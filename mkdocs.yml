@@ -1,0 +1,24 @@
+site_name: Depictio Documentation
+site_url: https://depictio.example.com
+theme:
+  name: material
+  palette:
+    primary: black
+    accent: black
+  logo: 'images/logo/logo_icon_white.png'
+  #   icon: 'images/logo/logo_icon.png'
+  favicon: 'images/logo/logo_icon_black.png'
+nav:
+  - Home: index.md
+  - Modularity: modularity.md
+  - Get Started:
+    - Prerequisites: prerequisites.md
+    - Installation:
+      - Microservices:
+        - Docker Compose: installation/microservices/docker.md
+        - Kubernetes: installation/microservices/kubernetes.md
+      - CLI: installation/cli.md
+  - API: api.md
+  - Architecture: architecture.md
+  - Use cases: use_cases.md
+  - Contributing: contributing.md

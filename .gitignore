@@ -1,0 +1,21 @@
+# Generate a gitignore for a mkdocs project
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# MkDocs
+site/
+docs/site/
+
+# Editor/IDE
+.vscode/
+.idea/
+
+# Build files
+build/
+dist/
+
+# Dependency directories
+venv/
+env/
