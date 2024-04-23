@@ -11,13 +11,13 @@
         <link rel="canonical" href="https://depictio.example.com/installation/microservices/docker/">
       
       
-        <link rel="prev" href="../../../prerequisites/">
+        <link rel="prev" href="../../../modularity/">
       
       
         <link rel="next" href="../kubernetes/">
       
       
-      <link rel="icon" href="../../../images/logo/logo_icon_black.png">
+      <link rel="icon" href="../../../images/logo/logo_icon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
     
     
@@ -90,7 +90,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../../.." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../../images/logo/logo_icon_white.png" alt="logo">
+  <img src="../../../images/logo/logo_icon.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -184,7 +184,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../../.." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../../images/logo/logo_icon_white.png" alt="logo">
+  <img src="../../../images/logo/logo_icon.png" alt="logo">
 
     </a>
     Depictio Documentation
@@ -276,7 +276,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../prerequisites/" class="md-nav__link">
+      <a href="../../../prerequisites.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -507,7 +507,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../use_cases/" class="md-nav__link">
+      <a href="../../../use_cases.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -583,8 +583,15 @@
 <p>If needed, example data can be downloaded by cloning the following repo:</p>
 <pre><code>git clone https://github.com/weber8thomas/depictio-data.git
 </code></pre>
-<p>Modify the <code>.env</code> file to update the environment variables. The following variables are mandatory to be set:</p>
+<p>Create and modify the <code>.env</code> file to update the environment variables. The following variables are mandatory to be set:</p>
 <pre><code>DEPICTIO_BACKEND_DATA_VOLUME_HOST=&lt;path_to_your_data_folder&gt;
+MINIO_ROOT_USER=&lt;minio&gt;
+MINIO_ROOT_PASSWORD=&lt;minio123&gt;
+MINIO_ACCESS_KEY=&lt;minio&gt;
+MINIO_SECRET_KEY=&lt;minio123&gt;
+</code></pre>
+<p>Create the MongoDB data folder and assign the correct permissions:</p>
+<pre><code>mkdir -p depictioDB/
 </code></pre>
 <p>Start the docker-compose services:</p>
 <pre><code>docker compose up -d --build
