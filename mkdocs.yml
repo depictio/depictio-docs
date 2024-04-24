@@ -5,9 +5,9 @@ theme:
   palette:
     primary: black
     accent: black
-  logo: 'images/logo/logo_icon_white.png'
+  logo: 'images/logo/logo_icon.png'
   #   icon: 'images/logo/logo_icon.png'
-  favicon: 'images/logo/logo_icon_black.png'
+  favicon: 'images/logo/logo_icon.png'
 nav:
   - Home: index.md
   - Modularity: modularity.md

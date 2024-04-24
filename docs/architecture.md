@@ -23,5 +23,7 @@ There are currently 6 main microservices running:
 
 # General object and database design
 
-<img src="docs/images/schema.png" alt="alt text" width="500">
 
+<p align="center">
+  <img src="../images/schema.png" width="500">
+</p>

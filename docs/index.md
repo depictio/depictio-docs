@@ -3,7 +3,7 @@
 # Welcome to Depictio documentation 
 
 <p align="center">
-  <img src="./images/logo/logo.png" alt="Depictio logo" width=300>
+  <img src="./images/logo/logo_hd.png" alt="Depictio logo" width=300>
 </p>
 
 
