@@ -14,7 +14,7 @@
         <link rel="prev" href="..">
       
       
-        <link rel="next" href="../installation/microservices/docker/">
+        <link rel="next" href="../get_started/">
       
       
       <link rel="icon" href="../images/logo/logo_icon.png">
@@ -265,6 +265,49 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#general-object-and-database-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      General object and database design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="General object and database design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#workflow-object-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Object Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Code architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      API structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#dashboard-components" class="md-nav__link">
     <span class="md-ellipsis">
       Dashboard components
@@ -273,6 +316,20 @@
   
     <nav class="md-nav" aria-label="Dashboard components">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#generic-components-data-collection-table" class="md-nav__link">
@@ -287,6 +344,15 @@
   <a href="#specific-components" class="md-nav__link">
     <span class="md-ellipsis">
       Specific components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      Web UI
     </span>
   </a>
   
@@ -311,208 +377,16 @@
   
   
   
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
+    <li class="md-nav__item">
+      <a href="../get_started/" class="md-nav__link">
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
   
   <span class="md-ellipsis">
     Get Started
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            Get Started
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../prerequisites.md" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Prerequisites
-  </span>
-  
-
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Installation
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_2">
-            <span class="md-nav__icon md-icon"></span>
-            Installation
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_2_1" id="__nav_3_2_1_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Microservices
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_2_1">
-            <span class="md-nav__icon md-icon"></span>
-            Microservices
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../installation/microservices/docker/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Docker Compose
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../installation/microservices/kubernetes/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Kubernetes
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../installation/cli/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    CLI
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -624,6 +498,49 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#general-object-and-database-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      General object and database design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="General object and database design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#workflow-object-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Object Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Code architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      API structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#dashboard-components" class="md-nav__link">
     <span class="md-ellipsis">
       Dashboard components
@@ -632,6 +549,20 @@
   
     <nav class="md-nav" aria-label="Dashboard components">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#generic-components-data-collection-table" class="md-nav__link">
@@ -646,6 +577,15 @@
   <a href="#specific-components" class="md-nav__link">
     <span class="md-ellipsis">
       Specific components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      Web UI
     </span>
   </a>
   
@@ -672,21 +612,46 @@
 
 
 <h1 id="modularity">Modularity</h1>
-<p>Depictio is designed with a modular architecture, allowing for easy integration of new features and functionalities. The frontend and backend components are decoupled, enabling independent development and deployment of each module. The platform is built to be scalable and adaptable to various needs, with a focus on user-friendly interfaces and interactive data visualization tools. </p>
-<p>The code organisation clearly separates each of the frontend components and the API endpoints, making it easy to understand and extend the platform.</p>
-<h2 id="dashboard-components">Dashboard components</h2>
-<p>Each of the components is designed to be modular and can be easily integrated into the dashboard. To add a new component to the dashboard, you simply need to click on the "Add new component" button of your dashboard. This will open a 3-levels modal where you will be able to select:</p>
-<ol>
-<li>
-<p>The data source: it corresponds to the bioinformatics workflow and the data collection you want to be based on to build your new component.</p>
-</li>
-<li>
-<p>The component type: it corresponds to the type of component (listed below) you want to add to your dashboard.</p>
-</li>
-<li>
-<p>The component configuration: it corresponds to the configuration of the component you want to add to your dashboard.</p>
-</li>
-</ol>
+<p>Depictio code is designed with a modular architecture, allowing for easy integration of new features and functionalities. The frontend and backend components are decoupled, enabling independent development and deployment of each module. The platform is built to be scalable and adaptable to various needs, with a focus on user-friendly interfaces and interactive data visualization tools. </p>
+<h2 id="general-object-and-database-design">General object and database design</h2>
+<p>Depictio is designed to manage complex workflows and their associated data collections, files, and configurations. The architecture is built to ensure a clear separation of concerns, with distinct layers for workflows, run configurations, runs, files, and data collections. This modular approach is reflected in both the database schema and the API structure.</p>
+<h3 id="workflow-object-design">Workflow Object Design</h3>
+<ul>
+<li><strong>Workflow</strong>: The top-level entity that encapsulates an entire process or pipeline. Each workflow can have multiple configurations and runs associated with it.</li>
+<li><strong>Run Configurations</strong>: These define the parameters and settings for running a workflow. Different configurations can be used to run the same workflow under different conditions.</li>
+<li><strong>Runs</strong>: Instances of a workflow executed using a specific run configuration. Each run generates output files, that are structured the same way across runs. These files can then be associated into data collections.</li>
+<li><strong>Files</strong>: Artifacts produced by each run. These can be intermediate or final results of the workflow.</li>
+<li><strong>Data Collections</strong>: Aggregated data from files following the same structure.</li>
+</ul>
+<p>The following diagram illustrates the relationships between different entities in Depictio:</p>
+<p><img src="../images/schema.png" width="600"></p>
+<h2 id="code-architecture">Code architecture</h2>
+<p>The code organisation clearly separates each of the frontend components and the API endpoints, making it easy to understand and extend the platform. </p>
+<p><img src="../image-1.png" alt="alt text" width="600"></p>
+<h3 id="api-structure">API structure</h3>
+<p>The API is structured to mirror the object design specified above, with each major component of the workflow having its own set of endpoints and models. The organization within <code>depictio/api/v1/endpoints</code> is as follows:</p>
+<ul>
+<li><strong>dashboards_endpoints</strong>: Manages endpoints related to dashboards, providing models and routes for dashboard data.</li>
+<li><strong>datacollections_endpoints</strong>: Handles endpoints for data collections, mapping closely to the Data Collection objects in the design.</li>
+<li><strong>deltatables_endpoints</strong>: Provides endpoints for delta tables, which are specific types of data collections with versioning.</li>
+<li><strong>files_endpoints</strong>: Manages file-related endpoints, directly corresponding to the File objects.</li>
+<li><strong>jbrowse_endpoints</strong>: Contains endpoints for jbrowse-specific functionalities, likely related to genomic data visualization.</li>
+<li><strong>user_endpoints</strong>: Manages user authentication and authorization, including models and routes for user management.</li>
+<li><strong>utils_endpoints</strong>: Provides utility endpoints, typically for internal or auxiliary operations.</li>
+<li><strong>workflow_endpoints</strong>: Focuses on managing workflows, run configurations, and runs, reflecting the core of the workflow architecture.</li>
+</ul>
+<p>Each endpoint is defined in a separate subfolder, where the <code>routes.py</code> file contains the API routes and the <code>models.py</code> file contains the object models associated.</p>
+<p><img src="../image-2.png" alt="alt text" width="600"></p>
+<h3 id="dashboard-components">Dashboard components</h3>
+<p>The frontend components in Depictio are organized in the depictio/dash/modules folder, with each component defined in a separate subfolder. This modular design ensures easy integration and maintainability.</p>
+<h4 id="component-structure">Component Structure</h4>
+<p>Each component folder typically contains:</p>
+<ul>
+<li><strong>frontend.py</strong>: Implements Dash callback functions.</li>
+<li><strong>utils.py</strong>: Contains helper functions for rendering and state management.</li>
+</ul>
+<p>Each of the frontend components is designed to be modular and can be easily integrated into the dashboard. Each component is defined in a separate folder, containing the component logic and styling. The <code>frontend.py</code> file contains the dash callback functions implementation and the <code>utils.py</code> file contains the helpers functions used by the component, allowing the component to be re-rendered in different scenarios (first design, reload/restore, refresh after data update).</p>
+<p><img src="../image-3.png" alt="alt text" width="600"></p>
 <h3 id="generic-components-data-collection-table">Generic components (Data collection Table)</h3>
 <p>There are currently 4 main components supported to build your dashboard:</p>
 <ul>
@@ -701,6 +666,20 @@
 <li>Graphs: Network graphs to visualize interactions between entities.</li>
 <li>Geomap: Geographical map.</li>
 </ul>
+<hr />
+<h3 id="web-ui">Web UI</h3>
+<p>To add a new component to the dashboard, you simply need to click on the "Add new component" button of your dashboard. This will open a 3-levels modal where you will be able to select:</p>
+<ol>
+<li>
+<p>The data source: it corresponds to the bioinformatics workflow and the data collection you want to be based on to build your new component.</p>
+</li>
+<li>
+<p>The component type: it corresponds to the type of component (listed below) you want to add to your dashboard.</p>
+</li>
+<li>
+<p>The component configuration: it corresponds to the configuration of the component you want to add to your dashboard.</p>
+</li>
+</ol>
 
 
 
@@ -747,7 +726,7 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.select", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>

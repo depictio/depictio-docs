@@ -2,42 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://depictio.example.com/</loc>
-         <lastmod>2024-05-09</lastmod>
+         <lastmod>2024-05-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://depictio.example.com/api/</loc>
-         <lastmod>2024-05-09</lastmod>
+         <lastmod>2024-05-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://depictio.example.com/architecture/</loc>
-         <lastmod>2024-05-09</lastmod>
+         <lastmod>2024-05-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://depictio.example.com/contributing/</loc>
-         <lastmod>2024-05-09</lastmod>
+         <lastmod>2024-05-24</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://depictio.example.com/get_started/</loc>
+         <lastmod>2024-05-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://depictio.example.com/modularity/</loc>
-         <lastmod>2024-05-09</lastmod>
+         <lastmod>2024-05-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://depictio.example.com/installation/cli/</loc>
-         <lastmod>2024-05-09</lastmod>
+         <lastmod>2024-05-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://depictio.example.com/installation/microservices/docker/</loc>
-         <lastmod>2024-05-09</lastmod>
+         <lastmod>2024-05-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://depictio.example.com/installation/microservices/kubernetes/</loc>
-         <lastmod>2024-05-09</lastmod>
+         <lastmod>2024-05-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
