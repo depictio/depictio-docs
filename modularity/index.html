@@ -265,13 +265,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#general-object-and-database-design" class="md-nav__link">
+  <a href="#general-object-model-and-database-design" class="md-nav__link">
     <span class="md-ellipsis">
-      General object and database design
+      General object model and database design
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="General object and database design">
+    <nav class="md-nav" aria-label="General object model and database design">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -498,13 +498,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#general-object-and-database-design" class="md-nav__link">
+  <a href="#general-object-model-and-database-design" class="md-nav__link">
     <span class="md-ellipsis">
-      General object and database design
+      General object model and database design
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="General object and database design">
+    <nav class="md-nav" aria-label="General object model and database design">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -613,13 +613,13 @@
 
 <h1 id="modularity">Modularity</h1>
 <p>Depictio code is designed with a modular architecture, allowing for easy integration of new features and functionalities. The frontend and backend components are decoupled, enabling independent development and deployment of each module. The platform is built to be scalable and adaptable to various needs, with a focus on user-friendly interfaces and interactive data visualization tools. </p>
-<h2 id="general-object-and-database-design">General object and database design</h2>
-<p>Depictio is designed to manage complex workflows and their associated data collections, files, and configurations. The architecture is built to ensure a clear separation of concerns, with distinct layers for workflows, run configurations, runs, files, and data collections. This modular approach is reflected in both the database schema and the API structure.</p>
+<h2 id="general-object-model-and-database-design">General object model and database design</h2>
+<p>Depictio object model was designed to reflect production-oriented workflows. The architecture is built to ensure a clear separation of concerns, with distinct layers for workflows, workflow run configurations, runs, files generated, and data collections. This modular approach is reflected in both the database schema and the API structure.</p>
 <h3 id="workflow-object-design">Workflow Object Design</h3>
 <ul>
-<li><strong>Workflow</strong>: The top-level entity that encapsulates an entire process or pipeline. Each workflow can have multiple configurations and runs associated with it.</li>
-<li><strong>Run Configurations</strong>: These define the parameters and settings for running a workflow. Different configurations can be used to run the same workflow under different conditions.</li>
-<li><strong>Runs</strong>: Instances of a workflow executed using a specific run configuration. Each run generates output files, that are structured the same way across runs. These files can then be associated into data collections.</li>
+<li><strong>Workflow</strong>: The top-level entity that encapsulates that represents a production-oriented pipeline/workflow. </li>
+<li><strong>Run Configurations</strong>: These define the parameters and settings that were used to run a workflow. </li>
+<li><strong>Runs</strong>: Instances of a production workflow executed using a specific run configuration. Each run generates output files, that are structured the same way across runs. These files can then be associated into data collections.</li>
 <li><strong>Files</strong>: Artifacts produced by each run. These can be intermediate or final results of the workflow.</li>
 <li><strong>Data Collections</strong>: Aggregated data from files following the same structure.</li>
 </ul>
@@ -631,7 +631,7 @@
 <h3 id="api-structure">API structure</h3>
 <p>The API is structured to mirror the object design specified above, with each major component of the workflow having its own set of endpoints and models. The organization within <code>depictio/api/v1/endpoints</code> is as follows:</p>
 <ul>
-<li><strong>dashboards_endpoints</strong>: Manages endpoints related to dashboards, providing models and routes for dashboard data.</li>
+<li><strong>dashboards_endpoints</strong>: Manages endpoints related to dashboards.</li>
 <li><strong>datacollections_endpoints</strong>: Handles endpoints for data collections, mapping closely to the Data Collection objects in the design.</li>
 <li><strong>deltatables_endpoints</strong>: Provides endpoints for delta tables, which are specific types of data collections with versioning.</li>
 <li><strong>files_endpoints</strong>: Manages file-related endpoints, directly corresponding to the File objects.</li>
