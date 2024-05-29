@@ -8,17 +8,29 @@ theme:
   logo: 'images/logo/logo_icon.png'
   #   icon: 'images/logo/logo_icon.png'
   favicon: 'images/logo/logo_icon.png'
+  features:
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate 
 nav:
   - Home: index.md
   - Modularity: modularity.md
-  - Get Started:
-    - Prerequisites: prerequisites.md
-    - Installation:
-      - Microservices:
-        - Docker Compose: installation/microservices/docker.md
-        - Kubernetes: installation/microservices/kubernetes.md
-      - CLI: installation/cli.md
+  - Get Started: get_started.md
+    # - Prerequisites: prerequisites.md
+    # - Installation:
+    #   - Microservices:
+    #     - Docker Compose: installation/microservices/docker.md
+    #     - Kubernetes: installation/microservices/kubernetes.md
+    #   - CLI: installation/cli.md
   - API: api.md
   - Architecture: architecture.md
   - Use cases: use_cases.md
   - Contributing: contributing.md
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

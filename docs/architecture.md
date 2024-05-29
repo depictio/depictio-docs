@@ -21,9 +21,6 @@ There are currently 6 main microservices running:
 
 
 
-# General object and database design
 
+# Plotly Dash server
 
-<p align="center">
-  <img src="../images/schema.png" width="500">
-</p>

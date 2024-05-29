@@ -19,3 +19,5 @@ dist/
 # Dependency directories
 venv/
 env/
+.DS_Store
+docs/.DS_Store
