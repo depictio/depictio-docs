@@ -8,26 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://depictio.github.io/depictio-docs/">
+        <link rel="canonical" href="https://depictio.github.io/depictio-docs/installation/docker/">
       
       
+        <link rel="prev" href="../install/">
       
-        <link rel="next" href="installation/install/">
+      
+        <link rel="next" href="../kubernetes/">
       
       
-      <link rel="icon" href="images/logo/logo_icon.png">
+      <link rel="icon" href="../../images/logo/logo_icon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
     
     
       
-        <title>Depictio Documentation</title>
+        <title>Docker Compose - Depictio Documentation</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.bcfcd587.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bcfcd587.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,9 +54,9 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -80,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project-overview" class="md-skip">
+        <a href="#docker-compose-setup" class="md-skip">
           Skip to content
         </a>
       
@@ -117,9 +119,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
+    <a href="../.." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="images/logo/logo_icon.png" alt="logo">
+  <img src="../../images/logo/logo_icon.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -136,7 +138,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Docker Compose
             
           </span>
         </div>
@@ -221,11 +223,9 @@
         
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
         
   
     
@@ -240,11 +240,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="installation/install/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../install/" class="md-tabs__link">
           
   
     
@@ -264,7 +266,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="usage/get_started/" class="md-tabs__link">
+        <a href="../../usage/get_started/" class="md-tabs__link">
           
   
     
@@ -284,7 +286,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="features/modularity/" class="md-tabs__link">
+        <a href="../../features/modularity/" class="md-tabs__link">
           
   
     
@@ -314,9 +316,7 @@
           
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -327,9 +327,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
+    <a href="../.." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="images/logo/logo_icon.png" alt="logo">
+  <img src="../../images/logo/logo_icon.png" alt="logo">
 
     </a>
     Depictio Documentation
@@ -353,28 +353,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -383,53 +365,6 @@
   
 
       </a>
-      
-        
-
-  
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#project-overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Project Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    <span class="md-ellipsis">
-      Features
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      Architecture
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -438,8 +373,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -452,19 +389,22 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -475,7 +415,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Installation
@@ -489,7 +429,7 @@
   
   
     <li class="md-nav__item">
-      <a href="installation/install/" class="md-nav__link">
+      <a href="../install/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -507,10 +447,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="installation/docker/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Docker Compose
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -519,6 +479,64 @@
   
 
       </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#clone-the-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clone the repository
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edit-the-configuration-and-create-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Edit the configuration and create volumes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-the-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start the services
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-of-services-and-corresponding-urls" class="md-nav__link">
+    <span class="md-ellipsis">
+      List of services and corresponding URLs
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -531,7 +549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="installation/kubernetes/" class="md-nav__link">
+      <a href="../kubernetes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -605,7 +623,7 @@
   
   
     <li class="md-nav__item">
-      <a href="usage/get_started/" class="md-nav__link">
+      <a href="../../usage/get_started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -674,7 +692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="usage/guides/web_ui/" class="md-nav__link">
+      <a href="../../usage/guides/web_ui/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -695,7 +713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="usage/guides/dashboard_creation/" class="md-nav__link">
+      <a href="../../usage/guides/dashboard_creation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -716,7 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="usage/guides/cli/" class="md-nav__link">
+      <a href="../../usage/guides/cli/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -796,7 +814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="features/modularity/" class="md-nav__link">
+      <a href="../../features/modularity/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -825,9 +843,7 @@
             
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -838,6 +854,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -846,27 +864,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#project-overview" class="md-nav__link">
+  <a href="#clone-the-repository" class="md-nav__link">
     <span class="md-ellipsis">
-      Project Overview
+      Clone the repository
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
+  <a href="#edit-the-configuration-and-create-volumes" class="md-nav__link">
     <span class="md-ellipsis">
-      Features
+      Edit the configuration and create volumes
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
+  <a href="#start-the-services" class="md-nav__link">
     <span class="md-ellipsis">
-      Architecture
+      Start the services
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-of-services-and-corresponding-urls" class="md-nav__link">
+    <span class="md-ellipsis">
+      List of services and corresponding URLs
     </span>
   </a>
   
@@ -890,62 +917,36 @@
   
 
 
-  <h1>Home</h1>
-
-<style>
-  .md-typeset h1,
-  .md-content__button {
-    display: none;
-  }
-</style>
-
-<p align="center">
-  <img src="./images/logo/logo_hd.png" alt="Depictio logo" width=300>
-</p>
-
-<p><img alt="" src="images/Demo.gif" /></p>
-<h2 id="project-overview">Project Overview<a class="headerlink" href="#project-overview" title="Permanent link">&para;</a></h2>
-<p>Depictio is an innovative microservices web-based platform designed to streamline the analysis of bioinformatics workflows by enabling the creation of customized visualization dashboards using various type of  outputs compatible with the platform. It provides a dynamic and interactive dashboard experience for quality control (QC) metrics monitoring and result exploration in omics. The platform is tailored towards large-scale studies and research facilities, offering support for various data formats and interactive data visualization tools.</p>
-<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<h1 id="docker-compose-setup">Docker-compose setup<a class="headerlink" href="#docker-compose-setup" title="Permanent link">&para;</a></h1>
+<h2 id="clone-the-repository">Clone the repository<a class="headerlink" href="#clone-the-repository" title="Permanent link">&para;</a></h2>
+<p>Clone the repo as well as its submodules:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git clone --recurse-submodules https://github.com/depictio/depictio.git
+</code></pre></div>
+<h2 id="edit-the-configuration-and-create-volumes">Edit the configuration and create volumes<a class="headerlink" href="#edit-the-configuration-and-create-volumes" title="Permanent link">&para;</a></h2>
+<p>Edit the <code>.env</code> file to update the data volume path where your data is stored:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>DEPICTIO_BACKEND_DATA_VOLUME_HOST=/ABSOLUTE/PATH/TO/depictio-data
+</code></pre></div>
+<p>Create volumes that will be used by the services:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir -p depictio-data/ &amp;&amp; chmod -R 777 depictio-data/
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>mkdir -p depictioDB/ &amp;&amp; chmod -R 777 depictioDB/
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>mkdir -p minio_data/ &amp;&amp; chmod -R 775 minio_data/
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>mkdir -p depictio/keys/ &amp;&amp; chmod -R 775 depictio/keys/
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>mkdir -p depictio/.depictio/ &amp;&amp; chmod -R 775 depictio/.depictio/
+</code></pre></div>
+<h2 id="start-the-services">Start the services<a class="headerlink" href="#start-the-services" title="Permanent link">&para;</a></h2>
+<p>Start the docker-compose services (latest version accessible <a href="https://github.com/depictio/depictio/blob/main/docker-compose.yaml">here</a>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker compose up -d --build
+</code></pre></div>
+<p>This will build the images and start the services. </p>
+<h2 id="list-of-services-and-corresponding-urls">List of services and corresponding URLs<a class="headerlink" href="#list-of-services-and-corresponding-urls" title="Permanent link">&para;</a></h2>
+<p>The services will be available at the following URLs (with default ports and configurations):</p>
 <ul>
-<li>Dynamic Dashboards: Real-time data interaction, customizable views, and user-driven exploration features.</li>
-<li>Diverse Data Format Support: Handles standard formats like CSV, TSV, XLSX, Parquet, and omics files like BED, BigBed, BigWig, BAM/CRAM, VCF.</li>
-<li>Robust Backend Technologies: Utilizes FastAPI, MongoDB, and Redis cache for high-performance data management and processing.</li>
-<li>Intuitive Frontend: Built on Plotly Dash, a ReactJS-based framework</li>
+<li><strong>Depictio frontend</strong>: <a href="**http**://localhost:5080">http://localhost:5080</a></li>
+<li><strong>Depictio backend</strong>: <a href="http://localhost:8058">http://localhost:8058</a></li>
+<li><strong>MinIO</strong>: <a href="http://localhost:9000">http://localhost:9000</a></li>
+<li><strong>MinIO WebUI</strong>: <a href="http://localhost:9001">http://localhost:9001</a></li>
+<li><strong>MongoDB</strong>: <a href="http://localhost:27018">http://localhost:27018</a></li>
 </ul>
-<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
-<p align="center">
-  <img src="./images/main.png" alt="Depictio logo" width=800>
-</p>
-
-<p>Depictio architecture is composed of a microservices architecture, including 6 microservices currently:</p>
-<ol>
-<li>
-<p>FastAPI instance</p>
-</li>
-<li>
-<p>mongoDB database</p>
-</li>
-<li>
-<p>redis cache system</p>
-</li>
-<li>
-<p>JBrowse on-premise genome browser</p>
-</li>
-<li>
-<p>MinIO S3 bucket management instance</p>
-</li>
-<li>
-<p>Plotly Dash server</p>
-</li>
-</ol>
-<!-- 
-
-## Current Status
-
-!!! warning
-
-      * Depictio is currently in the development phase and is not yet available for general use. The platform is being built with an emphasis on versatility and adaptability to various biological research needs. -->
 
 
 
@@ -953,13 +954,8 @@
 
 
 
-  
-  
 
 
-
-
-  
 
 
 
@@ -1019,10 +1015,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.sections", "header.autohide", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.top", "toc.follow", "announce.dismiss"], "search": "assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.sections", "header.autohide", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.top", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="assets/javascripts/bundle.1e8ae164.min.js"></script>
+      <script src="../../assets/javascripts/bundle.1e8ae164.min.js"></script>
       
     
   </body>
