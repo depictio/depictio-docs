@@ -1,6 +1,17 @@
+---
+hide:
+  - title
+  - navigation
+  - toc
+---
+<style>
+  .md-typeset h1,
+  .md-content__button {
+    display: none;
+  }
+</style>
 
 
-# Welcome to Depictio documentation 
 
 <p align="center">
   <img src="./images/logo/logo_hd.png" alt="Depictio logo" width=300>
@@ -26,7 +37,32 @@ Depictio is an innovative microservices web-based platform designed to streamlin
 * Intuitive Frontend: Built on Plotly Dash, a ReactJS-based framework
 
 
+## Architecture
+
+
+<p align="center">
+  <img src="./images/main.png" alt="Depictio logo" width=800>
+</p>
+
+
+Depictio architecture is composed of a microservices architecture, including 6 microservices currently:
+
+1. FastAPI instance
+
+2. mongoDB database
+
+3. redis cache system
+
+4. JBrowse on-premise genome browser
+
+5. MinIO S3 bucket management instance
+
+6. Plotly Dash server
+
+<!-- 
 
 ## Current Status
 
-Depictio is currently in the development phase and is not yet available for general use. The platform is being built with an emphasis on versatility and adaptability to various biological research needs.
+!!! warning
+   
+      * Depictio is currently in the development phase and is not yet available for general use. The platform is being built with an emphasis on versatility and adaptability to various biological research needs. -->

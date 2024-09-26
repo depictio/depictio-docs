@@ -1,10 +1,91 @@
 site_name: Depictio Documentation
-site_url: https://depictio.example.com
+site_url: https://depictio.github.io/depictio-docs/
+site_description: ""
+
+
+nav:
+  - Home: index.md
+  - Installation: 
+    - installation/install.md
+    - Docker Compose: installation/docker.md
+    - Kubernetes: installation/kubernetes.md
+    # - CLI: installation/cli.md
+  - Usage:
+    - usage/get_started.md
+    - Guides: 
+      # - usage/guides/guides.md
+      - WebUI: usage/guides/web_ui.md
+        # - usage/guides/web_ui.md
+        # - Workflows section: usage/guides/web_ui.md
+        # - Profile section: usage/guides/web_ui.md
+      - Dashboard creation: usage/guides/dashboard_creation.md
+      - CLI: usage/guides/cli.md
+      
+    # - Administration: usage/administration.md
+  # - Features: features.md
+  # - Administration: administration.md
+  # - Developer: developer.md
+  # - Guides: guides.md
+  # - FAQ: faq.md
+  # - Getting Started: get_started.md
+
+  # - Architecture: features/architecture.md
+  - Features:
+    - Modularity: features/modularity.md
+    # - Scalability: features/scalability.md
+  # - FAQ: faq/faq.md
+  # - Developer: developer/developer.md
+
+
+  # - API: api/api.md
+
+    # - Prerequisites: prerequisites.md
+    # - Installation:
+    #   - Microservices:
+    #     - Docker Compose: installation/microservices/docker.md
+    #     - Kubernetes: installation/microservices/kubernetes.md
+    #   - CLI: installation/cli.md
+  # - Use cases: use-cases/use_cases.md
+  # - Contributing: contributing/contributing.md
+extra_css:
+  - stylesheets/extra.css
 theme:
   name: material
   palette:
-    primary: black
-    accent: black
+    - scheme: default
+      primary: white
+      accent: white
+  custom_dir: overrides
+  # palette:
+  #     # Palette toggle for light mode
+  #   - scheme: default
+  #     primary: black
+  #     toggle:
+  #       icon: material/brightness-7 
+  #       name: Switch to dark mode
+  #   - scheme: slate
+  #     accent: black
+  #     toggle:
+  #       icon: material/brightness-7
+  #       name: Switch to light mode
+
+  icon:
+    annotation: material/record-circle
+    # admonition:
+    #   feature: fontawesome/solid/star
+    #   handson: fontawesome/solid/chalkboard-user
+    #   wip: fontawesome/solid/helmet-safety
+    #   tasklist: fontawesome/solid/list-ol
+    #   consumables: fontawesome/solid/flask
+    #   equipment: fontawesome/solid/plug
+    #   storage: fontawesome/solid/suitcase
+    #   specimen: fontawesome/solid/bug
+    #   biomaterials: fontawesome/solid/vial
+    #   protocols: fontawesome/solid/mortar-pestle
+    #   assays: fontawesome/solid/temperature-half
+    #   datasets: fontawesome/solid/database
+    #   other: fontawesome/solid/ellipsis
+
   logo: 'images/logo/logo_icon.png'
   #   icon: 'images/logo/logo_icon.png'
   favicon: 'images/logo/logo_icon.png'
@@ -12,25 +93,81 @@ theme:
     - content.code.copy
     - content.code.select
     - content.code.annotate 
-nav:
-  - Home: index.md
-  - Modularity: modularity.md
-  - Get Started: get_started.md
-    # - Prerequisites: prerequisites.md
-    # - Installation:
-    #   - Microservices:
-    #     - Docker Compose: installation/microservices/docker.md
-    #     - Kubernetes: installation/microservices/kubernetes.md
-    #   - CLI: installation/cli.md
-  - API: api.md
-  - Architecture: architecture.md
-  - Use cases: use_cases.md
-  - Contributing: contributing.md
+    - navigation.sections
+    - header.autohide
+    # - navigation.instant
+    # - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+    # - navigation.expand
+    - navigation.top # back to top
+    - toc.follow
+    # - toc.integrate
+    # - content.tabs.link
+    - announce.dismiss
+    # - header.autohide
+
 markdown_extensions:
+  # - pymdownx.highlight:
+  #     anchor_linenums: true
+  #     line_spans: __span
+  #     pygments_lang_class: true
+  # - lightgallery
+  - admonition
+  - attr_list
+  - def_list
+  - meta
+  - md_in_html
+  - footnotes
+  - pymdownx.caret # superscript
+  # - pymdownx.mark # highlight
+  - pymdownx.tilde # strikethrough
+  - pymdownx.details
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
   - pymdownx.highlight:
       anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
+      auto_title: false
+      linenums: false
+  - pymdownx.snippets:
+      base_path:
+        - docs
+  - pymdownx.tabbed
+  # - pymdownx.tabbed:
+  # alternate_style: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
   - pymdownx.superfences
+  - toc:
+      toc_depth: 4
+      title: On this page
+      permalink: true
+
+plugins:
+- search
+
+
+# - render_swagger
+
+
+repo_url: https://github.com/depictio/depictio
+repo_name: depictio/depictio
+
+copyright: Copyright &copy; 2023 - 2024 Thomas Weber
+
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/depictio/depictio
+      name: GitHub
+
+  version:
+    provider: mike
+
+

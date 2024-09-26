@@ -20,13 +20,13 @@ Depictio object model was designed to reflect production-oriented workflows. The
   
 The following diagram illustrates the relationships between different entities in Depictio:
 
-<img src="../images/schema.png" width="600">
+<img src="../../images/modularity/schema.png" width="600">
 
 ## Code architecture
 
 The code organisation clearly separates each of the frontend components and the API endpoints, making it easy to understand and extend the platform. 
 
-<img src="../image-1.png" alt="alt text" width="600">
+<img src="../../images/modularity/image-1.png" width="600">
 
 
 ### API structure
@@ -45,7 +45,7 @@ The API is structured to mirror the object design specified above, with each maj
 
 Each endpoint is defined in a separate subfolder, where the `routes.py` file contains the API routes and the `models.py` file contains the object models associated.
 
-<img src="../image-2.png" alt="alt text" width="600">
+<img src="../../images/modularity/image-2.png" width="600">
 
 
 ### Dashboard components
@@ -63,32 +63,6 @@ Each component folder typically contains:
 Each of the frontend components is designed to be modular and can be easily integrated into the dashboard. Each component is defined in a separate folder, containing the component logic and styling. The `frontend.py` file contains the dash callback functions implementation and the `utils.py` file contains the helpers functions used by the component, allowing the component to be re-rendered in different scenarios (first design, reload/restore, refresh after data update).
 
 
-<img src="../image-3.png" alt="alt text" width="600">
+<img src="../../images/modularity/image-3.png" width="600">
 
 
-
-### Generic components (Data collection Table)
-There are currently 4 main components supported to build your dashboard:
-
-* Figures: Bar, Line, Scatter, Box and Histogram plots.
-* Metrics cards: Cards displaying metrics values.
-* Interactive components: (slider, dropdown, input text, etc.)
-* Tables: Interactive tables with sorting, filtering and searching functionalities.
-
-### Specific components
-* JBrowse: Genome browser to visualize genomic data.
-* Graphs: Network graphs to visualize interactions between entities.
-* Geomap: Geographical map.
-
-
----------------
-
-### Web UI 
-
-To add a new component to the dashboard, you simply need to click on the "Add new component" button of your dashboard. This will open a 3-levels modal where you will be able to select:
-
-1. The data source: it corresponds to the bioinformatics workflow and the data collection you want to be based on to build your new component.
-  
-2. The component type: it corresponds to the type of component (listed below) you want to add to your dashboard.
-
-3. The component configuration: it corresponds to the configuration of the component you want to add to your dashboard.
