@@ -73,40 +73,4 @@ Other examples:
 </div>
 
 
-## Right Sidebar Parameters
-
-The right sidebar allows you to customize the appearance and behavior of the dashboard. Currently it includes the following options:
-* **Edit Dashboard**: allow you to enable or disable the editing mode, which allows you to modify the size and position of the components. Interactions with the components are still enabled in this mode.
-* **Toggle interactivity**: enable or disable the interactivity of the components. When disabled, the components will not respond to user interactions.
-
-
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/offcanvas.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/offcanvas.png" width="600">
-    </a>
-</div>
-
-
-## Saving the Dashboard
-
-1. Once your dashboard is ready, click the **Save** icon (green button at the top right).
-2. A **modal** will appear confirming that your dashboard has been saved (e.g., "Your amazing dashboard was successfully saved!").
-3. Click **Close** to dismiss the modal.
-4. Your dashboard will now appear with a thumbnail under the **Recently Viewed** section on the landing page.
-
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/save.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/save.png" width="600">
-    </a>
-</div>
-
-
-
-## Example Dashboard result
-
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/result.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/result.png" width="600">
-    </a>
-</div>
 

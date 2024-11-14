@@ -19,6 +19,7 @@ nav:
         # - Workflows section: usage/guides/web_ui.md
         # - Profile section: usage/guides/web_ui.md
       - Dashboard creation: usage/guides/dashboard_creation.md
+      - Using the dashboard: usage/guides/dashboard_usage.md
       - CLI: usage/guides/cli.md
       
     # - Administration: usage/administration.md
@@ -35,6 +36,7 @@ nav:
     # - Scalability: features/scalability.md
   # - FAQ: faq/faq.md
   # - Developer: developer/developer.md
+  - Changelog: changelog/changelog.md
 
 
   # - API: api/api.md
@@ -71,6 +73,7 @@ theme:
 
   icon:
     annotation: material/record-circle
+    # font: true
     # admonition:
     #   feature: fontawesome/solid/star
     #   handson: fontawesome/solid/chalkboard-user
