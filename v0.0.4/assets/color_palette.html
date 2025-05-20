@@ -47,14 +47,14 @@
           return (
             <div className="p-6 bg-white rounded-lg shadow-md">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">Depictio Color Palette</h2>
-              
+
               {Object.entries(colorGroups).map(([groupName, colorNames]) => (
                 <div key={groupName} className="mb-8">
                   <h3 className="text-lg font-semibold mb-3 text-gray-700">{groupName}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {colorNames.map(colorName => (
                       <div key={colorName} className="flex flex-col">
-                        <div 
+                        <div
                           className="h-24 rounded-lg shadow-sm"
                           style={{ backgroundColor: colors[colorName] }}
                         ></div>
@@ -67,15 +67,15 @@
                   </div>
                 </div>
               ))}
-              
+
               <div className="mt-10">
                 <h3 className="text-lg font-semibold mb-3 text-gray-700">Color Combinations</h3>
-                
+
                 <div className="mb-6">
                   <p className="font-medium mb-2 text-gray-800">Main Sequence</p>
                   <div className="flex h-12 rounded-lg overflow-hidden">
                     {["purple", "blue", "teal", "green", "yellow", "orange", "pink"].map(color => (
-                      <div 
+                      <div
                         key={color}
                         className="flex-1"
                         style={{ backgroundColor: colors[color] }}
@@ -83,12 +83,12 @@
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="mb-6">
                   <p className="font-medium mb-2 text-gray-800">Cool Colors</p>
                   <div className="flex h-12 rounded-lg overflow-hidden">
                     {["purple", "violet", "blue", "teal"].map(color => (
-                      <div 
+                      <div
                         key={color}
                         className="flex-1"
                         style={{ backgroundColor: colors[color] }}
@@ -96,12 +96,12 @@
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="mb-6">
                   <p className="font-medium mb-2 text-gray-800">Warm Colors</p>
                   <div className="flex h-12 rounded-lg overflow-hidden">
                     {["yellow", "orange", "red", "pink"].map(color => (
-                      <div 
+                      <div
                         key={color}
                         className="flex-1"
                         style={{ backgroundColor: colors[color] }}
@@ -109,12 +109,12 @@
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="mb-6">
                   <p className="font-medium mb-2 text-gray-800">Alert Colors</p>
                   <div className="flex h-12 rounded-lg overflow-hidden">
                     {["green", "yellow", "orange", "red"].map(color => (
-                      <div 
+                      <div
                         key={color}
                         className="flex-1"
                         style={{ backgroundColor: colors[color] }}
@@ -123,7 +123,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div className="mt-10 p-4 border border-gray-200 rounded-lg">
                 <h3 className="text-lg font-semibold mb-2 text-gray-700">Usage Example - Profile Page</h3>
                 <div className="flex flex-wrap gap-3">
