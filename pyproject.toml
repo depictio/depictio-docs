@@ -1,4 +1,13 @@
 [project]
 dependencies = [
     "mkdocstrings-python",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocs-material-extensions",
+    "mkdocs-render-swagger-plugin",
+    "mkdocs-typer",
+    "mkdocs-swagger-ui-tag",
+    "mike",
 ]
+name = "depictio-docs"
+version = "0.0.4"
