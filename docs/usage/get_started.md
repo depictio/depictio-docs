@@ -1,71 +1,89 @@
-# Getting started
+# Getting Started with Depictio
 
+This guide will help you get started with Depictio after installation. It covers the basic concepts and workflows to help you begin visualizing your data.
 
+## Overview
 
+Depictio is a platform for creating interactive dashboards for bioinformatics data visualization. It consists of:
 
+1. A **backend API** that manages data, users, and configurations
+2. A **frontend** that provides the user interface for creating and viewing dashboards
+3. A **CLI tool** for data ingestion and management
 
-## Ingest example data 
+## First Steps
 
-### depictio-cli setup
+### Accessing the Web Interface
 
-!!! note
-    * The depictio-cli is a command line interface that allows you to interact with the Depictio backend. It is used to register data collections and workflows, as well as to submit jobs. The depictio-cli is currently in development and is not yet ready for production use.
-    * Prerequisite: virtualenv or conda needs to be installed on your machine.
-
-
-To ingest example data, you can use the depictio-cli. The depictio-cli is a command line interface that allows you to interact with the Depictio backend. It is used to register data collections and workflows, as well as to submit jobs. The depictio-cli is currently in development and is not yet ready for production use.
-
-
-Clone the depictio-cli repository:
+After installation [see the installation guide](../installation/README.md), you can access the Depictio web interface. If you used Docker Compose or the helm chart with a local setup, the default port is `5080`. Open your web browser and navigate to:
 
 ```bash
-https://github.com/depictio/depictio-cli.git
+http://localhost:5080
 ```
 
-Create the depictio-cli python venv using the following:
+### Logging In
 
-```bash
-# Set up a virtual environment
-python -m venv depictio-cli-venv
+When you first access Depictio, you'll be prompted to log in. The default installation creates an admin user with:
 
-# Activate the virtual environment
-source depictio-cli-venv/bin/activate 
+- **Email**: `admin@example.com`
+- **Password**: `changeme`
 
-# Install the depictio-cli package
-pip install -e . 
+!!! warning "**Important**"
+Change the default password after your first login for security reasons.
 
-# Add the depictio package to the PYTHONPATH
-export PYTHONPATH=$PYTHONPATH:$PWD/depictio-cli
-```
+## Understanding the Interface
 
-### Running the ingestion command through the depictio-cli
+The Depictio interface is organized into several main sections:
 
-Using the depictio-cli, you can ingest example data by running the following command:
+### Dashboards management View
 
-```bash
-depictio-cli data setup \
-    --agent-config-path ../depictio/.depictio/default_admin_agent.yaml \
-    --pipeline-config-path configs/mosaicatcher_pipeline/mosaicatcher_pipeline.yaml \
-    --scan-files
-```
+This is the landing page where you can view and manage your dashboards. Key features include:
 
-The depictio-cli will do the following:
+- **Dashboard list**: View all your dashboards
+- **Create new dashboard**: Start a new dashboard project
+- **Edit existing dashboards**: Modify name, duplicate or delete existing dashboards
+- **Share dashboards**: Make public or private dashboards at the instance level
 
-* Validate the agent configuration against the API to ensure that the token is valid and user has the necessary permissions.
-* Validate the pipeline configuration against the API to ensure that the configuration is valid.
-* Register the workflows and data collections with the API.
-* Iterate through the files in the data directory listed in the pipeline configuration, create corresponding file objects in the mongo database, and associate them with the data collections.
+### Dashboard design View
 
-Then the depictio-backend will iterate through the files in the data directory listed in the pipeline configuration, and accordingly to the data collections created:
+When clikking on a dashboard, you enter the design view. This is where you can create and edit your dashboards. Key features include:
 
-* Data collection of type Table: Read each of the file, aggregate them into a DeltaLake format, and store them in the MinIO bucket.
-* Data collection of type JBrowse: Transfer the files to the MinIO bucket in a specific files structure that is compatible with JBrowse and Depictio.
+- **Component library**: Available visualization components
+- **Layout editor**: Drag-and-drop interface for arranging components
+- **Property editor**: Configure component properties using data collections registered in the project
+- **Interactivity settings**: Enable or disable interactivity between components
+- **Save**: Auto-save feature and manual save option to trigger a screenshot for the dashboard thumbnail
 
+### Project Management
 
-----
+This section allows you to manage your projects and data. Key features include:
 
-!!! danger "#TODO"
+- **Project list**: View and manage your projects
+- **Workflow management**: List workflows registered in the project and their metadata
+- **Data collections**: List each data collection of each workflow and their metadata. Preview the data collection in a table format.
 
-    * Show a log example of the result of the ingestion
-    * Logging through the admin default credentials
-    * Example dataset 
+## Basic Workflow
+
+The typical workflow in Depictio consists of:
+
+1. **Project Setup**: Create a YAML project configuration (workflows, data collections, and metadata). See refer
+2. **Data Ingestion**: Import data using the CLI tool
+3. **Dashboard Creation**: Design dashboards to visualize your data
+4. **Sharing**: Share dashboards with collaborators
+
+## Next Steps
+
+Now that you understand the basics, you can:
+
+- [Learn more about dashboard creation](guides/dashboard_creation.md)
+- [Explore the dashboard components](guides/dashboard_usage.md)
+- [Set up the CLI for your own data](../depictio-cli/usage.md)
+- [Understand the API for integration](../api/overview.md)
+
+## Troubleshooting
+
+If you encounter issues:
+
+- Check the [FAQ](../FAQ/general.md) for common problems and solutions
+- Review the logs for error messages
+- Ensure your data is in a supported format
+- Verify that all services are running correctly

@@ -1,0 +1,32 @@
+---
+# Default state for all rules
+default: true
+
+# MD013 - Line length
+MD013: false
+
+# MD033 - Inline HTML
+MD033: false
+
+# MD041 - First line in a file should be a top-level heading
+MD041: false
+
+# MD026 - Trailing punctuation in heading
+MD026: false
+
+# MD024 - Multiple headings with the same content
+MD024:
+  siblings_only: true
+
+# MD029 - Ordered list item prefix
+MD029: false
+
+# MD045 - Images in headers
+MD045: false
+
+# Allow fenced code blocks
+MD046:
+  style: "fenced"
+
+# Disable top level heading requirement
+MD025: false

@@ -1,7 +1,4 @@
-# Dashboard Creation 
-
-
-
+# Dashboard Creation
 
 ## Add a component to the dashboard
 
@@ -12,7 +9,6 @@
         <img src="../../../images/guides/dashboard_creation/step_one.png" width="600">
     </a>
 </div>
-
 
 1. Begin by clicking on the **"+ New Dashboard"** button to create a new dashboard.
 2. In the **"Design your new dashboard component"** modal:
@@ -28,7 +24,6 @@
     </a>
 </div>
 
-
 1. For each selected component, choose the corresponding **workflow** and **data collection** from the dropdowns.
 2. Verify the **Data Collection Info**, such as **Workflow ID**, **Table type**, **MongoDB ID**, and **Data preview**.
 3. Click **Next Step** to proceed.
@@ -41,16 +36,17 @@
     </a>
 </div>
 
-
-
 1. **Choose Visualization or Interactive Type**:
+
    - Based on the component type selected in Step 1, choose the appropriate **visualization** or **interactive type** from the list of available options (e.g., Bar, Scatter, Histogram, RangeSlider).
-   
+
 2. **Set Data Parameters**:
+
    - Define key parameters such as **X-axis** and **Y-axis** (if applicable), and assign the relevant data columns from your dataset.
    - Configure additional data settings, such as filters or ranges, depending on the component's functionality.
 
 3. **Adjust Specific Parameters**:
+
    - Customize visualization-specific parameters like colors, bin sizes, or axis labels to refine how the data is presented.
    - For interactive components, configure sliders, filters, or dropdown options based on the desired user interactions.
 
@@ -71,6 +67,3 @@ Other examples:
         <img src="../../../images/guides/dashboard_creation/step_three_interactive.png" width="600">
     </a>
 </div>
-
-
-
