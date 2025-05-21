@@ -126,6 +126,11 @@ extra:
     provider: mike
     default: latest
 
+  # Google Analytics
+  analytics:
+    provider: google
+    property: G-J14FKHSHLC
+
 # Navigation Structure
 nav:
   - index.md

@@ -27,12 +27,9 @@ When you first access Depictio, you'll be prompted to log in. The default instal
 - **Email**: `admin@example.com`
 - **Password**: `changeme`
 
-!!! warning "**Important**"
-
 <!-- markdownlint-disable MD046 -->
-
+!!! warning "**Important**"
     Change the default password after your first login for security reasons.
-
 <!-- markdownlint-enable MD046 -->
 
 ## Understanding the Interface

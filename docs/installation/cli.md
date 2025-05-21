@@ -21,13 +21,9 @@ Before installing the CLI, ensure you have:
 
 ## Installation Methods
 
-<!-- prettier-ignore -->
-!!! note "Note about the installation"
-
 <!-- markdownlint-disable MD046 -->
-<!-- prettier-ignore -->
-   Pypi is not available yet, so you can only install the CLI from source.
-
+!!! note "Note about the installation"
+      Pypi is not available yet, so you can only install the CLI from source.
 <!-- markdownlint-enable MD046 -->
 
 ### Install from Source

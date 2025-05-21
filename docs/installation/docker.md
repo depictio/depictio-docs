@@ -47,9 +47,9 @@ This command will:
 - Create and start containers for MongoDB, the Depictio backend & frontend, and MinIO
 - Set up the required network connections between services
 
-!!! **Note**:
-
 <!-- markdownlint-disable MD046 -->
+
+!!! note
 
     If you wish to use your own MinIO instance, you can skip the `docker-compose/docker-compose.minio.yaml` file. In this case, make sure to set the `MINIO_` variables accordingly in your `.env` file to point to your MinIO instance.
 
