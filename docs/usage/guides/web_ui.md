@@ -75,14 +75,13 @@
 3. The dashboard will be duplicated and added to the section with the suffix **"(copy)"**.
 
 !!! note
-
-<div style="border: 0px solid grey; width: 602px; padding: 1px; text-align: center;">
-<a href="../../../images/guides/dashboard_creation/dashboard_status.png" target="_blank">
-<img src="../../../images/guides/dashboard_creation/dashboard_status.png" width="300">
-</a>
-</div>
-Both "public" and "private" dashboards are listed in the **Dashboards** section. Public dashboards are accessible to all users, while private dashboards are only visible to the user who created them.
-Only the user who created a private dashboard can edit, or delete it.
+    <div style="border: 0px solid grey; width: 602px; padding: 1px; text-align: center;">
+    <a href="../../../images/guides/dashboard_creation/dashboard_status.png" target="_blank">
+    <img src="../../../images/guides/dashboard_creation/dashboard_status.png" width="300">
+    </a>
+    </div>
+    Both "public" and "private" dashboards are listed in the **Dashboards** section. Public dashboards are accessible to all users, while private dashboards are only visible to the user who created them.
+    Only the user who created a private dashboard can edit, or delete it.
 
 ## Projects section (/projects)
 
