@@ -2359,7 +2359,13 @@
 <li>Create and start containers for MongoDB, the Depictio backend &amp; frontend, and MinIO</li>
 <li>Set up the required network connections between services</li>
 </ul>
-<p>!!!<strong>Note</strong>: If you wish to use your own MinIO instance, you can skip the <code>docker-compose/docker-compose.minio.yaml</code> file. In this case, make sure to set the <code>MINIO_</code> variables accordingly in your <code>.env</code> file to point to your MinIO instance.</p>
+<p>!!! <strong>Note</strong>:</p>
+<!-- markdownlint-disable MD046 -->
+
+<div class="highlight"><pre><span></span><code>If you wish to use your own MinIO instance, you can skip the `docker-compose/docker-compose.minio.yaml` file. In this case, make sure to set the `MINIO_` variables accordingly in your `.env` file to point to your MinIO instance.
+</code></pre></div>
+<!-- markdownlint-enable MD046 -->
+
 <h3 id="4-verify-the-installation">4. Verify the Installation<a class="headerlink" href="#4-verify-the-installation" title="Permanent link">&para;</a></h3>
 <p>After starting the services, you can verify that everything is running correctly:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker-compose<span class="w"> </span>ps
