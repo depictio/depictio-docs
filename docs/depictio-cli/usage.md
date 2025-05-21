@@ -1,7 +1,12 @@
 # Depictio CLI Usage
 
 !!! note
-The depictio-cli is a command line interface that allows you to interact with the Depictio backend. It is used to register projects information including workflow files metadata. The depictio-cli is currently in development and is not yet ready for production use.
+
+<!-- markdownlint-disable MD046 -->
+
+    The depictio-cli is a command line interface that allows you to interact with the Depictio backend. It is used to register projects information including workflow files metadata. The depictio-cli is currently in development and is not yet ready for production use.
+
+<!-- markdownlint-enable MD046 -->
 
 ## Installation
 
