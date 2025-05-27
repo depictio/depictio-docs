@@ -3,7 +3,7 @@
 Depictio is built on a modern microservices architecture that provides flexibility, scalability, and maintainability. This page describes the overall architecture and how the different components interact.
 
 <p align="center">
-  <img src="../../images/main.png" alt="Depictio architecture" width=800>
+  <img src="../../images/modularity/main.png" alt="Depictio architecture" width=800>
 </p>
 
 ## Microservices Overview

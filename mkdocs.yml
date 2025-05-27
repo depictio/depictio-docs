@@ -165,19 +165,19 @@ nav:
       - FastAPI Docs: api/fastapi_docs.md
   - Developer:
       - Overview: developer/README.md
-    # - Contributing: developer/contributing.md
+      - Contributing: developer/contributing.md
   - FAQ:
       - Overview: FAQ/README.md
-    # - General: FAQ/general.md
+      - General: FAQ/general.md
   - Roadmap: roadmap/README.md
   - Changelog:
       - Overview: changelog/README.md
-  - Blog:
-      - Overview: blog/README.md
+  # - Blog:
+  #     - Overview: blog/README.md
     # - Posts:
     #   - blog/post_130525.md
   - More:
       - Overview: more/README.md
-      - Stories: more/stories.md
+      # - Stories: more/stories.md
       - Funding: more/funding.md
       - Color Palette: more/palette.md

@@ -6,9 +6,9 @@ description: "Find answers to frequently asked questions about Depictio."
 
 # Frequently Asked Questions
 
-This section is under construction and will be updated soon.
+<!-- This section is under construction and will be updated soon. -->
 
-<!-- This section addresses common questions about Depictio. If you don't find an answer to your question here, please check our community forums or open an issue on GitHub.
+This section addresses common questions about Depictio. If you don't find an answer to your question here, please check open an issue on GitHub.
 
 ## FAQ Categories
 
@@ -38,4 +38,3 @@ If you can't find an answer to your question in the FAQ:
 
 1. **Search the documentation**: Use the search function to find relevant information
 2. **Open an issue on GitHub**: For bugs, feature requests, or other technical issues
- -->
