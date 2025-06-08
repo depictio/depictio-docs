@@ -151,8 +151,8 @@ nav:
           - WebUI: usage/guides/web_ui.md
           - Dashboard creation: usage/guides/dashboard_creation.md
           - Using the dashboard: usage/guides/dashboard_usage.md
-      - Administration:
-          - Overview: usage/administration.md
+      # - Administration:
+      #     - Overview: usage/administration.md
   - Features:
       - Overview: features/README.md
       - Architecture: features/architecture.md

@@ -31,6 +31,109 @@ These options can be used with any command:
 - `--verbose`, `-v`: Enable verbose logging
 - `--verbose-level`, `-vl`: Set verbose logging level (default: "INFO")
 
+### Standalone Commands
+
+#### version
+
+Displays the version of the depictio-cli.
+
+```bash
+depictio-cli version
+```
+
+### Run Command
+
+The `run` command combines multiple Depictio commands into a single command for convenience. It executes the complete Depictio workflow: validate, sync, scan, and process data collections in sequence.
+
+```bash
+depictio-cli run [OPTIONS]
+```
+
+This command executes the full depictio-cli pipeline:
+
+1. Check server accessibility
+2. Check S3 storage configuration
+3. Validate project configuration
+4. Sync project configuration to server
+5. Scan data files
+6. Process data collections
+
+**Options:**
+
+**Basic Configuration:**
+
+- `--CLI-config-path`: Path to the CLI configuration file (default: "~/.depictio/CLI.yaml")
+- `--project-config-path`: Path to the pipeline configuration file (default: "")
+- `--workflow-name`: Name of the workflow to be processed (optional)
+- `--data-collection-tag`: Data collection tag to be processed (optional)
+
+**Flow Control Options:**
+
+- `--skip-server-check`: Skip server accessibility check (default: False)
+- `--skip-s3-check`: Skip S3 storage check (default: False)
+- `--skip-sync`: Skip syncing project config to server (default: False)
+- `--skip-scan`: Skip data scanning step (default: False)
+- `--skip-process`: Skip data processing step (default: False)
+
+**Sync Options:**
+
+- `--update-config`: Update the project configuration on the server (default: False)
+
+**Scan Options:**
+
+- `--rescan-folders`: Reprocess all runs for the data collection (default: False)
+- `--sync-files`: Update files for the data collection (default: False)
+
+**Process Options:**
+
+- `--overwrite`: Overwrite the workflow if it already exists (default: False)
+
+**Output and Control:**
+
+- `--rich-tables`: Show detailed summary of the workflow execution (default: False)
+- `--continue-on-error`: Continue execution even if a step fails (default: False)
+- `--dry-run`: Show what would be executed without running it (default: False)
+
+**Examples:**
+
+Run the complete workflow:
+
+```bash
+depictio-cli run \
+  --CLI-config-path ~/.depictio/config.yaml \
+  --project-config-path ./my-project-config.yaml
+```
+
+Run with specific workflow and skip certain steps:
+
+```bash
+depictio-cli run \
+  --CLI-config-path ~/.depictio/config.yaml \
+  --project-config-path ./my-project-config.yaml \
+  --workflow-name my-workflow \
+  --skip-server-check \
+  --rich-tables
+```
+
+Dry run to see what would be executed:
+
+```bash
+depictio-cli run \
+  --CLI-config-path ~/.depictio/config.yaml \
+  --project-config-path ./my-project-config.yaml --dry-run
+```
+
+Update configuration and rescan all folders:
+
+```bash
+depictio-cli run \
+  --CLI-config-path ~/.depictio/config.yaml \
+  --project-config-path ./my-project-config.yaml \
+  --update-config \
+  --rescan-folders \
+  --continue-on-error
+```
+
 ### Config Commands
 
 The `config` command group provides functionality for managing Depictio configurations.
