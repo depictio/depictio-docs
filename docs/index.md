@@ -80,11 +80,70 @@ hide:
 <section class="cta-section">
   <div class="container text-center">
     <div class="cta-buttons">
-      <a href="installation/" class="md-button md-button--primary">Get Started</a>
-      <a href="features/" class="md-button">Learn More</a>
+      <a href="installation/" class="md-button md-button--primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+        </svg>
+        Get Started
+      </a>
+      <a href="https://gitpod.io/#https://github.com/depictio/depictio" class="md-button md-button--gitpod">
+        <img src="images/gitpod-logo-mark.svg" width="12" height="12" alt="Gitpod">
+        Try on Gitpod
+      </a>
+      <a href="features/" class="md-button md-button--secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" />
+        </svg>
+        Learn More
+      </a>
     </div>
   </div>
 </section>
+
+<style>
+.md-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.md-button svg {
+  vertical-align: middle;
+  margin-top: -1px; /* Fine-tune vertical position */
+}
+
+.md-button--gitpod {
+  background-color:rgb(252, 249, 244) !important;
+  border-color: #ff8a00 !important;
+  color: #ff8a00 !important;
+}
+
+.md-button--gitpod:hover {
+  background-color: #e67e00 !important;
+  border-color: #e67e00 !important;
+}
+
+.md-button--primary {
+  background-color: #9966CC !important;
+  border-color: #9966CC !important;
+  color: white !important;
+}
+
+.md-button--primary:hover {
+  background-color: #9966CC !important;
+  border-color: #9966CC !important;
+}
+.md-button--secondary {
+  background-color: #8BC34A !important;
+  border-color: #8BC34A !important;
+  color: white !important;
+}
+
+.md-button--secondary:hover {
+  background-color: #8BC34A !important;
+  border-color: #8BC34A !important;
+}
+</style>
 
 ## Project Overview
 
