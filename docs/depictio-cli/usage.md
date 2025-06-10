@@ -100,7 +100,7 @@ Run the complete workflow:
 
 ```bash
 depictio-cli run \
-  --CLI-config-path ~/.depictio/config.yaml \
+  --CLI-config-path ~/.depictio/CLI.yaml \
   --project-config-path ./my-project-config.yaml
 ```
 
@@ -108,7 +108,7 @@ Run with specific workflow and skip certain steps:
 
 ```bash
 depictio-cli run \
-  --CLI-config-path ~/.depictio/config.yaml \
+  --CLI-config-path ~/.depictio/CLI.yaml \
   --project-config-path ./my-project-config.yaml \
   --workflow-name my-workflow \
   --skip-server-check \
@@ -119,7 +119,7 @@ Dry run to see what would be executed:
 
 ```bash
 depictio-cli run \
-  --CLI-config-path ~/.depictio/config.yaml \
+  --CLI-config-path ~/.depictio/CLI.yaml \
   --project-config-path ./my-project-config.yaml --dry-run
 ```
 
@@ -127,7 +127,7 @@ Update configuration and rescan all folders:
 
 ```bash
 depictio-cli run \
-  --CLI-config-path ~/.depictio/config.yaml \
+  --CLI-config-path ~/.depictio/CLI.yaml \
   --project-config-path ./my-project-config.yaml \
   --update-config \
   --rescan-folders \

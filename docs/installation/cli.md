@@ -61,7 +61,7 @@ You need to have access to the Depictio web interface in order to generate a con
 3. Click on "Generate CLI Config"
 4. Copy the generated YAML configuration into your clipboard using the "Copy to clipboard" icon button
 5. Place the configuration file in the following location:
-   - `~/.depictio/config.yaml` (recommended)
+   - `~/.depictio/CLI.yaml` (recommended, default location)
 
 ## Troubleshooting
 
