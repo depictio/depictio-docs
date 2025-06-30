@@ -8,6 +8,44 @@ hide:
 
 # Changelog
 
+## [v0.1.0-b8](https://github.com/depictio/depictio/releases/tag/v0.1.0-b8) (Latest Development Version)
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.1.0-b8
+ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:edge
+```
+
+**📚 [View Detailed Changelog for v0.1.0-b8](v0.1.0-b8.md)**
+
+This major development release represents a significant evolution from v0.0.6 with comprehensive new features:
+
+### ✨ Major Highlights
+
+- **🔐 Google OAuth Integration**: Complete OAuth authentication system
+- **📦 Backup & Restore System**: S3-compatible backup with CLI commands
+- **👤 Unauthenticated Mode**: Anonymous access with temporary users
+- **🚀 Performance Overhaul**: Astral `ty` type checker and caching system
+- **🔒 Enhanced Security**: Internal API key management and project permissions
+- **⚡ Infrastructure**: Performance settings and screenshot generation
+
+### Key Features Added Since v0.0.6
+
+- Google OAuth authentication with user management
+- Comprehensive backup/restore functionality with S3 integration
+- Temporary user system with session management
+- Project-based dashboard permissions
+- Astral type checker integration for enhanced type safety
+- Performance optimizations with caching and improved join processing
+- Enhanced CLI with improved configuration handling
+- Infrastructure diagnostics and health monitoring
+
+**[📖 Full detailed changelog with all features, fixes, and migration notes](v0.1.0-b8.md)**
+
+---
+
 ## [v0.0.5](https://github.com/depictio/depictio/releases/tag/v0.0.5)
 
 ### Docker Images
