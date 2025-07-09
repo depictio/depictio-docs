@@ -8,6 +8,39 @@ hide:
 
 # Changelog
 
+## **[v0.1.0](https://github.com/depictio/depictio/releases/tag/v0.1.0)**
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.1.0
+ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:stable
+ghcr.io/depictio/depictio:edge
+```
+
+### **✨ Major Features**
+
+* **Backup & Restore**: Implemented a comprehensive S3 backup and restore strategy manager, including CLI commands and endpoints for seamless integration ([92ce14ff](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/92ce14ff), [c126e407](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/c126e407)).
+* **Unauthenticated Mode**: Added full support for an unauthenticated mode, enabling automatic anonymous login and public access for dashboards, workflows, and data collections ([7622d11f](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/7622d11f), [a5d70429](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a5d70429)).
+* **Temporary Users**: Introduced functionality for temporary users with session management and upgrade options, alongside creation and cleanup features ([38ff59d7](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/38ff59d7), [6caf2863](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/6caf2863)).
+* **Google OAuth**: Implemented Google OAuth authentication endpoints and updated related configurations ([a07364cb](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a07364cb), [19396605](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/19396605)).
+
+### **🐛 Bug Fixes**
+
+* **Screenshot Generation**: Resolved screenshot endpoint authentication and CI timeout issues, and simplified screenshot generation tests ([faecb4ec](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/faecb4ec), [98598ee5](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/98598ee5)).
+
+### **Improvements 🚀**
+
+* **Performance & Caching**: Implemented caching for iterative joins, component data, workflows, and data collection specs to significantly enhance performance ([78a7704a](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/78a7704a), [cc7d7dbe](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/cc7d7dbe)).
+* **E2E Tests**: Enhanced Cypress tests with improved Chrome configuration and reliability, including better login handling and dashboard navigation ([dba2e3e3](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/dba2e3e3), [ca9fac6c](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/ca9fac6c)).
+* **Code Structure**: Refactored the code structure across multiple modules for improved readability and maintainability ([3f1f1b9b](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/3f1f1b9b), [dfeaf1f6](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/dfeaf1f6)).
+* **Logging**: Reduced logging verbosity across various modules for improved log management and clarity ([edd44b51](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/edd44b51), [4e408f36](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/4e408f36)).
+
+### **Chores 🧹**
+
+* **Changelog & CI**: Updated changelog generation, fixed release DNS issues in Helm CI, and added a CODEOWNERS file ([dd019370](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/dd019370)).
+
 ## **[v0.0.6](https://github.com/depictio/depictio/releases/tag/v0.0.6)**
 
 ```bash
