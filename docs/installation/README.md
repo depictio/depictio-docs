@@ -35,6 +35,17 @@ description: "Get started with Depictio by choosing the installation method that
   </div>
 </div>
 
+## Configuration
+
+<div class="cli-container">
+  <div class="installation-card">
+    <img src="../assets/depictio-configuration.png" alt="Depictio Configuration" class="card-logo">
+    <h3>Environment Variables</h3>
+    <p>Configure authentication, backups, and advanced features.</p>
+    <a href="configuration/" class="md-button md-button--primary">Guide</a>
+  </div>
+</div>
+
 <style>
 /* Installation Cards Grid */
 .installation-grid {

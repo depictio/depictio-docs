@@ -26,3 +26,41 @@
     /* grey */
     background-color: #f7f7f7;
 }
+
+/* Theme-aware logo switching */
+/* Light theme - show dark logo */
+[data-md-color-scheme="default"] .logo-dark {
+    display: inline-block;
+}
+
+[data-md-color-scheme="default"] .logo-light {
+    display: none;
+}
+
+/* Dark theme - show light logo */
+[data-md-color-scheme="slate"] .logo-dark {
+    display: none;
+}
+
+[data-md-color-scheme="slate"] .logo-light {
+    display: inline-block;
+}
+
+/* Theme-aware card styling */
+/* Light theme cards */
+[data-md-color-scheme="default"] .funding-card,
+[data-md-color-scheme="default"] .partner-card,
+[data-md-color-scheme="default"] .installation-card {
+    background-color: white;
+    border-color: rgba(0,0,0,0.1);
+    color: var(--md-default-fg-color);
+}
+
+/* Dark theme cards */
+[data-md-color-scheme="slate"] .funding-card,
+[data-md-color-scheme="slate"] .partner-card,
+[data-md-color-scheme="slate"] .installation-card {
+    background-color: var(--md-default-bg-color);
+    border-color: var(--md-default-fg-color--lighter);
+    color: var(--md-default-fg-color);
+}
