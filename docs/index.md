@@ -26,7 +26,8 @@ hide:
 <!-- Hero Section -->
 <section class="hero-section">
   <div class="container text-center">
-    <img src="./images/logo/logo_hd.png" alt="Depictio logo" width="350">
+    <img src="./images/logo/logo_hd.svg" alt="Depictio logo" width="350" class="logo-dark">
+    <img src="./images/logo/logo_hd_white.svg" alt="Depictio logo" width="350" class="logo-light">
     <div class="hero-demo">
       <img src="./images/Demo.gif" alt="Depictio Demo" class="demo-image">
     </div>
@@ -41,10 +42,17 @@ hide:
 <section class="workflow-section">
   <div class="container text-center">
     <p class="section-heading">
-      Build dashboards from production workflow results like:
+      Generate dashboards using results from standardised workflows available in:
     </p>
     <a href="https://nf-co.re/" target="_blank" rel="noopener">
-      <img src="https://www.scilifelab.se/wp-content/uploads/2021/09/nf-core-logo.png" alt="nf-core logo" class="workflow-logo" width="300">
+      <img src="https://www.scilifelab.se/wp-content/uploads/2021/09/nf-core-logo.png" alt="nf-core logo" class="workflow-logo nf-core-logo">
+    </a>
+    <a href="https://workflowhub.eu/" target="_blank" rel="noopener">
+      <img src="https://about.workflowhub.eu/assets/img/workflowhub-square.svg" alt="WorkflowHub logo" class="workflow-logo">
+    </a>
+    <a href="https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#catalog" target="_blank" rel="noopener" class="snakemake-catalog-link">
+      <img src="https://avatars.githubusercontent.com/u/33450111?v=4" alt="Snakemake logo" class="workflow-logo">
+      <strong>Snakemake workflow catalog</strong>
     </a>
   </div>
 </section>
@@ -355,8 +363,46 @@ Ready to get started with Depictio? Check out our installation guides:
     margin-bottom: 1rem;
   }
 
+  .workflow-section a {
+    display: inline-block;
+    margin: 0 15px;
+    vertical-align: middle;
+  }
+
   .workflow-logo {
+    height: 50px;
+    width: 150px;
+    object-fit: contain;
+  }
+
+  .nf-core-logo {
     height: 60px;
+    width: 250px;
+    max-width: 120px;
+  }
+
+  .snakemake-catalog-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    vertical-align: middle;
+  }
+
+  .snakemake-catalog-link .workflow-logo {
+    height: 65px;
+    width: 65px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .snakemake-catalog-link strong {
+    font-size: 1.1rem;
+    color: var(--md-default-fg-color);
+    white-space: nowrap;
+    line-height: 35px;
+    display: flex;
+    align-items: center;
   }
 
   /* Features Section */

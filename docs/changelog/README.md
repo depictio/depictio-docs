@@ -8,6 +8,36 @@ hide:
 
 # Changelog
 
+## **[v0.1.1](https://github.com/depictio/depictio/releases/tag/v0.1.1)**
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.1.1
+ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:stable
+ghcr.io/depictio/depictio:edge
+```
+
+### **✨ Major Features**
+
+* **UI Theming**: Implemented functional dark/light modes with auto-theming, including progress on Plotly figures, dashboard button visibility, and projects section theming ([a851f175](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a851f175), [d6d83410](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/d6d83410)).
+
+### **🐛 Bug Fixes**
+
+* **Cypress Tests**: Updated header element selectors and improved modal visibility checks in Cypress tests ([b17fb7bb](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/b17fb7bb)).
+* **Authentication**: Removed unused expiry_minutes parameters from user upgrade API calls and fixed CI issues related to authentication ([b9c5241f](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/b9c5241f), [78dbc295](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/78dbc295)).
+* **CLI Configuration**: Resolved inconsistencies in CLI configuration field names and updated mock configurations for tests ([ce91c581](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/ce91c581), [846fd4c1](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/846fd4c1)).
+
+### **Improvements 🚀**
+
+* **Dash Components**: Refactored Dash components to use updated props and styling conventions, ensuring compatibility with Dash v3 and Dash Mantine 2.0+ ([8ed8f068](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/8ed8f068), [a7a0e3bb](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a7a0e3bb)).
+* **Code Structure**: Improved overall code structure for enhanced readability and maintainability across various modules ([3ff3e54d](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/3ff3e54d), [89e62ec9](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/89e62ec9)).
+
+### **Chores 🧹**
+
+* **Pre-commit**: Initialized pre-commit hooks for code quality enforcement ([75cb3058](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/75cb3058)).
+
 ## **[v0.1.0](https://github.com/depictio/depictio/releases/tag/v0.1.0)**
 
 ### Docker Images
