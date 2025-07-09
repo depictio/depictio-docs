@@ -114,11 +114,33 @@ Important variables during development include:
 
 The Depictio codebase is organized into several key directories:
 
-- `depictio/api/` - Backend microservice built with FastAPI
-- `depictio/dash/` - Frontend microservice built with Plotly Dash
-- `depictio/models/` - Common Pydantic models shared between server and CLI
-- `depictio/cli/` - Command-line interface (depictio-cli) for data ingestion and management
-- `depictio/tests/` - Test suite including unit tests, integration tests, and end-to-end tests
+- `depictio/api/` - Backend microservice (FastAPI, port 8058)
+  - `endpoints/` - API endpoints for workflows, dashboards, data collections
+  - `models/` - Database models and validation
+- `depictio/dash/` - Frontend microservice (Dash, port 5080)
+  - `modules/` - Dash Component (see below)
+  - `layouts/` - Dashboard layouts and stepper UI
+- `depictio/models/` - Shared Pydantic models
+- `depictio/cli/` - Command-line interface for data management
+- `helm-charts/` - Kubernetes deployment manifests
+
+### Component Development (Key Feature)
+
+Depictio uses a modular component system in `depictio/dash/modules/`:
+
+- `card_component/` - Text and summary cards
+- `figure_component/` - Plotly visualizations
+- `interactive_component/` - Sliders, filters, dropdowns
+- `table_component/` - Data tables
+- `jbrowse_component/` - Genomic data visualization
+
+Each component follows this structure:
+
+```plaintext
+component_name/
+├── frontend.py      # Dash callbacks and UI
+└── utils.py         # Component building logic
+```
 
 ## Development Workflow
 
