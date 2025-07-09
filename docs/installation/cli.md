@@ -21,10 +21,21 @@ Before installing the CLI, ensure you have:
 
 ## Installation Methods
 
-<!-- markdownlint-disable MD046 -->
-!!! note "Note about the installation"
-      Pypi is not available yet, so you can only install the CLI from source.
-<!-- markdownlint-enable MD046 -->
+### Install via pip
+
+You can install the Depictio CLI using plain pip or through your preferrend package manager like `uv`:
+
+```bash
+pip install depictio-cli
+```
+
+If you prefer using `uv`, you can install it like this:
+
+```bash
+uv venv depictio-cli-env --python 3.11
+source depictio-cli-env/bin/activate
+pip install depictio-cli
+```
 
 ### Install from Source
 
