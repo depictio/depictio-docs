@@ -1,0 +1,66 @@
+.md-typeset .admonition,
+.md-typeset details {
+  font-size: 17px
+}
+
+.banner {
+    height: 12px;       /* Height of the banner */
+    position: sticky;   /* Follows as you scroll */
+    top: 0;             /* Absolute top of page */
+    left: 0;
+    width: 100%;
+    z-index: 1;         /* Tells the renderer "this is important", otherwise Admonition and Code Blocks will render into it */
+    text-align: center;
+    background-color: #f4b136; /* Red */
+}
+
+.md-banner {
+    background-color: #f4b136; /* Red */
+}
+
+.md-header {
+    /* grey */
+    background-color: #f7f7f7;
+}
+.md-tabs {
+    /* grey */
+    background-color: #f7f7f7;
+}
+
+/* Theme-aware logo switching */
+/* Light theme - show dark logo */
+[data-md-color-scheme="default"] .logo-dark {
+    display: inline-block;
+}
+
+[data-md-color-scheme="default"] .logo-light {
+    display: none;
+}
+
+/* Dark theme - show light logo */
+[data-md-color-scheme="slate"] .logo-dark {
+    display: none;
+}
+
+[data-md-color-scheme="slate"] .logo-light {
+    display: inline-block;
+}
+
+/* Theme-aware card styling */
+/* Light theme cards */
+[data-md-color-scheme="default"] .funding-card,
+[data-md-color-scheme="default"] .partner-card,
+[data-md-color-scheme="default"] .installation-card {
+    background-color: white;
+    border-color: rgba(0,0,0,0.1);
+    color: var(--md-default-fg-color);
+}
+
+/* Dark theme cards */
+[data-md-color-scheme="slate"] .funding-card,
+[data-md-color-scheme="slate"] .partner-card,
+[data-md-color-scheme="slate"] .installation-card {
+    background-color: var(--md-default-bg-color);
+    border-color: var(--md-default-fg-color--lighter);
+    color: var(--md-default-fg-color);
+}
