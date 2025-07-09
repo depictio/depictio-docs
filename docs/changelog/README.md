@@ -8,43 +8,46 @@ hide:
 
 # Changelog
 
-## [v0.1.0-b8](https://github.com/depictio/depictio/releases/tag/v0.1.0-b8) (Latest Development Version)
-
-### Docker Images
+## **[v0.0.6](https://github.com/depictio/depictio/releases/tag/v0.0.6)**
 
 ```bash
-ghcr.io/depictio/depictio:0.1.0-b8
+ghcr.io/depictio/depictio:0.0.6
 ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-**📚 [View Detailed Changelog for v0.1.0-b8](v0.1.0-b8.md)**
+This release focuses on significant enhancements across Authentication, User Management, and Security, making the application more robust and secure. Key improvements include refresh token, fix issues related to outdated tokens and provide a consolidated CI workflows for the CLI.
 
-This major development release represents a significant evolution from v0.0.6 with comprehensive new features:
+### **✨ Features & Improvements**
 
-### ✨ Major Highlights
+* **Authentication**: Implemented refresh token support across token management, enhancing security and user session persistence ([6a198be9](https://github.com/depictio/depictio/commit/6a198be9), [ae25380f](https://github.com/depictio/depictio/commit/ae25380f)).
+* **User Management**: Updated the user creation process to allow optional user IDs and group parameters, and improved user existence checks ([66d6aec9](https://github.com/depictio/depictio/commit/66d6aec9)).
+* **Security**: Added a Flask security assessment scanner for comprehensive application security checks ([caa5476c](https://github.com/depictio/depictio/commit/caa5476c)).
 
-- **🔐 Google OAuth Integration**: Complete OAuth authentication system
-- **📦 Backup & Restore System**: S3-compatible backup with CLI commands
-- **👤 Unauthenticated Mode**: Anonymous access with temporary users
-- **🚀 Performance Overhaul**: Astral `ty` type checker and caching system
-- **🔒 Enhanced Security**: Internal API key management and project permissions
-- **⚡ Infrastructure**: Performance settings and screenshot generation
+### **⌨️ CLI Highlights**
 
-### Key Features Added Since v0.0.6
+* **CI/CD**: Consolidated CI workflows by adding test, lint, build, and publish steps for depictio-cli ([83abfc65](https://github.com/depictio/depictio/commit/83abfc65)).
+* **Project Structure**: Updated CI workflows and initial CLI structure, removing setup.py and adjusting pyproject.toml for dependencies ([2915d3d2](https://github.com/depictio/depictio/commit/2915d3d2)).
+* **Packaging**: Fixed package directory mapping and license format in pyproject.toml ([9147327f](https://github.com/depictio/depictio/commit/9147327f), [af37c922](https://github.com/depictio/depictio/commit/af37c922)).
 
-- Google OAuth authentication with user management
-- Comprehensive backup/restore functionality with S3 integration
-- Temporary user system with session management
-- Project-based dashboard permissions
-- Astral type checker integration for enhanced type safety
-- Performance optimizations with caching and improved join processing
-- Enhanced CLI with improved configuration handling
-- Infrastructure diagnostics and health monitoring
+### **💻 Gitpod & Dev Environment Highlights**
 
-**[📖 Full detailed changelog with all features, fixes, and migration notes](v0.1.0-b8.md)**
+* **Setup**: Added and enhanced Gitpod workspace setup, including zsh, starship configuration, and Docker permissions ([e47b0c27](https://github.com/depictio/depictio/commit/e47b0c27), [a1e50c03](https://github.com/depictio/depictio/commit/a1e50c03)).
+* **Configuration**: Made backend and MinIO ports visible in Gitpod configuration for easier access during development ([d091cfc6](https://github.com/depictio/depictio/commit/d091cfc6)).
+* **Environment**: Updated environment configuration for Gitpod setup and adjusted logging verbosity for a cleaner development experience ([6b74b5f2](https://github.com/depictio/depictio/commit/6b74b5f2)).
 
----
+### **🧪 Testing & CI Highlights**
+
+* **Connectivity**: Enhanced inter-service connectivity tests with readiness checks and improved error handling ([ea147c59](https://github.com/depictio/depictio/commit/ea147c59)).
+* **Release Process**: Enhanced release name generation in CI to ensure DNS compliance ([86d5feaf](https://github.com/depictio/depictio/commit/86d5feaf)).
+* **Issue Templates**: Improved issue templates for bug reports and feature requests to streamline contributions ([a0fa5096](https://github.com/depictio/depictio/commit/a0fa5096)).
+
+### **🐳 Docker & Helm Highlights**
+
+* **Gunicorn**: Fixed a single-worker issue with Gunicorn and optimized timeouts ([16d3a92d](https://github.com/depictio/depictio/commit/16d3a92d)).
+* **Helm**: Updated public URLs in ConfigMaps and improved MongoDB connection logic and MinIO configuration in Helm charts ([b93ee6cf](https://github.com/depictio/depictio/commit/b93ee6cf), [dce087f8](https://github.com/depictio/depictio/commit/dce087f8)).
+* **Helm**: Fixed an issue with backend service name in the ConfigMap to enable screenshot generation ([965ca53b](https://github.com/depictio/depictio/commit/965ca53b)).
 
 ## [v0.0.5](https://github.com/depictio/depictio/releases/tag/v0.0.5)
 
@@ -57,50 +60,37 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-This changelog highlights the key changes in this release, organized by category. Special focus has been given to improvements in CLI, Docker, CI/CD, Helm, and code refactoring.
+This version brings substantial updates to S3 & Services configuration, streamlining data handling and external service integration. Notable progress has also been made in CLI execution logic and Docker build workflows, alongside critical Helm chart improvements.
 
-### ✨ Highlights
+### **⚙️ Setup & Configuration Highlights**
 
-This section provides a high-level overview of the most significant improvements in each category.
+* **S3 & Services**: Enhanced S3 configuration handling, logging, and URL management for better integration between internal and external services ([54fec27c](https://github.com/depictio/depictio/commit/54fec27c), [49ded59c](https://github.com/depictio/depictio/commit/49ded59c), [5eb17f50](https://github.com/depictio/depictio/commit/5eb17f50)).
+* **Data**: Added the Palmer Penguins dataset to test and validate the sequencing-runs ingestion pipeline ([0b7b1845](https://github.com/depictio/depictio/commit/0b7b1845)).
+* **Environment**: Added a step to generate the .env file from an example in deployment workflows to ensure consistency ([f5ad8f11](https://github.com/depictio/depictio/commit/f5ad8f11)).
 
-#### ⚙️ Setup & Configuration Highlights
+### **⌨️ CLI Highlights**
 
-* Enhance S3 configuration handling, logging, and URL management for better integration between services ([54fec27c](https://github.com/depictio/depictio/commit/54fec27c), [49ded59c](https://github.com/depictio/depictio/commit/49ded59c), [5eb17f50](https://github.com/depictio/depictio/commit/5eb17f50))
-* Update port settings and environment variables for external and internal API/Dash URLs ([98fe3654](https://github.com/depictio/depictio/commit/98fe3654), [ac03c664](https://github.com/depictio/depictio/commit/ac03c664))
+* **CI/CD**: Added a dedicated GitHub Actions workflow for testing, linting, and building the depictio-cli package ([46503f33](https://github.com/depictio/depictio/commit/46503f33)).
+* **Execution**: Refactored the scan/processing logic to improve logging and implemented a run function for a full, end-to-end execution of all steps ([c3335e41](https://github.com/depictio/depictio/commit/c3335e41)).
+* **Commands**: Added run and standalone commands, improved logging, and updated command documentation ([0bad4848](https://github.com/depictio/depictio/commit/0bad4848), [b3d6a8a9](https://github.com/depictio/depictio/commit/b3d6a8a9)).
 
-#### 🔧 CLI Highlights
+### **🐳 Docker Highlights**
 
-* Add run and standalone commands to CLI, enhance logging, and remove installation test script ([0bad4848](https://github.com/depictio/depictio/commit/0bad4848))
-* Refactor scan/processing to improve logging and implement a run function for full execution of all steps ([c3335e41](https://github.com/depictio/depictio/commit/c3335e41))
-* Add backend log retrieval steps to the Iris CLI workflow ([96a0630a](https://github.com/depictio/depictio/commit/96a0630a))
-* Add Palmer Penguins dataset to test sequencing-runs ingestion ([0b7b1845](https://github.com/depictio/depictio/commit/0b7b1845))
+* **CI/CD**: Enhanced the Docker build workflow with improved security, better output management, and service health checks ([e684982b](https://github.com/depictio/depictio/commit/e684982b), [bb65a818](https://github.com/depictio/depictio/commit/bb65a818)).
+* **Configuration**: Corrected the path for admin_config.yaml in the Docker copy command ([77d3c4ee](https://github.com/depictio/depictio/commit/77d3c4ee)).
 
-#### 🐳 Docker Highlights
+### **🧪 Testing & CI Highlights**
 
-* Enhance Docker build workflow with security improvements, better output management, and health checks ([e684982b](https://github.com/depictio/depictio/commit/e684982b), [bb65a818](https://github.com/depictio/depictio/commit/bb65a818))
-* Add permissions for Docker build job to read contents and write packages ([e82dc682](https://github.com/depictio/depictio/commit/e82dc682))
-* Correct path for admin_config.yaml in Docker copy command ([77d3c4ee](https://github.com/depictio/depictio/commit/77d3c4ee))
-* Update comment formatting for DEPICTIO_VERSION in docker-compose.dev.yaml ([bee58cb4](https://github.com/depictio/depictio/commit/bee58cb4))
+* **CI/CD Workflow Refactoring**: Refactored the main deployment workflow by splitting it into smaller, more manageable CI jobs with enhanced logging ([1d605c88](https://github.com/depictio/depictio/commit/1d605c88), [e8f1bbf2](https://github.com/depictio/depictio/commit/e8f1bbf2)).
+* **Integration Tests**: Enhanced the Iris dataset integration test with verification checks for project, deltatable, and dashboard creation ([9a8a6b00](https://github.com/depictio/depictio/commit/9a8a6b00)).
+* **Test Environment**: Added and refined test fixtures to properly set the DEPICTIO_CONTEXT environment variable for tests ([cb64d183](https://github.com/depictio/depictio/commit/cb64d183), [596395e6](https://github.com/depictio/depictio/commit/596395e6)).
 
-#### 🧪 Testing & CI Highlights
+### **⎈ Helm Highlights**
 
-* Enhance Iris integration verification in CI workflow with checks for project, deltatable, and dashboard ([9a8a6b00](https://github.com/depictio/depictio/commit/9a8a6b00))
-* Add and refine test fixtures for setting DEPICTIO_CONTEXT environment variable in tests ([cb64d183](https://github.com/depictio/depictio/commit/cb64d183), [596395e6](https://github.com/depictio/depictio/commit/596395e6), [2c5ac43f](https://github.com/depictio/depictio/commit/2c5ac43f))
-* Add a test suite for File model validation ([9957daa3](https://github.com/depictio/depictio/commit/9957daa3))
-* Add a workflow to notify the documentation repository of new releases ([3dee7132](https://github.com/depictio/depictio/commit/3dee7132))
-
-#### ⎈ Helm Highlights
-
-* Add GitHub Actions workflow for testing, building, and pushing Helm chart based on chart version ([4c965fa6](https://github.com/depictio/depictio/commit/4c965fa6))
-* Add persistent volume claims for keys and update deployments to mount them correctly ([fc0926ac](https://github.com/depictio/depictio/commit/fc0926ac), [e2a73584](https://github.com/depictio/depictio/commit/e2a73584))
-* Expose MinIO credentials in configmaps and include release name in resource names for better management ([82ca4c2a](https://github.com/depictio/depictio/commit/82ca4c2a), [bdd9af31](https://github.com/depictio/depictio/commit/bdd9af31))
-* Fix and standardize Helm chart secrets, configurations, and metadata ([b2fb78d2](https://github.com/depictio/depictio/commit/b2fb78d2), [39ca4f3f](https://github.com/depictio/depictio/commit/39ca4f3f))
-* Update versioning scripts and configurations to support Helm chart version bumping ([98ba8b24](https://github.com/depictio/depictio/commit/98ba8b24), [815214af](https://github.com/depictio/depictio/commit/815214af))
-
-#### ♻️ Code Refactoring & Bug Fixes Highlights
-
-* Fix version formatting in pyproject.toml and bumpversion configurations ([79750997](https://github.com/depictio/depictio/commit/79750997), [07324182](https://github.com/depictio/depictio/commit/07324182), [815214af](https://github.com/depictio/depictio/commit/815214af))
-* Clean up pre-commit configuration and remove unused imports ([ab6a40e2](https://github.com/depictio/depictio/commit/ab6a40e2), [d6b228b1](https://github.com/depictio/depictio/commit/d6b228b1))
+* **CI/CD**: Added a dedicated GitHub Actions workflow for testing, building, and pushing the Helm chart ([4c965fa6](https://github.com/depictio/depictio/commit/4c965fa6)).
+* **Configuration**: Improved service port variables, initContainers, MongoDB connection logic, and MinIO configuration ([959ee2e9](https://github.com/depictio/depictio/commit/959ee2e9), [dce087f8](https://github.com/depictio/depictio/commit/dce087f8)).
+* **Storage**: Added persistent volume claims for keys and adjusted default storage sizes for various components ([fc0926ac](https://github.com/depictio/depictio/commit/fc0926ac), [cd1de3f8](https://github.com/depictio/depictio/commit/cd1de3f8)).
+* **Ingress**: Enhanced the ingress configuration with default annotations, timeout settings, and correct service hostnames ([4d75fb17](https://github.com/depictio/depictio/commit/4d75fb17), [770d8e5d](https://github.com/depictio/depictio/commit/770d8e5d)).
 
 ## [v0.0.4](https://github.com/depictio/depictio/releases/tag/v0.0.4)
 
@@ -115,69 +105,49 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-This changelog highlights the key changes in v0.0.4, organized by category. Special focus has been given to improvements in setup, Docker, Cypress testing, GitHub CI, Beanie implementation, code refactoring, and UI enhancements.
+This release introduces a first version of project-level permissions and user management features, enhancing access control for collaboration. Major UI/UX improvements and a fundamental backend refactoring to a project-centric architecture also define this version.
+
+### **✨ Features & Improvements**
+
+* **Permissions & User Management**: Introduced initial project-level permissions management, user and group management features, including endpoints and UI modals for creation, deletion, and management ([d17f3690](https://github.com/depictio/depictio/commit/d17f3690), [10af7623](https://github.com/depictio/depictio/commit/10af7623)).
+* **Authentication & API**: Added SAML integration, API calls for token management, password editing, user registration, and improved API key validation ([47e9cd43](https://github.com/depictio/depictio/commit/47e9cd43), [7b9f5437](https://github.com/depictio/depictio/commit/7b9f5437)).
+* **Dashboarding**: Enhanced dashboard public/private toggles, edit functionality, and project-specific handling, including screenshot capturing ([532e9b7c](https://github.com/depictio/depictio/commit/532e9b7c), [9c192bd0](https://github.com/depictio/depictio/commit/9c192bd0)).
+
+### **🎨 UI & UX Highlights**
+
+* **Modals & Components**: Introduced new UI components like password editing modals and stylish modals for dashboard/item creation and deletion confirmations ([767908fc](https://github.com/depictio/depictio/commit/767908fc), [50e510b8](https://github.com/depictio/depictio/commit/50e510b8)).
+* **Layout & Styling**: Improved the layout and styling across the application, notably for project items and admin management sections, with added branding favicons ([c66f4d87](https://github.com/depictio/depictio/commit/c66f4d87), [6f70d027](https://github.com/depictio/depictio/commit/6f70d027)).
 
 ### **⚙️ Setup & Configuration**
 
-* Update email addresses for default users, add .env file for development, and adjust Docker volume paths (a835bb1)
-* Implement centralized logging initialization and update logging setup for CLI and models (2f20b67)
-* Enhance MinIO configuration and S3 utilities with new integration tests and refactoring (7e4fe38, 3110cfd)
-* Implement consistent API internal key generation, loading, and management (df71b3b, 9359bd4, 58f344e)
-* Add initial project configurations and Depictio example project generator script (8befa4a, 889888b, 8c502af)
+* **Environment & Logging**: Refined environment variable handling and implemented centralized logging initialization ([a835bb16](https://github.com/depictio/depictio/commit/a835bb16), [2f20b67c](https://github.com/depictio/depictio/commit/2f20b67c)).
+* **Database & Storage**: Enhanced MongoDB connection handling and initial project/user creation during database initialization, alongside MinIO configuration ([93e3d610](https://github.com/depictio/depictio/commit/93e3d610), [cd9fa0b9](https://github.com/depictio/depictio/commit/cd9fa0b9)).
 
-### **🐳 Docker related**
+### **🐳 Docker & Dev Environment Highlights**
 
-* Update deployment scripts (d052856, 48282e3, 3a959b7)
-* Refactor Docker workflows, enhance environment variables, and add support for AMD64/ARM64 builds with version tagging (e0139c6, 75b3652, 455d5ee)
-* Update Dockerfiles for improved environment setup and new scripts/dependencies (5ed61af, 3f48a1d, bc4fe1f, b255e7c)
-* Enhance Docker setup in deployment workflow with caching, BuildKit, and updated image build steps (8edf857, 7c01dc5)
-* Update devcontainer configurations for workspace, zsh, uv package manager, and cloning depictio-models (2ae702c, 01f2dbc, 55964e4)
+* **Docker Workflows & Builds**: Refactored Docker workflows, enhanced environment variables, and added support for AMD64/ARM64 builds ([d052856e](https://github.com/depictio/depictio/commit/d052856e), [e0139c67](https://github.com/depictio/depictio/commit/e0139c67)).
+* **Devcontainer Configurations**: Enhanced Gitpod and devcontainer configurations to streamline local development setup ([2ae702cc](https://github.com/depictio/depictio/commit/2ae702cc)).
 
-### **🧪 Testing & CI**
+### **🧪 Testing & CI Highlights**
 
-* Add GitHub Actions workflows for automated release creation, changelog generation, Helm chart testing, and Docker image builds (74536b3, 59023b4, 76544d7, ef0e4bf)
-* Add end-to-end tests for user authentication, registration, and dashboard management using Cypress (72550ff, 532e9b7, d7382b9)
-* Implement comprehensive unit and integration tests for various modules including user models, token management, CLI commands, S3 utilities, and system initialization (df44475, 7340269, cac52fe, e13ace2)
-* Migrate pytest configuration to pyproject.toml and add VSCode settings for Python testing (d640f0a, 104de0e)
-* Enhance deployment workflows with improved Python setup, dependency installation, caching, and artifact handling (6f33111, d25962d, 48c549b)
+* **GitHub Actions Workflows**: Added comprehensive GitHub Actions workflows for automated release creation, changelog generation, and Docker image builds ([74536b3d](https://github.com/depictio/depictio/commit/74536b3d), [76544d7c](https://github.com/depictio/depictio/commit/76544d7c)).
+* **End-to-End & Unit Tests**: Implemented extensive end-to-end tests for user authentication and dashboard management, and comprehensive unit tests for various modules ([72550ffa](https://github.com/depictio/depictio/commit/72550ffa), [df44475b](https://github.com/depictio/depictio/commit/df44475b)).
 
 ### **🧱 Beanie Implementation**
 
-* Implement FastAPI user management with Beanie ODM (6470af8, 47e9cd4)
-* Add user creation helpers using Beanie ODM with validation (bc3f3d3)
-* Add beanie setup for various tests and update model references to use Beanie models (e.g., ProjectBeanie) (ec008e0, db00fca, aa9796f)
-* Update create_group endpoint to support async operations and use GroupBeanie model (848e48f)
+* **User & Group Management**: Implemented FastAPI user and group management with Beanie ODM, including helpers for user and group creation ([6470af84](https://github.com/depictio/depictio/commit/6470af84)).
+* **Testing & Model Integration**: Added Beanie setup for various tests and updated model references for consistent integration ([ec008e0f](https://github.com/depictio/depictio/commit/ec008e0f)).
 
 ### **♻️ Code Refactoring**
 
-* Extensive refactoring of import statements, code organization, and whitespace across numerous files for clarity and consistency (f8b0f91, 1999b6e, e3385c6, 239ad86)
-* Refactor user creation, fetching, and token handling logic, often converting to async methods and improving error handling (0f6a7f5, 1fa623e, f6949db, b6c658c)
-* Streamline project and data collection retrieval, often removing workflow_id dependencies and using IDs directly (2891d6d, b13dde2, f8163f9)
-* Improve ObjectId handling, validation, and serialization in models and API calls (0a59584, bfefec4)
-* Move and reorganize code, such as refactoring app.py into multiple files, moving scripts into src/, and modularizing key utilities (374dee5, 429e354, fdee057)
-
-### **🎨 UI Improvements**
-
-* Add and enhance various UI components: password editing modal, color palette page, clipboard functionality, animated badges, segmented controls, stylish modals for dashboard/item creation, and delete confirmation modals (767908f, bfc6818, edc24f5, 321d7d4, 5af06e7, 50e510b)
-* Implement project permissions management UI, including user role badges, project visibility toggles, and a dedicated permissions page (d17f369, 221c95b, 0b4d4e4)
-* Improve layout and styling for About page, project items, "no projects" message, dashboard modals, and admin management sections (b752a7a, c66f4d8, fbda153, ee47204)
-* Enhance dashboard functionality: public/private toggle, edit dashboard name, display project name in header, and add tooltips/badges to tables (9c192bd, 1dcaa12, 3ef45cd)
-* Add favicons for branding (6f70d02)
-
-### **🚀 Features (General)**
-
-* Add BaseApiResponse model and enhance data collection configurations (dd272b8)
-* Implement API calls for token management, password editing, and various user/group/project/dashboard CRUD operations (4f4439d, 05e51ef, 7cbee90, 6aaed8e, 60974ec)
-* Add background task processing for initial data collections and an endpoint to trigger it (6997d36, db56b29)
-* Implement user registration logic and endpoints, replacing local lookups with API calls (ad3fa4f, 031a2f3, dd83de7)
+* **Code Organization & Clarity**: Performed refactoring of import statements, code organization, and whitespace across numerous files ([f8b0f913](https://github.com/depictio/depictio/commit/f8b0f913), [239ad86e](https://github.com/depictio/depictio/commit/239ad86e)).
+* **API & Data Models**: Refactored API and data models to use depictio-models as a centralized library and updated dependencies to Pydantic v2 ([2170ae17](https://github.com/depictio/depictio/commit/2170ae17), [e8397589](https://github.com/depictio/depictio/commit/e8397589)).
 
 ### **🐛 Bug Fixes**
 
-* Correct various file paths, IDs, and configurations for consistency and relative access, especially in initial_project_cli.yaml and S3 settings (214659e, 26804fa, 63d55b3, d1a87c9)
-* Address issues with user fetching functions, replacing deprecated calls and ensuring async execution (f334386, 725c3d9, 049422e)
-* Fix import paths due to module restructuring and clean up unused/commented code (ec1f4f5, 1e82323, f53e9ae)
-* Resolve issues with database initialization, including missing collections and enabling data saving (324d39a, aa8ec53)
-* Correct dependency management: add missing dependencies (tomli, bleach, typeguard, mypy-boto3-s3) and remove unused ones (5254cfd, c227a29, 5c2b2d8**)**
+* **CI/CD & Deployment**: Corrected workflow triggers and addressed various Docker and Helm deployment issues, including volume paths and logging ([14539146](https://github.com/depictio/depictio/commit/14539146), [a376bf98](https://github.com/depictio/depictio/commit/a376bf98)).
+* **Data & Configuration Paths**: Corrected various file paths, IDs, and configurations for consistency and relative access ([a835bb16](https://github.com/depictio/depictio/commit/a835bb16), [214659e3](https://github.com/depictio/depictio/commit/214659e3)).
+* **User & Authentication**: Addressed issues with user fetching functions, replacing deprecated calls and ensuring proper asynchronous execution ([f334386c](https://github.com/depictio/depictio/commit/f334386c), [725c3d98](https://github.com/depictio/depictio/commit/725c3d98)).
 
 ### Documentation
 

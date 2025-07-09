@@ -69,10 +69,10 @@ Once in the profile section, click in the **CLI Agents** button.
     </a>
 </div>
 
- This will generate a YAML file with the necessary configuration to interact with Depictio via the CLI. Save this file in a secure location (e.g., `~/.depictio/config.yaml`), and ensure it is not publicly accessible. Depending of your installation, the file will look like this:
+ This will generate a YAML file with the necessary configuration to interact with Depictio via the CLI. Save this file in a secure location (e.g., `~/.depictio/CLI.yaml`), and ensure it is not publicly accessible. Depending of your installation, the file will look like this:
 
 ```yaml
-# ~/.depictio/config.yaml
+# ~/.depictio/CLI.yaml
 base_url: http://localhost:8058
 s3:
   bucket: depictio-bucket
@@ -115,7 +115,7 @@ In that get started guide, you can use the **palmer penguins dataset** to test t
 
 ```bash
 depictio-cli run \
-    --CLI-config-path ~/.depictio/config.yaml \
+    --CLI-config-path ~/.depictio/CLI.yaml \
     --project-config-path ../api/v1/configs/penguins_dataset/penguins_project.yaml
 ```
 
