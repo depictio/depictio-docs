@@ -45,7 +45,8 @@ hide:
       Generate dashboards using results from standardised workflows available in:
     </p>
     <a href="https://nf-co.re/" target="_blank" rel="noopener">
-      <img src="https://www.scilifelab.se/wp-content/uploads/2021/09/nf-core-logo.png" alt="nf-core logo" class="workflow-logo nf-core-logo">
+      <img src="https://raw.githubusercontent.com/nf-core/logos/refs/heads/master/nf-core-logos/nf-core-logo.png" alt="nf-core logo" class="workflow-logo nf-core-logo nf-core-light">
+      <img src="https://raw.githubusercontent.com/nf-core/logos/refs/heads/master/nf-core-logos/nf-core-logo-darkbg.png" alt="nf-core logo" class="workflow-logo nf-core-logo nf-core-dark">
     </a>
     <a href="https://workflowhub.eu/" target="_blank" rel="noopener">
       <img src="https://about.workflowhub.eu/assets/img/workflowhub-square.svg" alt="WorkflowHub logo" class="workflow-logo">

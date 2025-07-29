@@ -64,3 +64,14 @@
     border-color: var(--md-default-fg-color--lighter);
     color: var(--md-default-fg-color);
 }
+
+
+/* NF-core logo theme change */
+
+/* Show light logo by default */
+.nf-core-light { display: inline; }
+.nf-core-dark { display: none; }
+
+/* If using Material theme's dark mode toggle */
+[data-md-color-scheme="slate"] .nf-core-light { display: none; }
+[data-md-color-scheme="slate"] .nf-core-dark { display: inline; }
