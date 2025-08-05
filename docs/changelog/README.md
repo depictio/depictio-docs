@@ -8,6 +8,37 @@ hide:
 
 # Changelog
 
+## **[v0.2.1](https://github.com/depictio/depictio/releases/tag/v0.2.1)**
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.2.1
+ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:stable
+ghcr.io/depictio/depictio:edge
+```
+
+### **✨ Features**
+
+* **Theming & Components**: Plotly templates were updated to 'mantine_light' and 'mantine_dark'. AG Grid and text components now have theme-aware styling. ([04e4069e](https://github.com/depictio/depictio/commit/04e4069e), [97e6c0f5](https://github.com/depictio/depictio/commit/97e6c0f5))
+* **Interactivity & Access**: Interactive components can now restore saved configurations and values. Added EMBL-specific security contexts for unauthenticated mode. ([892de076](https://github.com/depictio/depictio/commit/892de076), [08a6e311](https://github.com/depictio/depictio/commit/08a6e311), [db18d84f](https://github.com/depictio/depictio/commit/db18d84f))
+
+### **🐛 Bug Fixes**
+
+* **Security & Stability**: Addressed security vulnerabilities by updating seccompProfile. Fixed an UnboundLocalError and ensured metadata store indices are consistent. ([1b18d95a](https://github.com/depictio/depictio/commit/1b18d95a), [e828952a](https://github.com/depictio/depictio/commit/e828952a), [5a550856](https://github.com/depictio/depictio/commit/5a550856))
+* **Layout & Visuals**: Resolved footer positioning issues and adjusted default component dimensions for better layout consistency. ([f245982e](https://github.com/depictio/depictio/commit/f245982e), [2e16fdb9](https://github.com/depictio/depictio/commit/2e16fdb9))
+* **Visuals**: Updated logo images in the README for improved visibility in both light and dark modes. ([ca46ddc1](https://github.com/depictio/depictio/commit/ca46ddc1))
+
+### **🚀 Improvements**
+
+* **Code Refactoring**: Simplified input handling in save and text component callbacks. ([8937bea3](https://github.com/depictio/depictio/commit/8937bea3))
+
+### **🧹 Chores**
+
+* **Logging**: Refactored logging in various modules to reduce verbosity. ([322c80c1](https://github.com/depictio/depictio/commit/322c80c1))
+* **Version**: Bumped the project version from 0.2.0 to 0.2.1. ([8cd1e0e2](https://github.com/depictio/depictio/commit/8cd1e0e2))
+
 ## **[v0.2.0](https://github.com/depictio/depictio/releases/tag/v0.2.0)**
 
 ### Docker Images
