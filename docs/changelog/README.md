@@ -8,6 +8,46 @@ hide:
 
 # Changelog
 
+## **[v0.2.0](https://github.com/depictio/depictio/releases/tag/v0.2.0)**
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.2.0
+ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:stable
+ghcr.io/depictio/depictio:edge
+```
+
+### **✨ Major Features**
+
+* **UI Theming & UX**: Fully functional dark/light theme ([68af2cc0](https://github.com/depictio/depictio/commit/68af2cc0), [b085b89b](https://github.com/depictio/depictio/commit/b085b89b)). Switched from dash-draggable to dash-dynamic-react-grid ([aacea638](https://github.com/depictio/depictio/commit/aacea638)). Revised UX with improved component buttons layout. Implemented progressive loading over dashboard restore + logo animation ([e40ba587](https://github.com/depictio/depictio/commit/e40ba587), [d8d696d2](https://github.com/depictio/depictio/commit/d8d696d2)).
+* **Figure component**: UI mode completely revised > switching from documentation parsing to function signature inspection and organisation into pydantic models. New code mode allowing user to write/port existing code with RestrictedPython providing code filtering and restricted execution environment to limit dangerous operations. ([691a2678](https://github.com/depictio/depictio/commit/691a2678), [b5c229b2](https://github.com/depictio/depictio/commit/b5c229b2))
+* **Table component**: Infinite scrolling and pagination for the table component ([99f8e5a2](https://github.com/depictio/depictio/commit/99f8e5a2), [5466aa76](https://github.com/depictio/depictio/commit/5466aa76)).
+* **Text component**: Inline editable text components (using markdown headers style) with adjustable positioning (justify). ([2b2d267a](https://github.com/depictio/depictio/commit/2b2d267a), [114f713e](https://github.com/depictio/depictio/commit/114f713e), [59c8fc80](https://github.com/depictio/depictio/commit/59c8fc80))
+* **Card component**: improved styling & provide trend information to show difference compare to non filtered data (increase/decrease) ([9f2ab88c](https://github.com/depictio/depictio/commit/9f2ab88c), [6d51e3af](https://github.com/depictio/depictio/commit/6d51e3af))
+* **Interactive component**: switched every component to DMC. Implemented scale (log/linear) + number of marks for slider & rangeslider components. ([c73f4204](https://github.com/depictio/depictio/commit/c73f4204), [9f2ab88c](https://github.com/depictio/depictio/commit/9f2ab88c), [7f99958f](https://github.com/depictio/depictio/commit/7f99958f))
+* **Notes & documentation footer**: notes taking using dmc.RichTextEditor (markdown style, links, bullet points, code blocks …) with fullscreen mode and responsive layout. ([d226f52b](https://github.com/depictio/depictio/commit/d226f52b), [3af94fd3](https://github.com/depictio/depictio/commit/3af94fd3), [b06eb2ee](https://github.com/depictio/depictio/commit/b06eb2ee), [f245982e](https://github.com/depictio/depictio/commit/f245982e))
+* **Buttons**: Reset button functionality and visibility logic for interactive components ([583aa04f](https://github.com/depictio/depictio/commit/583aa04f), [166a2af1](https://github.com/depictio/depictio/commit/166a2af1), [52684721](https://github.com/depictio/depictio/commit/52684721), [8e5ef9cc](https://github.com/depictio/depictio/commit/8e5ef9cc)).
+
+### **🐛 Bug Fixes**
+
+* **Component & UI Fixes**:
+  * Resolved circular reference issues in the dashboard context and fixed AG Grid popup visibility ([2b9e64c9](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/2b9e64c9), [f5bf946d](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/f5bf946d)).
+  * Addressed layout issues for Accordion components on the projects page and improved styles for draggable components in dark mode ([d8907eae](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/d8907eae), [6c9febbf](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/6c9febbf)).
+* **Authentication & CI**: Fixed Google OAuth configuration and routes, and addressed CI issues related to authentication ([19396605](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/19396605), [78dbc295](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/78dbc295)).
+* **Cypress Tests**: Updated header element selectors and improved modal visibility checks in Cypress tests ([b17fb7bb](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/b17fb7bb)).
+
+### **🚀 Improvements**
+
+* **Dash Component Refactoring**: Refactored Dash components to use updated props and styling conventions, ensuring compatibility with Dash v3 and Dash Mantine 2.0+ ([8ed8f068](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/8ed8f068), [a7a0e3bb](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a7a0e3bb)).
+* **Code & Styling Refactoring**: Improved overall code structure for enhanced readability and maintainability, and refactored auth modal styles for better appearance ([3ff3e54d](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/3ff3e54d), [7ed7c995](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/7ed7c995)).
+
+### **Chores 🧹**
+
+* **Dependencies**: Added SVG format for logos ([9a9ceb9f](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/9a9ceb9f)).
+* **Pre-commit**: Improved pre-commit hooks for code quality enforcement ([75cb3058](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/75cb3058)).
+
 ## **[v0.1.1](https://github.com/depictio/depictio/releases/tag/v0.1.1)**
 
 ### Docker Images
@@ -21,22 +61,22 @@ ghcr.io/depictio/depictio:edge
 
 ### **✨ Major Features**
 
-* **UI Theming**: Implemented functional dark/light modes with auto-theming, including progress on Plotly figures, dashboard button visibility, and projects section theming ([a851f175](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a851f175), [d6d83410](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/d6d83410)).
+* **UI Theming**: Implemented functional dark/light modes with auto-theming, including progress on Plotly figures, dashboard button visibility, and projects section theming ([a851f175](https://github.com/depictio/depictio/commit/a851f175), [d6d83410](https://github.com/depictio/depictio/commit/d6d83410)).
 
 ### **🐛 Bug Fixes**
 
-* **Cypress Tests**: Updated header element selectors and improved modal visibility checks in Cypress tests ([b17fb7bb](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/b17fb7bb)).
-* **Authentication**: Removed unused expiry_minutes parameters from user upgrade API calls and fixed CI issues related to authentication ([b9c5241f](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/b9c5241f), [78dbc295](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/78dbc295)).
-* **CLI Configuration**: Resolved inconsistencies in CLI configuration field names and updated mock configurations for tests ([ce91c581](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/ce91c581), [846fd4c1](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/846fd4c1)).
+* **Cypress Tests**: Updated header element selectors and improved modal visibility checks in Cypress tests ([b17fb7bb](https://github.com/depictio/depictio/commit/b17fb7bb)).
+* **Authentication**: Removed unused expiry_minutes parameters from user upgrade API calls and fixed CI issues related to authentication ([b9c5241f](https://github.com/depictio/depictio/commit/b9c5241f), [78dbc295](https://github.com/depictio/depictio/commit/78dbc295)).
+* **CLI Configuration**: Resolved inconsistencies in CLI configuration field names and updated mock configurations for tests ([ce91c581](https://github.com/depictio/depictio/commit/ce91c581), [846fd4c1](https://github.com/depictio/depictio/commit/846fd4c1)).
 
-### **Improvements 🚀**
+### **🚀 Improvements**
 
-* **Dash Components**: Refactored Dash components to use updated props and styling conventions, ensuring compatibility with Dash v3 and Dash Mantine 2.0+ ([8ed8f068](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/8ed8f068), [a7a0e3bb](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a7a0e3bb)).
-* **Code Structure**: Improved overall code structure for enhanced readability and maintainability across various modules ([3ff3e54d](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/3ff3e54d), [89e62ec9](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/89e62ec9)).
+* **Dash Components**: Refactored Dash components to use updated props and styling conventions, ensuring compatibility with Dash v3 and Dash Mantine 2.0+ ([8ed8f068](https://github.com/depictio/depictio/commit/8ed8f068), [a7a0e3bb](https://github.com/depictio/depictio/commit/a7a0e3bb)).
+* **Code Structure**: Improved overall code structure for enhanced readability and maintainability across various modules ([3ff3e54d](https://github.com/depictio/depictio/commit/3ff3e54d), [89e62ec9](https://github.com/depictio/depictio/commit/89e62ec9)).
 
-### **Chores 🧹**
+### **🧹Chores**
 
-* **Pre-commit**: Initialized pre-commit hooks for code quality enforcement ([75cb3058](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/75cb3058)).
+* **Pre-commit**: Initialized pre-commit hooks for code quality enforcement ([75cb3058](https://github.com/depictio/depictio/commit/75cb3058)).
 
 ## **[v0.1.0](https://github.com/depictio/depictio/releases/tag/v0.1.0)**
 
@@ -51,25 +91,26 @@ ghcr.io/depictio/depictio:edge
 
 ### **✨ Major Features**
 
-* **Backup & Restore**: Implemented a comprehensive S3 backup and restore strategy manager, including CLI commands and endpoints for seamless integration ([92ce14ff](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/92ce14ff), [c126e407](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/c126e407)).
-* **Unauthenticated Mode**: Added full support for an unauthenticated mode, enabling automatic anonymous login and public access for dashboards, workflows, and data collections ([7622d11f](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/7622d11f), [a5d70429](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a5d70429)).
-* **Temporary Users**: Introduced functionality for temporary users with session management and upgrade options, alongside creation and cleanup features ([38ff59d7](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/38ff59d7), [6caf2863](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/6caf2863)).
-* **Google OAuth**: Implemented Google OAuth authentication endpoints and updated related configurations ([a07364cb](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a07364cb), [19396605](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/19396605)).
+* **Backup & Restore**: Implemented a comprehensive S3 backup and restore strategy manager, including CLI commands and endpoints for seamless integration ([92ce14ff](https://github.com/depictio/depictio/commit/92ce14ff), [c126e407](https://github.com/depictio/depictio/commit/c126e407)).
+
+* **Unauthenticated Mode & Temporary Users**: Added full support for an unauthenticated mode with automatic anonymous login and temporary user creation for defined time, including session management, upgrade options, and automated creation and cleanup features  ([38ff59d7](https://github.com/depictio/depictio/commit/38ff59d7), [6caf2863](https://github.com/depictio/depictio/commit/6caf2863), [7622d11f](https://github.com/depictio/depictio/commit/7622d11f), [a5d70429](https://github.com/depictio/depictio/commit/a5d70429)).
+* **Google OAuth**: Implemented Google OAuth authentication endpoints and updated related configurations ([a07364cb](https://github.com/depictio/depictio/commit/a07364cb), [19396605](https://github.com/depictio/depictio/commit/19396605)).
 
 ### **🐛 Bug Fixes**
 
-* **Screenshot Generation**: Resolved screenshot endpoint authentication and CI timeout issues, and simplified screenshot generation tests ([faecb4ec](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/faecb4ec), [98598ee5](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/98598ee5)).
+* **Screenshot Generation**: Resolved screenshot endpoint authentication and CI timeout issues, and simplified screenshot generation tests ([faecb4ec](https://github.com/depictio/depictio/commit/faecb4ec), [98598ee5](https://github.com/depictio/depictio/commit/98598ee5)).
 
-### **Improvements 🚀**
+### **🚀 Improvements**
 
-* **Performance & Caching**: Implemented caching for iterative joins, component data, workflows, and data collection specs to significantly enhance performance ([78a7704a](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/78a7704a), [cc7d7dbe](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/cc7d7dbe)).
-* **E2E Tests**: Enhanced Cypress tests with improved Chrome configuration and reliability, including better login handling and dashboard navigation ([dba2e3e3](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/dba2e3e3), [ca9fac6c](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/ca9fac6c)).
-* **Code Structure**: Refactored the code structure across multiple modules for improved readability and maintainability ([3f1f1b9b](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/3f1f1b9b), [dfeaf1f6](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/dfeaf1f6)).
-* **Logging**: Reduced logging verbosity across various modules for improved log management and clarity ([edd44b51](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/edd44b51), [4e408f36](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/4e408f36)).
+* **Performance & Caching**: Implemented caching for iterative joins, component data, workflows, and data collection specs to significantly enhance performance ([78a7704a](https://github.com/depictio/depictio/commit/78a7704a), [cc7d7dbe](https://github.com/depictio/depictio/commit/cc7d7dbe)).
+* **E2E Tests**: Enhanced Cypress tests with improved Chrome configuration and reliability, including better login handling and dashboard navigation ([dba2e3e3](https://github.com/depictio/depictio/commit/dba2e3e3), [ca9fac6c](https://github.com/depictio/depictio/commit/ca9fac6c)).
+* **Code Structure**: Refactored the code structure across multiple modules for improved readability and maintainability ([3f1f1b9b](https://github.com/depictio/depictio/commit/3f1f1b9b), [dfeaf1f6](https://github.com/depictio/depictio/commit/dfeaf1f6)).
+* **Type checking**: Implemented type checking with `ty` for better code quality and consistency.
+* **Logging**: Reduced logging verbosity across various modules for improved log management and clarity ([edd44b51](https://github.com/depictio/depictio/commit/edd44b51), [4e408f36](https://github.com/depictio/depictio/commit/4e408f36)).
 
-### **Chores 🧹**
+### **🧹Chores**
 
-* **Changelog & CI**: Updated changelog generation, fixed release DNS issues in Helm CI, and added a CODEOWNERS file ([dd019370](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/dd019370)).
+* **Changelog & CI**: Updated changelog generation, fixed release DNS issues in Helm CI, and added a CODEOWNERS file ([dd019370](https://github.com/depictio/depictio/commit/dd019370)).
 
 ## **[v0.0.6](https://github.com/depictio/depictio/releases/tag/v0.0.6)**
 

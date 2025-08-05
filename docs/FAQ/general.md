@@ -16,6 +16,14 @@ Depictio is designed for bioinformaticians, researchers, and core facilities who
 
 Yes, Depictio is an open-source project under MIT Licence. You can find the source code on [GitHub](https://github.com/depictio/depictio).
 
+### Is Depictio free to use?
+
+Yes, Depictio is free to use under the MIT License. You can deploy it on your own infrastructure without any licensing fees.
+
+### Who is behind Depictio?
+
+Depictio is currently actively and mainly developed by Thomas Weber, an ARISE fellow working in the [European Molecular Biology Laboratory (EMBL) Data Science Centre](https://www.embl.org/about/info/science/data-science-centre/). The project is open to contributions from the community, and we welcome pull requests and feedback.
+
 ## Installation and Setup
 
 ### What are the system requirements for Depictio?
@@ -24,6 +32,8 @@ Depictio is designed to run in containerized environments. The basic requirement
 
 - Docker and Docker Compose (for local deployment)
 - Kubernetes (for production deployment)
+
+We recommend at least 8 GB of RAM and a multi-core CPU for optimal performance, especially when working with large datasets.
 
 ### How do I install Depictio?
 

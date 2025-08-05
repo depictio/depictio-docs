@@ -6,6 +6,8 @@ description: "Get started with Depictio by choosing the installation method that
 
 # Installation
 
+
+
 ## Depictio (server)
 
 <div class="installation-grid">
@@ -39,12 +41,24 @@ description: "Get started with Depictio by choosing the installation method that
 
 <div class="cli-container">
   <div class="installation-card">
-    <img src="../assets/depictio-configuration.png" alt="Depictio Configuration" class="card-logo">
+    <img src="../assets/configuration.png" alt="Depictio Configuration" class="card-logo" width="100px">
     <h3>Environment Variables</h3>
     <p>Configure authentication, backups, and advanced features.</p>
     <a href="configuration/" class="md-button md-button--primary">Guide</a>
   </div>
 </div>
+
+## Wants a customizable hands-on preview?
+
+<div class="cli-container">
+  <div class="installation-card">
+    <img src="../images/gitpod-logo-mark.svg" alt="Gitpod Logo" class="card-logo" width="100px">
+    <h3>Gitpod</h3>
+    <p>For a quick preview of Depictio, you can use Gitpod to launch a temporary workspace with Depictio pre-installed.</p>
+    <a href="https://gitpod.io/#https://github.com/depictio/depictio" class="md-button md-button--primary">Open in Gitpod</a>
+  </div>
+</div>
+
 
 <style>
 /* Installation Cards Grid */

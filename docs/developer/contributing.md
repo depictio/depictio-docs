@@ -59,7 +59,7 @@ Example using `venv`:
 Example using `uv`:
 
    ```bash
-   uv venv depictio-dev-venv --python 3.11
+   uv venv depictio-dev-venv --python 3.12
    ```
 
 2. Install development dependencies:
@@ -115,13 +115,14 @@ Important variables during development include:
 The Depictio codebase is organized into several key directories:
 
 - `depictio/api/` - Backend microservice (FastAPI, port 8058)
-  - `endpoints/` - API endpoints for workflows, dashboards, data collections
-  - `models/` - Database models and validation
+      - `endpoints/` - API endpoints for workflows, dashboards, data collections
+      - `models/` - Database models and validation
 - `depictio/dash/` - Frontend microservice (Dash, port 5080)
-  - `modules/` - Dash Component (see below)
-  - `layouts/` - Dashboard layouts and stepper UI
+      - `modules/` - Dash Component (see below)
+      - `layouts/` - Dashboard layouts and stepper UI
 - `depictio/models/` - Shared Pydantic models
 - `depictio/cli/` - Command-line interface for data management
+- `depictio/tests/` - Unit, integration and E2E tests
 - `helm-charts/` - Kubernetes deployment manifests
 
 ### Component Development (Key Feature)
@@ -132,7 +133,7 @@ Depictio uses a modular component system in `depictio/dash/modules/`:
 - `figure_component/` - Plotly visualizations
 - `interactive_component/` - Sliders, filters, dropdowns
 - `table_component/` - Data tables
-- `jbrowse_component/` - Genomic data visualization
+- `text_component/` - Text display components
 
 Each component follows this structure:
 
@@ -146,30 +147,30 @@ component_name/
 
 1. Create a new branch for your feature or bugfix:
 
-   ```bash
-   git checkout -b <issue-type>/<issue-number>-<short-description>
-   # Example: git checkout -b feature/123-add-new-component / bugfix/456-fix-data-processing
-   ```
+    ```bash
+    git checkout -b <issue-type>/<issue-number>-<short-description>
+    # Example: git checkout -b feature/123-add-new-component / bugfix/456-fix-data-processing
+    ```
 
 2. Make your changes and commit them:
 
-   ```bash
-   git add .
-   git commit -m "Description of your changes"
-   ```
+    ```bash
+    git add .
+    git commit -m "Description of your changes"
+    ```
 
 3. Keep your branch updated with the upstream:
 
-   ```bash
-   git fetch upstream
-   git rebase upstream/main
-   ```
+    ```bash
+    git fetch upstream
+    git rebase upstream/main
+    ```
 
 4. Push your branch to GitHub:
 
-   ```bash
-   git push origin <issue-type>/<issue-number>-<short-description>
-   ```
+    ```bash
+    git push origin <issue-type>/<issue-number>-<short-description>
+    ```
 
 5. Create a pull request on GitHub.
 
@@ -198,8 +199,8 @@ Depictio follows these coding standards:
 
 We use pre-commit hooks to enforce code style, which includes:
 
-- ruff for code formatting and linting
-- isort for import sorting
+- [`ruff`](https://github.com/astral-sh/ruff) for code formatting and linting with isort for import sorting
+- [`ty`](https://github.com/astral-sh/ty) for static type checking
 
 ## Documentation
 
@@ -287,4 +288,4 @@ All submissions require review. The review process typically includes:
 
 ## License
 
-By contributing to Depictio, you agree that your contributions will be licensed under the project's license.
+By contributing to Depictio, you agree that your contributions will be licensed under the [project's license](https://github.com/depictio/depictio/blob/main/LICENSE).

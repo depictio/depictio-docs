@@ -1,4 +1,5 @@
-## Funding
+!!! note "Funding and Support"
+    Depictio is developed with the support of academic and public funding, enabling us to provide a free and open-source platform for the bioinformatics community.
 
 <div class="funding-grid">
   <div class="funding-card">

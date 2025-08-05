@@ -50,11 +50,3 @@ The frontend is built with Plotly Dash (React), a framework for building analyti
 - Draggagle and customizable dashboard layouts
 - Integration with the backend API for data retrieval and processing
 
-## Security
-
-Depictio implements several security measures:
-
-- JWT-based authentication for API access
-- Role-based access control for resources (owner, editor, viewer)
-- Secure communication between services
-- Data encryption for sensitive information (e.g., passwords)

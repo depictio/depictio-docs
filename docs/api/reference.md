@@ -16,7 +16,7 @@ The documentation below is generated automatically from the OpenAPI specificatio
 
 1. **Browse Endpoints**: Expand the sections to see available endpoints
 2. **Read Documentation**: Each endpoint includes descriptions, parameters, and response schemas
-3. **[Planned Feature] Try Endpoints**: Click "Try it out" to execute API calls
+<!-- 3. **[Planned Feature] Try Endpoints**: Click "Try it out" to execute API calls -->
 
 <!-- ## Generating the API Documentation
 

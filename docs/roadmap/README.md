@@ -6,6 +6,44 @@ hide:
   - navigation
 ---
 
+
+
+## Big Picture - What we want to achieve
+
+::timeline:: class="depictio-roadmap" center alternate
+
+- title: "Visualization Studio"
+  content: "Interactive dashboards with modern web components and real-time data binding"
+  icon: ":fontawesome-solid-chart-line:"
+  key: "completed"
+  sub_title: "Phase 1: Foundation ✅"
+
+- title: "Data Ingestion"
+  content: "Support for multiple tabular formats: Parquet, CSV, JSON, TSV with automated processing"
+  icon: ":fontawesome-solid-database:"
+  key: "completed"
+  sub_title: "Phase 1: Foundation ✅"
+
+- title: "MultiQC Integration"
+  content: "Seamless integration with bioinformatics quality control reports"
+  icon: "./multiqc.png"
+  key: "multiqc"
+  sub_title: "Phase 2: Specialization 🚧"
+
+- title: "Configuration Assistant"
+  content: "CLI-based project setup wizard with intelligent recommendations"
+  icon: ":fontawesome-solid-terminal:"
+  key: "nfcore"
+  sub_title: "Phase 2: Specialization 🚧"
+
+- title: "Workflow Templates"
+  content: "Pre-configured dashboards for popular bioinformatics workflows and pipelines"
+  icon: ":fontawesome-solid-sitemap:"
+  key: "planned"
+  sub_title: "Phase 3: Ecosystem 📋"
+
+::/timeline::
+
 ## What we have now
 
 ### Data ingestion & data types supported
@@ -82,6 +120,8 @@ hide:
 - [x] Functional dark/light mode theming with auto-theme detection
 - [x] Upgrade dash to the latest version (v3+)
 - [x] Upgrade dash mantine components to the latest version (2.0+) with enhanced components and styling
+- [x] Improve UI/UX (e.g., loading spinner, error handling, etc.)
+- [x] Improve dashboard layout and component resizing with vertical and horizontal growing
 
 ## What we plan for the future
 
@@ -135,5 +175,4 @@ hide:
 
 ### UI
 
-- [ ] Improve UI/UX (e.g., loading spinner, error handling, etc.)
 - [ ] Further theme customization (colors, fonts) and CSS styling enhancements

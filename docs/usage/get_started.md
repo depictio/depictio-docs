@@ -30,9 +30,9 @@ When you first access Depictio, you'll be prompted to log in. The default instal
 
 ### Use depictio-cli
 
-#### Install the CLI tool
+#### Install the depictio-cli tool
 
-Depictio provides a command-line interface (CLI) tool for managing data ingestion and other tasks. You can install the CLI tool by following the instructions in the [depictio-cli documentation](../installation/cli.md).
+Depictio provides a command-line interface (CLI) tool (`depictio-cli`) for managing data ingestion and other tasks. You can install the CLI tool by following the instructions in the [depictio-cli documentation](../installation/cli.md).
 
 #### Create a CLI configuration
 
@@ -122,6 +122,20 @@ depictio-cli run \
 This command will run the CLI tool with the specified configuration file and project configuration file. This will create a new project in Depictio with the palmer penguins dataset, including 2 data collections: `physical_features` and `demographic_data`.
 
 Once the data ingested into the system, you can go to the web interface and see the project created in the **Project Management** section.
+
+#### Video Tutorial
+
+<div style="padding: 64.29% 0 0 0; position: relative">
+  <iframe
+    src="https://player.vimeo.com/video/1105745104?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+    frameborder="0"
+    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
+    title="depictio-cli-registration-1753809368201"
+  ></iframe>
+</div>
+<script src="https://player.vimeo.com/api/player.js"></script>
 
 ### Creating Your First Dashboard
 
