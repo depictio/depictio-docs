@@ -49,7 +49,7 @@ https://your-depictio-instance.com/depictio/api/v1/...
 
 ## In This Section
 
-- [API Overview](overview.md) - Detailed information about the API structure and authentication
+<!-- - [API Overview](overview.md) - Detailed information about the API structure and authentication -->
 <!-- - [Endpoints](endpoints.md) - Summary of available API endpoints and their functionality -->
 - [API Reference](reference.md) - Interactive API documentation generated from the OpenAPI specification
 <!-- - [Integration](api_docs_integration.md) - Guide for integrating with the Depictio API -->

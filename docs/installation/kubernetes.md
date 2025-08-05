@@ -24,7 +24,7 @@ cd depictio
 To install the chart with the release name `depictio`:
 
 ```bash
-helm install depictio ./helm-charts/depictio
+helm install <RELEASE_NAME> depictio ./helm-charts/depictio -f ./helm-charts/depictio/values.yaml -n <YOUR_NAMESPACE>
 ```
 
 This command deploys Depictio on the Kubernetes cluster with the default configuration.
@@ -34,7 +34,7 @@ This command deploys Depictio on the Kubernetes cluster with the default configu
 Check that all pods are running:
 
 ```bash
-kubectl get pods -n datasci-depictio-project
+kubectl get pods -n <YOUR_NAMESPACE>
 ```
 
 You should see pods for the backend, frontend, MongoDB, and MinIO.
@@ -46,7 +46,7 @@ After deploying the chart, you can access the Depictio application:
 - If using ClusterIP (default), use port-forwarding to access the frontend service:
 
 ```bash
-kubectl port-forward -n datasci-depictio-project service/depictio-frontend 5080:80
+kubectl port-forward -n <YOUR_NAMESPACE> service/depictio-frontend 5080:80
 ```
 
 Then visit <http://localhost:5080> in your browser.
@@ -56,7 +56,10 @@ Then visit <http://localhost:5080> in your browser.
 You can customize the chart by overriding its values in a separate YAML file:
 
 ```bash
-helm install depictio ./helm-charts/depictio -f my-values.yaml
+helm install <RELEASE_NAME> ./helm-charts/depictio \
+    -f ./helm-charts/depictio/values.yaml \
+    -f ./my-custom-values.yaml \
+    -n <YOUR_NAMESPACE>
 ```
 
 For a complete list of configurable parameters, refer to the `values.yaml` file or run:
@@ -67,10 +70,10 @@ helm show values ./helm-charts/depictio
 
 ## Uninstalling
 
-To uninstall/delete the `depictio` deployment:
+To uninstall/delete the <RELEASE_NAME> deployment:
 
 ```bash
-helm uninstall depictio
+helm uninstall <RELEASE_NAME>
 ```
 
 ## Key Configuration Parameters

@@ -8,7 +8,13 @@
 
 1. **Navigate to the Registration page** by clicking the **Register** button on the login screen.
 
-<img src="../../../images/guides/register_login/login.png" width="600">
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../../images/guides/register_login/login.png" target="_blank">
+        <img src="../../../images/guides/register_login/login.png" width="600">
+    </a>
+</div>
+
 
 2. **Enter your email address** in the "Email" field.
 
@@ -18,8 +24,6 @@
 
 5. After successful registration, you can return to the login page by clicking the **Back to Login** button.
 
-<img src="../../../images/guides/register_login/register_success.png" width="600">
-
 ### Logging In (Sign In)
 
 1. **Open the Depictio Login page**.
@@ -28,6 +32,10 @@
 4. If you want to see the password as you type it, click the eye icon next to the password field.
 5. Once both fields are filled in, click the **Login** button.
 6. You will be redirected to the Depictio landing page (currently `/dashboards`).
+
+### Google OAuth Login
+
+If you have configured Google OAuth for your Depictio instance (see [Configuration](../../../installation/configuration/#google-oauth-integration)), you can log in using your Google account. If the account does not exist, it will be created automatically.
 
 ## Landing page / Dashboards section (/dashboards)
 
@@ -75,9 +83,9 @@
 3. The dashboard will be duplicated and added to the section with the suffix **"(copy)"**.
 
 !!! note
-    <div style="border: 0px solid grey; width: 602px; padding: 1px; text-align: center;">
+    <div style="border: 0px solid grey; padding: 1px; text-align: center;">
     <a href="../../../images/guides/dashboard_creation/dashboard_status.png" target="_blank">
-    <img src="../../../images/guides/dashboard_creation/dashboard_status.png" width="300">
+    <img src="../../../images/guides/dashboard_creation/dashboard_status.png" width="100">
     </a>
     </div>
     Both "public" and "private" dashboards are listed in the **Dashboards** section. Public dashboards are accessible to all users, while private dashboards are only visible to the user who created them.
@@ -131,10 +139,4 @@ The **About** section provides information about the GitHub repository and the d
     </a>
 </div>
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/pages/admin_dashboards.png" target="_blank">
-        <img src="../../../images/guides/pages/admin_dashboards.png" width="600">
-    </a>
-</div>
-
-The **Admin** section is only accessible to users with admin privileges. It allows admins to view users, projects and dashboards. The **Users** tab displays a list of all users registered in the system, while the **Dashboards** tab displays a list of all dashboards. The **Projects** tab is currently under development.
+The **Admin** section is only accessible to users with admin privileges. It allows admins to view users, projects and dashboards. The **Users** tab displays a list/delete/change status (sysadmin/standard) of all users registered in the system. The **Dashboards** tab displays a list of all dashboards while the **Projects** tab lists all projects. Admins can delete any project or dashboard, regardless of ownership.

@@ -23,7 +23,7 @@ Before installing the CLI, ensure you have:
 
 ### Install via pip
 
-You can install the Depictio CLI using plain pip or through your preferrend package manager like `uv`:
+As `depictio-cli` is available on [pypi](https://pypi.org/project/depictio-cli/), you can install the Depictio CLI using plain pip or through your preferred package manager like `uv`:
 
 ```bash
 pip install depictio-cli

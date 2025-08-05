@@ -31,14 +31,112 @@ Create a `.env` file in the root directory of the project. You can use the provi
 cp .env.example .env
 ```
 
+Or manually create the `.env` file and add the following content:
+
+<!-- markdownlint-disable MD046 -->
+
+??? Env-variables
+    ```env
+    # ============================================================================
+    # DEPICTIO ENVIRONMENT VARIABLES
+    # ============================================================================
+    # Description: Configuration file for Depictio application services
+    # ----------------------------------------------------------------------------
+    # Depictio Version
+    # ----------------------------------------------------------------------------
+    # DEPICTIO_VERSION=latest
+
+    # ----------------------------------------------------------------------------
+    # Application Context
+    # ----------------------------------------------------------------------------
+    # Defines the runtime context (options: server, client)
+    DEPICTIO_CONTEXT=server
+    DEPICTIO_LOGGING_VERBOSITY_LEVEL=INFO
+
+    # ----------------------------------------------------------------------------
+    # MinIO Storage Configuration
+    # ----------------------------------------------------------------------------
+    # Object storage server configuration (S3DepictioCLIConfig)
+    DEPICTIO_MINIO_ROOT_USER=minio
+    DEPICTIO_MINIO_ROOT_PASSWORD=minio123
+    # DEPICTIO_MINIO_PUBLIC_URL=http://localhost:9000
+
+    # ----------------------------------------------------------------------------
+    # MongoDB Configuration
+    # ----------------------------------------------------------------------------
+    # Database name
+    # DEPICTIO_MONGODB_DB_NAME=depictioDB
+    # DEPICTIO_MONGODB_PORT=27018
+    # DEPICTIO_MONGODB_SERVICE_NAME=mongo
+    # DEPICTIO_MONGODB_WIPE=false
+
+    # ----------------------------------------------------------------------------
+    # FastAPI Server Configuration
+    # ----------------------------------------------------------------------------
+    # API server network settings
+    # DEPICTIO_FASTAPI_HOST=0.0.0.0
+    # DEPICTIO_FASTAPI_PORT=8058
+    # DEPICTIO_FASTAPI_SERVICE_NAME=depictio-backend
+    # DEPICTIO_FASTAPI_LOGGING_LEVEL=INFO
+    # DEPICTIO_FASTAPI_WORKERS=1
+    # DEPICTIO_FASTAPI_SSL=false
+    # DEPICTIO_FASTAPI_PUBLIC_URL=http://localhost:8058
+
+    # ----------------------------------------------------------------------------
+    # Dash Frontend Configuration
+    # ----------------------------------------------------------------------------
+    # Dashboard server network settings
+    # DEPICTIO_DASH_HOST=0.0.0.0
+    # DEPICTIO_DASH_PORT=5080
+    # DEPICTIO_DASH_SERVICE_NAME=depictio-frontend
+    # DEPICTIO_DASH_WORKERS=1
+    # DEPICTIO_DASH_DEBUG=true
+
+    # ----------------------------------------------------------------------------
+    # Authentication Configuration
+    # ----------------------------------------------------------------------------
+    # Authentication and key management
+    # DEPICTIO_AUTH_TMP_TOKEN=eyJhb...
+    # DEPICTIO_AUTH_KEYS_DIR=depictio/keys
+    # DEPICTIO_AUTH_KEYS_ALGORITHM=RS256
+    # DEPICTIO_AUTH_CLI_CONFIG_DIR=depictio/.depictio
+    # DEPICTIO_AUTH_UNAUTHENTICATED_MODE=false
+
+    # Google OAuth2 Configuration
+    # DEPICTIO_AUTH_GOOGLE_OAUTH_ENABLED=true
+    # DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID="64285070862-***.apps.googleusercontent.com"
+    # DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET="GOCSPX-***"
+    # DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI="http://localhost:5080/auth"
+
+    # ----------------------------------------------------------------------------
+    # System Configuration
+    # ----------------------------------------------------------------------------
+    # Container user and group IDs (uncomment to set specific values)
+    #UID=502
+    #GID=20
+
+    # ----------------------------------------------------------------------------
+    # Development Settings (Keep at the end for contributors)
+    # ----------------------------------------------------------------------------
+    # Toggle development mode for the application
+    # DEV_MODE=false
+
+    # Enable Playwright development mode for testing
+    # DEPICTIO_PLAYWRIGHT_DEV_MODE=false
+    # ============================================================================
+    ```
+<!-- markdownlint-enable MD046 -->
+
 Edit the `.env` file to customize your configuration if needed. The default values should work for most users.
 
-### 3. Start the Services
+### 3. Start the Services (including MinIO)
 
 Start all Depictio services using Docker Compose:
 
 ```bash
-docker-compose -f docker-compose.yaml -f docker-compose/docker-compose.minio.yaml up -d
+docker compose -f docker-compose.yaml \
+               -f docker-compose/docker-compose.minio.yaml \
+               up -d
 ```
 
 This command will:
@@ -60,7 +158,7 @@ This command will:
 After starting the services, you can verify that everything is running correctly:
 
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 You should see all services in the "Up" state.
@@ -86,7 +184,7 @@ Default credentials are:
 To stop all services while preserving data:
 
 ```bash
-docker-compose stop
+docker compose stop
 ```
 
 ### Stopping and Removing Containers
@@ -94,7 +192,7 @@ docker-compose stop
 To stop all services and remove the containers:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ### Stopping and Removing Everything
@@ -102,7 +200,7 @@ docker-compose down
 To stop all services, remove the containers, and delete all data:
 
 ```bash
-docker-compose down -v
+docker compose down -v
 ```
 
 **Warning**: This will delete all data stored in MongoDB and MinIO.
@@ -112,19 +210,19 @@ docker-compose down -v
 To view the logs from all services:
 
 ```bash
-docker-compose logs
+docker compose logs
 ```
 
 To view logs from a specific service:
 
 ```bash
-docker-compose logs depictio-backend
+docker compose logs depictio-backend
 ```
 
 To follow the logs in real-time:
 
 ```bash
-docker-compose logs -f
+docker compose logs -f
 ```
 
 ## Configuration Options
@@ -143,10 +241,22 @@ If you need to change these ports, edit the `.env` file.
 
 ### Development Mode
 
-To run Depictio using Flask/Dash/gunicorn and FastAPI/uvicorn debug mode, which enables additional debugging features:
+To run Depictio using Flask/Dash/gunicorn and FastAPI/uvicorn debug mode, which enables additional debugging features, modify the `.env` file:
+
+```env
+DEV_MODE=true
+```
+
+and then start the services:
 
 ```bash
-DEV_MODE=true docker-compose up -d
+docker compose up -d
+```
+
+Or:
+
+```bash
+DEV_MODE=true docker compose up -d
 ```
 
 ## Troubleshooting
@@ -156,7 +266,7 @@ DEV_MODE=true docker-compose up -d
 If a container fails to start, check the logs:
 
 ```bash
-docker-compose logs <service_name>
+docker compose logs <service_name>
 ```
 
 Common issues include:

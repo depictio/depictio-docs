@@ -18,8 +18,6 @@ This section provides supplementary information and resources related to the Dep
 Depictio is an open-source project with an active community. Connect with us through:
 
 - **GitHub**: [github.com/depictio/depictio](https://github.com/depictio/depictio)
-- **Community Forums**: [community.depictio.org](https://community.depictio.org)
-- **Twitter**: [@depictio](https://twitter.com/depictio)
 
 ## License
 
@@ -38,5 +36,5 @@ We thank all contributors and the following projects that make Depictio possible
 
 ## Contact
 
-- **General Inquiries**: [info@depictio.org](mailto:info@depictio.org)
+- **General Inquiries**: [thomas.weber@embl.de](mailto:thomas.weber@embl.de)
 - **Technical Support**: [GitHub Issues](https://github.com/depictio/depictio/issues)

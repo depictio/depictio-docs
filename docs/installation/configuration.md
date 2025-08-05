@@ -391,8 +391,8 @@ Depictio validates environment variables on startup. Check the logs for any conf
 
 ```bash
 # Check application logs for configuration validation
-docker-compose logs depictio-backend
-docker-compose logs depictio-frontend
+docker compose logs depictio-backend
+docker compose logs depictio-frontend
 ```
 
 For more detailed configuration options, refer to the [source code settings models](https://github.com/depictio/depictio/blob/main/depictio/api/v1/configs/settings_models.py).

@@ -67,7 +67,9 @@ hide:
   </div>
 </section>
 
+
 <!-- Live Demo Section -->
+<!-- 
 <section class="live-demo-section">
   <div class="live-demo-info">
     <div class="demo-badge">
@@ -99,7 +101,7 @@ hide:
       <p>Your browser does not support iframes. <a href="https://demo.depictio.embl.org/">Click here to view the Depictio dashboard</a></p>
     </iframe>
   </div>
-</section>
+</section> -->
 
 <!-- Technology Stack Section -->
 <section class="tech-section">
@@ -119,7 +121,7 @@ hide:
         <span>MongoDB</span>
       </a>
       <a href="https://min.io/" target="_blank" rel="noopener" class="tech-badge minio">
-        <img src="https://min.io/resources/img/logo/MINIO_Bird.png" alt="MinIO">
+        <img src="https://cdn.prod.website-files.com/681c8426519d8db8f867c1e8/682dcb06620717ccd769b572_MINIO_Bird.png" alt="MinIO">
         <span>MinIO</span>
       </a>
       <a href="https://pola.rs/" target="_blank" rel="noopener" class="tech-badge polars">
@@ -264,6 +266,10 @@ hide:
 <!-- Funding Section -->
 <section class="funding-section">
   <h2>Funding</h2>
+
+  <!-- Statement about academic and public funding in a single sentence -->
+  <p class="funding-intro">Depictio is developed with the support of academic and public funding, enabling us to provide a free and open-source platform for the bioinformatics community.</p>
+
   <div class="funding-grid">
     <div class="funding-card">
       <img src="./assets/EN_fundedbyEU_VERTICAL_RGB_POS.png" alt="EU Logo">
