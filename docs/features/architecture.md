@@ -49,4 +49,3 @@ The frontend is built with Plotly Dash (React), a framework for building analyti
 - Real-time data updates
 - Draggagle and customizable dashboard layouts
 - Integration with the backend API for data retrieval and processing
-

@@ -252,16 +252,16 @@
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .blog-article-title {
     font-size: 2rem;
   }
-  
+
   .blog-article-meta {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .feature-grid {
     grid-template-columns: 1fr;
   }
