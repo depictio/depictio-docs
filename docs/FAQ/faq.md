@@ -21,7 +21,7 @@ Code execution uses **RestrictedPython** (Zope Foundation's battle-tested securi
 
 No, only pre-approved libraries are available for security reasons:
 - `plotly.express` (as `px`)
-- `plotly.graph_objects` (as `go`) 
+- `plotly.graph_objects` (as `go`)
 - `pandas` (as `pd`)
 - `numpy` (as `np`)
 - Basic Python built-ins (str, int, len, range, etc.)
@@ -58,7 +58,7 @@ df_filtered = df[df['value'] > 10]
 **❌ Blocked by RestrictedPython:**
 ```python
 import requests          # Network access blocked
-import os               # System access blocked  
+import os               # System access blocked
 open('file.txt')        # File operations blocked
 exec('some_code')       # Dynamic execution blocked
 ```

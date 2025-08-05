@@ -6,7 +6,7 @@ Depictio implements comprehensive security measures to protect your data and ens
 
 ### JWT-Based Authentication
 - **Token Security**: Public/private key encryption for session tokens
-- **Session Management**: Configurable token lifetime and refresh mechanisms  
+- **Session Management**: Configurable token lifetime and refresh mechanisms
 - **Role-Based Access**: User and group-based permissions for projects and dashboards
 
 
@@ -40,7 +40,7 @@ len(), range(), str(), int(), float(), sum(), min(), max()
 RestrictedPython prevents these operations at compile-time:
 
 - **File Operations**: `open()`, file I/O, filesystem access
-- **Network Access**: `requests`, `urllib`, socket operations  
+- **Network Access**: `requests`, `urllib`, socket operations
 - **System Calls**: `os.*`, `sys.*`, `subprocess`, shell commands
 - **Dangerous Built-ins**: `exec()`, `eval()`, `__import__()`, `compile()`
 - **Attribute Access**: Private attributes (underscore methods) on unsafe objects
