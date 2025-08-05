@@ -37,6 +37,7 @@ When the **Display components options** switch is enabled, each component will d
 - <span style="color: #339af0;"><i class="mdi mdi-pen"></i> Edit</span>: Open a modal to modify the component settings.
 - <span style="color: #868e96;"><i class="mdi mdi-content-copy"></i> Clone</span>: Create a copy of the component.
 - <span style="color: #fd7e14;"><i class="bx bx-reset"></i> Reset filters</span>: Clear all filters applied to the component.
+- <span style="color: #E6779F;"><i class="mdi mdi-format-align-left"></i> Align</span>: Choose text alignment (left, center, right) for text components.
 
 ## Interactivity
 
