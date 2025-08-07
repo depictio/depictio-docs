@@ -75,3 +75,188 @@
 /* If using Material theme's dark mode toggle */
 [data-md-color-scheme="slate"] .nf-core-light { display: none; }
 [data-md-color-scheme="slate"] .nf-core-dark { display: inline; }
+
+/* Virgil font definition */
+@font-face {
+    font-family: 'Virgil';
+    src: url('../fonts/Virgil.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Custom Depictio favicon icon */
+.depictio-icon {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background-image: url('../images/logo/logo_icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+}
+
+/* Triangular animation keyframes - based on original Depictio script */
+@keyframes triangular-pulse {
+    0%, 100% { 
+        transform: scale(1); 
+    }
+    50% { 
+        transform: scale(1.15); 
+    }
+}
+
+/* Container to prevent clipping */
+#inline-svg-container {
+    overflow: visible !important;
+    padding: 15px;
+}
+
+#inline-svg-container svg {
+    overflow: visible !important;
+}
+
+/* FOUC Prevention - hide logo until JS loads */
+.md-header__button.md-logo {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    overflow: visible !important;
+    padding: 8px;
+    min-width: 64px;
+    min-height: 64px;
+    margin-right: -8px;
+}
+
+.md-header__button.md-logo.logo-ready {
+    opacity: 1;
+}
+
+/* Header logo specific styling */
+.md-header__button.md-logo svg {
+    overflow: visible !important;
+    width: 48px !important;
+    height: 48px !important;
+}
+
+.md-header__button.md-logo img {
+    width: 48px !important;
+    height: 48px !important;
+}
+
+/* Reduce space between logo and title and change to Virgil font */
+.md-header__title {
+    margin-left: -12px;
+    font-size: 1.2rem !important;
+    font-weight: 600;
+    font-family: "Virgil", cursive !important;
+}
+
+/* Apply Virgil font to all H1 titles */
+h1 {
+    font-family: "Virgil", cursive !important;
+}
+
+.md-typeset h1 {
+    font-family: "Virgil", cursive !important;
+}
+
+/* Set up transform properties but NO animation by default */
+#shape-1, path#shape-1,
+#shape-2, path#shape-2,
+#shape-3, path#shape-3,
+#shape-4, path#shape-4,
+#shape-5, path#shape-5,
+#shape-6, path#shape-6,
+#shape-7, path#shape-7 {
+    transform-origin: center;
+    transform-box: fill-box;
+    transition: transform 0.2s ease;
+}
+
+/* ONLY animate on hover */
+svg:hover #shape-1,
+svg:hover path#shape-1 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+svg:hover #shape-2,
+svg:hover path#shape-2 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.1s;
+}
+
+svg:hover #shape-3,
+svg:hover path#shape-3 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.2s;
+}
+
+svg:hover #shape-4,
+svg:hover path#shape-4 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.3s;
+}
+
+svg:hover #shape-5,
+svg:hover path#shape-5 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.4s;
+}
+
+svg:hover #shape-6,
+svg:hover path#shape-6 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+svg:hover #shape-7,
+svg:hover path#shape-7 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.6s;
+}
+
+/* Enhanced animation when active */
+.triangular-active #shape-1,
+.triangular-active path#shape-1 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+.triangular-active #shape-2,
+.triangular-active path#shape-2 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.1s;
+}
+
+.triangular-active #shape-3,
+.triangular-active path#shape-3 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.2s;
+}
+
+.triangular-active #shape-4,
+.triangular-active path#shape-4 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.3s;
+}
+
+.triangular-active #shape-5,
+.triangular-active path#shape-5 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.4s;
+}
+
+.triangular-active #shape-6,
+.triangular-active path#shape-6 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+.triangular-active #shape-7,
+.triangular-active path#shape-7 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.6s;
+}
+
