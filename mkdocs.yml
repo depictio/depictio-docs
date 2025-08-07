@@ -16,7 +16,7 @@ theme:
   custom_dir: overrides
   icon:
     annotation: material/record-circle
-  logo: "images/logo/logo_icon.png"
+  logo: "images/logo/animated_favicon.svg"
   favicon: "images/logo/logo_icon.png"
 
   # Color Settings
@@ -73,6 +73,10 @@ extra_css:
   - https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
   - https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css
 
+# Extra JavaScript
+extra_javascript:
+  - javascripts/triangular-animation.js
+
 # Markdown Extensions
 markdown_extensions:
   # Basic Extensions
@@ -115,6 +119,8 @@ markdown_extensions:
 # Plugins
 plugins:
   - search
+  - inline-select-svg:
+      pattern: "animated_favicon.svg"
   - blog:
       blog_dir: blog
       post_dir: "{blog}/posts"
@@ -205,10 +211,11 @@ nav:
   - Roadmap: roadmap/README.md
   - Changelog:
       - Overview: changelog/README.md
-  # - Blog:
-  #     - blog/index.md
+  - Blog:
+      - blog/index.md
   - More:
       - Overview: more/README.md
       # - Stories: more/stories.md
       - Funding: more/funding.md
       - Color Palette: more/palette.md
+      - Animated Logo: animated-logo.md

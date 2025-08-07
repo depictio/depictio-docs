@@ -80,7 +80,7 @@ hide:
 
 
 <!-- Live Demo Section -->
-<!--
+
 <section class="live-demo-section">
   <div class="live-demo-info">
     <div class="demo-badge">
@@ -112,7 +112,7 @@ hide:
       <p>Your browser does not support iframes. <a href="https://demo.depictio.embl.org/">Click here to view the Depictio dashboard</a></p>
     </iframe>
   </div>
-</section> -->
+</section>
 
 <!-- Technology Stack Section -->
 <section class="tech-section">
