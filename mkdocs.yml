@@ -90,6 +90,7 @@ markdown_extensions:
   # Timeline
   - neoteroi.timeline
 
+
   # PyMdown Extensions
   - pymdownx.caret
   - pymdownx.tilde
@@ -108,7 +109,11 @@ markdown_extensions:
         - docs
   - pymdownx.tabbed
   - pymdownx.inlinehilite
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
   # Table of Contents
   - toc:

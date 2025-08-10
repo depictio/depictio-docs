@@ -83,10 +83,10 @@ hide:
 
 <section class="live-demo-section">
   <div class="live-demo-info">
-    <div class="demo-badge">
+    <a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener" class="demo-badge">
       <span class="live-indicator"></span>
       <strong>Live interactive demo - Try it!</strong>
-    </div>
+    </a>
   </div>
 
   <div class="hero-iframe-demo" id="iframe-container">
@@ -596,6 +596,7 @@ hide:
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
     transition: all 0.3s ease;
+    text-decoration: none;
   }
 
   [data-md-color-scheme="slate"] .demo-badge {
@@ -1128,7 +1129,7 @@ hide:
   }
 
   .tech-badge.polars {
-    background: linear-gradient(135deg, #d49c5a 0%, #c08c4a 100%);
+    background: linear-gradient(135deg, #00a2e8 0%, #0080c7 100%);
     color: white;
   }
 
@@ -1556,6 +1557,93 @@ hide:
       margin: 0 -1rem;
     }
   }
+
+  /* Demo Unavailable Message Styles */
+  .demo-unavailable-message {
+    background: #f8fafc;
+    padding: 1.5rem 2rem 3rem 2rem;
+    margin: 0 -2rem;
+    border-radius: 0;
+    text-align: center;
+  }
+
+  [data-md-color-scheme="slate"] .demo-unavailable-message {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .demo-unavailable-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .demo-unavailable-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem auto;
+    background: #f68b33;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  .demo-unavailable-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .demo-unavailable-content h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--md-default-fg-color);
+  }
+
+  .demo-unavailable-content p {
+    margin: 0 0 2rem 0;
+    color: var(--md-default-fg-color--light);
+    line-height: 1.6;
+  }
+
+  .demo-unavailable-content a {
+    color: var(--depictio-purple);
+    text-decoration: none;
+  }
+
+  .demo-unavailable-content a:hover {
+    text-decoration: underline;
+  }
+
+  .demo-alternative-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .demo-alternative-actions .md-button img {
+    vertical-align: middle;
+    margin-right: 8px;
+    margin-top: -2px;
+  }
+
+  @media (max-width: 768px) {
+    .demo-unavailable-message {
+      padding: 1rem 1rem 2rem 1rem;
+      margin: 0 -1rem;
+    }
+    
+    .demo-alternative-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .demo-alternative-actions .md-button {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
 </style>
 
 <script>
@@ -1582,6 +1670,66 @@ function toggleFullscreen() {
   }
 }
 
+// Function to check if the demo website is reachable
+async function checkDemoAvailability() {
+  const demoSection = document.querySelector('.live-demo-section');
+  const iframe = document.getElementById('demo-iframe');
+  const demoUrl = 'https://demo.depictio.embl.org/';
+
+  if (!demoSection || !iframe) return;
+  
+  try {
+    // Try to fetch the demo website
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+    
+    const response = await fetch(demoUrl, {
+      method: 'HEAD',
+      mode: 'no-cors', // Allow cross-origin requests
+      signal: controller.signal
+    });
+    
+    clearTimeout(timeoutId);
+    
+    // If we get here, the site is reachable (even with no-cors, network errors will throw)
+    console.log('Demo site is reachable');
+    
+  } catch (error) {
+    console.log('Demo site not reachable:', error.message);
+    
+    // Hide the live demo section
+    demoSection.style.display = 'none';
+    
+    // Create and show fallback message
+    const fallbackMessage = document.createElement('div');
+    fallbackMessage.className = 'demo-unavailable-message';
+    fallbackMessage.innerHTML = `
+      <div class="demo-unavailable-content">
+        <div class="demo-unavailable-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2ZM13,17H11V15H13V17ZM13,13H11V7H13V13Z"/>
+          </svg>
+        </div>
+        <h3>Live Demo Temporarily Unavailable</h3>
+        <p>The interactive demo is currently not accessible. Please try again later or <a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
+        <div class="demo-alternative-actions">
+          <a href="https://gitpod.io/#https://github.com/depictio/depictio" class="md-button md-button--gitpod" target="_blank" rel="noopener">
+            <img src="images/gitpod-logo-mark.svg" alt="Gitpod" width="16" height="16">
+            Open in Gitpod
+          </a>
+          <a href="usage/get_started/" class="md-button">View Documentation</a>
+        </div>
+      </div>
+    `;
+    
+    // Insert the fallback message after the workflow section
+    const workflowSection = document.querySelector('.workflow-section');
+    if (workflowSection) {
+      workflowSection.insertAdjacentElement('afterend', fallbackMessage);
+    }
+  }
+}
+
 // Handle ESC key to exit fullscreen
 document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('keydown', function(e) {
@@ -1592,5 +1740,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
+  
+  // Check demo availability when page loads
+  checkDemoAvailability();
 });
 </script>
