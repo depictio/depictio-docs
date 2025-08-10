@@ -8,6 +8,32 @@ hide:
 
 # Changelog
 
+## **[v0.3.0](https://github.com/depictio/depictio/releases/tag/v0.3.0)**
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.3.0
+ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:stable
+ghcr.io/depictio/depictio:edge
+```
+
+### **✨ Major Features**
+
+* **Enhanced Data Management**: Optimized DataFrame loading with lazy scanning and adaptive memory management. Implemented total storage size calculation and progress indicators for data collections. ([a308c300](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a308c300), [8afcdf2e](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/8afcdf2e), [bfcb6fd8](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/bfcb6fd8))
+* **Comprehensive Project & Data Collection Management**: Introduced new modal-based UI to manage workflows and data collection per project. Added features for creating, updating, deleting, and viewing data collections and projects. ([b9cb4727](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/b9cb4727), [78b93457](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/78b93457), [fb06d84e](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/fb06d84e))
+
+### **🐛 Bug Fixes**
+
+* **Temp users data handling**: Improved error handling for temporary user cleanup. ([1253e8a6](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/1253e8a6), [6fd41333](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/6fd41333))
+* **Figures & Components Logic**: Added validation to prevent df reassignment in user code. Fix “Edit mode” for figure components. Enhanced figure generation to allow editing existing figures even with auto-generation disabled. ([318c7ae9](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/318c7ae9), [48f91115](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/48f91115))
+* **UI & Layout**: Corrected project update logic and improved modal ID handling. ([f6b68c73](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/f6b68c73), [93d72bba](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/93d72bba))
+
+### **🚀 Improvements**
+
+* **CLI & Theming Enhancements**: Added customizable ASCII logo display for the CLI. Implemented theme-aware color handling for card and interactive components. ([63a0e62f](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/63a0e62f), [7d5957f0](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/7d5957f0), [1c201684](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/1c201684))
+
 ## **[v0.2.1](https://github.com/depictio/depictio/releases/tag/v0.2.1)**
 
 ### Docker Images

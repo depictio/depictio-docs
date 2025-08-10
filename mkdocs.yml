@@ -138,6 +138,11 @@ plugins:
         - Features
         - Community
         - Technical
+        - Development
+        - Performance
+        - Architecture
+        - UI/UX
+        - Database
   - swagger-ui-tag
   - kroki:
       ServerURL: "https://kroki.io"
@@ -181,6 +186,7 @@ nav:
       - Getting Started: usage/get_started.md
       - Guides:
           - WebUI: usage/guides/web_ui.md
+          - Projects: usage/guides/projects.md
           - Dashboard creation: usage/guides/dashboard_creation.md
           - Using the dashboard: usage/guides/dashboard_usage.md
       - CLI:
@@ -209,8 +215,7 @@ nav:
       - Overview: FAQ/README.md
       - General: FAQ/general.md
   - Roadmap: roadmap/README.md
-  - Changelog:
-      - Overview: changelog/README.md
+  - Changelog: changelog/README.md
   - Blog:
       - blog/index.md
   - More:
