@@ -1,8 +1,25 @@
-# Dashboard Creation
+# <span style="color: #F68B33;">:material-view-dashboard:</span> Dashboard Creation
 
-## Add a component to the dashboard
+## <span style="color: #E53935;">:material-video:</span> Video example
 
-### Step 1: Component Selection
+<div style="max-width: 1200px; margin: 1rem auto 2rem auto;">
+<div style="padding: 64.29% 0 0 0; position: relative">
+  <iframe
+    src="https://player.vimeo.com/video/1108747263?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+    frameborder="0"
+    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
+    title="depictio-long-demo-1754777542047"
+  ></iframe>
+  </div>
+  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>Depictio UI overview:</strong> Discover how to build a dashboard with Depictio</p>
+</div>
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+## <span style="color: #9966CC;">:material-plus-box:</span> Add a component to the dashboard
+
+### <span style="color: #45B8AC;">:material-numeric-1-circle:</span> Step 1: Component Selection
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/step_one.png" target="_blank">
@@ -15,7 +32,7 @@
    - Choose from the available components (e.g., **Figure**, **Card**, **Interactive**, **Table**, **Text**).
 3. Once you’ve chosen the component, click **Next Step**.
 
-### Step 2: Data Selection
+### <span style="color: #6495ED;">:material-numeric-2-circle:</span> Step 2: Data Selection
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/step_two.png" target="_blank">
@@ -27,7 +44,7 @@
 2. Verify the **Data Collection Info**, such as **Workflow ID**, **Table type**, **MongoDB ID**, and **Data preview**.
 3. Click **Next Step** to proceed.
 
-### Step 3: Customize Your Component
+### <span style="color: #F68B33;">:material-numeric-3-circle:</span> Step 3: Customize Your Component
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/design/figure_design.png" target="_blank">
@@ -68,9 +85,9 @@
     **Figure component** as now a mode to create figure through code as well. This allows you to write custom code or port existing one to generate the figure, providing flexibility for advanced users. You can access this mode by clicking on the **"Code"** tab in the figure design interface. Switching from UI to code mode using existing UI settings will automatically generate the code for you, which you can then modify as needed.
 <!-- markdownlint-enable MD046 -->
 
-#### Component design Examples:
+#### <span style="color: #8BC34A;">:material-palette:</span> Component design Examples:
 
-##### Figure design - visualization selection
+##### <span style="color: #F68B33;">:material-chart-line:</span> Figure design - visualization selection
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/design/figure_design.png" target="_blank">
@@ -78,7 +95,7 @@
     </a>
 </div>
 
-##### Figure design - scatter plot - UI mode
+##### <span style="color: #6495ED;">:material-scatter-plot:</span> Figure design - scatter plot - UI mode
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/design/figure_design_scatter.png" target="_blank">
@@ -86,7 +103,7 @@
     </a>
 </div>
 
-##### Figure design - scatter plot - code mode
+##### <span style="color: #7A5DC7;">:material-code-braces:</span> Figure design - scatter plot - code mode
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/design/figure_design_code.png" target="_blank">
@@ -94,7 +111,7 @@
     </a>
 </div>
 
-##### Interactive design - RangeSlider example
+##### <span style="color: #9966CC;">:material-tune-vertical:</span> Interactive design - RangeSlider example
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/design/interactive_design.png" target="_blank">
@@ -102,7 +119,7 @@
     </a>
 </div>
 
-##### Card design - metrics selection
+##### <span style="color: #E6779F;">:material-card:</span> Card design - metrics selection
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/design/card_design.png" target="_blank">

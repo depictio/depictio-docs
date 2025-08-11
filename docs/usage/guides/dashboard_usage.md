@@ -1,4 +1,4 @@
-# Using the Dashboard
+# <span style="color: #F68B33;">:material-view-dashboard:</span> Using the Dashboard
 
 ## Right Sidebar Parameters
 
