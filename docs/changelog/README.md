@@ -8,6 +8,32 @@ hide:
 
 # Changelog
 
+## **[v0.3.1](https://github.com/depictio/depictio/releases/tag/v0.3.1)**
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.3.1
+ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:stable
+ghcr.io/depictio/depictio:edge
+```
+
+### **🐛 Bug Fixes**
+
+* **Helm Chart & Deployment**: Adjusted resource limits and logging verbosity for backend services. Ensured proper permissions for frontend mounted directories and fixed authentication defaults in values.yaml. ([1ddc1d5e](https://github.com/depictio/depictio/commit/1ddc1d5e), [47214581](https://github.com/depictio/depictio/commit/47214581), [e574a013](https://github.com/depictio/depictio/commit/e574a013))
+* **Data Integrity**: Ensured depictio_run_id is included in joins for proper run isolation and normalized column data types in precompute_columns_specs function. ([e21ef1eb](https://github.com/depictio/depictio/commit/e21ef1eb), [f5ce756d](https://github.com/depictio/depictio/commit/f5ce756d))
+
+### **🚀 Improvements**
+
+* **Code Cleanliness & Consistency**: Standardized import statements across multiple files and removed unused imports. ([0349df19](https://github.com/depictio/depictio/commit/0349df19), [53b6b467](https://github.com/depictio/depictio/commit/53b6b467))
+* **Testing**: Implemented robust typing commands for improved input reliability in tests. ([f85a98e4](https://github.com/depictio/depictio/commit/f85a98e4))
+
+### **🧹 Chores**
+
+* **Logging**: Enhanced logging in API calls and data collection processing functions. ([0d662764](https://github.com/depictio/depictio/commit/0d662764))
+* **UMAP**: Disabled UMAP visualization temporarily. ([593ad1dd](https://github.com/depictio/depictio/commit/593ad1dd))
+
 ## **[v0.3.0](https://github.com/depictio/depictio/releases/tag/v0.3.0)**
 
 ### Docker Images
