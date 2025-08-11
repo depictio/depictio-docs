@@ -125,7 +125,9 @@ markdown_extensions:
 plugins:
   - search
   - inline-select-svg:
-      pattern: "images/logo/animated_favicon.svg" 
+      pattern: "images/logo/animated_favicon.svg"
+      replace_tag: true
+      add_class: "inline-svg" 
   - blog:
       blog_dir: blog
       post_dir: "{blog}/posts"
@@ -167,7 +169,7 @@ extra:
   version:
     provider: mike
     default: latest
-    alias: true
+    # alias: true
 
   # Google Analytics
   analytics:
