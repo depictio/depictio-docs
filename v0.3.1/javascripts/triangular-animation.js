@@ -4,9 +4,18 @@
 // Get the base path for assets (works both locally and on GitHub Pages)
 function getBasePath() {
     const path = window.location.pathname;
+    
+    // For mike versioned docs (e.g., /v0.3.1/, /latest/)
+    const versionMatch = path.match(/^(\/[^\/]+\/)/);
+    if (versionMatch) {
+        return versionMatch[1];
+    }
+    
+    // For GitHub Pages deployment
     if (path.includes('/depictio-docs/')) {
         return '/depictio-docs/';
     }
+    
     // For local development or other deployments
     return '/';
 }
