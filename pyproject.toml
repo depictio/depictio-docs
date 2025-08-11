@@ -8,6 +8,13 @@ dependencies = [
     "mkdocs-typer",
     "mkdocs-swagger-ui-tag",
     "mike",
+    "neoteroi-mkdocs",
+    "mkdocstrings",
+    "mkdocstrings-python",
+    "pre-commit",
+    "mkdocs-inline-select-svg-plugin",
+    "mkdocs-kroki-plugin",
+    "mkdocs-graphviz"
 ]
+version = "0.3.0"
 name = "depictio-docs"
-version = "0.0.4"

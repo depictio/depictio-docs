@@ -16,7 +16,7 @@ theme:
   custom_dir: overrides
   icon:
     annotation: material/record-circle
-  logo: "images/logo/logo_icon.png"
+  logo: "images/logo/animated_favicon.svg"
   favicon: "images/logo/logo_icon.png"
 
   # Color Settings
@@ -73,6 +73,10 @@ extra_css:
   - https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
   - https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css
 
+# Extra JavaScript
+extra_javascript:
+  - javascripts/triangular-animation.js
+
 # Markdown Extensions
 markdown_extensions:
   # Basic Extensions
@@ -85,6 +89,7 @@ markdown_extensions:
 
   # Timeline
   - neoteroi.timeline
+
 
   # PyMdown Extensions
   - pymdownx.caret
@@ -104,7 +109,11 @@ markdown_extensions:
         - docs
   - pymdownx.tabbed
   - pymdownx.inlinehilite
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
   # Table of Contents
   - toc:
@@ -115,6 +124,8 @@ markdown_extensions:
 # Plugins
 plugins:
   - search
+  - inline-select-svg:
+      pattern: "animated_favicon.svg"
   - blog:
       blog_dir: blog
       post_dir: "{blog}/posts"
@@ -132,6 +143,11 @@ plugins:
         - Features
         - Community
         - Technical
+        - Development
+        - Performance
+        - Architecture
+        - UI/UX
+        - Database
   - swagger-ui-tag
   - kroki:
       ServerURL: "https://kroki.io"
@@ -177,9 +193,12 @@ nav:
           - WebUI: usage/guides/web_ui.md
           - Dashboard creation: usage/guides/dashboard_creation.md
           - Using the dashboard: usage/guides/dashboard_usage.md
+      - Projects:
+          - Guide: usage/projects/guide.md
+          - YAML project configuration breakdown: usage/projects/yaml-examples.md
+          - Full Reference Configuration: usage/projects/reference.md
       - CLI:
           - Usage: depictio-cli/usage.md
-          - YAML reference: depictio-cli/full_reference_config.md
           - Minimal YAML config: depictio-cli/minimal_config.md
       - Special Modes:
           - Unauthenticated mode: usage/guides/unauthenticated_mode.md
@@ -203,12 +222,12 @@ nav:
       - Overview: FAQ/README.md
       - General: FAQ/general.md
   - Roadmap: roadmap/README.md
-  - Changelog:
-      - Overview: changelog/README.md
-  # - Blog:
-  #     - blog/index.md
+  - Changelog: changelog/README.md
+  - Blog:
+      - blog/index.md
   - More:
       - Overview: more/README.md
       # - Stories: more/stories.md
       - Funding: more/funding.md
       - Color Palette: more/palette.md
+      - Animated Logo: animated-logo.md

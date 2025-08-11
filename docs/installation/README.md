@@ -55,7 +55,7 @@ description: "Get started with Depictio by choosing the installation method that
     <img src="../images/gitpod-logo-mark.svg" alt="Gitpod Logo" class="card-logo" width="100px">
     <h3>Gitpod</h3>
     <p>For a quick preview of Depictio, you can use Gitpod to launch a temporary workspace with Depictio pre-installed.</p>
-    <a href="https://gitpod.io/#https://github.com/depictio/depictio" class="md-button md-button--primary">Open in Gitpod</a>
+    <a href="https://gitpod.io/#https://github.com/depictio/depictio/releases/latest" class="md-button md-button--primary">Open in Gitpod</a>
   </div>
 </div>
 

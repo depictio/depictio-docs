@@ -12,12 +12,12 @@
 - [Quick Reference](#quick-reference)
 - [Global Options](#global-options)
 - [🚀 Commands](#-commands)
-    - [🏃 Run Command](#-run-command)
-    - [📋 Config Commands](#-config-commands)
-    - [📊 Data Commands](#-data-commands)
-    - [💾 Backup Commands](#-backup-commands)
-- [🛠️ Common Use Cases](#️-common-use-cases)
-- [🔧 Error Handling](#-error-handling)
+    - [🏃 Run Command](#run-command)
+    - [📋 Config Commands](#config-commands)
+    - [📊 Data Commands](#data-commands)
+    - [💾 Backup Commands](#backup-commands)
+- [🛠️ Common Use Cases](#common-use-cases)
+- [🔧 Error Handling](#error-handling)
 
 ## Installation
 
@@ -50,6 +50,11 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 ## 🚀 Commands
 
 ### 🏃 Run Command
+
+
+<script src="https://asciinema.org/a/R5V6UXLetWzfp7AB39SxoGfhd.js" id="asciicast-R5V6UXLetWzfp7AB39SxoGfhd" async="true"></script>
+<p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>🖥️ `depictio-cli run` command example</strong></p>
+
 
 Execute the complete Depictio workflow: validate → sync → scan → process
 

@@ -1,0 +1,11 @@
+authors:
+  depictio-team:
+    name: Depictio Team
+    description: The core development team behind Depictio
+    avatar: https://github.com/depictio.png
+    url: https://github.com/depictio
+  thomas-weber:
+    name: Thomas Weber
+    description: Lead Developer & Founder
+    avatar: https://content.embl.org/sites/default/files/persons/CP-60038718.jpg
+    url: https://github.com/weber8thomas

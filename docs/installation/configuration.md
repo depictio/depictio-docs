@@ -42,6 +42,40 @@ DEPICTIO_DASH_PORT=5080
 DEPICTIO_DASH_SERVICE_NAME=depictio-frontend
 ```
 
+## Storage Configuration
+
+Depictio can use MinIO for object storage. You can either use an external MinIO service or the built-in one.
+
+### External MinIO Service
+
+If you have an external MinIO service, configure it as follows:
+
+For Docker Compose, add the following to your `.env` file:
+
+```bash
+# External MinIO service configuration
+DEPICTIO_MINIO_PUBLIC_URL=http://minio.example.com
+DEPICTIO_MINIO_ROOT_USER=minioadmin
+DEPICTIO_MINIO_ROOT_PASSWORD=minioadmin123
+DEPICTIO_MINIO_BUCKET_NAME=your-bucket-name
+DEPICTIO_MINIO_EXTERNAL_SERVICE=true
+```
+
+For Kubernetes, you can set these values in your custom `values.yaml` file:
+
+```yaml
+minio:
+  enabled: false  # Set to true if using built-in MinIO
+  env:
+    DEPICTIO_MINIO_PUBLIC_URL: "http://minio.example.com"
+    DEPICTIO_MINIO_ROOT_USER: "minioadmin"
+    DEPICTIO_MINIO_ROOT_PASSWORD: "minioadmin123"
+    DEPICTIO_MINIO_BUCKET_NAME: "your-bucket-name"
+    DEPICTIO_MINIO_EXTERNAL_SERVICE: true
+```
+
+Setting those values will disable the built-in MinIO service and use the external one instead.
+
 ## Authentication Configuration
 
 ### Unauthenticated Mode
