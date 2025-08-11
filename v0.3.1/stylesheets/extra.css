@@ -580,3 +580,8 @@ svg:hover path#shape-7 {
     }
 }
 
+/* Simple and direct - exclude Virgil font from version dropdown */
+.md-version {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
