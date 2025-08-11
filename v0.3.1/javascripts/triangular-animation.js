@@ -5,15 +5,19 @@
 function getBasePath() {
     const path = window.location.pathname;
     
-    // For mike versioned docs (e.g., /v0.3.1/, /latest/)
+    // For GitHub Pages deployment with versioning (e.g., /depictio-docs/v0.3.1/)
+    if (path.includes('/depictio-docs/')) {
+        const match = path.match(/^(\/depictio-docs\/[^\/]+\/)/);
+        if (match) {
+            return match[1]; // Returns /depictio-docs/v0.3.1/ or /depictio-docs/latest/
+        }
+        return '/depictio-docs/'; // Fallback for GitHub Pages
+    }
+    
+    // For mike versioned docs locally (e.g., /v0.3.1/, /latest/)
     const versionMatch = path.match(/^(\/[^\/]+\/)/);
     if (versionMatch) {
         return versionMatch[1];
-    }
-    
-    // For GitHub Pages deployment
-    if (path.includes('/depictio-docs/')) {
-        return '/depictio-docs/';
     }
     
     // For local development or other deployments
