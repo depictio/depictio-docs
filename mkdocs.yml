@@ -191,12 +191,14 @@ nav:
       - Getting Started: usage/get_started.md
       - Guides:
           - WebUI: usage/guides/web_ui.md
-          - Projects: usage/guides/projects.md
           - Dashboard creation: usage/guides/dashboard_creation.md
           - Using the dashboard: usage/guides/dashboard_usage.md
+      - Projects:
+          - Guide: usage/projects/guide.md
+          - YAML project configuration breakdown: usage/projects/yaml-examples.md
+          - Full Reference Configuration: usage/projects/reference.md
       - CLI:
           - Usage: depictio-cli/usage.md
-          - YAML reference: depictio-cli/full_reference_config.md
           - Minimal YAML config: depictio-cli/minimal_config.md
       - Special Modes:
           - Unauthenticated mode: usage/guides/unauthenticated_mode.md
