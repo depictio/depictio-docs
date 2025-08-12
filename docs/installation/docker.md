@@ -109,6 +109,20 @@ Or manually create the `.env` file and add the following content:
     # DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI="http://localhost:5080/auth"
 
     # ----------------------------------------------------------------------------
+    # Analytics Configuration
+    # ----------------------------------------------------------------------------
+    # Internal analytics tracking system
+    # DEPICTIO_ANALYTICS_ENABLED=false
+    # DEPICTIO_ANALYTICS_SESSION_TIMEOUT_MINUTES=30
+    # DEPICTIO_ANALYTICS_CLEANUP_DAYS=90
+    # DEPICTIO_ANALYTICS_TRACK_ANONYMOUS_USERS=true
+    # DEPICTIO_ANALYTICS_CLEANUP_ENABLED=true
+
+    # Google Analytics Configuration (GA4)
+    # DEPICTIO_GOOGLE_ANALYTICS_ENABLED=false
+    # DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-XXXXXXXXXX
+
+    # ----------------------------------------------------------------------------
     # System Configuration
     # ----------------------------------------------------------------------------
     # Container user and group IDs (uncomment to set specific values)
@@ -128,6 +142,8 @@ Or manually create the `.env` file and add the following content:
 <!-- markdownlint-enable MD046 -->
 
 Edit the `.env` file to customize your configuration if needed. The default values should work for most users.
+
+For detailed configuration options including analytics, authentication, and advanced features, see the [Configuration Guide](configuration.md).
 
 ### 3. Start the Services (including MinIO)
 

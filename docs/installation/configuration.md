@@ -403,11 +403,117 @@ DEPICTIO_PERFORMANCE_BROWSER_NAVIGATION_TIMEOUT=60000
 # JBrowse Integration
 DEPICTIO_JBROWSE_ENABLED=true
 
+# Analytics Configuration
+DEPICTIO_ANALYTICS_ENABLED=true
+DEPICTIO_ANALYTICS_SESSION_TIMEOUT_MINUTES=30
+DEPICTIO_ANALYTICS_CLEANUP_DAYS=90
+DEPICTIO_ANALYTICS_TRACK_ANONYMOUS_USERS=false
+DEPICTIO_ANALYTICS_CLEANUP_ENABLED=true
+
+# Google Analytics Configuration
+DEPICTIO_GOOGLE_ANALYTICS_ENABLED=true
+DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-XXXXXXXXXX
+
 # Development Settings (set to false for production)
 DEV_MODE=false
 DEPICTIO_PLAYWRIGHT_DEV_MODE=false
 DEPICTIO_TEST_MODE=false
 ```
+
+## Analytics Configuration
+
+Depictio provides comprehensive analytics capabilities to track user interactions and system usage. You can configure both internal analytics and external Google Analytics integration.
+
+### Internal Analytics System
+
+Configure Depictio's built-in analytics tracking system:
+
+```bash
+# Enable internal analytics tracking
+DEPICTIO_ANALYTICS_ENABLED=true
+
+# Session timeout configuration (in minutes, range: 5-1440)
+DEPICTIO_ANALYTICS_SESSION_TIMEOUT_MINUTES=30
+
+# Data retention period (in days, range: 1-365)
+DEPICTIO_ANALYTICS_CLEANUP_DAYS=90
+
+# Enable automatic cleanup of old analytics data
+DEPICTIO_ANALYTICS_CLEANUP_ENABLED=true
+```
+
+### Google Analytics Integration
+
+Configure Google Analytics 4 (GA4) for additional web analytics:
+
+```bash
+# Enable Google Analytics tracking
+DEPICTIO_GOOGLE_ANALYTICS_ENABLED=true
+
+# GA4 Measurement ID (obtain from Google Analytics dashboard)
+DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-XXXXXXXXXX
+```
+
+#### Setting up Google Analytics 4
+
+1. **Create Google Analytics Account**:
+   - Go to [Google Analytics](https://analytics.google.com)
+   - Create a new GA4 property for your domain
+
+2. **Configure Data Stream**:
+   - Navigate to Admin → Property → Data Streams
+   - Create or select a web stream for your Depictio instance
+   - Set your domain as the website URL
+
+3. **Get Measurement ID**:
+   - Copy the Measurement ID (starts with `G-`)
+   - Replace `G-XXXXXXXXXX` with your actual ID
+
+4. **Configure Environment Variables**:
+   - Set both `DEPICTIO_GOOGLE_ANALYTICS_ENABLED=true` and your tracking ID
+   - Ensure the same tracking ID is used for both backend and frontend services
+
+#### Analytics Features
+
+When analytics are enabled, the system tracks:
+
+**Internal Analytics**:
+- User session management and duration
+- Dashboard interactions and component usage
+- API endpoint usage patterns
+- User types (authenticated, anonymous, temporary)
+- Custom events and user flows
+
+**Google Analytics** (when enabled):
+- Page views and navigation events
+- Session duration and engagement metrics
+- User demographics and behavior flow
+- Custom events for dashboard interactions
+- Real-time analytics and reporting
+
+#### Kubernetes Configuration Example
+
+For Kubernetes deployments, use the provided example configuration:
+
+```yaml
+# Use the Google Analytics values file
+helm upgrade depictio ./helm-charts/depictio \
+  -f values.yaml \
+  -f examples/values-google-analytics.yaml
+
+# Or set values directly
+helm upgrade depictio ./helm-charts/depictio \
+  --set backend.env.DEPICTIO_GOOGLE_ANALYTICS_ENABLED=true \
+  --set backend.env.DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-XXXXXXXXXX \
+  --set frontend.env.DEPICTIO_GOOGLE_ANALYTICS_ENABLED=true \
+  --set frontend.env.DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-XXXXXXXXXX
+```
+
+#### Privacy Considerations
+
+- **GDPR Compliance**: Ensure compliance with data protection regulations
+- **User Consent**: Consider implementing user consent mechanisms for analytics
+- **Data Retention**: Configure appropriate `DEPICTIO_ANALYTICS_CLEANUP_DAYS` based on your data retention policies
 
 ## Security Considerations
 
@@ -418,6 +524,7 @@ DEPICTIO_TEST_MODE=false
 - **Set appropriate backup retention policies**
 - **Use separate S3 buckets** for primary data and backups
 - **Enable authentication** in production (disable unauthenticated mode)
+- **Review analytics data collection** and ensure compliance with privacy regulations
 
 ## Environment Variable Validation
 
