@@ -4185,29 +4185,26 @@ function toggleFullscreen() {
 async function checkDemoAvailability() {
   const demoSection = document.querySelector('.live-demo-section');
   const iframe = document.getElementById('demo-iframe');
-  const demoUrl = 'https://demo.depictio.embl.org/';
 
   if (!demoSection || !iframe) return;
 
-  try {
-    // Try to fetch the demo website
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+  let timeoutId = setTimeout(() => {
+    console.log('Demo site timeout - showing fallback');
+    showDemoUnavailable();
+  }, 10000); // 10 second timeout
 
-    const response = await fetch(demoUrl, {
-      method: 'HEAD',
-      mode: 'no-cors', // Allow cross-origin requests
-      signal: controller.signal
-    });
-
+  iframe.onload = () => {
+    console.log('Demo site loaded successfully');
     clearTimeout(timeoutId);
+  };
 
-    // If we get here, the site is reachable (even with no-cors, network errors will throw)
-    console.log('Demo site is reachable');
+  iframe.onerror = () => {
+    console.log('Demo site failed to load');
+    clearTimeout(timeoutId);
+    showDemoUnavailable();
+  };
 
-  } catch (error) {
-    console.log('Demo site not reachable:', error.message);
-
+  function showDemoUnavailable() {
     // Hide the live demo section
     demoSection.style.display = 'none';
 
