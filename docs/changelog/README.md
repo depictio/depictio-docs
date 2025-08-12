@@ -8,6 +8,26 @@ hide:
 
 # Changelog
 
+## **[v0.3.2](https://github.com/depictio/depictio/releases/tag/v0.3.2)**
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.3.2
+ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:stable
+ghcr.io/depictio/depictio:edge
+```
+
+### **✨ Features**
+
+* **Analytics & Session Management**: Enhanced analytics session management, including cleanup for anonymous sessions. Implemented both in-house analytics & Google Analytics integration to track unique connections and user activity. ([956d35f3](https://github.com/depictio/depictio/commit/956d35f3), [146e042a](https://github.com/depictio/depictio/commit/146e042a))
+* **Admin Dashboard**: Implemented a dedicated Admin Analytics Dashboard with related functionalities in admin section. Enhanced the analytics data service to include user ID validation and filtering for more precise data. ([8837a4fd](https://github.com/depictio/depictio/commit/8837a4fd), [41061497](https://github.com/depictio/depictio/commit/41061497))
+
+### **🚀 Improvements**
+
+* **Configuration**: Updated MinIO and backend configurations to optimize resource limits and enhance security context. ([9e681bfc](https://github.com/depictio/depictio/commit/9e681bfc))
+
 ## **[v0.3.1](https://github.com/depictio/depictio/releases/tag/v0.3.1)**
 
 ### Docker Images
