@@ -4228,44 +4228,39 @@ async function checkDemoAvailability() {
     showDemoUnavailable();
   }, 3000);
 
-  let loadCheckTimeout = setTimeout(() => {
-    // Additional check: if iframe hasn't properly loaded after initial load event
-    try {
-      const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-      if (iframeDoc) {
-        const title = iframeDoc.title.toLowerCase();
-        const bodyText = iframeDoc.body ? iframeDoc.body.innerText.toLowerCase() : '';
-
-        // Check for common 404/error indicators
-        if (title.includes('404') || title.includes('not found') || title.includes('error') ||
-            bodyText.includes('404') || bodyText.includes('not found') || bodyText.includes('page not found')) {
-          console.log('Demo site loaded but shows 404/error content');
-          clearTimeout(timeoutId);
-          showDemoUnavailable();
-          return;
-        }
-      }
-    } catch (e) {
-      // Cross-origin restrictions prevent access - this is actually good,
-      // means the site loaded properly from different domain
-      console.log('Cross-origin iframe (expected for external demo)');
-    }
-  }, 3000); // Check content 3 seconds after load
 
   iframe.onload = () => {
     console.log('Demo site iframe loaded');
     clearTimeout(timeoutId);
 
-    // Set up the content check
+    // Set up the content check after a brief delay
     setTimeout(() => {
-      loadCheckTimeout;
-    }, 100);
+      try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        if (iframeDoc) {
+          const title = iframeDoc.title.toLowerCase();
+          const bodyText = iframeDoc.body ? iframeDoc.body.innerText.toLowerCase() : '';
+
+          // Check for common 404/error indicators
+          if (title.includes('404') || title.includes('not found') || title.includes('error') ||
+              bodyText.includes('404') || bodyText.includes('not found') || bodyText.includes('page not found')) {
+            console.log('Demo site loaded but shows 404/error content');
+            showDemoUnavailable();
+            return;
+          }
+        }
+      } catch (e) {
+        // Cross-origin restrictions prevent access - this is actually good,
+        // means the site loaded properly from different domain
+        console.log('Cross-origin iframe (expected for external demo)');
+        // Site loaded successfully, do nothing - demo should be visible
+      }
+    }, 1000);
   };
 
   iframe.onerror = () => {
     console.log('Demo site failed to load in iframe');
     clearTimeout(timeoutId);
-    clearTimeout(loadCheckTimeout);
     showDemoUnavailable();
   };
 
@@ -4284,7 +4279,7 @@ async function checkDemoAvailability() {
           </svg>
         </div>
         <h3>Live Demo Temporarily Unavailable</h3>
-        <p>The interactive demo is currently not accessible. Please try again later or <a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
+        <p>The interactive demo is currently not accessible.</p>
         <div class="demo-alternative-actions">
           <a href="https://gitpod.io/#https://github.com/depictio/depictio/releases/latest" class="md-button md-button--gitpod" target="_blank" rel="noopener">
             <img src="images/gitpod-logo-mark.svg" alt="Gitpod" width="16" height="16">
