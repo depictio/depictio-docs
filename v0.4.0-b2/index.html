@@ -4182,29 +4182,50 @@ function toggleFullscreen() {
 }
 
 // Function to check if the demo website is reachable
-async function checkDemoAvailability() {
+function checkDemoAvailability() {
   const demoSection = document.querySelector('.live-demo-section');
   const iframe = document.getElementById('demo-iframe');
 
   if (!demoSection || !iframe) return;
 
-  try {
-    const response = await fetch('https://demo.depictio.embl.org/', {
-      method: 'GET'
-    });
+  // Set timeout to show fallback if iframe doesn't load
+  let timeoutId = setTimeout(() => {
+    console.log('Demo timeout - showing fallback');
+    showDemoUnavailable();
+  }, 8000);
 
-    const text = await response.text();
+  // Clear timeout if iframe loads successfully  
+  iframe.addEventListener('load', () => {
+    console.log('Demo loaded, checking content...');
+    clearTimeout(timeoutId);
 
-    // Check if it's a 404 page
-    if (text.includes('404 page not found')) {
-      throw new Error('404 page not found');
-    }
+    // Check if iframe loaded 404 content
+    setTimeout(() => {
+      try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        if (iframeDoc) {
+          const bodyText = iframeDoc.body.innerText || '';
+          if (bodyText.includes('404 page not found')) {
+            console.log('Demo shows 404 - showing fallback');
+            showDemoUnavailable();
+            return;
+          }
+        }
+        console.log('Demo loaded successfully');
+      } catch (e) {
+        // Cross-origin restriction means external site loaded properly
+        console.log('Demo loaded successfully (cross-origin)');
+      }
+    }, 1000);
+  });
 
-    console.log('Demo site is working');
+  iframe.addEventListener('error', () => {
+    console.log('Demo failed to load');
+    clearTimeout(timeoutId);
+    showDemoUnavailable();
+  });
 
-  } catch (error) {
-    console.log('Demo unavailable:', error.message);
-
+  function showDemoUnavailable() {
     // Hide the live demo section
     demoSection.style.display = 'none';
 
