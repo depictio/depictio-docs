@@ -4181,8 +4181,58 @@ function toggleFullscreen() {
   }
 }
 
-// Function to check if the demo website is reachable
-async function checkDemoAvailability() {
+// Simple demo availability check
+function checkDemoAvailability() {
+  const demoSection = document.querySelector('.live-demo-section');
+  const iframe = document.getElementById('demo-iframe');
+
+  if (!demoSection || !iframe) return;
+
+  let timeoutId = setTimeout(() => {
+    showDemoUnavailable();
+  }, 10000);
+
+  iframe.addEventListener('load', () => {
+    clearTimeout(timeoutId);
+  });
+
+  iframe.addEventListener('error', () => {
+    clearTimeout(timeoutId);
+    showDemoUnavailable();
+  });
+
+  function showDemoUnavailable() {
+    demoSection.style.display = 'none';
+    const fallbackMessage = document.createElement('div');
+    fallbackMessage.className = 'demo-unavailable-message';
+    fallbackMessage.innerHTML = `
+      <div class="demo-unavailable-content">
+        <div class="demo-unavailable-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2ZM13,17H11V15H13V17ZM13,13H11V7H13V13Z"/>
+          </svg>
+        </div>
+        <h3>Live Demo Temporarily Unavailable</h3>
+        <p>The interactive demo is currently not accessible.</p>
+        <div class="demo-alternative-actions">
+          <a href="https://gitpod.io/#https://github.com/depictio/depictio/releases/latest" class="md-button md-button--gitpod" target="_blank" rel="noopener">
+            <img src="images/gitpod-logo-mark.svg" alt="Gitpod" width="16" height="16">
+            Open in Gitpod
+          </a>
+          <a href="usage/get_started/" class="md-button">View Documentation</a>
+        </div>
+      </div>
+    `;
+    const workflowSection = document.querySelector('.workflow-section');
+    if (workflowSection) {
+      workflowSection.insertAdjacentElement('afterend', fallbackMessage);
+    }
+  }
+  return;
+}
+
+// OLD COMPLEX VERSION - COMMENTED OUT
+function checkDemoAvailability_old() {
   console.log('🚀 Starting demo availability check...');
   const demoSection = document.querySelector('.live-demo-section');
   const iframe = document.getElementById('demo-iframe');
