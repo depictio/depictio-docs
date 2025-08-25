@@ -2550,7 +2550,7 @@
           <span class="live-indicator"></span>
           <div class="demo-badge-content">
             <strong>Live interactive demo - Try it!</strong>
-            <a href="https://test.demo.depictio.embl.org/" target="_blank" rel="noopener" class="demo-direct-link">
+            <a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener" class="demo-direct-link">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
               </svg>
@@ -2570,7 +2570,7 @@
         <div class="demo-alternatives">
           <h4>Get started with Depictio</h4>
           <div class="demo-alt-buttons">
-            <a href="https://test.demo.depictio.embl.org/" class="demo-alt-btn demo-btn" target="_blank" rel="noopener">
+            <a href="https://demo.depictio.embl.org/" class="demo-alt-btn demo-btn" target="_blank" rel="noopener">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
               </svg>
@@ -2611,8 +2611,8 @@
         <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
       </svg>
     </button>
-    <iframe id="demo-iframe" src="https://test.demo.depictio.embl.org/" width="100%" height="1080" frameborder="0" allowfullscreen style="zoom: 0.56;">
-      <p>Your browser does not support iframes. <a href="https://test.demo.depictio.embl.org/">Click here to view the Depictio dashboard</a></p>
+    <iframe id="demo-iframe" src="https://demo.depictio.embl.org/" width="100%" height="1080" frameborder="0" allowfullscreen style="zoom: 0.56;">
+      <p>Your browser does not support iframes. <a href="https://demo.depictio.embl.org/">Click here to view the Depictio dashboard</a></p>
     </iframe>
   </div>
 </section>
@@ -4181,166 +4181,30 @@ function toggleFullscreen() {
   }
 }
 
-// Simple demo availability check
-function checkDemoAvailability() {
+// Function to check if the demo website is reachable
+async function checkDemoAvailability() {
   const demoSection = document.querySelector('.live-demo-section');
   const iframe = document.getElementById('demo-iframe');
 
   if (!demoSection || !iframe) return;
 
-  let timeoutId = setTimeout(() => {
-    showDemoUnavailable();
-  }, 10000);
+  try {
+    const response = await fetch('https://test.demo.depictio.embl.org/', {
+      method: 'GET'
+    });
 
-  iframe.addEventListener('load', () => {
-    clearTimeout(timeoutId);
-  });
+    const text = await response.text();
 
-  iframe.addEventListener('error', () => {
-    clearTimeout(timeoutId);
-    showDemoUnavailable();
-  });
-
-  function showDemoUnavailable() {
-    demoSection.style.display = 'none';
-    const fallbackMessage = document.createElement('div');
-    fallbackMessage.className = 'demo-unavailable-message';
-    fallbackMessage.innerHTML = `
-      <div class="demo-unavailable-content">
-        <div class="demo-unavailable-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2ZM13,17H11V15H13V17ZM13,13H11V7H13V13Z"/>
-          </svg>
-        </div>
-        <h3>Live Demo Temporarily Unavailable</h3>
-        <p>The interactive demo is currently not accessible.</p>
-        <div class="demo-alternative-actions">
-          <a href="https://gitpod.io/#https://github.com/depictio/depictio/releases/latest" class="md-button md-button--gitpod" target="_blank" rel="noopener">
-            <img src="images/gitpod-logo-mark.svg" alt="Gitpod" width="16" height="16">
-            Open in Gitpod
-          </a>
-          <a href="usage/get_started/" class="md-button">View Documentation</a>
-        </div>
-      </div>
-    `;
-    const workflowSection = document.querySelector('.workflow-section');
-    if (workflowSection) {
-      workflowSection.insertAdjacentElement('afterend', fallbackMessage);
+    // Check if it's a 404 page
+    if (text.includes('404 page not found')) {
+      throw new Error('404 page not found');
     }
-  }
-  return;
-}
 
-// OLD COMPLEX VERSION - COMMENTED OUT
-function checkDemoAvailability_old() {
-  console.log('🚀 Starting demo availability check...');
-  const demoSection = document.querySelector('.live-demo-section');
-  const iframe = document.getElementById('demo-iframe');
-
-  console.log('🔍 Elements found:', { 
-    demoSection: !!demoSection, 
-    iframe: !!iframe,
-    iframeSrc: iframe?.src 
-  });
-
-  if (!demoSection || !iframe) {
-    console.log('❌ Required elements not found, aborting check');
-    return;
-  }
-
-  const demoUrl = 'https://test.demo.depictio.embl.org/';
-
-  // First, check HTTP status before loading iframe
-  try {
-    console.log('📡 Starting HEAD request...');
-    const headStart = performance.now();
-    const response = await fetch(demoUrl, { 
-      method: 'HEAD', 
-      mode: 'no-cors',
-      cache: 'no-cache'
-    });
-
-    // Note: In no-cors mode, we can't check response.ok or status
-    // But the fetch will fail if the site is completely unreachable
-    const headEnd = performance.now();
-    console.log(`✅ HEAD request completed in ${Math.round(headEnd - headStart)}ms`);
+    console.log('Demo site is working');
 
   } catch (error) {
-    console.log('Demo site HEAD request failed:', error);
-    showDemoUnavailable();
-    return;
-  }
+    console.log('Demo unavailable:', error.message);
 
-  // Additional check with a GET request to detect 404s
-  try {
-    console.log('📡 Starting GET request...');
-    const getStart = performance.now();
-    const testResponse = await fetch(demoUrl, { 
-      method: 'GET',
-      mode: 'no-cors',
-      cache: 'no-cache'
-    });
-    const getEnd = performance.now();
-    console.log(`✅ GET request completed in ${Math.round(getEnd - getStart)}ms`);
-  } catch (error) {
-    console.log('Demo site GET request failed:', error);
-    showDemoUnavailable();
-    return;
-  }
-
-  console.log('⏰ Setting 8-second timeout for iframe load...');
-  let timeoutId = setTimeout(() => {
-    console.log('⏰ TIMEOUT: Demo site took too long to load - showing fallback');
-    console.log('🔍 Iframe state at timeout:', {
-      src: iframe.src,
-      contentWindow: !!iframe.contentWindow,
-      readyState: iframe.contentDocument?.readyState
-    });
-    showDemoUnavailable();
-  }, 8000);
-
-
-  iframe.onload = () => {
-    const loadTime = performance.now();
-    console.log('🎉 SUCCESS: Demo site iframe loaded successfully at', Math.round(loadTime));
-    clearTimeout(timeoutId);
-    console.log('⏰ Timeout cleared - demo should be visible');
-
-    // Set up the content check after a brief delay
-    setTimeout(() => {
-      try {
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        if (iframeDoc) {
-          const title = iframeDoc.title.toLowerCase();
-          const bodyText = iframeDoc.body ? iframeDoc.body.innerText.toLowerCase() : '';
-
-          // Check for common 404/error indicators
-          if (title.includes('404') || title.includes('not found') || title.includes('error') ||
-              bodyText.includes('404') || bodyText.includes('not found') || bodyText.includes('page not found')) {
-            console.log('Demo site loaded but shows 404/error content');
-            showDemoUnavailable();
-            return;
-          }
-        }
-      } catch (e) {
-        // Cross-origin restrictions prevent access - this is actually good,
-        // means the site loaded properly from different domain
-        console.log('🔒 Cross-origin restriction (GOOD - external demo loaded properly)');
-        console.log('✅ Demo should be fully functional');
-      }
-    }, 1000);
-  };
-
-  iframe.onerror = (event) => {
-    console.log('❌ IFRAME ERROR: Demo site failed to load in iframe');
-    console.log('🔍 Error event:', event);
-    clearTimeout(timeoutId);
-    showDemoUnavailable();
-  };
-
-  console.log('👂 Event listeners attached, waiting for iframe to load...');
-
-  function showDemoUnavailable() {
     // Hide the live demo section
     demoSection.style.display = 'none';
 
@@ -4355,7 +4219,7 @@ function checkDemoAvailability_old() {
           </svg>
         </div>
         <h3>Live Demo Temporarily Unavailable</h3>
-        <p>The interactive demo is currently not accessible.</p>
+        <p>The interactive demo is currently not accessible. Please try again later or <a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
         <div class="demo-alternative-actions">
           <a href="https://gitpod.io/#https://github.com/depictio/depictio/releases/latest" class="md-button md-button--gitpod" target="_blank" rel="noopener">
             <img src="images/gitpod-logo-mark.svg" alt="Gitpod" width="16" height="16">
