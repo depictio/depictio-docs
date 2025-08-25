@@ -4196,12 +4196,11 @@ function checkDemoAvailability() {
 
   console.log('Setting up iframe event listeners...');
 
-  // Clear timeout if iframe loads successfully  
-  iframe.addEventListener('load', () => {
-    console.log('✅ IFRAME LOAD EVENT FIRED - Demo loaded, checking content...');
+  // Function to check iframe content
+  function checkIframeContent() {
+    console.log('✅ Checking iframe content...');
     clearTimeout(timeoutId);
 
-    // Check if iframe loaded 404 content
     setTimeout(() => {
       try {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -4219,13 +4218,22 @@ function checkDemoAvailability() {
         console.log('Demo loaded successfully (cross-origin)');
       }
     }, 1000);
-  });
+  }
 
-  iframe.addEventListener('error', () => {
-    console.log('❌ IFRAME ERROR EVENT FIRED - Demo failed to load');
-    clearTimeout(timeoutId);
-    showDemoUnavailable();
-  });
+  // Check if iframe is already loaded
+  if (iframe.contentWindow && (iframe.contentDocument?.readyState === 'complete' || iframe.contentWindow.location.href !== 'about:blank')) {
+    console.log('Iframe already loaded, checking content...');
+    checkIframeContent();
+  } else {
+    // Set up event listeners for future load
+    iframe.addEventListener('load', checkIframeContent);
+
+    iframe.addEventListener('error', () => {
+      console.log('❌ IFRAME ERROR EVENT FIRED - Demo failed to load');
+      clearTimeout(timeoutId);
+      showDemoUnavailable();
+    });
+  }
 
   console.log('Event listeners attached. Current iframe src:', iframe.src);
 
