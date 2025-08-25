@@ -4192,11 +4192,13 @@ function checkDemoAvailability() {
   let timeoutId = setTimeout(() => {
     console.log('Demo timeout - showing fallback');
     showDemoUnavailable();
-  }, 8000);
+  }, 5000);
+
+  console.log('Setting up iframe event listeners...');
 
   // Clear timeout if iframe loads successfully  
   iframe.addEventListener('load', () => {
-    console.log('Demo loaded, checking content...');
+    console.log('✅ IFRAME LOAD EVENT FIRED - Demo loaded, checking content...');
     clearTimeout(timeoutId);
 
     // Check if iframe loaded 404 content
@@ -4220,10 +4222,12 @@ function checkDemoAvailability() {
   });
 
   iframe.addEventListener('error', () => {
-    console.log('Demo failed to load');
+    console.log('❌ IFRAME ERROR EVENT FIRED - Demo failed to load');
     clearTimeout(timeoutId);
     showDemoUnavailable();
   });
+
+  console.log('Event listeners attached. Current iframe src:', iframe.src);
 
   function showDemoUnavailable() {
     // Hide the live demo section
