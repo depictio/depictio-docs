@@ -4183,16 +4183,27 @@ function toggleFullscreen() {
 
 // Function to check if the demo website is reachable
 async function checkDemoAvailability() {
+  console.log('🚀 Starting demo availability check...');
   const demoSection = document.querySelector('.live-demo-section');
   const iframe = document.getElementById('demo-iframe');
 
-  if (!demoSection || !iframe) return;
+  console.log('🔍 Elements found:', { 
+    demoSection: !!demoSection, 
+    iframe: !!iframe,
+    iframeSrc: iframe?.src 
+  });
+
+  if (!demoSection || !iframe) {
+    console.log('❌ Required elements not found, aborting check');
+    return;
+  }
 
   const demoUrl = 'https://demo.depictio.embl.org/';
 
   // First, check HTTP status before loading iframe
   try {
-    console.log('Checking demo site availability...');
+    console.log('📡 Starting HEAD request...');
+    const headStart = performance.now();
     const response = await fetch(demoUrl, { 
       method: 'HEAD', 
       mode: 'no-cors',
@@ -4201,7 +4212,8 @@ async function checkDemoAvailability() {
 
     // Note: In no-cors mode, we can't check response.ok or status
     // But the fetch will fail if the site is completely unreachable
-    console.log('Demo site responded to HEAD request');
+    const headEnd = performance.now();
+    console.log(`✅ HEAD request completed in ${Math.round(headEnd - headStart)}ms`);
 
   } catch (error) {
     console.log('Demo site HEAD request failed:', error);
@@ -4211,27 +4223,38 @@ async function checkDemoAvailability() {
 
   // Additional check with a GET request to detect 404s
   try {
+    console.log('📡 Starting GET request...');
+    const getStart = performance.now();
     const testResponse = await fetch(demoUrl, { 
       method: 'GET',
       mode: 'no-cors',
       cache: 'no-cache'
     });
-    console.log('Demo site GET request completed');
+    const getEnd = performance.now();
+    console.log(`✅ GET request completed in ${Math.round(getEnd - getStart)}ms`);
   } catch (error) {
     console.log('Demo site GET request failed:', error);
     showDemoUnavailable();
     return;
   }
 
+  console.log('⏰ Setting 3-second timeout for iframe load...');
   let timeoutId = setTimeout(() => {
-    console.log('Demo site timeout - showing fallback');
+    console.log('⏰ TIMEOUT: Demo site took too long to load - showing fallback');
+    console.log('🔍 Iframe state at timeout:', {
+      src: iframe.src,
+      contentWindow: !!iframe.contentWindow,
+      readyState: iframe.contentDocument?.readyState
+    });
     showDemoUnavailable();
   }, 3000);
 
 
   iframe.onload = () => {
-    console.log('Demo site iframe loaded');
+    const loadTime = performance.now();
+    console.log('🎉 SUCCESS: Demo site iframe loaded successfully at', Math.round(loadTime));
     clearTimeout(timeoutId);
+    console.log('⏰ Timeout cleared - demo should be visible');
 
     // Set up the content check after a brief delay
     setTimeout(() => {
@@ -4252,17 +4275,20 @@ async function checkDemoAvailability() {
       } catch (e) {
         // Cross-origin restrictions prevent access - this is actually good,
         // means the site loaded properly from different domain
-        console.log('Cross-origin iframe (expected for external demo)');
-        // Site loaded successfully, do nothing - demo should be visible
+        console.log('🔒 Cross-origin restriction (GOOD - external demo loaded properly)');
+        console.log('✅ Demo should be fully functional');
       }
     }, 1000);
   };
 
-  iframe.onerror = () => {
-    console.log('Demo site failed to load in iframe');
+  iframe.onerror = (event) => {
+    console.log('❌ IFRAME ERROR: Demo site failed to load in iframe');
+    console.log('🔍 Error event:', event);
     clearTimeout(timeoutId);
     showDemoUnavailable();
   };
+
+  console.log('👂 Event listeners attached, waiting for iframe to load...');
 
   function showDemoUnavailable() {
     // Hide the live demo section

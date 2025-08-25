@@ -143,8 +143,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const logoButton = document.querySelector('.md-header__button.md-logo');
         const headerLogo = document.querySelector('.md-header__button.md-logo img');
         
+        console.log('🔍 Logo replacement check:', {
+            logoButton: !!logoButton,
+            headerLogo: !!headerLogo,
+            hasParent: !!headerLogo?.parentNode
+        });
+        
         if (!headerLogo || !logoButton) {
-            console.log('Header logo not found');
+            console.log('❌ Header logo or button not found, skipping replacement');
+            return;
+        }
+        
+        if (!headerLogo.parentNode) {
+            console.log('❌ Header logo has no parent node, skipping replacement');
             return;
         }
         
@@ -175,7 +186,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     svg.setAttribute('viewBox', newViewBox);
                     
                     // Replace the img with the SVG
-                    headerLogo.parentNode.replaceChild(svg, headerLogo);
+                    if (headerLogo.parentNode) {
+                        headerLogo.parentNode.replaceChild(svg, headerLogo);
+                    } else {
+                        console.error('Could not replace header logo: parentNode is null');
+                        return;
+                    }
                     
                     // Show the logo now that it's ready
                     logoButton.classList.add('logo-ready');
