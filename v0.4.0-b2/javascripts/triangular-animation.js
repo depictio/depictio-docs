@@ -146,8 +146,15 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('🔍 Logo replacement check:', {
             logoButton: !!logoButton,
             headerLogo: !!headerLogo,
-            hasParent: !!headerLogo?.parentNode
+            hasParent: !!headerLogo?.parentNode,
+            alreadyReplaced: logoButton?.classList.contains('logo-ready')
         });
+        
+        // Check if logo has already been replaced
+        if (logoButton?.classList.contains('logo-ready')) {
+            console.log('✅ Logo already replaced, skipping');
+            return;
+        }
         
         if (!headerLogo || !logoButton) {
             console.log('❌ Header logo or button not found, skipping replacement');
