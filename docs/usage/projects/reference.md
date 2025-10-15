@@ -227,6 +227,35 @@ workflows:
           with_dc:
             ["qc_summary"] # Required: Target data collections to join with
             # References to other data_collection_tag values
+
+      # --- MultiQC DATA COLLECTION (v0.5.0+) ---
+      - data_collection_tag:
+          "multiqc_data" # Required: Unique identifier for MultiQC data
+
+        description:
+          "MultiQC quality control report data" # Optional: Description
+
+        config:
+          # Required: Type specification for MultiQC
+          type:
+            "MultiQC" # Required: Identifies this as a MultiQC data collection
+            # NOTE: MultiQC type has special handling:
+            #   - Automatically detects multiqc_data/multiqc.parquet in each run
+            #   - No scan configuration needed (auto-detected)
+            #   - No metatype specification required
+            #   - No dc_specific_properties needed
+            #   - Requires MultiQC 1.29+ to generate parquet format
+
+        # Optional: Join with other data collections
+        join: # Optional: Join MultiQC data with other collections
+          on_columns:
+            ["sample"] # Required: Column for joining (typically "sample")
+            # MultiQC sample names must match values in other datasets
+          how:
+            "inner" # Required: Join type
+          with_dc:
+            ["sample_metadata"] # Required: Target data collections
+            # Can join with metadata, QC metrics, or other tables
 ```
 
 ## See Also

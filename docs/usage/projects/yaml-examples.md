@@ -403,6 +403,57 @@ dc_specific_properties:
                                                #   expression: "Log2 expression level"
 ```
 
+#### **MultiQC** Data Collection Configuration (v0.5.0+)
+
+MultiQC data collections provide specialized handling for quality control reports with automatic detection:
+
+```yaml
+config:
+  # === REQUIRED FIELD ===
+
+  type: "MultiQC"          # Required: Identifies this as a MultiQC data collection
+
+  # === AUTOMATIC HANDLING ===
+  # The following are NOT required for MultiQC type:
+  # - metatype: Automatically handled
+  # - scan: Auto-detects multiqc_data/multiqc.parquet in each run
+  # - dc_specific_properties: Not needed
+
+  # === REQUIREMENTS ===
+  # - MultiQC 1.29+ must be used to generate parquet format
+  # - Each run directory must contain: multiqc_data/multiqc.parquet
+  # - Sample names in MultiQC must match join column values
+
+# === OPTIONAL: JOIN CONFIGURATION ===
+join:
+  on_columns: ["sample"]   # Typically joins on "sample" column
+  how: "inner"            # Join type: inner, outer, left, right
+  with_dc: ["sample_metadata"]  # Other data collections to join with
+```
+
+**MultiQC-Specific Notes:**
+
+- **Automatic Detection**: No need to specify file paths or patterns
+- **Fixed Location**: System looks for `multiqc_data/multiqc.parquet` in each run
+- **Format Requirement**: Requires MultiQC 1.29+ to generate `.parquet` output
+- **No Configuration Overhead**: Just specify `type: "MultiQC"` and you're done
+- **Join Column**: Standard join column is `"sample"` to match MultiQC sample names
+
+**Example Directory Structure:**
+
+```text
+project_root/
+├── run_001/
+│   └── multiqc_data/
+│       └── multiqc.parquet    # Auto-detected
+├── run_002/
+│   └── multiqc_data/
+│       └── multiqc.parquet    # Auto-detected
+└── run_003/
+    └── multiqc_data/
+        └── multiqc.parquet    # Auto-detected
+```
+
 ### Polars Configuration Options
 
 Polars is Depictio's high-performance data processing engine. Configure data reading with these options:
@@ -756,6 +807,91 @@ workflows:
           how: "inner"
           with_dc: ["ashleys_labels", "mosaicatcher_stats", "sv_calls"]
 ```
+
+### Pattern 3: MultiQC Quality Control Integration (v0.5.0+)
+
+```yaml
+name: "MultiQC Quality Control Analysis"
+project_type: "advanced"
+
+workflows:
+  - name: "qc-pipeline"
+    engine:
+      name: "python"
+    data_location:
+      structure: "sequencing-runs"
+      runs_regex: "run_*"
+      locations:
+        - "{DATA_ROOT}/qc_results"
+
+    data_collections:
+      # MultiQC data collection - automatically detected
+      - data_collection_tag: "multiqc_data"
+        description: "MultiQC quality control report data"
+        config:
+          type: "MultiQC"
+          # NOTE: No scan, metatype, or dc_specific_properties needed
+          # MultiQC automatically detects multiqc_data/multiqc.parquet in each run
+          # Requires MultiQC 1.29+ to generate parquet format
+
+      # Sample metadata for context
+      - data_collection_tag: "sample_metadata"
+        description: "Sample metadata table for MultiQC integration"
+        config:
+          type: "Table"
+          metatype: "Metadata"
+          scan:
+            mode: "single"
+            scan_parameters:
+              filename: "metadata/sample_info.csv"
+          dc_specific_properties:
+            format: "CSV"
+            polars_kwargs:
+              separator: ","
+              has_header: true
+            columns_description:
+              "sample": "Sample identifier matching MultiQC sample names"
+              "treatment": "Treatment condition applied to the sample"
+              "batch": "Batch identifier for experimental runs"
+          join:
+            on_columns: ["sample"]
+            how: "inner"
+            with_dc: ["multiqc_data"]
+
+      # Additional per-sample QC metrics
+      - data_collection_tag: "sample_qc_metrics"
+        description: "Per-sample quality control metrics and statistics"
+        config:
+          type: "Table"
+          metatype: "Aggregate"
+          scan:
+            mode: "recursive"
+            scan_parameters:
+              regex_config:
+                pattern: "qc_metrics/.*\\.csv"
+          dc_specific_properties:
+            format: "CSV"
+            polars_kwargs:
+              separator: ","
+              has_header: true
+            columns_description:
+              "sample": "Sample identifier"
+              "total_reads": "Total number of reads"
+              "mapped_reads": "Number of successfully mapped reads"
+              "mapping_rate": "Percentage of reads mapped to reference"
+          join:
+            on_columns: ["sample"]
+            how: "inner"
+            with_dc: ["sample_metadata", "multiqc_data"]
+```
+
+**Key Points for MultiQC Integration:**
+
+- **Automatic Detection**: MultiQC data is automatically detected from `multiqc_data/multiqc.parquet` in each run
+- **Minimal Configuration**: Only requires `type: "MultiQC"` - no scan parameters needed
+- **Format Requirement**: Requires MultiQC 1.29+ to generate parquet output format
+- **Join Column**: Typically joins on `["sample"]` column to link with metadata and other QC metrics
+- **Location**: Each run must contain a `multiqc_data/multiqc.parquet` file generated by MultiQC
 
 ## 🔍 Validation
 
