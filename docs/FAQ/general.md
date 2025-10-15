@@ -51,7 +51,7 @@ Creating dashboards in Depictio is straightforward. Please refer to our [Dashboa
 
 ### What data formats does Depictio support?
 
-Depictio currently supports all tabular formats (CSV, TSV, XLSX, Parquet, etc.) compatible with [Polars](https://pola.rs/). Futur versions will include support for [MultiQC](https://seqera.io/multiqc/) reports, as well as [JBrowse](https://jbrowse.org/) compatible omics data formats (BED, BAM, VCF, etc.).
+Depictio currently supports all tabular formats (CSV, TSV, XLSX, Parquet, etc.) compatible with [Polars](https://pola.rs/). As of v0.5.0, [MultiQC](https://seqera.io/multiqc/) reports are fully supported with dedicated visualization components. Future versions will include support for [JBrowse](https://jbrowse.org/) compatible omics data formats (BED, BAM, VCF, etc.).
 
 ### Can I share my dashboards with others?
 

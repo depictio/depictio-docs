@@ -126,3 +126,26 @@
         <img src="../../../images/guides/dashboard_creation/design/card_design.png" width="600">
     </a>
 </div>
+
+## <img src="../../../roadmap/multiqc.png" width="24" style="vertical-align: middle;"> MultiQC Integration (v0.5.0+)
+
+As of version 0.5.0, Depictio includes dedicated support for MultiQC quality control reports. This integration allows you to:
+
+- **Automatically scan and aggregate** MultiQC output reports
+- **Create components** directly from MultiQC data using the MultiQC API
+- **Link figures** with external metadata for enhanced analysis
+- **Filter datasets** to display specific samples based on QC metrics
+
+<div style="padding:104.43% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1127490052?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Screen Recording 2025-10-13 at 22.23.16"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+
+### <span style="color: #6495ED;">:material-plus-circle:</span> Adding MultiQC Components
+
+1. When creating a new component, MultiQC data collections will be automatically detected if present in your project
+2. Select the **MultiQC data collection** from the available options in Step 2 (Data Selection)
+3. MultiQC-specific visualization options will be available based on the report content
+4. You can create multiple components from different sections of your MultiQC report (General Statistics, FastQC, Cutadapt, etc.)
+
+<!-- markdownlint-disable MD046 -->
+!!! tip "MultiQC Data Ingestion"
+    To ingest MultiQC reports into Depictio, use the Depictio-CLI with your project configuration file. MultiQC reports should be specified in your YAML configuration under the appropriate workflow section.
+<!-- markdownlint-enable MD046 -->

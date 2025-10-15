@@ -106,7 +106,7 @@ hide:
       <div class="demo-note-content" id="demo-note-content">
         <p>The demo is running an <strong>"unauthenticated mode"</strong> to allow anyone to try it out without needing an account. However, you can create a temporary account to create your own projects and upload datasets.</p>
         <p><strong>Note:</strong> Accounts and related data will be reset after 1 hour to keep the demo environment clean.</p>
-        
+
         <div class="demo-alternatives">
           <h4>Get started with Depictio</h4>
           <div class="demo-alt-buttons">
@@ -229,6 +229,7 @@ hide:
       <ul>
         <li><strong>Client-side processing:</strong> Depictio-CLI allows local data scanning and processing, pushing results to S3 bucket</li>
         <li><strong>Multiple formats:</strong> Support for Parquet, CSV, JSON, TSV using Polars and Delta Lake</li>
+        <li><strong>MultiQC integration:</strong> Seamless quality control report visualization with dedicated components (v0.5.0+)</li>
       </ul>
     </div>
 
@@ -1677,12 +1678,12 @@ hide:
       padding: 1rem 1rem 2rem 1rem;
       margin: 0 -1rem;
     }
-    
+
     .demo-alternative-actions {
       flex-direction: column;
       align-items: center;
     }
-    
+
     .demo-alternative-actions .md-button {
       width: 100%;
       max-width: 280px;
@@ -1694,7 +1695,7 @@ hide:
 function toggleDemoNote() {
   const content = document.getElementById('demo-note-content');
   const toggle = document.querySelector('.demo-note-toggle');
-  
+
   content.classList.toggle('expanded');
   toggle.classList.toggle('expanded');
 }
@@ -1729,29 +1730,29 @@ async function checkDemoAvailability() {
   const demoUrl = 'https://demo.depictio.embl.org/';
 
   if (!demoSection || !iframe) return;
-  
+
   try {
     // Try to fetch the demo website
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
-    
+
     const response = await fetch(demoUrl, {
       method: 'HEAD',
       mode: 'no-cors', // Allow cross-origin requests
       signal: controller.signal
     });
-    
+
     clearTimeout(timeoutId);
-    
+
     // If we get here, the site is reachable (even with no-cors, network errors will throw)
     console.log('Demo site is reachable');
-    
+
   } catch (error) {
     console.log('Demo site not reachable:', error.message);
-    
+
     // Hide the live demo section
     demoSection.style.display = 'none';
-    
+
     // Create and show fallback message
     const fallbackMessage = document.createElement('div');
     fallbackMessage.className = 'demo-unavailable-message';
@@ -1773,7 +1774,7 @@ async function checkDemoAvailability() {
         </div>
       </div>
     `;
-    
+
     // Insert the fallback message after the workflow section
     const workflowSection = document.querySelector('.workflow-section');
     if (workflowSection) {
@@ -1792,7 +1793,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
-  
+
   // Check demo availability when page loads
   checkDemoAvailability();
 });

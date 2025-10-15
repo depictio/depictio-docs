@@ -8,7 +8,7 @@ hide:
 
 # Changelog
 
-<!-- ## **[v0.5.3](https://github.com/depictio/depictio/releases/tag/v0.4.0)**
+## **[v0.5.3](https://github.com/depictio/depictio/releases/tag/v0.5.3)**
 
 ### Docker Images
 
@@ -23,7 +23,7 @@ ghcr.io/depictio/depictio:edge
 
 * Preserve original IDs during project creation to ensure consistency across K8s instances  [d4a57a5d](https://github.com/depictio/depictio/commit/d4a57a5d)
 
-## **[v0.5.2](https://github.com/depictio/depictio/releases/tag/v0.4.0)**
+## **[v0.5.2](https://github.com/depictio/depictio/releases/tag/v0.5.2)**
 
 ### Docker Images
 
@@ -49,7 +49,7 @@ ghcr.io/depictio/depictio:edge
 * **UI & Layout**: Prevented horizontal scrollbar, removed default background on draggable components, adjusted theme switch behavior. ([[310a8d9f](https://github.com/depictio/depictio/commit/310a8d9f)](<https://github.com/depictio/depictio/commit/310a8d9f>), [[6e06fd6c](https://github.com/depictio/depictio/commit/6e06fd6c)](<https://github.com/depictio/depictio/commit/6e06fd6c>), [[937e08b1](https://github.com/depictio/depictio/commit/937e08b1)](<https://github.com/depictio/depictio/commit/937e08b1>))
 * **Standardization & Cleanup**: Fixed naming inconsistencies in Iris Dashboard demo and commented out redundant tests/code. ([[ca6ee804](https://github.com/depictio/depictio/commit/ca6ee804)](<https://github.com/depictio/depictio/commit/ca6ee804>), [[d7d8a3d8](https://github.com/depictio/depictio/commit/d7d8a3d8)](<https://github.com/depictio/depictio/commit/d7d8a3d8>), [[8a83fe7b](https://github.com/depictio/depictio/commit/8a83fe7b)](<https://github.com/depictio/depictio/commit/8a83fe7b>), [[acf26a86](https://github.com/depictio/depictio/commit/acf26a86)](<https://github.com/depictio/depictio/commit/acf26a86>))
 
-## **[v0.5.1](https://github.com/depictio/depictio/releases/tag/v0.4.0)**
+## **[v0.5.1](https://github.com/depictio/depictio/releases/tag/v0.5.1)**
 
 ### Docker Images
 
@@ -75,7 +75,7 @@ ghcr.io/depictio/depictio:edge
 * **Component Editing**: Always create component buttons in edit mode and determine initial edit state. ([[669fdc92](https://github.com/depictio/depictio/commit/669fdc92)](<https://github.com/depictio/depictio/commit/669fdc92>), [[1e56ebe3](https://github.com/depictio/depictio/commit/1e56ebe3)](<https://github.com/depictio/depictio/commit/1e56ebe3>))
 * **Dashboard UI**: Improved header, modal layout, subtitle/icon customization, and sidebar/navbar handling. ([[ba99f97b](https://github.com/depictio/depictio/commit/ba99f97b)](<https://github.com/depictio/depictio/commit/ba99f97b>), [[40d10c09](https://github.com/depictio/depictio/commit/40d10c09)](<https://github.com/depictio/depictio/commit/40d10c09>), [[0d4ad756](https://github.com/depictio/depictio/commit/0d4ad756)](<https://github.com/depictio/depictio/commit/0d4ad756>))
 
-## **[v0.5.0](https://github.com/depictio/depictio/releases/tag/v0.4.0)**
+## **[v0.5.0](https://github.com/depictio/depictio/releases/tag/v0.5.0)**
 
 ### Docker Images
 
@@ -106,7 +106,7 @@ ghcr.io/depictio/depictio:edge
 
 * **Performance**: Optimized DataTable rendering and minimized unnecessary callback triggers. Introduced a new component update mechanism switching from full sequential rendering to initial rendering followed by parallel patching of components using Dash properties. ([f8e2f5a1](https://github.com/depictio/depictio/commit/f8e2f5a1))
 * **UI Responsiveness**: Moved more callbacks clientside for smoother interactions and reduced latency. ([a86bf22e](https://github.com/depictio/depictio/commit/a86bf22e))
-* **Code Cleanup**: Simplified logging and removed obsolete debug statements. ([bc2a93d4](https://github.com/depictio/depictio/commit/bc2a93d4)) -->
+* **Code Cleanup**: Simplified logging and removed obsolete debug statements. ([bc2a93d4](https://github.com/depictio/depictio/commit/bc2a93d4))
 
 ## **[v0.4.0](https://github.com/depictio/depictio/releases/tag/v0.4.0)**
 

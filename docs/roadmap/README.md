@@ -28,7 +28,7 @@ hide:
   content: "Seamless integration with bioinformatics quality control reports"
   icon: "./multiqc.png"
   key: "multiqc"
-  sub_title: "Phase 2: Specialization 🚧"
+  sub_title: "Phase 2: Specialization ✅"
 
 - title: "Configuration Assistant"
   content: "CLI-based project setup wizard with intelligent recommendations"
@@ -51,6 +51,7 @@ hide:
 - [x] Data ingestion using Depictio-CLI (python package based [typer](https://typer.tiangolo.com/)) using YAML configuration file
 - [x] Polars-compatible data format (Parquet, CSV, JSON, TSV) ingestion and transformation into [Delta Lake format](https://delta.io/)
 - [x] Delta lake push to S3 bucket (on-premise or remote MinIO)
+- [x] MultiQC report integration with dedicated visualization components (v0.5.0+)
 - [x] Comprehensive S3 backup and restore strategy with CLI commands and API endpoints
 - [x] Performance optimization with caching for iterative joins and component data
 - [x] Enhanced CLI execution with run commands and improved logging
@@ -127,7 +128,6 @@ hide:
 
 ### Data ingestion & data types supported
 
-- [ ] Support MultiQC report integration (leverage MultiQC 1.29 with parquet file)
 - [ ] Support for genome-browser tracks through [JBrowse2](https://jbrowse.org/) (e.g., VCF, BAM, BED, GFF)
 - [ ] Data ingestion template for heavily-used and standardized nf-core community workflows (`depictio-cli scan --template nf-core/sarek .`)
 - [ ] Single file loading (HTTP polars) without using CLI

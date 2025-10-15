@@ -38,6 +38,7 @@ When the **Display components options** switch is enabled, each component will d
 - <span style="color: #868e96;"><i class="mdi mdi-content-copy"></i> Clone</span>: Create a copy of the component.
 - <span style="color: #fd7e14;"><i class="bx bx-reset"></i> Reset filters</span>: Clear all filters applied to the component.
 - <span style="color: #E6779F;"><i class="mdi mdi-format-align-left"></i> Align</span>: Choose text alignment (left, center, right) for text components.
+- <span style="color: #15aabf;"><i class="mdi mdi-information-outline"></i> Component metadata</span>: View detailed metadata about the component, including its type, data source, and configuration settings.
 
 ## Interactivity
 
