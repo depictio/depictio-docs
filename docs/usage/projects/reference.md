@@ -263,4 +263,3 @@ workflows:
 - **[YAML Examples](yaml-examples.md)** - Complete configuration examples and patterns
 - **[Project Guide](guide.md)** - Comprehensive project management guide
 - **[CLI Reference](../../depictio-cli/usage.md)** - Command-line interface documentation
-

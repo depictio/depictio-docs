@@ -28,7 +28,7 @@ Choose your starting point based on your project complexity:
     ```yaml
     name: "My Analysis Project"
     project_type: "basic"
-    
+
     # Files will be uploaded through the web interface
     # No additional configuration needed!
     ```
@@ -38,10 +38,10 @@ Choose your starting point based on your project complexity:
     For CLI-based basic projects with direct files:
 
     ```yaml
-    name: "CSV Analysis Project"  
+    name: "CSV Analysis Project"
     project_type: "basic"
     is_public: false
-    
+
     data_collections:
       - data_collection_tag: "main_data"
         description: "Primary dataset for analysis"
@@ -66,7 +66,7 @@ Choose your starting point based on your project complexity:
     ```yaml
     name: "RNA-seq Analysis"
     project_type: "advanced"
-    
+
     workflows:
       - name: "rnaseq_pipeline"
         engine:
@@ -109,7 +109,7 @@ name: string                              # Required: Human-readable project nam
                                           # Example: "Multi-omics Cancer Study"
 
 
-# Advanced projects only: Workflow definitions  
+# Advanced projects only: Workflow definitions
 workflows: [Workflow]                     # Default: [] (empty for basic projects)
                                           # Array of workflow configurations
                                           # See "Workflow Configuration" section
@@ -150,7 +150,7 @@ Designed to be minimal and easy to set up, WebUI compatible, and suitable for sm
 **Use cases:**
 
 - Direct CSV/Excel file analysis
-- Ad-hoc data exploration  
+- Ad-hoc data exploration
 - Small-scale studies (< 100 files)
 - Quick prototyping and visualization
 
@@ -160,7 +160,7 @@ Designed to be minimal and easy to set up, WebUI compatible, and suitable for sm
 - Data uploaded via web interface or defined in `data_collections`
 - No workflow integration needed (default workflow is created under the hood for system compatibility)
 
-#### Advanced Projects  
+#### Advanced Projects
 
 Designed for complex data processing pipelines, automated workflows, and large-scale analyses.
 
@@ -185,14 +185,14 @@ Advanced projects use workflows to describe data organization patterns. Each wor
 ```yaml linenums="1"
 workflows:
   - # === REQUIRED FIELDS ===
-    
+
     name: string                          # Required: Workflow identifier
                                           # Must be non-empty
                                           # Example: "rnaseq_pipeline", "variant_calling"
-    
+
     engine:                               # Required: Execution engine information
       name: string                        # Required: Engine name
-                                          # Examples: "nextflow", "snakemake", "python", 
+                                          # Examples: "nextflow", "snakemake", "python",
                                           #          "galaxy", "cwl", "shell", "r"
                                           # Note: currently not validated against a list
 
@@ -205,25 +205,25 @@ workflows:
                                           # Options:
                                           # - "flat": All files in single directory level
                                           # - "sequencing-runs": Hierarchical run-based structure
-      
+
       locations: [string]                 # Required: Root directories to search
                                           # Supports environment variable expansion: {VAR_NAME}
-                                          # Examples: 
+                                          # Examples:
                                           #   - "/absolute/path/to/data"
                                           #   - "{DATA_ROOT}/project1"
                                           #   - "{HOME}/workflows/results"
-      
+
       runs_regex: string | null           # Required if structure="sequencing-runs"
-                                          # Optional if structure="flat" 
+                                          # Optional if structure="flat"
                                           # Regex pattern to identify individual runs
                                           # Example: "run_\\d+", "sample_.*", "batch[A-Z]"
-    
+
     data_collections: [DataCollection]    # Required: Data collection definitions
                                           # Array of data collections for this workflow
                                           # See "Data Collections Configuration"
-    
+
     # === OPTIONAL FIELDS ===
-    
+
     version: string | null                # Optional: Workflow version
                                           # Example: "1.0.0", "v2.3.1"
                                           # Note: version is currently saved only for the sake of documentation, no functional impact on the system, will be implemented in the future
@@ -232,14 +232,14 @@ workflows:
       name: string | null                 # Options: "nf-core", "smk-wf-catalog", "workflowhub"
       url: string | null                  # Catalog URL
                                           # Example: "https://nf-co.re/rnaseq"
-    
+
     repository_url: string | null         # Optional: Source code repository
                                           # Example: "https://github.com/user/workflow"
-    
+
     workflow_tag: string | null           # Optional: Auto-generated workflow identifier
                                           # Format: "engine/name" or "catalog/name"
                                           # Usually auto-populated, rarely set manually
-    
+
     config:                               # Optional: Workflow-specific configuration
       version: string | null              # Workflow configuration version
       workflow_parameters: object | null # Workflow-specific parameters
@@ -260,7 +260,7 @@ data_location:
 # Directory layout:
 # /data/project1/results/
 # ├── sample1_stats.csv
-# ├── sample2_stats.csv  
+# ├── sample2_stats.csv
 # ├── sample1_counts.tsv
 # └── sample2_counts.tsv
 ```
@@ -269,7 +269,7 @@ data_location:
 
 ```yaml
 data_location:
-  structure: "sequencing-runs"  
+  structure: "sequencing-runs"
   locations:
     - "{DATA_ROOT}/rnaseq_study"
   runs_regex: "run_\\d+"  # Required: matches run_001, run_002, etc.
@@ -281,7 +281,7 @@ data_location:
 # │   │   ├── stats.tsv
 # │   │   └── counts.tsv
 # │   └── sample_B/
-# │       ├── stats.tsv  
+# │       ├── stats.tsv
 # │       └── counts.tsv
 # └── run_002/
 #     ├── sample_C/
@@ -298,7 +298,7 @@ Depictio supports environment variable expansion in file paths:
 
 ```yaml
 # Environment setup
-# export DATA_ROOT="/mnt/storage/projects"  
+# export DATA_ROOT="/mnt/storage/projects"
 # export PROJECT_NAME="cancer_study"
 # export BACKUP_LOCATION="/backup/data"
 
@@ -311,7 +311,7 @@ data_location:
 **Common Environment Variables:**
 
 - `DATA_ROOT`, `DATA_LOCATION` - Primary data storage
-- `PROJECT_ROOT` - Project base directory  
+- `PROJECT_ROOT` - Project base directory
 - `HOME`, `USER` - User-specific paths
 - `SCRATCH_DIR`, `TEMP_DIR` - Temporary storage locations
 
@@ -322,23 +322,23 @@ Data collections define how to discover, process, and structure your data files.
 ```yaml
 data_collections:
   - # === REQUIRED FIELDS ===
-    
+
     data_collection_tag: string    # Required: Unique identifier within project
                                   # Must be unique across all data collections
                                   # Used for referencing in joins and dashboards
                                   # Example: "gene_counts", "quality_metrics"
-    
+
     config:                     # Required: Data collection configuration
       type: string                # Required: Data collection type
                                   # Options (only table for now):
                                   #  - "table": Tabular data (CSV, TSV, Excel, Parquet, Feather)
-      
+
       metatype: string | null    # Required for table type
                                   # Required: Data collection metatype
                                   # Options:
                                   # - "metadata": Single annotation/metadata file per project
                                   # - "aggregate": Multiple files combined into unified dataset
-      
+
       scan:                     # Required: File discovery configuration
         mode: string              # Required: Scanning strategy
                                   # Options:
@@ -349,20 +349,20 @@ data_collections:
           # For mode: "single"
           filename: string      # Required: Relative or absolute file path
                                # Example: "metadata/sample_info.csv"
-          
-          # For mode: "recursive"  
+
+          # For mode: "recursive"
           regex_config:         # Required: Pattern matching configuration
             pattern: string    # Required: Regex pattern for file discovery
                               # Example: "stats/.*_stats\\.tsv"
             wildcards: [...]   # Optional: Named capture groups for metadata extraction
           max_depth: int | null # Optional: Maximum directory depth to search
           ignore: [string] | null  # Optional: Patterns to exclude from search
-      
+
       dc_specific_properties:   # Required: Type-specific configuration
         # See "Table Configuration" section for details
-    
+
     # === OPTIONAL FIELDS ===
-    
+
     description: string | null  # Optional: Human-readable description
                                # Example: "Per-sample quality control metrics"
 ```
@@ -370,7 +370,7 @@ data_collections:
 ### Specific Data Collection Types
 
 !!! note "Data Collection Types"
-    Data collections can be of different types, each with its own configuration requirements. Currently, only the "table" type is supported, which handles structured tabular data. Future versions may introduce additional types for other data formats (e.g., Omics data, Images, GeoJSON).  
+    Data collections can be of different types, each with its own configuration requirements. Currently, only the "table" type is supported, which handles structured tabular data. Future versions may introduce additional types for other data formats (e.g., Omics data, Images, GeoJSON).
 
 #### **Table** Data Collection Configuration
 
@@ -379,26 +379,26 @@ Table data collections handle structured tabular data (CSV, TSV, Excel, Parquet,
 ```yaml
 dc_specific_properties:
   # === REQUIRED FIELDS ===
-  
+
   format: string               # Required: File format
                               # Values: "csv", "tsv", "xlsx", "xls", "parquet", "feather"
                               # Case-insensitive, normalized to lowercase
-  
+
   polars_kwargs: object       # Required: Polars DataFrame configuration
                              # Polars-specific parameters for data reading
                              # See "Polars Configuration" section
-  
+
   # === OPTIONAL FIELDS ===
-  
+
   keep_columns: [string] | null    # Optional: Column filtering
                                   # If specified, only these columns are retained
                                   # Improves performance for large datasets
                                   # Example: ["sample_id", "expression", "p_value"]
-  
+
   columns_description: {string: string} | null  # Optional: Column documentation
                                                # Human-readable column descriptions
                                                # Used in dashboard tooltips and documentation
-                                               # Example: 
+                                               # Example:
                                                #   sample_id: "Unique sample identifier"
                                                #   expression: "Log2 expression level"
 ```
@@ -461,56 +461,56 @@ Polars is Depictio's high-performance data processing engine. Configure data rea
 ```yaml
 polars_kwargs:
   # === COMMON OPTIONS ===
-  
+
   # CSV/TSV specific
   separator: string           # Column separator character
                              # Default: "," for CSV, "\t" for TSV
                              # Example: ",", "\t", "|", ";"
-  
+
   has_header: boolean        # First row contains column names
                             # Default: true
                             # Set false if first row is data
-  
-  skip_rows: int            # Number of rows to skip at file beginning  
+
+  skip_rows: int            # Number of rows to skip at file beginning
                            # Default: 0
                            # Useful for files with metadata headers
                            # Example: 3 (skip first 3 lines)
-  
+
   # === ADVANCED OPTIONS ===
-  
+
   # Data types
   column_types: object      # Explicit column type mapping
                            # Forces specific data types
                            # Example:
                            #   sample_id: "String"
-                           #   count: "Int64"  
+                           #   count: "Int64"
                            #   p_value: "Float64"
                            #   significant: "Boolean"
-  
+
   column_names: [string]    # Override column names
                            # Useful when has_header: false
                            # Example: ["sample", "gene", "expression"]
-  
+
   # Missing data handling
   null_values: [string]     # Values to treat as null/missing
                            # Default: ["", "NULL", "null", "None"]
                            # Example: ["NA", "N/A", "", "null", "-"]
-  
+
   # Performance options
   n_rows: int               # Limit number of rows to read
                            # Useful for testing configurations
                            # Example: 1000 (read only first 1000 rows)
-  
+
   # Encoding
-  encoding: string          # File encoding  
+  encoding: string          # File encoding
                            # Default: "utf8"
                            # Example: "utf8", "latin1", "ascii"
-  
+
   # Excel specific (for .xlsx, .xls files)
   sheet_name: string        # Excel sheet name to read
                            # Default: first sheet
                            # Example: "Results", "Sheet1"
-  
+
   sheet_id: int            # Excel sheet index (0-based)
                           # Alternative to sheet_name
                           # Example: 0 (first sheet), 1 (second sheet)
@@ -527,7 +527,7 @@ scan:
   mode: "single"
   scan_parameters:
     filename: "multiqc_data/multiqc_general_stats.txt"
-    
+
 # Finds exactly one file:
 # project_root/multiqc_data/multiqc_general_stats.txt
 ```
@@ -536,7 +536,7 @@ scan:
 
 Uses regex patterns to discover files across directory structures:
 
-```yaml  
+```yaml
 scan:
   mode: "recursive"
   scan_parameters:
@@ -550,7 +550,7 @@ scan:
 
 # Matches files like:
 # run_001/star_salmon/sample_A/quant.sf
-# run_001/star_salmon/sample_B/quant.sf  
+# run_001/star_salmon/sample_B/quant.sf
 # run_002/star_salmon/sample_C/quant.sf
 ```
 
@@ -569,13 +569,13 @@ join:
   on_columns: [string]        # Required: Column names for joining
                              # Must exist in both datasets
                              # Example: ["sample_id"], ["sample_id", "timepoint"]
-  
+
   how: string                # Required: Join type
                             # "inner": Keep only rows with matches in both datasets
                             # "outer": Keep all rows, fill missing with null
-                            # "left": Keep all rows from left dataset  
+                            # "left": Keep all rows from left dataset
                             # "right": Keep all rows from right dataset
-  
+
   with_dc: [string]         # Required: Target data collections to join with
                            # References to other data_collection_tag values
                            # Example: ["metadata", "quality_stats"]
@@ -584,12 +584,12 @@ join:
 data_collections:
   - data_collection_tag: "sample_metadata"
     # ... metadata configuration ...
-    
+
   - data_collection_tag: "gene_expression"
     # ... expression configuration ...
     join:
       on_columns: ["sample_id"]
-      how: "inner"  
+      how: "inner"
       with_dc: ["sample_metadata"]
 ```
 
@@ -611,13 +611,13 @@ workflows:
       name: "nextflow"
       version: "24.10.3"
     version: "3.18.0"
-    
+
     data_location:
       structure: "sequencing-runs"
       locations:
         - "{DATA_ROOT}/rnaseq_studies/cohort_2024"
       runs_regex: "batch_[A-C]"
-    
+
     data_collections:
       # Quality control metrics
       - data_collection_tag: "qc_summary"
@@ -648,10 +648,10 @@ workflows:
               "fastqc-percent_gc": "Overall GC content percentage"
               "fastqc-avg_sequence_length": "Average read length"
               "fastqc-percent_fails": "Percentage of FastQC modules that failed"
-      
+
       # Gene expression quantification
       - data_collection_tag: "salmon_gene_tpm"
-        description: "Salmon merged gene-level TPM expression matrix"  
+        description: "Salmon merged gene-level TPM expression matrix"
         config:
           type: "table"
           metatype: "metadata"
@@ -666,7 +666,7 @@ workflows:
               has_header: true
             columns_description:
               sample_id: "Sample identifier"
-              gene_id: "Gene identifier"  
+              gene_id: "Gene identifier"
               gene_name: "Gene symbol/name"
               condition: "Experimental condition (e.g., treatment, control)"
               replicate: "Biological replicate identifier"
@@ -694,13 +694,13 @@ workflows:
       url: "https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/friendsofstrandseq/mosaicatcher-pipeline.html"
     repository_url: "https://github.com/friendsofstrandseq/mosaicatcher-pipeline"
     workflow_tag: "snakemake/mosaicatcher-pipeline"
-    
+
     data_location:
       structure: "sequencing-runs"
       locations:
         - "/Data/mosaicatcher-pipeline-results/"
       runs_regex: ".*"
-    
+
     data_collections:
       # MosaiCatcher statistics per cell
       - data_collection_tag: "mosaicatcher_stats"
@@ -733,8 +733,8 @@ workflows:
               dupl: "Reads filtered out as PCR duplicates"
               pass1: "Coverage compliant cells (binary)"
               good: "Reads used for counting"
-      
-      # Ashleys QC labels  
+
+      # Ashleys QC labels
       - data_collection_tag: "ashleys_labels"
         description: "Probabilities generated by ashleys-qc model"
         config:
@@ -754,7 +754,7 @@ workflows:
           on_columns: ["sample", "cell"]
           how: "inner"
           with_dc: ["mosaicatcher_stats"]
-      
+
       # Structural variant calls
       - data_collection_tag: "sv_calls"
         description: "SV calls generated by MosaiCatcher (stringent)"
@@ -782,7 +782,7 @@ workflows:
           on_columns: ["sample", "cell"]
           how: "inner"
           with_dc: ["ashleys_labels", "mosaicatcher_stats"]
-      
+
       # Sample metadata
       - data_collection_tag: "mosaicatcher_samples_metadata"
         description: "Metadata file for MosaiCatcher samples"
@@ -914,7 +914,7 @@ depictio-cli run --project-config-path ./my_project.yaml \
 depictio-cli data scan --project-config-path ./my_project.yaml \
   --verbose --verbose-level DEBUG
 ```
-<!-- 
+<!--
 ### Common Configuration Errors
 
 #### Environment Variables Not Resolved
@@ -956,7 +956,7 @@ ValueError: Invalid regex pattern: "*.tsv"
 # Incorrect: shell glob pattern
 pattern: "*.tsv"
 
-# Correct: regex pattern  
+# Correct: regex pattern
 pattern: ".*\\.tsv"
 
 # More specific: files ending with _stats.tsv
@@ -981,7 +981,7 @@ find /data/study1 -type f -name "*.tsv" | grep -E "stats/.*\.tsv"
 
 # Use verbose logging to see search process
 depictio-cli --verbose --verbose-level DEBUG data scan --project-config-path config.yaml
-  
+
 ```
 
 #### Join Configuration Errors
@@ -998,12 +998,12 @@ ValueError: Column 'sample_id' not found in dataset 'expression_data'
 # Check column names match exactly (case-sensitive)
 join:
   on_columns: ["sample_id"]  # Must exist in both datasets
-  
+
 # Alternative: inspect data first
 keep_columns:
   - "Sample_ID"  # Note: different capitalization
   - "expression"
-  
+
 # Update join to use correct column name
 join:
   on_columns: ["Sample_ID"]  # Match actual column name
@@ -1024,7 +1024,7 @@ join:
 dc_specific_properties:
   keep_columns:
     - "sample_id"
-    - "gene_name" 
+    - "gene_name"
     - "expression"
     # Don't load unnecessary columns
 
@@ -1058,7 +1058,7 @@ workflows:
       - "/data/runs"
     runs_regex: ".*"
 
-# Current configuration (v0.3.0+)  
+# Current configuration (v0.3.0+)
 workflows:
   - name: "new_pipeline"
     engine:  # Object format (current)
@@ -1095,7 +1095,7 @@ depictio-cli config validate-project-config --project-config-path new_config.yam
 
 - **[Projects Guide](guide.md)** - Comprehensive project management guide
 - **[Configuration Reference](reference.md)** - Complete YAML reference documentation
-- **[CLI Reference](../../depictio-cli/usage.md)** - Complete CLI command documentation  
+- **[CLI Reference](../../depictio-cli/usage.md)** - Complete CLI command documentation
 - **[Dashboard Creation](../guides/dashboard_creation.md)** - Building interactive dashboards
 - **[API Documentation](../../api/reference.md)** - Programmatic project management
 - **[Pydantic Models](https://github.com/depictio/depictio/tree/main/depictio/models/models)** - Schema definitions and validation
