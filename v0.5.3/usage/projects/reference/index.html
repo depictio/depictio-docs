@@ -2768,6 +2768,35 @@
 <a id="__codelineno-0-215" name="__codelineno-0-215" href="#__codelineno-0-215"></a><span class="w">          </span><span class="nt">with_dc</span><span class="p">:</span>
 <a id="__codelineno-0-216" name="__codelineno-0-216" href="#__codelineno-0-216"></a><span class="w">            </span><span class="p p-Indicator">[</span><span class="s">&quot;qc_summary&quot;</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># Required: Target data collections to join with</span>
 <a id="__codelineno-0-217" name="__codelineno-0-217" href="#__codelineno-0-217"></a><span class="w">            </span><span class="c1"># References to other data_collection_tag values</span>
+<a id="__codelineno-0-218" name="__codelineno-0-218" href="#__codelineno-0-218"></a>
+<a id="__codelineno-0-219" name="__codelineno-0-219" href="#__codelineno-0-219"></a><span class="w">      </span><span class="c1"># --- MultiQC DATA COLLECTION (v0.5.0+) ---</span>
+<a id="__codelineno-0-220" name="__codelineno-0-220" href="#__codelineno-0-220"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span>
+<a id="__codelineno-0-221" name="__codelineno-0-221" href="#__codelineno-0-221"></a><span class="w">          </span><span class="s">&quot;multiqc_data&quot;</span><span class="w"> </span><span class="c1"># Required: Unique identifier for MultiQC data</span>
+<a id="__codelineno-0-222" name="__codelineno-0-222" href="#__codelineno-0-222"></a>
+<a id="__codelineno-0-223" name="__codelineno-0-223" href="#__codelineno-0-223"></a><span class="w">        </span><span class="nt">description</span><span class="p">:</span>
+<a id="__codelineno-0-224" name="__codelineno-0-224" href="#__codelineno-0-224"></a><span class="w">          </span><span class="s">&quot;MultiQC</span><span class="nv"> </span><span class="s">quality</span><span class="nv"> </span><span class="s">control</span><span class="nv"> </span><span class="s">report</span><span class="nv"> </span><span class="s">data&quot;</span><span class="w"> </span><span class="c1"># Optional: Description</span>
+<a id="__codelineno-0-225" name="__codelineno-0-225" href="#__codelineno-0-225"></a>
+<a id="__codelineno-0-226" name="__codelineno-0-226" href="#__codelineno-0-226"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-0-227" name="__codelineno-0-227" href="#__codelineno-0-227"></a><span class="w">          </span><span class="c1"># Required: Type specification for MultiQC</span>
+<a id="__codelineno-0-228" name="__codelineno-0-228" href="#__codelineno-0-228"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span>
+<a id="__codelineno-0-229" name="__codelineno-0-229" href="#__codelineno-0-229"></a><span class="w">            </span><span class="s">&quot;MultiQC&quot;</span><span class="w"> </span><span class="c1"># Required: Identifies this as a MultiQC data collection</span>
+<a id="__codelineno-0-230" name="__codelineno-0-230" href="#__codelineno-0-230"></a><span class="w">            </span><span class="c1"># NOTE: MultiQC type has special handling:</span>
+<a id="__codelineno-0-231" name="__codelineno-0-231" href="#__codelineno-0-231"></a><span class="w">            </span><span class="c1">#   - Automatically detects multiqc_data/multiqc.parquet in each run</span>
+<a id="__codelineno-0-232" name="__codelineno-0-232" href="#__codelineno-0-232"></a><span class="w">            </span><span class="c1">#   - No scan configuration needed (auto-detected)</span>
+<a id="__codelineno-0-233" name="__codelineno-0-233" href="#__codelineno-0-233"></a><span class="w">            </span><span class="c1">#   - No metatype specification required</span>
+<a id="__codelineno-0-234" name="__codelineno-0-234" href="#__codelineno-0-234"></a><span class="w">            </span><span class="c1">#   - No dc_specific_properties needed</span>
+<a id="__codelineno-0-235" name="__codelineno-0-235" href="#__codelineno-0-235"></a><span class="w">            </span><span class="c1">#   - Requires MultiQC 1.29+ to generate parquet format</span>
+<a id="__codelineno-0-236" name="__codelineno-0-236" href="#__codelineno-0-236"></a>
+<a id="__codelineno-0-237" name="__codelineno-0-237" href="#__codelineno-0-237"></a><span class="w">        </span><span class="c1"># Optional: Join with other data collections</span>
+<a id="__codelineno-0-238" name="__codelineno-0-238" href="#__codelineno-0-238"></a><span class="w">        </span><span class="nt">join</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: Join MultiQC data with other collections</span>
+<a id="__codelineno-0-239" name="__codelineno-0-239" href="#__codelineno-0-239"></a><span class="w">          </span><span class="nt">on_columns</span><span class="p">:</span>
+<a id="__codelineno-0-240" name="__codelineno-0-240" href="#__codelineno-0-240"></a><span class="w">            </span><span class="p p-Indicator">[</span><span class="s">&quot;sample&quot;</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># Required: Column for joining (typically &quot;sample&quot;)</span>
+<a id="__codelineno-0-241" name="__codelineno-0-241" href="#__codelineno-0-241"></a><span class="w">            </span><span class="c1"># MultiQC sample names must match values in other datasets</span>
+<a id="__codelineno-0-242" name="__codelineno-0-242" href="#__codelineno-0-242"></a><span class="w">          </span><span class="nt">how</span><span class="p">:</span>
+<a id="__codelineno-0-243" name="__codelineno-0-243" href="#__codelineno-0-243"></a><span class="w">            </span><span class="s">&quot;inner&quot;</span><span class="w"> </span><span class="c1"># Required: Join type</span>
+<a id="__codelineno-0-244" name="__codelineno-0-244" href="#__codelineno-0-244"></a><span class="w">          </span><span class="nt">with_dc</span><span class="p">:</span>
+<a id="__codelineno-0-245" name="__codelineno-0-245" href="#__codelineno-0-245"></a><span class="w">            </span><span class="p p-Indicator">[</span><span class="s">&quot;sample_metadata&quot;</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># Required: Target data collections</span>
+<a id="__codelineno-0-246" name="__codelineno-0-246" href="#__codelineno-0-246"></a><span class="w">            </span><span class="c1"># Can join with metadata, QC metrics, or other tables</span>
 </code></pre></div>
 <h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
