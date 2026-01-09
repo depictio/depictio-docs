@@ -123,6 +123,13 @@ Or manually create the `.env` file and add the following content:
     # DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-XXXXXXXXXX
 
     # ----------------------------------------------------------------------------
+    # Background Callbacks Configuration
+    # ----------------------------------------------------------------------------
+    # Enable asynchronous background callbacks for improved UI responsiveness
+    # DEPICTIO_USE_BACKGROUND_CALLBACKS=false
+    # DEPICTIO_CELERY_WORKERS=2
+
+    # ----------------------------------------------------------------------------
     # System Configuration
     # ----------------------------------------------------------------------------
     # Container user and group IDs (uncomment to set specific values)
@@ -274,6 +281,73 @@ Or:
 ```bash
 DEV_MODE=true docker compose up -d
 ```
+
+### Background Callbacks (Async Mode)
+
+Depictio supports asynchronous background callbacks using Celery for long-running operations like data loading and visualization rendering. This feature significantly improves responsiveness when working with large datasets or complex visualizations.
+
+#### Enabling Background Callbacks
+
+To enable background callbacks, set the environment variable in your `.env` file:
+
+```env
+DEPICTIO_USE_BACKGROUND_CALLBACKS=true
+```
+
+When enabled:
+
+- A Celery worker container (`depictio-celery-worker`) automatically starts
+- Long-running operations (card rendering, figure updates) execute asynchronously
+- The UI remains responsive during data processing
+- Redis is used as the message broker for task queuing
+
+#### How It Works
+
+With background callbacks enabled:
+
+1. **Automatic Service Management**: The `depictio-celery-worker` container starts automatically and checks the `DEPICTIO_USE_BACKGROUND_CALLBACKS` environment variable
+2. **Smart Startup**: If the variable is `false` or not set, the worker exits gracefully without consuming resources
+3. **Component Support**: Background processing applies to:
+   - Card components (initial render and filter updates)
+   - Figure components (visualization rendering and filter updates)
+   - Table components (data loading and pagination)
+
+#### Configuration
+
+You can configure the number of Celery workers (default: 2):
+
+```env
+DEPICTIO_USE_BACKGROUND_CALLBACKS=true
+DEPICTIO_CELERY_WORKERS=4
+```
+
+#### Disabling Background Callbacks
+
+To disable background callbacks (default behavior):
+
+```env
+DEPICTIO_USE_BACKGROUND_CALLBACKS=false
+```
+
+Or simply omit the variable from your `.env` file. The Celery worker container will start but immediately exit gracefully.
+
+#### Performance Impact
+
+Background callbacks provide significant performance improvements:
+
+- **Synchronous mode**: UI blocks during data loading (can take several seconds for large datasets)
+- **Background mode**: UI remains responsive, operations execute in parallel
+- **Recommended for**: Production deployments, large datasets, multiple concurrent users
+
+#### Compatibility Notes
+
+<!-- markdownlint-disable MD046 -->
+
+!!! info "Kubernetes/Helm Support"
+
+    Background callbacks are currently only supported in Docker Compose deployments. Kubernetes/Helm support is **coming soon** in an upcoming release.
+
+<!-- markdownlint-enable MD046 -->
 
 ## Troubleshooting
 

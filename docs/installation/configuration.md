@@ -307,6 +307,71 @@ DEPICTIO_PERFORMANCE_SERVICE_READINESS_DELAY=3
 DEPICTIO_PERFORMANCE_SERVICE_READINESS_TIMEOUT=10
 ```
 
+## Background Callbacks Configuration
+
+Depictio supports asynchronous background callbacks using Celery for long-running operations. This feature significantly improves UI responsiveness when working with large datasets.
+
+### Enabling Background Callbacks
+
+```bash
+# Enable background callbacks (async mode)
+DEPICTIO_USE_BACKGROUND_CALLBACKS=true
+
+# Configure number of Celery workers (default: 2)
+DEPICTIO_CELERY_WORKERS=4
+```
+
+### How Background Callbacks Work
+
+When enabled:
+
+- Long-running operations (data loading, visualization rendering) execute asynchronously
+- The UI remains responsive during data processing
+- Redis is used as the message broker for task queuing
+- A dedicated Celery worker service processes background tasks
+
+### Supported Components
+
+Background callbacks apply to:
+
+- **Card components**: Initial render and filter updates
+- **Figure components**: Visualization rendering and filter updates
+- **Table components**: Data loading and pagination
+
+### Performance Considerations
+
+**Synchronous mode** (default):
+
+- UI blocks during data operations
+- Simpler architecture, easier debugging
+- Suitable for small datasets and single-user deployments
+
+**Background mode** (enabled):
+
+- UI remains responsive during operations
+- Better user experience with large datasets
+- Recommended for production and multi-user environments
+- Requires Redis and Celery worker service
+
+### Docker Compose Configuration
+
+The `depictio-celery-worker` service automatically adapts based on the environment variable:
+
+- If `DEPICTIO_USE_BACKGROUND_CALLBACKS=true`: Worker starts and processes tasks
+- If `false` or not set: Worker exits gracefully without consuming resources
+
+No need to manually start/stop the worker service or use Docker Compose profiles.
+
+### Kubernetes/Helm Compatibility
+
+<!-- markdownlint-disable MD046 -->
+
+!!! info "K8S/Helm Support Coming Soon"
+
+    Background callbacks are currently only supported in Docker Compose deployments. Kubernetes/Helm support is **coming soon** in an upcoming release.
+
+<!-- markdownlint-enable MD046 -->
+
 ## Development Settings
 
 Configuration for development and testing:
@@ -478,6 +543,7 @@ DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-XXXXXXXXXX
 When analytics are enabled, the system tracks:
 
 **Internal Analytics**:
+
 - User session management and duration
 - Dashboard interactions and component usage
 - API endpoint usage patterns
@@ -485,6 +551,7 @@ When analytics are enabled, the system tracks:
 - Custom events and user flows
 
 **Google Analytics** (when enabled):
+
 - Page views and navigation events
 - Session duration and engagement metrics
 - User demographics and behavior flow
