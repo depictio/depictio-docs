@@ -445,7 +445,7 @@ links:
 - **Fixed Location**: System looks for `multiqc_data/multiqc.parquet` in each run
 - **Format Requirement**: Requires MultiQC 1.29+ to generate `.parquet` output
 - **No Configuration Overhead**: Just specify `type: "MultiQC"` and you're done
-- **Join Column**: Standard join column is `"sample"` to match MultiQC sample names
+- **Link Column**: Use `sample_mapping` resolver in links to connect with metadata tables
 
 **Example Directory Structure:**
 
