@@ -79,11 +79,54 @@
    - Review the component preview and ensure all settings are accurate.
    - Once complete, click **Next Step** to proceed to the final stage.
 
-<!-- prettier-ignore -->
+### <span style="color: #7A5DC7;">:material-code-braces:</span> Figure Code Mode (v0.6.0+)
+
+The **Figure** component includes a **Code Mode** for advanced users who want to write custom Python/Plotly code to generate visualizations. This provides maximum flexibility for complex or custom figures.
+
+#### Accessing Code Mode
+
+1. In the Figure design interface, click the **"Code"** tab
+2. Switch from **UI Mode** to **Code Mode** at any time
+3. Switching from UI to Code Mode automatically generates code from your current UI settings
+
+#### Available Variables
+
+In Code Mode, the following variables are pre-loaded:
+
+| Variable | Description |
+|----------|-------------|
+| `df` | Your data as a Polars DataFrame |
+| `px` | Plotly Express for quick visualizations |
+| `pd` | Pandas for data manipulation |
+| `pl` | Polars for high-performance data operations |
+| `go` | Plotly Graph Objects for detailed customization |
+
+#### Code Structure
+
+Your code must follow this structure:
+
+```python
+# Optional: Data preprocessing (single assignment)
+df_modified = df.filter(pl.col("value") > 0)
+
+# Required: Create figure using px or go
+fig = px.scatter(df_modified, x="col_x", y="col_y", color="category")
+```
+
 <!-- markdownlint-disable MD046 -->
-!!! note
-    **Figure component** as now a mode to create figure through code as well. This allows you to write custom code or port existing one to generate the figure, providing flexibility for advanced users. You can access this mode by clicking on the **"Code"** tab in the figure design interface. Switching from UI to code mode using existing UI settings will automatically generate the code for you, which you can then modify as needed.
+!!! warning "Code Constraints"
+    - Use `df_modified` for any data preprocessing (single line)
+    - The final `fig` variable must be a Plotly Figure object
+    - Only the pre-loaded libraries are available for security
 <!-- markdownlint-enable MD046 -->
+
+#### Code Mode Features
+
+- **Live Preview**: Click "Execute Code" to preview your figure instantly
+- **Syntax Highlighting**: Python syntax highlighting with the Ace editor
+- **Theme Support**: Editor theme follows the dashboard light/dark mode
+- **Resizable Editor**: Drag the editor border to adjust panel size
+- **Error Messages**: Clear error feedback for syntax and execution issues
 
 #### <span style="color: #8BC34A;">:material-palette:</span> Component design Examples:
 
