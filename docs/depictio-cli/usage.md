@@ -36,6 +36,7 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `config sync-project-config-to-server` | Sync project config to server | All users |
 | `data scan` | Scan project files | All users |
 | `data process` | Process data collections | All users |
+| `data join` | Execute pre-computed table joins | All users |
 | `backup backup` | Create system backup | **Admin only** |
 | `backup restore` | Restore from backup | **Admin only** |
 | `backup list-backups` | List available backups | **Admin only** |
@@ -328,6 +329,38 @@ depictio-cli data process [OPTIONS]
 
 ```bash
 depictio-cli data process --project-config-path ./config.yaml --overwrite
+```
+
+---
+
+#### `data join`
+
+Execute pre-computed table joins defined in project configuration.
+
+<!-- prettier-ignore -->
+<!-- markdownlint-disable MD046 -->
+!!! note "Links vs Joins"
+    For interactive cross-DC filtering, use **links** (configured in YAML, resolved at runtime). Use **joins** only when you need a pre-computed combined dataset stored as a Delta table. See [Cross-DC Filtering](../features/cross-dc-filtering.md).
+<!-- markdownlint-enable MD046 -->
+
+```bash
+depictio-cli data join [OPTIONS]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
+| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
+| `--join-name` | `string` | `null` | Specific join to process (all if not specified) |
+| `--preview` | `boolean` | `false` | Preview join results without persisting |
+| `--overwrite` | `boolean` | `false` | Overwrite existing joined tables |
+
+```bash
+# Preview all joins
+depictio-cli data join --project-config-path ./config.yaml --preview
+
+# Execute a specific join
+depictio-cli data join --project-config-path ./config.yaml --join-name my_join
 ```
 
 ### 💾 Backup Commands
