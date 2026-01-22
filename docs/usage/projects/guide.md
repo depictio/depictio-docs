@@ -171,7 +171,7 @@ Advanced projects are designed for **core facility-like setups** where standardi
 - **🔬 Workflow Integration** - Connect to nf-core, Nextflow, Snakemake, Galaxy pipelines
 - **📊 Multi-sample Analysis** - Handle large number of samples
 - **🔍 File Discovery** - Regex-based pattern matching for file organization
-- **🔗 Data Joining** - Combine different data types into unified views
+- **🔗 Cross-DC Links** - Interactive filtering across data collections (tables, MultiQC, etc.)
 - **📈 Scalable Processing** - Delta Lake backend for large-scale data
 
 ### Project Structure Example
@@ -304,13 +304,14 @@ workflows:
                 - "expression_level"
                 - "p_value"
 
-          # Data joining configuration
-          join:
-            on_columns:
-              - "sample_id"
-            how: "inner"
-            with_dc:
-              - "sample_stats" # Join with statistics
+# Cross-DC Links: Interactive filtering between data collections
+links:
+  - source_dc_id: "sample_stats"      # Filter from this DC
+    source_column: "sample_id"         # Filter by this column
+    target_dc_id: "gene_expression"    # Update this DC
+    target_type: "table"               # Target type: table or multiqc
+    link_config:
+      resolver: "direct"               # Same value in both DCs
 ```
 
 ### File Discovery Patterns
@@ -368,7 +369,7 @@ Choose the right project type for your workflow:
 | **Data Sources**         | UI File upload or CLI-based processing | CLI-based processing          |
 | **File Organization**    | Simple file management                 | Structured directory patterns |
 | **Multi-sample Support** | Single datasets                        | Multi samples support         |
-| **Data Processing**      | Direct conversion                      | Aggregation & joining         |
+| **Data Processing**      | Direct conversion                      | Aggregation & cross-DC links  |
 | **Learning Curve**       | Immediate                              | Moderate (YAML knowledge)     |
 | **Scalability**          | Small-medium datasets                  | Large-scale studies           |
 
@@ -482,16 +483,21 @@ dc_specific_properties:
     null_values: ["NA", "NULL", ""]
 ```
 
-### Data Joining
+### Cross-DC Links
 
-Complex data relationships through joins:
+Interactive filtering between data collections at runtime:
 
 ```yaml
-join:
-  on_columns: ["sample_id", "timepoint"] # Multi-column joins
-  how: "inner" # Join type
-  with_dc: ["metadata", "quality_stats"] # Target collections
+links:
+  - source_dc_id: "metadata"           # Filter from this DC
+    source_column: "sample_id"          # Filter by this column
+    target_dc_id: "multiqc_report"      # Update this DC
+    target_type: "multiqc"              # Target type: table or multiqc
+    link_config:
+      resolver: "sample_mapping"        # Maps canonical IDs to MultiQC variants
 ```
+
+See [Cross-DC Filtering](../../features/cross-dc-filtering.md) for details.
 
 ### Custom Workflows
 
@@ -583,7 +589,7 @@ catalog:
 
     **Solutions:**
     - Use column selection to reduce data size
-    - Optimize join operations
+    - Use links for runtime filtering instead of pre-computed joins
     - Consider data partitioning
     - Review query patterns
 
