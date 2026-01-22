@@ -44,6 +44,23 @@ data_management_platform_project_url:
   # Example: "https://labid.embl.org/projects/123"
 
 # =============================================================================
+# LINKS (Cross-DC Interactive Filtering)
+# =============================================================================
+
+links:  # Optional: Define relationships for cross-DC filtering
+  - source_dc_id: "sample_metadata"    # Required: DC containing the filter
+    source_column: "sample_id"         # Required: Column to filter on
+    target_dc_id: "multiqc_fastqc"     # Required: DC to update when filtered
+    target_type: "multiqc"             # Required: "table" or "multiqc"
+    link_config:
+      resolver: "sample_mapping"       # Required: "direct", "sample_mapping", "pattern"
+      target_field: "sample_name"      # Optional: Field to match in target DC
+      # Resolvers:
+      #   "direct" - Same value in both DCs
+      #   "sample_mapping" - Canonical ID → MultiQC sample variants
+      #   "pattern" - Template substitution (e.g., "{sample}.bam")
+
+# =============================================================================
 # WORKFLOWS (Required for Advanced Projects)
 # =============================================================================
 

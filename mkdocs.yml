@@ -127,7 +127,7 @@ plugins:
   - inline-select-svg:
       pattern: "images/logo/animated_favicon.svg"
       replace_tag: true
-      add_class: "inline-svg" 
+      add_class: "inline-svg"
   - blog:
       blog_dir: blog
       post_dir: "{blog}/posts"
@@ -210,6 +210,7 @@ nav:
   - Features:
       - Overview: features/README.md
       - Architecture: features/architecture.md
+      - Cross-DC Filtering: features/cross-dc-filtering.md
       - Modularity: features/modularity.md
       - Security: features/security.md
   - API:

@@ -554,47 +554,73 @@ scan:
 # run_002/star_salmon/sample_C/quant.sf
 ```
 
-### Data Collection Joins
+### Cross-DC Links (Interactive Filtering)
 
-When you use a production-oriented workflow, it can be tricky to modify workflow structure itself and rely instead of post-processing steps to reformat data into a unified structure. Depictio supports joining multiple data collections to create unified datasets.
+Links enable **cross-DC filtering** at runtime—filter one data collection and automatically update related visualizations without pre-computed joins.
 
-!!! note "Note about join configuration"
-    A join need to be defined once and does not need to be repeated for each data collection. For instance, if DC1 & DC2 are joined, the join configuration needs to be defined in either DC1 or DC2, not both.
+```yaml
+# Project-level links configuration
+links:
+  - source_dc_id: string      # Required: DC containing the filter
+    source_column: string     # Required: Column to filter on
+    target_dc_id: string      # Required: DC to receive filtered values
+    target_type: string       # Required: "table" or "multiqc"
+    link_config:
+      resolver: string        # Required: "direct", "sample_mapping", or "pattern"
+      target_field: string    # Optional: Field to match in target DC
+```
 
-This can be achieved by defining join configurations:
+**Resolvers:**
+
+| Resolver | Use Case |
+|----------|----------|
+| `direct` | Same value in both DCs |
+| `sample_mapping` | Canonical ID → MultiQC sample variants |
+| `pattern` | Template substitution (e.g., `{sample}.bam`) |
+
+**Example:**
+
+```yaml
+name: "My Project"
+project_type: "advanced"
+
+links:
+  - source_dc_id: sample_metadata
+    source_column: sample_id
+    target_dc_id: multiqc_fastqc
+    target_type: multiqc
+    link_config:
+      resolver: sample_mapping
+
+workflows:
+  # ... workflow configuration ...
+```
+
+For detailed documentation, see [Cross-DC Filtering](../../features/cross-dc-filtering.md).
+
+### Data Collection Joins (Pre-computed)
+
+For permanently combined datasets, use joins. Joins are pre-computed via CLI and stored as Delta tables.
+
+!!! note "Links vs Joins"
+    Use **links** for interactive filtering (runtime). Use **joins** when you need a permanently combined dataset (pre-computed).
 
 ```yaml
 # In one data collection configuration
 join:
   on_columns: [string]        # Required: Column names for joining
-                             # Must exist in both datasets
-                             # Example: ["sample_id"], ["sample_id", "timepoint"]
+  how: string                 # Required: "inner", "outer", "left", "right"
+  with_dc: [string]           # Required: Target data collection tags
 
-  how: string                # Required: Join type
-                            # "inner": Keep only rows with matches in both datasets
-                            # "outer": Keep all rows, fill missing with null
-                            # "left": Keep all rows from left dataset
-                            # "right": Keep all rows from right dataset
-
-  with_dc: [string]         # Required: Target data collections to join with
-                           # References to other data_collection_tag values
-                           # Example: ["metadata", "quality_stats"]
-
-# Example: Join expression data with sample metadata
+# Example
 data_collections:
-  - data_collection_tag: "sample_metadata"
-    # ... metadata configuration ...
-
   - data_collection_tag: "gene_expression"
-    # ... expression configuration ...
+    # ... configuration ...
     join:
       on_columns: ["sample_id"]
       how: "inner"
       with_dc: ["sample_metadata"]
 ```
-
-!!! warnning "Join Limitations"
-    Joins are currently limited to simple column-based joins. Future versions may support more complex joins and transformations.
 
 ## <span style="color: #45B8AC;">:material-library:</span> Configuration Patterns Library
 
