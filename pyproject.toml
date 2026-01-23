@@ -2,7 +2,7 @@
 dependencies = [
     "mkdocstrings-python",
     "mkdocs",
-    "mkdocs-material",
+    "mkdocs-material>=9.7.0",
     "mkdocs-material-extensions",
     "mkdocs-render-swagger-plugin",
     "mkdocs-typer",
