@@ -105,6 +105,10 @@
          <lastmod>2026-01-23</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v0.6.0-b4/developer/modularity/</loc>
+         <lastmod>2026-01-23</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v0.6.0-b4/documentation/</loc>
          <lastmod>2026-01-23</lastmod>
     </url>
@@ -117,19 +121,23 @@
          <lastmod>2026-01-23</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v0.6.0-b4/features/components/</loc>
+         <lastmod>2026-01-23</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v0.6.0-b4/features/cross-dc-filtering/</loc>
          <lastmod>2026-01-23</lastmod>
     </url>
     <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.6.0-b4/features/frontend_components/</loc>
-         <lastmod>2026-01-23</lastmod>
-    </url>
-    <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.6.0-b4/features/modularity/</loc>
+         <loc>https://depictio.github.io/depictio-docs/v0.6.0-b4/features/dashboards/</loc>
          <lastmod>2026-01-23</lastmod>
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v0.6.0-b4/features/security/</loc>
+         <lastmod>2026-01-23</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v0.6.0-b4/features/yaml-sync/</loc>
          <lastmod>2026-01-23</lastmod>
     </url>
     <url>
@@ -146,6 +154,10 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v0.6.0-b4/installation/docker/</loc>
+         <lastmod>2026-01-23</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v0.6.0-b4/installation/env-reference/</loc>
          <lastmod>2026-01-23</lastmod>
     </url>
     <url>

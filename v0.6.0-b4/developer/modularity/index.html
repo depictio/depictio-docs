@@ -6,17 +6,17 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Documentation for Depictio">
+        <meta name="description" content="Understanding Depictio's modular code architecture and object model design.">
       
       
       
-        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v0.6.0-b4/features/modularity/">
+        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v0.6.0-b4/developer/modularity/">
       
       
-        <link rel="prev" href="../cross-dc-filtering/">
+        <link rel="prev" href="../">
       
       
-        <link rel="next" href="../security/">
+        <link rel="next" href="../contributing/">
       
       
       <link rel="icon" href="../../images/logo/logo_icon.png">
@@ -339,13 +339,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../features/" class="md-tabs__link">
           
   
   
@@ -389,11 +387,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../developer/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -608,6 +608,8 @@
       
         
           
+        
+      
         
       
         
@@ -865,6 +867,31 @@
   
   <span class="md-ellipsis">
     Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/env-reference/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2m-2 12c-.25 0-.46-.18-.5-.42l-.37-2.65c-.63-.25-1.17-.59-1.69-.99l-2.49 1.01c-.22.08-.49 0-.61-.22l-2-3.46a.493.493 0 0 1 .12-.64l2.11-1.66L4.5 12l.07-1-2.11-1.63a.493.493 0 0 1-.12-.64l2-3.46c.12-.22.39-.31.61-.22l2.49 1c.52-.39 1.06-.73 1.69-.98l.37-2.65c.04-.24.25-.42.5-.42h4c.25 0 .46.18.5.42l.37 2.65c.63.25 1.17.59 1.69.98l2.49-1c.22-.09.49 0 .61.22l2 3.46c.13.22.07.49-.12.64L19.43 11l.07 1-.07 1 2.11 1.63c.19.15.25.42.12.64l-2 3.46c-.12.22-.39.31-.61.22l-2.49-1c-.52.39-1.06.73-1.69.98l-.37 2.65c-.04.24-.25.42-.5.42zm1.25-18-.37 2.61c-1.2.25-2.26.89-3.03 1.78L5.44 7.35l-.75 1.3L6.8 10.2a5.55 5.55 0 0 0 0 3.6l-2.12 1.56.75 1.3 2.43-1.04c.77.88 1.82 1.52 3.01 1.76l.37 2.62h1.52l.37-2.61c1.19-.25 2.24-.89 3.01-1.77l2.43 1.04.75-1.3-2.12-1.55c.4-1.17.4-2.44 0-3.61l2.11-1.55-.75-1.3-2.41 1.04a5.42 5.42 0 0 0-3.03-1.77L12.75 4z"/></svg>
+  
+  <span class="md-ellipsis">
+    Environment Reference
     
   </span>
   
@@ -1433,8 +1460,6 @@
       
   
   
-    
-  
   
   
     
@@ -1452,27 +1477,30 @@
       
         
       
-    
-    
-    
-      
         
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../features/" class="md-nav__link ">
               
   
   
@@ -1487,13 +1515,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Features
@@ -1509,9 +1537,111 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/" class="md-nav__link">
+      <a href="../../features/dashboards/" class="md-nav__link">
         
   
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 5v14h6V5zm7 0v5h6V5zm7 0v9h6V5zm-7 6v8h6v-8zm7 4v4h6v-4z"/></svg>
+  
+  <span class="md-ellipsis">
+    Dashboards
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/components/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z"/></svg>
+  
+  <span class="md-ellipsis">
+    Components
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/cross-dc-filtering/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.59 13.41c.41.39.41 1.03 0 1.42-.39.39-1.03.39-1.42 0a5.003 5.003 0 0 1 0-7.07l3.54-3.54a5.003 5.003 0 0 1 7.07 0 5.003 5.003 0 0 1 0 7.07l-1.49 1.49c.01-.82-.12-1.64-.4-2.42l.47-.48a2.98 2.98 0 0 0 0-4.24 2.98 2.98 0 0 0-4.24 0l-3.53 3.53a2.98 2.98 0 0 0 0 4.24m2.82-4.24c.39-.39 1.03-.39 1.42 0a5.003 5.003 0 0 1 0 7.07l-3.54 3.54a5.003 5.003 0 0 1-7.07 0 5.003 5.003 0 0 1 0-7.07l1.49-1.49c-.01.82.12 1.64.4 2.43l-.47.47a2.98 2.98 0 0 0 0 4.24 2.98 2.98 0 0 0 4.24 0l3.53-3.53a2.98 2.98 0 0 0 0-4.24.973.973 0 0 1 0-1.42"/></svg>
+  
+  <span class="md-ellipsis">
+    Cross-DC Filtering
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/yaml-sync/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18a6 6 0 0 1-6-6c0-1 .25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12a8 8 0 0 0 8 8v3l4-4-4-4m0-11V1L8 5l4 4V6a6 6 0 0 1 6 6c0 1-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12a8 8 0 0 0-8-8"/></svg>
+  
+  <span class="md-ellipsis">
+    YAML Dashboard Sync
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/architecture/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2v6h2v3H5c-1.11 0-2 .89-2 2v3H1v6h6v-6H5v-3h6v3H9v6h6v-6h-2v-3h6v3h-2v6h6v-6h-2v-3c0-1.11-.89-2-2-2h-6V8h2V2z"/></svg>
   
   <span class="md-ellipsis">
     Architecture
@@ -1532,171 +1662,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../cross-dc-filtering/" class="md-nav__link">
+      <a href="../../features/security/" class="md-nav__link">
         
   
   
-  <span class="md-ellipsis">
-    Cross-DC Filtering
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Modularity
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    Modularity
-    
-  </span>
-  
-
-      </a>
-      
-        
-
-  
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#general-object-model-and-database-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      General object model and database design
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="General object model and database design">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#project-workflow-object-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      Project &amp; Workflow Object Design
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#code-architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      Code architecture
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Code architecture">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#api-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      API structure
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dashboard-components" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dashboard components
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Dashboard components">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#component-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      Component Structure
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../security/" class="md-nav__link">
-        
-  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg>
   
   <span class="md-ellipsis">
     Security
@@ -1840,6 +1810,8 @@
       
   
   
+    
+  
   
   
     
@@ -1851,26 +1823,29 @@
       
         
       
+        
+      
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../developer/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1885,13 +1860,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Developer
@@ -1904,10 +1879,162 @@
                 
   
   
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 5v6h5V5m-11 6h5V5h-5m6 13h5v-6h-5m-6 6h5v-6h-5m-6 6h5v-6H4m0-1h5V5H4z"/></svg>
+  
+  <span class="md-ellipsis">
+    Modularity
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 5v6h5V5m-11 6h5V5h-5m6 13h5v-6h-5m-6 6h5v-6h-5m-6 6h5v-6H4m0-1h5V5H4z"/></svg>
+  
+  <span class="md-ellipsis">
+    Modularity
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-object-model-and-database-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      General Object Model and Database Design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="General Object Model and Database Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project-workflow-object-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project &amp; Workflow Object Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Code Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dashboard Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dashboard Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-new-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding New Components
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     <li class="md-nav__item">
-      <a href="../../developer/contributing/" class="md-nav__link">
+      <a href="../contributing/" class="md-nav__link">
         
   
   
@@ -2592,11 +2719,11 @@
         <li class="md-nav__item">
   <a href="#general-object-model-and-database-design" class="md-nav__link">
     <span class="md-ellipsis">
-      General object model and database design
+      General Object Model and Database Design
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="General object model and database design">
+    <nav class="md-nav" aria-label="General Object Model and Database Design">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2616,17 +2743,17 @@
         <li class="md-nav__item">
   <a href="#code-architecture" class="md-nav__link">
     <span class="md-ellipsis">
-      Code architecture
+      Code Architecture
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Code architecture">
+    <nav class="md-nav" aria-label="Code Architecture">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#api-structure" class="md-nav__link">
     <span class="md-ellipsis">
-      API structure
+      API Structure
     </span>
   </a>
   
@@ -2635,11 +2762,11 @@
           <li class="md-nav__item">
   <a href="#dashboard-components" class="md-nav__link">
     <span class="md-ellipsis">
-      Dashboard components
+      Dashboard Components
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Dashboard components">
+    <nav class="md-nav" aria-label="Dashboard Components">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2658,6 +2785,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-new-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding New Components
+    </span>
+  </a>
   
 </li>
       
@@ -2682,11 +2818,11 @@
 
 <h1 id="modularity">Modularity<a class="headerlink" href="#modularity" title="Permanent link">&para;</a></h1>
 <p>Depictio code structure is designed with a modular architecture, allowing for easy integration of new features and functionalities. The frontend and backend components are decoupled, enabling independent development and deployment of each module. The platform is built to be scalable and adaptable to various needs, with a focus on user-friendly interfaces and interactive data visualization tools.</p>
-<h2 id="general-object-model-and-database-design">General object model and database design<a class="headerlink" href="#general-object-model-and-database-design" title="Permanent link">&para;</a></h2>
+<h2 id="general-object-model-and-database-design">General Object Model and Database Design<a class="headerlink" href="#general-object-model-and-database-design" title="Permanent link">&para;</a></h2>
 <p>Depictio object model was designed to reflect production-oriented workflows. The architecture is built to ensure a clear separation of concerns, with distinct layers for workflows, workflow run configurations, runs, files generated, and data collections. This modular approach is reflected in both the database schema and the API structure.</p>
 <h3 id="project-workflow-object-design">Project &amp; Workflow Object Design<a class="headerlink" href="#project-workflow-object-design" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Project</strong> : The top-level entity that encapsulates that represents one or multiple production-oriented pipeline/workflow.</li>
+<li><strong>Project</strong>: The top-level entity that encapsulates that represents one or multiple production-oriented pipeline/workflow.</li>
 <li><strong>Workflow</strong>: Standardised / production-oriented workflow</li>
 <li><strong>Run Configurations</strong>: These define the parameters and settings that were used to run a workflow.</li>
 <li><strong>Runs</strong>: Instances of a production workflow executed using a specific run configuration. Each run generates output files, that are structured the same way across runs. These files can then be associated into data collections.</li>
@@ -2695,39 +2831,98 @@
 </ul>
 <p>The following diagram illustrates a "Workflow" object and its relationships with other objects in the system. The workflow object is at the center, with run configurations, runs, files, and data collections branching out from it. The files generated by each run can be organized into data collections, which can be used for visualization and analysis. Multiple workflows can be associated with a single project, enabling users to manage and visualize data, e.g., multi-omics data, from different workflows (<a href="https://nf-co.re/rnaseq">nf-core/rnaseq</a> and <a href="https://nf-co.re/atacseq">nf-core/atacseq</a>) in a single dashboard.</p>
 <p><img src="../../images/modularity/schema.png" width="600"></p>
-<h2 id="code-architecture">Code architecture<a class="headerlink" href="#code-architecture" title="Permanent link">&para;</a></h2>
+<h2 id="code-architecture">Code Architecture<a class="headerlink" href="#code-architecture" title="Permanent link">&para;</a></h2>
 <p>The code organisation clearly separates each of the frontend components and the API endpoints, making it easy to understand and extend the platform.</p>
 <p><img src="../../images/modularity/image-1.png" width="600"></p>
-<h3 id="api-structure">API structure<a class="headerlink" href="#api-structure" title="Permanent link">&para;</a></h3>
+<h3 id="api-structure">API Structure<a class="headerlink" href="#api-structure" title="Permanent link">&para;</a></h3>
 <p>The API is structured to mirror the object design specified above, with each major component of the workflow having its own set of endpoints and models. The organization within <code>depictio/api/v1/endpoints</code> is as follows:</p>
-<ul>
-<li><strong>dashboards_endpoints</strong>: Manages endpoints related to dashboards.</li>
-<li><strong>datacollections_endpoints</strong>: Handles endpoints for data collections, mapping closely to the Data Collection objects in the design.</li>
-<li><strong>deltatables_endpoints</strong>: Provides endpoints for delta tables, which are specific types of data collections with versioning.</li>
-<li><strong>files_endpoints</strong>: Manages file-related endpoints, directly corresponding to the File objects.</li>
-<li><strong>user_endpoints</strong>: Manages user authentication and authorization, including models and routes for user management.</li>
-<li><strong>utils_endpoints</strong>: Provides utility endpoints, typically for internal or auxiliary operations.</li>
-<li><strong>workflow_endpoints</strong>: Focuses on managing workflows, run configurations, and runs, reflecting the core of the workflow architecture.</li>
-<li><strong>project_endpoints</strong>: Handles project-related endpoints, including project creation, management, and permissions.</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Endpoint Module</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>dashboards_endpoints</strong></td>
+<td>Manages endpoints related to dashboards</td>
+</tr>
+<tr>
+<td><strong>datacollections_endpoints</strong></td>
+<td>Handles endpoints for data collections, mapping closely to the Data Collection objects in the design</td>
+</tr>
+<tr>
+<td><strong>deltatables_endpoints</strong></td>
+<td>Provides endpoints for delta tables, which are specific types of data collections with versioning</td>
+</tr>
+<tr>
+<td><strong>files_endpoints</strong></td>
+<td>Manages file-related endpoints, directly corresponding to the File objects</td>
+</tr>
+<tr>
+<td><strong>user_endpoints</strong></td>
+<td>Manages user authentication and authorization, including models and routes for user management</td>
+</tr>
+<tr>
+<td><strong>utils_endpoints</strong></td>
+<td>Provides utility endpoints, typically for internal or auxiliary operations</td>
+</tr>
+<tr>
+<td><strong>workflow_endpoints</strong></td>
+<td>Focuses on managing workflows, run configurations, and runs, reflecting the core of the workflow architecture</td>
+</tr>
+<tr>
+<td><strong>project_endpoints</strong></td>
+<td>Handles project-related endpoints, including project creation, management, and permissions</td>
+</tr>
+</tbody>
+</table>
 <p>Each endpoint is defined in a separate subfolder, where the <code>routes.py</code> file contains the API routes and the <code>models.py</code> file contains the object models associated.</p>
 <p><img src="../../images/modularity/image-2.png" width="600"></p>
-<h3 id="dashboard-components">Dashboard components<a class="headerlink" href="#dashboard-components" title="Permanent link">&para;</a></h3>
-<p>The frontend components in Depictio are organized in the depictio/dash/modules folder, with each component defined in a separate subfolder. This modular design ensures easy integration and maintainability.</p>
+<h3 id="dashboard-components">Dashboard Components<a class="headerlink" href="#dashboard-components" title="Permanent link">&para;</a></h3>
+<p>The frontend components in Depictio are organized in the <code>depictio/dash/modules</code> folder, with each component defined in a separate subfolder. This modular design ensures easy integration and maintainability.</p>
 <h4 id="component-structure">Component Structure<a class="headerlink" href="#component-structure" title="Permanent link">&para;</a></h4>
 <p>Each component folder typically contains:</p>
-<ul>
-<li><strong>frontend.py</strong>: Implements Dash callback functions.</li>
-<li><strong>utils.py</strong>: Contains helper functions for rendering and state management.</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>frontend.py</strong></td>
+<td>Implements Dash callback functions</td>
+</tr>
+<tr>
+<td><strong>utils.py</strong></td>
+<td>Contains helper functions for rendering and state management</td>
+</tr>
+</tbody>
+</table>
 <p>Each of the frontend components is designed to be modular and can be easily integrated into the dashboard. Each component is defined in a separate folder, containing the component logic and styling. The <code>frontend.py</code> file contains the dash callback functions implementation and the <code>utils.py</code> file contains the helpers functions used by the component, allowing the component to be re-rendered in different scenarios (first design, reload/restore, refresh after data update).</p>
 <p><img src="../../images/modularity/image-3.png" width="600"></p>
+<h2 id="adding-new-components">Adding New Components<a class="headerlink" href="#adding-new-components" title="Permanent link">&para;</a></h2>
+<p>To add a new component type:</p>
+<ol>
+<li>Create a new folder in <code>depictio/dash/modules/</code></li>
+<li>Implement <code>frontend.py</code> with callback functions</li>
+<li>Implement <code>utils.py</code> with helper functions</li>
+<li>Register the component in the component registry</li>
+<li>Add corresponding API endpoints if needed</li>
+</ol>
+<p>See <a href="../contributing/">Contributing Guide</a> for detailed instructions.</p>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -2754,12 +2949,81 @@
       
         <footer class="md-footer">
   
+
+  <!-- Custom Depictio Footer Content -->
+  <div class="depictio-footer">
+    <div class="depictio-footer__grid md-grid">
+
+      <!-- Logo Column -->
+      <div class="depictio-footer__section depictio-footer__brand">
+        <img src="../../images/logo/logo_icon.png" alt="Depictio" class="depictio-footer__logo">
+        <span class="depictio-footer__title">Depictio</span>
+        <p class="depictio-footer__tagline">Interactive dashboards for bioinformatics</p>
+      </div>
+
+      <!-- Connect Column -->
+      <div class="depictio-footer__section">
+        <h4 class="depictio-footer__heading">Connect</h4>
+        <ul class="depictio-footer__links">
+          <li><a href="https://github.com/depictio/depictio" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            GitHub
+          </a></li>
+          <li><a href="https://github.com/depictio/depictio/issues" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+            Report Issues
+          </a></li>
+          <li><a href="https://github.com/depictio/depictio/discussions" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+            Discussions
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Resources Column -->
+      <div class="depictio-footer__section">
+        <h4 class="depictio-footer__heading">Resources</h4>
+        <ul class="depictio-footer__links">
+          <li><a href="../../usage/get_started/">Getting Started</a></li>
+          <li><a href="../../installation/docker/">Installation</a></li>
+          <li><a href="../../features/">Features</a></li>
+          <li><a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">Live Demo</a></li>
+        </ul>
+      </div>
+
+      <!-- About Column -->
+      <div class="depictio-footer__section">
+        <h4 class="depictio-footer__heading">About</h4>
+        <ul class="depictio-footer__links">
+          <li><a href="https://github.com/depictio/depictio/blob/main/LICENSE" target="_blank" rel="noopener">License (MIT)</a></li>
+          <li><a href="../contributing/">Contributing</a></li>
+          <li><a href="https://github.com/depictio/depictio/releases" target="_blank" rel="noopener">Releases</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Funding/Supported By Section -->
+    <div class="depictio-footer__funding md-grid">
+      <div class="depictio-footer__funding-label">Supported by</div>
+      <div class="depictio-footer__funding-logos">
+        <a href="https://www.embl.org/" target="_blank" rel="noopener" title="EMBL - European Molecular Biology Laboratory">
+          <img src="../../assets/EMBL_logo_colour_DIGITAL.png" alt="EMBL Logo" class="depictio-footer__funding-logo">
+        </a>
+        <a href="https://www.embl.org/about/info/arise/" target="_blank" rel="noopener" title="ARISE Programme">
+          <img src="../../assets/AriseLogo300dpi.png" alt="ARISE Logo" class="depictio-footer__funding-logo">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copyright Bar -->
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2023 - 2025 Thomas Weber
+      Copyright &copy; 2023 - 2026 Thomas Weber
     </div>
   
   
