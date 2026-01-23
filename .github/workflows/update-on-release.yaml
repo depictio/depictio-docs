@@ -1,0 +1,161 @@
+name: Update Docs on Release
+
+on:
+  repository_dispatch:
+    types: [new-release]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., v0.6.0-b5)'
+        required: true
+        type: string
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: depictio/depictio
+
+jobs:
+  create-update-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      packages: read
+
+    steps:
+      - name: Checkout docs repo
+        uses: actions/checkout@v4
+
+      - name: Get version info
+        id: version
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+            PRERELEASE="false"
+          else
+            VERSION="${{ github.event.client_payload.version }}"
+            PRERELEASE="${{ github.event.client_payload.prerelease }}"
+          fi
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "image_tag=${VERSION#v}" >> $GITHUB_OUTPUT
+          echo "prerelease=${PRERELEASE}" >> $GITHUB_OUTPUT
+          echo "branch=docs/update-${VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Create update branch
+        run: |
+          git checkout -b ${{ steps.version.outputs.branch }}
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract OpenAPI specification
+        run: |
+          # Pull the released image
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.image_tag }}
+
+          # Start container with minimal config
+          docker run -d --name depictio-api \
+            -p 8058:8058 \
+            -e DEPICTIO_CONTEXT=server \
+            -e MONGO_HOST=localhost \
+            -e MONGO_PORT=27017 \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.image_tag }} \
+            uvicorn depictio.api.main:app --host 0.0.0.0 --port 8058 || true
+
+          # Wait for API to be ready
+          echo "Waiting for API to start..."
+          for i in {1..30}; do
+            if curl -s http://localhost:8058/openapi.json > /dev/null 2>&1; then
+              echo "API is ready!"
+              break
+            fi
+            echo "Attempt $i/30..."
+            sleep 2
+          done
+
+          # Fetch OpenAPI spec
+          curl -s http://localhost:8058/openapi.json | jq '.' > docs/api/openapi.json
+
+          # Verify the file is valid JSON
+          if ! jq empty docs/api/openapi.json 2>/dev/null; then
+            echo "Error: Invalid JSON in openapi.json"
+            cat docs/api/openapi.json
+            exit 1
+          fi
+
+          # Add generation metadata
+          jq --arg date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+             --arg version "${{ steps.version.outputs.version }}" \
+             '.info["x-generated-at"] = $date | .info["x-depictio-version"] = $version' \
+             docs/api/openapi.json > /tmp/openapi.json
+          mv /tmp/openapi.json docs/api/openapi.json
+
+          # Cleanup
+          docker stop depictio-api || true
+          docker rm depictio-api || true
+
+          echo "OpenAPI spec extracted: $(jq '.paths | keys | length' docs/api/openapi.json) endpoints"
+
+      - name: Update pyproject.toml version
+        run: |
+          sed -i "s/^version = .*/version = \"${{ steps.version.outputs.image_tag }}\"/" pyproject.toml
+
+      - name: Commit changes
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+          git add docs/api/openapi.json pyproject.toml
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            echo "has_changes=false" >> $GITHUB_ENV
+          else
+            git commit -m "Update docs for ${{ steps.version.outputs.version }}"
+            echo "has_changes=true" >> $GITHUB_ENV
+          fi
+
+      - name: Push branch
+        if: env.has_changes == 'true'
+        run: |
+          git push origin ${{ steps.version.outputs.branch }}
+
+      - name: Create Pull Request
+        if: env.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.version.outputs.branch }}
+          base: main
+          title: "docs: Update for ${{ steps.version.outputs.version }}"
+          body: |
+            ## Automated Documentation Update
+
+            This PR updates the documentation for **${{ steps.version.outputs.version }}**.
+
+            ### Changes
+            - Updated OpenAPI specification from released Docker image
+            - Updated version in pyproject.toml
+
+            ### Source
+            - Release: ${{ github.event.client_payload.release_url || 'Manual trigger' }}
+            - Pre-release: ${{ steps.version.outputs.prerelease }}
+
+            ---
+            *This PR was automatically created by the docs update workflow.*
+          labels: |
+            documentation
+            automated
+          draft: false
+
+      - name: Summary
+        run: |
+          echo "## Documentation Update" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version**: ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ steps.version.outputs.branch }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Pre-release**: ${{ steps.version.outputs.prerelease }}" >> $GITHUB_STEP_SUMMARY
