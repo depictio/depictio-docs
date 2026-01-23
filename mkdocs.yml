@@ -168,7 +168,7 @@ extra:
   # Version Provider
   version:
     provider: mike
-    default: latest
+    default: stable
     alias: true
 
   # Google Analytics
