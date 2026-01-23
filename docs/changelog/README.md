@@ -14,6 +14,46 @@ hide:
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
 
+### **[v0.6.0-b5](https://github.com/depictio/depictio/releases/tag/v0.6.0-b5)** (January 23, 2026)
+
+#### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.0-b5
+ghcr.io/depictio/depictio:edge
+```
+
+#### **✨ Features**
+
+* **Gunicorn Token Masking**: Added gunicorn config with token masking in access logs for improved security. ([e22778d9](https://github.com/depictio/depictio/commit/e22778d9))
+* **Celery Worker Deployment**: Added Celery worker deployment to Helm charts for background task processing. ([c702296c](https://github.com/depictio/depictio/commit/c702296c))
+* **Docker Health Checks**: Added healthchecks and restart policies for production readiness. ([89e8522a](https://github.com/depictio/depictio/commit/89e8522a))
+* **Automated OpenAPI Docs**: Added automated OpenAPI spec extraction for documentation. ([0173ecc4](https://github.com/depictio/depictio/commit/0173ecc4))
+
+#### **🐛 Fixes**
+
+* Fixed slider mark labels visibility in dark mode using dmc.Text components. ([a59f9802](https://github.com/depictio/depictio/commit/a59f9802), [d2a0d765](https://github.com/depictio/depictio/commit/d2a0d765))
+* Fixed parameter order in update_aggregation_options callback. ([c114b5ec](https://github.com/depictio/depictio/commit/c114b5ec))
+* Fixed type check for edit_context before calling .get(). ([17e034c7](https://github.com/depictio/depictio/commit/17e034c7))
+* Fixed screenshot trigger and updated accordion selectors for DMC 2.0+. ([cae52478](https://github.com/depictio/depictio/commit/cae52478))
+* Added fallback on non-200 status in _check_deltatables. ([adf75978](https://github.com/depictio/depictio/commit/adf75978))
+* Fixed triangle background animations visibility on auth page. ([6370fc53](https://github.com/depictio/depictio/commit/6370fc53))
+
+#### **🚀 Improvements**
+
+* Comprehensive code simplification and modularization of Dash components. ([bbf8395e](https://github.com/depictio/depictio/commit/bbf8395e))
+* Simplified figure and table component callbacks. ([b83ecf0d](https://github.com/depictio/depictio/commit/b83ecf0d))
+* Cleaned up verbose logs in table, text, and multiqc components. ([ebb6c18e](https://github.com/depictio/depictio/commit/ebb6c18e))
+* Removed verbose runtime logs from frontend callbacks. ([af750d3f](https://github.com/depictio/depictio/commit/af750d3f))
+
+#### **🧹 CI/CD**
+
+* Use content-based hash for Docker image tags. ([aa9da340](https://github.com/depictio/depictio/commit/aa9da340))
+* Switched to uv-based Dockerfile for faster Helm builds. ([8afa0a36](https://github.com/depictio/depictio/commit/8afa0a36))
+* Added Celery worker validation to test-build-push workflow. ([d36df38c](https://github.com/depictio/depictio/commit/d36df38c))
+
+---
+
 ### **[v0.6.0-b4](https://github.com/depictio/depictio/releases/tag/v0.6.0-b4)** (January 22, 2026)
 
 #### Docker Images
