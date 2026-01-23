@@ -95,15 +95,15 @@ Whether you're looking for a **plotly studio like** experience for immediate ana
 
 ### Choose **Basic** when:
 
-✅ **You have limited number of files ready to analyze** (CSV, Excel, Parquet)  
-✅ **One-time analysis** or ad-hoc exploration  
-✅ **Manual data preparation** is acceptable  
-✅ **Quick insights** are the primary goal  
+✅ **You have limited number of files ready to analyze** (CSV, Excel, Parquet)
+✅ **One-time analysis** or ad-hoc exploration
+✅ **Manual data preparation** is acceptable
+✅ **Quick insights** are the primary goal
 
 ### Choose **Advanced** when:
 
-✅ **Automated pipeline generates your data** (nf-core, Snakemake, etc.)  
-✅ **Standardized file organization** and naming conventions exist  
+✅ **Automated pipeline generates your data** (nf-core, Snakemake, etc.)
+✅ **Standardized file organization** and naming conventions exist
 ✅ **You need to aggregate data** across multiple samples or runs
 ✅ **Regular data updates** are expected
 
@@ -123,11 +123,11 @@ Whether you're looking for a **plotly studio like** experience for immediate ana
 **Common File Formats Supported:**
 
 - CSV files (most common) & TSV files (tab-separated values)
-- Excel spreadsheets (.xlsx, .xls)  
+- Excel spreadsheets (.xlsx, .xls)
 - Parquet files (efficient for large datasets)
 - Feather files (.feather)
 
-### Advanced Project Quickstart  
+### Advanced Project Quickstart
 
 **Project Structure Setup:**
 Advanced projects require a YAML configuration file that describes your data organization patterns. This tells Depictio how to automatically discover and organize your files.
@@ -196,17 +196,17 @@ is_public: false
 # =============================================================================
 workflows:
   - name: "bioinformatics_pipeline"
-    
+
     # Engine that executed the workflow
     engine:
       name: "nextflow"           # Workflow management system used
       version: "24.10.3"         # Version for reproducibility
-    
+
     description: "Multi-sample bioinformatics analysis pipeline"
     version: "3.1"               # Your pipeline version
-    
+
     # =============================================================================
-    # DATA DISCOVERY CONFIGURATION  
+    # DATA DISCOVERY CONFIGURATION
     # Tell Depictio where to find your data and how it's organized
     # =============================================================================
     config:
@@ -215,77 +215,77 @@ workflows:
         # Environment variables (like {DATA_LOCATION}) are resolved at runtime
         # This allows flexible deployment across different systems
         - "{DATA_LOCATION}/study_directory"
-      
+
       # Regular expression to identify run directories
       # "run_.*" matches: run_001, run_002, run_abc, etc.
       runs_regex: "run_.*"
-      
+
       # =============================================================================
       # DATA COLLECTIONS
       # Define the different types of data files to be ingested
       # =============================================================================
       data_collections:
-        
+
         # COLLECTION 1: Sample Statistics
         # ========================================
         - data_collection_tag: "sample_stats"
           description: "Statistics for each sample"
-          
+
           config:
             # Table = tabular data (CSV, TSV, Excel, etc.)
             # Futur Alternative: JBrowse2, GeoJSON, etc.
             type: "Table"
-            
+
             # Aggregate = combine multiple files into one dataset
             # Alternative: Metadata = single file per run
             metatype: "Aggregate"
-            
+
             # File discovery settings
             scan:
               # recursive = search through subdirectories
               # single = look for one specific file per run
               mode: "recursive"
-              
+
               scan_parameters:
                 regex_config:
                   # Find all files matching this pattern within each run directory
                   # Example matches: run_001/sample_A/stats/sample_A_stats.tsv
                   #                 run_001/sample_B/stats/sample_B_stats.tsv
                   pattern: "stats/.*_stats.tsv"
-            
+
             # Data processing configuration specific to type Table
             dc_specific_properties:
               format: "TSV"        # Tab-separated values
-              
+
               # Polars DataFrame configuration (high-performance data processing)
               polars_kwargs:
                 separator: "\t"    # Tab separator
                 has_header: true   # First row contains column names
                 # Other options: skip_rows, column_types, etc.
-              
+
               # Only keep these columns (improves performance and reduces memory)
               keep_columns:
                 - "sample_id"      # Links samples across datasets
                 - "total_reads"    # Sequencing depth metric
-                - "mapped_reads"   # Alignment quality metric  
+                - "mapped_reads"   # Alignment quality metric
                 - "quality_score"  # Overall sample quality
-              
+
               # Human-readable descriptions for dashboard tooltips
               columns_description:
                 sample_id: "Unique sample identifier"
                 total_reads: "Total number of sequencing reads"
-                mapped_reads: "Successfully aligned reads" 
+                mapped_reads: "Successfully aligned reads"
                 quality_score: "Overall sample quality metric"
-        
-        # COLLECTION 2: Analysis Results  
+
+        # COLLECTION 2: Analysis Results
         # ========================================
         - data_collection_tag: "analysis_results"
           description: "Analysis results for each sample"
-          
+
           config:
             type: "Table"
             metatype: "Aggregate"
-            
+
             scan:
               mode: "recursive"
               scan_parameters:
@@ -293,19 +293,19 @@ workflows:
                   # Find analysis result files in each sample directory
                   # Example: run_001/sample_A/analysis_results/sample_A_analysis.tsv
                   pattern: "analysis_results/.*_analysis.tsv"
-            
+
             dc_specific_properties:
               format: "TSV"
               polars_kwargs:
                 separator: "\t"
                 has_header: true
-              
+
               keep_columns:
                 - "sample_id"        # Join key for linking datasets
                 - "gene_expression"  # Expression analysis results
                 - "variant_count"    # Variant calling results
                 - "pathway_enrichment"  # Functional analysis results
-            
+
           # =============================================================================
           # DATA JOINING
           # Combine this collection with others for integrated analysis
@@ -314,11 +314,11 @@ workflows:
             # Columns used to match records between datasets
             on_columns:
               - "sample_id"        # Common identifier across collections
-            
+
             # Type of join (inner = only samples present in both datasets)
             # Options: inner, left, right, outer
             how: "inner"
-            
+
             # Other collections to join with
             with_dc:
               - "sample_stats"     # Combine analysis with quality metrics
@@ -344,7 +344,7 @@ This single command handles the entire pipeline automatically. For detailed CLI 
 Using the `run` command, the CLI executes this pipeline for advanced projects:
 
 1. **✅ Server Check** - Verify connection to Depictio backend
-2. **✅ S3 Storage Check** - Validate cloud storage configuration  
+2. **✅ S3 Storage Check** - Validate cloud storage configuration
 3. **✅ Config Validation** - Ensure YAML structure is correct
 4. **✅ Config Sync** - Register project with server
 5. **✅ File Scan** - Discover files matching patterns
@@ -365,7 +365,7 @@ This is usually suitable for **metadata files** or **summary statistics** that a
 
 ```yaml
 scan:
-  mode: "single" 
+  mode: "single"
   scan_parameters:
     filename: "multiqc_data/multiqc_general_stats.txt"
 ```
@@ -414,5 +414,5 @@ Now that you understand project types, you're ready to create your first interac
 
 ---
 
-*Thomas Weber*  
+*Thomas Weber*
 *August 2025*

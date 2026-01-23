@@ -1,10 +1,8 @@
 # Depictio CLI Usage
 
 <!-- prettier-ignore -->
-<!-- markdownlint-disable MD046 -->
 !!! note "Note about the CLI"
     The depictio-cli is a command line interface that allows you to interact with the Depictio backend. It is used to register projects information including workflow files metadata. The depictio-cli is currently in development and is not yet ready for production use.
-<!-- markdownlint-enable MD046 -->
 
 ## 📚 Table of Contents
 
@@ -16,6 +14,7 @@
     - [📋 Config Commands](#config-commands)
     - [📊 Data Commands](#data-commands)
     - [💾 Backup Commands](#backup-commands)
+    - [📈 Dashboard Commands](#dashboard-commands)
 - [🛠️ Common Use Cases](#common-use-cases)
 - [🔧 Error Handling](#error-handling)
 
@@ -37,6 +36,12 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `data scan` | Scan project files | All users |
 | `data process` | Process data collections | All users |
 | `data join` | Execute pre-computed table joins | All users |
+| `data link list` | List DC links for a project | All users |
+| `data link create` | Create a DC link for cross-DC filtering | All users |
+| `data link resolve` | Test link resolution | All users |
+| `data link delete` | Delete a DC link | All users |
+| `dashboard validate` | Validate dashboard YAML file | All users |
+| `dashboard validate-dir` | Validate all YAML files in directory | All users |
 | `backup backup` | Create system backup | **Admin only** |
 | `backup restore` | Restore from backup | **Admin only** |
 | `backup list-backups` | List available backups | **Admin only** |
@@ -78,7 +83,6 @@ depictio-cli run --project-config-path ./config.yaml
   5. ✅ Scan data files
   6. ✅ Process data collections
 
-<!-- markdownlint-disable MD046 -->
 ??? info "📋 Basic Configuration"
 
     | Parameter | Type | Default | Description |
@@ -87,9 +91,7 @@ depictio-cli run --project-config-path ./config.yaml
     | `--project-config-path` | `string` | `""` | Pipeline configuration file path |
     | `--workflow-name` | `string` | `null` | Specific workflow to process |
     | `--data-collection-tag` | `string` | `null` | Data collection tag to process |
-<!-- markdownlint-enable MD046 -->
 
-<!-- markdownlint-disable MD046 -->
 ??? info "⚙️ Flow Control Options"
 
     | Parameter | Type | Default | Description |
@@ -99,9 +101,7 @@ depictio-cli run --project-config-path ./config.yaml
     | `--skip-sync` | `boolean` | `false` | Skip config sync to server |
     | `--skip-scan` | `boolean` | `false` | Skip data scanning step |
     | `--skip-process` | `boolean` | `false` | Skip data processing step |
-<!-- markdownlint-enable MD046 -->
 
-<!-- markdownlint-disable MD046 -->
 ??? info "🔄 Sync & Scan Options"
 
     | Parameter | Type | Default | Description |
@@ -110,9 +110,7 @@ depictio-cli run --project-config-path ./config.yaml
     | `--rescan-folders` | `boolean` | `false` | Reprocess all runs for data collection |
     | `--sync-files` | `boolean` | `false` | Update files for data collection |
     | `--overwrite` | `boolean` | `false` | Overwrite workflow if it already exists |
-<!-- markdownlint-enable MD046 -->
 
-<!-- markdownlint-disable MD046 -->
 ??? info "🖥️ Output & Control"
 
     | Parameter | Type | Default | Description |
@@ -120,7 +118,6 @@ depictio-cli run --project-config-path ./config.yaml
     | `--rich-tables` | `boolean` | `false` | Show detailed execution summary |
     | `--continue-on-error` | `boolean` | `false` | Continue execution on step failure |
     | `--dry-run` | `boolean` | `false` | Show execution plan without running |
-<!-- markdownlint-enable MD046 -->
 
 **Examples:**
 
@@ -163,10 +160,8 @@ depictio-cli run \
 ### 📋 Config Commands
 
 <!-- prettier-ignore -->
-<!-- markdownlint-disable MD046 -->
 !!! info "Command Group: `depictio-cli config`"
     All commands in this section are part of the `config` command family. Use them to manage Depictio configurations and validate connections.
-<!-- markdownlint-enable MD046 -->
 
 Manage Depictio configurations and validate connections.
 
@@ -283,10 +278,8 @@ depictio-cli config sync-project-config-to-server --project-config-path ./config
 ### 📊 Data Commands
 
 <!-- prettier-ignore -->
-<!-- markdownlint-disable MD046 -->
 !!! info "Command Group: `depictio-cli data`"
     All commands in this section are part of the `data` command family. Use them to manage data scanning and processing operations.
-<!-- markdownlint-enable MD046 -->
 
 Manage data scanning and processing operations.
 
@@ -338,10 +331,8 @@ depictio-cli data process --project-config-path ./config.yaml --overwrite
 Execute pre-computed table joins defined in project configuration.
 
 <!-- prettier-ignore -->
-<!-- markdownlint-disable MD046 -->
 !!! note "Links vs Joins"
     For interactive cross-DC filtering, use **links** (configured in YAML, resolved at runtime). Use **joins** only when you need a pre-computed combined dataset stored as a Delta table. See [Cross-DC Filtering](../features/cross-dc-filtering.md).
-<!-- markdownlint-enable MD046 -->
 
 ```bash
 depictio-cli data join [OPTIONS]
@@ -363,21 +354,179 @@ depictio-cli data join --project-config-path ./config.yaml --preview
 depictio-cli data join --project-config-path ./config.yaml --join-name my_join
 ```
 
+---
+
+#### `data link`
+
+Manage DC links for cross-DC interactive filtering. Links enable runtime filtering between data collections without pre-computing joined tables.
+
+<!-- prettier-ignore -->
+!!! tip "Links vs Joins"
+    **Links** are the preferred method for cross-DC filtering. They resolve at runtime and support any DC type (tables, MultiQC, etc.). **Joins** create pre-computed Delta tables and only work between table DCs.
+
+##### `data link list`
+
+List all DC links for a project.
+
+```bash
+depictio-cli data link list [OPTIONS]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
+| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
+| `--target-dc` | `string` | `null` | Filter links by target DC ID |
+| `--source-dc` | `string` | `null` | Filter links by source DC ID |
+
+```bash
+# List all links in a project
+depictio-cli data link list --project-config-path ./config.yaml
+
+# List links targeting a specific DC
+depictio-cli data link list --project-config-path ./config.yaml --target-dc multiqc_dc_id
+```
+
+---
+
+##### `data link create`
+
+Create a new DC link for cross-DC filtering.
+
+```bash
+depictio-cli data link create [OPTIONS]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
+| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
+| `--source-dc` | `string` | **required** | Source data collection ID |
+| `--source-column` | `string` | **required** | Column in source DC to link from |
+| `--target-dc` | `string` | **required** | Target data collection ID |
+| `--target-type` | `string` | `table` | Target DC type (`table`, `multiqc`) |
+| `--resolver` | `string` | `direct` | Resolver type (see below) |
+| `--description` | `string` | `null` | Optional description for the link |
+
+**Resolver Types:**
+
+| Resolver | Use Case | Description |
+|----------|----------|-------------|
+| `direct` | Same value in both DCs | 1:1 mapping (e.g., `sample_id` = `sample_id`) |
+| `sample_mapping` | MultiQC sample variants | Canonical ID → MultiQC sample name variants |
+| `pattern` | Template substitution | e.g., `{sample}.bam` → `S1.bam` |
+| `regex` | Pattern matching | Match target values using regex |
+| `wildcard` | Glob-style matching | e.g., `S1*` matches `S1_R1.bam` |
+
+```bash
+# Create a direct link between two table DCs
+depictio-cli data link create \
+    --project-config-path ./config.yaml \
+    --source-dc metadata_table \
+    --source-column sample_id \
+    --target-dc variants_table \
+    --target-type table \
+    --resolver direct
+
+# Create a sample_mapping link to a MultiQC DC
+depictio-cli data link create \
+    --project-config-path ./config.yaml \
+    --source-dc metadata_table \
+    --source-column sample_id \
+    --target-dc multiqc_general_stats \
+    --target-type multiqc \
+    --resolver sample_mapping
+```
+
+---
+
+##### `data link resolve`
+
+Test link resolution by resolving filter values from source to target DC.
+
+```bash
+depictio-cli data link resolve [OPTIONS]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
+| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
+| `--source-dc` | `string` | **required** | Source data collection ID |
+| `--source-column` | `string` | **required** | Column in source DC to filter on |
+| `--target-dc` | `string` | **required** | Target data collection ID |
+| `--filter` | `string` | **required** | Comma-separated values to resolve |
+
+```bash
+# Resolve sample IDs to MultiQC sample names
+depictio-cli data link resolve \
+    --project-config-path ./config.yaml \
+    --source-dc metadata_table \
+    --source-column sample_id \
+    --target-dc multiqc_general_stats \
+    --filter "S1,S2,S3"
+```
+
+**Example output:**
+
+```
+Resolving link:
+  Source DC: metadata_table
+  Source Column: sample_id
+  Target DC: multiqc_general_stats
+  Filter Values: ['S1', 'S2', 'S3']
+
+Resolution successful!
+  Link ID: 507f1f77bcf86cd799439011
+  Resolver Used: sample_mapping
+  Target Type: multiqc
+  Match Count: 6
+
+Resolved Values (6):
+    - S1_R1
+    - S1_R2
+    - S2_R1
+    - S2_R2
+    - S3_R1
+    - S3_R2
+```
+
+---
+
+##### `data link delete`
+
+Delete a DC link.
+
+```bash
+depictio-cli data link delete [OPTIONS]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
+| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
+| `--link-id` | `string` | **required** | ID of the link to delete |
+| `--force` / `-f` | `boolean` | `false` | Skip confirmation prompt |
+
+```bash
+# Delete a link with confirmation
+depictio-cli data link delete --project-config-path ./config.yaml --link-id abc123
+
+# Delete without confirmation
+depictio-cli data link delete --project-config-path ./config.yaml --link-id abc123 --force
+```
+
 ### 💾 Backup Commands
 
 <!-- prettier-ignore -->
-<!-- markdownlint-disable MD046 -->
 !!! info "Command Group: `depictio-cli backup`"
     All commands in this section are part of the `backup` command family. Use them to backup and restore system data and configurations.
-<!-- markdownlint-enable MD046 -->
 
 Backup and restore system data and configurations.
 
 <!-- prettier-ignore -->
-<!-- markdownlint-disable MD046 -->
 !!! warning "Admin Access Required"
     Backup and restore commands require administrator privileges. Only users with admin access can perform backup and restore operations. Ensure your CLI configuration includes admin credentials.
-<!-- markdownlint-enable MD046 -->
 
 #### `backup backup`
 
@@ -439,6 +588,146 @@ depictio-cli backup list-backups [OPTIONS]
 depictio-cli backup list-backups --backup-path ./backups
 ```
 
+### 📈 Dashboard Commands
+
+<!-- prettier-ignore -->
+!!! info "Command Group: `depictio-cli dashboard`"
+    All commands in this section are part of the `dashboard` command family. Use them to validate dashboard YAML files before deployment.
+
+Validate dashboard YAML files for the [YAML Dashboard Sync](../features/yaml-sync.md) feature.
+
+#### `dashboard validate`
+
+Validate a single dashboard YAML file against the schema and optionally check column names and component types.
+
+```bash
+depictio-cli dashboard validate <yaml_file> [OPTIONS]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `yaml_file` | `path` | **required** | Path to YAML dashboard file |
+| `--verbose` / `-v` | `boolean` | `false` | Show detailed validation output including warnings |
+| `--check-columns` / `--no-check-columns` | `boolean` | `true` | Validate column names exist in data collection schema |
+| `--check-types` / `--no-check-types` | `boolean` | `true` | Validate chart types, aggregation functions, filter types |
+
+```bash
+# Basic validation
+depictio-cli dashboard validate dashboards/local/my_dashboard.yaml
+
+# With verbose output
+depictio-cli dashboard validate dashboards/local/my_dashboard.yaml --verbose
+
+# Skip column validation (useful for templates without data access)
+depictio-cli dashboard validate template.yaml --no-check-columns
+```
+
+**Example Output (Success):**
+
+```
+Validating: dashboards/local/my_dashboard.yaml
+  Including column name validation
+  Including component type validation
+
+✓ Validation passed
+  Errors: 0
+  Warnings: 0
+```
+
+**Example Output (Failure):**
+
+```
+Validating: dashboards/local/my_dashboard.yaml
+
+✗ Validation failed
+  Errors: 2
+  Warnings: 1
+
+┌──────────────────────────────────────────────────────────────────┐
+│                       Validation Errors                          │
+├─────────────────────┬────────────────┬───────────────────────────┤
+│ Component           │ Field          │ Message                   │
+├─────────────────────┼────────────────┼───────────────────────────┤
+│ scatter-plot-1      │ chart          │ Invalid chart type 'scat' │
+│ card-average        │ column         │ Column 'sepal_len' not    │
+│                     │                │ found. Did you mean       │
+│                     │                │ 'sepal.length'?           │
+└─────────────────────┴────────────────┴───────────────────────────┘
+```
+
+---
+
+#### `dashboard validate-dir`
+
+Validate all YAML files in a directory, with optional recursive search.
+
+```bash
+depictio-cli dashboard validate-dir [directory] [OPTIONS]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `directory` | `path` | `.` (current) | Directory to validate |
+| `--recursive` / `-r` | `boolean` | `true` | Recursively search subdirectories |
+| `--check-columns` / `--no-check-columns` | `boolean` | `true` | Validate column names exist in data collection schema |
+| `--check-types` / `--no-check-types` | `boolean` | `true` | Validate chart types, aggregation functions, filter types |
+
+```bash
+# Validate all YAML files in local dashboards directory
+depictio-cli dashboard validate-dir dashboards/local/
+
+# Validate current directory only (non-recursive)
+depictio-cli dashboard validate-dir . --no-recursive
+
+# Validate templates without column checks
+depictio-cli dashboard validate-dir dashboards/templates/ --no-check-columns
+```
+
+**Example Output:**
+
+```
+Found 5 YAML files
+  Including column name validation
+  Including component type validation
+
+┌──────────────────────────────────────────────────────────────────┐
+│                       Validation Results                         │
+├───────────────────────────────────────┬──────────────┬───────────┤
+│ File                                  │ Status       │ Errors    │
+├───────────────────────────────────────┼──────────────┼───────────┤
+│ Iris_Dashboard_demo_6824cb3b.yaml     │ ✓ Valid      │ 0         │
+│ Analysis_Dashboard_6824cb3c.yaml      │ ✓ Valid      │ 0         │
+│ QC_Overview_6824cb3d.yaml             │ ✗ Invalid    │ 3         │
+│ Sample_Dashboard_6824cb3e.yaml        │ ✓ Valid      │ 0         │
+│ broken_config.yaml                    │ ✗ Invalid    │ 1         │
+└───────────────────────────────────────┴──────────────┴───────────┘
+
+Summary: 3 valid, 2 invalid
+```
+
+---
+
+#### Dashboard Validation in CI/CD
+
+Use dashboard validation in your CI/CD pipeline:
+
+```yaml
+# GitHub Actions example
+jobs:
+  validate-dashboards:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install depictio-cli
+        run: pip install depictio
+      - name: Validate dashboards
+        run: |
+          depictio-cli dashboard validate-dir dashboards/templates/ \
+            --no-check-columns  # Skip column checks (no DB access)
+```
+
+For more information about the YAML Dashboard Sync feature, see [YAML Dashboard Sync](../features/yaml-sync.md).
+
 ## 🛠️ Common Use Cases
 
 ### 🚀 Quick Start
@@ -494,10 +783,8 @@ depictio-cli run --project-config-path ./config.yaml --skip-server-check --skip-
 ### 💾 Backup Operations
 
 <!-- prettier-ignore -->
-<!-- markdownlint-disable MD046 -->
 !!! warning "Admin Access Required"
     All backup operations require administrator privileges.
-<!-- markdownlint-enable MD046 -->
 
 === "Create Backup"
 
@@ -555,7 +842,6 @@ depictio-cli run --project-config-path ./config.yaml --update-config --overwrite
 
 ### Common Issues
 
-<!-- markdownlint-disable MD046 -->
 === "Connection Problems"
 
     **Error:** "Server not accessible"
@@ -568,9 +854,7 @@ depictio-cli run --project-config-path ./config.yaml --update-config --overwrite
     # Verify CLI configuration
     depictio-cli config show-cli-config
     ```
-<!-- markdownlint-enable MD046 -->
 
-<!-- markdownlint-disable MD046 -->
 === "Configuration Errors"
 
     **Error:** "Project config validation failed"
@@ -583,9 +867,7 @@ depictio-cli run --project-config-path ./config.yaml --update-config --overwrite
     # Check configuration examples
     # See: minimal_config.md and full_reference_config.md
     ```
-<!-- markdownlint-enable MD046 -->
 
-<!-- markdownlint-disable MD046 -->
 === "Permission Issues"
 
     **Error:** "Admin access required"
@@ -594,7 +876,6 @@ depictio-cli run --project-config-path ./config.yaml --update-config --overwrite
     - Ensure you're logged in with admin credentials
     - Check CLI configuration includes admin access tokens
     - Contact system administrator for proper permissions
-<!-- markdownlint-enable MD046 -->
 
 ### Troubleshooting Steps
 

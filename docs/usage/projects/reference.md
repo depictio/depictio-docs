@@ -1,11 +1,9 @@
 # <span style="color: #45B8AC;">:material-folder-multiple:</span> YAML Configuration Reference
 
-<!-- markdownlint-disable MD046 -->
 
 !!! warning "Full Configuration Template Warning"
     **Do not copy-paste this entire configuration blindly.** This reference shows all available options with their defaults and descriptions. Only specify values that differ from defaults or are required for your specific use case.
 
-<!-- markdownlint-enable MD046 -->
 
 This is a complete reference of all configuration options available in Depictio YAML files. For getting started and examples, see the [YAML Examples Guide](yaml-examples.md).
 

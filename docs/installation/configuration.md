@@ -4,43 +4,48 @@ icon: material/cog
 description: "Configure Depictio with environment variables for various features and integrations."
 ---
 
-# Environment Variables Configuration
+# Configuration Guide
 
-Depictio uses environment variables to configure various aspects of the application. This guide covers the key environment variables you can set to customize your deployment.
+Depictio uses environment variables to configure various aspects of the application. This guide covers common configuration scenarios and use cases.
 
-## Base Configuration
+!!! tip "Complete Reference"
 
-The base configuration is available in the [.env.example](https://github.com/depictio/depictio/blob/main/.env.example) file in the repository. Copy this file to `.env` and modify the values as needed.
+    For the complete list of all 160+ environment variables, see the [Environment Reference](env-reference.md) or use the `.env.complete.example` file in the repository.
 
-### Basic Setup
+## Configuration Files
+
+The repository includes two environment file templates:
+
+| File | Purpose |
+|------|---------|
+| `.env.example` | **Quick start** - Minimal configuration (just MinIO credentials) |
+| `.env.complete.example` | **Complete reference** - All 160+ variables with defaults and comments |
+
+## Quick Start Configuration
+
+For most users, the minimal configuration is sufficient:
 
 ```bash
-# Application Context
-DEPICTIO_CONTEXT=server
-DEPICTIO_LOGGING_VERBOSITY_LEVEL=ERROR
+cp .env.example .env
+```
 
-# MinIO Storage Configuration
+**Minimal `.env` file:**
+
+```bash
 DEPICTIO_MINIO_ROOT_USER=minio
 DEPICTIO_MINIO_ROOT_PASSWORD=minio123
-DEPICTIO_MINIO_PUBLIC_URL=http://localhost:9000
-
-# MongoDB Configuration
-DEPICTIO_MONGODB_DB_NAME=depictioDB
-DEPICTIO_MONGODB_PORT=27018
-DEPICTIO_MONGODB_SERVICE_NAME=mongo
-DEPICTIO_MONGODB_WIPE=false
-
-# FastAPI Server Configuration
-DEPICTIO_FASTAPI_HOST=0.0.0.0
-DEPICTIO_FASTAPI_PORT=8058
-DEPICTIO_FASTAPI_SERVICE_NAME=depictio-backend
-DEPICTIO_FASTAPI_PUBLIC_URL=http://localhost:8058
-
-# Dash Frontend Configuration
-DEPICTIO_DASH_HOST=0.0.0.0
-DEPICTIO_DASH_PORT=5080
-DEPICTIO_DASH_SERVICE_NAME=depictio-frontend
 ```
+
+## Advanced Configuration
+
+For full control, use the complete configuration file:
+
+```bash
+cp .env.complete.example .env
+# Then uncomment and modify the variables you need
+```
+
+All other settings use sensible defaults. The sections below cover common customization scenarios.
 
 ## Storage Configuration
 
@@ -309,13 +314,15 @@ DEPICTIO_PERFORMANCE_SERVICE_READINESS_TIMEOUT=10
 
 ## Background Callbacks Configuration
 
-Depictio supports asynchronous background callbacks using Celery for long-running operations. This feature significantly improves UI responsiveness when working with large datasets.
+Depictio uses Celery for asynchronous background processing. **Celery is required** for the dashboard editor (design mode) to function properly, as it enables non-blocking figure preview rendering during component creation.
 
-### Enabling Background Callbacks
+### Required Setup
 
 ```bash
-# Enable background callbacks (async mode)
-DEPICTIO_USE_BACKGROUND_CALLBACKS=true
+# Celery is ALWAYS enabled in the application
+# The Celery worker service is always started with docker-compose
+# This setting controls whether view mode also uses background callbacks
+DEPICTIO_CELERY_ENABLED=true
 
 # Configure number of Celery workers (default: 2)
 DEPICTIO_CELERY_WORKERS=4
@@ -323,54 +330,70 @@ DEPICTIO_CELERY_WORKERS=4
 
 ### How Background Callbacks Work
 
-When enabled:
+Celery provides asynchronous task processing for:
 
-- Long-running operations (data loading, visualization rendering) execute asynchronously
-- The UI remains responsive during data processing
+- **Design Mode** (Dashboard Editor): Always uses background callbacks (required)
+  - Figure preview rendering during component creation
+  - Real-time parameter updates without UI blocking
+  - Essential for responsive dashboard building experience
+
+- **View Mode** (Dashboard Viewing): Optionally uses background callbacks (controlled by env var)
+  - When `DEPICTIO_CELERY_ENABLED=true`: Data loading executes asynchronously
+  - When `false`: Data loading runs synchronously (UI may block during long operations)
+
+Technical implementation:
+
 - Redis is used as the message broker for task queuing
 - A dedicated Celery worker service processes background tasks
+- All imports are done inside callback functions for proper serialization
 
 ### Supported Components
 
-Background callbacks apply to:
+Background callbacks can apply to:
 
-- **Card components**: Initial render and filter updates
-- **Figure components**: Visualization rendering and filter updates
-- **Table components**: Data loading and pagination
+- **Card components**: Initial render and filter updates (view mode only)
+- **Figure components**: Visualization rendering and filter updates (both design and view mode)
+- **Table components**: Data loading and pagination (view mode only)
 
 ### Performance Considerations
 
-**Synchronous mode** (default):
+**Design Mode**:
 
-- UI blocks during data operations
-- Simpler architecture, easier debugging
-- Suitable for small datasets and single-user deployments
+- Always uses background callbacks (not configurable)
+- UI remains responsive during figure preview generation
+- Required for stepper workflow to function
 
-**Background mode** (enabled):
+**View Mode with Background Callbacks** (`DEPICTIO_CELERY_ENABLED=true`):
 
-- UI remains responsive during operations
+- UI remains responsive during data operations
 - Better user experience with large datasets
 - Recommended for production and multi-user environments
-- Requires Redis and Celery worker service
+- Requires Redis and Celery worker service (always running)
+
+**View Mode Synchronous** (`DEPICTIO_CELERY_ENABLED=false`):
+
+- Only view mode operations run synchronously
+- Design mode still requires Celery (always uses background)
+- UI may block during long data operations
+- Simpler for debugging view mode issues
 
 ### Docker Compose Configuration
 
-The `depictio-celery-worker` service automatically adapts based on the environment variable:
+The `depictio-celery-worker` service is always started and running:
 
-- If `DEPICTIO_USE_BACKGROUND_CALLBACKS=true`: Worker starts and processes tasks
-- If `false` or not set: Worker exits gracefully without consuming resources
+```bash
+# Start all services (Celery worker included by default)
+docker compose up
 
-No need to manually start/stop the worker service or use Docker Compose profiles.
+# The worker is always running - required for design mode
+# No need for profiles or conditional startup
+```
 
 ### Kubernetes/Helm Compatibility
-
-<!-- markdownlint-disable MD046 -->
 
 !!! info "K8S/Helm Support Coming Soon"
 
     Background callbacks are currently only supported in Docker Compose deployments. Kubernetes/Helm support is **coming soon** in an upcoming release.
-
-<!-- markdownlint-enable MD046 -->
 
 ## Development Settings
 
@@ -465,8 +488,8 @@ DEPICTIO_PERFORMANCE_HTTP_CLIENT_TIMEOUT=30
 DEPICTIO_PERFORMANCE_API_REQUEST_TIMEOUT=60
 DEPICTIO_PERFORMANCE_BROWSER_NAVIGATION_TIMEOUT=60000
 
-# JBrowse Integration
-DEPICTIO_JBROWSE_ENABLED=true
+# JBrowse Integration (Coming Soon - see Roadmap)
+# DEPICTIO_JBROWSE_ENABLED=false
 
 # Analytics Configuration
 DEPICTIO_ANALYTICS_ENABLED=true
@@ -603,4 +626,10 @@ docker compose logs depictio-backend
 docker compose logs depictio-frontend
 ```
 
-For more detailed configuration options, refer to the [source code settings models](https://github.com/depictio/depictio/blob/main/depictio/api/v1/configs/settings_models.py).
+## Complete Reference
+
+For the complete list of all environment variables with their defaults and descriptions:
+
+- **`.env.complete.example`** - Complete env file with all 160+ variables (copy and uncomment)
+- **[Environment Reference](env-reference.md)** - Searchable documentation for all variables
+- **[Source Code](https://github.com/depictio/depictio/blob/main/depictio/api/v1/configs/settings_models.py)** - Pydantic settings models (source of truth)

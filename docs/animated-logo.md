@@ -9,12 +9,12 @@ The triangular SVG from the original Depictio progressive loading script, now wi
     <div id="inline-svg-container" style="display: inline-block;">
         <!-- SVG will be loaded here -->
     </div>
-    
+
     <div style="margin-top: 20px;">
         <button onclick="triggerTriangularAnimation()" style="padding: 10px 20px; background: #f4b136; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">Trigger Animation</button>
         <button onclick="debugTriangularShapes()" style="padding: 10px 20px; background: #6279f0; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">Debug Shapes</button>
     </div>
-    
+
     <p style="margin-top: 15px; font-size: 14px; color: #666;">
         💡 Hover over the logo to see the sequential triangular animation!
     </p>
@@ -32,7 +32,7 @@ The animated triangular logo includes the exact effects from the original Python
 
 ### 2. Color-Coded Triangles
 - **Shape 1**: `#f1c547` (Golden yellow)
-- **Shape 2**: `#c064d3` (Purple/magenta)  
+- **Shape 2**: `#c064d3` (Purple/magenta)
 - **Shape 3**: `#58b3cb` (Light blue)
 - **Shape 4**: `#6279f0` (Blue)
 - **Shape 5**: `#ee9644` (Orange)
@@ -52,37 +52,37 @@ The animated triangular logo includes the exact effects from the original Python
         <p><strong>Delay:</strong> 0.0s</p>
         <p><strong>Color:</strong> Golden Yellow</p>
     </div>
-    
+
     <div style="text-align: center; padding: 15px; border: 2px solid #c064d3; border-radius: 8px;">
         <h4 style="color: #c064d3;">Triangle 2</h4>
         <p><strong>Delay:</strong> 0.1s</p>
         <p><strong>Color:</strong> Purple/Magenta</p>
     </div>
-    
+
     <div style="text-align: center; padding: 15px; border: 2px solid #58b3cb; border-radius: 8px;">
         <h4 style="color: #58b3cb;">Triangle 3</h4>
         <p><strong>Delay:</strong> 0.2s</p>
         <p><strong>Color:</strong> Light Blue</p>
     </div>
-    
+
     <div style="text-align: center; padding: 15px; border: 2px solid #6279f0; border-radius: 8px;">
         <h4 style="color: #6279f0;">Triangle 4</h4>
         <p><strong>Delay:</strong> 0.3s</p>
         <p><strong>Color:</strong> Blue</p>
     </div>
-    
+
     <div style="text-align: center; padding: 15px; border: 2px solid #ee9644; border-radius: 8px;">
         <h4 style="color: #ee9644;">Triangle 5</h4>
         <p><strong>Delay:</strong> 0.4s</p>
         <p><strong>Color:</strong> Orange</p>
     </div>
-    
+
     <div style="text-align: center; padding: 15px; border: 2px solid #7d5dec; border-radius: 8px;">
         <h4 style="color: #7d5dec;">Triangle 6</h4>
         <p><strong>Delay:</strong> 0.5s</p>
         <p><strong>Color:</strong> Purple</p>
     </div>
-    
+
     <div style="text-align: center; padding: 15px; border: 2px solid #a1d44d; border-radius: 8px;">
         <h4 style="color: #a1d44d;">Triangle 7</h4>
         <p><strong>Delay:</strong> 0.6s</p>
@@ -95,7 +95,7 @@ The animated triangular logo includes the exact effects from the original Python
 The animation system consists of:
 
 1. **CSS Keyframes**: Define the core animation patterns
-2. **JavaScript Enhancement**: Adds interactivity and advanced effects  
+2. **JavaScript Enhancement**: Adds interactivity and advanced effects
 3. **Sequential Timing**: Staggered animations with delays
 4. **Responsive Design**: Animations adapt to different screen sizes
 

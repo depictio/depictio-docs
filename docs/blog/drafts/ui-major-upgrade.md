@@ -51,7 +51,7 @@ These constraints were holding back the **intuitive, responsive experience** use
 Dash Mantine Components (DMC) 0.12 was **severely limiting** our UI capabilities:
 - Missing modern components (advanced inputs, layouts)
 - Inconsistent theming system
-- Limited styling flexibility  
+- Limited styling flexibility
 - Poor responsive design patterns
 
 ### The Solution: Major Version Jump
@@ -65,11 +65,11 @@ dmc.Button(
     color="blue"       # Basic color system
 )
 
-# After (DMC 2.1) - Rich component ecosystem  
+# After (DMC 2.1) - Rich component ecosystem
 dmc.Button(
     children="Submit",
     variant="gradient",         # New gradient variants
-    gradient={"from": "blue", "to": "purple"},  
+    gradient={"from": "blue", "to": "purple"},
     leftIcon=DashIconify(icon="mdi:upload"),
     loading=loading_state,      # Built-in loading states
     fullWidth=True             # Better responsive options
@@ -79,7 +79,7 @@ dmc.Button(
 ### Impact: Modern Design System
 The upgrade enabled:
 - **🎨 Advanced theming** with CSS custom properties
-- **📱 Better responsive components** 
+- **📱 Better responsive components**
 - **⚡ Improved performance** and bundle size
 - **🔧 New component types** (advanced inputs, better layouts)
 
@@ -156,13 +156,13 @@ def wrap_component_in_draggable_wrapper(component, component_id, component_type=
         component,
         style={
             "height": "100%",
-            "width": "100%", 
+            "width": "100%",
             "display": "flex",
             "flex-direction": "column",
             "box-sizing": "border-box",
         },
     )
-    
+
     return dgl.DraggableWrapper(
         wrapped_content,
         id=component_id,
@@ -194,13 +194,13 @@ def toggle_edit_mode(edit_enabled):
     return edit_enabled, edit_enabled
 ```
 
-**🎯 Contextual Component Buttons**: 
+**🎯 Contextual Component Buttons**:
 - **Reset button** (appears on hover for filtered components)
 - **Justify text** (for text components only)
 - **Edit button** (when component supports configuration)
 - **Remove button** (only in edit mode)
 
-## ⚡ Performance & Technical Benefits  
+## ⚡ Performance & Technical Benefits
 
 ### Grid Layout Performance
 - **🏃 Faster rendering**: More efficient React Grid Layout algorithm
@@ -216,7 +216,7 @@ def toggle_edit_mode(edit_enabled):
 Real-time graph adaptation to container changes:
 
 ```javascript
-// Clientside callback for dynamic graph resizing  
+// Clientside callback for dynamic graph resizing
 function(layout) {
     if (layout && layout.length > 0) {
         setTimeout(function() {
@@ -255,7 +255,7 @@ function(layout) {
 ### User Feedback Impact
 - **📈 Improved usability**: Users can resize components naturally
 - **🎨 Modern aesthetics**: Professional, clean interface
-- **⚡ Better performance**: Faster dashboard interactions  
+- **⚡ Better performance**: Faster dashboard interactions
 - **📱 Mobile ready**: Responsive design across devices
 
 ## 🔧 Technical Migration Process
@@ -264,7 +264,7 @@ function(layout) {
 ```bash
 # Package updates
 pip install dash-mantine-components==2.1.0
-pip uninstall dash-draggable  
+pip uninstall dash-draggable
 pip install dash-dynamic-grid-layout
 ```
 
@@ -300,5 +300,5 @@ This foundation enables exciting future features:
 
 ---
 
-*Thomas Weber*  
+*Thomas Weber*
 *January 2025*

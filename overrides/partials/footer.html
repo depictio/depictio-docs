@@ -1,0 +1,125 @@
+{#-
+  Custom footer override - Depictio styled footer with multiple sections
+-#}
+<footer class="md-footer">
+  {% if "navigation.footer" in features %}
+    {% if page.previous_page or page.next_page %}
+      {% if page.meta and page.meta.hide %}
+        {% set hidden = "hidden" if "footer" in page.meta.hide %}
+      {% endif %}
+      <nav class="md-footer__inner md-grid" aria-label="{{ lang.t('footer') }}" {{ hidden }}>
+        {% if page.previous_page %}
+          {% set direction = lang.t("footer.previous") %}
+          <a href="{{ page.previous_page.url | url }}" class="md-footer__link md-footer__link--prev" aria-label="{{ direction }}: {{ page.previous_page.title | e }}">
+            <div class="md-footer__button md-icon">
+              {% set icon = config.theme.icon.previous or "material/arrow-left" %}
+              {% include ".icons/" ~ icon ~ ".svg" %}
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                {{ direction }}
+              </span>
+              <div class="md-ellipsis">
+                {{ page.previous_page.title }}
+              </div>
+            </div>
+          </a>
+        {% endif %}
+        {% if page.next_page %}
+          {% set direction = lang.t("footer.next") %}
+          <a href="{{ page.next_page.url | url }}" class="md-footer__link md-footer__link--next" aria-label="{{ direction }}: {{ page.next_page.title | e }}">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                {{ direction }}
+              </span>
+              <div class="md-ellipsis">
+                {{ page.next_page.title }}
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              {% set icon = config.theme.icon.next or "material/arrow-right" %}
+              {% include ".icons/" ~ icon ~ ".svg" %}
+            </div>
+          </a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  {% endif %}
+
+  <!-- Custom Depictio Footer Content -->
+  <div class="depictio-footer">
+    <div class="depictio-footer__grid md-grid">
+
+      <!-- Logo Column -->
+      <div class="depictio-footer__section depictio-footer__brand">
+        <img src="{{ 'images/logo/logo_icon.png' | url }}" alt="Depictio" class="depictio-footer__logo">
+        <span class="depictio-footer__title">Depictio</span>
+        <p class="depictio-footer__tagline">Interactive dashboards for bioinformatics</p>
+      </div>
+
+      <!-- Connect Column -->
+      <div class="depictio-footer__section">
+        <h4 class="depictio-footer__heading">Connect</h4>
+        <ul class="depictio-footer__links">
+          <li><a href="https://github.com/depictio/depictio" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            GitHub
+          </a></li>
+          <li><a href="https://github.com/depictio/depictio/issues" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+            Report Issues
+          </a></li>
+          <li><a href="https://github.com/depictio/depictio/discussions" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+            Discussions
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Resources Column -->
+      <div class="depictio-footer__section">
+        <h4 class="depictio-footer__heading">Resources</h4>
+        <ul class="depictio-footer__links">
+          <li><a href="{{ 'usage/get_started/' | url }}">Getting Started</a></li>
+          <li><a href="{{ 'installation/docker/' | url }}">Installation</a></li>
+          <li><a href="{{ 'features/' | url }}">Features</a></li>
+          <li><a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">Live Demo</a></li>
+        </ul>
+      </div>
+
+      <!-- About Column -->
+      <div class="depictio-footer__section">
+        <h4 class="depictio-footer__heading">About</h4>
+        <ul class="depictio-footer__links">
+          <li><a href="https://github.com/depictio/depictio/blob/main/LICENSE" target="_blank" rel="noopener">License (MIT)</a></li>
+          <li><a href="{{ 'developer/contributing/' | url }}">Contributing</a></li>
+          <li><a href="https://github.com/depictio/depictio/releases" target="_blank" rel="noopener">Releases</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Funding/Supported By Section -->
+    <div class="depictio-footer__funding md-grid">
+      <div class="depictio-footer__funding-label">Supported by</div>
+      <div class="depictio-footer__funding-logos">
+        <a href="https://www.embl.org/" target="_blank" rel="noopener" title="EMBL - European Molecular Biology Laboratory">
+          <img src="{{ 'assets/EMBL_logo_colour_DIGITAL.png' | url }}" alt="EMBL Logo" class="depictio-footer__funding-logo">
+        </a>
+        <a href="https://www.embl.org/about/info/arise/" target="_blank" rel="noopener" title="ARISE Programme">
+          <img src="{{ 'assets/AriseLogo300dpi.png' | url }}" alt="ARISE Logo" class="depictio-footer__funding-logo">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copyright Bar -->
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      {% include "partials/copyright.html" %}
+      {% if config.extra.social %}
+        {% include "partials/social.html" %}
+      {% endif %}
+    </div>
+  </div>
+</footer>

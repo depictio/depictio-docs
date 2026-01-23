@@ -181,7 +181,7 @@ Depictio is built on a state-of-the-art microservices architecture combining mod
 The system is designed with a clear separation of concerns:
 
 - **🎨 Frontend Layer**: React-based dashboard interface with Plotly visualizations and Mantine UI components
-- **⚙️ API Layer**: FastAPI backend handling authentication, data operations, and real-time updates  
+- **⚙️ API Layer**: FastAPI backend handling authentication, data operations, and real-time updates
 - **💾 Data Layer**: MongoDB for metadata, Delta Lake for analytics data, MinIO for object storage
 - **🚀 Processing Engine**: Polars for high-performance data manipulation and analysis
 - **🔧 CLI Tool**: `depictio-cli` for project management, data scanning, and automated workflows
@@ -752,9 +752,9 @@ async function checkDemoAvailability() {
   const demoSection = document.querySelector('.live-demo-section');
   const iframe = document.getElementById('demo-iframe');
   const demoUrl = 'https://demo.depictio.embl.org/';
-  
+
   if (!demoSection || !iframe) return;
-  
+
   try {
     // Try to fetch the demo website
     const controller = new AbortController();
@@ -823,7 +823,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
-  
+
   // Check demo availability when page loads
   checkDemoAvailability();
 });
@@ -874,5 +874,5 @@ Depictio is open-source and community-driven. We welcome contributions, feedback
 
 ---
 
-*Thomas Weber*  
+*Thomas Weber*
 *August 2025*

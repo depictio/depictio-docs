@@ -65,13 +65,11 @@ graph TD
 
 ## **Basic** Projects
 
-<!-- markdownlint-disable MD046 -->
 
 !!! success "Perfect for: Direct data analysis and quick insights"
 
     **Use when:** You have tabular data files ready for analysis and want immediate visualization capabilities.
 
-<!-- markdownlint-enable MD046 -->
 
 Basic projects provide an **easy onboarding experience** - upload your data and start creating interactive dashboards within minutes.
 
@@ -156,13 +154,11 @@ Basic projects provide an **easy onboarding experience** - upload your data and 
 
 ## **Advanced** Projects
 
-<!-- markdownlint-disable MD046 -->
 
 !!! info "Perfect for: Bioinformatics workflows and complex data pipelines"
 
     **Use when:** You have automated pipelines generating data with standardized file organization and need to process multiple samples systematically.
 
-<!-- markdownlint-enable MD046 -->
 
 Advanced projects are designed for **core facility-like setups** where standardized workflows generate structured data across multiple samples, timepoints, or experimental conditions.
 
@@ -413,7 +409,7 @@ Public projects are:
 - ✅ Visible to all users
 - ✅ Read-only for non-members
 - ✅ Searchable in project listings
-- ❌ Only editable by *owners* and *editors* 
+- ❌ Only editable by *owners* and *editors*
 - ❌ Not editable by *viewers* or anonymous users
 
 ## 💾 Data Storage Architecture
@@ -547,7 +543,6 @@ catalog:
 
 ### Common Issues
 
-<!-- markdownlint-disable MD046 -->
 
 === "Configuration Errors"
 
@@ -593,7 +588,6 @@ catalog:
     - Consider data partitioning
     - Review query patterns
 
-<!-- markdownlint-enable MD046 -->
 
 ### Debugging Commands
 

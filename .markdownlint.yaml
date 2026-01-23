@@ -2,31 +2,72 @@
 # Default state for all rules
 default: true
 
+# MD007 - Unordered list indentation
+# MkDocs uses 4-space indentation
+MD007: false
+
+# MD012 - Multiple consecutive blank lines
+MD012: false
+
 # MD013 - Line length
 MD013: false
 
-# MD033 - Inline HTML
-MD033: false
+# MD022 - Headings should be surrounded by blank lines
+MD022: false
 
-# MD041 - First line in a file should be a top-level heading
-MD041: false
+# MD024 - Multiple headings with the same content
+# Disabled for changelog which has many repeated section headings under different versions
+MD024: false
+
+# MD025 - Disable top level heading requirement
+MD025: false
 
 # MD026 - Trailing punctuation in heading
 MD026: false
 
-# MD024 - Multiple headings with the same content
-MD024:
-  siblings_only: true
-
 # MD029 - Ordered list item prefix
 MD029: false
+
+# MD030 - Spaces after list markers
+# Some MkDocs features require different spacing
+MD030: false
+
+# MD031 - Fenced code blocks should be surrounded by blank lines
+# MkDocs admonitions use inline code blocks
+MD031: false
+
+# MD032 - Lists should be surrounded by blank lines
+MD032: false
+
+# MD033 - Inline HTML
+MD033: false
+
+# MD036 - No emphasis as heading
+# Used intentionally for styling in docs
+MD036: false
+
+# MD040 - Fenced code blocks should have a language specified
+# Allow unlabeled code blocks for output examples
+MD040: false
+
+# MD041 - First line in a file should be a top-level heading
+MD041: false
 
 # MD045 - Images in headers
 MD045: false
 
-# Allow fenced code blocks
-MD046:
-  style: "fenced"
+# MD046 - Code block style
+# Allow both fenced and indented code blocks
+MD046: false
 
-# Disable top level heading requirement
-MD025: false
+# MD049 - Emphasis style
+# Allow both asterisk and underscore
+MD049: false
+
+# MD050 - Strong style
+# Allow both asterisk and underscore
+MD050: false
+
+# MD051 - Link fragments should be valid
+# MkDocs generates different anchors than standard markdown
+MD051: false

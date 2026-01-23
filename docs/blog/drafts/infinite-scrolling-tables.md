@@ -58,10 +58,10 @@ Unlike traditional pagination systems, Depictio's infinite scrolling **seamlessl
 def infinite_scroll_component(request, interactive_values, stored_metadata, local_store, pathname):
     """
     INFINITE SCROLL CALLBACK WITH INTERACTIVE COMPONENT SUPPORT
-    
+
     Handles:
     - Interactive component filtering via iterative_join
-    - AG Grid server-side filtering and sorting  
+    - AG Grid server-side filtering and sorting
     - Efficient pagination for all dataset sizes
     - Cache invalidation when interactive values change
     """
@@ -102,7 +102,7 @@ triggered_by_interactive = ctx.triggered and any(
 if interactive_values:
     filtered_df = apply_interactive_filters(base_df, interactive_values)
 
-# 3. AG GRID FILTERS: Apply table-specific filters  
+# 3. AG GRID FILTERS: Apply table-specific filters
 if ag_grid_filter_model:
     filtered_df = apply_ag_grid_filters(filtered_df, ag_grid_filter_model)
 
@@ -111,7 +111,7 @@ if sort_model:
     filtered_df = apply_sorting(filtered_df, sort_model)
 
 # 5. PAGINATION: Return only requested block
-start_row = request["startRow"] 
+start_row = request["startRow"]
 end_row = request["endRow"]
 page_df = filtered_df.slice(start_row, end_row - start_row)
 ```
@@ -130,8 +130,8 @@ logger.info("🎯 Interactive component changed - invalidating table cache")
 if triggered_by_interactive:
     # Clear cached blocks to force refresh with new filters
     invalidate_table_cache(table_id)
-    
-    # Apply new interactive filters 
+
+    # Apply new interactive filters
     updated_metadata = extract_interactive_metadata(interactive_values)
     filtered_data = apply_metadata_filters(base_data, updated_metadata)
 ```
@@ -151,12 +151,12 @@ def apply_combined_filters(df, interactive_metadata, ag_grid_filters):
     # First apply dashboard-wide interactive filters
     if interactive_metadata:
         df = apply_metadata_filters(df, interactive_metadata)
-    
+
     # Then apply table-specific AG Grid filters
     if ag_grid_filters:
         for column, filter_config in ag_grid_filters.items():
             df = apply_ag_grid_filter(df, filter_config, column)
-    
+
     return df
 ```
 
@@ -171,13 +171,13 @@ class TableCache:
         self.base_data_cache = {}      # Full filtered datasets
         self.block_cache = {}          # Individual data blocks
         self.metadata_cache = {}       # Filter metadata snapshots
-    
+
     def get_block(self, table_id, start_row, end_row, filters):
         cache_key = f"{table_id}_{start_row}_{end_row}_{hash(filters)}"
-        
+
         if cache_key in self.block_cache:
             return self.block_cache[cache_key]
-        
+
         # Generate block and cache it
         block_data = self.generate_block(table_id, start_row, end_row, filters)
         self.block_cache[cache_key] = block_data
@@ -190,9 +190,9 @@ class TableCache:
 # Efficient column filtering with type safety
 def apply_ag_grid_filter(df: pl.DataFrame, filter_model: dict, col: str) -> pl.DataFrame:
     """Apply AG Grid filter to Polars DataFrame efficiently."""
-    
+
     filter_type = filter_model["type"]
-    
+
     if filter_type == "contains":
         return df.filter(pl.col(col).str.contains(filter_model["filter"], literal=False))
     elif filter_type == "inRange":
@@ -212,11 +212,11 @@ async def process_table_request(request, filters):
         # Submit concurrent tasks
         filter_future = executor.submit(apply_filters, base_data, filters)
         sort_future = executor.submit(apply_sorting, filtered_data, sort_model)
-        
+
         # Wait for results
         filtered_data = filter_future.result()
         sorted_data = sort_future.result()
-        
+
         return paginate_data(sorted_data, request["startRow"], request["endRow"])
 ```
 
@@ -229,7 +229,7 @@ async def process_table_request(request, filters):
 - **Filter update time**: 85ms
 - **Interactive sync**: < 100ms
 
-### **Multi-Omics Analysis: 25M Rows × 200 Columns**  
+### **Multi-Omics Analysis: 25M Rows × 200 Columns**
 - **Initial load time**: 200ms (first 100 rows)
 - **Scroll response time**: 120ms average
 - **Memory usage**: 18MB (browser)
@@ -262,13 +262,13 @@ table_aggrid = dag.AgGrid(
         "cacheBlockSize": 100,    # Optimal block size
         "cacheOverflowSize": 2,   # Allow cache overflow
         "infiniteInitialRowCount": 1000,  # Initial row estimate
-        
+
         # USER EXPERIENCE
         "rowSelection": "multiple",
         "enableCellTextSelection": True,
         "pagination": True,
         "paginationPageSize": 100,
-        
+
         # PERFORMANCE
         "suppressScrollOnNewData": True,
         "suppressAnimationFrame": False,
@@ -297,18 +297,18 @@ class InfiniteScrollCache:
         self.timestamps = {}
         self.max_blocks = max_blocks
         self.ttl = ttl_seconds
-    
+
     def get(self, key):
         if key in self.cache and not self._is_expired(key):
             self.timestamps[key] = time.time()  # Update access time
             return self.cache[key]
         return None
-    
+
     def set(self, key, value):
         # Cleanup old entries if cache is full
         if len(self.cache) >= self.max_blocks:
             self._evict_oldest()
-        
+
         self.cache[key] = value
         self.timestamps[key] = time.time()
 ```
@@ -322,12 +322,12 @@ class InfiniteScrollCache:
 def estimate_total_rows(df, current_filters):
     if not current_filters:
         return len(df)  # No filters = full dataset
-    
+
     # Sample-based estimation for large datasets
     sample_size = min(10000, len(df))
     sample_df = df.sample(sample_size)
     filtered_sample = apply_filters(sample_df, current_filters)
-    
+
     # Extrapolate to full dataset
     filter_ratio = len(filtered_sample) / sample_size
     return int(len(df) * filter_ratio)
@@ -343,7 +343,7 @@ def preload_adjacent_blocks(current_block, direction="down"):
         next_end = next_start + BLOCK_SIZE
         preload_block(next_start, next_end)
     else:
-        prev_end = current_block["startRow"] 
+        prev_end = current_block["startRow"]
         prev_start = max(0, prev_end - BLOCK_SIZE)
         preload_block(prev_start, prev_end)
 ```
@@ -365,7 +365,7 @@ def apply_text_filter(filter_value, column):
 - **↕️ Natural scroll behavior** (no pagination clicks)
 - **📊 Persistent dashboard sync** during table interactions
 
-### **Memory Efficiency** 
+### **Memory Efficiency**
 - **💾 Minimal browser memory** (< 20MB for any table size)
 - **⚡ Fast device support** (works on tablets, older laptops)
 - **🔋 Battery friendly** (no excessive DOM manipulation)
@@ -390,5 +390,5 @@ The infinite scrolling foundation enables future enhancements:
 
 ---
 
-*Thomas Weber*  
+*Thomas Weber*
 *January 2025*

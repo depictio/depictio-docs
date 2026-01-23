@@ -113,12 +113,10 @@ df_modified = df.filter(pl.col("value") > 0)
 fig = px.scatter(df_modified, x="col_x", y="col_y", color="category")
 ```
 
-<!-- markdownlint-disable MD046 -->
 !!! warning "Code Constraints"
     - Use `df_modified` for any data preprocessing (single line)
     - The final `fig` variable must be a Plotly Figure object
     - Only the pre-loaded libraries are available for security
-<!-- markdownlint-enable MD046 -->
 
 #### Code Mode Features
 
@@ -188,7 +186,5 @@ As of version 0.5.0, Depictio includes dedicated support for MultiQC quality con
 3. MultiQC-specific visualization options will be available based on the report content
 4. You can create multiple components from different sections of your MultiQC report (General Statistics, FastQC, Cutadapt, etc.)
 
-<!-- markdownlint-disable MD046 -->
 !!! tip "MultiQC Data Ingestion"
     To ingest MultiQC reports into Depictio, use the Depictio-CLI with your project configuration file. MultiQC reports should be specified in your YAML configuration under the appropriate workflow section.
-<!-- markdownlint-enable MD046 -->

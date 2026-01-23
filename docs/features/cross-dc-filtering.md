@@ -1,8 +1,14 @@
-# Cross-DC Filtering
+---
+title: "Cross-DC Filtering"
+icon: material/link-variant
+description: "Link data collections for interactive filtering across dashboards."
+---
+
+# :material-link-variant: Cross-DC Filtering
 
 Filter data in one collection and automatically update related visualizations—no pre-computed joins needed.
 
-## Overview
+## :material-information-outline: Overview
 
 **Links** connect Data Collections for interactive filtering at runtime. When you filter a metadata table, linked MultiQC plots and other visualizations update automatically.
 
@@ -14,13 +20,13 @@ Filter data in one collection and automatically update related visualizations—
 └─────────────────┘         └─────────────────┘
 ```
 
-## How It Works
+## :material-cog-sync: How It Works
 
-1. Define a **link** between source DC (e.g., metadata table) and target DC (e.g., MultiQC)
-2. Add a filter component to your dashboard
-3. When users filter the source DC, linked targets automatically show only matching data
+1. :material-link-plus: Define a **link** between source DC (e.g., metadata table) and target DC (e.g., MultiQC)
+2. :material-filter-plus: Add a filter component to your dashboard
+3. :material-sync: When users filter the source DC, linked targets automatically show only matching data
 
-## Configuration
+## :material-cog: Configuration
 
 Add links to your project YAML:
 
@@ -34,17 +40,17 @@ links:
       resolver: sample_mapping
 ```
 
-### Link Fields
+### :material-format-list-checkbox: Link Fields
 
 | Field | Required | Description |
 |-------|----------|-------------|
-| `source_dc_id` | Yes | Data collection containing the filter |
-| `source_column` | Yes | Column to filter on |
-| `target_dc_id` | Yes | Data collection to receive filtered values |
-| `target_type` | Yes | Type of target: `table` or `multiqc` |
-| `link_config` | Yes | Resolution configuration (see below) |
+| `source_dc_id` | :material-check: Yes | Data collection containing the filter |
+| `source_column` | :material-check: Yes | Column to filter on |
+| `target_dc_id` | :material-check: Yes | Data collection to receive filtered values |
+| `target_type` | :material-check: Yes | Type of target: `table` or `multiqc` |
+| `link_config` | :material-check: Yes | Resolution configuration (see below) |
 
-### Link Config Options
+### :material-cog-outline: Link Config Options
 
 ```yaml
 link_config:
@@ -52,32 +58,32 @@ link_config:
   target_field: sample_name   # Field to match in target (optional)
 ```
 
-## Resolvers
+## :material-map-marker-path: Resolvers
 
 Resolvers map source values to target identifiers:
 
 | Resolver | Use Case | Example |
 |----------|----------|---------|
-| `direct` | Same value in both DCs | `sample_id` → `sample_id` |
-| `sample_mapping` | Canonical ID → MultiQC variants | `S1` → `[S1_R1, S1_R2]` |
-| `pattern` | Template substitution | `{sample}.bam` |
+| :material-equal: `direct` | Same value in both DCs | `sample_id` → `sample_id` |
+| :material-map: `sample_mapping` | Canonical ID → MultiQC variants | `S1` → `[S1_R1, S1_R2]` |
+| :material-regex: `pattern` | Template substitution | `{sample}.bam` |
 
-### When to Use Each Resolver
+### :material-help-circle: When to Use Each Resolver
 
-- **`direct`**: Source and target use identical identifiers
-- **`sample_mapping`**: MultiQC sample names differ from your canonical IDs (most common for MultiQC)
-- **`pattern`**: Target uses predictable naming convention
+- :material-equal: **`direct`**: Source and target use identical identifiers
+- :material-map: **`sample_mapping`**: MultiQC sample names differ from your canonical IDs (most common for MultiQC)
+- :material-regex: **`pattern`**: Target uses predictable naming convention
 
-## Supported Target Types
+## :material-target: Supported Target Types
 
 | Type | Filter Action | Status |
 |------|---------------|--------|
-| `table` | Filters rows with `WHERE IN` | Available |
-| `multiqc` | Filters plot samples | Available |
-| `jbrowse2` | Shows/hides tracks | Planned |
-| `images` | Filters image gallery | Planned |
+| :material-table: `table` | Filters rows with `WHERE IN` | :material-check: Available |
+| :material-microscope: `multiqc` | Filters plot samples | :material-check: Available |
+| :material-dna: `jbrowse2` | Shows/hides tracks | :material-clock-outline: Planned |
+| :material-image-multiple: `images` | Filters image gallery | :material-clock-outline: Planned |
 
-## Complete Example
+## :material-code-braces: Complete Example
 
 ```yaml
 name: "RNA-seq QC Analysis"
@@ -124,16 +130,16 @@ workflows:
           # ... scan config ...
 ```
 
-## Dashboard Usage
+## :material-view-dashboard: Dashboard Usage
 
-1. Create a dashboard with your linked data collections
-2. Add a **filter component** (dropdown, multi-select) on the source DC
-3. Add visualizations for the target DCs
-4. Filter the source → targets update automatically
+1. :material-view-dashboard-outline: Create a dashboard with your linked data collections
+2. :material-filter-plus: Add a **filter component** (dropdown, multi-select) on the source DC
+3. :material-chart-box-outline: Add visualizations for the target DCs
+4. :material-filter: Filter the source → targets update automatically
 
-## Links vs Joins
+## :material-compare: Links vs Joins
 
-| Feature | Links | Joins |
+| Feature | :material-link-variant: Links | :material-table-merge-cells: Joins |
 |---------|-------|-------|
 | Execution | Runtime (on filter) | Pre-computed (CLI batch) |
 | Storage | None | Delta table in S3 |

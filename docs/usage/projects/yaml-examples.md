@@ -1,6 +1,5 @@
 # <span style="color: #45B8AC;">:material-folder-multiple:</span> YAML Project configuration breakdown
 
-<!-- markdownlint-disable MD046 -->
 !!! tip "Configuration Validation"
     **Always validate your YAML configuration before using:**
     ```bash
@@ -13,7 +12,6 @@
 
 !!! warning "Configuration Template Warning"
     **Do not copy-paste entire configurations blindly.** This reference shows all available options with their defaults and descriptions. Only specify values that differ from defaults or are required for your specific use case.
-<!-- markdownlint-enable MD046 -->
 
 This guide provides comprehensive YAML configuration examples for Depictio projects, from simple setups to complex bioinformatics workflows. For a complete reference of all options, see the [Configuration Reference](reference.md).
 

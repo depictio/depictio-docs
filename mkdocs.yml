@@ -8,7 +8,7 @@ repo_url: https://github.com/depictio/depictio
 repo_name: depictio/depictio
 
 # Copyright Information
-copyright: Copyright &copy; 2023 - 2025 Thomas Weber
+copyright: Copyright &copy; 2023 - 2026 Thomas Weber
 
 # Theme Configuration
 theme:
@@ -188,6 +188,7 @@ nav:
       - CLI:
           - installation/cli.md
       - Configuration: installation/configuration.md
+      - Environment Reference: installation/env-reference.md
 
   - Usage:
       - Overview: usage/README.md
@@ -209,9 +210,11 @@ nav:
       #     - Overview: usage/administration.md
   - Features:
       - Overview: features/README.md
-      - Architecture: features/architecture.md
+      - Dashboards: features/dashboards.md
+      - Components: features/components.md
       - Cross-DC Filtering: features/cross-dc-filtering.md
-      - Modularity: features/modularity.md
+      - YAML Dashboard Sync: features/yaml-sync.md
+      - Architecture: features/architecture.md
       - Security: features/security.md
   - API:
       - Overview: api/README.md
@@ -221,6 +224,7 @@ nav:
       - FastAPI Docs: api/fastapi_docs.md
   - Developer:
       - Overview: developer/README.md
+      - Modularity: developer/modularity.md
       - Contributing: developer/contributing.md
   - FAQ:
       - Overview: FAQ/README.md

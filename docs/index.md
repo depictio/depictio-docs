@@ -8,11 +8,9 @@ hide:
   - path
 ---
 
-<!-- markdownlint-disable MD025 -->
 
 #
 
-<!-- markdownlint-enable MD025 -->
 
 <style>
   .md-typeset h1 {
@@ -416,16 +414,6 @@ hide:
 
   [data-md-color-scheme="slate"] .nf-core-dark {
     display: block;
-  }
-
-  /* Footer theming - simple white background */
-  .md-footer {
-    background: white !important;
-    color: var(--md-default-fg-color) !important;
-  }
-
-  .md-footer-meta {
-    background: #f8f9fa !important;
   }
 
 .md-button {
@@ -1562,8 +1550,9 @@ hide:
   .getting-started-section,
   .partners-section {
     background: #ffffff;
-    padding: 1.5rem 2rem 3rem 2rem;
-    margin: 0 -2rem;
+    padding: 1.5rem 2rem 4rem 2rem;
+    margin: 0 -2rem 0 -2rem;
+    margin-bottom: 0 !important;
   }
 
   /* Dark theme section backgrounds */

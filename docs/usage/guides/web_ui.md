@@ -105,7 +105,6 @@ At the bottom of the sidebar, you will find:
 
 ## <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects section (/projects)
 
-<!-- markdownlint-disable MD046 -->
 
 !!! info "Complete Projects Documentation"
     **For comprehensive information about Projects in Depictio, see the dedicated [Projects Guide](../projects/guide.md).**
@@ -125,7 +124,6 @@ At the bottom of the sidebar, you will find:
     - :material-code-braces: **[YAML Examples](../projects/yaml-examples.md)** - Configuration patterns
     - :material-file-document: **[Configuration Reference](../projects/reference.md)** - Full parameter reference
 
-<!-- markdownlint-enable MD046 -->
 
 ### <span style="color: #6495ED;">:material-information:</span> Quick Overview
 
@@ -137,7 +135,7 @@ At the bottom of the sidebar, you will find:
 
 ## <span style="color: #8BC34A;">:material-account:</span> User Information (/profile)
 
-You can access your user profile by clicking on the avatar icon in the bottom left corner of the sidebar. 
+You can access your user profile by clicking on the avatar icon in the bottom left corner of the sidebar.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/pages/profile.png" target="_blank">
