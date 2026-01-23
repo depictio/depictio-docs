@@ -14,6 +14,8 @@ Its key capabilities include:
 
 - **Interactive Dashboards** for real-time data exploration
 - **Scalable Architecture** for handling large datasets
+- **Cross-Collection Filtering** for linked data exploration
+- **YAML Dashboard Sync** for Infrastructure-as-Code workflows and version control
 - **Data Integration** from multiple sources
 - **User Management** for secure access control
 - **Security Features** with restricted code execution and comprehensive protection
@@ -21,17 +23,103 @@ Its key capabilities include:
 
 ## In This Section
 
-- [Architecture](architecture.md) - Detailed overview of Depictio's microservices architecture
-- [Modularity](modularity.md) - Information about Depictio's modular design and extensibility
-- [Security](security.md) - Comprehensive security features and restricted code execution
+| Page | Description |
+|------|-------------|
+| [Dashboards](dashboards.md) | Dashboard modes, layouts, tabs, and organization |
+| [Components](components.md) | Guide to available component types and configuration |
+| [Cross-DC Filtering](cross-dc-filtering.md) | Link data collections for interactive filtering |
+| [YAML Dashboard Sync](yaml-sync.md) | Bidirectional YAML sync for IaC and version control |
+| [Architecture](architecture.md) | Technical overview of Depictio's microservices |
+| [Security](security.md) | Security features and code execution restrictions |
 
 ## Key Components
 
 Depictio consists of several integrated components:
 
-- **Backend API** (FastAPI) - Handles data processing and business logic
-- **Frontend** (Plotly Dash) - Provides the user interface
-- **Database** (MongoDB) - Stores metadata and configurations
-- **Storage** (MinIO) - Manages data files and assets
+```text
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   Dash UI   │────▶│  FastAPI    │────▶│   MongoDB   │
+│  (Frontend) │     │  (Backend)  │     │  (Database) │
+└──────┬──────┘     └──────┬──────┘     └─────────────┘
+       │                   │
+       │                   ├───────────▶┌─────────────┐
+       │                   │            │    MinIO    │
+       │                   │            │  (Storage)  │
+       │                   │            └─────────────┘
+       │                   │
+       │                   └───────────▶┌─────────────┐
+       │                                │    Redis    │
+       │                                │   (Cache)   │
+       │                                └──────▲──────┘
+       │                                       │
+       └──────────────────▶┌─────────────┐─────┘
+                           │   Celery    │
+                           │  (Workers)  │
+                           └─────────────┘
+```
+
+**Component Connections:**
+
+| Connection | Description |
+|------------|-------------|
+| **Dash → FastAPI** | API calls for data retrieval, authentication, and CRUD operations |
+| **Dash → Celery** | Background callbacks for long-running operations |
+| **FastAPI → MongoDB** | Document storage for metadata, users, projects, and configurations |
+| **FastAPI → MinIO** | Object storage for Delta tables, files, and dashboard screenshots |
+| **FastAPI → Redis** | Caching, session storage, and task result backend |
+| **Celery → Redis** | Task queue and results backend for background job processing |
+
+- **Frontend** (Plotly Dash) - Interactive dashboard interface
+- **Backend API** (FastAPI) - Data processing and business logic
+- **Database** (MongoDB) - Metadata and configuration storage
+- **Storage** (MinIO/S3) - Data files and Delta Lake tables
+- **Cache** (Redis) - Caching layer and task queue backend
+- **Workers** (Celery) - Distributed task queue for background processing
+
+## Quick Links
+
+<div class="grid cards" markdown>
+
+-   :material-view-dashboard:{ .lg .middle } **Dashboards**
+
+    ---
+
+    Learn about dashboard modes, tabs, and layouts
+
+    [:octicons-arrow-right-24: Dashboard Guide](dashboards.md)
+
+-   :material-chart-bar:{ .lg .middle } **Components**
+
+    ---
+
+    Explore available component types
+
+    [:octicons-arrow-right-24: Component Reference](components.md)
+
+-   :material-link-variant:{ .lg .middle } **Cross-DC Filtering**
+
+    ---
+
+    Link data collections for interactive filtering
+
+    [:octicons-arrow-right-24: Cross-DC Guide](cross-dc-filtering.md)
+
+-   :material-sync:{ .lg .middle } **YAML Dashboard Sync**
+
+    ---
+
+    Version control dashboards with bidirectional YAML sync
+
+    [:octicons-arrow-right-24: YAML Sync Guide](yaml-sync.md)
+
+-   :material-shield-check:{ .lg .middle } **Security**
+
+    ---
+
+    Security features and code restrictions
+
+    [:octicons-arrow-right-24: Security Details](security.md)
+
+</div>
 
 Explore the detailed documentation to learn more about each feature and how they work together to provide a comprehensive visualization platform.

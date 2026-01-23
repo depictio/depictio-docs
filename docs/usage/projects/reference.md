@@ -1,11 +1,9 @@
 # <span style="color: #45B8AC;">:material-folder-multiple:</span> YAML Configuration Reference
 
-<!-- markdownlint-disable MD046 -->
 
 !!! warning "Full Configuration Template Warning"
     **Do not copy-paste this entire configuration blindly.** This reference shows all available options with their defaults and descriptions. Only specify values that differ from defaults or are required for your specific use case.
 
-<!-- markdownlint-enable MD046 -->
 
 This is a complete reference of all configuration options available in Depictio YAML files. For getting started and examples, see the [YAML Examples Guide](yaml-examples.md).
 
@@ -42,6 +40,23 @@ data_management_platform_project_url:
   null # Optional: URL to external project system (default: null)
   # Must start with http:// or https://
   # Example: "https://labid.embl.org/projects/123"
+
+# =============================================================================
+# LINKS (Cross-DC Interactive Filtering)
+# =============================================================================
+
+links:  # Optional: Define relationships for cross-DC filtering
+  - source_dc_id: "sample_metadata"    # Required: DC containing the filter
+    source_column: "sample_id"         # Required: Column to filter on
+    target_dc_id: "multiqc_fastqc"     # Required: DC to update when filtered
+    target_type: "multiqc"             # Required: "table" or "multiqc"
+    link_config:
+      resolver: "sample_mapping"       # Required: "direct", "sample_mapping", "pattern"
+      target_field: "sample_name"      # Optional: Field to match in target DC
+      # Resolvers:
+      #   "direct" - Same value in both DCs
+      #   "sample_mapping" - Canonical ID → MultiQC sample variants
+      #   "pattern" - Template substitution (e.g., "{sample}.bam")
 
 # =============================================================================
 # WORKFLOWS (Required for Advanced Projects)
@@ -106,7 +121,7 @@ workflows:
       - # Required: Unique identifier for this data collection
         data_collection_tag:
           "gene_expression" # Required: Unique within project
-          # Used for referencing in joins and dashboards
+          # Used for referencing in links and dashboards
           # Example: "gene_counts", "quality_metrics"
 
         # Optional: Human-readable description
@@ -215,18 +230,17 @@ workflows:
               TPM: "Transcripts per million" # Used in dashboard tooltips and documentation
               NumReads: "Estimated read count" # Example format: column_name: "Description"
 
-        # Optional: Data joining configuration
-        join: # Optional: Join this collection with others
+        # Optional: Data joining configuration (LEGACY - prefer links)
+        # NOTE: Use project-level "links" for interactive cross-DC filtering
+        # Joins are pre-computed and only work with table DCs
+        join: # Optional: Join this collection with others (legacy)
           on_columns:
-            ["sample_id"] # Required: Column names for joining
+            ["sample_id"] # Column names for joining
             # Must exist in both datasets
-            # Example: ["sample_id"], ["sample_id", "timepoint"]
           how:
-            "inner" # Required: Join type
-            # Options: "inner", "outer", "left", "right"
+            "inner" # Join type: "inner", "outer", "left", "right"
           with_dc:
-            ["qc_summary"] # Required: Target data collections to join with
-            # References to other data_collection_tag values
+            ["qc_summary"] # Target data collection tags
 
       # --- MultiQC DATA COLLECTION (v0.5.0+) ---
       - data_collection_tag:
@@ -246,16 +260,16 @@ workflows:
             #   - No dc_specific_properties needed
             #   - Requires MultiQC 1.29+ to generate parquet format
 
-        # Optional: Join with other data collections
-        join: # Optional: Join MultiQC data with other collections
-          on_columns:
-            ["sample"] # Required: Column for joining (typically "sample")
-            # MultiQC sample names must match values in other datasets
-          how:
-            "inner" # Required: Join type
-          with_dc:
-            ["sample_metadata"] # Required: Target data collections
-            # Can join with metadata, QC metrics, or other tables
+        # NOTE: For MultiQC, use project-level "links" instead of joins
+        # Links enable interactive filtering with sample_mapping resolver
+        # Example link configuration (at project level):
+        #   links:
+        #     - source_dc_id: "sample_metadata"
+        #       source_column: "sample_id"
+        #       target_dc_id: "multiqc_data"
+        #       target_type: "multiqc"
+        #       link_config:
+        #         resolver: "sample_mapping"
 ```
 
 ## See Also

@@ -23,7 +23,7 @@ Thank you for your interest in contributing to Depictio! This guide outlines the
 
 Before you begin, ensure you have the following installed:
 
-- Python 3.11 or higher
+- Python 3.11 or higher (3.12 recommended)
 - Docker and Docker Compose
 - Git
 
@@ -45,99 +45,193 @@ Before you begin, ensure you have the following installed:
 
 ## Development Environment
 
-### Setting up test environment
+### Option 1: Docker Compose (Recommended)
 
-1. Create a virtual environment using Python's `venv` module or your preferred tool (e.g., `virtualenv`, `conda`, `uv`):
-
-Example using `venv`:
-
-   ```bash
-   python -m venv depictio-dev-venv
-   source depictio-dev-venv/bin/activate
-   ```
-
-Example using `uv`:
-
-   ```bash
-   uv venv depictio-dev-venv --python 3.12
-   ```
-
-2. Install development dependencies:
-
-   ```bash
-   pip install -e ".[dev]"
-   ```
-
-3. Set up pre-commit hooks:
-
-   ```bash
-   pre-commit install
-   ```
-
-### Running Depictio Locally using Docker Compose
-
-To modify and test Depictio locally, you can use Docker Compose to set up the development environment. This will allow you to run both the backend and frontend services and modify the code as needed from the `depictio` directory (mounted as a volume in the Docker container).
+The recommended way to develop Depictio is using Docker Compose, which provides a consistent environment with all services configured.
 
 ```bash
-volumes:
-   - ./depictio:/app/depictio
-```
-
-1. To build the Docker images and start the services, run the following command from the root of the project:
-
-```bash
+# Build and start all services
 docker compose -f docker-compose.dev.yaml \
                -f docker-compose/docker-compose.minio.yaml \
                --env-file docker-compose/.env up \
                --build --detach
 ```
 
-2. Access the backend API at `http://localhost:8058` and the frontend at `http://localhost:5080`.
+Access the services:
 
-### Dependencies
+| Service | URL |
+|---------|-----|
+| Backend API | `http://localhost:8058` |
+| Frontend | `http://localhost:5080` |
+| API Docs | `http://localhost:8058/docs` |
 
-Currently, Depictio is using a single container for both the backend and frontend services (`docker-images/Dockerfile_depictio.dockerfile`).
-This is done to simplify the development process. The container is built using a micromamba environment that includes all necessary dependencies for both the backend and frontend (`conda_ens/depictio.yaml`). As the project grows, we may consider splitting the backend and frontend into separate containers for better scalability and maintainability. The current container build process also includes a [**Playwright**](https://playwright.dev/) installation to generate thumbnails to be served on the landing page of the dashboard. As [**Cypress**](https://www.cypress.io/)
-is currently used for end-to-end testing, we might consider switching to it for thumbnail generation in the future.
+The source code is mounted as a volume for live reloading:
+
+```yaml
+volumes:
+   - ./depictio:/app/depictio
+```
+
+### Option 2: DevContainer & GitHub Codespaces
+
+For a cloud-based or containerized IDE experience, use the provided DevContainer configuration:
+
+**VS Code DevContainer:**
+
+1. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+2. Open the repository in VS Code
+3. Click "Reopen in Container" when prompted (or use Command Palette: `Dev Containers: Reopen in Container`)
+
+**GitHub Codespaces:**
+
+1. Go to the [Depictio repository](https://github.com/depictio/depictio)
+2. Click the green "Code" button
+3. Select "Codespaces" tab
+4. Click "Create codespace on main"
+
+Both options provide a pre-configured development environment with all dependencies installed.
+
+### Alternative: Local Python Setup
+
+For contributors who prefer local development without containers:
+
+=== "uv (Fast)"
+
+    ```bash
+    # Install uv: https://docs.astral.sh/uv/
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    # Sync dependencies
+    uv sync --all-extras
+
+    # Install Playwright browsers
+    uv run playwright install chromium
+    ```
+
+=== "pixi (With infrastructure)"
+
+    ```bash
+    # Install pixi: https://pixi.sh
+    curl -fsSL https://pixi.sh/install.sh | bash
+
+    # Install all dependencies (includes MongoDB, Redis, MinIO)
+    pixi install
+
+    # Start infrastructure and services
+    pixi run start-infra
+    pixi run api      # FastAPI backend
+    pixi run dash     # Dash frontend
+    ```
+
+=== "pip (Traditional)"
+
+    ```bash
+    python -m venv depictio-dev-venv
+    source depictio-dev-venv/bin/activate
+    pip install -e ".[dev]"
+    playwright install chromium
+    ```
+
+### Setting up Pre-commit Hooks
+
+```bash
+pre-commit install
+```
+
+### Docker Images
+
+The project provides multiple Dockerfile options:
+
+| Dockerfile | Description |
+|------------|-------------|
+| `Dockerfile_depictio_uv.dockerfile` | **Recommended** - Fast builds using uv |
+| `Dockerfile_depictio_prod.dockerfile` | Multi-stage production build |
+| `Dockerfile_depictio.dockerfile` | Legacy conda/mamba-based |
 
 ### Environment Variables
 
-Depictio uses environment variables for configuration. You can set these in a `.env` file in the root directory or pass them directly to Docker Compose. The `.env.example` file provides a template for the required variables.
+Depictio uses environment variables for configuration. Copy `.env.example` to `.env` and customize as needed.
 
-Important variables during development include:
+Key development variables:
 
-- `DEV_MODE`: Set to `true` to use development mode from FastAPI and Plotly Dash.
-- `DEPICTIO_MONGODB_WIPE`: Set to `true` to wipe the MongoDB database on startup (useful for development).
-- `DEPICTIO_LOGGING_VERBOSITY_LEVEL`: Set to `DEBUG` for detailed logging during development.
+| Variable | Description |
+|----------|-------------|
+| `DEPICTIO_CONTEXT` | Set to `server` for API, `dash` for frontend |
+| `MONGO_WIPE` | Set to `true` to reset database on startup |
+| `LOGGING_VERBOSITY_LEVEL` | Set to `DEBUG` for detailed logs |
+
+### Local Python Environment (Required)
+
+Regardless of which development option you choose, you need local Python packages for running tests, pre-commit hooks, and the CLI.
+
+**1. Main package (tests & pre-commit)**
+
+```bash
+# Install uv (fast Python package manager)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install depictio with all dev dependencies
+uv sync --all-extras
+
+# Set up pre-commit hooks
+uv run pre-commit install
+```
+
+**2. CLI package (separate)**
+
+The CLI is a standalone package with its own `pyproject.toml`:
+
+```bash
+# Install depictio-cli
+cd depictio/cli
+uv sync
+
+# Verify installation
+uv run depictio --help
+```
+
+**Available tools:**
+
+| Tool | Command | Purpose |
+|------|---------|---------|
+| **pytest** | `uv run pytest depictio/tests/ -xvs` | Run tests |
+| **pre-commit** | `uv run pre-commit run --all-files` | Code quality checks |
+| **ruff** | `uv run ruff check .` | Linting |
+| **ty** | `uv run ty check depictio/` | Type checking |
+| **depictio CLI** | `cd depictio/cli && uv run depictio --help` | CLI commands |
 
 ## Project Structure
 
-The Depictio codebase is organized into several key directories:
+```
+depictio/
+├── api/                 # FastAPI backend (port 8058)
+│   ├── endpoints/       # API routes
+│   ├── v1/              # API version 1
+│   └── main.py          # Application entry point
+├── dash/                # Dash frontend (port 5080)
+│   ├── modules/         # Dashboard components
+│   └── layouts/         # Page layouts
+├── models/              # Shared Pydantic models
+├── cli/                 # Command-line interface
+└── tests/               # Test suites
+```
 
-- `depictio/api/` - Backend microservice (FastAPI, port 8058)
-      - `endpoints/` - API endpoints for workflows, dashboards, data collections
-      - `models/` - Database models and validation
-- `depictio/dash/` - Frontend microservice (Dash, port 5080)
-      - `modules/` - Dash Component (see below)
-      - `layouts/` - Dashboard layouts and stepper UI
-- `depictio/models/` - Shared Pydantic models
-- `depictio/cli/` - Command-line interface for data management
-- `depictio/tests/` - Unit, integration and E2E tests
-- `helm-charts/` - Kubernetes deployment manifests
-
-### Component Development (Key Feature)
+### Component Development
 
 Depictio uses a modular component system in `depictio/dash/modules/`:
 
-- `card_component/` - Text and summary cards
-- `figure_component/` - Plotly visualizations
-- `interactive_component/` - Sliders, filters, dropdowns
-- `table_component/` - Data tables
-- `text_component/` - Text display components
+| Component | Purpose |
+|-----------|---------|
+| `card_component/` | Text and summary cards |
+| `figure_component/` | Plotly visualizations |
+| `interactive_component/` | Filters, dropdowns, sliders |
+| `table_component/` | Data tables |
+<!-- | `jbrowse_component/` | Genome browser | -->
+| `multiqc_component/` | MultiQC reports |
 
 Each component follows this structure:
 
-```plaintext
+```
 component_name/
 ├── frontend.py      # Dash callbacks and UI
 └── utils.py         # Component building logic
@@ -149,7 +243,8 @@ component_name/
 
     ```bash
     git checkout -b <issue-type>/<issue-number>-<short-description>
-    # Example: git checkout -b feature/123-add-new-component / bugfix/456-fix-data-processing
+    # Example: feature/123-add-new-component
+    # Example: bugfix/456-fix-data-processing
     ```
 
 2. Make your changes and commit them:
@@ -159,7 +254,7 @@ component_name/
     git commit -m "Description of your changes"
     ```
 
-3. Keep your branch updated with the upstream:
+3. Keep your branch updated with upstream:
 
     ```bash
     git fetch upstream
@@ -174,20 +269,42 @@ component_name/
 
 5. Create a pull request on GitHub.
 
-## Testing local changes
+## Testing Local Changes
 
 ### Running Tests
 
-Run the test suite to ensure your changes don't break existing functionality:
+```bash
+# Run all tests
+pytest depictio/tests/ -xvs
+
+# Run with parallel execution
+pytest depictio/tests/ -xvs -n auto
+
+# Run specific test file
+pytest depictio/tests/api/test_endpoints.py -xvs
+```
+
+### Code Quality Checks
 
 ```bash
-pytest
+# Format code
+ruff format .
+
+# Lint code
+ruff check .
+
+# Type checking
+ty check depictio/
+
+# Run all pre-commit hooks
+pre-commit run --all-files
 ```
 
 ### Writing Tests
 
 - Place tests in the `depictio/tests/` directory
-- Follow the existing test structure (e.g., `depictio/tests/api/`, `depictio/tests/dash/`, `depictio/tests/cli/`)
+- Follow existing structure: `tests/api/`, `tests/dash/`, `tests/cli/`
+- Include both unit tests and integration tests
 
 ## Code Style and Standards
 
@@ -195,39 +312,48 @@ Depictio follows these coding standards:
 
 - **PEP 8** for Python code style
 - **Type hints** for all function parameters and return values
-- **Docstrings** for all modules, classes, and functions
+- **Docstrings** for modules, classes, and functions
 
-We use pre-commit hooks to enforce code style, which includes:
+We use pre-commit hooks to enforce:
 
-- [`ruff`](https://github.com/astral-sh/ruff) for code formatting and linting with isort for import sorting
-- [`ty`](https://github.com/astral-sh/ty) for static type checking
+| Tool | Purpose |
+|------|---------|
+| [`ruff`](https://github.com/astral-sh/ruff) | Code formatting and linting |
+| [`ty`](https://github.com/astral-sh/ty) | Static type checking |
 
 ## Documentation
 
 ### Repository
 
-The documentation for Depictio is maintained in the `depictio-docs` repository at the following location: <https://github.com/depictio/depictio-docs>.
+Documentation is maintained in the [depictio-docs](https://github.com/depictio/depictio-docs) repository.
 
-### Pre-requisites
+### Setup
 
-- Apply the same procedure as for the main repository to fork the `depictio-docs` repository, clone it locally, and set up the development environment.
-- Install the
+1. Fork and clone the `depictio-docs` repository
+2. Install dependencies:
+
+   ```bash
+   cd depictio-docs
+   pip install -r requirements.txt
+   ```
 
 ### Writing Documentation
 
-- Documentation is built using MkDocs
+- Documentation is built using [MkDocs Material](https://squidfunk.github.io/mkdocs-material/)
 - Source files are in the `docs/` directory
 - Write in Markdown format
 - Include code examples where appropriate
 
 ### Building Documentation
 
-To build and preview the documentation locally:
+Preview documentation locally:
 
 ```bash
-cd docs
+cd depictio-docs
 mkdocs serve
 ```
+
+Then open `http://127.0.0.1:8000` in your browser.
 
 ## Issue Reporting
 
@@ -240,7 +366,7 @@ When reporting a bug, please include:
 - Expected behavior
 - Actual behavior
 - Screenshots if applicable
-- Environment information
+- Environment information (OS, browser, Python version)
 
 ### Feature Requests
 
@@ -259,7 +385,7 @@ When requesting a feature, please include:
 - Include tests for new functionality
 - Update documentation as needed
 - Reference related issues
-- Follow the commit message format
+- Ensure all CI checks pass
 
 ### PR Template
 
@@ -272,20 +398,20 @@ Your PR description should include:
 
 ## Code Review Process
 
-All submissions require review. The review process typically includes:
+All submissions require review. The review process includes:
 
-1. Automated checks (CI/CD pipeline)
-2. Code review by maintainers
-3. Addressing feedback
-4. Final approval and merge
+1. **Automated checks** - CI/CD pipeline runs tests and linting
+2. **Code review** - Maintainers review the changes
+3. **Feedback** - Address any requested changes
+4. **Approval** - Final approval and merge
 
 ## Community
 
 ### Communication Channels
 
-- GitHub Issues for bug reports and feature requests
-- Discussions for general questions and ideas
+- [GitHub Issues](https://github.com/depictio/depictio/issues) - Bug reports and feature requests
+- [GitHub Discussions](https://github.com/depictio/depictio/discussions) - Questions and ideas
 
 ## License
 
-By contributing to Depictio, you agree that your contributions will be licensed under the [project's license](https://github.com/depictio/depictio/blob/main/LICENSE).
+By contributing to Depictio, you agree that your contributions will be licensed under the [MIT License](https://github.com/depictio/depictio/blob/main/LICENSE).

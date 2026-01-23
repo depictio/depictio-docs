@@ -53,7 +53,7 @@ description: "Testing the timeline plugin syntax"
         "sub_title": "Phase 1: Foundation ✅"
     },
     {
-        "title": "Data Ingestion", 
+        "title": "Data Ingestion",
         "content": "Support for multiple tabular formats: Parquet, CSV, JSON, TSV with automated processing",
         "icon": ":fontawesome-solid-database:",
         "key": "green",
@@ -61,7 +61,7 @@ description: "Testing the timeline plugin syntax"
     },
     {
         "title": "MultiQC Integration",
-        "content": "Seamless integration with bioinformatics quality control reports", 
+        "content": "Seamless integration with bioinformatics quality control reports",
         "icon": ":fontawesome-solid-flask:",
         "key": "orange",
         "sub_title": "Phase 2: Specialization 🚧"
@@ -69,7 +69,7 @@ description: "Testing the timeline plugin syntax"
     {
         "title": "Configuration Assistant",
         "content": "CLI-based project setup wizard with intelligent recommendations",
-        "icon": ":fontawesome-solid-terminal:", 
+        "icon": ":fontawesome-solid-terminal:",
         "key": "orange",
         "sub_title": "Phase 2: Specialization 🚧"
     },
@@ -77,7 +77,7 @@ description: "Testing the timeline plugin syntax"
         "title": "Workflow Templates",
         "content": "Pre-configured dashboards for popular bioinformatics workflows and pipelines",
         "icon": ":fontawesome-solid-sitemap:",
-        "key": "blue", 
+        "key": "blue",
         "sub_title": "Phase 3: Ecosystem 📋"
     }
 ]

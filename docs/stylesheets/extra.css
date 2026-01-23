@@ -99,11 +99,11 @@
 
 /* Triangular animation keyframes - based on original Depictio script */
 @keyframes triangular-pulse {
-    0%, 100% { 
-        transform: scale(1); 
+    0%, 100% {
+        transform: scale(1);
     }
-    50% { 
-        transform: scale(1.15); 
+    50% {
+        transform: scale(1.15);
     }
 }
 
@@ -292,15 +292,15 @@ svg:hover path#shape-7 {
         height: calc(100vh - 2.4rem) !important;
         top: 2.4rem !important;
     }
-    
+
     .md-sidebar--primary {
         height: calc(100vh - 2.4rem) !important;
     }
-    
+
     .md-sidebar--secondary {
         height: calc(100vh - 2.4rem) !important;
     }
-    
+
     .md-sidebar__scrollwrap {
         height: calc(100vh - 2.4rem) !important;
         max-height: calc(100vh - 2.4rem) !important;
@@ -573,12 +573,12 @@ svg:hover path#shape-7 {
     .demo-note-section {
         padding: 0 1rem;
     }
-    
+
     .demo-alt-buttons {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .demo-alt-btn {
         width: 100%;
         max-width: 200px;
@@ -591,3 +591,330 @@ svg:hover path#shape-7 {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
 
+/* ===== FOOTER STYLING ===== */
+/* Ensure footer is always visible and properly styled */
+.md-footer {
+    position: relative !important;
+    z-index: 1000 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: transparent !important;
+    margin-top: 4rem !important;
+    padding: 0 !important;
+    clear: both !important;
+    width: 100% !important;
+}
+
+.md-footer-meta {
+    background-color: #1a1a1a !important;
+    display: block !important;
+    visibility: visible !important;
+    padding: 1rem 0 !important;
+}
+
+.md-footer-meta__inner {
+    display: flex !important;
+    visibility: visible !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 1rem !important;
+}
+
+/* Footer copyright text - dark background, light text */
+.md-copyright,
+.md-copyright__highlight,
+.md-footer-meta .md-typeset,
+.md-footer-meta .md-copyright {
+    color: #b0b0b0 !important;
+    font-size: 0.85rem !important;
+}
+
+.md-copyright a,
+.md-footer-meta a {
+    color: #9966cc !important;
+}
+
+.md-copyright a:hover,
+.md-footer-meta a:hover {
+    color: #b388e8 !important;
+}
+
+/* Social icons in footer */
+.md-social__link {
+    color: #b0b0b0 !important;
+}
+
+.md-social__link:hover {
+    color: #9966cc !important;
+}
+
+.md-social__link svg {
+    fill: currentColor !important;
+}
+
+/* Light theme - copyright bar */
+[data-md-color-scheme="default"] .md-footer-meta {
+    background-color: #e0e0e0 !important;
+}
+
+[data-md-color-scheme="default"] .md-copyright,
+[data-md-color-scheme="default"] .md-copyright__highlight,
+[data-md-color-scheme="default"] .md-footer-meta .md-typeset {
+    color: #333333 !important;
+}
+
+[data-md-color-scheme="default"] .md-copyright a,
+[data-md-color-scheme="default"] .md-footer-meta a {
+    color: #7a5dc7 !important;
+}
+
+[data-md-color-scheme="default"] .md-social__link {
+    color: #555555 !important;
+}
+
+[data-md-color-scheme="default"] .md-social__link:hover {
+    color: #7a5dc7 !important;
+}
+
+/* Footer social links */
+.md-footer-social {
+    color: #ffffff !important;
+}
+
+.md-footer-social__link {
+    color: #ffffff !important;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.md-footer-social__link:hover {
+    opacity: 1;
+    color: #9966cc !important;
+}
+
+/* Dark theme base footer */
+[data-md-color-scheme="slate"] .md-footer {
+    background-color: transparent !important;
+}
+
+/* Fix for landing page - ensure content doesn't cover footer */
+.md-main {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ensure content container doesn't extend over footer */
+.md-content {
+    position: relative;
+    z-index: 1;
+    overflow: visible !important;
+}
+
+/* Ensure the article doesn't clip or hide anything below it */
+.md-content__inner {
+    overflow: visible !important;
+    padding-bottom: 2rem !important;
+}
+
+/* Landing page specific - ensure sections don't extend into footer space */
+.md-typeset section:last-of-type {
+    margin-bottom: 3rem !important;
+    padding-bottom: 2rem !important;
+}
+
+/* ===== CUSTOM DEPICTIO FOOTER ===== */
+.depictio-footer {
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;
+    padding: 2.5rem 0 1.5rem 0 !important;
+    border-top: 4px solid #9966cc !important;
+}
+
+.depictio-footer__grid {
+    display: grid !important;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr !important;
+    gap: 2rem !important;
+    align-items: start !important;
+}
+
+.depictio-footer__section {
+    padding: 0 1rem !important;
+}
+
+.depictio-footer__brand {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+}
+
+.depictio-footer__logo {
+    width: 48px !important;
+    height: 48px !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.depictio-footer__title {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+}
+
+.depictio-footer__tagline {
+    font-size: 0.85rem !important;
+    color: #b0b0b0 !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+}
+
+.depictio-footer__heading {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    margin: 0 0 1rem 0 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+.depictio-footer__links {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.depictio-footer__links li {
+    margin: 0.5rem 0 !important;
+}
+
+.depictio-footer__links a {
+    color: #b0b0b0 !important;
+    text-decoration: none !important;
+    font-size: 0.85rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    transition: color 0.2s ease !important;
+}
+
+.depictio-footer__links a:hover {
+    color: #9966cc !important;
+}
+
+.depictio-footer__links svg {
+    flex-shrink: 0 !important;
+}
+
+/* Light theme custom footer */
+[data-md-color-scheme="default"] .depictio-footer {
+    background-color: #f5f5f5 !important;
+    color: #333333 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__title {
+    color: #333333 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__tagline {
+    color: #666666 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__heading {
+    color: #333333 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__links a {
+    color: #555555 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__links a:hover {
+    color: #7a5dc7 !important;
+}
+
+/* Footer Funding/Supported By Section */
+.depictio-footer__funding {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1.5rem !important;
+    padding: 1.5rem 0 !important;
+    margin-top: 1.5rem !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.depictio-footer__funding-label {
+    font-size: 0.8rem !important;
+    color: #888888 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    white-space: nowrap !important;
+}
+
+.depictio-footer__funding-logos {
+    display: flex !important;
+    align-items: center !important;
+    gap: 2rem !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+}
+
+.depictio-footer__funding-logo {
+    height: 55px !important;
+    width: auto !important;
+    filter: brightness(0) invert(0.8) !important;
+    opacity: 0.8 !important;
+    transition: opacity 0.2s ease, filter 0.2s ease !important;
+}
+
+.depictio-footer__funding-logo:hover {
+    opacity: 1 !important;
+    filter: brightness(0) invert(1) !important;
+}
+
+/* Light theme funding logos */
+[data-md-color-scheme="default"] .depictio-footer__funding {
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__funding-label {
+    color: #666666 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__funding-logo {
+    filter: none !important;
+    opacity: 0.7 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__funding-logo:hover {
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+/* Responsive footer */
+@media (max-width: 960px) {
+    .depictio-footer__grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .depictio-footer__grid {
+        grid-template-columns: 1fr !important;
+        text-align: center !important;
+    }
+
+    .depictio-footer__brand {
+        align-items: center !important;
+    }
+
+    .depictio-footer__section {
+        padding: 1rem 0 !important;
+    }
+
+    .depictio-footer__funding {
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+}

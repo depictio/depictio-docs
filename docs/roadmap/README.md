@@ -55,6 +55,7 @@ hide:
 - [x] Comprehensive S3 backup and restore strategy with CLI commands and API endpoints
 - [x] Performance optimization with caching for iterative joins and component data
 - [x] Enhanced CLI execution with run commands and improved logging
+- [x] Client-side table joining moved from server to CLI for better performance (v0.6.0+)
 
 ### Authentication
 
@@ -76,7 +77,7 @@ hide:
 
 ### Dashboard design and interactivity
 
-- [x] Dashboard design using generic components (figure, metrics card, interactive component, table)
+- [x] Dashboard design using generic components (figure, metrics card, interactive component, table, MultiQC)
 - [x] Add/delete components
 - [x] Resize and relayout components
 - [x] Edit components (title, aggregation applied)
@@ -84,6 +85,12 @@ hide:
 - [x] Enable/disable interactivity
 - [x] Enable/disable edit mode
 - [x] Auto-save dashboard + manual save (trigger screenshot to be used as thumbnail)
+- [x] Two-panel layout: left panel for filters/interactive components, right panel for visualizations (v0.6.0+)
+- [x] Dashboard tabs with vertical organization in collapsible navbar (v0.6.0+)
+- [x] Table component export to CSV with filter and sorting support (v0.6.0+)
+- [x] Universal DC linking system for cross-DC filtering without pre-computed joins (v0.6.0+)
+- [x] Figure code mode with live preview and bidirectional editor resize (v0.6.0+)
+- [x] YAML dashboard validation with Pydantic-based configuration checking (v0.6.0+)
 
 ### Project management
 
@@ -115,6 +122,10 @@ hide:
 - [x] Automated release workflows with changelog generation
 - [x] Implement astral/ty as static type checking & in pre-commit hooks
 - [x] Allow users to provide their own set of public/private keys
+- [x] Celery/Redis background processing for heavy computations in design mode (v0.6.0+)
+- [x] Multi-app architecture: separate Dash apps for Management, Viewer, and Editor (v0.6.0+)
+- [x] Local Delta Table caching for improved API performance (v0.6.0+)
+- [x] DevContainer and GitHub Codespaces support for cloud-based development
 
 ### UI
 
@@ -150,9 +161,8 @@ hide:
 - [ ] High-dimensional data methods (e.g., UMAP, PCA, t-SNE)
 - [ ] Omics data visualization methods (e.g., Volcano plot, ...)
 - [ ] Markdown component
-- [ ] Extend interactive component (date, radio, ...)
-- [ ] Improve component (e.g., slider values range, figure styling and properties, etc.)
-- [ ] Add more grouping functionalities
+- [ ] Extend interactive component (date picker, radio buttons, etc.)
+- [ ] Improve component properties (e.g., slider values range, figure styling, etc.)
 
 ### Admin
 

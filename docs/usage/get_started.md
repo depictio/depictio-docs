@@ -23,10 +23,8 @@ When you first access Depictio, you'll be prompted to log in. The default instal
 - **Email**: `admin@example.com`
 - **Password**: `changeme`
 
-<!-- markdownlint-disable MD046 -->
 !!! warning "**Important**"
     Change the default password after your first login for security reasons.
-<!-- markdownlint-enable MD046 -->
 
 ### <span style="color: #E6779F;">:material-database-eye:</span> Use existing demo data
 
@@ -45,10 +43,10 @@ If you want to explore Depictio with existing demo data, you can use the provide
 1. **Open the Projects section**: Click on the **"Projects"** link in the sidebar.
 2. **Click on "Create Project"**: This will open the project creation form.
 3. **Select Basic Project and enter project details**:
-   
+
     - **Project Name**: Enter a name for your project.
     - **Description**: Optionally, provide a description for your project.
-    
+
         - **Advanced**: For workflow-based projects with multiple data collections.
 
 4. **Navigate to the "Data Collections" tab**: This is where you will add your data.

@@ -8,6 +8,108 @@ hide:
 
 # Changelog
 
+
+## **v0.6.0 Beta Releases**
+
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v0.6.0-b4](https://github.com/depictio/depictio/releases/tag/v0.6.0-b4)** (January 22, 2026)
+
+#### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.0-b4
+ghcr.io/depictio/depictio:edge
+```
+
+#### **✨ Features**
+
+* **Universal DC Linking System**: New cross-DC filtering system that allows linking data collections for runtime filtering without pre-computed joins. ([#640](https://github.com/depictio/depictio/pull/640))
+* **Figure Code Mode Refactor**: Complete refactor of figure code mode with live preview, bidirectional editor resize, and improved theme switching. ([#639](https://github.com/depictio/depictio/pull/639))
+* **YAML Dashboard Validation**: Pydantic-based validation for dashboard YAML configuration with column name, chart type, and aggregation validation.
+* **Client-Side Table Joining**: Moved table joining from server to CLI for better performance and flexibility. ([#634](https://github.com/depictio/depictio/pull/634))
+
+#### **🐛 Fixes**
+
+* Fixed Ace editor theme switching and Execute button functionality in figure code mode.
+* Fixed HTTP status code checks for link create/delete in CLI.
+* Improved syntax error messages for code execution in figures.
+
+---
+
+### **[v0.6.0-b3](https://github.com/depictio/depictio/releases/tag/v0.6.0-b3)** (January 20, 2026)
+
+#### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.0-b3
+```
+
+#### **✨ Features**
+
+* **Figure Component Improvements**: Loading indicator for figure preview rendering, improved stepper UX. ([#622](https://github.com/depictio/depictio/pull/622))
+* **Celery by Default**: Celery is now enabled by default for design mode with Docker Compose profiles for flexible deployment.
+* **AI Development Tools**: Added Claude Code development toolkit and AI tools support in devcontainer.
+
+#### **🐛 Fixes**
+
+* Eliminated multiple scrollbars in dashboard edit mode.
+* Fixed optional parameters persisting incorrectly in figure component.
+* Improved stepper header centering and spacing.
+
+---
+
+### **[v0.6.0-b2](https://github.com/depictio/depictio/releases/tag/v0.6.0-b2)** (January 8, 2026)
+
+#### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.0-b2
+```
+
+#### **✨ Features**
+
+* **Dashboard Performance & UX**: Major performance improvements with ALL pattern rendering for cards and interactive components. ([#616](https://github.com/depictio/depictio/pull/616))
+* **Local Delta Table Caching**: Added local filesystem caching for Delta tables to improve API performance.
+* **Client-Side Performance Monitoring**: Added performance monitoring utilities for frontend optimization.
+
+#### **🐛 Fixes**
+
+* Suppressed third-party console warnings and fixed favicon issues.
+* Fixed frontend container startup issues in CI.
+* Improved quality job caching to skip when no code changes.
+
+---
+
+### **[v0.6.0-b1](https://github.com/depictio/depictio/releases/tag/v0.6.0-b1)** (January 7, 2026)
+
+#### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.0-b1
+```
+
+#### **✨ Major Features**
+
+* **Multi-App Architecture**: Refactored frontend into three independent Dash applications for improved performance and callback isolation. ([#615](https://github.com/depictio/depictio/pull/615), [#616](https://github.com/depictio/depictio/pull/616))
+    * **Management App** (`/`): Auth, dashboards, projects, admin
+    * **Viewer App** (`/dashboard/`): Read-only dashboard viewing
+    * **Editor App** (`/dashboard-edit/`): Dashboard editing and component builder
+* **Two-Panel Layout**: Dashboard components are now organized into left (filters) and right (visualizations) panels.
+* **Dashboard Tabs**: Support for tabbed organization within dashboards with custom icons and colors.
+* **Table Component Export**: Export table data to CSV with support for filters and sorting. ([#625](https://github.com/depictio/depictio/pull/625))
+* **Celery Background Processing**: Redis/Celery integration for heavy computations in design mode.
+
+#### **🚀 Improvements**
+
+* Dual-panel grid system with save/restore functionality.
+* Enhanced interactive component design and edit mode callbacks.
+* Improved card component metadata handling.
+* Centralized version management in VERSION file.
+
+---
+
 ## **[v0.5.3](https://github.com/depictio/depictio/releases/tag/v0.5.3)**
 
 ### Docker Images
@@ -36,18 +138,18 @@ ghcr.io/depictio/depictio:edge
 
 ### **✨ Features**
 
-* **S3 & Project Management**: Added S3 delta table checks, improved project ID handling, and auto-promotion for data collection IDs with join configurations. ([[bc31ff79](https://github.com/depictio/depictio/commit/bc31ff79)](<https://github.com/depictio/depictio/commit/bc31ff79>), [[103baee8](https://github.com/depictio/depictio/commit/103baee8)](<https://github.com/depictio/depictio/commit/103baee8>), [[7dfdcc24](https://github.com/depictio/depictio/commit/7dfdcc24)](<https://github.com/depictio/depictio/commit/7dfdcc24>))
-* **Dashboard Enhancements**: Improved filtering logic, enhanced permission checks, component resizing, and metadata synchronization. ([[3e259297](https://github.com/depictio/depictio/commit/3e259297)](<https://github.com/depictio/depictio/commit/3e259297>), [[c913dd2b](https://github.com/depictio/depictio/commit/c913dd2b)](<https://github.com/depictio/depictio/commit/c913dd2b>), [[aa03799f](https://github.com/depictio/depictio/commit/aa03799f)](<https://github.com/depictio/depictio/commit/aa03799f>), [[d03deeb8](https://github.com/depictio/depictio/commit/d03deeb8)](<https://github.com/depictio/depictio/commit/d03deeb8>))
-* **Icon & Styling Updates**: Updated dashboard icons with ActionIcon, DashIconify refactor, and improved figure/component styling. ([[ce4acaca](https://github.com/depictio/depictio/commit/ce4acaca)](<https://github.com/depictio/depictio/commit/ce4acaca>), [[1e9e9d8a](https://github.com/depictio/depictio/commit/1e9e9d8a)](<https://github.com/depictio/depictio/commit/1e9e9d8a>), [[76c55c18](https://github.com/depictio/depictio/commit/76c55c18)](<https://github.com/depictio/depictio/commit/76c55c18>))
-* **MultiQC Enhancements**: Added styling and metadata handling for MultiQC data collections. ([[b2d995fd](https://github.com/depictio/depictio/commit/b2d995fd)](<https://github.com/depictio/depictio/commit/b2d995fd>))
-* **Workflow & Helm Support**: URL pattern helpers for API/MinIO and improved backend/frontend deployments. ([[5a7850f1](https://github.com/depictio/depictio/commit/5a7850f1)](<https://github.com/depictio/depictio/commit/5a7850f1>), [[d09e6096](https://github.com/depictio/depictio/commit/d09e6096)](<https://github.com/depictio/depictio/commit/d09e6096>))
+* **S3 & Project Management**: Added S3 delta table checks, improved project ID handling, and auto-promotion for data collection IDs with join configurations. ([bc31ff79](https://github.com/depictio/depictio/commit/bc31ff79), [103baee8](https://github.com/depictio/depictio/commit/103baee8), [7dfdcc24](https://github.com/depictio/depictio/commit/7dfdcc24))
+* **Dashboard Enhancements**: Improved filtering logic, enhanced permission checks, component resizing, and metadata synchronization. ([3e259297](https://github.com/depictio/depictio/commit/3e259297), [c913dd2b](https://github.com/depictio/depictio/commit/c913dd2b), [aa03799f](https://github.com/depictio/depictio/commit/aa03799f), [d03deeb8](https://github.com/depictio/depictio/commit/d03deeb8))
+* **Icon & Styling Updates**: Updated dashboard icons with ActionIcon, DashIconify refactor, and improved figure/component styling. ([ce4acaca](https://github.com/depictio/depictio/commit/ce4acaca), [1e9e9d8a](https://github.com/depictio/depictio/commit/1e9e9d8a), [76c55c18](https://github.com/depictio/depictio/commit/76c55c18))
+* **MultiQC Enhancements**: Added styling and metadata handling for MultiQC data collections. ([b2d995fd](https://github.com/depictio/depictio/commit/b2d995fd))
+* **Workflow & Helm Support**: URL pattern helpers for API/MinIO and improved backend/frontend deployments. ([5a7850f1](https://github.com/depictio/depictio/commit/5a7850f1), [d09e6096](https://github.com/depictio/depictio/commit/d09e6096))
 
 ---
 
 ### **🐛 Fixes**
 
-* **UI & Layout**: Prevented horizontal scrollbar, removed default background on draggable components, adjusted theme switch behavior. ([[310a8d9f](https://github.com/depictio/depictio/commit/310a8d9f)](<https://github.com/depictio/depictio/commit/310a8d9f>), [[6e06fd6c](https://github.com/depictio/depictio/commit/6e06fd6c)](<https://github.com/depictio/depictio/commit/6e06fd6c>), [[937e08b1](https://github.com/depictio/depictio/commit/937e08b1)](<https://github.com/depictio/depictio/commit/937e08b1>))
-* **Standardization & Cleanup**: Fixed naming inconsistencies in Iris Dashboard demo and commented out redundant tests/code. ([[ca6ee804](https://github.com/depictio/depictio/commit/ca6ee804)](<https://github.com/depictio/depictio/commit/ca6ee804>), [[d7d8a3d8](https://github.com/depictio/depictio/commit/d7d8a3d8)](<https://github.com/depictio/depictio/commit/d7d8a3d8>), [[8a83fe7b](https://github.com/depictio/depictio/commit/8a83fe7b)](<https://github.com/depictio/depictio/commit/8a83fe7b>), [[acf26a86](https://github.com/depictio/depictio/commit/acf26a86)](<https://github.com/depictio/depictio/commit/acf26a86>))
+* **UI & Layout**: Prevented horizontal scrollbar, removed default background on draggable components, adjusted theme switch behavior. ([310a8d9f](https://github.com/depictio/depictio/commit/310a8d9f), [6e06fd6c](https://github.com/depictio/depictio/commit/6e06fd6c), [937e08b1](https://github.com/depictio/depictio/commit/937e08b1))
+* **Standardization & Cleanup**: Fixed naming inconsistencies in Iris Dashboard demo and commented out redundant tests/code. ([ca6ee804](https://github.com/depictio/depictio/commit/ca6ee804), [d7d8a3d8](https://github.com/depictio/depictio/commit/d7d8a3d8), [8a83fe7b](https://github.com/depictio/depictio/commit/8a83fe7b), [acf26a86](https://github.com/depictio/depictio/commit/acf26a86))
 
 ## **[v0.5.1](https://github.com/depictio/depictio/releases/tag/v0.5.1)**
 
@@ -62,18 +164,18 @@ ghcr.io/depictio/depictio:edge
 
 ### **🐛 Fixes**
 
-* **UI & State**: Updated handle colors, navbar/logo sizing, layout IDs, and removed unused states. ([[08938777](https://github.com/depictio/depictio/commit/08938777)](<https://github.com/depictio/depictio/commit/08938777>), [[435aa448](https://github.com/depictio/depictio/commit/435aa448)](<https://github.com/depictio/depictio/commit/435aa448>), [[a164f8cb](https://github.com/depictio/depictio/commit/a164f8cb)](<https://github.com/depictio/depictio/commit/a164f8cb>))
-* **Caching**: Fixed Redis cache stats logging. ([[ffcfd7a1](https://github.com/depictio/depictio/commit/ffcfd7a1)](<https://github.com/depictio/depictio/commit/ffcfd7a1>))
+* **UI & State**: Updated handle colors, navbar/logo sizing, layout IDs, and removed unused states. ([08938777](https://github.com/depictio/depictio/commit/08938777), [435aa448](https://github.com/depictio/depictio/commit/435aa448), [a164f8cb](https://github.com/depictio/depictio/commit/a164f8cb))
+* **Caching**: Fixed Redis cache stats logging. ([ffcfd7a1](https://github.com/depictio/depictio/commit/ffcfd7a1))
 
 ---
 
 ### **🚀 Improvements**
 
-* **Theming & Layout**: Enhanced clientside layout, padding, resize handle visibility, and logo updates. ([[b10bf77b](https://github.com/depictio/depictio/commit/b10bf77b)](<https://github.com/depictio/depictio/commit/b10bf77b>), [[58b0690b](https://github.com/depictio/depictio/commit/58b0690b)](<https://github.com/depictio/depictio/commit/58b0690b>), [[250437a2](https://github.com/depictio/depictio/commit/250437a2)](<https://github.com/depictio/depictio/commit/250437a2>))
-* **Redis Integration in K8S**: Added support with configuration and connectivity tests. ([[f86b4f10](https://github.com/depictio/depictio/commit/f86b4f10)](<https://github.com/depictio/depictio/commit/f86b4f10>))
-* **Theme Cleanup**: Removed dark theme–specific styles from auth modal and Google button. ([[6ddaf469](https://github.com/depictio/depictio/commit/6ddaf469)](<https://github.com/depictio/depictio/commit/6ddaf469>))
-* **Component Editing**: Always create component buttons in edit mode and determine initial edit state. ([[669fdc92](https://github.com/depictio/depictio/commit/669fdc92)](<https://github.com/depictio/depictio/commit/669fdc92>), [[1e56ebe3](https://github.com/depictio/depictio/commit/1e56ebe3)](<https://github.com/depictio/depictio/commit/1e56ebe3>))
-* **Dashboard UI**: Improved header, modal layout, subtitle/icon customization, and sidebar/navbar handling. ([[ba99f97b](https://github.com/depictio/depictio/commit/ba99f97b)](<https://github.com/depictio/depictio/commit/ba99f97b>), [[40d10c09](https://github.com/depictio/depictio/commit/40d10c09)](<https://github.com/depictio/depictio/commit/40d10c09>), [[0d4ad756](https://github.com/depictio/depictio/commit/0d4ad756)](<https://github.com/depictio/depictio/commit/0d4ad756>))
+* **Theming & Layout**: Enhanced clientside layout, padding, resize handle visibility, and logo updates. ([b10bf77b](https://github.com/depictio/depictio/commit/b10bf77b), [58b0690b](https://github.com/depictio/depictio/commit/58b0690b), [250437a2](https://github.com/depictio/depictio/commit/250437a2))
+* **Redis Integration in K8S**: Added support with configuration and connectivity tests. ([f86b4f10](https://github.com/depictio/depictio/commit/f86b4f10))
+* **Theme Cleanup**: Removed dark theme–specific styles from auth modal and Google button. ([6ddaf469](https://github.com/depictio/depictio/commit/6ddaf469))
+* **Component Editing**: Always create component buttons in edit mode and determine initial edit state. ([669fdc92](https://github.com/depictio/depictio/commit/669fdc92), [1e56ebe3](https://github.com/depictio/depictio/commit/1e56ebe3))
+* **Dashboard UI**: Improved header, modal layout, subtitle/icon customization, and sidebar/navbar handling. ([ba99f97b](https://github.com/depictio/depictio/commit/ba99f97b), [40d10c09](https://github.com/depictio/depictio/commit/40d10c09), [0d4ad756](https://github.com/depictio/depictio/commit/0d4ad756))
 
 ## **[v0.5.0](https://github.com/depictio/depictio/releases/tag/v0.5.0)**
 
@@ -121,17 +223,17 @@ ghcr.io/depictio/depictio:edge
 
 ### **✨ Features**
 
-* **Caching & Performance**: Added `flask-caching` and `orjson` for faster data handling. ([[b3bdd21f](https://github.com/depictio/depictio/commit/b3bdd21f)](<https://github.com/depictio/depictio/commit/b3bdd21f>))
-* **UI Interactivity**: Introduced Dock-style animations and live mode toggle. ([[0b6d073e](https://github.com/depictio/depictio/commit/0b6d073e)](<https://github.com/depictio/depictio/commit/0b6d073e>), [[14fe2314](https://github.com/depictio/depictio/commit/14fe2314)](<https://github.com/depictio/depictio/commit/14fe2314>))
-* **Data Debugging**: Added scripts for DataTable and plot input inspection. ([[b62fe583](https://github.com/depictio/depictio/commit/b62fe583)](<https://github.com/depictio/depictio/commit/b62fe583>))
+* **Caching & Performance**: Added `flask-caching` and `orjson` for faster data handling. ([b3bdd21f](https://github.com/depictio/depictio/commit/b3bdd21f))
+* **UI Interactivity**: Introduced Dock-style animations and live mode toggle. ([0b6d073e](https://github.com/depictio/depictio/commit/0b6d073e), [14fe2314](https://github.com/depictio/depictio/commit/14fe2314))
+* **Data Debugging**: Added scripts for DataTable and plot input inspection. ([b62fe583](https://github.com/depictio/depictio/commit/b62fe583))
 
 ---
 
 ### **🚀 Improvements**
 
-* **Editing Flow**: Refined UI elements, edit mode logic, and live interactivity. ([[71c78e83](https://github.com/depictio/depictio/commit/71c78e83)](<https://github.com/depictio/depictio/commit/71c78e83>), [[a01f3ac9](https://github.com/depictio/depictio/commit/a01f3ac9)](<https://github.com/depictio/depictio/commit/a01f3ac9>))
-* **Theme & Rendering**: Optimized theme updates and fixed marginal plot loops. ([[b05a5c9d](https://github.com/depictio/depictio/commit/b05a5c9d)](<https://github.com/depictio/depictio/commit/b05a5c9d>), [[0149dcca](https://github.com/depictio/depictio/commit/0149dcca)](<https://github.com/depictio/depictio/commit/0149dcca>))
-* **Performance**: Moved UI state to clientside, added caching, and improved async handling. ([[59c40d06](https://github.com/depictio/depictio/commit/59c40d06)](<https://github.com/depictio/depictio/commit/59c40d06>), [[e80e57d2](https://github.com/depictio/depictio/commit/e80e57d2)](<https://github.com/depictio/depictio/commit/e80e57d2>), [[696748d1](https://github.com/depictio/depictio/commit/696748d1)](<https://github.com/depictio/depictio/commit/696748d1>))
+* **Editing Flow**: Refined UI elements, edit mode logic, and live interactivity. ([71c78e83](https://github.com/depictio/depictio/commit/71c78e83), [a01f3ac9](https://github.com/depictio/depictio/commit/a01f3ac9))
+* **Theme & Rendering**: Optimized theme updates and fixed marginal plot loops. ([b05a5c9d](https://github.com/depictio/depictio/commit/b05a5c9d), [0149dcca](https://github.com/depictio/depictio/commit/0149dcca))
+* **Performance**: Moved UI state to clientside, added caching, and improved async handling. ([59c40d06](https://github.com/depictio/depictio/commit/59c40d06), [e80e57d2](https://github.com/depictio/depictio/commit/e80e57d2), [696748d1](https://github.com/depictio/depictio/commit/696748d1))
 
 ## **[v0.3.2](https://github.com/depictio/depictio/releases/tag/v0.3.2)**
 

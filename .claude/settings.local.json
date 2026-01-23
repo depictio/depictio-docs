@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/Users/tweber/miniconda3/envs/depictio-docs/bin/pre-commit run markdownlint --files docs/depictio-cli/usage.md)",
+      "Bash(/Users/tweber/miniconda3/envs/depictio-docs/bin/pre-commit run markdownlint --files docs/depictio-cli/usage.md docs/developer/contributing.md docs/installation/configuration.md)",
+      "Bash(/Users/tweber/miniconda3/envs/depictio-docs/bin/pre-commit run markdownlint --files docs/roadmap/README.md)",
+      "Bash(/Users/tweber/miniconda3/envs/depictio-docs/bin/markdownlint docs/roadmap/README.md)",
+      "Bash(mkdir:*)",
+      "Bash(mkdocs serve:*)",
+      "Bash(mv:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(touch:*)",
+      "Bash(cp:*)",
+      "Bash(python -m mkdocs serve:*)",
+      "Bash(python3:*)"
+    ],
+    "deny": []
+  }
+}

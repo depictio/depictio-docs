@@ -1,9 +1,7 @@
 # Minimal Reference Configuration
 
-<!-- markdownlint-disable MD046 -->
 !!! danger "Warning"
     This is not recommended to copy and paste the configuration as is. The configuration is meant to be a example and should be modified to fit your specific use case.
-<!-- markdownlint-enable MD046 -->
 
 This is a minimal reference configuration example file for the Depictio CLI. It includes the minimum required options and their descriptions. You can use this as a template to create your own configuration file.
 

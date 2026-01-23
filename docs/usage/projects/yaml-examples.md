@@ -1,6 +1,5 @@
 # <span style="color: #45B8AC;">:material-folder-multiple:</span> YAML Project configuration breakdown
 
-<!-- markdownlint-disable MD046 -->
 !!! tip "Configuration Validation"
     **Always validate your YAML configuration before using:**
     ```bash
@@ -13,7 +12,6 @@
 
 !!! warning "Configuration Template Warning"
     **Do not copy-paste entire configurations blindly.** This reference shows all available options with their defaults and descriptions. Only specify values that differ from defaults or are required for your specific use case.
-<!-- markdownlint-enable MD046 -->
 
 This guide provides comprehensive YAML configuration examples for Depictio projects, from simple setups to complex bioinformatics workflows. For a complete reference of all options, see the [Configuration Reference](reference.md).
 
@@ -325,7 +323,7 @@ data_collections:
 
     data_collection_tag: string    # Required: Unique identifier within project
                                   # Must be unique across all data collections
-                                  # Used for referencing in joins and dashboards
+                                  # Used for referencing in links and dashboards
                                   # Example: "gene_counts", "quality_metrics"
 
     config:                     # Required: Data collection configuration
@@ -422,13 +420,21 @@ config:
   # === REQUIREMENTS ===
   # - MultiQC 1.29+ must be used to generate parquet format
   # - Each run directory must contain: multiqc_data/multiqc.parquet
-  # - Sample names in MultiQC must match join column values
+```
 
-# === OPTIONAL: JOIN CONFIGURATION ===
-join:
-  on_columns: ["sample"]   # Typically joins on "sample" column
-  how: "inner"            # Join type: inner, outer, left, right
-  with_dc: ["sample_metadata"]  # Other data collections to join with
+**Linking MultiQC with Metadata (Recommended):**
+
+Use **links** for interactive filtering between metadata tables and MultiQC:
+
+```yaml
+# At project level - enables cross-DC filtering
+links:
+  - source_dc_id: sample_metadata    # Filter from metadata table
+    source_column: sample_id          # Filter by sample ID
+    target_dc_id: multiqc_data        # Update MultiQC visualizations
+    target_type: multiqc              # Target type
+    link_config:
+      resolver: sample_mapping        # Maps canonical IDs to MultiQC sample variants
 ```
 
 **MultiQC-Specific Notes:**
@@ -437,7 +443,7 @@ join:
 - **Fixed Location**: System looks for `multiqc_data/multiqc.parquet` in each run
 - **Format Requirement**: Requires MultiQC 1.29+ to generate `.parquet` output
 - **No Configuration Overhead**: Just specify `type: "MultiQC"` and you're done
-- **Join Column**: Standard join column is `"sample"` to match MultiQC sample names
+- **Link Column**: Use `sample_mapping` resolver in links to connect with metadata tables
 
 **Example Directory Structure:**
 
@@ -554,47 +560,66 @@ scan:
 # run_002/star_salmon/sample_C/quant.sf
 ```
 
-### Data Collection Joins
+### Cross-DC Links (Interactive Filtering)
 
-When you use a production-oriented workflow, it can be tricky to modify workflow structure itself and rely instead of post-processing steps to reformat data into a unified structure. Depictio supports joining multiple data collections to create unified datasets.
-
-!!! note "Note about join configuration"
-    A join need to be defined once and does not need to be repeated for each data collection. For instance, if DC1 & DC2 are joined, the join configuration needs to be defined in either DC1 or DC2, not both.
-
-This can be achieved by defining join configurations:
+Links enable **cross-DC filtering** at runtime—filter one data collection and automatically update related visualizations without pre-computed joins.
 
 ```yaml
-# In one data collection configuration
-join:
-  on_columns: [string]        # Required: Column names for joining
-                             # Must exist in both datasets
-                             # Example: ["sample_id"], ["sample_id", "timepoint"]
-
-  how: string                # Required: Join type
-                            # "inner": Keep only rows with matches in both datasets
-                            # "outer": Keep all rows, fill missing with null
-                            # "left": Keep all rows from left dataset
-                            # "right": Keep all rows from right dataset
-
-  with_dc: [string]         # Required: Target data collections to join with
-                           # References to other data_collection_tag values
-                           # Example: ["metadata", "quality_stats"]
-
-# Example: Join expression data with sample metadata
-data_collections:
-  - data_collection_tag: "sample_metadata"
-    # ... metadata configuration ...
-
-  - data_collection_tag: "gene_expression"
-    # ... expression configuration ...
-    join:
-      on_columns: ["sample_id"]
-      how: "inner"
-      with_dc: ["sample_metadata"]
+# Project-level links configuration
+links:
+  - source_dc_id: string      # Required: DC containing the filter
+    source_column: string     # Required: Column to filter on
+    target_dc_id: string      # Required: DC to receive filtered values
+    target_type: string       # Required: "table" or "multiqc"
+    link_config:
+      resolver: string        # Required: "direct", "sample_mapping", or "pattern"
+      target_field: string    # Optional: Field to match in target DC
 ```
 
-!!! warnning "Join Limitations"
-    Joins are currently limited to simple column-based joins. Future versions may support more complex joins and transformations.
+**Resolvers:**
+
+| Resolver | Use Case |
+|----------|----------|
+| `direct` | Same value in both DCs |
+| `sample_mapping` | Canonical ID → MultiQC sample variants |
+| `pattern` | Template substitution (e.g., `{sample}.bam`) |
+
+**Example:**
+
+```yaml
+name: "My Project"
+project_type: "advanced"
+
+links:
+  - source_dc_id: sample_metadata
+    source_column: sample_id
+    target_dc_id: multiqc_fastqc
+    target_type: multiqc
+    link_config:
+      resolver: sample_mapping
+
+workflows:
+  # ... workflow configuration ...
+```
+
+For detailed documentation, see [Cross-DC Filtering](../../features/cross-dc-filtering.md).
+
+### Data Collection Joins (Legacy - Pre-computed)
+
+!!! warning "Prefer Links Over Joins"
+    **Links** are the recommended approach for cross-DC filtering. They work at runtime and support all DC types (tables, MultiQC, etc.). Use **joins** only when you specifically need a permanently pre-computed combined dataset.
+
+Joins pre-compute combined datasets via CLI and store them as Delta tables. They only work with table-type data collections.
+
+```yaml
+# Legacy join configuration (in data collection)
+join:
+  on_columns: [string]        # Column names for joining
+  how: string                 # "inner", "outer", "left", "right"
+  with_dc: [string]           # Target data collection tags
+```
+
+For most use cases, use [Cross-DC Links](#cross-dc-links-interactive-filtering) instead.
 
 ## <span style="color: #45B8AC;">:material-library:</span> Configuration Patterns Library
 
@@ -604,6 +629,15 @@ data_collections:
 name: "RNA-seq Expression Analysis"
 project_type: "advanced"
 is_public: false
+
+# Cross-DC Links for interactive filtering
+links:
+  - source_dc_id: qc_summary            # Filter from QC data
+    source_column: Sample               # Column to filter on
+    target_dc_id: salmon_gene_tpm       # Target expression data
+    target_type: table                  # Target type
+    link_config:
+      resolver: direct                  # Same sample IDs in both DCs
 
 workflows:
   - name: "nextflow-custom-rnaseq"
@@ -671,10 +705,7 @@ workflows:
               condition: "Experimental condition (e.g., treatment, control)"
               replicate: "Biological replicate identifier"
               tpm: "Transcripts per million (TPM) expression value"
-        join:
-          on_columns: ["sample_id"]
-          how: "inner"
-          with_dc: ["qc_summary"]
+        # Note: Use project-level links (above) for interactive filtering
 ```
 
 ### Pattern 2: Multi-sample Strand-seq (single-cell) Study
@@ -683,6 +714,27 @@ workflows:
 name: "Strand-Seq data analysis"
 project_type: "advanced"
 data_management_platform_project_url: "https://labid.embl.org/core/projects/default/5baa8f07-bd00-46e7-b3cb-ec79d01f6f3c"
+
+# Cross-DC Links for interactive filtering
+links:
+  - source_dc_id: mosaicatcher_samples_metadata
+    source_column: sample
+    target_dc_id: mosaicatcher_stats
+    target_type: table
+    link_config:
+      resolver: direct
+  - source_dc_id: mosaicatcher_samples_metadata
+    source_column: sample
+    target_dc_id: ashleys_labels
+    target_type: table
+    link_config:
+      resolver: direct
+  - source_dc_id: mosaicatcher_samples_metadata
+    source_column: sample
+    target_dc_id: sv_calls
+    target_type: table
+    link_config:
+      resolver: direct
 
 workflows:
   - name: "mosaicatcher-pipeline"
@@ -750,10 +802,7 @@ workflows:
             polars_kwargs:
               separator: "\t"
               has_header: true
-        join:
-          on_columns: ["sample", "cell"]
-          how: "inner"
-          with_dc: ["mosaicatcher_stats"]
+        # Note: Use project-level links (above) for interactive filtering
 
       # Structural variant calls
       - data_collection_tag: "sv_calls"
@@ -778,10 +827,7 @@ workflows:
               start: "SV start position"
               end: "SV end position"
               sv_call_name: "Structural variant call identifier"
-        join:
-          on_columns: ["sample", "cell"]
-          how: "inner"
-          with_dc: ["ashleys_labels", "mosaicatcher_stats"]
+        # Note: Use project-level links (above) for interactive filtering
 
       # Sample metadata
       - data_collection_tag: "mosaicatcher_samples_metadata"
@@ -802,10 +848,7 @@ workflows:
               patient_id: "Patient identifier"
               tissue_type: "Type of tissue analyzed"
               collection_date: "Date of sample collection"
-        join:
-          on_columns: ["sample"]
-          how: "inner"
-          with_dc: ["ashleys_labels", "mosaicatcher_stats", "sv_calls"]
+        # Note: Use project-level links (above) for interactive filtering
 ```
 
 ### Pattern 3: MultiQC Quality Control Integration (v0.5.0+)
@@ -813,6 +856,15 @@ workflows:
 ```yaml
 name: "MultiQC Quality Control Analysis"
 project_type: "advanced"
+
+# Cross-DC Links for interactive filtering
+links:
+  - source_dc_id: sample_metadata       # Filter from metadata table
+    source_column: sample               # Column to filter on
+    target_dc_id: multiqc_data          # Target MultiQC visualizations
+    target_type: multiqc                # Target type
+    link_config:
+      resolver: sample_mapping          # Maps canonical IDs to MultiQC sample variants
 
 workflows:
   - name: "qc-pipeline"
@@ -853,10 +905,8 @@ workflows:
               "sample": "Sample identifier matching MultiQC sample names"
               "treatment": "Treatment condition applied to the sample"
               "batch": "Batch identifier for experimental runs"
-          join:
-            on_columns: ["sample"]
-            how: "inner"
-            with_dc: ["multiqc_data"]
+          # Note: Use project-level links (above) for interactive filtering
+          # instead of join configuration
 
       # Additional per-sample QC metrics
       - data_collection_tag: "sample_qc_metrics"
@@ -879,10 +929,7 @@ workflows:
               "total_reads": "Total number of reads"
               "mapped_reads": "Number of successfully mapped reads"
               "mapping_rate": "Percentage of reads mapped to reference"
-          join:
-            on_columns: ["sample"]
-            how: "inner"
-            with_dc: ["sample_metadata", "multiqc_data"]
+          # Note: Use project-level links (above) for interactive filtering
 ```
 
 **Key Points for MultiQC Integration:**
@@ -890,7 +937,7 @@ workflows:
 - **Automatic Detection**: MultiQC data is automatically detected from `multiqc_data/multiqc.parquet` in each run
 - **Minimal Configuration**: Only requires `type: "MultiQC"` - no scan parameters needed
 - **Format Requirement**: Requires MultiQC 1.29+ to generate parquet output format
-- **Join Column**: Typically joins on `["sample"]` column to link with metadata and other QC metrics
+- **Cross-DC Filtering**: Use project-level **links** with `sample_mapping` resolver to connect metadata tables with MultiQC visualizations
 - **Location**: Each run must contain a `multiqc_data/multiqc.parquet` file generated by MultiQC
 
 ## 🔍 Validation

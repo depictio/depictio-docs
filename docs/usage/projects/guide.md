@@ -65,13 +65,11 @@ graph TD
 
 ## **Basic** Projects
 
-<!-- markdownlint-disable MD046 -->
 
 !!! success "Perfect for: Direct data analysis and quick insights"
 
     **Use when:** You have tabular data files ready for analysis and want immediate visualization capabilities.
 
-<!-- markdownlint-enable MD046 -->
 
 Basic projects provide an **easy onboarding experience** - upload your data and start creating interactive dashboards within minutes.
 
@@ -156,13 +154,11 @@ Basic projects provide an **easy onboarding experience** - upload your data and 
 
 ## **Advanced** Projects
 
-<!-- markdownlint-disable MD046 -->
 
 !!! info "Perfect for: Bioinformatics workflows and complex data pipelines"
 
     **Use when:** You have automated pipelines generating data with standardized file organization and need to process multiple samples systematically.
 
-<!-- markdownlint-enable MD046 -->
 
 Advanced projects are designed for **core facility-like setups** where standardized workflows generate structured data across multiple samples, timepoints, or experimental conditions.
 
@@ -171,7 +167,7 @@ Advanced projects are designed for **core facility-like setups** where standardi
 - **🔬 Workflow Integration** - Connect to nf-core, Nextflow, Snakemake, Galaxy pipelines
 - **📊 Multi-sample Analysis** - Handle large number of samples
 - **🔍 File Discovery** - Regex-based pattern matching for file organization
-- **🔗 Data Joining** - Combine different data types into unified views
+- **🔗 Cross-DC Links** - Interactive filtering across data collections (tables, MultiQC, etc.)
 - **📈 Scalable Processing** - Delta Lake backend for large-scale data
 
 ### Project Structure Example
@@ -304,13 +300,14 @@ workflows:
                 - "expression_level"
                 - "p_value"
 
-          # Data joining configuration
-          join:
-            on_columns:
-              - "sample_id"
-            how: "inner"
-            with_dc:
-              - "sample_stats" # Join with statistics
+# Cross-DC Links: Interactive filtering between data collections
+links:
+  - source_dc_id: "sample_stats"      # Filter from this DC
+    source_column: "sample_id"         # Filter by this column
+    target_dc_id: "gene_expression"    # Update this DC
+    target_type: "table"               # Target type: table or multiqc
+    link_config:
+      resolver: "direct"               # Same value in both DCs
 ```
 
 ### File Discovery Patterns
@@ -368,7 +365,7 @@ Choose the right project type for your workflow:
 | **Data Sources**         | UI File upload or CLI-based processing | CLI-based processing          |
 | **File Organization**    | Simple file management                 | Structured directory patterns |
 | **Multi-sample Support** | Single datasets                        | Multi samples support         |
-| **Data Processing**      | Direct conversion                      | Aggregation & joining         |
+| **Data Processing**      | Direct conversion                      | Aggregation & cross-DC links  |
 | **Learning Curve**       | Immediate                              | Moderate (YAML knowledge)     |
 | **Scalability**          | Small-medium datasets                  | Large-scale studies           |
 
@@ -412,7 +409,7 @@ Public projects are:
 - ✅ Visible to all users
 - ✅ Read-only for non-members
 - ✅ Searchable in project listings
-- ❌ Only editable by *owners* and *editors* 
+- ❌ Only editable by *owners* and *editors*
 - ❌ Not editable by *viewers* or anonymous users
 
 ## 💾 Data Storage Architecture
@@ -482,16 +479,21 @@ dc_specific_properties:
     null_values: ["NA", "NULL", ""]
 ```
 
-### Data Joining
+### Cross-DC Links
 
-Complex data relationships through joins:
+Interactive filtering between data collections at runtime:
 
 ```yaml
-join:
-  on_columns: ["sample_id", "timepoint"] # Multi-column joins
-  how: "inner" # Join type
-  with_dc: ["metadata", "quality_stats"] # Target collections
+links:
+  - source_dc_id: "metadata"           # Filter from this DC
+    source_column: "sample_id"          # Filter by this column
+    target_dc_id: "multiqc_report"      # Update this DC
+    target_type: "multiqc"              # Target type: table or multiqc
+    link_config:
+      resolver: "sample_mapping"        # Maps canonical IDs to MultiQC variants
 ```
+
+See [Cross-DC Filtering](../../features/cross-dc-filtering.md) for details.
 
 ### Custom Workflows
 
@@ -541,7 +543,6 @@ catalog:
 
 ### Common Issues
 
-<!-- markdownlint-disable MD046 -->
 
 === "Configuration Errors"
 
@@ -583,11 +584,10 @@ catalog:
 
     **Solutions:**
     - Use column selection to reduce data size
-    - Optimize join operations
+    - Use links for runtime filtering instead of pre-computed joins
     - Consider data partitioning
     - Review query patterns
 
-<!-- markdownlint-enable MD046 -->
 
 ### Debugging Commands
 

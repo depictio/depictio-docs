@@ -25,125 +25,25 @@ Alternatively, you can download a release version from the [GitHub releases page
 
 ### 2. Configure Environment Variables
 
-Create a `.env` file in the root directory of the project. You can use the provided example as a starting point:
+Create a `.env` file in the root directory of the project:
 
 ```bash
 cp .env.example .env
 ```
 
-Or manually create the `.env` file and add the following content:
+The minimal configuration only requires MinIO credentials:
 
-<!-- markdownlint-disable MD046 -->
+```bash
+# .env - Minimal required configuration
+DEPICTIO_MINIO_ROOT_USER=minio
+DEPICTIO_MINIO_ROOT_PASSWORD=minio123
+```
 
-??? Env-variables
-    ```env
-    # ============================================================================
-    # DEPICTIO ENVIRONMENT VARIABLES
-    # ============================================================================
-    # Description: Configuration file for Depictio application services
-    # ----------------------------------------------------------------------------
-    # Depictio Version
-    # ----------------------------------------------------------------------------
-    # DEPICTIO_VERSION=latest
+The default values work for most users. For advanced configuration:
 
-    # ----------------------------------------------------------------------------
-    # Application Context
-    # ----------------------------------------------------------------------------
-    # Defines the runtime context (options: server, client)
-    DEPICTIO_CONTEXT=server
-    DEPICTIO_LOGGING_VERBOSITY_LEVEL=INFO
-
-    # ----------------------------------------------------------------------------
-    # MinIO Storage Configuration
-    # ----------------------------------------------------------------------------
-    # Object storage server configuration (S3DepictioCLIConfig)
-    DEPICTIO_MINIO_ROOT_USER=minio
-    DEPICTIO_MINIO_ROOT_PASSWORD=minio123
-    # DEPICTIO_MINIO_PUBLIC_URL=http://localhost:9000
-
-    # ----------------------------------------------------------------------------
-    # MongoDB Configuration
-    # ----------------------------------------------------------------------------
-    # Database name
-    # DEPICTIO_MONGODB_DB_NAME=depictioDB
-    # DEPICTIO_MONGODB_PORT=27018
-    # DEPICTIO_MONGODB_SERVICE_NAME=mongo
-    # DEPICTIO_MONGODB_WIPE=false
-
-    # ----------------------------------------------------------------------------
-    # FastAPI Server Configuration
-    # ----------------------------------------------------------------------------
-    # API server network settings
-    # DEPICTIO_FASTAPI_HOST=0.0.0.0
-    # DEPICTIO_FASTAPI_PORT=8058
-    # DEPICTIO_FASTAPI_SERVICE_NAME=depictio-backend
-    # DEPICTIO_FASTAPI_LOGGING_LEVEL=INFO
-    # DEPICTIO_FASTAPI_WORKERS=1
-    # DEPICTIO_FASTAPI_SSL=false
-    # DEPICTIO_FASTAPI_PUBLIC_URL=http://localhost:8058
-
-    # ----------------------------------------------------------------------------
-    # Dash Frontend Configuration
-    # ----------------------------------------------------------------------------
-    # Dashboard server network settings
-    # DEPICTIO_DASH_HOST=0.0.0.0
-    # DEPICTIO_DASH_PORT=5080
-    # DEPICTIO_DASH_SERVICE_NAME=depictio-frontend
-    # DEPICTIO_DASH_WORKERS=1
-    # DEPICTIO_DASH_DEBUG=true
-
-    # ----------------------------------------------------------------------------
-    # Authentication Configuration
-    # ----------------------------------------------------------------------------
-    # Authentication and key management
-    # DEPICTIO_AUTH_TMP_TOKEN=eyJhb...
-    # DEPICTIO_AUTH_KEYS_DIR=depictio/keys
-    # DEPICTIO_AUTH_KEYS_ALGORITHM=RS256
-    # DEPICTIO_AUTH_CLI_CONFIG_DIR=depictio/.depictio
-    # DEPICTIO_AUTH_UNAUTHENTICATED_MODE=false
-
-    # Google OAuth2 Configuration
-    # DEPICTIO_AUTH_GOOGLE_OAUTH_ENABLED=true
-    # DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID="64285070862-***.apps.googleusercontent.com"
-    # DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET="GOCSPX-***"
-    # DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI="http://localhost:5080/auth"
-
-    # ----------------------------------------------------------------------------
-    # Analytics Configuration
-    # ----------------------------------------------------------------------------
-    # Internal analytics tracking system
-    # DEPICTIO_ANALYTICS_ENABLED=false
-    # DEPICTIO_ANALYTICS_SESSION_TIMEOUT_MINUTES=30
-    # DEPICTIO_ANALYTICS_CLEANUP_DAYS=90
-    # DEPICTIO_ANALYTICS_TRACK_ANONYMOUS_USERS=true
-    # DEPICTIO_ANALYTICS_CLEANUP_ENABLED=true
-
-    # Google Analytics Configuration (GA4)
-    # DEPICTIO_GOOGLE_ANALYTICS_ENABLED=false
-    # DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-XXXXXXXXXX
-
-    # ----------------------------------------------------------------------------
-    # System Configuration
-    # ----------------------------------------------------------------------------
-    # Container user and group IDs (uncomment to set specific values)
-    #UID=502
-    #GID=20
-
-    # ----------------------------------------------------------------------------
-    # Development Settings (Keep at the end for contributors)
-    # ----------------------------------------------------------------------------
-    # Toggle development mode for the application
-    # DEV_MODE=false
-
-    # Enable Playwright development mode for testing
-    # DEPICTIO_PLAYWRIGHT_DEV_MODE=false
-    # ============================================================================
-    ```
-<!-- markdownlint-enable MD046 -->
-
-Edit the `.env` file to customize your configuration if needed. The default values should work for most users.
-
-For detailed configuration options including analytics, authentication, and advanced features, see the [Configuration Guide](configuration.md).
+- **Complete env file**: `.env.complete.example` - All 160+ variables with defaults (copy and uncomment as needed)
+- **Configuration Guide**: [Configuration](configuration.md) - Common use cases and setup guides
+- **Complete Reference**: [Environment Reference](env-reference.md) - Searchable documentation for all variables
 
 ### 3. Start the Services (including MinIO)
 
@@ -161,13 +61,48 @@ This command will:
 - Create and start containers for MongoDB, the Depictio backend & frontend, and MinIO
 - Set up the required network connections between services
 
-<!-- markdownlint-disable MD046 -->
 
-!!! note
+### Using an Existing MinIO Instance
 
-    If you wish to use your own MinIO instance, you can skip the `docker-compose/docker-compose.minio.yaml` file. In this case, make sure to set the `MINIO_` variables accordingly in your `.env` file to point to your MinIO instance.
+If you already have a MinIO server running, you can skip the bundled MinIO container and configure Depictio to connect to your existing instance.
 
-<!-- markdownlint-enable MD046 -->
+**Skip the bundled MinIO container:**
+
+```bash
+# Start without the MinIO compose file
+docker compose -f docker-compose.yaml up -d
+```
+
+**Configure your `.env` file to point to your existing MinIO:**
+
+```bash
+# Connect to an existing MinIO server
+DEPICTIO_MINIO_SERVICE_NAME=your-minio-host.example.com
+DEPICTIO_MINIO_SERVICE_PORT=9000
+DEPICTIO_MINIO_EXTERNAL_HOST=your-minio-host.example.com
+DEPICTIO_MINIO_EXTERNAL_PORT=9000
+DEPICTIO_MINIO_ROOT_USER=your-access-key
+DEPICTIO_MINIO_ROOT_PASSWORD=your-secret-key
+DEPICTIO_MINIO_BUCKET=depictio-bucket
+
+# Set to true if MinIO is outside Docker network
+DEPICTIO_MINIO_EXTERNAL_SERVICE=true
+
+# Use https if your MinIO uses TLS
+DEPICTIO_MINIO_EXTERNAL_PROTOCOL=https
+```
+
+!!! tip "Bucket Creation"
+
+    Depictio will automatically create the bucket specified in `DEPICTIO_MINIO_BUCKET` if it doesn't exist, provided the credentials have sufficient permissions.
+
+!!! note "Network Configuration"
+
+    Set `DEPICTIO_MINIO_EXTERNAL_SERVICE=true` when your MinIO server is not part of the Docker Compose network. This tells Depictio to use the external host/port for connections instead of Docker's internal service discovery.
+
+!!! info "S3-Compatible Storage"
+
+    Depictio uses the MinIO client library which implements the S3 API. Other S3-compatible services (AWS S3, DigitalOcean Spaces, Backblaze B2, etc.) may work but have not been tested. If you try these configurations, please share your feedback!
 
 ### 4. Verify the Installation
 
@@ -274,6 +209,92 @@ Or:
 ```bash
 DEV_MODE=true docker compose up -d
 ```
+
+### Background Callbacks with Celery
+
+Depictio uses Celery for asynchronous background processing. **Celery is required** for the dashboard editor (design mode) to function properly, as it enables non-blocking figure preview rendering during component creation.
+
+#### Architecture
+
+The Celery worker container (`depictio-celery-worker`) is always started with docker-compose:
+
+- **Design Mode** (Dashboard Editor): Always requires Celery for responsive figure preview
+- **View Mode** (Dashboard Viewing): Optionally uses Celery based on configuration
+- Redis is used as the message broker for task queuing
+
+#### Configuration
+
+Configure background callback behavior in your `.env` file:
+
+```env
+# REQUIRED: Set to true for design mode to work
+# Also enables background callbacks for view mode (optional)
+DEPICTIO_CELERY_ENABLED=true
+
+# Configure number of Celery workers (default: 2)
+DEPICTIO_CELERY_WORKERS=4
+```
+
+#### How It Works
+
+**Design Mode (Dashboard Editor)**:
+
+- Always uses background callbacks (not configurable)
+- The Celery worker processes figure preview rendering
+- UI remains responsive during component creation
+- Required for the stepper workflow to function
+
+**View Mode (Dashboard Viewing)**:
+
+- When `DEPICTIO_CELERY_ENABLED=true`: Data loading executes asynchronously
+- When `false`: Data loading runs synchronously (design mode still requires Celery)
+- Background processing applies to:
+  - Card components (initial render and filter updates)
+  - Figure components (visualization rendering and filter updates)
+  - Table components (data loading and pagination)
+
+#### Performance Impact
+
+**Design Mode**:
+
+- Always asynchronous (required)
+- UI never blocks during figure preview generation
+- Essential for responsive dashboard building
+
+**View Mode with Background Callbacks** (`DEPICTIO_CELERY_ENABLED=true`):
+
+- UI remains responsive during data operations
+- Operations execute in parallel
+- Recommended for production, large datasets, multiple concurrent users
+
+**View Mode Synchronous** (`DEPICTIO_CELERY_ENABLED=false`):
+
+- Only view mode runs synchronously
+- Design mode still uses Celery (required)
+- UI may block during long data operations
+- Simpler for debugging view mode issues
+
+#### Service Management
+
+The Celery worker is always running:
+
+```bash
+# Start all services (Celery worker included by default)
+docker compose up -d
+
+# Check Celery worker status
+docker compose logs depictio-celery-worker
+
+# The worker is always running - no need for conditional startup
+```
+
+#### Compatibility Notes
+
+
+!!! info "Kubernetes/Helm Support"
+
+    Background callbacks are currently only supported in Docker Compose deployments. Kubernetes/Helm support is **coming soon** in an upcoming release.
+
 
 ## Troubleshooting
 

@@ -41,11 +41,11 @@ By the end of this tutorial, you'll have created a **fully interactive dashboard
 
 - **🎛️ Interactive Controls** - Sliders and dropdowns that filter your data
 - **📊 Dynamic Charts** - Scatter plots and bar charts that update in real-time
-- **📋 Data Tables** - Sortable, filterable tables with infinite scrolling
+- **📋 Data Tables** - Sortable, filterable tables with server-side pagination
 - **🎯 Metrics Cards** - Key statistics that change with your filters
 
-**Time to complete**: 15-20 minutes  
-**Difficulty**: Beginner  
+**Time to complete**: 15-20 minutes
+**Difficulty**: Beginner
 **Requirements**: Sample CSV file (we'll provide one)
 
 ## 🚀 Step 1: Prepare Your Data
@@ -83,7 +83,7 @@ Chinstrap,Dream,46.5,17.9,192,3500,female,2007
 2. **Create Account** → Click "Sign Up" (or use demo mode)
 3. **New Project** → Click "+ Create Project"
 4. **Project Settings**:
-   - **Name**: "My First Dashboard"  
+   - **Name**: "My First Dashboard"
    - **Type**: Basic
    - **Description**: "Learning interactive dashboards"
 
@@ -152,7 +152,7 @@ Interactive components are **global filters** that affect all other dashboard co
 
 ### Add Body Mass Slider
 
-1. **Add Component** → Click "+" → "Interactive Component" 
+1. **Add Component** → Click "+" → "Interactive Component"
 2. **Configuration**:
    - **Data Collection**: "Penguins Dataset"
    - **Column**: "body_mass_g"
@@ -164,7 +164,7 @@ Interactive components are **global filters** that affect all other dashboard co
 
 1. **Add Component** → Click "+" → "Interactive Component"
 2. **Configuration**:
-   - **Data Collection**: "Penguins Dataset"  
+   - **Data Collection**: "Penguins Dataset"
    - **Column**: "island"
    - **Component Type**: "Segmented Control"
    - **Label**: "Select Island"
@@ -181,7 +181,7 @@ Interactive components are **global filters** that affect all other dashboard co
    - **Chart Type**: "Scatter Plot"
    - **Data Collection**: "Penguins Dataset"
    - **X-axis**: "bill_length_mm"
-   - **Y-axis**: "bill_depth_mm" 
+   - **Y-axis**: "bill_depth_mm"
    - **Color**: "species"
    - **Size**: "body_mass_g"
    - **Title**: "Bill Dimensions by Species"
@@ -230,7 +230,7 @@ Now comes the magic! **All components respond to interactive filters simultaneou
 2. **Watch everything update**:
    - Scatter plot shows only Adelie penguins
    - Bar chart adjusts counts
-   - Average body mass recalculates  
+   - Average body mass recalculates
    - Table filters to Adelie rows only
 
 ### Test Body Mass Slider
@@ -267,7 +267,7 @@ Now comes the magic! **All components respond to interactive filters simultaneou
 
 **Chart Styling:**
 - **Colors**: Customize color schemes
-- **Axes**: Adjust labels and ranges  
+- **Axes**: Adjust labels and ranges
 - **Legends**: Position and format legends
 - **Annotations**: Add trend lines or highlights
 
@@ -317,7 +317,7 @@ https://demo.depictio.embl.org/dashboards/your-dashboard-id
 **Embed Code:**
 ```html
 <!-- Embed in website or documentation -->
-<iframe src="https://demo.depictio.embl.org/embed/your-dashboard-id" 
+<iframe src="https://demo.depictio.embl.org/embed/your-dashboard-id"
         width="100%" height="600px" frameborder="0">
 </iframe>
 ```
@@ -326,11 +326,11 @@ https://demo.depictio.embl.org/dashboards/your-dashboard-id
 
 **Congratulations!** 🎉 You've created a fully interactive dashboard with:
 
-✅ **Real-time filtering** across all components  
-✅ **Professional visualizations** (scatter plots, bar charts)  
-✅ **Interactive controls** (dropdowns, sliders, segmented controls)  
-✅ **Data exploration tools** (sortable tables, metrics)  
-✅ **Responsive design** that works on any device  
+✅ **Real-time filtering** across all components
+✅ **Professional visualizations** (scatter plots, bar charts)
+✅ **Interactive controls** (dropdowns, sliders, segmented controls)
+✅ **Data exploration tools** (sortable tables, metrics)
+✅ **Responsive design** that works on any device
 ✅ **Shareable results** with public links
 
 ## 🚀 Next Level: Advanced Features
@@ -342,7 +342,7 @@ https://demo.depictio.embl.org/dashboards/your-dashboard-id
 depictio data upload \
     --file environmental_data.csv \
     --collection-name "Environmental Conditions"
-    
+
 depictio data upload \
     --file genetic_markers.parquet \
     --collection-name "Genetic Analysis"
@@ -357,7 +357,7 @@ depictio data upload \
 ### Custom Component Types
 
 - **📈 Time Series** → Trend analysis over time
-- **🗺️ Geographic Maps** → Spatial data visualization  
+- **🗺️ Geographic Maps** → Spatial data visualization
 - **🎯 KPI Dashboards** → Executive summary views
 - **📊 Statistical Plots** → Box plots, violin plots, regression lines
 
@@ -369,7 +369,7 @@ depictio data upload \
 - ✅ Ensure all components use the same data collection
 - ✅ Check that interactive components target the right columns
 
-**❌ Slow performance**  
+**❌ Slow performance**
 - ✅ Limit initial data display (use sampling for large datasets)
 - ✅ Use aggregated views for very large tables
 
@@ -383,24 +383,24 @@ depictio data upload \
 
 ### Getting Help
 
-**📚 Documentation**: [docs.depictio.embl.org](https://docs.depictio.embl.org)  
-**💬 Community**: [GitHub Discussions](https://github.com/depictio/depictio/discussions)  
-**🐛 Bug Reports**: [GitHub Issues](https://github.com/depictio/depictio/issues)  
-**📧 Direct Support**: Open an issue for personalized help  
+**📚 Documentation**: [docs.depictio.embl.org](https://docs.depictio.embl.org)
+**💬 Community**: [GitHub Discussions](https://github.com/depictio/depictio/discussions)
+**🐛 Bug Reports**: [GitHub Issues](https://github.com/depictio/depictio/issues)
+**📧 Direct Support**: Open an issue for personalized help
 
 ## 🗺️ What's Next?
 
 ### Explore More Tutorials
 
 - **🔬 [Advanced Project Types](./depictio-basics.md)** - Bioinformatics workflow integration
-- **⚡ [Performance Optimization](./interactive-metadata-system.md)** - Handle massive datasets  
+- **⚡ [Performance Optimization](./interactive-metadata-system.md)** - Handle massive datasets
 - **🎨 [UI Customization](./ui-major-upgrade.md)** - Design beautiful dashboards
 - **📊 [Table Mastery](./infinite-scrolling-tables.md)** - Advanced table features
 
 ### Join the Community
 
 - **⭐ Star the project** on GitHub
-- **🤝 Contribute** features or documentation  
+- **🤝 Contribute** features or documentation
 - **💬 Share your dashboards** in the community
 - **📢 Provide feedback** to shape future development
 
@@ -410,5 +410,5 @@ depictio data upload \
 
 ---
 
-*Thomas Weber*  
+*Thomas Weber*
 *January 2025*
