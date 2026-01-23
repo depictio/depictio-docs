@@ -6,28 +6,32 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Documentation for Depictio">
+        <meta name="description" content="Complete guide to Depictio's dashboard component types and their configuration.">
       
       
       
-        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v0.6.0-b1/blog/drafts/create-your-first-dashboard/">
+        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v0.6.0-b1/features/components/">
       
       
+        <link rel="prev" href="../dashboards/">
       
       
-      <link rel="icon" href="../../../images/logo/logo_icon.png">
+        <link rel="next" href="../cross-dc-filtering/">
+      
+      
+      <link rel="icon" href="../../images/logo/logo_icon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
-        <title>🎨 Create Your First Dashboard: From Data to Interactive Insights - Depictio Documentation</title>
+        <title>Dashboard Components - Depictio Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,19 +56,19 @@
       
     
     
-      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-      <link rel="stylesheet" href="../../../stylesheets/timeline.css">
+      <link rel="stylesheet" href="../../stylesheets/timeline.css">
     
-      <link rel="stylesheet" href="../../../stylesheets/blog.css">
+      <link rel="stylesheet" href="../../stylesheets/blog.css">
     
-      <link rel="stylesheet" href="../../../stylesheets/neoteroi-mkdocs-v1.1.3.css">
+      <link rel="stylesheet" href="../../stylesheets/neoteroi-mkdocs-v1.1.3.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
     
       <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -100,7 +104,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#create-your-first-dashboard-from-data-to-interactive-insights" class="md-skip">
+        <a href="#dashboard-components" class="md-skip">
           Skip to content
         </a>
       
@@ -137,9 +141,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
+    <a href="../.." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../../images/logo/animated_favicon.svg" alt="logo">
+  <img src="../../images/logo/animated_favicon.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -156,7 +160,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              🎨 Create Your First Dashboard: From Data to Interactive Insights
+              Dashboard Components
             
           </span>
         </div>
@@ -268,7 +272,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../.." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -291,7 +295,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../installation/" class="md-tabs__link">
+        <a href="../../installation/" class="md-tabs__link">
           
   
   
@@ -315,7 +319,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../usage/" class="md-tabs__link">
+        <a href="../../usage/" class="md-tabs__link">
           
   
   
@@ -335,11 +339,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../features/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -363,7 +369,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../api/" class="md-tabs__link">
+        <a href="../../api/" class="md-tabs__link">
           
   
   
@@ -387,7 +393,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../developer/" class="md-tabs__link">
+        <a href="../../developer/" class="md-tabs__link">
           
   
   
@@ -411,7 +417,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../FAQ/" class="md-tabs__link">
+        <a href="../../FAQ/" class="md-tabs__link">
           
   
   
@@ -433,7 +439,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../roadmap/" class="md-tabs__link">
+      <a href="../../roadmap/" class="md-tabs__link">
         
   
   
@@ -454,7 +460,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../changelog/" class="md-tabs__link">
+      <a href="../../changelog/" class="md-tabs__link">
         
   
   
@@ -477,7 +483,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../" class="md-tabs__link">
+        <a href="../../blog/" class="md-tabs__link">
           
   
   
@@ -501,7 +507,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../more/" class="md-tabs__link">
+        <a href="../../more/" class="md-tabs__link">
           
   
   
@@ -545,9 +551,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
+    <a href="../.." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../../images/logo/animated_favicon.svg" alt="logo">
+  <img src="../../images/logo/animated_favicon.svg" alt="logo">
 
     </a>
     Depictio Documentation
@@ -574,7 +580,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -631,7 +637,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../installation/" class="md-nav__link ">
+            <a href="../../installation/" class="md-nav__link ">
               
   
   
@@ -719,7 +725,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../installation/docker/" class="md-nav__link">
+      <a href="../../installation/docker/" class="md-nav__link">
         
   
   
@@ -742,7 +748,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../installation/kubernetes/" class="md-nav__link">
+      <a href="../../installation/kubernetes/" class="md-nav__link">
         
   
   
@@ -822,7 +828,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../installation/cli/" class="md-nav__link">
+      <a href="../../installation/cli/" class="md-nav__link">
         
   
   
@@ -853,7 +859,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../installation/configuration/" class="md-nav__link">
+      <a href="../../installation/configuration/" class="md-nav__link">
         
   
   
@@ -878,7 +884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../installation/env-reference/" class="md-nav__link">
+      <a href="../../installation/env-reference/" class="md-nav__link">
         
   
   
@@ -945,7 +951,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../usage/" class="md-nav__link ">
+            <a href="../../usage/" class="md-nav__link ">
               
   
   
@@ -982,7 +988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../usage/get_started/" class="md-nav__link">
+      <a href="../../usage/get_started/" class="md-nav__link">
         
   
   
@@ -1058,7 +1064,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../usage/guides/web_ui/" class="md-nav__link">
+      <a href="../../usage/guides/web_ui/" class="md-nav__link">
         
   
   
@@ -1081,7 +1087,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../usage/guides/dashboard_creation/" class="md-nav__link">
+      <a href="../../usage/guides/dashboard_creation/" class="md-nav__link">
         
   
   
@@ -1104,7 +1110,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../usage/guides/dashboard_usage/" class="md-nav__link">
+      <a href="../../usage/guides/dashboard_usage/" class="md-nav__link">
         
   
   
@@ -1188,7 +1194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../usage/projects/guide/" class="md-nav__link">
+      <a href="../../usage/projects/guide/" class="md-nav__link">
         
   
   
@@ -1211,7 +1217,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../usage/projects/yaml-examples/" class="md-nav__link">
+      <a href="../../usage/projects/yaml-examples/" class="md-nav__link">
         
   
   
@@ -1234,7 +1240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../usage/projects/reference/" class="md-nav__link">
+      <a href="../../usage/projects/reference/" class="md-nav__link">
         
   
   
@@ -1316,7 +1322,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../depictio-cli/usage/" class="md-nav__link">
+      <a href="../../depictio-cli/usage/" class="md-nav__link">
         
   
   
@@ -1339,7 +1345,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../depictio-cli/minimal_config/" class="md-nav__link">
+      <a href="../../depictio-cli/minimal_config/" class="md-nav__link">
         
   
   
@@ -1419,7 +1425,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../usage/guides/unauthenticated_mode/" class="md-nav__link">
+      <a href="../../usage/guides/unauthenticated_mode/" class="md-nav__link">
         
   
   
@@ -1454,6 +1460,8 @@
       
   
   
+    
+  
   
   
     
@@ -1479,22 +1487,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../features/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1509,13 +1518,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Features
@@ -1531,7 +1540,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../features/dashboards/" class="md-nav__link">
+      <a href="../dashboards/" class="md-nav__link">
         
   
   
@@ -1553,10 +1562,34 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../features/components/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z"/></svg>
+  
+  <span class="md-ellipsis">
+    Components
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1569,6 +1602,331 @@
   
 
       </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#component-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#figure-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Figure Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Figure Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-chart-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Chart Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ui-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      UI Mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration Options
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Table Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#card-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Card Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Card Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aggregation-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Aggregation Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#styling-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Styling Options
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#text-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Text Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Text Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-header-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Header Levels
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Cases
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interactive-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interactive Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interactive Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rangeslider" class="md-nav__link">
+    <span class="md-ellipsis">
+      RangeSlider
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiselect" class="md-nav__link">
+    <span class="md-ellipsis">
+      MultiSelect
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datepicker" class="md-nav__link">
+    <span class="md-ellipsis">
+      DatePicker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#segmentedcontrol" class="md-nav__link">
+    <span class="md-ellipsis">
+      SegmentedControl
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiqc-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      MultiQC Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MultiQC Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-dc-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-DC Filtering
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Creation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Component Creation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-the-stepper-wizard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the Stepper Wizard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#positioning-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Positioning Components
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1581,7 +1939,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../features/cross-dc-filtering/" class="md-nav__link">
+      <a href="../cross-dc-filtering/" class="md-nav__link">
         
   
   
@@ -1606,7 +1964,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../features/yaml-sync/" class="md-nav__link">
+      <a href="../yaml-sync/" class="md-nav__link">
         
   
   
@@ -1631,7 +1989,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../features/architecture/" class="md-nav__link">
+      <a href="../architecture/" class="md-nav__link">
         
   
   
@@ -1656,7 +2014,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../features/security/" class="md-nav__link">
+      <a href="../security/" class="md-nav__link">
         
   
   
@@ -1717,7 +2075,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../api/" class="md-nav__link ">
+            <a href="../../api/" class="md-nav__link ">
               
   
   
@@ -1754,7 +2112,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/reference/" class="md-nav__link">
+      <a href="../../api/reference/" class="md-nav__link">
         
   
   
@@ -1777,7 +2135,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/fastapi_docs/" class="md-nav__link">
+      <a href="../../api/fastapi_docs/" class="md-nav__link">
         
   
   
@@ -1836,7 +2194,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../developer/" class="md-nav__link ">
+            <a href="../../developer/" class="md-nav__link ">
               
   
   
@@ -1873,7 +2231,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/modularity/" class="md-nav__link">
+      <a href="../../developer/modularity/" class="md-nav__link">
         
   
   
@@ -1898,7 +2256,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/contributing/" class="md-nav__link">
+      <a href="../../developer/contributing/" class="md-nav__link">
         
   
   
@@ -1955,7 +2313,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../FAQ/" class="md-nav__link ">
+            <a href="../../FAQ/" class="md-nav__link ">
               
   
   
@@ -1992,7 +2350,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../FAQ/general/" class="md-nav__link">
+      <a href="../../FAQ/general/" class="md-nav__link">
         
   
   
@@ -2022,7 +2380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../roadmap/" class="md-nav__link">
+      <a href="../../roadmap/" class="md-nav__link">
         
   
   
@@ -2046,7 +2404,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../changelog/" class="md-nav__link">
+      <a href="../../changelog/" class="md-nav__link">
         
   
   
@@ -2099,7 +2457,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../" class="md-nav__link ">
+            <a href="../../blog/" class="md-nav__link ">
               
   
   
@@ -2187,7 +2545,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../archive/2025/" class="md-nav__link">
+      <a href="../../blog/archive/2025/" class="md-nav__link">
         
   
   
@@ -2277,7 +2635,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../category/announcements/" class="md-nav__link">
+      <a href="../../blog/category/announcements/" class="md-nav__link">
         
   
   
@@ -2302,7 +2660,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../category/demo/" class="md-nav__link">
+      <a href="../../blog/category/demo/" class="md-nav__link">
         
   
   
@@ -2327,7 +2685,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../category/features/" class="md-nav__link">
+      <a href="../../blog/category/features/" class="md-nav__link">
         
   
   
@@ -2352,7 +2710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../category/launch/" class="md-nav__link">
+      <a href="../../blog/category/launch/" class="md-nav__link">
         
   
   
@@ -2377,7 +2735,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../category/tutorials/" class="md-nav__link">
+      <a href="../../blog/category/tutorials/" class="md-nav__link">
         
   
   
@@ -2446,7 +2804,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../more/" class="md-nav__link ">
+            <a href="../../more/" class="md-nav__link ">
               
   
   
@@ -2483,7 +2841,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../more/funding/" class="md-nav__link">
+      <a href="../../more/funding/" class="md-nav__link">
         
   
   
@@ -2506,7 +2864,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../more/palette/" class="md-nav__link">
+      <a href="../../more/palette/" class="md-nav__link">
         
   
   
@@ -2529,7 +2887,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../animated-logo/" class="md-nav__link">
+      <a href="../../animated-logo/" class="md-nav__link">
         
   
   
@@ -2581,37 +2939,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-youll-build" class="md-nav__link">
+  <a href="#component-overview" class="md-nav__link">
     <span class="md-ellipsis">
-      🎯 What You'll Build
+      Component Overview
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-1-prepare-your-data" class="md-nav__link">
+  <a href="#figure-components" class="md-nav__link">
     <span class="md-ellipsis">
-      🚀 Step 1: Prepare Your Data
+      Figure Components
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="🚀 Step 1: Prepare Your Data">
+    <nav class="md-nav" aria-label="Figure Components">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#option-a-use-our-sample-data" class="md-nav__link">
+  <a href="#supported-chart-types" class="md-nav__link">
     <span class="md-ellipsis">
-      Option A: Use Our Sample Data
+      Supported Chart Types
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#option-b-use-your-own-data" class="md-nav__link">
+  <a href="#ui-mode" class="md-nav__link">
     <span class="md-ellipsis">
-      Option B: Use Your Own Data
+      UI Mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration Options
     </span>
   </a>
   
@@ -2623,28 +2999,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-create-your-project" class="md-nav__link">
+  <a href="#table-components" class="md-nav__link">
     <span class="md-ellipsis">
-      📁 Step 2: Create Your Project
+      Table Components
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📁 Step 2: Create Your Project">
+    <nav class="md-nav" aria-label="Table Components">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#using-the-web-interface" class="md-nav__link">
+  <a href="#features" class="md-nav__link">
     <span class="md-ellipsis">
-      Using the Web Interface
+      Features
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-the-cli" class="md-nav__link">
+  <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Using the CLI
+      Configuration
     </span>
   </a>
   
@@ -2656,28 +3032,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-upload-your-data" class="md-nav__link">
+  <a href="#card-components" class="md-nav__link">
     <span class="md-ellipsis">
-      📤 Step 3: Upload Your Data
+      Card Components
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📤 Step 3: Upload Your Data">
+    <nav class="md-nav" aria-label="Card Components">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#web-upload" class="md-nav__link">
+  <a href="#aggregation-types" class="md-nav__link">
     <span class="md-ellipsis">
-      Web Upload
+      Aggregation Types
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#cli-upload" class="md-nav__link">
+  <a href="#configuration_1" class="md-nav__link">
     <span class="md-ellipsis">
-      CLI Upload
+      Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#styling-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Styling Options
     </span>
   </a>
   
@@ -2689,19 +3074,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-4-create-your-dashboard" class="md-nav__link">
+  <a href="#text-components" class="md-nav__link">
     <span class="md-ellipsis">
-      🎨 Step 4: Create Your Dashboard
+      Text Components
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="🎨 Step 4: Create Your Dashboard">
+    <nav class="md-nav" aria-label="Text Components">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#access-dashboard-builder" class="md-nav__link">
+  <a href="#supported-header-levels" class="md-nav__link">
     <span class="md-ellipsis">
-      Access Dashboard Builder
+      Supported Header Levels
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Cases
     </span>
   </a>
   
@@ -2713,37 +3107,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-5-add-interactive-controls" class="md-nav__link">
+  <a href="#interactive-components" class="md-nav__link">
     <span class="md-ellipsis">
-      🎛️ Step 5: Add Interactive Controls
+      Interactive Components
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="🎛️ Step 5: Add Interactive Controls">
+    <nav class="md-nav" aria-label="Interactive Components">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#add-species-filter" class="md-nav__link">
+  <a href="#component-types" class="md-nav__link">
     <span class="md-ellipsis">
-      Add Species Filter
+      Component Types
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#add-body-mass-slider" class="md-nav__link">
+  <a href="#rangeslider" class="md-nav__link">
     <span class="md-ellipsis">
-      Add Body Mass Slider
+      RangeSlider
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#add-island-selection" class="md-nav__link">
+  <a href="#multiselect" class="md-nav__link">
     <span class="md-ellipsis">
-      Add Island Selection
+      MultiSelect
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datepicker" class="md-nav__link">
+    <span class="md-ellipsis">
+      DatePicker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#segmentedcontrol" class="md-nav__link">
+    <span class="md-ellipsis">
+      SegmentedControl
     </span>
   </a>
   
@@ -2755,46 +3167,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-6-add-visual-components" class="md-nav__link">
+  <a href="#multiqc-components" class="md-nav__link">
     <span class="md-ellipsis">
-      📊 Step 6: Add Visual Components
+      MultiQC Components
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📊 Step 6: Add Visual Components">
+    <nav class="md-nav" aria-label="MultiQC Components">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#create-a-scatter-plot" class="md-nav__link">
+  <a href="#features_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Create a Scatter Plot
+      Features
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#add-a-bar-chart" class="md-nav__link">
+  <a href="#configuration_2" class="md-nav__link">
     <span class="md-ellipsis">
-      Add a Bar Chart
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create-a-metrics-card" class="md-nav__link">
-    <span class="md-ellipsis">
-      Create a Metrics Card
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#add-a-data-table" class="md-nav__link">
-    <span class="md-ellipsis">
-      Add a Data Table
+      Configuration
     </span>
   </a>
   
@@ -2806,262 +3200,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-7-test-the-interactivity" class="md-nav__link">
+  <a href="#cross-dc-filtering" class="md-nav__link">
     <span class="md-ellipsis">
-      ✨ Step 7: Test the Interactivity
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="✨ Step 7: Test the Interactivity">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#test-species-filter" class="md-nav__link">
-    <span class="md-ellipsis">
-      Test Species Filter
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#test-body-mass-slider" class="md-nav__link">
-    <span class="md-ellipsis">
-      Test Body Mass Slider
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#test-multi-filter-combinations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Test Multi-Filter Combinations
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-8-customize-your-layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      🎨 Step 8: Customize Your Layout
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🎨 Step 8: Customize Your Layout">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#arrange-components" class="md-nav__link">
-    <span class="md-ellipsis">
-      Arrange Components
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#advanced-customization" class="md-nav__link">
-    <span class="md-ellipsis">
-      Advanced Customization
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-9-advanced-interactions" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔄 Step 9: Advanced Interactions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔄 Step 9: Advanced Interactions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#scatter-plot-selections" class="md-nav__link">
-    <span class="md-ellipsis">
-      Scatter Plot Selections
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#table-row-selection-coming-soon" class="md-nav__link">
-    <span class="md-ellipsis">
-      Table Row Selection (Coming Soon!)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cross-filtering" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cross-Filtering
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-10-save-and-share" class="md-nav__link">
-    <span class="md-ellipsis">
-      💾 Step 10: Save and Share
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="💾 Step 10: Save and Share">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#save-your-dashboard" class="md-nav__link">
-    <span class="md-ellipsis">
-      Save Your Dashboard
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#share-options" class="md-nav__link">
-    <span class="md-ellipsis">
-      Share Options
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-youve-accomplished" class="md-nav__link">
-    <span class="md-ellipsis">
-      🎯 What You've Accomplished
+      Cross-DC Filtering
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#next-level-advanced-features" class="md-nav__link">
+  <a href="#component-creation" class="md-nav__link">
     <span class="md-ellipsis">
-      🚀 Next Level: Advanced Features
+      Component Creation
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="🚀 Next Level: Advanced Features">
+    <nav class="md-nav" aria-label="Component Creation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#add-more-data-collections" class="md-nav__link">
+  <a href="#using-the-stepper-wizard" class="md-nav__link">
     <span class="md-ellipsis">
-      Add More Data Collections
+      Using the Stepper Wizard
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#cross-collection-joins" class="md-nav__link">
+  <a href="#positioning-components" class="md-nav__link">
     <span class="md-ellipsis">
-      Cross-Collection Joins
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#custom-component-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      Custom Component Types
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      🛠️ Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🛠️ Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Issues
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#getting-help" class="md-nav__link">
-    <span class="md-ellipsis">
-      Getting Help
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#whats-next" class="md-nav__link">
-    <span class="md-ellipsis">
-      🗺️ What's Next?
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🗺️ What&#39;s Next?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#explore-more-tutorials" class="md-nav__link">
-    <span class="md-ellipsis">
-      Explore More Tutorials
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#join-the-community" class="md-nav__link">
-    <span class="md-ellipsis">
-      Join the Community
+      Positioning Components
     </span>
   </a>
   
@@ -3091,339 +3260,556 @@
   
 
 
-<h1 id="create-your-first-dashboard-from-data-to-interactive-insights">🎨 Create Your First Dashboard: From Data to Interactive Insights<a class="headerlink" href="#create-your-first-dashboard-from-data-to-interactive-insights" title="Permanent link">&para;</a></h1>
-<p><strong>Step-by-step guide to building your first interactive dashboard in Depictio - no coding required!</strong></p>
-<!-- more -->
-
-<div style="max-width: 1200px; margin: 1rem auto 2rem auto;">
-  <div style="padding: 64.29% 0 0 0; position: relative">
-    <iframe
-      src="https://player.vimeo.com/video/placeholder?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1"
-      frameborder="0"
-      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
-      title="depictio-first-dashboard-tutorial"
-    ></iframe>
-  </div>
+<h1 id="dashboard-components"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.5 11H19V7a2 2 0 0 0-2-2h-4V3.5A2.5 2.5 0 0 0 10.5 1 2.5 2.5 0 0 0 8 3.5V5H4a2 2 0 0 0-2 2v3.8h1.5c1.5 0 2.7 1.2 2.7 2.7S5 16.2 3.5 16.2H2V20a2 2 0 0 0 2 2h3.8v-1.5c0-1.5 1.2-2.7 2.7-2.7s2.7 1.2 2.7 2.7V22H17a2 2 0 0 0 2-2v-4h1.5a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg></span> Dashboard Components<a class="headerlink" href="#dashboard-components" title="Permanent link">&para;</a></h1>
+<p>Depictio provides a variety of component types for building interactive dashboards. This guide covers each component type, when to use it, and how to configure it.</p>
+<h2 id="component-overview"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 5h14v2H7zm0 8v-2h14v2zM4 4.5A1.5 1.5 0 0 1 5.5 6 1.5 1.5 0 0 1 4 7.5 1.5 1.5 0 0 1 2.5 6 1.5 1.5 0 0 1 4 4.5m0 6A1.5 1.5 0 0 1 5.5 12 1.5 1.5 0 0 1 4 13.5 1.5 1.5 0 0 1 2.5 12 1.5 1.5 0 0 1 4 10.5M7 19v-2h14v2zm-3-2.5A1.5 1.5 0 0 1 5.5 18 1.5 1.5 0 0 1 4 19.5 1.5 1.5 0 0 1 2.5 18 1.5 1.5 0 0 1 4 16.5"/></svg></span> Component Overview<a class="headerlink" href="#component-overview" title="Permanent link">&para;</a></h2>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"/></svg></span> <strong>Figure</strong></p>
+<hr />
+<p>Charts and plots (scatter, bar, histogram, line, box, pie, and more)</p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"/></svg></span> <strong>Table</strong></p>
+<hr />
+<p>Interactive data tables with filtering and sorting</p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2M5 13v2h11v-2zm0-4v2h14V9z"/></svg></span> <strong>Card</strong></p>
+<hr />
+<p>Metric display with aggregations</p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 4h2v6h4V4h2v14H9v-6H5v6H3zm11 14v-2h2V6.31l-2.5 1.44V5.44L16 4h2v12h2v2z"/></svg></span> <strong>Text</strong></p>
+<hr />
+<p>Section headers (H1, H2, H3)</p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 17v2h6v-2zM3 5v2h10V5zm10 16v-2h8v-2h-8v-2h-2v6zM7 9v2H3v2h4v2h2V9zm14 4v-2H11v2zm-6-4h2V7h4V5h-4V3h-2z"/></svg></span> <strong>Interactive</strong></p>
+<hr />
+<p>User input components for filtering (slider, dropdown, date picker)</p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.46 6.28 11.05 9c-2.58.26-4.55 2.41-4.55 5a5 5 0 0 0 5 5c2.05 0 3.81-1.23 4.58-3H13.5v-2h8v2h-2.25a8.05 8.05 0 0 1-2.46 4h2.71v2h-16v-2h2.71a8 8 0 0 1-2.71-6c0-3.63 2.46-6.8 5.96-7.72m3.28-4.21.76 1.3.86-.5 3.5 6.06-3.47 2-3.5-6.06.87-.5-.76-1.3z"/></svg></span> <strong>MultiQC</strong></p>
+<hr />
+<p>Quality control report visualizations</p>
+</li>
+</ul>
 </div>
-<script src="https://player.vimeo.com/api/player.js"></script>
-
-<h2 id="what-youll-build">🎯 What You'll Build<a class="headerlink" href="#what-youll-build" title="Permanent link">&para;</a></h2>
-<p>By the end of this tutorial, you'll have created a <strong>fully interactive dashboard</strong> with:</p>
+<hr />
+<h2 id="figure-components"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"/></svg></span> Figure Components<a class="headerlink" href="#figure-components" title="Permanent link">&para;</a></h2>
+<p>Figure components display data visualizations using Plotly charts. They support both <strong>UI Mode</strong> (drag-and-drop configuration) and <strong>Code Mode</strong> (Python code for custom plots).</p>
+<h3 id="supported-chart-types">Supported Chart Types<a class="headerlink" href="#supported-chart-types" title="Permanent link">&para;</a></h3>
+<p><strong>UI Mode</strong> provides a curated selection of chart types through the visual interface:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Chart Types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"/></svg></span> <strong>Basic Charts</strong></td>
+<td>Scatter, Bar, Line, Area, Pie, Donut</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"/></svg></span> <strong>Statistical</strong></td>
+<td>Histogram, Box, Violin, Strip</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"/></svg></span> <strong>Distribution</strong></td>
+<td>Density Heatmap, Density Contour</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 6h8v16h-8zM2 4h20V2H2zm0 4h10V6H2zm7 14h3V10H9zm-7 0h5V10H2z"/></svg></span> <strong>Hierarchical</strong></td>
+<td>Treemap, Sunburst</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Unlimited Charts with Code Mode <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.6 16.6 4.6-4.6-4.6-4.6L16 6l6 6-6 6zm-5.2 0L4.8 12l4.6-4.6L8 6l-6 6 6 6z"/></svg></span></p>
+<p><strong>Code Mode</strong> supports the entire Plotly library, giving you access to all chart types including 3D plots, maps, financial charts, and more. See the <a href="https://plotly.com/python/" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span> Plotly Python documentation</a> for the complete reference.</p>
+</div>
+<h3 id="ui-mode">UI Mode<a class="headerlink" href="#ui-mode" title="Permanent link">&para;</a></h3>
+<p>In UI Mode, configure charts through the visual interface:</p>
+<ol>
+<li>Select a <strong>Data Collection</strong> as your data source</li>
+<li>Choose the <strong>Chart Type</strong> (scatter, bar, histogram, etc.)</li>
+<li>Map data columns to <strong>X-axis</strong>, <strong>Y-axis</strong>, and optional <strong>Color</strong> dimension</li>
+<li>Customize appearance (title, axis labels, colors)</li>
+</ol>
+<h3 id="code-mode">Code Mode<a class="headerlink" href="#code-mode" title="Permanent link">&para;</a></h3>
+<p>Code Mode allows custom Python code for advanced visualizations:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># df is your data collection as a pandas DataFrame</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">df</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;coverage&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;quality_score&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;sample_type&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Coverage vs Quality by Sample Type&quot;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1"># Return the figure object</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">fig</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Security Note <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 6c1.4 0 2.8 1.1 2.8 2.5V11c.6 0 1.2.6 1.2 1.3v3.5c0 .6-.6 1.2-1.3 1.2H9.2c-.6 0-1.2-.6-1.2-1.3v-3.5c0-.6.6-1.2 1.2-1.2V9.5C9.2 8.1 10.6 7 12 7m0 1.2c-.8 0-1.5.5-1.5 1.3V11h3V9.5c0-.8-.7-1.3-1.5-1.3"/></svg></span></p>
+<p>Code Mode uses RestrictedPython for security. Only approved libraries (pandas, plotly) are available. See <a href="../security/">Security</a> for details.</p>
+</div>
+<h3 id="configuration-options">Configuration Options<a class="headerlink" href="#configuration-options" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Title</td>
+<td>Chart title displayed at top</td>
+<td>Auto-generated</td>
+</tr>
+<tr>
+<td>X-axis label</td>
+<td>Label for horizontal axis</td>
+<td>Column name</td>
+</tr>
+<tr>
+<td>Y-axis label</td>
+<td>Label for vertical axis</td>
+<td>Column name</td>
+</tr>
+<tr>
+<td>Color</td>
+<td>Column for color encoding</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Hover data</td>
+<td>Additional columns shown on hover</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="table-components"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"/></svg></span> Table Components<a class="headerlink" href="#table-components" title="Permanent link">&para;</a></h2>
+<p>Table components display data in interactive tables with built-in filtering and sorting.</p>
+<h3 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 3H5a2 2 0 0 0-2 2v6h4V9l4 3-4 3v-2H3v6a2 2 0 0 0 2 2h15a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-3 14h-4v-2h4zm3-4h-7v-2h7zm0-4h-7V7h7zM3 13H0v-2h3z"/></svg></span> <strong>Server-Side Pagination</strong></td>
+<td>Efficiently handles large datasets by loading data in pages</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.8 11V9.5C18.8 8.1 17.4 7 16 7s-2.8 1.1-2.8 2.5V11c-.6 0-1.2.6-1.2 1.2v3.5c0 .7.6 1.3 1.2 1.3h5.5c.7 0 1.3-.6 1.3-1.2v-3.5c0-.7-.6-1.3-1.2-1.3m-1.3 0h-3V9.5c0-.8.7-1.3 1.5-1.3s1.5.5 1.5 1.3zM9 6h3L8 2 4 6h3v12H4l4 4 4-4H9z"/></svg></span> <strong>Server-Side Scrolling</strong></td>
+<td>Virtual scrolling for smooth navigation through large tables</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m18 21-4-4h3V7h-3l4-4 4 4h-3v10h3M2 19v-2h10v2M2 13v-2h7v2M2 7V5h4v2z"/></svg></span> <strong>Column Sorting</strong></td>
+<td>Click headers to sort ascending/descending</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 12v7.88c.04.3-.06.62-.29.83a.996.996 0 0 1-1.41 0l-2.01-2.01a.99.99 0 0 1-.29-.83V12h-.03L4.21 4.62a1 1 0 0 1 .17-1.4c.19-.14.4-.22.62-.22h14c.22 0 .43.08.62.22a1 1 0 0 1 .17 1.4L14.03 12z"/></svg></span> <strong>Column Filtering</strong></td>
+<td>Filter by column values</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"/></svg></span> <strong>Export</strong> (v0.6.0+)</td>
+<td>Download data as CSV</td>
+</tr>
+</tbody>
+</table>
+<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data Collection</td>
+<td>Source data for the table</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>Visible Columns</td>
+<td>Columns to display</td>
+<td>All columns</td>
+</tr>
+<tr>
+<td>Page Size</td>
+<td>Rows per page</td>
+<td>10, 25, 50, or 100</td>
+</tr>
+<tr>
+<td>Style</td>
+<td>Column width, text alignment</td>
+<td>Auto</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="card-components"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2M5 13v2h11v-2zm0-4v2h14V9z"/></svg></span> Card Components<a class="headerlink" href="#card-components" title="Permanent link">&para;</a></h2>
+<p>Card components display single metrics with optional aggregations and styling.</p>
+<h3 id="aggregation-types">Aggregation Types<a class="headerlink" href="#aggregation-types" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aggregation</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 2v12h7V6zm16 12V6h-1.24c.24.54.19 1.07.19 1.13-.07.67-.54 1.37-.71 1.62l-2.33 2.55 3.32-.02.01 1.22-5.2-.03-.04-1s3.05-3.23 3.2-3.52c.14-.28.71-1.95-.7-1.95-1.23.05-1.09 1.3-1.09 1.3l-1.54.01s.01-.66.38-1.31H13v12h2.58l-.01-.86.97-.01s.91-.16.92-1.05c.04-1-.81-1-.96-1-.13 0-1.07.05-1.07.87h-1.52s.04-2.06 2.59-2.06c2.6 0 2.46 2.02 2.46 2.02s.04 1.25-1.11 1.72l.52.37zM8.92 16h-1.5v-5.8l-1.8.56V9.53l3.14-1.12h.16z"/></svg></span> <strong>count</strong></td>
+<td>Number of rows</td>
+<td>Total samples</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 6H8.83l6 6-6 6H18v2H6v-2l6-6-6-6V4h12z"/></svg></span> <strong>sum</strong></td>
+<td>Sum of values</td>
+<td>Total reads</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3.5 18.5 6-6 4 4L22 6.92 20.59 5.5l-7.09 8-4-4L2 17z"/></svg></span> <strong>mean</strong></td>
+<td>Average value</td>
+<td>Average coverage</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 19h3v4h2v-4h3l-4-4zm8-14h-3V1h-2v4H8l4 4zM4 11v2h16v-2z"/></svg></span> <strong>median</strong></td>
+<td>Median value</td>
+<td>Median quality score</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 4h2v12l5.5-5.5 1.42 1.42L12 19.84l-7.92-7.92L5.5 10.5 11 16z"/></svg></span> <strong>min</strong></td>
+<td>Minimum value</td>
+<td>Minimum mapping rate</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg></span> <strong>max</strong></td>
+<td>Maximum value</td>
+<td>Maximum duplication rate</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.5 9A1.5 1.5 0 0 0 7 7.5 1.5 1.5 0 0 0 5.5 6 1.5 1.5 0 0 0 4 7.5 1.5 1.5 0 0 0 5.5 9m11.91 2.58c.36.36.59.86.59 1.42 0 .55-.22 1.05-.59 1.41l-5 5a1.996 1.996 0 0 1-2.83 0l-6.99-6.99C2.22 12.05 2 11.55 2 11V6c0-1.11.89-2 2-2h5c.55 0 1.05.22 1.41.58zm-3.87-5.87 1-1 6.87 6.87c.37.36.59.87.59 1.42s-.22 1.05-.58 1.41l-5.38 5.38-1-1L20.75 13z"/></svg></span> <strong>unique</strong></td>
+<td>Count of unique values</td>
+<td>Unique sample types</td>
+</tr>
+</tbody>
+</table>
+<h3 id="configuration_1">Configuration<a class="headerlink" href="#configuration_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Select a <strong>Data Collection</strong></li>
+<li>Choose a <strong>Column</strong> to aggregate</li>
+<li>Select an <strong>Aggregation</strong> type</li>
+<li>Customize the <strong>Title</strong> and <strong>Format</strong></li>
+</ol>
+<h3 id="styling-options">Styling Options<a class="headerlink" href="#styling-options" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Title</td>
+<td>Metric label</td>
+<td>"Total Samples"</td>
+</tr>
+<tr>
+<td>Format</td>
+<td>Number formatting</td>
+<td><code>{:,.0f}</code> or <code>{:.2%}</code></td>
+</tr>
+<tr>
+<td>Color</td>
+<td>Card accent color</td>
+<td>Mantine color</td>
+</tr>
+<tr>
+<td>Icon</td>
+<td>Optional icon</td>
+<td><code>mdi:chart-line</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="text-components"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 4h2v6h4V4h2v14H9v-6H5v6H3zm11 14v-2h2V6.31l-2.5 1.44V5.44L16 4h2v12h2v2z"/></svg></span> Text Components<a class="headerlink" href="#text-components" title="Permanent link">&para;</a></h2>
+<p>Text components display section headers to organize your dashboard.</p>
+<h3 id="supported-header-levels">Supported Header Levels<a class="headerlink" href="#supported-header-levels" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Syntax</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H1</strong></td>
+<td><code># Header</code></td>
+<td>Main section headers</td>
+</tr>
+<tr>
+<td><strong>H2</strong></td>
+<td><code>## Header</code></td>
+<td>Sub-section headers</td>
+</tr>
+<tr>
+<td><strong>H3</strong></td>
+<td><code>### Header</code></td>
+<td>Minor section headers</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Limited Markdown Support</p>
+<p>Currently, only H1, H2, and H3 headers are supported. Full markdown rendering (lists, links, bold, italic, code blocks, etc.) is not available in text components.</p>
+</div>
+<h3 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>🎛️ Interactive Controls</strong> - Sliders and dropdowns that filter your data</li>
-<li><strong>📊 Dynamic Charts</strong> - Scatter plots and bar charts that update in real-time</li>
-<li><strong>📋 Data Tables</strong> - Sortable, filterable tables with server-side pagination</li>
-<li><strong>🎯 Metrics Cards</strong> - Key statistics that change with your filters</li>
-</ul>
-<p><strong>Time to complete</strong>: 15-20 minutes
-<strong>Difficulty</strong>: Beginner
-<strong>Requirements</strong>: Sample CSV file (we'll provide one)</p>
-<h2 id="step-1-prepare-your-data">🚀 Step 1: Prepare Your Data<a class="headerlink" href="#step-1-prepare-your-data" title="Permanent link">&para;</a></h2>
-<h3 id="option-a-use-our-sample-data">Option A: Use Our Sample Data<a class="headerlink" href="#option-a-use-our-sample-data" title="Permanent link">&para;</a></h3>
-<p>Download our sample Palmer Penguins dataset:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Download sample data</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>curl<span class="w"> </span>-o<span class="w"> </span>penguins.csv<span class="w"> </span>https://raw.githubusercontent.com/depictio/sample-data/main/penguins.csv
-</code></pre></div>
-<h3 id="option-b-use-your-own-data">Option B: Use Your Own Data<a class="headerlink" href="#option-b-use-your-own-data" title="Permanent link">&para;</a></h3>
-<p>Your CSV file should have:
-- <strong>Column headers</strong> in the first row
-- <strong>Mixed data types</strong> (text, numbers, categories)
-- <strong>At least 50 rows</strong> for interesting interactions</p>
-<p><strong>Example structure:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex,year
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Adelie,Torgersen,39.1,18.7,181,3750,male,2007
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Adelie,Torgersen,39.5,17.4,186,3800,female,2007
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Chinstrap,Dream,46.5,17.9,192,3500,female,2007
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>...
-</code></pre></div></p>
-<h2 id="step-2-create-your-project">📁 Step 2: Create Your Project<a class="headerlink" href="#step-2-create-your-project" title="Permanent link">&para;</a></h2>
-<h3 id="using-the-web-interface">Using the Web Interface<a class="headerlink" href="#using-the-web-interface" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Visit Depictio</strong> → Go to <a href="https://demo.depictio.embl.org">demo.depictio.embl.org</a></li>
-<li><strong>Create Account</strong> → Click "Sign Up" (or use demo mode)</li>
-<li><strong>New Project</strong> → Click "+ Create Project"</li>
-<li><strong>Project Settings</strong>:</li>
-<li><strong>Name</strong>: "My First Dashboard"</li>
-<li><strong>Type</strong>: Basic</li>
-<li><strong>Description</strong>: "Learning interactive dashboards"</li>
-</ol>
-<h3 id="using-the-cli">Using the CLI<a class="headerlink" href="#using-the-cli" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Install depictio-cli</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>pip<span class="w"> </span>install<span class="w"> </span>depictio-cli
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Login and create project</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>depictio<span class="w"> </span>auth<span class="w"> </span>login
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>depictio<span class="w"> </span>project<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span>--name<span class="w"> </span><span class="s2">&quot;My First Dashboard&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span>--type<span class="w"> </span>basic<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span>--description<span class="w"> </span><span class="s2">&quot;Learning interactive dashboards&quot;</span>
-</code></pre></div>
-<h2 id="step-3-upload-your-data">📤 Step 3: Upload Your Data<a class="headerlink" href="#step-3-upload-your-data" title="Permanent link">&para;</a></h2>
-<h3 id="web-upload">Web Upload<a class="headerlink" href="#web-upload" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Navigate to Project</strong> → Click on "My First Dashboard"</li>
-<li><strong>Add Data Collection</strong>:</li>
-<li>Click "Add Data Collection"</li>
-<li><strong>Name</strong>: "Penguins Dataset"</li>
-<li><strong>Upload File</strong>: Select your <code>penguins.csv</code></li>
-<li>Click "Upload"</li>
-</ol>
-<h3 id="cli-upload">CLI Upload<a class="headerlink" href="#cli-upload" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Upload data collection</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>depictio<span class="w"> </span>data<span class="w"> </span>upload<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>--file<span class="w"> </span>penguins.csv<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>--collection-name<span class="w"> </span><span class="s2">&quot;Penguins Dataset&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span>--project-name<span class="w"> </span><span class="s2">&quot;My First Dashboard&quot;</span>
-</code></pre></div>
-<p><strong>✅ Success indicator</strong>: You should see "Data collection created successfully" and your data preview.</p>
-<h2 id="step-4-create-your-dashboard">🎨 Step 4: Create Your Dashboard<a class="headerlink" href="#step-4-create-your-dashboard" title="Permanent link">&para;</a></h2>
-<h3 id="access-dashboard-builder">Access Dashboard Builder<a class="headerlink" href="#access-dashboard-builder" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Go to Dashboards</strong> → Click "Dashboards" tab</li>
-<li><strong>Create Dashboard</strong> → Click "+ New Dashboard"</li>
-<li><strong>Dashboard Settings</strong>:</li>
-<li><strong>Name</strong>: "Penguins Explorer"</li>
-<li><strong>Description</strong>: "Interactive penguin species analysis"</li>
-</ol>
-<p>You'll see the <strong>dashboard canvas</strong> - an empty grid where you'll add components.</p>
-<h2 id="step-5-add-interactive-controls">🎛️ Step 5: Add Interactive Controls<a class="headerlink" href="#step-5-add-interactive-controls" title="Permanent link">&para;</a></h2>
-<p>Interactive components are <strong>global filters</strong> that affect all other dashboard components.</p>
-<h3 id="add-species-filter">Add Species Filter<a class="headerlink" href="#add-species-filter" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Add Component</strong> → Click "+" button → "Interactive Component"</li>
-<li><strong>Component Configuration</strong>:</li>
-<li><strong>Data Collection</strong>: "Penguins Dataset"</li>
-<li><strong>Column</strong>: "species"</li>
-<li><strong>Component Type</strong>: "Dropdown"</li>
-<li><strong>Label</strong>: "Filter by Species"</li>
-<li><strong>Save</strong> → Click "Save Component"</li>
-</ol>
-<h3 id="add-body-mass-slider">Add Body Mass Slider<a class="headerlink" href="#add-body-mass-slider" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Add Component</strong> → Click "+" → "Interactive Component"</li>
-<li><strong>Configuration</strong>:</li>
-<li><strong>Data Collection</strong>: "Penguins Dataset"</li>
-<li><strong>Column</strong>: "body_mass_g"</li>
-<li><strong>Component Type</strong>: "Range Slider"</li>
-<li><strong>Label</strong>: "Body Mass Range (g)"</li>
-<li><strong>Save</strong> → Click "Save Component"</li>
-</ol>
-<h3 id="add-island-selection">Add Island Selection<a class="headerlink" href="#add-island-selection" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Add Component</strong> → Click "+" → "Interactive Component"</li>
-<li><strong>Configuration</strong>:</li>
-<li><strong>Data Collection</strong>: "Penguins Dataset"</li>
-<li><strong>Column</strong>: "island"</li>
-<li><strong>Component Type</strong>: "Segmented Control"</li>
-<li><strong>Label</strong>: "Select Island"</li>
-<li><strong>Save</strong> → Click "Save Component"</li>
-</ol>
-<p><strong>🎯 Result</strong>: You now have three interactive controls that will filter your entire dashboard!</p>
-<h2 id="step-6-add-visual-components">📊 Step 6: Add Visual Components<a class="headerlink" href="#step-6-add-visual-components" title="Permanent link">&para;</a></h2>
-<h3 id="create-a-scatter-plot">Create a Scatter Plot<a class="headerlink" href="#create-a-scatter-plot" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Add Component</strong> → Click "+" → "Figure Component"</li>
-<li><strong>Figure Configuration</strong>:</li>
-<li><strong>Chart Type</strong>: "Scatter Plot"</li>
-<li><strong>Data Collection</strong>: "Penguins Dataset"</li>
-<li><strong>X-axis</strong>: "bill_length_mm"</li>
-<li><strong>Y-axis</strong>: "bill_depth_mm"</li>
-<li><strong>Color</strong>: "species"</li>
-<li><strong>Size</strong>: "body_mass_g"</li>
-<li><strong>Title</strong>: "Bill Dimensions by Species"</li>
-<li><strong>Save</strong> → Click "Save Component"</li>
-</ol>
-<h3 id="add-a-bar-chart">Add a Bar Chart<a class="headerlink" href="#add-a-bar-chart" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Add Component</strong> → Click "+" → "Figure Component"</li>
-<li><strong>Configuration</strong>:</li>
-<li><strong>Chart Type</strong>: "Bar Chart"</li>
-<li><strong>Data Collection</strong>: "Penguins Dataset"</li>
-<li><strong>X-axis</strong>: "island"</li>
-<li><strong>Y-axis</strong>: "count" (aggregated)</li>
-<li><strong>Color</strong>: "species"</li>
-<li><strong>Title</strong>: "Penguin Count by Island"</li>
-<li><strong>Save</strong> → Click "Save Component"</li>
-</ol>
-<h3 id="create-a-metrics-card">Create a Metrics Card<a class="headerlink" href="#create-a-metrics-card" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Add Component</strong> → Click "+" → "Card Component"</li>
-<li><strong>Configuration</strong>:</li>
-<li><strong>Data Collection</strong>: "Penguins Dataset"</li>
-<li><strong>Metric</strong>: "body_mass_g"</li>
-<li><strong>Aggregation</strong>: "Average"</li>
-<li><strong>Title</strong>: "Average Body Mass"</li>
-<li><strong>Format</strong>: "Number with units (g)"</li>
-<li><strong>Save</strong> → Click "Save Component"</li>
-</ol>
-<h3 id="add-a-data-table">Add a Data Table<a class="headerlink" href="#add-a-data-table" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Add Component</strong> → Click "+" → "Table Component"</li>
-<li><strong>Configuration</strong>:</li>
-<li><strong>Data Collection</strong>: "Penguins Dataset"</li>
-<li><strong>Columns</strong>: Select all columns</li>
-<li><strong>Title</strong>: "Penguin Data Explorer"</li>
-<li><strong>Enable Sorting</strong>: ✅</li>
-<li><strong>Enable Filtering</strong>: ✅</li>
-<li><strong>Save</strong> → Click "Save Component"</li>
-</ol>
-<h2 id="step-7-test-the-interactivity">✨ Step 7: Test the Interactivity<a class="headerlink" href="#step-7-test-the-interactivity" title="Permanent link">&para;</a></h2>
-<p>Now comes the magic! <strong>All components respond to interactive filters simultaneously.</strong></p>
-<h3 id="test-species-filter">Test Species Filter<a class="headerlink" href="#test-species-filter" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Use the species dropdown</strong> → Select "Adelie"</li>
-<li><strong>Watch everything update</strong>:</li>
-<li>Scatter plot shows only Adelie penguins</li>
-<li>Bar chart adjusts counts</li>
-<li>Average body mass recalculates</li>
-<li>Table filters to Adelie rows only</li>
-</ol>
-<h3 id="test-body-mass-slider">Test Body Mass Slider<a class="headerlink" href="#test-body-mass-slider" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Adjust the mass range</strong> → Drag to 3000-4000g</li>
-<li><strong>See real-time updates</strong>:</li>
-<li>All charts filter to penguins in that mass range</li>
-<li>Metrics update instantly</li>
-<li>Table shows matching rows</li>
-</ol>
-<h3 id="test-multi-filter-combinations">Test Multi-Filter Combinations<a class="headerlink" href="#test-multi-filter-combinations" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Apply multiple filters</strong>:</li>
-<li>Species: "Chinstrap"</li>
-<li>Body Mass: 3500-4500g</li>
-<li>Island: "Dream"</li>
-<li><strong>Everything synchronizes</strong> to show only Chinstrap penguins from Dream island in the specified mass range!</li>
-</ol>
-<h2 id="step-8-customize-your-layout">🎨 Step 8: Customize Your Layout<a class="headerlink" href="#step-8-customize-your-layout" title="Permanent link">&para;</a></h2>
-<h3 id="arrange-components">Arrange Components<a class="headerlink" href="#arrange-components" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Enable Edit Mode</strong> → Toggle "Edit Mode" in the header</li>
-<li><strong>Drag Components</strong> → Click and drag to rearrange</li>
-<li><strong>Resize Components</strong> → Drag corners to resize</li>
-<li><strong>Fine-tune Layout</strong> → Position components for optimal viewing</li>
-</ol>
-<p><strong>Recommended Layout:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[Species Filter] [Body Mass Slider] [Island Selection]
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>[   Scatter Plot   ] [  Bar Chart  ] [ Metrics Card ]
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>[          Data Table (full width)          ]
-</code></pre></div></p>
-<h3 id="advanced-customization">Advanced Customization<a class="headerlink" href="#advanced-customization" title="Permanent link">&para;</a></h3>
-<p><strong>Chart Styling:</strong>
-- <strong>Colors</strong>: Customize color schemes
-- <strong>Axes</strong>: Adjust labels and ranges
-- <strong>Legends</strong>: Position and format legends
-- <strong>Annotations</strong>: Add trend lines or highlights</p>
-<p><strong>Component Options:</strong>
-- <strong>Responsive Sizing</strong>: Components adapt to screen size
-- <strong>Conditional Formatting</strong>: Highlight important values
-- <strong>Export Options</strong>: Download charts as images</p>
-<h2 id="step-9-advanced-interactions">🔄 Step 9: Advanced Interactions<a class="headerlink" href="#step-9-advanced-interactions" title="Permanent link">&para;</a></h2>
-<h3 id="scatter-plot-selections">Scatter Plot Selections<a class="headerlink" href="#scatter-plot-selections" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Box Selection</strong> → Click and drag on scatter plot to select points</li>
-<li><strong>Watch Updates</strong> → All other components filter to selected points</li>
-<li><strong>Reset Selection</strong> → Click "Reset" button to clear</li>
-</ol>
-<h3 id="table-row-selection-coming-soon">Table Row Selection (Coming Soon!)<a class="headerlink" href="#table-row-selection-coming-soon" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Future feature: Table row selection</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">selected_rows</span> <span class="o">=</span> <span class="n">table_component</span><span class="o">.</span><span class="n">get_selected_rows</span><span class="p">()</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">dashboard</span><span class="o">.</span><span class="n">apply_selection_filter</span><span class="p">(</span><span class="n">selected_rows</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="cross-filtering">Cross-Filtering<a class="headerlink" href="#cross-filtering" title="Permanent link">&para;</a></h3>
-<p>Your dashboard now supports <strong>cross-filtering</strong>: selections in one component automatically filter all others, creating a cohesive analytical experience.</p>
-<h2 id="step-10-save-and-share">💾 Step 10: Save and Share<a class="headerlink" href="#step-10-save-and-share" title="Permanent link">&para;</a></h2>
-<h3 id="save-your-dashboard">Save Your Dashboard<a class="headerlink" href="#save-your-dashboard" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Save Progress</strong> → Click "Save Dashboard"</li>
-<li><strong>Set Permissions</strong>:</li>
-<li><strong>Private</strong>: Only you can access</li>
-<li><strong>Public</strong>: Anyone with link can view</li>
-<li><strong>Team</strong>: Share with specific users</li>
-</ol>
-<h3 id="share-options">Share Options<a class="headerlink" href="#share-options" title="Permanent link">&para;</a></h3>
-<p><strong>Public Link:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Your shareable dashboard URL</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>https://demo.depictio.embl.org/dashboards/your-dashboard-id
-</code></pre></div></p>
-<p><strong>Embed Code:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cm">&lt;!-- Embed in website or documentation --&gt;</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://demo.depictio.embl.org/embed/your-dashboard-id&quot;</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>        <span class="na">width</span><span class="o">=</span><span class="s">&quot;100%&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;600px&quot;</span> <span class="na">frameborder</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">&gt;</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="p">&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
-</code></pre></div></p>
-<h2 id="what-youve-accomplished">🎯 What You've Accomplished<a class="headerlink" href="#what-youve-accomplished" title="Permanent link">&para;</a></h2>
-<p><strong>Congratulations!</strong> 🎉 You've created a fully interactive dashboard with:</p>
-<p>✅ <strong>Real-time filtering</strong> across all components
-✅ <strong>Professional visualizations</strong> (scatter plots, bar charts)
-✅ <strong>Interactive controls</strong> (dropdowns, sliders, segmented controls)
-✅ <strong>Data exploration tools</strong> (sortable tables, metrics)
-✅ <strong>Responsive design</strong> that works on any device
-✅ <strong>Shareable results</strong> with public links</p>
-<h2 id="next-level-advanced-features">🚀 Next Level: Advanced Features<a class="headerlink" href="#next-level-advanced-features" title="Permanent link">&para;</a></h2>
-<h3 id="add-more-data-collections">Add More Data Collections<a class="headerlink" href="#add-more-data-collections" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Upload additional datasets to the same project</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>depictio<span class="w"> </span>data<span class="w"> </span>upload<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span>--file<span class="w"> </span>environmental_data.csv<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span>--collection-name<span class="w"> </span><span class="s2">&quot;Environmental Conditions&quot;</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>depictio<span class="w"> </span>data<span class="w"> </span>upload<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span>--file<span class="w"> </span>genetic_markers.parquet<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span>--collection-name<span class="w"> </span><span class="s2">&quot;Genetic Analysis&quot;</span>
-</code></pre></div>
-<h3 id="cross-collection-joins">Cross-Collection Joins<a class="headerlink" href="#cross-collection-joins" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Join Data</strong> → Use common columns to combine datasets</li>
-<li><strong>Complex Analysis</strong> → Correlate penguin traits with environmental factors</li>
-<li><strong>Advanced Visualizations</strong> → Multi-dimensional analysis</li>
-</ol>
-<h3 id="custom-component-types">Custom Component Types<a class="headerlink" href="#custom-component-types" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>📈 Time Series</strong> → Trend analysis over time</li>
-<li><strong>🗺️ Geographic Maps</strong> → Spatial data visualization</li>
-<li><strong>🎯 KPI Dashboards</strong> → Executive summary views</li>
-<li><strong>📊 Statistical Plots</strong> → Box plots, violin plots, regression lines</li>
-</ul>
-<h2 id="troubleshooting">🛠️ Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<h3 id="common-issues">Common Issues<a class="headerlink" href="#common-issues" title="Permanent link">&para;</a></h3>
-<p><strong>❌ Components not updating together</strong>
-- ✅ Ensure all components use the same data collection
-- ✅ Check that interactive components target the right columns</p>
-<p><strong>❌ Slow performance</strong>
-- ✅ Limit initial data display (use sampling for large datasets)
-- ✅ Use aggregated views for very large tables</p>
-<p><strong>❌ Charts not displaying properly</strong>
-- ✅ Verify column data types (numeric vs categorical)
-- ✅ Check for missing values in key columns</p>
-<p><strong>❌ Upload errors</strong>
-- ✅ Ensure CSV has headers in the first row
-- ✅ Check file size limits (contact admin for large files)</p>
-<h3 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h3>
-<p><strong>📚 Documentation</strong>: <a href="https://docs.depictio.embl.org">docs.depictio.embl.org</a>
-<strong>💬 Community</strong>: <a href="https://github.com/depictio/depictio/discussions">GitHub Discussions</a>
-<strong>🐛 Bug Reports</strong>: <a href="https://github.com/depictio/depictio/issues">GitHub Issues</a>
-<strong>📧 Direct Support</strong>: Open an issue for personalized help</p>
-<h2 id="whats-next">🗺️ What's Next?<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
-<h3 id="explore-more-tutorials">Explore More Tutorials<a class="headerlink" href="#explore-more-tutorials" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>🔬 <a href="./depictio-basics.md">Advanced Project Types</a></strong> - Bioinformatics workflow integration</li>
-<li><strong>⚡ <a href="../interactive-metadata-system/">Performance Optimization</a></strong> - Handle massive datasets</li>
-<li><strong>🎨 <a href="../ui-major-upgrade/">UI Customization</a></strong> - Design beautiful dashboards</li>
-<li><strong>📊 <a href="../infinite-scrolling-tables/">Table Mastery</a></strong> - Advanced table features</li>
-</ul>
-<h3 id="join-the-community">Join the Community<a class="headerlink" href="#join-the-community" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>⭐ Star the project</strong> on GitHub</li>
-<li><strong>🤝 Contribute</strong> features or documentation</li>
-<li><strong>💬 Share your dashboards</strong> in the community</li>
-<li><strong>📢 Provide feedback</strong> to shape future development</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4v3h5.5v12h3V7H19V4z"/></svg></span> Dashboard section headers</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 11h8V3H3m0 18h8v-8H3m10 8h8v-8h-8m0-10v8h8V3"/></svg></span> Visual organization of content</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.63 5.84C17.27 5.33 16.67 5 16 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h11c.67 0 1.27-.34 1.63-.85L22 12z"/></svg></span> Labeling groups of related components</li>
 </ul>
 <hr />
-<p><em>You've just created your first interactive dashboard! This is the beginning of your journey into powerful, code-free data analysis with Depictio. Every component, every interaction, every insight is now at your fingertips.</em></p>
+<h2 id="interactive-components"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 17v2h6v-2zM3 5v2h10V5zm10 16v-2h8v-2h-8v-2h-2v6zM7 9v2H3v2h4v2h2V9zm14 4v-2H11v2zm-6-4h2V7h4V5h-4V3h-2z"/></svg></span> Interactive Components<a class="headerlink" href="#interactive-components" title="Permanent link">&para;</a></h2>
+<p>Interactive components let users filter data across the dashboard. These components affect all linked visualization components.</p>
+<h3 id="component-types">Component Types<a class="headerlink" href="#component-types" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Input Type</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 9c1.31 0 2.42.83 2.83 2h10.34c.41-1.17 1.52-2 2.83-2a3 3 0 0 1 3 3 3 3 0 0 1-3 3 2.99 2.99 0 0 1-2.83-2H6.83A2.99 2.99 0 0 1 4 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3"/></svg></span> <strong>RangeSlider</strong></td>
+<td>Numeric range</td>
+<td>Coverage: 0-100x</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 5h6v6H3zm2 2v2h2V7zm6 0h10v2H11zm0 8h10v2H11zm-6 5-3.5-3.5 1.41-1.41L5 17.17l4.59-4.58L11 14z"/></svg></span> <strong>MultiSelect</strong></td>
+<td>Multiple choices</td>
+<td>Sample types</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg></span> <strong>DatePicker</strong></td>
+<td>Date range</td>
+<td>Run dates</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg></span> <strong>SegmentedControl</strong></td>
+<td>Single choice</td>
+<td>Condition A/B</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7h5v10h-5v2a1 1 0 0 0 1 1h2v2h-2.5c-.55 0-1.5-.45-1.5-1 0 .55-.95 1-1.5 1H12v-2h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-2V2h2.5c.55 0 1.5.45 1.5 1 0-.55.95-1 1.5-1H20v2h-2a1 1 0 0 0-1 1zM2 7h11v2H4v6h9v2H2zm18 8V9h-3v6z"/></svg></span> <strong>TextInput</strong></td>
+<td>Free text</td>
+<td>Sample ID search</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rangeslider">RangeSlider<a class="headerlink" href="#rangeslider" title="Permanent link">&para;</a></h3>
+<p>Filter data by numeric range:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Column</td>
+<td>Numeric column to filter</td>
+</tr>
+<tr>
+<td>Min/Max</td>
+<td>Range bounds</td>
+</tr>
+<tr>
+<td>Step</td>
+<td>Increment value</td>
+</tr>
+<tr>
+<td>Default</td>
+<td>Initial range values</td>
+</tr>
+</tbody>
+</table>
+<h3 id="multiselect">MultiSelect<a class="headerlink" href="#multiselect" title="Permanent link">&para;</a></h3>
+<p>Filter by selecting multiple values:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Column</td>
+<td>Categorical column to filter</td>
+</tr>
+<tr>
+<td>Options</td>
+<td>Available values (auto-populated)</td>
+</tr>
+<tr>
+<td>Default</td>
+<td>Initially selected values</td>
+</tr>
+<tr>
+<td>Placeholder</td>
+<td>Hint text when empty</td>
+</tr>
+</tbody>
+</table>
+<h3 id="datepicker">DatePicker<a class="headerlink" href="#datepicker" title="Permanent link">&para;</a></h3>
+<p>Filter by date range:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Column</td>
+<td>Date/datetime column to filter</td>
+</tr>
+<tr>
+<td>Format</td>
+<td>Date display format</td>
+</tr>
+<tr>
+<td>Default</td>
+<td>Initial date range</td>
+</tr>
+</tbody>
+</table>
+<h3 id="segmentedcontrol">SegmentedControl<a class="headerlink" href="#segmentedcontrol" title="Permanent link">&para;</a></h3>
+<p>Single-selection toggle:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Column</td>
+<td>Column to filter</td>
+</tr>
+<tr>
+<td>Options</td>
+<td>Available choices</td>
+</tr>
+<tr>
+<td>Default</td>
+<td>Initially selected option</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<p><em>Thomas Weber</em>
-<em>January 2025</em></p>
+<h2 id="multiqc-components"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.46 6.28 11.05 9c-2.58.26-4.55 2.41-4.55 5a5 5 0 0 0 5 5c2.05 0 3.81-1.23 4.58-3H13.5v-2h8v2h-2.25a8.05 8.05 0 0 1-2.46 4h2.71v2h-16v-2h2.71a8 8 0 0 1-2.71-6c0-3.63 2.46-6.8 5.96-7.72m3.28-4.21.76 1.3.86-.5 3.5 6.06-3.47 2-3.5-6.06.87-.5-.76-1.3z"/></svg></span> MultiQC Components<a class="headerlink" href="#multiqc-components" title="Permanent link">&para;</a></h2>
+<p>MultiQC components display quality control reports generated by <a href="https://multiqc.info/" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span> MultiQC</a>.</p>
+<h3 id="features_1">Features<a class="headerlink" href="#features_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 2H3a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2M11 17.5 9.5 19 5 14.5 9.5 10l1.5 1.5-3 3zm3.5 1.5L13 17.5l3-3-3-3 1.5-1.5 4.5 4.5zM21 7H3V4h18z"/></svg></span> <strong>Report Embedding</strong></td>
+<td>Display MultiQC HTML reports inline</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2 4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg></span> <strong>Interactive Navigation</strong></td>
+<td>Navigate between MultiQC sections</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21.71 20.29-1.42 1.42a1 1 0 0 1-1.41 0L7 9.85A3.8 3.8 0 0 1 6 10a4 4 0 0 1-3.78-5.3l2.54 2.54.53-.53 1.42-1.42.53-.53L4.7 2.22A4 4 0 0 1 10 6a3.8 3.8 0 0 1-.15 1l11.86 11.88a1 1 0 0 1 0 1.41M2.29 18.88a1 1 0 0 0 0 1.41l1.42 1.42a1 1 0 0 0 1.41 0l5.47-5.46-2.83-2.83M20 2l-4 2v2l-2.17 2.17 2 2L18 8h2l2-4Z"/></svg></span> <strong>Tool Integration</strong></td>
+<td>Support for various QC tools (FastQC, Samtools, STAR, etc.)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="configuration_2">Configuration<a class="headerlink" href="#configuration_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Report Path</td>
+<td>Path to MultiQC report HTML file</td>
+</tr>
+<tr>
+<td>Display Mode</td>
+<td>Full report or specific sections</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Data Requirements</p>
+<p>MultiQC components require pre-generated MultiQC reports. The report HTML files should be accessible via the configured data source.</p>
+</div>
+<hr />
+<h2 id="cross-dc-filtering"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.59 13.41c.41.39.41 1.03 0 1.42-.39.39-1.03.39-1.42 0a5.003 5.003 0 0 1 0-7.07l3.54-3.54a5.003 5.003 0 0 1 7.07 0 5.003 5.003 0 0 1 0 7.07l-1.49 1.49c.01-.82-.12-1.64-.4-2.42l.47-.48a2.98 2.98 0 0 0 0-4.24 2.98 2.98 0 0 0-4.24 0l-3.53 3.53a2.98 2.98 0 0 0 0 4.24m2.82-4.24c.39-.39 1.03-.39 1.42 0a5.003 5.003 0 0 1 0 7.07l-3.54 3.54a5.003 5.003 0 0 1-7.07 0 5.003 5.003 0 0 1 0-7.07l1.49-1.49c-.01.82.12 1.64.4 2.43l-.47.47a2.98 2.98 0 0 0 0 4.24 2.98 2.98 0 0 0 4.24 0l3.53-3.53a2.98 2.98 0 0 0 0-4.24.973.973 0 0 1 0-1.42"/></svg></span> Cross-DC Filtering<a class="headerlink" href="#cross-dc-filtering" title="Permanent link">&para;</a></h2>
+<p>Interactive components can filter across <strong>linked Data Collections</strong> using the Links system. See <a href="../cross-dc-filtering/">Cross-DC Filtering</a> for details.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>┌─────────────────┐         ┌─────────────────┐
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>│  Filter: Status │  link   │  Table: Samples │
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│  [MultiSelect]  │────────▶│  [auto-filters] │
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>└─────────────────┘         └─────────────────┘
+</code></pre></div>
+<hr />
+<h2 id="component-creation"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span> Component Creation<a class="headerlink" href="#component-creation" title="Permanent link">&para;</a></h2>
+<h3 id="using-the-stepper-wizard">Using the Stepper Wizard<a class="headerlink" href="#using-the-stepper-wizard" title="Permanent link">&para;</a></h3>
+<p>The component builder guides you through creation:</p>
+<ol>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg></span> <strong>Select Data Collection</strong> - Choose your data source</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 13.5v8H3v-8zM12 2l5.5 9h-11zm5.5 11c2.5 0 4.5 2 4.5 4.5S20 22 17.5 22 13 20 13 17.5s2-4.5 4.5-4.5"/></svg></span> <strong>Choose Component Type</strong> - Figure, Table, Card, Interactive, Text, or MultiQC</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97s-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1s.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64z"/></svg></span> <strong>Configure Settings</strong> - Type-specific options</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg></span> <strong>Preview</strong> - See the component before adding</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg></span> <strong>Add to Dashboard</strong> - Place on the canvas</li>
+</ol>
+<h3 id="positioning-components">Positioning Components<a class="headerlink" href="#positioning-components" title="Permanent link">&para;</a></h3>
+<ul>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 19v-2h2v2zm4 0v-2h2v2zm4 0v-2h2v2zm-8-4v-2h2v2zm4 0v-2h2v2zm4 0v-2h2v2zm-8-4V9h2v2zm4 0V9h2v2zm4 0V9h2v2zM7 7V5h2v2zm4 0V5h2v2zm4 0V5h2v2z"/></svg></span> <strong>Drag and drop</strong> components in Edit Mode</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4v4h4V4zm6 0v4h4V4zm0 6v4h4v-4zm0 6v4h4v-4zm-2 4v-4h-4v4zm-6 0v-4H4v4zm0-6v-4H4v4zm0-6V4H4v4zm2 6h4v-4h-4zM4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2"/></svg></span> Components snap to a <strong>grid layout</strong></li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10.59 12 4-4H11V6h7v7h-2V9.41l-4 4V16h8V4H8v8zM22 2v16H12v4H2V12h4V2zM10 14H4v6h6z"/></svg></span> Resize by dragging corner handles</li>
+</ul>
 
 
 
@@ -3466,7 +3852,7 @@
 
       <!-- Logo Column -->
       <div class="depictio-footer__section depictio-footer__brand">
-        <img src="../../../images/logo/logo_icon.png" alt="Depictio" class="depictio-footer__logo">
+        <img src="../../images/logo/logo_icon.png" alt="Depictio" class="depictio-footer__logo">
         <span class="depictio-footer__title">Depictio</span>
         <p class="depictio-footer__tagline">Interactive dashboards for bioinformatics</p>
       </div>
@@ -3494,9 +3880,9 @@
       <div class="depictio-footer__section">
         <h4 class="depictio-footer__heading">Resources</h4>
         <ul class="depictio-footer__links">
-          <li><a href="../../../usage/get_started/">Getting Started</a></li>
-          <li><a href="../../../installation/docker/">Installation</a></li>
-          <li><a href="../../../features/">Features</a></li>
+          <li><a href="../../usage/get_started/">Getting Started</a></li>
+          <li><a href="../../installation/docker/">Installation</a></li>
+          <li><a href="../">Features</a></li>
           <li><a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">Live Demo</a></li>
         </ul>
       </div>
@@ -3506,7 +3892,7 @@
         <h4 class="depictio-footer__heading">About</h4>
         <ul class="depictio-footer__links">
           <li><a href="https://github.com/depictio/depictio/blob/main/LICENSE" target="_blank" rel="noopener">License (MIT)</a></li>
-          <li><a href="../../../developer/contributing/">Contributing</a></li>
+          <li><a href="../../developer/contributing/">Contributing</a></li>
           <li><a href="https://github.com/depictio/depictio/releases" target="_blank" rel="noopener">Releases</a></li>
         </ul>
       </div>
@@ -3518,10 +3904,10 @@
       <div class="depictio-footer__funding-label">Supported by</div>
       <div class="depictio-footer__funding-logos">
         <a href="https://www.embl.org/" target="_blank" rel="noopener" title="EMBL - European Molecular Biology Laboratory">
-          <img src="../../../assets/EMBL_logo_colour_DIGITAL.png" alt="EMBL Logo" class="depictio-footer__funding-logo">
+          <img src="../../assets/EMBL_logo_colour_DIGITAL.png" alt="EMBL Logo" class="depictio-footer__funding-logo">
         </a>
         <a href="https://www.embl.org/about/info/arise/" target="_blank" rel="noopener" title="ARISE Programme">
-          <img src="../../../assets/AriseLogo300dpi.png" alt="ARISE Logo" class="depictio-footer__funding-logo">
+          <img src="../../assets/AriseLogo300dpi.png" alt="ARISE Logo" class="depictio-footer__funding-logo">
         </a>
       </div>
     </div>
@@ -3568,12 +3954,12 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.sections", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.expand", "navigation.top", "header.autohide", "toc.follow", "search.highlight", "search.share", "search.suggest", "announce.dismiss"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.sections", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.expand", "navigation.top", "header.autohide", "toc.follow", "search.highlight", "search.share", "search.suggest", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
-        <script src="../../../javascripts/triangular-animation.js"></script>
+        <script src="../../javascripts/triangular-animation.js"></script>
       
     
   </body>
