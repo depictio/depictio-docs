@@ -62,10 +62,47 @@ This command will:
 - Set up the required network connections between services
 
 
-!!! note
+### Using an Existing MinIO Instance
 
-    If you wish to use your own MinIO instance, you can skip the `docker-compose/docker-compose.minio.yaml` file. In this case, make sure to set the `MINIO_` variables accordingly in your `.env` file to point to your MinIO instance.
+If you already have a MinIO server running, you can skip the bundled MinIO container and configure Depictio to connect to your existing instance.
 
+**Skip the bundled MinIO container:**
+
+```bash
+# Start without the MinIO compose file
+docker compose -f docker-compose.yaml up -d
+```
+
+**Configure your `.env` file to point to your existing MinIO:**
+
+```bash
+# Connect to an existing MinIO server
+DEPICTIO_MINIO_SERVICE_NAME=your-minio-host.example.com
+DEPICTIO_MINIO_SERVICE_PORT=9000
+DEPICTIO_MINIO_EXTERNAL_HOST=your-minio-host.example.com
+DEPICTIO_MINIO_EXTERNAL_PORT=9000
+DEPICTIO_MINIO_ROOT_USER=your-access-key
+DEPICTIO_MINIO_ROOT_PASSWORD=your-secret-key
+DEPICTIO_MINIO_BUCKET=depictio-bucket
+
+# Set to true if MinIO is outside Docker network
+DEPICTIO_MINIO_EXTERNAL_SERVICE=true
+
+# Use https if your MinIO uses TLS
+DEPICTIO_MINIO_EXTERNAL_PROTOCOL=https
+```
+
+!!! tip "Bucket Creation"
+
+    Depictio will automatically create the bucket specified in `DEPICTIO_MINIO_BUCKET` if it doesn't exist, provided the credentials have sufficient permissions.
+
+!!! note "Network Configuration"
+
+    Set `DEPICTIO_MINIO_EXTERNAL_SERVICE=true` when your MinIO server is not part of the Docker Compose network. This tells Depictio to use the external host/port for connections instead of Docker's internal service discovery.
+
+!!! info "S3-Compatible Storage"
+
+    Depictio uses the MinIO client library which implements the S3 API. Other S3-compatible services (AWS S3, DigitalOcean Spaces, Backblaze B2, etc.) may work but have not been tested. If you try these configurations, please share your feedback!
 
 ### 4. Verify the Installation
 
