@@ -14,6 +14,46 @@ hide:
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
 
+### **[v0.6.0-b8](https://github.com/depictio/depictio/releases/tag/v0.6.0-b8)** (January 23, 2026)
+
+#### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.0-b8
+ghcr.io/depictio/depictio:beta
+ghcr.io/depictio/depictio:edge
+```
+
+#### **🧹 CI/CD**
+
+* **Documentation Workflow**: Fixed race condition where docs update ran before Docker image was pushed by moving `repository_dispatch` to end of Docker build workflow. ([61a1b6fa](https://github.com/depictio/depictio/commit/61a1b6fa))
+
+---
+
+### **[v0.6.0-b7](https://github.com/depictio/depictio/releases/tag/v0.6.0-b7)** (January 23, 2026)
+
+#### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.0-b7
+```
+
+#### **✨ Features**
+
+* **Fullscreen Mode**: Added fullscreen mode for figure components, allowing users to expand charts to full viewport. ([0fe66bd8](https://github.com/depictio/depictio/commit/0fe66bd8))
+
+#### **🚀 Improvements**
+
+* **Screenshot Generation**: Moved screenshot generation to background Celery task for improved API responsiveness. ([81ce338d](https://github.com/depictio/depictio/commit/81ce338d))
+* **Code Cleanup**: Removed 700+ lines of commented backup code from save module. ([ea91dbb6](https://github.com/depictio/depictio/commit/ea91dbb6))
+
+#### **🧹 CI/CD**
+
+* **Docs Workflow Refactor**: Moved API documentation update workflow from depictio repo to depictio-docs repo for better separation of concerns. ([037df501](https://github.com/depictio/depictio/commit/037df501))
+* Added tag push trigger to update-api-docs workflow. ([25856c56](https://github.com/depictio/depictio/commit/25856c56))
+
+---
+
 ### **[v0.6.0-b5](https://github.com/depictio/depictio/releases/tag/v0.6.0-b5)** (January 23, 2026)
 
 #### Docker Images
