@@ -1,0 +1,5026 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for Depictio">
+      
+      
+      
+        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v0.6.0-b7/depictio-cli/usage/">
+      
+      
+        <link rel="prev" href="../../usage/projects/reference/">
+      
+      
+        <link rel="next" href="../minimal_config/">
+      
+      
+      <link rel="icon" href="../../images/logo/logo_icon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Usage - Depictio Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202A10%2010%200%200%200%202%2012a10%2010%200%200%200%2010%2010%2010%2010%200%200%200%2010-10A10%2010%200%200%200%2012%202m0%207a3%203%200%200%201%203%203%203%203%200%200%201-3%203%203%203%200%200%201-3-3%203%203%200%200%201%203-3%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/timeline.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/blog.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/neoteroi-mkdocs-v1.1.3.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-J14FKHSHLC"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-J14FKHSHLC",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-J14FKHSHLC",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#depictio-cli-usage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              </button>
+            
+            
+    Depictio is currently in active development and is not yet suitable for production use.
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
+      
+  <img src="../../images/logo/animated_favicon.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Depictio Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Usage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/depictio/depictio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    depictio/depictio
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../installation/" class="md-tabs__link">
+          
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.12 5h13.75l-.94-1h-12zm15.42.23c.29.34.46.77.46 1.27V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6.5c0-.5.17-.93.46-1.27l1.38-1.68C5.12 3.21 5.53 3 6 3h12c.47 0 .88.21 1.15.55zM6 18h6v-3H6z"/></svg>
+    
+  
+  Installation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../usage/" class="md-tabs__link">
+          
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-5h4z"/></svg>
+    
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../features/" class="md-tabs__link">
+          
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+    
+  
+  Features
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/" class="md-tabs__link">
+          
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 7H5a2 2 0 0 0-2 2v8h2v-4h2v4h2V9a2 2 0 0 0-2-2m0 4H5V9h2m7-2h-4v10h2v-4h2a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2m0 4h-2V9h2m6 0v6h1v2h-4v-2h1V9h-1V7h4v2Z"/></svg>
+    
+  
+  API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../developer/" class="md-tabs__link">
+          
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.6 16.6 4.6-4.6-4.6-4.6L16 6l6 6-6 6zm-5.2 0L4.8 12l4.6-4.6L8 6l-6 6 6 6z"/></svg>
+    
+  
+  Developer
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../FAQ/" class="md-tabs__link">
+          
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m15.07 11.25-.9.92C13.45 12.89 13 13.5 13 15h-2v-.5c0-1.11.45-2.11 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41a2 2 0 0 0-2-2 2 2 0 0 0-2 2H8a4 4 0 0 1 4-4 4 4 0 0 1 4 4 3.2 3.2 0 0 1-.93 2.25M13 19h-2v-2h2M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10c0-5.53-4.5-10-10-10"/></svg>
+    
+  
+  FAQ
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm5 8h10v3H7zm4 5h10v3H11zM6 4h16v4h-2V6H8v2H6z"/></svg>
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../changelog/" class="md-tabs__link">
+        
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1a6.887 6.887 0 0 0 0 9.8c2.73 2.7 7.15 2.7 9.88 0 1.36-1.35 2.04-2.92 2.04-4.9h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58a8.987 8.987 0 0 1 12.65 0L21 3zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8z"/></svg>
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../blog/" class="md-tabs__link">
+          
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3v18h18V3zm15 15H6v-1h12zm0-2H6v-1h12zm0-4H6V6h12z"/></svg>
+    
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../more/" class="md-tabs__link">
+          
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 12a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2m-6 0a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2m-6 0a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2"/></svg>
+    
+  
+  More
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
+      
+  <img src="../../images/logo/animated_favicon.svg" alt="logo">
+
+    </a>
+    Depictio Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/depictio/depictio" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    depictio/depictio
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../installation/" class="md-nav__link ">
+              
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.12 5h13.75l-.94-1h-12zm15.42.23c.29.34.46.77.46 1.27V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6.5c0-.5.17-.93.46-1.27l1.38-1.68C5.12 3.21 5.53 3 6 3h12c.47 0 .88.21 1.15.55zM6 18h6v-3H6z"/></svg>
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Installation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Server
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Server
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CLI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            CLI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CLI Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/configuration/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97s-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1s.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64z"/></svg>
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/env-reference/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2m-2 12c-.25 0-.46-.18-.5-.42l-.37-2.65c-.63-.25-1.17-.59-1.69-.99l-2.49 1.01c-.22.08-.49 0-.61-.22l-2-3.46a.493.493 0 0 1 .12-.64l2.11-1.66L4.5 12l.07-1-2.11-1.63a.493.493 0 0 1-.12-.64l2-3.46c.12-.22.39-.31.61-.22l2.49 1c.52-.39 1.06-.73 1.69-.98l.37-2.65c.04-.24.25-.42.5-.42h4c.25 0 .46.18.5.42l.37 2.65c.63.25 1.17.59 1.69.98l2.49-1c.22-.09.49 0 .61.22l2 3.46c.13.22.07.49-.12.64L19.43 11l.07 1-.07 1 2.11 1.63c.19.15.25.42.12.64l-2 3.46c-.12.22-.39.31-.61.22l-2.49-1c-.52.39-1.06.73-1.69.98l-.37 2.65c-.04.24-.25.42-.5.42zm1.25-18-.37 2.61c-1.2.25-2.26.89-3.03 1.78L5.44 7.35l-.75 1.3L6.8 10.2a5.55 5.55 0 0 0 0 3.6l-2.12 1.56.75 1.3 2.43-1.04c.77.88 1.82 1.52 3.01 1.76l.37 2.62h1.52l.37-2.61c1.19-.25 2.24-.89 3.01-1.77l2.43 1.04.75-1.3-2.12-1.55c.4-1.17.4-2.44 0-3.61l2.11-1.55-.75-1.3-2.41 1.04a5.42 5.42 0 0 0-3.03-1.77L12.75 4z"/></svg>
+  
+  <span class="md-ellipsis">
+    Environment Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../usage/" class="md-nav__link ">
+              
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-5h4z"/></svg>
+  
+  <span class="md-ellipsis">
+    Usage
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Usage
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/get_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Guides
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/guides/web_ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WebUI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/guides/dashboard_creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dashboard creation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/guides/dashboard_usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Using the dashboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Projects
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Projects
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/projects/guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/projects/yaml-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    YAML project configuration breakdown
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/projects/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Full Reference Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    CLI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            CLI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Usage
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Usage
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Reference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Global Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏃 Run Command
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 Config Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📋 Config Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#config-show-cli-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      config show-cli-config
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-check-s3-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      config check-s3-storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-check-server-accessibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      config check-server-accessibility
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-show-depictio-project-metadata-on-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      config show-depictio-project-metadata-on-server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-validate-project-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      config validate-project-config
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-sync-project-config-to-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      config sync-project-config-to-server
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Data Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 Data Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      data scan
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      data process
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      data join
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-link" class="md-nav__link">
+    <span class="md-ellipsis">
+      data link
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      💾 Backup Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💾 Backup Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backup-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      backup backup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      backup restore
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-list-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      backup list-backups
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      📈 Dashboard Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📈 Dashboard Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-validate" class="md-nav__link">
+    <span class="md-ellipsis">
+      dashboard validate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-validate-dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      dashboard validate-dir
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-validation-in-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dashboard Validation in CI/CD
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛠️ Common Use Cases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ Common Use Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Quick Start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#development-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Development Workflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      💾 Backup Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Data Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Error Handling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 Error Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exit-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exit Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting Steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      📖 Configuration References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../minimal_config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Minimal YAML config
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Special Modes
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            Special Modes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/guides/unauthenticated_mode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unauthenticated mode
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../features/" class="md-nav__link ">
+              
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"/></svg>
+  
+  <span class="md-ellipsis">
+    Features
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Features
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/dashboards/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 5v14h6V5zm7 0v5h6V5zm7 0v9h6V5zm-7 6v8h6v-8zm7 4v4h6v-4z"/></svg>
+  
+  <span class="md-ellipsis">
+    Dashboards
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/components/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z"/></svg>
+  
+  <span class="md-ellipsis">
+    Components
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/cross-dc-filtering/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.59 13.41c.41.39.41 1.03 0 1.42-.39.39-1.03.39-1.42 0a5.003 5.003 0 0 1 0-7.07l3.54-3.54a5.003 5.003 0 0 1 7.07 0 5.003 5.003 0 0 1 0 7.07l-1.49 1.49c.01-.82-.12-1.64-.4-2.42l.47-.48a2.98 2.98 0 0 0 0-4.24 2.98 2.98 0 0 0-4.24 0l-3.53 3.53a2.98 2.98 0 0 0 0 4.24m2.82-4.24c.39-.39 1.03-.39 1.42 0a5.003 5.003 0 0 1 0 7.07l-3.54 3.54a5.003 5.003 0 0 1-7.07 0 5.003 5.003 0 0 1 0-7.07l1.49-1.49c-.01.82.12 1.64.4 2.43l-.47.47a2.98 2.98 0 0 0 0 4.24 2.98 2.98 0 0 0 4.24 0l3.53-3.53a2.98 2.98 0 0 0 0-4.24.973.973 0 0 1 0-1.42"/></svg>
+  
+  <span class="md-ellipsis">
+    Cross-DC Filtering
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/yaml-sync/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18a6 6 0 0 1-6-6c0-1 .25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12a8 8 0 0 0 8 8v3l4-4-4-4m0-11V1L8 5l4 4V6a6 6 0 0 1 6 6c0 1-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12a8 8 0 0 0-8-8"/></svg>
+  
+  <span class="md-ellipsis">
+    YAML Dashboard Sync
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/architecture/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2v6h2v3H5c-1.11 0-2 .89-2 2v3H1v6h6v-6H5v-3h6v3H9v6h6v-6h-2v-3h6v3h-2v6h6v-6h-2v-3c0-1.11-.89-2-2-2h-6V8h2V2z"/></svg>
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/security/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg>
+  
+  <span class="md-ellipsis">
+    Security
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../api/" class="md-nav__link ">
+              
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 7H5a2 2 0 0 0-2 2v8h2v-4h2v4h2V9a2 2 0 0 0-2-2m0 4H5V9h2m7-2h-4v10h2v-4h2a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2m0 4h-2V9h2m6 0v6h1v2h-4v-2h1V9h-1V7h4v2Z"/></svg>
+  
+  <span class="md-ellipsis">
+    API
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fastapi_docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FastAPI Docs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../developer/" class="md-nav__link ">
+              
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.6 16.6 4.6-4.6-4.6-4.6L16 6l6 6-6 6zm-5.2 0L4.8 12l4.6-4.6L8 6l-6 6 6 6z"/></svg>
+  
+  <span class="md-ellipsis">
+    Developer
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Developer
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/modularity/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 5v6h5V5m-11 6h5V5h-5m6 13h5v-6h-5m-6 6h5v-6h-5m-6 6h5v-6H4m0-1h5V5H4z"/></svg>
+  
+  <span class="md-ellipsis">
+    Modularity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../FAQ/" class="md-nav__link ">
+              
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m15.07 11.25-.9.92C13.45 12.89 13 13.5 13 15h-2v-.5c0-1.11.45-2.11 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41a2 2 0 0 0-2-2 2 2 0 0 0-2 2H8a4 4 0 0 1 4-4 4 4 0 0 1 4 4 3.2 3.2 0 0 1-.93 2.25M13 19h-2v-2h2M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10c0-5.53-4.5-10-10-10"/></svg>
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            FAQ
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../FAQ/general/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    General
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm5 8h10v3H7zm4 5h10v3H11zM6 4h16v4h-2V6H8v2H6z"/></svg>
+  
+  <span class="md-ellipsis">
+    Roadmap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1a6.887 6.887 0 0 0 0 9.8c2.73 2.7 7.15 2.7 9.88 0 1.36-1.35 2.04-2.92 2.04-4.9h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58a8.987 8.987 0 0 1 12.65 0L21 3zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8z"/></svg>
+  
+  <span class="md-ellipsis">
+    Changelog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../blog/" class="md-nav__link ">
+              
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3v18h18V3zm15 15H6v-1h12zm0-2H6v-1h12zm0-4H6V6h12z"/></svg>
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_10_2" id="__nav_10_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_2">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_10_3" id="__nav_10_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Categories
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_3">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/category/announcements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Announcements
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/category/demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Demo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/category/features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/category/launch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Launch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/category/tutorials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../more/" class="md-nav__link ">
+              
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 12a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2m-6 0a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2m-6 0a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2"/></svg>
+  
+  <span class="md-ellipsis">
+    More
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            More
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../more/funding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Funding
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../more/palette/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Color Palette
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../animated-logo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Animated Logo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Reference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Global Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏃 Run Command
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 Config Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📋 Config Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#config-show-cli-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      config show-cli-config
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-check-s3-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      config check-s3-storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-check-server-accessibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      config check-server-accessibility
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-show-depictio-project-metadata-on-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      config show-depictio-project-metadata-on-server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-validate-project-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      config validate-project-config
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-sync-project-config-to-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      config sync-project-config-to-server
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Data Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 Data Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      data scan
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      data process
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      data join
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-link" class="md-nav__link">
+    <span class="md-ellipsis">
+      data link
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      💾 Backup Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💾 Backup Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backup-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      backup backup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      backup restore
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-list-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      backup list-backups
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      📈 Dashboard Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📈 Dashboard Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-validate" class="md-nav__link">
+    <span class="md-ellipsis">
+      dashboard validate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-validate-dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      dashboard validate-dir
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-validation-in-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dashboard Validation in CI/CD
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛠️ Common Use Cases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ Common Use Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Quick Start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#development-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Development Workflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      💾 Backup Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Data Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Error Handling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 Error Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exit-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exit Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting Steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      📖 Configuration References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="depictio-cli-usage">Depictio CLI Usage<a class="headerlink" href="#depictio-cli-usage" title="Permanent link">&para;</a></h1>
+<!-- prettier-ignore -->
+<div class="admonition note">
+<p class="admonition-title">Note about the CLI</p>
+<p>The depictio-cli is a command line interface that allows you to interact with the Depictio backend. It is used to register projects information including workflow files metadata. The depictio-cli is currently in development and is not yet ready for production use.</p>
+</div>
+<h2 id="table-of-contents">📚 Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#quick-reference">Quick Reference</a></li>
+<li><a href="#global-options">Global Options</a></li>
+<li><a href="#-commands">🚀 Commands</a><ul>
+<li><a href="#run-command">🏃 Run Command</a></li>
+<li><a href="#config-commands">📋 Config Commands</a></li>
+<li><a href="#data-commands">📊 Data Commands</a></li>
+<li><a href="#backup-commands">💾 Backup Commands</a></li>
+<li><a href="#dashboard-commands">📈 Dashboard Commands</a></li>
+</ul>
+</li>
+<li><a href="#common-use-cases">🛠️ Common Use Cases</a></li>
+<li><a href="#error-handling">🔧 Error Handling</a></li>
+</ul>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<p>See the <a href="../../installation/cli/">installation guide</a> for instructions on how to install the depictio-cli.</p>
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+<th>Access Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>version</code></td>
+<td>Show CLI version</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td>Execute complete workflow</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>config show-cli-config</code></td>
+<td>Display CLI configuration</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>config check-s3-storage</code></td>
+<td>Validate S3 storage setup</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>config check-server-accessibility</code></td>
+<td>Test server connection</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>config validate-project-config</code></td>
+<td>Validate project configuration</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>config sync-project-config-to-server</code></td>
+<td>Sync project config to server</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>data scan</code></td>
+<td>Scan project files</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>data process</code></td>
+<td>Process data collections</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>data join</code></td>
+<td>Execute pre-computed table joins</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>data link list</code></td>
+<td>List DC links for a project</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>data link create</code></td>
+<td>Create a DC link for cross-DC filtering</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>data link resolve</code></td>
+<td>Test link resolution</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>data link delete</code></td>
+<td>Delete a DC link</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>dashboard validate</code></td>
+<td>Validate dashboard YAML file</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>dashboard validate-dir</code></td>
+<td>Validate all YAML files in directory</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>backup backup</code></td>
+<td>Create system backup</td>
+<td><strong>Admin only</strong></td>
+</tr>
+<tr>
+<td><code>backup restore</code></td>
+<td>Restore from backup</td>
+<td><strong>Admin only</strong></td>
+</tr>
+<tr>
+<td><code>backup list-backups</code></td>
+<td>List available backups</td>
+<td><strong>Admin only</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="global-options">Global Options<a class="headerlink" href="#global-options" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Short</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--verbose</code></td>
+<td><code>-v</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Enable verbose logging</td>
+</tr>
+<tr>
+<td><code>--verbose-level</code></td>
+<td><code>-vl</code></td>
+<td><code>string</code></td>
+<td><code>"INFO"</code></td>
+<td>Set verbose logging level</td>
+</tr>
+</tbody>
+</table>
+<h2 id="commands">🚀 Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
+<h3 id="run-command">🏃 Run Command<a class="headerlink" href="#run-command" title="Permanent link">&para;</a></h3>
+<script src="https://asciinema.org/a/R5V6UXLetWzfp7AB39SxoGfhd.js" id="asciicast-R5V6UXLetWzfp7AB39SxoGfhd" async="true"></script>
+<p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>🖥️ `depictio-cli run` command example</strong></p>
+
+<p>Execute the complete Depictio workflow: validate → sync → scan → process</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<p><strong>Quick Start:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+</code></pre></div>
+<p><strong>Pipeline Steps:</strong></p>
+<ol>
+<li>✅ Check server accessibility</li>
+<li>✅ Check S3 storage configuration</li>
+<li>✅ Validate project configuration</li>
+<li>✅ Sync project configuration to server</li>
+<li>✅ Scan data files</li>
+<li>✅ Process data collections</li>
+</ol>
+<details class="info">
+<summary>📋 Basic Configuration</summary>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td>Pipeline configuration file path</td>
+</tr>
+<tr>
+<td><code>--workflow-name</code></td>
+<td><code>string</code></td>
+<td><code>null</code></td>
+<td>Specific workflow to process</td>
+</tr>
+<tr>
+<td><code>--data-collection-tag</code></td>
+<td><code>string</code></td>
+<td><code>null</code></td>
+<td>Data collection tag to process</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="info">
+<summary>⚙️ Flow Control Options</summary>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--skip-server-check</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Skip server accessibility check</td>
+</tr>
+<tr>
+<td><code>--skip-s3-check</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Skip S3 storage validation</td>
+</tr>
+<tr>
+<td><code>--skip-sync</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Skip config sync to server</td>
+</tr>
+<tr>
+<td><code>--skip-scan</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Skip data scanning step</td>
+</tr>
+<tr>
+<td><code>--skip-process</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Skip data processing step</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="info">
+<summary>🔄 Sync &amp; Scan Options</summary>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--update-config</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Update project configuration on server</td>
+</tr>
+<tr>
+<td><code>--rescan-folders</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Reprocess all runs for data collection</td>
+</tr>
+<tr>
+<td><code>--sync-files</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Update files for data collection</td>
+</tr>
+<tr>
+<td><code>--overwrite</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Overwrite workflow if it already exists</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="info">
+<summary>🖥️ Output &amp; Control</summary>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--rich-tables</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Show detailed execution summary</td>
+</tr>
+<tr>
+<td><code>--continue-on-error</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Continue execution on step failure</td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Show execution plan without running</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p><strong>Examples:</strong></p>
+<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Basic Usage</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Complete workflow execution</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+</code></pre></div>
+<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Development</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># With detailed output and error handling</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>--continue-on-error<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>--rich-tables
+</code></pre></div>
+<div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Dry Run</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Preview execution without running</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>--dry-run
+</code></pre></div>
+<div class="tabbed-set" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Skip Steps</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Skip server checks for faster execution</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>--skip-server-check<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span>--skip-s3-check
+</code></pre></div>
+<h3 id="config-commands">📋 Config Commands<a class="headerlink" href="#config-commands" title="Permanent link">&para;</a></h3>
+<!-- prettier-ignore -->
+<div class="admonition info">
+<p class="admonition-title">Command Group: <code>depictio-cli config</code></p>
+<p>All commands in this section are part of the <code>config</code> command family. Use them to manage Depictio configurations and validate connections.</p>
+</div>
+<p>Manage Depictio configurations and validate connections.</p>
+<h4 id="config-show-cli-config"><code>config show-cli-config</code><a class="headerlink" href="#config-show-cli-config" title="Permanent link">&para;</a></h4>
+<p>Display the current CLI configuration.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>show-cli-config<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>show-cli-config
+</code></pre></div>
+<hr />
+<h4 id="config-check-s3-storage"><code>config check-s3-storage</code><a class="headerlink" href="#config-check-s3-storage" title="Permanent link">&para;</a></h4>
+<p>Validate S3 storage configuration.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>check-s3-storage<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>check-s3-storage
+</code></pre></div>
+<hr />
+<h4 id="config-check-server-accessibility"><code>config check-server-accessibility</code><a class="headerlink" href="#config-check-server-accessibility" title="Permanent link">&para;</a></h4>
+<p>Test connection to Depictio server.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>check-server-accessibility<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>check-server-accessibility
+</code></pre></div>
+<hr />
+<h4 id="config-show-depictio-project-metadata-on-server"><code>config show-depictio-project-metadata-on-server</code><a class="headerlink" href="#config-show-depictio-project-metadata-on-server" title="Permanent link">&para;</a></h4>
+<p>Display metadata for registered projects.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>show-depictio-project-metadata-on-server<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--project-name</code></td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td>Specific project name</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>show-depictio-project-metadata-on-server<span class="w"> </span>--project-name<span class="w"> </span>my-project
+</code></pre></div>
+<hr />
+<h4 id="config-validate-project-config"><code>config validate-project-config</code><a class="headerlink" href="#config-validate-project-config" title="Permanent link">&para;</a></h4>
+<p>Validate project configuration file.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>validate-project-config<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td>Pipeline configuration file path</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>validate-project-config<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+</code></pre></div>
+<hr />
+<h4 id="config-sync-project-config-to-server"><code>config sync-project-config-to-server</code><a class="headerlink" href="#config-sync-project-config-to-server" title="Permanent link">&para;</a></h4>
+<p>Sync project configuration to server.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>sync-project-config-to-server<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td>Pipeline configuration file path</td>
+</tr>
+<tr>
+<td><code>--update</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Update existing project configuration</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>sync-project-config-to-server<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--update
+</code></pre></div>
+<h3 id="data-commands">📊 Data Commands<a class="headerlink" href="#data-commands" title="Permanent link">&para;</a></h3>
+<!-- prettier-ignore -->
+<div class="admonition info">
+<p class="admonition-title">Command Group: <code>depictio-cli data</code></p>
+<p>All commands in this section are part of the <code>data</code> command family. Use them to manage data scanning and processing operations.</p>
+</div>
+<p>Manage data scanning and processing operations.</p>
+<h4 id="data-scan"><code>data scan</code><a class="headerlink" href="#data-scan" title="Permanent link">&para;</a></h4>
+<p>Scan project files for data collections.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td>Pipeline configuration file path</td>
+</tr>
+<tr>
+<td><code>--workflow-name</code></td>
+<td><code>string</code></td>
+<td><code>null</code></td>
+<td>Specific workflow to scan</td>
+</tr>
+<tr>
+<td><code>--data-collection-tag</code></td>
+<td><code>string</code></td>
+<td><code>null</code></td>
+<td>Data collection tag to scan</td>
+</tr>
+<tr>
+<td><code>--rescan-folders</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Reprocess all runs for data collection</td>
+</tr>
+<tr>
+<td><code>--sync-files</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Update files for data collection</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--workflow-name<span class="w"> </span>my-workflow
+</code></pre></div>
+<hr />
+<h4 id="data-process"><code>data process</code><a class="headerlink" href="#data-process" title="Permanent link">&para;</a></h4>
+<p>Process data collections for workflow execution.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>process<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td>Pipeline configuration file path</td>
+</tr>
+<tr>
+<td><code>--overwrite</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Overwrite existing workflow</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>process<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--overwrite
+</code></pre></div>
+<hr />
+<h4 id="data-join"><code>data join</code><a class="headerlink" href="#data-join" title="Permanent link">&para;</a></h4>
+<p>Execute pre-computed table joins defined in project configuration.</p>
+<!-- prettier-ignore -->
+<div class="admonition note">
+<p class="admonition-title">Links vs Joins</p>
+<p>For interactive cross-DC filtering, use <strong>links</strong> (configured in YAML, resolved at runtime). Use <strong>joins</strong> only when you need a pre-computed combined dataset stored as a Delta table. See <a href="../../features/cross-dc-filtering/">Cross-DC Filtering</a>.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>join<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td>Pipeline configuration file path</td>
+</tr>
+<tr>
+<td><code>--join-name</code></td>
+<td><code>string</code></td>
+<td><code>null</code></td>
+<td>Specific join to process (all if not specified)</td>
+</tr>
+<tr>
+<td><code>--preview</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Preview join results without persisting</td>
+</tr>
+<tr>
+<td><code>--overwrite</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Overwrite existing joined tables</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Preview all joins</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>join<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--preview
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1"># Execute a specific join</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>join<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--join-name<span class="w"> </span>my_join
+</code></pre></div>
+<hr />
+<h4 id="data-link"><code>data link</code><a class="headerlink" href="#data-link" title="Permanent link">&para;</a></h4>
+<p>Manage DC links for cross-DC interactive filtering. Links enable runtime filtering between data collections without pre-computing joined tables.</p>
+<!-- prettier-ignore -->
+<div class="admonition tip">
+<p class="admonition-title">Links vs Joins</p>
+<p><strong>Links</strong> are the preferred method for cross-DC filtering. They resolve at runtime and support any DC type (tables, MultiQC, etc.). <strong>Joins</strong> create pre-computed Delta tables and only work between table DCs.</p>
+</div>
+<h5 id="data-link-list"><code>data link list</code><a class="headerlink" href="#data-link-list" title="Permanent link">&para;</a></h5>
+<p>List all DC links for a project.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>link<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td>Pipeline configuration file path</td>
+</tr>
+<tr>
+<td><code>--target-dc</code></td>
+<td><code>string</code></td>
+<td><code>null</code></td>
+<td>Filter links by target DC ID</td>
+</tr>
+<tr>
+<td><code>--source-dc</code></td>
+<td><code>string</code></td>
+<td><code>null</code></td>
+<td>Filter links by source DC ID</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># List all links in a project</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>link<span class="w"> </span>list<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="c1"># List links targeting a specific DC</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>link<span class="w"> </span>list<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--target-dc<span class="w"> </span>multiqc_dc_id
+</code></pre></div>
+<hr />
+<h5 id="data-link-create"><code>data link create</code><a class="headerlink" href="#data-link-create" title="Permanent link">&para;</a></h5>
+<p>Create a new DC link for cross-DC filtering.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>link<span class="w"> </span>create<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td>Pipeline configuration file path</td>
+</tr>
+<tr>
+<td><code>--source-dc</code></td>
+<td><code>string</code></td>
+<td><strong>required</strong></td>
+<td>Source data collection ID</td>
+</tr>
+<tr>
+<td><code>--source-column</code></td>
+<td><code>string</code></td>
+<td><strong>required</strong></td>
+<td>Column in source DC to link from</td>
+</tr>
+<tr>
+<td><code>--target-dc</code></td>
+<td><code>string</code></td>
+<td><strong>required</strong></td>
+<td>Target data collection ID</td>
+</tr>
+<tr>
+<td><code>--target-type</code></td>
+<td><code>string</code></td>
+<td><code>table</code></td>
+<td>Target DC type (<code>table</code>, <code>multiqc</code>)</td>
+</tr>
+<tr>
+<td><code>--resolver</code></td>
+<td><code>string</code></td>
+<td><code>direct</code></td>
+<td>Resolver type (see below)</td>
+</tr>
+<tr>
+<td><code>--description</code></td>
+<td><code>string</code></td>
+<td><code>null</code></td>
+<td>Optional description for the link</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Resolver Types:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Resolver</th>
+<th>Use Case</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>direct</code></td>
+<td>Same value in both DCs</td>
+<td>1:1 mapping (e.g., <code>sample_id</code> = <code>sample_id</code>)</td>
+</tr>
+<tr>
+<td><code>sample_mapping</code></td>
+<td>MultiQC sample variants</td>
+<td>Canonical ID → MultiQC sample name variants</td>
+</tr>
+<tr>
+<td><code>pattern</code></td>
+<td>Template substitution</td>
+<td>e.g., <code>{sample}.bam</code> → <code>S1.bam</code></td>
+</tr>
+<tr>
+<td><code>regex</code></td>
+<td>Pattern matching</td>
+<td>Match target values using regex</td>
+</tr>
+<tr>
+<td><code>wildcard</code></td>
+<td>Glob-style matching</td>
+<td>e.g., <code>S1*</code> matches <code>S1_R1.bam</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1"># Create a direct link between two table DCs</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>link<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">    </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">    </span>--source-dc<span class="w"> </span>metadata_table<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">    </span>--source-column<span class="w"> </span>sample_id<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">    </span>--target-dc<span class="w"> </span>variants_table<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="w">    </span>--target-type<span class="w"> </span>table<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="w">    </span>--resolver<span class="w"> </span>direct
+<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>
+<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="c1"># Create a sample_mapping link to a MultiQC DC</span>
+<a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>link<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="w">    </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="w">    </span>--source-dc<span class="w"> </span>metadata_table<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a><span class="w">    </span>--source-column<span class="w"> </span>sample_id<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a><span class="w">    </span>--target-dc<span class="w"> </span>multiqc_general_stats<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a><span class="w">    </span>--target-type<span class="w"> </span>multiqc<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a><span class="w">    </span>--resolver<span class="w"> </span>sample_mapping
+</code></pre></div>
+<hr />
+<h5 id="data-link-resolve"><code>data link resolve</code><a class="headerlink" href="#data-link-resolve" title="Permanent link">&para;</a></h5>
+<p>Test link resolution by resolving filter values from source to target DC.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>link<span class="w"> </span>resolve<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td>Pipeline configuration file path</td>
+</tr>
+<tr>
+<td><code>--source-dc</code></td>
+<td><code>string</code></td>
+<td><strong>required</strong></td>
+<td>Source data collection ID</td>
+</tr>
+<tr>
+<td><code>--source-column</code></td>
+<td><code>string</code></td>
+<td><strong>required</strong></td>
+<td>Column in source DC to filter on</td>
+</tr>
+<tr>
+<td><code>--target-dc</code></td>
+<td><code>string</code></td>
+<td><strong>required</strong></td>
+<td>Target data collection ID</td>
+</tr>
+<tr>
+<td><code>--filter</code></td>
+<td><code>string</code></td>
+<td><strong>required</strong></td>
+<td>Comma-separated values to resolve</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1"># Resolve sample IDs to MultiQC sample names</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>link<span class="w"> </span>resolve<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">    </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">    </span>--source-dc<span class="w"> </span>metadata_table<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">    </span>--source-column<span class="w"> </span>sample_id<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="w">    </span>--target-dc<span class="w"> </span>multiqc_general_stats<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="w">    </span>--filter<span class="w"> </span><span class="s2">&quot;S1,S2,S3&quot;</span>
+</code></pre></div>
+<p><strong>Example output:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Resolving link:
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>  Source DC: metadata_table
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>  Source Column: sample_id
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>  Target DC: multiqc_general_stats
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>  Filter Values: [&#39;S1&#39;, &#39;S2&#39;, &#39;S3&#39;]
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>Resolution successful!
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>  Link ID: 507f1f77bcf86cd799439011
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>  Resolver Used: sample_mapping
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>  Target Type: multiqc
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>  Match Count: 6
+<a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>
+<a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>Resolved Values (6):
+<a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a>    - S1_R1
+<a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a>    - S1_R2
+<a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a>    - S2_R1
+<a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a>    - S2_R2
+<a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a>    - S3_R1
+<a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a>    - S3_R2
+</code></pre></div>
+<hr />
+<h5 id="data-link-delete"><code>data link delete</code><a class="headerlink" href="#data-link-delete" title="Permanent link">&para;</a></h5>
+<p>Delete a DC link.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>link<span class="w"> </span>delete<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td>Pipeline configuration file path</td>
+</tr>
+<tr>
+<td><code>--link-id</code></td>
+<td><code>string</code></td>
+<td><strong>required</strong></td>
+<td>ID of the link to delete</td>
+</tr>
+<tr>
+<td><code>--force</code> / <code>-f</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Skip confirmation prompt</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="c1"># Delete a link with confirmation</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>link<span class="w"> </span>delete<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--link-id<span class="w"> </span>abc123
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="c1"># Delete without confirmation</span>
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>link<span class="w"> </span>delete<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--link-id<span class="w"> </span>abc123<span class="w"> </span>--force
+</code></pre></div>
+<h3 id="backup-commands">💾 Backup Commands<a class="headerlink" href="#backup-commands" title="Permanent link">&para;</a></h3>
+<!-- prettier-ignore -->
+<div class="admonition info">
+<p class="admonition-title">Command Group: <code>depictio-cli backup</code></p>
+<p>All commands in this section are part of the <code>backup</code> command family. Use them to backup and restore system data and configurations.</p>
+</div>
+<p>Backup and restore system data and configurations.</p>
+<!-- prettier-ignore -->
+<div class="admonition warning">
+<p class="admonition-title">Admin Access Required</p>
+<p>Backup and restore commands require administrator privileges. Only users with admin access can perform backup and restore operations. Ensure your CLI configuration includes admin credentials.</p>
+</div>
+<h4 id="backup-backup"><code>backup backup</code><a class="headerlink" href="#backup-backup" title="Permanent link">&para;</a></h4>
+<p>Create a backup of database and S3 storage data.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>depictio-cli<span class="w"> </span>backup<span class="w"> </span>backup<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--backup-name</code></td>
+<td><code>string</code></td>
+<td><code>timestamp</code></td>
+<td>Name for the backup</td>
+</tr>
+<tr>
+<td><code>--include-s3</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Include S3 storage data in backup</td>
+</tr>
+<tr>
+<td><code>--include-db</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Include database data in backup</td>
+</tr>
+<tr>
+<td><code>--output-path</code></td>
+<td><code>string</code></td>
+<td><code>./backups</code></td>
+<td>Path where backup files are stored</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>depictio-cli<span class="w"> </span>backup<span class="w"> </span>backup<span class="w"> </span>--backup-name<span class="w"> </span>production-backup<span class="w"> </span>--output-path<span class="w"> </span>./backups
+</code></pre></div>
+<hr />
+<h4 id="backup-restore"><code>backup restore</code><a class="headerlink" href="#backup-restore" title="Permanent link">&para;</a></h4>
+<p>Restore data from a previously created backup.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>depictio-cli<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--CLI-config-path</code></td>
+<td><code>string</code></td>
+<td><code>~/.depictio/CLI.yaml</code></td>
+<td>CLI configuration file path</td>
+</tr>
+<tr>
+<td><code>--backup-path</code></td>
+<td><code>string</code></td>
+<td><strong>required</strong></td>
+<td>Path to backup file or directory</td>
+</tr>
+<tr>
+<td><code>--restore-s3</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Restore S3 storage data</td>
+</tr>
+<tr>
+<td><code>--restore-db</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Restore database data</td>
+</tr>
+<tr>
+<td><code>--force</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Force restore without confirmation</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>depictio-cli<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>--backup-path<span class="w"> </span>./backups/production-backup<span class="w"> </span>--force
+</code></pre></div>
+<hr />
+<h4 id="backup-list-backups"><code>backup list-backups</code><a class="headerlink" href="#backup-list-backups" title="Permanent link">&para;</a></h4>
+<p>List all available backups.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>depictio-cli<span class="w"> </span>backup<span class="w"> </span>list-backups<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--backup-path</code></td>
+<td><code>string</code></td>
+<td><code>./backups</code></td>
+<td>Path to backup directory</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>depictio-cli<span class="w"> </span>backup<span class="w"> </span>list-backups<span class="w"> </span>--backup-path<span class="w"> </span>./backups
+</code></pre></div>
+<h3 id="dashboard-commands">📈 Dashboard Commands<a class="headerlink" href="#dashboard-commands" title="Permanent link">&para;</a></h3>
+<!-- prettier-ignore -->
+<div class="admonition info">
+<p class="admonition-title">Command Group: <code>depictio-cli dashboard</code></p>
+<p>All commands in this section are part of the <code>dashboard</code> command family. Use them to validate dashboard YAML files before deployment.</p>
+</div>
+<p>Validate dashboard YAML files for the <a href="../../features/yaml-sync/">YAML Dashboard Sync</a> feature.</p>
+<h4 id="dashboard-validate"><code>dashboard validate</code><a class="headerlink" href="#dashboard-validate" title="Permanent link">&para;</a></h4>
+<p>Validate a single dashboard YAML file against the schema and optionally check column names and component types.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>depictio-cli<span class="w"> </span>dashboard<span class="w"> </span>validate<span class="w"> </span>&lt;yaml_file&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>yaml_file</code></td>
+<td><code>path</code></td>
+<td><strong>required</strong></td>
+<td>Path to YAML dashboard file</td>
+</tr>
+<tr>
+<td><code>--verbose</code> / <code>-v</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Show detailed validation output including warnings</td>
+</tr>
+<tr>
+<td><code>--check-columns</code> / <code>--no-check-columns</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Validate column names exist in data collection schema</td>
+</tr>
+<tr>
+<td><code>--check-types</code> / <code>--no-check-types</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Validate chart types, aggregation functions, filter types</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="c1"># Basic validation</span>
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>depictio-cli<span class="w"> </span>dashboard<span class="w"> </span>validate<span class="w"> </span>dashboards/local/my_dashboard.yaml
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="c1"># With verbose output</span>
+<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>depictio-cli<span class="w"> </span>dashboard<span class="w"> </span>validate<span class="w"> </span>dashboards/local/my_dashboard.yaml<span class="w"> </span>--verbose
+<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>
+<a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a><span class="c1"># Skip column validation (useful for templates without data access)</span>
+<a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a>depictio-cli<span class="w"> </span>dashboard<span class="w"> </span>validate<span class="w"> </span>template.yaml<span class="w"> </span>--no-check-columns
+</code></pre></div>
+<p><strong>Example Output (Success):</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>Validating: dashboards/local/my_dashboard.yaml
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>  Including column name validation
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>  Including component type validation
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>✓ Validation passed
+<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>  Errors: 0
+<a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>  Warnings: 0
+</code></pre></div>
+<p><strong>Example Output (Failure):</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>Validating: dashboards/local/my_dashboard.yaml
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>✗ Validation failed
+<a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>  Errors: 2
+<a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>  Warnings: 1
+<a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>
+<a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a>┌──────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a>│                       Validation Errors                          │
+<a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a>├─────────────────────┬────────────────┬───────────────────────────┤
+<a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a>│ Component           │ Field          │ Message                   │
+<a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a>├─────────────────────┼────────────────┼───────────────────────────┤
+<a id="__codelineno-42-12" name="__codelineno-42-12" href="#__codelineno-42-12"></a>│ scatter-plot-1      │ chart          │ Invalid chart type &#39;scat&#39; │
+<a id="__codelineno-42-13" name="__codelineno-42-13" href="#__codelineno-42-13"></a>│ card-average        │ column         │ Column &#39;sepal_len&#39; not    │
+<a id="__codelineno-42-14" name="__codelineno-42-14" href="#__codelineno-42-14"></a>│                     │                │ found. Did you mean       │
+<a id="__codelineno-42-15" name="__codelineno-42-15" href="#__codelineno-42-15"></a>│                     │                │ &#39;sepal.length&#39;?           │
+<a id="__codelineno-42-16" name="__codelineno-42-16" href="#__codelineno-42-16"></a>└─────────────────────┴────────────────┴───────────────────────────┘
+</code></pre></div>
+<hr />
+<h4 id="dashboard-validate-dir"><code>dashboard validate-dir</code><a class="headerlink" href="#dashboard-validate-dir" title="Permanent link">&para;</a></h4>
+<p>Validate all YAML files in a directory, with optional recursive search.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>depictio-cli<span class="w"> </span>dashboard<span class="w"> </span>validate-dir<span class="w"> </span><span class="o">[</span>directory<span class="o">]</span><span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>directory</code></td>
+<td><code>path</code></td>
+<td><code>.</code> (current)</td>
+<td>Directory to validate</td>
+</tr>
+<tr>
+<td><code>--recursive</code> / <code>-r</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Recursively search subdirectories</td>
+</tr>
+<tr>
+<td><code>--check-columns</code> / <code>--no-check-columns</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Validate column names exist in data collection schema</td>
+</tr>
+<tr>
+<td><code>--check-types</code> / <code>--no-check-types</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Validate chart types, aggregation functions, filter types</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="c1"># Validate all YAML files in local dashboards directory</span>
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>depictio-cli<span class="w"> </span>dashboard<span class="w"> </span>validate-dir<span class="w"> </span>dashboards/local/
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="c1"># Validate current directory only (non-recursive)</span>
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>depictio-cli<span class="w"> </span>dashboard<span class="w"> </span>validate-dir<span class="w"> </span>.<span class="w"> </span>--no-recursive
+<a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>
+<a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a><span class="c1"># Validate templates without column checks</span>
+<a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>depictio-cli<span class="w"> </span>dashboard<span class="w"> </span>validate-dir<span class="w"> </span>dashboards/templates/<span class="w"> </span>--no-check-columns
+</code></pre></div>
+<p><strong>Example Output:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>Found 5 YAML files
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>  Including column name validation
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>  Including component type validation
+<a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>
+<a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>┌──────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>│                       Validation Results                         │
+<a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>├───────────────────────────────────────┬──────────────┬───────────┤
+<a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a>│ File                                  │ Status       │ Errors    │
+<a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a>├───────────────────────────────────────┼──────────────┼───────────┤
+<a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a>│ Iris_Dashboard_demo_6824cb3b.yaml     │ ✓ Valid      │ 0         │
+<a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a>│ Analysis_Dashboard_6824cb3c.yaml      │ ✓ Valid      │ 0         │
+<a id="__codelineno-45-12" name="__codelineno-45-12" href="#__codelineno-45-12"></a>│ QC_Overview_6824cb3d.yaml             │ ✗ Invalid    │ 3         │
+<a id="__codelineno-45-13" name="__codelineno-45-13" href="#__codelineno-45-13"></a>│ Sample_Dashboard_6824cb3e.yaml        │ ✓ Valid      │ 0         │
+<a id="__codelineno-45-14" name="__codelineno-45-14" href="#__codelineno-45-14"></a>│ broken_config.yaml                    │ ✗ Invalid    │ 1         │
+<a id="__codelineno-45-15" name="__codelineno-45-15" href="#__codelineno-45-15"></a>└───────────────────────────────────────┴──────────────┴───────────┘
+<a id="__codelineno-45-16" name="__codelineno-45-16" href="#__codelineno-45-16"></a>
+<a id="__codelineno-45-17" name="__codelineno-45-17" href="#__codelineno-45-17"></a>Summary: 3 valid, 2 invalid
+</code></pre></div>
+<hr />
+<h4 id="dashboard-validation-in-cicd">Dashboard Validation in CI/CD<a class="headerlink" href="#dashboard-validation-in-cicd" title="Permanent link">&para;</a></h4>
+<p>Use dashboard validation in your CI/CD pipeline:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="c1"># GitHub Actions example</span>
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="w">  </span><span class="nt">validate-dashboards</span><span class="p">:</span>
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install depictio-cli</span>
+<a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install depictio</span>
+<a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Validate dashboards</span>
+<a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a><span class="w">          </span><span class="no">depictio-cli dashboard validate-dir dashboards/templates/ \</span>
+<a id="__codelineno-46-12" name="__codelineno-46-12" href="#__codelineno-46-12"></a><span class="w">            </span><span class="no">--no-check-columns  # Skip column checks (no DB access)</span>
+</code></pre></div>
+<p>For more information about the YAML Dashboard Sync feature, see <a href="../../features/yaml-sync/">YAML Dashboard Sync</a>.</p>
+<h2 id="common-use-cases">🛠️ Common Use Cases<a class="headerlink" href="#common-use-cases" title="Permanent link">&para;</a></h2>
+<h3 id="quick-start">🚀 Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Complete Setup</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="c1"># 1. Validate your project configuration</span>
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>validate-project-config<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>
+<a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a><span class="c1"># 2. Run the complete workflow</span>
+<a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+</code></pre></div>
+<div class="tabbed-set" data-tabs="6:1"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Step by Step</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="c1"># 1. Check system status</span>
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>check-server-accessibility
+<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>check-s3-storage
+<a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a>
+<a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a><span class="c1"># 2. Validate and sync configuration</span>
+<a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>validate-project-config<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>sync-project-config-to-server<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a>
+<a id="__codelineno-48-9" name="__codelineno-48-9" href="#__codelineno-48-9"></a><span class="c1"># 3. Scan and process data</span>
+<a id="__codelineno-48-10" name="__codelineno-48-10" href="#__codelineno-48-10"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-48-11" name="__codelineno-48-11" href="#__codelineno-48-11"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>process<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+</code></pre></div>
+<h3 id="development-workflow">🔧 Development Workflow<a class="headerlink" href="#development-workflow" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set" data-tabs="7:1"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Testing Changes</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="c1"># Preview changes without execution</span>
+<a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--dry-run
+<a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>
+<a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="c1"># Test with specific workflow</span>
+<a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--workflow-name<span class="w"> </span>test-workflow
+</code></pre></div>
+<div class="tabbed-set" data-tabs="8:1"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Debugging</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="c1"># Enable verbose logging</span>
+<a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--verbose<span class="w"> </span>--continue-on-error
+<a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>
+<a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="c1"># Skip problematic steps</span>
+<a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--skip-server-check<span class="w"> </span>--skip-s3-check
+</code></pre></div>
+<h3 id="backup-operations">💾 Backup Operations<a class="headerlink" href="#backup-operations" title="Permanent link">&para;</a></h3>
+<!-- prettier-ignore -->
+<div class="admonition warning">
+<p class="admonition-title">Admin Access Required</p>
+<p>All backup operations require administrator privileges.</p>
+</div>
+<div class="tabbed-set" data-tabs="9:1"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">Create Backup</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="c1"># Create timestamped backup</span>
+<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>depictio-cli<span class="w"> </span>backup<span class="w"> </span>backup<span class="w"> </span>--backup-name<span class="w"> </span><span class="s2">&quot;backup-</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d-%H%M%S<span class="k">)</span><span class="s2">&quot;</span>
+<a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>
+<a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a><span class="c1"># Custom backup location</span>
+<a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a>depictio-cli<span class="w"> </span>backup<span class="w"> </span>backup<span class="w"> </span>--backup-name<span class="w"> </span>production-backup<span class="w"> </span>--output-path<span class="w"> </span>/secure/backups
+</code></pre></div>
+<div class="tabbed-set" data-tabs="10:1"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><label for="__tabbed_10_1">Restore Backup</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="c1"># List available backups</span>
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>depictio-cli<span class="w"> </span>backup<span class="w"> </span>list-backups<span class="w"> </span>--backup-path<span class="w"> </span>/secure/backups
+<a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>
+<a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="c1"># Restore specific backup</span>
+<a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a>depictio-cli<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>--backup-path<span class="w"> </span>/secure/backups/production-backup<span class="w"> </span>--force
+</code></pre></div>
+<h3 id="data-management">📊 Data Management<a class="headerlink" href="#data-management" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set" data-tabs="11:1"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><label for="__tabbed_11_1">Rescan Data</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="c1"># Rescan all folders</span>
+<a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--rescan-folders
+<a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a>
+<a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="c1"># Sync file updates</span>
+<a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--sync-files
+</code></pre></div>
+<div class="tabbed-set" data-tabs="12:1"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><label for="__tabbed_12_1">Process Updates</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="c1"># Overwrite existing workflow</span>
+<a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>depictio-cli<span class="w"> </span>data<span class="w"> </span>process<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--overwrite
+<a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>
+<a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a><span class="c1"># Update and reprocess</span>
+<a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--update-config<span class="w"> </span>--overwrite
+</code></pre></div>
+<h2 id="error-handling">🔧 Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
+<h3 id="exit-codes">Exit Codes<a class="headerlink" href="#exit-codes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Success</td>
+<td>Command completed successfully</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Configuration error</td>
+<td>Check configuration file paths and syntax</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Server connection failed</td>
+<td>Verify server URL and network connectivity</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>S3 storage error</td>
+<td>Validate S3 credentials and bucket configuration</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>Data processing failed</td>
+<td>Check data file permissions and formats</td>
+</tr>
+</tbody>
+</table>
+<h3 id="common-issues">Common Issues<a class="headerlink" href="#common-issues" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set" data-tabs="13:3"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><label for="__tabbed_13_1">Connection Problems</label><div class="tabbed-content">
+<p><strong>Error:</strong> "Server not accessible"</p>
+<p><strong>Solutions:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="c1"># Check server accessibility</span>
+<a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>check-server-accessibility
+<a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>
+<a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="c1"># Verify CLI configuration</span>
+<a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>show-cli-config
+</code></pre></div></p>
+</div>
+<input id="__tabbed_13_2" name="__tabbed_13" type="radio" /><label for="__tabbed_13_2">Configuration Errors</label><div class="tabbed-content">
+<p><strong>Error:</strong> "Project config validation failed"</p>
+<p><strong>Solutions:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="c1"># Validate configuration with verbose output</span>
+<a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>validate-project-config<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--verbose
+<a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>
+<a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a><span class="c1"># Check configuration examples</span>
+<a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a><span class="c1"># See: minimal_config.md and full_reference_config.md</span>
+</code></pre></div></p>
+</div>
+<input id="__tabbed_13_3" name="__tabbed_13" type="radio" /><label for="__tabbed_13_3">Permission Issues</label><div class="tabbed-content">
+<p><strong>Error:</strong> "Admin access required"</p>
+<p><strong>Solutions:</strong>
+- Ensure you're logged in with admin credentials
+- Check CLI configuration includes admin access tokens
+- Contact system administrator for proper permissions</p>
+</div>
+</div>
+<h3 id="troubleshooting-steps">Troubleshooting Steps<a class="headerlink" href="#troubleshooting-steps" title="Permanent link">&para;</a></h3>
+<p><strong>1. Check Prerequisites:</strong></p>
+<ul>
+<li>Depictio server is running and accessible</li>
+<li>CLI configuration file exists (<code>~/.depictio/CLI.yaml</code>)</li>
+<li>Project configuration file is valid YAML</li>
+<li>Proper permissions for file access</li>
+</ul>
+<p><strong>2. Enable Verbose Logging:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>depictio-cli<span class="w"> </span><span class="o">[</span>command<span class="o">]</span><span class="w"> </span>--verbose<span class="w"> </span>--verbose-level<span class="w"> </span>DEBUG
+</code></pre></div>
+<p><strong>3. Test Components Individually:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>check-server-accessibility
+<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>check-s3-storage
+<a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>validate-project-config<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+</code></pre></div>
+<p><strong>4. Use Dry Run Mode:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--dry-run
+</code></pre></div>
+<h2 id="configuration-references">📖 Configuration References<a class="headerlink" href="#configuration-references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../minimal_config/">Minimal YAML Configuration</a></li>
+<li><a href="full_reference_config.md">Full Reference Configuration</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+
+  <!-- Custom Depictio Footer Content -->
+  <div class="depictio-footer">
+    <div class="depictio-footer__grid md-grid">
+
+      <!-- Logo Column -->
+      <div class="depictio-footer__section depictio-footer__brand">
+        <img src="../../images/logo/logo_icon.png" alt="Depictio" class="depictio-footer__logo">
+        <span class="depictio-footer__title">Depictio</span>
+        <p class="depictio-footer__tagline">Interactive dashboards for bioinformatics</p>
+      </div>
+
+      <!-- Connect Column -->
+      <div class="depictio-footer__section">
+        <h4 class="depictio-footer__heading">Connect</h4>
+        <ul class="depictio-footer__links">
+          <li><a href="https://github.com/depictio/depictio" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            GitHub
+          </a></li>
+          <li><a href="https://github.com/depictio/depictio/issues" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+            Report Issues
+          </a></li>
+          <li><a href="https://github.com/depictio/depictio/discussions" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+            Discussions
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Resources Column -->
+      <div class="depictio-footer__section">
+        <h4 class="depictio-footer__heading">Resources</h4>
+        <ul class="depictio-footer__links">
+          <li><a href="../../usage/get_started/">Getting Started</a></li>
+          <li><a href="../../installation/docker/">Installation</a></li>
+          <li><a href="../../features/">Features</a></li>
+          <li><a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">Live Demo</a></li>
+        </ul>
+      </div>
+
+      <!-- About Column -->
+      <div class="depictio-footer__section">
+        <h4 class="depictio-footer__heading">About</h4>
+        <ul class="depictio-footer__links">
+          <li><a href="https://github.com/depictio/depictio/blob/main/LICENSE" target="_blank" rel="noopener">License (MIT)</a></li>
+          <li><a href="../../developer/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/depictio/depictio/releases" target="_blank" rel="noopener">Releases</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Funding/Supported By Section -->
+    <div class="depictio-footer__funding md-grid">
+      <div class="depictio-footer__funding-label">Supported by</div>
+      <div class="depictio-footer__funding-logos">
+        <a href="https://www.embl.org/" target="_blank" rel="noopener" title="EMBL - European Molecular Biology Laboratory">
+          <img src="../../assets/EMBL_logo_colour_DIGITAL.png" alt="EMBL Logo" class="depictio-footer__funding-logo">
+        </a>
+        <a href="https://www.embl.org/about/info/arise/" target="_blank" rel="noopener" title="ARISE Programme">
+          <img src="../../assets/AriseLogo300dpi.png" alt="ARISE Logo" class="depictio-footer__funding-logo">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copyright Bar -->
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 - 2026 Thomas Weber
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/depictio/depictio" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.sections", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.expand", "navigation.top", "header.autohide", "toc.follow", "search.highlight", "search.share", "search.suggest", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../javascripts/triangular-animation.js"></script>
+      
+    
+  </body>
+</html>
