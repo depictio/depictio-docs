@@ -57,47 +57,20 @@ jobs:
           # Pull the released image
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.image_tag }}
 
-          # Start container - FastAPI can serve /openapi.json without database connection
-          echo "Starting API container..."
-          docker run -d --name depictio-api \
-            -p 8058:8058 \
+          # Generate OpenAPI schema directly without starting the server
+          # This avoids the need for MongoDB and other dependencies
+          echo "Generating OpenAPI specification..."
+          docker run --rm \
             -e DEPICTIO_CONTEXT=server \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.image_tag }} \
-            uvicorn depictio.api.main:app --host 0.0.0.0 --port 8058
-
-          # Wait for API to be ready with proper timeout handling
-          echo "Waiting for API to start..."
-          API_READY=false
-          for i in {1..30}; do
-            if curl -sf http://localhost:8058/openapi.json > /dev/null 2>&1; then
-              echo "API is ready!"
-              API_READY=true
-              break
-            fi
-            echo "Attempt $i/30..."
-            sleep 2
-          done
-
-          if [ "$API_READY" = false ]; then
-            echo "Error: API failed to start after 60 seconds"
-            echo "Container logs:"
-            docker logs depictio-api
-            docker stop depictio-api || true
-            docker rm depictio-api || true
-            exit 1
-          fi
-
-          # Fetch OpenAPI spec
-          echo "Fetching OpenAPI specification..."
-          curl -sf http://localhost:8058/openapi.json > docs/api/openapi.json
+            python -c "import json; from depictio.api.main import app; print(json.dumps(app.openapi(), indent=2))" \
+            > docs/api/openapi.json
 
           # Verify the file is valid JSON and has content
           echo "Validating OpenAPI specification..."
           if ! jq empty docs/api/openapi.json 2>/dev/null; then
             echo "Error: Invalid JSON in openapi.json"
             cat docs/api/openapi.json
-            docker stop depictio-api || true
-            docker rm depictio-api || true
             exit 1
           fi
 
@@ -106,8 +79,6 @@ jobs:
           if [ "$FILE_SIZE" -lt 100 ]; then
             echo "Error: openapi.json is too small ($FILE_SIZE bytes)"
             cat docs/api/openapi.json
-            docker stop depictio-api || true
-            docker rm depictio-api || true
             exit 1
           fi
 
@@ -115,8 +86,6 @@ jobs:
           PATH_COUNT=$(jq '.paths | keys | length' docs/api/openapi.json)
           if [ "$PATH_COUNT" -lt 10 ]; then
             echo "Error: openapi.json has too few endpoints ($PATH_COUNT)"
-            docker stop depictio-api || true
-            docker rm depictio-api || true
             exit 1
           fi
 
@@ -126,10 +95,6 @@ jobs:
              '.info["x-generated-at"] = $date | .info["x-depictio-version"] = $version' \
              docs/api/openapi.json > /tmp/openapi.json
           mv /tmp/openapi.json docs/api/openapi.json
-
-          # Cleanup
-          docker stop depictio-api || true
-          docker rm depictio-api || true
 
           echo "OpenAPI spec extracted successfully: $PATH_COUNT endpoints"
 
