@@ -41,10 +41,6 @@ jobs:
           echo "prerelease=${PRERELEASE}" >> $GITHUB_OUTPUT
           echo "branch=docs/update-${VERSION}" >> $GITHUB_OUTPUT
 
-      - name: Create update branch
-        run: |
-          git checkout -b ${{ steps.version.outputs.branch }}
-
       - name: Log in to Container Registry
         uses: docker/login-action@v3
         with:
@@ -102,33 +98,13 @@ jobs:
         run: |
           sed -i "s/^version = .*/version = \"${{ steps.version.outputs.image_tag }}\"/" pyproject.toml
 
-      - name: Commit changes
-        run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "actions@github.com"
-
-          git add docs/api/openapi.json pyproject.toml
-
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-            echo "has_changes=false" >> $GITHUB_ENV
-          else
-            git commit -m "Update docs for ${{ steps.version.outputs.version }}"
-            echo "has_changes=true" >> $GITHUB_ENV
-          fi
-
-      - name: Push branch
-        if: env.has_changes == 'true'
-        run: |
-          git push origin ${{ steps.version.outputs.branch }}
-
       - name: Create Pull Request
-        if: env.has_changes == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ steps.version.outputs.branch }}
           base: main
+          commit-message: "docs: update for ${{ steps.version.outputs.version }}"
           title: "docs: Update for ${{ steps.version.outputs.version }}"
           body: |
             ## Automated Documentation Update
@@ -149,6 +125,9 @@ jobs:
             documentation
             automated
           draft: false
+          add-paths: |
+            docs/api/openapi.json
+            pyproject.toml
 
       - name: Summary
         run: |
