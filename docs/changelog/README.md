@@ -8,49 +8,143 @@ hide:
 
 # Changelog
 
+## **[v0.6.0](https://github.com/depictio/depictio/releases/tag/v0.6.0)** (January 25, 2026)
+
+!!! success "Stable Release"
+    This is a production-ready stable release based on v0.6.0-b18.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.0
+ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:stable
+```
+
+### **✨ Features**
+
+* **Dashboard UI**: Integrated fullscreen button into ActionIconGroup for improved component controls and better user experience
+
+### **🐛 Bug Fixes**
+
+* **Kubernetes Deployment**: Allow explicit `DEPICTIO_FASTAPI_PUBLIC_URL` override in ConfigMaps for flexible API URL configuration
+* **Kubernetes Deployment**: Generate `api_internal_key.pem` during backend startup to ensure proper key management
+* **Kubernetes Deployment**: Init containers now wait for `private_key.pem` instead of `api_internal_key.pem` for correct initialization sequence
+* **Kubernetes Deployment**: Disable YAML auto-export for K8s deployments to prevent configuration conflicts
+* **EMBL Deployment**: Add explicit API URL configuration and reduce replicas for EMBL dev environment optimization
+
+### **🧹 Internal Changes**
+
+* Version synchronization across all configuration files (pyproject.toml, Chart.yaml, values.yaml)
+* Helm chart version updates with date-based versioning
+
+---
 
 ## **v0.6.0 Beta Releases**
 
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
 
+### **[v0.6.0-b18](https://github.com/depictio/depictio/releases/tag/v0.6.0-b18)** (January 24, 2026)
+
+#### **🐛 Fixes**
+* Sync Chart.yaml appVersion to 0.6.0-b17
+* Allow explicit DEPICTIO_FASTAPI_PUBLIC_URL override in ConfigMaps
+* Add explicit API URL and reduce replicas for EMBL dev
+
+---
+
+### **[v0.6.0-b17](https://github.com/depictio/depictio/releases/tag/v0.6.0-b17)** (January 24, 2026)
+
+#### **🐛 Fixes**
+* Sync all version files to 0.6.0-b17
+
+---
+
+### **[v0.6.0-b16](https://github.com/depictio/depictio/releases/tag/v0.6.0-b16)** (January 24, 2026)
+
+#### **🐛 Fixes**
+* Correct corrupted appVersion in Chart.yaml
+
+---
+
+### **[v0.6.0-b15](https://github.com/depictio/depictio/releases/tag/v0.6.0-b15)** (January 24, 2026)
+
+#### **🐛 Fixes**
+* Correct corrupted version strings across all files
+
+---
+
+### **[v0.6.0-b14](https://github.com/depictio/depictio/releases/tag/v0.6.0-b14)** (January 24, 2026)
+
+#### **✨ Features**
+* Integrated fullscreen button into ActionIconGroup
+
+#### **🐛 Fixes**
+* Generate `api_internal_key.pem` during backend startup
+* Init containers wait for `private_key.pem` instead of `api_internal_key.pem`
+* Disable YAML auto-export for K8s deployments
+
+---
+
+### **[v0.6.0-b13](https://github.com/depictio/depictio/releases/tag/v0.6.0-b13)** (January 24, 2026)
+
+#### **🐛 Fixes**
+* Add YAML watcher environment variables to Helm ConfigMap
+
+---
+
+### **[v0.6.0-b12](https://github.com/depictio/depictio/releases/tag/v0.6.0-b12)** (January 24, 2026)
+
+#### **🐛 Fixes**
+* Disable YAML watcher for Kubernetes deployments
+
+---
+
+### **[v0.6.0-b11](https://github.com/depictio/depictio/releases/tag/v0.6.0-b11)** (January 23, 2026)
+
+#### **✨ Features**
+* Wait for Docker build and add post-deploy CLI registration
+
+#### **🧹 CI/CD**
+* Update all Docker builds to use uv-based Dockerfile
+
+---
+
+### **[v0.6.0-b10](https://github.com/depictio/depictio/releases/tag/v0.6.0-b10)** (January 23, 2026)
+
+#### **🐛 Fixes**
+* Use absolute path for secrets file on self-hosted runner
+
+---
+
+### **[v0.6.0-b9](https://github.com/depictio/depictio/releases/tag/v0.6.0-b9)** (January 23, 2026)
+
+#### **✨ Features**
+* Add EMBL self-hosted deployment workflow
+
+---
+
 ### **[v0.6.0-b8](https://github.com/depictio/depictio/releases/tag/v0.6.0-b8)** (January 23, 2026)
-
-#### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.6.0-b8
-ghcr.io/depictio/depictio:beta
-ghcr.io/depictio/depictio:edge
-```
 
 #### **🧹 CI/CD**
 
-* **Documentation Workflow**: Fixed race condition where docs update ran before Docker image was pushed by moving `repository_dispatch` to end of Docker build workflow. ([61a1b6fa](https://github.com/depictio/depictio/commit/61a1b6fa))
+* Fixed race condition in documentation workflow
 
 ---
 
 ### **[v0.6.0-b7](https://github.com/depictio/depictio/releases/tag/v0.6.0-b7)** (January 23, 2026)
 
-#### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.6.0-b7
-```
-
-#### **✨ Features**
-
-* **Fullscreen Mode**: Added fullscreen mode for figure components, allowing users to expand charts to full viewport. ([0fe66bd8](https://github.com/depictio/depictio/commit/0fe66bd8))
-
-#### **🚀 Improvements**
-
-* **Screenshot Generation**: Moved screenshot generation to background Celery task for improved API responsiveness. ([81ce338d](https://github.com/depictio/depictio/commit/81ce338d))
-* **Code Cleanup**: Removed 700+ lines of commented backup code from save module. ([ea91dbb6](https://github.com/depictio/depictio/commit/ea91dbb6))
-
 #### **🧹 CI/CD**
 
-* **Docs Workflow Refactor**: Moved API documentation update workflow from depictio repo to depictio-docs repo for better separation of concerns. ([037df501](https://github.com/depictio/depictio/commit/037df501))
-* Added tag push trigger to update-api-docs workflow. ([25856c56](https://github.com/depictio/depictio/commit/25856c56))
+* Move API docs workflow to depictio-docs repo
+
+---
+
+### **v0.6.0-b6** (January 23, 2026)
+
+!!! info "Internal Release"
+    Version bump only - no public release
 
 ---
 
