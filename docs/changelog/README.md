@@ -11,7 +11,7 @@ hide:
 ## **[v0.6.2](https://github.com/depictio/depictio/releases/tag/v0.6.2)** (January 29, 2026)
 
 !!! success "Stable Release"
-    This is a production-ready stable release based on v0.6.2-b7.
+    This is a stable release based on v0.6.2-b7.
 
 ### Docker Images
 
@@ -35,45 +35,6 @@ ghcr.io/depictio/depictio:stable
 
 * Removed MultiQC from automatic reference dataset initialization (data files require separate setup)
 * Version synchronization across all configuration files
-
----
-
-## **[v0.6.1](https://github.com/depictio/depictio/releases/tag/v0.6.1)** (January 28, 2026)
-
-!!! success "Stable Release"
-    This is a production-ready stable release based on v0.6.1-b1.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.6.1
-```
-
-### **✨ Features**
-
-* **Reference Dashboards**: Added pre-configured dashboard screenshots for improved visual representation in the dashboard gallery.
-* **Dashboard UI**: Enhanced dashboards management page with new categories, tab count badges, and screenshot carousel tooltips.
-* **Auto-Screenshots**: Added automatic screenshot generation callback for dashboard viewer.
-
-### **🐛 Bug Fixes**
-
-* **Kubernetes Deployment**: Fixed K8s CORS configuration, Celery screenshot handling, and delta table errors.
-* **Helm Chart**: Added master switch to completely disable YAML dashboard sync feature.
-* **Reference Datasets**: Made deltatable checks non-fatal in CLI jobs to prevent blocking on optional data.
-* **Authentication**: Removed premature validation error on auth modal landing.
-* **Theme Compatibility**: Made "Back to Dashboards" link theme-compatible.
-
-### **🚀 Improvements**
-
-* **Reference Projects**: Reorganized demo datasets with improved project configurations.
-* **Dashboard Gallery**: Added dashboard counts to section headers and expand all non-empty sections by default.
-* **Tab Preview**: Added zoom preview to multi-tab dashboard carousel with HoverCard.
-
-### **🧹 Internal Changes**
-
-* Refactored screenshot processing from API endpoint to Celery task
-* Reorganized project configs to use project-level joins/links
-* Added auto-registration for penguins and multiqc reference datasets
 
 ---
 
@@ -140,6 +101,45 @@ ghcr.io/depictio/depictio:0.6.1
 
 ---
 
+## **[v0.6.1](https://github.com/depictio/depictio/releases/tag/v0.6.1)** (January 28, 2026)
+
+!!! success "Stable Release"
+    This is a stable release based on v0.6.1-b1.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.1
+```
+
+### **✨ Features**
+
+* **Reference Dashboards**: Added pre-configured dashboard screenshots for improved visual representation in the dashboard gallery.
+* **Dashboard UI**: Enhanced dashboards management page with new categories, tab count badges, and screenshot carousel tooltips.
+* **Auto-Screenshots**: Added automatic screenshot generation callback for dashboard viewer.
+
+### **🐛 Bug Fixes**
+
+* **Kubernetes Deployment**: Fixed K8s CORS configuration, Celery screenshot handling, and delta table errors.
+* **Helm Chart**: Added master switch to completely disable YAML dashboard sync feature.
+* **Reference Datasets**: Made deltatable checks non-fatal in CLI jobs to prevent blocking on optional data.
+* **Authentication**: Removed premature validation error on auth modal landing.
+* **Theme Compatibility**: Made "Back to Dashboards" link theme-compatible.
+
+### **🚀 Improvements**
+
+* **Reference Projects**: Reorganized demo datasets with improved project configurations.
+* **Dashboard Gallery**: Added dashboard counts to section headers and expand all non-empty sections by default.
+* **Tab Preview**: Added zoom preview to multi-tab dashboard carousel with HoverCard.
+
+### **🧹 Internal Changes**
+
+* Refactored screenshot processing from API endpoint to Celery task
+* Reorganized project configs to use project-level joins/links
+* Added auto-registration for penguins and multiqc reference datasets
+
+---
+
 ## **v0.6.1 Beta Releases**
 
 !!! warning "Beta Releases"
@@ -162,7 +162,7 @@ ghcr.io/depictio/depictio:0.6.1
 ## **[v0.6.0](https://github.com/depictio/depictio/releases/tag/v0.6.0)** (January 25, 2026)
 
 !!! success "Stable Release"
-    This is a production-ready stable release based on v0.6.0-b18.
+    This is a stable release based on v0.6.0-b18.
 
 ### Docker Images
 
