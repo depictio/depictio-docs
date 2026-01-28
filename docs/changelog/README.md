@@ -8,6 +8,157 @@ hide:
 
 # Changelog
 
+## **[v0.6.2](https://github.com/depictio/depictio/releases/tag/v0.6.2)** (January 29, 2026)
+
+!!! success "Stable Release"
+    This is a production-ready stable release based on v0.6.2-b7.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.2
+ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:stable
+```
+
+### **🐛 Bug Fixes**
+
+* **MultiQC Data Processing**: Removed incorrect deltatable registration from MultiQC processor to fix HTTP 400 errors on re-processing. MultiQC uses dedicated API endpoints, not the deltatables collection.
+* **S3 Cleanup**: Fixed orphaned file cleanup to skip MultiQC consistency checks that caused false positives.
+* **Kubernetes Deployment**: Mount screenshots PVC in Celery worker for shared access to dashboard preview images.
+* **Screenshot Cleanup**: Fixed dashboard ID extraction to properly strip `_dark`/`_light` suffixes before validation.
+* **Authentication**: Fixed auth redirect for stale tokens that caused `AttributeError: 'NoneType' object has no attribute 'email'`.
+* **Race Condition**: Handle duplicate project creation race condition in multi-worker Gunicorn initialization.
+* **Reference Datasets**: Pre-create screenshot files for reference dashboards to ensure proper display.
+
+### **🧹 Internal Changes**
+
+* Removed MultiQC from automatic reference dataset initialization (data files require separate setup)
+* Version synchronization across all configuration files
+
+---
+
+## **[v0.6.1](https://github.com/depictio/depictio/releases/tag/v0.6.1)** (January 28, 2026)
+
+!!! success "Stable Release"
+    This is a production-ready stable release based on v0.6.1-b1.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.1
+```
+
+### **✨ Features**
+
+* **Reference Dashboards**: Added pre-configured dashboard screenshots for improved visual representation in the dashboard gallery.
+* **Dashboard UI**: Enhanced dashboards management page with new categories, tab count badges, and screenshot carousel tooltips.
+* **Auto-Screenshots**: Added automatic screenshot generation callback for dashboard viewer.
+
+### **🐛 Bug Fixes**
+
+* **Kubernetes Deployment**: Fixed K8s CORS configuration, Celery screenshot handling, and delta table errors.
+* **Helm Chart**: Added master switch to completely disable YAML dashboard sync feature.
+* **Reference Datasets**: Made deltatable checks non-fatal in CLI jobs to prevent blocking on optional data.
+* **Authentication**: Removed premature validation error on auth modal landing.
+* **Theme Compatibility**: Made "Back to Dashboards" link theme-compatible.
+
+### **🚀 Improvements**
+
+* **Reference Projects**: Reorganized demo datasets with improved project configurations.
+* **Dashboard Gallery**: Added dashboard counts to section headers and expand all non-empty sections by default.
+* **Tab Preview**: Added zoom preview to multi-tab dashboard carousel with HoverCard.
+
+### **🧹 Internal Changes**
+
+* Refactored screenshot processing from API endpoint to Celery task
+* Reorganized project configs to use project-level joins/links
+* Added auto-registration for penguins and multiqc reference datasets
+
+---
+
+## **v0.6.2 Beta Releases**
+
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v0.6.2-b7](https://github.com/depictio/depictio/releases/tag/v0.6.2-b7)** (January 29, 2026)
+
+#### **🐛 Fixes**
+* Restore pre-created screenshot files for reference dashboards
+
+---
+
+### **[v0.6.2-b6](https://github.com/depictio/depictio/releases/tag/v0.6.2-b6)** (January 29, 2026)
+
+#### **🐛 Fixes**
+* Fix auth redirect on stale token (NoneType attribute error)
+* Fix screenshot cleanup bug (strip _dark/_light suffix from dashboard ID)
+
+---
+
+### **[v0.6.2-b5](https://github.com/depictio/depictio/releases/tag/v0.6.2-b5)** (January 29, 2026)
+
+#### **🐛 Fixes**
+* Correct corrupted version strings in pyproject.toml files
+* Correct corrupted Helm chart YAML from version bump script
+
+---
+
+### **[v0.6.2-b4](https://github.com/depictio/depictio/releases/tag/v0.6.2-b4)** (January 29, 2026)
+
+#### **🐛 Fixes**
+* Handle race condition in reference dataset init (duplicate project error)
+* Remove multiqc from automatic reference dataset initialization
+* Mount screenshots PVC in Celery worker for shared access
+* Handle None user in route_authenticated_user
+* Remove incorrect MultiQC deltatable check from S3 cleanup
+
+---
+
+### **[v0.6.2-b3](https://github.com/depictio/depictio/releases/tag/v0.6.2-b3)** (January 29, 2026)
+
+#### **🐛 Fixes**
+* Set reference projects/dashboards as public
+* Add frontend screenshots for reference dashboards
+
+---
+
+### **[v0.6.2-b2](https://github.com/depictio/depictio/releases/tag/v0.6.2-b2)** (January 28, 2026)
+
+#### **🐛 Fixes**
+* Add missing ampliseq data files and multiqc reference project
+* Fix K8s Celery background callbacks and screenshot init container
+
+---
+
+### **[v0.6.2-b1](https://github.com/depictio/depictio/releases/tag/v0.6.2-b1)** (January 28, 2026)
+
+#### **🐛 Fixes**
+* Fix K8s deployment CORS, Celery screenshots, and delta table errors
+* Remove incorrect deltatable registration from MultiQC processor
+
+---
+
+## **v0.6.1 Beta Releases**
+
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v0.6.1-b1](https://github.com/depictio/depictio/releases/tag/v0.6.1-b1)** (January 28, 2026)
+
+#### **✨ Features**
+* Update dashboard screenshots for improved visual representation
+* Add reference dashboard screenshots and improve CI verification
+
+#### **🐛 Fixes**
+* Add master switch to completely disable YAML dashboard sync
+* Make reference dataset deltatable checks non-fatal in CLI jobs
+* Use correct Ampliseq project name in CI verification
+* Remove redundant color parameter from box plot
+
+---
+
 ## **[v0.6.0](https://github.com/depictio/depictio/releases/tag/v0.6.0)** (January 25, 2026)
 
 !!! success "Stable Release"
