@@ -2370,6 +2370,50 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#v062-january-29-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.6.2 (January 29, 2026)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v061-january-28-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.6.1 (January 28, 2026)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v062-beta-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.6.2 Beta Releases
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v061-beta-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.6.1 Beta Releases
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#v060-january-25-2026" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3198,6 +3242,50 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#v062-january-29-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.6.2 (January 29, 2026)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v061-january-28-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.6.1 (January 28, 2026)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v062-beta-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.6.2 Beta Releases
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v061-beta-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.6.1 Beta Releases
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#v060-january-25-2026" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3440,21 +3528,157 @@
 
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h2 id="v062-january-29-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.2">v0.6.2</a></strong> (January 29, 2026)<a class="headerlink" href="#v062-january-29-2026" title="Permanent link">&para;</a></h2>
+<div class="admonition success">
+<p class="admonition-title">Stable Release</p>
+<p>This is a production-ready stable release based on v0.6.2-b7.</p>
+</div>
+<h3 id="docker-images">Docker Images<a class="headerlink" href="#docker-images" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ghcr.io/depictio/depictio:0.6.2
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>ghcr.io/depictio/depictio:stable
+</code></pre></div>
+<h3 id="bug-fixes"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>MultiQC Data Processing</strong>: Removed incorrect deltatable registration from MultiQC processor to fix HTTP 400 errors on re-processing. MultiQC uses dedicated API endpoints, not the deltatables collection.</li>
+<li><strong>S3 Cleanup</strong>: Fixed orphaned file cleanup to skip MultiQC consistency checks that caused false positives.</li>
+<li><strong>Kubernetes Deployment</strong>: Mount screenshots PVC in Celery worker for shared access to dashboard preview images.</li>
+<li><strong>Screenshot Cleanup</strong>: Fixed dashboard ID extraction to properly strip <code>_dark</code>/<code>_light</code> suffixes before validation.</li>
+<li><strong>Authentication</strong>: Fixed auth redirect for stale tokens that caused <code>AttributeError: 'NoneType' object has no attribute 'email'</code>.</li>
+<li><strong>Race Condition</strong>: Handle duplicate project creation race condition in multi-worker Gunicorn initialization.</li>
+<li><strong>Reference Datasets</strong>: Pre-create screenshot files for reference dashboards to ensure proper display.</li>
+</ul>
+<h3 id="internal-changes"><strong>🧹 Internal Changes</strong><a class="headerlink" href="#internal-changes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Removed MultiQC from automatic reference dataset initialization (data files require separate setup)</li>
+<li>Version synchronization across all configuration files</li>
+</ul>
+<hr />
+<h2 id="v061-january-28-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.1">v0.6.1</a></strong> (January 28, 2026)<a class="headerlink" href="#v061-january-28-2026" title="Permanent link">&para;</a></h2>
+<div class="admonition success">
+<p class="admonition-title">Stable Release</p>
+<p>This is a production-ready stable release based on v0.6.1-b1.</p>
+</div>
+<h3 id="docker-images_1">Docker Images<a class="headerlink" href="#docker-images_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ghcr.io/depictio/depictio:0.6.1
+</code></pre></div>
+<h3 id="features"><strong>✨ Features</strong><a class="headerlink" href="#features" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Reference Dashboards</strong>: Added pre-configured dashboard screenshots for improved visual representation in the dashboard gallery.</li>
+<li><strong>Dashboard UI</strong>: Enhanced dashboards management page with new categories, tab count badges, and screenshot carousel tooltips.</li>
+<li><strong>Auto-Screenshots</strong>: Added automatic screenshot generation callback for dashboard viewer.</li>
+</ul>
+<h3 id="bug-fixes_1"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Kubernetes Deployment</strong>: Fixed K8s CORS configuration, Celery screenshot handling, and delta table errors.</li>
+<li><strong>Helm Chart</strong>: Added master switch to completely disable YAML dashboard sync feature.</li>
+<li><strong>Reference Datasets</strong>: Made deltatable checks non-fatal in CLI jobs to prevent blocking on optional data.</li>
+<li><strong>Authentication</strong>: Removed premature validation error on auth modal landing.</li>
+<li><strong>Theme Compatibility</strong>: Made "Back to Dashboards" link theme-compatible.</li>
+</ul>
+<h3 id="improvements"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Reference Projects</strong>: Reorganized demo datasets with improved project configurations.</li>
+<li><strong>Dashboard Gallery</strong>: Added dashboard counts to section headers and expand all non-empty sections by default.</li>
+<li><strong>Tab Preview</strong>: Added zoom preview to multi-tab dashboard carousel with HoverCard.</li>
+</ul>
+<h3 id="internal-changes_1"><strong>🧹 Internal Changes</strong><a class="headerlink" href="#internal-changes_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Refactored screenshot processing from API endpoint to Celery task</li>
+<li>Reorganized project configs to use project-level joins/links</li>
+<li>Added auto-registration for penguins and multiqc reference datasets</li>
+</ul>
+<hr />
+<h2 id="v062-beta-releases"><strong>v0.6.2 Beta Releases</strong><a class="headerlink" href="#v062-beta-releases" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Beta Releases</p>
+<p>These are pre-release versions intended for testing. Use in production at your own risk.</p>
+</div>
+<h3 id="v062-b7-january-29-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.2-b7">v0.6.2-b7</a></strong> (January 29, 2026)<a class="headerlink" href="#v062-b7-january-29-2026" title="Permanent link">&para;</a></h3>
+<h4 id="fixes"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Restore pre-created screenshot files for reference dashboards</li>
+</ul>
+<hr />
+<h3 id="v062-b6-january-29-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.2-b6">v0.6.2-b6</a></strong> (January 29, 2026)<a class="headerlink" href="#v062-b6-january-29-2026" title="Permanent link">&para;</a></h3>
+<h4 id="fixes_1"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Fix auth redirect on stale token (NoneType attribute error)</li>
+<li>Fix screenshot cleanup bug (strip _dark/_light suffix from dashboard ID)</li>
+</ul>
+<hr />
+<h3 id="v062-b5-january-29-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.2-b5">v0.6.2-b5</a></strong> (January 29, 2026)<a class="headerlink" href="#v062-b5-january-29-2026" title="Permanent link">&para;</a></h3>
+<h4 id="fixes_2"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Correct corrupted version strings in pyproject.toml files</li>
+<li>Correct corrupted Helm chart YAML from version bump script</li>
+</ul>
+<hr />
+<h3 id="v062-b4-january-29-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.2-b4">v0.6.2-b4</a></strong> (January 29, 2026)<a class="headerlink" href="#v062-b4-january-29-2026" title="Permanent link">&para;</a></h3>
+<h4 id="fixes_3"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Handle race condition in reference dataset init (duplicate project error)</li>
+<li>Remove multiqc from automatic reference dataset initialization</li>
+<li>Mount screenshots PVC in Celery worker for shared access</li>
+<li>Handle None user in route_authenticated_user</li>
+<li>Remove incorrect MultiQC deltatable check from S3 cleanup</li>
+</ul>
+<hr />
+<h3 id="v062-b3-january-29-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.2-b3">v0.6.2-b3</a></strong> (January 29, 2026)<a class="headerlink" href="#v062-b3-january-29-2026" title="Permanent link">&para;</a></h3>
+<h4 id="fixes_4"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_4" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Set reference projects/dashboards as public</li>
+<li>Add frontend screenshots for reference dashboards</li>
+</ul>
+<hr />
+<h3 id="v062-b2-january-28-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.2-b2">v0.6.2-b2</a></strong> (January 28, 2026)<a class="headerlink" href="#v062-b2-january-28-2026" title="Permanent link">&para;</a></h3>
+<h4 id="fixes_5"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Add missing ampliseq data files and multiqc reference project</li>
+<li>Fix K8s Celery background callbacks and screenshot init container</li>
+</ul>
+<hr />
+<h3 id="v062-b1-january-28-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.2-b1">v0.6.2-b1</a></strong> (January 28, 2026)<a class="headerlink" href="#v062-b1-january-28-2026" title="Permanent link">&para;</a></h3>
+<h4 id="fixes_6"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_6" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Fix K8s deployment CORS, Celery screenshots, and delta table errors</li>
+<li>Remove incorrect deltatable registration from MultiQC processor</li>
+</ul>
+<hr />
+<h2 id="v061-beta-releases"><strong>v0.6.1 Beta Releases</strong><a class="headerlink" href="#v061-beta-releases" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Beta Releases</p>
+<p>These are pre-release versions intended for testing. Use in production at your own risk.</p>
+</div>
+<h3 id="v061-b1-january-28-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.1-b1">v0.6.1-b1</a></strong> (January 28, 2026)<a class="headerlink" href="#v061-b1-january-28-2026" title="Permanent link">&para;</a></h3>
+<h4 id="features_1"><strong>✨ Features</strong><a class="headerlink" href="#features_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Update dashboard screenshots for improved visual representation</li>
+<li>Add reference dashboard screenshots and improve CI verification</li>
+</ul>
+<h4 id="fixes_7"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_7" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Add master switch to completely disable YAML dashboard sync</li>
+<li>Make reference dataset deltatable checks non-fatal in CLI jobs</li>
+<li>Use correct Ampliseq project name in CI verification</li>
+<li>Remove redundant color parameter from box plot</li>
+</ul>
+<hr />
 <h2 id="v060-january-25-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0">v0.6.0</a></strong> (January 25, 2026)<a class="headerlink" href="#v060-january-25-2026" title="Permanent link">&para;</a></h2>
 <div class="admonition success">
 <p class="admonition-title">Stable Release</p>
 <p>This is a production-ready stable release based on v0.6.0-b18.</p>
 </div>
-<h3 id="docker-images">Docker Images<a class="headerlink" href="#docker-images" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ghcr.io/depictio/depictio:0.6.0
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>ghcr.io/depictio/depictio:stable
+<h3 id="docker-images_2">Docker Images<a class="headerlink" href="#docker-images_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ghcr.io/depictio/depictio:0.6.0
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>ghcr.io/depictio/depictio:stable
 </code></pre></div>
-<h3 id="features"><strong>✨ Features</strong><a class="headerlink" href="#features" title="Permanent link">&para;</a></h3>
+<h3 id="features_2"><strong>✨ Features</strong><a class="headerlink" href="#features_2" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Dashboard UI</strong>: Integrated fullscreen button into ActionIconGroup for improved component controls and better user experience</li>
 </ul>
-<h3 id="bug-fixes"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes" title="Permanent link">&para;</a></h3>
+<h3 id="bug-fixes_2"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_2" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Kubernetes Deployment</strong>: Allow explicit <code>DEPICTIO_FASTAPI_PUBLIC_URL</code> override in ConfigMaps for flexible API URL configuration</li>
 <li><strong>Kubernetes Deployment</strong>: Generate <code>api_internal_key.pem</code> during backend startup to ensure proper key management</li>
@@ -3462,7 +3686,7 @@
 <li><strong>Kubernetes Deployment</strong>: Disable YAML auto-export for K8s deployments to prevent configuration conflicts</li>
 <li><strong>EMBL Deployment</strong>: Add explicit API URL configuration and reduce replicas for EMBL dev environment optimization</li>
 </ul>
-<h3 id="internal-changes"><strong>🧹 Internal Changes</strong><a class="headerlink" href="#internal-changes" title="Permanent link">&para;</a></h3>
+<h3 id="internal-changes_2"><strong>🧹 Internal Changes</strong><a class="headerlink" href="#internal-changes_2" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Version synchronization across all configuration files (pyproject.toml, Chart.yaml, values.yaml)</li>
 <li>Helm chart version updates with date-based versioning</li>
@@ -3474,7 +3698,7 @@
 <p>These are pre-release versions intended for testing. Use in production at your own risk.</p>
 </div>
 <h3 id="v060-b18-january-24-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b18">v0.6.0-b18</a></strong> (January 24, 2026)<a class="headerlink" href="#v060-b18-january-24-2026" title="Permanent link">&para;</a></h3>
-<h4 id="fixes"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes" title="Permanent link">&para;</a></h4>
+<h4 id="fixes_8"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_8" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Sync Chart.yaml appVersion to 0.6.0-b17</li>
 <li>Allow explicit DEPICTIO_FASTAPI_PUBLIC_URL override in ConfigMaps</li>
@@ -3482,29 +3706,29 @@
 </ul>
 <hr />
 <h3 id="v060-b17-january-24-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b17">v0.6.0-b17</a></strong> (January 24, 2026)<a class="headerlink" href="#v060-b17-january-24-2026" title="Permanent link">&para;</a></h3>
-<h4 id="fixes_1"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_1" title="Permanent link">&para;</a></h4>
+<h4 id="fixes_9"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_9" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Sync all version files to 0.6.0-b17</li>
 </ul>
 <hr />
 <h3 id="v060-b16-january-24-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b16">v0.6.0-b16</a></strong> (January 24, 2026)<a class="headerlink" href="#v060-b16-january-24-2026" title="Permanent link">&para;</a></h3>
-<h4 id="fixes_2"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_2" title="Permanent link">&para;</a></h4>
+<h4 id="fixes_10"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_10" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Correct corrupted appVersion in Chart.yaml</li>
 </ul>
 <hr />
 <h3 id="v060-b15-january-24-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b15">v0.6.0-b15</a></strong> (January 24, 2026)<a class="headerlink" href="#v060-b15-january-24-2026" title="Permanent link">&para;</a></h3>
-<h4 id="fixes_3"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_3" title="Permanent link">&para;</a></h4>
+<h4 id="fixes_11"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_11" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Correct corrupted version strings across all files</li>
 </ul>
 <hr />
 <h3 id="v060-b14-january-24-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b14">v0.6.0-b14</a></strong> (January 24, 2026)<a class="headerlink" href="#v060-b14-january-24-2026" title="Permanent link">&para;</a></h3>
-<h4 id="features_1"><strong>✨ Features</strong><a class="headerlink" href="#features_1" title="Permanent link">&para;</a></h4>
+<h4 id="features_3"><strong>✨ Features</strong><a class="headerlink" href="#features_3" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Integrated fullscreen button into ActionIconGroup</li>
 </ul>
-<h4 id="fixes_4"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_4" title="Permanent link">&para;</a></h4>
+<h4 id="fixes_12"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_12" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Generate <code>api_internal_key.pem</code> during backend startup</li>
 <li>Init containers wait for <code>private_key.pem</code> instead of <code>api_internal_key.pem</code></li>
@@ -3512,19 +3736,19 @@
 </ul>
 <hr />
 <h3 id="v060-b13-january-24-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b13">v0.6.0-b13</a></strong> (January 24, 2026)<a class="headerlink" href="#v060-b13-january-24-2026" title="Permanent link">&para;</a></h3>
-<h4 id="fixes_5"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_5" title="Permanent link">&para;</a></h4>
+<h4 id="fixes_13"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_13" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Add YAML watcher environment variables to Helm ConfigMap</li>
 </ul>
 <hr />
 <h3 id="v060-b12-january-24-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b12">v0.6.0-b12</a></strong> (January 24, 2026)<a class="headerlink" href="#v060-b12-january-24-2026" title="Permanent link">&para;</a></h3>
-<h4 id="fixes_6"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_6" title="Permanent link">&para;</a></h4>
+<h4 id="fixes_14"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_14" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Disable YAML watcher for Kubernetes deployments</li>
 </ul>
 <hr />
 <h3 id="v060-b11-january-23-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b11">v0.6.0-b11</a></strong> (January 23, 2026)<a class="headerlink" href="#v060-b11-january-23-2026" title="Permanent link">&para;</a></h3>
-<h4 id="features_2"><strong>✨ Features</strong><a class="headerlink" href="#features_2" title="Permanent link">&para;</a></h4>
+<h4 id="features_4"><strong>✨ Features</strong><a class="headerlink" href="#features_4" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Wait for Docker build and add post-deploy CLI registration</li>
 </ul>
@@ -3534,13 +3758,13 @@
 </ul>
 <hr />
 <h3 id="v060-b10-january-23-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b10">v0.6.0-b10</a></strong> (January 23, 2026)<a class="headerlink" href="#v060-b10-january-23-2026" title="Permanent link">&para;</a></h3>
-<h4 id="fixes_7"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_7" title="Permanent link">&para;</a></h4>
+<h4 id="fixes_15"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_15" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Use absolute path for secrets file on self-hosted runner</li>
 </ul>
 <hr />
 <h3 id="v060-b9-january-23-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b9">v0.6.0-b9</a></strong> (January 23, 2026)<a class="headerlink" href="#v060-b9-january-23-2026" title="Permanent link">&para;</a></h3>
-<h4 id="features_3"><strong>✨ Features</strong><a class="headerlink" href="#features_3" title="Permanent link">&para;</a></h4>
+<h4 id="features_5"><strong>✨ Features</strong><a class="headerlink" href="#features_5" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Add EMBL self-hosted deployment workflow</li>
 </ul>
@@ -3564,18 +3788,18 @@
 </div>
 <hr />
 <h3 id="v060-b5-january-23-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b5">v0.6.0-b5</a></strong> (January 23, 2026)<a class="headerlink" href="#v060-b5-january-23-2026" title="Permanent link">&para;</a></h3>
-<h4 id="docker-images_1">Docker Images<a class="headerlink" href="#docker-images_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ghcr.io/depictio/depictio:0.6.0-b5
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ghcr.io/depictio/depictio:edge
+<h4 id="docker-images_3">Docker Images<a class="headerlink" href="#docker-images_3" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ghcr.io/depictio/depictio:0.6.0-b5
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
-<h4 id="features_4"><strong>✨ Features</strong><a class="headerlink" href="#features_4" title="Permanent link">&para;</a></h4>
+<h4 id="features_6"><strong>✨ Features</strong><a class="headerlink" href="#features_6" title="Permanent link">&para;</a></h4>
 <ul>
 <li><strong>Gunicorn Token Masking</strong>: Added gunicorn config with token masking in access logs for improved security. (<a href="https://github.com/depictio/depictio/commit/e22778d9">e22778d9</a>)</li>
 <li><strong>Celery Worker Deployment</strong>: Added Celery worker deployment to Helm charts for background task processing. (<a href="https://github.com/depictio/depictio/commit/c702296c">c702296c</a>)</li>
 <li><strong>Docker Health Checks</strong>: Added healthchecks and restart policies for production readiness. (<a href="https://github.com/depictio/depictio/commit/89e8522a">89e8522a</a>)</li>
 <li><strong>Automated OpenAPI Docs</strong>: Added automated OpenAPI spec extraction for documentation. (<a href="https://github.com/depictio/depictio/commit/0173ecc4">0173ecc4</a>)</li>
 </ul>
-<h4 id="fixes_8"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_8" title="Permanent link">&para;</a></h4>
+<h4 id="fixes_16"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_16" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Fixed slider mark labels visibility in dark mode using dmc.Text components. (<a href="https://github.com/depictio/depictio/commit/a59f9802">a59f9802</a>, <a href="https://github.com/depictio/depictio/commit/d2a0d765">d2a0d765</a>)</li>
 <li>Fixed parameter order in update_aggregation_options callback. (<a href="https://github.com/depictio/depictio/commit/c114b5ec">c114b5ec</a>)</li>
@@ -3584,7 +3808,7 @@
 <li>Added fallback on non-200 status in _check_deltatables. (<a href="https://github.com/depictio/depictio/commit/adf75978">adf75978</a>)</li>
 <li>Fixed triangle background animations visibility on auth page. (<a href="https://github.com/depictio/depictio/commit/6370fc53">6370fc53</a>)</li>
 </ul>
-<h4 id="improvements"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements" title="Permanent link">&para;</a></h4>
+<h4 id="improvements_1"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Comprehensive code simplification and modularization of Dash components. (<a href="https://github.com/depictio/depictio/commit/bbf8395e">bbf8395e</a>)</li>
 <li>Simplified figure and table component callbacks. (<a href="https://github.com/depictio/depictio/commit/b83ecf0d">b83ecf0d</a>)</li>
@@ -3599,18 +3823,18 @@
 </ul>
 <hr />
 <h3 id="v060-b4-january-22-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b4">v0.6.0-b4</a></strong> (January 22, 2026)<a class="headerlink" href="#v060-b4-january-22-2026" title="Permanent link">&para;</a></h3>
-<h4 id="docker-images_2">Docker Images<a class="headerlink" href="#docker-images_2" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ghcr.io/depictio/depictio:0.6.0-b4
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>ghcr.io/depictio/depictio:edge
+<h4 id="docker-images_4">Docker Images<a class="headerlink" href="#docker-images_4" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ghcr.io/depictio/depictio:0.6.0-b4
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
-<h4 id="features_5"><strong>✨ Features</strong><a class="headerlink" href="#features_5" title="Permanent link">&para;</a></h4>
+<h4 id="features_7"><strong>✨ Features</strong><a class="headerlink" href="#features_7" title="Permanent link">&para;</a></h4>
 <ul>
 <li><strong>Universal DC Linking System</strong>: New cross-DC filtering system that allows linking data collections for runtime filtering without pre-computed joins. (<a href="https://github.com/depictio/depictio/pull/640">#640</a>)</li>
 <li><strong>Figure Code Mode Refactor</strong>: Complete refactor of figure code mode with live preview, bidirectional editor resize, and improved theme switching. (<a href="https://github.com/depictio/depictio/pull/639">#639</a>)</li>
 <li><strong>YAML Dashboard Validation</strong>: Pydantic-based validation for dashboard YAML configuration with column name, chart type, and aggregation validation.</li>
 <li><strong>Client-Side Table Joining</strong>: Moved table joining from server to CLI for better performance and flexibility. (<a href="https://github.com/depictio/depictio/pull/634">#634</a>)</li>
 </ul>
-<h4 id="fixes_9"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_9" title="Permanent link">&para;</a></h4>
+<h4 id="fixes_17"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_17" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Fixed Ace editor theme switching and Execute button functionality in figure code mode.</li>
 <li>Fixed HTTP status code checks for link create/delete in CLI.</li>
@@ -3618,16 +3842,16 @@
 </ul>
 <hr />
 <h3 id="v060-b3-january-20-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b3">v0.6.0-b3</a></strong> (January 20, 2026)<a class="headerlink" href="#v060-b3-january-20-2026" title="Permanent link">&para;</a></h3>
-<h4 id="docker-images_3">Docker Images<a class="headerlink" href="#docker-images_3" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ghcr.io/depictio/depictio:0.6.0-b3
+<h4 id="docker-images_5">Docker Images<a class="headerlink" href="#docker-images_5" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ghcr.io/depictio/depictio:0.6.0-b3
 </code></pre></div>
-<h4 id="features_6"><strong>✨ Features</strong><a class="headerlink" href="#features_6" title="Permanent link">&para;</a></h4>
+<h4 id="features_8"><strong>✨ Features</strong><a class="headerlink" href="#features_8" title="Permanent link">&para;</a></h4>
 <ul>
 <li><strong>Figure Component Improvements</strong>: Loading indicator for figure preview rendering, improved stepper UX. (<a href="https://github.com/depictio/depictio/pull/622">#622</a>)</li>
 <li><strong>Celery by Default</strong>: Celery is now enabled by default for design mode with Docker Compose profiles for flexible deployment.</li>
 <li><strong>AI Development Tools</strong>: Added Claude Code development toolkit and AI tools support in devcontainer.</li>
 </ul>
-<h4 id="fixes_10"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_10" title="Permanent link">&para;</a></h4>
+<h4 id="fixes_18"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_18" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Eliminated multiple scrollbars in dashboard edit mode.</li>
 <li>Fixed optional parameters persisting incorrectly in figure component.</li>
@@ -3635,16 +3859,16 @@
 </ul>
 <hr />
 <h3 id="v060-b2-january-8-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b2">v0.6.0-b2</a></strong> (January 8, 2026)<a class="headerlink" href="#v060-b2-january-8-2026" title="Permanent link">&para;</a></h3>
-<h4 id="docker-images_4">Docker Images<a class="headerlink" href="#docker-images_4" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ghcr.io/depictio/depictio:0.6.0-b2
+<h4 id="docker-images_6">Docker Images<a class="headerlink" href="#docker-images_6" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ghcr.io/depictio/depictio:0.6.0-b2
 </code></pre></div>
-<h4 id="features_7"><strong>✨ Features</strong><a class="headerlink" href="#features_7" title="Permanent link">&para;</a></h4>
+<h4 id="features_9"><strong>✨ Features</strong><a class="headerlink" href="#features_9" title="Permanent link">&para;</a></h4>
 <ul>
 <li><strong>Dashboard Performance &amp; UX</strong>: Major performance improvements with ALL pattern rendering for cards and interactive components. (<a href="https://github.com/depictio/depictio/pull/616">#616</a>)</li>
 <li><strong>Local Delta Table Caching</strong>: Added local filesystem caching for Delta tables to improve API performance.</li>
 <li><strong>Client-Side Performance Monitoring</strong>: Added performance monitoring utilities for frontend optimization.</li>
 </ul>
-<h4 id="fixes_11"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_11" title="Permanent link">&para;</a></h4>
+<h4 id="fixes_19"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_19" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Suppressed third-party console warnings and fixed favicon issues.</li>
 <li>Fixed frontend container startup issues in CI.</li>
@@ -3652,8 +3876,8 @@
 </ul>
 <hr />
 <h3 id="v060-b1-january-7-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.6.0-b1">v0.6.0-b1</a></strong> (January 7, 2026)<a class="headerlink" href="#v060-b1-january-7-2026" title="Permanent link">&para;</a></h3>
-<h4 id="docker-images_5">Docker Images<a class="headerlink" href="#docker-images_5" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ghcr.io/depictio/depictio:0.6.0-b1
+<h4 id="docker-images_7">Docker Images<a class="headerlink" href="#docker-images_7" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ghcr.io/depictio/depictio:0.6.0-b1
 </code></pre></div>
 <h4 id="major-features"><strong>✨ Major Features</strong><a class="headerlink" href="#major-features" title="Permanent link">&para;</a></h4>
 <ul>
@@ -3668,7 +3892,7 @@
 <li><strong>Table Component Export</strong>: Export table data to CSV with support for filters and sorting. (<a href="https://github.com/depictio/depictio/pull/625">#625</a>)</li>
 <li><strong>Celery Background Processing</strong>: Redis/Celery integration for heavy computations in design mode.</li>
 </ul>
-<h4 id="improvements_1"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_1" title="Permanent link">&para;</a></h4>
+<h4 id="improvements_2"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Dual-panel grid system with save/restore functionality.</li>
 <li>Enhanced interactive component design and edit mode callbacks.</li>
@@ -3677,24 +3901,24 @@
 </ul>
 <hr />
 <h2 id="v053"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.5.3">v0.5.3</a></strong><a class="headerlink" href="#v053" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_6">Docker Images<a class="headerlink" href="#docker-images_6" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ghcr.io/depictio/depictio:0.5.3
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_8">Docker Images<a class="headerlink" href="#docker-images_8" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ghcr.io/depictio/depictio:0.5.3
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
-<h3 id="fixes_12"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_12" title="Permanent link">&para;</a></h3>
+<h3 id="fixes_20"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_20" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Preserve original IDs during project creation to ensure consistency across K8s instances  <a href="https://github.com/depictio/depictio/commit/d4a57a5d">d4a57a5d</a></li>
 </ul>
 <h2 id="v052"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.5.2">v0.5.2</a></strong><a class="headerlink" href="#v052" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_7">Docker Images<a class="headerlink" href="#docker-images_7" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ghcr.io/depictio/depictio:0.5.2
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_9">Docker Images<a class="headerlink" href="#docker-images_9" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ghcr.io/depictio/depictio:0.5.2
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
-<h3 id="features_8"><strong>✨ Features</strong><a class="headerlink" href="#features_8" title="Permanent link">&para;</a></h3>
+<h3 id="features_10"><strong>✨ Features</strong><a class="headerlink" href="#features_10" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>S3 &amp; Project Management</strong>: Added S3 delta table checks, improved project ID handling, and auto-promotion for data collection IDs with join configurations. (<a href="https://github.com/depictio/depictio/commit/bc31ff79">bc31ff79</a>, <a href="https://github.com/depictio/depictio/commit/103baee8">103baee8</a>, <a href="https://github.com/depictio/depictio/commit/7dfdcc24">7dfdcc24</a>)</li>
 <li><strong>Dashboard Enhancements</strong>: Improved filtering logic, enhanced permission checks, component resizing, and metadata synchronization. (<a href="https://github.com/depictio/depictio/commit/3e259297">3e259297</a>, <a href="https://github.com/depictio/depictio/commit/c913dd2b">c913dd2b</a>, <a href="https://github.com/depictio/depictio/commit/aa03799f">aa03799f</a>, <a href="https://github.com/depictio/depictio/commit/d03deeb8">d03deeb8</a>)</li>
@@ -3703,25 +3927,25 @@
 <li><strong>Workflow &amp; Helm Support</strong>: URL pattern helpers for API/MinIO and improved backend/frontend deployments. (<a href="https://github.com/depictio/depictio/commit/5a7850f1">5a7850f1</a>, <a href="https://github.com/depictio/depictio/commit/d09e6096">d09e6096</a>)</li>
 </ul>
 <hr />
-<h3 id="fixes_13"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_13" title="Permanent link">&para;</a></h3>
+<h3 id="fixes_21"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_21" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>UI &amp; Layout</strong>: Prevented horizontal scrollbar, removed default background on draggable components, adjusted theme switch behavior. (<a href="https://github.com/depictio/depictio/commit/310a8d9f">310a8d9f</a>, <a href="https://github.com/depictio/depictio/commit/6e06fd6c">6e06fd6c</a>, <a href="https://github.com/depictio/depictio/commit/937e08b1">937e08b1</a>)</li>
 <li><strong>Standardization &amp; Cleanup</strong>: Fixed naming inconsistencies in Iris Dashboard demo and commented out redundant tests/code. (<a href="https://github.com/depictio/depictio/commit/ca6ee804">ca6ee804</a>, <a href="https://github.com/depictio/depictio/commit/d7d8a3d8">d7d8a3d8</a>, <a href="https://github.com/depictio/depictio/commit/8a83fe7b">8a83fe7b</a>, <a href="https://github.com/depictio/depictio/commit/acf26a86">acf26a86</a>)</li>
 </ul>
 <h2 id="v051"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.5.1">v0.5.1</a></strong><a class="headerlink" href="#v051" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_8">Docker Images<a class="headerlink" href="#docker-images_8" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ghcr.io/depictio/depictio:0.5.1
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_10">Docker Images<a class="headerlink" href="#docker-images_10" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ghcr.io/depictio/depictio:0.5.1
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
-<h3 id="fixes_14"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_14" title="Permanent link">&para;</a></h3>
+<h3 id="fixes_22"><strong>🐛 Fixes</strong><a class="headerlink" href="#fixes_22" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>UI &amp; State</strong>: Updated handle colors, navbar/logo sizing, layout IDs, and removed unused states. (<a href="https://github.com/depictio/depictio/commit/08938777">08938777</a>, <a href="https://github.com/depictio/depictio/commit/435aa448">435aa448</a>, <a href="https://github.com/depictio/depictio/commit/a164f8cb">a164f8cb</a>)</li>
 <li><strong>Caching</strong>: Fixed Redis cache stats logging. (<a href="https://github.com/depictio/depictio/commit/ffcfd7a1">ffcfd7a1</a>)</li>
 </ul>
 <hr />
-<h3 id="improvements_2"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_2" title="Permanent link">&para;</a></h3>
+<h3 id="improvements_3"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Theming &amp; Layout</strong>: Enhanced clientside layout, padding, resize handle visibility, and logo updates. (<a href="https://github.com/depictio/depictio/commit/b10bf77b">b10bf77b</a>, <a href="https://github.com/depictio/depictio/commit/58b0690b">58b0690b</a>, <a href="https://github.com/depictio/depictio/commit/250437a2">250437a2</a>)</li>
 <li><strong>Redis Integration in K8S</strong>: Added support with configuration and connectivity tests. (<a href="https://github.com/depictio/depictio/commit/f86b4f10">f86b4f10</a>)</li>
@@ -3730,13 +3954,13 @@
 <li><strong>Dashboard UI</strong>: Improved header, modal layout, subtitle/icon customization, and sidebar/navbar handling. (<a href="https://github.com/depictio/depictio/commit/ba99f97b">ba99f97b</a>, <a href="https://github.com/depictio/depictio/commit/40d10c09">40d10c09</a>, <a href="https://github.com/depictio/depictio/commit/0d4ad756">0d4ad756</a>)</li>
 </ul>
 <h2 id="v050"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.5.0">v0.5.0</a></strong><a class="headerlink" href="#v050" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_9">Docker Images<a class="headerlink" href="#docker-images_9" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ghcr.io/depictio/depictio:0.5.0
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_11">Docker Images<a class="headerlink" href="#docker-images_11" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ghcr.io/depictio/depictio:0.5.0
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
-<h3 id="features_9"><strong>✨ Features</strong><a class="headerlink" href="#features_9" title="Permanent link">&para;</a></h3>
+<h3 id="features_11"><strong>✨ Features</strong><a class="headerlink" href="#features_11" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>MultiQC Integration</strong>: Added a dedicated component to visualize and explore MultiQC outputs directly in the dashboard. This includes report scanning and aggregation, component creation through the MultiQC API, figure patching to link with external metadata, and dataset filtering to display resulting samples. (<a href="https://github.com/depictio/depictio/commit/2f1e9d31">2f1e9d31</a>)</li>
 <li><strong>User Experience</strong>: Introduced a new header design with cleaner layout and added iconography for better navigation. (<a href="https://github.com/depictio/depictio/commit/d6f0c1b2">d6f0c1b2</a>)</li>
@@ -3744,67 +3968,67 @@
 <li><strong>Live Updates</strong>: Implemented dynamic refresh for dashboard elements to reflect state changes instantly. (<a href="https://github.com/depictio/depictio/commit/46a4e0a3">46a4e0a3</a>)</li>
 </ul>
 <hr />
-<h3 id="fixes_15"><strong>🛠 Fixes</strong><a class="headerlink" href="#fixes_15" title="Permanent link">&para;</a></h3>
+<h3 id="fixes_23"><strong>🛠 Fixes</strong><a class="headerlink" href="#fixes_23" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Data Handling</strong>: Resolved issues with inconsistent plot rendering and duplicate state updates. (<a href="https://github.com/depictio/depictio/commit/02c5e7e4">02c5e7e4</a>)</li>
 <li><strong>Theme Sync</strong>: Fixed a race condition during theme switching that caused UI flickers. (<a href="https://github.com/depictio/depictio/commit/30b9f24d">30b9f24d</a>)</li>
 </ul>
 <hr />
-<h3 id="improvements_3"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_3" title="Permanent link">&para;</a></h3>
+<h3 id="improvements_4"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Performance</strong>: Optimized DataTable rendering and minimized unnecessary callback triggers. Introduced a new component update mechanism switching from full sequential rendering to initial rendering followed by parallel patching of components using Dash properties. (<a href="https://github.com/depictio/depictio/commit/f8e2f5a1">f8e2f5a1</a>)</li>
 <li><strong>UI Responsiveness</strong>: Moved more callbacks clientside for smoother interactions and reduced latency. (<a href="https://github.com/depictio/depictio/commit/a86bf22e">a86bf22e</a>)</li>
 <li><strong>Code Cleanup</strong>: Simplified logging and removed obsolete debug statements. (<a href="https://github.com/depictio/depictio/commit/bc2a93d4">bc2a93d4</a>)</li>
 </ul>
 <h2 id="v040"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.4.0">v0.4.0</a></strong><a class="headerlink" href="#v040" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_10">Docker Images<a class="headerlink" href="#docker-images_10" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ghcr.io/depictio/depictio:0.4.0
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_12">Docker Images<a class="headerlink" href="#docker-images_12" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ghcr.io/depictio/depictio:0.4.0
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
-<h3 id="features_10"><strong>✨ Features</strong><a class="headerlink" href="#features_10" title="Permanent link">&para;</a></h3>
+<h3 id="features_12"><strong>✨ Features</strong><a class="headerlink" href="#features_12" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Caching &amp; Performance</strong>: Added <code>flask-caching</code> and <code>orjson</code> for faster data handling. (<a href="https://github.com/depictio/depictio/commit/b3bdd21f">b3bdd21f</a>)</li>
 <li><strong>UI Interactivity</strong>: Introduced Dock-style animations and live mode toggle. (<a href="https://github.com/depictio/depictio/commit/0b6d073e">0b6d073e</a>, <a href="https://github.com/depictio/depictio/commit/14fe2314">14fe2314</a>)</li>
 <li><strong>Data Debugging</strong>: Added scripts for DataTable and plot input inspection. (<a href="https://github.com/depictio/depictio/commit/b62fe583">b62fe583</a>)</li>
 </ul>
 <hr />
-<h3 id="improvements_4"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_4" title="Permanent link">&para;</a></h3>
+<h3 id="improvements_5"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_5" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Editing Flow</strong>: Refined UI elements, edit mode logic, and live interactivity. (<a href="https://github.com/depictio/depictio/commit/71c78e83">71c78e83</a>, <a href="https://github.com/depictio/depictio/commit/a01f3ac9">a01f3ac9</a>)</li>
 <li><strong>Theme &amp; Rendering</strong>: Optimized theme updates and fixed marginal plot loops. (<a href="https://github.com/depictio/depictio/commit/b05a5c9d">b05a5c9d</a>, <a href="https://github.com/depictio/depictio/commit/0149dcca">0149dcca</a>)</li>
 <li><strong>Performance</strong>: Moved UI state to clientside, added caching, and improved async handling. (<a href="https://github.com/depictio/depictio/commit/59c40d06">59c40d06</a>, <a href="https://github.com/depictio/depictio/commit/e80e57d2">e80e57d2</a>, <a href="https://github.com/depictio/depictio/commit/696748d1">696748d1</a>)</li>
 </ul>
 <h2 id="v032"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.3.2">v0.3.2</a></strong><a class="headerlink" href="#v032" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_11">Docker Images<a class="headerlink" href="#docker-images_11" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ghcr.io/depictio/depictio:0.3.2
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_13">Docker Images<a class="headerlink" href="#docker-images_13" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ghcr.io/depictio/depictio:0.3.2
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
-<h3 id="features_11"><strong>✨ Features</strong><a class="headerlink" href="#features_11" title="Permanent link">&para;</a></h3>
+<h3 id="features_13"><strong>✨ Features</strong><a class="headerlink" href="#features_13" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Analytics &amp; Session Management</strong>: Enhanced analytics session management, including cleanup for anonymous sessions. Implemented both in-house analytics &amp; Google Analytics integration to track unique connections and user activity. (<a href="https://github.com/depictio/depictio/commit/956d35f3">956d35f3</a>, <a href="https://github.com/depictio/depictio/commit/146e042a">146e042a</a>)</li>
 <li><strong>Admin Dashboard</strong>: Implemented a dedicated Admin Analytics Dashboard with related functionalities in admin section. Enhanced the analytics data service to include user ID validation and filtering for more precise data. (<a href="https://github.com/depictio/depictio/commit/8837a4fd">8837a4fd</a>, <a href="https://github.com/depictio/depictio/commit/41061497">41061497</a>)</li>
 </ul>
-<h3 id="improvements_5"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_5" title="Permanent link">&para;</a></h3>
+<h3 id="improvements_6"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_6" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Configuration</strong>: Updated MinIO and backend configurations to optimize resource limits and enhance security context. (<a href="https://github.com/depictio/depictio/commit/9e681bfc">9e681bfc</a>)</li>
 </ul>
 <h2 id="v031"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.3.1">v0.3.1</a></strong><a class="headerlink" href="#v031" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_12">Docker Images<a class="headerlink" href="#docker-images_12" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ghcr.io/depictio/depictio:0.3.1
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_14">Docker Images<a class="headerlink" href="#docker-images_14" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ghcr.io/depictio/depictio:0.3.1
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
-<h3 id="bug-fixes_1"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_1" title="Permanent link">&para;</a></h3>
+<h3 id="bug-fixes_3"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Helm Chart &amp; Deployment</strong>: Adjusted resource limits and logging verbosity for backend services. Ensured proper permissions for frontend mounted directories and fixed authentication defaults in values.yaml. (<a href="https://github.com/depictio/depictio/commit/1ddc1d5e">1ddc1d5e</a>, <a href="https://github.com/depictio/depictio/commit/47214581">47214581</a>, <a href="https://github.com/depictio/depictio/commit/e574a013">e574a013</a>)</li>
 <li><strong>Data Integrity</strong>: Ensured depictio_run_id is included in joins for proper run isolation and normalized column data types in precompute_columns_specs function. (<a href="https://github.com/depictio/depictio/commit/e21ef1eb">e21ef1eb</a>, <a href="https://github.com/depictio/depictio/commit/f5ce756d">f5ce756d</a>)</li>
 </ul>
-<h3 id="improvements_6"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_6" title="Permanent link">&para;</a></h3>
+<h3 id="improvements_7"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_7" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Code Cleanliness &amp; Consistency</strong>: Standardized import statements across multiple files and removed unused imports. (<a href="https://github.com/depictio/depictio/commit/0349df19">0349df19</a>, <a href="https://github.com/depictio/depictio/commit/53b6b467">53b6b467</a>)</li>
 <li><strong>Testing</strong>: Implemented robust typing commands for improved input reliability in tests. (<a href="https://github.com/depictio/depictio/commit/f85a98e4">f85a98e4</a>)</li>
@@ -3815,46 +4039,46 @@
 <li><strong>UMAP</strong>: Disabled UMAP visualization temporarily. (<a href="https://github.com/depictio/depictio/commit/593ad1dd">593ad1dd</a>)</li>
 </ul>
 <h2 id="v030"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.3.0">v0.3.0</a></strong><a class="headerlink" href="#v030" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_13">Docker Images<a class="headerlink" href="#docker-images_13" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ghcr.io/depictio/depictio:0.3.0
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_15">Docker Images<a class="headerlink" href="#docker-images_15" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ghcr.io/depictio/depictio:0.3.0
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
 <h3 id="major-features_1"><strong>✨ Major Features</strong><a class="headerlink" href="#major-features_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Enhanced Data Management</strong>: Optimized DataFrame loading with lazy scanning and adaptive memory management. Implemented total storage size calculation and progress indicators for data collections. (<a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a308c300">a308c300</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/8afcdf2e">8afcdf2e</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/bfcb6fd8">bfcb6fd8</a>)</li>
 <li><strong>Comprehensive Project &amp; Data Collection Management</strong>: Introduced new modal-based UI to manage workflows and data collection per project. Added features for creating, updating, deleting, and viewing data collections and projects. (<a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/b9cb4727">b9cb4727</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/78b93457">78b93457</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/fb06d84e">fb06d84e</a>)</li>
 </ul>
-<h3 id="bug-fixes_2"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_2" title="Permanent link">&para;</a></h3>
+<h3 id="bug-fixes_4"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Temp users data handling</strong>: Improved error handling for temporary user cleanup. (<a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/1253e8a6">1253e8a6</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/6fd41333">6fd41333</a>)</li>
 <li><strong>Figures &amp; Components Logic</strong>: Added validation to prevent df reassignment in user code. Fix “Edit mode” for figure components. Enhanced figure generation to allow editing existing figures even with auto-generation disabled. (<a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/318c7ae9">318c7ae9</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/48f91115">48f91115</a>)</li>
 <li><strong>UI &amp; Layout</strong>: Corrected project update logic and improved modal ID handling. (<a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/f6b68c73">f6b68c73</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/93d72bba">93d72bba</a>)</li>
 </ul>
-<h3 id="improvements_7"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_7" title="Permanent link">&para;</a></h3>
+<h3 id="improvements_8"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_8" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>CLI &amp; Theming Enhancements</strong>: Added customizable ASCII logo display for the CLI. Implemented theme-aware color handling for card and interactive components. (<a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/63a0e62f">63a0e62f</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/7d5957f0">7d5957f0</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/1c201684">1c201684</a>)</li>
 </ul>
 <h2 id="v021"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.2.1">v0.2.1</a></strong><a class="headerlink" href="#v021" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_14">Docker Images<a class="headerlink" href="#docker-images_14" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ghcr.io/depictio/depictio:0.2.1
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_16">Docker Images<a class="headerlink" href="#docker-images_16" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ghcr.io/depictio/depictio:0.2.1
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
-<h3 id="features_12"><strong>✨ Features</strong><a class="headerlink" href="#features_12" title="Permanent link">&para;</a></h3>
+<h3 id="features_14"><strong>✨ Features</strong><a class="headerlink" href="#features_14" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Theming &amp; Components</strong>: Plotly templates were updated to 'mantine_light' and 'mantine_dark'. AG Grid and text components now have theme-aware styling. (<a href="https://github.com/depictio/depictio/commit/04e4069e">04e4069e</a>, <a href="https://github.com/depictio/depictio/commit/97e6c0f5">97e6c0f5</a>)</li>
 <li><strong>Interactivity &amp; Access</strong>: Interactive components can now restore saved configurations and values. Added EMBL-specific security contexts for unauthenticated mode. (<a href="https://github.com/depictio/depictio/commit/892de076">892de076</a>, <a href="https://github.com/depictio/depictio/commit/08a6e311">08a6e311</a>, <a href="https://github.com/depictio/depictio/commit/db18d84f">db18d84f</a>)</li>
 </ul>
-<h3 id="bug-fixes_3"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_3" title="Permanent link">&para;</a></h3>
+<h3 id="bug-fixes_5"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_5" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Security &amp; Stability</strong>: Addressed security vulnerabilities by updating seccompProfile. Fixed an UnboundLocalError and ensured metadata store indices are consistent. (<a href="https://github.com/depictio/depictio/commit/1b18d95a">1b18d95a</a>, <a href="https://github.com/depictio/depictio/commit/e828952a">e828952a</a>, <a href="https://github.com/depictio/depictio/commit/5a550856">5a550856</a>)</li>
 <li><strong>Layout &amp; Visuals</strong>: Resolved footer positioning issues and adjusted default component dimensions for better layout consistency. (<a href="https://github.com/depictio/depictio/commit/f245982e">f245982e</a>, <a href="https://github.com/depictio/depictio/commit/2e16fdb9">2e16fdb9</a>)</li>
 <li><strong>Visuals</strong>: Updated logo images in the README for improved visibility in both light and dark modes. (<a href="https://github.com/depictio/depictio/commit/ca46ddc1">ca46ddc1</a>)</li>
 </ul>
-<h3 id="improvements_8"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_8" title="Permanent link">&para;</a></h3>
+<h3 id="improvements_9"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_9" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Code Refactoring</strong>: Simplified input handling in save and text component callbacks. (<a href="https://github.com/depictio/depictio/commit/8937bea3">8937bea3</a>)</li>
 </ul>
@@ -3864,11 +4088,11 @@
 <li><strong>Version</strong>: Bumped the project version from 0.2.0 to 0.2.1. (<a href="https://github.com/depictio/depictio/commit/8cd1e0e2">8cd1e0e2</a>)</li>
 </ul>
 <h2 id="v020"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.2.0">v0.2.0</a></strong><a class="headerlink" href="#v020" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_15">Docker Images<a class="headerlink" href="#docker-images_15" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ghcr.io/depictio/depictio:0.2.0
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_17">Docker Images<a class="headerlink" href="#docker-images_17" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ghcr.io/depictio/depictio:0.2.0
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
 <h3 id="major-features_2"><strong>✨ Major Features</strong><a class="headerlink" href="#major-features_2" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3881,7 +4105,7 @@
 <li><strong>Notes &amp; documentation footer</strong>: notes taking using dmc.RichTextEditor (markdown style, links, bullet points, code blocks …) with fullscreen mode and responsive layout. (<a href="https://github.com/depictio/depictio/commit/d226f52b">d226f52b</a>, <a href="https://github.com/depictio/depictio/commit/3af94fd3">3af94fd3</a>, <a href="https://github.com/depictio/depictio/commit/b06eb2ee">b06eb2ee</a>, <a href="https://github.com/depictio/depictio/commit/f245982e">f245982e</a>)</li>
 <li><strong>Buttons</strong>: Reset button functionality and visibility logic for interactive components (<a href="https://github.com/depictio/depictio/commit/583aa04f">583aa04f</a>, <a href="https://github.com/depictio/depictio/commit/166a2af1">166a2af1</a>, <a href="https://github.com/depictio/depictio/commit/52684721">52684721</a>, <a href="https://github.com/depictio/depictio/commit/8e5ef9cc">8e5ef9cc</a>).</li>
 </ul>
-<h3 id="bug-fixes_4"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_4" title="Permanent link">&para;</a></h3>
+<h3 id="bug-fixes_6"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_6" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Component &amp; UI Fixes</strong>:</li>
 <li>Resolved circular reference issues in the dashboard context and fixed AG Grid popup visibility (<a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/2b9e64c9">2b9e64c9</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/f5bf946d">f5bf946d</a>).</li>
@@ -3889,7 +4113,7 @@
 <li><strong>Authentication &amp; CI</strong>: Fixed Google OAuth configuration and routes, and addressed CI issues related to authentication (<a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/19396605">19396605</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/78dbc295">78dbc295</a>).</li>
 <li><strong>Cypress Tests</strong>: Updated header element selectors and improved modal visibility checks in Cypress tests (<a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/b17fb7bb">b17fb7bb</a>).</li>
 </ul>
-<h3 id="improvements_9"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_9" title="Permanent link">&para;</a></h3>
+<h3 id="improvements_10"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_10" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Dash Component Refactoring</strong>: Refactored Dash components to use updated props and styling conventions, ensuring compatibility with Dash v3 and Dash Mantine 2.0+ (<a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/8ed8f068">8ed8f068</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a7a0e3bb">a7a0e3bb</a>).</li>
 <li><strong>Code &amp; Styling Refactoring</strong>: Improved overall code structure for enhanced readability and maintainability, and refactored auth modal styles for better appearance (<a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/3ff3e54d">3ff3e54d</a>, <a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/7ed7c995">7ed7c995</a>).</li>
@@ -3900,23 +4124,23 @@
 <li><strong>Pre-commit</strong>: Improved pre-commit hooks for code quality enforcement (<a href="https://www.google.com/search?q=https://github.com/depictio/depictio/commit/75cb3058">75cb3058</a>).</li>
 </ul>
 <h2 id="v011"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.1.1">v0.1.1</a></strong><a class="headerlink" href="#v011" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_16">Docker Images<a class="headerlink" href="#docker-images_16" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ghcr.io/depictio/depictio:0.1.1
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_18">Docker Images<a class="headerlink" href="#docker-images_18" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ghcr.io/depictio/depictio:0.1.1
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
 <h3 id="major-features_3"><strong>✨ Major Features</strong><a class="headerlink" href="#major-features_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>UI Theming</strong>: Implemented functional dark/light modes with auto-theming, including progress on Plotly figures, dashboard button visibility, and projects section theming (<a href="https://github.com/depictio/depictio/commit/a851f175">a851f175</a>, <a href="https://github.com/depictio/depictio/commit/d6d83410">d6d83410</a>).</li>
 </ul>
-<h3 id="bug-fixes_5"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_5" title="Permanent link">&para;</a></h3>
+<h3 id="bug-fixes_7"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_7" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Cypress Tests</strong>: Updated header element selectors and improved modal visibility checks in Cypress tests (<a href="https://github.com/depictio/depictio/commit/b17fb7bb">b17fb7bb</a>).</li>
 <li><strong>Authentication</strong>: Removed unused expiry_minutes parameters from user upgrade API calls and fixed CI issues related to authentication (<a href="https://github.com/depictio/depictio/commit/b9c5241f">b9c5241f</a>, <a href="https://github.com/depictio/depictio/commit/78dbc295">78dbc295</a>).</li>
 <li><strong>CLI Configuration</strong>: Resolved inconsistencies in CLI configuration field names and updated mock configurations for tests (<a href="https://github.com/depictio/depictio/commit/ce91c581">ce91c581</a>, <a href="https://github.com/depictio/depictio/commit/846fd4c1">846fd4c1</a>).</li>
 </ul>
-<h3 id="improvements_10"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_10" title="Permanent link">&para;</a></h3>
+<h3 id="improvements_11"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_11" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Dash Components</strong>: Refactored Dash components to use updated props and styling conventions, ensuring compatibility with Dash v3 and Dash Mantine 2.0+ (<a href="https://github.com/depictio/depictio/commit/8ed8f068">8ed8f068</a>, <a href="https://github.com/depictio/depictio/commit/a7a0e3bb">a7a0e3bb</a>).</li>
 <li><strong>Code Structure</strong>: Improved overall code structure for enhanced readability and maintainability across various modules (<a href="https://github.com/depictio/depictio/commit/3ff3e54d">3ff3e54d</a>, <a href="https://github.com/depictio/depictio/commit/89e62ec9">89e62ec9</a>).</li>
@@ -3926,11 +4150,11 @@
 <li><strong>Pre-commit</strong>: Initialized pre-commit hooks for code quality enforcement (<a href="https://github.com/depictio/depictio/commit/75cb3058">75cb3058</a>).</li>
 </ul>
 <h2 id="v010"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.1.0">v0.1.0</a></strong><a class="headerlink" href="#v010" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_17">Docker Images<a class="headerlink" href="#docker-images_17" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ghcr.io/depictio/depictio:0.1.0
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_19">Docker Images<a class="headerlink" href="#docker-images_19" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>ghcr.io/depictio/depictio:0.1.0
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
 <h3 id="major-features_4"><strong>✨ Major Features</strong><a class="headerlink" href="#major-features_4" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3942,11 +4166,11 @@
 </li>
 <li><strong>Google OAuth</strong>: Implemented Google OAuth authentication endpoints and updated related configurations (<a href="https://github.com/depictio/depictio/commit/a07364cb">a07364cb</a>, <a href="https://github.com/depictio/depictio/commit/19396605">19396605</a>).</li>
 </ul>
-<h3 id="bug-fixes_6"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_6" title="Permanent link">&para;</a></h3>
+<h3 id="bug-fixes_8"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_8" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Screenshot Generation</strong>: Resolved screenshot endpoint authentication and CI timeout issues, and simplified screenshot generation tests (<a href="https://github.com/depictio/depictio/commit/faecb4ec">faecb4ec</a>, <a href="https://github.com/depictio/depictio/commit/98598ee5">98598ee5</a>).</li>
 </ul>
-<h3 id="improvements_11"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_11" title="Permanent link">&para;</a></h3>
+<h3 id="improvements_12"><strong>🚀 Improvements</strong><a class="headerlink" href="#improvements_12" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Performance &amp; Caching</strong>: Implemented caching for iterative joins, component data, workflows, and data collection specs to significantly enhance performance (<a href="https://github.com/depictio/depictio/commit/78a7704a">78a7704a</a>, <a href="https://github.com/depictio/depictio/commit/cc7d7dbe">cc7d7dbe</a>).</li>
 <li><strong>E2E Tests</strong>: Enhanced Cypress tests with improved Chrome configuration and reliability, including better login handling and dashboard navigation (<a href="https://github.com/depictio/depictio/commit/dba2e3e3">dba2e3e3</a>, <a href="https://github.com/depictio/depictio/commit/ca9fac6c">ca9fac6c</a>).</li>
@@ -3959,10 +4183,10 @@
 <li><strong>Changelog &amp; CI</strong>: Updated changelog generation, fixed release DNS issues in Helm CI, and added a CODEOWNERS file (<a href="https://github.com/depictio/depictio/commit/dd019370">dd019370</a>).</li>
 </ul>
 <h2 id="v006"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.0.6">v0.0.6</a></strong><a class="headerlink" href="#v006" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ghcr.io/depictio/depictio:0.0.6
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>ghcr.io/depictio/depictio:edge
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>ghcr.io/depictio/depictio:0.0.6
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
 <p>This release focuses on significant enhancements across Authentication, User Management, and Security, making the application more robust and secure. Key improvements include refresh token, fix issues related to outdated tokens and provide a consolidated CI workflows for the CLI.</p>
 <h3 id="features-improvements"><strong>✨ Features &amp; Improvements</strong><a class="headerlink" href="#features-improvements" title="Permanent link">&para;</a></h3>
@@ -3996,11 +4220,11 @@
 <li><strong>Helm</strong>: Fixed an issue with backend service name in the ConfigMap to enable screenshot generation (<a href="https://github.com/depictio/depictio/commit/965ca53b">965ca53b</a>).</li>
 </ul>
 <h2 id="v005"><a href="https://github.com/depictio/depictio/releases/tag/v0.0.5">v0.0.5</a><a class="headerlink" href="#v005" title="Permanent link">&para;</a></h2>
-<h3 id="docker-images_18">Docker Images<a class="headerlink" href="#docker-images_18" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>ghcr.io/depictio/depictio:0.0.5
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_20">Docker Images<a class="headerlink" href="#docker-images_20" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>ghcr.io/depictio/depictio:0.0.5
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
 <p>This version brings substantial updates to S3 &amp; Services configuration, streamlining data handling and external service integration. Notable progress has also been made in CLI execution logic and Docker build workflows, alongside critical Helm chart improvements.</p>
 <h3 id="setup-configuration-highlights"><strong>⚙️ Setup &amp; Configuration Highlights</strong><a class="headerlink" href="#setup-configuration-highlights" title="Permanent link">&para;</a></h3>
@@ -4035,11 +4259,11 @@
 </ul>
 <h2 id="v004"><a href="https://github.com/depictio/depictio/releases/tag/v0.0.4">v0.0.4</a><a class="headerlink" href="#v004" title="Permanent link">&para;</a></h2>
 <p>Generating changelog from dev to v0.0.4</p>
-<h3 id="docker-images_19">Docker Images<a class="headerlink" href="#docker-images_19" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>ghcr.io/depictio/depictio:0.0.4
-<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>ghcr.io/depictio/depictio:latest
-<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>ghcr.io/depictio/depictio:stable
-<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>ghcr.io/depictio/depictio:edge
+<h3 id="docker-images_21">Docker Images<a class="headerlink" href="#docker-images_21" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>ghcr.io/depictio/depictio:0.0.4
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>ghcr.io/depictio/depictio:latest
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>ghcr.io/depictio/depictio:stable
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>ghcr.io/depictio/depictio:edge
 </code></pre></div>
 <p>This release introduces a first version of project-level permissions and user management features, enhancing access control for collaboration. Major UI/UX improvements and a fundamental backend refactoring to a project-centric architecture also define this version.</p>
 <h3 id="features-improvements_1"><strong>✨ Features &amp; Improvements</strong><a class="headerlink" href="#features-improvements_1" title="Permanent link">&para;</a></h3>
@@ -4078,7 +4302,7 @@
 <li><strong>Code Organization &amp; Clarity</strong>: Performed refactoring of import statements, code organization, and whitespace across numerous files (<a href="https://github.com/depictio/depictio/commit/f8b0f913">f8b0f913</a>, <a href="https://github.com/depictio/depictio/commit/239ad86e">239ad86e</a>).</li>
 <li><strong>API &amp; Data Models</strong>: Refactored API and data models to use depictio-models as a centralized library and updated dependencies to Pydantic v2 (<a href="https://github.com/depictio/depictio/commit/2170ae17">2170ae17</a>, <a href="https://github.com/depictio/depictio/commit/e8397589">e8397589</a>).</li>
 </ul>
-<h3 id="bug-fixes_7"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_7" title="Permanent link">&para;</a></h3>
+<h3 id="bug-fixes_9"><strong>🐛 Bug Fixes</strong><a class="headerlink" href="#bug-fixes_9" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>CI/CD &amp; Deployment</strong>: Corrected workflow triggers and addressed various Docker and Helm deployment issues, including volume paths and logging (<a href="https://github.com/depictio/depictio/commit/14539146">14539146</a>, <a href="https://github.com/depictio/depictio/commit/a376bf98">a376bf98</a>).</li>
 <li><strong>Data &amp; Configuration Paths</strong>: Corrected various file paths, IDs, and configurations for consistency and relative access (<a href="https://github.com/depictio/depictio/commit/a835bb16">a835bb16</a>, <a href="https://github.com/depictio/depictio/commit/214659e3">214659e3</a>).</li>
@@ -4087,11 +4311,11 @@
 <h3 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h3>
 <p>Full documentation: <a href="https://depictio.github.io/depictio-docs/">https://depictio.github.io/depictio-docs/</a></p>
 <h2 id="v003"><a href="https://github.com/depictio/depictio/releases/tag/v0.0.3">v0.0.3</a><a class="headerlink" href="#v003" title="Permanent link">&para;</a></h2>
-<h3 id="bug-fixes_8">Bug Fixes<a class="headerlink" href="#bug-fixes_8" title="Permanent link">&para;</a></h3>
+<h3 id="bug-fixes_10">Bug Fixes<a class="headerlink" href="#bug-fixes_10" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Component size were modified to reflect better size on the dashboard</li>
 </ul>
-<h3 id="features_13">Features<a class="headerlink" href="#features_13" title="Permanent link">&para;</a></h3>
+<h3 id="features_15">Features<a class="headerlink" href="#features_15" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Edit component (goes to design part (step 3 of component creation))</li>
 <li>Display/hide component options</li>
@@ -4104,12 +4328,12 @@
 <li>Public/private dashboard (public dashboards are visible but not editable by all users ; possibility to copy public dashboard to private personal dashboard)</li>
 </ul>
 <h2 id="v002"><a href="https://github.com/depictio/depictio/releases/tag/v0.0.2">v0.0.2</a><a class="headerlink" href="#v002" title="Permanent link">&para;</a></h2>
-<h3 id="bug-fixes_9">Bug Fixes<a class="headerlink" href="#bug-fixes_9" title="Permanent link">&para;</a></h3>
+<h3 id="bug-fixes_11">Bug Fixes<a class="headerlink" href="#bug-fixes_11" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Switch from dashboard &amp; component ID increment to UUID</li>
 <li>Fix double click on add component button</li>
 </ul>
-<h3 id="features_14">Features<a class="headerlink" href="#features_14" title="Permanent link">&para;</a></h3>
+<h3 id="features_16">Features<a class="headerlink" href="#features_16" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Autosave dashboard</li>
 <li>Duplicate dashboard</li>
@@ -4117,7 +4341,7 @@
 <li>Admin view (list users)</li>
 </ul>
 <h2 id="v001"><a href="https://github.com/depictio/depictio/releases/tag/v0.0.1">v0.0.1</a><a class="headerlink" href="#v001" title="Permanent link">&para;</a></h2>
-<h3 id="features_15">Features<a class="headerlink" href="#features_15" title="Permanent link">&para;</a></h3>
+<h3 id="features_17">Features<a class="headerlink" href="#features_17" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Initial release of the project</li>
 <li>Support for creating dashboards with multiple components (figure, metrics card, interactive &amp; table)</li>
