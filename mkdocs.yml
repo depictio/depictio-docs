@@ -16,8 +16,8 @@ theme:
   custom_dir: overrides
   icon:
     annotation: material/record-circle
-  logo: "/images/logo/animated_favicon.svg"
-  favicon: "/images/logo/logo_icon.png"
+  logo: "images/logo/animated_favicon.svg"
+  favicon: "images/logo/logo_icon.png"
 
   # Color Settings
   palette:
