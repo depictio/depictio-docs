@@ -221,6 +221,7 @@ components:
 | `card` | Metric cards with aggregations | `aggregation.column`, `aggregation.function` |
 | `interactive` | Filters (RangeSlider, MultiSelect) | `filter.column`, `filter.type` |
 | `table` | Data tables | (minimal configuration) |
+| `image` | Image galleries from S3/MinIO | `image_column`, `s3_base_folder`, `thumbnail_size` |
 
 #### Figure Chart Types
 
@@ -244,6 +245,22 @@ Supported filter types:
 - `RangeSlider` - Numeric range selection
 - `MultiSelect` - Multiple value selection
 - `Select` - Single value selection
+
+#### Image Component Fields
+
+Image components display image galleries from S3/MinIO storage:
+
+```yaml
+- tag: sample-gallery
+  component_type: image
+  workflow_tag: python/image_workflow
+  data_collection_tag: sample_images
+  image_column: image_path          # Column with image paths (required)
+  s3_base_folder: "s3://bucket/images/"  # S3/MinIO prefix (required)
+  thumbnail_size: 150               # Thumbnail height in pixels
+  columns: 3                        # Grid columns
+  max_images: 9                     # Maximum images to display
+```
 
 ## Validation System
 
