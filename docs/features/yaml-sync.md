@@ -9,7 +9,7 @@ description: "Manage dashboards as code using YAML files with depictio-cli impor
 Depictio supports managing dashboards as human-readable YAML files using the `depictio-cli` command-line tool. This enables Infrastructure-as-Code (IaC) workflows, version control integration, and reproducible dashboard deployments.
 
 !!! info "Implementation Reference"
-    The DashboardDataLite model and CLI dashboard commands were introduced in [:material-github: PR #663](https://github.com/depictio/depictio/pull/663){ target="_blank" }.
+The DashboardDataLite model and CLI dashboard commands were introduced in [:material-github: PR #663](https://github.com/depictio/depictio/pull/663){ target="\_blank" }.
 
 ## Overview
 
@@ -35,11 +35,11 @@ Depictio supports managing dashboards as human-readable YAML files using the `de
 
 The `depictio-cli dashboard` command group provides three commands for YAML management:
 
-| Command | Description | Server Required |
-|---------|-------------|-----------------|
-| `validate` | Validate YAML schema locally | No |
-| `import` | Import YAML to server | Yes (unless `--dry-run`) |
-| `export` | Export dashboard to YAML | Yes |
+| Command    | Description                  | Server Required          |
+| ---------- | ---------------------------- | ------------------------ |
+| `validate` | Validate YAML schema locally | No                       |
+| `import`   | Import YAML to server        | Yes (unless `--dry-run`) |
+| `export`   | Export dashboard to YAML     | Yes                      |
 
 ### Validate
 
@@ -49,8 +49,8 @@ Validate a dashboard YAML file against the DashboardDataLite schema locally with
 depictio-cli dashboard validate <yaml_file> [OPTIONS]
 ```
 
-| Option | Description |
-|--------|-------------|
+| Option            | Description                     |
+| ----------------- | ------------------------------- |
 | `--verbose`, `-v` | Show detailed validation output |
 
 **Examples:**
@@ -80,13 +80,13 @@ Import a dashboard YAML file to the server. The project is determined from the Y
 depictio-cli dashboard import <yaml_file> [OPTIONS]
 ```
 
-| Option | Description |
-|--------|-------------|
-| `--config`, `-c` | Path to CLI config file (required unless `--dry-run`) |
-| `--project`, `-p` | Project ID (overrides `project_tag` in YAML) |
-| `--overwrite` | Update existing dashboard with same title |
-| `--dry-run` | Validate only, don't import |
-| `--api` | API base URL (default: from config) |
+| Option            | Description                                           |
+| ----------------- | ----------------------------------------------------- |
+| `--config`, `-c`  | Path to CLI config file (required unless `--dry-run`) |
+| `--project`, `-p` | Project ID (overrides `project_tag` in YAML)          |
+| `--overwrite`     | Update existing dashboard with same title             |
+| `--dry-run`       | Validate only, don't import                           |
+| `--api`           | API base URL (default: from config)                   |
 
 **Examples:**
 
@@ -134,11 +134,11 @@ Export a dashboard from the server to a YAML file.
 depictio-cli dashboard export <dashboard_id> [OPTIONS]
 ```
 
-| Option | Description |
-|--------|-------------|
-| `--config`, `-c` | Path to CLI config file (required) |
+| Option           | Description                                  |
+| ---------------- | -------------------------------------------- |
+| `--config`, `-c` | Path to CLI config file (required)           |
 | `--output`, `-o` | Output file path (default: `dashboard.yaml`) |
-| `--api` | API base URL (default: from config) |
+| `--api`          | API base URL (default: from config)          |
 
 **Examples:**
 
@@ -251,13 +251,13 @@ components:
 
 ### Component Types Reference
 
-| Type | Description | Key Fields |
-|------|-------------|------------|
-| `figure` | Visualizations (scatter, box, histogram, etc.) | `visu_type`, `dict_kwargs` |
-| `card` | Metric cards with aggregations | `aggregation`, `column_name`, `column_type` |
-| `interactive` | Filters (RangeSlider, MultiSelect) | `interactive_component_type`, `column_name` |
-| `table` | Data tables | `page_size` |
-| `image` | Image galleries from S3/MinIO | `image_column`, `s3_base_folder` |
+| Type          | Description                                    | Key Fields                                  |
+| ------------- | ---------------------------------------------- | ------------------------------------------- |
+| `figure`      | Visualizations (scatter, box, histogram, etc.) | `visu_type`, `dict_kwargs`                  |
+| `card`        | Metric cards with aggregations                 | `aggregation`, `column_name`, `column_type` |
+| `interactive` | Filters (RangeSlider, MultiSelect)             | `interactive_component_type`, `column_name` |
+| `table`       | Data tables                                    | `page_size`                                 |
+| `image`       | Image galleries from S3/MinIO                  | `image_column`, `s3_base_folder`            |
 
 #### Figure Component
 
@@ -266,7 +266,7 @@ components:
   component_type: figure
   workflow_tag: python/workflow_name
   data_collection_tag: table_dc
-  visu_type: scatter  # scatter, box, histogram, bar, line, pie, etc.
+  visu_type: scatter # scatter, box, histogram, bar, line, pie, etc.
   dict_kwargs:
     x: column_x
     y: column_y
@@ -283,9 +283,9 @@ components:
   component_type: card
   workflow_tag: python/workflow_name
   data_collection_tag: table_dc
-  aggregation: average  # count, sum, mean, average, median, min, max, nunique
+  aggregation: average # count, sum, mean, average, median, min, max, nunique
   column_name: numeric_column
-  column_type: float64  # float64, int64, object
+  column_type: float64 # float64, int64, object
   icon_name: mdi:chart-line
   icon_color: "#2196F3"
 ```
@@ -321,7 +321,7 @@ components:
   component_type: table
   workflow_tag: python/workflow_name
   data_collection_tag: table_dc
-  page_size: 10  # 10, 25, 50, or 100
+  page_size: 10 # 10, 25, 50, or 100
 ```
 
 #### Image Component
@@ -331,11 +331,11 @@ components:
   component_type: image
   workflow_tag: python/workflow_name
   data_collection_tag: images_dc
-  image_column: image_path      # Column with relative image paths (required)
-  s3_base_folder: "s3://bucket/images/"  # S3/MinIO prefix (required)
-  thumbnail_size: 150           # Thumbnail height in pixels
-  columns: 4                    # Grid columns
-  max_images: 20                # Maximum images to display
+  image_column: image_path # Column with relative image paths (required)
+  s3_base_folder: "s3://bucket/images/" # S3/MinIO prefix (required)
+  thumbnail_size: 150 # Thumbnail height in pixels
+  columns: 4 # Grid columns
+  max_images: 20 # Maximum images to display
 ```
 
 ## Validation
@@ -361,6 +361,7 @@ The CLI validates YAML files against the DashboardDataLite Pydantic model:
 ### Validation Error Examples
 
 **Invalid component type:**
+
 ```
 ✗ Validation failed
   Errors: 1
@@ -374,6 +375,7 @@ The CLI validates YAML files against the DashboardDataLite Pydantic model:
 ```
 
 **Missing required field:**
+
 ```
 ✗ Validation failed
   Errors: 1
@@ -383,66 +385,6 @@ The CLI validates YAML files against the DashboardDataLite Pydantic model:
 ├───────────────┼────────────────┼────────────────────────────┤
 │ -             │ workflow_tag   │ Field required             │
 └─────────────────────────────────────────────────────────────┘
-```
-
-## Workflows
-
-### Development Workflow
-
-1. **Export existing dashboard:**
-   ```bash
-   depictio-cli dashboard export <dashboard_id> --config ~/.depictio/admin_config.yaml -o dashboard.yaml
-   ```
-
-2. **Edit YAML file** in your preferred editor
-
-3. **Validate changes locally:**
-   ```bash
-   depictio-cli dashboard validate dashboard.yaml
-   ```
-
-4. **Import updated dashboard:**
-   ```bash
-   depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --overwrite
-   ```
-
-### Version Control Workflow
-
-1. **Export dashboard and commit:**
-   ```bash
-   depictio-cli dashboard export <id> --config ~/.depictio/admin_config.yaml -o dashboards/my_dashboard.yaml
-   git add dashboards/my_dashboard.yaml
-   git commit -m "Add my_dashboard configuration"
-   ```
-
-2. **Review changes in PR:**
-   ```bash
-   git diff dashboards/my_dashboard.yaml  # Human-readable diffs
-   ```
-
-3. **Deploy to production:**
-   ```bash
-   depictio-cli dashboard import dashboards/my_dashboard.yaml --config prod_config.yaml --overwrite
-   ```
-
-### CI/CD Integration
-
-Validate dashboards in your CI pipeline:
-
-```yaml
-# GitHub Actions example
-jobs:
-  validate-dashboards:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install depictio-cli
-        run: pip install depictio
-      - name: Validate all dashboards
-        run: |
-          for f in dashboards/*.yaml; do
-            depictio-cli dashboard validate "$f"
-          done
 ```
 
 ## Best Practices
@@ -465,9 +407,9 @@ Use descriptive tags that indicate purpose:
 
 ```yaml
 # Good: Descriptive tags
-- tag: box-variety-sepal-length      # Chart type + data
-- tag: sepal-length-average          # Metric + aggregation
-- tag: variety-filter                # Column + purpose
+- tag: box-variety-sepal-length # Chart type + data
+- tag: sepal-length-average # Metric + aggregation
+- tag: variety-filter # Column + purpose
 
 # Avoid: Generic tags
 - tag: figure-1
