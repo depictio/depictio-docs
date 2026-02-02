@@ -26,6 +26,9 @@ The YAML Dashboard Sync feature enables bidirectional synchronization between Mo
 - **Human-Readable Format**: Edit dashboards directly in YAML (60-80 lines vs 500+ MongoDB)
 - **Collaborative Development**: Share and review dashboard configurations as code
 
+!!! info "Implementation Reference"
+    The DashboardDataLite model and CLI dashboard commands were introduced in [:material-github: PR #663](https://github.com/depictio/depictio/pull/663){ target="_blank" }. This includes `dashboard validate`, `dashboard import`, and `dashboard export` commands with tag-based references and overwrite support.
+
 ## How It Works
 
 ### Export (MongoDB → YAML)
