@@ -40,8 +40,9 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `data link create` | Create a DC link for cross-DC filtering | All users |
 | `data link resolve` | Test link resolution | All users |
 | `data link delete` | Delete a DC link | All users |
-| `dashboard validate` | Validate dashboard YAML file | All users |
-| `dashboard validate-dir` | Validate all YAML files in directory | All users |
+| `dashboard validate` | Validate dashboard YAML file locally | All users |
+| `dashboard import` | Import dashboard YAML to server | All users |
+| `dashboard export` | Export dashboard to YAML file | All users |
 | `backup backup` | Create system backup | **Admin only** |
 | `backup restore` | Restore from backup | **Admin only** |
 | `backup list-backups` | List available backups | **Admin only** |
@@ -592,13 +593,19 @@ depictio-cli backup list-backups --backup-path ./backups
 
 <!-- prettier-ignore -->
 !!! info "Command Group: `depictio-cli dashboard`"
-    All commands in this section are part of the `dashboard` command family. Use them to validate dashboard YAML files before deployment.
+    All commands in this section are part of the `dashboard` command family. Use them to manage dashboard YAML files - validate, import to server, and export from server.
 
-Validate dashboard YAML files for the [YAML Dashboard Sync](../features/yaml-sync.md) feature.
+Manage dashboard YAML files for the [Dashboard YAML Management](../features/yaml-sync.md) feature.
+
+| Command | Description | Server Required |
+|---------|-------------|-----------------|
+| `validate` | Validate YAML schema locally | No |
+| `import` | Import YAML to server | Yes (unless `--dry-run`) |
+| `export` | Export dashboard to YAML | Yes |
 
 #### `dashboard validate`
 
-Validate a single dashboard YAML file against the schema and optionally check column names and component types.
+Validate a single dashboard YAML file against the DashboardDataLite schema locally.
 
 ```bash
 depictio-cli dashboard validate <yaml_file> [OPTIONS]
@@ -608,27 +615,19 @@ depictio-cli dashboard validate <yaml_file> [OPTIONS]
 |-----------|------|---------|-------------|
 | `yaml_file` | `path` | **required** | Path to YAML dashboard file |
 | `--verbose` / `-v` | `boolean` | `false` | Show detailed validation output including warnings |
-| `--check-columns` / `--no-check-columns` | `boolean` | `true` | Validate column names exist in data collection schema |
-| `--check-types` / `--no-check-types` | `boolean` | `true` | Validate chart types, aggregation functions, filter types |
 
 ```bash
 # Basic validation
-depictio-cli dashboard validate dashboards/local/my_dashboard.yaml
+depictio-cli dashboard validate my_dashboard.yaml
 
 # With verbose output
-depictio-cli dashboard validate dashboards/local/my_dashboard.yaml --verbose
-
-# Skip column validation (useful for templates without data access)
-depictio-cli dashboard validate template.yaml --no-check-columns
+depictio-cli dashboard validate my_dashboard.yaml --verbose
 ```
 
 **Example Output (Success):**
 
 ```
-Validating: dashboards/local/my_dashboard.yaml
-  Including column name validation
-  Including component type validation
-
+Validating: my_dashboard.yaml
 ✓ Validation passed
   Errors: 0
   Warnings: 0
@@ -637,79 +636,129 @@ Validating: dashboards/local/my_dashboard.yaml
 **Example Output (Failure):**
 
 ```
-Validating: dashboards/local/my_dashboard.yaml
+Validating: my_dashboard.yaml
 
 ✗ Validation failed
   Errors: 2
-  Warnings: 1
 
 ┌──────────────────────────────────────────────────────────────────┐
 │                       Validation Errors                          │
 ├─────────────────────┬────────────────┬───────────────────────────┤
 │ Component           │ Field          │ Message                   │
 ├─────────────────────┼────────────────┼───────────────────────────┤
-│ scatter-plot-1      │ chart          │ Invalid chart type 'scat' │
-│ card-average        │ column         │ Column 'sepal_len' not    │
-│                     │                │ found. Did you mean       │
-│                     │                │ 'sepal.length'?           │
+│ -                   │ component_type │ Invalid value 'graphs'    │
+│ -                   │ workflow_tag   │ Field required            │
 └─────────────────────┴────────────────┴───────────────────────────┘
 ```
 
 ---
 
-#### `dashboard validate-dir`
+#### `dashboard import`
 
-Validate all YAML files in a directory, with optional recursive search.
+Import a dashboard YAML file to the server. The project is determined from the YAML `project_tag` field or the `--project` option.
 
 ```bash
-depictio-cli dashboard validate-dir [directory] [OPTIONS]
+depictio-cli dashboard import <yaml_file> [OPTIONS]
 ```
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `directory` | `path` | `.` (current) | Directory to validate |
-| `--recursive` / `-r` | `boolean` | `true` | Recursively search subdirectories |
-| `--check-columns` / `--no-check-columns` | `boolean` | `true` | Validate column names exist in data collection schema |
-| `--check-types` / `--no-check-types` | `boolean` | `true` | Validate chart types, aggregation functions, filter types |
+| `yaml_file` | `path` | **required** | Path to YAML dashboard file |
+| `--config` / `-c` | `string` | `null` | Path to CLI config file (required unless `--dry-run`) |
+| `--project` / `-p` | `string` | `null` | Project ID (overrides `project_tag` in YAML) |
+| `--overwrite` | `boolean` | `false` | Update existing dashboard with same title |
+| `--dry-run` | `boolean` | `false` | Validate only, don't import |
+| `--api` | `string` | from config | API base URL |
 
 ```bash
-# Validate all YAML files in local dashboards directory
-depictio-cli dashboard validate-dir dashboards/local/
+# Validate locally without server (no config needed)
+depictio-cli dashboard import dashboard.yaml --dry-run
 
-# Validate current directory only (non-recursive)
-depictio-cli dashboard validate-dir . --no-recursive
+# Import to server
+depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml
 
-# Validate templates without column checks
-depictio-cli dashboard validate-dir dashboards/templates/ --no-check-columns
+# Update existing dashboard with same title
+depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --overwrite
+
+# Override project from YAML
+depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --project 646b0f3c1e4a2d7f8e5b8c9a
 ```
 
 **Example Output:**
 
 ```
-Found 5 YAML files
-  Including column name validation
-  Including component type validation
+Validating: dashboard.yaml
+✓ Validation passed
+  Title: Iris Dashboard Demo
+  Components: 7
+  Project: Iris_Dataset_Project (from YAML project_tag)
 
-┌──────────────────────────────────────────────────────────────────┐
-│                       Validation Results                         │
-├───────────────────────────────────────┬──────────────┬───────────┤
-│ File                                  │ Status       │ Errors    │
-├───────────────────────────────────────┼──────────────┼───────────┤
-│ Iris_Dashboard_demo_6824cb3b.yaml     │ ✓ Valid      │ 0         │
-│ Analysis_Dashboard_6824cb3c.yaml      │ ✓ Valid      │ 0         │
-│ QC_Overview_6824cb3d.yaml             │ ✗ Invalid    │ 3         │
-│ Sample_Dashboard_6824cb3e.yaml        │ ✓ Valid      │ 0         │
-│ broken_config.yaml                    │ ✗ Invalid    │ 1         │
-└───────────────────────────────────────┴──────────────┴───────────┘
+Loading CLI configuration...
+✓ Configuration loaded
+  API URL: http://localhost:8058
 
-Summary: 3 valid, 2 invalid
+Importing dashboard (project: Iris_Dataset_Project)...
+✓ Dashboard imported successfully!
+  Dashboard ID: 6824cb3b89d2b72169309737
+  Title: Iris Dashboard Demo
+  Project ID: 650a1b2c3d4e5f6a7b8c9d0e
+
+View at: http://localhost:8058/dashboard/6824cb3b89d2b72169309737
 ```
 
 ---
 
-#### Dashboard Validation in CI/CD
+#### `dashboard export`
 
-Use dashboard validation in your CI/CD pipeline:
+Export a dashboard from the server to a YAML file.
+
+```bash
+depictio-cli dashboard export <dashboard_id> [OPTIONS]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `dashboard_id` | `string` | **required** | Dashboard ID to export |
+| `--config` / `-c` | `string` | **required** | Path to CLI config file |
+| `--output` / `-o` | `path` | `dashboard.yaml` | Output file path |
+| `--api` | `string` | from config | API base URL |
+
+```bash
+# Export to default file
+depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admin_config.yaml
+
+# Export to specific file
+depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admin_config.yaml -o iris_dashboard.yaml
+```
+
+**Example Output:**
+
+```
+Loading CLI configuration...
+Exporting dashboard 6824cb3b89d2b72169309737...
+✓ Dashboard exported to: iris_dashboard.yaml
+```
+
+---
+
+#### Dashboard Workflows
+
+**Development workflow:**
+
+```bash
+# 1. Export existing dashboard
+depictio-cli dashboard export <dashboard_id> --config ~/.depictio/admin_config.yaml -o dashboard.yaml
+
+# 2. Edit YAML file in your editor
+
+# 3. Validate changes locally
+depictio-cli dashboard validate dashboard.yaml
+
+# 4. Import updated dashboard
+depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --overwrite
+```
+
+**CI/CD integration:**
 
 ```yaml
 # GitHub Actions example
@@ -722,11 +771,12 @@ jobs:
         run: pip install depictio
       - name: Validate dashboards
         run: |
-          depictio-cli dashboard validate-dir dashboards/templates/ \
-            --no-check-columns  # Skip column checks (no DB access)
+          for f in dashboards/*.yaml; do
+            depictio-cli dashboard validate "$f"
+          done
 ```
 
-For more information about the YAML Dashboard Sync feature, see [YAML Dashboard Sync](../features/yaml-sync.md).
+For more information about dashboard YAML format and workflows, see [Dashboard YAML Management](../features/yaml-sync.md).
 
 ## 🛠️ Common Use Cases
 
