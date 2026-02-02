@@ -25,6 +25,18 @@ function getBasePath() {
     return '/';
 }
 
+// Add page-specific body classes for CSS targeting
+function addPageBodyClass() {
+    const path = window.location.pathname;
+    if (path.includes('/changelog')) {
+        document.body.classList.add('page-changelog');
+    }
+}
+
+// Run on load and on navigation
+document.addEventListener('DOMContentLoaded', addPageBodyClass);
+document.addEventListener('DOMContentSwitch', addPageBodyClass);
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🎨 Initializing triangular animation system...');
 

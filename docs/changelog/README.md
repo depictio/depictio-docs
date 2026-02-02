@@ -4,7 +4,6 @@ icon: material/update
 description: "Track changes and updates to Depictio across different versions."
 hide:
   - navigation
-  - toc
 ---
 
 # Changelog
