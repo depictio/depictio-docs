@@ -10,11 +10,11 @@
 - [Quick Reference](#quick-reference)
 - [Global Options](#global-options)
 - [🚀 Commands](#-commands)
-    - [🏃 Run Command](#run-command)
-    - [📋 Config Commands](#config-commands)
-    - [📊 Data Commands](#data-commands)
-    - [💾 Backup Commands](#backup-commands)
-    - [📈 Dashboard Commands](#dashboard-commands)
+  - [🏃 Run Command](#run-command)
+  - [📋 Config Commands](#config-commands)
+  - [📊 Data Commands](#data-commands)
+  - [💾 Backup Commands](#backup-commands)
+  - [📈 Dashboard Commands](#dashboard-commands)
 - [🛠️ Common Use Cases](#common-use-cases)
 - [🔧 Error Handling](#error-handling)
 
@@ -24,43 +24,42 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 
 ## Quick Reference
 
-| Command | Description | Access Level |
-|---------|-------------|--------------|
-| `version` | Show CLI version | All users |
-| `run` | Execute complete workflow | All users |
-| `config show-cli-config` | Display CLI configuration | All users |
-| `config check-s3-storage` | Validate S3 storage setup | All users |
-| `config check-server-accessibility` | Test server connection | All users |
-| `config validate-project-config` | Validate project configuration | All users |
-| `config sync-project-config-to-server` | Sync project config to server | All users |
-| `data scan` | Scan project files | All users |
-| `data process` | Process data collections | All users |
-| `data join` | Execute pre-computed table joins | All users |
-| `data link list` | List DC links for a project | All users |
-| `data link create` | Create a DC link for cross-DC filtering | All users |
-| `data link resolve` | Test link resolution | All users |
-| `data link delete` | Delete a DC link | All users |
-| `dashboard validate` | Validate dashboard YAML file | All users |
-| `dashboard validate-dir` | Validate all YAML files in directory | All users |
-| `backup backup` | Create system backup | **Admin only** |
-| `backup restore` | Restore from backup | **Admin only** |
-| `backup list-backups` | List available backups | **Admin only** |
+| Command                                | Description                             | Access Level   |
+| -------------------------------------- | --------------------------------------- | -------------- |
+| `version`                              | Show CLI version                        | All users      |
+| `run`                                  | Execute complete workflow               | All users      |
+| `config show-cli-config`               | Display CLI configuration               | All users      |
+| `config check-s3-storage`              | Validate S3 storage setup               | All users      |
+| `config check-server-accessibility`    | Test server connection                  | All users      |
+| `config validate-project-config`       | Validate project configuration          | All users      |
+| `config sync-project-config-to-server` | Sync project config to server           | All users      |
+| `data scan`                            | Scan project files                      | All users      |
+| `data process`                         | Process data collections                | All users      |
+| `data join`                            | Execute pre-computed table joins        | All users      |
+| `data link list`                       | List DC links for a project             | All users      |
+| `data link create`                     | Create a DC link for cross-DC filtering | All users      |
+| `data link resolve`                    | Test link resolution                    | All users      |
+| `data link delete`                     | Delete a DC link                        | All users      |
+| `dashboard validate`                   | Validate dashboard YAML file locally    | All users      |
+| `dashboard import`                     | Import dashboard YAML to server         | All users      |
+| `dashboard export`                     | Export dashboard to YAML file           | All users      |
+| `backup backup`                        | Create system backup                    | **Admin only** |
+| `backup restore`                       | Restore from backup                     | **Admin only** |
+| `backup list-backups`                  | List available backups                  | **Admin only** |
 
 ## Global Options
 
-| Option | Short | Type | Default | Description |
-|--------|-------|------|---------|-------------|
-| `--verbose` | `-v` | `boolean` | `false` | Enable verbose logging |
-| `--verbose-level` | `-vl` | `string` | `"INFO"` | Set verbose logging level |
+| Option            | Short | Type      | Default  | Description               |
+| ----------------- | ----- | --------- | -------- | ------------------------- |
+| `--verbose`       | `-v`  | `boolean` | `false`  | Enable verbose logging    |
+| `--verbose-level` | `-vl` | `string`  | `"INFO"` | Set verbose logging level |
 
 ## 🚀 Commands
 
 ### 🏃 Run Command
 
-
 <script src="https://asciinema.org/a/R5V6UXLetWzfp7AB39SxoGfhd.js" id="asciicast-R5V6UXLetWzfp7AB39SxoGfhd" async="true"></script>
 <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>🖥️ `depictio-cli run` command example</strong></p>
-
 
 Execute the complete Depictio workflow: validate → sync → scan → process
 
@@ -76,12 +75,12 @@ depictio-cli run --project-config-path ./config.yaml
 
 **Pipeline Steps:**
 
-  1. ✅ Check server accessibility
-  2. ✅ Check S3 storage configuration
-  3. ✅ Validate project configuration
-  4. ✅ Sync project configuration to server
-  5. ✅ Scan data files
-  6. ✅ Process data collections
+1. ✅ Check server accessibility
+2. ✅ Check S3 storage configuration
+3. ✅ Validate project configuration
+4. ✅ Sync project configuration to server
+5. ✅ Scan data files
+6. ✅ Process data collections
 
 ??? info "📋 Basic Configuration"
 
@@ -173,8 +172,8 @@ Display the current CLI configuration.
 depictio-cli config show-cli-config [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
+| Parameter           | Type     | Default                | Description                 |
+| ------------------- | -------- | ---------------------- | --------------------------- |
 | `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
 
 ```bash
@@ -191,8 +190,8 @@ Validate S3 storage configuration.
 depictio-cli config check-s3-storage [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
+| Parameter           | Type     | Default                | Description                 |
+| ------------------- | -------- | ---------------------- | --------------------------- |
 | `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
 
 ```bash
@@ -209,8 +208,8 @@ Test connection to Depictio server.
 depictio-cli config check-server-accessibility [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
+| Parameter           | Type     | Default                | Description                 |
+| ------------------- | -------- | ---------------------- | --------------------------- |
 | `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
 
 ```bash
@@ -227,10 +226,10 @@ Display metadata for registered projects.
 depictio-cli config show-depictio-project-metadata-on-server [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
+| Parameter           | Type     | Default                | Description                 |
+| ------------------- | -------- | ---------------------- | --------------------------- |
 | `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-| `--project-name` | `string` | `""` | Specific project name |
+| `--project-name`    | `string` | `""`                   | Specific project name       |
 
 ```bash
 depictio-cli config show-depictio-project-metadata-on-server --project-name my-project
@@ -246,10 +245,10 @@ Validate project configuration file.
 depictio-cli config validate-project-config [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
+| Parameter               | Type     | Default                | Description                      |
+| ----------------------- | -------- | ---------------------- | -------------------------------- |
+| `--CLI-config-path`     | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path      |
+| `--project-config-path` | `string` | `""`                   | Pipeline configuration file path |
 
 ```bash
 depictio-cli config validate-project-config --project-config-path ./config.yaml
@@ -265,11 +264,11 @@ Sync project configuration to server.
 depictio-cli config sync-project-config-to-server [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
-| `--update` | `boolean` | `false` | Update existing project configuration |
+| Parameter               | Type      | Default                | Description                           |
+| ----------------------- | --------- | ---------------------- | ------------------------------------- |
+| `--CLI-config-path`     | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path           |
+| `--project-config-path` | `string`  | `""`                   | Pipeline configuration file path      |
+| `--update`              | `boolean` | `false`                | Update existing project configuration |
 
 ```bash
 depictio-cli config sync-project-config-to-server --project-config-path ./config.yaml --update
@@ -291,14 +290,14 @@ Scan project files for data collections.
 depictio-cli data scan [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
-| `--workflow-name` | `string` | `null` | Specific workflow to scan |
-| `--data-collection-tag` | `string` | `null` | Data collection tag to scan |
-| `--rescan-folders` | `boolean` | `false` | Reprocess all runs for data collection |
-| `--sync-files` | `boolean` | `false` | Update files for data collection |
+| Parameter               | Type      | Default                | Description                            |
+| ----------------------- | --------- | ---------------------- | -------------------------------------- |
+| `--CLI-config-path`     | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path            |
+| `--project-config-path` | `string`  | `""`                   | Pipeline configuration file path       |
+| `--workflow-name`       | `string`  | `null`                 | Specific workflow to scan              |
+| `--data-collection-tag` | `string`  | `null`                 | Data collection tag to scan            |
+| `--rescan-folders`      | `boolean` | `false`                | Reprocess all runs for data collection |
+| `--sync-files`          | `boolean` | `false`                | Update files for data collection       |
 
 ```bash
 depictio-cli data scan --project-config-path ./config.yaml --workflow-name my-workflow
@@ -314,11 +313,11 @@ Process data collections for workflow execution.
 depictio-cli data process [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
-| `--overwrite` | `boolean` | `false` | Overwrite existing workflow |
+| Parameter               | Type      | Default                | Description                      |
+| ----------------------- | --------- | ---------------------- | -------------------------------- |
+| `--CLI-config-path`     | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path      |
+| `--project-config-path` | `string`  | `""`                   | Pipeline configuration file path |
+| `--overwrite`           | `boolean` | `false`                | Overwrite existing workflow      |
 
 ```bash
 depictio-cli data process --project-config-path ./config.yaml --overwrite
@@ -338,13 +337,13 @@ Execute pre-computed table joins defined in project configuration.
 depictio-cli data join [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
-| `--join-name` | `string` | `null` | Specific join to process (all if not specified) |
-| `--preview` | `boolean` | `false` | Preview join results without persisting |
-| `--overwrite` | `boolean` | `false` | Overwrite existing joined tables |
+| Parameter               | Type      | Default                | Description                                     |
+| ----------------------- | --------- | ---------------------- | ----------------------------------------------- |
+| `--CLI-config-path`     | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path                     |
+| `--project-config-path` | `string`  | `""`                   | Pipeline configuration file path                |
+| `--join-name`           | `string`  | `null`                 | Specific join to process (all if not specified) |
+| `--preview`             | `boolean` | `false`                | Preview join results without persisting         |
+| `--overwrite`           | `boolean` | `false`                | Overwrite existing joined tables                |
 
 ```bash
 # Preview all joins
@@ -353,7 +352,7 @@ depictio-cli data join --project-config-path ./config.yaml --preview
 # Execute a specific join
 depictio-cli data join --project-config-path ./config.yaml --join-name my_join
 ```
-
+<!-- 
 ---
 
 #### `data link`
@@ -364,7 +363,7 @@ Manage DC links for cross-DC interactive filtering. Links enable runtime filteri
 !!! tip "Links vs Joins"
     **Links** are the preferred method for cross-DC filtering. They resolve at runtime and support any DC type (tables, MultiQC, etc.). **Joins** create pre-computed Delta tables and only work between table DCs.
 
-##### `data link list`
+<!-- ##### `data link list`
 
 List all DC links for a project.
 
@@ -372,12 +371,12 @@ List all DC links for a project.
 depictio-cli data link list [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
-| `--target-dc` | `string` | `null` | Filter links by target DC ID |
-| `--source-dc` | `string` | `null` | Filter links by source DC ID |
+| Parameter               | Type     | Default                | Description                      |
+| ----------------------- | -------- | ---------------------- | -------------------------------- |
+| `--CLI-config-path`     | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path      |
+| `--project-config-path` | `string` | `""`                   | Pipeline configuration file path |
+| `--target-dc`           | `string` | `null`                 | Filter links by target DC ID     |
+| `--source-dc`           | `string` | `null`                 | Filter links by source DC ID     |
 
 ```bash
 # List all links in a project
@@ -397,26 +396,26 @@ Create a new DC link for cross-DC filtering.
 depictio-cli data link create [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
-| `--source-dc` | `string` | **required** | Source data collection ID |
-| `--source-column` | `string` | **required** | Column in source DC to link from |
-| `--target-dc` | `string` | **required** | Target data collection ID |
-| `--target-type` | `string` | `table` | Target DC type (`table`, `multiqc`) |
-| `--resolver` | `string` | `direct` | Resolver type (see below) |
-| `--description` | `string` | `null` | Optional description for the link |
+| Parameter               | Type     | Default                | Description                         |
+| ----------------------- | -------- | ---------------------- | ----------------------------------- |
+| `--CLI-config-path`     | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path         |
+| `--project-config-path` | `string` | `""`                   | Pipeline configuration file path    |
+| `--source-dc`           | `string` | **required**           | Source data collection ID           |
+| `--source-column`       | `string` | **required**           | Column in source DC to link from    |
+| `--target-dc`           | `string` | **required**           | Target data collection ID           |
+| `--target-type`         | `string` | `table`                | Target DC type (`table`, `multiqc`) |
+| `--resolver`            | `string` | `direct`               | Resolver type (see below)           |
+| `--description`         | `string` | `null`                 | Optional description for the link   |
 
 **Resolver Types:**
 
-| Resolver | Use Case | Description |
-|----------|----------|-------------|
-| `direct` | Same value in both DCs | 1:1 mapping (e.g., `sample_id` = `sample_id`) |
-| `sample_mapping` | MultiQC sample variants | Canonical ID → MultiQC sample name variants |
-| `pattern` | Template substitution | e.g., `{sample}.bam` → `S1.bam` |
-| `regex` | Pattern matching | Match target values using regex |
-| `wildcard` | Glob-style matching | e.g., `S1*` matches `S1_R1.bam` |
+| Resolver         | Use Case                | Description                                   |
+| ---------------- | ----------------------- | --------------------------------------------- |
+| `direct`         | Same value in both DCs  | 1:1 mapping (e.g., `sample_id` = `sample_id`) |
+| `sample_mapping` | MultiQC sample variants | Canonical ID → MultiQC sample name variants   |
+| `pattern`        | Template substitution   | e.g., `{sample}.bam` → `S1.bam`               |
+| `regex`          | Pattern matching        | Match target values using regex               |
+| `wildcard`       | Glob-style matching     | e.g., `S1*` matches `S1_R1.bam`               |
 
 ```bash
 # Create a direct link between two table DCs
@@ -448,14 +447,14 @@ Test link resolution by resolving filter values from source to target DC.
 depictio-cli data link resolve [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
-| `--source-dc` | `string` | **required** | Source data collection ID |
-| `--source-column` | `string` | **required** | Column in source DC to filter on |
-| `--target-dc` | `string` | **required** | Target data collection ID |
-| `--filter` | `string` | **required** | Comma-separated values to resolve |
+| Parameter               | Type     | Default                | Description                       |
+| ----------------------- | -------- | ---------------------- | --------------------------------- |
+| `--CLI-config-path`     | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path       |
+| `--project-config-path` | `string` | `""`                   | Pipeline configuration file path  |
+| `--source-dc`           | `string` | **required**           | Source data collection ID         |
+| `--source-column`       | `string` | **required**           | Column in source DC to filter on  |
+| `--target-dc`           | `string` | **required**           | Target data collection ID         |
+| `--filter`              | `string` | **required**           | Comma-separated values to resolve |
 
 ```bash
 # Resolve sample IDs to MultiQC sample names
@@ -501,12 +500,12 @@ Delete a DC link.
 depictio-cli data link delete [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-| `--project-config-path` | `string` | `""` | Pipeline configuration file path |
-| `--link-id` | `string` | **required** | ID of the link to delete |
-| `--force` / `-f` | `boolean` | `false` | Skip confirmation prompt |
+| Parameter               | Type      | Default                | Description                      |
+| ----------------------- | --------- | ---------------------- | -------------------------------- |
+| `--CLI-config-path`     | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path      |
+| `--project-config-path` | `string`  | `""`                   | Pipeline configuration file path |
+| `--link-id`             | `string`  | **required**           | ID of the link to delete         |
+| `--force` / `-f`        | `boolean` | `false`                | Skip confirmation prompt         |
 
 ```bash
 # Delete a link with confirmation
@@ -514,7 +513,7 @@ depictio-cli data link delete --project-config-path ./config.yaml --link-id abc1
 
 # Delete without confirmation
 depictio-cli data link delete --project-config-path ./config.yaml --link-id abc123 --force
-```
+``` --> -->
 
 ### 💾 Backup Commands
 
@@ -536,13 +535,13 @@ Create a backup of database and S3 storage data.
 depictio-cli backup backup [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-| `--backup-name` | `string` | `timestamp` | Name for the backup |
-| `--include-s3` | `boolean` | `true` | Include S3 storage data in backup |
-| `--include-db` | `boolean` | `true` | Include database data in backup |
-| `--output-path` | `string` | `./backups` | Path where backup files are stored |
+| Parameter           | Type      | Default                | Description                        |
+| ------------------- | --------- | ---------------------- | ---------------------------------- |
+| `--CLI-config-path` | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path        |
+| `--backup-name`     | `string`  | `timestamp`            | Name for the backup                |
+| `--include-s3`      | `boolean` | `true`                 | Include S3 storage data in backup  |
+| `--include-db`      | `boolean` | `true`                 | Include database data in backup    |
+| `--output-path`     | `string`  | `./backups`            | Path where backup files are stored |
 
 ```bash
 depictio-cli backup backup --backup-name production-backup --output-path ./backups
@@ -558,13 +557,13 @@ Restore data from a previously created backup.
 depictio-cli backup restore [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-| `--backup-path` | `string` | **required** | Path to backup file or directory |
-| `--restore-s3` | `boolean` | `true` | Restore S3 storage data |
-| `--restore-db` | `boolean` | `true` | Restore database data |
-| `--force` | `boolean` | `false` | Force restore without confirmation |
+| Parameter           | Type      | Default                | Description                        |
+| ------------------- | --------- | ---------------------- | ---------------------------------- |
+| `--CLI-config-path` | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path        |
+| `--backup-path`     | `string`  | **required**           | Path to backup file or directory   |
+| `--restore-s3`      | `boolean` | `true`                 | Restore S3 storage data            |
+| `--restore-db`      | `boolean` | `true`                 | Restore database data              |
+| `--force`           | `boolean` | `false`                | Force restore without confirmation |
 
 ```bash
 depictio-cli backup restore --backup-path ./backups/production-backup --force
@@ -580,8 +579,8 @@ List all available backups.
 depictio-cli backup list-backups [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
+| Parameter       | Type     | Default     | Description              |
+| --------------- | -------- | ----------- | ------------------------ |
 | `--backup-path` | `string` | `./backups` | Path to backup directory |
 
 ```bash
@@ -592,43 +591,41 @@ depictio-cli backup list-backups --backup-path ./backups
 
 <!-- prettier-ignore -->
 !!! info "Command Group: `depictio-cli dashboard`"
-    All commands in this section are part of the `dashboard` command family. Use them to validate dashboard YAML files before deployment.
+    All commands in this section are part of the `dashboard` command family. Use them to manage dashboard YAML files - validate, import to server, and export from server.
 
-Validate dashboard YAML files for the [YAML Dashboard Sync](../features/yaml-sync.md) feature.
+Manage dashboard YAML files for the [Dashboard YAML Management](../features/yaml-sync.md) feature.
+
+| Command    | Description                  | Server Required          |
+| ---------- | ---------------------------- | ------------------------ |
+| `validate` | Validate YAML schema locally | No                       |
+| `import`   | Import YAML to server        | Yes (unless `--dry-run`) |
+| `export`   | Export dashboard to YAML     | Yes                      |
 
 #### `dashboard validate`
 
-Validate a single dashboard YAML file against the schema and optionally check column names and component types.
+Validate a single dashboard YAML file against the DashboardDataLite schema locally.
 
 ```bash
 depictio-cli dashboard validate <yaml_file> [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `yaml_file` | `path` | **required** | Path to YAML dashboard file |
-| `--verbose` / `-v` | `boolean` | `false` | Show detailed validation output including warnings |
-| `--check-columns` / `--no-check-columns` | `boolean` | `true` | Validate column names exist in data collection schema |
-| `--check-types` / `--no-check-types` | `boolean` | `true` | Validate chart types, aggregation functions, filter types |
+| Parameter          | Type      | Default      | Description                                        |
+| ------------------ | --------- | ------------ | -------------------------------------------------- |
+| `yaml_file`        | `path`    | **required** | Path to YAML dashboard file                        |
+| `--verbose` / `-v` | `boolean` | `false`      | Show detailed validation output including warnings |
 
 ```bash
 # Basic validation
-depictio-cli dashboard validate dashboards/local/my_dashboard.yaml
+depictio-cli dashboard validate my_dashboard.yaml
 
 # With verbose output
-depictio-cli dashboard validate dashboards/local/my_dashboard.yaml --verbose
-
-# Skip column validation (useful for templates without data access)
-depictio-cli dashboard validate template.yaml --no-check-columns
+depictio-cli dashboard validate my_dashboard.yaml --verbose
 ```
 
 **Example Output (Success):**
 
 ```
-Validating: dashboards/local/my_dashboard.yaml
-  Including column name validation
-  Including component type validation
-
+Validating: my_dashboard.yaml
 ✓ Validation passed
   Errors: 0
   Warnings: 0
@@ -637,96 +634,112 @@ Validating: dashboards/local/my_dashboard.yaml
 **Example Output (Failure):**
 
 ```
-Validating: dashboards/local/my_dashboard.yaml
+Validating: my_dashboard.yaml
 
 ✗ Validation failed
   Errors: 2
-  Warnings: 1
 
 ┌──────────────────────────────────────────────────────────────────┐
 │                       Validation Errors                          │
 ├─────────────────────┬────────────────┬───────────────────────────┤
 │ Component           │ Field          │ Message                   │
 ├─────────────────────┼────────────────┼───────────────────────────┤
-│ scatter-plot-1      │ chart          │ Invalid chart type 'scat' │
-│ card-average        │ column         │ Column 'sepal_len' not    │
-│                     │                │ found. Did you mean       │
-│                     │                │ 'sepal.length'?           │
+│ -                   │ component_type │ Invalid value 'graphs'    │
+│ -                   │ workflow_tag   │ Field required            │
 └─────────────────────┴────────────────┴───────────────────────────┘
 ```
 
 ---
 
-#### `dashboard validate-dir`
+#### `dashboard import`
 
-Validate all YAML files in a directory, with optional recursive search.
+Import a dashboard YAML file to the server. The project is determined from the YAML `project_tag` field or the `--project` option.
 
 ```bash
-depictio-cli dashboard validate-dir [directory] [OPTIONS]
+depictio-cli dashboard import <yaml_file> [OPTIONS]
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `directory` | `path` | `.` (current) | Directory to validate |
-| `--recursive` / `-r` | `boolean` | `true` | Recursively search subdirectories |
-| `--check-columns` / `--no-check-columns` | `boolean` | `true` | Validate column names exist in data collection schema |
-| `--check-types` / `--no-check-types` | `boolean` | `true` | Validate chart types, aggregation functions, filter types |
+| Parameter          | Type      | Default      | Description                                           |
+| ------------------ | --------- | ------------ | ----------------------------------------------------- |
+| `yaml_file`        | `path`    | **required** | Path to YAML dashboard file                           |
+| `--config` / `-c`  | `string`  | `null`       | Path to CLI config file (required unless `--dry-run`) |
+| `--project` / `-p` | `string`  | `null`       | Project ID (overrides `project_tag` in YAML)          |
+| `--overwrite`      | `boolean` | `false`      | Update existing dashboard with same title             |
+| `--dry-run`        | `boolean` | `false`      | Validate only, don't import                           |
+| `--api`            | `string`  | from config  | API base URL                                          |
 
 ```bash
-# Validate all YAML files in local dashboards directory
-depictio-cli dashboard validate-dir dashboards/local/
+# Validate locally without server (no config needed)
+depictio-cli dashboard import dashboard.yaml --dry-run
 
-# Validate current directory only (non-recursive)
-depictio-cli dashboard validate-dir . --no-recursive
+# Import to server
+depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml
 
-# Validate templates without column checks
-depictio-cli dashboard validate-dir dashboards/templates/ --no-check-columns
+# Update existing dashboard with same title
+depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --overwrite
+
+# Override project from YAML
+depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --project 646b0f3c1e4a2d7f8e5b8c9a
 ```
 
 **Example Output:**
 
 ```
-Found 5 YAML files
-  Including column name validation
-  Including component type validation
+Validating: dashboard.yaml
+✓ Validation passed
+  Title: Iris Dashboard Demo
+  Components: 7
+  Project: Iris_Dataset_Project (from YAML project_tag)
 
-┌──────────────────────────────────────────────────────────────────┐
-│                       Validation Results                         │
-├───────────────────────────────────────┬──────────────┬───────────┤
-│ File                                  │ Status       │ Errors    │
-├───────────────────────────────────────┼──────────────┼───────────┤
-│ Iris_Dashboard_demo_6824cb3b.yaml     │ ✓ Valid      │ 0         │
-│ Analysis_Dashboard_6824cb3c.yaml      │ ✓ Valid      │ 0         │
-│ QC_Overview_6824cb3d.yaml             │ ✗ Invalid    │ 3         │
-│ Sample_Dashboard_6824cb3e.yaml        │ ✓ Valid      │ 0         │
-│ broken_config.yaml                    │ ✗ Invalid    │ 1         │
-└───────────────────────────────────────┴──────────────┴───────────┘
+Loading CLI configuration...
+✓ Configuration loaded
+  API URL: http://localhost:8058
 
-Summary: 3 valid, 2 invalid
+Importing dashboard (project: Iris_Dataset_Project)...
+✓ Dashboard imported successfully!
+  Dashboard ID: 6824cb3b89d2b72169309737
+  Title: Iris Dashboard Demo
+  Project ID: 650a1b2c3d4e5f6a7b8c9d0e
+
+View at: http://localhost:8058/dashboard/6824cb3b89d2b72169309737
 ```
 
 ---
 
-#### Dashboard Validation in CI/CD
+#### `dashboard export`
 
-Use dashboard validation in your CI/CD pipeline:
+Export a dashboard from the server to a YAML file.
 
-```yaml
-# GitHub Actions example
-jobs:
-  validate-dashboards:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install depictio-cli
-        run: pip install depictio
-      - name: Validate dashboards
-        run: |
-          depictio-cli dashboard validate-dir dashboards/templates/ \
-            --no-check-columns  # Skip column checks (no DB access)
+```bash
+depictio-cli dashboard export <dashboard_id> [OPTIONS]
 ```
 
-For more information about the YAML Dashboard Sync feature, see [YAML Dashboard Sync](../features/yaml-sync.md).
+| Parameter         | Type     | Default          | Description             |
+| ----------------- | -------- | ---------------- | ----------------------- |
+| `dashboard_id`    | `string` | **required**     | Dashboard ID to export  |
+| `--config` / `-c` | `string` | **required**     | Path to CLI config file |
+| `--output` / `-o` | `path`   | `dashboard.yaml` | Output file path        |
+| `--api`           | `string` | from config      | API base URL            |
+
+```bash
+# Export to default file
+depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admin_config.yaml
+
+# Export to specific file
+depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admin_config.yaml -o iris_dashboard.yaml
+```
+
+**Example Output:**
+
+```
+Loading CLI configuration...
+Exporting dashboard 6824cb3b89d2b72169309737...
+✓ Dashboard exported to: iris_dashboard.yaml
+```
+
+---
+
+For more information about dashboard YAML format and workflows, see [Dashboard YAML Management](../features/yaml-sync.md).
 
 ## 🛠️ Common Use Cases
 
@@ -832,13 +845,13 @@ depictio-cli run --project-config-path ./config.yaml --update-config --overwrite
 
 ### Exit Codes
 
-| Code | Description | Solution |
-|------|-------------|----------|
-| `0` | Success | Command completed successfully |
-| `1` | Configuration error | Check configuration file paths and syntax |
-| `2` | Server connection failed | Verify server URL and network connectivity |
-| `3` | S3 storage error | Validate S3 credentials and bucket configuration |
-| `4` | Data processing failed | Check data file permissions and formats |
+| Code | Description              | Solution                                         |
+| ---- | ------------------------ | ------------------------------------------------ |
+| `0`  | Success                  | Command completed successfully                   |
+| `1`  | Configuration error      | Check configuration file paths and syntax        |
+| `2`  | Server connection failed | Verify server URL and network connectivity       |
+| `3`  | S3 storage error         | Validate S3 credentials and bucket configuration |
+| `4`  | Data processing failed   | Check data file permissions and formats          |
 
 ### Common Issues
 
@@ -888,9 +901,9 @@ depictio-cli run --project-config-path ./config.yaml --update-config --overwrite
 
 **2. Enable Verbose Logging:**
 
-   ```bash
-   depictio-cli [command] --verbose --verbose-level DEBUG
-   ```
+```bash
+depictio-cli [command] --verbose --verbose-level DEBUG
+```
 
 **3. Test Components Individually:**
 

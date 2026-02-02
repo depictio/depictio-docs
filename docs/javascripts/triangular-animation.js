@@ -25,6 +25,32 @@ function getBasePath() {
     return '/';
 }
 
+// Add page-specific body classes for CSS targeting
+function updatePageBodyClass() {
+    const path = window.location.pathname;
+    // Always remove first, then add if needed
+    document.body.classList.remove('page-changelog');
+    if (path.includes('/changelog')) {
+        document.body.classList.add('page-changelog');
+    }
+}
+
+// Run on initial load
+document.addEventListener('DOMContentLoaded', updatePageBodyClass);
+
+// Handle MkDocs Material instant navigation
+document.addEventListener('DOMContentLoaded', function() {
+    // Watch for URL changes (instant navigation)
+    let lastPath = location.pathname;
+    const observer = new MutationObserver(function() {
+        if (location.pathname !== lastPath) {
+            lastPath = location.pathname;
+            updatePageBodyClass();
+        }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🎨 Initializing triangular animation system...');
 
