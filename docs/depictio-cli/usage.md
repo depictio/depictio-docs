@@ -13,10 +13,10 @@
   - [🏃 Run Command](#run-command)
   - [📋 Config Commands](#config-commands)
   - [📊 Data Commands](#data-commands)
-  - [💾 Backup Commands](#backup-commands)
   - [📈 Dashboard Commands](#dashboard-commands)
+  - [💾 Backup Commands](#backup-commands)
 - [🛠️ Common Use Cases](#common-use-cases)
-- [🔧 Error Handling](#error-handling)
+<!-- - [🔧 Error Handling](#error-handling) -->
 
 ## Installation
 
@@ -35,6 +35,26 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `config sync-project-config-to-server` | Sync project config to server           | All users      |
 | `data scan`                            | Scan project files                      | All users      |
 | `data process`                         | Process data collections                | All users      |
+| `dashboard validate`                   | Validate dashboard YAML file locally    | All users      |
+| `dashboard import`                     | Import dashboard YAML to server         | All users      |
+| `dashboard export`                     | Export dashboard to YAML file           | All users      |
+| `backup create`                        | Create system backup                    | **Admin only** |
+| `backup list`                          | List available backups                  | **Admin only** |
+| `backup validate`                      | Validate backup against models          | **Admin only** |
+| `backup restore`                       | Restore from backup                     | **Admin only** |
+| `backup check-coverage`                | Check validation coverage               | **Admin only** |
+
+<!-- | Command                                | Description                             | Access Level   |
+| -------------------------------------- | --------------------------------------- | -------------- |
+| `version`                              | Show CLI version                        | All users      |
+| `run`                                  | Execute complete workflow               | All users      |
+| `config show-cli-config`               | Display CLI configuration               | All users      |
+| `config check-s3-storage`              | Validate S3 storage setup               | All users      |
+| `config check-server-accessibility`    | Test server connection                  | All users      |
+| `config validate-project-config`       | Validate project configuration          | All users      |
+| `config sync-project-config-to-server` | Sync project config to server           | All users      |
+| `data scan`                            | Scan project files                      | All users      |
+| `data process`                         | Process data collections                | All users      |
 | `data join`                            | Execute pre-computed table joins        | All users      |
 | `data link list`                       | List DC links for a project             | All users      |
 | `data link create`                     | Create a DC link for cross-DC filtering | All users      |
@@ -43,9 +63,11 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `dashboard validate`                   | Validate dashboard YAML file locally    | All users      |
 | `dashboard import`                     | Import dashboard YAML to server         | All users      |
 | `dashboard export`                     | Export dashboard to YAML file           | All users      |
-| `backup backup`                        | Create system backup                    | **Admin only** |
+| `backup create`                        | Create system backup                    | **Admin only** |
+| `backup list`                          | List available backups                  | **Admin only** |
+| `backup validate`                      | Validate backup against models          | **Admin only** |
 | `backup restore`                       | Restore from backup                     | **Admin only** |
-| `backup list-backups`                  | List available backups                  | **Admin only** |
+| `backup check-coverage`                | Check validation coverage               | **Admin only** | -->
 
 ## Global Options
 
@@ -323,17 +345,17 @@ depictio-cli data process [OPTIONS]
 depictio-cli data process --project-config-path ./config.yaml --overwrite
 ```
 
----
+<!-- ---
 
 #### `data join`
 
 Execute pre-computed table joins defined in project configuration.
 
 <!-- prettier-ignore -->
-!!! note "Links vs Joins"
-    For interactive cross-DC filtering, use **links** (configured in YAML, resolved at runtime). Use **joins** only when you need a pre-computed combined dataset stored as a Delta table. See [Cross-DC Filtering](../features/cross-dc-filtering.md).
+<!-- !!! note "Links vs Joins"
+    For interactive cross-DC filtering, use **links** (configured in YAML, resolved at runtime). Use **joins** only when you need a pre-computed combined dataset stored as a Delta table. See [Cross-DC Filtering](../features/cross-dc-filtering.md). -->
 
-```bash
+<!-- ```bash
 depictio-cli data join [OPTIONS]
 ```
 
@@ -352,7 +374,6 @@ depictio-cli data join --project-config-path ./config.yaml --preview
 # Execute a specific join
 depictio-cli data join --project-config-path ./config.yaml --join-name my_join
 ```
-<!-- 
 ---
 
 #### `data link`
@@ -360,8 +381,8 @@ depictio-cli data join --project-config-path ./config.yaml --join-name my_join
 Manage DC links for cross-DC interactive filtering. Links enable runtime filtering between data collections without pre-computing joined tables.
 
 <!-- prettier-ignore -->
-!!! tip "Links vs Joins"
-    **Links** are the preferred method for cross-DC filtering. They resolve at runtime and support any DC type (tables, MultiQC, etc.). **Joins** create pre-computed Delta tables and only work between table DCs.
+<!-- !!! tip "Links vs Joins"
+    **Links** are the preferred method for cross-DC filtering. They resolve at runtime and support any DC type (tables, MultiQC, etc.). **Joins** create pre-computed Delta tables and only work between table DCs. -->
 
 <!-- ##### `data link list`
 
@@ -515,78 +536,6 @@ depictio-cli data link delete --project-config-path ./config.yaml --link-id abc1
 depictio-cli data link delete --project-config-path ./config.yaml --link-id abc123 --force
 ``` --> -->
 
-### 💾 Backup Commands
-
-<!-- prettier-ignore -->
-!!! info "Command Group: `depictio-cli backup`"
-    All commands in this section are part of the `backup` command family. Use them to backup and restore system data and configurations.
-
-Backup and restore system data and configurations.
-
-<!-- prettier-ignore -->
-!!! warning "Admin Access Required"
-    Backup and restore commands require administrator privileges. Only users with admin access can perform backup and restore operations. Ensure your CLI configuration includes admin credentials.
-
-#### `backup backup`
-
-Create a backup of database and S3 storage data.
-
-```bash
-depictio-cli backup backup [OPTIONS]
-```
-
-| Parameter           | Type      | Default                | Description                        |
-| ------------------- | --------- | ---------------------- | ---------------------------------- |
-| `--CLI-config-path` | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path        |
-| `--backup-name`     | `string`  | `timestamp`            | Name for the backup                |
-| `--include-s3`      | `boolean` | `true`                 | Include S3 storage data in backup  |
-| `--include-db`      | `boolean` | `true`                 | Include database data in backup    |
-| `--output-path`     | `string`  | `./backups`            | Path where backup files are stored |
-
-```bash
-depictio-cli backup backup --backup-name production-backup --output-path ./backups
-```
-
----
-
-#### `backup restore`
-
-Restore data from a previously created backup.
-
-```bash
-depictio-cli backup restore [OPTIONS]
-```
-
-| Parameter           | Type      | Default                | Description                        |
-| ------------------- | --------- | ---------------------- | ---------------------------------- |
-| `--CLI-config-path` | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path        |
-| `--backup-path`     | `string`  | **required**           | Path to backup file or directory   |
-| `--restore-s3`      | `boolean` | `true`                 | Restore S3 storage data            |
-| `--restore-db`      | `boolean` | `true`                 | Restore database data              |
-| `--force`           | `boolean` | `false`                | Force restore without confirmation |
-
-```bash
-depictio-cli backup restore --backup-path ./backups/production-backup --force
-```
-
----
-
-#### `backup list-backups`
-
-List all available backups.
-
-```bash
-depictio-cli backup list-backups [OPTIONS]
-```
-
-| Parameter       | Type     | Default     | Description              |
-| --------------- | -------- | ----------- | ------------------------ |
-| `--backup-path` | `string` | `./backups` | Path to backup directory |
-
-```bash
-depictio-cli backup list-backups --backup-path ./backups
-```
-
 ### 📈 Dashboard Commands
 
 <!-- prettier-ignore -->
@@ -695,7 +644,7 @@ depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.y
 
 <span style="color: #0097a7;">Loading CLI configuration...</span>
 <span style="color: #2e7d32;">✓ Configuration loaded</span>
-  API URL: http://localhost:8058
+  API URL: localhost:8058
 
 <span style="color: #0097a7;">Importing dashboard (project: Iris_Dataset_Project)...</span>
 <span style="color: #2e7d32;">✓ Dashboard imported successfully!</span>
@@ -703,7 +652,7 @@ depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.y
   Title: Iris Dashboard Demo
   Project ID: 650a1b2c3d4e5f6a7b8c9d0e
 
-<span style="color: #0097a7;">View at:</span> http://localhost:8058/dashboard/6824cb3b89d2b72169309737
+<span style="color: #0097a7;">View at:</span> localhost:8058/dashboard/6824cb3b89d2b72169309737
 </pre>
 </div>
 
@@ -744,6 +693,110 @@ depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admi
 ---
 
 For more information about dashboard YAML format and workflows, see [Dashboard YAML Management](../features/yaml-sync.md).
+
+### 💾 Backup Commands
+
+<!-- prettier-ignore -->
+!!! info "Command Group: `depictio-cli backup`"
+    All commands in this section are part of the `backup` command family. Use them to backup and restore MongoDB database and S3 data. **Admin access required.**
+
+Backup and restore system data and configurations.
+
+#### `backup create`
+
+Create a backup of the MongoDB database.
+
+```bash
+depictio-cli backup create [OPTIONS]
+```
+
+| Parameter            | Type      | Default                | Description                          |
+| -------------------- | --------- | ---------------------- | ------------------------------------ |
+| `--CLI-config-path`  | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path          |
+| `--dry-run`          | `boolean` | `false`                | Validate without creating backup     |
+| `--include-s3-data`  | `boolean` | `false`                | Include S3 deltatable data in backup |
+| `--s3-backup-prefix` | `string`  | `backup`               | Prefix for S3 backup location        |
+
+```bash
+depictio-cli backup create --include-s3-data
+```
+
+---
+
+#### `backup list`
+
+List available backup files on the server.
+
+```bash
+depictio-cli backup list [OPTIONS]
+```
+
+| Parameter           | Type     | Default                | Description                 |
+| ------------------- | -------- | ---------------------- | --------------------------- |
+| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
+
+```bash
+depictio-cli backup list
+```
+
+---
+
+#### `backup validate`
+
+Validate a backup file against Pydantic models.
+
+```bash
+depictio-cli backup validate <backup_id> [OPTIONS]
+```
+
+| Parameter           | Type     | Default                | Description                             |
+| ------------------- | -------- | ---------------------- | --------------------------------------- |
+| `backup_id`         | `string` | **required**           | Backup ID to validate (YYYYMMDD_HHMMSS) |
+| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path             |
+
+```bash
+depictio-cli backup validate 20240115_143052
+```
+
+---
+
+#### `backup restore`
+
+Restore data from a backup file. **Warning: destructive operation.**
+
+```bash
+depictio-cli backup restore <backup_id> [OPTIONS]
+```
+
+| Parameter           | Type      | Default                | Description                             |
+| ------------------- | --------- | ---------------------- | --------------------------------------- |
+| `backup_id`         | `string`  | **required**           | Backup ID to restore (YYYYMMDD_HHMMSS)  |
+| `--CLI-config-path` | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path             |
+| `--dry-run`         | `boolean` | `false`                | Simulate restore without making changes |
+| `--collections`     | `string`  | `null`                 | Comma-separated list of collections     |
+| `--force`           | `boolean` | `false`                | Skip confirmation prompt                |
+
+```bash
+depictio-cli backup restore 20240115_143052 --dry-run
+```
+
+---
+
+#### `backup check-coverage`
+
+Check validation coverage for all MongoDB collections.
+
+```bash
+depictio-cli backup check-coverage [OPTIONS]
+```
+
+| Parameter           | Type     | Default                | Description                 |
+| ------------------- | -------- | ---------------------- | --------------------------- |
+| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
+
+```bash
+depictio-cli backup check-coverage
+```
 
 ## 🛠️ Common Use Cases
 
@@ -806,21 +859,24 @@ depictio-cli run --project-config-path ./config.yaml --skip-server-check --skip-
 === "Create Backup"
 
 ```bash
-# Create timestamped backup
-depictio-cli backup backup --backup-name "backup-$(date +%Y%m%d-%H%M%S)"
+# Create database backup
+depictio-cli backup create
 
-# Custom backup location
-depictio-cli backup backup --backup-name production-backup --output-path /secure/backups
+# Include S3 deltatable data
+depictio-cli backup create --include-s3-data
 ```
 
 === "Restore Backup"
 
 ```bash
 # List available backups
-depictio-cli backup list-backups --backup-path /secure/backups
+depictio-cli backup list
+
+# Preview restore
+depictio-cli backup restore 20240115_143052 --dry-run
 
 # Restore specific backup
-depictio-cli backup restore --backup-path /secure/backups/production-backup --force
+depictio-cli backup restore 20240115_143052 --force
 ```
 
 ### 📊 Data Management
@@ -844,7 +900,7 @@ depictio-cli data process --project-config-path ./config.yaml --overwrite
 # Update and reprocess
 depictio-cli run --project-config-path ./config.yaml --update-config --overwrite
 ```
-
+<!--
 ## 🔧 Error Handling
 
 ### Exit Codes
@@ -921,7 +977,7 @@ depictio-cli config validate-project-config --project-config-path ./config.yaml
 
 ```bash
 depictio-cli run --project-config-path ./config.yaml --dry-run
-```
+``` -->
 
 ## 📖 Configuration References
 

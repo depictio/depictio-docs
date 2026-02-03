@@ -28,7 +28,8 @@ hide:
     <img src="./images/logo/logo_hd_white.svg" alt="Depictio logo" width="350" class="logo-light">
 
     <p class="hero-description">
-      A modern open-source platform that transforms bioinformatics workflow outputs into interactive dashboards.
+      A modern open-source platform that transforms bioinformatics workflow outputs into interactive dashboards.<br>
+      <span class="hero-subtext">Build, share, and explore data visualizations with or without writing code.</span>
     </p>
 
   </div>
@@ -76,6 +77,69 @@ hide:
   </div>
 </section>
 
+<!-- Dashboard Components Section -->
+<section class="components-section">
+  <div class="components-content">
+    <h2 class="components-title">Dashboard Components</h2>
+    <p class="components-description">
+      Build powerful dashboards with a rich library of interactive components.
+    </p>
+    <div class="components-grid">
+      <div class="component-card">
+        <div class="component-icon" style="background: var(--depictio-purple);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.45,15.18L22,7.31V19L22,21H2V3H4V15.54L9.5,6L16,9.78L20.24,2.45L21.97,3.45L16.74,12.5L10.23,8.75L4.31,19H6.57L10.96,11.44L17.45,15.18Z"/>
+          </svg>
+        </div>
+        <h4>Figure</h4>
+        <p>Scatter, bar, box, histogram, line plots and more with Plotly</p>
+      </div>
+      <div class="component-card">
+        <div class="component-icon" style="background: var(--depictio-blue);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5,4H19A2,2 0 0,1 21,6V18A2,2 0 0,1 19,20H5A2,2 0 0,1 3,18V6A2,2 0 0,1 5,4M5,8V12H11V8H5M13,8V12H19V8H13M5,14V18H11V14H5M13,14V18H19V14H13Z"/>
+          </svg>
+        </div>
+        <h4>Table</h4>
+        <p>Interactive AG Grid tables with filtering, sorting, and export</p>
+      </div>
+      <div class="component-card">
+        <div class="component-icon" style="background: var(--depictio-teal);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5,3A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3H5M7,7H17V9H7V7M7,11H14V13H7V11M7,15H17V17H7V15Z"/>
+          </svg>
+        </div>
+        <h4>Card</h4>
+        <p>Metric cards with aggregations (count, sum, mean, min, max)</p>
+      </div>
+      <div class="component-card">
+        <div class="component-icon" style="background: var(--depictio-green);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z"/>
+          </svg>
+        </div>
+        <h4>Interactive</h4>
+        <p>Filters with sliders, dropdowns, and date pickers</p>
+      </div>
+      <div class="component-card">
+        <div class="component-icon multiqc-logo-icon">
+          <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC">
+        </div>
+        <h4>MultiQC</h4>
+        <p>Quality control reports embedded in dashboards</p>
+      </div>
+      <div class="component-card">
+        <div class="component-icon" style="background: var(--depictio-pink);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M22,16V4A2,2 0 0,0 20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16M11,12L13.03,14.71L16,11L20,16H8M2,6V20A2,2 0 0,0 4,22H18V20H4V6"/>
+          </svg>
+        </div>
+        <h4>Image</h4>
+        <p>Image galleries with S3/MinIO storage integration</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Live Demo Section -->
 
@@ -214,6 +278,49 @@ hide:
   </div>
 </section>
 
+<!-- Goals Section -->
+<section class="goals-section">
+  <h2>Why Depictio?</h2>
+  <div class="goals-grid">
+    <div class="goal-card">
+      <div class="goal-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,12.5A1.5,1.5 0 0,1 10.5,11A1.5,1.5 0 0,1 12,9.5A1.5,1.5 0 0,1 13.5,11A1.5,1.5 0 0,1 12,12.5M12,7.2C9.9,7.2 8.2,8.9 8.2,11C8.2,14 12,17.5 12,17.5C12,17.5 15.8,14 15.8,11C15.8,8.9 14.1,7.2 12,7.2Z"/>
+        </svg>
+      </div>
+      <h3>No Code Required</h3>
+      <p>Create interactive dashboards without writing code. Drag and drop components, configure visualizations through the UI.</p>
+    </div>
+    <div class="goal-card">
+      <div class="goal-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"/>
+        </svg>
+      </div>
+      <h3>Workflow Integration</h3>
+      <p>Connect directly to Nextflow, Snakemake, Galaxy outputs. Automatically ingest results from production pipelines.</p>
+    </div>
+    <div class="goal-card">
+      <div class="goal-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z"/>
+        </svg>
+      </div>
+      <h3>Shareable & Reproducible</h3>
+      <p>Export dashboards as YAML for version control. Share with collaborators, deploy across environments.</p>
+    </div>
+    <div class="goal-card">
+      <div class="goal-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M15.5,12C18,12 20,14 20,16.5C20,17.38 19.75,18.21 19.31,18.9L22.39,22L21,23.39L17.88,20.32C17.19,20.75 16.37,21 15.5,21C13,21 11,19 11,16.5C11,14 13,12 15.5,12M15.5,14A2.5,2.5 0 0,0 13,16.5A2.5,2.5 0 0,0 15.5,19A2.5,2.5 0 0,0 18,16.5A2.5,2.5 0 0,0 15.5,14M5,3H19C20.1,3 21,3.89 21,5V13.03C20.5,12.23 19.81,11.54 19,11V5H5V19H9.5C9.81,19.75 10.26,20.42 10.81,21H5C3.9,21 3,20.1 3,19V5A2,2 0 0,1 5,3M7,7H17V9H7V7M7,11H12.03C11.23,11.5 10.54,12.19 10,13H7V11M7,15H9.17C9.06,15.5 9,16 9,16.5V17H7V15Z"/>
+        </svg>
+      </div>
+      <h3>Real-time Exploration</h3>
+      <p>Filter and interact with data in real-time. Cross-filter between components for deep data exploration.</p>
+    </div>
+  </div>
+</section>
+
 <section class="key-features-section">
   <h2>Key Features</h2>
   <div class="features-container">
@@ -225,9 +332,10 @@ hide:
       </div>
       <h3>Data Ingestion</h3>
       <ul>
-        <li><strong>Client-side processing:</strong> Depictio-CLI allows local data scanning and processing, pushing results to S3 bucket</li>
+        <li><strong>Client-side processing:</strong> Depictio-CLI scans and processes data locally, pushing results to S3</li>
         <li><strong>Multiple formats:</strong> Support for Parquet, CSV, JSON, TSV using Polars and Delta Lake</li>
-        <li><strong>MultiQC integration:</strong> Seamless quality control report visualization with dedicated components (v0.5.0+)</li>
+        <li><strong>Automatic aggregation:</strong> Combine files across workflow runs into unified datasets</li>
+        <li><strong>MultiQC integration:</strong> Seamless QC report visualization with dedicated components</li>
       </ul>
     </div>
 
@@ -239,9 +347,10 @@ hide:
       </div>
       <h3>Frontend & Visualization</h3>
       <ul>
-        <li><strong>Customizable dashboards:</strong> Design and customize dashboards with ease</li>
-        <li><strong>Real-time interactivity:</strong> Dynamic data exploration with instant updates</li>
-        <li><strong>Project organization:</strong> Organize dashboards by projects for better management</li>
+        <li><strong>Drag-and-drop dashboards:</strong> Build layouts visually without coding</li>
+        <li><strong>Cross-component filtering:</strong> Interactive filters affect all linked visualizations</li>
+        <li><strong>Code Mode:</strong> Write custom Python/Plotly code for advanced visualizations</li>
+        <li><strong>Project organization:</strong> Group dashboards by projects with user permissions</li>
       </ul>
     </div>
 
@@ -254,7 +363,9 @@ hide:
       <h3>System & Infrastructure</h3>
       <ul>
         <li><strong>Cloud-ready:</strong> Built for Kubernetes and Docker-Compose environments</li>
-        <li><strong>YAML Dashboard Sync:</strong> Bidirectional sync between MongoDB and YAML files for version control and IaC workflows</li>
+        <li><strong>YAML Dashboard Sync:</strong> Import and export dashboards as human-readable YAML files for version control and Infrastructure-as-Code workflows</li>
+        <li><strong>S3/MinIO Storage:</strong> Scalable object storage for data files and images</li>
+        <li><strong>Delta Lake:</strong> ACID transactions and versioned data tables</li>
         <li><strong>Open-source:</strong> Community-driven development with transparent deployment</li>
       </ul>
     </div>
@@ -846,6 +957,226 @@ hide:
   .hero-description {
     font-size: 1.2rem;
     margin-bottom: 2rem;
+  }
+
+  .hero-subtext {
+    font-size: 1rem;
+    color: var(--md-default-fg-color--light);
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  /* Dashboard Components Section */
+  .components-section {
+    background: #ffffff;
+    padding: 1.5rem 2rem 3rem 2rem;
+    margin: 0 -2rem;
+  }
+
+  [data-md-color-scheme="slate"] .components-section {
+    background: transparent;
+  }
+
+  .components-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .components-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--md-default-fg-color);
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+  }
+
+  .components-description {
+    font-size: 1.2rem;
+    color: var(--md-default-fg-color--light);
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .components-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .component-card {
+    background: var(--md-default-bg-color);
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--md-default-fg-color--lightest);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+  }
+
+  [data-md-color-scheme="slate"] .component-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .component-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .component-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1rem auto;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  .component-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .component-icon.multiqc-logo-icon {
+    background: transparent;
+  }
+
+  .component-icon.multiqc-logo-icon img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+
+  .component-card h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--md-default-fg-color);
+  }
+
+  .component-card p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--md-default-fg-color--light);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .components-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .components-section {
+      padding: 1rem 1rem 2rem 1rem;
+      margin: 0 -1rem;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .components-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Goals Section */
+  .goals-section {
+    background: #f8fafc;
+    padding: 1.5rem 2rem 3rem 2rem;
+    margin: 0 -2rem;
+  }
+
+  [data-md-color-scheme="slate"] .goals-section {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .goals-section h2 {
+    text-align: center;
+    margin-top: 0;
+  }
+
+  .goals-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    max-width: 1200px;
+    margin: 2rem auto 0 auto;
+  }
+
+  .goal-card {
+    background: var(--md-default-bg-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--md-default-fg-color--lightest);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  [data-md-color-scheme="slate"] .goal-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .goal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .goal-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 1rem auto;
+    background: linear-gradient(135deg, var(--depictio-purple) 0%, var(--depictio-blue) 100%);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  .goal-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .goal-card h3 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--md-default-fg-color);
+  }
+
+  .goal-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--md-default-fg-color--light);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 1024px) {
+    .goals-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .goals-section {
+      padding: 1rem 1rem 2rem 1rem;
+      margin: 0 -1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .goals-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* Workflow Section */

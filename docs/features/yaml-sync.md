@@ -9,7 +9,7 @@ description: "Manage dashboards as code using YAML files with depictio-cli impor
 Depictio supports managing dashboards as human-readable YAML files using the `depictio-cli` command-line tool. This enables Infrastructure-as-Code (IaC) workflows, version control integration, and reproducible dashboard deployments.
 
 !!! info "Implementation Reference"
-The DashboardDataLite model and CLI dashboard commands were introduced in [:material-github: PR #663](https://github.com/depictio/depictio/pull/663){ target="\_blank" }.
+    The DashboardDataLite model and CLI dashboard commands were introduced in [:material-github: PR #663](https://github.com/depictio/depictio/pull/663){ target="\_blank" }.
 
 ## Overview
 
@@ -116,7 +116,7 @@ depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.y
 
 <span style="color: #0097a7;">Loading CLI configuration...</span>
 <span style="color: #2e7d32;">✓ Configuration loaded</span>
-  API URL: http://localhost:8058
+  API URL: localhost:8058
 
 <span style="color: #0097a7;">Importing dashboard (project: Iris_Dataset_Project)...</span>
 <span style="color: #2e7d32;">✓ Dashboard imported successfully!</span>
@@ -124,7 +124,7 @@ depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.y
   Title: Iris Dashboard Demo
   Project ID: 650a1b2c3d4e5f6a7b8c9d0e
 
-<span style="color: #0097a7;">View at:</span> http://localhost:8058/dashboard/6824cb3b89d2b72169309737
+<span style="color: #0097a7;">View at:</span> localhost:8058/dashboard/6824cb3b89d2b72169309737
 </pre>
 </div>
 
