@@ -344,198 +344,6 @@ depictio-cli data process [OPTIONS]
 ```bash
 depictio-cli data process --project-config-path ./config.yaml --overwrite
 ```
-
-<!-- ---
-
-#### `data join`
-
-Execute pre-computed table joins defined in project configuration.
-
-<!-- prettier-ignore -->
-<!-- !!! note "Links vs Joins"
-    For interactive cross-DC filtering, use **links** (configured in YAML, resolved at runtime). Use **joins** only when you need a pre-computed combined dataset stored as a Delta table. See [Cross-DC Filtering](../features/cross-dc-filtering.md). -->
-
-<!-- ```bash
-depictio-cli data join [OPTIONS]
-```
-
-| Parameter               | Type      | Default                | Description                                     |
-| ----------------------- | --------- | ---------------------- | ----------------------------------------------- |
-| `--CLI-config-path`     | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path                     |
-| `--project-config-path` | `string`  | `""`                   | Pipeline configuration file path                |
-| `--join-name`           | `string`  | `null`                 | Specific join to process (all if not specified) |
-| `--preview`             | `boolean` | `false`                | Preview join results without persisting         |
-| `--overwrite`           | `boolean` | `false`                | Overwrite existing joined tables                |
-
-```bash
-# Preview all joins
-depictio-cli data join --project-config-path ./config.yaml --preview
-
-# Execute a specific join
-depictio-cli data join --project-config-path ./config.yaml --join-name my_join
-```
----
-
-#### `data link`
-
-Manage DC links for cross-DC interactive filtering. Links enable runtime filtering between data collections without pre-computing joined tables.
-
-<!-- prettier-ignore -->
-<!-- !!! tip "Links vs Joins"
-    **Links** are the preferred method for cross-DC filtering. They resolve at runtime and support any DC type (tables, MultiQC, etc.). **Joins** create pre-computed Delta tables and only work between table DCs. -->
-
-<!-- ##### `data link list`
-
-List all DC links for a project.
-
-```bash
-depictio-cli data link list [OPTIONS]
-```
-
-| Parameter               | Type     | Default                | Description                      |
-| ----------------------- | -------- | ---------------------- | -------------------------------- |
-| `--CLI-config-path`     | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path      |
-| `--project-config-path` | `string` | `""`                   | Pipeline configuration file path |
-| `--target-dc`           | `string` | `null`                 | Filter links by target DC ID     |
-| `--source-dc`           | `string` | `null`                 | Filter links by source DC ID     |
-
-```bash
-# List all links in a project
-depictio-cli data link list --project-config-path ./config.yaml
-
-# List links targeting a specific DC
-depictio-cli data link list --project-config-path ./config.yaml --target-dc multiqc_dc_id
-```
-
----
-
-##### `data link create`
-
-Create a new DC link for cross-DC filtering.
-
-```bash
-depictio-cli data link create [OPTIONS]
-```
-
-| Parameter               | Type     | Default                | Description                         |
-| ----------------------- | -------- | ---------------------- | ----------------------------------- |
-| `--CLI-config-path`     | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path         |
-| `--project-config-path` | `string` | `""`                   | Pipeline configuration file path    |
-| `--source-dc`           | `string` | **required**           | Source data collection ID           |
-| `--source-column`       | `string` | **required**           | Column in source DC to link from    |
-| `--target-dc`           | `string` | **required**           | Target data collection ID           |
-| `--target-type`         | `string` | `table`                | Target DC type (`table`, `multiqc`) |
-| `--resolver`            | `string` | `direct`               | Resolver type (see below)           |
-| `--description`         | `string` | `null`                 | Optional description for the link   |
-
-**Resolver Types:**
-
-| Resolver         | Use Case                | Description                                   |
-| ---------------- | ----------------------- | --------------------------------------------- |
-| `direct`         | Same value in both DCs  | 1:1 mapping (e.g., `sample_id` = `sample_id`) |
-| `sample_mapping` | MultiQC sample variants | Canonical ID → MultiQC sample name variants   |
-| `pattern`        | Template substitution   | e.g., `{sample}.bam` → `S1.bam`               |
-| `regex`          | Pattern matching        | Match target values using regex               |
-| `wildcard`       | Glob-style matching     | e.g., `S1*` matches `S1_R1.bam`               |
-
-```bash
-# Create a direct link between two table DCs
-depictio-cli data link create \
-    --project-config-path ./config.yaml \
-    --source-dc metadata_table \
-    --source-column sample_id \
-    --target-dc variants_table \
-    --target-type table \
-    --resolver direct
-
-# Create a sample_mapping link to a MultiQC DC
-depictio-cli data link create \
-    --project-config-path ./config.yaml \
-    --source-dc metadata_table \
-    --source-column sample_id \
-    --target-dc multiqc_general_stats \
-    --target-type multiqc \
-    --resolver sample_mapping
-```
-
----
-
-##### `data link resolve`
-
-Test link resolution by resolving filter values from source to target DC.
-
-```bash
-depictio-cli data link resolve [OPTIONS]
-```
-
-| Parameter               | Type     | Default                | Description                       |
-| ----------------------- | -------- | ---------------------- | --------------------------------- |
-| `--CLI-config-path`     | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path       |
-| `--project-config-path` | `string` | `""`                   | Pipeline configuration file path  |
-| `--source-dc`           | `string` | **required**           | Source data collection ID         |
-| `--source-column`       | `string` | **required**           | Column in source DC to filter on  |
-| `--target-dc`           | `string` | **required**           | Target data collection ID         |
-| `--filter`              | `string` | **required**           | Comma-separated values to resolve |
-
-```bash
-# Resolve sample IDs to MultiQC sample names
-depictio-cli data link resolve \
-    --project-config-path ./config.yaml \
-    --source-dc metadata_table \
-    --source-column sample_id \
-    --target-dc multiqc_general_stats \
-    --filter "S1,S2,S3"
-```
-
-**Example output:**
-
-```
-Resolving link:
-  Source DC: metadata_table
-  Source Column: sample_id
-  Target DC: multiqc_general_stats
-  Filter Values: ['S1', 'S2', 'S3']
-
-Resolution successful!
-  Link ID: 507f1f77bcf86cd799439011
-  Resolver Used: sample_mapping
-  Target Type: multiqc
-  Match Count: 6
-
-Resolved Values (6):
-    - S1_R1
-    - S1_R2
-    - S2_R1
-    - S2_R2
-    - S3_R1
-    - S3_R2
-```
-
----
-
-##### `data link delete`
-
-Delete a DC link.
-
-```bash
-depictio-cli data link delete [OPTIONS]
-```
-
-| Parameter               | Type      | Default                | Description                      |
-| ----------------------- | --------- | ---------------------- | -------------------------------- |
-| `--CLI-config-path`     | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path      |
-| `--project-config-path` | `string`  | `""`                   | Pipeline configuration file path |
-| `--link-id`             | `string`  | **required**           | ID of the link to delete         |
-| `--force` / `-f`        | `boolean` | `false`                | Skip confirmation prompt         |
-
-```bash
-# Delete a link with confirmation
-depictio-cli data link delete --project-config-path ./config.yaml --link-id abc123
-
-# Delete without confirmation
-depictio-cli data link delete --project-config-path ./config.yaml --link-id abc123 --force
-``` --> -->
-
 ### 📈 Dashboard Commands
 
 <!-- prettier-ignore -->
@@ -900,6 +708,12 @@ depictio-cli data process --project-config-path ./config.yaml --overwrite
 # Update and reprocess
 depictio-cli run --project-config-path ./config.yaml --update-config --overwrite
 ```
+
+## 📖 Configuration References
+
+- [Minimal YAML Configuration](minimal_config.md)
+- [Full Reference Configuration](full_reference_config.md)
+
 <!--
 ## 🔧 Error Handling
 
@@ -979,7 +793,194 @@ depictio-cli config validate-project-config --project-config-path ./config.yaml
 depictio-cli run --project-config-path ./config.yaml --dry-run
 ``` -->
 
-## 📖 Configuration References
 
-- [Minimal YAML Configuration](minimal_config.md)
-- [Full Reference Configuration](full_reference_config.md)
+<!-- ---
+
+#### `data join`
+
+Execute pre-computed table joins defined in project configuration.
+
+<!-- prettier-ignore -->
+<!-- !!! note "Links vs Joins"
+    For interactive cross-DC filtering, use **links** (configured in YAML, resolved at runtime). Use **joins** only when you need a pre-computed combined dataset stored as a Delta table. See [Cross-DC Filtering](../features/cross-dc-filtering.md). -->
+
+<!-- ```bash
+depictio-cli data join [OPTIONS]
+```
+
+| Parameter               | Type      | Default                | Description                                     |
+| ----------------------- | --------- | ---------------------- | ----------------------------------------------- |
+| `--CLI-config-path`     | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path                     |
+| `--project-config-path` | `string`  | `""`                   | Pipeline configuration file path                |
+| `--join-name`           | `string`  | `null`                 | Specific join to process (all if not specified) |
+| `--preview`             | `boolean` | `false`                | Preview join results without persisting         |
+| `--overwrite`           | `boolean` | `false`                | Overwrite existing joined tables                |
+
+```bash
+# Preview all joins
+depictio-cli data join --project-config-path ./config.yaml --preview
+
+# Execute a specific join
+depictio-cli data join --project-config-path ./config.yaml --join-name my_join
+```
+---
+
+#### `data link`
+
+Manage DC links for cross-DC interactive filtering. Links enable runtime filtering between data collections without pre-computing joined tables.
+
+<!-- prettier-ignore -->
+<!-- !!! tip "Links vs Joins"
+    **Links** are the preferred method for cross-DC filtering. They resolve at runtime and support any DC type (tables, MultiQC, etc.). **Joins** create pre-computed Delta tables and only work between table DCs. -->
+
+<!-- ##### `data link list`
+
+List all DC links for a project.
+
+```bash
+depictio-cli data link list [OPTIONS]
+```
+
+| Parameter               | Type     | Default                | Description                      |
+| ----------------------- | -------- | ---------------------- | -------------------------------- |
+| `--CLI-config-path`     | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path      |
+| `--project-config-path` | `string` | `""`                   | Pipeline configuration file path |
+| `--target-dc`           | `string` | `null`                 | Filter links by target DC ID     |
+| `--source-dc`           | `string` | `null`                 | Filter links by source DC ID     |
+
+```bash
+# List all links in a project
+depictio-cli data link list --project-config-path ./config.yaml
+
+# List links targeting a specific DC
+depictio-cli data link list --project-config-path ./config.yaml --target-dc multiqc_dc_id
+```
+
+---
+
+##### `data link create`
+
+Create a new DC link for cross-DC filtering.
+
+```bash
+depictio-cli data link create [OPTIONS]
+```
+
+| Parameter               | Type     | Default                | Description                         |
+| ----------------------- | -------- | ---------------------- | ----------------------------------- |
+| `--CLI-config-path`     | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path         |
+| `--project-config-path` | `string` | `""`                   | Pipeline configuration file path    |
+| `--source-dc`           | `string` | **required**           | Source data collection ID           |
+| `--source-column`       | `string` | **required**           | Column in source DC to link from    |
+| `--target-dc`           | `string` | **required**           | Target data collection ID           |
+| `--target-type`         | `string` | `table`                | Target DC type (`table`, `multiqc`) |
+| `--resolver`            | `string` | `direct`               | Resolver type (see below)           |
+| `--description`         | `string` | `null`                 | Optional description for the link   |
+
+**Resolver Types:**
+
+| Resolver         | Use Case                | Description                                   |
+| ---------------- | ----------------------- | --------------------------------------------- |
+| `direct`         | Same value in both DCs  | 1:1 mapping (e.g., `sample_id` = `sample_id`) |
+| `sample_mapping` | MultiQC sample variants | Canonical ID → MultiQC sample name variants   |
+| `pattern`        | Template substitution   | e.g., `{sample}.bam` → `S1.bam`               |
+| `regex`          | Pattern matching        | Match target values using regex               |
+| `wildcard`       | Glob-style matching     | e.g., `S1*` matches `S1_R1.bam`               |
+
+```bash
+# Create a direct link between two table DCs
+depictio-cli data link create \
+    --project-config-path ./config.yaml \
+    --source-dc metadata_table \
+    --source-column sample_id \
+    --target-dc variants_table \
+    --target-type table \
+    --resolver direct
+
+# Create a sample_mapping link to a MultiQC DC
+depictio-cli data link create \
+    --project-config-path ./config.yaml \
+    --source-dc metadata_table \
+    --source-column sample_id \
+    --target-dc multiqc_general_stats \
+    --target-type multiqc \
+    --resolver sample_mapping
+```
+
+---
+
+##### `data link resolve`
+
+Test link resolution by resolving filter values from source to target DC.
+
+```bash
+depictio-cli data link resolve [OPTIONS]
+```
+
+| Parameter               | Type     | Default                | Description                       |
+| ----------------------- | -------- | ---------------------- | --------------------------------- |
+| `--CLI-config-path`     | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path       |
+| `--project-config-path` | `string` | `""`                   | Pipeline configuration file path  |
+| `--source-dc`           | `string` | **required**           | Source data collection ID         |
+| `--source-column`       | `string` | **required**           | Column in source DC to filter on  |
+| `--target-dc`           | `string` | **required**           | Target data collection ID         |
+| `--filter`              | `string` | **required**           | Comma-separated values to resolve |
+
+```bash
+# Resolve sample IDs to MultiQC sample names
+depictio-cli data link resolve \
+    --project-config-path ./config.yaml \
+    --source-dc metadata_table \
+    --source-column sample_id \
+    --target-dc multiqc_general_stats \
+    --filter "S1,S2,S3"
+```
+
+**Example output:**
+
+```
+Resolving link:
+  Source DC: metadata_table
+  Source Column: sample_id
+  Target DC: multiqc_general_stats
+  Filter Values: ['S1', 'S2', 'S3']
+
+Resolution successful!
+  Link ID: 507f1f77bcf86cd799439011
+  Resolver Used: sample_mapping
+  Target Type: multiqc
+  Match Count: 6
+
+Resolved Values (6):
+    - S1_R1
+    - S1_R2
+    - S2_R1
+    - S2_R2
+    - S3_R1
+    - S3_R2
+```
+
+---
+
+##### `data link delete`
+
+Delete a DC link.
+
+```bash
+depictio-cli data link delete [OPTIONS]
+```
+
+| Parameter               | Type      | Default                | Description                      |
+| ----------------------- | --------- | ---------------------- | -------------------------------- |
+| `--CLI-config-path`     | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path      |
+| `--project-config-path` | `string`  | `""`                   | Pipeline configuration file path |
+| `--link-id`             | `string`  | **required**           | ID of the link to delete         |
+| `--force` / `-f`        | `boolean` | `false`                | Skip confirmation prompt         |
+
+```bash
+# Delete a link with confirmation
+depictio-cli data link delete --project-config-path ./config.yaml --link-id abc123
+
+# Delete without confirmation
+depictio-cli data link delete --project-config-path ./config.yaml --link-id abc123 --force
+``` --> 
