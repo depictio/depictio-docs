@@ -65,12 +65,14 @@ depictio-cli dashboard validate my_dashboard.yaml --verbose
 
 **Example Output:**
 
-```
+<div class="terminal-output">
+<pre>
 Validating: my_dashboard.yaml
-✓ Validation passed
-  Errors: 0
-  Warnings: 0
-```
+<span style="color: #4CAF50;">✓ Validation passed</span>
+  Errors: <span style="color: #4CAF50;">0</span>
+  Warnings: <span style="color: #4CAF50;">0</span>
+</pre>
+</div>
 
 ### Import
 
@@ -106,25 +108,27 @@ depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.y
 
 **Example Output:**
 
-```
-Validating: dashboard.yaml
-✓ Validation passed
-  Title: Iris Dashboard Demo
-  Components: 7
-  Project: Iris_Dataset_Project (from YAML project_tag)
+<div class="terminal-output">
+<pre>
+Validating: <span style="color: #2196F3;">dashboard.yaml</span>
+<span style="color: #4CAF50;">✓ Validation passed</span>
+  Title: <span style="color: #FF9800;">Iris Dashboard Demo</span>
+  Components: <span style="color: #2196F3;">7</span>
+  Project: <span style="color: #9C27B0;">Iris_Dataset_Project</span> (from YAML project_tag)
 
 Loading CLI configuration...
-✓ Configuration loaded
-  API URL: http://localhost:8058
+<span style="color: #4CAF50;">✓ Configuration loaded</span>
+  API URL: <span style="color: #2196F3;">http://localhost:8058</span>
 
-Importing dashboard (project: Iris_Dataset_Project)...
-✓ Dashboard imported successfully!
-  Dashboard ID: 6824cb3b89d2b72169309737
-  Title: Iris Dashboard Demo
-  Project ID: 650a1b2c3d4e5f6a7b8c9d0e
+Importing dashboard (project: <span style="color: #9C27B0;">Iris_Dataset_Project</span>)...
+<span style="color: #4CAF50;">✓ Dashboard imported successfully!</span>
+  Dashboard ID: <span style="color: #2196F3;">6824cb3b89d2b72169309737</span>
+  Title: <span style="color: #FF9800;">Iris Dashboard Demo</span>
+  Project ID: <span style="color: #2196F3;">650a1b2c3d4e5f6a7b8c9d0e</span>
 
-View at: http://localhost:8058/dashboard/6824cb3b89d2b72169309737
-```
+View at: <span style="color: #4CAF50;">http://localhost:8058/dashboard/6824cb3b89d2b72169309737</span>
+</pre>
+</div>
 
 ### Export
 
@@ -362,30 +366,34 @@ The CLI validates YAML files against the DashboardDataLite Pydantic model:
 
 **Invalid component type:**
 
-```
-✗ Validation failed
-  Errors: 1
+<div class="terminal-output">
+<pre>
+<span style="color: #F44336;">✗ Validation failed</span>
+  Errors: <span style="color: #F44336;">1</span>
 
 ┌─────────────────────────────────────────────────────────────┐
 │ Component     │ Field          │ Message                    │
 ├───────────────┼────────────────┼────────────────────────────┤
-│ -             │ component_type │ Invalid value 'graphs'.    │
+│ -             │ <span style="color: #FF9800;">component_type</span> │ <span style="color: #F44336;">Invalid value 'graphs'.</span>    │
 │               │                │ Valid: figure, card, etc.  │
 └─────────────────────────────────────────────────────────────┘
-```
+</pre>
+</div>
 
 **Missing required field:**
 
-```
-✗ Validation failed
-  Errors: 1
+<div class="terminal-output">
+<pre>
+<span style="color: #F44336;">✗ Validation failed</span>
+  Errors: <span style="color: #F44336;">1</span>
 
 ┌─────────────────────────────────────────────────────────────┐
 │ Component     │ Field          │ Message                    │
 ├───────────────┼────────────────┼────────────────────────────┤
-│ -             │ workflow_tag   │ Field required             │
+│ -             │ <span style="color: #FF9800;">workflow_tag</span>   │ <span style="color: #F44336;">Field required</span>             │
 └─────────────────────────────────────────────────────────────┘
-```
+</pre>
+</div>
 
 ## Best Practices
 
