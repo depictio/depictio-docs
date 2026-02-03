@@ -118,6 +118,17 @@ fig
 | Color | Column for color encoding | None |
 | Hover data | Additional columns shown on hover | None |
 
+### Selection Filtering (Scatter Plots)
+
+Scatter plots can act as interactive filters. Enable selection to let users lasso, box-select, or click points to filter other components.
+
+| Option | Description |
+|--------|-------------|
+| `selection_enabled` | Enable selection filtering (`true`/`false`) |
+| `selection_column` | Column to extract from selected points |
+
+See [Interactive Selection Filtering](interactive-selection-filtering.md) for details.
+
 ---
 
 ## :material-table: Table Components
@@ -142,6 +153,17 @@ Table components display data in interactive tables with built-in filtering and 
 | Visible Columns | Columns to display | All columns |
 | Page Size | Rows per page | 10, 25, 50, or 100 |
 | Style | Column width, text alignment | Auto |
+
+### Row Selection Filtering
+
+Tables can act as interactive filters. Enable row selection to let users click rows to filter other components.
+
+| Option | Description |
+|--------|-------------|
+| `row_selection_enabled` | Enable row selection filtering (`true`/`false`) |
+| `row_selection_column` | Column to extract from selected rows |
+
+See [Interactive Selection Filtering](interactive-selection-filtering.md) for details.
 
 ---
 
