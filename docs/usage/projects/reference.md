@@ -230,10 +230,10 @@ workflows:
               TPM: "Transcripts per million" # Used in dashboard tooltips and documentation
               NumReads: "Estimated read count" # Example format: column_name: "Description"
 
-        # Optional: Data joining configuration (LEGACY - prefer links)
-        # NOTE: Use project-level "links" for interactive cross-DC filtering
-        # Joins are pre-computed and only work with table DCs
-        join: # Optional: Join this collection with others (legacy)
+        # Optional: Data joining configuration (client-side pre-computed)
+        # NOTE: Joins combine Table DCs during depictio-cli run
+        # Use project-level "links" for runtime cross-DC filtering in UI
+        join: # Optional: Join this collection with others
           on_columns:
             ["sample_id"] # Column names for joining
             # Must exist in both datasets
