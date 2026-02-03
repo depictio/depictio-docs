@@ -8,6 +8,93 @@ hide:
 
 # Changelog
 
+## **[v0.7.0](https://github.com/depictio/depictio/releases/tag/v0.7.0)** (February 3, 2026)
+
+!!! success "Stable Release"
+    This is a stable release based on v0.7.0-b1, introducing Image component support.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.0
+ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:stable
+```
+
+### **✨ Features**
+
+* **Image Component**: New Image data collection type with full dashboard integration
+    * Add images to dashboards with gallery and modal views
+    * Support for image cross-filtering with other data collections
+    * CLI registration and duplication support for Image components
+    * YAML dashboard import support for Image components
+    * Public image serving endpoint for authenticated access
+
+### **🚀 Improvements**
+
+* **Code Refactoring**: Moved cross-DC filtering logic to shared utilities for better reuse across components
+
+### **🐛 Bug Fixes**
+
+* **Environment Safety**: Commented out `DEPICTIO_MONGODB_WIPE` for safer development environments
+
+---
+
+## **v0.7.0 Beta Releases**
+
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v0.7.0-b1](https://github.com/depictio/depictio/releases/tag/v0.7.0-b1)** (February 3, 2026)
+
+#### **✨ Features**
+* Add image support to DC links and cross-filtering
+* Add Image component CLI registration and duplication support
+* Integrate Image component into dashboard stepper and viewer
+* Implement Image component with gallery and modal views
+* Add public image serving endpoint and fix S3 cleanup
+* Enable Image DC processing in CLI workflow
+* Add Image DC model with Table DC capabilities
+* Add image component support in YAML dashboard import
+
+#### **🚀 Improvements**
+* Refactor cross-DC filtering to shared utils for reuse
+
+#### **🐛 Fixes**
+* Comment out DEPICTIO_MONGODB_WIPE for safety in development
+* Various CI/CD fixes for Image component testing and validation
+
+---
+
+## **[v0.6.3-b1](https://github.com/depictio/depictio/releases/tag/v0.6.3-b1)** (February 1, 2026)
+
+!!! warning "Beta Release"
+    This is a pre-release version intended for testing. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.3-b1
+```
+
+### **✨ Features**
+
+* **Image Component Foundation**: Initial infrastructure for Image data collection type
+* **API Health Endpoint**: Added `/health` endpoint for Kubernetes readiness checks
+
+### **🐛 Bug Fixes**
+
+* **S3 Handling**: Handle `BucketAlreadyOwnedByYou` error gracefully
+* **S3 Cleanup**: Prevent HTTPException from killing worker during S3 cleanup, delay cleanup on startup
+* **CI/CD**: Multiple fixes for health checks, token handling, and dashboard verification
+
+### **🧹 Internal Changes**
+
+* Comprehensive unit tests for Image component changes
+* Extended dashboard CLI testing with DB verification
+
+---
+
 ## **[v0.6.2](https://github.com/depictio/depictio/releases/tag/v0.6.2)** (January 29, 2026)
 
 !!! success "Stable Release"
