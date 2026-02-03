@@ -65,8 +65,8 @@ depictio-cli dashboard validate my_dashboard.yaml --verbose
 
 **Example Output:**
 
-<div class="terminal-output">
-<pre>
+<div class="terminal-output" style="background-color: var(--md-code-bg-color, #1e1e1e); padding: 1em; border-radius: 0.25rem; overflow-x: auto;">
+<pre style="margin: 0; color: var(--md-code-fg-color, #e0e0e0);">
 Validating: my_dashboard.yaml
 <span style="color: #4CAF50;">✓ Validation passed</span>
   Errors: <span style="color: #4CAF50;">0</span>
@@ -108,8 +108,8 @@ depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.y
 
 **Example Output:**
 
-<div class="terminal-output">
-<pre>
+<div class="terminal-output" style="background-color: var(--md-code-bg-color, #1e1e1e); padding: 1em; border-radius: 0.25rem; overflow-x: auto;">
+<pre style="margin: 0; color: var(--md-code-fg-color, #e0e0e0);">
 Validating: <span style="color: #2196F3;">dashboard.yaml</span>
 <span style="color: #4CAF50;">✓ Validation passed</span>
   Title: <span style="color: #FF9800;">Iris Dashboard Demo</span>
@@ -366,8 +366,8 @@ The CLI validates YAML files against the DashboardDataLite Pydantic model:
 
 **Invalid component type:**
 
-<div class="terminal-output">
-<pre>
+<div class="terminal-output" style="background-color: var(--md-code-bg-color, #1e1e1e); padding: 1em; border-radius: 0.25rem; overflow-x: auto;">
+<pre style="margin: 0; color: var(--md-code-fg-color, #e0e0e0);">
 <span style="color: #F44336;">✗ Validation failed</span>
   Errors: <span style="color: #F44336;">1</span>
 
@@ -382,8 +382,8 @@ The CLI validates YAML files against the DashboardDataLite Pydantic model:
 
 **Missing required field:**
 
-<div class="terminal-output">
-<pre>
+<div class="terminal-output" style="background-color: var(--md-code-bg-color, #1e1e1e); padding: 1em; border-radius: 0.25rem; overflow-x: auto;">
+<pre style="margin: 0; color: var(--md-code-fg-color, #e0e0e0);">
 <span style="color: #F44336;">✗ Validation failed</span>
   Errors: <span style="color: #F44336;">1</span>
 
