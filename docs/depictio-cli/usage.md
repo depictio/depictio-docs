@@ -624,30 +624,32 @@ depictio-cli dashboard validate my_dashboard.yaml --verbose
 
 **Example Output (Success):**
 
-```
-Validating: my_dashboard.yaml
-✓ Validation passed
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);">Validating: <span style="color: #c2185b;">my_dashboard.yaml</span>
+<span style="color: #2e7d32;">✓ Validation passed</span>
   Errors: 0
   Warnings: 0
-```
+</pre>
+</div>
 
 **Example Output (Failure):**
 
-```
-Validating: my_dashboard.yaml
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);">Validating: <span style="color: #c2185b;">my_dashboard.yaml</span>
 
-✗ Validation failed
+<span style="color: #c62828;">✗ Validation failed</span>
   Errors: 2
 
 ┌──────────────────────────────────────────────────────────────────┐
 │                       Validation Errors                          │
 ├─────────────────────┬────────────────┬───────────────────────────┤
-│ Component           │ Field          │ Message                   │
+│ <span style="color: #0097a7;">Component</span>           │ <span style="color: #c2185b;">Field</span>          │ <span style="color: #c62828;">Message</span>                   │
 ├─────────────────────┼────────────────┼───────────────────────────┤
-│ -                   │ component_type │ Invalid value 'graphs'    │
-│ -                   │ workflow_tag   │ Field required            │
+│ <span style="color: #0097a7;">-</span>                   │ <span style="color: #c2185b;">component_type</span> │ <span style="color: #c62828;">Invalid value 'graphs'</span>    │
+│ <span style="color: #0097a7;">-</span>                   │ <span style="color: #c2185b;">workflow_tag</span>   │ <span style="color: #c62828;">Field required</span>            │
 └─────────────────────┴────────────────┴───────────────────────────┘
-```
+</pre>
+</div>
 
 ---
 
@@ -684,25 +686,26 @@ depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.y
 
 **Example Output:**
 
-```
-Validating: dashboard.yaml
-✓ Validation passed
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Validating:</span> <span style="color: #c2185b;">dashboard.yaml</span>
+<span style="color: #2e7d32;">✓ Validation passed</span>
   Title: Iris Dashboard Demo
   Components: 7
   Project: Iris_Dataset_Project (from YAML project_tag)
 
-Loading CLI configuration...
-✓ Configuration loaded
+<span style="color: #0097a7;">Loading CLI configuration...</span>
+<span style="color: #2e7d32;">✓ Configuration loaded</span>
   API URL: http://localhost:8058
 
-Importing dashboard (project: Iris_Dataset_Project)...
-✓ Dashboard imported successfully!
+<span style="color: #0097a7;">Importing dashboard (project: Iris_Dataset_Project)...</span>
+<span style="color: #2e7d32;">✓ Dashboard imported successfully!</span>
   Dashboard ID: 6824cb3b89d2b72169309737
   Title: Iris Dashboard Demo
   Project ID: 650a1b2c3d4e5f6a7b8c9d0e
 
-View at: http://localhost:8058/dashboard/6824cb3b89d2b72169309737
-```
+<span style="color: #0097a7;">View at:</span> http://localhost:8058/dashboard/6824cb3b89d2b72169309737
+</pre>
+</div>
 
 ---
 
@@ -731,11 +734,12 @@ depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admi
 
 **Example Output:**
 
-```
-Loading CLI configuration...
-Exporting dashboard 6824cb3b89d2b72169309737...
-✓ Dashboard exported to: iris_dashboard.yaml
-```
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Loading CLI configuration...</span>
+<span style="color: #0097a7;">Exporting dashboard 6824cb3b89d2b72169309737...</span>
+<span style="color: #2e7d32;">✓ Dashboard exported to:</span> <span style="color: #c2185b;">iris_dashboard.yaml</span>
+</pre>
+</div>
 
 ---
 
