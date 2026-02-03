@@ -13,10 +13,10 @@
   - [🏃 Run Command](#run-command)
   - [📋 Config Commands](#config-commands)
   - [📊 Data Commands](#data-commands)
-  - [💾 Backup Commands](#backup-commands)
   - [📈 Dashboard Commands](#dashboard-commands)
+  - [💾 Backup Commands](#backup-commands)
 - [🛠️ Common Use Cases](#common-use-cases)
-- [🔧 Error Handling](#error-handling)
+<!-- - [🔧 Error Handling](#error-handling) -->
 
 ## Installation
 
@@ -35,6 +35,26 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `config sync-project-config-to-server` | Sync project config to server           | All users      |
 | `data scan`                            | Scan project files                      | All users      |
 | `data process`                         | Process data collections                | All users      |
+| `dashboard validate`                   | Validate dashboard YAML file locally    | All users      |
+| `dashboard import`                     | Import dashboard YAML to server         | All users      |
+| `dashboard export`                     | Export dashboard to YAML file           | All users      |
+| `backup create`                        | Create system backup                    | **Admin only** |
+| `backup list`                          | List available backups                  | **Admin only** |
+| `backup validate`                      | Validate backup against models          | **Admin only** |
+| `backup restore`                       | Restore from backup                     | **Admin only** |
+| `backup check-coverage`                | Check validation coverage               | **Admin only** |
+
+<!-- | Command                                | Description                             | Access Level   |
+| -------------------------------------- | --------------------------------------- | -------------- |
+| `version`                              | Show CLI version                        | All users      |
+| `run`                                  | Execute complete workflow               | All users      |
+| `config show-cli-config`               | Display CLI configuration               | All users      |
+| `config check-s3-storage`              | Validate S3 storage setup               | All users      |
+| `config check-server-accessibility`    | Test server connection                  | All users      |
+| `config validate-project-config`       | Validate project configuration          | All users      |
+| `config sync-project-config-to-server` | Sync project config to server           | All users      |
+| `data scan`                            | Scan project files                      | All users      |
+| `data process`                         | Process data collections                | All users      |
 | `data join`                            | Execute pre-computed table joins        | All users      |
 | `data link list`                       | List DC links for a project             | All users      |
 | `data link create`                     | Create a DC link for cross-DC filtering | All users      |
@@ -43,9 +63,11 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `dashboard validate`                   | Validate dashboard YAML file locally    | All users      |
 | `dashboard import`                     | Import dashboard YAML to server         | All users      |
 | `dashboard export`                     | Export dashboard to YAML file           | All users      |
-| `backup backup`                        | Create system backup                    | **Admin only** |
+| `backup create`                        | Create system backup                    | **Admin only** |
+| `backup list`                          | List available backups                  | **Admin only** |
+| `backup validate`                      | Validate backup against models          | **Admin only** |
 | `backup restore`                       | Restore from backup                     | **Admin only** |
-| `backup list-backups`                  | List available backups                  | **Admin only** |
+| `backup check-coverage`                | Check validation coverage               | **Admin only** | -->
 
 ## Global Options
 
@@ -322,18 +344,467 @@ depictio-cli data process [OPTIONS]
 ```bash
 depictio-cli data process --project-config-path ./config.yaml --overwrite
 ```
+### 📈 Dashboard Commands
+
+<!-- prettier-ignore -->
+!!! info "Command Group: `depictio-cli dashboard`"
+    All commands in this section are part of the `dashboard` command family. Use them to manage dashboard YAML files - validate, import to server, and export from server.
+
+Manage dashboard YAML files for the [Dashboard YAML Management](../features/yaml-sync.md) feature.
+
+| Command    | Description                  | Server Required          |
+| ---------- | ---------------------------- | ------------------------ |
+| `validate` | Validate YAML schema locally | No                       |
+| `import`   | Import YAML to server        | Yes (unless `--dry-run`) |
+| `export`   | Export dashboard to YAML     | Yes                      |
+
+#### `dashboard validate`
+
+Validate a single dashboard YAML file against the DashboardDataLite schema locally.
+
+```bash
+depictio-cli dashboard validate <yaml_file> [OPTIONS]
+```
+
+| Parameter          | Type      | Default      | Description                                        |
+| ------------------ | --------- | ------------ | -------------------------------------------------- |
+| `yaml_file`        | `path`    | **required** | Path to YAML dashboard file                        |
+| `--verbose` / `-v` | `boolean` | `false`      | Show detailed validation output including warnings |
+
+```bash
+# Basic validation
+depictio-cli dashboard validate my_dashboard.yaml
+
+# With verbose output
+depictio-cli dashboard validate my_dashboard.yaml --verbose
+```
+
+**Example Output (Success):**
+
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);">Validating: <span style="color: #c2185b;">my_dashboard.yaml</span>
+<span style="color: #2e7d32;">✓ Validation passed</span>
+  Errors: 0
+  Warnings: 0
+</pre>
+</div>
+
+**Example Output (Failure):**
+
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);">Validating: <span style="color: #c2185b;">my_dashboard.yaml</span>
+
+<span style="color: #c62828;">✗ Validation failed</span>
+  Errors: 2
+
+┌──────────────────────────────────────────────────────────────────┐
+│                       Validation Errors                          │
+├─────────────────────┬────────────────┬───────────────────────────┤
+│ <span style="color: #0097a7;">Component</span>           │ <span style="color: #c2185b;">Field</span>          │ <span style="color: #c62828;">Message</span>                   │
+├─────────────────────┼────────────────┼───────────────────────────┤
+│ <span style="color: #0097a7;">-</span>                   │ <span style="color: #c2185b;">component_type</span> │ <span style="color: #c62828;">Invalid value 'graphs'</span>    │
+│ <span style="color: #0097a7;">-</span>                   │ <span style="color: #c2185b;">workflow_tag</span>   │ <span style="color: #c62828;">Field required</span>            │
+└─────────────────────┴────────────────┴───────────────────────────┘
+</pre>
+</div>
 
 ---
+
+#### `dashboard import`
+
+Import a dashboard YAML file to the server. The project is determined from the YAML `project_tag` field or the `--project` option.
+
+```bash
+depictio-cli dashboard import <yaml_file> [OPTIONS]
+```
+
+| Parameter          | Type      | Default      | Description                                           |
+| ------------------ | --------- | ------------ | ----------------------------------------------------- |
+| `yaml_file`        | `path`    | **required** | Path to YAML dashboard file                           |
+| `--config` / `-c`  | `string`  | `null`       | Path to CLI config file (required unless `--dry-run`) |
+| `--project` / `-p` | `string`  | `null`       | Project ID (overrides `project_tag` in YAML)          |
+| `--overwrite`      | `boolean` | `false`      | Update existing dashboard with same title             |
+| `--dry-run`        | `boolean` | `false`      | Validate only, don't import                           |
+| `--api`            | `string`  | from config  | API base URL                                          |
+
+```bash
+# Validate locally without server (no config needed)
+depictio-cli dashboard import dashboard.yaml --dry-run
+
+# Import to server
+depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml
+
+# Update existing dashboard with same title
+depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --overwrite
+
+# Override project from YAML
+depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --project 646b0f3c1e4a2d7f8e5b8c9a
+```
+
+**Example Output:**
+
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Validating:</span> <span style="color: #c2185b;">dashboard.yaml</span>
+<span style="color: #2e7d32;">✓ Validation passed</span>
+  Title: Iris Dashboard Demo
+  Components: 7
+  Project: Iris_Dataset_Project (from YAML project_tag)
+
+<span style="color: #0097a7;">Loading CLI configuration...</span>
+<span style="color: #2e7d32;">✓ Configuration loaded</span>
+  API URL: localhost:8058
+
+<span style="color: #0097a7;">Importing dashboard (project: Iris_Dataset_Project)...</span>
+<span style="color: #2e7d32;">✓ Dashboard imported successfully!</span>
+  Dashboard ID: 6824cb3b89d2b72169309737
+  Title: Iris Dashboard Demo
+  Project ID: 650a1b2c3d4e5f6a7b8c9d0e
+
+<span style="color: #0097a7;">View at:</span> localhost:8058/dashboard/6824cb3b89d2b72169309737
+</pre>
+</div>
+
+---
+
+#### `dashboard export`
+
+Export a dashboard from the server to a YAML file.
+
+```bash
+depictio-cli dashboard export <dashboard_id> [OPTIONS]
+```
+
+| Parameter         | Type     | Default          | Description             |
+| ----------------- | -------- | ---------------- | ----------------------- |
+| `dashboard_id`    | `string` | **required**     | Dashboard ID to export  |
+| `--config` / `-c` | `string` | **required**     | Path to CLI config file |
+| `--output` / `-o` | `path`   | `dashboard.yaml` | Output file path        |
+| `--api`           | `string` | from config      | API base URL            |
+
+```bash
+# Export to default file
+depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admin_config.yaml
+
+# Export to specific file
+depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admin_config.yaml -o iris_dashboard.yaml
+```
+
+**Example Output:**
+
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Loading CLI configuration...</span>
+<span style="color: #0097a7;">Exporting dashboard 6824cb3b89d2b72169309737...</span>
+<span style="color: #2e7d32;">✓ Dashboard exported to:</span> <span style="color: #c2185b;">iris_dashboard.yaml</span>
+</pre>
+</div>
+
+---
+
+For more information about dashboard YAML format and workflows, see [Dashboard YAML Management](../features/yaml-sync.md).
+
+### 💾 Backup Commands
+
+<!-- prettier-ignore -->
+!!! info "Command Group: `depictio-cli backup`"
+    All commands in this section are part of the `backup` command family. Use them to backup and restore MongoDB database and S3 data. **Admin access required.**
+
+Backup and restore system data and configurations.
+
+#### `backup create`
+
+Create a backup of the MongoDB database.
+
+```bash
+depictio-cli backup create [OPTIONS]
+```
+
+| Parameter            | Type      | Default                | Description                          |
+| -------------------- | --------- | ---------------------- | ------------------------------------ |
+| `--CLI-config-path`  | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path          |
+| `--dry-run`          | `boolean` | `false`                | Validate without creating backup     |
+| `--include-s3-data`  | `boolean` | `false`                | Include S3 deltatable data in backup |
+| `--s3-backup-prefix` | `string`  | `backup`               | Prefix for S3 backup location        |
+
+```bash
+depictio-cli backup create --include-s3-data
+```
+
+---
+
+#### `backup list`
+
+List available backup files on the server.
+
+```bash
+depictio-cli backup list [OPTIONS]
+```
+
+| Parameter           | Type     | Default                | Description                 |
+| ------------------- | -------- | ---------------------- | --------------------------- |
+| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
+
+```bash
+depictio-cli backup list
+```
+
+---
+
+#### `backup validate`
+
+Validate a backup file against Pydantic models.
+
+```bash
+depictio-cli backup validate <backup_id> [OPTIONS]
+```
+
+| Parameter           | Type     | Default                | Description                             |
+| ------------------- | -------- | ---------------------- | --------------------------------------- |
+| `backup_id`         | `string` | **required**           | Backup ID to validate (YYYYMMDD_HHMMSS) |
+| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path             |
+
+```bash
+depictio-cli backup validate 20240115_143052
+```
+
+---
+
+#### `backup restore`
+
+Restore data from a backup file. **Warning: destructive operation.**
+
+```bash
+depictio-cli backup restore <backup_id> [OPTIONS]
+```
+
+| Parameter           | Type      | Default                | Description                             |
+| ------------------- | --------- | ---------------------- | --------------------------------------- |
+| `backup_id`         | `string`  | **required**           | Backup ID to restore (YYYYMMDD_HHMMSS)  |
+| `--CLI-config-path` | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path             |
+| `--dry-run`         | `boolean` | `false`                | Simulate restore without making changes |
+| `--collections`     | `string`  | `null`                 | Comma-separated list of collections     |
+| `--force`           | `boolean` | `false`                | Skip confirmation prompt                |
+
+```bash
+depictio-cli backup restore 20240115_143052 --dry-run
+```
+
+---
+
+#### `backup check-coverage`
+
+Check validation coverage for all MongoDB collections.
+
+```bash
+depictio-cli backup check-coverage [OPTIONS]
+```
+
+| Parameter           | Type     | Default                | Description                 |
+| ------------------- | -------- | ---------------------- | --------------------------- |
+| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
+
+```bash
+depictio-cli backup check-coverage
+```
+
+## 🛠️ Common Use Cases
+
+### 🚀 Quick Start
+
+=== "Complete Setup"
+
+```bash
+# 1. Validate your project configuration
+depictio-cli config validate-project-config --project-config-path ./config.yaml
+
+# 2. Run the complete workflow
+depictio-cli run --project-config-path ./config.yaml
+```
+
+=== "Step by Step"
+
+```bash
+# 1. Check system status
+depictio-cli config check-server-accessibility
+depictio-cli config check-s3-storage
+
+# 2. Validate and sync configuration
+depictio-cli config validate-project-config --project-config-path ./config.yaml
+depictio-cli config sync-project-config-to-server --project-config-path ./config.yaml
+
+# 3. Scan and process data
+depictio-cli data scan --project-config-path ./config.yaml
+depictio-cli data process --project-config-path ./config.yaml
+```
+
+### 🔧 Development Workflow
+
+=== "Testing Changes"
+
+```bash
+# Preview changes without execution
+depictio-cli run --project-config-path ./config.yaml --dry-run
+
+# Test with specific workflow
+depictio-cli run --project-config-path ./config.yaml --workflow-name test-workflow
+```
+
+=== "Debugging"
+
+```bash
+# Enable verbose logging
+depictio-cli run --project-config-path ./config.yaml --verbose --continue-on-error
+
+# Skip problematic steps
+depictio-cli run --project-config-path ./config.yaml --skip-server-check --skip-s3-check
+```
+
+### 💾 Backup Operations
+
+<!-- prettier-ignore -->
+!!! warning "Admin Access Required"
+    All backup operations require administrator privileges.
+
+=== "Create Backup"
+
+```bash
+# Create database backup
+depictio-cli backup create
+
+# Include S3 deltatable data
+depictio-cli backup create --include-s3-data
+```
+
+=== "Restore Backup"
+
+```bash
+# List available backups
+depictio-cli backup list
+
+# Preview restore
+depictio-cli backup restore 20240115_143052 --dry-run
+
+# Restore specific backup
+depictio-cli backup restore 20240115_143052 --force
+```
+
+### 📊 Data Management
+
+=== "Rescan Data"
+
+```bash
+# Rescan all folders
+depictio-cli data scan --project-config-path ./config.yaml --rescan-folders
+
+# Sync file updates
+depictio-cli data scan --project-config-path ./config.yaml --sync-files
+```
+
+=== "Process Updates"
+
+```bash
+# Overwrite existing workflow
+depictio-cli data process --project-config-path ./config.yaml --overwrite
+
+# Update and reprocess
+depictio-cli run --project-config-path ./config.yaml --update-config --overwrite
+```
+
+## 📖 Configuration References
+
+- [Minimal YAML Configuration](minimal_config.md)
+- [Full Reference Configuration](full_reference_config.md)
+
+<!--
+## 🔧 Error Handling
+
+### Exit Codes
+
+| Code | Description              | Solution                                         |
+| ---- | ------------------------ | ------------------------------------------------ |
+| `0`  | Success                  | Command completed successfully                   |
+| `1`  | Configuration error      | Check configuration file paths and syntax        |
+| `2`  | Server connection failed | Verify server URL and network connectivity       |
+| `3`  | S3 storage error         | Validate S3 credentials and bucket configuration |
+| `4`  | Data processing failed   | Check data file permissions and formats          |
+
+### Common Issues
+
+=== "Connection Problems"
+
+    **Error:** "Server not accessible"
+
+    **Solutions:**
+    ```bash
+    # Check server accessibility
+    depictio-cli config check-server-accessibility
+
+    # Verify CLI configuration
+    depictio-cli config show-cli-config
+    ```
+
+=== "Configuration Errors"
+
+    **Error:** "Project config validation failed"
+
+    **Solutions:**
+    ```bash
+    # Validate configuration with verbose output
+    depictio-cli config validate-project-config --project-config-path ./config.yaml --verbose
+
+    # Check configuration examples
+    # See: minimal_config.md and full_reference_config.md
+    ```
+
+=== "Permission Issues"
+
+    **Error:** "Admin access required"
+
+    **Solutions:**
+    - Ensure you're logged in with admin credentials
+    - Check CLI configuration includes admin access tokens
+    - Contact system administrator for proper permissions
+
+### Troubleshooting Steps
+
+**1. Check Prerequisites:**
+
+- Depictio server is running and accessible
+- CLI configuration file exists (`~/.depictio/CLI.yaml`)
+- Project configuration file is valid YAML
+- Proper permissions for file access
+
+**2. Enable Verbose Logging:**
+
+```bash
+depictio-cli [command] --verbose --verbose-level DEBUG
+```
+
+**3. Test Components Individually:**
+
+```bash
+depictio-cli config check-server-accessibility
+depictio-cli config check-s3-storage
+depictio-cli config validate-project-config --project-config-path ./config.yaml
+```
+
+**4. Use Dry Run Mode:**
+
+```bash
+depictio-cli run --project-config-path ./config.yaml --dry-run
+``` -->
+
+
+<!-- ---
 
 #### `data join`
 
 Execute pre-computed table joins defined in project configuration.
 
 <!-- prettier-ignore -->
-!!! note "Links vs Joins"
-    For interactive cross-DC filtering, use **links** (configured in YAML, resolved at runtime). Use **joins** only when you need a pre-computed combined dataset stored as a Delta table. See [Cross-DC Filtering](../features/cross-dc-filtering.md).
+<!-- !!! note "Links vs Joins"
+    For interactive cross-DC filtering, use **links** (configured in YAML, resolved at runtime). Use **joins** only when you need a pre-computed combined dataset stored as a Delta table. See [Cross-DC Filtering](../features/cross-dc-filtering.md). -->
 
-```bash
+<!-- ```bash
 depictio-cli data join [OPTIONS]
 ```
 
@@ -352,7 +823,6 @@ depictio-cli data join --project-config-path ./config.yaml --preview
 # Execute a specific join
 depictio-cli data join --project-config-path ./config.yaml --join-name my_join
 ```
-<!-- 
 ---
 
 #### `data link`
@@ -360,8 +830,8 @@ depictio-cli data join --project-config-path ./config.yaml --join-name my_join
 Manage DC links for cross-DC interactive filtering. Links enable runtime filtering between data collections without pre-computing joined tables.
 
 <!-- prettier-ignore -->
-!!! tip "Links vs Joins"
-    **Links** are the preferred method for cross-DC filtering. They resolve at runtime and support any DC type (tables, MultiQC, etc.). **Joins** create pre-computed Delta tables and only work between table DCs.
+<!-- !!! tip "Links vs Joins"
+    **Links** are the preferred method for cross-DC filtering. They resolve at runtime and support any DC type (tables, MultiQC, etc.). **Joins** create pre-computed Delta tables and only work between table DCs. -->
 
 <!-- ##### `data link list`
 
@@ -513,413 +983,4 @@ depictio-cli data link delete --project-config-path ./config.yaml --link-id abc1
 
 # Delete without confirmation
 depictio-cli data link delete --project-config-path ./config.yaml --link-id abc123 --force
-``` --> -->
-
-### 💾 Backup Commands
-
-<!-- prettier-ignore -->
-!!! info "Command Group: `depictio-cli backup`"
-    All commands in this section are part of the `backup` command family. Use them to backup and restore system data and configurations.
-
-Backup and restore system data and configurations.
-
-<!-- prettier-ignore -->
-!!! warning "Admin Access Required"
-    Backup and restore commands require administrator privileges. Only users with admin access can perform backup and restore operations. Ensure your CLI configuration includes admin credentials.
-
-#### `backup backup`
-
-Create a backup of database and S3 storage data.
-
-```bash
-depictio-cli backup backup [OPTIONS]
-```
-
-| Parameter           | Type      | Default                | Description                        |
-| ------------------- | --------- | ---------------------- | ---------------------------------- |
-| `--CLI-config-path` | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path        |
-| `--backup-name`     | `string`  | `timestamp`            | Name for the backup                |
-| `--include-s3`      | `boolean` | `true`                 | Include S3 storage data in backup  |
-| `--include-db`      | `boolean` | `true`                 | Include database data in backup    |
-| `--output-path`     | `string`  | `./backups`            | Path where backup files are stored |
-
-```bash
-depictio-cli backup backup --backup-name production-backup --output-path ./backups
-```
-
----
-
-#### `backup restore`
-
-Restore data from a previously created backup.
-
-```bash
-depictio-cli backup restore [OPTIONS]
-```
-
-| Parameter           | Type      | Default                | Description                        |
-| ------------------- | --------- | ---------------------- | ---------------------------------- |
-| `--CLI-config-path` | `string`  | `~/.depictio/CLI.yaml` | CLI configuration file path        |
-| `--backup-path`     | `string`  | **required**           | Path to backup file or directory   |
-| `--restore-s3`      | `boolean` | `true`                 | Restore S3 storage data            |
-| `--restore-db`      | `boolean` | `true`                 | Restore database data              |
-| `--force`           | `boolean` | `false`                | Force restore without confirmation |
-
-```bash
-depictio-cli backup restore --backup-path ./backups/production-backup --force
-```
-
----
-
-#### `backup list-backups`
-
-List all available backups.
-
-```bash
-depictio-cli backup list-backups [OPTIONS]
-```
-
-| Parameter       | Type     | Default     | Description              |
-| --------------- | -------- | ----------- | ------------------------ |
-| `--backup-path` | `string` | `./backups` | Path to backup directory |
-
-```bash
-depictio-cli backup list-backups --backup-path ./backups
-```
-
-### 📈 Dashboard Commands
-
-<!-- prettier-ignore -->
-!!! info "Command Group: `depictio-cli dashboard`"
-    All commands in this section are part of the `dashboard` command family. Use them to manage dashboard YAML files - validate, import to server, and export from server.
-
-Manage dashboard YAML files for the [Dashboard YAML Management](../features/yaml-sync.md) feature.
-
-| Command    | Description                  | Server Required          |
-| ---------- | ---------------------------- | ------------------------ |
-| `validate` | Validate YAML schema locally | No                       |
-| `import`   | Import YAML to server        | Yes (unless `--dry-run`) |
-| `export`   | Export dashboard to YAML     | Yes                      |
-
-#### `dashboard validate`
-
-Validate a single dashboard YAML file against the DashboardDataLite schema locally.
-
-```bash
-depictio-cli dashboard validate <yaml_file> [OPTIONS]
-```
-
-| Parameter          | Type      | Default      | Description                                        |
-| ------------------ | --------- | ------------ | -------------------------------------------------- |
-| `yaml_file`        | `path`    | **required** | Path to YAML dashboard file                        |
-| `--verbose` / `-v` | `boolean` | `false`      | Show detailed validation output including warnings |
-
-```bash
-# Basic validation
-depictio-cli dashboard validate my_dashboard.yaml
-
-# With verbose output
-depictio-cli dashboard validate my_dashboard.yaml --verbose
-```
-
-**Example Output (Success):**
-
-```
-Validating: my_dashboard.yaml
-✓ Validation passed
-  Errors: 0
-  Warnings: 0
-```
-
-**Example Output (Failure):**
-
-```
-Validating: my_dashboard.yaml
-
-✗ Validation failed
-  Errors: 2
-
-┌──────────────────────────────────────────────────────────────────┐
-│                       Validation Errors                          │
-├─────────────────────┬────────────────┬───────────────────────────┤
-│ Component           │ Field          │ Message                   │
-├─────────────────────┼────────────────┼───────────────────────────┤
-│ -                   │ component_type │ Invalid value 'graphs'    │
-│ -                   │ workflow_tag   │ Field required            │
-└─────────────────────┴────────────────┴───────────────────────────┘
-```
-
----
-
-#### `dashboard import`
-
-Import a dashboard YAML file to the server. The project is determined from the YAML `project_tag` field or the `--project` option.
-
-```bash
-depictio-cli dashboard import <yaml_file> [OPTIONS]
-```
-
-| Parameter          | Type      | Default      | Description                                           |
-| ------------------ | --------- | ------------ | ----------------------------------------------------- |
-| `yaml_file`        | `path`    | **required** | Path to YAML dashboard file                           |
-| `--config` / `-c`  | `string`  | `null`       | Path to CLI config file (required unless `--dry-run`) |
-| `--project` / `-p` | `string`  | `null`       | Project ID (overrides `project_tag` in YAML)          |
-| `--overwrite`      | `boolean` | `false`      | Update existing dashboard with same title             |
-| `--dry-run`        | `boolean` | `false`      | Validate only, don't import                           |
-| `--api`            | `string`  | from config  | API base URL                                          |
-
-```bash
-# Validate locally without server (no config needed)
-depictio-cli dashboard import dashboard.yaml --dry-run
-
-# Import to server
-depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml
-
-# Update existing dashboard with same title
-depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --overwrite
-
-# Override project from YAML
-depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --project 646b0f3c1e4a2d7f8e5b8c9a
-```
-
-**Example Output:**
-
-```
-Validating: dashboard.yaml
-✓ Validation passed
-  Title: Iris Dashboard Demo
-  Components: 7
-  Project: Iris_Dataset_Project (from YAML project_tag)
-
-Loading CLI configuration...
-✓ Configuration loaded
-  API URL: http://localhost:8058
-
-Importing dashboard (project: Iris_Dataset_Project)...
-✓ Dashboard imported successfully!
-  Dashboard ID: 6824cb3b89d2b72169309737
-  Title: Iris Dashboard Demo
-  Project ID: 650a1b2c3d4e5f6a7b8c9d0e
-
-View at: http://localhost:8058/dashboard/6824cb3b89d2b72169309737
-```
-
----
-
-#### `dashboard export`
-
-Export a dashboard from the server to a YAML file.
-
-```bash
-depictio-cli dashboard export <dashboard_id> [OPTIONS]
-```
-
-| Parameter         | Type     | Default          | Description             |
-| ----------------- | -------- | ---------------- | ----------------------- |
-| `dashboard_id`    | `string` | **required**     | Dashboard ID to export  |
-| `--config` / `-c` | `string` | **required**     | Path to CLI config file |
-| `--output` / `-o` | `path`   | `dashboard.yaml` | Output file path        |
-| `--api`           | `string` | from config      | API base URL            |
-
-```bash
-# Export to default file
-depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admin_config.yaml
-
-# Export to specific file
-depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admin_config.yaml -o iris_dashboard.yaml
-```
-
-**Example Output:**
-
-```
-Loading CLI configuration...
-Exporting dashboard 6824cb3b89d2b72169309737...
-✓ Dashboard exported to: iris_dashboard.yaml
-```
-
----
-
-For more information about dashboard YAML format and workflows, see [Dashboard YAML Management](../features/yaml-sync.md).
-
-## 🛠️ Common Use Cases
-
-### 🚀 Quick Start
-
-=== "Complete Setup"
-
-```bash
-# 1. Validate your project configuration
-depictio-cli config validate-project-config --project-config-path ./config.yaml
-
-# 2. Run the complete workflow
-depictio-cli run --project-config-path ./config.yaml
-```
-
-=== "Step by Step"
-
-```bash
-# 1. Check system status
-depictio-cli config check-server-accessibility
-depictio-cli config check-s3-storage
-
-# 2. Validate and sync configuration
-depictio-cli config validate-project-config --project-config-path ./config.yaml
-depictio-cli config sync-project-config-to-server --project-config-path ./config.yaml
-
-# 3. Scan and process data
-depictio-cli data scan --project-config-path ./config.yaml
-depictio-cli data process --project-config-path ./config.yaml
-```
-
-### 🔧 Development Workflow
-
-=== "Testing Changes"
-
-```bash
-# Preview changes without execution
-depictio-cli run --project-config-path ./config.yaml --dry-run
-
-# Test with specific workflow
-depictio-cli run --project-config-path ./config.yaml --workflow-name test-workflow
-```
-
-=== "Debugging"
-
-```bash
-# Enable verbose logging
-depictio-cli run --project-config-path ./config.yaml --verbose --continue-on-error
-
-# Skip problematic steps
-depictio-cli run --project-config-path ./config.yaml --skip-server-check --skip-s3-check
-```
-
-### 💾 Backup Operations
-
-<!-- prettier-ignore -->
-!!! warning "Admin Access Required"
-    All backup operations require administrator privileges.
-
-=== "Create Backup"
-
-```bash
-# Create timestamped backup
-depictio-cli backup backup --backup-name "backup-$(date +%Y%m%d-%H%M%S)"
-
-# Custom backup location
-depictio-cli backup backup --backup-name production-backup --output-path /secure/backups
-```
-
-=== "Restore Backup"
-
-```bash
-# List available backups
-depictio-cli backup list-backups --backup-path /secure/backups
-
-# Restore specific backup
-depictio-cli backup restore --backup-path /secure/backups/production-backup --force
-```
-
-### 📊 Data Management
-
-=== "Rescan Data"
-
-```bash
-# Rescan all folders
-depictio-cli data scan --project-config-path ./config.yaml --rescan-folders
-
-# Sync file updates
-depictio-cli data scan --project-config-path ./config.yaml --sync-files
-```
-
-=== "Process Updates"
-
-```bash
-# Overwrite existing workflow
-depictio-cli data process --project-config-path ./config.yaml --overwrite
-
-# Update and reprocess
-depictio-cli run --project-config-path ./config.yaml --update-config --overwrite
-```
-
-## 🔧 Error Handling
-
-### Exit Codes
-
-| Code | Description              | Solution                                         |
-| ---- | ------------------------ | ------------------------------------------------ |
-| `0`  | Success                  | Command completed successfully                   |
-| `1`  | Configuration error      | Check configuration file paths and syntax        |
-| `2`  | Server connection failed | Verify server URL and network connectivity       |
-| `3`  | S3 storage error         | Validate S3 credentials and bucket configuration |
-| `4`  | Data processing failed   | Check data file permissions and formats          |
-
-### Common Issues
-
-=== "Connection Problems"
-
-    **Error:** "Server not accessible"
-
-    **Solutions:**
-    ```bash
-    # Check server accessibility
-    depictio-cli config check-server-accessibility
-
-    # Verify CLI configuration
-    depictio-cli config show-cli-config
-    ```
-
-=== "Configuration Errors"
-
-    **Error:** "Project config validation failed"
-
-    **Solutions:**
-    ```bash
-    # Validate configuration with verbose output
-    depictio-cli config validate-project-config --project-config-path ./config.yaml --verbose
-
-    # Check configuration examples
-    # See: minimal_config.md and full_reference_config.md
-    ```
-
-=== "Permission Issues"
-
-    **Error:** "Admin access required"
-
-    **Solutions:**
-    - Ensure you're logged in with admin credentials
-    - Check CLI configuration includes admin access tokens
-    - Contact system administrator for proper permissions
-
-### Troubleshooting Steps
-
-**1. Check Prerequisites:**
-
-- Depictio server is running and accessible
-- CLI configuration file exists (`~/.depictio/CLI.yaml`)
-- Project configuration file is valid YAML
-- Proper permissions for file access
-
-**2. Enable Verbose Logging:**
-
-```bash
-depictio-cli [command] --verbose --verbose-level DEBUG
-```
-
-**3. Test Components Individually:**
-
-```bash
-depictio-cli config check-server-accessibility
-depictio-cli config check-s3-storage
-depictio-cli config validate-project-config --project-config-path ./config.yaml
-```
-
-**4. Use Dry Run Mode:**
-
-```bash
-depictio-cli run --project-config-path ./config.yaml --dry-run
-```
-
-## 📖 Configuration References
-
-- [Minimal YAML Configuration](minimal_config.md)
-- [Full Reference Configuration](full_reference_config.md)
+``` --> 

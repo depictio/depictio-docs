@@ -52,15 +52,15 @@ The dashboard interface uses a **three-panel layout** with a collapsible sidebar
 │ Side-  │   LEFT PANEL     │            RIGHT PANEL                       │
 │  bar   │   (Filters)      │          (Visualizations)                    │
 │        │                  │                                              │
-│ Tab 1  │ ┌──────────────┐ │  ┌─────────────┐  ┌─────────────┐           │
-│ Tab 2  │ │  DatePicker  │ │  │   Figure    │  │   Figure    │           │
-│ Tab 3  │ └──────────────┘ │  │  (Scatter)  │  │ (Histogram) │           │
-│        │                  │  └─────────────┘  └─────────────┘           │
+│ Tab 1  │ ┌──────────────┐ │  ┌─────────────┐  ┌─────────────┐            │
+│ Tab 2  │ │  DatePicker  │ │  │   Figure    │  │   Figure    │            │
+│ Tab 3  │ └──────────────┘ │  │  (Scatter)  │  │ (Histogram) │            │
+│        │                  │  └─────────────┘  └─────────────┘            │
 │ [+]    │ ┌──────────────┐ │                                              │
-│        │ │ MultiSelect  │ │  ┌─────────────┐  ┌─────────────┐           │
-│ [☰]    │ └──────────────┘ │  │    Table    │  │    Card     │           │
-│        │                  │  │             │  │  (Metric)   │           │
-│        │ ┌──────────────┐ │  └─────────────┘  └─────────────┘           │
+│        │ │ MultiSelect  │ │  ┌─────────────┐  ┌─────────────┐            │
+│ [=]    │ └──────────────┘ │  │    Table    │  │    Card     │            │
+│        │                  │  │             │  │  (Metric)   │            │
+│        │ ┌──────────────┐ │  └─────────────┘  └─────────────┘            │
 │        │ │ RangeSlider  │ │                                              │
 │        │ └──────────────┘ │                                              │
 │        │                  │                                              │
@@ -95,17 +95,18 @@ The **right panel** is the main canvas where visualization components are displa
 
 Available component types include:
 
-| Component Type | Description |
-|----------------|-------------|
-| :material-chart-scatter-plot: **Figures** | Interactive charts and visualizations |
-| :material-table: **Tables** | Data tables with filtering and pagination |
-| :material-card-text: **Cards** | Summary statistics and KPIs |
-| :material-tune: **Interactive Filters** | Dropdowns, sliders, and other controls |
-| :material-format-header-1: **Text/Headers** | Section headers (H1, H2, H3) |
-| :material-microscope: **MultiQC** | Quality control report visualizations |
+| Component Type                              | Description                                    |
+| ------------------------------------------- | ---------------------------------------------- |
+| :material-chart-scatter-plot: **Figures**   | Interactive charts and visualizations          |
+| :material-table: **Tables**                 | Data tables with filtering and pagination      |
+| :material-card-text: **Cards**              | Summary statistics and KPIs                    |
+| :material-tune: **Interactive Filters**     | Dropdowns, sliders, and other controls         |
+| :material-format-header-1: **Text/Headers** | Section headers (H1, H2, H3)                   |
+| :material-microscope: **MultiQC**           | Quality control report visualizations          |
+| :material-image: **Images**                 | Display grid of static images (PNG, JPEG, SVG) |
 
 !!! note "Future Components"
-    Additional component types may be added in future releases based on user needs and feedback.
+    Additional component types may be added in future releases based on user needs and feedback (Geomap, Network Graphs, JBrowse2.).
 
 ---
 
@@ -136,14 +137,14 @@ Organize complex dashboards with **tabs** (v0.6.0+):
 4. :material-palette-outline: Choose an **icon color**
 5. :material-check: Click **Create**
 
-### :material-tools: Tab Operations
+<!-- ### :material-tools: Tab Operations
 
-| Operation | Description |
-|-----------|-------------|
-| :material-plus: **Add Tab** | Create a new empty tab |
-| :material-pencil: **Rename Tab** | Change the tab's display name |
-| :material-delete: **Delete Tab** | Remove a tab and its components |
-| :material-reorder-horizontal: **Reorder Tabs** | Drag tabs to change their order |
+| Operation                                      | Description                     |
+| ---------------------------------------------- | ------------------------------- |
+| :material-plus: **Add Tab**                    | Create a new empty tab          |
+| :material-pencil: **Rename Tab**               | Change the tab's display name   |
+| :material-delete: **Delete Tab**               | Remove a tab and its components |
+| :material-reorder-horizontal: **Reorder Tabs** | Drag tabs to change their order | -->
 
 ---
 
@@ -153,23 +154,23 @@ Depictio automatically saves certain changes to prevent data loss. Understanding
 
 ### :material-content-save-check: What IS Auto-Saved
 
-| Action | Description |
-|--------|-------------|
-| :material-plus-circle: **Component Creation** | Adding new components to the dashboard |
-| :material-pencil: **Component Edition** | Modifying component configuration (data source, visualization type, etc.) |
-| :material-delete: **Component Deletion** | Removing components from the dashboard |
-| :material-tab: **Tab Operations** | Creating, renaming, or deleting tabs |
+| Action                                        | Description                                                               |
+| --------------------------------------------- | ------------------------------------------------------------------------- |
+| :material-plus-circle: **Component Creation** | Adding new components to the dashboard                                    |
+| :material-pencil: **Component Edition**       | Modifying component configuration (data source, visualization type, etc.) |
+| :material-delete: **Component Deletion**      | Removing components from the dashboard                                    |
+| :material-tab: **Tab Operations**             | Creating, renaming, or deleting tabs                                      |
 
 ### :material-content-save-alert: What is NOT Auto-Saved
 
-| Action | Description |
-|--------|-------------|
-| :material-drag-variant: **Layout Positions** | Dragging components to new positions requires manual save |
+| Action                                              | Description                                                 |
+| --------------------------------------------------- | ----------------------------------------------------------- |
+| :material-drag-variant: **Layout Positions**        | Dragging components to new positions requires manual save   |
 | :material-filter-off: **Interactive Filter Values** | Filter selections are session-only and reset on page reload |
-| :material-resize: **Component Resize** | Resizing components requires manual save |
+| :material-resize: **Component Resize**              | Resizing components requires manual save                    |
 
 !!! tip "Saving Layout Changes"
-    After repositioning or resizing components, use the **Save Layout** button in the dashboard toolbar to persist your layout changes.
+After repositioning or resizing components, use the **Save Layout** button in the dashboard toolbar to persist your layout changes.
 
 ---
 
@@ -179,11 +180,11 @@ Depictio automatically saves certain changes to prevent data loss. Understanding
 
 Dashboards inherit permissions from their project:
 
-| Role | View | Edit | Delete |
-|------|------|------|--------|
+| Role                              | View                 | Edit                 | Delete               |
+| --------------------------------- | -------------------- | -------------------- | -------------------- |
 | :material-shield-crown: **Admin** | :material-check: Yes | :material-check: Yes | :material-check: Yes |
-| :material-shield-edit: **Editor** | :material-check: Yes | :material-check: Yes | :material-close: No |
-| :material-shield-eye: **Viewer** | :material-check: Yes | :material-close: No | :material-close: No |
+| :material-shield-edit: **Editor** | :material-check: Yes | :material-check: Yes | :material-close: No  |
+| :material-shield-eye: **Viewer**  | :material-check: Yes | :material-close: No  | :material-close: No  |
 
 ### :material-link: Sharing URLs
 

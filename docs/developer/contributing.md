@@ -321,6 +321,52 @@ We use pre-commit hooks to enforce:
 | [`ruff`](https://github.com/astral-sh/ruff) | Code formatting and linting |
 | [`ty`](https://github.com/astral-sh/ty) | Static type checking |
 
+### Frontend Guidelines
+
+<!-- prettier-ignore -->
+!!! warning "Required for all frontend contributions"
+    All new UI components **must** use DMC 2.0+ (Dash Mantine Components) and support dark/light themes.
+
+**Component library priority:**
+
+1. **Primary**: DMC 2.0+ components — use for all new UI
+2. **Secondary**: Custom HTML/CSS — only when DMC is insufficient
+3. **Deprecated**: Bootstrap components — maintain only, do not extend
+
+**Theme compatibility checklist:**
+
+- [ ] Use CSS variables: `var(--app-bg-color)`, `var(--app-text-color)`, `var(--app-surface-color)`
+- [ ] Test in both light and dark themes
+- [ ] Never hardcode colors (`#ffffff`, `#000000`)
+
+### Multi-App Architecture
+
+<!-- prettier-ignore -->
+!!! info "Critical for Dash contributors"
+    The Dash frontend uses **three separate applications**. Callbacks must be registered in the correct app(s).
+
+| App | URL Pattern | Purpose |
+|-----|-------------|---------|
+| **Management** | `/dashboards`, `/profile`, `/projects` | Dashboard listing, user settings |
+| **Viewer** | `/dashboard/{id}` | Read-only dashboard viewing |
+| **Editor** | `/dashboard/{id}/edit` | Dashboard editing, save operations |
+
+**Common pitfall:** Registering a callback only in Editor when it should also work in Viewer.
+
+```python
+# ✅ CORRECT: Register in both apps for view+edit features
+# In dashboard_viewer.py
+register_my_callback(app)
+# In dashboard_editor.py
+register_my_callback(app)
+
+# ❌ WRONG: Only in editor, won't work in view mode
+# In dashboard_editor.py only
+register_my_callback(app)
+```
+
+**Shared stores** must be defined in `depictio/dash/layouts/shared_app_shell.py` → `create_shared_stores()`
+
 ## Documentation
 
 ### Repository
@@ -404,6 +450,18 @@ All submissions require review. The review process includes:
 2. **Code review** - Maintainers review the changes
 3. **Feedback** - Address any requested changes
 4. **Approval** - Final approval and merge
+
+## Areas Needing Help
+
+We welcome contributions in these priority areas. See the [Roadmap](../roadmap/README.md) for details.
+
+| Area | What's Needed | Difficulty |
+|------|---------------|------------|
+| **Templates** | nf-core workflow dashboard templates | Medium |
+| **Quarto integration** | Static HTML/PDF export for publications | Medium |
+| **Documentation** | User guides, tutorials, examples | Easy |
+| **Testing** | E2E tests, edge cases, coverage | Medium |
+| **Components** | Markdown component, date picker | Medium |
 
 ## Community
 

@@ -6,9 +6,7 @@ hide:
   - navigation
 ---
 
-
-
-## Big Picture - What we want to achieve
+## Big Picture
 
 ::timeline:: class="depictio-roadmap" center alternate
 
@@ -19,7 +17,7 @@ hide:
   sub_title: "Phase 1: Foundation ✅"
 
 - title: "Data Ingestion"
-  content: "Support for multiple tabular formats: Parquet, CSV, JSON, TSV with automated processing"
+  content: "Multiple tabular formats with Delta Lake storage and data provenance"
   icon: ":fontawesome-solid-database:"
   key: "completed"
   sub_title: "Phase 1: Foundation ✅"
@@ -30,159 +28,135 @@ hide:
   key: "multiqc"
   sub_title: "Phase 2: Specialization ✅"
 
-- title: "Configuration Assistant"
-  content: "CLI-based project setup wizard with intelligent recommendations"
-  icon: ":fontawesome-solid-terminal:"
+- title: "Scientific Reproducibility"
+  content: "YAML-first dashboards, data provenance, DOI/ORCID integration"
+  icon: ":fontawesome-solid-flask:"
   key: "nfcore"
-  sub_title: "Phase 2: Specialization 🚧"
+  sub_title: "Phase 3: Reproducibility 🚧"
 
-- title: "Workflow Templates"
-  content: "Pre-configured dashboards for popular bioinformatics workflows and pipelines"
-  icon: ":fontawesome-solid-sitemap:"
+- title: "Open Science"
+  content: "Zenodo archival, RO-Crate export, LIMS integrations"
+  icon: ":fontawesome-solid-globe:"
   key: "planned"
-  sub_title: "Phase 3: Ecosystem 📋"
+  sub_title: "Phase 4: Integration 📋"
+
+- title: "AI & Automation"
+  content: "MCP server for AI-assisted dashboard creation and data exploration"
+  icon: ":fontawesome-solid-robot:"
+  key: "planned"
+  sub_title: "Phase 5: Intelligence 📋"
 
 ::/timeline::
 
-## What we have now
+---
 
-### Data ingestion & data types supported
+## The Reproducibility Challenge
 
-- [x] Data ingestion using Depictio-CLI (python package based [typer](https://typer.tiangolo.com/)) using YAML configuration file
-- [x] Polars-compatible data format (Parquet, CSV, JSON, TSV) ingestion and transformation into [Delta Lake format](https://delta.io/)
-- [x] Delta lake push to S3 bucket (on-premise or remote MinIO)
-- [x] MultiQC report integration with dedicated visualization components (v0.5.0+)
-- [x] Comprehensive S3 backup and restore strategy with CLI commands and API endpoints
-- [x] Performance optimization with caching for iterative joins and component data
-- [x] Enhanced CLI execution with run commands and improved logging
-- [x] Client-side table joining moved from server to CLI for better performance (v0.6.0+)
+<!-- prettier-ignore -->
+!!! quote "The Reproducibility Crisis in Data Visualization"
+    - *"Dashboards disappear after papers are published."*
+    - *"Visualizations can't be reproduced months later."*
+    - *"Data lineage is lost between pipeline runs."*
+    - *"Cross-experiment comparisons are impossible."*
 
-### Authentication
+Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles/) in mind: **F**indable, **A**ccessible, **I**nteroperable, **R**eusable.
 
-- [x] Basic authentication (username/password) > register, login, logout
-- [x] JWT token management
-- [x] Refresh token support with enhanced security and session persistence
-- [x] Public/private & API internal key creation
-- [x] Profile management (change password)
-- [x] Create CLI configuration through the web interface (YAML to be copy-pasted)
-- [x] Google OAuth authentication integration
-- [x] Unauthenticated mode with automatic anonymous login for public access
-- [x] Temporary user functionality with session management and upgrade options
+**Depictio addresses this with:**
 
-### Dashboards management
+| Challenge                      | Solution                                                                                                                                                                                |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dashboards disappear           | :fontawesome-solid-database: Persistent, queryable dashboards — compare experiments over time                                                                                           |
+| Can't reproduce visualizations | :fontawesome-solid-file-code: YAML-defined dashboards + traceable data — persistent IDs from sample ([LabID](https://grp-gbcs.embl-community.io/labid-user-docs/)) to pipeline to Delta |
+| No data lineage                | :fontawesome-solid-clock-rotate-left: Delta Lake storage — time travel, auditing, provenance                                                                                            |
+| Siloed experiment data         | :fontawesome-solid-link: Cross-DC linking — meta-analysis across studies                                                                                                                |
 
-- [x] Create a dashboard for a project
-- [x] Edit name, duplicate, delete a dashboard
-- [x] Make public/private a dashboard at the instance level
+---
 
-### Dashboard design and interactivity
+## Current Features
 
-- [x] Dashboard design using generic components (figure, metrics card, interactive component, table, MultiQC)
-- [x] Add/delete components
-- [x] Resize and relayout components
-- [x] Edit components (title, aggregation applied)
-- [x] Duplicate components
-- [x] Enable/disable interactivity
-- [x] Enable/disable edit mode
-- [x] Auto-save dashboard + manual save (trigger screenshot to be used as thumbnail)
-- [x] Two-panel layout: left panel for filters/interactive components, right panel for visualizations (v0.6.0+)
-- [x] Dashboard tabs with vertical organization in collapsible navbar (v0.6.0+)
-- [x] Table component export to CSV with filter and sorting support (v0.6.0+)
-- [x] Universal DC linking system for cross-DC filtering without pre-computed joins (v0.6.0+)
-- [x] Figure code mode with live preview and bidirectional editor resize (v0.6.0+)
-- [x] YAML dashboard validation with Pydantic-based configuration checking (v0.6.0+)
+### Data Ingestion
 
-### Project management
+- [x] YAML-based data ingestion via CLI ([docs](../depictio-cli/usage.md))
+- [x] Polars-compatible formats (Parquet, CSV, JSON, TSV) → [Delta Lake](https://delta.io/)
+- [x] S3/MinIO storage with backup/restore commands ([docs](../depictio-cli/usage.md#-backup-commands))
+- [x] MultiQC report integration ([docs](../features/components.md#multiqc-components) | [:material-github: #626](https://github.com/depictio/depictio/pull/626))
+- [x] Client-side table joining in CLI ([:material-github: #634](https://github.com/depictio/depictio/pull/634))
 
-- [x] Project management UI to list workflows and data collections
-- [x] List and edit project permissions
-- [x] Turn public/private a project
+### Dashboard Components
 
-### Admin
+- [x] Generic components: Figure, Table, Card, Interactive ([docs](../features/components.md))
+- [x] MultiQC components for QC reports ([docs](../features/components.md#multiqc-components))
+- [x] Image gallery with S3/MinIO integration ([:material-github: #664](https://github.com/depictio/depictio/pull/664))
+- [x] Figure code mode with live preview ([:material-github: #639](https://github.com/depictio/depictio/pull/639))
 
-- [x] Admin interface to list and manage users (delete functionality only)
-- [x] Admin interface to list projects
-- [x] Admin interface to list dashboards
+### Dashboard Interactivity
 
-### Testing & Quality Assurance
+- [x] Two-panel layout with tabs ([:material-github: #616](https://github.com/depictio/depictio/pull/616))
+- [x] Cross-DC filtering via universal linking ([docs](../features/cross-dc-filtering.md))
+- [x] Interactive selection filtering: scatter/table selections
+- [x] YAML dashboard import/export ([docs](../features/yaml-sync.md))
 
-- [x] Pre-commit hooks for code quality enforcement
-- [x] Comprehensive end-to-end testing with Cypress
-- [x] Enhanced CI/CD workflows with automated testing
-- [x] Integration tests for various components and workflows
-- [x] Flask security assessment scanner integration
-- [x] Improved test reliability and coverage
+### Infrastructure
 
-### Infrastructure & Deployment
+- [x] Docker + Kubernetes with Helm charts ([docs](../installation/docker.md))
+- [x] Celery/Redis background processing
+- [x] Multi-app architecture (Management, Viewer, Editor)
+- [x] Authentication: local, Google OAuth, unauthenticated mode
 
-- [x] Docker containerization with multi-architecture support (AMD64/ARM64)
-- [x] Kubernetes deployment with Helm charts
-- [x] Enhanced Helm chart configuration with persistent volumes and ingress
-- [x] Gitpod workspace setup for streamlined development
-- [x] Automated release workflows with changelog generation
-- [x] Implement astral/ty as static type checking & in pre-commit hooks
-- [x] Allow users to provide their own set of public/private keys
-- [x] Celery/Redis background processing for heavy computations in design mode (v0.6.0+)
-- [x] Multi-app architecture: separate Dash apps for Management, Viewer, and Editor (v0.6.0+)
-- [x] Local Delta Table caching for improved API performance (v0.6.0+)
-- [x] DevContainer and GitHub Codespaces support for cloud-based development
+---
 
-### UI
+## Planned Features
 
-- [x] Functional dark/light mode theming with auto-theme detection
-- [x] Upgrade dash to the latest version (v3+)
-- [x] Upgrade dash mantine components to the latest version (2.0+) with enhanced components and styling
-- [x] Improve UI/UX (e.g., loading spinner, error handling, etc.)
-- [x] Improve dashboard layout and component resizing with vertical and horizontal growing
+### Tier 1: Scientific Reproducibility (0-6 months) :material-star:{ .priority }
 
-## What we plan for the future
+Essential for research workflows and publication-ready outputs.
 
-### Data ingestion & data types supported
+- [ ] **YAML-first dashboards** — all state exportable, no GUI-only configuration
+- [ ] **Data provenance** — via [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/) integration for pipeline versions, parameters, timestamps
+- [ ] **DOI/ORCID integration** — citable dashboards, researcher attribution
+- [ ] **Static export** — [Quarto](https://quarto.org/) integration for HTML/PDF publication supplements
+- [ ] **nf-core plugin** — submit pipeline outputs directly to Depictio
+- [ ] **Schema versioning** — backwards compatibility guarantees
 
-- [ ] Support for genome-browser tracks through [JBrowse2](https://jbrowse.org/) (e.g., VCF, BAM, BED, GFF)
-- [ ] Data ingestion template for heavily-used and standardized nf-core community workflows (`depictio-cli scan --template nf-core/sarek .`)
-- [ ] Single file loading (HTTP polars) without using CLI
-- [ ] S3 bucket automatic cleanup when delta not listed in DB
+### Tier 2: Open Science Integration (6-12 months)
 
-### Authentication
+Valuable for sharing and archiving research outputs.
 
-- [ ] OAuth2 authentication (GitHub, etc.) - Google OAuth already implemented
-- [ ] SSO/SAML authentication - partial SAML integration completed
-- [ ] Groups management
+- [ ] **RO-Crate export** — [Research Object](https://www.researchobject.org/) standard packaging
+- [ ] **Zenodo integration** — one-click dashboard archival with DOI
 
-### Dashboards management
+### Tier 3: Community-Driven (12+ months)
 
-- [ ] Dashboard sharing with specific users or groups
-- [ ] Tagging system for dashboards
+Features driven by community requests and contributions.
 
-### Dashboard design and interactivity
+- [ ] **Multi-user collaboration** — shared lab dashboards, real-time editing
+- [ ] **AI-assisted creation** — MCP server, natural language dashboard building
 
-- [ ] Implement JBrowse2 component for genome browser tracks
-- [ ] High-dimensional data methods (e.g., UMAP, PCA, t-SNE)
-- [ ] Omics data visualization methods (e.g., Volcano plot, ...)
-- [ ] Markdown component
-- [ ] Extend interactive component (date picker, radio buttons, etc.)
-- [ ] Improve component properties (e.g., slider values range, figure styling, etc.)
-
-### Admin
-
-- [ ] Move admin interface to a dedicated FastAPI dashboard using [FastAPI-Users](https://frankie567.github.io/fastapi-users/) and [FastAPI-Admin](https://fastapi-admin-docs.long2ice.io/)
-- [ ] List and manage groups
-- [ ] Admin interface to list and manage API keys
-- [ ] Update endpoints policy (hide/unprotect when needed)
-
-### Development & Infrastructure
-
-- [ ] Build separate containers for frontend and backend
-- [ ] Performance testing for polars read/write from S3 with/without dashboard rendering
+---
 
 ### Templates & Workflows
 
-- [ ] Depictio templates system for workflow integration
-- [ ] Dashboard templates for standardized nf-core workflows
-- [ ] Template validation and CI/CD integration
-- [ ] Template marketplace with screenshots and descriptions
+- [ ] **Depictio templates system** — pre-configured project and dashboard templates
+- [ ] [nf-core](https://nf-co.re/) workflow templates (rnaseq, sarek, atacseq, etc.)
+- [ ] Template marketplace with validation and screenshots
 
-### UI
+### Visualization Modules
 
-- [ ] Further theme customization (colors, fonts) and CSS styling enhancements
+- [ ] Reusable chart configurations catalog
+- [ ] High-dimensional methods (UMAP, PCA, t-SNE)
+- [ ] Omics visualizations (Volcano, MA, heatmaps)
+- [ ] [JBrowse2](https://jbrowse.org/) genome browser component
+
+### UI & Components
+
+- [ ] Markdown component for documentation
+- [ ] Extended interactive components (radio buttons, improved sliders, ...)
+- [ ] Project creation wizard with workflow selection
+
+---
+
+### Links
+
+- [:material-github: GitHub Issues](https://github.com/depictio/depictio/issues) — feature requests, bug reports
+- [Contributing Guide](../developer/contributing.md) — detailed setup instructions
+- [Developer Docs](../developer/index.md) — architecture overview

@@ -604,22 +604,60 @@ workflows:
 
 For detailed documentation, see [Cross-DC Filtering](../../features/cross-dc-filtering.md).
 
-### Data Collection Joins (Legacy - Pre-computed)
+### Data Collection Joins (Client-Side Pre-computed)
 
-!!! warning "Prefer Links Over Joins"
-    **Links** are the recommended approach for cross-DC filtering. They work at runtime and support all DC types (tables, MultiQC, etc.). Use **joins** only when you specifically need a permanently pre-computed combined dataset.
+!!! info "Joins vs Links"
+    **Joins** and **Links** serve different purposes:
 
-Joins pre-compute combined datasets via CLI and store them as Delta tables. They only work with table-type data collections.
+    - **Joins**: Combine Table DCs into a single pre-computed view during `depictio-cli run`. The joined dataset is pushed to the server as one unified Delta table. No dynamic joining happens on the server.
+    - **Links**: Enable runtime cross-DC filtering in the dashboard UI. Data collections remain separate; filtering happens dynamically.
+
+Joins are processed client-side when running `depictio-cli` and create a merged view that gets uploaded to the server. They only work with **Table-type** data collections.
 
 ```yaml
-# Legacy join configuration (in data collection)
+# Join configuration (in data collection)
 join:
   on_columns: [string]        # Column names for joining
   how: string                 # "inner", "outer", "left", "right"
-  with_dc: [string]           # Target data collection tags
+  with_dc: [string]           # Target data collection tags to join with
 ```
 
-For most use cases, use [Cross-DC Links](#cross-dc-links-interactive-filtering) instead.
+**Example: Joining sample metadata with expression data**
+
+```yaml
+data_collections:
+  - data_collection_tag: "sample_metadata"
+    config:
+      type: "table"
+      metatype: "metadata"
+      # ... scan and dc_specific_properties ...
+
+  - data_collection_tag: "expression_with_metadata"
+    config:
+      type: "table"
+      metatype: "aggregate"
+      # ... scan and dc_specific_properties ...
+    join:
+      on_columns: ["sample_id"]
+      how: "left"
+      with_dc: ["sample_metadata"]
+```
+
+When you run `depictio-cli run`, the CLI will:
+
+1. Load both data collections locally
+2. Perform the join operation on the client
+3. Push the resulting joined table to the server
+
+**When to use Joins vs Links:**
+
+| Use Case | Recommended |
+|----------|-------------|
+| Need a single combined dataset for analysis | **Joins** |
+| Want to filter one DC based on another in UI | **Links** |
+| Working with MultiQC data | **Links** (joins don't support MultiQC) |
+| Need to reduce server-side data duplication | **Joins** |
+| Want dynamic, runtime filtering | **Links** |
 
 ## <span style="color: #45B8AC;">:material-library:</span> Configuration Patterns Library
 
