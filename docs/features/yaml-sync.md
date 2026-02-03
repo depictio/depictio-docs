@@ -65,9 +65,9 @@ depictio-cli dashboard validate my_dashboard.yaml --verbose
 
 **Example Output:**
 
-<div class="terminal-output" style="background-color: var(--md-code-bg-color, #1e1e1e); padding: 1em; border-radius: 0.25rem; overflow-x: auto;">
-<pre style="margin: 0; color: var(--md-code-fg-color, #e0e0e0);">Validating: my_dashboard.yaml
-<span style="color: #50fa7b;">✓ Validation passed</span>
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Validating:</span> <span style="color: #c2185b;">my_dashboard.yaml</span>
+<span style="color: #2e7d32;">✓ Validation passed</span>
   Errors: 0
   Warnings: 0
 </pre>
@@ -107,24 +107,24 @@ depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.y
 
 **Example Output:**
 
-<div class="terminal-output" style="background-color: var(--md-code-bg-color, #1e1e1e); padding: 1em; border-radius: 0.25rem; overflow-x: auto;">
-<pre style="margin: 0; color: var(--md-code-fg-color, #e0e0e0);"><span style="color: #8be9fd;">Validating:</span> dashboard.yaml
-<span style="color: #50fa7b;">✓ Validation passed</span>
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Validating:</span> <span style="color: #c2185b;">dashboard.yaml</span>
+<span style="color: #2e7d32;">✓ Validation passed</span>
   Title: Iris Dashboard Demo
   Components: 7
   Project: Iris_Dataset_Project (from YAML project_tag)
 
-<span style="color: #8be9fd;">Loading CLI configuration...</span>
-<span style="color: #50fa7b;">✓ Configuration loaded</span>
+<span style="color: #0097a7;">Loading CLI configuration...</span>
+<span style="color: #2e7d32;">✓ Configuration loaded</span>
   API URL: http://localhost:8058
 
-<span style="color: #8be9fd;">Importing dashboard (project: Iris_Dataset_Project)...</span>
-<span style="color: #50fa7b;">✓ Dashboard imported successfully!</span>
+<span style="color: #0097a7;">Importing dashboard (project: Iris_Dataset_Project)...</span>
+<span style="color: #2e7d32;">✓ Dashboard imported successfully!</span>
   Dashboard ID: 6824cb3b89d2b72169309737
   Title: Iris Dashboard Demo
   Project ID: 650a1b2c3d4e5f6a7b8c9d0e
 
-<span style="color: #8be9fd;">View at:</span> http://localhost:8058/dashboard/6824cb3b89d2b72169309737
+<span style="color: #0097a7;">View at:</span> http://localhost:8058/dashboard/6824cb3b89d2b72169309737
 </pre>
 </div>
 
@@ -364,14 +364,14 @@ The CLI validates YAML files against the DashboardDataLite Pydantic model:
 
 **Invalid component type:**
 
-<div class="terminal-output" style="background-color: var(--md-code-bg-color, #1e1e1e); padding: 1em; border-radius: 0.25rem; overflow-x: auto;">
-<pre style="margin: 0; color: var(--md-code-fg-color, #e0e0e0);"><span style="color: #ff5555;">✗ Validation failed</span>
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #c62828;">✗ Validation failed</span>
   Errors: 1
 
 ┌─────────────────────────────────────────────────────────────┐
-│ <span style="color: #8be9fd;">Component</span>     │ <span style="color: #ff79c6;">Field</span>          │ <span style="color: #ff5555;">Message</span>                    │
+│ <span style="color: #0097a7;">Component</span>     │ <span style="color: #c2185b;">Field</span>          │ <span style="color: #c62828;">Message</span>                    │
 ├───────────────┼────────────────┼────────────────────────────┤
-│ <span style="color: #8be9fd;">-</span>             │ <span style="color: #ff79c6;">component_type</span> │ <span style="color: #ff5555;">Invalid value 'graphs'.</span>    │
+│ <span style="color: #0097a7;">-</span>             │ <span style="color: #c2185b;">component_type</span> │ <span style="color: #c62828;">Invalid value 'graphs'.</span>    │
 │               │                │ Valid: figure, card, etc.  │
 └─────────────────────────────────────────────────────────────┘
 </pre>
@@ -379,14 +379,14 @@ The CLI validates YAML files against the DashboardDataLite Pydantic model:
 
 **Missing required field:**
 
-<div class="terminal-output" style="background-color: var(--md-code-bg-color, #1e1e1e); padding: 1em; border-radius: 0.25rem; overflow-x: auto;">
-<pre style="margin: 0; color: var(--md-code-fg-color, #e0e0e0);"><span style="color: #ff5555;">✗ Validation failed</span>
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #c62828;">✗ Validation failed</span>
   Errors: 1
 
 ┌─────────────────────────────────────────────────────────────┐
-│ <span style="color: #8be9fd;">Component</span>     │ <span style="color: #ff79c6;">Field</span>          │ <span style="color: #ff5555;">Message</span>                    │
+│ <span style="color: #0097a7;">Component</span>     │ <span style="color: #c2185b;">Field</span>          │ <span style="color: #c62828;">Message</span>                    │
 ├───────────────┼────────────────┼────────────────────────────┤
-│ <span style="color: #8be9fd;">-</span>             │ <span style="color: #ff79c6;">workflow_tag</span>   │ <span style="color: #ff5555;">Field required</span>             │
+│ <span style="color: #0097a7;">-</span>             │ <span style="color: #c2185b;">workflow_tag</span>   │ <span style="color: #c62828;">Field required</span>             │
 └─────────────────────────────────────────────────────────────┘
 </pre>
 </div>
