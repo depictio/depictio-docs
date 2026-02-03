@@ -208,13 +208,16 @@ nav:
       #     - Overview: usage/administration.md
   - Features:
       - Overview: features/README.md
-      - Dashboards: features/dashboards.md
-      - Components: features/components.md
-      - Interactive Selection Filtering: features/interactive-selection-filtering.md
-      - Cross-DC Filtering: features/cross-dc-filtering.md
-      - YAML Dashboard Sync: features/yaml-sync.md
-      - Architecture: features/architecture.md
-      - Security: features/security.md
+      - Dashboard & Components:
+          - Dashboards: features/dashboards.md
+          - Components: features/components.md
+          - Interactive Selection Filtering: features/interactive-selection-filtering.md
+      - Data Integration:
+          - Cross-DC Filtering: features/cross-dc-filtering.md
+          - YAML Dashboard Sync: features/yaml-sync.md
+      - System Design:
+          - Architecture: features/architecture.md
+          - Security: features/security.md
   - API:
       - Overview: api/README.md
       # - Endpoints: api/endpoints.md
