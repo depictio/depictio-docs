@@ -1,5 +1,13 @@
 [
   {
+    "version": "0.7.0-b1",
+    "title": "0.7.0-b1",
+    "aliases": [
+      "latest",
+      "beta"
+    ]
+  },
+  {
     "version": "v0.6.2",
     "title": "v0.6.2",
     "aliases": []
@@ -13,16 +21,13 @@
     "version": "v0.6.0",
     "title": "v0.6.0",
     "aliases": [
-      "stable",
-      "latest"
+      "stable"
     ]
   },
   {
     "version": "v0.6.0-b8",
     "title": "v0.6.0-b8",
-    "aliases": [
-      "beta"
-    ]
+    "aliases": []
   },
   {
     "version": "v0.6.0-b7",
