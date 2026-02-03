@@ -66,12 +66,21 @@ Figure components display data visualizations using Plotly charts. They support 
 
 **UI Mode** provides a curated selection of chart types through the visual interface:
 
+<!-- TODO: update when more UI types are re-enabled -->
+
 | Category | Chart Types |
+|----------|-------------|
+| :material-chart-scatter-plot: **Basic Charts** | Scatter, Bar, Line |
+| :material-chart-box: **Statistical** | Histogram, Box |
+<!-- | :material-chart-bell-curve: **Distribution** | Density Heatmap, Density Contour |
+| :material-chart-tree: **Hierarchical** | Treemap, Sunburst | -->
+
+<!-- | Category | Chart Types |
 |----------|-------------|
 | :material-chart-scatter-plot: **Basic Charts** | Scatter, Bar, Line, Area, Pie, Donut |
 | :material-chart-box: **Statistical** | Histogram, Box, Violin, Strip |
 | :material-chart-bell-curve: **Distribution** | Density Heatmap, Density Contour |
-| :material-chart-tree: **Hierarchical** | Treemap, Sunburst |
+| :material-chart-tree: **Hierarchical** | Treemap, Sunburst | -->
 
 !!! tip "Unlimited Charts with Code Mode :material-code-tags:"
     **Code Mode** supports the entire Plotly library, giving you access to all chart types including 3D plots, maps, financial charts, and more. See the [:material-open-in-new: Plotly Python documentation](https://plotly.com/python/){ target="_blank" } for the complete reference.
@@ -106,7 +115,7 @@ fig
 ```
 
 !!! warning "Security Note :material-shield-lock:"
-    Code Mode uses RestrictedPython for security. Only approved libraries (pandas, plotly) are available. See [Security](security.md) for details.
+    Code Mode uses [RestrictedPython](https://restrictedpython.readthedocs.io/en/latest/) for security. Only approved libraries (pandas, plotly) are available. See [Security](security.md) for details.
 
 ### Configuration Options
 
@@ -399,12 +408,36 @@ components:
 
 ### Image Storage
 
-Images must be uploaded to S3/MinIO before they can be displayed:
+Images can be stored and accessed in two ways:
+
+**Option 1: Images already on S3/MinIO**
+
+If your images are already uploaded to S3/MinIO, specify the location in your project configuration:
+
+```yaml
+# In project.yaml - dc_specific_properties
+s3_base_folder: "s3://bucket-name/images/"
+```
+
+**Option 2: Upload local images with depictio-cli (Recommended)**
+
+Use the `depictio-cli run` command to automatically upload images from a local directory to S3:
+
+```yaml
+# In project.yaml - dc_specific_properties
+local_images_path: ./images  # Local path relative to project directory
+```
 
 ```bash
-# Upload images to MinIO
-mc cp --recursive ./images/ minio/depictio-bucket/project/images/
+# Run depictio-cli to sync project and upload images
+depictio-cli run --project-dir /path/to/project
 ```
+
+The CLI will:
+
+1. Read the `local_images_path` from your project configuration
+2. Upload images to the configured S3 bucket
+3. Set the correct `s3_base_folder` automatically
 
 !!! tip "Cross-DC Filtering"
     Image components support filtering via interactive components on the same Data Collection. Select samples using a MultiSelect filter, and the image gallery updates automatically.
