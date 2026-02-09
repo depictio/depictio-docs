@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "0.7.0-b1",
-    "x-generated-at": "2026-02-03T13:59:30Z",
-    "x-depictio-version": "v0.7.0-b1"
+    "version": "0.7.3-b4",
+    "x-generated-at": "2026-02-09T20:28:30Z",
+    "x-depictio-version": "v0.7.3-b4"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -3392,7 +3392,7 @@
           "Dashboards"
         ],
         "summary": "Get Dashboard",
-        "description": "Fetch dashboard data related to a dashboard ID.\nNow uses project-based permissions instead of dashboard-specific permissions.",
+        "description": "Fetch dashboard data related to a dashboard ID.\nNow uses project-based permissions instead of dashboard-specific permissions.\nFor child tabs, includes parent_dashboard_title for header display.",
         "operationId": "get_dashboard_depictio_api_v1_dashboards_get__dashboard_id__get",
         "security": [
           {
@@ -3416,9 +3416,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DashboardData-Output"
-                }
+                "schema": {}
               }
             }
           },
@@ -3618,8 +3616,66 @@
           "Dashboards"
         ],
         "summary": "Edit Dashboard Name",
-        "description": "Edit the name of a dashboard with the given dashboard ID.\nNow uses project-based permissions (editor level required).",
+        "description": "Edit the name of a dashboard with the given dashboard ID.\nNow uses project-based permissions (editor level required).\nDeprecated: Use /edit/{dashboard_id} instead.",
         "operationId": "edit_dashboard_name_depictio_api_v1_dashboards_edit_name__dashboard_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Data"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/edit/{dashboard_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Edit Dashboard",
+        "description": "Edit a dashboard's properties (title, subtitle, icon, icon_color, workflow_system).\n\nDoes NOT allow changing project_id. Uses project-based permissions (editor level required).\n\nArgs:\n    dashboard_id: The dashboard ID to edit.\n    data: Dictionary with fields to update. Allowed fields:\n        - title: Dashboard title (required if provided)\n        - subtitle: Dashboard subtitle (optional)\n        - icon: Icon identifier (optional)\n        - icon_color: Icon color (optional)\n        - workflow_system: Workflow system (optional)",
+        "operationId": "edit_dashboard_depictio_api_v1_dashboards_edit__dashboard_id__post",
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -3700,7 +3756,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DashboardData-Input"
+                "$ref": "#/components/schemas/DashboardData"
               }
             }
           }
@@ -3791,6 +3847,202 @@
               "type": "string",
               "format": "objectid",
               "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/tab/{dashboard_id}": {
+      "patch": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Update Tab",
+        "description": "Update tab properties (title, icon, icon_color, main_tab_name).\n\nFor main tabs, you can also update main_tab_name.\nFor child tabs, you can update title, tab_icon, and tab_icon_color.\n\nArgs:\n    dashboard_id: The dashboard/tab ID to update\n    data: Dictionary with fields to update:\n        - title: New tab title (for child tabs or dashboard title for main tabs)\n        - tab_icon: Icon name (e.g., \"mdi:chart-bar\")\n        - tab_icon_color: Color for the icon\n        - main_tab_name: Custom name for the main tab (main tabs only)\n\nReturns:\n    Updated dashboard information",
+        "operationId": "update_tab_depictio_api_v1_dashboards_tab__dashboard_id__patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Data"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Delete Tab",
+        "description": "Delete a child tab.\n\nMain tabs cannot be deleted through this endpoint - use the regular\n/delete/{dashboard_id} endpoint which also deletes all child tabs.\n\nArgs:\n    dashboard_id: The child tab's dashboard ID to delete\n\nReturns:\n    Success message with deleted tab info",
+        "operationId": "delete_tab_depictio_api_v1_dashboards_tab__dashboard_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/tabs/reorder": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Reorder Tabs",
+        "description": "Reorder child tabs by updating their tab_order values.\n\nMain tab always stays at position 0 and cannot be reordered.\nOnly child tabs can be reordered.\n\nArgs:\n    data: Dictionary with:\n        - parent_dashboard_id: The main tab's dashboard ID\n        - tab_orders: List of {dashboard_id, tab_order} dicts\n\nReturns:\n    Success message with count of updated tabs",
+        "operationId": "reorder_tabs_depictio_api_v1_dashboards_tabs_reorder_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Data"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/dashboards/tabs/{parent_dashboard_id}": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Get Tabs",
+        "description": "Get all tabs for a dashboard (main tab + child tabs).\n\nReturns the main tab and all child tabs sorted by tab_order.\n\nArgs:\n    parent_dashboard_id: The main tab's dashboard ID\n\nReturns:\n    List of tabs with main tab first, then child tabs ordered by tab_order",
+        "operationId": "get_tabs_depictio_api_v1_dashboards_tabs__parent_dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "parent_dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Parent Dashboard Id"
             }
           }
         ],
@@ -4010,8 +4262,55 @@
           "Dashboards"
         ],
         "summary": "Export Dashboard As Yaml",
-        "description": "Export dashboard as YAML.\n\nReturns a YAML representation of the dashboard suitable for\nversion control or backup.\n\nArgs:\n    dashboard_id: The dashboard ID to export\n\nReturns:\n    YAML content with application/x-yaml content type",
+        "description": "Export dashboard as YAML.\n\nReturns a YAML representation of the dashboard suitable for\nversion control or backup. Includes tab fields for child tabs.\n\nArgs:\n    dashboard_id: The dashboard ID to export\n\nReturns:\n    YAML content with application/x-yaml content type",
         "operationId": "export_dashboard_as_yaml_depictio_api_v1_dashboards__dashboard_id__yaml_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/{dashboard_id}/yaml/family": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Export Dashboard Family As Yaml",
+        "description": "Export dashboard family (main tab + all child tabs) as ZIP archive.\n\nReturns a ZIP file containing YAML files for the main dashboard and\nall its child tabs, preserving the tab hierarchy for re-import.\n\nArgs:\n    dashboard_id: The main dashboard ID to export\n\nReturns:\n    ZIP file containing YAML files",
+        "operationId": "export_dashboard_family_as_yaml_depictio_api_v1_dashboards__dashboard_id__yaml_family_get",
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -4116,6 +4415,199 @@
                 "schema": {
                   "type": "object",
                   "title": "Response Get Yaml Schema Depictio Api V1 Dashboards Yaml Schema Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/{dashboard_id}/json": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Export Dashboard As Json",
+        "description": "Export dashboard as JSON with data integrity metadata.\n\nReturns a JSON representation of the dashboard including:\n- Export metadata (version, timestamp, source)\n- Dashboard configuration (title, components, layout)\n- Data integrity information (collection schemas and hashes)\n\nArgs:\n    dashboard_id: The dashboard ID to export\n    current_user: Current authenticated user\n\nReturns:\n    JSON object with dashboard data and integrity metadata",
+        "operationId": "export_dashboard_as_json_depictio_api_v1_dashboards__dashboard_id__json_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Export Dashboard As Json Depictio Api V1 Dashboards  Dashboard Id  Json Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/import/json": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Import Dashboard From Json",
+        "description": "Import a dashboard from JSON content with optional integrity validation.\n\nCreates a new dashboard from the provided JSON configuration.\nOptionally validates that data collection schemas match the export.\n\nArgs:\n    json_content: The JSON content defining the dashboard\n    project_id: Target project ID (required if not in JSON)\n    validate_integrity: Whether to validate data collection schemas (default: True)\n    current_user: Current authenticated user\n\nReturns:\n    Import result with dashboard ID and any validation warnings",
+        "operationId": "import_dashboard_from_json_depictio_api_v1_dashboards_import_json_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "validate_integrity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Validate Integrity"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Json Content"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Import Dashboard From Json Depictio Api V1 Dashboards Import Json Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/json/validate": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Validate Json Import",
+        "description": "Validate JSON import content without actually importing.\n\nPerforms all validation checks and returns detailed results including:\n- Format validation\n- Project resolution\n- Data integrity checks\n\nArgs:\n    json_content: The JSON content to validate\n    project_id: Target project ID (optional)\n    current_user: Current authenticated user\n\nReturns:\n    Validation result with is_valid flag and detailed warnings/errors",
+        "operationId": "validate_json_import_depictio_api_v1_dashboards_json_validate_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Json Content"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Validate Json Import Depictio Api V1 Dashboards Json Validate Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -6149,13 +6641,13 @@
         ],
         "title": "DCTableConfig"
       },
-      "DashboardData-Input": {
+      "DashboardData": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -6339,28 +6831,8 @@
             "type": "integer",
             "title": "Tab Order",
             "default": 0
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "dashboard_id",
-          "title",
-          "permissions",
-          "project_id"
-        ],
-        "title": "DashboardData",
-        "description": "Full dashboard model with MongoDB and auth fields.\n\nExtends DashboardDataLite with:\n- MongoDB document fields (id, project_id, dashboard_id)\n- Permissions (owners, editors, viewers)\n- Versioning and timestamps\n- Tab support"
-      },
-      "DashboardData-Output": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "objectid",
-            "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
           },
-          "description": {
+          "main_tab_name": {
             "anyOf": [
               {
                 "type": "string"
@@ -6369,20 +6841,9 @@
                 "type": "null"
               }
             ],
-            "title": "Description"
+            "title": "Main Tab Name"
           },
-          "flexible_metadata": {
-            "anyOf": [
-              {
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Flexible Metadata"
-          },
-          "hash": {
+          "tab_icon": {
             "anyOf": [
               {
                 "type": "string"
@@ -6391,141 +6852,9 @@
                 "type": "null"
               }
             ],
-            "title": "Hash"
+            "title": "Tab Icon"
           },
-          "dashboard_id": {
-            "type": "string",
-            "format": "objectid",
-            "title": "Dashboard Id"
-          },
-          "version": {
-            "type": "integer",
-            "title": "Version",
-            "default": 1
-          },
-          "tmp_children_data": {
-            "anyOf": [
-              {
-                "items": {},
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Tmp Children Data",
-            "default": []
-          },
-          "stored_layout_data": {
-            "items": {},
-            "type": "array",
-            "title": "Stored Layout Data",
-            "default": []
-          },
-          "stored_children_data": {
-            "items": {},
-            "type": "array",
-            "title": "Stored Children Data",
-            "default": []
-          },
-          "stored_metadata": {
-            "items": {},
-            "type": "array",
-            "title": "Stored Metadata"
-          },
-          "stored_edit_dashboard_mode_button": {
-            "items": {},
-            "type": "array",
-            "title": "Stored Edit Dashboard Mode Button",
-            "default": []
-          },
-          "left_panel_layout_data": {
-            "items": {},
-            "type": "array",
-            "title": "Left Panel Layout Data",
-            "default": []
-          },
-          "right_panel_layout_data": {
-            "items": {},
-            "type": "array",
-            "title": "Right Panel Layout Data",
-            "default": []
-          },
-          "buttons_data": {
-            "type": "object",
-            "title": "Buttons Data",
-            "default": {
-              "unified_edit_mode": true,
-              "add_components_button": {
-                "count": 0
-              }
-            }
-          },
-          "stored_add_button": {
-            "type": "object",
-            "title": "Stored Add Button",
-            "default": {
-              "count": 0
-            }
-          },
-          "title": {
-            "type": "string",
-            "title": "Title"
-          },
-          "subtitle": {
-            "type": "string",
-            "title": "Subtitle",
-            "default": ""
-          },
-          "icon": {
-            "type": "string",
-            "title": "Icon",
-            "default": "mdi:view-dashboard"
-          },
-          "icon_color": {
-            "type": "string",
-            "title": "Icon Color",
-            "default": "orange"
-          },
-          "icon_variant": {
-            "type": "string",
-            "title": "Icon Variant",
-            "default": "filled"
-          },
-          "workflow_system": {
-            "type": "string",
-            "title": "Workflow System",
-            "default": "none"
-          },
-          "notes_content": {
-            "type": "string",
-            "title": "Notes Content",
-            "default": ""
-          },
-          "permissions": {
-            "type": "object"
-          },
-          "is_public": {
-            "type": "boolean",
-            "title": "Is Public",
-            "default": false
-          },
-          "last_saved_ts": {
-            "type": "string",
-            "title": "Last Saved Ts",
-            "default": ""
-          },
-          "project_id": {
-            "type": "string",
-            "format": "objectid",
-            "title": "Project Id"
-          },
-          "is_main_tab": {
-            "type": "boolean",
-            "title": "Is Main Tab",
-            "default": true
-          },
-          "parent_dashboard_id": {
+          "tab_icon_color": {
             "anyOf": [
               {
                 "type": "string"
@@ -6534,12 +6863,18 @@
                 "type": "null"
               }
             ],
-            "title": "Parent Dashboard Id"
+            "title": "Tab Icon Color"
           },
-          "tab_order": {
-            "type": "integer",
-            "title": "Tab Order",
-            "default": 0
+          "parent_dashboard_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Dashboard Title"
           }
         },
         "additionalProperties": false,
@@ -6559,7 +6894,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -6616,7 +6951,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -6673,7 +7008,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -6779,7 +7114,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -6895,7 +7230,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -6980,7 +7315,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-03 13:59:27"
+            "default": "2026-02-09 20:28:27"
           },
           "file_hash": {
             "type": "string",
@@ -7928,7 +8263,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -8135,7 +8470,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -8239,7 +8574,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-03 13:59:27"
+            "default": "2026-02-09 20:28:28"
           },
           "project_type": {
             "type": "string",
@@ -8249,6 +8584,16 @@
             ],
             "title": "Project Type",
             "default": "basic"
+          },
+          "realtime": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RealtimeConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -8265,7 +8610,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -8369,7 +8714,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-03 13:59:27"
+            "default": "2026-02-09 20:28:28"
           },
           "project_type": {
             "type": "string",
@@ -8379,6 +8724,16 @@
             ],
             "title": "Project Type",
             "default": "basic"
+          },
+          "realtime": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RealtimeConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -8413,6 +8768,41 @@
         "minLength": 24,
         "pattern": "^[0-9a-f]{24}$",
         "example": "5eb7cf5a86d9755df3a6c593"
+      },
+      "RealtimeConfig": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "description": "Enable real-time updates for this project",
+            "default": true
+          },
+          "debounce_ms": {
+            "type": "integer",
+            "title": "Debounce Ms",
+            "description": "Debounce interval in milliseconds for rapid updates",
+            "default": 1000
+          },
+          "watch_data_collections": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Watch Data Collections",
+            "description": "Specific data collection tags to watch (None = all)"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "RealtimeConfig",
+        "description": "Project-level real-time configuration (stored in project.yaml or Project model)."
       },
       "Regex": {
         "properties": {
@@ -8724,7 +9114,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -8929,7 +9319,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -9160,7 +9550,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6981ff3d8a742e9c3767cff2"
+            "default": "698a436a8ba3aa761cf3ce9a"
           }
         },
         "type": "object",
@@ -9249,7 +9639,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -9367,7 +9757,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -9448,7 +9838,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -9533,7 +9923,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -9618,7 +10008,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -9783,7 +10173,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -9906,7 +10296,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-03 13:59:25"
+            "default": "2026-02-09 20:28:26"
           }
         },
         "additionalProperties": false,
@@ -9925,7 +10315,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -10048,7 +10438,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-03 13:59:25"
+            "default": "2026-02-09 20:28:26"
           }
         },
         "additionalProperties": false,
@@ -10100,7 +10490,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -10168,7 +10558,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -10265,7 +10655,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -10338,7 +10728,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-03 13:59:25"
+            "default": "2026-02-09 20:28:26"
           },
           "run_hash": {
             "type": "string",
@@ -10383,7 +10773,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6981ff3d8a742e9c3767cff1"
+            "default": "698a436a8ba3aa761cf3ce99"
           },
           "description": {
             "anyOf": [
@@ -10456,7 +10846,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-03 13:59:25"
+            "default": "2026-02-09 20:28:26"
           },
           "run_hash": {
             "type": "string",
@@ -10518,7 +10908,7 @@
           "scan_time": {
             "type": "string",
             "title": "Scan Time",
-            "default": "2026-02-03 13:59:25"
+            "default": "2026-02-09 20:28:26"
           },
           "dc_stats": {
             "anyOf": [
