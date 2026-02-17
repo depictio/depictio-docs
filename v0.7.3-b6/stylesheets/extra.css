@@ -1,0 +1,925 @@
+/* Limit TOC depth to level 2 on changelog page */
+body.page-changelog .md-sidebar--secondary .md-nav__list .md-nav__list {
+    display: none;
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  font-size: 17px
+}
+
+.banner {
+    height: 12px;       /* Height of the banner */
+    position: sticky;   /* Follows as you scroll */
+    top: 0;             /* Absolute top of page */
+    left: 0;
+    width: 100%;
+    z-index: 1;         /* Tells the renderer "this is important", otherwise Admonition and Code Blocks will render into it */
+    text-align: center;
+    background-color: #f4b136; /* Red */
+}
+
+.md-banner {
+    background-color: #f4b136; /* Red */
+}
+
+.md-header {
+    /* grey */
+    background-color: #f7f7f7;
+}
+.md-tabs {
+    /* grey */
+    background-color: #f7f7f7;
+}
+
+/* Theme-aware logo switching */
+/* Light theme - show dark logo */
+[data-md-color-scheme="default"] .logo-dark {
+    display: inline-block;
+}
+
+[data-md-color-scheme="default"] .logo-light {
+    display: none;
+}
+
+/* Dark theme - show light logo */
+[data-md-color-scheme="slate"] .logo-dark {
+    display: none;
+}
+
+[data-md-color-scheme="slate"] .logo-light {
+    display: inline-block;
+}
+
+/* Theme-aware card styling */
+/* Light theme cards */
+[data-md-color-scheme="default"] .funding-card,
+[data-md-color-scheme="default"] .partner-card,
+[data-md-color-scheme="default"] .installation-card {
+    background-color: white;
+    border-color: rgba(0,0,0,0.1);
+    color: var(--md-default-fg-color);
+}
+
+/* Dark theme cards */
+[data-md-color-scheme="slate"] .funding-card,
+[data-md-color-scheme="slate"] .partner-card,
+[data-md-color-scheme="slate"] .installation-card {
+    background-color: var(--md-default-bg-color);
+    border-color: var(--md-default-fg-color--lighter);
+    color: var(--md-default-fg-color);
+}
+
+
+/* NF-core logo theme change */
+
+/* Show light logo by default */
+.nf-core-light { display: inline; }
+.nf-core-dark { display: none; }
+
+/* If using Material theme's dark mode toggle */
+[data-md-color-scheme="slate"] .nf-core-light { display: none; }
+[data-md-color-scheme="slate"] .nf-core-dark { display: inline; }
+
+/* Virgil font definition */
+@font-face {
+    font-family: 'Virgil';
+    src: url('../fonts/Virgil.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Custom Depictio favicon icon */
+.depictio-icon {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background-image: url('../images/logo/logo_icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+}
+
+/* Triangular animation keyframes - based on original Depictio script */
+@keyframes triangular-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+/* Container to prevent clipping */
+#inline-svg-container {
+    overflow: visible !important;
+    padding: 15px;
+}
+
+#inline-svg-container svg {
+    overflow: visible !important;
+}
+
+/* FOUC Prevention - hide logo until JS loads, but show after delay as fallback */
+.md-header__button.md-logo {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    overflow: visible !important;
+    padding: 8px;
+    min-width: 64px;
+    min-height: 64px;
+    margin-right: -8px;
+    animation: showLogoFallback 0.1s ease 2s forwards; /* Show after 2s if JS fails */
+}
+
+.md-header__button.md-logo.logo-ready {
+    opacity: 1;
+    animation: none; /* Cancel fallback animation when JS succeeds */
+}
+
+@keyframes showLogoFallback {
+    to { opacity: 1; }
+}
+
+/* Header logo specific styling */
+.md-header__button.md-logo svg {
+    overflow: visible !important;
+    width: 48px !important;
+    height: 48px !important;
+}
+
+.md-header__button.md-logo img {
+    width: 48px !important;
+    height: 48px !important;
+}
+
+/* Reduce space between logo and title and change to Virgil font */
+.md-header__title {
+    margin-left: -12px;
+    font-size: 1.2rem !important;
+    font-weight: 600;
+    font-family: "Virgil", cursive !important;
+}
+
+/* Apply Virgil font to all H1 titles */
+h1 {
+    font-family: "Virgil", cursive !important;
+}
+
+.md-typeset h1 {
+    font-family: "Virgil", cursive !important;
+}
+
+/* Set up transform properties but NO animation by default */
+#shape-1, path#shape-1,
+#shape-2, path#shape-2,
+#shape-3, path#shape-3,
+#shape-4, path#shape-4,
+#shape-5, path#shape-5,
+#shape-6, path#shape-6,
+#shape-7, path#shape-7 {
+    transform-origin: center;
+    transform-box: fill-box;
+    transition: transform 0.2s ease;
+}
+
+/* ONLY animate on hover */
+svg:hover #shape-1,
+svg:hover path#shape-1 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+svg:hover #shape-2,
+svg:hover path#shape-2 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.1s;
+}
+
+svg:hover #shape-3,
+svg:hover path#shape-3 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.2s;
+}
+
+svg:hover #shape-4,
+svg:hover path#shape-4 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.3s;
+}
+
+svg:hover #shape-5,
+svg:hover path#shape-5 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.4s;
+}
+
+svg:hover #shape-6,
+svg:hover path#shape-6 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+svg:hover #shape-7,
+svg:hover path#shape-7 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.6s;
+}
+
+/* Enhanced animation when active */
+.triangular-active #shape-1,
+.triangular-active path#shape-1 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+.triangular-active #shape-2,
+.triangular-active path#shape-2 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.1s;
+}
+
+.triangular-active #shape-3,
+.triangular-active path#shape-3 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.2s;
+}
+
+.triangular-active #shape-4,
+.triangular-active path#shape-4 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.3s;
+}
+
+.triangular-active #shape-5,
+.triangular-active path#shape-5 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.4s;
+}
+
+.triangular-active #shape-6,
+.triangular-active path#shape-6 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+.triangular-active #shape-7,
+.triangular-active path#shape-7 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.6s;
+}
+
+/* Fix sidebar heights to use full viewport */
+.md-sidebar {
+    height: 100vh !important;
+    position: sticky !important;
+    top: 0 !important;
+}
+
+.md-sidebar--primary {
+    height: 100vh !important;
+}
+
+.md-sidebar--secondary {
+    height: 100vh !important;
+}
+
+.md-sidebar__scrollwrap {
+    height: 100vh !important;
+    max-height: 100vh !important;
+}
+
+/* Adjust for header height */
+@media screen and (min-width: 76.25em) {
+    .md-sidebar {
+        height: calc(100vh - 2.4rem) !important;
+        top: 2.4rem !important;
+    }
+
+    .md-sidebar--primary {
+        height: calc(100vh - 2.4rem) !important;
+    }
+
+    .md-sidebar--secondary {
+        height: calc(100vh - 2.4rem) !important;
+    }
+
+    .md-sidebar__scrollwrap {
+        height: calc(100vh - 2.4rem) !important;
+        max-height: calc(100vh - 2.4rem) !important;
+    }
+}
+
+/* Account for tabs when present */
+.md-tabs ~ .md-main .md-sidebar {
+    height: calc(100vh - 4.8rem) !important;
+    top: 4.8rem !important;
+}
+
+.md-tabs ~ .md-main .md-sidebar__scrollwrap {
+    height: calc(100vh - 4.8rem) !important;
+    max-height: calc(100vh - 4.8rem) !important;
+}
+
+/* Custom Demo Note Section */
+.demo-note-section {
+    margin: 2rem 0;
+    padding: 0 2rem;
+}
+
+.live-demo-info .demo-note-card {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    margin: 2rem auto;
+    max-width: 600px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+[data-md-color-scheme="slate"] .live-demo-info .demo-note-card {
+    background: #374151 !important;
+    border: 1px solid #4b5563 !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.demo-note-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.demo-note-header {
+    background: #f8f9fa !important;
+    color: var(--md-default-fg-color) !important;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+[data-md-color-scheme="slate"] .demo-note-header {
+    background: #4b5563 !important;
+    color: var(--md-default-fg-color) !important;
+    border-bottom: 1px solid #6b7280;
+}
+
+.demo-badge-integrated {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.demo-badge-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.demo-badge-content strong {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.demo-direct-link {
+    color: var(--md-default-fg-color);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.demo-direct-link:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+[data-md-color-scheme="slate"] .demo-direct-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.demo-note-header:hover {
+    background: #e9ecef !important;
+}
+
+[data-md-color-scheme="slate"] .demo-note-header:hover {
+    background: #374151 !important;
+}
+
+.demo-note-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.demo-note-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    flex: 1;
+}
+
+.demo-note-toggle {
+    color: var(--md-default-fg-color);
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.demo-note-toggle:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+[data-md-color-scheme="slate"] .demo-note-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.demo-toggle-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.demo-note-toggle.expanded .demo-toggle-icon {
+    transform: rotate(180deg);
+}
+
+.demo-note-content {
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.demo-note-content.expanded {
+    padding: 1.5rem;
+    max-height: 800px;
+}
+
+.demo-note-content p {
+    margin: 0 0 1rem 0;
+    color: var(--md-default-fg-color--light);
+    line-height: 1.6;
+    text-align: center;
+}
+
+.demo-note-content p:last-of-type {
+    margin-bottom: 1.5rem;
+}
+
+.demo-note-content strong {
+    color: var(--md-default-fg-color);
+    font-weight: 600;
+}
+
+.demo-alternatives {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+[data-md-color-scheme="slate"] .demo-alternatives {
+    background: #374151;
+    border: 1px solid #4b5563;
+}
+
+.demo-alternatives h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--md-default-fg-color);
+}
+
+.demo-alt-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.demo-alt-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.demo-alt-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+}
+
+.gitpod-btn {
+    background: rgba(255, 138, 0, 0.8);
+    color: white !important;
+    border: 2px solid rgba(255, 138, 0, 1);
+}
+
+.gitpod-btn:hover {
+    background: rgba(255, 138, 0, 0.9);
+    color: white !important;
+    border: 2px solid rgba(255, 138, 0, 1);
+}
+
+.install-btn {
+    background: rgba(69, 184, 172, 0.8);
+    color: white !important;
+    border: 2px solid rgba(69, 184, 172, 1);
+}
+
+.install-btn:hover {
+    background: rgba(69, 184, 172, 0.9);
+    color: white !important;
+    border: 2px solid rgba(69, 184, 172, 1);
+}
+
+.demo-btn {
+    background: rgba(100, 149, 237, 0.8);
+    color: white !important;
+    border: 2px solid rgba(100, 149, 237, 1);
+}
+
+.demo-btn:hover {
+    background: rgba(100, 149, 237, 0.9);
+    color: white !important;
+    border: 2px solid rgba(100, 149, 237, 1);
+}
+
+.demo-alt-btn img,
+.demo-alt-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .demo-note-section {
+        padding: 0 1rem;
+    }
+
+    .demo-alt-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .demo-alt-btn {
+        width: 100%;
+        max-width: 200px;
+        justify-content: center;
+    }
+}
+
+/* Simple and direct - exclude Virgil font from version dropdown */
+.md-version {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* ===== FOOTER STYLING ===== */
+/* Ensure footer is always visible and properly styled */
+.md-footer {
+    position: relative !important;
+    z-index: 1000 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: transparent !important;
+    margin-top: 4rem !important;
+    padding: 0 !important;
+    clear: both !important;
+    width: 100% !important;
+}
+
+.md-footer-meta {
+    background-color: #1a1a1a !important;
+    display: block !important;
+    visibility: visible !important;
+    padding: 1rem 0 !important;
+}
+
+.md-footer-meta__inner {
+    display: flex !important;
+    visibility: visible !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 1rem !important;
+}
+
+/* Footer copyright text - dark background, light text */
+.md-copyright,
+.md-copyright__highlight,
+.md-footer-meta .md-typeset,
+.md-footer-meta .md-copyright {
+    color: #b0b0b0 !important;
+    font-size: 0.85rem !important;
+}
+
+.md-copyright a,
+.md-footer-meta a {
+    color: #9966cc !important;
+}
+
+.md-copyright a:hover,
+.md-footer-meta a:hover {
+    color: #b388e8 !important;
+}
+
+/* Social icons in footer */
+.md-social__link {
+    color: #b0b0b0 !important;
+}
+
+.md-social__link:hover {
+    color: #9966cc !important;
+}
+
+.md-social__link svg {
+    fill: currentColor !important;
+}
+
+/* Light theme - copyright bar */
+[data-md-color-scheme="default"] .md-footer-meta {
+    background-color: #e0e0e0 !important;
+}
+
+[data-md-color-scheme="default"] .md-copyright,
+[data-md-color-scheme="default"] .md-copyright__highlight,
+[data-md-color-scheme="default"] .md-footer-meta .md-typeset {
+    color: #333333 !important;
+}
+
+[data-md-color-scheme="default"] .md-copyright a,
+[data-md-color-scheme="default"] .md-footer-meta a {
+    color: #7a5dc7 !important;
+}
+
+[data-md-color-scheme="default"] .md-social__link {
+    color: #555555 !important;
+}
+
+[data-md-color-scheme="default"] .md-social__link:hover {
+    color: #7a5dc7 !important;
+}
+
+/* Footer social links */
+.md-footer-social {
+    color: #ffffff !important;
+}
+
+.md-footer-social__link {
+    color: #ffffff !important;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.md-footer-social__link:hover {
+    opacity: 1;
+    color: #9966cc !important;
+}
+
+/* Dark theme base footer */
+[data-md-color-scheme="slate"] .md-footer {
+    background-color: transparent !important;
+}
+
+/* Fix for landing page - ensure content doesn't cover footer */
+.md-main {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ensure content container doesn't extend over footer */
+.md-content {
+    position: relative;
+    z-index: 1;
+    overflow: visible !important;
+}
+
+/* Ensure the article doesn't clip or hide anything below it */
+.md-content__inner {
+    overflow: visible !important;
+    padding-bottom: 2rem !important;
+}
+
+/* Landing page specific - ensure sections don't extend into footer space */
+.md-typeset section:last-of-type {
+    margin-bottom: 3rem !important;
+    padding-bottom: 2rem !important;
+}
+
+/* ===== CUSTOM DEPICTIO FOOTER ===== */
+.depictio-footer {
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;
+    padding: 2.5rem 0 1.5rem 0 !important;
+    border-top: 4px solid #9966cc !important;
+}
+
+.depictio-footer__grid {
+    display: grid !important;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr !important;
+    gap: 2rem !important;
+    align-items: start !important;
+}
+
+.depictio-footer__section {
+    padding: 0 1rem !important;
+}
+
+.depictio-footer__brand {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+}
+
+.depictio-footer__logo {
+    width: 48px !important;
+    height: 48px !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.depictio-footer__title {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+}
+
+.depictio-footer__tagline {
+    font-size: 0.85rem !important;
+    color: #b0b0b0 !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+}
+
+.depictio-footer__heading {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    margin: 0 0 1rem 0 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+.depictio-footer__links {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.depictio-footer__links li {
+    margin: 0.5rem 0 !important;
+}
+
+.depictio-footer__links a {
+    color: #b0b0b0 !important;
+    text-decoration: none !important;
+    font-size: 0.85rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    transition: color 0.2s ease !important;
+}
+
+.depictio-footer__links a:hover {
+    color: #9966cc !important;
+}
+
+.depictio-footer__links svg {
+    flex-shrink: 0 !important;
+}
+
+/* Light theme custom footer */
+[data-md-color-scheme="default"] .depictio-footer {
+    background-color: #f5f5f5 !important;
+    color: #333333 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__title {
+    color: #333333 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__tagline {
+    color: #666666 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__heading {
+    color: #333333 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__links a {
+    color: #555555 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__links a:hover {
+    color: #7a5dc7 !important;
+}
+
+/* Footer Funding/Supported By Section */
+.depictio-footer__funding {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1.5rem !important;
+    padding: 1.5rem 0 !important;
+    margin-top: 1.5rem !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.depictio-footer__funding-label {
+    font-size: 0.8rem !important;
+    color: #888888 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    white-space: nowrap !important;
+}
+
+.depictio-footer__funding-logos {
+    display: flex !important;
+    align-items: center !important;
+    gap: 2rem !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+}
+
+.depictio-footer__funding-logo {
+    height: 55px !important;
+    width: auto !important;
+    filter: brightness(0) invert(0.8) !important;
+    opacity: 0.8 !important;
+    transition: opacity 0.2s ease, filter 0.2s ease !important;
+}
+
+.depictio-footer__funding-logo:hover {
+    opacity: 1 !important;
+    filter: brightness(0) invert(1) !important;
+}
+
+/* Light theme funding logos */
+[data-md-color-scheme="default"] .depictio-footer__funding {
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__funding-label {
+    color: #666666 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__funding-logo {
+    filter: none !important;
+    opacity: 0.7 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__funding-logo:hover {
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+/* Responsive footer */
+@media (max-width: 960px) {
+    .depictio-footer__grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .depictio-footer__grid {
+        grid-template-columns: 1fr !important;
+        text-align: center !important;
+    }
+
+    .depictio-footer__brand {
+        align-items: center !important;
+    }
+
+    .depictio-footer__section {
+        padding: 1rem 0 !important;
+    }
+
+    .depictio-footer__funding {
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+}
