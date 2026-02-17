@@ -83,17 +83,24 @@ Setting those values will disable the built-in MinIO service and use the externa
 
 ## Authentication Configuration
 
-### Unauthenticated Mode
-
-Enable unauthenticated mode to allow anonymous access to your Depictio instance:
+Depictio supports four authentication modes. See [Authentication Modes](../usage/guides/authentication-modes.md) for a full comparison.
 
 ```bash
-# Enable unauthenticated mode (allows anonymous access)
-DEPICTIO_AUTH_UNAUTHENTICATED_MODE=true
+# Single-User Mode — personal instance, no login, full admin access
+DEPICTIO_AUTH_SINGLE_USER_MODE=true
 
-# Anonymous user configuration
-DEPICTIO_AUTH_ANONYMOUS_USER_EMAIL=anonymous@depict.io
+# Public Mode — anonymous read-only, sign in to create content
+DEPICTIO_AUTH_PUBLIC_MODE=true
+
+# Demo Mode — public mode + guided interactive tour
+DEPICTIO_AUTH_PUBLIC_MODE=true
+DEPICTIO_AUTH_DEMO_MODE=true
+
+# Temporary user session duration (Public/Demo modes)
 DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS=24
+
+# Backward-compatible alias for Public Mode:
+# DEPICTIO_AUTH_UNAUTHENTICATED_MODE=true
 ```
 
 ### Google OAuth Integration

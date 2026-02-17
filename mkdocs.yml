@@ -203,7 +203,8 @@ nav:
           - Usage: depictio-cli/usage.md
           - Minimal YAML config: depictio-cli/minimal_config.md
       - Special Modes:
-          - Unauthenticated mode: usage/guides/unauthenticated_mode.md
+          - Authentication Modes: usage/guides/authentication-modes.md
+          - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md
       # - Administration:
       #     - Overview: usage/administration.md
   - Features:

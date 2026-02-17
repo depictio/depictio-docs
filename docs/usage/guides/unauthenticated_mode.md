@@ -1,5 +1,9 @@
 # Unauthenticated Mode
 
+!!! warning "Renamed to Public Mode"
+
+    This page describes the legacy "Unauthenticated Mode" which has been renamed to **Public Mode**. The env var `DEPICTIO_AUTH_UNAUTHENTICATED_MODE` still works as a backward-compatible alias. See [Authentication Modes](authentication-modes.md) for the full overview of all four modes.
+
 ## Overview
 
 ### What is Unauthenticated Mode?

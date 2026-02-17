@@ -8,6 +8,121 @@ hide:
 
 # Changelog
 
+## **v0.7.3 Beta Releases**
+
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v0.7.3-b5](https://github.com/depictio/depictio/releases/tag/v0.7.3-b5)** (February 9, 2026)
+
+#### **🐛 Fixes**
+* Fix debug menu auto-collapse script path in HTML templates (local dev + production)
+
+### **[v0.7.3-b4](https://github.com/depictio/depictio/releases/tag/v0.7.3-b4)** (February 9, 2026)
+
+#### **🐛 Fixes**
+* Fix demo tour popover callback errors across Management App pages
+* Enhance debug menu auto-collapse for Dash 3.x compatibility
+
+### **[v0.7.3-b3](https://github.com/depictio/depictio/releases/tag/v0.7.3-b3)** (February 9, 2026)
+
+#### **🚀 Improvements**
+* Optimize dashboard interactivity and fix WebSocket connection for K8s deployments
+
+### **[v0.7.3-b2](https://github.com/depictio/depictio/releases/tag/v0.7.3-b2)** (February 9, 2026)
+
+#### **🐛 Fixes**
+* Enable WebSocket callback on initial page load
+* Remove conflicting NGINX annotations for WebSocket
+
+### **[v0.7.3-b1](https://github.com/depictio/depictio/releases/tag/v0.7.3-b1)** (February 9, 2026)
+
+#### **🚀 Improvements**
+* Migrate from unauthenticated mode to demo + public mode architecture
+* Improve demo mode with walkthrough tour and temporary user support
+
+---
+
+## **[v0.7.2](https://github.com/depictio/depictio/releases/tag/v0.7.2)** (February 8, 2026)
+
+!!! success "Stable Release"
+    This is a stable release with auth mode improvements and guided tour features.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.2
+```
+
+### **✨ Features**
+
+* **Single User Mode**: Badge now clickable to navigate to /profile
+* **Guided Tour**: Added demo mode onboarding tour for new users
+* **Dashboard Import/Export**: Full import/export functionality integrated into New Dashboard modal
+* **WebSocket Events**: Real-time event system for dashboard updates
+* **Tab Management**: Enhanced tab editing with full CRUD and reordering capabilities
+
+### **🐛 Bug Fixes**
+
+* Skip auth modal callbacks in single-user mode
+* Fix scatter selection preservation on figure re-render
+* Fix dashboard creation in single-user mode for anonymous user
+* Fix debug menu collapse script loading across all modes
+* Harden public/demo mode dashboard visibility and tour behavior
+* Various E2E test fixes for auth flow changes
+
+### **🧹 Internal Changes**
+
+* Cypress upgrade and E2E tests for demo/single-user modes
+* UI refinements for Single User Mode badge and welcome section
+
+---
+
+## **[v0.7.1](https://github.com/depictio/depictio/releases/tag/v0.7.1)** (February 4, 2026)
+
+!!! success "Stable Release"
+    This is a stable release based on v0.7.1-b1, introducing tab management features.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.1
+```
+
+### **✨ Features**
+
+* **Tab Management**: Full CRUD operations with drag-and-drop reordering
+* **Smart Sidebar**: Dynamic tab selection with improved navigation
+* **Breadcrumb Navigation**: Dashboard/tab breadcrumb in header title
+
+### **🐛 Bug Fixes**
+
+* Fix header to use dashboard title instead of main_tab_name for parent display
+* Add parent_dashboard_title field to DashboardData model
+
+### **🚀 Improvements**
+
+* Simplify and consolidate tab management code
+* Add comprehensive unit tests for tab functionality
+
+---
+
+## **v0.7.1 Beta Releases**
+
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v0.7.1-b1](https://github.com/depictio/depictio/releases/tag/v0.7.1-b1)** (February 4, 2026)
+
+#### **✨ Features**
+* Implement full tab CRUD with reordering and smart sidebar
+* Show dashboard/tab breadcrumb in header title
+
+#### **🐛 Fixes**
+* Fix header parent display and add parent_dashboard_title field
+
+---
+
 ## **[v0.7.0](https://github.com/depictio/depictio/releases/tag/v0.7.0)** (February 3, 2026)
 
 !!! success "Stable Release"
