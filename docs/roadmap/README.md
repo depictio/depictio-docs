@@ -65,7 +65,7 @@ hide:
     - *"Data lineage is lost between pipeline runs."*
     - *"Cross-experiment comparisons are impossible."*
 
-Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles/) in mind: **F**indable, **A**ccessible, **I**nteroperable, **R**eusable.
+Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles/) in mind: **F**indable, **A**ccessible, **I**nteroperable, **R**eusable. Some challenges are already addressed today; others are part of our roadmap and will be tackled in future releases.
 
 | Challenge                      | Solution                                                                                                                                                                                |
 | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
