@@ -69,9 +69,9 @@ Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles
 
 | Challenge                      | Solution                                                                                                                                                                                |
 | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Dashboards disappear           | :fontawesome-solid-database: Persistent, queryable dashboards — compare experiments over time                                                                                           |
+| Dashboards disappear           | :fontawesome-solid-database: *Will show in the future* — persistent, queryable dashboards for cross-experiment comparison                                                               |
 | Can't reproduce visualizations | :fontawesome-solid-file-code: YAML-defined dashboards + traceable data — export and re-import any dashboard as code                                                                     |
-| No data lineage                | :fontawesome-solid-clock-rotate-left: Delta Lake storage — time travel, auditing, provenance                                                                                            |
+| No data lineage                | :fontawesome-solid-clock-rotate-left: *Will show in the future* — Delta Lake time travel, auditing, and provenance                                                                      |
 | Siloed experiment data         | :fontawesome-solid-link: Cross-DC linking — meta-analysis across studies                                                                                                                |
 | Dashboards not citable         | :fontawesome-solid-id-card: *Will show in the future* — DOI integration, persistent access IDs, citable dashboard snapshots                                                             |
 | No sample-to-viz traceability  | :fontawesome-solid-fingerprint: *Will show in the future* — persistent URL / access ID from sample ([LabID](https://grp-gbcs.embl-community.io/labid-user-docs/)) to pipeline to Delta |
