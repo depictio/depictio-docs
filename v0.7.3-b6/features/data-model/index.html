@@ -6,28 +6,28 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Understanding Depictio's modular code architecture and object model design.">
+        <meta name="description" content="Conceptual overview of Depictio's domain objects and relationship model — how Projects, Workflows, Runs, Files, DataCollections, and Dashboards fit together.">
       
       
       
-        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v0.7.3-b6/developer/modularity/">
+        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v0.7.3-b6/features/data-model/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../architecture/">
       
       
-        <link rel="next" href="../contributing/">
+        <link rel="next" href="../security/">
       
       
         
       
       
       <link rel="icon" href="../../images/logo/logo_icon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
     
     
       
-        <title>Modularity - Depictio Documentation</title>
+        <title>Data Model - Depictio Documentation</title>
       
     
     
@@ -87,6 +87,8 @@
 
     
     
+  <link rel="preload" href="../../fonts/Virgil.ttf" as="font" type="font/ttf" crossorigin>
+
   </head>
   
   
@@ -106,7 +108,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#modularity" class="md-skip">
+        <a href="#data-model" class="md-skip">
           Skip to content
         </a>
       
@@ -162,7 +164,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Modularity
+              Data Model
             
           </span>
         </div>
@@ -341,11 +343,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../features/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -389,13 +393,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../developer/" class="md-tabs__link">
           
   
   
@@ -1520,6 +1522,8 @@
       
         
       
+        
+      
     
     
     
@@ -1574,6 +1578,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../usage/guides/authentication-modes/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.7 9.7 0 0 1 12 20.92 9.7 9.7 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication Modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../usage/guides/unauthenticated_mode/" class="md-nav__link">
         
   
@@ -1581,7 +1615,7 @@
   <span class="md-ellipsis">
     
   
-    Unauthenticated mode
+    Unauthenticated mode (legacy)
   
 
     
@@ -1614,6 +1648,8 @@
       
   
   
+    
+  
   
   
     
@@ -1633,22 +1669,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../features/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1668,13 +1705,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1708,10 +1745,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1720,7 +1760,7 @@
         <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_2" >
         
           
-          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="">
             
   
   
@@ -1756,7 +1796,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/dashboards/" class="md-nav__link">
+      <a href="../dashboards/" class="md-nav__link">
         
   
   
@@ -1786,7 +1826,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/components/" class="md-nav__link">
+      <a href="../components/" class="md-nav__link">
         
   
   
@@ -1816,7 +1856,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/interactive-selection-filtering/" class="md-nav__link">
+      <a href="../interactive-selection-filtering/" class="md-nav__link">
         
   
   
@@ -1866,10 +1906,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1878,7 +1921,7 @@
         <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3" >
         
           
-          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="">
             
   
   
@@ -1914,7 +1957,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/cross-dc-filtering/" class="md-nav__link">
+      <a href="../cross-dc-filtering/" class="md-nav__link">
         
   
   
@@ -1944,7 +1987,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/yaml-sync/" class="md-nav__link">
+      <a href="../yaml-sync/" class="md-nav__link">
         
   
   
@@ -1979,8 +2022,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -1988,25 +2033,28 @@
       
         
       
-    
-    
-    
-      
-      
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    
       
-        
+      
         
           
+          
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4" >
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="">
             
   
   
@@ -2024,7 +2072,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2042,7 +2090,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/architecture/" class="md-nav__link">
+      <a href="../architecture/" class="md-nav__link">
         
   
   
@@ -2069,10 +2117,268 @@
                 
   
   
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Model
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#object-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflowrun" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WorkflowRun
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datacollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DataCollection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relationship-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relationship Models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Relationship Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#permission" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Permission
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#joindefinition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JoinDefinition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dclink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DCLink
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mongodb-collections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MongoDB Collections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Documentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     <li class="md-nav__item">
-      <a href="../../features/security/" class="md-nav__link">
+      <a href="../security/" class="md-nav__link">
         
   
   
@@ -2252,8 +2558,6 @@
       
   
   
-    
-  
   
   
     
@@ -2265,29 +2569,26 @@
       
         
       
-        
-      
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../developer/" class="md-nav__link ">
               
   
   
@@ -2307,13 +2608,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2330,186 +2631,10 @@
                 
   
   
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 5v6h5V5m-11 6h5V5h-5m6 13h5v-6h-5m-6 6h5v-6h-5m-6 6h5v-6H4m0-1h5V5H4z"/></svg>
-  
-  <span class="md-ellipsis">
-    
-  
-    Modularity
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 5v6h5V5m-11 6h5V5h-5m6 13h5v-6h-5m-6 6h5v-6h-5m-6 6h5v-6H4m0-1h5V5H4z"/></svg>
-  
-  <span class="md-ellipsis">
-    
-  
-    Modularity
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-  
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#general-object-model-and-database-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        General Object Model and Database Design
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="General Object Model and Database Design">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#project-workflow-object-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project &amp; Workflow Object Design
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#code-architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Code Architecture
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Code Architecture">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#api-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        API Structure
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dashboard-components" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Dashboard Components
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Dashboard Components">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#component-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Component Structure
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#adding-new-components" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Adding New Components
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
   
   
     <li class="md-nav__item">
-      <a href="../contributing/" class="md-nav__link">
+      <a href="../../developer/contributing/" class="md-nav__link">
         
   
   
@@ -3302,22 +3427,99 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#general-object-model-and-database-design" class="md-nav__link">
+  <a href="#object-hierarchy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        General Object Model and Database Design
+        Object Hierarchy
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="General Object Model and Database Design">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Objects">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#project-workflow-object-design" class="md-nav__link">
+  <a href="#project" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Project &amp; Workflow Object Design
+        Project
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflowrun" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WorkflowRun
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datacollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DataCollection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User
       
     </span>
   </a>
@@ -3330,22 +3532,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#code-architecture" class="md-nav__link">
+  <a href="#relationship-models" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Code Architecture
+        Relationship Models
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Code Architecture">
+    <nav class="md-nav" aria-label="Relationship Models">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#api-structure" class="md-nav__link">
+  <a href="#permission" class="md-nav__link">
     <span class="md-ellipsis">
       
-        API Structure
+        Permission
       
     </span>
   </a>
@@ -3353,30 +3555,24 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#dashboard-components" class="md-nav__link">
+  <a href="#joindefinition" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Dashboard Components
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Dashboard Components">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#component-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Component Structure
+        JoinDefinition
       
     </span>
   </a>
   
 </li>
         
-      </ul>
-    </nav>
+          <li class="md-nav__item">
+  <a href="#dclink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DCLink
+      
+    </span>
+  </a>
   
 </li>
         
@@ -3386,10 +3582,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-new-components" class="md-nav__link">
+  <a href="#mongodb-collections" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Adding New Components
+        MongoDB Collections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Documentation
       
     </span>
   </a>
@@ -3416,104 +3623,484 @@
   
 
 
-<h1 id="modularity">Modularity<a class="headerlink" href="#modularity" title="Permanent link">&para;</a></h1>
-<p>Depictio code structure is designed with a modular architecture, allowing for easy integration of new features and functionalities. The frontend and backend components are decoupled, enabling independent development and deployment of each module. The platform is built to be scalable and adaptable to various needs, with a focus on user-friendly interfaces and interactive data visualization tools.</p>
-<h2 id="general-object-model-and-database-design">General Object Model and Database Design<a class="headerlink" href="#general-object-model-and-database-design" title="Permanent link">&para;</a></h2>
-<p>Depictio object model was designed to reflect production-oriented workflows. The architecture is built to ensure a clear separation of concerns, with distinct layers for workflows, workflow run configurations, runs, files generated, and data collections. This modular approach is reflected in both the database schema and the API structure.</p>
-<h3 id="project-workflow-object-design">Project &amp; Workflow Object Design<a class="headerlink" href="#project-workflow-object-design" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Project</strong>: The top-level entity that encapsulates that represents one or multiple production-oriented pipeline/workflow.</li>
-<li><strong>Workflow</strong>: Standardised / production-oriented workflow</li>
-<li><strong>Run Configurations</strong>: These define the parameters and settings that were used to run a workflow.</li>
-<li><strong>Runs</strong>: Instances of a production workflow executed using a specific run configuration. Each run generates output files, that are structured the same way across runs. These files can then be associated into data collections.</li>
-<li><strong>Files</strong>: Artifacts produced by each run. These can be intermediate or final results of the workflow.</li>
-<li><strong>Data Collections</strong>: Aggregated data from files following the same structure.</li>
-</ul>
-<p>The following diagram illustrates a "Workflow" object and its relationships with other objects in the system. The workflow object is at the center, with run configurations, runs, files, and data collections branching out from it. The files generated by each run can be organized into data collections, which can be used for visualization and analysis. Multiple workflows can be associated with a single project, enabling users to manage and visualize data, e.g., multi-omics data, from different workflows (<a href="https://nf-co.re/rnaseq">nf-core/rnaseq</a> and <a href="https://nf-co.re/atacseq">nf-core/atacseq</a>) in a single dashboard.</p>
-<p><img src="../../images/modularity/schema.png" width="600"></p>
-<h2 id="code-architecture">Code Architecture<a class="headerlink" href="#code-architecture" title="Permanent link">&para;</a></h2>
-<p>The code organisation clearly separates each of the frontend components and the API endpoints, making it easy to understand and extend the platform.</p>
-<p><img src="../../images/modularity/image-1.png" width="600"></p>
-<h3 id="api-structure">API Structure<a class="headerlink" href="#api-structure" title="Permanent link">&para;</a></h3>
-<p>The API is structured to mirror the object design specified above, with each major component of the workflow having its own set of endpoints and models. The organization within <code>depictio/api/v1/endpoints</code> is as follows:</p>
+<h1 id="data-model"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"/></svg></span> Data Model<a class="headerlink" href="#data-model" title="Permanent link">&para;</a></h1>
+<p>Depictio's object model is designed to reflect <strong>production-oriented, FAIR-compliant workflows</strong>. The hierarchy mirrors how pipelines actually run: a project contains workflows, each workflow execution produces files, and those files are aggregated into typed data collections that power interactive dashboards.</p>
+<hr />
+<h2 id="object-hierarchy">Object Hierarchy<a class="headerlink" href="#object-hierarchy" title="Permanent link">&para;</a></h2>
+<p>The core chain of objects, from the user-facing dashboard down to individual files:</p>
+<div style="max-width: 420px; margin: 0 auto;">
+<pre class="mermaid"><code>%%{init: {"look": "handDrawn", "themeVariables": {"fontFamily": "Virgil", "fontSize": "20px"}}}%%
+graph TD
+    D[Dashboard] --&gt; P[Project]
+    P --&gt; W[Workflow]
+    W --&gt; WR[WorkflowRun]
+    WR --&gt; DC[DataCollection]
+    DC --&gt; F[File]
+    P -.-&gt;|basic project| DC
+
+    classDef dashboard fill:#9966CC,stroke:#9966CC,color:#fff
+    classDef project   fill:#6495ED,stroke:#6495ED,color:#fff
+    classDef workflow  fill:#45B8AC,stroke:#45B8AC,color:#fff
+    classDef run       fill:#8BC34A,stroke:#8BC34A,color:#333
+    classDef dc        fill:#F68B33,stroke:#F68B33,color:#fff
+    classDef file      fill:#F9CB40,stroke:#F9CB40,color:#333
+
+    class D dashboard
+    class P project
+    class W workflow
+    class WR run
+    class DC dc
+    class F file</code></pre>
+</div>
+<p>The dashed arrow shows the shortcut for <strong>basic projects</strong>: DataCollections can attach directly to the project, skipping the Workflow and WorkflowRun layers.</p>
+<p>The remaining domain objects attach to the hierarchy as support structures:</p>
+<div style="max-width: 650px; margin: 0 auto;">
+<pre class="mermaid"><code>%%{init: {"look": "handDrawn", "themeVariables": {"fontFamily": "Virgil", "fontSize": "20px"}}}%%
+graph TD
+    P[Project] &amp; D[Dashboard] --&gt; PERM[Permission]
+    P --&gt; JD[JoinDefinition]
+    P --&gt; DCL[DCLink]
+    PERM --&gt; U[User]
+
+    classDef project   fill:#6495ED,stroke:#6495ED,color:#fff
+    classDef dashboard fill:#9966CC,stroke:#9966CC,color:#fff
+    classDef perm      fill:#E6779F,stroke:#E6779F,color:#fff
+    classDef join      fill:#45B8AC,stroke:#45B8AC,color:#fff
+    classDef link      fill:#7A5DC7,stroke:#7A5DC7,color:#fff
+    classDef user      fill:#8BC34A,stroke:#8BC34A,color:#333
+
+    class P project
+    class D dashboard
+    class PERM perm
+    class JD join
+    class DCL link
+    class U user</code></pre>
+</div>
+<hr />
+<h2 id="core-objects">Core Objects<a class="headerlink" href="#core-objects" title="Permanent link">&para;</a></h2>
+<h3 id="project"><span style="color:#6495ED">Project</span><a class="headerlink" href="#project" title="Permanent link">&para;</a></h3>
+<p>The <strong>top-level container</strong> for all related pipelines and visualizations.</p>
 <table>
 <thead>
 <tr>
-<th>Endpoint Module</th>
+<th>Field</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>dashboards_endpoints</strong></td>
-<td>Manages endpoints related to dashboards</td>
+<td><code>name</code></td>
+<td>Human-readable project identifier</td>
 </tr>
 <tr>
-<td><strong>datacollections_endpoints</strong></td>
-<td>Handles endpoints for data collections, mapping closely to the Data Collection objects in the design</td>
+<td><code>project_type</code></td>
+<td><code>basic</code> or <code>workflow</code></td>
 </tr>
 <tr>
-<td><strong>deltatables_endpoints</strong></td>
-<td>Provides endpoints for delta tables, which are specific types of data collections with versioning</td>
+<td><code>workflows</code></td>
+<td>List of associated Workflow objects</td>
 </tr>
 <tr>
-<td><strong>files_endpoints</strong></td>
-<td>Manages file-related endpoints, directly corresponding to the File objects</td>
+<td><code>data_collections</code></td>
+<td>DataCollections for basic projects</td>
 </tr>
 <tr>
-<td><strong>user_endpoints</strong></td>
-<td>Manages user authentication and authorization, including models and routes for user management</td>
+<td><code>joins</code></td>
+<td>JoinDefinition list for cross-DC merging</td>
 </tr>
 <tr>
-<td><strong>utils_endpoints</strong></td>
-<td>Provides utility endpoints, typically for internal or auxiliary operations</td>
+<td><code>links</code></td>
+<td>DCLink list for cross-DC filter propagation</td>
 </tr>
 <tr>
-<td><strong>workflow_endpoints</strong></td>
-<td>Focuses on managing workflows, run configurations, and runs, reflecting the core of the workflow architecture</td>
+<td><code>permissions</code></td>
+<td>Embedded Permission object (owners/editors/viewers)</td>
 </tr>
 <tr>
-<td><strong>project_endpoints</strong></td>
-<td>Handles project-related endpoints, including project creation, management, and permissions</td>
+<td><code>is_public</code></td>
+<td>Whether the project is publicly accessible</td>
 </tr>
 </tbody>
 </table>
-<p>Each endpoint is defined in a separate subfolder, where the <code>routes.py</code> file contains the API routes and the <code>models.py</code> file contains the object models associated.</p>
-<p><img src="../../images/modularity/image-2.png" width="600"></p>
-<h3 id="dashboard-components">Dashboard Components<a class="headerlink" href="#dashboard-components" title="Permanent link">&para;</a></h3>
-<p>The frontend components in Depictio are organized in the <code>depictio/dash/modules</code> folder, with each component defined in a separate subfolder. This modular design ensures easy integration and maintainability.</p>
-<h4 id="component-structure">Component Structure<a class="headerlink" href="#component-structure" title="Permanent link">&para;</a></h4>
-<p>Each component folder typically contains:</p>
+<hr />
+<h3 id="workflow"><span style="color:#45B8AC">Workflow</span><a class="headerlink" href="#workflow" title="Permanent link">&para;</a></h3>
+<p>Represents a <strong>standardised production pipeline</strong> (Nextflow, Snakemake, or custom).</p>
 <table>
 <thead>
 <tr>
-<th>File</th>
-<th>Purpose</th>
+<th>Field</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>frontend.py</strong></td>
-<td>Implements Dash callback functions</td>
+<td><code>name</code></td>
+<td>Workflow identifier</td>
 </tr>
 <tr>
-<td><strong>utils.py</strong></td>
-<td>Contains helper functions for rendering and state management</td>
+<td><code>engine</code></td>
+<td>Pipeline engine (<code>nextflow</code>, <code>snakemake</code>, etc.)</td>
+</tr>
+<tr>
+<td><code>catalog</code></td>
+<td>External pipeline registry reference (e.g., nf-core)</td>
+</tr>
+<tr>
+<td><code>data_collections</code></td>
+<td>DataCollections produced by this workflow</td>
+</tr>
+<tr>
+<td><code>runs</code></td>
+<td>List of WorkflowRun instances</td>
 </tr>
 </tbody>
 </table>
-<p>Each of the frontend components is designed to be modular and can be easily integrated into the dashboard. Each component is defined in a separate folder, containing the component logic and styling. The <code>frontend.py</code> file contains the dash callback functions implementation and the <code>utils.py</code> file contains the helpers functions used by the component, allowing the component to be re-rendered in different scenarios (first design, reload/restore, refresh after data update).</p>
-<p><img src="../../images/modularity/image-3.png" width="600"></p>
-<h2 id="adding-new-components">Adding New Components<a class="headerlink" href="#adding-new-components" title="Permanent link">&para;</a></h2>
-<p>To add a new component type:</p>
-<ol>
-<li>Create a new folder in <code>depictio/dash/modules/</code></li>
-<li>Implement <code>frontend.py</code> with callback functions</li>
-<li>Implement <code>utils.py</code> with helper functions</li>
-<li>Register the component in the component registry</li>
-<li>Add corresponding API endpoints if needed</li>
-</ol>
-<p>See <a href="../contributing/">Contributing Guide</a> for detailed instructions.</p>
+<p>Multiple workflows can belong to a single project, enabling multi-omics or multi-pipeline dashboards (e.g., combining <a href="https://nf-co.re/rnaseq">nf-core/rnaseq</a> and <a href="https://nf-co.re/atacseq">nf-core/atacseq</a> outputs).</p>
+<hr />
+<h3 id="workflowrun"><span style="color:#8BC34A">WorkflowRun</span><a class="headerlink" href="#workflowrun" title="Permanent link">&para;</a></h3>
+<p>A <strong>single execution instance</strong> of a workflow.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>run_tag</code></td>
+<td>Unique tag identifying this execution</td>
+</tr>
+<tr>
+<td><code>start_time</code> / <code>end_time</code></td>
+<td>Execution timestamps</td>
+</tr>
+<tr>
+<td><code>file_count</code></td>
+<td>Number of output files generated</td>
+</tr>
+<tr>
+<td><code>scan_stats</code></td>
+<td>Metadata from the file-scan step</td>
+</tr>
+</tbody>
+</table>
+<p>Files produced by each run share a consistent structure across runs, making them suitable for aggregation into DataCollections.</p>
+<hr />
+<h3 id="datacollection"><span style="color:#F68B33">DataCollection</span><a class="headerlink" href="#datacollection" title="Permanent link">&para;</a></h3>
+<p>An <strong>aggregated view of output files</strong> from one or more runs, typed by content.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>table</code></td>
+<td>Tabular data (CSV/TSV/Parquet → Delta Lake)</td>
+</tr>
+<tr>
+<td><code>multiqc</code></td>
+<td>MultiQC JSON report files</td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>Image files (PNG, SVG, …)</td>
+</tr>
+</tbody>
+</table>
+<p>DataCollections also carry a <strong>source</strong> attribute describing how they were created:</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NATIVE</code></td>
+<td>Directly scanned from workflow output files</td>
+</tr>
+<tr>
+<td><code>JOINED</code></td>
+<td>Derived by merging two or more native DCs via a JoinDefinition</td>
+</tr>
+<tr>
+<td><code>AGGREGATED</code></td>
+<td>Combined from multiple DCs across runs or projects</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="file"><span style="color:#D4960A">File</span><a class="headerlink" href="#file" title="Permanent link">&para;</a></h3>
+<p>An <strong>individual artifact</strong> produced by a workflow run.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filename</code></td>
+<td>File name</td>
+</tr>
+<tr>
+<td><code>file_hash</code></td>
+<td>Content hash for deduplication</td>
+</tr>
+<tr>
+<td><code>filesize</code></td>
+<td>Size in bytes</td>
+</tr>
+<tr>
+<td><code>data_collection_id</code></td>
+<td>Parent DataCollection reference</td>
+</tr>
+<tr>
+<td><code>run_id</code></td>
+<td>Parent WorkflowRun reference</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="dashboard"><span style="color:#9966CC">Dashboard</span><a class="headerlink" href="#dashboard" title="Permanent link">&para;</a></h3>
+<p>A <strong>visualization container</strong> linked to a project, composed of draggable components.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td>Dashboard name</td>
+</tr>
+<tr>
+<td><code>project_id</code></td>
+<td>Reference to parent Project</td>
+</tr>
+<tr>
+<td><code>tabs</code></td>
+<td>Optional tab grouping of components</td>
+</tr>
+<tr>
+<td><code>permissions</code></td>
+<td>Embedded Permission (may differ from project)</td>
+</tr>
+</tbody>
+</table>
+<p>Dashboards support tabbed layouts, allowing a single dashboard to present multiple analytical views of the same underlying data.</p>
+<hr />
+<h3 id="user"><span style="color:#8BC34A">User</span><a class="headerlink" href="#user" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>email</code></td>
+<td>Unique user identifier</td>
+</tr>
+<tr>
+<td><code>is_admin</code></td>
+<td>Whether the user has admin privileges</td>
+</tr>
+<tr>
+<td><code>is_anonymous</code></td>
+<td>Whether the user is unauthenticated (anonymous access mode)</td>
+</tr>
+</tbody>
+</table>
+<p>Access control is enforced through <code>Permission</code> objects embedded in Projects and Dashboards.</p>
+<hr />
+<h2 id="relationship-models">Relationship Models<a class="headerlink" href="#relationship-models" title="Permanent link">&para;</a></h2>
+<h3 id="permission"><span style="color:#E6779F">Permission</span><a class="headerlink" href="#permission" title="Permanent link">&para;</a></h3>
+<p>Permissions are <strong>embedded</strong> in Projects, Dashboards, and Files. They define a three-tier access model:</p>
+<pre class="mermaid"><code>classDiagram
+    class Permission {
+        owners: List[User]
+        editors: List[User]
+        viewers: List[User]
+    }
+    Permission "1" --&gt; "*" User</code></pre>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Can do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>owners</strong></td>
+<td>Full control — edit, share, delete</td>
+</tr>
+<tr>
+<td><strong>editors</strong></td>
+<td>Modify dashboard content, run data updates</td>
+</tr>
+<tr>
+<td><strong>viewers</strong></td>
+<td>Read-only access to dashboards and data</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="joindefinition"><span style="color:#45B8AC">JoinDefinition</span><a class="headerlink" href="#joindefinition" title="Permanent link">&para;</a></h3>
+<p>Defines <strong>how two DataCollections are merged</strong> to produce a JOINED DataCollection.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>on_columns</code></td>
+<td>Column(s) used as join key(s)</td>
+</tr>
+<tr>
+<td><code>join_type</code></td>
+<td><code>inner</code>, <code>left</code>, <code>outer</code>, etc.</td>
+</tr>
+<tr>
+<td><code>granularity</code></td>
+<td>Row-level or aggregation granularity</td>
+</tr>
+<tr>
+<td><code>persist</code></td>
+<td>Whether the join result is materialised in storage</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="dclink"><span style="color:#7A5DC7">DCLink</span><a class="headerlink" href="#dclink" title="Permanent link">&para;</a></h3>
+<p>Controls <strong>cross-DC filter propagation</strong> — when a user selects a value in one component, DCLinks determine which other DataCollections are filtered accordingly.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>source_dc</code></td>
+<td>DataCollection whose selection triggers the link</td>
+</tr>
+<tr>
+<td><code>target_dc</code></td>
+<td>DataCollection that receives the filter</td>
+</tr>
+<tr>
+<td><code>resolver</code></td>
+<td>Strategy for mapping source values to target</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Resolver strategies:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>direct</code></td>
+<td>Shared column with identical values</td>
+</tr>
+<tr>
+<td><code>sample_mapping</code></td>
+<td>Lookup table maps source → target identifiers</td>
+</tr>
+<tr>
+<td><code>pattern</code></td>
+<td>String pattern extraction (e.g., strip suffix)</td>
+</tr>
+<tr>
+<td><code>regex</code></td>
+<td>Regex-based value transformation</td>
+</tr>
+<tr>
+<td><code>wildcard</code></td>
+<td>Glob-style matching across identifiers</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="mongodb-collections">MongoDB Collections<a class="headerlink" href="#mongodb-collections" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Collection</th>
+<th>Domain Object</th>
+<th>Key Fields</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>projects</code></td>
+<td>Project</td>
+<td>name, workflows (embedded), permissions, joins, links</td>
+</tr>
+<tr>
+<td><code>runs</code></td>
+<td>WorkflowRun</td>
+<td>creation_time, files_id, last_modification_time</td>
+</tr>
+<tr>
+<td><code>files</code></td>
+<td>File</td>
+<td>filename, file_hash, file_location, data_collection_id</td>
+</tr>
+<tr>
+<td><code>deltatables</code></td>
+<td>DataCollection — table</td>
+<td>data_collection_id, delta_table_location, aggregation</td>
+</tr>
+<tr>
+<td><code>multiqc</code></td>
+<td>DataCollection — multiqc</td>
+<td>data_collection_id, metadata</td>
+</tr>
+<tr>
+<td><code>dashboards</code></td>
+<td>Dashboard</td>
+<td>dashboard_id, description, permissions</td>
+</tr>
+<tr>
+<td><code>users</code></td>
+<td>User</td>
+<td>email, is_admin, is_anonymous</td>
+</tr>
+<tr>
+<td><code>tokens</code></td>
+<td>Auth token</td>
+<td>access_token, expire_datetime</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">&para;</a></h2>
+<ul>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2v6h2v3H5c-1.11 0-2 .89-2 2v3H1v6h6v-6H5v-3h6v3H9v6h6v-6h-2v-3h6v3h-2v6h6v-6h-2v-3c0-1.11-.89-2-2-2h-6V8h2V2z"/></svg></span> <a href="../architecture/">Architecture</a> — Microservices stack and data flow</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 12v7.88c.04.3-.06.62-.29.83a.996.996 0 0 1-1.41 0l-2.01-2.01a.99.99 0 0 1-.29-.83V12h-.03L4.21 4.62a1 1 0 0 1 .17-1.4c.19-.14.4-.22.62-.22h14c.22 0 .43.08.62.22a1 1 0 0 1 .17 1.4L14.03 12z"/></svg></span> <a href="../cross-dc-filtering/">Cross-DC Filtering</a> — DCLink resolver strategies in depth</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18a6 6 0 0 1-6-6c0-1 .25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12a8 8 0 0 0 8 8v3l4-4-4-4m0-11V1L8 5l4 4V6a6 6 0 0 1 6 6c0 1-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12a8 8 0 0 0-8-8"/></svg></span> <a href="../yaml-sync/">YAML Dashboard Sync</a> — Declarative dashboard export/import</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 3a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2H3v2h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h2v-2H8v-5a2 2 0 0 0-2-2 2 2 0 0 0 2-2V5h2V3m6 0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3z"/></svg></span> <a href="../../developer/contributing/">Contributing</a> — How to extend the platform</li>
+</ul>
 
 
 
@@ -3586,7 +4173,7 @@
         <ul class="depictio-footer__links">
           <li><a href="../../usage/get_started/">Getting Started</a></li>
           <li><a href="../../installation/docker/">Installation</a></li>
-          <li><a href="../../features/">Features</a></li>
+          <li><a href="../">Features</a></li>
           <li><a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">Live Demo</a></li>
         </ul>
       </div>
@@ -3596,7 +4183,7 @@
         <h4 class="depictio-footer__heading">About</h4>
         <ul class="depictio-footer__links">
           <li><a href="https://github.com/depictio/depictio/blob/main/LICENSE" target="_blank" rel="noopener">License (MIT)</a></li>
-          <li><a href="../contributing/">Contributing</a></li>
+          <li><a href="../../developer/contributing/">Contributing</a></li>
           <li><a href="https://github.com/depictio/depictio/releases" target="_blank" rel="noopener">Releases</a></li>
         </ul>
       </div>

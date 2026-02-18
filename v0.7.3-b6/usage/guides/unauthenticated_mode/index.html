@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://depictio.github.io/depictio-docs/v0.7.3-b6/usage/guides/unauthenticated_mode/">
       
       
-        <link rel="prev" href="../../../depictio-cli/minimal_config/">
+        <link rel="prev" href="../authentication-modes/">
       
       
         <link rel="next" href="../../../features/">
@@ -23,11 +23,11 @@
       
       
       <link rel="icon" href="../../../images/logo/logo_icon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
     
     
       
-        <title>Unauthenticated mode - Depictio Documentation</title>
+        <title>Unauthenticated mode (legacy) - Depictio Documentation</title>
       
     
     
@@ -87,6 +87,8 @@
 
     
     
+  <link rel="preload" href="../../../fonts/Virgil.ttf" as="font" type="font/ttf" crossorigin>
+
   </head>
   
   
@@ -162,7 +164,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Unauthenticated mode
+              Unauthenticated mode (legacy)
             
           </span>
         </div>
@@ -1534,6 +1536,8 @@
       
         
       
+        
+      
     
     
     
@@ -1586,6 +1590,36 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../authentication-modes/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.7 9.7 0 0 1 12 20.92 9.7 9.7 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication Modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -1605,7 +1639,7 @@
   <span class="md-ellipsis">
     
   
-    Unauthenticated mode
+    Unauthenticated mode (legacy)
   
 
     
@@ -1623,7 +1657,7 @@
   <span class="md-ellipsis">
     
   
-    Unauthenticated mode
+    Unauthenticated mode (legacy)
   
 
     
@@ -2191,6 +2225,8 @@
       
         
       
+        
+      
     
     
     
@@ -2255,6 +2291,36 @@
     
   
     Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../features/data-model/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Model
   
 
     
@@ -2466,8 +2532,6 @@
       
         
       
-        
-      
     
     
     
@@ -2524,36 +2588,6 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../developer/modularity/" class="md-nav__link">
-        
-  
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 5v6h5V5m-11 6h5V5h-5m6 13h5v-6h-5m-6 6h5v-6h-5m-6 6h5v-6H4m0-1h5V5H4z"/></svg>
-  
-  <span class="md-ellipsis">
-    
-  
-    Modularity
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
               
             
               
@@ -3515,6 +3549,10 @@
 
 
 <h1 id="unauthenticated-mode">Unauthenticated Mode<a class="headerlink" href="#unauthenticated-mode" title="Permanent link">&para;</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Renamed to Public Mode</p>
+<p>This page describes the legacy "Unauthenticated Mode" which has been renamed to <strong>Public Mode</strong>. The env var <code>DEPICTIO_AUTH_UNAUTHENTICATED_MODE</code> still works as a backward-compatible alias. See <a href="../authentication-modes/">Authentication Modes</a> for the full overview of all four modes.</p>
+</div>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <h3 id="what-is-unauthenticated-mode">What is Unauthenticated Mode?<a class="headerlink" href="#what-is-unauthenticated-mode" title="Permanent link">&para;</a></h3>
 <p>In unauthenticated mode, user lands as a temporary anonymous user with limited access. This anonymous user can only access the existing <strong>public dashboards</strong> and play with the interactive features in a stateless manner (no database persistence), but cannot create or modify dashboards. This mode is ideal for quick demonstrations or public sharing of dashboards without requiring user authentication.</p>

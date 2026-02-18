@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../images/logo/logo_icon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
     
     
       
@@ -87,6 +87,8 @@
 
     
     
+  <link rel="preload" href="../../fonts/Virgil.ttf" as="font" type="font/ttf" crossorigin>
+
   </head>
   
   
@@ -818,33 +820,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prerequisites
+        Quick Start
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Installation Steps
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Installation Steps">
+    <nav class="md-nav" aria-label="Quick Start">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-clone-the-repository-optional" class="md-nav__link">
+  <a href="#step-1-download-the-compose-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Clone the Repository (Optional)
+        Step 1 — Download the compose file
       
     </span>
   </a>
@@ -852,10 +843,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-configure-environment-variables" class="md-nav__link">
+  <a href="#step-2-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Configure Environment Variables
+        Step 2 — Start
       
     </span>
   </a>
@@ -863,32 +854,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-start-the-services-including-minio" class="md-nav__link">
+  <a href="#step-3-open" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Start the Services (including MinIO)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-an-existing-minio-instance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using an Existing MinIO Instance
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-verify-the-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Verify the Installation
+        Step 3 — Open
       
     </span>
   </a>
@@ -901,33 +870,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#accessing-depictio" class="md-nav__link">
+  <a href="#advanced-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Accessing Depictio
+        Advanced Configuration
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#managing-the-services" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Managing the Services
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Managing the Services">
+    <nav class="md-nav" aria-label="Advanced Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#stopping-the-services" class="md-nav__link">
+  <a href="#single-user-vs-multi-user-mode" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stopping the Services
+        Single-user vs Multi-user mode
       
     </span>
   </a>
@@ -935,10 +893,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#stopping-and-removing-containers" class="md-nav__link">
+  <a href="#custom-credentials-env-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stopping and Removing Containers
+        Custom Credentials (.env file)
       
     </span>
   </a>
@@ -946,10 +904,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#stopping-and-removing-everything" class="md-nav__link">
+  <a href="#external-s3-bring-your-own-minio" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stopping and Removing Everything
+        External S3 / Bring Your Own MinIO
       
     </span>
   </a>
@@ -957,38 +915,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#viewing-logs" class="md-nav__link">
+  <a href="#port-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Viewing Logs
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration-options" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration Options
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuration Options">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#ports" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ports
+        Port Configuration
       
     </span>
   </a>
@@ -1007,77 +937,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#background-callbacks-with-celery" class="md-nav__link">
+  <a href="#background-callbacks-celery" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Background Callbacks with Celery
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Background Callbacks with Celery">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Architecture
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How It Works
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#performance-impact" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Performance Impact
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#service-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Service Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#compatibility-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Compatibility Notes
+        Background Callbacks (Celery)
       
     </span>
   </a>
@@ -1088,9 +951,15 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#managing-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing Services
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1107,10 +976,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#container-fails-to-start" class="md-nav__link">
+  <a href="#a-container-fails-to-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Container Fails to Start
+        A container fails to start
       
     </span>
   </a>
@@ -1121,7 +990,7 @@
   <a href="#cannot-connect-to-services" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Cannot Connect to Services
+        Cannot connect to services
       
     </span>
   </a>
@@ -1129,10 +998,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#data-persistence-issues" class="md-nav__link">
+  <a href="#data-persistence" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data Persistence Issues
+        Data persistence
       
     </span>
   </a>
@@ -1916,6 +1785,8 @@
       
         
       
+        
+      
     
     
     
@@ -1970,6 +1841,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../usage/guides/authentication-modes/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.7 9.7 0 0 1 12 20.92 9.7 9.7 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication Modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../usage/guides/unauthenticated_mode/" class="md-nav__link">
         
   
@@ -1977,7 +1878,7 @@
   <span class="md-ellipsis">
     
   
-    Unauthenticated mode
+    Unauthenticated mode (legacy)
   
 
     
@@ -2384,6 +2285,8 @@
       
         
       
+        
+      
     
     
     
@@ -2448,6 +2351,36 @@
     
   
     Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/data-model/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Model
   
 
     
@@ -2659,8 +2592,6 @@
       
         
       
-        
-      
     
     
     
@@ -2717,36 +2648,6 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../developer/modularity/" class="md-nav__link">
-        
-  
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 5v6h5V5m-11 6h5V5h-5m6 13h5v-6h-5m-6 6h5v-6h-5m-6 6h5v-6H4m0-1h5V5H4z"/></svg>
-  
-  <span class="md-ellipsis">
-    
-  
-    Modularity
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
               
             
               
@@ -3549,33 +3450,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prerequisites
+        Quick Start
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Installation Steps
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Installation Steps">
+    <nav class="md-nav" aria-label="Quick Start">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-clone-the-repository-optional" class="md-nav__link">
+  <a href="#step-1-download-the-compose-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Clone the Repository (Optional)
+        Step 1 — Download the compose file
       
     </span>
   </a>
@@ -3583,10 +3473,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-configure-environment-variables" class="md-nav__link">
+  <a href="#step-2-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Configure Environment Variables
+        Step 2 — Start
       
     </span>
   </a>
@@ -3594,32 +3484,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-start-the-services-including-minio" class="md-nav__link">
+  <a href="#step-3-open" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Start the Services (including MinIO)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-an-existing-minio-instance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using an Existing MinIO Instance
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-verify-the-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Verify the Installation
+        Step 3 — Open
       
     </span>
   </a>
@@ -3632,33 +3500,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#accessing-depictio" class="md-nav__link">
+  <a href="#advanced-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Accessing Depictio
+        Advanced Configuration
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#managing-the-services" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Managing the Services
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Managing the Services">
+    <nav class="md-nav" aria-label="Advanced Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#stopping-the-services" class="md-nav__link">
+  <a href="#single-user-vs-multi-user-mode" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stopping the Services
+        Single-user vs Multi-user mode
       
     </span>
   </a>
@@ -3666,10 +3523,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#stopping-and-removing-containers" class="md-nav__link">
+  <a href="#custom-credentials-env-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stopping and Removing Containers
+        Custom Credentials (.env file)
       
     </span>
   </a>
@@ -3677,10 +3534,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#stopping-and-removing-everything" class="md-nav__link">
+  <a href="#external-s3-bring-your-own-minio" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stopping and Removing Everything
+        External S3 / Bring Your Own MinIO
       
     </span>
   </a>
@@ -3688,38 +3545,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#viewing-logs" class="md-nav__link">
+  <a href="#port-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Viewing Logs
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration-options" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration Options
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuration Options">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#ports" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ports
+        Port Configuration
       
     </span>
   </a>
@@ -3738,77 +3567,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#background-callbacks-with-celery" class="md-nav__link">
+  <a href="#background-callbacks-celery" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Background Callbacks with Celery
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Background Callbacks with Celery">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Architecture
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How It Works
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#performance-impact" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Performance Impact
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#service-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Service Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#compatibility-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Compatibility Notes
+        Background Callbacks (Celery)
       
     </span>
   </a>
@@ -3819,9 +3581,15 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#managing-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing Services
+      
+    </span>
+  </a>
   
 </li>
       
@@ -3838,10 +3606,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#container-fails-to-start" class="md-nav__link">
+  <a href="#a-container-fails-to-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Container Fails to Start
+        A container fails to start
       
     </span>
   </a>
@@ -3852,7 +3620,7 @@
   <a href="#cannot-connect-to-services" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Cannot Connect to Services
+        Cannot connect to services
       
     </span>
   </a>
@@ -3860,10 +3628,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#data-persistence-issues" class="md-nav__link">
+  <a href="#data-persistence" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data Persistence Issues
+        Data persistence
       
     </span>
   </a>
@@ -3907,241 +3675,265 @@
 
 
 <h1 id="docker-compose-installation">Docker Compose Installation<a class="headerlink" href="#docker-compose-installation" title="Permanent link">&para;</a></h1>
-<p>This guide will walk you through installing and running Depictio using Docker Compose, which is the simplest way to get started with Depictio.</p>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
-<p>Before you begin, ensure you have the following installed:</p>
-<ul>
-<li><a href="https://docs.docker.com/get-docker/">Docker</a> (version 20.10.0 or higher)</li>
-<li><a href="https://docs.docker.com/compose/install/">Docker Compose</a> (version 2.0.0 or higher)</li>
-<li>Git (optional, for cloning the repository)</li>
-</ul>
-<h2 id="installation-steps">Installation Steps<a class="headerlink" href="#installation-steps" title="Permanent link">&para;</a></h2>
-<h3 id="1-clone-the-repository-optional">1. Clone the Repository (Optional)<a class="headerlink" href="#1-clone-the-repository-optional" title="Permanent link">&para;</a></h3>
-<p>If you want to use the latest development version, you can clone the repository:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/depictio/depictio.git
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>depictio
+<h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"/></svg></span> Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<p>Up and running in two commands — no git clone, no configuration file needed.</p>
+<p><strong>Prerequisites</strong>: <a href="https://docs.docker.com/get-docker/">Docker</a> 20.10+ and <a href="https://docs.docker.com/compose/install/">Docker Compose</a> V2.</p>
+<h3 id="step-1-download-the-compose-file">Step 1 — Download the compose file<a class="headerlink" href="#step-1-download-the-compose-file" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-LO<span class="w"> </span>https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml
 </code></pre></div>
-<p>Alternatively, you can download a release version from the <a href="https://github.com/depictio/depictio/releases">GitHub releases page</a>.</p>
-<h3 id="2-configure-environment-variables">2. Configure Environment Variables<a class="headerlink" href="#2-configure-environment-variables" title="Permanent link">&para;</a></h3>
-<p>Create a <code>.env</code> file in the root directory of the project:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+<h3 id="step-2-start">Step 2 — Start<a class="headerlink" href="#step-2-start" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
-<p>The minimal configuration only requires MinIO credentials:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># .env - Minimal required configuration</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nv">DEPICTIO_MINIO_ROOT_USER</span><span class="o">=</span>minio
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="o">=</span>minio123
+<p>All services start automatically: MongoDB, Redis, MinIO, backend, frontend, and Celery worker.</p>
+<h3 id="step-3-open">Step 3 — Open<a class="headerlink" href="#step-3-open" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>URL</th>
+<th>Credentials</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Depictio</td>
+<td><a href="http://localhost:5080">http://localhost:5080</a></td>
+<td><em>(single-user mode, no login)</em></td>
+</tr>
+<tr>
+<td>API docs</td>
+<td><a href="http://localhost:8058/docs">http://localhost:8058/docs</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>MinIO console</td>
+<td><a href="http://localhost:9001">http://localhost:9001</a></td>
+<td><code>minio</code> / <code>minio123</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition success">
+<p class="admonition-title">That's it!</p>
+<p>Depictio starts in <strong>single-user mode</strong> by default — no account or login required.
+Change MinIO credentials before exposing to the network (see <a href="#custom-credentials-env-file">Custom credentials</a> below).</p>
+</div>
+<hr />
+<h2 id="advanced-configuration"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2m-2 12c-.25 0-.46-.18-.5-.42l-.37-2.65c-.63-.25-1.17-.59-1.69-.99l-2.49 1.01c-.22.08-.49 0-.61-.22l-2-3.46a.493.493 0 0 1 .12-.64l2.11-1.66L4.5 12l.07-1-2.11-1.63a.493.493 0 0 1-.12-.64l2-3.46c.12-.22.39-.31.61-.22l2.49 1c.52-.39 1.06-.73 1.69-.98l.37-2.65c.04-.24.25-.42.5-.42h4c.25 0 .46.18.5.42l.37 2.65c.63.25 1.17.59 1.69.98l2.49-1c.22-.09.49 0 .61.22l2 3.46c.13.22.07.49-.12.64L19.43 11l.07 1-.07 1 2.11 1.63c.19.15.25.42.12.64l-2 3.46c-.12.22-.39.31-.61.22l-2.49-1c-.52.39-1.06.73-1.69.98l-.37 2.65c-.04.24-.25.42-.5.42zm1.25-18-.37 2.61c-1.2.25-2.26.89-3.03 1.78L5.44 7.35l-.75 1.3L6.8 10.2a5.55 5.55 0 0 0 0 3.6l-2.12 1.56.75 1.3 2.43-1.04c.77.88 1.82 1.52 3.01 1.76l.37 2.62h1.52l.37-2.61c1.19-.25 2.24-.89 3.01-1.77l2.43 1.04.75-1.3-2.12-1.55c.4-1.17.4-2.44 0-3.61l2.11-1.55-.75-1.3-2.41 1.04a5.42 5.42 0 0 0-3.03-1.77L12.75 4z"/></svg></span> Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Permanent link">&para;</a></h2>
+<p>Everything in this section is <strong>optional</strong>. The Quick Start defaults work for most users.</p>
+<h3 id="single-user-vs-multi-user-mode">Single-user vs Multi-user mode<a class="headerlink" href="#single-user-vs-multi-user-mode" title="Permanent link">&para;</a></h3>
+<p>Depictio ships in <strong>single-user mode</strong> by default: no login, no accounts, one admin user.</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th><code>DEPICTIO_AUTH_SINGLE_USER_MODE</code></th>
+<th><code>DEPICTIO_AUTH_PUBLIC_MODE</code></th>
+<th style="text-align: right;">Use case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Single-user</strong> <em>(default)</em></td>
+<td><code>true</code></td>
+<td><code>false</code></td>
+<td style="text-align: right;">Local development, personal use</td>
+</tr>
+<tr>
+<td><strong>Multi-user</strong></td>
+<td><code>false</code></td>
+<td><code>false</code></td>
+<td style="text-align: right;">Team deployment with login</td>
+</tr>
+<tr>
+<td><strong>Public (read-only)</strong></td>
+<td><code>false</code></td>
+<td><code>true</code></td>
+<td style="text-align: right;">Shared dashboards, no auth required</td>
+</tr>
+</tbody>
+</table>
+<p>Switch to multi-user mode in your <code>.env</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">DEPICTIO_AUTH_SINGLE_USER_MODE</span><span class="o">=</span><span class="nb">false</span>
 </code></pre></div>
-<p>The default values work for most users. For advanced configuration:</p>
-<ul>
-<li><strong>Complete env file</strong>: <code>.env.complete.example</code> - All 160+ variables with defaults (copy and uncomment as needed)</li>
-<li><strong>Configuration Guide</strong>: <a href="../configuration/">Configuration</a> - Common use cases and setup guides</li>
-<li><strong>Complete Reference</strong>: <a href="../env-reference/">Environment Reference</a> - Searchable documentation for all variables</li>
-</ul>
-<h3 id="3-start-the-services-including-minio">3. Start the Services (including MinIO)<a class="headerlink" href="#3-start-the-services-including-minio" title="Permanent link">&para;</a></h3>
-<p>Start all Depictio services using Docker Compose:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">               </span>-f<span class="w"> </span>docker-compose/docker-compose.minio.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">               </span>up<span class="w"> </span>-d
+<p>Users can then register accounts and log in via the Depictio UI.</p>
+<div class="admonition warning">
+<p class="admonition-title">Expose to the network?</p>
+<p>If making Depictio accessible beyond <code>localhost</code>, disable single-user mode and change the MinIO credentials.</p>
+</div>
+<h3 id="custom-credentials-env-file">Custom Credentials (.env file)<a class="headerlink" href="#custom-credentials-env-file" title="Permanent link">&para;</a></h3>
+<p>To change MinIO credentials or pin a specific version, copy the example file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
 </code></pre></div>
-<p>This command will:</p>
-<ul>
-<li>Pull the necessary Docker images (latest by default, can be changed in the <code>.env</code> file)</li>
-<li>Create and start containers for MongoDB, the Depictio backend &amp; frontend, and MinIO</li>
-<li>Set up the required network connections between services</li>
-</ul>
-<h3 id="using-an-existing-minio-instance">Using an Existing MinIO Instance<a class="headerlink" href="#using-an-existing-minio-instance" title="Permanent link">&para;</a></h3>
-<p>If you already have a MinIO server running, you can skip the bundled MinIO container and configure Depictio to connect to your existing instance.</p>
-<p><strong>Skip the bundled MinIO container:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Start without the MinIO compose file</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.yaml<span class="w"> </span>up<span class="w"> </span>-d
-</code></pre></div>
-<p><strong>Configure your <code>.env</code> file to point to your existing MinIO:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Connect to an existing MinIO server</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nv">DEPICTIO_MINIO_SERVICE_NAME</span><span class="o">=</span>your-minio-host.example.com
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nv">DEPICTIO_MINIO_SERVICE_PORT</span><span class="o">=</span><span class="m">9000</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_HOST</span><span class="o">=</span>your-minio-host.example.com
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_PORT</span><span class="o">=</span><span class="m">9000</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nv">DEPICTIO_MINIO_ROOT_USER</span><span class="o">=</span>your-access-key
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nv">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="o">=</span>your-secret-key
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="nv">DEPICTIO_MINIO_BUCKET</span><span class="o">=</span>depictio-bucket
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1"># Set to true if MinIO is outside Docker network</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_SERVICE</span><span class="o">=</span><span class="nb">true</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="c1"># Use https if your MinIO uses TLS</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_PROTOCOL</span><span class="o">=</span>https
+<p>Edit <code>.env</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Application version (default: latest)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">DEPICTIO_VERSION</span><span class="o">=</span>latest
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># MinIO credentials — change these for production</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nv">DEPICTIO_MINIO_ROOT_USER</span><span class="o">=</span>minio
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nv">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="o">=</span>minio123
 </code></pre></div>
 <div class="admonition tip">
-<p class="admonition-title">Bucket Creation</p>
-<p>Depictio will automatically create the bucket specified in <code>DEPICTIO_MINIO_BUCKET</code> if it doesn't exist, provided the credentials have sufficient permissions.</p>
+<p class="admonition-title">Full reference</p>
+<ul>
+<li><strong>Complete env file</strong>: <code>.env.complete.example</code> — all 160+ variables with defaults</li>
+<li><strong>Configuration Guide</strong>: <a href="../configuration/">Configuration</a> — common use cases</li>
+<li><strong>Full Reference</strong>: <a href="../env-reference/">Environment Reference</a> — all variables</li>
+</ul>
 </div>
+<h3 id="external-s3-bring-your-own-minio">External S3 / Bring Your Own MinIO<a class="headerlink" href="#external-s3-bring-your-own-minio" title="Permanent link">&para;</a></h3>
+<p>If you already have a MinIO server or S3-compatible storage, use the dedicated no-minio compose file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose/docker-compose.no-minio.yaml<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<p>Configure your <code>.env</code> to point to your existing instance:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">DEPICTIO_MINIO_ROOT_USER</span><span class="o">=</span>your-access-key
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="o">=</span>your-secret-key
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nv">DEPICTIO_MINIO_PUBLIC_URL</span><span class="o">=</span>https://your-minio-host.example.com
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_SERVICE</span><span class="o">=</span><span class="nb">true</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># Optional overrides</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_HOST</span><span class="o">=</span>your-minio-host.example.com
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_PORT</span><span class="o">=</span><span class="m">9000</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_PROTOCOL</span><span class="o">=</span>https
+</code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Network Configuration</p>
-<p>Set <code>DEPICTIO_MINIO_EXTERNAL_SERVICE=true</code> when your MinIO server is not part of the Docker Compose network. This tells Depictio to use the external host/port for connections instead of Docker's internal service discovery.</p>
+<p>Set <code>DEPICTIO_MINIO_EXTERNAL_SERVICE=true</code> when MinIO is outside the Docker Compose network.</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title">S3-Compatible Storage</p>
-<p>Depictio uses the MinIO client library which implements the S3 API. Other S3-compatible services (AWS S3, DigitalOcean Spaces, Backblaze B2, etc.) may work but have not been tested. If you try these configurations, please share your feedback!</p>
+<p>Depictio uses the MinIO client library (S3 API compatible). AWS S3, DigitalOcean Spaces, Backblaze B2, and others may work but have not been officially tested.</p>
 </div>
-<h3 id="4-verify-the-installation">4. Verify the Installation<a class="headerlink" href="#4-verify-the-installation" title="Permanent link">&para;</a></h3>
-<p>After starting the services, you can verify that everything is running correctly:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>ps
+<h3 id="port-configuration">Port Configuration<a class="headerlink" href="#port-configuration" title="Permanent link">&para;</a></h3>
+<p>Override default ports in <code>.env</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">MINIO_PORT</span><span class="o">=</span><span class="m">9000</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nv">MINIO_CONSOLE_PORT</span><span class="o">=</span><span class="m">9001</span>
 </code></pre></div>
-<p>You should see all services in the "Up" state.</p>
-<h2 id="accessing-depictio">Accessing Depictio<a class="headerlink" href="#accessing-depictio" title="Permanent link">&para;</a></h2>
-<p>Once the services are running, you can access:</p>
-<ul>
-<li><strong>Frontend (Dash)</strong>: <a href="http://localhost:5080">http://localhost:5080</a></li>
-<li><strong>Backend API</strong>: <a href="http://localhost:8058">http://localhost:8058</a></li>
-<li><strong>API Documentation</strong>: <a href="http://localhost:8058/docs">http://localhost:8058/docs</a></li>
-<li><strong>Minio UI</strong>: <a href="http://localhost:9001">http://localhost:9001</a></li>
-</ul>
-<p>Default credentials are:</p>
-<ul>
-<li><strong>Depictio Admin credentials</strong>: login: <code>admin@example.com</code> / password: <code>changeme</code></li>
-<li><strong>MinIO credentials</strong>: login: <code>minio</code> / password: <code>minio123</code></li>
-</ul>
-<h2 id="managing-the-services">Managing the Services<a class="headerlink" href="#managing-the-services" title="Permanent link">&para;</a></h2>
-<h3 id="stopping-the-services">Stopping the Services<a class="headerlink" href="#stopping-the-services" title="Permanent link">&para;</a></h3>
-<p>To stop all services while preserving data:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>stop
-</code></pre></div>
-<h3 id="stopping-and-removing-containers">Stopping and Removing Containers<a class="headerlink" href="#stopping-and-removing-containers" title="Permanent link">&para;</a></h3>
-<p>To stop all services and remove the containers:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down
-</code></pre></div>
-<h3 id="stopping-and-removing-everything">Stopping and Removing Everything<a class="headerlink" href="#stopping-and-removing-everything" title="Permanent link">&para;</a></h3>
-<p>To stop all services, remove the containers, and delete all data:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span>-v
-</code></pre></div>
-<p><strong>Warning</strong>: This will delete all data stored in MongoDB and MinIO.</p>
-<h3 id="viewing-logs">Viewing Logs<a class="headerlink" href="#viewing-logs" title="Permanent link">&para;</a></h3>
-<p>To view the logs from all services:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>logs
-</code></pre></div>
-<p>To view logs from a specific service:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>depictio-backend
-</code></pre></div>
-<p>To follow the logs in real-time:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f
-</code></pre></div>
-<h2 id="configuration-options">Configuration Options<a class="headerlink" href="#configuration-options" title="Permanent link">&para;</a></h2>
-<h3 id="ports">Ports<a class="headerlink" href="#ports" title="Permanent link">&para;</a></h3>
-<p>By default, Depictio uses the following ports:</p>
-<ul>
-<li><strong>5080</strong>: Frontend (Dash)</li>
-<li><strong>8058</strong>: Backend API</li>
-<li><strong>27018</strong>: MongoDB</li>
-<li><strong>9000</strong>: MinIO API</li>
-<li><strong>9001</strong>: MinIO UI</li>
-</ul>
-<p>If you need to change these ports, edit the <code>.env</code> file.</p>
+<p>All default ports:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Default port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frontend (Dash)</td>
+<td>5080</td>
+</tr>
+<tr>
+<td>Backend API</td>
+<td>8058</td>
+</tr>
+<tr>
+<td>MongoDB</td>
+<td>27018</td>
+</tr>
+<tr>
+<td>MinIO API</td>
+<td>9000</td>
+</tr>
+<tr>
+<td>MinIO UI</td>
+<td>9001</td>
+</tr>
+</tbody>
+</table>
 <h3 id="development-mode">Development Mode<a class="headerlink" href="#development-mode" title="Permanent link">&para;</a></h3>
-<p>To run Depictio using Flask/Dash/gunicorn and FastAPI/uvicorn debug mode, which enables additional debugging features, modify the <code>.env</code> file:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>DEV_MODE=true
+<p>Enable debug logging and hot-reload:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">DEPICTIO_DEV_MODE</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
-<p>and then start the services:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+<p>Or set <code>DEPICTIO_DEV_MODE=true</code> in your <code>.env</code> file.</p>
+<h3 id="background-callbacks-celery">Background Callbacks (Celery)<a class="headerlink" href="#background-callbacks-celery" title="Permanent link">&para;</a></h3>
+<p>Depictio uses Celery for asynchronous processing. The <code>depictio-celery-worker</code> container always starts automatically — it is <strong>required</strong> for the dashboard editor (design mode).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Configure view-mode behaviour in .env</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nv">DEPICTIO_CELERY_ENABLED</span><span class="o">=</span><span class="nb">true</span><span class="w">   </span><span class="c1"># false = synchronous view mode (simpler for debugging)</span>
 </code></pre></div>
-<p>Or:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">DEV_MODE</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
-</code></pre></div>
-<h3 id="background-callbacks-with-celery">Background Callbacks with Celery<a class="headerlink" href="#background-callbacks-with-celery" title="Permanent link">&para;</a></h3>
-<p>Depictio uses Celery for asynchronous background processing. <strong>Celery is required</strong> for the dashboard editor (design mode) to function properly, as it enables non-blocking figure preview rendering during component creation.</p>
-<h4 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h4>
-<p>The Celery worker container (<code>depictio-celery-worker</code>) is always started with docker-compose:</p>
-<ul>
-<li><strong>Design Mode</strong> (Dashboard Editor): Always requires Celery for responsive figure preview</li>
-<li><strong>View Mode</strong> (Dashboard Viewing): Optionally uses Celery based on configuration</li>
-<li>Redis is used as the message broker for task queuing</li>
-</ul>
-<h4 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h4>
-<p>Configure background callback behavior in your <code>.env</code> file:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a># REQUIRED: Set to true for design mode to work
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a># Also enables background callbacks for view mode (optional)
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>DEPICTIO_CELERY_ENABLED=true
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a># Configure number of Celery workers (default: 2)
-<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>DEPICTIO_CELERY_WORKERS=4
-</code></pre></div>
-<h4 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h4>
-<p><strong>Design Mode (Dashboard Editor)</strong>:</p>
-<ul>
-<li>Always uses background callbacks (not configurable)</li>
-<li>The Celery worker processes figure preview rendering</li>
-<li>UI remains responsive during component creation</li>
-<li>Required for the stepper workflow to function</li>
-</ul>
-<p><strong>View Mode (Dashboard Viewing)</strong>:</p>
-<ul>
-<li>When <code>DEPICTIO_CELERY_ENABLED=true</code>: Data loading executes asynchronously</li>
-<li>When <code>false</code>: Data loading runs synchronously (design mode still requires Celery)</li>
-<li>Background processing applies to:</li>
-<li>Card components (initial render and filter updates)</li>
-<li>Figure components (visualization rendering and filter updates)</li>
-<li>Table components (data loading and pagination)</li>
-</ul>
-<h4 id="performance-impact">Performance Impact<a class="headerlink" href="#performance-impact" title="Permanent link">&para;</a></h4>
-<p><strong>Design Mode</strong>:</p>
-<ul>
-<li>Always asynchronous (required)</li>
-<li>UI never blocks during figure preview generation</li>
-<li>Essential for responsive dashboard building</li>
-</ul>
-<p><strong>View Mode with Background Callbacks</strong> (<code>DEPICTIO_CELERY_ENABLED=true</code>):</p>
-<ul>
-<li>UI remains responsive during data operations</li>
-<li>Operations execute in parallel</li>
-<li>Recommended for production, large datasets, multiple concurrent users</li>
-</ul>
-<p><strong>View Mode Synchronous</strong> (<code>DEPICTIO_CELERY_ENABLED=false</code>):</p>
-<ul>
-<li>Only view mode runs synchronously</li>
-<li>Design mode still uses Celery (required)</li>
-<li>UI may block during long data operations</li>
-<li>Simpler for debugging view mode issues</li>
-</ul>
-<h4 id="service-management">Service Management<a class="headerlink" href="#service-management" title="Permanent link">&para;</a></h4>
-<p>The Celery worker is always running:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Start all services (Celery worker included by default)</span>
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
-<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Check Celery worker status</span>
-<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>depictio-celery-worker
-<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
-<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1"># The worker is always running - no need for conditional startup</span>
-</code></pre></div>
-<h4 id="compatibility-notes">Compatibility Notes<a class="headerlink" href="#compatibility-notes" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th><code>DEPICTIO_CELERY_ENABLED</code></th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Design mode (editor)</td>
+<td>always on</td>
+<td>Non-blocking figure preview — required</td>
+</tr>
+<tr>
+<td>View mode</td>
+<td><code>true</code></td>
+<td>Async data loading — recommended for production</td>
+</tr>
+<tr>
+<td>View mode</td>
+<td><code>false</code></td>
+<td>Synchronous — simpler for development</td>
+</tr>
+</tbody>
+</table>
 <div class="admonition info">
-<p class="admonition-title">Kubernetes/Helm Support</p>
-<p>Background callbacks are currently only supported in Docker Compose deployments. Kubernetes/Helm support is <strong>coming soon</strong> in an upcoming release.</p>
+<p class="admonition-title">Kubernetes/Helm</p>
+<p>Background callbacks are also supported in Kubernetes via the Helm chart (<code>celery.enabled: true</code> by default). See the <a href="kubernetes/">Kubernetes installation guide</a>.</p>
 </div>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<h3 id="container-fails-to-start">Container Fails to Start<a class="headerlink" href="#container-fails-to-start" title="Permanent link">&para;</a></h3>
-<p>If a container fails to start, check the logs:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>&lt;service_name&gt;
+<hr />
+<h2 id="managing-services"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4"/></svg></span> Managing Services<a class="headerlink" href="#managing-services" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stop (preserve data)</td>
+<td><code>docker compose stop</code></td>
+</tr>
+<tr>
+<td>Stop and remove containers</td>
+<td><code>docker compose down</code></td>
+</tr>
+<tr>
+<td>Stop, remove containers <strong>and data</strong></td>
+<td><code>docker compose down -v</code></td>
+</tr>
+<tr>
+<td>View all logs</td>
+<td><code>docker compose logs -f</code></td>
+</tr>
+<tr>
+<td>View one service</td>
+<td><code>docker compose logs -f depictio-backend</code></td>
+</tr>
+<tr>
+<td>Check status</td>
+<td><code>docker compose ps</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="troubleshooting"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 12h-4v-2h4m0 6h-4v-2h4m6-6h-2.81a6 6 0 0 0-1.82-1.96L17 4.41 15.59 3l-2.17 2.17a6 6 0 0 0-2.83 0L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20z"/></svg></span> Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="a-container-fails-to-start">A container fails to start<a class="headerlink" href="#a-container-fails-to-start" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>&lt;service_name&gt;
 </code></pre></div>
-<p>Common issues include:</p>
-<ul>
-<li>Port conflicts (another application is using the same port)</li>
-<li>Insufficient permissions for mounted volumes</li>
-<li>MongoDB connection issues</li>
-</ul>
-<h3 id="cannot-connect-to-services">Cannot Connect to Services<a class="headerlink" href="#cannot-connect-to-services" title="Permanent link">&para;</a></h3>
-<p>If you cannot connect to the services, check:</p>
+<p>Common causes: port conflict, volume permission error, MongoDB connection failure.</p>
+<h3 id="cannot-connect-to-services">Cannot connect to services<a class="headerlink" href="#cannot-connect-to-services" title="Permanent link">&para;</a></h3>
 <ol>
-<li>That the containers are running: <code>docker-compose ps</code></li>
-<li>That you're using the correct ports</li>
-<li>That there are no firewall rules blocking the connections</li>
+<li>Check containers are running: <code>docker compose ps</code></li>
+<li>Confirm you are using the correct ports</li>
+<li>Check for firewall rules blocking the connection</li>
 </ol>
-<h3 id="data-persistence-issues">Data Persistence Issues<a class="headerlink" href="#data-persistence-issues" title="Permanent link">&para;</a></h3>
-<p>By default, MongoDB data is stored in the <code>./depictioDB</code> directory. Make sure this directory has the correct permissions.</p>
+<h3 id="data-persistence">Data persistence<a class="headerlink" href="#data-persistence" title="Permanent link">&para;</a></h3>
+<p>MongoDB data is stored in <code>./depictioDB</code> (bind-mount). MinIO data is stored in a named Docker volume (<code>minio_data</code>). Both persist across <code>docker compose down</code> restarts.</p>
+<hr />
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
-<p>Now that you have Depictio running, you can:</p>
 <ul>
-<li><a href="../../usage/get_started/">Get started with using Depictio</a></li>
-<li><a href="../../usage/guides/dashboard_creation/">Learn how to create dashboards</a></li>
-<li><a href="../../depictio-cli/usage/">Configure the CLI for data ingestion</a></li>
+<li><a href="../../usage/get_started/">Get started with Depictio</a></li>
+<li><a href="../../usage/guides/dashboard_creation/">Create your first dashboard</a></li>
+<li><a href="../../depictio-cli/usage/">Ingest data with the CLI</a></li>
 </ul>
 
 

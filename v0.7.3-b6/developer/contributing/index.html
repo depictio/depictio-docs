@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://depictio.github.io/depictio-docs/v0.7.3-b6/developer/contributing/">
       
       
-        <link rel="prev" href="../modularity/">
+        <link rel="prev" href="../">
       
       
         <link rel="next" href="../../FAQ/">
@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../images/logo/logo_icon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
     
     
       
@@ -87,6 +87,8 @@
 
     
     
+  <link rel="preload" href="../../fonts/Virgil.ttf" as="font" type="font/ttf" crossorigin>
+
   </head>
   
   
@@ -1520,6 +1522,8 @@
       
         
       
+        
+      
     
     
     
@@ -1574,6 +1578,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../usage/guides/authentication-modes/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.7 9.7 0 0 1 12 20.92 9.7 9.7 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication Modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../usage/guides/unauthenticated_mode/" class="md-nav__link">
         
   
@@ -1581,7 +1615,7 @@
   <span class="md-ellipsis">
     
   
-    Unauthenticated mode
+    Unauthenticated mode (legacy)
   
 
     
@@ -1988,6 +2022,8 @@
       
         
       
+        
+      
     
     
     
@@ -2052,6 +2088,36 @@
     
   
     Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/data-model/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Model
   
 
     
@@ -2265,8 +2331,6 @@
       
         
       
-        
-      
     
     
     
@@ -2324,36 +2388,6 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../modularity/" class="md-nav__link">
-        
-  
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 5v6h5V5m-11 6h5V5h-5m6 13h5v-6h-5m-6 6h5v-6h-5m-6 6h5v-6H4m0-1h5V5H4z"/></svg>
-  
-  <span class="md-ellipsis">
-    
-  
-    Modularity
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
               
             
               
@@ -2487,13 +2521,52 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#option-1-docker-compose-recommended" class="md-nav__link">
+  <a href="#option-1-docker-compose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Option 1: Docker Compose (Recommended)
+        Option 1: Docker Compose
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Option 1: Docker Compose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quickstart-pre-built-images-no-build-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quickstart — pre-built images (no build required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#development-source-mounts-with-hot-reload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development — source mounts with hot-reload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Services
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2553,10 +2626,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#local-python-environment-required" class="md-nav__link">
+  <a href="#local-python-environment-development" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Local Python Environment (Required)
+        Local Python Environment (Development)
       
     </span>
   </a>
@@ -2581,10 +2654,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#component-development" class="md-nav__link">
+  <a href="#api-endpoint-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Component Development
+        API Endpoint Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dash-component-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dash Component Structure
       
     </span>
   </a>
@@ -2685,6 +2769,17 @@
     <span class="md-ellipsis">
       
         Multi-App Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal-technical-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Internal Technical Documentation
       
     </span>
   </a>
@@ -3739,13 +3834,52 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#option-1-docker-compose-recommended" class="md-nav__link">
+  <a href="#option-1-docker-compose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Option 1: Docker Compose (Recommended)
+        Option 1: Docker Compose
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Option 1: Docker Compose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quickstart-pre-built-images-no-build-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quickstart — pre-built images (no build required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#development-source-mounts-with-hot-reload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development — source mounts with hot-reload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Services
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -3805,10 +3939,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#local-python-environment-required" class="md-nav__link">
+  <a href="#local-python-environment-development" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Local Python Environment (Required)
+        Local Python Environment (Development)
       
     </span>
   </a>
@@ -3833,10 +3967,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#component-development" class="md-nav__link">
+  <a href="#api-endpoint-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Component Development
+        API Endpoint Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dash-component-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dash Component Structure
       
     </span>
   </a>
@@ -3937,6 +4082,17 @@
     <span class="md-ellipsis">
       
         Multi-App Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal-technical-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Internal Technical Documentation
       
     </span>
   </a>
@@ -4207,15 +4363,21 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>https://github.com/depictio/depictio.git
 </code></pre></div>
 <h2 id="development-environment">Development Environment<a class="headerlink" href="#development-environment" title="Permanent link">&para;</a></h2>
-<h3 id="option-1-docker-compose-recommended">Option 1: Docker Compose (Recommended)<a class="headerlink" href="#option-1-docker-compose-recommended" title="Permanent link">&para;</a></h3>
-<p>The recommended way to develop Depictio is using Docker Compose, which provides a consistent environment with all services configured.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Build and start all services</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.dev.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">               </span>-f<span class="w"> </span>docker-compose/docker-compose.minio.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">               </span>--env-file<span class="w"> </span>docker-compose/.env<span class="w"> </span>up<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">               </span>--build<span class="w"> </span>--detach
+<h3 id="option-1-docker-compose">Option 1: Docker Compose<a class="headerlink" href="#option-1-docker-compose" title="Permanent link">&para;</a></h3>
+<p>There are two compose files depending on your goal:</p>
+<h4 id="quickstart-pre-built-images-no-build-required">Quickstart — pre-built images (no build required)<a class="headerlink" href="#quickstart-pre-built-images-no-build-required" title="Permanent link">&para;</a></h4>
+<p>Uses images from GHCR. MinIO is bundled by default — no <code>.env</code> needed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
-<p>Access the services:</p>
+<p>For external S3 / bring your own MinIO:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose/docker-compose.no-minio.yaml<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<h4 id="development-source-mounts-with-hot-reload">Development — source mounts with hot-reload<a class="headerlink" href="#development-source-mounts-with-hot-reload" title="Permanent link">&para;</a></h4>
+<p>Uses <code>docker-compose.dev.yaml</code> which mounts the local source tree and
+builds the image locally:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.dev.yaml<span class="w"> </span>up<span class="w"> </span>--build<span class="w"> </span>--detach
+</code></pre></div>
+<h4 id="services">Services<a class="headerlink" href="#services" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -4225,22 +4387,26 @@
 </thead>
 <tbody>
 <tr>
-<td>Backend API</td>
-<td><code>http://localhost:8058</code></td>
-</tr>
-<tr>
 <td>Frontend</td>
 <td><code>http://localhost:5080</code></td>
+</tr>
+<tr>
+<td>Backend API</td>
+<td><code>http://localhost:8058</code></td>
 </tr>
 <tr>
 <td>API Docs</td>
 <td><code>http://localhost:8058/docs</code></td>
 </tr>
+<tr>
+<td>MinIO Console</td>
+<td><code>http://localhost:9001</code></td>
+</tr>
 </tbody>
 </table>
-<p>The source code is mounted as a volume for live reloading:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">volumes</span><span class="p">:</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./depictio:/app/depictio</span>
+<p>The source code is mounted as a volume in the dev file for live reloading:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">volumes</span><span class="p">:</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./depictio:/app/depictio</span>
 </code></pre></div>
 <h3 id="option-2-devcontainer-github-codespaces">Option 2: DevContainer &amp; GitHub Codespaces<a class="headerlink" href="#option-2-devcontainer-github-codespaces" title="Permanent link">&para;</a></h3>
 <p>For a cloud-based or containerized IDE experience, use the provided DevContainer configuration:</p>
@@ -4261,39 +4427,39 @@
 <h3 id="alternative-local-python-setup">Alternative: Local Python Setup<a class="headerlink" href="#alternative-local-python-setup" title="Permanent link">&para;</a></h3>
 <p>For contributors who prefer local development without containers:</p>
 <div class="tabbed-set" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">uv (Fast)</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Install uv: https://docs.astral.sh/uv/</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Sync dependencies</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>uv<span class="w"> </span>sync<span class="w"> </span>--all-extras
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># Install Playwright browsers</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>uv<span class="w"> </span>run<span class="w"> </span>playwright<span class="w"> </span>install<span class="w"> </span>chromium
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Install uv: https://docs.astral.sh/uv/</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Sync dependencies</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>uv<span class="w"> </span>sync<span class="w"> </span>--all-extras
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Install Playwright browsers</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>uv<span class="w"> </span>run<span class="w"> </span>playwright<span class="w"> </span>install<span class="w"> </span>chromium
 </code></pre></div>
 </div>
 <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">pixi (With infrastructure)</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Install pixi: https://pixi.sh</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://pixi.sh/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Install all dependencies (includes MongoDB, Redis, MinIO)</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>pixi<span class="w"> </span>install
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># Start infrastructure and services</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>pixi<span class="w"> </span>run<span class="w"> </span>start-infra
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>pixi<span class="w"> </span>run<span class="w"> </span>api<span class="w">      </span><span class="c1"># FastAPI backend</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>pixi<span class="w"> </span>run<span class="w"> </span>dash<span class="w">     </span><span class="c1"># Dash frontend</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Install pixi: https://pixi.sh</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://pixi.sh/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Install all dependencies (includes MongoDB, Redis, MinIO)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>pixi<span class="w"> </span>install
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Start infrastructure and services</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>pixi<span class="w"> </span>run<span class="w"> </span>start-infra
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>pixi<span class="w"> </span>run<span class="w"> </span>api<span class="w">      </span><span class="c1"># FastAPI backend</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>pixi<span class="w"> </span>run<span class="w"> </span>dash<span class="w">     </span><span class="c1"># Dash frontend</span>
 </code></pre></div>
 </div>
 <input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">pip (Traditional)</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>depictio-dev-venv
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">source</span><span class="w"> </span>depictio-dev-venv/bin/activate
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>playwright<span class="w"> </span>install<span class="w"> </span>chromium
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>depictio-dev-venv
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">source</span><span class="w"> </span>depictio-dev-venv/bin/activate
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>playwright<span class="w"> </span>install<span class="w"> </span>chromium
 </code></pre></div>
 </div>
 </div>
 <h3 id="setting-up-pre-commit-hooks">Setting up Pre-commit Hooks<a class="headerlink" href="#setting-up-pre-commit-hooks" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pre-commit<span class="w"> </span>install
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>uv<span class="w"> </span>run<span class="w"> </span>pre-commit<span class="w"> </span>install
 </code></pre></div>
 <h3 id="docker-images">Docker Images<a class="headerlink" href="#docker-images" title="Permanent link">&para;</a></h3>
 <p>The project provides multiple Dockerfile options:</p>
@@ -4320,7 +4486,13 @@
 </tbody>
 </table>
 <h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
-<p>Depictio uses environment variables for configuration. Copy <code>.env.example</code> to <code>.env</code> and customize as needed.</p>
+<p>All critical defaults are embedded directly in the compose files, so <code>.env</code> is
+<strong>optional</strong> — <code>docker compose up -d</code> works out of the box.</p>
+<p>To override credentials or settings, copy <code>.env.example</code> to <code>.env</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w">   </span><span class="c1"># only 3 lines — version, MinIO user, MinIO password</span>
+</code></pre></div>
+<p>For development with <code>docker-compose.dev.yaml</code>, the full config lives in
+<code>docker-compose/.env</code> (already populated for local dev).</p>
 <p>Key development variables:</p>
 <table>
 <thead>
@@ -4335,35 +4507,47 @@
 <td>Set to <code>server</code> for API, <code>dash</code> for frontend</td>
 </tr>
 <tr>
-<td><code>MONGO_WIPE</code></td>
-<td>Set to <code>true</code> to reset database on startup</td>
+<td><code>DEPICTIO_MONGODB_WIPE</code></td>
+<td>Set to <code>true</code> to reset the database on startup</td>
 </tr>
 <tr>
-<td><code>LOGGING_VERBOSITY_LEVEL</code></td>
+<td><code>DEPICTIO_LOGGING_VERBOSITY_LEVEL</code></td>
 <td>Set to <code>DEBUG</code> for detailed logs</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_AUTH_SINGLE_USER_MODE</code></td>
+<td><code>true</code> by default — disables login prompt</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_MINIO_ROOT_USER</code></td>
+<td>MinIO access key (default: <code>minio</code>)</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_MINIO_ROOT_PASSWORD</code></td>
+<td>MinIO secret (default: <code>minio123</code>)</td>
 </tr>
 </tbody>
 </table>
-<h3 id="local-python-environment-required">Local Python Environment (Required)<a class="headerlink" href="#local-python-environment-required" title="Permanent link">&para;</a></h3>
+<h3 id="local-python-environment-development">Local Python Environment (Development)<a class="headerlink" href="#local-python-environment-development" title="Permanent link">&para;</a></h3>
 <p>Regardless of which development option you choose, you need local Python packages for running tests, pre-commit hooks, and the CLI.</p>
 <p><strong>1. Main package (tests &amp; pre-commit)</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Install uv (fast Python package manager)</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Install depictio with all dev dependencies</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>uv<span class="w"> </span>sync<span class="w"> </span>--all-extras
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># Set up pre-commit hooks</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>uv<span class="w"> </span>run<span class="w"> </span>pre-commit<span class="w"> </span>install
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Install uv (fast Python package manager)</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Install depictio with all dev dependencies</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>uv<span class="w"> </span>sync<span class="w"> </span>--all-extras
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1"># Set up pre-commit hooks</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>uv<span class="w"> </span>run<span class="w"> </span>pre-commit<span class="w"> </span>install
 </code></pre></div>
 <p><strong>2. CLI package (separate)</strong></p>
 <p>The CLI is a standalone package with its own <code>pyproject.toml</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Install depictio-cli</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">cd</span><span class="w"> </span>depictio/cli
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>uv<span class="w"> </span>sync
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># Verify installation</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>uv<span class="w"> </span>run<span class="w"> </span>depictio<span class="w"> </span>--help
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Install depictio-cli</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nb">cd</span><span class="w"> </span>depictio/cli
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>uv<span class="w"> </span>sync
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1"># Verify installation</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>uv<span class="w"> </span>run<span class="w"> </span>depictio<span class="w"> </span>--help
 </code></pre></div>
 <p><strong>Available tools:</strong></p>
 <table>
@@ -4403,19 +4587,31 @@
 </tbody>
 </table>
 <h2 id="project-structure">Project Structure<a class="headerlink" href="#project-structure" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>depictio/
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>├── api/                 # FastAPI backend (port 8058)
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>│   ├── endpoints/       # API routes
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>│   ├── v1/              # API version 1
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>│   └── main.py          # Application entry point
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>├── dash/                # Dash frontend (port 5080)
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>│   ├── modules/         # Dashboard components
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>│   └── layouts/         # Page layouts
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>├── models/              # Shared Pydantic models
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>├── cli/                 # Command-line interface
-<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>└── tests/               # Test suites
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>depictio/
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>├── api/                 # FastAPI backend (port 8058)
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>│   ├── main.py          # Application entry point
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>│   └── v1/
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>│       ├── configs/     # Settings models and logging config
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>│       ├── endpoints/   # One sub-package per resource domain
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>│       ├── services/    # Business logic, background tasks, lifespan
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>│       ├── middleware/  # Analytics and request middleware
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>│       └── db.py        # MongoDB / Beanie setup
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>├── dash/                # Dash frontend (port 5080)
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>│   ├── pages/           # Multi-app entry points (management, viewer, editor)
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>│   ├── layouts/         # Shared shell, sidebar, save logic
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>│   └── modules/         # One sub-package per dashboard component type
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>├── models/              # Shared Pydantic models (API + Dash)
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>├── cli/                 # Standalone CLI package (own pyproject.toml)
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>└── tests/               # Test suites (api/, dash/, cli/)
 </code></pre></div>
-<h3 id="component-development">Component Development<a class="headerlink" href="#component-development" title="Permanent link">&para;</a></h3>
+<h3 id="api-endpoint-structure">API Endpoint Structure<a class="headerlink" href="#api-endpoint-structure" title="Permanent link">&para;</a></h3>
+<p>Each resource domain lives in <code>depictio/api/v1/endpoints/&lt;domain&gt;_endpoints/</code> and typically contains a subset of:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>&lt;domain&gt;_endpoints/
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>├── routes.py        # FastAPI router — path operations
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>├── models.py        # Request / response Pydantic models
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>└── utils.py         # Domain-specific helpers
+</code></pre></div>
+<h3 id="dash-component-structure">Dash Component Structure<a class="headerlink" href="#dash-component-structure" title="Permanent link">&para;</a></h3>
 <p>Depictio uses a modular component system in <code>depictio/dash/modules/</code>:</p>
 <table>
 <thead>
@@ -4431,7 +4627,11 @@
 </tr>
 <tr>
 <td><code>figure_component/</code></td>
-<td>Plotly visualizations</td>
+<td>Plotly visualizations (Plotly Express, code mode, MultiQC plots)</td>
+</tr>
+<tr>
+<td><code>image_component/</code></td>
+<td>Static image display from S3</td>
 </tr>
 <tr>
 <td><code>interactive_component/</code></td>
@@ -4439,41 +4639,51 @@
 </tr>
 <tr>
 <td><code>table_component/</code></td>
-<td>Data tables</td>
+<td>Interactive data tables (AG Grid)</td>
+</tr>
+<tr>
+<td><code>text_component/</code></td>
+<td>Rich text / Markdown cards</td>
+</tr>
+<tr>
+<td><code>multiqc_component/</code></td>
+<td>Embedded MultiQC HTML reports</td>
 </tr>
 </tbody>
 </table>
-<!-- | `jbrowse_component/` | Genome browser | -->
-<p>| <code>multiqc_component/</code> | MultiQC reports |</p>
-<p>Each component follows this structure:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>component_name/
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>├── frontend.py      # Dash callbacks and UI
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>└── utils.py         # Component building logic
+<p>Each component typically contains a subset of:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>component_name/
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>├── frontend.py      # Entry point — layout and top-level callbacks
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>├── utils.py         # Component building logic and helpers
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>├── design_ui.py     # Stepper / configuration UI shown in edit mode
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>├── models.py        # Component-specific Pydantic models
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>└── callbacks/       # Callback modules split by concern
 </code></pre></div>
+<p>Not all files are present in every component — the structure grows with complexity.</p>
 <h2 id="development-workflow">Development Workflow<a class="headerlink" href="#development-workflow" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
 <p>Create a new branch for your feature or bugfix:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>&lt;issue-type&gt;/&lt;issue-number&gt;-&lt;short-description&gt;
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1"># Example: feature/123-add-new-component</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># Example: bugfix/456-fix-data-processing</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>&lt;issue-type&gt;/&lt;issue-number&gt;-&lt;short-description&gt;
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="c1"># Example: feature/123-add-new-component</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="c1"># Example: bugfix/456-fix-data-processing</span>
 </code></pre></div>
 </li>
 <li>
 <p>Make your changes and commit them:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>git<span class="w"> </span>add<span class="w"> </span>.
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Description of your changes&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>git<span class="w"> </span>add<span class="w"> </span>.
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Description of your changes&quot;</span>
 </code></pre></div>
 </li>
 <li>
 <p>Keep your branch updated with upstream:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>upstream
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>git<span class="w"> </span>rebase<span class="w"> </span>upstream/main
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>upstream
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>git<span class="w"> </span>rebase<span class="w"> </span>upstream/main
 </code></pre></div>
 </li>
 <li>
 <p>Push your branch to GitHub:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>&lt;issue-type&gt;/&lt;issue-number&gt;-&lt;short-description&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>&lt;issue-type&gt;/&lt;issue-number&gt;-&lt;short-description&gt;
 </code></pre></div>
 </li>
 <li>
@@ -4482,27 +4692,27 @@
 </ol>
 <h2 id="testing-local-changes">Testing Local Changes<a class="headerlink" href="#testing-local-changes" title="Permanent link">&para;</a></h2>
 <h3 id="running-tests">Running Tests<a class="headerlink" href="#running-tests" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Run all tests</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>pytest<span class="w"> </span>depictio/tests/<span class="w"> </span>-xvs
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Run with parallel execution</span>
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>pytest<span class="w"> </span>depictio/tests/<span class="w"> </span>-xvs<span class="w"> </span>-n<span class="w"> </span>auto
-<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
-<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># Run specific test file</span>
-<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>pytest<span class="w"> </span>depictio/tests/api/test_endpoints.py<span class="w"> </span>-xvs
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Run all tests</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>pytest<span class="w"> </span>depictio/tests/<span class="w"> </span>-xvs
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># Run with parallel execution</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>pytest<span class="w"> </span>depictio/tests/<span class="w"> </span>-xvs<span class="w"> </span>-n<span class="w"> </span>auto
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="c1"># Run specific test file</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>pytest<span class="w"> </span>depictio/tests/api/test_endpoints.py<span class="w"> </span>-xvs
 </code></pre></div>
 <h3 id="code-quality-checks">Code Quality Checks<a class="headerlink" href="#code-quality-checks" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Format code</span>
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ruff<span class="w"> </span>format<span class="w"> </span>.
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
-<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Lint code</span>
-<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>ruff<span class="w"> </span>check<span class="w"> </span>.
-<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
-<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1"># Type checking</span>
-<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>ty<span class="w"> </span>check<span class="w"> </span>depictio/
-<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>
-<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="c1"># Run all pre-commit hooks</span>
-<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Format code</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>ruff<span class="w"> </span>format<span class="w"> </span>.
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># Lint code</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>ruff<span class="w"> </span>check<span class="w"> </span>.
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="c1"># Type checking</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>ty<span class="w"> </span>check<span class="w"> </span>depictio/
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="c1"># Run all pre-commit hooks</span>
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
 </code></pre></div>
 <h3 id="writing-tests">Writing Tests<a class="headerlink" href="#writing-tests" title="Permanent link">&para;</a></h3>
 <ul>
@@ -4550,7 +4760,8 @@
 </ol>
 <p><strong>Theme compatibility checklist:</strong></p>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Use CSS variables: <code>var(--app-bg-color)</code>, <code>var(--app-text-color)</code>, <code>var(--app-surface-color)</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Use DMC component props for theming whenever possible — DMC 2.0+ handles dark/light automatically</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Only fall back to inline <code>style=</code> with CSS variables (<code>var(--app-bg-color)</code>, <code>var(--app-surface-color)</code>) when DMC has no built-in prop</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Test in both light and dark themes</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Never hardcode colors (<code>#ffffff</code>, <code>#000000</code>)</li>
 </ul>
@@ -4587,17 +4798,19 @@
 </tbody>
 </table>
 <p><strong>Common pitfall:</strong> Registering a callback only in Editor when it should also work in Viewer.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># ✅ CORRECT: Register in both apps for view+edit features</span>
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="c1"># In dashboard_viewer.py</span>
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="n">register_my_callback</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># In dashboard_editor.py</span>
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="n">register_my_callback</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
-<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
-<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="c1"># ❌ WRONG: Only in editor, won&#39;t work in view mode</span>
-<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="c1"># In dashboard_editor.py only</span>
-<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="n">register_my_callback</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># ✅ CORRECT: Register in both apps for view+edit features</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="c1"># In dashboard_viewer.py</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="n">register_my_callback</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># In dashboard_editor.py</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="n">register_my_callback</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="c1"># ❌ WRONG: Only in editor, won&#39;t work in view mode</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="c1"># In dashboard_editor.py only</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="n">register_my_callback</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Shared stores</strong> must be defined in <code>depictio/dash/layouts/shared_app_shell.py</code> → <code>create_shared_stores()</code></p>
+<h3 id="internal-technical-documentation">Internal Technical Documentation<a class="headerlink" href="#internal-technical-documentation" title="Permanent link">&para;</a></h3>
+<p>Detailed architecture notes, design decisions, and implementation internals are maintained in a <strong>private repository</strong>. If you need access (e.g. for a significant contribution), reach out to the maintainers.</p>
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
 <h3 id="repository">Repository<a class="headerlink" href="#repository" title="Permanent link">&para;</a></h3>
 <p>Documentation is maintained in the <a href="https://github.com/depictio/depictio-docs">depictio-docs</a> repository.</p>
@@ -4606,8 +4819,8 @@
 <li>Fork and clone the <code>depictio-docs</code> repository</li>
 <li>Install dependencies:</li>
 </ol>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nb">cd</span><span class="w"> </span>depictio-docs
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="nb">cd</span><span class="w"> </span>depictio-docs
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 </code></pre></div>
 <h3 id="writing-documentation">Writing Documentation<a class="headerlink" href="#writing-documentation" title="Permanent link">&para;</a></h3>
 <ul>
@@ -4618,8 +4831,8 @@
 </ul>
 <h3 id="building-documentation">Building Documentation<a class="headerlink" href="#building-documentation" title="Permanent link">&para;</a></h3>
 <p>Preview documentation locally:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nb">cd</span><span class="w"> </span>depictio-docs
-<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>mkdocs<span class="w"> </span>serve
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nb">cd</span><span class="w"> </span>depictio-docs
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>mkdocs<span class="w"> </span>serve
 </code></pre></div>
 <p>Then open <code>http://127.0.0.1:8000</code> in your browser.</p>
 <h2 id="issue-reporting">Issue Reporting<a class="headerlink" href="#issue-reporting" title="Permanent link">&para;</a></h2>
