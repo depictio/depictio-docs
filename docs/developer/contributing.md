@@ -189,7 +189,7 @@ Key development variables:
 | `DEPICTIO_MINIO_ROOT_USER` | MinIO access key (default: `minio`) |
 | `DEPICTIO_MINIO_ROOT_PASSWORD` | MinIO secret (default: `minio123`) |
 
-### Local Python Environment (Required)
+### Local Python Environment (Development)
 
 Regardless of which development option you choose, you need local Python packages for running tests, pre-commit hooks, and the CLI.
 
@@ -234,18 +234,34 @@ uv run depictio --help
 ```
 depictio/
 ├── api/                 # FastAPI backend (port 8058)
-│   ├── endpoints/       # API routes
-│   ├── v1/              # API version 1
-│   └── main.py          # Application entry point
+│   ├── main.py          # Application entry point
+│   └── v1/
+│       ├── configs/     # Settings models and logging config
+│       ├── endpoints/   # One sub-package per resource domain
+│       ├── services/    # Business logic, background tasks, lifespan
+│       ├── middleware/  # Analytics and request middleware
+│       └── db.py        # MongoDB / Beanie setup
 ├── dash/                # Dash frontend (port 5080)
-│   ├── modules/         # Dashboard components
-│   └── layouts/         # Page layouts
-├── models/              # Shared Pydantic models
-├── cli/                 # Command-line interface
-└── tests/               # Test suites
+│   ├── pages/           # Multi-app entry points (management, viewer, editor)
+│   ├── layouts/         # Shared shell, sidebar, save logic
+│   └── modules/         # One sub-package per dashboard component type
+├── models/              # Shared Pydantic models (API + Dash)
+├── cli/                 # Standalone CLI package (own pyproject.toml)
+└── tests/               # Test suites (api/, dash/, cli/)
 ```
 
-### Component Development
+### API Endpoint Structure
+
+Each resource domain lives in `depictio/api/v1/endpoints/<domain>_endpoints/` and typically contains a subset of:
+
+```
+<domain>_endpoints/
+├── routes.py        # FastAPI router — path operations
+├── models.py        # Request / response Pydantic models
+└── utils.py         # Domain-specific helpers
+```
+
+### Dash Component Structure
 
 Depictio uses a modular component system in `depictio/dash/modules/`:
 
