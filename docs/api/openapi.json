@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "0.7.3-b6",
-    "x-generated-at": "2026-02-17T16:03:25Z",
-    "x-depictio-version": "v0.7.3-b6"
+    "version": "0.7.3",
+    "x-generated-at": "2026-02-18T20:42:45Z",
+    "x-depictio-version": "v0.7.3"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -4210,7 +4210,7 @@
           "Dashboards"
         ],
         "summary": "Import Dashboard From Yaml",
-        "description": "Import a dashboard from YAML content.\n\nCreates a new dashboard from the provided YAML configuration.\nA new dashboard_id will be generated, and the current user will be set as owner.\n\nIf `overwrite=True` and a dashboard with the same title exists in the project,\nthe existing dashboard will be updated instead of creating a new one.\n\nProject identification:\n- If `project_id` is provided, uses that project directly\n- If `project_id` is not provided, extracts `project_tag` from YAML and\n  looks up the project by name\n\nArgs:\n    yaml_content: The YAML content defining the dashboard\n    project_id: Optional project ID (if not provided, uses project_tag from YAML)\n    overwrite: If True, update existing dashboard with same title (default: False)\n    current_user: The authenticated user (will be set as owner)\n\nReturns:\n    Created/updated dashboard information including dashboard_id",
+        "description": "Import a dashboard from YAML content.\n\nSupports both single dashboard and multi-tab dashboard formats:\n- Single: Standard YAML with title, components, etc.\n- Multi-tab: YAML with main_dashboard and tabs keys\n\nA new dashboard_id will be generated, and the current user will be set as owner.\n\nIf `overwrite=True` and a dashboard with the same title exists in the project,\nthe existing dashboard will be updated instead of creating a new one.\n\nProject identification:\n- If `project_id` is provided, uses that project directly\n- If `project_id` is not provided, extracts `project_tag` from YAML and\n  looks up the project by name\n\nArgs:\n    yaml_content: The YAML content defining the dashboard(s)\n    project_id: Optional project ID (if not provided, uses project_tag from YAML)\n    overwrite: If True, update existing dashboard with same title (default: False)\n    current_user: The authenticated user (will be set as owner)\n\nReturns:\n    Created/updated dashboard information including dashboard_id",
         "operationId": "import_dashboard_from_yaml_depictio_api_v1_dashboards_import_yaml_post",
         "security": [
           {
@@ -4283,7 +4283,7 @@
           "Dashboards"
         ],
         "summary": "Export Dashboard As Yaml",
-        "description": "Export dashboard as YAML.\n\nReturns a YAML representation of the dashboard suitable for\nversion control or backup. Includes tab fields for child tabs.\n\nArgs:\n    dashboard_id: The dashboard ID to export\n\nReturns:\n    YAML content with application/x-yaml content type",
+        "description": "Export dashboard as YAML.\n\nFor main tabs with children: Returns a single YAML with nested structure.\nFor standalone/child dashboards: Returns a single dashboard YAML.\n\nMulti-tab structure:\n    main_dashboard:\n        title: \"Main Dashboard\"\n        components: [...]\n    tabs:\n        - title: \"Tab 1\"\n          components: [...]\n\nArgs:\n    dashboard_id: The dashboard ID to export\n\nReturns:\n    YAML content with application/x-yaml content type",
         "operationId": "export_dashboard_as_yaml_depictio_api_v1_dashboards__dashboard_id__yaml_get",
         "security": [
           {
@@ -6668,7 +6668,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -6915,7 +6915,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -6972,7 +6972,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -7029,7 +7029,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -7135,7 +7135,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -7251,7 +7251,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -7336,7 +7336,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-17 16:03:22"
+            "default": "2026-02-18 20:42:42"
           },
           "file_hash": {
             "type": "string",
@@ -8284,7 +8284,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -8491,7 +8491,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -8595,7 +8595,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-17 16:03:23"
+            "default": "2026-02-18 20:42:42"
           },
           "project_type": {
             "type": "string",
@@ -8631,7 +8631,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -8735,7 +8735,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-17 16:03:23"
+            "default": "2026-02-18 20:42:42"
           },
           "project_type": {
             "type": "string",
@@ -8910,6 +8910,7 @@
           "external_host": {
             "type": "string",
             "title": "External Host",
+            "description": "Hostname for external access",
             "default": "localhost"
           },
           "external_port": {
@@ -8920,6 +8921,7 @@
           "external_protocol": {
             "type": "string",
             "title": "External Protocol",
+            "description": "Protocol for external access (http/https)",
             "default": "http"
           },
           "public_url": {
@@ -8931,33 +8933,38 @@
                 "type": "null"
               }
             ],
-            "title": "Public Url"
+            "title": "Public Url",
+            "description": "Override URL for external access (e.g. reverse-proxy or CDN endpoint)"
           },
           "external_service": {
             "type": "boolean",
             "title": "External Service",
+            "description": "True when the service is outside the Docker Compose network",
             "default": false
           },
           "root_user": {
             "type": "string",
             "title": "Root User",
+            "description": "MinIO/S3 root access key",
             "default": "minio"
           },
           "root_password": {
             "type": "string",
             "title": "Root Password",
+            "description": "MinIO/S3 root secret key",
             "default": "minio123"
           },
           "bucket": {
             "type": "string",
             "title": "Bucket",
+            "description": "Default S3 bucket name for Depictio data",
             "default": "depictio-bucket"
           }
         },
         "additionalProperties": false,
         "type": "object",
         "title": "S3DepictioCLIConfig",
-        "description": "S3 configuration inheriting service URL management."
+        "description": "S3/MinIO object storage configuration."
       },
       "Scan-Input": {
         "properties": {
@@ -9135,7 +9142,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -9340,7 +9347,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -9571,7 +9578,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "699491491d46dbc56c915a20"
+            "default": "69962441c48a1a223d9e4681"
           }
         },
         "type": "object",
@@ -9660,7 +9667,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -9778,7 +9785,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -9859,7 +9866,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -9944,7 +9951,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -10029,7 +10036,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -10194,7 +10201,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -10317,7 +10324,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-17 16:03:21"
+            "default": "2026-02-18 20:42:41"
           }
         },
         "additionalProperties": false,
@@ -10336,7 +10343,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -10459,7 +10466,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-17 16:03:21"
+            "default": "2026-02-18 20:42:41"
           }
         },
         "additionalProperties": false,
@@ -10511,7 +10518,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -10579,7 +10586,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -10676,7 +10683,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -10749,7 +10756,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-17 16:03:21"
+            "default": "2026-02-18 20:42:41"
           },
           "run_hash": {
             "type": "string",
@@ -10794,7 +10801,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "699491491d46dbc56c915a1f"
+            "default": "69962441c48a1a223d9e4680"
           },
           "description": {
             "anyOf": [
@@ -10867,7 +10874,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-17 16:03:21"
+            "default": "2026-02-18 20:42:41"
           },
           "run_hash": {
             "type": "string",
@@ -10929,7 +10936,7 @@
           "scan_time": {
             "type": "string",
             "title": "Scan Time",
-            "default": "2026-02-17 16:03:21"
+            "default": "2026-02-18 20:42:41"
           },
           "dc_stats": {
             "anyOf": [
