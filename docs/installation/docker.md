@@ -2,15 +2,14 @@
 
 ## :material-rocket-launch: Quick Start
 
-Up and running in under a minute — no configuration file needed.
+Up and running in two commands — no git clone, no configuration file needed.
 
 **Prerequisites**: [Docker](https://docs.docker.com/get-docker/) 20.10+ and [Docker Compose](https://docs.docker.com/compose/install/) V2.
 
-### Step 1 — Clone
+### Step 1 — Download the compose file
 
 ```bash
-git clone https://github.com/depictio/depictio.git
-cd depictio
+curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml
 ```
 
 ### Step 2 — Start
@@ -19,7 +18,7 @@ cd depictio
 docker compose up -d
 ```
 
-MinIO (S3-compatible storage) is bundled — no overlay files needed.
+All services start automatically: MongoDB, Redis, MinIO, backend, frontend, and Celery worker.
 
 ### Step 3 — Open
 
@@ -30,7 +29,7 @@ MinIO (S3-compatible storage) is bundled — no overlay files needed.
 | MinIO console | <http://localhost:9001> | `minio` / `minio123` |
 
 !!! success "That's it!"
-    Depictio starts in single-user mode by default — no account or login required.
+    Depictio starts in **single-user mode** by default — no account or login required.
     Change MinIO credentials before exposing to the network (see [Custom credentials](#custom-credentials-env-file) below).
 
 ---
@@ -38,6 +37,27 @@ MinIO (S3-compatible storage) is bundled — no overlay files needed.
 ## :material-cog-outline: Advanced Configuration
 
 Everything in this section is **optional**. The Quick Start defaults work for most users.
+
+### Single-user vs Multi-user mode
+
+Depictio ships in **single-user mode** by default: no login, no accounts, one admin user.
+
+| Mode | `DEPICTIO_AUTH_SINGLE_USER_MODE` | `DEPICTIO_AUTH_PUBLIC_MODE` | Use case |
+|------|----------------------------------|-----------------------------|---------:|
+| **Single-user** _(default)_ | `true` | `false` | Local development, personal use |
+| **Multi-user** | `false` | `false` | Team deployment with login |
+| **Public (read-only)** | `false` | `true` | Shared dashboards, no auth required |
+
+Switch to multi-user mode in your `.env`:
+
+```bash
+DEPICTIO_AUTH_SINGLE_USER_MODE=false
+```
+
+Users can then register accounts and log in via the Depictio UI.
+
+!!! warning "Expose to the network?"
+    If making Depictio accessible beyond `localhost`, disable single-user mode and change the MinIO credentials.
 
 ### Custom Credentials (.env file)
 

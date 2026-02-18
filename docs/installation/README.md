@@ -8,11 +8,10 @@ description: "Get started with Depictio by choosing the installation method that
 
 ## Quickstart
 
-No configuration file needed — MinIO is bundled by default:
+No git clone, no configuration file — just two commands:
 
 ```bash
-git clone https://github.com/depictio/depictio.git
-cd depictio
+curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml
 docker compose up -d
 ```
 
