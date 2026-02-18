@@ -6,20 +6,45 @@ description: "Get started with Depictio by choosing the installation method that
 
 # Installation
 
-## Quickstart
+## :material-rocket-launch: Quickstart
 
-No git clone, no configuration file — just two commands:
+No git clone, no configuration file.
 
-```bash
-curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml
-docker compose up -d
+```bash title="Terminal" linenums="1"
+curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml # (1)!
+docker compose up -d # (2)!
 ```
 
-| Service | URL |
-|---------|-----|
-| Depictio | <http://localhost:5080> |
-| API docs | <http://localhost:8058/docs> |
-| MinIO console | <http://localhost:9001> (minio / minio123) |
+1.  :material-download: Downloads the single compose file — nothing else needed locally.
+2.  :material-play-circle: Starts **all six services** in the background: MongoDB, Redis, MinIO, backend API, frontend, and Celery worker.
+
+!!! success "Open Depictio"
+
+    | | Service | URL | Notes |
+    |-|---------|-----|-------|
+    | :material-view-dashboard: | **Depictio** | [localhost:5080](http://localhost:5080) | Single-user mode — no login required |
+    | :material-api: | **API docs** | [localhost:8058/docs](http://localhost:8058/docs) | Interactive OpenAPI interface |
+    | :simple-minio: | **MinIO console** | [localhost:9001](http://localhost:9001) | `minio` / `minio123` |
+
+<div class="grid cards" markdown>
+
+-   :material-pencil: **Customise credentials**
+
+    ---
+
+    Copy `.env.example` to `.env` to change the MinIO password or switch to multi-user mode.
+
+    [:octicons-arrow-right-24: Advanced configuration](docker/#advanced-configuration)
+
+-   :material-account-group: **Multi-user or public mode?**
+
+    ---
+
+    Set `DEPICTIO_AUTH_SINGLE_USER_MODE=false` in `.env` to enable accounts and login.
+
+    [:octicons-arrow-right-24: Authentication modes](../usage/guides/authentication-modes.md)
+
+</div>
 
 ---
 
