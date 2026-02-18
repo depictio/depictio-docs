@@ -23,70 +23,74 @@ cd depictio
 
 Alternatively, you can download a release version from the [GitHub releases page](https://github.com/depictio/depictio/releases).
 
-### 2. Configure Environment Variables
+### 2. Configure Environment Variables (Optional)
 
-Create a `.env` file in the root directory of the project:
+Depictio ships with sensible defaults — **no `.env` file is required to start**. If you want to change the MinIO credentials (recommended for production), copy the example file:
 
 ```bash
 cp .env.example .env
 ```
 
-The minimal configuration only requires MinIO credentials:
+The minimal `.env.example` looks like:
 
 ```bash
-# .env - Minimal required configuration
+# Application version
+DEPICTIO_VERSION=latest
+
+# MinIO storage credentials (change for production)
 DEPICTIO_MINIO_ROOT_USER=minio
 DEPICTIO_MINIO_ROOT_PASSWORD=minio123
 ```
 
-The default values work for most users. For advanced configuration:
+For advanced configuration:
 
-- **Complete env file**: `.env.complete.example` - All 160+ variables with defaults (copy and uncomment as needed)
-- **Configuration Guide**: [Configuration](configuration.md) - Common use cases and setup guides
-- **Complete Reference**: [Environment Reference](env-reference.md) - Searchable documentation for all variables
+- **Complete env file**: `.env.complete.example` — all 160+ variables with defaults
+- **Configuration Guide**: [Configuration](configuration.md) — common use cases and setup guides
+- **Complete Reference**: [Environment Reference](env-reference.md) — searchable documentation for all variables
 
-### 3. Start the Services (including MinIO)
+### 3. Start the Services
 
-Start all Depictio services using Docker Compose:
+MinIO (S3-compatible object storage) is bundled by default. A single command starts everything:
 
 ```bash
-docker compose -f docker-compose.yaml \
-               -f docker-compose/docker-compose.minio.yaml \
-               up -d
+docker compose up -d
 ```
 
 This command will:
 
-- Pull the necessary Docker images (latest by default, can be changed in the `.env` file)
-- Create and start containers for MongoDB, the Depictio backend & frontend, and MinIO
+- Pull the necessary Docker images
+- Start MongoDB, Redis, MinIO, the Depictio backend, frontend, and Celery worker
 - Set up the required network connections between services
 
+!!! tip "No extra files needed"
 
-### Using an Existing MinIO Instance
+    MinIO is embedded directly in `docker-compose.yaml` — no overlay files required.
+    The single `docker compose up -d` command is all you need.
 
-If you already have a MinIO server running, you can skip the bundled MinIO container and configure Depictio to connect to your existing instance.
+### Using an External S3 / MinIO Instance
 
-**Skip the bundled MinIO container:**
+If you already have a MinIO server or S3-compatible storage, use the dedicated no-minio compose file instead:
 
 ```bash
-# Start without the MinIO compose file
-docker compose -f docker-compose.yaml up -d
+docker compose -f docker-compose/docker-compose.no-minio.yaml up -d
 ```
 
-**Configure your `.env` file to point to your existing MinIO:**
+**Configure your `.env` file to point to your existing MinIO/S3:**
 
 ```bash
 # Connect to an existing MinIO server
-DEPICTIO_MINIO_SERVICE_NAME=your-minio-host.example.com
-DEPICTIO_MINIO_SERVICE_PORT=9000
-DEPICTIO_MINIO_EXTERNAL_HOST=your-minio-host.example.com
-DEPICTIO_MINIO_EXTERNAL_PORT=9000
 DEPICTIO_MINIO_ROOT_USER=your-access-key
 DEPICTIO_MINIO_ROOT_PASSWORD=your-secret-key
-DEPICTIO_MINIO_BUCKET=depictio-bucket
 
-# Set to true if MinIO is outside Docker network
+# Set the public URL for your MinIO/S3 endpoint
+DEPICTIO_MINIO_PUBLIC_URL=https://your-minio-host.example.com
+
+# Set to true if MinIO is outside the Docker network
 DEPICTIO_MINIO_EXTERNAL_SERVICE=true
+
+# Optional: override host and port explicitly
+DEPICTIO_MINIO_EXTERNAL_HOST=your-minio-host.example.com
+DEPICTIO_MINIO_EXTERNAL_PORT=9000
 
 # Use https if your MinIO uses TLS
 DEPICTIO_MINIO_EXTERNAL_PROTOCOL=https
@@ -121,7 +125,7 @@ Once the services are running, you can access:
 - **Frontend (Dash)**: <http://localhost:5080>
 - **Backend API**: <http://localhost:8058>
 - **API Documentation**: <http://localhost:8058/docs>
-- **Minio UI**: <http://localhost:9001>
+- **MinIO UI**: <http://localhost:9001>
 
 Default credentials are:
 
@@ -188,7 +192,12 @@ By default, Depictio uses the following ports:
 - **9000**: MinIO API
 - **9001**: MinIO UI
 
-If you need to change these ports, edit the `.env` file.
+If you need to change these ports, set the corresponding variables in your `.env` file:
+
+```bash
+MINIO_PORT=9000
+MINIO_CONSOLE_PORT=9001
+```
 
 ### Development Mode
 
@@ -316,13 +325,13 @@ Common issues include:
 
 If you cannot connect to the services, check:
 
-1. That the containers are running: `docker-compose ps`
+1. That the containers are running: `docker compose ps`
 2. That you're using the correct ports
 3. That there are no firewall rules blocking the connections
 
 ### Data Persistence Issues
 
-By default, MongoDB data is stored in the `./depictioDB` directory. Make sure this directory has the correct permissions.
+By default, MongoDB data is stored in the `./depictioDB` directory and MinIO data in a named Docker volume. Make sure the `./depictioDB` directory has the correct permissions.
 
 ## Next Steps
 
