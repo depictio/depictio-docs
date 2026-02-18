@@ -6,115 +6,76 @@ description: "Get started with Depictio by choosing the installation method that
 
 # Installation
 
+## Quickstart
 
+No configuration file needed — MinIO is bundled by default:
 
-## Depictio (server)
+```bash
+git clone https://github.com/depictio/depictio.git
+cd depictio
+docker compose up -d
+```
 
-<div class="installation-grid">
-  <div class="installation-card">
-    <img src="../assets/docker-compose.webp" alt="Docker Compose" class="card-logo" width="100px">
-    <h3>Docker Compose</h3>
-    <p>For development, testing, and small-scale deployments.</p>
-    <a href="docker/" class="md-button md-button--primary">Guide</a>
-  </div>
+| Service | URL |
+|---------|-----|
+| Depictio | <http://localhost:5080> |
+| API docs | <http://localhost:8058/docs> |
+| MinIO console | <http://localhost:9001> (minio / minio123) |
 
-  <div class="installation-card">
-    <img src="../assets/kubernetes.png" alt="Kubernetes" class="card-logo" width="100px">
-    <h3>Kubernetes</h3>
-    <p>For production environments and scalable deployments.</p>
-    <a href="kubernetes/" class="md-button md-button--primary">Guide</a>
-  </div>
+---
+
+## Server Deployment
+
+<div class="grid cards" markdown>
+
+-   :fontawesome-brands-docker:{ .lg .middle } **Docker Compose**
+
+    ---
+
+    The recommended way to run Depictio. MinIO is bundled — one command starts everything.
+
+    Ideal for development, testing, and small-scale deployments.
+
+    [:octicons-arrow-right-24: Installation guide](docker/)
+
+-   :simple-kubernetes:{ .lg .middle } **Kubernetes**
+
+    ---
+
+    Deploy Depictio on a Kubernetes cluster using the official Helm chart.
+
+    Ideal for production environments and scalable deployments.
+
+    [:octicons-arrow-right-24: Installation guide](kubernetes/)
+
 </div>
 
-## Depictio-CLI
+## CLI & Configuration
 
-<div class="cli-container">
-  <div class="installation-card">
-    <img src="../assets/depictio-cli.png" alt="Depictio CLI" class="card-logo">
-    <h3>Depictio-CLI</h3>
-    <p>For data ingestion and management.</p>
-    <a href="cli/" class="md-button md-button--primary">Guide</a>
-  </div>
+<div class="grid cards" markdown>
+
+-   :material-console-line:{ .lg .middle } **Depictio CLI**
+
+    ---
+
+    Command-line tool for data ingestion, project management, and interacting with the Depictio API.
+
+    [:octicons-arrow-right-24: CLI guide](cli/)
+
+-   :material-cog-outline:{ .lg .middle } **Configuration**
+
+    ---
+
+    Configure authentication, S3/MinIO, backups, and advanced features via environment variables.
+
+    [:octicons-arrow-right-24: Configuration guide](configuration/)
+
+-   :simple-gitpod:{ .lg .middle } **Try in Gitpod**
+
+    ---
+
+    Launch a temporary workspace with Depictio pre-installed — no local setup required.
+
+    [:octicons-arrow-right-24: Open in Gitpod](https://gitpod.io/#https://github.com/depictio/depictio/releases/latest)
+
 </div>
-
-## Configuration
-
-<div class="cli-container">
-  <div class="installation-card">
-    <img src="../assets/configuration.png" alt="Depictio Configuration" class="card-logo" width="100px">
-    <h3>Environment Variables</h3>
-    <p>Configure authentication, backups, and advanced features.</p>
-    <a href="configuration/" class="md-button md-button--primary">Guide</a>
-  </div>
-</div>
-
-## Wants a customizable hands-on preview?
-
-<div class="cli-container">
-  <div class="installation-card">
-    <img src="../images/gitpod-logo-mark.svg" alt="Gitpod Logo" class="card-logo" width="100px">
-    <h3>Gitpod</h3>
-    <p>For a quick preview of Depictio, you can use Gitpod to launch a temporary workspace with Depictio pre-installed.</p>
-    <a href="https://gitpod.io/#https://github.com/depictio/depictio/releases/latest" class="md-button md-button--primary">Open in Gitpod</a>
-  </div>
-</div>
-
-
-<style>
-/* Installation Cards Grid */
-.installation-grid {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin: 1.5rem 0;
-}
-
-.installation-card {
-  flex: 0 1 300px;
-  padding: 1.25rem;
-  border-radius: 8px;
-  border: 1px solid rgba(0,0,0,0.1);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  text-align: center;
-  background-color: white;
-}
-
-.card-logo {
-  height: 60px;
-  margin-bottom: 1rem;
-}
-
-.installation-card h3 {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-}
-
-.installation-card p {
-  color: var(--md-default-fg-color--light);
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-}
-
-/* CLI Container */
-.cli-container {
-  display: flex;
-  justify-content: center;
-  margin: 1.5rem 0;
-}
-
-.cli-container .installation-card {
-  max-width: 300px;
-}
-
-@media (max-width: 650px) {
-  .installation-grid {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .installation-card {
-    width: 100%;
-    max-width: 300px;
-  }
-}
-</style>
