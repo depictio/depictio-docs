@@ -8,10 +8,73 @@ hide:
 
 # Changelog
 
+## **[v0.7.3](https://github.com/depictio/depictio/releases/tag/v0.7.3)** (February 18, 2026)
+
+!!! success "Stable Release"
+    This is a stable release consolidating all v0.7.3 beta improvements over v0.7.2.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.3
+```
+
+### **✨ Features**
+
+* **Demo & Public Mode Architecture**: Replaced unauthenticated mode with a dedicated demo mode (walkthrough tour, temporary users) and a distinct public mode for read-only access
+* **YAML Dashboard Sync — Full Overhaul**: Multi-tab export/import, minimal metadata, server-side Pydantic validation, icon field preservation, code-mode figure content, and stable component tags across round-trips
+* **YAML Reference Dashboards**: Iris, penguins, and ampliseq reference projects now ship with versioned YAML dashboard definitions
+* **MultiQC Enhancements**: DateRangePicker filter with value normalisation, theme switching via CSS variables, human-readable filter titles
+* **Fullscreen Mode**: Native browser Fullscreen API replacing the previous workaround; correct chart dimensions in fullscreen
+
+### **🐛 Bug Fixes**
+
+* Fix demo mode: owner edit-button visibility, tab copy naming, MultiQC s3\_location on restore, dashboard ownership, MultiQC habitat filter, TabsTab href crash
+* Fix cross-DC filtering for card components and anonymous users in single-user mode
+* Fix MultiQC callback errors (separate view/design mode callbacks), metadata not saved from stepper
+* Fix dashboard duplication: icon colours, theme variant thumbnails, child tab listing
+* Fix duplicate/remove component issues from layout type mismatch
+* Fix DateRangePicker validation and normalisation for figure and table callbacks
+* Fix stepper navigation (duplicate edit-page-context stores)
+* Fix interactive component JavaScript callback errors
+
+### **🚀 Improvements**
+
+* **Docker Compose**: MinIO embedded by default; `.env` truly optional (critical defaults inlined); named MongoDB volume for zero-clone quick-start; frozen image and package versions
+* **Theme Variables**: Consistent CSS theme variables across all dashboard styles (MultiQC, Figure, card trend subtitles)
+* **WebSocket**: Fix WebSocket connection for K8s deployments; enable background callbacks on initial page load
+* Simplify fullscreen and interactive filtering callback code; improve card trend subtitle readability
+
+### **🧹 Internal**
+
+* Reorganise and clean up `settings_models.py` — remove dead code, add structured sections and field docs
+* Add YAML export/import round-trip CI test and comprehensive CLI validation unit tests
+* CI fixes: ruff import format, pyyaml version conflict, missing ampliseq child tab screenshots
+
+---
+
 ## **v0.7.3 Beta Releases**
 
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v0.7.3-b8](https://github.com/depictio/depictio/releases/tag/v0.7.3-b8)** (February 18, 2026)
+
+#### **✨ Features**
+* Complete YAML export/import overhaul: multi-tab support, minimal metadata for MultiQC/Image components, stable component tags, layout position preservation, icon field preservation, code-mode figure content export, server-side Pydantic validation in CLI `validate` and `import` commands
+* Add YAML dashboard definitions for iris, penguins, and ampliseq reference projects
+
+#### **🐛 Fixes**
+* Resolve demo mode round-2 issues: dashboard ownership checks, MultiQC habitat filter, TabsTab href crash
+* Resolve CI failures: ruff import format and pyyaml version conflict
+* Add missing child tab screenshots for ampliseq demo dashboard
+
+#### **🚀 Improvements**
+* Streamline Docker Compose: embed MinIO by default, freeze image/package versions, inline critical env defaults so `.env` is optional, switch MongoDB to named volume for zero-clone quick-start
+* Reorganise and clean up `settings_models.py`
+* Add round-trip CI test and unit tests for YAML CLI validation
+
+---
 
 ### **[v0.7.3-b7](https://github.com/depictio/depictio/releases/tag/v0.7.3-b7)** (February 17, 2026)
 
