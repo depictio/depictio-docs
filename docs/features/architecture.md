@@ -201,5 +201,5 @@ docker compose down && docker compose up -d
 
 - :material-view-dashboard-variant: [Dashboards](dashboards.md) - Dashboard modes, tabs, and layouts
 - :material-puzzle: [Components](components.md) - Available component types
-- :material-developer-board: [Modularity](../developer/modularity.md) - Code structure and API design
+- :material-database-outline: [Data Model](data-model.md) - Domain objects and relationship model
 - :material-shield-check: [Security](security.md) - Security features and code restrictions

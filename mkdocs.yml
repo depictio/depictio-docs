@@ -218,6 +218,7 @@ nav:
           - YAML Dashboard Sync: features/yaml-sync.md
       - System Design:
           - Architecture: features/architecture.md
+          - Data Model: features/data-model.md
           - Security: features/security.md
   - API:
       - Overview: api/README.md
@@ -227,7 +228,6 @@ nav:
       - FastAPI Docs: api/fastapi_docs.md
   - Developer:
       - Overview: developer/README.md
-      - Modularity: developer/modularity.md
       - Contributing: developer/contributing.md
   - FAQ:
       - Overview: FAQ/README.md
