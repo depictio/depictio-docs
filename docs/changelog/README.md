@@ -8,6 +8,307 @@ hide:
 
 # Changelog
 
+## **[v0.7.3](https://github.com/depictio/depictio/releases/tag/v0.7.3)** (February 18, 2026)
+
+!!! success "Stable Release"
+    This is a stable release consolidating all v0.7.3 beta improvements over v0.7.2.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.3
+```
+
+### **✨ Features**
+
+* **Demo & Public Mode Architecture**: Replaced unauthenticated mode with a dedicated demo mode (walkthrough tour, temporary users) and a distinct public mode for read-only access
+* **YAML Dashboard Sync — Full Overhaul**: Multi-tab export/import, minimal metadata, server-side Pydantic validation, icon field preservation, code-mode figure content, and stable component tags across round-trips
+* **YAML Reference Dashboards**: Iris, penguins, and ampliseq reference projects now ship with versioned YAML dashboard definitions
+* **MultiQC Enhancements**: DateRangePicker filter with value normalisation, theme switching via CSS variables, human-readable filter titles
+* **Fullscreen Mode**: Native browser Fullscreen API replacing the previous workaround; correct chart dimensions in fullscreen
+
+### **🐛 Bug Fixes**
+
+* Fix demo mode: owner edit-button visibility, tab copy naming, MultiQC s3\_location on restore, dashboard ownership, MultiQC habitat filter, TabsTab href crash
+* Fix cross-DC filtering for card components and anonymous users in single-user mode
+* Fix MultiQC callback errors (separate view/design mode callbacks), metadata not saved from stepper
+* Fix dashboard duplication: icon colours, theme variant thumbnails, child tab listing
+* Fix duplicate/remove component issues from layout type mismatch
+* Fix DateRangePicker validation and normalisation for figure and table callbacks
+* Fix stepper navigation (duplicate edit-page-context stores)
+* Fix interactive component JavaScript callback errors
+
+### **🚀 Improvements**
+
+* **Docker Compose**: MinIO embedded by default; `.env` truly optional (critical defaults inlined); named MongoDB volume for zero-clone quick-start; frozen image and package versions
+* **Theme Variables**: Consistent CSS theme variables across all dashboard styles (MultiQC, Figure, card trend subtitles)
+* **WebSocket**: Fix WebSocket connection for K8s deployments; enable background callbacks on initial page load
+* Simplify fullscreen and interactive filtering callback code; improve card trend subtitle readability
+
+### **🧹 Internal**
+
+* Reorganise and clean up `settings_models.py` — remove dead code, add structured sections and field docs
+* Add YAML export/import round-trip CI test and comprehensive CLI validation unit tests
+* CI fixes: ruff import format, pyyaml version conflict, missing ampliseq child tab screenshots
+
+---
+
+## **v0.7.3 Beta Releases**
+
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v0.7.3-b8](https://github.com/depictio/depictio/releases/tag/v0.7.3-b8)** (February 18, 2026)
+
+#### **✨ Features**
+* Complete YAML export/import overhaul: multi-tab support, minimal metadata for MultiQC/Image components, stable component tags, layout position preservation, icon field preservation, code-mode figure content export, server-side Pydantic validation in CLI `validate` and `import` commands
+* Add YAML dashboard definitions for iris, penguins, and ampliseq reference projects
+
+#### **🐛 Fixes**
+* Resolve demo mode round-2 issues: dashboard ownership checks, MultiQC habitat filter, TabsTab href crash
+* Resolve CI failures: ruff import format and pyyaml version conflict
+* Add missing child tab screenshots for ampliseq demo dashboard
+
+#### **🚀 Improvements**
+* Streamline Docker Compose: embed MinIO by default, freeze image/package versions, inline critical env defaults so `.env` is optional, switch MongoDB to named volume for zero-clone quick-start
+* Reorganise and clean up `settings_models.py`
+* Add round-trip CI test and unit tests for YAML CLI validation
+
+---
+
+### **[v0.7.3-b7](https://github.com/depictio/depictio/releases/tag/v0.7.3-b7)** (February 17, 2026)
+
+#### **🐛 Fixes**
+* Resolve three demo mode issues: owner edit button visibility, tab copy naming, and MultiQC s3_location population on restore
+* Update CI/CD YAML files to use current naming conventions
+
+### **[v0.7.3-b6](https://github.com/depictio/depictio/releases/tag/v0.7.3-b6)** (February 17, 2026)
+
+#### **✨ Features**
+* Add DateRangePicker filter to MultiQC component with proper value normalization
+* Add theme switching support for MultiQC and Figure components using CSS theme variables
+* Add human-readable titles to interactive filter components
+* Improve stepper component selection UX with empty states and visual feedback
+* Add colored border around image tab icons for better visual distinction
+
+#### **🐛 Fixes**
+* Allow screenshot generation in single-user mode (remove auth dependency)
+* Resolve missing Add Tab and Edit Tab buttons in single-user mode
+* Fix MultiQC callback errors by separating view and design mode callbacks
+* Fix MultiQC component metadata not saved from GUI stepper workflow
+* Fix duplicate and remove component issues due to layout type mismatch
+* Fix stepper navigation by removing duplicate edit-page-context stores
+* Resolve Interactive component callback JavaScript errors
+* Fix fullscreen mode: implement native browser Fullscreen API and correct chart dimensions
+* Fix dashboard duplication: preserve icon colors, copy theme variant thumbnails, fix child tab listing
+* Fix cross-DC filtering for card components via link resolution
+* Allow anonymous users to use link resolution in single-user mode
+* Skip validation for empty-valued filters in runtime filter application
+* Fix DateRangePicker validation and normalization for figure and table callbacks
+
+#### **🚀 Improvements**
+* Add owner-only permission checks for screenshot generation
+* Implement consistent theme variables across dashboard styles
+* Simplify fullscreen and interactive filtering callback code
+* Improve card trend subtitle readability (2 decimal places)
+
+### **[v0.7.3-b5](https://github.com/depictio/depictio/releases/tag/v0.7.3-b5)** (February 9, 2026)
+
+#### **🐛 Fixes**
+* Fix debug menu auto-collapse script path in HTML templates (local dev + production)
+
+### **[v0.7.3-b4](https://github.com/depictio/depictio/releases/tag/v0.7.3-b4)** (February 9, 2026)
+
+#### **🐛 Fixes**
+* Fix demo tour popover callback errors across Management App pages
+* Enhance debug menu auto-collapse for Dash 3.x compatibility
+
+### **[v0.7.3-b3](https://github.com/depictio/depictio/releases/tag/v0.7.3-b3)** (February 9, 2026)
+
+#### **🚀 Improvements**
+* Optimize dashboard interactivity and fix WebSocket connection for K8s deployments
+
+### **[v0.7.3-b2](https://github.com/depictio/depictio/releases/tag/v0.7.3-b2)** (February 9, 2026)
+
+#### **🐛 Fixes**
+* Enable WebSocket callback on initial page load
+* Remove conflicting NGINX annotations for WebSocket
+
+### **[v0.7.3-b1](https://github.com/depictio/depictio/releases/tag/v0.7.3-b1)** (February 9, 2026)
+
+#### **🚀 Improvements**
+* Migrate from unauthenticated mode to demo + public mode architecture
+* Improve demo mode with walkthrough tour and temporary user support
+
+---
+
+## **[v0.7.2](https://github.com/depictio/depictio/releases/tag/v0.7.2)** (February 8, 2026)
+
+!!! success "Stable Release"
+    This is a stable release with auth mode improvements and guided tour features.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.2
+```
+
+### **✨ Features**
+
+* **Single User Mode**: Badge now clickable to navigate to /profile
+* **Guided Tour**: Added demo mode onboarding tour for new users
+* **Dashboard Import/Export**: Full import/export functionality integrated into New Dashboard modal
+* **WebSocket Events**: Real-time event system for dashboard updates
+* **Tab Management**: Enhanced tab editing with full CRUD and reordering capabilities
+
+### **🐛 Bug Fixes**
+
+* Skip auth modal callbacks in single-user mode
+* Fix scatter selection preservation on figure re-render
+* Fix dashboard creation in single-user mode for anonymous user
+* Fix debug menu collapse script loading across all modes
+* Harden public/demo mode dashboard visibility and tour behavior
+* Various E2E test fixes for auth flow changes
+
+### **🧹 Internal Changes**
+
+* Cypress upgrade and E2E tests for demo/single-user modes
+* UI refinements for Single User Mode badge and welcome section
+
+---
+
+## **[v0.7.1](https://github.com/depictio/depictio/releases/tag/v0.7.1)** (February 4, 2026)
+
+!!! success "Stable Release"
+    This is a stable release based on v0.7.1-b1, introducing tab management features.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.1
+```
+
+### **✨ Features**
+
+* **Tab Management**: Full CRUD operations with drag-and-drop reordering
+* **Smart Sidebar**: Dynamic tab selection with improved navigation
+* **Breadcrumb Navigation**: Dashboard/tab breadcrumb in header title
+
+### **🐛 Bug Fixes**
+
+* Fix header to use dashboard title instead of main_tab_name for parent display
+* Add parent_dashboard_title field to DashboardData model
+
+### **🚀 Improvements**
+
+* Simplify and consolidate tab management code
+* Add comprehensive unit tests for tab functionality
+
+---
+
+## **v0.7.1 Beta Releases**
+
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v0.7.1-b1](https://github.com/depictio/depictio/releases/tag/v0.7.1-b1)** (February 4, 2026)
+
+#### **✨ Features**
+* Implement full tab CRUD with reordering and smart sidebar
+* Show dashboard/tab breadcrumb in header title
+
+#### **🐛 Fixes**
+* Fix header parent display and add parent_dashboard_title field
+
+---
+
+## **[v0.7.0](https://github.com/depictio/depictio/releases/tag/v0.7.0)** (February 3, 2026)
+
+!!! success "Stable Release"
+    This is a stable release based on v0.7.0-b1, introducing Image component support.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.0
+ghcr.io/depictio/depictio:latest
+ghcr.io/depictio/depictio:stable
+```
+
+### **✨ Features**
+
+* **Image Component**: New Image data collection type with full dashboard integration
+    * Add images to dashboards with gallery and modal views
+    * Support for image cross-filtering with other data collections
+    * CLI registration and duplication support for Image components
+    * YAML dashboard import support for Image components
+    * Public image serving endpoint for authenticated access
+
+### **🚀 Improvements**
+
+* **Code Refactoring**: Moved cross-DC filtering logic to shared utilities for better reuse across components
+
+### **🐛 Bug Fixes**
+
+* **Environment Safety**: Commented out `DEPICTIO_MONGODB_WIPE` for safer development environments
+
+---
+
+## **v0.7.0 Beta Releases**
+
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v0.7.0-b1](https://github.com/depictio/depictio/releases/tag/v0.7.0-b1)** (February 3, 2026)
+
+#### **✨ Features**
+* Add image support to DC links and cross-filtering
+* Add Image component CLI registration and duplication support
+* Integrate Image component into dashboard stepper and viewer
+* Implement Image component with gallery and modal views
+* Add public image serving endpoint and fix S3 cleanup
+* Enable Image DC processing in CLI workflow
+* Add Image DC model with Table DC capabilities
+* Add image component support in YAML dashboard import
+
+#### **🚀 Improvements**
+* Refactor cross-DC filtering to shared utils for reuse
+
+#### **🐛 Fixes**
+* Comment out DEPICTIO_MONGODB_WIPE for safety in development
+* Various CI/CD fixes for Image component testing and validation
+
+---
+
+## **[v0.6.3-b1](https://github.com/depictio/depictio/releases/tag/v0.6.3-b1)** (February 1, 2026)
+
+!!! warning "Beta Release"
+    This is a pre-release version intended for testing. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.6.3-b1
+```
+
+### **✨ Features**
+
+* **Image Component Foundation**: Initial infrastructure for Image data collection type
+* **API Health Endpoint**: Added `/health` endpoint for Kubernetes readiness checks
+
+### **🐛 Bug Fixes**
+
+* **S3 Handling**: Handle `BucketAlreadyOwnedByYou` error gracefully
+* **S3 Cleanup**: Prevent HTTPException from killing worker during S3 cleanup, delay cleanup on startup
+* **CI/CD**: Multiple fixes for health checks, token handling, and dashboard verification
+
+### **🧹 Internal Changes**
+
+* Comprehensive unit tests for Image component changes
+* Extended dashboard CLI testing with DB verification
+
+---
+
 ## **[v0.6.2](https://github.com/depictio/depictio/releases/tag/v0.6.2)** (January 29, 2026)
 
 !!! success "Stable Release"

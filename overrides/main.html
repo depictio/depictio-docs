@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+  <link rel="preload" href="{{ 'fonts/Virgil.ttf' | url }}" as="font" type="font/ttf" crossorigin>
+{% endblock %}
+
 {% block announce %}
     Depictio is currently in active development and is not yet suitable for production use.
 {% endblock %}

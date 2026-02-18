@@ -1,101 +1,222 @@
 # Kubernetes Installation
 
-This guide will walk you through deploying Depictio on a Kubernetes cluster using Helm charts.
+Deploy Depictio on a Kubernetes cluster using the official Helm chart.
 
-## Prerequisites
+**Prerequisites**: Kubernetes 1.19+, Helm 3.2.0+, a PV provisioner (if persistence is enabled).
 
-Before you begin, ensure you have:
+---
 
-- Kubernetes 1.19+
-- Helm 3.2.0+
-- PV provisioner support in the underlying infrastructure (if persistence is enabled)
+## :material-rocket-launch: Quick Start
 
-## Installation Steps
-
-### Step 1: Clone the Repository
+### Step 1 — Clone and install
 
 ```bash
 git clone https://github.com/depictio/depictio.git
 cd depictio
+
+helm install depictio helm-charts/depictio \
+  -f helm-charts/depictio/values.yaml \
+  -n depictio --create-namespace
 ```
 
-### Step 2: Install the Chart
-
-To install the chart with the release name `depictio`:
+### Step 2 — Wait for pods
 
 ```bash
-helm install <RELEASE_NAME> depictio ./helm-charts/depictio -f ./helm-charts/depictio/values.yaml -n <YOUR_NAMESPACE>
+kubectl get pods -n depictio --watch
 ```
 
-This command deploys Depictio on the Kubernetes cluster with the default configuration.
+All pods should reach `Running` status: backend, frontend, mongo, minio, redis, celery-worker.
 
-### Step 3: Verify the Installation
+### Step 3 — Access Depictio
 
-Check that all pods are running:
+By default services are `ClusterIP`. Use port-forwarding to access locally:
 
 ```bash
-kubectl get pods -n <YOUR_NAMESPACE>
+kubectl port-forward -n depictio service/depictio-frontend 5080:5080
 ```
 
-You should see pods for the backend, frontend, MongoDB, and MinIO.
+Then open <http://localhost:5080>.
 
-## Accessing Depictio
+| Service | Port |
+|---------|------|
+| Frontend (Dash) | 5080 |
+| Backend API | 8058 |
+| MinIO Console | 9001 |
 
-After deploying the chart, you can access the Depictio application:
+---
 
-- If using ClusterIP (default), use port-forwarding to access the frontend service:
+## :material-cog-outline: Advanced Configuration
+
+### Custom values file
+
+Create a `my-values.yaml` to override defaults and pass it at install time:
 
 ```bash
-kubectl port-forward -n <YOUR_NAMESPACE> service/depictio-frontend 5080:80
+helm install depictio helm-charts/depictio \
+  -f helm-charts/depictio/values.yaml \
+  -f my-values.yaml \
+  -n depictio --create-namespace
 ```
 
-Then visit <http://localhost:5080> in your browser.
-
-## Customizing the Installation
-
-You can customize the chart by overriding its values in a separate YAML file:
+To see all configurable parameters:
 
 ```bash
-helm install <RELEASE_NAME> ./helm-charts/depictio \
-    -f ./helm-charts/depictio/values.yaml \
-    -f ./my-custom-values.yaml \
-    -n <YOUR_NAMESPACE>
+helm show values helm-charts/depictio
 ```
 
-For a complete list of configurable parameters, refer to the `values.yaml` file or run:
+### Real-world example (EMBL)
+
+The repository includes the EMBL demo deployment values files as a reference.
+They demonstrate the **layered approach**: a shared base file overlaid by
+environment-specific files.
+
+| File | Purpose |
+|------|---------|
+| [`values-embl-demo-base.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-demo-base.yaml) | Shared settings (storage, resources, auth, MinIO) |
+| [`values-embl-demo.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-demo.yaml) | Demo overlay (ingress, image tags, replicas) |
+| [`values-embl-demo-dev.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-demo-dev.yaml) | Dev overlay (debug flags, reduced resources) |
+| [`values-embl-auth.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-auth.yaml) | Multi-user auth + Google OAuth |
+
+Usage pattern:
 
 ```bash
-helm show values ./helm-charts/depictio
+helm install depictio helm-charts/depictio \
+  -f helm-charts/depictio/values.yaml \
+  -f helm-charts/depictio/values-embl-demo-base.yaml \
+  -f helm-charts/depictio/values-embl-demo.yaml \
+  -n depictio --create-namespace
 ```
 
-## Uninstalling
+!!! note "Secrets file"
+    `values-embl-secrets.yaml` is gitignored — it holds MinIO passwords and OAuth
+    secrets that must be created locally. See `values-embl-auth.yaml` for the
+    expected key names.
 
-To uninstall/delete the <RELEASE_NAME> deployment:
+### Single-user vs Multi-user mode
+
+```yaml
+# my-values.yaml
+backend:
+  env:
+    DEPICTIO_AUTH_SINGLE_USER_MODE: "true"   # default — no login required
+    # DEPICTIO_AUTH_PUBLIC_MODE: "true"        # public read-only with sign-in
+```
+
+### MinIO credentials
+
+```yaml
+# my-values.yaml
+secrets:
+  minioRootUser: "myadmin"
+  minioRootPassword: "mysecurepassword"
+```
+
+### External S3 / Bring Your Own MinIO
+
+```yaml
+# my-values.yaml
+minio:
+  enabled: false   # disable bundled MinIO
+
+backend:
+  env:
+    DEPICTIO_MINIO_PUBLIC_URL: "https://your-minio-host.example.com"
+    DEPICTIO_MINIO_EXTERNAL_SERVICE: "true"
+    DEPICTIO_MINIO_ROOT_USER: "your-access-key"
+    DEPICTIO_MINIO_ROOT_PASSWORD: "your-secret-key"
+```
+
+### Ingress
+
+```yaml
+# my-values.yaml
+ingress:
+  enabled: true
+  host: depictio.yourdomain.com
+  tls:
+    enabled: true
+    secretName: depictio-tls
+```
+
+### Celery workers (background callbacks)
+
+The Celery worker is included and enabled by default (`celery.enabled: true`).
+Design mode always requires Celery. View mode behaviour is controlled separately:
+
+```yaml
+# my-values.yaml
+celery:
+  replicas: 1
+  env:
+    DEPICTIO_CELERY_WORKERS: "4"
+    DEPICTIO_CELERY_ENABLED: "true"   # async view mode (recommended for production)
+```
+
+### Resource limits
+
+```yaml
+# my-values.yaml
+backend:
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "500m"
+    limits:
+      memory: "4Gi"
+      cpu: "2"
+
+frontend:
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "2Gi"
+      cpu: "1"
+```
+
+### Google Analytics
+
+```yaml
+# my-values.yaml — or use the bundled example
+helm upgrade depictio helm-charts/depictio \
+  -f helm-charts/depictio/values.yaml \
+  -f helm-charts/depictio/examples/values-google-analytics.yaml
+```
+
+---
+
+## :material-wrench: Managing Releases
+
+| Action | Command |
+|--------|---------|
+| Upgrade | `helm upgrade depictio helm-charts/depictio -f values.yaml -n depictio` |
+| Rollback | `helm rollback depictio -n depictio` |
+| Uninstall | `helm uninstall depictio -n depictio` |
+| Show history | `helm history depictio -n depictio` |
+
+---
+
+## :material-bug: Troubleshooting
 
 ```bash
-helm uninstall <RELEASE_NAME>
+# Check pod status
+kubectl get pods -n depictio
+
+# Inspect logs
+kubectl logs -n depictio deployment/depictio-backend
+kubectl logs -n depictio deployment/depictio-frontend
+
+# Describe a failing pod
+kubectl describe pod -n depictio <pod-name>
 ```
 
-## Key Configuration Parameters
+Common causes: insufficient storage class, PVC pending, image pull errors.
 
-Here are some of the key parameters you can configure:
+---
 
-### Storage
+## Next Steps
 
-The chart supports persistence for various components:
-
-- MongoDB data
-- MinIO storage
-- Screenshots
-- Example data
-
-By default, all persistence is enabled with appropriate storage sizes.
-
-### Services
-
-- Backend API: Accessible on port 8058
-- Frontend: Accessible on port 5080
-- MongoDB: Accessible on port 27018
-- MinIO: Accessible on ports 9000 (API) and 9001 (Console)
-
-For more detailed configuration options, please refer to the [Helm chart README](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/README.md).
+- [Get started with Depictio](../usage/get_started.md)
+- [Create your first dashboard](../usage/guides/dashboard_creation.md)
+- [Ingest data with the CLI](../depictio-cli/usage.md)

@@ -83,17 +83,24 @@ Setting those values will disable the built-in MinIO service and use the externa
 
 ## Authentication Configuration
 
-### Unauthenticated Mode
-
-Enable unauthenticated mode to allow anonymous access to your Depictio instance:
+Depictio supports four authentication modes. See [Authentication Modes](../usage/guides/authentication-modes.md) for a full comparison.
 
 ```bash
-# Enable unauthenticated mode (allows anonymous access)
-DEPICTIO_AUTH_UNAUTHENTICATED_MODE=true
+# Single-User Mode — personal instance, no login, full admin access
+DEPICTIO_AUTH_SINGLE_USER_MODE=true
 
-# Anonymous user configuration
-DEPICTIO_AUTH_ANONYMOUS_USER_EMAIL=anonymous@depict.io
+# Public Mode — anonymous read-only, sign in to create content
+DEPICTIO_AUTH_PUBLIC_MODE=true
+
+# Demo Mode — public mode + guided interactive tour
+DEPICTIO_AUTH_PUBLIC_MODE=true
+DEPICTIO_AUTH_DEMO_MODE=true
+
+# Temporary user session duration (Public/Demo modes)
 DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS=24
+
+# Backward-compatible alias for Public Mode:
+# DEPICTIO_AUTH_UNAUTHENTICATED_MODE=true
 ```
 
 ### Google OAuth Integration
@@ -389,123 +396,19 @@ docker compose up
 # No need for profiles or conditional startup
 ```
 
-### Kubernetes/Helm Compatibility
-
-!!! info "K8S/Helm Support Coming Soon"
-
-    Background callbacks are currently only supported in Docker Compose deployments. Kubernetes/Helm support is **coming soon** in an upcoming release.
-
 ## Development Settings
 
-Configuration for development and testing:
+Enable debug logging and hot-reload:
 
 ```bash
-# Development Mode
-DEV_MODE=true
+# Enable development mode (hot-reload, verbose logging)
+DEPICTIO_DEV_MODE=true
+
+# Enable Playwright debug mode (browser automation diagnostics)
 DEPICTIO_PLAYWRIGHT_DEV_MODE=true
-DEPICTIO_TEST_MODE=true
 
-# Version Information
-DEPICTIO_VERSION=latest
-```
-
-## Docker/Kubernetes Configuration
-
-For containerized deployments:
-
-```bash
-# Container Configuration
-UID=502
-GID=20
-
-# Kubernetes-specific (if deploying to Kubernetes)
-KUBERNETES_NAMESPACE=depictio
-KUBERNETES_NODE_NAME=node-1
-```
-
-## Complete Example
-
-Here's a complete example configuration for a production deployment with all features enabled:
-
-```bash
-# ============================================================================
-# DEPICTIO PRODUCTION CONFIGURATION
-# ============================================================================
-
-# Application Context
-DEPICTIO_CONTEXT=server
-DEPICTIO_LOGGING_VERBOSITY_LEVEL=INFO
-DEPICTIO_VERSION=latest
-
-# MinIO Storage Configuration
-DEPICTIO_MINIO_ROOT_USER=minio
-DEPICTIO_MINIO_ROOT_PASSWORD=secure-minio-password
-DEPICTIO_MINIO_PUBLIC_URL=https://minio.yourdomain.com
-
-# MongoDB Configuration
-DEPICTIO_MONGODB_DB_NAME=depictioDB
-DEPICTIO_MONGODB_PORT=27017
-DEPICTIO_MONGODB_SERVICE_NAME=mongo
-DEPICTIO_MONGODB_WIPE=false
-
-# FastAPI Server Configuration
-DEPICTIO_FASTAPI_HOST=0.0.0.0
-DEPICTIO_FASTAPI_PORT=8058
-DEPICTIO_FASTAPI_SERVICE_NAME=depictio-backend
-DEPICTIO_FASTAPI_PUBLIC_URL=https://api.yourdomain.com
-
-# Dash Frontend Configuration
-DEPICTIO_DASH_HOST=0.0.0.0
-DEPICTIO_DASH_PORT=5080
-DEPICTIO_DASH_SERVICE_NAME=depictio-frontend
-
-# Authentication Configuration
-DEPICTIO_AUTH_UNAUTHENTICATED_MODE=false
-DEPICTIO_AUTH_KEYS_DIR=depictio/keys
-DEPICTIO_AUTH_KEYS_ALGORITHM=RS256
-
-# Google OAuth Configuration
-DEPICTIO_AUTH_GOOGLE_OAUTH_ENABLED=true
-DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID=your-client-id.apps.googleusercontent.com
-DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET=your-client-secret
-DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI=https://yourdomain.com/auth/google/callback
-
-# Backup Configuration
-DEPICTIO_BACKUP_BASE_DIR=/var/backups/depictio
-DEPICTIO_BACKUP_BACKUP_DIR=backups
-DEPICTIO_BACKUP_S3_BACKUP_STRATEGY=s3_to_s3
-DEPICTIO_BACKUP_BACKUP_S3_ENABLED=true
-DEPICTIO_BACKUP_BACKUP_S3_BUCKET=depictio-backups
-DEPICTIO_BACKUP_BACKUP_S3_ENDPOINT_URL=https://s3.amazonaws.com
-DEPICTIO_BACKUP_BACKUP_S3_ACCESS_KEY=your-backup-access-key
-DEPICTIO_BACKUP_BACKUP_S3_SECRET_KEY=your-backup-secret-key
-DEPICTIO_BACKUP_BACKUP_S3_REGION=us-east-1
-DEPICTIO_BACKUP_COMPRESS_LOCAL_BACKUPS=true
-DEPICTIO_BACKUP_BACKUP_FILE_RETENTION_DAYS=30
-
-# Performance Configuration
-DEPICTIO_PERFORMANCE_HTTP_CLIENT_TIMEOUT=30
-DEPICTIO_PERFORMANCE_API_REQUEST_TIMEOUT=60
-DEPICTIO_PERFORMANCE_BROWSER_NAVIGATION_TIMEOUT=60000
-
-# JBrowse Integration (Coming Soon - see Roadmap)
-# DEPICTIO_JBROWSE_ENABLED=false
-
-# Analytics Configuration
-DEPICTIO_ANALYTICS_ENABLED=true
-DEPICTIO_ANALYTICS_SESSION_TIMEOUT_MINUTES=30
-DEPICTIO_ANALYTICS_CLEANUP_DAYS=90
-DEPICTIO_ANALYTICS_TRACK_ANONYMOUS_USERS=false
-DEPICTIO_ANALYTICS_CLEANUP_ENABLED=true
-
-# Google Analytics Configuration
-DEPICTIO_GOOGLE_ANALYTICS_ENABLED=true
-DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-XXXXXXXXXX
-
-# Development Settings (set to false for production)
-DEV_MODE=false
-DEPICTIO_PLAYWRIGHT_DEV_MODE=false
-DEPICTIO_TEST_MODE=false
+# Pin a specific version (default: latest)
+DEPICTIO_VERSION=0.7.3-b7
 ```
 
 ## Analytics Configuration

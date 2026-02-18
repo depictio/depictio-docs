@@ -24,7 +24,6 @@ For detailed information on how to contribute, see the [Contributing Guide](cont
 
 | Page | Description |
 |------|-------------|
-| [Modularity](modularity.md) | Code architecture, object model, and API structure |
 | [Contributing Guide](contributing.md) | How to set up development environment and contribute |
 
 ## Getting Started
@@ -32,7 +31,7 @@ For detailed information on how to contribute, see the [Contributing Guide](cont
 To begin contributing to Depictio, we recommend:
 
 1. Familiarize yourself with the [project architecture](../features/architecture.md)
-2. Understand the [code modularity](modularity.md) and object model
+2. Understand the [data model](../features/data-model.md) and object hierarchy
 3. Read the [contributing guidelines](contributing.md)
 4. Set up your development environment
 5. Start with small, manageable contributions

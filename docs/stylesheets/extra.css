@@ -531,18 +531,6 @@ svg:hover path#shape-7 {
     text-decoration: none;
 }
 
-.gitpod-btn {
-    background: rgba(255, 138, 0, 0.8);
-    color: white !important;
-    border: 2px solid rgba(255, 138, 0, 1);
-}
-
-.gitpod-btn:hover {
-    background: rgba(255, 138, 0, 0.9);
-    color: white !important;
-    border: 2px solid rgba(255, 138, 0, 1);
-}
-
 .install-btn {
     background: rgba(69, 184, 172, 0.8);
     color: white !important;

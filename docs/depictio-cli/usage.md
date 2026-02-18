@@ -360,51 +360,57 @@ Manage dashboard YAML files for the [Dashboard YAML Management](../features/yaml
 
 #### `dashboard validate`
 
-Validate a single dashboard YAML file against the DashboardDataLite schema locally.
+Validate a dashboard YAML file. Runs in two passes: schema + domain constraints (always), then server schema validation (when `--config` is provided).
 
 ```bash
 depictio-cli dashboard validate <yaml_file> [OPTIONS]
 ```
 
-| Parameter          | Type      | Default      | Description                                        |
-| ------------------ | --------- | ------------ | -------------------------------------------------- |
-| `yaml_file`        | `path`    | **required** | Path to YAML dashboard file                        |
-| `--verbose` / `-v` | `boolean` | `false`      | Show detailed validation output including warnings |
+| Parameter           | Type      | Default      | Description                                                       |
+| ------------------- | --------- | ------------ | ----------------------------------------------------------------- |
+| `yaml_file`         | `path`    | **required** | Path to YAML dashboard file                                       |
+| `--config` / `-c`   | `string`  | `null`       | CLI config file — enables server schema validation (Pass 2)       |
+| `--offline`         | `boolean` | `false`      | Skip server schema check even when `--config` is provided         |
+| `--verbose` / `-v`  | `boolean` | `false`      | Show detailed validation output                                   |
+| `--api`             | `string`  | from config  | API base URL                                                      |
 
 ```bash
-# Basic validation
+# Schema + domain only (no server needed)
 depictio-cli dashboard validate my_dashboard.yaml
 
-# With verbose output
-depictio-cli dashboard validate my_dashboard.yaml --verbose
+# Full validation including server column check
+depictio-cli dashboard validate my_dashboard.yaml --config ~/.depictio/admin_config.yaml
+
+# Force offline even when config is provided
+depictio-cli dashboard validate my_dashboard.yaml --config ~/.depictio/admin_config.yaml --offline
 ```
 
 **Example Output (Success):**
 
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
 <pre style="margin: 0; color: var(--md-code-fg-color);">Validating: <span style="color: #c2185b;">my_dashboard.yaml</span>
+  Pass 1: schema + domain constraints
+  <span style="color: #2e7d32;">✓ Schema + domain OK</span>
+  Pass 2: server schema validation
+  <span style="color: #2e7d32;">✓ Server schema OK</span>
+
 <span style="color: #2e7d32;">✓ Validation passed</span>
-  Errors: 0
-  Warnings: 0
 </pre>
 </div>
 
-**Example Output (Failure):**
+**Example Output (Failure — per-component error table):**
 
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
 <pre style="margin: 0; color: var(--md-code-fg-color);">Validating: <span style="color: #c2185b;">my_dashboard.yaml</span>
-
-<span style="color: #c62828;">✗ Validation failed</span>
-  Errors: 2
-
-┌──────────────────────────────────────────────────────────────────┐
-│                       Validation Errors                          │
-├─────────────────────┬────────────────┬───────────────────────────┤
-│ <span style="color: #0097a7;">Component</span>           │ <span style="color: #c2185b;">Field</span>          │ <span style="color: #c62828;">Message</span>                   │
-├─────────────────────┼────────────────┼───────────────────────────┤
-│ <span style="color: #0097a7;">-</span>                   │ <span style="color: #c2185b;">component_type</span> │ <span style="color: #c62828;">Invalid value 'graphs'</span>    │
-│ <span style="color: #0097a7;">-</span>                   │ <span style="color: #c2185b;">workflow_tag</span>   │ <span style="color: #c62828;">Field required</span>            │
-└─────────────────────┴────────────────┴───────────────────────────┘
+  Pass 1: schema + domain constraints
+<span style="color: #c62828;">✗ Schema/domain validation failed</span>
+                         Validation Errors
+┏━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Component     ┃ Field     ┃ Message                                            ┃
+┡━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ pie-chart     │ -         │ Invalid visu_type 'pie' for mode='ui'.             │
+│               │           │ Valid values: scatter, line, bar, box, histogram   │
+└───────────────┴───────────┴────────────────────────────────────────────────────┘
 </pre>
 </div>
 
@@ -418,14 +424,15 @@ Import a dashboard YAML file to the server. The project is determined from the Y
 depictio-cli dashboard import <yaml_file> [OPTIONS]
 ```
 
-| Parameter          | Type      | Default      | Description                                           |
-| ------------------ | --------- | ------------ | ----------------------------------------------------- |
-| `yaml_file`        | `path`    | **required** | Path to YAML dashboard file                           |
-| `--config` / `-c`  | `string`  | `null`       | Path to CLI config file (required unless `--dry-run`) |
-| `--project` / `-p` | `string`  | `null`       | Project ID (overrides `project_tag` in YAML)          |
-| `--overwrite`      | `boolean` | `false`      | Update existing dashboard with same title             |
-| `--dry-run`        | `boolean` | `false`      | Validate only, don't import                           |
-| `--api`            | `string`  | from config  | API base URL                                          |
+| Parameter          | Type      | Default      | Description                                                    |
+| ------------------ | --------- | ------------ | -------------------------------------------------------------- |
+| `yaml_file`        | `path`    | **required** | Path to YAML dashboard file                                    |
+| `--config` / `-c`  | `string`  | `null`       | Path to CLI config file (required unless `--dry-run`)          |
+| `--project` / `-p` | `string`  | `null`       | Project ID (overrides `project_tag` in YAML)                   |
+| `--overwrite`      | `boolean` | `false`      | Update existing dashboard with same title                      |
+| `--dry-run`        | `boolean` | `false`      | Validate schema + domain only, don't import (no server needed) |
+| `--offline`        | `boolean` | `false`      | Skip server schema check (column names not verified)           |
+| `--api`            | `string`  | from config  | API base URL                                                   |
 
 ```bash
 # Validate locally without server (no config needed)
@@ -983,4 +990,4 @@ depictio-cli data link delete --project-config-path ./config.yaml --link-id abc1
 
 # Delete without confirmation
 depictio-cli data link delete --project-config-path ./config.yaml --link-id abc123 --force
-``` --> 
+``` -->

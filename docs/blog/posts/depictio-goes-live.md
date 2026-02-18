@@ -569,18 +569,6 @@ Access the live demo at [demo.depictio.embl.org](https://demo.depictio.embl.org)
     margin-top: -2px;
   }
 
-  .md-button--gitpod {
-    background-color: rgb(252, 249, 244) !important;
-    border-color: #ff8a00 !important;
-    color: #ff8a00 !important;
-  }
-
-  .md-button--gitpod:hover {
-    background-color: #e67e00 !important;
-    border-color: #e67e00 !important;
-    color: white !important;
-  }
-
   @media (max-width: 768px) {
     .demo-unavailable-message {
       padding: 1rem;
@@ -790,10 +778,7 @@ async function checkDemoAvailability() {
         <h3>Live Demo Temporarily Unavailable</h3>
         <p>The interactive demo is currently not accessible. Please try again later or <a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
         <div class="demo-alternative-actions">
-          <a href="https://gitpod.io/#https://github.com/depictio/depictio/releases/latest" class="md-button md-button--gitpod" target="_blank" rel="noopener">
-            <img src="../../images/gitpod-logo-mark.svg" alt="Gitpod" width="16" height="16">
-            Open in Gitpod
-          </a>
+          <a href="https://codespaces.new/depictio/depictio" class="md-button" target="_blank" rel="noopener">Open in Codespaces</a>
           <a href="../../usage/get_started/" class="md-button">View Documentation</a>
         </div>
       </div>

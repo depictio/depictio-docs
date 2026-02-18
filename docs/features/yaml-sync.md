@@ -9,7 +9,7 @@ description: "Manage dashboards as code using YAML files with depictio-cli impor
 Depictio supports managing dashboards as human-readable YAML files using the `depictio-cli` command-line tool. This enables Infrastructure-as-Code (IaC) workflows, version control integration, and reproducible dashboard deployments.
 
 !!! info "Implementation Reference"
-    The DashboardDataLite model and CLI dashboard commands were introduced in [:material-github: PR #663](https://github.com/depictio/depictio/pull/663){ target="\_blank" }.
+    The DashboardDataLite model and CLI dashboard commands were introduced in [:material-github: PR #663](https://github.com/depictio/depictio/pull/663){ target="\_blank" }. Domain validation (enum constraints, cross-field rules, server schema checks) was added in [:material-github: PR #684](https://github.com/depictio/depictio/pull/684){ target="\_blank" }.
 
 ## Overview
 
@@ -29,74 +29,111 @@ Depictio supports managing dashboards as human-readable YAML files using the `de
 - **Infrastructure-as-Code**: Manage dashboards alongside your project configuration
 - **Human-Readable Format**: Edit dashboards directly in YAML (60-80 lines vs 500+ in MongoDB)
 - **Reproducible Deployments**: Import dashboards to any Depictio instance
-- **Validation**: Validate YAML locally before deploying to server
+- **Early Validation**: Catch invalid field values and incompatible combinations before importing
 
 ## CLI Commands
 
 The `depictio-cli dashboard` command group provides three commands for YAML management:
 
-| Command    | Description                  | Server Required          |
-| ---------- | ---------------------------- | ------------------------ |
-| `validate` | Validate YAML schema locally | No                       |
-| `import`   | Import YAML to server        | Yes (unless `--dry-run`) |
-| `export`   | Export dashboard to YAML     | Yes                      |
+| Command    | Description                              | Server Required          |
+| ---------- | ---------------------------------------- | ------------------------ |
+| `validate` | Validate YAML (schema + server schema)   | Optional (for Pass 2)    |
+| `import`   | Import YAML to server                    | Yes (unless `--dry-run`) |
+| `export`   | Export dashboard to YAML                 | Yes                      |
 
 ### Validate
 
-Validate a dashboard YAML file against the DashboardDataLite schema locally without server connection.
+Validate a dashboard YAML file. Runs in two passes:
+
+- **Pass 1 — schema + domain** (always, no server required): checks required fields, enum values (`visu_type`, `column_type`), and cross-field rules (aggregation × column_type, interactive_type × column_type, mode/code_content).
+- **Pass 2 — server schema** (default when `--config` is provided): resolves each component's `workflow_tag` + `data_collection_tag` against the live delta table schema, checks that `column_name` exists, and validates aggregation/interactive type against the inferred column type. Skip with `--offline`.
 
 ```bash
 depictio-cli dashboard validate <yaml_file> [OPTIONS]
 ```
 
-| Option            | Description                     |
-| ----------------- | ------------------------------- |
-| `--verbose`, `-v` | Show detailed validation output |
+| Option              | Description                                                              |
+| ------------------- | ------------------------------------------------------------------------ |
+| `--config`, `-c`    | Path to CLI config file (enables server schema validation — Pass 2)      |
+| `--offline`         | Skip server schema check (Pass 1 only — useful without server access)    |
+| `--verbose`, `-v`   | Show detailed validation output                                          |
+| `--api`             | API base URL (default: from config)                                      |
 
 **Examples:**
 
 ```bash
-# Basic validation
+# Schema + domain only (no server needed)
 depictio-cli dashboard validate my_dashboard.yaml
 
-# Verbose output with warnings
-depictio-cli dashboard validate my_dashboard.yaml --verbose
+# Full validation including server column check
+depictio-cli dashboard validate my_dashboard.yaml --config ~/.depictio/admin_config.yaml
+
+# Force offline even when config is provided
+depictio-cli dashboard validate my_dashboard.yaml --config ~/.depictio/admin_config.yaml --offline
 ```
 
-**Example Output:**
+**Example Output (all passes OK):**
 
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
-<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Validating:</span> <span style="color: #c2185b;">my_dashboard.yaml</span>
+<pre style="margin: 0; color: var(--md-code-fg-color);">Validating: <span style="color: #c2185b;">my_dashboard.yaml</span>
+  Pass 1: schema + domain constraints
+  <span style="color: #2e7d32;">✓ Schema + domain OK</span>
+  Pass 2: server schema validation
+  <span style="color: #2e7d32;">✓ Server schema OK</span>
+
 <span style="color: #2e7d32;">✓ Validation passed</span>
-  Errors: 0
-  Warnings: 0
+</pre>
+</div>
+
+**Example Output (domain error — invalid visu_type):**
+
+<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
+<pre style="margin: 0; color: var(--md-code-fg-color);">Validating: <span style="color: #c2185b;">my_dashboard.yaml</span>
+  Pass 1: schema + domain constraints
+<span style="color: #c62828;">✗ Schema/domain validation failed</span>
+                         Validation Errors
+┏━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Component     ┃ Field     ┃ Message                                            ┃
+┡━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ pie-chart     │ -         │ Invalid visu_type 'pie' for mode='ui'.             │
+│               │           │ Valid values: scatter, line, bar, box, histogram   │
+│ treemap-chart │ -         │ Invalid visu_type 'treemap' for mode='ui'.         │
+│               │           │ Valid values: scatter, line, bar, box, histogram   │
+└───────────────┴───────────┴────────────────────────────────────────────────────┘
 </pre>
 </div>
 
 ### Import
 
-Import a dashboard YAML file to the server. The project is determined from the YAML `project_tag` field or the `--project` option.
+Import a dashboard YAML file to the server. Always runs schema + domain validation first (Pass 1). Also runs server schema validation by default (Pass 2) — skip with `--offline`.
 
 ```bash
 depictio-cli dashboard import <yaml_file> [OPTIONS]
 ```
 
-| Option            | Description                                           |
-| ----------------- | ----------------------------------------------------- |
-| `--config`, `-c`  | Path to CLI config file (required unless `--dry-run`) |
-| `--project`, `-p` | Project ID (overrides `project_tag` in YAML)          |
-| `--overwrite`     | Update existing dashboard with same title             |
-| `--dry-run`       | Validate only, don't import                           |
-| `--api`           | API base URL (default: from config)                   |
+| Option              | Description                                                    |
+| ------------------- | -------------------------------------------------------------- |
+| `--config`, `-c`    | Path to CLI config file (required unless `--dry-run`)          |
+| `--project`, `-p`   | Project ID (overrides `project_tag` in YAML)                   |
+| `--overwrite`       | Update existing dashboard with same title                      |
+| `--dry-run`         | Validate schema + domain only, don't import (no server needed) |
+| `--offline`         | Skip server schema check (column names not verified)           |
+| `--api`             | API base URL (default: from config)                            |
+
+!!! note "Validation before import"
+    `dashboard import` always validates your YAML before sending it to the server. A failed validation aborts the import — you never import a dashboard that fails schema or domain checks.
 
 **Examples:**
 
 ```bash
-# Validate locally without server (no config needed)
+# Schema + domain validation only (no config, no import)
 depictio-cli dashboard import dashboard.yaml --dry-run
 
-# Import to server
+# Full validation + import (server schema check runs by default)
 depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml
+
+# Import without server schema check
+depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --offline
 
 # Update existing dashboard with same title
 depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --overwrite
@@ -136,11 +173,11 @@ Export a dashboard from the server to a YAML file.
 depictio-cli dashboard export <dashboard_id> [OPTIONS]
 ```
 
-| Option           | Description                                  |
-| ---------------- | -------------------------------------------- |
-| `--config`, `-c` | Path to CLI config file (required)           |
-| `--output`, `-o` | Output file path (default: `dashboard.yaml`) |
-| `--api`          | API base URL (default: from config)          |
+| Option            | Description                                  |
+| ----------------- | -------------------------------------------- |
+| `--config`, `-c`  | Path to CLI config file (required)           |
+| `--output`, `-o`  | Output file path (default: `dashboard.yaml`) |
+| `--api`           | API base URL (default: from config)          |
 
 **Examples:**
 
@@ -165,7 +202,7 @@ project_tag: Project_Name
 
 components:
   - tag: component-identifier
-    component_type: figure|card|interactive|table|image
+    component_type: figure|card|interactive|table|image|multiqc
     workflow_tag: engine/workflow_name
     data_collection_tag: dc_tag
     # Component-specific fields...
@@ -209,7 +246,6 @@ components:
     data_collection_tag: iris_table
     aggregation: average
     column_name: sepal.length
-    column_type: float64
     icon_name: mdi:leaf
     icon_color: "#8BC34A"
 
@@ -220,7 +256,6 @@ components:
     data_collection_tag: iris_table
     interactive_component_type: MultiSelect
     column_name: variety
-    column_type: object
     custom_color: "#858585"
 
   # Interactive: RangeSlider filter
@@ -230,14 +265,12 @@ components:
     data_collection_tag: iris_table
     interactive_component_type: RangeSlider
     column_name: sepal.length
-    column_type: float64
 
   # Table: Data display
   - tag: data-table
     component_type: table
     workflow_tag: python/iris_workflow
     data_collection_tag: iris_table
-    page_size: 10
 
   # Image: Gallery component
   - tag: sample-gallery
@@ -245,30 +278,42 @@ components:
     workflow_tag: python/image_workflow
     data_collection_tag: sample_images
     image_column: image_path
-    s3_base_folder: "s3://bucket/images/"
     thumbnail_size: 150
     columns: 3
     max_images: 9
+
+  # MultiQC: Quality control report
+  - tag: fastqc-quality
+    component_type: multiqc
+    workflow_tag: python/nf_workflow
+    data_collection_tag: multiqc_report
+    selected_module: fastqc
+    selected_plot: per_base_sequence_quality
 ```
 
-### Component Types Reference
+## Component Types Reference
 
-| Type          | Description                                    | Key Fields                                  |
-| ------------- | ---------------------------------------------- | ------------------------------------------- |
-| `figure`      | Visualizations (scatter, box, histogram, etc.) | `visu_type`, `dict_kwargs`                  |
-| `card`        | Metric cards with aggregations                 | `aggregation`, `column_name`, `column_type` |
-| `interactive` | Filters (RangeSlider, MultiSelect)             | `interactive_component_type`, `column_name` |
-| `table`       | Data tables                                    | `page_size`                                 |
-| `image`       | Image galleries from S3/MinIO                  | `image_column`, `s3_base_folder`            |
+| Type          | Description                                    | Required Fields                                          |
+| ------------- | ---------------------------------------------- | -------------------------------------------------------- |
+| `figure`      | Plotly charts (scatter, box, histogram, etc.)  | `visu_type` (ui mode) or `code_content` (code mode)     |
+| `card`        | Metric cards with aggregations                 | `aggregation`, `column_name`                             |
+| `interactive` | Filters (RangeSlider, MultiSelect, etc.)       | `interactive_component_type`, `column_name`              |
+| `table`       | Data tables                                    | _(none beyond base fields)_                              |
+| `image`       | Image galleries from S3/MinIO                  | `image_column`                                           |
+| `multiqc`     | MultiQC quality control report viewer          | `selected_module`, `selected_plot`                       |
 
-#### Figure Component
+### Figure Component
+
+Two rendering modes are supported:
+
+**UI Mode** (default) — select a chart type and pass Plotly Express parameters:
 
 ```yaml
 - tag: scatter-plot
   component_type: figure
   workflow_tag: python/workflow_name
   data_collection_tag: table_dc
-  visu_type: scatter # scatter, box, histogram, bar, line, pie, etc.
+  visu_type: scatter       # see valid values below
   dict_kwargs:
     x: column_x
     y: column_y
@@ -276,120 +321,187 @@ components:
     title: Chart Title
 ```
 
-**Supported chart types:** `scatter`, `box`, `histogram`, `bar`, `line`, `area`, `violin`, `strip`, `pie`, `sunburst`, `treemap`, `heatmap`, `density_contour`, `density_heatmap`
+**Valid `visu_type` values (UI mode):** `scatter`, `line`, `bar`, `box`, `histogram`
 
-#### Card Component
+**Code Mode** — write arbitrary Python/Plotly code for full flexibility:
+
+```yaml
+- tag: custom-plot
+  component_type: figure
+  workflow_tag: python/workflow_name
+  data_collection_tag: table_dc
+  mode: code
+  code_content: |
+    import plotly.express as px
+    fig = px.scatter_matrix(df, dimensions=["sepal.length", "sepal.width", "petal.length"])
+```
+
+!!! note "Code mode and visu_type"
+    `visu_type` is not validated when `mode: code`. Any Plotly chart can be built in code mode. `code_content` must be non-empty when `mode: code`.
+
+**Selection filtering** — enable lasso/box selection to filter linked components:
+
+```yaml
+- tag: scatter-with-selection
+  component_type: figure
+  visu_type: scatter
+  selection_enabled: true
+  selection_column: sample_id   # required when selection_enabled=true
+  # ...
+```
+
+### Card Component
 
 ```yaml
 - tag: metric-card
   component_type: card
   workflow_tag: python/workflow_name
   data_collection_tag: table_dc
-  aggregation: average # count, sum, mean, average, median, min, max, nunique
+  aggregation: average
   column_name: numeric_column
-  column_type: float64 # float64, int64, object
+  column_type: float64     # optional — enables offline aggregation validation
   icon_name: mdi:chart-line
   icon_color: "#2196F3"
 ```
 
-#### Interactive Component
+**Aggregation × column_type compatibility:**
+
+| column_type  | Valid aggregations                                                              |
+| ------------ | ------------------------------------------------------------------------------- |
+| `int64`      | `count`, `sum`, `average`, `median`, `min`, `max`, `range`, `variance`, `std_dev`, `skewness`, `kurtosis` |
+| `float64`    | `count`, `sum`, `average`, `median`, `min`, `max`, `range`, `variance`, `std_dev`, `percentile`, `skewness`, `kurtosis` |
+| `bool`       | `count`, `sum`, `min`, `max`                                                    |
+| `datetime`   | `count`, `min`, `max`                                                           |
+| `timedelta`  | `count`, `sum`, `min`, `max`                                                    |
+| `category`   | `count`, `mode`                                                                 |
+| `object`     | `count`, `mode`, `nunique`                                                      |
+
+!!! tip "column_type is optional"
+    If you omit `column_type`, validation against the compatibility table is skipped offline. When `--config` is provided, the column type is inferred from the server schema and used for validation automatically.
+
+### Interactive Component
 
 ```yaml
-# MultiSelect filter
+# MultiSelect — for categorical/text columns
 - tag: category-filter
   component_type: interactive
   workflow_tag: python/workflow_name
   data_collection_tag: table_dc
   interactive_component_type: MultiSelect
   column_name: category
-  column_type: object
 
-# RangeSlider filter
+# RangeSlider — for numeric columns
 - tag: numeric-filter
   component_type: interactive
   workflow_tag: python/workflow_name
   data_collection_tag: table_dc
   interactive_component_type: RangeSlider
   column_name: value
-  column_type: float64
+  column_type: float64     # optional — enables offline type compatibility check
+
+# DateRangePicker — for datetime columns
+- tag: date-filter
+  component_type: interactive
+  workflow_tag: python/workflow_name
+  data_collection_tag: table_dc
+  interactive_component_type: DateRangePicker
+  column_name: sample_date
 ```
 
-**Supported filter types:** `RangeSlider`, `MultiSelect`, `Select`
+**Interactive type × column_type compatibility:**
 
-#### Table Component
+| column_type  | Valid interactive_component_type                    |
+| ------------ | --------------------------------------------------- |
+| `int64`      | `Slider`, `RangeSlider`                             |
+| `float64`    | `Slider`, `RangeSlider`                             |
+| `datetime`   | `DateRangePicker`                                   |
+| `category`   | `Select`, `MultiSelect`, `SegmentedControl`         |
+| `object`     | `Select`, `MultiSelect`, `SegmentedControl`         |
+| `bool`       | _(not yet supported)_                               |
+| `timedelta`  | _(not supported)_                                   |
+
+### Table Component
 
 ```yaml
 - tag: data-table
   component_type: table
   workflow_tag: python/workflow_name
   data_collection_tag: table_dc
-  page_size: 10 # 10, 25, 50, or 100
+  page_size: 25          # rows per page (default: 10)
+  columns: [col1, col2]  # optional: restrict visible columns
 ```
 
-#### Image Component
+### Image Component
 
 ```yaml
 - tag: image-gallery
   component_type: image
   workflow_tag: python/workflow_name
   data_collection_tag: images_dc
-  image_column: image_path # Column with relative image paths (required)
-  s3_base_folder: "s3://bucket/images/" # S3/MinIO prefix (required)
-  thumbnail_size: 150 # Thumbnail height in pixels
-  columns: 4 # Grid columns
-  max_images: 20 # Maximum images to display
+  image_column: image_path   # required: column with image paths
+  thumbnail_size: 150        # pixels (default: 150)
+  columns: 4                 # grid columns (default: 4)
+  max_images: 20             # max images shown (default: 20)
 ```
+
+!!! note "`s3_base_folder` is optional"
+    If omitted, the image base folder is resolved automatically from the data collection's S3 configuration at runtime.
+
+### MultiQC Component
+
+Embeds a specific plot from a MultiQC quality control report. Both `selected_module` and `selected_plot` are required — they uniquely identify which plot to render.
+
+```yaml
+- tag: fastqc-quality
+  component_type: multiqc
+  workflow_tag: python/nf_workflow
+  data_collection_tag: multiqc_report
+  selected_module: fastqc
+  selected_plot: per_base_sequence_quality
+```
+
+!!! warning "Both fields are required"
+    Omitting either `selected_module` or `selected_plot` will fail validation. Unlike the Dash runtime (which can auto-select), YAML-defined components must be explicit about which plot to display.
 
 ## Validation
 
-The CLI validates YAML files against the DashboardDataLite Pydantic model:
+The CLI validates YAML files in two passes:
 
 ```text
-┌─────────────────────────────────────────────────────────────┐
-│  1. YAML Syntax Parsing                                     │
-│     └─ Checks valid YAML format                             │
-├─────────────────────────────────────────────────────────────┤
-│  2. Pydantic Schema Validation                              │
-│     └─ Validates against DashboardDataLite model            │
-├─────────────────────────────────────────────────────────────┤
-│  3. Component Type Validation                               │
-│     └─ Validates chart types, aggregation functions         │
-├─────────────────────────────────────────────────────────────┤
-│  4. Required Fields                                         │
-│     └─ Ensures all required fields are present              │
-└─────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│  Pass 1 — Schema + Domain  (always, no server needed)        │
+│                                                              │
+│  ✓ YAML syntax parsing                                       │
+│  ✓ Required fields (title, component required fields)        │
+│  ✓ visu_type enum (scatter, line, bar, box, histogram)       │
+│  ✓ mode/code_content cross-field rule                        │
+│  ✓ selection_enabled/selection_column cross-field rule       │
+│  ✓ aggregation × column_type compatibility (if provided)     │
+│  ✓ interactive_type × column_type compatibility (if provided)│
+│  ✓ MultiQC: selected_module + selected_plot both required    │
+│  ✓ Image: image_column required                              │
+├──────────────────────────────────────────────────────────────┤
+│  Pass 2 — Server Schema  (with --config, skip: --offline)    │
+│                                                              │
+│  ✓ Resolves workflow_tag + data_collection_tag → DC schema   │
+│  ✓ Checks column_name exists in delta table schema           │
+│  ✓ Infers column_type from schema → validates aggregation    │
+│    and interactive_component_type against inferred type      │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-### Validation Error Examples
+Error output is a clean per-component table — each invalid field gets its own row:
 
-**Invalid component type:**
-
-<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
-<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #c62828;">✗ Validation failed</span>
-  Errors: 1
-
-┌─────────────────────────────────────────────────────────────┐
-│ <span style="color: #0097a7;">Component</span>     │ <span style="color: #c2185b;">Field</span>          │ <span style="color: #c62828;">Message</span>                    │
-├───────────────┼────────────────┼────────────────────────────┤
-│ <span style="color: #0097a7;">-</span>             │ <span style="color: #c2185b;">component_type</span> │ <span style="color: #c62828;">Invalid value 'graphs'.</span>    │
-│               │                │ Valid: figure, card, etc.  │
-└─────────────────────────────────────────────────────────────┘
-</pre>
-</div>
-
-**Missing required field:**
-
-<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
-<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #c62828;">✗ Validation failed</span>
-  Errors: 1
-
-┌─────────────────────────────────────────────────────────────┐
-│ <span style="color: #0097a7;">Component</span>     │ <span style="color: #c2185b;">Field</span>          │ <span style="color: #c62828;">Message</span>                    │
-├───────────────┼────────────────┼────────────────────────────┤
-│ <span style="color: #0097a7;">-</span>             │ <span style="color: #c2185b;">workflow_tag</span>   │ <span style="color: #c62828;">Field required</span>             │
-└─────────────────────────────────────────────────────────────┘
-</pre>
-</div>
+```
+                     Validation Errors
+┏━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓
+┃ Component              ┃ Field           ┃ Message        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩
+│ image-missing-column   │ image_column    │ Field required │
+│ multiqc-missing-module │ selected_module │ Field required │
+│ multiqc-missing-plot   │ selected_plot   │ Field required │
+└────────────────────────┴─────────────────┴────────────────┘
+```
 
 ## Best Practices
 
@@ -411,13 +523,33 @@ Use descriptive tags that indicate purpose:
 
 ```yaml
 # Good: Descriptive tags
-- tag: box-variety-sepal-length # Chart type + data
-- tag: sepal-length-average # Metric + aggregation
-- tag: variety-filter # Column + purpose
+- tag: box-variety-sepal-length   # Chart type + data
+- tag: sepal-length-average       # Metric + aggregation
+- tag: variety-filter             # Column + purpose
 
 # Avoid: Generic tags
 - tag: figure-1
 - tag: card-2
+```
+
+### Incremental Validation Workflow
+
+```bash
+# Step 1 — check schema and domain constraints (no server needed)
+depictio-cli dashboard validate my.yaml
+
+# Step 2 — full validation including column names
+depictio-cli dashboard validate my.yaml --config ~/.depictio/admin_config.yaml
+
+# Step 3 — dry import (schema check only, no write)
+depictio-cli dashboard import my.yaml --dry-run
+
+# Step 4 — actual import
+depictio-cli dashboard import my.yaml --config ~/.depictio/admin_config.yaml
+
+# Step 5 — roundtrip check (export back and diff)
+depictio-cli dashboard export <id> -o out.yaml
+diff my.yaml out.yaml
 ```
 
 ### Version Control

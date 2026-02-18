@@ -45,31 +45,47 @@ Before you begin, ensure you have the following installed:
 
 ## Development Environment
 
-### Option 1: Docker Compose (Recommended)
+### Option 1: Docker Compose
 
-The recommended way to develop Depictio is using Docker Compose, which provides a consistent environment with all services configured.
+There are two compose files depending on your goal:
+
+#### Quickstart — pre-built images (no build required)
+
+Uses images from GHCR. MinIO is bundled by default — no `.env` needed:
 
 ```bash
-# Build and start all services
-docker compose -f docker-compose.dev.yaml \
-               -f docker-compose/docker-compose.minio.yaml \
-               --env-file docker-compose/.env up \
-               --build --detach
+docker compose up -d
 ```
 
-Access the services:
+For external S3 / bring your own MinIO:
+
+```bash
+docker compose -f docker-compose/docker-compose.no-minio.yaml up -d
+```
+
+#### Development — source mounts with hot-reload
+
+Uses `docker-compose.dev.yaml` which mounts the local source tree and
+builds the image locally:
+
+```bash
+docker compose -f docker-compose.dev.yaml up --build --detach
+```
+
+#### Services
 
 | Service | URL |
 |---------|-----|
-| Backend API | `http://localhost:8058` |
 | Frontend | `http://localhost:5080` |
+| Backend API | `http://localhost:8058` |
 | API Docs | `http://localhost:8058/docs` |
+| MinIO Console | `http://localhost:9001` |
 
-The source code is mounted as a volume for live reloading:
+The source code is mounted as a volume in the dev file for live reloading:
 
 ```yaml
 volumes:
-   - ./depictio:/app/depictio
+  - ./depictio:/app/depictio
 ```
 
 ### Option 2: DevContainer & GitHub Codespaces
@@ -135,7 +151,7 @@ For contributors who prefer local development without containers:
 ### Setting up Pre-commit Hooks
 
 ```bash
-pre-commit install
+uv run pre-commit install
 ```
 
 ### Docker Images
@@ -150,17 +166,30 @@ The project provides multiple Dockerfile options:
 
 ### Environment Variables
 
-Depictio uses environment variables for configuration. Copy `.env.example` to `.env` and customize as needed.
+All critical defaults are embedded directly in the compose files, so `.env` is
+**optional** — `docker compose up -d` works out of the box.
+
+To override credentials or settings, copy `.env.example` to `.env`:
+
+```bash
+cp .env.example .env   # only 3 lines — version, MinIO user, MinIO password
+```
+
+For development with `docker-compose.dev.yaml`, the full config lives in
+`docker-compose/.env` (already populated for local dev).
 
 Key development variables:
 
 | Variable | Description |
 |----------|-------------|
 | `DEPICTIO_CONTEXT` | Set to `server` for API, `dash` for frontend |
-| `MONGO_WIPE` | Set to `true` to reset database on startup |
-| `LOGGING_VERBOSITY_LEVEL` | Set to `DEBUG` for detailed logs |
+| `DEPICTIO_MONGODB_WIPE` | Set to `true` to reset the database on startup |
+| `DEPICTIO_LOGGING_VERBOSITY_LEVEL` | Set to `DEBUG` for detailed logs |
+| `DEPICTIO_AUTH_SINGLE_USER_MODE` | `true` by default — disables login prompt |
+| `DEPICTIO_MINIO_ROOT_USER` | MinIO access key (default: `minio`) |
+| `DEPICTIO_MINIO_ROOT_PASSWORD` | MinIO secret (default: `minio123`) |
 
-### Local Python Environment (Required)
+### Local Python Environment (Development)
 
 Regardless of which development option you choose, you need local Python packages for running tests, pre-commit hooks, and the CLI.
 
@@ -205,37 +234,59 @@ uv run depictio --help
 ```
 depictio/
 ├── api/                 # FastAPI backend (port 8058)
-│   ├── endpoints/       # API routes
-│   ├── v1/              # API version 1
-│   └── main.py          # Application entry point
+│   ├── main.py          # Application entry point
+│   └── v1/
+│       ├── configs/     # Settings models and logging config
+│       ├── endpoints/   # One sub-package per resource domain
+│       ├── services/    # Business logic, background tasks, lifespan
+│       ├── middleware/  # Analytics and request middleware
+│       └── db.py        # MongoDB / Beanie setup
 ├── dash/                # Dash frontend (port 5080)
-│   ├── modules/         # Dashboard components
-│   └── layouts/         # Page layouts
-├── models/              # Shared Pydantic models
-├── cli/                 # Command-line interface
-└── tests/               # Test suites
+│   ├── pages/           # Multi-app entry points (management, viewer, editor)
+│   ├── layouts/         # Shared shell, sidebar, save logic
+│   └── modules/         # One sub-package per dashboard component type
+├── models/              # Shared Pydantic models (API + Dash)
+├── cli/                 # Standalone CLI package (own pyproject.toml)
+└── tests/               # Test suites (api/, dash/, cli/)
 ```
 
-### Component Development
+### API Endpoint Structure
+
+Each resource domain lives in `depictio/api/v1/endpoints/<domain>_endpoints/` and typically contains a subset of:
+
+```
+<domain>_endpoints/
+├── routes.py        # FastAPI router — path operations
+├── models.py        # Request / response Pydantic models
+└── utils.py         # Domain-specific helpers
+```
+
+### Dash Component Structure
 
 Depictio uses a modular component system in `depictio/dash/modules/`:
 
 | Component | Purpose |
 |-----------|---------|
 | `card_component/` | Text and summary cards |
-| `figure_component/` | Plotly visualizations |
+| `figure_component/` | Plotly visualizations (Plotly Express, code mode, MultiQC plots) |
+| `image_component/` | Static image display from S3 |
 | `interactive_component/` | Filters, dropdowns, sliders |
-| `table_component/` | Data tables |
-<!-- | `jbrowse_component/` | Genome browser | -->
-| `multiqc_component/` | MultiQC reports |
+| `table_component/` | Interactive data tables (AG Grid) |
+| `text_component/` | Rich text / Markdown cards |
+| `multiqc_component/` | Embedded MultiQC HTML reports |
 
-Each component follows this structure:
+Each component typically contains a subset of:
 
 ```
 component_name/
-├── frontend.py      # Dash callbacks and UI
-└── utils.py         # Component building logic
+├── frontend.py      # Entry point — layout and top-level callbacks
+├── utils.py         # Component building logic and helpers
+├── design_ui.py     # Stepper / configuration UI shown in edit mode
+├── models.py        # Component-specific Pydantic models
+└── callbacks/       # Callback modules split by concern
 ```
+
+Not all files are present in every component — the structure grows with complexity.
 
 ## Development Workflow
 
@@ -335,7 +386,8 @@ We use pre-commit hooks to enforce:
 
 **Theme compatibility checklist:**
 
-- [ ] Use CSS variables: `var(--app-bg-color)`, `var(--app-text-color)`, `var(--app-surface-color)`
+- [ ] Use DMC component props for theming whenever possible — DMC 2.0+ handles dark/light automatically
+- [ ] Only fall back to inline `style=` with CSS variables (`var(--app-bg-color)`, `var(--app-surface-color)`) when DMC has no built-in prop
 - [ ] Test in both light and dark themes
 - [ ] Never hardcode colors (`#ffffff`, `#000000`)
 
@@ -366,6 +418,10 @@ register_my_callback(app)
 ```
 
 **Shared stores** must be defined in `depictio/dash/layouts/shared_app_shell.py` → `create_shared_stores()`
+
+### Internal Technical Documentation
+
+Detailed architecture notes, design decisions, and implementation internals are maintained in a **private repository**. If you need access (e.g. for a significant contribution), reach out to the maintainers.
 
 ## Documentation
 
