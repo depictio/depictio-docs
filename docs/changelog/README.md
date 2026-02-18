@@ -13,6 +13,42 @@ hide:
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
 
+### **[v0.7.3-b7](https://github.com/depictio/depictio/releases/tag/v0.7.3-b7)** (February 17, 2026)
+
+#### **🐛 Fixes**
+* Resolve three demo mode issues: owner edit button visibility, tab copy naming, and MultiQC s3_location population on restore
+* Update CI/CD YAML files to use current naming conventions
+
+### **[v0.7.3-b6](https://github.com/depictio/depictio/releases/tag/v0.7.3-b6)** (February 17, 2026)
+
+#### **✨ Features**
+* Add DateRangePicker filter to MultiQC component with proper value normalization
+* Add theme switching support for MultiQC and Figure components using CSS theme variables
+* Add human-readable titles to interactive filter components
+* Improve stepper component selection UX with empty states and visual feedback
+* Add colored border around image tab icons for better visual distinction
+
+#### **🐛 Fixes**
+* Allow screenshot generation in single-user mode (remove auth dependency)
+* Resolve missing Add Tab and Edit Tab buttons in single-user mode
+* Fix MultiQC callback errors by separating view and design mode callbacks
+* Fix MultiQC component metadata not saved from GUI stepper workflow
+* Fix duplicate and remove component issues due to layout type mismatch
+* Fix stepper navigation by removing duplicate edit-page-context stores
+* Resolve Interactive component callback JavaScript errors
+* Fix fullscreen mode: implement native browser Fullscreen API and correct chart dimensions
+* Fix dashboard duplication: preserve icon colors, copy theme variant thumbnails, fix child tab listing
+* Fix cross-DC filtering for card components via link resolution
+* Allow anonymous users to use link resolution in single-user mode
+* Skip validation for empty-valued filters in runtime filter application
+* Fix DateRangePicker validation and normalization for figure and table callbacks
+
+#### **🚀 Improvements**
+* Add owner-only permission checks for screenshot generation
+* Implement consistent theme variables across dashboard styles
+* Simplify fullscreen and interactive filtering callback code
+* Improve card trend subtitle readability (2 decimal places)
+
 ### **[v0.7.3-b5](https://github.com/depictio/depictio/releases/tag/v0.7.3-b5)** (February 9, 2026)
 
 #### **🐛 Fixes**

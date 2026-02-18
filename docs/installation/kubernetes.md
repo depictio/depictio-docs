@@ -64,6 +64,34 @@ To see all configurable parameters:
 helm show values helm-charts/depictio
 ```
 
+### Real-world example (EMBL)
+
+The repository includes the EMBL demo deployment values files as a reference.
+They demonstrate the **layered approach**: a shared base file overlaid by
+environment-specific files.
+
+| File | Purpose |
+|------|---------|
+| [`values-embl-demo-base.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-demo-base.yaml) | Shared settings (storage, resources, auth, MinIO) |
+| [`values-embl-demo.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-demo.yaml) | Demo overlay (ingress, image tags, replicas) |
+| [`values-embl-demo-dev.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-demo-dev.yaml) | Dev overlay (debug flags, reduced resources) |
+| [`values-embl-auth.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-auth.yaml) | Multi-user auth + Google OAuth |
+
+Usage pattern:
+
+```bash
+helm install depictio helm-charts/depictio \
+  -f helm-charts/depictio/values.yaml \
+  -f helm-charts/depictio/values-embl-demo-base.yaml \
+  -f helm-charts/depictio/values-embl-demo.yaml \
+  -n depictio --create-namespace
+```
+
+!!! note "Secrets file"
+    `values-embl-secrets.yaml` is gitignored — it holds MinIO passwords and OAuth
+    secrets that must be created locally. See `values-embl-auth.yaml` for the
+    expected key names.
+
 ### Single-user vs Multi-user mode
 
 ```yaml

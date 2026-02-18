@@ -45,31 +45,47 @@ Before you begin, ensure you have the following installed:
 
 ## Development Environment
 
-### Option 1: Docker Compose (Recommended)
+### Option 1: Docker Compose
 
-The recommended way to develop Depictio is using Docker Compose, which provides a consistent environment with all services configured.
+There are two compose files depending on your goal:
+
+#### Quickstart — pre-built images (no build required)
+
+Uses images from GHCR. MinIO is bundled by default — no `.env` needed:
 
 ```bash
-# Build and start all services
-docker compose -f docker-compose.dev.yaml \
-               -f docker-compose/docker-compose.minio.yaml \
-               --env-file docker-compose/.env up \
-               --build --detach
+docker compose up -d
 ```
 
-Access the services:
+For external S3 / bring your own MinIO:
+
+```bash
+docker compose -f docker-compose/docker-compose.no-minio.yaml up -d
+```
+
+#### Development — source mounts with hot-reload
+
+Uses `docker-compose.dev.yaml` which mounts the local source tree and
+builds the image locally:
+
+```bash
+docker compose -f docker-compose.dev.yaml up --build --detach
+```
+
+#### Services
 
 | Service | URL |
 |---------|-----|
-| Backend API | `http://localhost:8058` |
 | Frontend | `http://localhost:5080` |
+| Backend API | `http://localhost:8058` |
 | API Docs | `http://localhost:8058/docs` |
+| MinIO Console | `http://localhost:9001` |
 
-The source code is mounted as a volume for live reloading:
+The source code is mounted as a volume in the dev file for live reloading:
 
 ```yaml
 volumes:
-   - ./depictio:/app/depictio
+  - ./depictio:/app/depictio
 ```
 
 ### Option 2: DevContainer & GitHub Codespaces
@@ -135,7 +151,7 @@ For contributors who prefer local development without containers:
 ### Setting up Pre-commit Hooks
 
 ```bash
-pre-commit install
+uv run pre-commit install
 ```
 
 ### Docker Images
@@ -150,15 +166,28 @@ The project provides multiple Dockerfile options:
 
 ### Environment Variables
 
-Depictio uses environment variables for configuration. Copy `.env.example` to `.env` and customize as needed.
+All critical defaults are embedded directly in the compose files, so `.env` is
+**optional** — `docker compose up -d` works out of the box.
+
+To override credentials or settings, copy `.env.example` to `.env`:
+
+```bash
+cp .env.example .env   # only 3 lines — version, MinIO user, MinIO password
+```
+
+For development with `docker-compose.dev.yaml`, the full config lives in
+`docker-compose/.env` (already populated for local dev).
 
 Key development variables:
 
 | Variable | Description |
 |----------|-------------|
 | `DEPICTIO_CONTEXT` | Set to `server` for API, `dash` for frontend |
-| `MONGO_WIPE` | Set to `true` to reset database on startup |
-| `LOGGING_VERBOSITY_LEVEL` | Set to `DEBUG` for detailed logs |
+| `DEPICTIO_MONGODB_WIPE` | Set to `true` to reset the database on startup |
+| `DEPICTIO_LOGGING_VERBOSITY_LEVEL` | Set to `DEBUG` for detailed logs |
+| `DEPICTIO_AUTH_SINGLE_USER_MODE` | `true` by default — disables login prompt |
+| `DEPICTIO_MINIO_ROOT_USER` | MinIO access key (default: `minio`) |
+| `DEPICTIO_MINIO_ROOT_PASSWORD` | MinIO secret (default: `minio123`) |
 
 ### Local Python Environment (Required)
 

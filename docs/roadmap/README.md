@@ -67,7 +67,7 @@ hide:
 
 Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles/) in mind: **F**indable, **A**ccessible, **I**nteroperable, **R**eusable. Some challenges are already addressed today; others are part of our roadmap and will be tackled in future releases.
 
-** How Depictio will address the reproducibility crisis:**
+**How Depictio will address the reproducibility crisis:**
 
 | Challenge                      | Solution                                                                                                                                                                                |
 | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
