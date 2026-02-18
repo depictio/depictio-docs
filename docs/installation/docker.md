@@ -154,8 +154,8 @@ DEPICTIO_CELERY_ENABLED=true   # false = synchronous view mode (simpler for debu
 | View mode | `true` | Async data loading — recommended for production |
 | View mode | `false` | Synchronous — simpler for development |
 
-!!! info "Kubernetes/Helm Support"
-    Background callbacks are currently only supported in Docker Compose. Kubernetes support is coming soon.
+!!! info "Kubernetes/Helm"
+    Background callbacks are also supported in Kubernetes via the Helm chart (`celery.enabled: true` by default). See the [Kubernetes installation guide](kubernetes/).
 
 ---
 
