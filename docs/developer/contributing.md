@@ -252,19 +252,25 @@ Depictio uses a modular component system in `depictio/dash/modules/`:
 | Component | Purpose |
 |-----------|---------|
 | `card_component/` | Text and summary cards |
-| `figure_component/` | Plotly visualizations |
+| `figure_component/` | Plotly visualizations (Plotly Express, code mode, MultiQC plots) |
+| `image_component/` | Static image display from S3 |
 | `interactive_component/` | Filters, dropdowns, sliders |
-| `table_component/` | Data tables |
-<!-- | `jbrowse_component/` | Genome browser | -->
-| `multiqc_component/` | MultiQC reports |
+| `table_component/` | Interactive data tables (AG Grid) |
+| `text_component/` | Rich text / Markdown cards |
+| `multiqc_component/` | Embedded MultiQC HTML reports |
 
-Each component follows this structure:
+Each component typically contains a subset of:
 
 ```
 component_name/
-├── frontend.py      # Dash callbacks and UI
-└── utils.py         # Component building logic
+├── frontend.py      # Entry point — layout and top-level callbacks
+├── utils.py         # Component building logic and helpers
+├── design_ui.py     # Stepper / configuration UI shown in edit mode
+├── models.py        # Component-specific Pydantic models
+└── callbacks/       # Callback modules split by concern
 ```
+
+Not all files are present in every component — the structure grows with complexity.
 
 ## Development Workflow
 
@@ -364,7 +370,8 @@ We use pre-commit hooks to enforce:
 
 **Theme compatibility checklist:**
 
-- [ ] Use CSS variables: `var(--app-bg-color)`, `var(--app-text-color)`, `var(--app-surface-color)`
+- [ ] Use DMC component props for theming whenever possible — DMC 2.0+ handles dark/light automatically
+- [ ] Only fall back to inline `style=` with CSS variables (`var(--app-bg-color)`, `var(--app-surface-color)`) when DMC has no built-in prop
 - [ ] Test in both light and dark themes
 - [ ] Never hardcode colors (`#ffffff`, `#000000`)
 
@@ -395,6 +402,10 @@ register_my_callback(app)
 ```
 
 **Shared stores** must be defined in `depictio/dash/layouts/shared_app_shell.py` → `create_shared_stores()`
+
+### Internal Technical Documentation
+
+Detailed architecture notes, design decisions, and implementation internals are maintained in a **private repository**. If you need access (e.g. for a significant contribution), reach out to the maintainers.
 
 ## Documentation
 

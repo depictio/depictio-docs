@@ -94,12 +94,12 @@ docker compose up -d # (2)!
 
     [:octicons-arrow-right-24: Configuration guide](configuration/)
 
--   :simple-gitpod:{ .lg .middle } **Try in Gitpod**
+-   :material-cloud-braces:{ .lg .middle } **Try in GitHub Codespaces**
 
     ---
 
-    Launch a temporary workspace with Depictio pre-installed — no local setup required.
+    Launch a temporary cloud workspace with Depictio pre-configured — no local setup required.
 
-    [:octicons-arrow-right-24: Open in Gitpod](https://gitpod.io/#https://github.com/depictio/depictio/releases/latest)
+    [:octicons-arrow-right-24: Open in Codespaces](https://codespaces.new/depictio/depictio)
 
 </div>
