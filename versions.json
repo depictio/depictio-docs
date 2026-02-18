@@ -8,6 +8,13 @@
     ]
   },
   {
+    "version": "v0.7.3-b8",
+    "title": "v0.7.3-b8",
+    "aliases": [
+      "beta"
+    ]
+  },
+  {
     "version": "v0.7.3-b7",
     "title": "v0.7.3-b7",
     "aliases": []
@@ -15,9 +22,7 @@
   {
     "version": "v0.7.3-b6",
     "title": "v0.7.3-b6",
-    "aliases": [
-      "beta"
-    ]
+    "aliases": []
   },
   {
     "version": "v0.7.3-b5",
