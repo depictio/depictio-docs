@@ -8,6 +8,97 @@ hide:
 
 # Changelog
 
+## **[v0.7.5-b1](https://github.com/depictio/depictio/releases/tag/v0.7.5-b1)** (February 25, 2026)
+
+!!! warning "Beta Release"
+    This is a beta release. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.5-b1
+```
+
+No user-facing changes — version bump only after v0.7.4 stable release.
+
+---
+
+## **[v0.7.4](https://github.com/depictio/depictio/releases/tag/v0.7.4)** (February 25, 2026)
+
+!!! success "Stable Release"
+    This is a stable release consolidating all v0.7.4 beta improvements over v0.7.3.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.4
+```
+
+### **✨ Features**
+
+* **Ampliseq Dashboard Updates**: Use relative abundance and ANCOM-BC data for ampliseq dashboards
+
+### **🐛 Bug Fixes**
+
+* Fix dashboard YAML import HTTP 400 errors and improve import robustness
+* Fix MultiQC plots not updating on interactive filter changes
+* Fix single-user mode: auto-create admin user, auto-login as admin, redirect `/auth` to `/dashboards`
+* Fix stale local-store tokens after instance recreation in single-user mode
+* Fix CLI config generation in public/demo mode
+* Fix MongoDB data path and improve docker-compose healthchecks
+* Fix single-user mode in Helm chart CI to fix screenshot 401 error
+* Fix CI roundtrip import to handle duplicate check with `--overwrite`
+
+### **🚀 Improvements**
+
+* Update ampliseq init dashboard JSONs from YAML-imported dashboards
+* Update `.env` for single-user mode configuration and clean up comments
+* Replace Gitpod with GitHub Codespaces and remove Gitpod files
+* Remove leftover analysis and summary markdown files
+
+### **🔧 CI/CD**
+
+* Multi-arch Docker build: native arm64 runner, amd64 early tag push, imagetools-based multi-arch merge
+* Add version input for manual workflow\_dispatch
+* Add docs repo notification to stable multi-arch build merge job
+* Fix CI environment variable handling for UID/GID/DATA\_DIR in backup jobs
+
+---
+
+## **[v0.7.4-b1](https://github.com/depictio/depictio/releases/tag/v0.7.4-b1)** (February 23, 2026)
+
+!!! warning "Beta Release"
+    This is a beta release. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.4-b1
+```
+
+### **🐛 Bug Fixes**
+
+* Fix single-user mode: auto-create admin user, auto-login as admin, redirect `/auth` to `/dashboards`
+* Fix stale local-store tokens after instance recreation in single-user mode
+* Fix CLI config generation in public/demo mode
+* Fix MongoDB data path and improve docker-compose healthchecks
+* Fix CI environment variable handling for UID/GID/DATA\_DIR in backup jobs
+* Fix CI e2e test sed patterns to match docker-compose/.env defaults
+
+### **🚀 Improvements**
+
+* Replace Gitpod with GitHub Codespaces and remove Gitpod files
+* Update `.env` for single-user mode configuration and clean up comments
+* Remove leftover analysis and summary markdown files
+
+### **🔧 CI/CD**
+
+* Multi-arch Docker build: native arm64 runner, amd64 early tag push, imagetools-based multi-arch merge
+* Add version input for manual workflow\_dispatch
+* Add docs repo notification to stable multi-arch build merge job
+
+---
+
 ## **[v0.7.3](https://github.com/depictio/depictio/releases/tag/v0.7.3)** (February 18, 2026)
 
 !!! success "Stable Release"
