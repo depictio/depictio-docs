@@ -16,5 +16,5 @@ dependencies = [
     "mkdocs-kroki-plugin",
     "mkdocs-graphviz"
 ]
-version = "0.7.3"
+version = "0.8.0-b1"
 name = "depictio-docs"
