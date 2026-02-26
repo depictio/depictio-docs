@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "0.7.3",
-    "x-generated-at": "2026-02-18T20:42:45Z",
-    "x-depictio-version": "v0.7.3"
+    "version": "0.7.5-b1",
+    "x-generated-at": "2026-02-24T23:42:31Z",
+    "x-depictio-version": "v0.7.5-b1"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -4219,15 +4219,6 @@
         ],
         "parameters": [
           {
-            "name": "yaml_content",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Yaml Content"
-            }
-          },
-          {
             "name": "project_id",
             "in": "query",
             "required": false,
@@ -4255,6 +4246,17 @@
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "title": "Yaml Content"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -4379,22 +4381,17 @@
         "summary": "Validate Yaml Content",
         "description": "Validate YAML content against DashboardDataLite schema.\n\nUses Pydantic validation to check if the YAML content is valid.\n\nArgs:\n    yaml_content: YAML string to validate\n\nReturns:\n    Validation result with is_valid flag and any errors",
         "operationId": "validate_yaml_content_depictio_api_v1_dashboards_yaml_validate_post",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "yaml_content",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Yaml Content"
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "title": "Yaml Content"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -4417,7 +4414,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/depictio/api/v1/dashboards/yaml/schema": {
@@ -6668,7 +6670,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -6915,7 +6917,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -6972,7 +6974,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -7029,7 +7031,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -7135,7 +7137,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -7251,7 +7253,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -7336,7 +7338,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-18 20:42:42"
+            "default": "2026-02-24 23:42:28"
           },
           "file_hash": {
             "type": "string",
@@ -8284,7 +8286,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -8491,7 +8493,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -8595,7 +8597,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-18 20:42:42"
+            "default": "2026-02-24 23:42:29"
           },
           "project_type": {
             "type": "string",
@@ -8631,7 +8633,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -8735,7 +8737,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-18 20:42:42"
+            "default": "2026-02-24 23:42:29"
           },
           "project_type": {
             "type": "string",
@@ -9142,7 +9144,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -9347,7 +9349,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -9578,7 +9580,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "69962441c48a1a223d9e4681"
+            "default": "699e37632765cefe3fef94d8"
           }
         },
         "type": "object",
@@ -9667,7 +9669,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -9785,7 +9787,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -9866,7 +9868,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -9951,7 +9953,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -10036,7 +10038,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -10201,7 +10203,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -10324,7 +10326,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-18 20:42:41"
+            "default": "2026-02-24 23:42:27"
           }
         },
         "additionalProperties": false,
@@ -10343,7 +10345,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -10466,7 +10468,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-18 20:42:41"
+            "default": "2026-02-24 23:42:27"
           }
         },
         "additionalProperties": false,
@@ -10518,7 +10520,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -10586,7 +10588,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -10683,7 +10685,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -10756,7 +10758,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-18 20:42:41"
+            "default": "2026-02-24 23:42:27"
           },
           "run_hash": {
             "type": "string",
@@ -10801,7 +10803,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69962441c48a1a223d9e4680"
+            "default": "699e37632765cefe3fef94d7"
           },
           "description": {
             "anyOf": [
@@ -10874,7 +10876,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-18 20:42:41"
+            "default": "2026-02-24 23:42:27"
           },
           "run_hash": {
             "type": "string",
@@ -10936,7 +10938,7 @@
           "scan_time": {
             "type": "string",
             "title": "Scan Time",
-            "default": "2026-02-18 20:42:41"
+            "default": "2026-02-24 23:42:27"
           },
           "dc_stats": {
             "anyOf": [
