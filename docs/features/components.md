@@ -54,6 +54,12 @@ Depictio provides a variety of component types for building interactive dashboar
 
     Image galleries with S3/MinIO storage integration
 
+-   :material-map-marker-multiple:{ .lg .middle } **Map**
+
+    ---
+
+    Geospatial map visualization with markers
+
 </div>
 
 ---
@@ -72,6 +78,7 @@ Figure components display data visualizations using Plotly charts. They support 
 |----------|-------------|
 | :material-chart-scatter-plot: **Basic Charts** | Scatter, Bar, Line |
 | :material-chart-box: **Statistical** | Histogram, Box |
+| :material-grid-large: **Matrix** | ComplexHeatmap (via [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" }) |
 <!-- | :material-chart-bell-curve: **Distribution** | Density Heatmap, Density Contour |
 | :material-chart-tree: **Hierarchical** | Treemap, Sunburst | -->
 
@@ -126,6 +133,24 @@ fig
 | Y-axis label | Label for vertical axis | Column name |
 | Color | Column for color encoding | None |
 | Hover data | Additional columns shown on hover | None |
+
+### ComplexHeatmap
+
+ComplexHeatmap figures use the [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" } library to render clustered heatmaps with dendrograms and row/column annotations — similar to R's `ComplexHeatmap`.
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `index_column` | Column used as row labels | First column |
+| `value_columns` | Numeric columns for the matrix | All numeric |
+| `row_annotations` | Columns rendered as colored side bars | None |
+| `cluster_rows` / `cluster_cols` | Enable hierarchical clustering | `true` |
+| `normalize` | Row normalization (`zscore`, `minmax`, `none`) | `none` |
+| `colorscale` | Plotly colorscale name | `RdBu_r` |
+| `split_rows_by` | Split heatmap into groups by annotation | None |
+| `cluster_method` | Linkage method (`ward`, `average`, `complete`, `single`) | `ward` |
+| `cluster_metric` | Distance metric (`euclidean`, `correlation`, `cosine`) | `euclidean` |
+
+Heatmaps work in both **UI Mode** (parameter discovery in the stepper) and **YAML Mode** (see [YAML figure reference](yaml-sync.md#figure-component)).
 
 ### Selection Filtering (Scatter Plots)
 
@@ -444,6 +469,84 @@ The CLI will:
 
 ---
 
+## :material-map-marker-multiple: Map Components
+
+Map components display geospatial data on interactive tile-based maps using Plotly Express (no API key required).
+
+### Map Types
+
+| Type | Function | Best For |
+|------|----------|----------|
+| :material-map-marker: `scatter_map` | Point markers at lat/lon coordinates | Sample locations, site maps |
+| :material-heat-wave: `density_map` | Heatmap overlay from point density | Concentration hotspots |
+| :material-map-legend: `choropleth_map` | Colored polygon regions from GeoJSON | Per-country/region statistics |
+
+### Configuration Options
+
+| Option | Applies To | Description |
+|--------|------------|-------------|
+| `lat_column` / `lon_column` | scatter, density | Columns with GPS coordinates (required) |
+| `color_column` | scatter, choropleth | Column for color encoding |
+| `size_column` | scatter | Column for marker size encoding |
+| `hover_columns` | scatter, choropleth | Columns shown on hover tooltip |
+| `map_style` | all | Tile style: `open-street-map`, `carto-positron`, `carto-darkmatter` |
+| `opacity` | all | Marker/region opacity (0.0–1.0) |
+| `default_zoom` / `default_center` | all | Override auto-computed viewport |
+
+### Choropleth GeoJSON Sources
+
+Choropleth maps require a GeoJSON FeatureCollection to define region boundaries. Three sources are supported:
+
+| Source | Field | Description |
+|--------|-------|-------------|
+| URL | `geojson_url` | Public URL to a GeoJSON file |
+| Data Collection | `geojson_dc_tag` | Tag of a `geojson`-type Data Collection in the same project |
+| Inline | `geojson_data` | Embedded GeoJSON dict (large — prefer URL or DC) |
+
+### Selection Filtering
+
+Scatter maps support the same lasso/box/click selection as scatter plots. Enable with `selection_enabled: true` and `selection_column`. See [Interactive Selection Filtering](interactive-selection-filtering.md) for details.
+
+!!! note "Choropleth Limitation"
+    Choropleth maps do not support selection filtering (Plotly does not expose click/lasso on choropleth traces).
+
+### YAML Examples
+
+**Scatter map:**
+
+```yaml
+- tag: sampling-map
+  component_type: map
+  workflow_tag: python/my_workflow
+  data_collection_tag: sample_metadata
+  lat_column: latitude
+  lon_column: longitude
+  color_column: biome
+  size_column: read_count
+  hover_columns: [sample_id, site_name, country]
+  map_style: carto-positron
+  selection_enabled: true
+  selection_column: sample_id
+```
+
+**Choropleth map:**
+
+```yaml
+- tag: country-choropleth
+  component_type: map
+  workflow_tag: python/my_workflow
+  data_collection_tag: sample_metadata
+  map_type: choropleth_map
+  locations_column: country_name
+  featureidkey: properties.NAME
+  color_column: sample_id
+  choropleth_aggregation: count
+  color_continuous_scale: Viridis
+  geojson_url: "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson"
+```
+
+---
+
 ## :material-link-variant: Cross-DC Filtering
 
 Interactive components can filter across **linked Data Collections** using the Links system. See [Cross-DC Filtering](cross-dc-filtering.md) for details.
@@ -464,7 +567,7 @@ Interactive components can filter across **linked Data Collections** using the L
 The component builder guides you through creation:
 
 1. :material-database: **Select Data Collection** - Choose your data source
-2. :material-shape: **Choose Component Type** - Figure, Table, Card, Interactive, Text, or MultiQC
+2. :material-shape: **Choose Component Type** - Figure, Table, Card, Interactive, Text, MultiQC, or Map
 3. :material-cog: **Configure Settings** - Type-specific options
 4. :material-eye: **Preview** - See the component before adding
 5. :material-plus-circle: **Add to Dashboard** - Place on the canvas
