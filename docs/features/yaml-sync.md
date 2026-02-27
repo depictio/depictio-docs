@@ -289,18 +289,44 @@ components:
     data_collection_tag: multiqc_report
     selected_module: fastqc
     selected_plot: per_base_sequence_quality
+
+  # Figure: Clustered heatmap
+  - tag: gene-expression-heatmap
+    component_type: figure
+    workflow_tag: python/bio_workflow
+    data_collection_tag: expression_matrix
+    visu_type: heatmap
+    dict_kwargs:
+      index_column: gene_name
+      row_annotations: [gene_type]
+      cluster_rows: true
+      normalize: zscore
+
+  # Map: Scatter map with selection
+  - tag: sampling-map
+    component_type: map
+    workflow_tag: python/my_workflow
+    data_collection_tag: sample_metadata
+    lat_column: latitude
+    lon_column: longitude
+    color_column: biome
+    hover_columns: [sample_id, site_name]
+    map_style: carto-positron
+    selection_enabled: true
+    selection_column: sample_id
 ```
 
 ## Component Types Reference
 
 | Type          | Description                                    | Required Fields                                          |
 | ------------- | ---------------------------------------------- | -------------------------------------------------------- |
-| `figure`      | Plotly charts (scatter, box, histogram, etc.)  | `visu_type` (ui mode) or `code_content` (code mode)     |
+| `figure`      | Plotly charts (scatter, box, heatmap, etc.)    | `visu_type` (ui mode) or `code_content` (code mode)     |
 | `card`        | Metric cards with aggregations                 | `aggregation`, `column_name`                             |
 | `interactive` | Filters (RangeSlider, MultiSelect, etc.)       | `interactive_component_type`, `column_name`              |
 | `table`       | Data tables                                    | _(none beyond base fields)_                              |
 | `image`       | Image galleries from S3/MinIO                  | `image_column`                                           |
 | `multiqc`     | MultiQC quality control report viewer          | `selected_module`, `selected_plot`                       |
+| `map`         | Geospatial maps (scatter, density, choropleth) | `lat_column`, `lon_column` (scatter/density) or `locations_column`, GeoJSON source (choropleth) |
 
 ### Figure Component
 
@@ -321,7 +347,7 @@ Two rendering modes are supported:
     title: Chart Title
 ```
 
-**Valid `visu_type` values (UI mode):** `scatter`, `line`, `bar`, `box`, `histogram`
+**Valid `visu_type` values (UI mode):** `scatter`, `line`, `bar`, `box`, `histogram`, `heatmap`
 
 **Code Mode** — write arbitrary Python/Plotly code for full flexibility:
 
@@ -335,6 +361,41 @@ Two rendering modes are supported:
     import plotly.express as px
     fig = px.scatter_matrix(df, dimensions=["sepal.length", "sepal.width", "petal.length"])
 ```
+
+**ComplexHeatmap** — clustered heatmap with annotations (via [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" }):
+
+```yaml
+- tag: gene-expression-heatmap
+  component_type: figure
+  workflow_tag: python/workflow_name
+  data_collection_tag: expression_dc
+  visu_type: heatmap
+  dict_kwargs:
+    index_column: gene_name
+    value_columns: [sample_A, sample_B, sample_C]
+    row_annotations: [gene_type, pathway]
+    cluster_rows: true
+    cluster_cols: true
+    normalize: zscore
+    colorscale: RdBu_r
+    split_rows_by: gene_type
+    cluster_method: ward
+    cluster_metric: euclidean
+```
+
+Heatmap `dict_kwargs` parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `index_column` | string | Column for row labels |
+| `value_columns` | list | Numeric columns for the matrix (omit for all numeric) |
+| `row_annotations` | list | Columns shown as colored side bars |
+| `cluster_rows` / `cluster_cols` | bool | Enable hierarchical clustering |
+| `normalize` | string | `zscore`, `minmax`, or `none` |
+| `colorscale` | string | Plotly colorscale (e.g. `RdBu_r`, `Viridis`) |
+| `split_rows_by` | string | Split heatmap rows by annotation column |
+| `cluster_method` | string | `ward`, `average`, `complete`, `single` |
+| `cluster_metric` | string | `euclidean`, `correlation`, `cosine` |
 
 !!! note "Code mode and visu_type"
     `visu_type` is not validated when `mode: code`. Any Plotly chart can be built in code mode. `code_content` must be non-empty when `mode: code`.
@@ -463,6 +524,53 @@ Embeds a specific plot from a MultiQC quality control report. Both `selected_mod
 !!! warning "Both fields are required"
     Omitting either `selected_module` or `selected_plot` will fail validation. Unlike the Dash runtime (which can auto-select), YAML-defined components must be explicit about which plot to display.
 
+### Map Component
+
+Supports three map types: `scatter_map` (default), `density_map`, and `choropleth_map`.
+
+**Scatter map** — point markers at lat/lon coordinates:
+
+```yaml
+- tag: sampling-map
+  component_type: map
+  workflow_tag: python/my_workflow
+  data_collection_tag: sample_metadata
+  lat_column: latitude
+  lon_column: longitude
+  color_column: biome
+  size_column: read_count
+  hover_columns: [sample_id, site_name]
+  map_style: carto-positron
+  selection_enabled: true
+  selection_column: sample_id
+```
+
+**Choropleth map** — colored regions from GeoJSON:
+
+```yaml
+- tag: country-choropleth
+  component_type: map
+  workflow_tag: python/my_workflow
+  data_collection_tag: sample_metadata
+  map_type: choropleth_map
+  locations_column: country_name
+  featureidkey: properties.NAME
+  color_column: sample_id
+  choropleth_aggregation: count
+  color_continuous_scale: Viridis
+  opacity: 0.6
+  # GeoJSON source — pick one:
+  geojson_url: "https://example.com/countries.geojson"   # URL
+  # geojson_dc_tag: europe_geojson                        # DC tag
+```
+
+**Valid `map_type` values:** `scatter_map`, `density_map`, `choropleth_map`
+
+**Valid `map_style` values:** `open-street-map`, `carto-positron`, `carto-darkmatter`
+
+!!! note "Choropleth requirements"
+    Choropleth maps require `locations_column`, `color_column`, and a GeoJSON source (`geojson_url`, `geojson_dc_tag`, or `geojson_data`). Selection filtering is not supported on choropleth maps.
+
 ## Validation
 
 The CLI validates YAML files in two passes:
@@ -473,7 +581,7 @@ The CLI validates YAML files in two passes:
 │                                                              │
 │  ✓ YAML syntax parsing                                       │
 │  ✓ Required fields (title, component required fields)        │
-│  ✓ visu_type enum (scatter, line, bar, box, histogram)       │
+│  ✓ visu_type enum (scatter, line, bar, box, histogram, ...)  │
 │  ✓ mode/code_content cross-field rule                        │
 │  ✓ selection_enabled/selection_column cross-field rule       │
 │  ✓ aggregation × column_type compatibility (if provided)     │
