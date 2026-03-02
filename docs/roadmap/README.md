@@ -34,6 +34,12 @@ hide:
   key: "completed"
   sub_title: "Phase 2: Specialization ✅"
 
+- title: "Geospatial Map Component"
+  content: "Scatter, density, and choropleth maps with cross-filtering and GeoJSON data collection support"
+  icon: ":fontawesome-solid-map-location-dot:"
+  key: "completed"
+  sub_title: "Phase 2: Specialization ✅"
+
 - title: "Templates & Community"
   content: "Reusable dashboard templates for standard bioinformatics workflows, nf-core integration, and nf-core plugin for automatic data ingestion"
   icon: "./nf-core-logo-square.png"
@@ -96,13 +102,14 @@ Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles
 - [x] Generic components: Figure, Table, Card, Interactive ([docs](../features/components.md))
 - [x] MultiQC components for QC reports ([docs](../features/components.md#multiqc-components))
 - [x] Image grid with S3/MinIO integration and configurable thumbnails ([:material-github: #664](https://github.com/depictio/depictio/pull/664))
+- [x] Geospatial map component: scatter, density, choropleth with GeoJSON DC support ([docs](../features/components.md#map-components))
 - [x] Figure code mode with live preview ([:material-github: #639](https://github.com/depictio/depictio/pull/639))
 
 ### Dashboard Interactivity
 
 - [x] Two-panel layout with tabs ([:material-github: #616](https://github.com/depictio/depictio/pull/616))
 - [x] Cross-DC filtering via universal linking ([docs](../features/cross-dc-filtering.md))
-- [x] Interactive selection filtering: scatter/table selections
+- [x] Interactive selection filtering: scatter/table/map selections
 - [x] YAML dashboard import/export ([docs](../features/yaml-sync.md))
 
 ### Infrastructure

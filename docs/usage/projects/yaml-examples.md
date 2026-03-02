@@ -328,8 +328,11 @@ data_collections:
 
     config:                     # Required: Data collection configuration
       type: string                # Required: Data collection type
-                                  # Options (only table for now):
+                                  # Options:
                                   #  - "table": Tabular data (CSV, TSV, Excel, Parquet, Feather)
+                                  #  - "MultiQC": MultiQC quality control reports
+                                  #  - "Image": Image files with metadata
+                                  #  - "geojson": GeoJSON boundary files for choropleth maps
 
       metatype: string | null    # Required for table type
                                   # Required: Data collection metatype
@@ -368,7 +371,7 @@ data_collections:
 ### Specific Data Collection Types
 
 !!! note "Data Collection Types"
-    Data collections can be of different types, each with its own configuration requirements. Currently, only the "table" type is supported, which handles structured tabular data. Future versions may introduce additional types for other data formats (e.g., Omics data, Images, GeoJSON).
+    Data collections can be of different types, each with its own configuration requirements. Supported types: **Table** (structured tabular data), **MultiQC** (quality control reports), **Image** (image galleries), and **GeoJSON** (boundary files for choropleth maps).
 
 #### **Table** Data Collection Configuration
 
@@ -421,6 +424,40 @@ config:
   # - MultiQC 1.29+ must be used to generate parquet format
   # - Each run directory must contain: multiqc_data/multiqc.parquet
 ```
+
+#### **GeoJSON** Data Collection Configuration
+
+GeoJSON data collections store boundary files (FeatureCollections) used as the geometry source for choropleth map components:
+
+```yaml
+config:
+  # === REQUIRED FIELDS ===
+
+  type: "geojson"          # Required: Identifies this as a GeoJSON data collection
+
+  metatype: "GeoJSON"      # Required: Metatype identifier
+
+  scan:                    # Required: File discovery
+    mode: "single"
+    scan_parameters:
+      filename: "path/to/boundaries.geojson"
+
+  dc_specific_properties:
+    feature_id_key: "properties.NAME"  # Required: GeoJSON property path
+                                       # to match the locations_column
+                                       # in choropleth map components
+                                       # Common values: "id", "properties.NAME",
+                                       #   "properties.ISO_A3"
+```
+
+**GeoJSON-Specific Notes:**
+
+- **Purpose**: Provides region boundaries for `choropleth_map` components
+- **Dashboard Reference**: Referenced via `geojson_dc_tag` in dashboard YAML
+- **File Format**: Standard GeoJSON FeatureCollection (`.geojson`)
+- **Feature ID Key**: Maps to Plotly's `featureidkey` parameter — identifies which GeoJSON property matches the `locations_column` in your tabular data
+
+---
 
 **Linking MultiQC with Metadata (Recommended):**
 

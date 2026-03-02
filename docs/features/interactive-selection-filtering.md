@@ -15,6 +15,7 @@ Filter dashboard components by selecting points on scatter plots or rows in tabl
 - :material-chart-scatter-plot: **Lasso or box-select** points on scatter plots
 - :material-gesture-tap: **Click** individual points on scatter plots
 - :material-table-row: **Select rows** in AG Grid tables
+- :material-map-marker-multiple: **Lasso or click** markers on scatter maps
 
 Selected values automatically filter other components on the same Data Collection.
 
@@ -115,6 +116,26 @@ components:
 ### Reset Selection
 
 Click the :material-refresh: **Reset** button on the table to clear row selection.
+
+---
+
+## :material-map-marker-multiple: Map Selection
+
+Scatter maps support the same selection modes as scatter plots (lasso, box, click). Add `selection_enabled` and `selection_column` to a map component:
+
+```yaml
+- tag: sampling-map
+  component_type: map
+  workflow_tag: python/my_workflow
+  data_collection_tag: sample_metadata
+  lat_column: latitude
+  lon_column: longitude
+  color_column: biome
+  selection_enabled: true
+  selection_column: sample_id
+```
+
+Selected markers dim unselected points and filter other components on the same Data Collection. Choropleth maps do not support selection.
 
 ---
 
@@ -233,7 +254,7 @@ components:
 ## :material-alert-circle-outline: Limitations
 
 - **Same Data Collection**: Selection filtering works within the same Data Collection. For cross-DC filtering, use [Links](cross-dc-filtering.md).
-- **Scatter Only**: Currently only scatter plots support selection (not bar charts, histograms, etc.).
+- **Scatter & Maps Only**: Currently scatter plots and scatter maps support selection (not bar charts, histograms, or choropleth maps).
 - **No Persistence**: Selections are cleared on page reload.
 
 ---

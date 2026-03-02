@@ -202,7 +202,7 @@ project_tag: Project_Name
 
 components:
   - tag: component-identifier
-    component_type: figure|card|interactive|table|image|multiqc
+    component_type: figure|card|interactive|table|image|multiqc|map
     workflow_tag: engine/workflow_name
     data_collection_tag: dc_tag
     # Component-specific fields...
@@ -323,7 +323,7 @@ components:
 | `figure`      | Plotly charts (scatter, box, heatmap, etc.)    | `visu_type` (ui mode) or `code_content` (code mode)     |
 | `card`        | Metric cards with aggregations                 | `aggregation`, `column_name`                             |
 | `interactive` | Filters (RangeSlider, MultiSelect, etc.)       | `interactive_component_type`, `column_name`              |
-| `table`       | Data tables                                    | _(none beyond base fields)_                              |
+| `table`       | Data tables                                    | _(none required — title auto-generated from DC tag)_     |
 | `image`       | Image galleries from S3/MinIO                  | `image_column`                                           |
 | `multiqc`     | MultiQC quality control report viewer          | `selected_module`, `selected_plot`                       |
 | `map`         | Geospatial maps (scatter, density, choropleth) | `lat_column`, `lon_column` (scatter/density) or `locations_column`, GeoJSON source (choropleth) |
@@ -488,9 +488,15 @@ Heatmap `dict_kwargs` parameters:
   component_type: table
   workflow_tag: python/workflow_name
   data_collection_tag: table_dc
-  page_size: 25          # rows per page (default: 10)
-  columns: [col1, col2]  # optional: restrict visible columns
+  page_size: 25            # rows per page (default: 10)
+  columns: [col1, col2]   # optional: restrict visible columns
+  title: "Sample Data"    # optional: auto-generated from DC tag if omitted
+  description: "Complete measurements across all samples"  # optional subtitle
+  title_size: h3          # h1, h2, h3, or sm (default: sm)
+  title_align: left       # left (default), center, or right
 ```
+
+**Title / description** fields are rendered as a header above the AG Grid table. When `title` is omitted, it is auto-generated from `data_collection_tag`.
 
 ### Image Component
 

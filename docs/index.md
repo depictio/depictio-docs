@@ -137,6 +137,15 @@ hide:
         <h4>Image</h4>
         <p>Image galleries with S3/MinIO storage integration</p>
       </div>
+      <div class="component-card">
+        <div class="component-icon" style="background: var(--depictio-violet);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/>
+          </svg>
+        </div>
+        <h4>Map</h4>
+        <p>Geospatial map visualization with markers</p>
+      </div>
     </div>
   </div>
 </section>
@@ -992,8 +1001,9 @@ hide:
   }
 
   .components-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1.5rem;
     max-width: 900px;
     margin: 0 auto;
@@ -1007,6 +1017,8 @@ hide:
     border: 1px solid var(--md-default-fg-color--lightest);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     text-align: center;
+    width: calc((100% - 3rem) / 3);
+    box-sizing: border-box;
   }
 
   [data-md-color-scheme="slate"] .component-card {
@@ -1059,8 +1071,8 @@ hide:
   }
 
   @media (max-width: 900px) {
-    .components-grid {
-      grid-template-columns: repeat(2, 1fr);
+    .component-card {
+      width: calc((100% - 1.5rem) / 2);
     }
   }
 
@@ -1072,8 +1084,8 @@ hide:
   }
 
   @media (max-width: 500px) {
-    .components-grid {
-      grid-template-columns: 1fr;
+    .component-card {
+      width: 100%;
     }
   }
 

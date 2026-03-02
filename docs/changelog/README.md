@@ -8,6 +8,110 @@ hide:
 
 # Changelog
 
+## **[v0.8.0-b1](https://github.com/depictio/depictio/releases/tag/v0.8.0-b1)** (February 27, 2026)
+
+!!! warning "Beta Release"
+    This is a beta release. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.8.0-b1
+```
+
+### **✨ Features**
+
+* **Geospatial Map Component**: New interactive map component supporting scatter maps (GPS markers), density maps, and choropleth maps (colored regions from GeoJSON). Supports cross-filtering and selection propagation. No API key required (uses Plotly's built-in tile providers).
+* **Choropleth GeoJSON Support**: New `geojson` Data Collection type that loads GeoJSON from S3. Choropleth maps can reference boundaries via URL, Data Collection tag, or inline data.
+* **ComplexHeatmap Integration**: Clustered heatmap with dendrograms and row/column annotations — similar to R's `ComplexHeatmap` — available as native `visu_type: heatmap` via the [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" } library.
+* **Table Title & Description**: Tables now support configurable `title`, `description`, `title_size` (h1/h2/h3/sm), and `title_align` (left/center/right) in both the stepper UI and YAML format.
+* **Projects Directory Reorganization**: Reference project files reorganized under `depictio/projects/` with a consistent `dashboards/` subdirectory layout for better versioning support.
+
+### **🐛 Bug Fixes**
+
+* Fix map component viewport stability — viewport no longer resets on filter/theme changes
+* Fix map theme switching — promote `theme-store` to Input for reliable dark/light tile swapping
+* Fix map component stepper save support
+
+### **🔧 CI/CD**
+
+* Fix absolute path from `pixi.lock` for CI portability
+* Fix CI `dashboard_lite.yaml` references to new `dashboards/` paths
+
+---
+
+## **[v0.7.6](https://github.com/depictio/depictio/releases/tag/v0.7.6)** (February 26, 2026)
+
+!!! success "Stable Release"
+    This is a stable release consolidating all v0.7.6 beta improvements over v0.7.5.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.6
+```
+
+No user-facing changes — version bump only to promote v0.7.6-b1 to stable.
+
+---
+
+## **[v0.7.6-b1](https://github.com/depictio/depictio/releases/tag/v0.7.6-b1)** (February 25, 2026)
+
+!!! warning "Beta Release"
+    This is a beta release. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.6-b1
+```
+
+No user-facing changes — version bump only after v0.7.5 stable release.
+
+---
+
+## **[v0.7.5](https://github.com/depictio/depictio/releases/tag/v0.7.5)** (February 25, 2026)
+
+!!! success "Stable Release"
+    This is a stable release consolidating all v0.7.5 beta improvements over v0.7.4.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.5
+```
+
+### **✨ Features**
+
+* **MultiQC General Statistics Table**: New "General Statistics" module option in MultiQC components renders an interactive DataTable from `multiqc.parquet` general stats data. Includes column visibility toggles, search filtering, and theme-aware styling.
+
+### **🐛 Bug Fixes**
+
+* Fix infinite React re-render loop (`Maximum update depth exceeded`) that could occur when multiple interactive components were linked
+
+---
+
+## **[v0.7.5-b2](https://github.com/depictio/depictio/releases/tag/v0.7.5-b2)** (February 25, 2026)
+
+!!! warning "Beta Release"
+    This is a beta release. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.7.5-b2
+```
+
+### **✨ Features**
+
+* **MultiQC General Statistics Table**: New "General Statistics" module option in MultiQC components renders an interactive DataTable from `multiqc.parquet` general stats data. Includes column visibility toggles, search filtering, and theme-aware styling.
+
+### **🐛 Bug Fixes**
+
+* Fix infinite React re-render loop (`Maximum update depth exceeded`) that could occur when multiple interactive components were linked
+
+---
+
 ## **[v0.7.5-b1](https://github.com/depictio/depictio/releases/tag/v0.7.5-b1)** (February 25, 2026)
 
 !!! warning "Beta Release"
