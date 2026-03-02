@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "0.7.6",
-    "x-generated-at": "2026-02-26T20:40:19Z",
-    "x-depictio-version": "v0.7.6"
+    "version": "0.8.0-b3",
+    "x-generated-at": "2026-03-02T12:59:16Z",
+    "x-depictio-version": "v0.8.0-b3"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -6362,6 +6362,41 @@
         "title": "ColumnAggregation",
         "description": "Aggregation configuration for a specific column.\n\nAllows fine-grained control over how individual columns are aggregated\nwhen joining tables with different granularities."
       },
+      "DCGeoJSONConfig": {
+        "properties": {
+          "feature_id_key": {
+            "type": "string",
+            "title": "Feature Id Key",
+            "default": "id"
+          },
+          "s3_location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "S3 Location"
+          },
+          "file_size_bytes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Size Bytes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "DCGeoJSONConfig",
+        "description": "Configuration for GeoJSON data collections.\n\nGeoJSON DCs store geometry files (FeatureCollection) in S3.\nThe feature_id_key maps to Plotly's featureidkey parameter,\nidentifying which GeoJSON property matches the locations column."
+      },
       "DCImageConfig": {
         "properties": {
           "format": {
@@ -6670,7 +6705,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -6917,7 +6952,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -6974,7 +7009,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -7031,7 +7066,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -7108,6 +7143,9 @@
               },
               {
                 "$ref": "#/components/schemas/DCImageConfig"
+              },
+              {
+                "$ref": "#/components/schemas/DCGeoJSONConfig"
               }
             ],
             "title": "Dc Specific Properties"
@@ -7137,7 +7175,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -7214,6 +7252,9 @@
               },
               {
                 "$ref": "#/components/schemas/DCImageConfig"
+              },
+              {
+                "$ref": "#/components/schemas/DCGeoJSONConfig"
               }
             ],
             "title": "Dc Specific Properties"
@@ -7253,7 +7294,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -7338,7 +7379,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-26 20:40:15"
+            "default": "2026-03-02 12:59:13"
           },
           "file_hash": {
             "type": "string",
@@ -8286,7 +8327,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -8493,7 +8534,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -8597,7 +8638,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-26 20:40:16"
+            "default": "2026-03-02 12:59:13"
           },
           "project_type": {
             "type": "string",
@@ -8633,7 +8674,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -8737,7 +8778,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-26 20:40:16"
+            "default": "2026-03-02 12:59:13"
           },
           "project_type": {
             "type": "string",
@@ -9144,7 +9185,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -9349,7 +9390,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -9580,7 +9621,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "69a0afaeb14590f1d9566c0f"
+            "default": "69a5899ff248aacf63bf5f21"
           }
         },
         "type": "object",
@@ -9669,7 +9710,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -9787,7 +9828,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -9868,7 +9909,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -9953,7 +9994,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -10038,7 +10079,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -10203,7 +10244,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -10326,7 +10367,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-26 20:40:14"
+            "default": "2026-03-02 12:59:11"
           }
         },
         "additionalProperties": false,
@@ -10345,7 +10386,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -10468,7 +10509,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-26 20:40:14"
+            "default": "2026-03-02 12:59:11"
           }
         },
         "additionalProperties": false,
@@ -10520,7 +10561,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -10588,7 +10629,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -10685,7 +10726,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -10758,7 +10799,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-26 20:40:14"
+            "default": "2026-03-02 12:59:11"
           },
           "run_hash": {
             "type": "string",
@@ -10803,7 +10844,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a0afaeb14590f1d9566c0e"
+            "default": "69a5899ff248aacf63bf5f20"
           },
           "description": {
             "anyOf": [
@@ -10876,7 +10917,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-02-26 20:40:14"
+            "default": "2026-03-02 12:59:11"
           },
           "run_hash": {
             "type": "string",
@@ -10938,7 +10979,7 @@
           "scan_time": {
             "type": "string",
             "title": "Scan Time",
-            "default": "2026-02-26 20:40:14"
+            "default": "2026-03-02 12:59:11"
           },
           "dc_stats": {
             "anyOf": [
