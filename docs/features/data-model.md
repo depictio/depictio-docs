@@ -131,6 +131,7 @@ An **aggregated view of output files** from one or more runs, typed by content.
 | `table` | Tabular data (CSV/TSV/Parquet → Delta Lake) |
 | `multiqc` | MultiQC JSON report files |
 | `image` | Image files (PNG, SVG, …) |
+| `geojson` | GeoJSON boundary files for choropleth maps |
 
 DataCollections also carry a **source** attribute describing how they were created:
 

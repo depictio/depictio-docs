@@ -80,6 +80,7 @@ Resolvers map source values to target identifiers:
 |------|---------------|--------|
 | :material-table: `table` | Filters rows with `WHERE IN` | :material-check: Available |
 | :material-microscope: `multiqc` | Filters plot samples | :material-check: Available |
+| :material-map-marker-multiple: `map` | Filters map markers | :material-check: Available |
 | :material-dna: `jbrowse2` | Shows/hides tracks | :material-clock-outline: Planned |
 | :material-image-multiple: `images` | Filters image gallery | :material-clock-outline: Planned |
 

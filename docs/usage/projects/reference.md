@@ -134,8 +134,11 @@ workflows:
           # Required: Type of data collection
           type:
             "table" # Required: Data collection type
-            # Options (only table for now):
+            # Options:
             #   "table" - Tabular data (CSV, TSV, Excel, Parquet, Feather)
+            #   "MultiQC" - MultiQC quality control reports
+            #   "Image" - Image files with metadata
+            #   "geojson" - GeoJSON boundary files for choropleth maps
 
           # Required: Data aggregation strategy
           metatype:
@@ -270,6 +273,38 @@ workflows:
         #       target_type: "multiqc"
         #       link_config:
         #         resolver: "sample_mapping"
+
+      # --- GeoJSON DATA COLLECTION ---
+      - data_collection_tag:
+          "europe_geojson" # Required: Unique identifier for GeoJSON data
+
+        description:
+          "GeoJSON boundaries for European regions" # Optional: Description
+
+        config:
+          # Required: Type specification for GeoJSON
+          type:
+            "geojson" # Required: Identifies this as a GeoJSON data collection
+            # NOTE: GeoJSON type stores FeatureCollection files in S3
+            #   - Used as boundary source for choropleth_map components
+            #   - Referenced by geojson_dc_tag in dashboard YAML
+            #   - Requires a single .geojson file
+
+          metatype:
+            "GeoJSON" # Required: Metatype identifier
+
+          # Required: File discovery configuration
+          scan:
+            mode: single
+            scan_parameters:
+              filename: "path/to/boundaries.geojson"
+
+          # Required: GeoJSON-specific configuration
+          dc_specific_properties:
+            feature_id_key:
+              "properties.NAME" # Required: GeoJSON property path to match locations_column
+              # Maps to Plotly's featureidkey parameter
+              # Common values: "id", "properties.NAME", "properties.ISO_A3"
 ```
 
 ## See Also

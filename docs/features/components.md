@@ -187,6 +187,10 @@ Table components display data in interactive tables with built-in filtering and 
 | Visible Columns | Columns to display | All columns |
 | Page Size | Rows per page | 10, 25, 50, or 100 |
 | Style | Column width, text alignment | Auto |
+| Title | Header text above the table | Auto (from DC tag) |
+| Description | Subtitle text below the title | None |
+| Title Size | Header level: `h1`, `h2`, `h3`, or `sm` | `sm` |
+| Title Align | Text alignment: `left`, `center`, or `right` | `left` |
 
 ### Row Selection Filtering
 
