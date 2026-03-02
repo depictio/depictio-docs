@@ -413,6 +413,8 @@ Heatmap `dict_kwargs` parameters:
 
 ### Card Component
 
+**Single-metric card:**
+
 ```yaml
 - tag: metric-card
   component_type: card
@@ -424,6 +426,44 @@ Heatmap `dict_kwargs` parameters:
   icon_name: mdi:chart-line
   icon_color: "#2196F3"
 ```
+
+**Multi-metric summary card** — secondary aggregations displayed below the hero value:
+
+```yaml
+- tag: petal-length-summary
+  component_type: card
+  workflow_tag: python/iris_workflow
+  data_collection_tag: iris_table
+  aggregation: average           # hero metric (large display)
+  aggregations:                  # secondary metrics (compact rows)
+    - median
+    - std_dev
+    - min
+    - max
+  column_name: petal.length
+  column_type: float64
+  icon_name: mdi:leaf
+  icon_color: "#43A047"
+  title: "Petal Length"
+```
+
+**Conditional aggregation** — pre-filter data before computing metrics:
+
+```yaml
+- tag: high-coverage-count
+  component_type: card
+  workflow_tag: python/samples_workflow
+  data_collection_tag: samples
+  aggregation: count
+  column_name: sample_id
+  column_type: object
+  filter_expr: "(col('coverage') >= 30) & (col('quality_score') > 80)"
+  icon_name: mdi:filter-check-outline
+  icon_color: "#F4511E"
+  title: "High-Quality Samples"
+```
+
+`filter_expr` accepts a Polars expression string. See [Filter Expressions](filter-expressions.md) for the full reference.
 
 **Aggregation × column_type compatibility:**
 
@@ -468,6 +508,23 @@ Heatmap `dict_kwargs` parameters:
   interactive_component_type: DateRangePicker
   column_name: sample_date
 ```
+
+**Scoped interactive component** — pre-filter data to restrict available options:
+
+```yaml
+# Only show varieties present in rows where petal.length > 4
+- tag: long-petal-variety-filter
+  component_type: interactive
+  workflow_tag: python/iris_workflow
+  data_collection_tag: iris_table
+  interactive_component_type: MultiSelect
+  column_name: variety
+  column_type: object
+  filter_expr: "col('petal.length') > 4"
+  title: "Varieties (petal > 4 cm)"
+```
+
+`filter_expr` scopes the component's options/range to the filtered subset. See [Filter Expressions](filter-expressions.md).
 
 **Interactive type × column_type compatibility:**
 

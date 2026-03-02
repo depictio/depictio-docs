@@ -215,6 +215,7 @@ nav:
           - Interactive Selection Filtering: features/interactive-selection-filtering.md
       - Data Integration:
           - Cross-DC Filtering: features/cross-dc-filtering.md
+          - Filter Expressions: features/filter-expressions.md
           - YAML Dashboard Sync: features/yaml-sync.md
       - System Design:
           - Architecture: features/architecture.md
