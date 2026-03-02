@@ -3,9 +3,14 @@
     "version": "v0.7.6",
     "title": "v0.7.6",
     "aliases": [
-      "stable",
-      "latest"
+      "latest",
+      "stable"
     ]
+  },
+  {
+    "version": "v0.7.5-b2",
+    "title": "v0.7.5-b2",
+    "aliases": []
   },
   {
     "version": "v0.7.5-b1",
