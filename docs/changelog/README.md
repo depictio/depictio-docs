@@ -8,6 +8,29 @@ hide:
 
 # Changelog
 
+## **v0.8.1 Beta Releases**
+
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v0.8.1-b1](https://github.com/depictio/depictio/releases/tag/v0.8.1-b1)** (March 3, 2026)
+
+#### **✨ Features**
+* **Heatmap Title & Description**: Taxonomy heatmap components now support configurable `title` and `description` fields, passed through the figure-trigger store for consistent rendering across component types.
+
+#### **🐛 Bug Fixes**
+* Fix fresh install auth redirect dead-end — new deployments no longer get stuck on `/auth` page
+* Fix random `/auth` page landing in public mode when authentication is disabled
+* Fix burger icon out of sync on single-tab dashboard sidebar collapse
+* Fix data tripling in K8s multi-worker initialization and correct Faith PD axis labeling
+* Fix table rendering consistency when heatmap title/description are updated
+* Fix retry logic in API call functions (test coverage improvements)
+
+#### **🔧 CI / Tooling**
+* Add stable tag auto-update to `bump-with-helm.sh` release script
+
+---
+
 ## **[v0.8.0](https://github.com/depictio/depictio/releases/tag/v0.8.0)** (March 3, 2026)
 
 !!! success "Stable Release"
@@ -19,18 +42,17 @@ hide:
 ghcr.io/depictio/depictio:0.8.0
 ```
 
-### **✨ Highlights**
+### **✨ Features**
 
-This release brings major new visualization and data-filtering capabilities:
-
-* **Geospatial Map Component** — scatter, density, and choropleth maps with cross-filtering and selection propagation (no API key required)
-* **ComplexHeatmap Integration** — clustered heatmaps with dendrograms and row/column annotations via [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" }
-* **Multi-Metric Summary Cards** — display a hero metric plus secondary aggregations (median, std_dev, min, max, etc.) in a single card
-* **Filter Expressions (`filter_expr`)** — Polars-based expressions for conditional aggregation on cards and scoped options on interactive components. Supports comparisons, string methods, window functions, and group-level filtering
-* **Table Title & Description** — configurable headers above AG Grid tables
-* **GeoJSON Data Collection Type** — load GeoJSON boundary files from S3 for choropleth maps
-* **Debug UI Toggle** — `DEPICTIO_DASH_DEBUG_UI` environment variable to control Dash debug UI visibility
-* **MultiQC General Statistics Table** — interactive DataTable from `multiqc.parquet` general stats (carried over from v0.7.5)
+* **Geospatial Map Component**: New interactive map component supporting scatter maps (GPS markers), density maps, and choropleth maps (colored regions from GeoJSON). Supports cross-filtering and selection propagation. No API key required (uses Plotly's built-in tile providers).
+* **ComplexHeatmap Integration**: Clustered heatmap with dendrograms and row/column annotations — similar to R's `ComplexHeatmap` — available as native `visu_type: heatmap` via the [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" } library.
+* **Multi-Metric Summary Cards**: Cards can now display multiple aggregation results — a primary hero metric plus secondary metrics (median, std_dev, min, max, etc.) rendered as compact rows below the main value.
+* **Filter Expressions (`filter_expr`)**: Polars-based expressions for conditional aggregation on cards and scoped options on interactive components. Supports comparisons, string methods, window functions (`.over()`), and group-level filtering patterns.
+* **Table Title & Description**: Tables now support configurable `title`, `description`, `title_size` (h1/h2/h3/sm), and `title_align` (left/center/right) in both the stepper UI and YAML format.
+* **GeoJSON Data Collection Type**: New `geojson` Data Collection type that loads GeoJSON boundary files from S3. Choropleth maps can reference boundaries via URL, Data Collection tag, or inline data.
+* **Debug UI Toggle**: New `DEPICTIO_DASH_DEBUG_UI` environment variable to show/hide Dash debug UI independently of full dev mode.
+* **Multi-Tier MultiQC Caching**: Optimize MultiQC data loading with multi-tier caching for faster dashboard rendering.
+* **Projects Directory Reorganization**: Reference project files reorganized under `depictio/projects/` with a consistent `dashboards/` subdirectory layout for better versioning support.
 
 ### **🐛 Bug Fixes**
 
@@ -38,145 +60,72 @@ This release brings major new visualization and data-filtering capabilities:
 * Fix map component viewport stability — no more resets on filter/theme changes
 * Fix map theme switching with reliable dark/light tile swapping
 * Fix General Statistics table dark mode styling
-* Fix infinite React re-render loop (`Maximum update depth exceeded`)
 * Fix screenshot timeouts — configurable settings with increased defaults
 * Fix alpha diversity chart rendering with average + error bars
-
-### **📖 Full Beta History**
-
-For detailed per-beta changelogs, see: [v0.8.0-b1](#v080-b1-february-27-2026) through [v0.8.0-b6](#v080-b6-march-3-2026) below.
+* Fix secondary metrics rendering in card components
 
 ---
 
-## **[v0.8.0-b6](https://github.com/depictio/depictio/releases/tag/v0.8.0-b6)** (March 3, 2026)
+## **v0.8.0 Beta Releases**
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
 
-### Docker Images
+### **[v0.8.0-b6](https://github.com/depictio/depictio/releases/tag/v0.8.0-b6)** (March 3, 2026)
 
-```bash
-ghcr.io/depictio/depictio:0.8.0-b6
-```
-
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Fix alpha diversity chart — use average + error bars and `df_modified` pattern for code executor
 * Regenerate all JSON seeds via proper YAML import roundtrip for fresh deployments
 
----
+### **[v0.8.0-b5](https://github.com/depictio/depictio/releases/tag/v0.8.0-b5)** (March 3, 2026)
 
-## **[v0.8.0-b5](https://github.com/depictio/depictio/releases/tag/v0.8.0-b5)** (March 3, 2026)
-
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.8.0-b5
-```
-
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Regenerate community JSON seed with map and heatmap components for fresh deployments
 
----
+### **[v0.8.0-b4](https://github.com/depictio/depictio/releases/tag/v0.8.0-b4)** (March 2, 2026)
 
-## **[v0.8.0-b4](https://github.com/depictio/depictio/releases/tag/v0.8.0-b4)** (March 2, 2026)
-
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.8.0-b4
-```
-
-### **✨ Features**
-
+#### **✨ Features**
 * **Ampliseq Reference Dashboard**: Add map, heatmap, and geo metadata to the nf-core/ampliseq reference dashboard showcasing all new component types
 
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Fix cross-DC filtering for figures, MultiQC, and heatmap components — filters now propagate correctly across linked data collections
 * Fix General Statistics table dark mode styling for header, data bars, and hover highlight
 * Fix screenshot timeouts — increase defaults and use configurable settings
 * Fix `pixi.lock` absolute path breaking CI
 
----
+### **[v0.8.0-b3](https://github.com/depictio/depictio/releases/tag/v0.8.0-b3)** (March 2, 2026)
 
-## **[v0.8.0-b3](https://github.com/depictio/depictio/releases/tag/v0.8.0-b3)** (March 2, 2026)
-
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.8.0-b3
-```
-
-### **✨ Features**
-
+#### **✨ Features**
 * **Multi-Metric Summary Cards**: Cards can now display multiple aggregation results — a primary hero metric plus secondary metrics (median, std_dev, min, max, etc.) rendered as compact rows below the main value
 * **Conditional Aggregation (filter_expr)**: Cards support a `filter_expr` field — a Polars expression that pre-filters data before computing aggregations (e.g., "count samples where coverage > 30x")
 * **Scoped Interactive Components**: Interactive components (MultiSelect, RangeSlider, etc.) now support `filter_expr` to restrict their available options to a filtered data subset
 * **Bioinformatics Filter Methods**: `filter_expr` expanded with window functions (`.over()`), string methods (`.str.contains()`), range checks (`.is_between()`), and group-level filtering patterns
 * **Multi-Tier MultiQC Caching**: Optimize MultiQC data loading with multi-tier caching for faster dashboard rendering
 
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Fix secondary metrics rendering — display in dedicated container instead of being appended to hero value
 * Fix single-metric cards missing the secondary-metrics container
 
----
+### **[v0.8.0-b2](https://github.com/depictio/depictio/releases/tag/v0.8.0-b2)** (March 2, 2026)
 
-## **[v0.8.0-b2](https://github.com/depictio/depictio/releases/tag/v0.8.0-b2)** (March 2, 2026)
-
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.8.0-b2
-```
-
-### **✨ Features**
-
+#### **✨ Features**
 * **Debug UI Toggle**: New `DEPICTIO_DASH_DEBUG_UI` environment variable to show/hide Dash debug UI independently of full dev mode. Debug UI is hidden by default in production.
 
----
+### **[v0.8.0-b1](https://github.com/depictio/depictio/releases/tag/v0.8.0-b1)** (February 27, 2026)
 
-## **[v0.8.0-b1](https://github.com/depictio/depictio/releases/tag/v0.8.0-b1)** (February 27, 2026)
-
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.8.0-b1
-```
-
-### **✨ Features**
-
+#### **✨ Features**
 * **Geospatial Map Component**: New interactive map component supporting scatter maps (GPS markers), density maps, and choropleth maps (colored regions from GeoJSON). Supports cross-filtering and selection propagation. No API key required (uses Plotly's built-in tile providers).
 * **Choropleth GeoJSON Support**: New `geojson` Data Collection type that loads GeoJSON from S3. Choropleth maps can reference boundaries via URL, Data Collection tag, or inline data.
 * **ComplexHeatmap Integration**: Clustered heatmap with dendrograms and row/column annotations — similar to R's `ComplexHeatmap` — available as native `visu_type: heatmap` via the [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" } library.
 * **Table Title & Description**: Tables now support configurable `title`, `description`, `title_size` (h1/h2/h3/sm), and `title_align` (left/center/right) in both the stepper UI and YAML format.
 * **Projects Directory Reorganization**: Reference project files reorganized under `depictio/projects/` with a consistent `dashboards/` subdirectory layout for better versioning support.
 
-### **🐛 Bug Fixes**
-
+#### **🐛 Fixes**
 * Fix map component viewport stability — viewport no longer resets on filter/theme changes
 * Fix map theme switching — promote `theme-store` to Input for reliable dark/light tile swapping
 * Fix map component stepper save support
 
-### **🔧 CI/CD**
-
+#### **🔧 CI/CD**
 * Fix absolute path from `pixi.lock` for CI portability
 * Fix CI `dashboard_lite.yaml` references to new `dashboards/` paths
 
@@ -197,16 +146,12 @@ No user-facing changes — version bump only to promote v0.7.6-b1 to stable.
 
 ---
 
-## **[v0.7.6-b1](https://github.com/depictio/depictio/releases/tag/v0.7.6-b1)** (February 25, 2026)
+## **v0.7.6 Beta Releases**
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
 
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.7.6-b1
-```
+### **[v0.7.6-b1](https://github.com/depictio/depictio/releases/tag/v0.7.6-b1)** (February 25, 2026)
 
 No user-facing changes — version bump only after v0.7.5 stable release.
 
@@ -233,37 +178,20 @@ ghcr.io/depictio/depictio:0.7.5
 
 ---
 
-## **[v0.7.5-b2](https://github.com/depictio/depictio/releases/tag/v0.7.5-b2)** (February 25, 2026)
+## **v0.7.5 Beta Releases**
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
 
-### Docker Images
+### **[v0.7.5-b2](https://github.com/depictio/depictio/releases/tag/v0.7.5-b2)** (February 25, 2026)
 
-```bash
-ghcr.io/depictio/depictio:0.7.5-b2
-```
-
-### **✨ Features**
-
+#### **✨ Features**
 * **MultiQC General Statistics Table**: New "General Statistics" module option in MultiQC components renders an interactive DataTable from `multiqc.parquet` general stats data. Includes column visibility toggles, search filtering, and theme-aware styling.
 
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Fix infinite React re-render loop (`Maximum update depth exceeded`) that could occur when multiple interactive components were linked
 
----
-
-## **[v0.7.5-b1](https://github.com/depictio/depictio/releases/tag/v0.7.5-b1)** (February 25, 2026)
-
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.7.5-b1
-```
+### **[v0.7.5-b1](https://github.com/depictio/depictio/releases/tag/v0.7.5-b1)** (February 25, 2026)
 
 No user-facing changes — version bump only after v0.7.4 stable release.
 
@@ -311,19 +239,14 @@ ghcr.io/depictio/depictio:0.7.4
 
 ---
 
-## **[v0.7.4-b1](https://github.com/depictio/depictio/releases/tag/v0.7.4-b1)** (February 23, 2026)
+## **v0.7.4 Beta Releases**
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
 
-### Docker Images
+### **[v0.7.4-b1](https://github.com/depictio/depictio/releases/tag/v0.7.4-b1)** (February 23, 2026)
 
-```bash
-ghcr.io/depictio/depictio:0.7.4-b1
-```
-
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Fix single-user mode: auto-create admin user, auto-login as admin, redirect `/auth` to `/dashboards`
 * Fix stale local-store tokens after instance recreation in single-user mode
 * Fix CLI config generation in public/demo mode
@@ -331,14 +254,12 @@ ghcr.io/depictio/depictio:0.7.4-b1
 * Fix CI environment variable handling for UID/GID/DATA\_DIR in backup jobs
 * Fix CI e2e test sed patterns to match docker-compose/.env defaults
 
-### **🚀 Improvements**
-
+#### **🚀 Improvements**
 * Replace Gitpod with GitHub Codespaces and remove Gitpod files
 * Update `.env` for single-user mode configuration and clean up comments
 * Remove leftover analysis and summary markdown files
 
-### **🔧 CI/CD**
-
+#### **🔧 CI/CD**
 * Multi-arch Docker build: native arm64 runner, amd64 early tag push, imagetools-based multi-arch merge
 * Add version input for manual workflow\_dispatch
 * Add docs repo notification to stable multi-arch build merge job
@@ -617,30 +538,23 @@ ghcr.io/depictio/depictio:stable
 
 ---
 
-## **[v0.6.3-b1](https://github.com/depictio/depictio/releases/tag/v0.6.3-b1)** (February 1, 2026)
+## **v0.6.3 Beta Releases**
 
-!!! warning "Beta Release"
-    This is a pre-release version intended for testing. Use in production at your own risk.
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
 
-### Docker Images
+### **[v0.6.3-b1](https://github.com/depictio/depictio/releases/tag/v0.6.3-b1)** (February 1, 2026)
 
-```bash
-ghcr.io/depictio/depictio:0.6.3-b1
-```
-
-### **✨ Features**
-
+#### **✨ Features**
 * **Image Component Foundation**: Initial infrastructure for Image data collection type
 * **API Health Endpoint**: Added `/health` endpoint for Kubernetes readiness checks
 
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * **S3 Handling**: Handle `BucketAlreadyOwnedByYou` error gracefully
 * **S3 Cleanup**: Prevent HTTPException from killing worker during S3 cleanup, delay cleanup on startup
 * **CI/CD**: Multiple fixes for health checks, token handling, and dashboard verification
 
-### **🧹 Internal Changes**
-
+#### **🧹 Internal Changes**
 * Comprehensive unit tests for Image component changes
 * Extended dashboard CLI testing with DB verification
 
