@@ -8,6 +8,90 @@ hide:
 
 # Changelog
 
+## **[v0.8.0-b5](https://github.com/depictio/depictio/releases/tag/v0.8.0-b5)** (March 3, 2026)
+
+!!! warning "Beta Release"
+    This is a beta release. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.8.0-b5
+```
+
+### **🐛 Bug Fixes**
+
+* Regenerate community JSON seed with map and heatmap components for fresh deployments
+
+---
+
+## **[v0.8.0-b4](https://github.com/depictio/depictio/releases/tag/v0.8.0-b4)** (March 2, 2026)
+
+!!! warning "Beta Release"
+    This is a beta release. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.8.0-b4
+```
+
+### **✨ Features**
+
+* **Ampliseq Reference Dashboard**: Add map, heatmap, and geo metadata to the nf-core/ampliseq reference dashboard showcasing all new component types
+
+### **🐛 Bug Fixes**
+
+* Fix cross-DC filtering for figures, MultiQC, and heatmap components — filters now propagate correctly across linked data collections
+* Fix General Statistics table dark mode styling for header, data bars, and hover highlight
+* Fix screenshot timeouts — increase defaults and use configurable settings
+* Fix `pixi.lock` absolute path breaking CI
+
+---
+
+## **[v0.8.0-b3](https://github.com/depictio/depictio/releases/tag/v0.8.0-b3)** (March 2, 2026)
+
+!!! warning "Beta Release"
+    This is a beta release. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.8.0-b3
+```
+
+### **✨ Features**
+
+* **Multi-Metric Summary Cards**: Cards can now display multiple aggregation results — a primary hero metric plus secondary metrics (median, std_dev, min, max, etc.) rendered as compact rows below the main value
+* **Conditional Aggregation (filter_expr)**: Cards support a `filter_expr` field — a Polars expression that pre-filters data before computing aggregations (e.g., "count samples where coverage > 30x")
+* **Scoped Interactive Components**: Interactive components (MultiSelect, RangeSlider, etc.) now support `filter_expr` to restrict their available options to a filtered data subset
+* **Bioinformatics Filter Methods**: `filter_expr` expanded with window functions (`.over()`), string methods (`.str.contains()`), range checks (`.is_between()`), and group-level filtering patterns
+* **Multi-Tier MultiQC Caching**: Optimize MultiQC data loading with multi-tier caching for faster dashboard rendering
+
+### **🐛 Bug Fixes**
+
+* Fix secondary metrics rendering — display in dedicated container instead of being appended to hero value
+* Fix single-metric cards missing the secondary-metrics container
+
+---
+
+## **[v0.8.0-b2](https://github.com/depictio/depictio/releases/tag/v0.8.0-b2)** (March 2, 2026)
+
+!!! warning "Beta Release"
+    This is a beta release. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.8.0-b2
+```
+
+### **✨ Features**
+
+* **Debug UI Toggle**: New `DEPICTIO_DASH_DEBUG_UI` environment variable to show/hide Dash debug UI independently of full dev mode. Debug UI is hidden by default in production.
+
+---
+
 ## **[v0.8.0-b1](https://github.com/depictio/depictio/releases/tag/v0.8.0-b1)** (February 27, 2026)
 
 !!! warning "Beta Release"

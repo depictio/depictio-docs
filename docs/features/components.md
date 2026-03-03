@@ -207,7 +207,7 @@ See [Interactive Selection Filtering](interactive-selection-filtering.md) for de
 
 ## :material-card-text: Card Components
 
-Card components display single metrics with optional aggregations and styling.
+Card components display metrics with aggregations. A card shows a **hero metric** (primary value) and can optionally display **secondary metrics** below it for at-a-glance summaries.
 
 ### Aggregation Types
 
@@ -215,27 +215,65 @@ Card components display single metrics with optional aggregations and styling.
 |-------------|-------------|---------|
 | :material-counter: **count** | Number of rows | Total samples |
 | :material-sigma: **sum** | Sum of values | Total reads |
-| :material-chart-line-variant: **mean** | Average value | Average coverage |
+| :material-chart-line-variant: **average** | Average value | Average coverage |
 | :material-format-vertical-align-center: **median** | Median value | Median quality score |
 | :material-arrow-down: **min** | Minimum value | Minimum mapping rate |
 | :material-arrow-up: **max** | Maximum value | Maximum duplication rate |
-| :material-tag-multiple: **unique** | Count of unique values | Unique sample types |
+| :material-tag-multiple: **nunique** | Count of unique values | Unique sample types |
+| :material-chart-bell-curve-cumulative: **std_dev** | Standard deviation | Coverage spread |
+| :material-chart-bell-curve: **variance** | Variance | Expression variability |
+| :material-arrow-expand-horizontal: **range** | Max − Min | Read length range |
+| :material-wave: **skewness** | Distribution skew | Quality score symmetry |
+| :material-sine-wave: **kurtosis** | Distribution tailedness | Outlier tendency |
+| :material-percent: **percentile** | 50th percentile | Median coverage |
+| :material-poll: **mode** | Most frequent value | Dominant sample type |
 
 ### Configuration
 
 1. Select a **Data Collection**
 2. Choose a **Column** to aggregate
-3. Select an **Aggregation** type
-4. Customize the **Title** and **Format**
+3. Select an **Aggregation** type (hero metric)
+4. Optionally add **Secondary Metrics** (`aggregations`) for a multi-metric summary
+5. Optionally add a **Filter Expression** (`filter_expr`) for conditional aggregation
+6. Customize the **Title**, **Icon**, and **Styling**
+
+### Multi-Metric Summary Cards
+
+Cards can display multiple aggregation results in a single component. The primary `aggregation` is shown as the large hero value, and `aggregations` are displayed as compact secondary rows below it.
+
+```text
+┌─────────────────────────────────┐
+│ Petal Length              [Icon]│
+├─────────────────────────────────┤
+│           4.5 cm                │
+│          (Average)              │
+├─────────────────────────────────┤
+│ Median:       4.35              │
+│ Std Dev:      0.82              │
+│ Min:          1.00              │
+│ Max:          6.90              │
+└─────────────────────────────────┘
+```
+
+### Conditional Aggregation (filter_expr)
+
+Cards support a `filter_expr` field — a Polars expression that pre-filters the data **before** computing the aggregation. This enables conditional metrics like "count of samples with coverage > 30x" without creating a separate data collection.
+
+`filter_expr` works **on top of** interactive filters (dual-layer filtering): interactive filters narrow the dataset first, then `filter_expr` applies an additional condition before aggregation.
+
+See [Filter Expressions](filter-expressions.md) for the complete expression reference.
 
 ### Styling Options
 
 | Option | Description | Example |
 |--------|-------------|---------|
 | Title | Metric label | "Total Samples" |
-| Format | Number formatting | `{:,.0f}` or `{:.2%}` |
-| Color | Card accent color | Mantine color |
-| Icon | Optional icon | `mdi:chart-line` |
+| Description | Subtitle text | "Across all batches" |
+| Icon | Iconify icon name | `mdi:chart-line` |
+| Icon Color | Icon accent color | `#2196F3` |
+| Title Color | Title text color | `#333333` |
+| Title Font Size | Title font size | `sm` |
+| Value Font Size | Hero value font size | `xl` |
 
 ---
 
@@ -317,6 +355,20 @@ Single-selection toggle:
 | Column | Column to filter |
 | Options | Available choices |
 | Default | Initially selected option |
+
+### Scoped Filters (filter_expr)
+
+Interactive components support a `filter_expr` field that **pre-filters the underlying data before computing component options**. Instead of showing all possible values, the component shows only values that exist in the filtered subset.
+
+**Example**: A MultiSelect with `filter_expr: "col('petal.length') > 4"` only shows variety options that appear in rows where petal length exceeds 4 cm.
+
+This is useful for:
+
+- :material-filter-variant: **Cascading filters** — show only relevant options based on data conditions
+- :material-microscope: **Domain-specific scoping** — e.g., only show taxa above an abundance threshold
+- :material-target: **Focused analysis** — restrict a slider's range to a meaningful subset
+
+See [Filter Expressions](filter-expressions.md) for the complete expression reference.
 
 ---
 
