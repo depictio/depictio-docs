@@ -8,6 +8,46 @@ hide:
 
 # Changelog
 
+## **[v0.8.0](https://github.com/depictio/depictio/releases/tag/v0.8.0)** (March 3, 2026)
+
+!!! success "Stable Release"
+    This is a stable release consolidating all v0.8.0 beta improvements over v0.7.6.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.8.0
+```
+
+### **✨ Highlights**
+
+This release brings major new visualization and data-filtering capabilities:
+
+* **Geospatial Map Component** — scatter, density, and choropleth maps with cross-filtering and selection propagation (no API key required)
+* **ComplexHeatmap Integration** — clustered heatmaps with dendrograms and row/column annotations via [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" }
+* **Multi-Metric Summary Cards** — display a hero metric plus secondary aggregations (median, std_dev, min, max, etc.) in a single card
+* **Filter Expressions (`filter_expr`)** — Polars-based expressions for conditional aggregation on cards and scoped options on interactive components. Supports comparisons, string methods, window functions, and group-level filtering
+* **Table Title & Description** — configurable headers above AG Grid tables
+* **GeoJSON Data Collection Type** — load GeoJSON boundary files from S3 for choropleth maps
+* **Debug UI Toggle** — `DEPICTIO_DASH_DEBUG_UI` environment variable to control Dash debug UI visibility
+* **MultiQC General Statistics Table** — interactive DataTable from `multiqc.parquet` general stats (carried over from v0.7.5)
+
+### **🐛 Bug Fixes**
+
+* Fix cross-DC filtering for figures, MultiQC, and heatmap components
+* Fix map component viewport stability — no more resets on filter/theme changes
+* Fix map theme switching with reliable dark/light tile swapping
+* Fix General Statistics table dark mode styling
+* Fix infinite React re-render loop (`Maximum update depth exceeded`)
+* Fix screenshot timeouts — configurable settings with increased defaults
+* Fix alpha diversity chart rendering with average + error bars
+
+### **📖 Full Beta History**
+
+For detailed per-beta changelogs, see: [v0.8.0-b1](#v080-b1-february-27-2026) through [v0.8.0-b6](#v080-b6-march-3-2026) below.
+
+---
+
 ## **[v0.8.0-b6](https://github.com/depictio/depictio/releases/tag/v0.8.0-b6)** (March 3, 2026)
 
 !!! warning "Beta Release"
