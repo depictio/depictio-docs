@@ -8,6 +8,24 @@ hide:
 
 # Changelog
 
+## **[v0.8.0-b6](https://github.com/depictio/depictio/releases/tag/v0.8.0-b6)** (March 3, 2026)
+
+!!! warning "Beta Release"
+    This is a beta release. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.8.0-b6
+```
+
+### **🐛 Bug Fixes**
+
+* Fix alpha diversity chart — use average + error bars and `df_modified` pattern for code executor
+* Regenerate all JSON seeds via proper YAML import roundtrip for fresh deployments
+
+---
+
 ## **[v0.8.0-b5](https://github.com/depictio/depictio/releases/tag/v0.8.0-b5)** (March 3, 2026)
 
 !!! warning "Beta Release"
