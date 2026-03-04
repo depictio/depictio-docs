@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "0.8.0",
-    "x-generated-at": "2026-03-03T10:58:46Z",
-    "x-depictio-version": "v0.8.0"
+    "version": "0.8.1",
+    "x-generated-at": "2026-03-04T08:56:45Z",
+    "x-depictio-version": "v0.8.1"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -6705,7 +6705,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -6952,7 +6952,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -7009,7 +7009,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -7066,7 +7066,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -7175,7 +7175,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -7294,7 +7294,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -7379,7 +7379,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-03 10:58:43"
+            "default": "2026-03-04 08:56:42"
           },
           "file_hash": {
             "type": "string",
@@ -8327,7 +8327,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -8534,7 +8534,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -8638,7 +8638,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-03 10:58:43"
+            "default": "2026-03-04 08:56:42"
           },
           "project_type": {
             "type": "string",
@@ -8674,7 +8674,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -8778,7 +8778,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-03 10:58:43"
+            "default": "2026-03-04 08:56:42"
           },
           "project_type": {
             "type": "string",
@@ -9185,7 +9185,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -9390,7 +9390,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -9621,7 +9621,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "69a6bee199860c6843087c57"
+            "default": "69a7f3c88da8d90e06af6bba"
           }
         },
         "type": "object",
@@ -9710,7 +9710,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -9828,7 +9828,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -9909,7 +9909,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -9994,7 +9994,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -10079,7 +10079,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -10244,7 +10244,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -10367,7 +10367,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-03 10:58:41"
+            "default": "2026-03-04 08:56:40"
           }
         },
         "additionalProperties": false,
@@ -10386,7 +10386,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -10509,7 +10509,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-03 10:58:41"
+            "default": "2026-03-04 08:56:40"
           }
         },
         "additionalProperties": false,
@@ -10561,7 +10561,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -10629,7 +10629,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -10726,7 +10726,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -10799,7 +10799,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-03 10:58:41"
+            "default": "2026-03-04 08:56:40"
           },
           "run_hash": {
             "type": "string",
@@ -10844,7 +10844,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a6bee199860c6843087c56"
+            "default": "69a7f3c88da8d90e06af6bb9"
           },
           "description": {
             "anyOf": [
@@ -10917,7 +10917,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-03 10:58:41"
+            "default": "2026-03-04 08:56:40"
           },
           "run_hash": {
             "type": "string",
@@ -10979,7 +10979,7 @@
           "scan_time": {
             "type": "string",
             "title": "Scan Time",
-            "default": "2026-03-03 10:58:41"
+            "default": "2026-03-04 08:56:40"
           },
           "dc_stats": {
             "anyOf": [
