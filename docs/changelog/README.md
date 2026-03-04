@@ -8,10 +8,40 @@ hide:
 
 # Changelog
 
+## **[v0.8.1](https://github.com/depictio/depictio/releases/tag/v0.8.1)** (March 4, 2026)
+
+!!! success "Stable Release"
+    This release fixes the blank `/auth` page bug on fresh Docker installs caused by internal API key mismatch between containers.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.8.1
+```
+
+### **🐛 Bug Fixes**
+
+* **Fix blank `/auth` page on fresh Docker install**: Add shared `depictio_keys` volume so backend, frontend, and celery-worker containers use the same internal API key. Previously each container generated a different key (based on PID/UID), causing 403 errors on every internal API call in single-user mode.
+* **Upgrade internal API key generation**: Replace deterministic `sha256(uid+salt)` with cryptographically random `secrets.token_hex(32)` for improved security.
+
+### **📖 Documentation**
+
+* Add update, backup & restore guide to Docker installation docs
+
+---
+
 ## **v0.8.1 Beta Releases**
 
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v0.8.1-b2](https://github.com/depictio/depictio/releases/tag/v0.8.1-b2)** (March 4, 2026)
+
+#### **🐛 Bug Fixes**
+* Shared `depictio_keys` Docker volume for internal API key consistency across containers
+* Upgrade key generation from deterministic hash to `secrets.token_hex(32)`
+
+---
 
 ### **[v0.8.1-b1](https://github.com/depictio/depictio/releases/tag/v0.8.1-b1)** (March 3, 2026)
 

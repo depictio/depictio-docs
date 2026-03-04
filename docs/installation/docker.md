@@ -9,7 +9,7 @@ Up and running in two commands — no git clone, no configuration file needed.
 ### Step 1 — Download the compose file
 
 ```bash
-curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml
+curl -LO https://raw.githubusercontent.com/depictio/depictio/stable/docker-compose.yaml
 ```
 
 ### Step 2 — Start
@@ -191,6 +191,84 @@ Common causes: port conflict, volume permission error, MongoDB connection failur
 ### Data persistence
 
 MongoDB data is stored in `./depictioDB` (bind-mount). MinIO data is stored in a named Docker volume (`minio_data`). Both persist across `docker compose down` restarts.
+
+---
+
+## :material-update: Updating Depictio
+
+### Pull the latest images
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
+Containers are recreated with the new image; data volumes are preserved.
+
+### Pin a specific version
+
+Set `DEPICTIO_VERSION` in your `.env` to avoid unexpected upgrades:
+
+```bash
+DEPICTIO_VERSION=0.8.1-b1
+```
+
+### Update the compose file
+
+When a new release adds volumes or services (e.g. the `depictio_keys` shared volume in v0.8.1), re-download the compose file:
+
+```bash
+curl -LO https://raw.githubusercontent.com/depictio/depictio/stable/docker-compose.yaml
+docker compose up -d
+```
+
+---
+
+## :material-backup-restore: Backup & Restore
+
+### What to back up
+
+| Data | Location | Type |
+|------|----------|------|
+| Dashboards, users, projects | `mongo_data` volume | MongoDB |
+| Uploaded files & Delta tables | `minio_data` volume | MinIO (S3) |
+| Internal API keys | `depictio_keys` volume | Shared key files |
+| Your configuration | `.env` | File |
+
+### Backup
+
+```bash
+# MongoDB
+docker exec mongo mongodump --port 27018 --archive=/data/backup.archive
+docker cp mongo:/data/backup.archive ./depictio-backup.archive
+
+# MinIO data
+docker run --rm -v minio_data:/data -v $(pwd):/backup alpine \
+  tar czf /backup/minio-backup.tar.gz -C /data .
+
+# Internal API keys
+docker run --rm -v depictio_keys:/data -v $(pwd):/backup alpine \
+  tar czf /backup/depictio-keys-backup.tar.gz -C /data .
+```
+
+### Restore
+
+```bash
+# MongoDB
+docker cp ./depictio-backup.archive mongo:/data/backup.archive
+docker exec mongo mongorestore --port 27018 --archive=/data/backup.archive --drop
+
+# MinIO data
+docker run --rm -v minio_data:/data -v $(pwd):/backup alpine \
+  sh -c "rm -rf /data/* && tar xzf /backup/minio-backup.tar.gz -C /data"
+
+# Internal API keys
+docker run --rm -v depictio_keys:/data -v $(pwd):/backup alpine \
+  sh -c "rm -rf /data/* && tar xzf /backup/depictio-keys-backup.tar.gz -C /data"
+```
+
+!!! warning "`docker compose down -v` deletes all volumes"
+    Only use the `-v` flag when you intentionally want a clean slate. For routine restarts, use `docker compose down` (without `-v`) or `docker compose restart`.
 
 ---
 
