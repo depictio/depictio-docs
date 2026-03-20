@@ -15,6 +15,7 @@
   - [📊 Data Commands](#data-commands)
   - [📈 Dashboard Commands](#dashboard-commands)
   - [💾 Backup Commands](#backup-commands)
+  - [🔄 Migrate Commands](#migrate-commands)
 - [🛠️ Common Use Cases](#common-use-cases)
 <!-- - [🔧 Error Handling](#error-handling) -->
 
@@ -43,6 +44,7 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `backup validate`                      | Validate backup against models          | **Admin only** |
 | `backup restore`                       | Restore from backup                     | **Admin only** |
 | `backup check-coverage`                | Check validation coverage               | **Admin only** |
+| `migrate run`                          | Migrate a project to another instance   | **Admin only** |
 
 <!-- | Command                                | Description                             | Access Level   |
 | -------------------------------------- | --------------------------------------- | -------------- |
@@ -613,6 +615,66 @@ depictio-cli backup check-coverage [OPTIONS]
 depictio-cli backup check-coverage
 ```
 
+### 🔄 Migrate Commands
+
+<!-- prettier-ignore -->
+!!! warning "Admin Access Required"
+    All migrate operations require administrator privileges on both the source and target instances.
+
+#### `migrate run`
+
+Migrate a project from one Depictio instance to another — non-destructive upsert, never wipes existing data on the target.
+
+```bash
+depictio-cli migrate run --project <name> [OPTIONS]
+```
+
+| Parameter           | Type     | Default                     | Description                                        |
+| ------------------- | -------- | --------------------------- | -------------------------------------------------- |
+| `--project`         | `string` | **required**                | Project name to migrate                            |
+| `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml`      | Source instance CLI config (credentials + API URL) |
+| `--target-config`   | `string` | `~/.depictio/CLI_remote.yaml` | Target instance CLI config                       |
+| `--mode`            | `string` | `all`                       | Migration scope: `all`, `metadata`, `dashboard`, `files` |
+| `--dry-run`         | `flag`   | `False`                     | Preview changes without writing anything           |
+
+**Migration modes:**
+
+| Mode        | What is migrated                                  | When to use                                         |
+| ----------- | ------------------------------------------------- | --------------------------------------------------- |
+| `all`       | MongoDB documents + S3 files                      | First-time full migration                           |
+| `metadata`  | MongoDB documents only                            | Both instances share the same S3 storage            |
+| `dashboard` | Dashboard documents only                          | Project already exists on remote, updating layouts  |
+| `files`     | S3 files only                                     | MongoDB already migrated, syncing data files        |
+
+```bash
+# Dry-run first (recommended before any migration)
+depictio-cli migrate run \
+  --project "My Project" \
+  --CLI-config-path ~/.depictio/CLI_local.yaml \
+  --target-config ~/.depictio/CLI_remote.yaml \
+  --dry-run
+
+# Full migration (MongoDB + S3)
+depictio-cli migrate run \
+  --project "My Project" \
+  --CLI-config-path ~/.depictio/CLI_local.yaml \
+  --target-config ~/.depictio/CLI_remote.yaml
+
+# Metadata-only (shared S3)
+depictio-cli migrate run \
+  --project "My Project" \
+  --CLI-config-path ~/.depictio/CLI_local.yaml \
+  --target-config ~/.depictio/CLI_remote.yaml \
+  --mode metadata
+
+# Dashboard-only update
+depictio-cli migrate run \
+  --project "My Project" \
+  --CLI-config-path ~/.depictio/CLI_local.yaml \
+  --target-config ~/.depictio/CLI_remote.yaml \
+  --mode dashboard
+```
+
 ## 🛠️ Common Use Cases
 
 ### 🚀 Quick Start
@@ -714,6 +776,52 @@ depictio-cli data process --project-config-path ./config.yaml --overwrite
 
 # Update and reprocess
 depictio-cli run --project-config-path ./config.yaml --update-config --overwrite
+```
+
+### 🔄 Project Migration
+
+<!-- prettier-ignore -->
+!!! warning "Admin Access Required"
+    Migration requires administrator privileges on both source and target instances.
+
+=== "First-time Migration"
+
+```bash
+# 1. Dry-run to preview what will be migrated
+depictio-cli migrate run \
+  --project "My Project" \
+  --CLI-config-path ~/.depictio/CLI_local.yaml \
+  --target-config ~/.depictio/CLI_remote.yaml \
+  --dry-run
+
+# 2. Run full migration (MongoDB docs + S3 files)
+depictio-cli migrate run \
+  --project "My Project" \
+  --CLI-config-path ~/.depictio/CLI_local.yaml \
+  --target-config ~/.depictio/CLI_remote.yaml
+```
+
+=== "Shared S3 Storage"
+
+```bash
+# When source and target share the same S3, only migrate MongoDB docs
+depictio-cli migrate run \
+  --project "My Project" \
+  --CLI-config-path ~/.depictio/CLI_local.yaml \
+  --target-config ~/.depictio/CLI_remote.yaml \
+  --mode metadata
+```
+
+=== "Dashboard Update"
+
+```bash
+# Push updated dashboard layouts to a remote instance
+# (project and data already exist on remote)
+depictio-cli migrate run \
+  --project "My Project" \
+  --CLI-config-path ~/.depictio/CLI_local.yaml \
+  --target-config ~/.depictio/CLI_remote.yaml \
+  --mode dashboard
 ```
 
 ## 📖 Configuration References

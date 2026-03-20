@@ -217,6 +217,8 @@ nav:
           - Cross-DC Filtering: features/cross-dc-filtering.md
           - Filter Expressions: features/filter-expressions.md
           - YAML Dashboard Sync: features/yaml-sync.md
+      - Administration:
+          - Project Migration: features/migrate.md
       - System Design:
           - Architecture: features/architecture.md
           - Data Model: features/data-model.md
