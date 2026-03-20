@@ -128,10 +128,11 @@ depictio-cli run --project-config-path ./config.yaml
     | `--template` | `string` | `null` | Template ID (e.g. `nf-core/ampliseq/2.16.0`) |
     | `--data-root` | `path` | `null` | Root directory substituted for `{DATA_ROOT}` in template. Required when `--template` is set. |
     | `--project-name` | `string` | `null` | Custom project name (auto-generated from template if omitted) |
+    | `--deep` | `flag` | `false` | Enable level-2 data validation: checks column names in expected files |
     | `--dashboard` | `path` | `null` | Override default dashboard(s) to import. Repeatable. |
     | `--skip-dashboard-import` | `flag` | `false` | Skip the automatic dashboard import step (Step 8) |
 
-    See [Templates](../usage/projects/templates.md) for full documentation.
+    See [Templates](../features/templates.md) for full documentation.
 
 ??? info "⚙️ Flow Control Options"
 
@@ -176,6 +177,12 @@ depictio-cli run --project-config-path ./config.yaml
 depictio-cli run \
   --template nf-core/ampliseq/2.16.0 \
   --data-root /data/my_ampliseq_run
+
+# With deep column validation
+depictio-cli run \
+  --template nf-core/ampliseq/2.16.0 \
+  --data-root /data/my_ampliseq_run \
+  --deep
 ```
 
 === "Development"
@@ -211,7 +218,7 @@ depictio-cli run \
 
 <!-- prettier-ignore -->
 !!! info "Command Group: `depictio-cli recipe`"
-    All commands in this section are part of the `recipe` command family. Use them to discover, inspect, and locally test data transformation recipes before running them in a project. For full recipe documentation, see [Recipes](../usage/projects/recipes.md).
+    All commands in this section are part of the `recipe` command family. Use them to discover, inspect, and locally test data transformation recipes before running them in a project. For full recipe documentation, see [Recipes](recipes.md).
 
 Discover and execute data transformation recipes locally.
 

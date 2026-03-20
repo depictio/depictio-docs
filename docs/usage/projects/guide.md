@@ -355,19 +355,87 @@ The CLI executes this pipeline:
 5. **✅ File Scan** - Discover files matching patterns
 6. **✅ Data Process** - Convert files to Delta Lake format
 
+## Template Projects
+
+<!-- prettier-ignore -->
+!!! success "Perfect for: nf-core pipelines and standardized bioinformatics workflows"
+
+    **Use when:** You have output from a supported pipeline (e.g. nf-core/ampliseq) and want a fully configured project + dashboards in one command — without writing any YAML.
+
+Templates are pre-packaged project configurations that ship with Depictio. Each template bundles a project YAML (with `{DATA_ROOT}` placeholders), bundled dashboards, and referenced data transformation recipes for a specific pipeline version.
+
+### One-command setup
+
+```bash
+depictio run \
+  --template nf-core/ampliseq/2.16.0 \
+  --data-root /data/my_ampliseq_run
+```
+
+That single command:
+
+1. Validates your data directory structure against the template's `expected_files`
+2. Resolves all `{DATA_ROOT}` placeholders throughout the config
+3. Creates the project in MongoDB
+4. Discovers and processes all data collections (running recipes automatically)
+5. Imports the bundled dashboard
+
+### When to use templates
+
+Use templates when:
+
+- ✅ You ran a supported nf-core pipeline (e.g. ampliseq) and want instant visualization
+- ✅ You want a reproducible, versioned project setup you can share with collaborators
+- ✅ You prefer not to write project YAML from scratch
+
+Use a manual YAML config when:
+
+- ✅ Your pipeline is not yet covered by a bundled template
+- ✅ You need highly customized data collection patterns or scan configurations
+- ✅ You want fine-grained control over which files are included
+
+### Template workflow diagram
+
+```mermaid
+graph LR
+    A["depictio run --template X --data-root /path"] --> B["Step 0: Resolve template\nSubstitute {DATA_ROOT}"]
+    B --> C["Validate data directory\n(Level 1 or Level 2 with --deep)"]
+    C --> D["Steps 1-7: Standard pipeline\n(sync, scan, process recipes, ...)"]
+    D --> E["Step 8: Import bundled dashboards"]
+    E --> F["Project ready + badge shown in UI\n'Template: nf-core/ampliseq/2.16.0'"]
+
+    classDef default fill:#45B8AC,stroke:#2E7D73,stroke-width:2px,color:#fff
+    classDef highlight fill:#2E7D73,stroke:#45B8AC,stroke-width:2px,color:#fff
+    class A,F highlight
+```
+
+### Template origin badge
+
+Once imported, every dashboard card in the UI shows a badge:
+
+```
+Template: nf-core/ampliseq/2.16.0
+```
+
+This tells you and your collaborators which template generated the project, enabling template discovery and making provenance visible throughout the UI.
+
+For full template reference — available templates, data validation levels, YAML structure, and all CLI flags — see **[Templates](../../features/templates.md)**.
+
+---
+
 ## Project Types Comparison
 
 Choose the right project type for your workflow:
 
-| Feature                  | Basic Projects                         | Advanced Projects             |
-| ------------------------ | -------------------------------------- | ----------------------------- |
-| **Setup Complexity**     | Minimal - Web UI or CLI                | YAML config + CLI required    |
-| **Data Sources**         | UI File upload or CLI-based processing | CLI-based processing          |
-| **File Organization**    | Simple file management                 | Structured directory patterns |
-| **Multi-sample Support** | Single datasets                        | Multi samples support         |
-| **Data Processing**      | Direct conversion                      | Aggregation & cross-DC links  |
-| **Learning Curve**       | Immediate                              | Moderate (YAML knowledge)     |
-| **Scalability**          | Small-medium datasets                  | Large-scale studies           |
+| Feature                  | Basic Projects                         | Advanced Projects             | Template Projects                         |
+| ------------------------ | -------------------------------------- | ----------------------------- | ----------------------------------------- |
+| **Setup Complexity**     | Minimal - Web UI or CLI                | YAML config + CLI required    | Single command, no YAML needed            |
+| **Data Sources**         | UI File upload or CLI-based processing | CLI-based processing          | CLI-based (pipeline output)               |
+| **File Organization**    | Simple file management                 | Structured directory patterns | Fixed structure per template              |
+| **Multi-sample Support** | Single datasets                        | Multi samples support         | Full support (template-specific)          |
+| **Data Processing**      | Direct conversion                      | Aggregation & cross-DC links  | Recipes + cross-DC links (pre-configured) |
+| **Learning Curve**       | Immediate                              | Moderate (YAML knowledge)     | Minimal (just point at data dir)          |
+| **Scalability**          | Small-medium datasets                  | Large-scale studies           | Pipeline-scale (template-specific)        |
 
 ### How to Choose the Right Project Type
 
@@ -384,6 +452,12 @@ Choose **Advanced** when:
 - ✅ Standardized file organization exists
 - ✅ You need to aggregate data across samples/runs
 - ✅ Regular data updates are expected
+
+Choose a **Template** when:
+
+- ✅ You ran a supported nf-core pipeline (e.g. ampliseq)
+- ✅ You want instant project + dashboards without writing YAML
+- ✅ Reproducibility and template provenance tracking matter
 
 ## <span style="color: #45B8AC;">:material-lock:</span> Project Permissions
 

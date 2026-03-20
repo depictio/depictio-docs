@@ -1213,11 +1213,107 @@ depictio-cli config migrate --input legacy_config.yaml --output new_config.yaml
 depictio-cli config validate-project-config --project-config-path new_config.yaml
 ``` -->
 
+### Pattern: Template project with recipe-transformed data collections { #pattern-template-project }
+
+Templates are pre-packaged project configurations for specific bioinformatics pipelines. You don't write the YAML manually — you point the CLI at your data directory and a template ID. This pattern shows what the template YAML looks like internally and how to invoke it.
+
+**1. Minimal `template:` metadata block (top of a template YAML)**
+
+```yaml
+template:
+  template_id: "nf-core/ampliseq/2.16.0"
+  description: "nf-core/ampliseq microbial community analysis template"
+  version: "1.0.0"
+  variables:
+    - name: "DATA_ROOT"
+      description: "Root directory containing ampliseq pipeline output data"
+      required: true
+  expected_files:
+    - relative_path: "input/Metadata_full.tsv"
+      description: "Sample metadata"
+      format: "TSV"
+      columns: ["ID", "name", "habitat"]   # checked by --deep validation
+  expected_directories:
+    - relative_path: "qiime2"
+      description: "QIIME2 output directory"
+  dashboards:
+    - "dashboards/full_analysis.yaml"
+```
+
+**2. Recipe-transformed data collection (`source: "transformed"`)**
+
+```yaml
+data_collections:
+  - data_collection_tag: "alpha_diversity"
+    description: "Per-sample alpha diversity (Faith PD)"
+    config:
+      type: "Table"
+      source: "transformed"          # ← marks this DC as recipe-produced
+      transform:
+        recipe: "nf-core/ampliseq/alpha_diversity.py"
+        # Optional: override a source file path
+        # source_overrides:
+        #   faith_pd:
+        #     path: "custom/path/to/faith_pd_vector/metadata.tsv"
+      dc_specific_properties:
+        format: "TSV"
+        columns_description:
+          "sample": "Sample identifier"
+          "habitat": "Habitat type"
+          "faith_pd": "Faith's Phylogenetic Diversity"
+```
+
+**3. Cross-DC source via `dc_ref` (in a recipe's SOURCES)**
+
+Some recipes reference another data collection instead of a file. The `dc_ref` field names the source DC's `data_collection_tag`:
+
+```yaml
+# In the recipe Python file (e.g. taxonomy_rel_abundance.py):
+SOURCES = [
+    RecipeSource(
+        ref="rel_table",
+        path="qiime2/rel_abundance_tables/rel-table-2.tsv",
+        format="TSV",
+        read_kwargs={"skip_rows": 1},
+    ),
+    RecipeSource(ref="metadata", dc_ref="metadata"),  # ← loaded from the "metadata" DC
+]
+```
+
+The `dc_ref` source is resolved automatically during `depictio run` — no additional YAML is needed in the project config.
+
+**4. Running the template**
+
+```bash
+# Minimal — template ID + data root
+depictio run \
+  --template nf-core/ampliseq/2.16.0 \
+  --data-root /data/my_ampliseq_run
+
+# With level-2 column validation
+depictio run \
+  --template nf-core/ampliseq/2.16.0 \
+  --data-root /data/my_ampliseq_run \
+  --deep
+
+# Skip auto-import (import dashboards manually later)
+depictio run \
+  --template nf-core/ampliseq/2.16.0 \
+  --data-root /data/my_ampliseq_run \
+  --skip-dashboard-import
+```
+
+For full template reference, see [Templates](../../features/templates.md). For recipe documentation, see [Recipes](../../depictio-cli/recipes.md).
+
+---
+
 ## 📖 Additional Resources
 
 - **[Projects Guide](guide.md)** - Comprehensive project management guide
 - **[Configuration Reference](reference.md)** - Complete YAML reference documentation
 - **[CLI Reference](../../depictio-cli/usage.md)** - Complete CLI command documentation
+- **[Templates](../../features/templates.md)** - Pre-packaged project configurations
+- **[Recipes](../../depictio-cli/recipes.md)** - Data transformation recipes
 - **[Dashboard Creation](../guides/dashboard_creation.md)** - Building interactive dashboards
 - **[API Documentation](../../api/reference.md)** - Programmatic project management
 - **[Pydantic Models](https://github.com/depictio/depictio/tree/main/depictio/models/models)** - Schema definitions and validation
