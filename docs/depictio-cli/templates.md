@@ -6,7 +6,7 @@ Templates are pre-packaged project configurations that let you set up a complete
 
 A template is a `template.yaml` file (an extended project YAML) that ships inside Depictio under `depictio/projects/<pipeline>/<version>/`. It contains:
 
-- A **`template:`** metadata block with variable declarations and expected file/directory structure
+- A **`template:`** metadata block with variable declarations
 - A **standard project configuration** (workflows, data collections, links) with `{DATA_ROOT}` placeholders throughout
 - References to **bundled dashboard YAML** files
 - References to **recipes** for data collections that need transformation
@@ -29,17 +29,6 @@ template:
     - name: "DATA_ROOT"
       description: "Root directory containing ampliseq pipeline output data"
       required: true
-  # Pre-flight checks: run at Step 0, before any data is processed.
-  # Only declare files NOT already covered by recipe SOURCES (recipe inputs are
-  # validated automatically by the recipe pipeline). Directories are useful for
-  # scan modes that silently return zero results when the directory is missing.
-  expected_files:
-    - relative_path: "input/Metadata_full.tsv"
-      description: "Sample metadata with sample IDs and experimental factors"
-      format: "TSV"
-  expected_directories:
-    - relative_path: "multiqc"
-      description: "MultiQC output directory"
   dashboards:
     - "dashboards/full_analysis.yaml"
 
@@ -145,24 +134,6 @@ When `--template` is set, `depictio run` adds an extra step 0 before the standar
 | **8** | Dashboard import | Import bundled dashboard YAML automatically |
 
 Step 8 is skipped when `--skip-dashboard-import` is set.
-
----
-
-## Pre-flight Data Validation
-
-Before the pipeline starts (Step 0), Depictio checks that your `--data-root` is correctly structured. This gives you an immediate, clear error instead of a confusing failure deep inside the pipeline:
-
-```
-✗ Expected file not found: input/Metadata_full.tsv (Sample metadata)
-✗ Expected directory not found: multiqc (MultiQC output directory)
-```
-
-The template declares two focused checks in its `template:` block:
-
-- **`expected_files`** — files that need to exist but are **not** validated elsewhere. Recipe input files are validated automatically by the recipe pipeline; only files outside recipes (like the sample metadata TSV) need to be listed here.
-- **`expected_directories`** — directories used by **recursive scan modes** that silently return zero results when the directory is missing. For example, the MultiQC data collection scans recursively for a parquet file — without this check, a missing `multiqc/` folder would produce an empty dataset with no error.
-
-Both checks run as a **pre-flight at Step 0**, before any server-side changes occur.
 
 ---
 
