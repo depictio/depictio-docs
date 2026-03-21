@@ -234,9 +234,14 @@ nav:
       - API Reference: api/reference.md
       # - Integration: api/api_docs_integration.md
       - FastAPI Docs: api/fastapi_docs.md
+  - Templates:
+      - templates/index.md
+      - nf-core:
+          - ampliseq: templates/nf-core/ampliseq.md
   - Developer:
       - Overview: developer/README.md
       - Contributing: developer/contributing.md
+      - Contributing Templates: developer/contributing-templates.md
   - FAQ:
       - Overview: FAQ/README.md
       - General: FAQ/general.md
