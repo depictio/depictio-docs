@@ -121,9 +121,12 @@ depictio run \
 
 When `--template` is set, `depictio run` adds an extra step 0 before the standard pipeline:
 
+!!! info "Step 0 — Template mode only"
+    Before the standard pipeline runs, the CLI inserts **Step 0: Template resolution**. This step loads the `template.yaml` for the given `--template` ID, substitutes `{DATA_ROOT}` throughout the config, and validates that `--data-root` is a valid directory. Steps 1–8 are identical regardless of whether you use `--template` or `--project-config-path`.
+
 | Step | Name | Description |
 |------|------|-------------|
-| **0** | Template resolution | Load `template.yaml`, substitute `{DATA_ROOT}`, validate data directory structure |
+| **0** :material-new-box:{ title="Template mode only" } | **Template resolution** | Load `template.yaml`, substitute `{DATA_ROOT}`, validate data directory |
 | 1 | Config validation | Pydantic validation of the resolved project config |
 | 2 | Authentication | Login + fetch JWT token |
 | 3 | Project sync | Create or update project in MongoDB via API |

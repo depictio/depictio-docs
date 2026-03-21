@@ -28,7 +28,6 @@ flowchart TD
         • long format
         • clean schema
         • validated types"]
-        D --> DL["Delta Lake"]
         D --> V["Dashboard figures & tables"]
     end
 
@@ -38,9 +37,8 @@ flowchart TD
     style W fill:#f5f5f5,stroke:#999
     style R fill:#f5f5f5,stroke:#999
     style T fill:#45B8AC,color:#fff,stroke:#45B8AC
-    style D fill:#e8f5e9,stroke:#81c784
-    style DL fill:#e3f2fd,stroke:#64b5f6
-    style V fill:#e3f2fd,stroke:#64b5f6
+    style D fill:#b2dfdb,stroke:#45B8AC
+    style V fill:#45B8AC,color:#fff,stroke:#45B8AC
     class R,T,D leftText
 ```
 
