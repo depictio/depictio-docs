@@ -13,5 +13,3 @@ Everything you need to configure and manage Depictio projects.
 | [Guide](guide.md) | Project types (Basic, Advanced, Template) and lifecycle |
 | [YAML Examples](yaml-examples.md) | Configuration patterns with annotated examples |
 | [Full Reference](reference.md) | Complete YAML field reference |
-| [Recipes](recipes.md) | Data transformation recipes for bioinformatics pipelines |
-| [Templates](templates.md) | One-command project setup for nf-core pipelines |
