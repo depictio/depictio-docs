@@ -44,7 +44,7 @@ hide:
   content: "Reusable dashboard templates for standard bioinformatics workflows, nf-core integration, and nf-core plugin for automatic data ingestion"
   icon: "./nf-core-logo-square.png"
   key: "nfcore"
-  sub_title: "Phase 3: Templates ✅🚧"
+  sub_title: "Phase 3: Templates ✅"
 
 - title: "Scientific Reproducibility"
   content: "DOI integration, persistent access IDs, citable dashboards, full data provenance from sample to visualization"
@@ -98,7 +98,7 @@ Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles
 - [x] Client-side table joining in CLI ([:material-github: #634](https://github.com/depictio/depictio/pull/634))
 - [x] Recipe-based data transformation — Python recipes with 4-checkpoint validation ([docs](../usage/projects/recipes.md))
 - [x] Template-based project setup — one-command project creation with `{DATA_ROOT}` substitution ([docs](../usage/projects/templates.md))
-- [x] nf-core/ampliseq templates (v2.14.0, v2.16.0) with 5 bundled recipes and auto dashboard import
+
 
 ### Dashboard Components
 
