@@ -29,22 +29,15 @@ template:
     - name: "DATA_ROOT"
       description: "Root directory containing ampliseq pipeline output data"
       required: true
-  # Pre-flight checks: these run at Step 0, before any data is processed.
-  # Level 1 (default): verify the files/directories exist under --data-root.
-  # Level 2 (--deep):  also read each file header and check the declared columns exist.
+  # Pre-flight checks: run at Step 0, before any data is processed.
+  # Only declare files NOT already covered by recipe SOURCES (recipe inputs are
+  # validated automatically by the recipe pipeline). Directories are useful for
+  # scan modes that silently return zero results when the directory is missing.
   expected_files:
     - relative_path: "input/Metadata_full.tsv"
       description: "Sample metadata with sample IDs and experimental factors"
       format: "TSV"
-      columns: ["ID", "name", "habitat"]   # only checked with --deep
-    - relative_path: "qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv"
-      description: "Raw QIIME2 Faith PD vector (input for alpha_diversity recipe)"
-      format: "TSV"
-      columns: ["id", "faith_pd"]          # only checked with --deep
-    # ... one entry per file the recipes need ...
   expected_directories:
-    - relative_path: "qiime2"
-      description: "QIIME2 output directory"
     - relative_path: "multiqc"
       description: "MultiQC output directory"
   dashboards:
@@ -96,15 +89,6 @@ depictio run \
   --data-root /data/my_ampliseq_run
 ```
 
-### With deep data validation
-
-```bash
-depictio run \
-  --template nf-core/ampliseq/2.16.0 \
-  --data-root /data/my_ampliseq_run \
-  --deep
-```
-
 ### Override the bundled dashboard
 
 ```bash
@@ -138,7 +122,6 @@ depictio run \
 |------|------|----------|-------------|
 | `--template` | `string` | yes (mutually exclusive with `--project-config-path`) | Template ID (e.g. `nf-core/ampliseq/2.16.0`) |
 | `--data-root` | `path` | yes when `--template` is set | Root directory substituted for `{DATA_ROOT}` |
-| `--deep` | `flag` | no | Enable level-2 validation (checks column names in expected files) |
 | `--dashboard` | `path` | no | Override default dashboard(s); repeatable for multiple files |
 | `--skip-dashboard-import` | `flag` | no | Skip the automatic dashboard import step |
 | `--project-name` | `string` | no | Custom project name (auto-generated from template if omitted) |
@@ -167,27 +150,19 @@ Step 8 is skipped when `--skip-dashboard-import` is set.
 
 ## Pre-flight Data Validation
 
-Before the pipeline starts (Step 0), Depictio checks that your `--data-root` actually contains the files and directories the template needs. This prevents confusing recipe errors mid-run — instead you get a clear message like:
+Before the pipeline starts (Step 0), Depictio checks that your `--data-root` is correctly structured. This gives you an immediate, clear error instead of a confusing failure deep inside the pipeline:
 
 ```
-✗ Expected file not found: qiime2/barplot/level-2.csv (Raw QIIME2 barplot CSV)
+✗ Expected file not found: input/Metadata_full.tsv (Sample metadata)
+✗ Expected directory not found: multiqc (MultiQC output directory)
 ```
 
-The template declares what to check via two fields in its `template:` block:
+The template declares two focused checks in its `template:` block:
 
-- **`expected_files`** — specific files that must exist at exact relative paths under `--data-root`. These are the raw pipeline output files that recipes will read. If a file is missing it means either the wrong data directory was given, or the pipeline run didn't complete fully.
-- **`expected_directories`** — top-level directories that must exist (e.g. `qiime2/`, `multiqc/`). A quick sanity check that the data root points at actual pipeline output.
+- **`expected_files`** — files that need to exist but are **not** validated elsewhere. Recipe input files are validated automatically by the recipe pipeline; only files outside recipes (like the sample metadata TSV) need to be listed here.
+- **`expected_directories`** — directories used by **recursive scan modes** that silently return zero results when the directory is missing. For example, the MultiQC data collection scans recursively for a parquet file — without this check, a missing `multiqc/` folder would produce an empty dataset with no error.
 
-This runs as a **pre-flight check at Step 0**, before any data is synced, scanned, or processed.
-
-### Validation levels
-
-| Level | Flag | What is checked |
-|-------|------|----------------|
-| **Level 1** (default) | *(none)* | All listed files and directories exist under `--data-root` |
-| **Level 2** | `--deep` | Level 1 + reads each file header and checks the declared `columns` are present |
-
-Level 2 is useful when adapting a template to a slightly different pipeline version where column names may have changed (e.g. `sample` vs `ID` between ampliseq 2.14 and 2.16).
+Both checks run as a **pre-flight at Step 0**, before any server-side changes occur.
 
 ---
 
