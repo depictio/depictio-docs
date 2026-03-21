@@ -4,7 +4,10 @@ Recipes are the data transformation layer of the Depictio CLI. They convert raw 
 
 ```mermaid
 flowchart TD
+    classDef leftText text-align:left
+
     subgraph up["Upstream — Workflow"]
+        direction TD
         W["Bioinformatics pipeline
         nf-core / Nextflow / Snakemake"]
         W --> R["Raw output files
@@ -20,6 +23,7 @@ flowchart TD
     • compute metrics"]
 
     subgraph down["Downstream — Depictio"]
+        direction TD
         D["Tidy DataFrame
         • long format
         • clean schema
@@ -37,6 +41,7 @@ flowchart TD
     style D fill:#e8f5e9,stroke:#81c784
     style DL fill:#e3f2fd,stroke:#64b5f6
     style V fill:#e3f2fd,stroke:#64b5f6
+    class R,T,D leftText
 ```
 
 ## What is a Recipe?
