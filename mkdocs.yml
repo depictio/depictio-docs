@@ -192,21 +192,24 @@ nav:
       - Overview: usage/README.md
       - Getting Started: usage/get_started.md
       - Guides:
+          - usage/guides/index.md
           - WebUI: usage/guides/web_ui.md
           - Dashboard creation: usage/guides/dashboard_creation.md
           - Using the dashboard: usage/guides/dashboard_usage.md
       - Projects:
+          - usage/projects/index.md
           - Guide: usage/projects/guide.md
           - YAML project configuration breakdown: usage/projects/yaml-examples.md
           - Full Reference Configuration: usage/projects/reference.md
       - CLI:
+          - depictio-cli/index.md
           - Usage: depictio-cli/usage.md
           - Minimal YAML config: depictio-cli/minimal_config.md
       - Special Modes:
           - Authentication Modes: usage/guides/authentication-modes.md
           - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md
       - Administration:
-          - Overview: usage/administration/index.md
+          - usage/administration/index.md
           - Backup & Restore: usage/administration/backup.md
           - Project Migration: usage/administration/migrate.md
   - Features:
