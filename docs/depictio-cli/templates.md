@@ -29,16 +29,19 @@ template:
     - name: "DATA_ROOT"
       description: "Root directory containing ampliseq pipeline output data"
       required: true
+  # Pre-flight checks: these run at Step 0, before any data is processed.
+  # Level 1 (default): verify the files/directories exist under --data-root.
+  # Level 2 (--deep):  also read each file header and check the declared columns exist.
   expected_files:
     - relative_path: "input/Metadata_full.tsv"
       description: "Sample metadata with sample IDs and experimental factors"
       format: "TSV"
-      columns: ["ID", "name", "habitat"]   # checked with --deep
+      columns: ["ID", "name", "habitat"]   # only checked with --deep
     - relative_path: "qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv"
-      description: "Raw QIIME2 Faith PD vector"
+      description: "Raw QIIME2 Faith PD vector (input for alpha_diversity recipe)"
       format: "TSV"
-      columns: ["id", "faith_pd"]
-    # ... more files ...
+      columns: ["id", "faith_pd"]          # only checked with --deep
+    # ... one entry per file the recipes need ...
   expected_directories:
     - relative_path: "qiime2"
       description: "QIIME2 output directory"
@@ -162,16 +165,29 @@ Step 8 is skipped when `--skip-dashboard-import` is set.
 
 ---
 
-## Data Validation Levels
+## Pre-flight Data Validation
 
-Templates declare `expected_files` and `expected_directories` in their metadata. Depictio checks these before running the full pipeline:
+Before the pipeline starts (Step 0), Depictio checks that your `--data-root` actually contains the files and directories the template needs. This prevents confusing recipe errors mid-run — instead you get a clear message like:
+
+```
+✗ Expected file not found: qiime2/barplot/level-2.csv (Raw QIIME2 barplot CSV)
+```
+
+The template declares what to check via two fields in its `template:` block:
+
+- **`expected_files`** — specific files that must exist at exact relative paths under `--data-root`. These are the raw pipeline output files that recipes will read. If a file is missing it means either the wrong data directory was given, or the pipeline run didn't complete fully.
+- **`expected_directories`** — top-level directories that must exist (e.g. `qiime2/`, `multiqc/`). A quick sanity check that the data root points at actual pipeline output.
+
+This runs as a **pre-flight check at Step 0**, before any data is synced, scanned, or processed.
+
+### Validation levels
 
 | Level | Flag | What is checked |
 |-------|------|----------------|
-| **Level 1** (default) | *(none)* | Each `expected_files` path and `expected_directories` path exists under `--data-root` |
-| **Level 2** | `--deep` | All of level 1, plus: reads each file header with Polars and checks that declared `columns` are present |
+| **Level 1** (default) | *(none)* | All listed files and directories exist under `--data-root` |
+| **Level 2** | `--deep` | Level 1 + reads each file header and checks the declared `columns` are present |
 
-Level 2 is slower but catches column naming mismatches before processing starts — useful when adapting a template to a slightly different pipeline version.
+Level 2 is useful when adapting a template to a slightly different pipeline version where column names may have changed (e.g. `sample` vs `ID` between ampliseq 2.14 and 2.16).
 
 ---
 
