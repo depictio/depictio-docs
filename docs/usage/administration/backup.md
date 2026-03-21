@@ -1,11 +1,12 @@
 ---
 title: Backup & Restore
+icon: material/database-export
 description: Back up and restore Depictio MongoDB data using the CLI.
 ---
 
-# :material-database-export:{ style="color: #009688" } Backup & Restore
+# :material-database-export: Backup & Restore
 
-The `depictio-cli backup` commands let administrators snapshot the MongoDB database and restore it from a previous backup. All backup operations require admin credentials.
+The `depictio backup` commands let administrators snapshot the MongoDB database and restore it from a previous backup. All backup operations require admin credentials.
 
 !!! warning "Admin only"
     All `backup` sub-commands require the authenticated user to be an administrator.
@@ -19,10 +20,10 @@ The `depictio-cli backup` commands let administrators snapshot the MongoDB datab
 Create a server-side snapshot of the MongoDB database. Short-lived tokens and temporary users are excluded automatically.
 
 ```bash
-depictio-cli backup create
+depictio backup create
 
 # Also back up S3 Delta Lake files
-depictio-cli backup create --include-s3-data --s3-backup-prefix my-backup
+depictio backup create --include-s3-data --s3-backup-prefix my-backup
 ```
 
 | Flag | Default | Description |
@@ -40,7 +41,7 @@ On success, prints a backup ID (format `YYYYMMDD_HHMMSS`) and document counts pe
 List all available backups stored on the server.
 
 ```bash
-depictio-cli backup list
+depictio backup list
 ```
 
 ---
@@ -50,7 +51,7 @@ depictio-cli backup list
 Check that a backup file is well-formed and passes Pydantic model validation before attempting a restore.
 
 ```bash
-depictio-cli backup validate 20260315_143000
+depictio backup validate 20260315_143000
 ```
 
 ---
@@ -64,16 +65,16 @@ Restore all or selected collections from a backup snapshot.
 
 ```bash
 # Preview first
-depictio-cli backup restore 20260315_143000 --dry-run
+depictio backup restore 20260315_143000 --dry-run
 
 # Restore everything (prompts for confirmation)
-depictio-cli backup restore 20260315_143000
+depictio backup restore 20260315_143000
 
 # Restore specific collections only
-depictio-cli backup restore 20260315_143000 --collections projects,dashboards
+depictio backup restore 20260315_143000 --collections projects,dashboards
 
 # Skip confirmation prompt (automation / CI)
-depictio-cli backup restore 20260315_143000 --force
+depictio backup restore 20260315_143000 --force
 ```
 
 | Flag | Default | Description |
@@ -88,14 +89,14 @@ depictio-cli backup restore 20260315_143000 --force
 
 ```bash
 # 1. Create a backup before a major operation
-depictio-cli backup create
+depictio backup create
 
 # 2. Validate the backup
-depictio-cli backup validate 20260315_143000
+depictio backup validate 20260315_143000
 
 # 3. Dry-run a restore to see what would change
-depictio-cli backup restore 20260315_143000 --dry-run
+depictio backup restore 20260315_143000 --dry-run
 
 # 4. Restore if needed
-depictio-cli backup restore 20260315_143000
+depictio backup restore 20260315_143000
 ```

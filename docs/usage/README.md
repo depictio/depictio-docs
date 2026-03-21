@@ -116,8 +116,8 @@ Command-line tools for data ingestion, recipes, and templates.
 |------|-------------|
 | [Usage](../depictio-cli/usage.md) | All CLI commands with options and examples |
 | [Minimal YAML Config](../depictio-cli/minimal_config.md) | Minimal project YAML to get started |
-| [Recipes](../depictio-cli/recipes.md) | Data transformation recipes for bioinformatics pipelines |
-| [Templates](../depictio-cli/templates.md) | One-command project setup for nf-core pipelines |
+| [Recipes](projects/recipes.md) | Data transformation recipes for bioinformatics pipelines |
+| [Templates](projects/templates.md) | One-command project setup for nf-core pipelines |
 
 <div class="grid cards" markdown>
 
@@ -135,7 +135,7 @@ Command-line tools for data ingestion, recipes, and templates.
 
     Transform raw pipeline output into dashboard-ready tables
 
-    [:octicons-arrow-right-24: Recipes Guide](../depictio-cli/recipes.md)
+    [:octicons-arrow-right-24: Recipes Guide](projects/recipes.md)
 
 -   :material-layers:{ .lg .middle } **Templates**
 
@@ -143,7 +143,7 @@ Command-line tools for data ingestion, recipes, and templates.
 
     Set up a complete nf-core project with a single command
 
-    [:octicons-arrow-right-24: Templates Guide](../depictio-cli/templates.md)
+    [:octicons-arrow-right-24: Templates Guide](projects/templates.md)
 
 </div>
 

@@ -201,15 +201,16 @@ nav:
           - Guide: usage/projects/guide.md
           - YAML project configuration breakdown: usage/projects/yaml-examples.md
           - Full Reference Configuration: usage/projects/reference.md
+          - Recipes: usage/projects/recipes.md
+          - Templates: usage/projects/templates.md
       - CLI:
           - depictio-cli/index.md
           - Usage: depictio-cli/usage.md
           - Minimal YAML config: depictio-cli/minimal_config.md
-          - Recipes: depictio-cli/recipes.md
-          - Templates: depictio-cli/templates.md
       - Administration:
           - usage/administration/index.md
           - Project Migration: usage/administration/migrate.md
+          - Backup & Restore: usage/administration/backup.md
       - Special Modes:
           - Authentication Modes: usage/guides/authentication-modes.md
           - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md

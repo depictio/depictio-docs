@@ -426,5 +426,5 @@ The recipe is executed during `depictio data process` (Step 5 of `depictio run`)
 ## Additional Resources
 
 - **[Templates](templates.md)** — pre-packaged project configs that use recipes automatically
-- **[YAML Examples](../usage/projects/yaml-examples.md)** — recipe data collection patterns
-- **[CLI Usage](usage.md)** — full CLI command reference
+- **[YAML Examples](yaml-examples.md)** — recipe data collection patterns
+- **[CLI Usage](../../depictio-cli/usage.md)** — full CLI command reference

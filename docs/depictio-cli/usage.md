@@ -131,7 +131,7 @@ depictio-cli run --project-config-path ./config.yaml
     | `--dashboard` | `path` | `null` | Override default dashboard(s) to import. Repeatable. |
     | `--skip-dashboard-import` | `flag` | `false` | Skip the automatic dashboard import step (Step 8) |
 
-    See [Templates](templates.md) for full documentation.
+    See [Templates](../usage/projects/templates.md) for full documentation.
 
 ??? info "⚙️ Flow Control Options"
 
@@ -211,7 +211,7 @@ depictio-cli run \
 
 <!-- prettier-ignore -->
 !!! info "Command Group: `depictio-cli recipe`"
-    All commands in this section are part of the `recipe` command family. Use them to discover, inspect, and locally test data transformation recipes before running them in a project. For full recipe documentation, see [Recipes](recipes.md).
+    All commands in this section are part of the `recipe` command family. Use them to discover, inspect, and locally test data transformation recipes before running them in a project. For full recipe documentation, see [Recipes](../usage/projects/recipes.md).
 
 Discover and execute data transformation recipes locally.
 

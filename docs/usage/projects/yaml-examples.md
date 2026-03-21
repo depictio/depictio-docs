@@ -1303,7 +1303,7 @@ depictio run \
   --skip-dashboard-import
 ```
 
-For full template reference, see [Templates](../../depictio-cli/templates.md). For recipe documentation, see [Recipes](../../depictio-cli/recipes.md).
+For full template reference, see [Templates](templates.md). For recipe documentation, see [Recipes](recipes.md).
 
 ---
 
@@ -1312,8 +1312,8 @@ For full template reference, see [Templates](../../depictio-cli/templates.md). F
 - **[Projects Guide](guide.md)** - Comprehensive project management guide
 - **[Configuration Reference](reference.md)** - Complete YAML reference documentation
 - **[CLI Reference](../../depictio-cli/usage.md)** - Complete CLI command documentation
-- **[Templates](../../depictio-cli/templates.md)** - Pre-packaged project configurations
-- **[Recipes](../../depictio-cli/recipes.md)** - Data transformation recipes
+- **[Templates](templates.md)** - Pre-packaged project configurations
+- **[Recipes](recipes.md)** - Data transformation recipes
 - **[Dashboard Creation](../guides/dashboard_creation.md)** - Building interactive dashboards
 - **[API Documentation](../../api/reference.md)** - Programmatic project management
 - **[Pydantic Models](https://github.com/depictio/depictio/tree/main/depictio/models/models)** - Schema definitions and validation

@@ -419,7 +419,7 @@ Template: nf-core/ampliseq/2.16.0
 
 This tells you and your collaborators which template generated the project, enabling template discovery and making provenance visible throughout the UI.
 
-For full template reference — available templates, data validation levels, YAML structure, and all CLI flags — see **[Templates](../../depictio-cli/templates.md)**.
+For full template reference — available templates, data validation levels, YAML structure, and all CLI flags — see **[Templates](templates.md)**.
 
 ---
 
