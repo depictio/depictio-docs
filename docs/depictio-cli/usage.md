@@ -11,6 +11,7 @@
 - [Global Options](#global-options)
 - [🚀 Commands](#-commands)
   - [🏃 Run Command](#run-command)
+  - [🍳 Recipe Commands](#recipe-commands)
   - [📋 Config Commands](#config-commands)
   - [📊 Data Commands](#data-commands)
   - [📈 Dashboard Commands](#dashboard-commands)
@@ -29,6 +30,9 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | -------------------------------------- | --------------------------------------- | -------------- |
 | `version`                              | Show CLI version                        | All users      |
 | `run`                                  | Execute complete workflow               | All users      |
+| `recipe list`                          | List all bundled recipes                | All users      |
+| `recipe info <name>`                   | Show recipe sources and schema          | All users      |
+| `recipe run <name>`                    | Execute a recipe locally with validation| All users      |
 | `config show-cli-config`               | Display CLI configuration               | All users      |
 | `config check-s3-storage`              | Validate S3 storage setup               | All users      |
 | `config check-server-accessibility`    | Test server connection                  | All users      |
@@ -44,7 +48,7 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `backup validate`                      | Validate backup against models          | **Admin only** |
 | `backup restore`                       | Restore from backup                     | **Admin only** |
 | `backup check-coverage`                | Check validation coverage               | **Admin only** |
-| `migrate run`                          | Migrate a project to another instance   | **Admin only** |
+| `migrate`                          | Migrate a project to another instance   | **Admin only** |
 
 <!-- | Command                                | Description                             | Access Level   |
 | -------------------------------------- | --------------------------------------- | -------------- |
@@ -111,9 +115,23 @@ depictio-cli run --project-config-path ./config.yaml
     | Parameter | Type | Default | Description |
     |-----------|------|---------|-------------|
     | `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
-    | `--project-config-path` | `string` | `""` | Pipeline configuration file path |
+    | `--project-config-path` | `string` | `""` | Pipeline configuration file path (mutually exclusive with `--template`) |
     | `--workflow-name` | `string` | `null` | Specific workflow to process |
     | `--data-collection-tag` | `string` | `null` | Data collection tag to process |
+
+??? info "🍳 Template Options"
+
+    Use these flags to run from a pre-packaged template instead of a project YAML. `--template` and `--project-config-path` are mutually exclusive.
+
+    | Parameter | Type | Default | Description |
+    |-----------|------|---------|-------------|
+    | `--template` | `string` | `null` | Template ID (e.g. `nf-core/ampliseq/2.16.0`) |
+    | `--data-root` | `path` | `null` | Root directory substituted for `{DATA_ROOT}` in template. Required when `--template` is set. |
+    | `--project-name` | `string` | `null` | Custom project name (auto-generated from template if omitted) |
+    | `--dashboard` | `path` | `null` | Override default dashboard(s) to import. Repeatable. |
+    | `--skip-dashboard-import` | `flag` | `false` | Skip the automatic dashboard import step (Step 8) |
+
+    See [Templates](../usage/projects/templates.md) for full documentation.
 
 ??? info "⚙️ Flow Control Options"
 
@@ -151,6 +169,15 @@ depictio-cli run --project-config-path ./config.yaml
 depictio-cli run --project-config-path ./config.yaml
 ```
 
+=== "Template (nf-core/ampliseq)"
+
+```bash
+# Set up a complete ampliseq project from raw pipeline output
+depictio-cli run \
+  --template nf-core/ampliseq/2.16.0 \
+  --data-root /data/my_ampliseq_run
+```
+
 === "Development"
 
 ```bash
@@ -178,6 +205,95 @@ depictio-cli run \
   --project-config-path ./config.yaml \
   --skip-server-check \
   --skip-s3-check
+```
+
+### 🍳 Recipe Commands
+
+<!-- prettier-ignore -->
+!!! info "Command Group: `depictio-cli recipe`"
+    All commands in this section are part of the `recipe` command family. Use them to discover, inspect, and locally test data transformation recipes before running them in a project. For full recipe documentation, see [Recipes](../usage/projects/recipes.md).
+
+Discover and execute data transformation recipes locally.
+
+#### `recipe list`
+
+List all bundled recipes.
+
+```bash
+depictio-cli recipe list
+```
+
+**Output:**
+
+```
+Available recipes (5):
+  nf-core/ampliseq/alpha_diversity.py
+  nf-core/ampliseq/alpha_rarefaction.py
+  nf-core/ampliseq/ancombc.py
+  nf-core/ampliseq/taxonomy_composition.py
+  nf-core/ampliseq/taxonomy_rel_abundance.py
+```
+
+---
+
+#### `recipe info <name>`
+
+Show recipe details: description, sources, and expected output schema.
+
+```bash
+depictio-cli recipe info <recipe_name>
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `recipe_name` | `string` | **required** | Recipe name (e.g. `nf-core/ampliseq/alpha_diversity.py`) |
+
+```bash
+depictio-cli recipe info nf-core/ampliseq/alpha_diversity.py
+```
+
+**Output:**
+
+```
+Recipe: nf-core/ampliseq/alpha_diversity.py
+Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD table.
+
+Sources (1):
+  faith_pd: qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv (TSV)
+
+Expected output schema (3 columns):
+  sample: Utf8
+  habitat: Utf8
+  faith_pd: Float64
+```
+
+---
+
+#### `recipe run <name>`
+
+Execute a recipe against a local data directory with all 4 validation checkpoints.
+
+```bash
+depictio-cli recipe run <recipe_name> [OPTIONS]
+```
+
+| Parameter | Short | Default | Description |
+|-----------|-------|---------|-------------|
+| `recipe_name` | — | **required** | Recipe name (e.g. `nf-core/ampliseq/alpha_diversity.py`) |
+| `--data-dir` | `-d` | **required** | Root directory with workflow output files |
+| `--output` | `-o` | `null` | Save result to `.parquet` or `.csv` file |
+| `--head` | `-n` | `20` | Number of rows to display |
+
+```bash
+# Run with validation output
+depictio-cli recipe run nf-core/ampliseq/alpha_diversity.py \
+  --data-dir /data/ampliseq_results
+
+# Save output and show first 5 rows
+depictio-cli recipe run nf-core/ampliseq/alpha_diversity.py \
+  --data-dir /data/ampliseq_results \
+  --output alpha_diversity.parquet \
+  --head 5
 ```
 
 ### 📋 Config Commands
@@ -621,12 +737,12 @@ depictio-cli backup check-coverage
 !!! warning "Admin Access Required"
     All migrate operations require administrator privileges on both the source and target instances.
 
-#### `migrate run`
+#### `migrate`
 
 Migrate a project from one Depictio instance to another — non-destructive upsert, never wipes existing data on the target.
 
 ```bash
-depictio-cli migrate run --project <name> [OPTIONS]
+depictio-cli migrate --project <name> [OPTIONS]
 ```
 
 | Parameter           | Type     | Default                     | Description                                        |
@@ -648,27 +764,27 @@ depictio-cli migrate run --project <name> [OPTIONS]
 
 ```bash
 # Dry-run first (recommended before any migration)
-depictio-cli migrate run \
+depictio-cli migrate \
   --project "My Project" \
   --CLI-config-path ~/.depictio/CLI_local.yaml \
   --target-config ~/.depictio/CLI_remote.yaml \
   --dry-run
 
 # Full migration (MongoDB + S3)
-depictio-cli migrate run \
+depictio-cli migrate \
   --project "My Project" \
   --CLI-config-path ~/.depictio/CLI_local.yaml \
   --target-config ~/.depictio/CLI_remote.yaml
 
 # Metadata-only (shared S3)
-depictio-cli migrate run \
+depictio-cli migrate \
   --project "My Project" \
   --CLI-config-path ~/.depictio/CLI_local.yaml \
   --target-config ~/.depictio/CLI_remote.yaml \
   --mode metadata
 
 # Dashboard-only update
-depictio-cli migrate run \
+depictio-cli migrate \
   --project "My Project" \
   --CLI-config-path ~/.depictio/CLI_local.yaml \
   --target-config ~/.depictio/CLI_remote.yaml \
@@ -788,14 +904,14 @@ depictio-cli run --project-config-path ./config.yaml --update-config --overwrite
 
 ```bash
 # 1. Dry-run to preview what will be migrated
-depictio-cli migrate run \
+depictio-cli migrate \
   --project "My Project" \
   --CLI-config-path ~/.depictio/CLI_local.yaml \
   --target-config ~/.depictio/CLI_remote.yaml \
   --dry-run
 
 # 2. Run full migration (MongoDB docs + S3 files)
-depictio-cli migrate run \
+depictio-cli migrate \
   --project "My Project" \
   --CLI-config-path ~/.depictio/CLI_local.yaml \
   --target-config ~/.depictio/CLI_remote.yaml
@@ -805,7 +921,7 @@ depictio-cli migrate run \
 
 ```bash
 # When source and target share the same S3, only migrate MongoDB docs
-depictio-cli migrate run \
+depictio-cli migrate \
   --project "My Project" \
   --CLI-config-path ~/.depictio/CLI_local.yaml \
   --target-config ~/.depictio/CLI_remote.yaml \
@@ -817,7 +933,7 @@ depictio-cli migrate run \
 ```bash
 # Push updated dashboard layouts to a remote instance
 # (project and data already exist on remote)
-depictio-cli migrate run \
+depictio-cli migrate \
   --project "My Project" \
   --CLI-config-path ~/.depictio/CLI_local.yaml \
   --target-config ~/.depictio/CLI_remote.yaml \
