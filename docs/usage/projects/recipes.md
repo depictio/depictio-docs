@@ -104,10 +104,11 @@ Available recipes (5):
 
 ### `depictio recipe info <name>`
 
-Show recipe details: docstring, sources, and expected output schema.
+Show recipe details: docstring, sources, and expected output schema. Pass `--version` to inspect a version-specific override.
 
 ```bash
 depictio recipe info nf-core/ampliseq/alpha_diversity.py
+depictio recipe info nf-core/ampliseq/taxonomy_rel_abundance.py --version 2.14.0
 ```
 
 **Output:**
@@ -141,6 +142,7 @@ depictio recipe run nf-core/ampliseq/alpha_diversity.py \
 | Flag | Short | Default | Description |
 |------|-------|---------|-------------|
 | `--data-dir` | `-d` | **required** | Root directory with workflow output files |
+| `--version` | `-v` | `null` | Pipeline version for version-specific recipe (e.g. `2.14.0`) |
 | `--output` | `-o` | `null` | Save result to `.parquet` or `.csv` file |
 | `--head` | `-n` | `20` | Number of rows to display |
 
@@ -450,10 +452,6 @@ data_collections:
       source: "transformed"
       transform:
         recipe: "nf-core/ampliseq/alpha_diversity.py"
-        # Optional: override a source file path
-        source_overrides:
-          faith_pd:
-            path: "custom/path/to/faith_pd_vector/metadata.tsv"
       dc_specific_properties:
         format: "TSV"
         columns_description:
@@ -467,6 +465,57 @@ The recipe is executed during `depictio data process` (Step 5 of `depictio run`)
 <!-- prettier-ignore -->
 !!! tip "Using templates"
     For nf-core/ampliseq, all five recipes are pre-configured in the bundled template. Use `depictio run --template nf-core/ampliseq/2.16.0 --data-root /your/data` to set up the complete project without writing any YAML. See [Templates](templates.md).
+
+---
+
+## Recipe File Locations
+
+Recipes live inside the `depictio/projects/` directory, co-located with the templates that use them:
+
+```
+depictio/projects/
+└── nf-core/
+    └── ampliseq/
+        ├── recipes/                          ← shared recipes (all pipeline versions)
+        │   ├── alpha_diversity.py
+        │   ├── alpha_rarefaction.py
+        │   ├── ancombc.py
+        │   ├── taxonomy_composition.py
+        │   └── taxonomy_rel_abundance.py
+        ├── 2.14.0/
+        │   ├── template.yaml
+        │   └── recipes/                      ← version-specific overrides
+        │       └── taxonomy_rel_abundance.py
+        └── 2.16.0/
+            └── template.yaml                 ← no overrides, inherits shared
+```
+
+To add a recipe for a new pipeline, create `depictio/projects/{org}/{pipeline}/recipes/{name}.py` following the contract: define `SOURCES`, `EXPECTED_SCHEMA`, and `transform()`.
+
+---
+
+## Version-Specific Recipes
+
+When a pipeline output format changes between versions (column renames, file moves, schema changes), you can add a version-specific override without touching the shared recipe.
+
+**Resolution order** when running pipeline version `2.14.0`:
+
+1. `projects/{pipeline}/2.14.0/recipes/{name}.py` — checked first (override)
+2. `projects/{pipeline}/recipes/{name}.py` — used if no override exists (shared)
+
+Most recipes are shared across all versions. Only the ones that actually differ need an override. For example, `taxonomy_rel_abundance.py` has a v2.14.0 override because the metadata column was renamed from `sample` to `ID` in v2.16.0 — each version's recipe simply uses the correct column name with no conditional branching.
+
+To test a version-specific recipe standalone:
+
+```bash
+# Uses shared recipe
+depictio recipe run nf-core/ampliseq/taxonomy_rel_abundance.py --data-dir /data/run
+
+# Uses the v2.14.0 override if it exists, falls back to shared otherwise
+depictio recipe run nf-core/ampliseq/taxonomy_rel_abundance.py \
+  --data-dir /data/run \
+  --version 2.14.0
+```
 
 ---
 
