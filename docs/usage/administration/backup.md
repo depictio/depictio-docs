@@ -3,7 +3,7 @@ title: Backup & Restore
 description: Back up and restore Depictio MongoDB data using the CLI.
 ---
 
-# Backup & Restore
+# :material-database-export: Backup & Restore
 
 The `depictio backup` commands let administrators snapshot the MongoDB database and restore it from a previous backup. All backup operations require admin credentials.
 
