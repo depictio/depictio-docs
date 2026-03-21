@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "0.8.1",
-    "x-generated-at": "2026-03-04T08:56:45Z",
-    "x-depictio-version": "v0.8.1"
+    "version": "0.9.0",
+    "x-generated-at": "2026-03-21T21:40:54Z",
+    "x-depictio-version": "v0.9.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -3340,6 +3340,167 @@
         ]
       }
     },
+    "/depictio/api/v1/migrate/export-project": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Export Project",
+        "description": "Export a project bundle from this instance.\n\nScoped to one project: cascades through workflows → data_collections →\nfiles / deltatables / runs → dashboards.  Optionally copies S3 data to\na target MinIO (modes all / files).",
+        "operationId": "export_project_depictio_api_v1_migrate_export_project_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MigrateExportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/migrate/import-project": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Import Project",
+        "description": "Import a project bundle into this instance (non-destructive upsert).\n\nDocuments are upserted in dependency order.  Owner IDs that do not exist\non this instance are remapped to the calling admin (or the specified\nowner_user_id).",
+        "operationId": "import_project_depictio_api_v1_migrate_import_project_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MigrateImportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MigrateImportResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/migrate/import-project-zip": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Import Project Zip",
+        "description": "Import a project bundle from a ZIP file (for UI use).\n\nAccepts a .zip file containing bundle.json and migrate_metadata.json.\nAlways remaps all owners to the calling user (force_owner_remap=True).",
+        "operationId": "import_project_zip_depictio_api_v1_migrate_import_project_zip_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dry_run",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Dry Run"
+            }
+          },
+          {
+            "name": "overwrite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Overwrite"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_import_project_zip_depictio_api_v1_migrate_import_project_zip_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MigrateImportResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/cli/validate_cli_config": {
       "post": {
         "tags": [
@@ -6196,6 +6357,20 @@
         ],
         "title": "Body_compare_models_endpoint_depictio_api_v1_workflows_compare_workflow_models_post"
       },
+      "Body_import_project_zip_depictio_api_v1_migrate_import_project_zip_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_import_project_zip_depictio_api_v1_migrate_import_project_zip_post"
+      },
       "Body_login_depictio_api_v1_auth_login_post": {
         "properties": {
           "grant_type": {
@@ -6705,7 +6880,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -6952,7 +7127,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -7009,7 +7184,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -7066,7 +7241,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -7175,7 +7350,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -7294,7 +7469,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -7379,7 +7554,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-04 08:56:42"
+            "default": "2026-03-21 21:40:51"
           },
           "file_hash": {
             "type": "string",
@@ -8273,6 +8448,133 @@
         "title": "LinkUpdateRequest",
         "description": "Request to update an existing DC link.\n\nAll fields are optional - only provided fields will be updated."
       },
+      "MigrateExportRequest": {
+        "properties": {
+          "project_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Id"
+          },
+          "project_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Name"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "all",
+              "metadata",
+              "dashboard",
+              "files"
+            ],
+            "title": "Mode",
+            "default": "all"
+          },
+          "target_s3_config": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target S3 Config"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "MigrateExportRequest"
+      },
+      "MigrateImportRequest": {
+        "properties": {
+          "bundle": {
+            "type": "object",
+            "title": "Bundle"
+          },
+          "owner_user_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner User Id"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": false
+          },
+          "force_owner_remap": {
+            "type": "boolean",
+            "title": "Force Owner Remap",
+            "default": false
+          },
+          "overwrite": {
+            "type": "boolean",
+            "title": "Overwrite",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "bundle"
+        ],
+        "title": "MigrateImportRequest"
+      },
+      "MigrateImportResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "upserted": {
+            "type": "object",
+            "title": "Upserted",
+            "default": {}
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": false
+          },
+          "conflict": {
+            "type": "boolean",
+            "title": "Conflict",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message"
+        ],
+        "title": "MigrateImportResponse"
+      },
       "MultiQCMetadata": {
         "properties": {
           "samples": {
@@ -8327,7 +8629,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -8534,7 +8836,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -8638,7 +8940,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-04 08:56:42"
+            "default": "2026-03-21 21:40:51"
           },
           "project_type": {
             "type": "string",
@@ -8674,7 +8976,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -8778,7 +9080,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-04 08:56:42"
+            "default": "2026-03-21 21:40:51"
           },
           "project_type": {
             "type": "string",
@@ -9185,7 +9487,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -9390,7 +9692,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -9621,7 +9923,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "69a7f3c88da8d90e06af6bba"
+            "default": "69bf1061ff85d5130e00b1ab"
           }
         },
         "type": "object",
@@ -9710,7 +10012,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -9828,7 +10130,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -9909,7 +10211,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -9994,7 +10296,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -10079,7 +10381,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -10244,7 +10546,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -10367,7 +10669,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-04 08:56:40"
+            "default": "2026-03-21 21:40:49"
           }
         },
         "additionalProperties": false,
@@ -10386,7 +10688,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -10509,7 +10811,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-04 08:56:40"
+            "default": "2026-03-21 21:40:49"
           }
         },
         "additionalProperties": false,
@@ -10561,7 +10863,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -10629,7 +10931,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -10726,7 +11028,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -10799,7 +11101,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-04 08:56:40"
+            "default": "2026-03-21 21:40:49"
           },
           "run_hash": {
             "type": "string",
@@ -10844,7 +11146,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69a7f3c88da8d90e06af6bb9"
+            "default": "69bf1061ff85d5130e00b1aa"
           },
           "description": {
             "anyOf": [
@@ -10917,7 +11219,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-04 08:56:40"
+            "default": "2026-03-21 21:40:49"
           },
           "run_hash": {
             "type": "string",
@@ -10979,7 +11281,7 @@
           "scan_time": {
             "type": "string",
             "title": "Scan Time",
-            "default": "2026-03-04 08:56:40"
+            "default": "2026-03-21 21:40:49"
           },
           "dc_stats": {
             "anyOf": [
