@@ -130,12 +130,22 @@ Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles
 
 Reusable dashboards for standard bioinformatics workflows, with a focus on nf-core community adoption.
 
+**Infrastructure (shipped)**
+
 - [x] **Depictio templates system** — one-command project setup via `depictio run --template`, with `{DATA_ROOT}` substitution, template provenance tracking, and automatic dashboard import ([docs](../usage/projects/templates.md))
 - [x] **Recipe-based data transformation** — versioned Python recipes with 4-checkpoint validation, co-located with templates ([docs](../usage/projects/recipes.md))
-- [x] **nf-core/ampliseq templates** — complete templates for v2.14.0 and v2.16.0 with 5 recipes covering alpha diversity, rarefaction, taxonomy, and differential abundance
-- [ ] **More nf-core pipeline templates** — rnaseq, sarek, atacseq, methylseq, …
+
+**Shipped templates** — peer-reviewed by developers, ready to use
+
+| Template | Pipeline | Versions | Recipes |
+|----------|----------|----------|---------|
+| `nf-core/ampliseq` | 16S/ITS amplicon sequencing | 2.14.0, 2.16.0 | Alpha diversity, rarefaction, taxonomy composition, relative abundance, differential abundance (ANCOM-BC) |
+
+**Planned**
+
 - [ ] **nf-core plugin** — automatically registers nf-core pipeline outputs in Depictio at run time, no manual CLI step required
-- [ ] **Template marketplace** — community-contributed templates with validation and screenshots
+- [ ] **`nextflow.config` template** — embed Depictio ingestion directly in your Nextflow config so data collection happens at pipeline runtime
+- [ ] **Snakemake report plugin** — Depictio as a drop-in replacement for Snakemake's built-in HTML report, with interactive dashboards instead of static outputs
 
 ### Phase 4: Scientific Reproducibility (6-12 months)
 
