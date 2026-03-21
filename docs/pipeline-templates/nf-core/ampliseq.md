@@ -1,7 +1,7 @@
 # <span style="color: #45B8AC;">:material-dna:</span> nf-core/ampliseq
 
 <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px;">
-  <img src="../../images/templates/nf-core/ampliseq/ampliseq_icon.png" alt="ampliseq" style="height:48px;">
+  <img src="../../images/pipeline-templates/nf-core/ampliseq/ampliseq_icon.png" alt="ampliseq" style="height:48px;">
   <div>
     <strong>16S/ITS amplicon sequencing — microbial community analysis</strong><br>
     <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/ampliseq" target="_blank">nf-co.re/ampliseq</a></span>
@@ -43,19 +43,19 @@ Three dashboards are imported automatically. Each opens as a tab in the Depictio
 
         **nf-core/ampliseq** — Quality control overview powered by MultiQC.
 
-        ![MultiQC dashboard](../../images/templates/nf-core/ampliseq/multiqc_light.png)
+        ![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png)
 
     === "Community Analysis"
 
         **Community Analysis** — Alpha diversity (Faith PD), rarefaction curves, and taxonomic composition across samples.
 
-        ![Community Analysis dashboard](../../images/templates/nf-core/ampliseq/community_light.png)
+        ![Community Analysis dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png)
 
     === "Differential Abundance"
 
         **Diff. Abundance** — ANCOM-BC differential abundance results: volcano plots, log-fold change heatmaps, and significance tables.
 
-        ![Differential Abundance dashboard](../../images/templates/nf-core/ampliseq/differential_light.png)
+        ![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png)
 
 === "2.14.0"
 
@@ -63,19 +63,19 @@ Three dashboards are imported automatically. Each opens as a tab in the Depictio
 
         **nf-core/ampliseq** — Quality control overview powered by MultiQC.
 
-        ![MultiQC dashboard](../../images/templates/nf-core/ampliseq/multiqc_light.png)
+        ![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png)
 
     === "Community Analysis"
 
         **Community Analysis** — Alpha diversity (Faith PD), rarefaction curves, and taxonomic composition across samples.
 
-        ![Community Analysis dashboard](../../images/templates/nf-core/ampliseq/community_light.png)
+        ![Community Analysis dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png)
 
     === "Differential Abundance"
 
         **Diff. Abundance** — ANCOM-BC differential abundance results: volcano plots, log-fold change heatmaps, and significance tables.
 
-        ![Differential Abundance dashboard](../../images/templates/nf-core/ampliseq/differential_light.png)
+        ![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png)
 
 ---
 

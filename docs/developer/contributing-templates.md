@@ -2,7 +2,7 @@
 
 This guide explains how to create, test, and contribute a new template to Depictio.
 
-A template bundles a pipeline-specific project configuration, recipes, and dashboards so that users can set up a complete analysis with a single command. Before writing your template, check [Templates](../templates/index.md) to see what already exists.
+A template bundles a pipeline-specific project configuration, recipes, and dashboards so that users can set up a complete analysis with a single command. Before writing your template, check [Templates](../pipeline-templates/README.md) to see what already exists.
 
 ---
 
