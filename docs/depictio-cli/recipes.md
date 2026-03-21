@@ -419,12 +419,12 @@ The recipe is executed during `depictio data process` (Step 5 of `depictio run`)
 
 <!-- prettier-ignore -->
 !!! tip "Using templates"
-    For nf-core/ampliseq, all five recipes are pre-configured in the bundled template. Use `depictio run --template nf-core/ampliseq/2.16.0 --data-root /your/data` to set up the complete project without writing any YAML. See [Templates](../features/templates.md).
+    For nf-core/ampliseq, all five recipes are pre-configured in the bundled template. Use `depictio run --template nf-core/ampliseq/2.16.0 --data-root /your/data` to set up the complete project without writing any YAML. See [Templates](templates.md).
 
 ---
 
 ## Additional Resources
 
-- **[Templates](../features/templates.md)** — pre-packaged project configs that use recipes automatically
+- **[Templates](templates.md)** — pre-packaged project configs that use recipes automatically
 - **[YAML Examples](../usage/projects/yaml-examples.md)** — recipe data collection patterns
 - **[CLI Usage](usage.md)** — full CLI command reference

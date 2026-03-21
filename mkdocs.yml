@@ -206,6 +206,9 @@ nav:
           - Usage: depictio-cli/usage.md
           - Minimal YAML config: depictio-cli/minimal_config.md
           - Recipes: depictio-cli/recipes.md
+          - Templates: depictio-cli/templates.md
+      - Administration:
+          - Project Migration: usage/administration/migrate.md
       - Special Modes:
           - usage/special-modes/index.md
           - Authentication Modes: usage/guides/authentication-modes.md
@@ -224,9 +227,6 @@ nav:
           - Cross-DC Filtering: features/cross-dc-filtering.md
           - Filter Expressions: features/filter-expressions.md
           - YAML Dashboard Sync: features/yaml-sync.md
-          - Templates: features/templates.md
-      - Administration:
-          - Project Migration: features/migrate.md
       - System Design:
           - Architecture: features/architecture.md
           - Data Model: features/data-model.md

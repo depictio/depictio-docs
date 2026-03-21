@@ -132,7 +132,7 @@ depictio-cli run --project-config-path ./config.yaml
     | `--dashboard` | `path` | `null` | Override default dashboard(s) to import. Repeatable. |
     | `--skip-dashboard-import` | `flag` | `false` | Skip the automatic dashboard import step (Step 8) |
 
-    See [Templates](../features/templates.md) for full documentation.
+    See [Templates](templates.md) for full documentation.
 
 ??? info "⚙️ Flow Control Options"
 

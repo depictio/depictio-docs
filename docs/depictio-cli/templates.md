@@ -246,7 +246,7 @@ And 5 cross-DC links for interactive filtering from the metadata table to all ot
 
 ## Additional Resources
 
-- **[Recipes](../depictio-cli/recipes.md)** — how to write and test recipes
+- **[Recipes](recipes.md)** — how to write and test recipes
 - **[YAML Examples](../usage/projects/yaml-examples.md#pattern-template-project)** — template YAML patterns
 - **[Projects Guide](../usage/projects/guide.md#template-projects)** — template projects in context
-- **[CLI Usage](../depictio-cli/usage.md)** — full `depictio run` reference
+- **[CLI Usage](usage.md)** — full `depictio run` reference

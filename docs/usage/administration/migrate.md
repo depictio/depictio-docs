@@ -1,6 +1,6 @@
-# :material-database-arrow-right:{ style="color: #009688" } Project Migration
+# Project Migration
 
-Depictio supports **non-destructive project migration** between instances — move a project (MongoDB metadata + S3 data files + dashboards) from one Depictio deployment to another without touching any other project on the target.
+Depictio supports **non-destructive project migration** between instances — move a project (MongoDB metadata + S3 data files) from one Depictio deployment to another without touching any other project on the target.
 
 ## Overview
 
@@ -12,47 +12,25 @@ Migration works as a scoped upsert: every document is written via `ReplaceOne(..
 
 ## How It Works
 
-The CLI and UI paths differ in how S3 data is transferred:
-
 ```
-CLI path (S3 copied directly)
-──────────────────────────────────────────────────────────────────
 Source instance                        Target instance
+─────────────────                      ─────────────────
 depictio-cli                           API: /migrate/import-project
     │                                       │
-    ├─ POST /migrate/export-project         ├─ Upsert: projects
-    │     → ZIP (no S3 data inside)         │     (workflows + data_collections
-    │       ├─ bundle.json                  │      are embedded in project doc)
-    │       ├─ migrate_metadata.json        ├─ Upsert: files / deltatables / runs
-    │       └─ s3_metadata.json             └─ Upsert: dashboards
+    ├─ api_export_project()                 ├─ Upsert: projects
+    │     └─ POST /migrate/export-project   ├─ Upsert: workflows
+    │           → ZIP bundle               ├─ Upsert: data_collections
+    │             ├─ bundle.json           ├─ Upsert: files / deltatables / runs
+    │             └─ migrate_metadata.json └─ Upsert: dashboards
     │
-    └─ S3 copy: source MinIO → target MinIO (direct, not via ZIP)
-
-
-UI path (S3 bundled inside ZIP)
-──────────────────────────────────────────────────────────────────
-Browser                                Target instance
-    │                                       │
-    ├─ POST /migrate/export-project         ├─ POST /migrate/import-project-zip
-    │     → ZIP (S3 data included)          │     extracts bundle.json
-    │       ├─ bundle.json                  │     restores s3_data/* → MinIO
-    │       ├─ migrate_metadata.json        └─ Upsert: same order as CLI path
-    │       ├─ s3_metadata.json
-    │       └─ s3_data/<original S3 paths>
-    │
-    └─ ZIP downloaded to browser, re-uploaded to target UI
+    └─ (optionally) copy S3 files
+          source MinIO → target MinIO
 ```
 
-### ZIP Archive Contents
+The export endpoint returns a **ZIP archive** containing:
 
-| File / Folder | Always present | Description |
-|---|:---:|---|
-| `bundle.json` | ✅ | MongoDB documents — project (with embedded workflows + data_collections), files, deltatables, runs, dashboards |
-| `migrate_metadata.json` | ✅ | Export timestamp, project name, mode, Depictio version, document counts |
-| `s3_metadata.json` | ✅ | S3 paths discovered, file/byte counts, errors |
-| `s3_data/` | UI only (mode `all`/`files`) | S3 objects bundled at their original paths for cross-instance UI import |
-
-> **Note:** Workflows and data collections are not stored in separate MongoDB collections — they are embedded inside the project document and are exported/imported as part of `projects` in `bundle.json`.
+- `bundle.json` — all MongoDB documents for the project (projects, workflows, data_collections, files, deltatables, runs, dashboards)
+- `migrate_metadata.json` — export timestamp, project name, mode, document counts
 
 ## Migration Modes
 
@@ -65,18 +43,18 @@ Browser                                Target instance
 
 ## CLI Usage
 
-See [CLI Reference — migrate](../../depictio-cli/usage.md#migrate-commands) for the full option reference.
+See [CLI Reference — migrate run](../../depictio-cli/usage.md#migrate-commands) for the full option reference.
 
 ```bash
 # Recommended: dry-run first
-depictio-cli migrate \
+depictio-cli migrate run \
   --project "My Project" \
   --CLI-config-path ~/.depictio/CLI_local.yaml \
   --target-config ~/.depictio/CLI_remote.yaml \
   --dry-run
 
 # Full migration
-depictio-cli migrate \
+depictio-cli migrate run \
   --project "My Project" \
   --CLI-config-path ~/.depictio/CLI_local.yaml \
   --target-config ~/.depictio/CLI_remote.yaml
