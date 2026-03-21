@@ -3,10 +3,10 @@
 Recipes are the data transformation layer of the Depictio CLI. They convert raw bioinformatics pipeline output files into clean, dashboard-ready [Polars](https://pola.rs/) DataFrames — automatically, reproducibly, and with full validation.
 
 ```mermaid
-flowchart LR
-    A["Raw pipeline output\n(TSV / CSV / Parquet)"] -->|SOURCES| B["Recipe\nPython module"]
+flowchart TD
+    A["Raw pipeline output\n(TSV / CSV / Parquet)"] -->|SOURCES| B
     C["Other data collection\n(dc_ref)"] -->|SOURCES| B
-    B -->|"transform(sources)"| D["Tidy DataFrame\n(validated schema)"]
+    B["Recipe\nPython module"] -->|"transform(sources)"| D["Tidy DataFrame\n(validated schema)"]
     D --> E["Delta Lake\n(stored & queryable)"]
     D --> F["Dashboard\ncomponents"]
 
