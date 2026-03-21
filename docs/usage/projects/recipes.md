@@ -4,18 +4,28 @@ Recipes are the data transformation layer of the Depictio CLI. They convert raw 
 
 ```mermaid
 flowchart TD
-    A["Raw pipeline output\n(TSV / CSV / Parquet)"] -->|SOURCES| B
-    C["Other data collection\n(dc_ref)"] -->|SOURCES| B
-    B["Recipe\nPython module"] -->|"transform(sources)"| D["Tidy DataFrame\n(validated schema)"]
-    D --> E["Delta Lake\n(stored & queryable)"]
-    D --> F["Dashboard\ncomponents"]
+    subgraph up["Upstream — Workflow"]
+        W["Bioinformatics pipeline\nnf-core · Nextflow · Snakemake"]
+        W --> R["Raw output files\nwide CSV · nested TSV · non-standard headers"]
+    end
 
-    style A fill:#f5f5f5,stroke:#999
-    style C fill:#f5f5f5,stroke:#999
-    style B fill:#45B8AC,color:#fff,stroke:#45B8AC
+    T["Recipe\nreformat & reshape\nwide → long · rename columns · compute metrics"]
+
+    subgraph down["Downstream — Depictio"]
+        D["Tidy DataFrame\nlong format · clean schema · validated types"]
+        D --> DL["Delta Lake"]
+        D --> V["Dashboard figures & tables"]
+    end
+
+    up --> T
+    T --> down
+
+    style W fill:#f5f5f5,stroke:#999
+    style R fill:#f5f5f5,stroke:#999
+    style T fill:#45B8AC,color:#fff,stroke:#45B8AC
     style D fill:#e8f5e9,stroke:#81c784
-    style E fill:#e3f2fd,stroke:#64b5f6
-    style F fill:#e3f2fd,stroke:#64b5f6
+    style DL fill:#e3f2fd,stroke:#64b5f6
+    style V fill:#e3f2fd,stroke:#64b5f6
 ```
 
 ## What is a Recipe?
