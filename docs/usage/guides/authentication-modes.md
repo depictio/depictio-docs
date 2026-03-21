@@ -1,10 +1,9 @@
 ---
 title: "Authentication Modes"
-icon: material/shield-account
 description: "Depictio supports four authentication modes to fit different deployment scenarios."
 ---
 
-# Authentication Modes
+# :material-shield-account:{ style="color: #009688" } Authentication Modes
 
 Depictio supports four authentication modes, each designed for a different deployment scenario. Only one mode is active at a time.
 
