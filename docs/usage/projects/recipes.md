@@ -5,14 +5,25 @@ Recipes are the data transformation layer of the Depictio CLI. They convert raw 
 ```mermaid
 flowchart TD
     subgraph up["Upstream — Workflow"]
-        W["Bioinformatics pipeline\nnf-core · Nextflow · Snakemake"]
-        W --> R["Raw output files\nwide CSV · nested TSV · non-standard headers"]
+        W["Bioinformatics pipeline
+        nf-core / Nextflow / Snakemake"]
+        W --> R["Raw output files
+        • wide CSV
+        • nested TSV
+        • non-standard headers"]
     end
 
-    T["Recipe\nreformat & reshape\nwide → long · rename columns · compute metrics"]
+    T["Recipe
+    • reformat & reshape
+    • wide → long
+    • rename columns
+    • compute metrics"]
 
     subgraph down["Downstream — Depictio"]
-        D["Tidy DataFrame\nlong format · clean schema · validated types"]
+        D["Tidy DataFrame
+        • long format
+        • clean schema
+        • validated types"]
         D --> DL["Delta Lake"]
         D --> V["Dashboard figures & tables"]
     end
