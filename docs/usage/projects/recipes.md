@@ -2,45 +2,52 @@
 
 Recipes are the data transformation layer of the Depictio CLI. They convert raw bioinformatics pipeline output files into clean, dashboard-ready [Polars](https://pola.rs/) DataFrames — automatically, reproducibly, and with full validation.
 
-```mermaid
-flowchart TD
-    classDef leftText text-align:left
+<div style="display:flex;flex-direction:column;align-items:center;gap:10px;max-width:420px;margin:24px auto;font-size:0.9em;">
 
-    subgraph up["Upstream — Workflow"]
-        direction TD
-        W["Bioinformatics pipeline
-        nf-core / Nextflow / Snakemake"]
-        W --> R["Raw output files
-        • wide CSV
-        • nested TSV
-        • non-standard headers"]
-    end
+  <div style="width:100%;border:1.5px solid #bbb;border-radius:8px;background:#f9f9f9;padding:12px 16px;">
+    <div style="font-weight:600;color:#888;font-size:0.75em;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">Upstream — Workflow</div>
+    <div style="background:#efefef;border:1px solid #ccc;border-radius:6px;padding:9px 13px;">
+      <strong>Bioinformatics pipeline</strong><br>
+      <span style="color:#666;font-size:0.85em;">nf-core / Nextflow / Snakemake</span>
+    </div>
+    <div style="text-align:center;color:#aaa;margin:6px 0;font-size:1.1em;">↓</div>
+    <div style="background:#efefef;border:1px solid #ccc;border-radius:6px;padding:9px 13px;">
+      <strong>Raw output files</strong>
+      <ul style="margin:5px 0 0 0;padding-left:16px;color:#555;font-size:0.85em;">
+        <li>wide CSV</li><li>nested TSV</li><li>non-standard headers</li>
+      </ul>
+    </div>
+  </div>
 
-    T["Recipe
-    • reformat & reshape
-    • wide → long
-    • rename columns
-    • compute metrics"]
+  <div style="color:#45B8AC;font-size:1.4em;line-height:1;">↓</div>
 
-    subgraph down["Downstream — Depictio"]
-        direction TD
-        D["Tidy DataFrame
-        • long format
-        • clean schema
-        • validated types"]
-        D --> V["Dashboard figures & tables"]
-    end
+  <div style="width:100%;background:#45B8AC;color:#fff;border-radius:8px;padding:12px 16px;">
+    <strong>Recipe</strong>
+    <ul style="margin:5px 0 0 0;padding-left:16px;font-size:0.85em;">
+      <li>reformat &amp; reshape</li><li>wide → long</li><li>rename columns</li><li>compute metrics</li>
+    </ul>
+  </div>
 
-    up --> T
-    T --> down
+  <div style="color:#45B8AC;font-size:1.4em;line-height:1;">↓</div>
 
-    style W fill:#f5f5f5,stroke:#999
-    style R fill:#f5f5f5,stroke:#999
-    style T fill:#45B8AC,color:#fff,stroke:#45B8AC
-    style D fill:#b2dfdb,stroke:#45B8AC
-    style V fill:#45B8AC,color:#fff,stroke:#45B8AC
-    class R,T,D leftText
-```
+  <div style="width:100%;border:1.5px solid #45B8AC;border-radius:8px;background:#f0fafa;padding:12px 16px;">
+    <div style="display:flex;align-items:center;gap:6px;font-weight:600;color:#45B8AC;font-size:0.75em;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">
+      <img src="../../../images/logo/logo_icon.png" alt="Depictio" style="height:16px;width:auto;vertical-align:middle;">
+      Downstream — Depictio
+    </div>
+    <div style="background:#b2dfdb;border:1px solid #45B8AC;border-radius:6px;padding:9px 13px;">
+      <strong>Tidy DataFrame</strong>
+      <ul style="margin:5px 0 0 0;padding-left:16px;font-size:0.85em;">
+        <li>long format</li><li>clean schema</li><li>validated types</li>
+      </ul>
+    </div>
+    <div style="text-align:center;color:#45B8AC;margin:6px 0;font-size:1.1em;">↓</div>
+    <div style="background:#45B8AC;color:#fff;border-radius:6px;padding:9px 13px;text-align:center;font-weight:600;">
+      Dashboard figures &amp; tables
+    </div>
+  </div>
+
+</div>
 
 ## What is a Recipe?
 
