@@ -190,33 +190,25 @@ nav:
 
   - Usage:
       - Overview: usage/README.md
-      - Getting Started: usage/get_started.md
-      - Guides:
-          - usage/guides/index.md
+      - ':material-rocket-launch: Getting Started': usage/get_started.md
+      - ':material-book-open-variant: Guides':
           - WebUI: usage/guides/web_ui.md
           - Dashboard creation: usage/guides/dashboard_creation.md
           - Using the dashboard: usage/guides/dashboard_usage.md
-      - Projects:
-          - usage/projects/index.md
+      - ':material-folder-multiple: Projects':
           - Guide: usage/projects/guide.md
           - YAML project configuration breakdown: usage/projects/yaml-examples.md
           - Full Reference Configuration: usage/projects/reference.md
-      - CLI:
-          - depictio-cli/index.md
+      - ':material-console: CLI':
           - Usage: depictio-cli/usage.md
           - Minimal YAML config: depictio-cli/minimal_config.md
           - Recipes: depictio-cli/recipes.md
           - Templates: depictio-cli/templates.md
-      - Administration:
+      - ':material-shield-account: Administration':
           - Project Migration: usage/administration/migrate.md
-      - Special Modes:
-          - usage/special-modes/index.md
+      - ':material-toggle-switch: Special Modes':
           - Authentication Modes: usage/guides/authentication-modes.md
           - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md
-      - Administration:
-          - usage/administration/index.md
-          - Backup & Restore: usage/administration/backup.md
-          - Project Migration: usage/administration/migrate.md
   - Features:
       - Overview: features/README.md
       - Dashboard & Components:
