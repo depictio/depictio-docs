@@ -51,10 +51,11 @@ Recipes are the data transformation layer of the Depictio CLI. They convert raw 
 
 ## What is a Recipe?
 
-A recipe is a plain Python module that describes how to transform one or more raw files into a single tidy DataFrame. Each recipe lives in `depictio/recipes/<pipeline>/` and declares exactly three things:
+A recipe is a plain Python module that describes how to transform one or more raw files into a single tidy DataFrame. Each recipe lives in `depictio/projects/<pipeline>/recipes/` and declares:
 
 - **`SOURCES`** — input files to read (paths relative to `--data-dir`, or references to other data collections via `dc_ref`)
 - **`EXPECTED_SCHEMA`** — required output columns and their Polars data types
+- **`OPTIONAL_SCHEMA`** *(optional)* — columns that may or may not be present (e.g. user-defined metadata columns)
 - **`transform(sources)`** — a pure function that takes loaded DataFrames and returns the output DataFrame
 
 Recipes are used in two ways:
@@ -71,9 +72,9 @@ Every recipe execution — whether via `depictio recipe run` or `depictio run` �
 | # | Checkpoint | What it checks |
 |---|-----------|----------------|
 | 1 | **Load** | Import the recipe module; verify `SOURCES`, `EXPECTED_SCHEMA`, and a callable `transform()` exist |
-| 2 | **Resolve** | Find each file under `--data-dir`; fail fast if any file is missing or empty |
+| 2 | **Resolve** | Find each file under `--data-dir`; skip optional sources gracefully; fail fast if required files are missing |
 | 3 | **Transform** | Call `transform(sources)`, verify it returns a non-empty `pl.DataFrame` |
-| 4 | **Schema** | Assert every column in `EXPECTED_SCHEMA` is present with the correct dtype |
+| 4 | **Schema** | Assert every column in `EXPECTED_SCHEMA` is present with the correct dtype; validate `OPTIONAL_SCHEMA` columns if present |
 
 If any checkpoint fails, execution stops with a clear error message pointing to the exact problem.
 
@@ -92,11 +93,12 @@ depictio recipe list
 **Output:**
 
 ```
-Available recipes (5):
+Available recipes (6):
   nf-core/ampliseq/alpha_diversity.py
   nf-core/ampliseq/alpha_rarefaction.py
   nf-core/ampliseq/ancombc.py
   nf-core/ampliseq/taxonomy_composition.py
+  nf-core/ampliseq/taxonomy_heatmap.py
   nf-core/ampliseq/taxonomy_rel_abundance.py
 ```
 
@@ -108,7 +110,6 @@ Show recipe details: docstring, sources, and expected output schema. Pass `--ver
 
 ```bash
 depictio recipe info nf-core/ampliseq/alpha_diversity.py
-depictio recipe info nf-core/ampliseq/taxonomy_rel_abundance.py --version 2.14.0
 ```
 
 **Output:**
@@ -120,10 +121,11 @@ Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD tabl
 Sources (1):
   faith_pd: qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv (TSV)
 
-Expected output schema (3 columns):
+Expected output schema (2 columns):
   sample: Utf8
-  habitat: Utf8
   faith_pd: Float64
+
+Optional schema: {} (metadata columns passed through dynamically)
 ```
 
 ---
@@ -146,37 +148,6 @@ depictio recipe run nf-core/ampliseq/alpha_diversity.py \
 | `--output` | `-o` | `null` | Save result to `.parquet` or `.csv` file |
 | `--head` | `-n` | `20` | Number of rows to display |
 
-**Example with output:**
-
-```bash
-depictio recipe run nf-core/ampliseq/alpha_diversity.py \
-  --data-dir /data/ampliseq_results \
-  --output alpha_diversity.parquet \
-  --head 5
-```
-
-**Example output:**
-
-```
-  Loaded recipe: nf-core/ampliseq/alpha_diversity.py (1 source(s))
-  Resolved source 'faith_pd': 48 rows x 3 columns
-  Transform produced 48 rows x 3 columns
-  Schema valid: sample(Utf8), habitat(Utf8), faith_pd(Float64)
-
-shape: (5, 3)
-┌─────────────┬────────────┬──────────┐
-│ sample      ┆ habitat    ┆ faith_pd │
-│ ---         ┆ ---        ┆ ---      │
-│ str         ┆ str        ┆ f64      │
-╞═════════════╪════════════╪══════════╡
-│ SRR13122774 ┆ Groundwater┆ 12.3     │
-│ SRR13122775 ┆ River      ┆ 8.7      │
-│ ...         ┆ ...        ┆ ...      │
-└─────────────┴────────────┴──────────┘
-
-  Saved to alpha_diversity.parquet
-```
-
 <!-- prettier-ignore -->
 !!! note "dc_ref sources"
     Recipes that reference another data collection via `dc_ref` (e.g. `taxonomy_rel_abundance.py`) cannot be fully executed standalone. The CLI will report which sources are skipped and exit with code 0. These sources are resolved automatically during `depictio run` when all data collections are available.
@@ -185,19 +156,16 @@ shape: (5, 3)
 
 ## Recipe Anatomy: Ampliseq Examples
 
-The five bundled ampliseq recipes cover the full spectrum of transformation patterns. Study them as templates for writing your own recipes.
+The six bundled ampliseq recipes cover the full spectrum of transformation patterns. Study them as templates for writing your own recipes.
 
 ### Example 1 — Simple file transformation (`alpha_diversity.py`)
 
-**Pattern:** Filter comment rows, rename columns, cast types.
-
-Input: QIIME2 TSV with a `#` comment header row and an `id` column instead of `sample`.
+**Pattern:** Filter comment rows, rename columns, cast types. Metadata columns embedded by the pipeline are passed through dynamically.
 
 ```python
 """Transform QIIME2 alpha diversity vector to per-sample Faith PD table."""
 
 import polars as pl
-
 from depictio.models.models.transforms import RecipeSource
 
 SOURCES: list[RecipeSource] = [
@@ -210,18 +178,18 @@ SOURCES: list[RecipeSource] = [
 
 EXPECTED_SCHEMA: dict[str, type[pl.DataType]] = {
     "sample": pl.Utf8,
-    "habitat": pl.Utf8,
     "faith_pd": pl.Float64,
 }
+# Any metadata columns embedded by QIIME2 (e.g. habitat) are passed through.
+OPTIONAL_SCHEMA: dict[str, type[pl.DataType]] = {}
 
 
 def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
-    """Transform raw Faith PD vector to clean per-sample table."""
     df = sources["faith_pd"]
-    df = df.filter(~pl.col("id").str.starts_with("#"))  # drop comment rows
+    df = df.filter(~pl.col("id").str.starts_with("#"))
     df = df.rename({"id": "sample"})
     df = df.with_columns(pl.col("faith_pd").cast(pl.Float64))
-    return df.select("sample", "habitat", "faith_pd")
+    return df  # all columns preserved, including any embedded metadata
 ```
 
 ---
@@ -237,7 +205,6 @@ Output: Long-format `(sample, depth, iter, faith_pd)` — ready for line charts.
 """Transform QIIME2 alpha rarefaction wide CSV to long-format rarefaction curves."""
 
 import polars as pl
-
 from depictio.models.models.transforms import RecipeSource
 
 SOURCES: list[RecipeSource] = [
@@ -257,38 +224,30 @@ EXPECTED_SCHEMA = {
 
 
 def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
-    """Melt wide rarefaction table (depth-X_iter-Y columns) to long format."""
     df = sources["faith_pd_csv"]
-
     value_cols = [c for c in df.columns if c.startswith("depth-")]
     df = df.unpivot(
         on=value_cols, index="sample-id", variable_name="depth_iter", value_name="faith_pd"
     )
     df = df.rename({"sample-id": "sample"})
-
-    # Extract depth and iter from column names like "depth-500_iter-3"
     df = df.with_columns(
         pl.col("depth_iter").str.extract(r"depth-(\d+)", 1).cast(pl.Int64).alias("depth"),
         pl.col("depth_iter").str.extract(r"iter-(\d+)", 1).cast(pl.Int64).alias("iter"),
         pl.col("faith_pd").cast(pl.Float64),
     )
-
     return df.drop_nulls(subset=["faith_pd"]).select("sample", "depth", "iter", "faith_pd")
 ```
 
 ---
 
-### Example 3 — Cross-DC join via `dc_ref` (`taxonomy_rel_abundance.py`)
+### Example 3 — Cross-DC join with optional metadata (`taxonomy_rel_abundance.py`)
 
-**Pattern:** Reference another data collection instead of a file, join on a shared key.
-
-The `dc_ref="metadata"` entry tells the system to load the `metadata` data collection (by tag) and inject it into `sources` before calling `transform()`. This enables metadata enrichment without duplicating files.
+**Pattern:** Reference another data collection via `dc_ref`, join generically on a shared key. The metadata source is **optional** — when absent, the recipe produces core columns only.
 
 ```python
 """Transform QIIME2 relative abundance table to long-format per-sample taxonomy table."""
 
 import polars as pl
-
 from depictio.models.models.transforms import RecipeSource
 
 SOURCES: list[RecipeSource] = [
@@ -298,26 +257,29 @@ SOURCES: list[RecipeSource] = [
         format="TSV",
         read_kwargs={"skip_rows": 1},
     ),
-    RecipeSource(ref="metadata", dc_ref="metadata"),  # ← references another DC by tag
+    RecipeSource(
+        ref="metadata",
+        dc_ref="metadata",    # references another DC by tag
+        optional=True,         # absent when no metadata provided
+    ),
 ]
 
 EXPECTED_SCHEMA = {
     "sample": pl.Utf8,
     "taxonomy": pl.Utf8,
     "rel_abundance": pl.Float64,
-    "habitat": pl.Utf8,
     "Kingdom": pl.Utf8,
     "Phylum": pl.Utf8,
 }
+# Metadata columns are user-defined; validated dynamically
+OPTIONAL_SCHEMA: dict[str, type[pl.DataType]] = {}
 
 
 def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
-    """Unpivot wide abundance table and join with metadata."""
     df = sources["rel_table"]
     df = df.rename({"#OTU ID": "taxonomy"})
-
     sample_cols = [c for c in df.columns if c != "taxonomy"]
-    df = df.with_columns([pl.col(c).cast(pl.Float64) for c in sample_cols])
+    df = df.with_columns(pl.col(sample_cols).cast(pl.Float64))
     df = df.unpivot(
         on=sample_cols, index="taxonomy", variable_name="sample", value_name="rel_abundance"
     )
@@ -327,58 +289,36 @@ def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
         pl.col("taxonomy").str.split(";").list.get(1).fill_null("Unclassified").alias("Phylum"),
     )
 
-    metadata = sources["metadata"]
-    # Handle both column naming conventions (v2.14: "sample", v2.16+: "ID")
-    if "ID" in metadata.columns and "sample" not in metadata.columns:
+    # Join ALL metadata columns generically when metadata is available
+    metadata = sources.get("metadata")
+    if metadata is not None:
         metadata = metadata.rename({"ID": "sample"})
-    metadata = metadata.select("sample", "habitat")
+        df = df.join(metadata, on="sample", how="left")
 
-    return df.join(metadata, on="sample", how="left").select(
-        "sample", "taxonomy", "rel_abundance", "habitat", "Kingdom", "Phylum"
-    )
+    core = ["sample", "taxonomy", "rel_abundance", "Kingdom", "Phylum"]
+    extra = [c for c in df.columns if c not in core]
+    return df.select(core + extra)
 ```
 
 ---
 
-### Example 4 — Multi-file merge (`ancombc.py`)
+### Example 4 — Multi-file merge with source overrides (`ancombc.py`)
 
-**Pattern:** Merge multiple slices of the same analysis into one long-format table, compute derived columns.
-
-Merges 5 separate ANCOM-BC result CSVs (lfc, p_val, q_val, w, se) into one differential abundance table with `-log10(q)` and significance flag.
+**Pattern:** Merge multiple slices of the same analysis into one long-format table. The recipe declares default source paths, but the **template overrides them** via `source_overrides` to parameterize the directory name with `{GROUP_COL}`.
 
 ```python
 """Merge ANCOM-BC differential abundance results (5 files) into one long-format table."""
 
 import polars as pl
-
 from depictio.models.models.transforms import RecipeSource
 
+# Default paths — overridden by template.yaml source_overrides with {GROUP_COL}
 SOURCES = [
-    RecipeSource(
-        ref="lfc",
-        path="qiime2/ancombc/differentials/Category-habitat-level-2/lfc_slice.csv",
-        format="CSV",
-    ),
-    RecipeSource(
-        ref="p_val",
-        path="qiime2/ancombc/differentials/Category-habitat-level-2/p_val_slice.csv",
-        format="CSV",
-    ),
-    RecipeSource(
-        ref="q_val",
-        path="qiime2/ancombc/differentials/Category-habitat-level-2/q_val_slice.csv",
-        format="CSV",
-    ),
-    RecipeSource(
-        ref="w",
-        path="qiime2/ancombc/differentials/Category-habitat-level-2/w_slice.csv",
-        format="CSV",
-    ),
-    RecipeSource(
-        ref="se",
-        path="qiime2/ancombc/differentials/Category-habitat-level-2/se_slice.csv",
-        format="CSV",
-    ),
+    RecipeSource(ref="lfc", path="qiime2/ancombc/differentials/Category-habitat-level-2/lfc_slice.csv", format="CSV"),
+    RecipeSource(ref="p_val", path="qiime2/ancombc/differentials/Category-habitat-level-2/p_val_slice.csv", format="CSV"),
+    RecipeSource(ref="q_val", path="qiime2/ancombc/differentials/Category-habitat-level-2/q_val_slice.csv", format="CSV"),
+    RecipeSource(ref="w", path="qiime2/ancombc/differentials/Category-habitat-level-2/w_slice.csv", format="CSV"),
+    RecipeSource(ref="se", path="qiime2/ancombc/differentials/Category-habitat-level-2/se_slice.csv", format="CSV"),
 ]
 
 EXPECTED_SCHEMA = {
@@ -391,35 +331,28 @@ EXPECTED_SCHEMA = {
 
 
 def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
-    """Melt each ANCOM-BC slice and join into one table with taxonomy annotations."""
     contrast_cols = [c for c in sources["lfc"].columns if c not in ("id", "(Intercept)")]
-
     melted = {
-        name: (
-            sources[name]
-            .select("id", *contrast_cols)
+        name: sources[name].select("id", *contrast_cols)
             .unpivot(on=contrast_cols, index="id", variable_name="contrast", value_name=name)
-        )
         for name in ["lfc", "p_val", "q_val", "w", "se"]
     }
-
     result = melted["lfc"]
     for name in ["p_val", "q_val", "w", "se"]:
         result = result.join(melted[name], on=["id", "contrast"], how="left")
-
-    for col_name in ["lfc", "p_val", "q_val", "w", "se"]:
-        result = result.with_columns(pl.col(col_name).cast(pl.Float64))
 
     return result.with_columns(
         pl.col("id").str.split(";").list.get(0).alias("Kingdom"),
         pl.col("id").str.split(";").list.get(1).fill_null("Unclassified").alias("Phylum"),
         (-pl.col("q_val").log(base=10)).alias("neg_log10_qval"),
         (pl.col("q_val") < 0.05).alias("significant"),
-    ).select(
-        "id", "contrast", "lfc", "p_val", "q_val", "w", "se",
-        "Kingdom", "Phylum", "neg_log10_qval", "significant",
-    )
+    ).select("id", "contrast", "lfc", "p_val", "q_val", "w", "se",
+             "Kingdom", "Phylum", "neg_log10_qval", "significant")
 ```
+
+<!-- prettier-ignore -->
+!!! note "Source overrides"
+    The `Category-habitat-level-2` directory name in the default SOURCES paths is a fallback. In the ampliseq template, these paths are overridden to `Category-{GROUP_COL}-level-2/` so they resolve dynamically based on the user's metadata grouping column.
 
 ---
 
@@ -434,8 +367,10 @@ def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
 | `dc_ref` | `str` | if no `path` | Tag of another data collection to inject (resolved by the API) |
 | `format` | `str` | yes if `path` set | `CSV`, `TSV`, or `Parquet` (case-insensitive) |
 | `read_kwargs` | `dict` | no | Extra kwargs forwarded to the Polars reader (e.g. `{"skip_rows": 1}`) |
+| `optional` | `bool` | no | If `true`, source is skipped when unavailable instead of failing |
+| `glob_pattern` | `str` | no | Glob pattern for matching multiple files (concatenated) |
 
-Exactly one of `path` or `dc_ref` must be set per source.
+Exactly one of `path`, `dc_ref`, or `glob_pattern` must be set per source.
 
 ---
 
@@ -446,7 +381,7 @@ To use a recipe in a project, set `source: "transformed"` on the data collection
 ```yaml
 data_collections:
   - data_collection_tag: "alpha_diversity"
-    description: "Per-sample alpha diversity (from raw QIIME2 Faith PD vector)"
+    description: "Per-sample alpha diversity"
     config:
       type: "Table"
       source: "transformed"
@@ -456,15 +391,29 @@ data_collections:
         format: "TSV"
         columns_description:
           "sample": "Sample identifier"
-          "habitat": "Habitat type"
           "faith_pd": "Faith's Phylogenetic Diversity"
+```
+
+Use `source_overrides` to parameterize recipe source paths via template variables:
+
+```yaml
+  - data_collection_tag: "ancombc_results"
+    config:
+      type: "Table"
+      source: "transformed"
+      transform:
+        recipe: "nf-core/ampliseq/ancombc.py"
+        source_overrides:
+          lfc:
+            path: "qiime2/ancombc/differentials/Category-{GROUP_COL}-level-2/lfc_slice.csv"
+          # ... one override per source ref
 ```
 
 The recipe is executed during `depictio data process` (Step 5 of `depictio run`). All 4 checkpoints run automatically. If the recipe fails, the data collection is skipped and an error is logged.
 
 <!-- prettier-ignore -->
 !!! tip "Using templates"
-    For nf-core/ampliseq, all five recipes are pre-configured in the bundled template. Use `depictio run --template nf-core/ampliseq/2.16.0 --data-root /your/data` to set up the complete project without writing any YAML. See [Templates](templates.md).
+    For nf-core/ampliseq, all six recipes are pre-configured in the bundled template. Use `depictio run --template nf-core/ampliseq/2.16.0 --data-root /your/data --var SAMPLESHEET_FILE=samplesheet.csv` to set up the complete project without writing any YAML. See [Templates](templates.md).
 
 ---
 
@@ -481,13 +430,17 @@ depictio/projects/
         │   ├── alpha_rarefaction.py
         │   ├── ancombc.py
         │   ├── taxonomy_composition.py
+        │   ├── taxonomy_heatmap.py
         │   └── taxonomy_rel_abundance.py
         ├── 2.14.0/
         │   ├── template.yaml
         │   └── recipes/                      ← version-specific overrides
         │       └── taxonomy_rel_abundance.py
         └── 2.16.0/
-            └── template.yaml                 ← no overrides, inherits shared
+            ├── template.yaml                 ← no overrides, inherits shared
+            └── dashboards/
+                ├── base.yaml                 ← minimal (no metadata)
+                └── full_analysis.yaml        ← metadata-aware with {GROUP_COL}
 ```
 
 To add a recipe for a new pipeline, create `depictio/projects/{org}/{pipeline}/recipes/{name}.py` following the contract: define `SOURCES`, `EXPECTED_SCHEMA`, and `transform()`.
@@ -503,7 +456,7 @@ When a pipeline output format changes between versions (column renames, file mov
 1. `projects/{pipeline}/2.14.0/recipes/{name}.py` — checked first (override)
 2. `projects/{pipeline}/recipes/{name}.py` — used if no override exists (shared)
 
-Most recipes are shared across all versions. Only the ones that actually differ need an override. For example, `taxonomy_rel_abundance.py` has a v2.14.0 override because the metadata column was renamed from `sample` to `ID` in v2.16.0 — each version's recipe simply uses the correct column name with no conditional branching.
+Most recipes are shared across all versions. Only the ones that actually differ need an override.
 
 To test a version-specific recipe standalone:
 
