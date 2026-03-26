@@ -18,10 +18,10 @@ That's it. Depictio resolves your data directory, runs all data transformations,
 
 A template bundles:
 
-- :material-cog:{ style="color: #45B8AC" } **Project configuration** — workflows, data collections, and cross-DC links with `{VAR_NAME}` placeholders
-- :material-chef-hat:{ style="color: #45B8AC" } **Recipes** — Python transforms that convert raw pipeline outputs into dashboard-ready tables
-- :material-view-dashboard:{ style="color: #45B8AC" } **Dashboard YAML** — imported automatically on first run, with template variable substitution
-- :material-link:{ style="color: #45B8AC" } **Cross-DC links** — enable interactive filtering across data collections
+- **Project configuration** — workflows, data collections, and cross-DC links with `{VAR_NAME}` placeholders
+- **Recipes** — Python transforms that convert raw pipeline outputs into dashboard-ready tables
+- **Dashboard YAML** — imported automatically on first run, with template variable substitution
+- **Cross-DC links** — enable interactive filtering across data collections
 
 See [Templates reference](../usage/projects/templates.md) for the full technical specification, and [Recipes](../usage/projects/recipes.md) for how data transformations work.
 
@@ -31,14 +31,20 @@ See [Templates reference](../usage/projects/templates.md) for the full technical
 
 Each template carries a status reflecting its review level.
 
-!!! success "🛡️ Certified"
-    Reviewed and validated by the **pipeline lead developer**. Highest trust — the pipeline author confirms the template correctly represents their outputs.
-
-!!! info "☑️ Reviewed"
-    Tested against reference datasets, CI passes, recipe checkpoints validated. Reviewed by Depictio team or community maintainers.
-
-!!! warning "🧪 Experimental"
-    Shared as-is. A good starting point — feedback and PRs welcome.
+<div style="display:flex;flex-direction:column;gap:12px;margin:16px 0;">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span style="background:#4CAF50;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;min-width:120px;text-align:center;">🛡️ Certified</span>
+    <span>Validated by the <strong>pipeline lead developer</strong>. Highest trust.</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span style="background:#2196F3;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;min-width:120px;text-align:center;">☑️ Reviewed</span>
+    <span>Tested, CI passes, reviewed by Depictio team or community.</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span style="background:#FF9800;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;min-width:120px;text-align:center;">🧪 Experimental</span>
+    <span>Shared as-is. Feedback and PRs welcome.</span>
+  </div>
+</div>
 
 ---
 
@@ -46,21 +52,19 @@ Each template carries a status reflecting its review level.
 
 <div class="grid cards" markdown>
 
--   <a href="nf-core/ampliseq/" style="text-decoration:none;color:inherit;">
-    <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="ampliseq" style="height:36px;margin-bottom:8px;">
+-   <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="ampliseq" style="height:36px;margin-bottom:8px;">
 
-    **nf-core/ampliseq**{ style="font-size:1.1em" }
+    **nf-core/ampliseq**
 
     ---
 
     16S/ITS amplicon sequencing — microbial community analysis
 
-    :material-database: 9 DCs · :material-chef-hat: 6 recipes · :material-link: 7 links
+    9 DCs · 6 recipes · 7 links
 
-    !!! success inline end ""
-        🛡️ Certified
+    <span style="background:#4CAF50;color:#fff;padding:3px 10px;border-radius:10px;font-size:0.8em;font-weight:600;">🛡️ Certified</span>
 
-    </a>
+    [:octicons-arrow-right-24: View template](nf-core/ampliseq.md)
 
 </div>
 
