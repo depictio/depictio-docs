@@ -34,9 +34,8 @@ Each template carries a status badge reflecting its review level and trust.
 | Status | Meaning |
 |--------|---------|
 | <span style="background:#4CAF50;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">🛡️ Certified</span> | Reviewed and validated by the **pipeline lead developer**. Highest trust — the pipeline author confirms the template correctly represents their outputs. |
-| <span style="background:#45B8AC;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">✅ Supported</span> | Built and maintained by the **Depictio core team**. Tested against reference datasets. Fully supported. |
-| <span style="background:#2196F3;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">☑️ Community</span> | **Community-contributed** and reviewed by a Depictio core team member. CI passes, recipe checkpoints validated. |
-| <span style="background:#FF9800;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">🧪 Experimental</span> | **User-contributed**, shared as-is. A good starting point — feedback and PRs welcome. |
+| <span style="background:#2196F3;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">☑️ Reviewed</span> | Tested against reference datasets, CI passes, recipe checkpoints validated. Reviewed by Depictio team or community maintainers. |
+| <span style="background:#FF9800;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">🧪 Experimental</span> | Shared as-is. A good starting point — feedback and PRs welcome. |
 
 ---
 
