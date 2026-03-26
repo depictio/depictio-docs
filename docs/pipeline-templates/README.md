@@ -1,4 +1,4 @@
-# Templates
+# :material-layers-outline: Templates
 
 Templates are pre-packaged project configurations that set up a complete bioinformatics analysis project — dashboards included — with a single command.
 
@@ -31,32 +31,21 @@ See [Templates reference](../usage/projects/templates.md) for the full technical
 
 Each template carries a status reflecting its review level.
 
-<div style="display:flex;flex-direction:column;gap:12px;margin:16px 0;">
-  <div style="display:flex;align-items:center;gap:12px;">
-    <span style="background:#4CAF50;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;min-width:120px;text-align:center;">🛡️ Certified</span>
-    <span>Validated by the <strong>pipeline lead developer</strong>. Highest trust.</span>
-  </div>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <span style="background:#2196F3;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;min-width:120px;text-align:center;">☑️ Reviewed</span>
-    <span>Tested, CI passes, reviewed by Depictio team or community.</span>
-  </div>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <span style="background:#FF9800;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;min-width:120px;text-align:center;">🧪 Experimental</span>
-    <span>Shared as-is. Feedback and PRs welcome.</span>
-  </div>
-</div>
+:material-shield-check:{ style="color:#4CAF50" } **Certified** — Validated by the **pipeline lead developer**. Highest trust.
+
+:material-check-circle-outline:{ style="color:#2196F3" } **Reviewed** — Tested, CI passes, reviewed by Depictio team or community.
+
+:material-flask-outline:{ style="color:#FF9800" } **Experimental** — Shared as-is. Feedback and PRs welcome.
 
 ---
 
 ## Available templates
 
-<div class="grid cards" markdown>
-
--   <a href="nf-core/ampliseq/" style="text-decoration:none;color:inherit;display:block;text-align:center;">
-    <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:60px;margin:16px auto;display:block;">
-    <span style="background:#4CAF50;color:#fff;padding:3px 10px;border-radius:10px;font-size:0.8em;font-weight:600;">🛡️ Certified</span>
-    </a>
-
+<div style="display:flex;gap:16px;flex-wrap:wrap;">
+  <a href="nf-core/ampliseq/" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:1px solid #ddd;border-radius:16px;padding:32px 40px;width:280px;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+    <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:64px;">
+    <span style="background:#4CAF50;color:#fff;padding:4px 14px;border-radius:12px;font-size:0.85em;font-weight:600;">Certified</span>
+  </a>
 </div>
 
 ---
