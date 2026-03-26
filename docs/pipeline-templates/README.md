@@ -22,10 +22,10 @@ That's it. Depictio resolves your data directory, runs all data transformations,
 
 A template bundles:
 
-- **Project configuration** — workflows, data collections, and cross-DC links with `{VAR_NAME}` placeholders
-- **Recipes** — Python transforms that convert raw pipeline outputs into dashboard-ready tables
-- **Dashboard YAML** — imported automatically on first run, with template variable substitution
-- **Cross-DC links** — enable interactive filtering across data collections
+- :material-cog: **Project configuration** — workflows, data collections, and cross-DC links with `{VAR_NAME}` placeholders
+- :material-chef-hat: **Recipes** — Python transforms that convert raw pipeline outputs into dashboard-ready tables
+- :material-view-dashboard: **Dashboard YAML** — imported automatically on first run, with template variable substitution
+- :material-link: **Cross-DC links** — enable interactive filtering across data collections
 
 See [Templates reference](../usage/projects/templates.md) for the full technical specification, and [Recipes](../usage/projects/recipes.md) for how data transformations work.
 
