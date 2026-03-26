@@ -1,12 +1,12 @@
 # <span style="color: #45B8AC;">:material-dna:</span> nf-core/ampliseq
 
-<div style="display:flex;align-items:center;gap:16px;margin-bottom:8px;">
-  <img src="../../images/pipeline-templates/nf-core/ampliseq/nf-core-ampliseq_logo.png" alt="nf-core/ampliseq" style="height:56px;">
-  <div>
-    <strong>16S/ITS amplicon sequencing — microbial community analysis</strong><br>
+<div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+  <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:56px;" onerror="this.src='../../images/pipeline-templates/nf-core/ampliseq/nf-core-ampliseq_logo.png'">
+  <div style="flex:1;">
+    <strong style="font-size:1.1em;">16S/ITS amplicon sequencing — microbial community analysis</strong><br>
     <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/ampliseq" target="_blank">nf-co.re/ampliseq</a></span>
   </div>
-  <span style="margin-left:auto;background:#4CAF50;color:#fff;padding:3px 10px;border-radius:12px;font-size:0.8em;font-weight:600;">🛡️ Certified</span>
+  <div style="background:#4CAF50;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;white-space:nowrap;">🛡️ Certified</div>
 </div>
 
 The ampliseq template covers the main outputs of a standard nf-core/ampliseq run:
@@ -156,10 +156,10 @@ See [nf-co.re/ampliseq/usage](https://nf-co.re/ampliseq/2.16.0/docs/usage) for f
 
 ## Required data structure
 
-Point `--data-root` to a single ampliseq **run output directory** (the Nextflow `results/` folder). Not all files are required — the template adapts based on what's present and which `--var` flags you provide.
+Point `--data-root` to the directory containing your ampliseq outputs. This can be a single run's `results/` folder or a parent directory containing multiple runs — Depictio scans recursively. Not all files are required; the template adapts based on what's present and which `--var` flags you provide.
 
 ```text
-<DATA_ROOT>/   # e.g., results/ from: nextflow run nf-core/ampliseq ...
+<DATA_ROOT>/
 ├── samplesheet.csv                                # --var SAMPLESHEET_FILE
 ├── Metadata.tsv                                   # --var METADATA_FILE (optional)
 ├── multiqc/

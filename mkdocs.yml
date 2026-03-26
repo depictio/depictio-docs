@@ -234,10 +234,10 @@ nav:
       - API Reference: api/reference.md
       # - Integration: api/api_docs_integration.md
       - FastAPI Docs: api/fastapi_docs.md
-  - "🧩 Templates":
+  - Templates:
       - Overview: pipeline-templates/README.md
       - nf-core:
-          - "🧬 ampliseq": pipeline-templates/nf-core/ampliseq.md
+          - ampliseq: pipeline-templates/nf-core/ampliseq.md
   - Developer:
       - Overview: developer/README.md
       - Contributing: developer/contributing.md
