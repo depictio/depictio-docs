@@ -6,10 +6,16 @@
     <strong>16S/ITS amplicon sequencing — microbial community analysis</strong><br>
     <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/ampliseq" target="_blank">nf-co.re/ampliseq</a></span>
   </div>
-  <span style="margin-left:auto;background:#45B8AC;color:#fff;padding:3px 10px;border-radius:12px;font-size:0.8em;font-weight:600;">:material-check-decagram: Official</span>
+  <span style="margin-left:auto;background:#4CAF50;color:#fff;padding:3px 10px;border-radius:12px;font-size:0.8em;font-weight:600;">:material-shield-check: Pipeline-reviewed</span>
 </div>
 
-nf-core/ampliseq analyses amplicon sequencing data (16S rRNA by default) via [QIIME2](https://qiime2.org/). The template covers MultiQC quality control, taxonomy composition, diversity metrics, and differential abundance.
+The ampliseq template covers the main outputs of a standard nf-core/ampliseq run:
+
+- :material-chart-bar: **MultiQC quality control** — FastQC read quality, Cutadapt trimming statistics
+- :material-bacteria: **Taxonomy composition** — phylum-level barplots, sunburst, heatmap with annotations
+- :material-chart-line: **Alpha diversity** — Faith's Phylogenetic Diversity, rarefaction curves (requires metadata)
+- :material-chart-scatter-plot: **Differential abundance** — ANCOM-BC volcano plots, log-fold change (requires metadata + `--ancombc`)
+- :material-map-marker: **Sampling locations** — geographic scatter map from metadata coordinates (requires metadata)
 
 ---
 
@@ -24,7 +30,7 @@ nf-core/ampliseq analyses amplicon sequencing data (16S rRNA by default) via [QI
       --var SAMPLESHEET_FILE=samplesheet.csv
     ```
 
-    Produces: MultiQC + taxonomy composition dashboards (no diversity/ANCOM-BC).
+    MultiQC + taxonomy dashboards. No diversity or differential abundance.
 
 === "Extended (with metadata)"
 
@@ -37,70 +43,114 @@ nf-core/ampliseq analyses amplicon sequencing data (16S rRNA by default) via [QI
       --var GROUP_COL=habitat
     ```
 
-    Produces: Full dashboard with diversity, facetted charts, sampling map, heatmap annotations, ANCOM-BC differential abundance.
+    Full dashboard with diversity, facetted charts, map, heatmap annotations, ANCOM-BC.
 
 ---
 
 ## Template variables
 
-| Variable | Required | Auto-detected | Description |
-|----------|----------|---------------|-------------|
-| `DATA_ROOT` | :material-check: | — | Pipeline output root directory (set via `--data-root`) |
+| Variable | Required | Auto | Description |
+|----------|:--------:|:----:|-------------|
+| `DATA_ROOT` | :material-check: | — | Pipeline output root (set via `--data-root`) |
 | `SAMPLESHEET_FILE` | :material-check: | — | Path to ampliseq samplesheet CSV |
-| `METADATA_FILE` | — | — | Path to sample metadata TSV. Enables extended dashboard. |
-| `GROUP_COL` | — | :material-check: | Metadata column for grouping/facetting. Auto-detected as first annotation column. |
-| `GROUP_COL_DISPLAY` | — | :material-check: | Title-cased version of GROUP_COL (e.g., "Habitat") |
-| `ANNOTATION_COLS` | — | :material-check: | Comma-separated list of all annotation columns from metadata |
+| `METADATA_FILE` | — | — | Sample metadata TSV. Enables extended mode. |
+| `GROUP_COL` | — | :material-check: | Grouping column for facetting. Auto: first annotation column. |
+| `GROUP_COL_DISPLAY` | — | :material-check: | Title-cased GROUP_COL for chart labels |
+| `ANNOTATION_COLS` | — | :material-check: | All annotation columns from metadata |
 
 ---
 
 ## Data collections
 
-| Data Collection | Type | Source | Recipe | Base | Extended |
-|-----------------|------|--------|--------|:----:|:--------:|
-| `multiqc_data` | MultiQC | `multiqc/multiqc_data/multiqc.parquet` | — | :material-check: | :material-check: |
-| `samplesheet` | Table | `{SAMPLESHEET_FILE}` | — | :material-check: | :material-check: |
-| `metadata` | Table | `{METADATA_FILE}` | — | :material-close: | :material-check: |
-| `alpha_diversity` | Table | `qiime2/diversity/.../metadata.tsv` | `alpha_diversity.py` | :material-close: | :material-check: |
-| `alpha_rarefaction` | Table | `qiime2/alpha-rarefaction/faith_pd.csv` | `alpha_rarefaction.py` | :material-close: | :material-check: |
-| `taxonomy_composition` | Table | `qiime2/barplot/level-2.csv` | `taxonomy_composition.py` | :material-check: | :material-check: |
-| `taxonomy_rel_abundance` | Table | `qiime2/rel_abundance_tables/rel-table-2.tsv` + metadata DC | `taxonomy_rel_abundance.py` | :material-check: | :material-check: |
-| `taxonomy_heatmap` | Table | rel_abundance DC + metadata DC | `taxonomy_heatmap.py` | :material-check: | :material-check: |
-| `ancombc_results` | Table | 5 ANCOM-BC CSV slices | `ancombc.py` | :material-close: | :material-check: |
+| Data Collection | Type | Recipe | Base | Extended |
+|-----------------|------|--------|:----:|:--------:|
+| `multiqc_data` | MultiQC | — | :material-check: | :material-check: |
+| `samplesheet` | Table | — | :material-check: | :material-check: |
+| `taxonomy_composition` | Table | `taxonomy_composition.py` | :material-check: | :material-check: |
+| `taxonomy_rel_abundance` | Table | `taxonomy_rel_abundance.py` | :material-check: | :material-check: |
+| `taxonomy_heatmap` | Table | `taxonomy_heatmap.py` | :material-check: | :material-check: |
+| `metadata` | Table | — | :material-close: | :material-check: |
+| `alpha_diversity` | Table | `alpha_diversity.py` | :material-close: | :material-check: |
+| `alpha_rarefaction` | Table | `alpha_rarefaction.py` | :material-close: | :material-check: |
+| `ancombc_results` | Table | `ancombc.py` | :material-close: | :material-check: |
 
-**Base** = no `METADATA_FILE` provided. Conditionals remove metadata, alpha metrics, and ANCOM-BC.
-**Extended** = `METADATA_FILE` provided. All DCs active, facetted charts by `GROUP_COL`.
+!!! info "Base vs Extended"
+
+    === "Base"
+
+        No `METADATA_FILE` provided. The template removes metadata-dependent DCs (alpha diversity, rarefaction, ANCOM-BC) and imports a single dashboard with MultiQC + taxonomy composition.
+
+        **Use when:** Quick QC check, no sample metadata available, or testing the pipeline setup.
+
+    === "Extended"
+
+        `METADATA_FILE` provided. All 9 DCs active. Dashboard includes facetted charts by `GROUP_COL`, sampling location map, heatmap with metadata annotations, and ANCOM-BC differential abundance.
+
+        **Use when:** Full analysis with sample grouping, geographic data, and differential abundance.
 
 ---
 
-## Dashboard variants
+## Dashboards
 
-=== "Base (MultiQC + Taxonomy)"
+=== "MultiQC"
 
-    - **MultiQC tab**: General stats, Cutadapt, FastQC plots with sample filter
-    - **Community Analysis tab**: 4 metric cards + sunburst, mean rel abundance by Phylum (± std), stacked bar per sample, heatmap, data table
+    **nf-core/ampliseq** — Quality control overview powered by MultiQC.
 
-=== "Extended (Full Analysis)"
+    ![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png)
 
-    - **MultiQC tab**: Same + GROUP_COL filter, DatePicker, sample filter
-    - **Community Analysis tab**: All base components + alpha diversity bar chart, rarefaction curves, facetted charts by GROUP_COL, sampling locations map, heatmap with habitat/city annotations
-    - **Diff. Abundance tab**: ANCOM-BC volcano plot, top differential taxa, summary cards
+=== "Community Analysis"
+
+    **Community Analysis** — Taxonomy composition, diversity metrics, heatmap with annotations, and sampling map.
+
+    ![Community Analysis dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png)
+
+=== "Differential Abundance"
+
+    **Diff. Abundance** — ANCOM-BC volcano plots, top differential taxa, and results table. Only in extended mode.
+
+    ![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png)
 
 ---
 
 ## Cross-DC links (7)
 
-| Source | Column | Target | Target Field | Description |
-|--------|--------|--------|-------------|-------------|
-| `samplesheet` | `sampleID` | `multiqc_data` | `sample_name` | Filter MultiQC by samples |
-| `metadata` | `ID` | `alpha_diversity` | `sample` | Filter diversity by metadata |
-| `metadata` | `ID` | `alpha_rarefaction` | `sample` | Filter rarefaction by metadata |
-| `metadata` | `ID` | `taxonomy_composition` | `sample` | Filter taxonomy by metadata |
-| `metadata` | `ID` | `taxonomy_rel_abundance` | `sample` | Filter rel abundance by metadata |
-| `samplesheet` | `sampleID` | `taxonomy_heatmap` | `sample` | Filter heatmap (base) |
-| `metadata` | `ID` | `taxonomy_heatmap` | `sample` | Filter heatmap (extended) |
+| Source | Column | Target | Description |
+|--------|--------|--------|-------------|
+| `samplesheet` | `sampleID` | `multiqc_data` | Filter MultiQC by samples |
+| `metadata` | `ID` | `alpha_diversity` | Filter diversity by metadata |
+| `metadata` | `ID` | `alpha_rarefaction` | Filter rarefaction by metadata |
+| `metadata` | `ID` | `taxonomy_composition` | Filter taxonomy by metadata |
+| `metadata` | `ID` | `taxonomy_rel_abundance` | Filter rel abundance by metadata |
+| `samplesheet` | `sampleID` | `taxonomy_heatmap` | Filter heatmap (base) |
+| `metadata` | `ID` | `taxonomy_heatmap` | Filter heatmap (extended) |
 
 Metadata links are auto-pruned when `METADATA_FILE` is absent.
+
+---
+
+## Running the pipeline
+
+Depictio reads the **output** of nf-core/ampliseq — it does not run the pipeline. Run the pipeline first:
+
+```bash
+nextflow run nf-core/ampliseq \
+  --input samplesheet.csv \
+  --FW_primer GTGYCAGCMGCCGCGGTAA \
+  --RV_primer GGACTACNVGGGTWTCTAAT \
+  --metadata Metadata.tsv \
+  -profile docker
+```
+
+Then point Depictio at the results:
+
+```bash
+depictio run --template nf-core/ampliseq/2.16.0 \
+  --data-root results/ \
+  --var SAMPLESHEET_FILE=samplesheet.csv \
+  --var METADATA_FILE=Metadata.tsv
+```
+
+See [nf-co.re/ampliseq/usage](https://nf-co.re/ampliseq/2.16.0/docs/usage) for full pipeline documentation.
 
 ---
 
@@ -114,9 +164,9 @@ Metadata links are auto-pruned when `METADATA_FILE` is absent.
 │   └── multiqc_data/
 │       └── multiqc.parquet
 └── qiime2/
-    ├── alpha-rarefaction/                          # ⚠ Requires metadata
+    ├── alpha-rarefaction/                          # ⚠ Requires --metadata
     │   └── faith_pd.csv
-    ├── ancombc/differentials/                      # ⚠ Requires metadata + --ancombc
+    ├── ancombc/differentials/                      # ⚠ Requires --metadata + --ancombc
     │   └── Category-<GROUP_COL>-level-2/
     │       ├── lfc_slice.csv
     │       ├── p_val_slice.csv
@@ -125,7 +175,7 @@ Metadata links are auto-pruned when `METADATA_FILE` is absent.
     │       └── w_slice.csv
     ├── barplot/
     │   └── level-2.csv
-    ├── diversity/alpha_diversity/                  # ⚠ Requires metadata
+    ├── diversity/alpha_diversity/                  # ⚠ Requires --metadata
     │   └── faith_pd_vector/
     │       └── metadata.tsv
     └── rel_abundance_tables/
@@ -136,25 +186,14 @@ Metadata links are auto-pruned when `METADATA_FILE` is absent.
 
 ## Recipes (6)
 
-| Recipe | Input | Output | Key transformation |
-|--------|-------|--------|--------------------|
-| `alpha_diversity.py` | `faith_pd_vector/metadata.tsv` | `sample`, `faith_pd` + metadata cols | Filter comment rows, rename `id` → `sample` |
-| `alpha_rarefaction.py` | `faith_pd.csv` | `sample`, `depth`, `iter`, `faith_pd` | Wide → long unpivot, regex depth/iter extraction |
-| `taxonomy_composition.py` | `barplot/level-2.csv` | `sample`, `taxonomy`, `count` + metadata cols | Detect taxonomy by `;` in column names |
-| `taxonomy_rel_abundance.py` | `rel-table-2.tsv` + metadata DC | `sample`, `taxonomy`, `rel_abundance`, `Kingdom`, `Phylum` + metadata cols | Wide → long, taxonomy split, metadata join |
-| `taxonomy_heatmap.py` | rel_abundance DC + metadata DC | `Phylum`, `Kingdom`, sample columns + `_col_annotations_json` | Pivot to wide matrix, embed metadata annotations |
-| `ancombc.py` | 5 ANCOM-BC slice CSVs | `id`, `contrast`, `lfc`, `q_val`, `significant`, ... | Melt 5 slices, join, compute `-log10(q)` |
-
----
-
-## Version differences
-
-| Aspect | 2.14.0 | 2.16.0 |
-|--------|--------|--------|
-| Metadata sample column | `sample` | `ID` |
-| Recipe override | `taxonomy_rel_abundance.py` (v2.14-specific) | shared recipe |
-| Template variables | `DATA_ROOT` only | `DATA_ROOT` + `SAMPLESHEET_FILE` + optional metadata vars |
-| Conditionals | none | metadata-based DC removal |
+| Recipe | Input | Key transformation |
+|--------|-------|--------------------|
+| `alpha_diversity.py` | `faith_pd_vector/metadata.tsv` | Filter comment rows, rename `id` → `sample`, pass through metadata cols |
+| `alpha_rarefaction.py` | `faith_pd.csv` | Wide → long unpivot, regex depth/iter extraction |
+| `taxonomy_composition.py` | `barplot/level-2.csv` | Detect taxonomy by `;` in column names, melt to long format |
+| `taxonomy_rel_abundance.py` | `rel-table-2.tsv` + metadata DC | Wide → long, taxonomy split, generic metadata join |
+| `taxonomy_heatmap.py` | rel_abundance DC + metadata DC | Pivot to Phylum × sample matrix, embed metadata annotations with Plotly colors |
+| `ancombc.py` | 5 ANCOM-BC CSVs (via source_overrides) | Melt 5 slices, join, compute `-log10(q)` and significance |
 
 ---
 
