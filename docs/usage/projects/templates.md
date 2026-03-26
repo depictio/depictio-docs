@@ -57,7 +57,7 @@ template:
   # Conditionals: toggle DCs and dashboards based on which variables are provided
   conditional:
     - if_var_absent: "METADATA_FILE"
-      remove_dc_tags: ["metadata", "ancombc_results"]
+      remove_dc_tags: ["metadata", "alpha_diversity", "alpha_rarefaction", "ancombc_results"]
       dashboards: ["dashboards/base.yaml"]
     - if_var_present: "METADATA_FILE"
       dashboards: ["dashboards/base.yaml", "dashboards/full_analysis.yaml"]
@@ -234,7 +234,7 @@ This provenance is stored in the `template_origin` field on the Project document
 | Template ID | Pipeline | Version | DCs | Recipes | Notes |
 |-------------|----------|---------|-----|---------|-------|
 | `nf-core/ampliseq/2.14.0` | 16S rRNA amplicon sequencing | 2.14.0 | 7 | 5 | Older column naming |
-| `nf-core/ampliseq/2.16.0` | 16S rRNA amplicon sequencing | 2.16.0 | 9 | 6 | Conditional metadata support, 5 cross-DC links |
+| `nf-core/ampliseq/2.16.0` | 16S rRNA amplicon sequencing | 2.16.0 | 9 | 6 | Conditional metadata support, 7 cross-DC links |
 
 ### Required directory structure for `nf-core/ampliseq/2.16.0`
 
@@ -277,7 +277,7 @@ The template runs 6 recipes to transform raw QIIME2 outputs into dashboard-ready
 | `taxonomy_heatmap.py` | taxonomy_rel_abundance DC + metadata DC | `Phylum`, `Kingdom`, sample columns + `_col_annotations_json` |
 | `ancombc.py` | 5 ANCOM-BC slice CSVs (via source_overrides) | `id`, `contrast`, `lfc`, `q_val`, `neg_log10_qval`, `significant`, ... |
 
-And 5 cross-DC links for interactive filtering from the metadata table to all other data collections (auto-pruned when metadata is absent).
+And 7 cross-DC links: 2 from samplesheet (multiqc, heatmap) + 5 from metadata (alpha_diversity, alpha_rarefaction, taxonomy_composition, taxonomy_rel_abundance, taxonomy_heatmap). Metadata links are auto-pruned when metadata is absent.
 
 ---
 

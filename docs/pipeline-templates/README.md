@@ -54,7 +54,7 @@ Each template carries a quality badge reflecting how it was developed and tested
 
 | Template | Pipeline | Versions | Badge | Recipes | One-liner |
 |----------|----------|----------|-------|---------|-----------|
-| [nf-core/ampliseq](nf-core/ampliseq.md) | 16S/ITS amplicon sequencing | 2.14.0, 2.16.0 | :material-check-decagram:{ style="color: #45B8AC" title="Official" } Official | 5 | `depictio run --template nf-core/ampliseq/2.16.0 --data-root <path>` |
+| [nf-core/ampliseq](nf-core/ampliseq.md) | 16S/ITS amplicon sequencing | 2.14.0, 2.16.0 | :material-check-decagram:{ style="color: #45B8AC" title="Official" } Official | 6 recipes · 9 DCs | `depictio run --template nf-core/ampliseq/2.16.0 --data-root <path> --var SAMPLESHEET_FILE=...` |
 
 ---
 
