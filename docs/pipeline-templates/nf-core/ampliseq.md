@@ -1,12 +1,12 @@
 # <span style="color: #45B8AC;">:material-dna:</span> nf-core/ampliseq
 
 <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px;">
-  <img src="../../images/pipeline-templates/nf-core/ampliseq/ampliseq_icon.png" alt="ampliseq" style="height:48px;">
+  <img src="../../images/pipeline-templates/nf-core/ampliseq/nf-core-ampliseq_logo.png" alt="nf-core/ampliseq" style="height:56px;">
   <div>
     <strong>16S/ITS amplicon sequencing — microbial community analysis</strong><br>
     <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/ampliseq" target="_blank">nf-co.re/ampliseq</a></span>
   </div>
-  <span style="margin-left:auto;background:#4CAF50;color:#fff;padding:3px 10px;border-radius:12px;font-size:0.8em;font-weight:600;">:material-shield-check: Pipeline-reviewed</span>
+  <span style="margin-left:auto;background:#4CAF50;color:#fff;padding:3px 10px;border-radius:12px;font-size:0.8em;font-weight:600;">&#x1F6E1; Pipeline-reviewed</span>
 </div>
 
 The ampliseq template covers the main outputs of a standard nf-core/ampliseq run:
@@ -43,7 +43,7 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
       --var GROUP_COL=habitat
     ```
 
-    Full dashboard with diversity, facetted charts, map, heatmap annotations, ANCOM-BC.
+    Full dashboard: diversity, facetted charts, map, heatmap annotations, ANCOM-BC.
 
 ---
 
