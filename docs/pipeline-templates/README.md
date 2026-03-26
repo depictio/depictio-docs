@@ -1,4 +1,8 @@
-# :material-layers-outline: Templates
+---
+icon: material/layers-outline
+---
+
+# Templates
 
 Templates are pre-packaged project configurations that set up a complete bioinformatics analysis project — dashboards included — with a single command.
 

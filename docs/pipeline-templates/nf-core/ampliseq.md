@@ -1,4 +1,8 @@
-# <span style="color: #45B8AC;">:material-dna:</span> nf-core/ampliseq
+---
+icon: material/dna
+---
+
+# nf-core/ampliseq
 
 <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
   <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:56px;" onerror="this.src='../../images/pipeline-templates/nf-core/ampliseq/nf-core-ampliseq_logo.png'">
@@ -162,26 +166,27 @@ Point `--data-root` to the directory containing your ampliseq outputs. This can 
 <DATA_ROOT>/
 ├── samplesheet.csv                                # --var SAMPLESHEET_FILE
 ├── Metadata.tsv                                   # --var METADATA_FILE (optional)
-├── multiqc/
-│   └── multiqc_data/
-│       └── multiqc.parquet
-└── qiime2/
-    ├── alpha-rarefaction/                          # ⚠ Requires --metadata
-    │   └── faith_pd.csv
-    ├── ancombc/differentials/                      # ⚠ Requires --metadata + --ancombc
-    │   └── Category-<GROUP_COL>-level-2/
-    │       ├── lfc_slice.csv
-    │       ├── p_val_slice.csv
-    │       ├── q_val_slice.csv
-    │       ├── se_slice.csv
-    │       └── w_slice.csv
-    ├── barplot/
-    │   └── level-2.csv
-    ├── diversity/alpha_diversity/                  # ⚠ Requires --metadata
-    │   └── faith_pd_vector/
-    │       └── metadata.tsv
-    └── rel_abundance_tables/
-        └── rel-table-2.tsv
+└── <run_id>/                                      # One or more pipeline run output folders
+    ├── multiqc/
+    │   └── multiqc_data/
+    │       └── multiqc.parquet
+    └── qiime2/
+        ├── alpha-rarefaction/                      # ⚠ Requires --metadata
+        │   └── faith_pd.csv
+        ├── ancombc/differentials/                  # ⚠ Requires --metadata + --ancombc
+        │   └── Category-<GROUP_COL>-level-2/
+        │       ├── lfc_slice.csv
+        │       ├── p_val_slice.csv
+        │       ├── q_val_slice.csv
+        │       ├── se_slice.csv
+        │       └── w_slice.csv
+        ├── barplot/
+        │   └── level-2.csv
+        ├── diversity/alpha_diversity/              # ⚠ Requires --metadata
+        │   └── faith_pd_vector/
+        │       └── metadata.tsv
+        └── rel_abundance_tables/
+            └── rel-table-2.tsv
 ```
 
 ---
