@@ -90,25 +90,59 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 
 ---
 
-## Dashboards
+## Dashboard tabs
 
 === "MultiQC"
 
-    **nf-core/ampliseq** — Quality control overview powered by MultiQC.
+    Quality control overview powered by MultiQC.
 
     ![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png)
 
+    **Components:**
+
+    - General stats table
+    - Cutadapt: filtered reads, trimmed sequence lengths
+    - FastQC: sequence counts, quality histograms, GC content, adapter content
+    - Sample ID filter (samplesheet)
+
 === "Community Analysis"
 
-    **Community Analysis** — Taxonomy composition, diversity metrics, heatmap with annotations, and sampling map.
+    Taxonomy composition, diversity metrics, heatmap, and sampling map.
 
     ![Community Analysis dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png)
 
+    **Components (base):**
+
+    - Metric cards: total samples, total taxa, kingdoms, unique phyla
+    - Sunburst: Kingdom → Phylum hierarchy
+    - Mean relative abundance by Phylum (± std)
+    - Stacked bar: taxonomic composition per sample
+    - ComplexHeatmap: z-score normalized, clustered, with Kingdom row annotations
+    - Data table: taxonomy relative abundance
+    - Filters: Kingdom, Phylum, relative abundance range
+
+    **Additional components (extended):**
+
+    - Alpha diversity bar chart by GROUP_COL
+    - Rarefaction curves (Faith PD per sample)
+    - Facetted bar charts by GROUP_COL
+    - Sampling locations scatter map
+    - Heatmap with habitat + city column annotations
+    - Filters: sampling period (DatePicker), GROUP_COL, sample ID
+
 === "Differential Abundance"
 
-    **Diff. Abundance** — ANCOM-BC volcano plots, top differential taxa, and results table. Only in extended mode.
+    ANCOM-BC differential abundance results. Only in extended mode.
 
     ![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png)
+
+    **Components:**
+
+    - Metric cards: total taxa, significant taxa (q<0.05), unique phyla, max log-fold change
+    - Volcano plot: LFC vs -log10(q-value), facetted by contrast
+    - Top differential taxa bar chart
+    - Results data table
+    - Filters: contrast, Phylum, Kingdom, W statistic range, LFC range
 
 ---
 
