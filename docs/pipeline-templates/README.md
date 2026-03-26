@@ -29,13 +29,16 @@ See [Templates reference](../usage/projects/templates.md) for the full technical
 
 ## Status levels
 
-Each template carries a status badge reflecting its review level and trust.
+Each template carries a status reflecting its review level.
 
-| Status | Meaning |
-|--------|---------|
-| <span style="background:#4CAF50;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">🛡️ Certified</span> | Reviewed and validated by the **pipeline lead developer**. Highest trust — the pipeline author confirms the template correctly represents their outputs. |
-| <span style="background:#2196F3;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">☑️ Reviewed</span> | Tested against reference datasets, CI passes, recipe checkpoints validated. Reviewed by Depictio team or community maintainers. |
-| <span style="background:#FF9800;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">🧪 Experimental</span> | Shared as-is. A good starting point — feedback and PRs welcome. |
+!!! success "🛡️ Certified"
+    Reviewed and validated by the **pipeline lead developer**. Highest trust — the pipeline author confirms the template correctly represents their outputs.
+
+!!! info "☑️ Reviewed"
+    Tested against reference datasets, CI passes, recipe checkpoints validated. Reviewed by Depictio team or community maintainers.
+
+!!! warning "🧪 Experimental"
+    Shared as-is. A good starting point — feedback and PRs welcome.
 
 ---
 
@@ -43,19 +46,21 @@ Each template carries a status badge reflecting its review level and trust.
 
 <div class="grid cards" markdown>
 
--   ![nf-core/ampliseq](../images/pipeline-templates/nf-core/ampliseq/nf-core-ampliseq_logo.png){ style="height:40px" }
+-   <a href="nf-core/ampliseq/" style="text-decoration:none;color:inherit;">
+    <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="ampliseq" style="height:36px;margin-bottom:8px;">
 
-    **nf-core/ampliseq**
+    **nf-core/ampliseq**{ style="font-size:1.1em" }
 
     ---
 
     16S/ITS amplicon sequencing — microbial community analysis
 
-    9 data collections · 6 recipes · 7 cross-DC links
+    :material-database: 9 DCs · :material-chef-hat: 6 recipes · :material-link: 7 links
 
-    <span style="background:#4CAF50;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.8em;">🛡️ Certified</span>
+    !!! success inline end ""
+        🛡️ Certified
 
-    [:octicons-arrow-right-24: View template](nf-core/ampliseq.md)
+    </a>
 
 </div>
 
