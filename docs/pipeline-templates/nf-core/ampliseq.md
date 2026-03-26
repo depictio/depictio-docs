@@ -6,7 +6,7 @@
     <strong>16S/ITS amplicon sequencing — microbial community analysis</strong><br>
     <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/ampliseq" target="_blank">nf-co.re/ampliseq</a></span>
   </div>
-  <span style="margin-left:auto;background:#4CAF50;color:#fff;padding:3px 10px;border-radius:12px;font-size:0.8em;font-weight:600;">&#x1F6E1; Pipeline-reviewed</span>
+  <span style="margin-left:auto;background:#4CAF50;color:#fff;padding:3px 10px;border-radius:12px;font-size:0.8em;font-weight:600;">🛡️ Certified</span>
 </div>
 
 The ampliseq template covers the main outputs of a standard nf-core/ampliseq run:

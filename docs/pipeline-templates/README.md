@@ -27,24 +27,38 @@ See [Templates reference](../usage/projects/templates.md) for the full technical
 
 ---
 
-## Badge system
+## Status levels
 
-Each template carries a quality badge reflecting how it was developed and reviewed.
+Each template carries a status badge reflecting its review level and trust.
 
-| Badge | Meaning |
-|-------|---------|
-| <span style="background:#4CAF50;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">:material-shield-check: Pipeline-reviewed</span> | Reviewed and validated by the **pipeline lead developer**. Confirms the template correctly represents pipeline outputs. Highest trust level. |
-| <span style="background:#45B8AC;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">:material-check-decagram: Official</span> | Built by the **Depictio core team**. Tested against reference datasets. Fully supported. |
-| <span style="background:#2196F3;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">:material-check-circle: Verified</span> | **Community-contributed** and reviewed by a Depictio core team member. CI passes, recipe checkpoints validated. |
-| <span style="background:#FF9800;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">:material-flask: Experimental</span> | **User-contributed**, shared as-is. A good starting point — feedback and PRs welcome. |
+| Status | Meaning |
+|--------|---------|
+| <span style="background:#4CAF50;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">🛡️ Certified</span> | Reviewed and validated by the **pipeline lead developer**. Highest trust — the pipeline author confirms the template correctly represents their outputs. |
+| <span style="background:#45B8AC;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">✅ Supported</span> | Built and maintained by the **Depictio core team**. Tested against reference datasets. Fully supported. |
+| <span style="background:#2196F3;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">☑️ Community</span> | **Community-contributed** and reviewed by a Depictio core team member. CI passes, recipe checkpoints validated. |
+| <span style="background:#FF9800;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">🧪 Experimental</span> | **User-contributed**, shared as-is. A good starting point — feedback and PRs welcome. |
 
 ---
 
 ## Available templates
 
-| Template | Pipeline | Badge |
-|----------|----------|-------|
-| [nf-core/ampliseq](nf-core/ampliseq.md) | 16S/ITS amplicon sequencing | <span style="background:#4CAF50;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.85em;">Pipeline-reviewed</span> |
+<div class="grid cards" markdown>
+
+-   ![nf-core/ampliseq](../images/pipeline-templates/nf-core/ampliseq/nf-core-ampliseq_logo.png){ style="height:40px" }
+
+    **nf-core/ampliseq**
+
+    ---
+
+    16S/ITS amplicon sequencing — microbial community analysis
+
+    9 data collections · 6 recipes · 7 cross-DC links
+
+    <span style="background:#4CAF50;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.8em;">🛡️ Certified</span>
+
+    [:octicons-arrow-right-24: View template](nf-core/ampliseq.md)
+
+</div>
 
 ---
 
