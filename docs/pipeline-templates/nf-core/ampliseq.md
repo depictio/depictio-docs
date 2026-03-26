@@ -156,8 +156,10 @@ See [nf-co.re/ampliseq/usage](https://nf-co.re/ampliseq/2.16.0/docs/usage) for f
 
 ## Required data structure
 
+Point `--data-root` to a single ampliseq **run output directory** (the Nextflow `results/` folder). Not all files are required — the template adapts based on what's present and which `--var` flags you provide.
+
 ```text
-<DATA_ROOT>/
+<DATA_ROOT>/   # e.g., results/ from: nextflow run nf-core/ampliseq ...
 ├── samplesheet.csv                                # --var SAMPLESHEET_FILE
 ├── Metadata.tsv                                   # --var METADATA_FILE (optional)
 ├── multiqc/
