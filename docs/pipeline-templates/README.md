@@ -48,7 +48,7 @@ Each template carries a status reflecting its review level.
 <div style="display:flex;gap:16px;flex-wrap:wrap;">
   <a href="nf-core/ampliseq/" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:1px solid #ddd;border-radius:16px;padding:32px 40px;width:280px;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
     <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:64px;">
-    <span style="background:#4CAF50;color:#fff;padding:4px 14px;border-radius:12px;font-size:0.85em;font-weight:600;">Certified</span>
+    <span style="background:#4CAF50;color:#fff;padding:4px 14px;border-radius:12px;font-size:0.85em;font-weight:600;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>Certified</span>
   </a>
 </div>
 
