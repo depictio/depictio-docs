@@ -1,4 +1,4 @@
-# <span style="color: #45B8AC;">:material-puzzle:</span> Templates
+# Templates
 
 Templates are pre-packaged project configurations that set up a complete bioinformatics analysis project — dashboards included — with a single command.
 
@@ -52,19 +52,10 @@ Each template carries a status reflecting its review level.
 
 <div class="grid cards" markdown>
 
--   <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="ampliseq" style="height:36px;margin-bottom:8px;">
-
-    **nf-core/ampliseq**
-
-    ---
-
-    16S/ITS amplicon sequencing — microbial community analysis
-
-    9 DCs · 6 recipes · 7 links
-
+-   <a href="nf-core/ampliseq/" style="text-decoration:none;color:inherit;display:block;text-align:center;">
+    <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:60px;margin:16px auto;display:block;">
     <span style="background:#4CAF50;color:#fff;padding:3px 10px;border-radius:10px;font-size:0.8em;font-weight:600;">🛡️ Certified</span>
-
-    [:octicons-arrow-right-24: View template](nf-core/ampliseq.md)
+    </a>
 
 </div>
 
