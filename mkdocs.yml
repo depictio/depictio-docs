@@ -235,7 +235,7 @@ nav:
       # - Integration: api/api_docs_integration.md
       - FastAPI Docs: api/fastapi_docs.md
   - Templates:
-      - Overview: pipeline-templates/README.md
+      - pipeline-templates/README.md
       - nf-core:
           - ampliseq: pipeline-templates/nf-core/ampliseq.md
   - Developer:
