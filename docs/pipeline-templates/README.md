@@ -9,8 +9,7 @@ Templates are pre-packaged project configurations that set up a complete bioinfo
 ```bash
 depictio run \
   --template nf-core/ampliseq/2.16.0 \
-  --data-root /data/my_ampliseq_run \
-  --var SAMPLESHEET_FILE=samplesheet.csv
+  --data-root /data/my_ampliseq_run
 ```
 
 That's it. Depictio resolves your data directory, runs all data transformations, and imports ready-to-use dashboards automatically.
