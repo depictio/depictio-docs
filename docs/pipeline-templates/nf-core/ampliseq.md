@@ -238,5 +238,5 @@ Point `--data-root` to the directory containing your ampliseq outputs. This can 
 
 - [nf-co.re/ampliseq](https://nf-co.re/ampliseq) — official pipeline documentation
 - [nf-co.re/ampliseq/2.16.0/results](https://nf-co.re/ampliseq/2.16.0/results) — AWS test results
-- [Templates reference](../../usage/projects/templates.md) — full template YAML spec
+- [Template System Reference](../../usage/projects/templates.md) — YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md) — how to read, test, and write recipes

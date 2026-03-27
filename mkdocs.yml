@@ -202,7 +202,7 @@ nav:
           - YAML project configuration breakdown: usage/projects/yaml-examples.md
           - Full Reference Configuration: usage/projects/reference.md
           - Recipes: usage/projects/recipes.md
-          - Templates: usage/projects/templates.md
+          - Template System Reference: usage/projects/templates.md
       - CLI:
           - depictio-cli/index.md
           - Usage: depictio-cli/usage.md

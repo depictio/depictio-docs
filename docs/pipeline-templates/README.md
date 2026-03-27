@@ -7,7 +7,7 @@ icon: material/layers-outline
 Templates are pre-packaged project configurations that set up a complete bioinformatics analysis project — dashboards included — with a single command.
 
 ```bash
-depictio run \
+depictio-cli run \
   --template nf-core/ampliseq/2.16.0 \
   --data-root /data/my_ampliseq_run
 ```
@@ -25,7 +25,7 @@ A template bundles:
 - :material-view-dashboard: **Dashboard YAML** — imported automatically on first run, with template variable substitution
 - :material-link: **Cross-DC links** — enable interactive filtering across data collections
 
-See [Templates reference](../usage/projects/templates.md) for the full technical specification, and [Recipes](../usage/projects/recipes.md) for how data transformations work.
+See [Template System Reference](../usage/projects/templates.md) for the YAML format and resolution mechanics, and [Recipes](../usage/projects/recipes.md) for how data transformations work.
 
 ---
 
