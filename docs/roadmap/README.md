@@ -44,7 +44,7 @@ hide:
   content: "Reusable dashboard templates for standard bioinformatics workflows, nf-core integration, and nf-core plugin for automatic data ingestion"
   icon: "./nf-core-logo-square.png"
   key: "nfcore"
-  sub_title: "Phase 3: Templates 🚧"
+  sub_title: "Phase 3: Templates ✅"
 
 - title: "Scientific Reproducibility"
   content: "DOI integration, persistent access IDs, citable dashboards, full data provenance from sample to visualization"
@@ -83,7 +83,7 @@ Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles
 | Siloed experiment data         | :fontawesome-solid-link: Cross-DC linking — meta-analysis across studies                                                                                                                |
 | Dashboards not citable         | :fontawesome-solid-id-card: *Will show in the future* — DOI integration, persistent access IDs, citable dashboard snapshots                                                             |
 | No sample-to-viz traceability  | :fontawesome-solid-fingerprint: *Will show in the future* — persistent URL / access ID from sample ([LabID](https://grp-gbcs.embl-community.io/labid-user-docs/)) to pipeline to Delta |
-| Reproducibility requires setup | :fontawesome-solid-puzzle-piece: *Will show in the future* — nf-core plugin for automatic data ingestion; pre-built dashboard templates per pipeline                                    |
+| Reproducibility requires setup | :fontawesome-solid-puzzle-piece: Pre-built templates for nf-core/ampliseq **shipped** ([docs](../usage/projects/templates.md)); nf-core plugin for automatic data ingestion planned |
 
 ---
 
@@ -96,6 +96,9 @@ Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles
 - [x] S3/MinIO storage with backup/restore commands ([docs](../depictio-cli/usage.md#-backup-commands))
 - [x] MultiQC report integration ([docs](../features/components.md#multiqc-components) | [:material-github: #626](https://github.com/depictio/depictio/pull/626))
 - [x] Client-side table joining in CLI ([:material-github: #634](https://github.com/depictio/depictio/pull/634))
+- [x] Recipe-based data transformation — Python recipes with 4-checkpoint validation ([docs](../usage/projects/recipes.md))
+- [x] Template-based project setup — one-command project creation with `{DATA_ROOT}` substitution ([docs](../usage/projects/templates.md))
+
 
 ### Dashboard Components
 
@@ -123,15 +126,26 @@ Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles
 
 ## Planned Features
 
-### Phase 3: Templates & Community (0-6 months) :material-star:{ .priority }
+### Phase 3: Templates & Community :material-star:{ .priority }
 
 Reusable dashboards for standard bioinformatics workflows, with a focus on nf-core community adoption.
 
-- [ ] **Depictio templates system** — pre-configured project and dashboard templates exportable/importable as YAML bundles
-- [ ] **nf-core dashboard templates** — one-click dashboards for [nf-core](https://nf-co.re/) pipelines (rnaseq, sarek, atacseq, methylseq, …)
+**Infrastructure (shipped)**
+
+- [x] **Depictio templates system** — one-command project setup via `depictio run --template`, with `{DATA_ROOT}` substitution, template provenance tracking, and automatic dashboard import ([docs](../usage/projects/templates.md))
+- [x] **Recipe-based data transformation** — versioned Python recipes with 4-checkpoint validation, co-located with templates ([docs](../usage/projects/recipes.md))
+
+**Shipped templates** — peer-reviewed by developers, ready to use
+
+| Template | Pipeline | Versions | Recipes |
+|----------|----------|----------|---------|
+| `nf-core/ampliseq` | 16S/ITS amplicon sequencing | 2.14.0, 2.16.0 | Alpha diversity, rarefaction, taxonomy composition, relative abundance, differential abundance (ANCOM-BC) |
+
+**Planned**
+
 - [ ] **nf-core plugin** — automatically registers nf-core pipeline outputs in Depictio at run time, no manual CLI step required
-- [ ] **Template marketplace** — community-contributed templates with validation and screenshots
-- [ ] **Schema versioning** — backwards compatibility guarantees across Depictio versions
+- [ ] **`nextflow.config` template** — embed Depictio ingestion directly in your Nextflow config so data collection happens at pipeline runtime
+- [ ] **Snakemake report plugin** — Depictio as a drop-in replacement for Snakemake's built-in HTML report, with interactive dashboards instead of static outputs
 
 ### Phase 4: Scientific Reproducibility (6-12 months)
 

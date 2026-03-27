@@ -201,18 +201,19 @@ nav:
           - Guide: usage/projects/guide.md
           - YAML project configuration breakdown: usage/projects/yaml-examples.md
           - Full Reference Configuration: usage/projects/reference.md
+          - Recipes: usage/projects/recipes.md
+          - Template System Reference: usage/projects/templates.md
       - CLI:
           - depictio-cli/index.md
           - Usage: depictio-cli/usage.md
           - Minimal YAML config: depictio-cli/minimal_config.md
-      - Special Modes:
-          - usage/special-modes/index.md
-          - Authentication Modes: usage/guides/authentication-modes.md
-          - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md
       - Administration:
           - usage/administration/index.md
-          - Backup & Restore: usage/administration/backup.md
           - Project Migration: usage/administration/migrate.md
+          - Backup & Restore: usage/administration/backup.md
+      - Special Modes:
+          - Authentication Modes: usage/guides/authentication-modes.md
+          - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md
   - Features:
       - Overview: features/README.md
       - Dashboard & Components:
@@ -233,9 +234,14 @@ nav:
       - API Reference: api/reference.md
       # - Integration: api/api_docs_integration.md
       - FastAPI Docs: api/fastapi_docs.md
+  - Templates:
+      - pipeline-templates/README.md
+      - nf-core:
+          - ampliseq: pipeline-templates/nf-core/ampliseq.md
   - Developer:
       - Overview: developer/README.md
       - Contributing: developer/contributing.md
+      - Contributing Templates: developer/contributing-templates.md
   - FAQ:
       - Overview: FAQ/README.md
       - General: FAQ/general.md
