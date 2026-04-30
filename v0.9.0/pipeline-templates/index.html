@@ -10,27 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v0.9.0/features/migrate/">
+        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v0.9.0/pipeline-templates/">
       
       
+        <link rel="prev" href="../api/fastapi_docs/">
+      
+      
+        <link rel="next" href="nf-core/ampliseq/">
       
       
         
       
       
-      <link rel="icon" href="../../images/logo/logo_icon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <link rel="icon" href="../images/logo/logo_icon.png">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.6">
     
     
       
-        <title>Project Migration - Depictio Documentation</title>
+        <title>Templates - Depictio Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -55,19 +59,19 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-      <link rel="stylesheet" href="../../stylesheets/timeline.css">
+      <link rel="stylesheet" href="../stylesheets/timeline.css">
     
-      <link rel="stylesheet" href="../../stylesheets/blog.css">
+      <link rel="stylesheet" href="../stylesheets/blog.css">
     
-      <link rel="stylesheet" href="../../stylesheets/neoteroi-mkdocs-v1.1.3.css">
+      <link rel="stylesheet" href="../stylesheets/neoteroi-mkdocs-v1.1.3.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
     
       <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -83,7 +87,7 @@
 
     
     
-  <link rel="preload" href="../../fonts/Virgil.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="../fonts/Virgil.ttf" as="font" type="font/ttf" crossorigin>
 
   </head>
   
@@ -104,7 +108,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project-migration" class="md-skip">
+        <a href="#templates" class="md-skip">
           Skip to content
         </a>
       
@@ -141,9 +145,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
+    <a href=".." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../images/logo/animated_favicon.svg" alt="logo">
+  <img src="../images/logo/animated_favicon.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -160,7 +164,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Project Migration
+              Templates
             
           </span>
         </div>
@@ -272,7 +276,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href=".." class="md-tabs__link">
         
   
   
@@ -295,7 +299,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../installation/" class="md-tabs__link">
+        <a href="../installation/" class="md-tabs__link">
           
   
   
@@ -319,7 +323,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../usage/" class="md-tabs__link">
+        <a href="../usage/" class="md-tabs__link">
           
   
   
@@ -343,7 +347,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../" class="md-tabs__link">
+        <a href="../features/" class="md-tabs__link">
           
   
   
@@ -367,7 +371,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../api/" class="md-tabs__link">
+        <a href="../api/" class="md-tabs__link">
           
   
   
@@ -387,11 +391,37 @@
   
   
   
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 18.54 7.37-5.74L21 14.07l-9 7-9-7 1.62-1.26zM12 16 3 9l9-7 9 7zm0-11.47L6.26 9 12 13.47 17.74 9z"/></svg>
+    
+  
+  Templates
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
   
     
     
       <li class="md-tabs__item">
-        <a href="../../developer/" class="md-tabs__link">
+        <a href="../developer/" class="md-tabs__link">
           
   
   
@@ -415,7 +445,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../FAQ/" class="md-tabs__link">
+        <a href="../FAQ/" class="md-tabs__link">
           
   
   
@@ -437,7 +467,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../roadmap/" class="md-tabs__link">
+      <a href="../roadmap/" class="md-tabs__link">
         
   
   
@@ -458,7 +488,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../changelog/" class="md-tabs__link">
+      <a href="../changelog/" class="md-tabs__link">
         
   
   
@@ -481,7 +511,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../blog/" class="md-tabs__link">
+        <a href="../blog/" class="md-tabs__link">
           
   
   
@@ -505,7 +535,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../more/" class="md-tabs__link">
+        <a href="../more/" class="md-tabs__link">
           
   
   
@@ -549,9 +579,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
+    <a href=".." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../images/logo/animated_favicon.svg" alt="logo">
+  <img src="../images/logo/animated_favicon.svg" alt="logo">
 
     </a>
     Depictio Documentation
@@ -578,7 +608,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -640,7 +670,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../installation/" class="md-nav__link ">
+            <a href="../installation/" class="md-nav__link ">
               
   
   
@@ -746,7 +776,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/" class="md-nav__link">
+      <a href="../installation/docker/" class="md-nav__link">
         
   
   
@@ -774,7 +804,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/kubernetes/" class="md-nav__link">
+      <a href="../installation/kubernetes/" class="md-nav__link">
         
   
   
@@ -868,7 +898,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/cli/" class="md-nav__link">
+      <a href="../installation/cli/" class="md-nav__link">
         
   
   
@@ -904,7 +934,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/configuration/" class="md-nav__link">
+      <a href="../installation/configuration/" class="md-nav__link">
         
   
   
@@ -934,7 +964,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/env-reference/" class="md-nav__link">
+      <a href="../installation/env-reference/" class="md-nav__link">
         
   
   
@@ -1008,7 +1038,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../usage/" class="md-nav__link ">
+            <a href="../usage/" class="md-nav__link ">
               
   
   
@@ -1054,7 +1084,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/get_started/" class="md-nav__link">
+      <a href="../usage/get_started/" class="md-nav__link">
         
   
   
@@ -1113,7 +1143,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../usage/guides/" class="md-nav__link ">
+            <a href="../usage/guides/" class="md-nav__link ">
               
   
   
@@ -1159,7 +1189,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/guides/web_ui/" class="md-nav__link">
+      <a href="../usage/guides/web_ui/" class="md-nav__link">
         
   
   
@@ -1187,7 +1217,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/guides/dashboard_creation/" class="md-nav__link">
+      <a href="../usage/guides/dashboard_creation/" class="md-nav__link">
         
   
   
@@ -1215,7 +1245,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/guides/dashboard_usage/" class="md-nav__link">
+      <a href="../usage/guides/dashboard_usage/" class="md-nav__link">
         
   
   
@@ -1263,6 +1293,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1282,7 +1316,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../usage/projects/" class="md-nav__link ">
+            <a href="../usage/projects/" class="md-nav__link ">
               
   
   
@@ -1328,7 +1362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/projects/guide/" class="md-nav__link">
+      <a href="../usage/projects/guide/" class="md-nav__link">
         
   
   
@@ -1356,7 +1390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/projects/yaml-examples/" class="md-nav__link">
+      <a href="../usage/projects/yaml-examples/" class="md-nav__link">
         
   
   
@@ -1384,7 +1418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/projects/reference/" class="md-nav__link">
+      <a href="../usage/projects/reference/" class="md-nav__link">
         
   
   
@@ -1392,6 +1426,62 @@
     
   
     Full Reference Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/projects/recipes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/projects/templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Template System Reference
   
 
     
@@ -1449,7 +1539,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../depictio-cli/" class="md-nav__link ">
+            <a href="../depictio-cli/" class="md-nav__link ">
               
   
   
@@ -1495,7 +1585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../depictio-cli/usage/" class="md-nav__link">
+      <a href="../depictio-cli/usage/" class="md-nav__link">
         
   
   
@@ -1523,7 +1613,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../depictio-cli/minimal_config/" class="md-nav__link">
+      <a href="../depictio-cli/minimal_config/" class="md-nav__link">
         
   
   
@@ -1588,16 +1678,16 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../usage/special-modes/" class="md-nav__link ">
+            <a href="../usage/administration/" class="md-nav__link ">
               
   
   
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.7 9.7 0 0 1 12 20.92 9.7 9.7 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53"/></svg>
   
   <span class="md-ellipsis">
     
   
-    Special Modes
+    Administration
   
 
     
@@ -1619,7 +1709,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Special Modes
+    Administration
   
 
           </label>
@@ -1634,14 +1724,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/guides/authentication-modes/" class="md-nav__link">
+      <a href="../usage/administration/migrate/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Authentication Modes
+    Project Migration
   
 
     
@@ -1662,14 +1752,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/guides/unauthenticated_mode/" class="md-nav__link">
+      <a href="../usage/administration/backup/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Unauthenticated mode (legacy)
+    Backup & Restore
   
 
     
@@ -1701,10 +1791,6 @@
     
       
         
-          
-        
-      
-        
       
         
       
@@ -1726,17 +1812,14 @@
         <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_7" >
         
           
-          <div class="md-nav__link md-nav__container">
-            <a href="../../usage/administration/" class="md-nav__link ">
-              
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
   
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.7 9.7 0 0 1 12 20.92 9.7 9.7 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53"/></svg>
   
   <span class="md-ellipsis">
     
   
-    Administration
+    Special Modes
   
 
     
@@ -1744,27 +1827,19 @@
   
   
 
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
+            <span class="md-nav__icon md-icon"></span>
+          </label>
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_7">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Administration
+    Special Modes
   
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
             
               
                 
@@ -1773,14 +1848,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/administration/backup/" class="md-nav__link">
+      <a href="../usage/guides/authentication-modes/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Backup & Restore
+    Authentication Modes
   
 
     
@@ -1801,14 +1876,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/administration/migrate/" class="md-nav__link">
+      <a href="../usage/guides/unauthenticated_mode/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Project Migration
+    Unauthenticated mode (legacy)
   
 
     
@@ -1875,7 +1950,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../features/" class="md-nav__link ">
               
   
   
@@ -1983,7 +2058,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dashboards/" class="md-nav__link">
+      <a href="../features/dashboards/" class="md-nav__link">
         
   
   
@@ -2013,7 +2088,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/" class="md-nav__link">
+      <a href="../features/components/" class="md-nav__link">
         
   
   
@@ -2043,7 +2118,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../interactive-selection-filtering/" class="md-nav__link">
+      <a href="../features/interactive-selection-filtering/" class="md-nav__link">
         
   
   
@@ -2143,7 +2218,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cross-dc-filtering/" class="md-nav__link">
+      <a href="../features/cross-dc-filtering/" class="md-nav__link">
         
   
   
@@ -2173,7 +2248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../filter-expressions/" class="md-nav__link">
+      <a href="../features/filter-expressions/" class="md-nav__link">
         
   
   
@@ -2203,7 +2278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../yaml-sync/" class="md-nav__link">
+      <a href="../features/yaml-sync/" class="md-nav__link">
         
   
   
@@ -2303,7 +2378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/" class="md-nav__link">
+      <a href="../features/architecture/" class="md-nav__link">
         
   
   
@@ -2333,7 +2408,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../data-model/" class="md-nav__link">
+      <a href="../features/data-model/" class="md-nav__link">
         
   
   
@@ -2363,7 +2438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../security/" class="md-nav__link">
+      <a href="../features/security/" class="md-nav__link">
         
   
   
@@ -2437,7 +2512,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../api/" class="md-nav__link ">
+            <a href="../api/" class="md-nav__link ">
               
   
   
@@ -2483,7 +2558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/reference/" class="md-nav__link">
+      <a href="../api/reference/" class="md-nav__link">
         
   
   
@@ -2511,7 +2586,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/fastapi_docs/" class="md-nav__link">
+      <a href="../api/fastapi_docs/" class="md-nav__link">
         
   
   
@@ -2543,6 +2618,8 @@
       
   
   
+    
+  
   
   
     
@@ -2550,6 +2627,186 @@
       
         
           
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 18.54 7.37-5.74L21 14.07l-9 7-9-7 1.62-1.26zM12 16 3 9l9-7 9 7zm0-11.47L6.26 9 12 13.47 17.74 9z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link md-nav__link--active" for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Templates
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    nf-core
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    nf-core
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nf-core/ampliseq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ampliseq
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
         
       
         
@@ -2569,11 +2826,11 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../developer/" class="md-nav__link ">
+            <a href="../developer/" class="md-nav__link ">
               
   
   
@@ -2593,14 +2850,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2619,7 +2876,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/contributing/" class="md-nav__link">
+      <a href="../developer/contributing/" class="md-nav__link">
         
   
   
@@ -2627,6 +2884,34 @@
     
   
     Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer/contributing-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing Templates
   
 
     
@@ -2677,11 +2962,11 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../FAQ/" class="md-nav__link ">
+            <a href="../FAQ/" class="md-nav__link ">
               
   
   
@@ -2701,14 +2986,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2727,7 +3012,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../FAQ/general/" class="md-nav__link">
+      <a href="../FAQ/general/" class="md-nav__link">
         
   
   
@@ -2762,7 +3047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../roadmap/" class="md-nav__link">
+      <a href="../roadmap/" class="md-nav__link">
         
   
   
@@ -2791,7 +3076,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelog/" class="md-nav__link">
+      <a href="../changelog/" class="md-nav__link">
         
   
   
@@ -2845,11 +3130,11 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../blog/" class="md-nav__link ">
+            <a href="../blog/" class="md-nav__link ">
               
   
   
@@ -2869,14 +3154,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_10">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2914,10 +3199,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10_2" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11_2" >
         
           
-          <label class="md-nav__link" for="__nav_10_2" id="__nav_10_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_11_2" id="__nav_11_2_label" tabindex="0">
             
   
   
@@ -2935,8 +3220,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_10_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2955,7 +3240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/archive/2025/" class="md-nav__link">
+      <a href="../blog/archive/2025/" class="md-nav__link">
         
   
   
@@ -3018,10 +3303,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10_3" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11_3" >
         
           
-          <label class="md-nav__link" for="__nav_10_3" id="__nav_10_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_11_3" id="__nav_11_3_label" tabindex="0">
             
   
   
@@ -3039,8 +3324,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_10_3">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_3">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -3059,7 +3344,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/category/announcements/" class="md-nav__link">
+      <a href="../blog/category/announcements/" class="md-nav__link">
         
   
   
@@ -3089,7 +3374,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/category/demo/" class="md-nav__link">
+      <a href="../blog/category/demo/" class="md-nav__link">
         
   
   
@@ -3119,7 +3404,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/category/features/" class="md-nav__link">
+      <a href="../blog/category/features/" class="md-nav__link">
         
   
   
@@ -3149,7 +3434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/category/launch/" class="md-nav__link">
+      <a href="../blog/category/launch/" class="md-nav__link">
         
   
   
@@ -3179,7 +3464,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/category/tutorials/" class="md-nav__link">
+      <a href="../blog/category/tutorials/" class="md-nav__link">
         
   
   
@@ -3249,11 +3534,11 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_12" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../more/" class="md-nav__link ">
+            <a href="../more/" class="md-nav__link ">
               
   
   
@@ -3273,14 +3558,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_11">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -3299,7 +3584,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../more/funding/" class="md-nav__link">
+      <a href="../more/funding/" class="md-nav__link">
         
   
   
@@ -3327,7 +3612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../more/palette/" class="md-nav__link">
+      <a href="../more/palette/" class="md-nav__link">
         
   
   
@@ -3355,7 +3640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../animated-logo/" class="md-nav__link">
+      <a href="../animated-logo/" class="md-nav__link">
         
   
   
@@ -3412,10 +3697,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#how-templates-work" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overview
+        How templates work
       
     </span>
   </a>
@@ -3423,10 +3708,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
+  <a href="#status-levels" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How It Works
+        Status levels
       
     </span>
   </a>
@@ -3434,10 +3719,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#migration-modes" class="md-nav__link">
+  <a href="#available-templates" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Migration Modes
+        Available templates
       
     </span>
   </a>
@@ -3445,71 +3730,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cli-usage" class="md-nav__link">
+  <a href="#contributing-a-template" class="md-nav__link">
     <span class="md-ellipsis">
       
-        CLI Usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#web-ui" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Web UI
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Web UI">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#export-a-project" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Export a Project
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#import-a-project" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Import a Project
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#s3-data-scope" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        S3 Data Scope
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Permissions
+        Contributing a template
       
     </span>
   </a>
@@ -3536,156 +3760,50 @@
   
 
 
-<h1 id="project-migration">Project Migration<a class="headerlink" href="#project-migration" title="Permanent link">&para;</a></h1>
-<p>Depictio supports <strong>non-destructive project migration</strong> between instances — move a project (MongoDB metadata + S3 data files) from one Depictio deployment to another without touching any other project on the target.</p>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>Migration works as a scoped upsert: every document is written via <code>ReplaceOne(..., upsert=True)</code>, so:</p>
-<ul>
-<li>Re-running migration is idempotent — no duplicates are created.</li>
-<li>Only the migrated project's documents are affected — all other projects on the target remain untouched.</li>
-<li>Owner IDs that do not exist on the target are remapped to the importing admin user.</li>
-</ul>
-<h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Source instance                        Target instance
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>─────────────────                      ─────────────────
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>depictio-cli                           API: /migrate/import-project
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    │                                       │
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    ├─ api_export_project()                 ├─ Upsert: projects
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    │     └─ POST /migrate/export-project   ├─ Upsert: workflows
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    │           → ZIP bundle               ├─ Upsert: data_collections
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    │             ├─ bundle.json           ├─ Upsert: files / deltatables / runs
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    │             └─ migrate_metadata.json └─ Upsert: dashboards
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    │
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    └─ (optionally) copy S3 files
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>          source MinIO → target MinIO
+<h1 id="templates">Templates<a class="headerlink" href="#templates" title="Permanent link">&para;</a></h1>
+<p>Templates are pre-packaged project configurations that set up a complete bioinformatics analysis project — dashboards included — with a single command.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/ampliseq/2.16.0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>--data-root<span class="w"> </span>/data/my_ampliseq_run
 </code></pre></div>
-<p>The export endpoint returns a <strong>ZIP archive</strong> containing:</p>
+<p>That's it. Depictio resolves your data directory, runs all data transformations, and imports ready-to-use dashboards automatically.</p>
+<hr />
+<h2 id="how-templates-work">How templates work<a class="headerlink" href="#how-templates-work" title="Permanent link">&para;</a></h2>
+<p>A template bundles:</p>
 <ul>
-<li><code>bundle.json</code> — all MongoDB documents for the project (projects, workflows, data_collections, files, deltatables, runs, dashboards)</li>
-<li><code>migrate_metadata.json</code> — export timestamp, project name, mode, document counts</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97s-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1s.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64z"/></svg></span> <strong>Project configuration</strong> — workflows, data collections, and cross-DC links with <code>{VAR_NAME}</code> placeholders</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.5 1.5c-1.77 0-3.33 1.17-3.83 2.87C8.14 4.13 7.58 4 7 4a4 4 0 0 0-4 4 4.01 4.01 0 0 0 3 3.87V19h13v-7.13c1.76-.46 3-2.05 3-3.87a4 4 0 0 0-4-4c-.58 0-1.14.13-1.67.37-.5-1.7-2.06-2.87-3.83-2.87m-.5 9h1v7h-1zm-3 2h1v5H9zm6 0h1v5h-1zM6 20v1a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-1z"/></svg></span> <strong>Recipes</strong> — Python transforms that convert raw pipeline outputs into dashboard-ready tables</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z"/></svg></span> <strong>Dashboard YAML</strong> — imported automatically on first run, with template variable substitution</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg></span> <strong>Cross-DC links</strong> — enable interactive filtering across data collections</li>
 </ul>
-<h2 id="migration-modes">Migration Modes<a class="headerlink" href="#migration-modes" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Mode</th>
-<th style="text-align: center;">MongoDB docs</th>
-<th style="text-align: center;">S3 files</th>
-<th>Typical use case</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>all</code></td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td>First-time full migration</td>
-</tr>
-<tr>
-<td><code>metadata</code></td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">❌</td>
-<td>Both instances share the same S3 bucket</td>
-</tr>
-<tr>
-<td><code>dashboard</code></td>
-<td style="text-align: center;">dashboards only</td>
-<td style="text-align: center;">❌</td>
-<td>Project exists on remote, updating layouts</td>
-</tr>
-<tr>
-<td><code>files</code></td>
-<td style="text-align: center;">❌</td>
-<td style="text-align: center;">✅</td>
-<td>MongoDB already migrated, syncing data files</td>
-</tr>
-</tbody>
-</table>
-<h2 id="cli-usage">CLI Usage<a class="headerlink" href="#cli-usage" title="Permanent link">&para;</a></h2>
-<p>See <a href="../../depictio-cli/usage/#migrate-commands">CLI Reference — migrate run</a> for the full option reference.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Recommended: dry-run first</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>depictio-cli<span class="w"> </span>migrate<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">&quot;My Project&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--CLI-config-path<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>--target-config<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>--dry-run
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># Full migration</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>depictio-cli<span class="w"> </span>migrate<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">&quot;My Project&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span>--CLI-config-path<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">  </span>--target-config<span class="w"> </span>~/.depictio/CLI_remote.yaml
-</code></pre></div>
-<p>Each config file points to a different Depictio instance and carries its own API URL, token, and S3 credentials.</p>
-<h2 id="web-ui">Web UI<a class="headerlink" href="#web-ui" title="Permanent link">&para;</a></h2>
-<p>Migration is also available directly from the Projects page — no CLI required.</p>
-<h3 id="export-a-project">Export a Project<a class="headerlink" href="#export-a-project" title="Permanent link">&para;</a></h3>
-<ol>
-<li>Open <strong>Projects</strong> (<code>/projects</code>).</li>
-<li>Expand the project you want to export.</li>
-<li>Open the <strong>Project Management</strong> accordion section.</li>
-<li>Click <strong>Export Project</strong> (violet button).</li>
-<li>A <code>.zip</code> file downloads automatically — this is the same bundle the CLI produces.</li>
-</ol>
-<h3 id="import-a-project">Import a Project<a class="headerlink" href="#import-a-project" title="Permanent link">&para;</a></h3>
-<ol>
-<li>Click <strong>Create New Project</strong>.</li>
-<li>Switch to the <strong>Import</strong> tab.</li>
-<li>Drag-and-drop (or browse for) the <code>.zip</code> bundle.</li>
-<li>A preview shows the project name, export mode, and document counts.</li>
-<li>Click <strong>Import Project</strong> — the project is created and owned by your account.</li>
-</ol>
-<!-- prettier-ignore -->
-<div class="admonition note">
-<p class="admonition-title">Owner remapping</p>
-<p>When importing via the UI, all project and dashboard owners in the bundle are automatically remapped to the importing user. This differs from the CLI, which only remaps owners that do not already exist on the target instance.</p>
+<p>See <a href="../usage/projects/templates/">Template System Reference</a> for the YAML format and resolution mechanics, and <a href="../usage/projects/recipes/">Recipes</a> for how data transformations work.</p>
+<hr />
+<h2 id="status-levels">Status levels<a class="headerlink" href="#status-levels" title="Permanent link">&para;</a></h2>
+<p>Each template carries a status reflecting its review level.</p>
+<p><span class="twemoji" style="color:#4CAF50"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg></span> <strong>Certified</strong> — Validated by the <strong>pipeline lead developer</strong>. Highest trust.</p>
+<p><span class="twemoji" style="color:#2196F3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/></svg></span> <strong>Reviewed</strong> — Tested, CI passes, reviewed by Depictio team or community.</p>
+<p><span class="twemoji" style="color:#FF9800"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1c0-.21-.07-.41-.18-.57L13 8.35V4h-2v4.35L5.18 18.43c-.11.16-.18.36-.18.57m1 3a3 3 0 0 1-3-3c0-.6.18-1.16.5-1.63L9 7.81V6a1 1 0 0 1-1-1V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1v1.81l5.5 9.56c.32.47.5 1.03.5 1.63a3 3 0 0 1-3 3zm7-6 1.34-1.34L16.27 18H7.73l2.66-4.61zm-.5-4a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5"/></svg></span> <strong>Experimental</strong> — Shared as-is. Feedback and PRs welcome.</p>
+<hr />
+<h2 id="available-templates">Available templates<a class="headerlink" href="#available-templates" title="Permanent link">&para;</a></h2>
+<div style="display:flex;gap:16px;flex-wrap:wrap;">
+  <a href="nf-core/ampliseq/" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:1px solid #ddd;border-radius:16px;padding:32px 40px;width:280px;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+    <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:64px;">
+    <span style="background:#4CAF50;color:#fff;padding:4px 14px;border-radius:12px;font-size:0.85em;font-weight:600;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>Certified</span>
+  </a>
 </div>
-<h2 id="s3-data-scope">S3 Data Scope<a class="headerlink" href="#s3-data-scope" title="Permanent link">&para;</a></h2>
-<p>When <code>mode=all</code> or <code>mode=files</code>, the migrate feature copies S3 objects for all supported data collection types:</p>
-<table>
-<thead>
-<tr>
-<th>Data Collection Type</th>
-<th>S3 location source</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Delta Lake / Table</td>
-<td><code>deltatables.delta_table_location</code></td>
-</tr>
-<tr>
-<td>GeoJSON</td>
-<td><code>data_collections.config.dc_specific_properties.s3_location</code></td>
-</tr>
-<tr>
-<td>Image</td>
-<td><code>data_collections.config.dc_specific_properties.s3_base_folder</code></td>
-</tr>
-<tr>
-<td>MultiQC</td>
-<td><code>multiqc_reports.s3_location</code></td>
-</tr>
-<tr>
-<td>JBrowse2</td>
-<td>S3 URIs in <code>jbrowse_collection.tracks[].uri</code></td>
-</tr>
-</tbody>
-</table>
-<p>S3 objects are streamed directly from source to target (no full buffering in RAM).</p>
-<h2 id="permissions">Permissions<a class="headerlink" href="#permissions" title="Permanent link">&para;</a></h2>
-<p>Both the CLI and UI require <strong>administrator</strong> privileges:</p>
-<ul>
-<li><strong>CLI</strong>: both source and target configs must authenticate as admins.</li>
-<li><strong>UI export</strong>: the user must be admin (or project owner).</li>
-<li><strong>UI import</strong>: the user must be admin; all document owners are remapped to the importing user.</li>
-</ul>
+
+<hr />
+<h2 id="contributing-a-template">Contributing a template<a class="headerlink" href="#contributing-a-template" title="Permanent link">&para;</a></h2>
+<p>Want to add a template for another pipeline? See the <a href="../developer/contributing-templates/">Contributing Templates</a> guide for the directory layout, recipe requirements, and review process.</p>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -3719,7 +3837,7 @@
 
       <!-- Logo Column -->
       <div class="depictio-footer__section depictio-footer__brand">
-        <img src="../../images/logo/logo_icon.png" alt="Depictio" class="depictio-footer__logo">
+        <img src="../images/logo/logo_icon.png" alt="Depictio" class="depictio-footer__logo">
         <span class="depictio-footer__title">Depictio</span>
         <p class="depictio-footer__tagline">Interactive dashboards for bioinformatics</p>
       </div>
@@ -3747,9 +3865,9 @@
       <div class="depictio-footer__section">
         <h4 class="depictio-footer__heading">Resources</h4>
         <ul class="depictio-footer__links">
-          <li><a href="../../usage/get_started/">Getting Started</a></li>
-          <li><a href="../../installation/docker/">Installation</a></li>
-          <li><a href="../">Features</a></li>
+          <li><a href="../usage/get_started/">Getting Started</a></li>
+          <li><a href="../installation/docker/">Installation</a></li>
+          <li><a href="../features/">Features</a></li>
           <li><a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">Live Demo</a></li>
         </ul>
       </div>
@@ -3759,7 +3877,7 @@
         <h4 class="depictio-footer__heading">About</h4>
         <ul class="depictio-footer__links">
           <li><a href="https://github.com/depictio/depictio/blob/main/LICENSE" target="_blank" rel="noopener">License (MIT)</a></li>
-          <li><a href="../../developer/contributing/">Contributing</a></li>
+          <li><a href="../developer/contributing/">Contributing</a></li>
           <li><a href="https://github.com/depictio/depictio/releases" target="_blank" rel="noopener">Releases</a></li>
         </ul>
       </div>
@@ -3771,10 +3889,10 @@
       <div class="depictio-footer__funding-label">Supported by</div>
       <div class="depictio-footer__funding-logos">
         <a href="https://www.embl.org/" target="_blank" rel="noopener" title="EMBL - European Molecular Biology Laboratory">
-          <img src="../../assets/EMBL_logo_colour_DIGITAL.png" alt="EMBL Logo" class="depictio-footer__funding-logo">
+          <img src="../assets/EMBL_logo_colour_DIGITAL.png" alt="EMBL Logo" class="depictio-footer__funding-logo">
         </a>
         <a href="https://www.embl.org/about/info/arise/" target="_blank" rel="noopener" title="ARISE Programme">
-          <img src="../../assets/AriseLogo300dpi.png" alt="ARISE Logo" class="depictio-footer__funding-logo">
+          <img src="../assets/AriseLogo300dpi.png" alt="ARISE Logo" class="depictio-footer__funding-logo">
         </a>
       </div>
     </div>
@@ -3823,12 +3941,12 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.sections", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.expand", "navigation.top", "header.autohide", "toc.follow", "search.highlight", "search.share", "search.suggest", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.sections", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.expand", "navigation.top", "header.autohide", "toc.follow", "search.highlight", "search.share", "search.suggest", "announce.dismiss"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../javascripts/triangular-animation.js"></script>
+        <script src="../javascripts/triangular-animation.js"></script>
       
     
   </body>

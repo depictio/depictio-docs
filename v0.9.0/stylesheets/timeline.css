@@ -21,14 +21,14 @@
     background: white !important;
 } */
 
-/* NF-Core items - Depictio Teal */
+/* NF-Core items - white background for logo visibility */
 .nt-timeline-dot.nfcore {
-    background: #45B8AC !important; /* Depictio teal */
-    border-color: #45B8AC !important;
+    background: white !important;
+    border-color: #24B064 !important; /* nf-core green */
 }
 
 .nt-timeline-dot.nfcore .icon {
-    color: white !important;
+    color: #24B064 !important;
 }
 
 /* Planned items - Depictio Blue */
