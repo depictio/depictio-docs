@@ -8,6 +8,27 @@ hide:
 
 # Changelog
 
+## **[v0.10.3](https://github.com/depictio/depictio/releases/tag/v0.10.3)** (May 4, 2026)
+
+!!! success "Stable Release"
+    Patch release: manual workflow for adding additional OCI tags to the
+    published Helm chart image.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.10.3
+```
+
+### **🔧 CI / Tooling**
+
+* **OCI tag workflow**: new `workflow_dispatch` GitHub Actions workflow
+  to add additional tags to the already-published Helm chart OCI image
+  (e.g. tagging a release with a `stable` or per-customer tag without
+  re-running the full release pipeline).
+
+---
+
 ## **[v0.10.2](https://github.com/depictio/depictio/releases/tag/v0.10.2)** (May 4, 2026)
 
 !!! success "Stable Release"
