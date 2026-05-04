@@ -238,6 +238,7 @@ nav:
       - pipeline-templates/README.md
       - nf-core:
           - ampliseq: pipeline-templates/nf-core/ampliseq.md
+          - viralrecon: pipeline-templates/nf-core/viralrecon.md
   - Developer:
       - Overview: developer/README.md
       - Contributing: developer/contributing.md
