@@ -486,6 +486,25 @@ Public projects are:
 - ❌ Only editable by *owners* and *editors*
 - ❌ Not editable by *viewers* or anonymous users
 
+## :material-trash-can: Project deletion
+
+Deleting a project (via the Web UI or `DELETE /depictio/api/v1/projects/{id}`)
+cascades to all dependent state:
+
+- Workflows declared in the project
+- Data collections (and their MongoDB documents)
+- Dashboards owned by the project
+- S3 objects under `s3://<bucket>/{project_id}/`
+
+There is no soft-delete or trash bin — once the operation completes, the
+project's data is unrecoverable. Use [Project migrate](../administration/migrate.md)
+to take a portable backup ZIP before deletion if you need rollback capability.
+
+!!! note "Self-migration shortcut"
+    Migrating a project to the same instance (source == target) skips the
+    S3 copy step but still produces a complete export ZIP — useful for
+    backing up immediately before a delete.
+
 ## 💾 Data Storage Architecture
 
 ### Delta Lake Backend

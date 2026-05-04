@@ -8,6 +8,43 @@ hide:
 
 # Changelog
 
+## **[v0.9.0](https://github.com/depictio/depictio/releases/tag/v0.9.0)** (March 21, 2026)
+
+!!! success "Stable Release"
+    Adds project migrate (cross-instance export/import) and cascade delete
+    on project deletion.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.9.0
+```
+
+### **✨ Features**
+
+* **Project migrate command**: `depictio-cli migrate` exports a project as
+  a ZIP bundle (config, dashboards, embedded workflows/DCs, S3 objects)
+  and imports on a target instance with conflict detection and
+  `--overwrite`. Includes a UI export/import flow. See
+  [administration/migrate](../usage/administration/migrate.md).
+* **Cascade delete on project deletion**: deleting a project now cascades
+  to dependent MongoDB documents (workflows, data collections, dashboards)
+  and S3 objects, preventing orphaned storage. See
+  [project deletion](../usage/projects/guide.md#project-deletion).
+
+### **🐛 Bug Fixes**
+
+* `depictio-cli migrate` invokes via `app.callback()` (no spurious sub-prompt).
+* Skip S3 copy for self-migration.
+* Datetime JSON serialization in export bundle.
+* Dashboard export `string vs ObjectId` `project_id` mismatch.
+
+### **📦 Packaging**
+
+* Logo and Codespaces badge in CLI README for PyPI.
+
+---
+
 ## **[v0.8.2](https://github.com/depictio/depictio/releases/tag/v0.8.2)** (March 4, 2026)
 
 !!! success "Stable Release"
