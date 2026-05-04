@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "0.9.0",
-    "x-generated-at": "2026-03-21T21:40:54Z",
-    "x-depictio-version": "v0.9.0"
+    "version": "0.10.2",
+    "x-generated-at": "2026-05-04T12:37:27Z",
+    "x-depictio-version": "v0.10.2"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -1202,6 +1202,63 @@
               "schema": {
                 "type": "object",
                 "title": "Request Data"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/datacollections/{data_collection_id}/dc_specific_properties": {
+      "patch": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Update Dc Specific Properties",
+        "description": "Partially update dc_specific_properties for a data collection.",
+        "operationId": "update_dc_specific_properties_depictio_api_v1_datacollections__data_collection_id__dc_specific_properties_patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Properties"
               }
             }
           }
@@ -6708,7 +6765,20 @@
           "source_dc_id": {
             "type": "string",
             "title": "Source Dc Id",
-            "description": "Data collection ID for the source (where filters are applied)"
+            "description": "Data collection ID for the source (where filters are applied)",
+            "default": ""
+          },
+          "source_dc_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Dc Tag",
+            "description": "Data collection tag for the source (used in templates, resolved to ID at instantiation)"
           },
           "source_column": {
             "type": "string",
@@ -6718,7 +6788,20 @@
           "target_dc_id": {
             "type": "string",
             "title": "Target Dc Id",
-            "description": "Data collection ID for the target (receives resolved values)"
+            "description": "Data collection ID for the target (receives resolved values)",
+            "default": ""
+          },
+          "target_dc_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Dc Tag",
+            "description": "Data collection tag for the target (used in templates, resolved to ID at instantiation)"
           },
           "target_type": {
             "type": "string",
@@ -6756,9 +6839,7 @@
         "additionalProperties": false,
         "type": "object",
         "required": [
-          "source_dc_id",
           "source_column",
-          "target_dc_id",
           "target_type"
         ],
         "title": "DCLink",
@@ -6880,7 +6961,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -7127,7 +7208,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -7168,6 +7249,11 @@
           },
           "config": {
             "$ref": "#/components/schemas/DataCollectionConfig-Input"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -7184,7 +7270,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -7225,6 +7311,11 @@
           },
           "config": {
             "$ref": "#/components/schemas/DataCollectionConfig-Output"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -7241,7 +7332,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -7334,6 +7425,16 @@
                 "type": "null"
               }
             ]
+          },
+          "transform": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TransformConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -7350,7 +7451,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -7443,6 +7544,16 @@
                 "type": "null"
               }
             ]
+          },
+          "transform": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TransformConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -7458,7 +7569,8 @@
         "enum": [
           "native",
           "joined",
-          "aggregated"
+          "aggregated",
+          "transformed"
         ],
         "title": "DataCollectionSource",
         "description": "Origin/source type of a data collection."
@@ -7469,7 +7581,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -7554,7 +7666,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:51"
+            "default": "2026-05-04 12:37:23"
           },
           "file_hash": {
             "type": "string",
@@ -8629,7 +8741,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -8836,7 +8948,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -8940,7 +9052,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:51"
+            "default": "2026-05-04 12:37:23"
           },
           "project_type": {
             "type": "string",
@@ -8955,6 +9067,16 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/RealtimeConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "template_origin": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TemplateOrigin"
               },
               {
                 "type": "null"
@@ -8976,7 +9098,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -9080,7 +9202,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:51"
+            "default": "2026-05-04 12:37:23"
           },
           "project_type": {
             "type": "string",
@@ -9095,6 +9217,16 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/RealtimeConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "template_origin": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TemplateOrigin"
               },
               {
                 "type": "null"
@@ -9451,6 +9583,21 @@
         ],
         "title": "ScanSingle"
       },
+      "SourceOverride": {
+        "properties": {
+          "path": {
+            "type": "string",
+            "title": "Path"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "path"
+        ],
+        "title": "SourceOverride",
+        "description": "Override a recipe source path in project.yaml."
+      },
       "TableJoinConfig": {
         "properties": {
           "on_columns": {
@@ -9481,13 +9628,58 @@
         ],
         "title": "TableJoinConfig"
       },
+      "TemplateOrigin": {
+        "properties": {
+          "template_id": {
+            "type": "string",
+            "title": "Template Id",
+            "description": "Template identifier (e.g., 'nf-core/ampliseq/2.16.0')"
+          },
+          "template_version": {
+            "type": "string",
+            "title": "Template Version",
+            "description": "Template schema version at time of use"
+          },
+          "data_root": {
+            "type": "string",
+            "title": "Data Root",
+            "description": "The actual --data-root value provided by the user"
+          },
+          "applied_at": {
+            "type": "string",
+            "title": "Applied At",
+            "description": "Timestamp when template was applied"
+          },
+          "variables": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Variables",
+            "description": "Resolved template variables (DATA_ROOT, SAMPLESHEET_FILE, GROUP_COL, etc.)"
+          },
+          "config_snapshot": {
+            "type": "object",
+            "title": "Config Snapshot",
+            "description": "Frozen copy of the resolved template config (for reproducibility)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "template_id",
+          "template_version",
+          "data_root"
+        ],
+        "title": "TemplateOrigin",
+        "description": "Stored on Project model to track that a template was used to create the project.\n\nThis enables the DB and UI to distinguish template-instantiated projects from\nmanually configured ones, and to show which template was used."
+      },
       "TokenBase-Input": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -9692,7 +9884,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -9923,11 +10115,40 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "69bf1061ff85d5130e00b1ab"
+            "default": "69f89301fb1a42ee88e18607"
           }
         },
         "type": "object",
         "title": "TokenData"
+      },
+      "TransformConfig": {
+        "properties": {
+          "recipe": {
+            "type": "string",
+            "title": "Recipe"
+          },
+          "source_overrides": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/SourceOverride"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Overrides"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "recipe"
+        ],
+        "title": "TransformConfig",
+        "description": "Config for a transformed data collection in project.yaml."
       },
       "UpsertDeltaTableAggregated": {
         "properties": {
@@ -10012,7 +10233,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -10130,7 +10351,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -10211,7 +10432,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -10296,7 +10517,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -10381,7 +10602,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -10546,7 +10767,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -10669,7 +10890,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:49"
+            "default": "2026-05-04 12:37:21"
           }
         },
         "additionalProperties": false,
@@ -10688,7 +10909,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -10811,7 +11032,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:49"
+            "default": "2026-05-04 12:37:21"
           }
         },
         "additionalProperties": false,
@@ -10863,7 +11084,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -10931,7 +11152,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -11028,7 +11249,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -11101,7 +11322,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:49"
+            "default": "2026-05-04 12:37:21"
           },
           "run_hash": {
             "type": "string",
@@ -11146,7 +11367,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69f89301fb1a42ee88e18606"
           },
           "description": {
             "anyOf": [
@@ -11219,7 +11440,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:49"
+            "default": "2026-05-04 12:37:21"
           },
           "run_hash": {
             "type": "string",
@@ -11281,7 +11502,7 @@
           "scan_time": {
             "type": "string",
             "title": "Scan Time",
-            "default": "2026-03-21 21:40:49"
+            "default": "2026-05-04 12:37:21"
           },
           "dc_stats": {
             "anyOf": [
