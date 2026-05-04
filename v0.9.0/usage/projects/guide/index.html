@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../images/logo/logo_icon.png">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -1735,6 +1735,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project deletion
+      
+    </span>
+  </a>
   
 </li>
       
@@ -4592,6 +4603,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#project-deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project deletion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#data-storage-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5344,6 +5366,24 @@
 <li>❌ Only editable by <em>owners</em> and <em>editors</em></li>
 <li>❌ Not editable by <em>viewers</em> or anonymous users</li>
 </ul>
+<h2 id="project-deletion"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v1H4v2h1v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1V4h-5V3zm0 5h2v9H9zm4 0h2v9h-2z"/></svg></span> Project deletion<a class="headerlink" href="#project-deletion" title="Permanent link">&para;</a></h2>
+<p>Deleting a project (via the Web UI or <code>DELETE /depictio/api/v1/projects/{id}</code>)
+cascades to all dependent state:</p>
+<ul>
+<li>Workflows declared in the project</li>
+<li>Data collections (and their MongoDB documents)</li>
+<li>Dashboards owned by the project</li>
+<li>S3 objects under <code>s3://&lt;bucket&gt;/{project_id}/</code></li>
+</ul>
+<p>There is no soft-delete or trash bin — once the operation completes, the
+project's data is unrecoverable. Use <a href="../../administration/migrate/">Project migrate</a>
+to take a portable backup ZIP before deletion if you need rollback capability.</p>
+<div class="admonition note">
+<p class="admonition-title">Self-migration shortcut</p>
+<p>Migrating a project to the same instance (source == target) skips the
+S3 copy step but still produces a complete export ZIP — useful for
+backing up immediately before a delete.</p>
+</div>
 <h2 id="data-storage-architecture">💾 Data Storage Architecture<a class="headerlink" href="#data-storage-architecture" title="Permanent link">&para;</a></h2>
 <h3 id="delta-lake-backend">Delta Lake Backend<a class="headerlink" href="#delta-lake-backend" title="Permanent link">&para;</a></h3>
 <p>All project data is automatically converted to <a href="https://delta.io/">Delta Lake</a> format which provides following benefits:</p>
