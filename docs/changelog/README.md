@@ -8,6 +8,32 @@ hide:
 
 # Changelog
 
+## **[v0.10.2](https://github.com/depictio/depictio/releases/tag/v0.10.2)** (May 4, 2026)
+
+!!! success "Stable Release"
+    Patch release: pod rollouts on config changes via Helm checksum
+    annotations, and re-enable the CLI Agents button for single-user mode.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.10.2
+```
+
+### **✨ Features**
+
+* **Config-checksum annotations on Helm deployments**: Backend and frontend
+  pod templates carry a `checksum/config` annotation derived from rendered
+  ConfigMaps, so `helm upgrade` rolls pods automatically on config changes.
+
+### **🐛 Bug Fixes**
+
+* **CLI Agents button enabled in single-user mode**: Single-user mode has
+  a real authenticated user, so CLI agent token management should be
+  reachable. Only public/demo (unauthenticated) modes now gate the button.
+
+---
+
 ## **[v0.10.1](https://github.com/depictio/depictio/releases/tag/v0.10.1)** (April 30, 2026)
 
 !!! success "Stable Release"
