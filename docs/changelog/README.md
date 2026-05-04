@@ -8,6 +8,31 @@ hide:
 
 # Changelog
 
+## **[v0.10.1](https://github.com/depictio/depictio/releases/tag/v0.10.1)** (April 30, 2026)
+
+!!! success "Stable Release"
+    Adds the nf-core/viralrecon template with a four-tab analysis dashboard
+    and recipe enhancements for per-sample inputs.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.10.1
+```
+
+### **✨ Highlights**
+
+* **nf-core/viralrecon template (3.0.0)**: SARS-CoV-2 / viral genome
+  surveillance pipeline support. Ships eight aggregated data collections
+  and a four-tab dashboard — MultiQC overview, Coverage & Depth, Lineage
+  Analysis, Variant Landscape. See [nf-core/viralrecon](../pipeline-templates/nf-core/viralrecon.md).
+* **Recipe enhancements**: new `glob_pattern` field on `RecipeSource` for
+  per-sample file inputs, and a `metatype: "Aggregated"` convention for
+  cross-sample DCs (used by the API's join-compatibility logic to avoid
+  silent joins at differing granularities). See [Recipes](../usage/projects/recipes.md#glob_pattern-per-sample-inputs).
+
+---
+
 ## **[v0.10.0](https://github.com/depictio/depictio/releases/tag/v0.10.0)** (April 30, 2026)
 
 !!! success "Stable Release"

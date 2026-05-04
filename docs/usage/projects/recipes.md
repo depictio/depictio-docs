@@ -372,6 +372,26 @@ def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
 
 Exactly one of `path`, `dc_ref`, or `glob_pattern` must be set per source.
 
+### `glob_pattern` (per-sample inputs)
+
+Use `glob_pattern` instead of `path` to fan multiple per-sample files
+into one DataFrame. The glob is expanded by the recipe runner relative
+to the project's `data_dir` (typically `--data-root`):
+
+```python
+SOURCES: list[RecipeSource] = [
+    RecipeSource(
+        ref="pangolin_raw",
+        glob_pattern="variants/ivar/consensus/bcftools/pangolin/*.pangolin.csv",
+        format="CSV",
+    ),
+]
+```
+
+Matched files are read individually and concatenated with
+`pl.concat([...], how="diagonal_relaxed")`. `glob_pattern` is mutually
+exclusive with `path` and `dc_ref`.
+
 ---
 
 ## Declaring a Recipe in `project.yaml`
