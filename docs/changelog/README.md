@@ -8,6 +8,46 @@ hide:
 
 # Changelog
 
+## **[v0.10.0](https://github.com/depictio/depictio/releases/tag/v0.10.0)** (April 30, 2026)
+
+!!! success "Stable Release"
+    Major release: project template system, Python recipe pipeline, the
+    nf-core/ampliseq template, and dedicated ingress for MinIO and backend.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.10.0
+```
+
+### **✨ Highlights**
+
+* **Project template system** with `template_origin` metadata, template
+  variables (e.g. `DATA_ROOT`, `METADATA_FILE`), and an automatic dashboard
+  import flow. See [Project Templates](../usage/projects/templates.md).
+* **nf-core/ampliseq 2.16.0 template** — first reference template, ships
+  bundled pre-computed data files for `depictio-cli run` initialization.
+* **Python recipe system** for bioinformatics preprocessing — Polars-based
+  recipes with `dc_ref` cross-DC dependency resolution. Adds new
+  `source: "transformed"` to `DataCollectionSource`. See [Recipes](../usage/projects/recipes.md).
+* **Dedicated ingress for MinIO and backend API** in Helm — separate
+  ingress resources with isolated annotations per route. Ships a
+  `values-serve.yaml` overlay used by the [hosted depictio instance on
+  SciLifeLab Serve](https://serve.scilifelab.se/). See [Kubernetes installation](../installation/kubernetes.md#ingress).
+
+### **🐛 Bug Fixes**
+
+* Cross-DC link filtering for figures, MultiQC, and heatmap components.
+* `/projects` 500 error from ObjectId serialization in template metadata.
+
+### **🚀 Improvements**
+
+* Recipe path resolution for cross-DC dependencies; fallback import for
+  `depictio.recipes` from source tree.
+* Stale file cleanup when re-running with different template/data_root.
+
+---
+
 ## **[v0.9.0](https://github.com/depictio/depictio/releases/tag/v0.9.0)** (March 21, 2026)
 
 !!! success "Stable Release"

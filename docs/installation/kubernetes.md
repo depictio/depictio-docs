@@ -128,6 +128,21 @@ backend:
 
 ### Ingress
 
+Depictio's Helm chart supports three ingress topologies. Pick based on
+how your cluster's auth and TLS termination work.
+
+| Topology | Toggle | When to use |
+|---|---|---|
+| **Single ingress** (default) | `ingress.enabled: true` only | Frontend, backend API, and MinIO console all share one ingress + annotation set. Right for small/dev clusters or when one OIDC layer covers everything. |
+| **Frontend + dedicated backend** | `backend.ingress.separateRoute: true` | Apply different auth annotations (or no auth) on the API. Useful when the API needs a different OIDC scope, or when programmatic clients hit `/depictio/api/*` with mTLS or API tokens. |
+| **Frontend + dedicated MinIO** | `minio.ingress.separateRoute: true` | Same idea for MinIO — typically when MinIO is exposed for direct S3 access from CI runners and shouldn't sit behind the user-facing OIDC. |
+
+You can combine the toggles to get all three ingresses separate.
+
+#### Per-route annotations
+
+Each ingress has its own `annotations` block, applied in isolation:
+
 ```yaml
 # my-values.yaml
 ingress:
@@ -136,7 +151,51 @@ ingress:
   tls:
     enabled: true
     secretName: depictio-tls
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    # OIDC annotations applied to the FRONTEND ingress only
+
+backend:
+  ingress:
+    separateRoute: true
+    inheritDefaultAnnotations: false   # don't copy ingress.annotations
+    annotations:
+      nginx.ingress.kubernetes.io/auth-method: "BASIC"   # different auth
+      nginx.ingress.kubernetes.io/proxy-body-size: "200m"
+
+minio:
+  ingress:
+    separateRoute: true
+    inheritDefaultAnnotations: false
+    annotations: {}                     # no auth — restrict at network policy
 ```
+
+`inheritDefaultAnnotations` controls whether `ingress.annotations` are
+merged into the per-route ingress. Set `false` when the per-route ingress
+needs a fundamentally different auth chain.
+
+!!! warning "Network restrictions on dedicated routes"
+    A dedicated MinIO or backend ingress with `annotations: {}` is
+    **unauthenticated at the ingress layer**. Restrict access via Kubernetes
+    NetworkPolicies, ingress controller IP whitelisting, or a dedicated
+    private DNS — don't rely on obscurity.
+
+#### Hosted deployment overlay
+
+The `values-serve.yaml` overlay at `helm-charts/depictio/values-serve.yaml`
+is the reference configuration used to deploy depictio on
+[SciLifeLab Serve](https://serve.scilifelab.se/):
+
+```bash
+helm upgrade --install depictio ./helm-charts/depictio \
+  -f helm-charts/depictio/values.yaml \
+  -f helm-charts/depictio/values-serve.yaml
+```
+
+The overlay sets `separateRoute: true` and `inheritDefaultAnnotations: false`
+on both backend and MinIO so the Serve-managed OIDC layer protects only the
+frontend ingress; backend and MinIO routes are then locked down at the
+cluster network level.
 
 ### Celery workers (background callbacks)
 
