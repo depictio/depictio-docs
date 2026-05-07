@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "0.9.0",
-    "x-generated-at": "2026-03-21T21:40:54Z",
-    "x-depictio-version": "v0.9.0"
+    "version": "0.11.2",
+    "x-generated-at": "2026-05-07T08:01:03Z",
+    "x-depictio-version": "v0.11.2"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -13,7 +13,7 @@
           "Projects"
         ],
         "summary": "Get All Projects",
-        "description": "Get all projects accessible for the current user.\n\nArgs:\n    current_user (User, optional): _description_. Defaults to Depends(get_current_user).\n\nReturns:\n    List: List of projects.",
+        "description": "Get all projects accessible for the current user.\n\nUses ``get_user_or_anonymous`` so single-user / public mode works without a\npersisted token: the anonymous user (admin in single-user mode) hits the\n``is_admin`` bypass in ``_async_get_all_projects`` and sees seed projects.\n\nArgs:\n    current_user (User, optional): Defaults to ``Depends(get_user_or_anonymous)``.\n\nReturns:\n    List: List of projects.",
         "operationId": "get_all_projects_depictio_api_v1_projects_get_all_get",
         "responses": {
           "200": {
@@ -102,7 +102,7 @@
           "Projects"
         ],
         "summary": "Get Project From Name",
-        "description": "Get a project by name.\n\nArgs:\n    project_name (str): _Description of the project name to be retrieved.\n    current_user (User, optional): _description_. Defaults to Depends(get_current_user).\n\nReturns:\n    _type_: Project: The project object retrieved from the database.",
+        "description": "Get a project by name.\n\nUses ``get_user_or_anonymous`` for parity with ``get/all`` so single-user /\npublic mode resolves to the anonymous (admin) user and the admin bypass in\n``_async_get_project_from_name`` returns the project.\n\nArgs:\n    project_name (str): The project name to be retrieved.\n    current_user (User, optional): Defaults to ``Depends(get_user_or_anonymous)``.\n\nReturns:\n    Project: The project object retrieved from the database.",
         "operationId": "get_project_from_name_depictio_api_v1_projects_get_from_name__project_name__get",
         "security": [
           {
@@ -197,7 +197,7 @@
           "Projects"
         ],
         "summary": "Create Project",
-        "description": "Create a new project.",
+        "description": "Create a new project.\n\nTolerates missing tokens so single-user / public mode can create projects\nwithout a persisted token — the inline owner / ``is_admin`` gate below\nstill rejects callers who aren't listed as owners and aren't admins.\n\nPublic/demo mode hard-blocks creation regardless of token: visitors are\nauto-minted as authenticated temp users, so the standard owner/admin gate\nwouldn't stop them from POSTing here directly. The frontend disables the\n\"Create Project\" button in public mode (see Dash\n`app_layout.return_create_project_button` and React `ProjectsApp.tsx`),\nand this check is the matching server-side enforcement.",
         "operationId": "create_project_depictio_api_v1_projects_create_post",
         "requestBody": {
           "content": {
@@ -1228,6 +1228,63 @@
         }
       }
     },
+    "/depictio/api/v1/datacollections/{data_collection_id}/dc_specific_properties": {
+      "patch": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Update Dc Specific Properties",
+        "description": "Partially update dc_specific_properties for a data collection.",
+        "operationId": "update_dc_specific_properties_depictio_api_v1_datacollections__data_collection_id__dc_specific_properties_patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Properties"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/datacollections/{data_collection_id}": {
       "delete": {
         "tags": [
@@ -1272,6 +1329,51 @@
             }
           }
         }
+      }
+    },
+    "/depictio/api/v1/datacollections/create_from_upload": {
+      "post": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Create Data Collection From Upload",
+        "description": "Create a data collection from an uploaded file (basic projects).\n\nWraps the same scan + process pipeline used by depictio-cli, exposing\nit directly to the React UI so we don't need to round-trip through\nDash anymore. Tolerates missing tokens (single-user / public mode); the\nproject-permission check inside ``_create_dc_from_upload`` still gates\nwrite access.",
+        "operationId": "create_data_collection_from_upload_depictio_api_v1_datacollections_create_from_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_create_data_collection_from_upload_depictio_api_v1_datacollections_create_from_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/depictio/api/v1/multiqc/reports": {
@@ -1721,6 +1823,108 @@
             }
           }
         }
+      }
+    },
+    "/depictio/api/v1/multiqc/builder_options": {
+      "get": {
+        "tags": [
+          "MultiQC",
+          "MultiQC"
+        ],
+        "summary": "List available modules / plots / datasets for the MultiQC builder",
+        "description": "Aggregate the available modules, plots and datasets for a MultiQC data\ncollection so the React builder can render cascading dropdowns. Mirrors\nthe data the Dash design UI surfaces via ``get_multiqc_reports_for_data_collection``.\n\nReturns::\n\n    {\n      \"modules\": [\"fastqc\", \"trimming\", ...],\n      \"plots\":   {\"fastqc\": [\"per_base_seq_quality\", ...], ...},\n      \"datasets\": {\"per_base_seq_quality\": [\"raw\", \"filtered\"], ...},\n      \"s3_locations\": [...],\n      \"general_stats\": [{\"module\": \"general_stats\", \"plot\": \"general_stats\"}]\n    }",
+        "operationId": "get_multiqc_builder_options_depictio_api_v1_multiqc_builder_options_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "MultiQC data collection ID",
+              "title": "Data Collection Id"
+            },
+            "description": "MultiQC data collection ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Get Multiqc Builder Options Depictio Api V1 Multiqc Builder Options Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/multiqc/preview": {
+      "post": {
+        "tags": [
+          "MultiQC",
+          "MultiQC"
+        ],
+        "summary": "Render a MultiQC plot from in-flight builder metadata (no save needed)",
+        "description": "Render a MultiQC Plotly figure for the React builder's live preview, with\nno dashboard / saved component required. Mirrors the s3-location resolution\n+ ``create_multiqc_plot()`` call done by ``render_multiqc_endpoint`` in\n``dashboards_endpoints/routes.py``.\n\nHeavy work (parquet read + figure build) runs on Celery when\n`settings.celery.offload_preview` is true (default).\n\nBody::\n\n    {\n      \"dc_id\": \"<MultiQC data collection ID>\",\n      \"module\": \"...\",\n      \"plot\": \"...\",\n      \"dataset\": \"...\" | null,\n      \"theme\": \"light\" | \"dark\"\n    }",
+        "operationId": "multiqc_preview_depictio_api_v1_multiqc_preview_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Request"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Multiqc Preview Depictio Api V1 Multiqc Preview Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/depictio/api/v1/multiqc/reports/{report_id}/download-url": {
@@ -2703,6 +2907,88 @@
         }
       }
     },
+    "/depictio/api/v1/deltatables/unique_values/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Unique Values",
+        "description": "Return the sorted unique values of ``column`` within a data collection.\n\nBacks the React viewer's MultiSelect options fetch. Mirrors the code path\nDash uses via ``load_deltatable_lite(..., load_for_options=True)`` so both\nviewers see identical option lists.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column name whose unique values to return.\n    limit: Max values to return (default 1000). Prevents unbounded payloads\n        on high-cardinality columns; MultiSelect's UX caps at 100 anyway.\n    filter_expr: Optional Polars filter expression (string) applied before\n        collecting unique values. Validated through the safe-eval pipeline\n        in ``depictio.models.components.filter_expr``.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\": str, \"values\": list[str]}`` — strings for MultiSelect UI.\n\nRaises:\n    HTTPException: 404 if DC not found / not accessible, 500 on read error.",
+        "operationId": "get_unique_values_depictio_api_v1_deltatables_unique_values__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "column",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Column"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1000,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "filter_expr",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Filter Expr"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/deltatables/shape/{data_collection_id}": {
       "get": {
         "tags": [
@@ -2725,6 +3011,63 @@
               "type": "string",
               "format": "objectid",
               "title": "Data Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/deltatables/preview/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Preview",
+        "description": "Return the first `limit` rows + column names for a data collection's\ndelta table, for the React stepper data-source preview pane.\n\nMirrors what the Dash stepper builds via\n``load_deltatable_lite(..., limit_rows=100, load_for_preview=True)``.\n\nHeavy work (Polars scan + collect) runs on Celery when\n`settings.celery.offload_preview` is true (default).",
+        "operationId": "get_preview_depictio_api_v1_deltatables_preview__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "title": "Limit"
             }
           }
         ],
@@ -3438,7 +3781,7 @@
           "Migrate"
         ],
         "summary": "Import Project Zip",
-        "description": "Import a project bundle from a ZIP file (for UI use).\n\nAccepts a .zip file containing bundle.json and migrate_metadata.json.\nAlways remaps all owners to the calling user (force_owner_remap=True).",
+        "description": "Import a project bundle from a ZIP file (for UI use).\n\nAccepts a .zip file containing bundle.json and migrate_metadata.json.\nAlways remaps all owners to the calling user (force_owner_remap=True).\n\nTolerates missing tokens (single-user / public mode); the inline\n``is_admin`` gate below still rejects non-admin callers.",
         "operationId": "import_project_zip_depictio_api_v1_migrate_import_project_zip_post",
         "security": [
           {
@@ -3715,7 +4058,7 @@
           "Dashboards"
         ],
         "summary": "List All Dashboards",
-        "description": "Fetch a list of all dashboards (admin only).",
+        "description": "Fetch a list of all dashboards (admin only).\n\nTolerates missing tokens (single-user / public mode) so the React admin\n\"Dashboards\" tab loads — the inline ``is_admin`` gate below still blocks\nnon-admin users.",
         "operationId": "list_all_dashboards_depictio_api_v1_dashboards_list_all_get",
         "responses": {
           "200": {
@@ -4365,6 +4708,555 @@
         }
       }
     },
+    "/depictio/api/v1/dashboards/bulk_compute_cards/{dashboard_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Bulk Compute Cards",
+        "description": "Compute card values with interactive filters applied.\n\nCalled by the React viewer whenever the filter state changes. Dedupes\nDelta-table loads: multiple cards referencing the same (wf_id, dc_id, filter\nfingerprint) share one load. Returns a map keyed by component index.\n\nRequest body:\n    {\n        \"filters\": [\n            {\"index\": \"...\", \"value\": ..., \"column_name\": \"...\",\n             \"interactive_component_type\": \"MultiSelect\"},\n            ...\n        ],\n        \"component_ids\": [\"...\", ...]   # optional; defaults to all cards\n    }\n\nResponse:\n    {\n        \"values\": {\"<component_index>\": <scalar or null>, ...},\n        \"secondary_values\": {\n            \"<component_index>\": {\"<aggregation>\": <scalar or null>, ...},\n            ...\n        },\n        \"aggregations\": {\"<component_index>\": [\"<aggregation>\", ...], ...},\n        \"filter_applied\": bool,\n        \"filter_count\": int\n    }\n\n    ``secondary_values`` and ``aggregations`` are only populated for cards\n    that declare ``aggregations`` in YAML (multi-metrics card).\n\nNotes:\n    - Uses load_deltatable_lite with the same metadata format as Dash so\n      the filter semantics match the Dash viewer exactly.\n    - The Dash callback render_card_value_background in\n      card_component/callbacks/core.py remains the source of truth for the\n      edit path; this endpoint mirrors its math.",
+        "operationId": "bulk_compute_cards_depictio_api_v1_dashboards_bulk_compute_cards__dashboard_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/render_figure/{dashboard_id}/{component_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Render Figure Endpoint",
+        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when\n`settings.celery.offload_rendering` is true. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\"}\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}",
+        "operationId": "render_figure_endpoint_depictio_api_v1_dashboards_render_figure__dashboard_id___component_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/render_table/{dashboard_id}/{component_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Render Table Endpoint",
+        "description": "Return table rows + column definitions for the React viewer's AG Grid.\n\nRequest body:\n    {\"filters\": [...], \"start\": 0, \"limit\": 100,\n     \"sort_by\": <col|null>, \"sort_dir\": \"asc\"|\"desc\"}\n\nResponse:\n    {\"columns\": [{\"field\", \"headerName\", \"type\"}, ...],\n     \"rows\":    [{...}, ...],\n     \"total\":   <int>,\n     \"sort_by\": <col|null>, \"sort_dir\": \"asc\"|\"desc\"}\n\nSort runs server-side because the React grid uses AG Grid's *infinite*\nrow model — only the visible page is loaded, so client-side header sort\ncan't reorder unloaded rows. When ``sort_by`` is null the server picks\nany ``acquisition*`` column (newest first) so realtime ingests land at\nthe top of the visible table; users can override via header click.",
+        "operationId": "render_table_endpoint_depictio_api_v1_dashboards_render_table__dashboard_id___component_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/render_image_paths/{dashboard_id}/{component_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Render Image Paths Endpoint",
+        "description": "Return non-null values of an image component's ``image_column``.\n\nRequest body (optional):\n    {\"filters\": [...], \"max\": 50, \"sort_by\": <col|null>, \"sort_dir\": \"asc\"|\"desc\"}\n\nThe ``?max=`` query string is still honored as a backwards-compatible alias\nwhen callers don't supply a body. ``filters`` follows the same payload\nshape used by ``bulk_compute_cards``/``render_figure``/``render_table`` and\ncan include selection-source filters (``source: \"scatter_selection\"``,\n``\"table_selection\"``, ``\"map_selection\"``). Cross-DC link filters are\napplied via ``extend_filters_via_links`` so an image grid narrows when a\nlinked DC is filtered (mirrors Dash ``_extract_filters_for_image``).\n\nResponse now carries one row per image (``rows: [{path, ...all columns}]``)\nso the React viewer can drive sort dropdowns / metadata popovers without a\nsecond round-trip. ``paths`` is preserved as a derived shortcut for\nolder callers.",
+        "operationId": "render_image_paths_endpoint_depictio_api_v1_dashboards_render_image_paths__dashboard_id___component_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          },
+          {
+            "name": "max",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Max"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/render_map/{dashboard_id}/{component_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Render Map Endpoint",
+        "description": "Render a Plotly map component as JSON for the React viewer.\n\nMirrors `render_figure_endpoint` but delegates to\n`depictio.dash.modules.map_component.utils.render_map`. The full map\n`stored_metadata` already carries every trigger_data field (map_type,\nlat_column, lon_column, color_column, geojson_*, etc.) — the Dash callback\njust rebuilds it from kwargs at create time — so we pass `component`\ndirectly as `trigger_data`. `render_map` reads what it needs via `.get()`.",
+        "operationId": "render_map_endpoint_depictio_api_v1_dashboards_render_map__dashboard_id___component_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/render_jbrowse/{dashboard_id}/{component_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Render Jbrowse Endpoint",
+        "description": "Synthesise the JBrowse 2 iframe URL for the React viewer.\n\nJBrowse 2 must be running at ``localhost:3000`` and its session config\nserver at ``localhost:9010/sessions/...``; if either is unreachable,\nreturns 503 (no silent fallback).",
+        "operationId": "render_jbrowse_endpoint_depictio_api_v1_dashboards_render_jbrowse__dashboard_id___component_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/render_multiqc/{dashboard_id}/{component_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Render Multiqc Endpoint",
+        "description": "Render a MultiQC Plotly figure as JSON for the React viewer.\n\nWraps the pure ``create_multiqc_plot()`` helper in\n``depictio.dash.modules.figure_component.multiqc_vis`` — same function the\nDash callback uses. Reads ``selected_module``, ``selected_plot``,\n``selected_dataset`` and ``s3_locations`` from the component's\nstored_metadata (with a DC-config fallback for ``s3_locations`` if missing,\nmatching the Dash restoration path).\n\nFilters: applied via ``patch_multiqc_figures()`` after sample resolution.\nFilters that target a metadata DC different from the MultiQC DC are\nresolved by loading the metadata DC with the filters applied, then\npulling the unique values of the ``sample`` join column. Filters that\ntarget the MultiQC DC's own ``sample`` column are used directly.",
+        "operationId": "render_multiqc_endpoint_depictio_api_v1_dashboards_render_multiqc__dashboard_id___component_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/render_multiqc_general_stats/{dashboard_id}/{component_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Render Multiqc General Stats Endpoint",
+        "description": "JSON-safe payload for the React MultiQC General Statistics renderer.\n\nWraps ``build_general_stats_payload()`` (the JSON-safe sibling of\n``build_general_stats_content()``). Resolves ``s3_locations`` the same way\nthe regular ``render_multiqc`` endpoint does, then converts the first\nlocation into a local parquet path via ``_get_local_path_for_s3`` (matching\nthe Dash dispatcher in ``multiqc_component/callbacks/core.py``). Reuses the\nsame Redis cache key shape so warm Dash sessions also warm the React route.",
+        "operationId": "render_multiqc_general_stats_endpoint_depictio_api_v1_dashboards_render_multiqc_general_stats__dashboard_id___component_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/dashboards/import/yaml": {
       "post": {
         "tags": [
@@ -4661,7 +5553,7 @@
           "Dashboards"
         ],
         "summary": "Import Dashboard From Json",
-        "description": "Import a dashboard from JSON content with optional integrity validation.\n\nCreates a new dashboard from the provided JSON configuration.\nOptionally validates that data collection schemas match the export.\n\nArgs:\n    json_content: The JSON content defining the dashboard\n    project_id: Target project ID (required if not in JSON)\n    validate_integrity: Whether to validate data collection schemas (default: True)\n    current_user: Current authenticated user\n\nReturns:\n    Import result with dashboard ID and any validation warnings",
+        "description": "Import a dashboard from JSON content with optional integrity validation.\n\nCreates a new dashboard from the provided JSON configuration.\nOptionally validates that data collection schemas match the export.\n\nPublic/demo mode hard-blocks imports: visitors are auto-minted as\nauthenticated temp users, so `get_current_user` doesn't stop them from\nPOSTing user-supplied JSON that bypasses the project-permission model.\nThe frontend disables the Import tab in `CreateDashboardModal` and the\nDash equivalent — this check is the matching server-side enforcement.\n\nArgs:\n    json_content: The JSON content defining the dashboard\n    project_id: Target project ID (required if not in JSON)\n    validate_integrity: Whether to validate data collection schemas (default: True)\n    current_user: Current authenticated user\n\nReturns:\n    Import result with dashboard ID and any validation warnings",
         "operationId": "import_dashboard_from_json_depictio_api_v1_dashboards_import_json_post",
         "security": [
           {
@@ -4799,6 +5691,244 @@
         }
       }
     },
+    "/depictio/api/v1/figure/visualizations": {
+      "get": {
+        "tags": [
+          "Figure Builder"
+        ],
+        "summary": "List Visualizations",
+        "description": "Return the curated list of figure visualizations with display metadata.\n\nLightweight payload — name/label/description/icon/group only. The React\nbuilder uses this to populate the visualization-type dropdown so the TS\nside never falls out of sync with the Python registry. Per-viz parameter\nspecs are still fetched lazily via `/figure/parameter-discovery/{viz_type}`.",
+        "operationId": "list_visualizations_depictio_api_v1_figure_visualizations_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/figure/parameter-discovery/{viz_type}": {
+      "get": {
+        "tags": [
+          "Figure Builder"
+        ],
+        "summary": "Parameter Discovery",
+        "description": "Return the full parameter spec for a visualization type.\n\nWraps ``depictio.dash.modules.figure_component.definitions.get_visualization_definition``\nand returns the resulting Pydantic ``VisualizationDefinition`` as JSON. The\nReact figure builder uses this to render the parameter accordion (Core /\nCommon / Specific / Advanced) without duplicating the spec in TS.",
+        "operationId": "parameter_discovery_depictio_api_v1_figure_parameter_discovery__viz_type__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "viz_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Viz Type"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/figure/preview": {
+      "post": {
+        "tags": [
+          "Figure Builder"
+        ],
+        "summary": "Preview Figure",
+        "description": "Build a figure from the supplied builder metadata and return its JSON.\n\nDiffers from ``/dashboards/render_figure/{id}/{cid}`` in that the metadata\nis supplied directly, not looked up. Suitable for live preview during the\ncreate / edit flow.\n\nHeavy work (delta-table load + Plotly build) runs on a Celery worker by\ndefault — see `settings.celery.offload_preview`. The endpoint awaits the\ntask via a non-blocking poll loop so the FastAPI event loop stays free.\n\nRequest body::\n\n    {\n      \"metadata\": { ...full figure stored_metadata shape... },\n      \"filters\": [...] (optional),\n      \"theme\": \"light\" | \"dark\" (default \"light\")\n    }",
+        "operationId": "preview_figure_depictio_api_v1_figure_preview_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Request"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/figure/analyze_code": {
+      "post": {
+        "tags": [
+          "Figure Builder"
+        ],
+        "summary": "Analyze Code",
+        "description": "Validate user-written figure code and extract UI-equivalent params.\n\nWraps ``analyze_constrained_code`` from\n``depictio.dash.modules.figure_component.code_mode``. Used by the React\nbuilder when toggling code↔UI mode so the UI tab can be re-populated.\n\nOffloaded to Celery on the same flag as `/preview`.",
+        "operationId": "analyze_code_depictio_api_v1_figure_analyze_code_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Request"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/celery/health": {
+      "get": {
+        "tags": [
+          "Celery"
+        ],
+        "summary": "Celery Health",
+        "description": "Return broker connectivity + worker count + queue list.\n\nUseful for liveness/readiness probes and to confirm the offload flag is\nactually pointing at a live worker pool.",
+        "operationId": "celery_health_depictio_api_v1_celery_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/celery/active": {
+      "get": {
+        "tags": [
+          "Celery"
+        ],
+        "summary": "Celery Active",
+        "description": "Return tasks currently executing on each worker.",
+        "operationId": "celery_active_depictio_api_v1_celery_active_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/celery/stats": {
+      "get": {
+        "tags": [
+          "Celery"
+        ],
+        "summary": "Celery Stats",
+        "description": "Aggregate per-worker stats (pool size, totals, prefetch count).",
+        "operationId": "celery_stats_depictio_api_v1_celery_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/auth/login": {
       "post": {
         "tags": [
@@ -4879,6 +6009,50 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TokenBeanie-Output"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/auth/refresh": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Refresh Token Browser",
+        "description": "Browser-safe refresh: uses the refresh token as the only credential.\n\nMirrors ``/auth/refresh_token`` but without the internal-api-key\nrequirement so SPAs (the React viewer) can call it directly. The refresh\ntoken itself is treated as the authenticating secret.\n\nArgs:\n    request: Dict containing 'refresh_token' key.\n\nReturns:\n    Dict with new access_token and expire_datetime.\n\nRaises:\n    HTTPException: 401 if refresh token is invalid or expired.",
+        "operationId": "refresh_token_browser_depictio_api_v1_auth_refresh_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Request"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Refresh Token Browser Depictio Api V1 Auth Refresh Post"
                 }
               }
             }
@@ -5121,7 +6295,7 @@
           "Authentication"
         ],
         "summary": "Get Current User Info",
-        "description": "Get current user information using Bearer token authentication.\n\nThis endpoint is designed for frontend authentication and uses Bearer tokens\ninstead of internal API keys, making it suitable for user-facing applications.\n\nArgs:\n    current_user: Current authenticated user from Bearer token\n\nReturns:\n    User: Current user information",
+        "description": "Get current user information for the React profile page.\n\nUses ``get_user_or_anonymous`` so single-user / public mode works without a\npersisted token: the React /profile route resolves to the anonymous user\n(admin in single-user mode) instead of rendering \"No authenticated user.\"\n\nArgs:\n    current_user: User resolved from Bearer token, or the anonymous user\n        in single-user / public mode when no valid token is supplied.\n\nReturns:\n    User: Current user information.",
         "operationId": "get_current_user_info_depictio_api_v1_auth_me_get",
         "responses": {
           "200": {
@@ -5130,6 +6304,34 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/auth/me/optional": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get Current User Info Optional",
+        "description": "Get current user identity + server auth mode for the React viewer.\n\nUnlike ``/me``, this endpoint does NOT 401 when the Authorization header is\nmissing or invalid. It always returns 200 with an ``auth_mode`` field so the\nReact UI can render the right profile badge variant (\"Single user mode\",\n\"Anonymous\", or the actual user). The ``user`` field is ``null`` when no\nvalid token is supplied.\n\nBackward compatible: existing callers that read ``auth_mode`` and ``user``\nkeep working. The React /auth page additionally consumes ``is_public_mode``,\n``is_single_user_mode``, and ``google_oauth_enabled`` to decide which UI to\nrender with a single round-trip on page load.\n\nArgs:\n    token: Optional JWT access token from the Authorization header.\n\nReturns:\n    Dict with ``auth_mode`` ('single_user' | 'unauthenticated' | 'standard'),\n    ``user`` (minimal user identity or ``null``), plus mode flags.",
+        "operationId": "get_current_user_info_optional_depictio_api_v1_auth_me_optional_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Get Current User Info Optional Depictio Api V1 Auth Me Optional Get"
                 }
               }
             }
@@ -5300,41 +6502,14 @@
         }
       }
     },
-    "/depictio/api/v1/auth/upgrade_to_temporary_user": {
+    "/depictio/api/v1/auth/public/create_temporary_user": {
       "post": {
         "tags": [
           "Authentication"
         ],
-        "summary": "Upgrade To Temporary User Endpoint",
-        "description": "Upgrade from anonymous user to temporary user for interactive features.\n\nArgs:\n    expiry_hours: Number of hours until the temporary user expires (default: 24)\n    current_user: Current user (should be anonymous in unauthenticated mode)\n\nReturns:\n    Session data for the new temporary user",
-        "operationId": "upgrade_to_temporary_user_endpoint_depictio_api_v1_auth_upgrade_to_temporary_user_post",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "expiry_hours",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 24,
-              "title": "Expiry Hours"
-            }
-          },
-          {
-            "name": "expiry_minutes",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "title": "Expiry Minutes"
-            }
-          }
-        ],
+        "summary": "Create Temporary User Public",
+        "description": "Create a temporary user for the React /auth SPA in public mode.\n\nPublic-facing variant of ``/create_temporary_user`` (no API key). Disabled\noutside public mode and rate-limited per IP. Expiry is taken from settings\nso the SPA doesn't need to (and shouldn't be able to) override it.",
+        "operationId": "create_temporary_user_public_depictio_api_v1_auth_public_create_temporary_user_post",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -5342,17 +6517,30 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "Response Upgrade To Temporary User Endpoint Depictio Api V1 Auth Upgrade To Temporary User Post"
+                  "title": "Response Create Temporary User Public Depictio Api V1 Auth Public Create Temporary User Post"
                 }
               }
             }
-          },
-          "422": {
-            "description": "Validation Error",
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/auth/public/get_anonymous_user_session": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get Anonymous User Session Public",
+        "description": "Anonymous-user session for the React /auth SPA in single-user mode.\n\nPublic-facing variant of ``/get_anonymous_user_session`` (no API key).\nDisabled outside single-user mode and rate-limited per IP. Public/demo\nmode mints a temporary user via ``/auth/public/create_temporary_user``.",
+        "operationId": "get_anonymous_user_session_public_depictio_api_v1_auth_public_get_anonymous_user_session_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "type": "object",
+                  "title": "Response Get Anonymous User Session Public Depictio Api V1 Auth Public Get Anonymous User Session Get"
                 }
               }
             }
@@ -5485,6 +6673,101 @@
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/auth/me/tokens": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Create My Token",
+        "description": "Create a long-lived CLI token for the current authenticated user.\n\nReplaces the internal-API-key-gated /create_token for browser callers.\nAlways issues a long-lived bearer token scoped to ``current_user``.",
+        "operationId": "create_my_token_depictio_api_v1_auth_me_tokens_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/_CreateMeTokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenBeanie-Output"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/auth/me/tokens/{token_id}": {
+      "delete": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Delete My Token",
+        "description": "Delete one of the current user's tokens.\n\nReplaces the internal-API-key-gated /delete_token for browser callers.\nRefuses to delete tokens that don't belong to the caller.",
+        "operationId": "delete_my_token_depictio_api_v1_auth_me_tokens__token_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PydanticObjectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Delete My Token Depictio Api V1 Auth Me Tokens  Token Id  Delete"
+                }
               }
             }
           },
@@ -5674,6 +6957,7 @@
           "Authentication"
         ],
         "summary": "List Users",
+        "description": "List all users for the React admin Users tab.\n\nUses ``get_user_or_anonymous`` for parity with the projects list — the\nanonymous user in single-user mode is admin, so no token is required.",
         "operationId": "list_users_depictio_api_v1_auth_list_get",
         "responses": {
           "200": {
@@ -6059,6 +7343,469 @@
         }
       }
     },
+    "/dashboard-beta/favicon.svg": {
+      "get": {
+        "summary": " Serve Viewer Favicon",
+        "operationId": "_serve_viewer_favicon_dashboard_beta_favicon_svg_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dashboard-beta/{_dashboard_id}": {
+      "get": {
+        "summary": " Serve Viewer Spa",
+        "description": "Serve the React viewer SPA. All sub-paths fall through to index.html\nso React's client-side router handles the dashboard ID segment.",
+        "operationId": "_serve_viewer_spa_dashboard_beta___dashboard_id__get",
+        "parameters": [
+          {
+            "name": "_dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dashboard-beta-edit/{_dashboard_id}": {
+      "get": {
+        "summary": " Serve Editor Spa",
+        "description": "Serve the React editor SPA. Same bundle as the viewer; the SPA's\nboot routing inspects window.location.pathname to render EditorApp.\nAsset paths in index.html still resolve via /dashboard-beta/assets/.",
+        "operationId": "_serve_editor_spa_dashboard_beta_edit___dashboard_id__get",
+        "parameters": [
+          {
+            "name": "_dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth": {
+      "get": {
+        "summary": " Serve Auth Spa Root",
+        "operationId": "_serve_auth_spa_root_auth_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/{_auth_path}": {
+      "get": {
+        "summary": " Serve Auth Spa",
+        "operationId": "_serve_auth_spa_auth___auth_path__get",
+        "parameters": [
+          {
+            "name": "_auth_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Auth Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dashboards-beta": {
+      "get": {
+        "summary": " Serve Dashboards Spa Root",
+        "operationId": "_serve_dashboards_spa_root_dashboards_beta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dashboards-beta/{_path}": {
+      "get": {
+        "summary": " Serve Dashboards Spa",
+        "operationId": "_serve_dashboards_spa_dashboards_beta___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/about-beta": {
+      "get": {
+        "summary": " Serve About Spa Root",
+        "operationId": "_serve_about_spa_root_about_beta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/about-beta/{_path}": {
+      "get": {
+        "summary": " Serve About Spa",
+        "operationId": "_serve_about_spa_about_beta___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin-beta": {
+      "get": {
+        "summary": " Serve Admin Spa Root",
+        "operationId": "_serve_admin_spa_root_admin_beta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin-beta/{_path}": {
+      "get": {
+        "summary": " Serve Admin Spa",
+        "operationId": "_serve_admin_spa_admin_beta___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects-beta": {
+      "get": {
+        "summary": " Serve Projects Spa Root",
+        "operationId": "_serve_projects_spa_root_projects_beta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects-beta/{_path}": {
+      "get": {
+        "summary": " Serve Projects Spa",
+        "operationId": "_serve_projects_spa_projects_beta___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile-beta": {
+      "get": {
+        "summary": " Serve Profile Spa Root",
+        "operationId": "_serve_profile_spa_root_profile_beta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile-beta/{_path}": {
+      "get": {
+        "summary": " Serve Profile Spa",
+        "operationId": "_serve_profile_spa_profile_beta___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cli-agents-beta": {
+      "get": {
+        "summary": " Serve Cli Agents Spa Root",
+        "operationId": "_serve_cli_agents_spa_root_cli_agents_beta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cli-agents-beta/{_path}": {
+      "get": {
+        "summary": " Serve Cli Agents Spa",
+        "operationId": "_serve_cli_agents_spa_cli_agents_beta___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "summary": "Health Check",
@@ -6356,6 +8103,71 @@
           "existing_workflow"
         ],
         "title": "Body_compare_models_endpoint_depictio_api_v1_workflows_compare_workflow_models_post"
+      },
+      "Body_create_data_collection_from_upload_depictio_api_v1_datacollections_create_from_upload_post": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "data_type": {
+            "type": "string",
+            "title": "Data Type",
+            "default": "table"
+          },
+          "file_format": {
+            "type": "string",
+            "title": "File Format",
+            "default": "csv"
+          },
+          "separator": {
+            "type": "string",
+            "title": "Separator",
+            "default": ","
+          },
+          "custom_separator": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Separator"
+          },
+          "compression": {
+            "type": "string",
+            "title": "Compression",
+            "default": "none"
+          },
+          "has_header": {
+            "type": "boolean",
+            "title": "Has Header",
+            "default": true
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          },
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id",
+          "name",
+          "file"
+        ],
+        "title": "Body_create_data_collection_from_upload_depictio_api_v1_datacollections_create_from_upload_post"
       },
       "Body_import_project_zip_depictio_api_v1_migrate_import_project_zip_post": {
         "properties": {
@@ -6708,7 +8520,20 @@
           "source_dc_id": {
             "type": "string",
             "title": "Source Dc Id",
-            "description": "Data collection ID for the source (where filters are applied)"
+            "description": "Data collection ID for the source (where filters are applied)",
+            "default": ""
+          },
+          "source_dc_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Dc Tag",
+            "description": "Data collection tag for the source (used in templates, resolved to ID at instantiation)"
           },
           "source_column": {
             "type": "string",
@@ -6718,7 +8543,20 @@
           "target_dc_id": {
             "type": "string",
             "title": "Target Dc Id",
-            "description": "Data collection ID for the target (receives resolved values)"
+            "description": "Data collection ID for the target (receives resolved values)",
+            "default": ""
+          },
+          "target_dc_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Dc Tag",
+            "description": "Data collection tag for the target (used in templates, resolved to ID at instantiation)"
           },
           "target_type": {
             "type": "string",
@@ -6756,9 +8594,7 @@
         "additionalProperties": false,
         "type": "object",
         "required": [
-          "source_dc_id",
           "source_column",
-          "target_dc_id",
           "target_type"
         ],
         "title": "DCLink",
@@ -6880,7 +8716,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -7108,6 +8944,17 @@
               }
             ],
             "title": "Parent Dashboard Title"
+          },
+          "project_realtime": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Realtime"
           }
         },
         "additionalProperties": false,
@@ -7127,7 +8974,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -7168,6 +9015,11 @@
           },
           "config": {
             "$ref": "#/components/schemas/DataCollectionConfig-Input"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -7184,7 +9036,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -7225,6 +9077,11 @@
           },
           "config": {
             "$ref": "#/components/schemas/DataCollectionConfig-Output"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -7241,7 +9098,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -7334,6 +9191,16 @@
                 "type": "null"
               }
             ]
+          },
+          "transform": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TransformConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -7350,7 +9217,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -7443,6 +9310,16 @@
                 "type": "null"
               }
             ]
+          },
+          "transform": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TransformConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -7458,7 +9335,8 @@
         "enum": [
           "native",
           "joined",
-          "aggregated"
+          "aggregated",
+          "transformed"
         ],
         "title": "DataCollectionSource",
         "description": "Origin/source type of a data collection."
@@ -7469,7 +9347,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -7554,7 +9432,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:51"
+            "default": "2026-05-07 08:00:59"
           },
           "file_hash": {
             "type": "string",
@@ -8629,7 +10507,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -8836,7 +10714,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -8940,7 +10818,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:51"
+            "default": "2026-05-07 08:01:00"
           },
           "project_type": {
             "type": "string",
@@ -8955,6 +10833,16 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/RealtimeConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "template_origin": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TemplateOrigin"
               },
               {
                 "type": "null"
@@ -8976,7 +10864,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -9080,7 +10968,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:51"
+            "default": "2026-05-07 08:01:00"
           },
           "project_type": {
             "type": "string",
@@ -9095,6 +10983,16 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/RealtimeConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "template_origin": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TemplateOrigin"
               },
               {
                 "type": "null"
@@ -9451,6 +11349,21 @@
         ],
         "title": "ScanSingle"
       },
+      "SourceOverride": {
+        "properties": {
+          "path": {
+            "type": "string",
+            "title": "Path"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "path"
+        ],
+        "title": "SourceOverride",
+        "description": "Override a recipe source path in project.yaml."
+      },
       "TableJoinConfig": {
         "properties": {
           "on_columns": {
@@ -9481,13 +11394,58 @@
         ],
         "title": "TableJoinConfig"
       },
+      "TemplateOrigin": {
+        "properties": {
+          "template_id": {
+            "type": "string",
+            "title": "Template Id",
+            "description": "Template identifier (e.g., 'nf-core/ampliseq/2.16.0')"
+          },
+          "template_version": {
+            "type": "string",
+            "title": "Template Version",
+            "description": "Template schema version at time of use"
+          },
+          "data_root": {
+            "type": "string",
+            "title": "Data Root",
+            "description": "The actual --data-root value provided by the user"
+          },
+          "applied_at": {
+            "type": "string",
+            "title": "Applied At",
+            "description": "Timestamp when template was applied"
+          },
+          "variables": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Variables",
+            "description": "Resolved template variables (DATA_ROOT, SAMPLESHEET_FILE, GROUP_COL, etc.)"
+          },
+          "config_snapshot": {
+            "type": "object",
+            "title": "Config Snapshot",
+            "description": "Frozen copy of the resolved template config (for reproducibility)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "template_id",
+          "template_version",
+          "data_root"
+        ],
+        "title": "TemplateOrigin",
+        "description": "Stored on Project model to track that a template was used to create the project.\n\nThis enables the DB and UI to distinguish template-instantiated projects from\nmanually configured ones, and to show which template was used."
+      },
       "TokenBase-Input": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -9692,7 +11650,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -9923,11 +11881,40 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "69bf1061ff85d5130e00b1ab"
+            "default": "69fc46b9d3e7a093d82cabb7"
           }
         },
         "type": "object",
         "title": "TokenData"
+      },
+      "TransformConfig": {
+        "properties": {
+          "recipe": {
+            "type": "string",
+            "title": "Recipe"
+          },
+          "source_overrides": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/SourceOverride"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Overrides"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "recipe"
+        ],
+        "title": "TransformConfig",
+        "description": "Config for a transformed data collection in project.yaml."
       },
       "UpsertDeltaTableAggregated": {
         "properties": {
@@ -10012,7 +11999,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -10130,7 +12117,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -10211,7 +12198,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -10296,7 +12283,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -10381,7 +12368,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -10546,7 +12533,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -10669,7 +12656,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:49"
+            "default": "2026-05-07 08:00:57"
           }
         },
         "additionalProperties": false,
@@ -10688,7 +12675,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -10811,7 +12798,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:49"
+            "default": "2026-05-07 08:00:57"
           }
         },
         "additionalProperties": false,
@@ -10863,7 +12850,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -10931,7 +12918,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -11028,7 +13015,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -11101,7 +13088,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:49"
+            "default": "2026-05-07 08:00:57"
           },
           "run_hash": {
             "type": "string",
@@ -11146,7 +13133,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69bf1061ff85d5130e00b1aa"
+            "default": "69fc46b9d3e7a093d82cabb6"
           },
           "description": {
             "anyOf": [
@@ -11219,7 +13206,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-03-21 21:40:49"
+            "default": "2026-05-07 08:00:57"
           },
           "run_hash": {
             "type": "string",
@@ -11281,7 +13268,7 @@
           "scan_time": {
             "type": "string",
             "title": "Scan Time",
-            "default": "2026-03-21 21:40:49"
+            "default": "2026-05-07 08:00:57"
           },
           "dc_stats": {
             "anyOf": [
@@ -11307,6 +13294,20 @@
           "files_id"
         ],
         "title": "WorkflowRunScan"
+      },
+      "_CreateMeTokenRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "_CreateMeTokenRequest",
+        "description": "Body for POST /auth/me/tokens — only the human-readable name is required."
       }
     },
     "securitySchemes": {
