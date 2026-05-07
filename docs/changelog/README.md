@@ -8,6 +8,107 @@ hide:
 
 # Changelog
 
+## **[v0.11.2](https://github.com/depictio/depictio/releases/tag/v0.11.2)** (May 7, 2026)
+
+!!! success "Stable Release"
+    Patch release: viewer Docker prod build fix and dev-compose Vite HMR.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.11.2
+```
+
+### **🐛 Bug Fixes**
+
+* **Viewer Docker prod build**: `Dockerfile_depictio_uv.dockerfile` viewer-builder
+  stage now produces a working bundle (`pnpm --filter depictio-viewer build`).
+* **Dev compose HMR**: viewer service in `docker-compose.dev.yaml` runs the
+  Vite dev server with HMR (`pnpm --filter depictio-viewer dev`).
+
+### **📦 Packaging**
+
+* `react-resizable ^3.0.5` declared as a direct dep in
+  `depictio/viewer/package.json` (was a transitive that pnpm strict resolution
+  refused).
+
+### **🧹 Internal**
+
+* viralrecon recipes moved under the canonical `projects/` path.
+
+---
+
+## **[v0.11.1](https://github.com/depictio/depictio/releases/tag/v0.11.1)** (May 6, 2026)
+
+!!! success "Stable Release"
+    Housekeeping release: stop tracking instance/runtime-only files. No
+    user-facing changes.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.11.1
+```
+
+### **🧹 Internal**
+
+* Untrack `depictio/dashboards_yaml/` (instance/runtime-only).
+* Untrack AI session-handoff scratch under `depictio/viewer/`.
+* Untrack auto-generated `CLAUDE.md` context and superseded `.claude-code/`
+  skills.
+
+---
+
+## **[v0.11.0](https://github.com/depictio/depictio/releases/tag/v0.11.0)** (May 6, 2026)
+
+!!! warning "Major Release — React viewer is in Beta"
+    Major release: React viewer (Beta), realtime dashboard refresh, and a
+    Dash 3.2 → 4.1 upgrade.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.11.0
+```
+
+### **✨ Highlights**
+
+* **React viewer (Beta)** — new Vite-built SPA at `/dashboard-beta/{id}`
+  (viewer) and `/dashboard-beta-edit/{id}` (component builder), plus
+  parallel `/dashboards-beta`, `/projects-beta`, `/auth`, `/admin-beta`,
+  `/profile-beta`, `/about-beta`, `/cli-agents-beta` sub-apps. A "Try the
+  new version" switcher in the legacy Dash sidebar links to it. Ships an
+  AG Grid SSRM table, Map / JBrowse / MultiQC ports, and a Timeline
+  interactive. Source: `depictio/viewer/` + shared
+  `packages/depictio-react-core/`.
+* **Realtime dashboard refresh (opt-in)** — new WebSocket and SSE endpoints
+  under `/depictio/api/v1/events/` for live data-collection updates. Adds
+  the `websockets` dependency; degrades gracefully on standalone MongoDB.
+* **Drag-and-drop data collection** — new
+  `POST /depictio/api/v1/datacollections/create_from_upload` endpoint lets
+  basic-project users create a DC without `depictio-cli`.
+* **Dash 3.2 → 4.1 upgrade** — `dash[async]>=4.1,<5` for a
+  pattern-matching callback perf fix.
+
+### **🚀 Improvements**
+
+* Demo / public mode: in-viewer banner, guided tour, and write actions
+  (Create Project, Import, Upload) **disabled** rather than hidden.
+* Cross-DC links: dtype-agnostic `is_in` resolution and consistent heatmap
+  annotation filtering.
+* Filter-aware MultiQC caching with Celery prewarm; SVG re-encode + N+1
+  cache fixes for MultiQC samples.
+
+### **🐛 Bug Fixes**
+
+* Editor duplicate-component visibility and ref staleness.
+* Heatmap recipe: None-value handling, date serialization, and
+  column-loading scope.
+* `/projects` 500 from ObjectId serialization in template metadata.
+* Map component filtering; DatePicker reordered first in sidebar.
+
+---
+
 ## **[v0.10.3](https://github.com/depictio/depictio/releases/tag/v0.10.3)** (May 4, 2026)
 
 !!! success "Stable Release"
