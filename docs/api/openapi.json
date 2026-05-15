@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "0.11.2",
-    "x-generated-at": "2026-05-07T08:01:03Z",
-    "x-depictio-version": "v0.11.2"
+    "version": "0.12.0",
+    "x-generated-at": "2026-05-15T19:07:56Z",
+    "x-depictio-version": "v0.12.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -325,6 +325,56 @@
             }
           }
         }
+      }
+    },
+    "/depictio/api/v1/projects/admin/examples": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "List Example Projects",
+        "description": "List seed projects that currently exist in Mongo. Admin-only.\n\nTolerates anonymous (single-user / public mode) so the React admin page\nloads without a persisted token — the inline ``is_admin`` gate below still\nblocks non-admin users.",
+        "operationId": "list_example_projects_depictio_api_v1_projects_admin_examples_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/admin/clean_examples": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Clean Example Projects",
+        "description": "Delete every seed project listed in ``SEED_PROJECT_IDS`` that still\nexists, cascading dashboards / workflows / data collections / S3 objects\nvia ``_cascade_delete_project``. Admin-only.",
+        "operationId": "clean_example_projects_depictio_api_v1_projects_admin_clean_examples_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/depictio/api/v1/projects/update_project_permissions": {
@@ -1337,13 +1387,103 @@
           "Data Collections"
         ],
         "summary": "Create Data Collection From Upload",
-        "description": "Create a data collection from an uploaded file (basic projects).\n\nWraps the same scan + process pipeline used by depictio-cli, exposing\nit directly to the React UI so we don't need to round-trip through\nDash anymore. Tolerates missing tokens (single-user / public mode); the\nproject-permission check inside ``_create_dc_from_upload`` still gates\nwrite access.",
+        "description": "Create a data collection from an uploaded file (basic projects).\n\nWraps the same scan + process pipeline used by depictio-cli, exposing\nit directly to the React UI so we don't need to round-trip through\nDash anymore. Tolerates missing tokens (single-user / public mode); the\nproject-permission check inside ``_create_dc_from_upload`` still gates\nwrite access.\n\nWhen ``lat_column`` and ``lon_column`` are provided, the resulting DC\nconfig is a ``DCTableCoordinatesConfig`` (still ``dc_type='table'``) —\nconsumed by Map components for geographic data.",
         "operationId": "create_data_collection_from_upload_depictio_api_v1_datacollections_create_from_upload_post",
         "requestBody": {
           "content": {
             "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/Body_create_data_collection_from_upload_depictio_api_v1_datacollections_create_from_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/datacollections/multiqc_uniformity_check": {
+      "post": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Multiqc Uniformity Check",
+        "description": "Dry-run MultiQC uniformity check (no DC created, no S3 writes).\n\nLets the React Create DC modal preview the same checks the create flow\nruns (modules, plots, version, samples) before the user commits to Create.",
+        "operationId": "multiqc_uniformity_check_depictio_api_v1_datacollections_multiqc_uniformity_check_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_multiqc_uniformity_check_depictio_api_v1_datacollections_multiqc_uniformity_check_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/datacollections/create_multiqc_from_upload": {
+      "post": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Create Multiqc Data Collection From Upload",
+        "description": "Create a MultiQC data collection from one or more uploaded multiqc.parquet files.\n\nEach file's effective name is the browser-provided ``webkitRelativePath``\n(``run_01/multiqc_data/multiqc.parquet``) so the helper can group reports\nby parent folder. Per-file cap 50MB, total cap 500MB; per-file cap is\nenforced inside the helper, total is enforced here against the headers\nso we can fail fast before reading bodies.",
+        "operationId": "create_multiqc_data_collection_from_upload_depictio_api_v1_datacollections_create_multiqc_from_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_create_multiqc_data_collection_from_upload_depictio_api_v1_datacollections_create_multiqc_from_upload_post"
               }
             }
           },
@@ -1708,6 +1848,186 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MultiQCReportsListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "MultiQC",
+          "MultiQC"
+        ],
+        "summary": "Bulk-delete all MultiQC reports for a data collection",
+        "description": "Delete all MultiQC reports linked to a data collection in a single Mongo call.\n\nOptionally also deletes the underlying S3 parquet objects. Returns counts for\nboth Mongo and S3 deletions.",
+        "operationId": "delete_all_reports_for_data_collection_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "delete_s3_files",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Whether to also delete the associated S3 parquet objects",
+              "default": false,
+              "title": "Delete S3 Files"
+            },
+            "description": "Whether to also delete the associated S3 parquet objects"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Delete All Reports For Data Collection Depictio Api V1 Multiqc Reports Data Collection  Data Collection Id  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/multiqc/reports/data-collection/{data_collection_id}/replace": {
+      "post": {
+        "tags": [
+          "MultiQC",
+          "MultiQC"
+        ],
+        "summary": "Replace all reports for a MultiQC DC with the uploaded set",
+        "description": "Bulk-delete every existing report (Mongo + S3) and reprocess from the uploads.\n\nEditor permission check happens inside the helper; returns 404 (not 403)\non permission failure to avoid leaking DC existence.",
+        "operationId": "replace_multiqc_reports_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__replace_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_replace_multiqc_reports_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__replace_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Replace Multiqc Reports Depictio Api V1 Multiqc Reports Data Collection  Data Collection Id  Replace Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/multiqc/reports/data-collection/{data_collection_id}/append": {
+      "post": {
+        "tags": [
+          "MultiQC",
+          "MultiQC"
+        ],
+        "summary": "Append new reports to a MultiQC DC, preserving existing reports",
+        "description": "Add new uploads to an existing MultiQC DC.\n\nExisting reports' parquets are pulled back from S3 so the processor\nsees the full file set. Old report rows are dropped only after the\nreprocess succeeds — partial failure leaves the DC at its pre-append\nstate.",
+        "operationId": "append_multiqc_reports_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__append_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_append_multiqc_reports_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__append_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Append Multiqc Reports Depictio Api V1 Multiqc Reports Data Collection  Data Collection Id  Append Post"
                 }
               }
             }
@@ -8088,6 +8408,23 @@
         ],
         "title": "BackupValidateResponse"
       },
+      "Body_append_multiqc_reports_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__append_post": {
+        "properties": {
+          "files": {
+            "items": {
+              "type": "string",
+              "format": "binary"
+            },
+            "type": "array",
+            "title": "Files"
+          }
+        },
+        "type": "object",
+        "required": [
+          "files"
+        ],
+        "title": "Body_append_multiqc_reports_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__append_post"
+      },
       "Body_compare_models_endpoint_depictio_api_v1_workflows_compare_workflow_models_post": {
         "properties": {
           "new_workflow": {
@@ -8155,6 +8492,28 @@
             "title": "Description",
             "default": ""
           },
+          "lat_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat Column"
+          },
+          "lon_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lon Column"
+          },
           "file": {
             "type": "string",
             "format": "binary",
@@ -8168,6 +8527,38 @@
           "file"
         ],
         "title": "Body_create_data_collection_from_upload_depictio_api_v1_datacollections_create_from_upload_post"
+      },
+      "Body_create_multiqc_data_collection_from_upload_depictio_api_v1_datacollections_create_multiqc_from_upload_post": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          },
+          "files": {
+            "items": {
+              "type": "string",
+              "format": "binary"
+            },
+            "type": "array",
+            "title": "Files"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id",
+          "name",
+          "files"
+        ],
+        "title": "Body_create_multiqc_data_collection_from_upload_depictio_api_v1_datacollections_create_multiqc_from_upload_post"
       },
       "Body_import_project_zip_depictio_api_v1_migrate_import_project_zip_post": {
         "properties": {
@@ -8239,6 +8630,40 @@
           "password"
         ],
         "title": "Body_login_depictio_api_v1_auth_login_post"
+      },
+      "Body_multiqc_uniformity_check_depictio_api_v1_datacollections_multiqc_uniformity_check_post": {
+        "properties": {
+          "files": {
+            "items": {
+              "type": "string",
+              "format": "binary"
+            },
+            "type": "array",
+            "title": "Files"
+          }
+        },
+        "type": "object",
+        "required": [
+          "files"
+        ],
+        "title": "Body_multiqc_uniformity_check_depictio_api_v1_datacollections_multiqc_uniformity_check_post"
+      },
+      "Body_replace_multiqc_reports_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__replace_post": {
+        "properties": {
+          "files": {
+            "items": {
+              "type": "string",
+              "format": "binary"
+            },
+            "type": "array",
+            "title": "Files"
+          }
+        },
+        "type": "object",
+        "required": [
+          "files"
+        ],
+        "title": "Body_replace_multiqc_reports_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__replace_post"
       },
       "CLIConfig-Input": {
         "properties": {
@@ -8710,13 +9135,78 @@
         ],
         "title": "DCTableConfig"
       },
+      "DCTableCoordinatesConfig": {
+        "properties": {
+          "format": {
+            "type": "string",
+            "title": "Format"
+          },
+          "polars_kwargs": {
+            "type": "object",
+            "title": "Polars Kwargs",
+            "default": {}
+          },
+          "keep_columns": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Keep Columns",
+            "default": []
+          },
+          "columns_description": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Columns Description",
+            "default": {}
+          },
+          "lat_column": {
+            "type": "string",
+            "title": "Lat Column"
+          },
+          "lon_column": {
+            "type": "string",
+            "title": "Lon Column"
+          },
+          "crs": {
+            "type": "string",
+            "title": "Crs",
+            "default": "EPSG:4326"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "format",
+          "lat_column",
+          "lon_column"
+        ],
+        "title": "DCTableCoordinatesConfig",
+        "description": "Table DC variant carrying explicit lat/lon column hints for Map components.\n\nSame dc_type (\"table\") as DCTableConfig — this is a programmatic specialisation\nmaterialised at deserialisation time when the persisted config dict carries\n`lat_column` / `lon_column` keys. All table-format handling (CSV/TSV/Parquet,\npolars_kwargs, keep_columns, columns_description) is inherited unchanged."
+      },
       "DashboardData": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -8974,7 +9464,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -9036,7 +9526,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -9098,7 +9588,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -9165,6 +9655,9 @@
           "dc_specific_properties": {
             "anyOf": [
               {
+                "$ref": "#/components/schemas/DCTableCoordinatesConfig"
+              },
+              {
                 "$ref": "#/components/schemas/DCTableConfig"
               },
               {
@@ -9217,7 +9710,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -9284,6 +9777,9 @@
           "dc_specific_properties": {
             "anyOf": [
               {
+                "$ref": "#/components/schemas/DCTableCoordinatesConfig"
+              },
+              {
                 "$ref": "#/components/schemas/DCTableConfig"
               },
               {
@@ -9347,7 +9843,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -9432,7 +9928,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-07 08:00:59"
+            "default": "2026-05-15 19:07:52"
           },
           "file_hash": {
             "type": "string",
@@ -10507,7 +11003,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -10714,7 +11210,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -10818,7 +11314,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-07 08:01:00"
+            "default": "2026-05-15 19:07:52"
           },
           "project_type": {
             "type": "string",
@@ -10864,7 +11360,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -10968,7 +11464,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-07 08:01:00"
+            "default": "2026-05-15 19:07:52"
           },
           "project_type": {
             "type": "string",
@@ -11445,7 +11941,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -11650,7 +12146,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -11881,7 +12377,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "69fc46b9d3e7a093d82cabb7"
+            "default": "6a076f0643f29253fa69873b"
           }
         },
         "type": "object",
@@ -11999,7 +12495,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -12117,7 +12613,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -12198,7 +12694,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -12283,7 +12779,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -12368,7 +12864,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -12533,7 +13029,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -12656,7 +13152,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-07 08:00:57"
+            "default": "2026-05-15 19:07:50"
           }
         },
         "additionalProperties": false,
@@ -12675,7 +13171,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -12798,7 +13294,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-07 08:00:57"
+            "default": "2026-05-15 19:07:50"
           }
         },
         "additionalProperties": false,
@@ -12850,7 +13346,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -12918,7 +13414,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -13015,7 +13511,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -13088,7 +13584,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-07 08:00:57"
+            "default": "2026-05-15 19:07:50"
           },
           "run_hash": {
             "type": "string",
@@ -13133,7 +13629,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "69fc46b9d3e7a093d82cabb6"
+            "default": "6a076f0643f29253fa69873a"
           },
           "description": {
             "anyOf": [
@@ -13206,7 +13702,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-07 08:00:57"
+            "default": "2026-05-15 19:07:50"
           },
           "run_hash": {
             "type": "string",
@@ -13268,7 +13764,7 @@
           "scan_time": {
             "type": "string",
             "title": "Scan Time",
-            "default": "2026-05-07 08:00:57"
+            "default": "2026-05-15 19:07:50"
           },
           "dc_stats": {
             "anyOf": [
