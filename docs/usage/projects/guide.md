@@ -460,8 +460,8 @@ graph TD
     D --> E["📊 Import bundled dashboards"]
     E --> F(["✨ <b>Project ready</b><br/><i>badge: Template: nf-core/ampliseq/2.16.0</i>"])
 
-    classDef default fill:#45B8AC,stroke:#2E7D73,stroke-width:2px,color:#fff
-    classDef endpoints fill:#2E7D73,stroke:#F68B33,stroke-width:3px,color:#fff
+    classDef default fill:#E0F2F1,stroke:#45B8AC,stroke-width:2px,color:#2E7D73
+    classDef endpoints fill:#45B8AC,stroke:#F68B33,stroke-width:3px,color:#fff
     class A,F endpoints
 ```
 
