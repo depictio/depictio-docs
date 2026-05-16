@@ -84,13 +84,13 @@ The current frontend is built with Plotly Dash (React under the hood), providing
 - :material-drag: Draggable and customizable dashboard layouts
 - :material-api: Integration with the backend API
 
-A second frontend — a Vite + Mantine **React SPA** (`depictio/viewer/`, shared `packages/depictio-react-core/`) — ships in Beta at `/dashboard-beta/{id}` and the related `*-beta` routes. From **v0.15.0** it replaces the Dash frontend and **graduates onto the current canonical URLs** (`/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, …); the `*-beta` paths are temporary. See the [Dash deprecation note](../changelog/README.md#v0120-may-15-2026).
+A second frontend — a Vite + Mantine **React SPA** (`depictio/viewer/`, shared `packages/depictio-react-core/`) — ships in Beta at `/dashboard-beta/{id}` and the related `*-beta` routes. See the [Dash deprecation note](../changelog/README.md#v0120-may-15-2026) for the v0.15.0 cutover plan.
 
 ---
 
 ## :material-apps: Multi-App Architecture (Dash, v0.6.0+)
 
-Starting with version 0.6.0, Depictio uses a **multi-app architecture** that separates the Dash frontend into three independent applications. The React (Beta) viewer exposes parallel routes (`/dashboards-beta`, `/dashboard-beta/{id}`, `/dashboard-beta-edit/{id}`) and shares the same FastAPI backend.
+Starting with version 0.6.0, Depictio uses a **multi-app architecture** that separates the Dash frontend into three independent applications. The React (Beta) viewer runs alongside on parallel `*-beta` routes against the same FastAPI backend.
 
 ```text
 ┌─────────────────────────────────────────────────────────────────┐
