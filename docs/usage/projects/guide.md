@@ -384,7 +384,13 @@ Non-uniform reports surface a checklist of differences (missing modules, diverge
 !!! example "#TODO figure — uniformity checklist after a *Check now* run"
     Screenshot placeholder — capture from the *Manage Data Collection* modal after appending a non-uniform report.
 
-### Map-capable Table Data Collections
+### Type-specific Data Collection configuration
+
+Some visualization types need extra metadata declared **at the Data Collection level** (e.g. which columns hold coordinates, which hold sample IDs, log-fold-change, p-values, …). Declaring this on the DC means every figure built on top inherits the config — no need to re-specify it per component.
+
+This pattern is being rolled out incrementally. The first shipped example is **Map**; advanced-viz types (volcano, ComplexHeatmap, UpSet, GSEA enrichment, rarefaction, …) will follow the same pattern.
+
+#### Example: Map-capable Table DCs
 
 Tabular DCs can be marked Map-capable so every Map figure built on them inherits the same coordinates without re-specifying `lat_column` / `lon_column`:
 
