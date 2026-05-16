@@ -530,7 +530,7 @@ The CLI will:
 Map components display geospatial data on interactive tile-based maps using Plotly Express (no API key required).
 
 !!! tip "Declaring coordinates at the DC level"
-    `lat_column` / `lon_column` can be set per-figure (below) **or** at the Data Collection level so every Map figure on that DC inherits them. See [Managing Data Collections from the viewer](../usage/projects/guide.md#managing-data-collections-from-the-viewer-react-beta) for the *Coordinates* tab and the `latColumn`/`lonColumn` upload hints.
+    `lat_column` / `lon_column` can be set per-figure (below) **or** at the Data Collection level so every Map figure on that DC inherits them. Map is the first example of [type-specific DC configuration](../usage/projects/guide.md#type-specific-data-collection-configuration); more visualization types will follow.
 
 ### Map Types
 
