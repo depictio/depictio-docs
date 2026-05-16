@@ -355,9 +355,12 @@ The CLI executes this pipeline:
 5. **✅ File Scan** - Discover files matching patterns
 6. **✅ Data Process** - Convert files to Delta Lake format
 
-## Managing Data Collections from the viewer (React Beta)
+## Managing Data Collections from the viewer (React Beta, v0.12.0+)
 
 The React (Beta) viewer at `/dashboards-beta` lets you create and manage Data Collections without leaving the UI. Available for Basic projects today; some flows also work on Advanced projects.
+
+!!! info "Available from v0.12.0"
+    All flows in this section require Depictio **v0.12.0 or later**. See the [changelog](../../changelog/README.md#v0120-may-15-2026) for the full release notes.
 
 ### MultiQC Data Collections
 
