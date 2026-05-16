@@ -355,6 +355,64 @@ The CLI executes this pipeline:
 5. **✅ File Scan** - Discover files matching patterns
 6. **✅ Data Process** - Convert files to Delta Lake format
 
+## Managing Data Collections from the viewer (v0.12.0+)
+
+Data Collections can be created and managed directly from the viewer — no YAML edits or CLI runs required. Available for Basic projects today; some flows also work on Advanced projects.
+
+!!! info "Available from v0.12.0"
+    All flows in this section require Depictio **v0.12.0 or later**. See the [changelog](../../changelog/README.md#v0120-may-15-2026) for the full release notes. Where a flow is only wired in the **React (Beta) viewer** (`/dashboards-beta`), this is noted on the subsection.
+
+### MultiQC Data Collections
+
+MultiQC DCs support a full lifecycle from the *Manage Data Collection* modal:
+
+| Action | What it does |
+|--------|--------------|
+| :material-plus: **Create** | Upload one or more MultiQC reports (single file or folder) — the DC is materialised with cache prewarmed via Celery |
+| :material-plus-box: **Append** | Add more runs to an existing DC; the live cache is invalidated and rewarmed |
+| :material-swap-horizontal: **Replace** | Swap the underlying report set in place |
+| :material-broom: **Clear** | Drop all data from the DC while keeping the definition |
+
+<!-- TODO(figure): MultiQC Manage Data Collection modal — append / replace / clear actions -->
+!!! example "#TODO figure — *Manage Data Collection* modal (MultiQC tab)"
+    Screenshot placeholder — capture from `/dashboards-beta/<id>` → DC actions menu.
+
+#### Uniformity validation (React Beta)
+
+!!! warning "React Beta only"
+    The uniformity checklist UI and the *Check now* button ship in the **React (Beta) viewer** only. The validator endpoint can be called from any client.
+
+Before ingest, MultiQC reports are checked for **uniformity** — the same module set and column schema across runs — so plot rendering stays consistent. The check runs automatically on **Create** and on every **Append**, and can be re-run on demand with the **Check now** button.
+
+Non-uniform reports surface a checklist of differences (missing modules, divergent columns) and block the destructive action until resolved.
+
+<!-- TODO(figure): MultiQC uniformity checklist — Check now button + failing rows -->
+!!! example "#TODO figure — uniformity checklist after a *Check now* run"
+    Screenshot placeholder — capture from the *Manage Data Collection* modal after appending a non-uniform report.
+
+### Type-specific Data Collection configuration (React Beta)
+
+!!! warning "React Beta only"
+    The UI for type-specific DC configuration ships in the **React (Beta) viewer** (`/dashboards-beta`). YAML-level configuration is supported everywhere.
+
+Some visualization types need extra metadata declared **at the Data Collection level** (e.g. which columns hold coordinates, which hold sample IDs, log-fold-change, p-values, …). Declaring this on the DC means every figure built on top inherits the config — no need to re-specify it per component.
+
+This pattern is being rolled out incrementally. The first shipped example is **:material-map-marker-multiple: Map**; advanced-viz types (volcano, ComplexHeatmap, UpSet, GSEA enrichment, rarefaction, …) will follow the same pattern.
+
+#### :material-map-marker-multiple: Example: Map-capable Table DCs
+
+Tabular DCs can be marked Map-capable so every Map figure built on them inherits the same coordinates without re-specifying `lat_column` / `lon_column`:
+
+- **In the React viewer**: the *Create DC* modal has a **Coordinates** tab. Columns are scanned and lat/lon candidates are detected inline — you confirm or override the pick.
+- **At upload time**: `POST /create_from_upload` accepts `latColumn` and `lonColumn` query params with column-existence validation.
+- **In YAML**: use `DCTableCoordinatesConfig` on the DC's config block (see [YAML examples](yaml-examples.md)).
+
+Per-figure `lat_column`/`lon_column` overrides still work when set; if both are unset, the DC-level config is used.
+
+<!-- TODO(figure): Create DC modal — Coordinates tab with inline lat/lon detection -->
+!!! example "#TODO figure — *Coordinates* tab in the Create DC modal"
+    Screenshot placeholder — capture from `/dashboards-beta/<id>` → *Create Data Collection* → *Coordinates*.
+
 ## Template Projects
 
 <!-- prettier-ignore -->
@@ -397,16 +455,17 @@ Use a manual YAML config when:
 ### Template workflow diagram
 
 ```mermaid
-graph LR
-    A["depictio run --template X --data-root /path"] --> B["Step 0: Resolve template\nSubstitute {DATA_ROOT}"]
-    B --> C["Validate data directory\n(Level 1 or Level 2 with --deep)"]
-    C --> D["Steps 1-7: Standard pipeline\n(sync, scan, process recipes, ...)"]
-    D --> E["Step 8: Import bundled dashboards"]
-    E --> F["Project ready + badge shown in UI\n'Template: nf-core/ampliseq/2.16.0'"]
+graph TD
+    A(["🚀 <b>depictio run --template X</b>"])
+    A --> B["📦 Resolve template<br/><i>substitute {DATA_ROOT}</i>"]
+    B --> C["✅ Validate data dir<br/><i>Level 1 / Level 2 (--deep)</i>"]
+    C --> D["⚙️ Sync · Scan · Process<br/><i>standard pipeline + recipes</i>"]
+    D --> E["📊 Import bundled dashboards"]
+    E --> F(["✨ <b>Project ready</b><br/><i>badge: Template: nf-core/ampliseq/2.16.0</i>"])
 
-    classDef default fill:#45B8AC,stroke:#2E7D73,stroke-width:2px,color:#fff
-    classDef highlight fill:#2E7D73,stroke:#45B8AC,stroke-width:2px,color:#fff
-    class A,F highlight
+    classDef default fill:#E0F2F1,stroke:#45B8AC,stroke-width:2px,color:#2E7D73
+    classDef endpoints fill:#45B8AC,stroke:#F68B33,stroke-width:3px,color:#fff
+    class A,F endpoints
 ```
 
 ### Template origin badge
@@ -429,7 +488,7 @@ Choose the right project type for your workflow:
 
 | Feature                  | Basic Projects                         | Advanced Projects             | Template Projects                         |
 | ------------------------ | -------------------------------------- | ----------------------------- | ----------------------------------------- |
-| **Setup Complexity**     | Minimal - Web UI or CLI                | YAML config + CLI required    | Single command, no YAML needed            |
+| **Setup Complexity**     | Minimal - Web UI or CLI                | CLI only today (WebUI planned), YAML config required    | Single CLI command, no YAML needed (WebUI planned)            |
 | **Data Sources**         | UI File upload or CLI-based processing | CLI-based processing          | CLI-based (pipeline output)               |
 | **File Organization**    | Simple file management                 | Structured directory patterns | Fixed structure per template              |
 | **Multi-sample Support** | Single datasets                        | Multi samples support         | Full support (template-specific)          |

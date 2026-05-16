@@ -21,7 +21,8 @@ Depictio's architecture consists of six main components organized by category:
 | Component | Technology | Purpose |
 |-----------|------------|---------|
 | :material-api: **Backend** | FastAPI | RESTful API, authentication, business logic |
-| :material-view-dashboard: **Frontend** | Plotly Dash | Interactive dashboards |
+| :material-view-dashboard: **Frontend (legacy)** | Plotly Dash | Interactive dashboards — removal in **v0.15.0** |
+| :material-react: **Frontend (Beta)** | React + Vite + Mantine | New viewer at `/dashboard-beta/*`; in v0.15.0 takes over the canonical URLs |
 
 ### :material-database: Data Layer
 
@@ -74,20 +75,22 @@ Redis serves dual purposes in Depictio:
 - :material-cached: **Caching**: DataFrame caching and session storage for improved performance
 - :material-message-fast: **Task Broker**: Message broker and result backend for Celery background tasks
 
-### :material-view-dashboard: Plotly Dash Frontend
+### :material-view-dashboard: Frontend — Dash today, React (Beta) tomorrow
 
-The frontend is built with Plotly Dash (React), providing:
+The current frontend is built with Plotly Dash (React under the hood), providing:
 
 - :material-chart-scatter-plot: Interactive data visualization components
 - :material-sync: Real-time data updates
 - :material-drag: Draggable and customizable dashboard layouts
 - :material-api: Integration with the backend API
 
+A second frontend — a Vite + Mantine **React SPA** (`depictio/viewer/`, shared `packages/depictio-react-core/`) — ships in Beta at `/dashboard-beta/{id}` and the related `*-beta` routes. See the [Dash deprecation note](../changelog/README.md#v0120-may-15-2026) for the v0.15.0 cutover plan.
+
 ---
 
-## :material-apps: Multi-App Architecture (v0.6.0+)
+## :material-apps: Multi-App Architecture (Dash, v0.6.0+)
 
-Starting with version 0.6.0, Depictio uses a **multi-app architecture** that separates the frontend into three independent Dash applications:
+Starting with version 0.6.0, Depictio uses a **multi-app architecture** that separates the Dash frontend into three independent applications. The React (Beta) viewer runs alongside on parallel `*-beta` routes against the same FastAPI backend.
 
 ```text
 ┌─────────────────────────────────────────────────────────────────┐

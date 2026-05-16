@@ -8,6 +8,47 @@ hide:
 
 # Changelog
 
+## **[v0.12.0](https://github.com/depictio/depictio/releases/tag/v0.12.0)** (May 15, 2026)
+
+!!! success "Stable Release — MultiQC lifecycle and cross-DC links"
+
+!!! warning "Dash deprecation — removal in v0.15.0"
+    From **v0.15.0**, the legacy Plotly Dash frontend will be removed. The React viewer — currently in Beta at `/dashboard-beta/*` — will **graduate onto the canonical URLs** (`/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, …) and become the sole frontend. The `*-beta` paths are temporary. Track migration progress and contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.12.0
+```
+
+### **✨ New Features**
+
+* **MultiQC DC management** — full create / append / replace / clear
+  lifecycle
+* **MultiQC uniformity validator (React beta version only)** — dry-run check endpoint and *Check now*
+  button surface uniformity issues before ingest; runs automatically on the
+  create flow with a checklist UI.
+* **Cross-DC link** — create / edit / delete links from the
+  viewer with a polished modal
+* **Map-capable table DC (React beta version only)** — new `DCTableCoordinatesConfig` variant. The
+  Create DC modal has a **Coordinates** tab, inline DC previews, and inline
+  lat/lon detection; `/create_from_upload` accepts `latColumn`/`lonColumn`
+  hints with column validation.
+* **Dashboards & Projects revamp (React beta version only)** — new toolbar, table view, pins,
+  and filters across `/dashboards-beta` and `/projects-beta`; canonical
+  `selected_*` keys.
+
+### **🚀 Improvements**
+
+* MultiQC: disk-persistent prerender store + Celery worker rebuild, longer
+  preview offload timeout, collapsed multi-line log, safer append, cache-key
+  correctness.
+* Helm: ConfigMap/Secret content checksum rolls dependent Pods on change.
+* CI/Docker: pin `pnpm@10` in `viewer-builder` and `dev-viewer` stages;
+  viewer-dev Vite port wired through the dev-port allocator.
+
+---
+
 ## **[v0.11.2](https://github.com/depictio/depictio/releases/tag/v0.11.2)** (May 7, 2026)
 
 !!! success "Stable Release"
