@@ -453,15 +453,16 @@ Use a manual YAML config when:
 
 ```mermaid
 graph TD
-    A["depictio run --template X --data-root /path"] --> B["Step 0: Resolve template\nSubstitute {DATA_ROOT}"]
-    B --> C["Validate data directory\n(Level 1 or Level 2 with --deep)"]
-    C --> D["Steps 1-7: Standard pipeline\n(sync, scan, process recipes, ...)"]
-    D --> E["Step 8: Import bundled dashboards"]
-    E --> F["Project ready + badge shown in UI\n'Template: nf-core/ampliseq/2.16.0'"]
+    A(["🚀 <b>depictio run --template X</b>"])
+    A --> B["📦 Resolve template<br/><i>substitute {DATA_ROOT}</i>"]
+    B --> C["✅ Validate data dir<br/><i>Level 1 / Level 2 (--deep)</i>"]
+    C --> D["⚙️ Sync · Scan · Process<br/><i>standard pipeline + recipes</i>"]
+    D --> E["📊 Import bundled dashboards"]
+    E --> F(["✨ <b>Project ready</b><br/><i>badge: Template: nf-core/ampliseq/2.16.0</i>"])
 
     classDef default fill:#45B8AC,stroke:#2E7D73,stroke-width:2px,color:#fff
-    classDef highlight fill:#2E7D73,stroke:#45B8AC,stroke-width:2px,color:#fff
-    class A,F highlight
+    classDef endpoints fill:#2E7D73,stroke:#F68B33,stroke-width:3px,color:#fff
+    class A,F endpoints
 ```
 
 ### Template origin badge
@@ -484,7 +485,7 @@ Choose the right project type for your workflow:
 
 | Feature                  | Basic Projects                         | Advanced Projects             | Template Projects                         |
 | ------------------------ | -------------------------------------- | ----------------------------- | ----------------------------------------- |
-| **Setup Complexity**     | Minimal - Web UI or CLI                | YAML config + CLI required    | Single command, no YAML needed            |
+| **Setup Complexity**     | Minimal - Web UI or CLI                | CLI only today (WebUI planned), YAML config required    | Single CLI command, no YAML needed (WebUI planned)            |
 | **Data Sources**         | UI File upload or CLI-based processing | CLI-based processing          | CLI-based (pipeline output)               |
 | **File Organization**    | Simple file management                 | Structured directory patterns | Fixed structure per template              |
 | **Multi-sample Support** | Single datasets                        | Multi samples support         | Full support (template-specific)          |
