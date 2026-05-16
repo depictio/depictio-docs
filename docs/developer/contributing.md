@@ -419,7 +419,7 @@ Maintenance-only. New components should not be added here. All new UI in Dash **
 
 <!-- prettier-ignore -->
 !!! info "Critical for Dash contributors"
-    The Dash frontend uses **three separate applications**. Callbacks must be registered in the correct app(s). The React (Beta) viewer offers parallel routes (`/dashboards-beta`, `/dashboard-beta/{id}`, `/dashboard-beta-edit/{id}`) and is unaffected by these rules.
+    The Dash frontend uses **three separate applications**. Callbacks must be registered in the correct app(s). The React (Beta) viewer offers parallel routes (`/dashboards-beta`, `/dashboard-beta/{id}`, `/dashboard-beta-edit/{id}`) today and is unaffected by these rules — in **v0.15.0** it takes over the canonical Dash URLs and the `*-beta` paths go away.
 
 | App | URL Pattern | Purpose |
 |-----|-------------|---------|

@@ -22,7 +22,7 @@ Depictio's architecture consists of six main components organized by category:
 |-----------|------------|---------|
 | :material-api: **Backend** | FastAPI | RESTful API, authentication, business logic |
 | :material-view-dashboard: **Frontend (legacy)** | Plotly Dash | Interactive dashboards — removal in **v0.15.0** |
-| :material-react: **Frontend (Beta)** | React + Vite + Mantine | New viewer at `/dashboard-beta/*`, future default |
+| :material-react: **Frontend (Beta)** | React + Vite + Mantine | New viewer at `/dashboard-beta/*`; in v0.15.0 takes over the canonical URLs |
 
 ### :material-database: Data Layer
 
@@ -84,7 +84,7 @@ The current frontend is built with Plotly Dash (React under the hood), providing
 - :material-drag: Draggable and customizable dashboard layouts
 - :material-api: Integration with the backend API
 
-A second frontend — a Vite + Mantine **React SPA** (`depictio/viewer/`, shared `packages/depictio-react-core/`) — ships in Beta at `/dashboard-beta/{id}` and the related `*-beta` routes. From **v0.15.0** it replaces the Dash frontend; see the [Dash deprecation note](../changelog/README.md#v0120-may-15-2026).
+A second frontend — a Vite + Mantine **React SPA** (`depictio/viewer/`, shared `packages/depictio-react-core/`) — ships in Beta at `/dashboard-beta/{id}` and the related `*-beta` routes. From **v0.15.0** it replaces the Dash frontend and **graduates onto the current canonical URLs** (`/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, …); the `*-beta` paths are temporary. See the [Dash deprecation note](../changelog/README.md#v0120-may-15-2026).
 
 ---
 

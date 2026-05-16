@@ -13,7 +13,7 @@ hide:
 !!! success "Stable Release — MultiQC lifecycle and cross-DC links"
 
 !!! warning "Dash deprecation — removal in v0.15.0"
-    From **v0.15.0**, the legacy Plotly Dash frontend will be removed. The React (Beta) viewer at `/dashboard-beta/*` will become the sole frontend. Track migration progress and contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
+    From **v0.15.0**, the legacy Plotly Dash frontend will be removed. The React viewer — currently in Beta at `/dashboard-beta/*` — will **graduate onto the canonical URLs** (`/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, …) and become the sole frontend. The `*-beta` paths are temporary. Track migration progress and contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
 
 ### Docker Images
 
