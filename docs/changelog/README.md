@@ -10,11 +10,10 @@ hide:
 
 ## **[v0.12.0](https://github.com/depictio/depictio/releases/tag/v0.12.0)** (May 15, 2026)
 
-!!! warning "Minor Release — React viewer data-management UX"
-    First release where the React (Beta) viewer can **create and manage**
-    Data Collections end-to-end: MultiQC lifecycle, cross-DC links, and a
-    new Map-capable table DC with coordinates detection. The legacy Dash UI
-    is unchanged.
+!!! success "Stable Release — MultiQC lifecycle and cross-DC links"
+
+!!! warning "Dash deprecation — removal in v0.15.0"
+    From **v0.15.0**, the legacy Plotly Dash frontend will be removed. The React (Beta) viewer at `/dashboard-beta/*` will become the sole frontend. Track migration progress and contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
 
 ### Docker Images
 
@@ -24,24 +23,20 @@ ghcr.io/depictio/depictio:0.12.0
 
 ### **✨ New Features**
 
-* **MultiQC DC management in React** — full create / append / replace / clear
-  lifecycle via new HTTP endpoints, with a unified *Manage Data Collection*
-  modal, folder uploads, live cache + Celery prewarm, disk-persistent
-  prerender store, and authorization on destructive endpoints.
-* **MultiQC uniformity validator** — dry-run check endpoint and *Check now*
+* **MultiQC DC management** — full create / append / replace / clear
+  lifecycle
+* **MultiQC uniformity validator (React beta version only)** — dry-run check endpoint and *Check now*
   button surface uniformity issues before ingest; runs automatically on the
   create flow with a checklist UI.
-* **Cross-DC link CRUD in React** — create / edit / delete links from the
-  viewer with a polished modal; Cytoscape link graph handles enriched
-  aggregation specs and missing column nodes; links cascade-delete with their
-  DC.
-* **Map-capable table DC** — new `DCTableCoordinatesConfig` variant. The
+* **Cross-DC link** — create / edit / delete links from the
+  viewer with a polished modal
+* **Map-capable table DC (React beta version only)** — new `DCTableCoordinatesConfig` variant. The
   Create DC modal has a **Coordinates** tab, inline DC previews, and inline
   lat/lon detection; `/create_from_upload` accepts `latColumn`/`lonColumn`
   hints with column validation.
-* **Dashboards & Projects revamp (React)** — new toolbar, table view, pins,
+* **Dashboards & Projects revamp (React beta version only)** — new toolbar, table view, pins,
   and filters across `/dashboards-beta` and `/projects-beta`; canonical
-  `selected_*` keys + SPA route polish.
+  `selected_*` keys.
 
 ### **🚀 Improvements**
 
@@ -51,16 +46,6 @@ ghcr.io/depictio/depictio:0.12.0
 * Helm: ConfigMap/Secret content checksum rolls dependent Pods on change.
 * CI/Docker: pin `pnpm@10` in `viewer-builder` and `dev-viewer` stages;
   viewer-dev Vite port wired through the dev-port allocator.
-
-### **🐛 Bug Fixes**
-
-* Viewer: hide demo banner + tour in React routes; favicon path rewritten by
-  Vite `base`; side-by-side worktree dev stacks unblocked.
-* Cytoscape: handle `aggregation_columns_specs` as list of dicts; extract DC
-  columns from enriched specs; resolve edges referencing nonexistent column
-  nodes.
-* MultiQC: skip scan step on create, fix file naming, tighten suffix regex.
-* Screenshots: regenerate clean example dashboard previews.
 
 ---
 
