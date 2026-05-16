@@ -388,19 +388,19 @@ We use pre-commit hooks to enforce:
 ### Frontend Guidelines
 
 !!! warning "Two frontends, two sets of rules"
-    Depictio currently ships **two frontends**. New work should target the **React (Beta) viewer** unless you are fixing or maintaining the legacy Dash app — Dash is scheduled for removal in **v0.15.0**.
+    Depictio ships two frontends today. Target the **React (Beta) viewer** for new work; only touch the Dash app for maintenance. See the [Dash deprecation note](../changelog/README.md#v0120-may-15-2026) for the v0.15.0 cutover.
 
 #### React (Beta) frontend — preferred for new work
 
 Lives in `depictio/viewer/` and `packages/depictio-react-core/`. Stack: Vite + React + Mantine 7 + `pnpm@10`.
 
-- **Use default Mantine theming** — drop hardcoded color literals and custom CSS unless you have a strong reason. Mantine's tokens cover light/dark automatically.
+- **Use default Mantine theming** — drop hardcoded color literals and custom CSS unless there's a strong reason. Mantine tokens cover light/dark automatically.
 - **Workspace**: `pnpm -C depictio/viewer dev` runs the dev server at port `5173` against the existing FastAPI backend.
-- **Shared logic** belongs in `packages/depictio-react-core/`, not duplicated in the viewer.
+- **Shared logic** belongs in `packages/depictio-react-core/`, not in the viewer.
 
-#### Dash frontend — legacy (removal in v0.15.0)
+#### Dash frontend — legacy
 
-Maintenance-only. New components should not be added here. All new UI in Dash **must** use DMC 2.0+ (Dash Mantine Components) and support dark/light themes.
+Maintenance-only — no new components. Existing Dash UI **must** use DMC 2.0+ (Dash Mantine Components) and support dark/light themes.
 
 **Component library priority:**
 
@@ -419,7 +419,7 @@ Maintenance-only. New components should not be added here. All new UI in Dash **
 
 <!-- prettier-ignore -->
 !!! info "Critical for Dash contributors"
-    The Dash frontend uses **three separate applications**. Callbacks must be registered in the correct app(s). The React (Beta) viewer offers parallel routes (`/dashboards-beta`, `/dashboard-beta/{id}`, `/dashboard-beta-edit/{id}`) today and is unaffected by these rules — in **v0.15.0** it takes over the canonical Dash URLs and the `*-beta` paths go away.
+    The Dash frontend uses **three separate applications**. Callbacks must be registered in the correct app(s). The React (Beta) viewer runs on parallel `*-beta` routes and is unaffected by these rules.
 
 | App | URL Pattern | Purpose |
 |-----|-------------|---------|

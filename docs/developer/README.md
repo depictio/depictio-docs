@@ -13,7 +13,7 @@ This section provides information for developers who want to contribute to Depic
 Depictio is an open-source project that welcomes contributions from the community. There are many ways to contribute:
 
 - **Code contributions**: Implement new features, develop new components, or fix bugs
-- **Frontend ports**: Port Dash components to the React (Beta) viewer (Dash is removed in **v0.15.0**)
+- **Frontend ports**: Port Dash components to the React (Beta) viewer
 - **Testing**: Help test features or report bugs
 - **Design**: Contribute to the UI/UX design
 - **Documentation**: Improve or expand the documentation
@@ -56,7 +56,7 @@ pytest depictio/tests/ -xvs
 
 # Start development server
 pixi run api                      # FastAPI backend
-pixi run dash                     # Dash frontend (legacy, removal in v0.15.0)
+pixi run dash                     # Dash frontend (legacy)
 pnpm -C depictio/viewer dev       # React (Beta) viewer at http://localhost:5173
 ```
 
