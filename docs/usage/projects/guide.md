@@ -355,12 +355,12 @@ The CLI executes this pipeline:
 5. **✅ File Scan** - Discover files matching patterns
 6. **✅ Data Process** - Convert files to Delta Lake format
 
-## Managing Data Collections from the viewer (React Beta, v0.12.0+)
+## Managing Data Collections from the viewer (v0.12.0+)
 
-The React (Beta) viewer at `/dashboards-beta` lets you create and manage Data Collections without leaving the UI. Available for Basic projects today; some flows also work on Advanced projects.
+Data Collections can be created and managed directly from the viewer — no YAML edits or CLI runs required. Available for Basic projects today; some flows also work on Advanced projects.
 
 !!! info "Available from v0.12.0"
-    All flows in this section require Depictio **v0.12.0 or later**. See the [changelog](../../changelog/README.md#v0120-may-15-2026) for the full release notes.
+    All flows in this section require Depictio **v0.12.0 or later**. See the [changelog](../../changelog/README.md#v0120-may-15-2026) for the full release notes. Where a flow is only wired in the **React (Beta) viewer** (`/dashboards-beta`), this is noted on the subsection.
 
 ### MultiQC Data Collections
 
@@ -387,7 +387,10 @@ Non-uniform reports surface a checklist of differences (missing modules, diverge
 !!! example "#TODO figure — uniformity checklist after a *Check now* run"
     Screenshot placeholder — capture from the *Manage Data Collection* modal after appending a non-uniform report.
 
-### Type-specific Data Collection configuration
+### Type-specific Data Collection configuration (React Beta)
+
+!!! warning "React Beta only"
+    The UI for type-specific DC configuration ships in the **React (Beta) viewer** (`/dashboards-beta`). YAML-level configuration is supported everywhere.
 
 Some visualization types need extra metadata declared **at the Data Collection level** (e.g. which columns hold coordinates, which hold sample IDs, log-fold-change, p-values, …). Declaring this on the DC means every figure built on top inherits the config — no need to re-specify it per component.
 
