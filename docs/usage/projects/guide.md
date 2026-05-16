@@ -377,7 +377,10 @@ MultiQC DCs support a full lifecycle from the *Manage Data Collection* modal:
 !!! example "#TODO figure — *Manage Data Collection* modal (MultiQC tab)"
     Screenshot placeholder — capture from `/dashboards-beta/<id>` → DC actions menu.
 
-#### Uniformity validation
+#### Uniformity validation (React Beta)
+
+!!! warning "React Beta only"
+    The uniformity checklist UI and the *Check now* button ship in the **React (Beta) viewer** only. The validator endpoint can be called from any client.
 
 Before ingest, MultiQC reports are checked for **uniformity** — the same module set and column schema across runs — so plot rendering stays consistent. The check runs automatically on **Create** and on every **Append**, and can be re-run on demand with the **Check now** button.
 
