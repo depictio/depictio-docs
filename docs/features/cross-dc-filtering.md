@@ -131,6 +131,20 @@ workflows:
           # ... scan config ...
 ```
 
+## :material-pencil-box: Managing links from the viewer (React Beta)
+
+Links can be defined in YAML (above) **or** managed interactively from the React viewer (`/dashboards-beta`). Both paths target the same `links:` data; UI-managed links are persisted alongside YAML-defined ones.
+
+| Action | Where | Notes |
+|--------|-------|-------|
+| :material-plus: **Create** | DC actions menu → *Manage Links* → *Add link* | Source + target DC, source column, resolver, optional sample mapping |
+| :material-pencil: **Edit** | Link row → *Edit* | Updates the resolver config in place |
+| :material-delete: **Delete** | Link row → *Delete* | Cascades automatically when the source or target DC is removed |
+
+<!-- TODO(figure): Cross-DC link create/edit modal — resolver selection -->
+!!! example "#TODO figure — link *Create/Edit* modal with resolver picker"
+    Screenshot placeholder — capture from `/dashboards-beta/<id>` → *Manage Links* → *Add link*.
+
 ## :material-view-dashboard: Dashboard Usage
 
 1. :material-view-dashboard-outline: Create a dashboard with your linked data collections
