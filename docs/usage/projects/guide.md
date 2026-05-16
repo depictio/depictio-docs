@@ -452,7 +452,7 @@ Use a manual YAML config when:
 ### Template workflow diagram
 
 ```mermaid
-graph LR
+graph TD
     A["depictio run --template X --data-root /path"] --> B["Step 0: Resolve template\nSubstitute {DATA_ROOT}"]
     B --> C["Validate data directory\n(Level 1 or Level 2 with --deep)"]
     C --> D["Steps 1-7: Standard pipeline\n(sync, scan, process recipes, ...)"]
