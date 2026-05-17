@@ -115,23 +115,6 @@
     </div>
     <div data-md-component="announce">
       
-        <aside class="md-banner">
-          <div class="md-banner__inner md-grid md-typeset">
-            
-              <button class="md-banner__button md-icon" aria-label="Don't show this again">
-                
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-              </button>
-            
-            
-    Depictio is currently in active development and is not yet suitable for production use.
-
-          </div>
-          
-            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
-          
-        </aside>
-      
     </div>
     
       <div data-md-color-scheme="default" data-md-component="outdated" hidden>
@@ -2404,6 +2387,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#managing-links-from-the-viewer-react-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing links from the viewer (React Beta)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#dashboard-usage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4028,6 +4022,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#managing-links-from-the-viewer-react-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing links from the viewer (React Beta)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#dashboard-usage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4252,6 +4257,39 @@
 <a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a><span class="w">          </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;aggregate&quot;</span>
 <a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a><span class="w">          </span><span class="c1"># ... scan config ...</span>
 </code></pre></div>
+<h2 id="managing-links-from-the-viewer-react-beta"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-2.3 6.35c.22-.21.22-.56 0-.77L15.42 7.3a.53.53 0 0 0-.77 0l-1 1 2.05 2.05zM7 14.94V17h2.06l6.06-6.06-2.06-2.06z"/></svg></span> Managing links from the viewer (React Beta)<a class="headerlink" href="#managing-links-from-the-viewer-react-beta" title="Permanent link">&para;</a></h2>
+<p>Links can be defined in YAML (above) <strong>or</strong> managed interactively from the React viewer (<code>/dashboards-beta</code>). Both paths target the same <code>links:</code> data; UI-managed links are persisted alongside YAML-defined ones.</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Where</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg></span> <strong>Create</strong></td>
+<td>DC actions menu → <em>Manage Links</em> → <em>Add link</em></td>
+<td>Source + target DC, source column, resolver, optional sample mapping</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg></span> <strong>Edit</strong></td>
+<td>Link row → <em>Edit</em></td>
+<td>Updates the resolver config in place</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z"/></svg></span> <strong>Delete</strong></td>
+<td>Link row → <em>Delete</em></td>
+<td>Cascades automatically when the source or target DC is removed</td>
+</tr>
+</tbody>
+</table>
+<figure>
+  <img alt="Cross-DC link Create modal — source/target DCs picked, Sample mapping resolver, mapping preview" src="../../images/v0.12/link_create_modal.png" />
+<br />
+<figcaption><em>Create cross-DC link</em> modal — source DC <code>sample_metadata</code>, target DC <code>multiqc_reports</code> (detected as <em>multiqc</em>), <em>Sample mapping</em> resolver, with the auto-loaded MultiQC sample mappings previewed.</figcaption>
+</figure>
 <h2 id="dashboard-usage"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z"/></svg></span> Dashboard Usage<a class="headerlink" href="#dashboard-usage" title="Permanent link">&para;</a></h2>
 <ol>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"/></svg></span> Create a dashboard with your linked data collections</li>

@@ -115,23 +115,6 @@
     </div>
     <div data-md-component="announce">
       
-        <aside class="md-banner">
-          <div class="md-banner__inner md-grid md-typeset">
-            
-              <button class="md-banner__button md-icon" aria-label="Don't show this again">
-                
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-              </button>
-            
-            
-    Depictio is currently in active development and is not yet suitable for production use.
-
-          </div>
-          
-            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
-          
-        </aside>
-      
     </div>
     
       <div data-md-color-scheme="default" data-md-component="outdated" hidden>
@@ -5709,7 +5692,7 @@
 </table>
 <div class="admonition note">
 <p class="admonition-title">Data Requirements</p>
-<p>MultiQC components require pre-generated MultiQC reports. The report HTML files should be accessible via the configured data source.</p>
+<p>MultiQC components require pre-generated MultiQC reports. The report HTML files should be accessible via the configured data source. See <a href="../../usage/projects/guide/#managing-data-collections-from-the-viewer-v0120">Managing Data Collections from the viewer</a> for the create / append / replace / clear lifecycle.</p>
 </div>
 <hr />
 <h2 id="image-components"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-11-4 2.03 2.71L16 11l4 5H8M2 6v14a2 2 0 0 0 2 2h14v-2H4V6"/></svg></span> Image Components<a class="headerlink" href="#image-components" title="Permanent link">&para;</a></h2>
@@ -5869,6 +5852,10 @@
 <hr />
 <h2 id="map-components"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 11.5A2.5 2.5 0 0 0 16.5 9 2.5 2.5 0 0 0 14 6.5 2.5 2.5 0 0 0 11.5 9a2.5 2.5 0 0 0 2.5 2.5M14 2c3.86 0 7 3.13 7 7 0 5.25-7 13-7 13S7 14.25 7 9a7 7 0 0 1 7-7M5 9c0 4.5 5.08 10.66 6 11.81L10 22S3 14.25 3 9c0-3.17 2.11-5.85 5-6.71C6.16 3.94 5 6.33 5 9"/></svg></span> Map Components<a class="headerlink" href="#map-components" title="Permanent link">&para;</a></h2>
 <p>Map components display geospatial data on interactive tile-based maps using Plotly Express (no API key required).</p>
+<div class="admonition tip">
+<p class="admonition-title">Declaring coordinates at the DC level</p>
+<p><code>lat_column</code> / <code>lon_column</code> can be set per-figure (below) <strong>or</strong> at the Data Collection level so every Map figure on that DC inherits them. Map is the first example of <a href="../../usage/projects/guide/#type-specific-data-collection-configuration-react-beta">type-specific DC configuration</a>; more visualization types will follow.</p>
+</div>
 <h3 id="map-types">Map Types<a class="headerlink" href="#map-types" title="Permanent link">&para;</a></h3>
 <table>
 <thead>

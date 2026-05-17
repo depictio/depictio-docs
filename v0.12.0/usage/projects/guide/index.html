@@ -115,23 +115,6 @@
     </div>
     <div data-md-component="announce">
       
-        <aside class="md-banner">
-          <div class="md-banner__inner md-grid md-typeset">
-            
-              <button class="md-banner__button md-icon" aria-label="Don't show this again">
-                
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-              </button>
-            
-            
-    Depictio is currently in active development and is not yet suitable for production use.
-
-          </div>
-          
-            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
-          
-        </aside>
-      
     </div>
     
       <div data-md-color-scheme="default" data-md-component="outdated" hidden>
@@ -1602,6 +1585,79 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#managing-data-collections-from-the-viewer-v0120" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing Data Collections from the viewer (v0.12.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Managing Data Collections from the viewer (v0.12.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multiqc-data-collections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MultiQC Data Collections
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MultiQC Data Collections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uniformity-validation-react-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uniformity validation (React Beta)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-specific-data-collection-configuration-react-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type-specific Data Collection configuration (React Beta)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Type-specific Data Collection configuration (React Beta)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-map-capable-table-dcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Map-capable Table DCs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -4505,6 +4561,79 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#managing-data-collections-from-the-viewer-v0120" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing Data Collections from the viewer (v0.12.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Managing Data Collections from the viewer (v0.12.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multiqc-data-collections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MultiQC Data Collections
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MultiQC Data Collections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uniformity-validation-react-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uniformity validation (React Beta)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-specific-data-collection-configuration-react-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type-specific Data Collection configuration (React Beta)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Type-specific Data Collection configuration (React Beta)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-map-capable-table-dcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Map-capable Table DCs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#template-projects" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5229,6 +5358,77 @@
 <li><strong>✅ File Scan</strong> - Discover files matching patterns</li>
 <li><strong>✅ Data Process</strong> - Convert files to Delta Lake format</li>
 </ol>
+<h2 id="managing-data-collections-from-the-viewer-v0120">Managing Data Collections from the viewer (v0.12.0+)<a class="headerlink" href="#managing-data-collections-from-the-viewer-v0120" title="Permanent link">&para;</a></h2>
+<p>Data Collections can be created and managed directly from the viewer — no YAML edits or CLI runs required. Available for Basic projects today; some flows also work on Advanced projects.</p>
+<div class="admonition info">
+<p class="admonition-title">Available from v0.12.0</p>
+<p>All flows in this section require Depictio <strong>v0.12.0 or later</strong>. See the <a href="../../../changelog/#v0120-may-15-2026">changelog</a> for the full release notes. Where a flow is only wired in the <strong>React (Beta) viewer</strong> (<code>/dashboards-beta</code>), this is noted on the subsection.</p>
+</div>
+<h3 id="multiqc-data-collections">MultiQC Data Collections<a class="headerlink" href="#multiqc-data-collections" title="Permanent link">&para;</a></h3>
+<p>MultiQC DCs support a full lifecycle from the <em>Manage Data Collection</em> modal:</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg></span> <strong>Create</strong></td>
+<td>Upload one or more MultiQC reports (single file or folder) — the DC is materialised with cache prewarmed via Celery</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m2-8H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2"/></svg></span> <strong>Append</strong></td>
+<td>Add more runs to an existing DC; the live cache is invalidated and rewarmed</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21 9-4-4v3h-7v2h7v3M7 11l-4 4 4 4v-3h7v-2H7z"/></svg></span> <strong>Replace</strong></td>
+<td>Swap the underlying report set in place</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.36 2.72 1.42 1.42-5.72 5.71c1.07 1.54 1.22 3.39.32 4.59L9.06 8.12c1.2-.9 3.05-.75 4.59.32zM5.93 17.57c-2.01-2.01-3.24-4.41-3.58-6.65l4.88-2.09 7.44 7.44-2.09 4.88c-2.24-.34-4.64-1.57-6.65-3.58"/></svg></span> <strong>Clear</strong></td>
+<td>Drop all data from the DC while keeping the definition</td>
+</tr>
+</tbody>
+</table>
+<figure>
+  <img alt="Manage Data Collection modal — Modify data / Clear contents tabs" src="../../../images/v0.12/manage_dc_modal.png" />
+<br />
+<figcaption><em>Manage Data Collection</em> modal — the <em>Modify data</em> tab handles append / replace; <em>Clear contents</em> drops data while keeping the DC definition. Shown against a Table DC; the same shell drives the MultiQC lifecycle, with the inner upload UI swapped for multiqc-folder ingest.</figcaption>
+</figure>
+<h4 id="uniformity-validation-react-beta">Uniformity validation (React Beta)<a class="headerlink" href="#uniformity-validation-react-beta" title="Permanent link">&para;</a></h4>
+<div class="admonition warning">
+<p class="admonition-title">React Beta only</p>
+<p>The uniformity checklist UI and the <em>Check now</em> button ship in the <strong>React (Beta) viewer</strong> only. The validator endpoint can be called from any client.</p>
+</div>
+<p>Before ingest, MultiQC reports are checked for <strong>uniformity</strong> — the same module set and column schema across runs — so plot rendering stays consistent. The check runs automatically on <strong>Create</strong> and on every <strong>Append</strong>, and can be re-run on demand with the <strong>Check now</strong> button.</p>
+<p>Non-uniform reports surface a checklist of differences (missing modules, divergent columns) and block the destructive action until resolved.</p>
+<figure>
+  <img alt="MultiQC uniformity checks — Modules, Plot keys, version, Sample uniqueness all passing, with Check now button" src="../../../images/v0.12/uniformity_checklist.png" />
+<br />
+<figcaption>Uniformity checks panel inside the MultiQC create flow — module set, plot keys, MultiQC version, and sample uniqueness are validated; <em>Check now</em> re-runs the check on demand.</figcaption>
+</figure>
+<h3 id="type-specific-data-collection-configuration-react-beta">Type-specific Data Collection configuration (React Beta)<a class="headerlink" href="#type-specific-data-collection-configuration-react-beta" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">React Beta only</p>
+<p>The UI for type-specific DC configuration ships in the <strong>React (Beta) viewer</strong> (<code>/dashboards-beta</code>). YAML-level configuration is supported everywhere.</p>
+</div>
+<p>Some visualization types need extra metadata declared <strong>at the Data Collection level</strong> (e.g. which columns hold coordinates, which hold sample IDs, log-fold-change, p-values, …). Declaring this on the DC means every figure built on top inherits the config — no need to re-specify it per component.</p>
+<p>This pattern is being rolled out incrementally. The first shipped example is <strong><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 11.5A2.5 2.5 0 0 0 16.5 9 2.5 2.5 0 0 0 14 6.5 2.5 2.5 0 0 0 11.5 9a2.5 2.5 0 0 0 2.5 2.5M14 2c3.86 0 7 3.13 7 7 0 5.25-7 13-7 13S7 14.25 7 9a7 7 0 0 1 7-7M5 9c0 4.5 5.08 10.66 6 11.81L10 22S3 14.25 3 9c0-3.17 2.11-5.85 5-6.71C6.16 3.94 5 6.33 5 9"/></svg></span> Map</strong>; advanced-viz types (volcano, ComplexHeatmap, UpSet, GSEA enrichment, rarefaction, …) will follow the same pattern.</p>
+<h4 id="example-map-capable-table-dcs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 11.5A2.5 2.5 0 0 0 16.5 9 2.5 2.5 0 0 0 14 6.5 2.5 2.5 0 0 0 11.5 9a2.5 2.5 0 0 0 2.5 2.5M14 2c3.86 0 7 3.13 7 7 0 5.25-7 13-7 13S7 14.25 7 9a7 7 0 0 1 7-7M5 9c0 4.5 5.08 10.66 6 11.81L10 22S3 14.25 3 9c0-3.17 2.11-5.85 5-6.71C6.16 3.94 5 6.33 5 9"/></svg></span> Example: Map-capable Table DCs<a class="headerlink" href="#example-map-capable-table-dcs" title="Permanent link">&para;</a></h4>
+<p>Tabular DCs can be marked Map-capable so every Map figure built on them inherits the same coordinates without re-specifying <code>lat_column</code> / <code>lon_column</code>:</p>
+<ul>
+<li><strong>In the React viewer</strong>: the <em>Create DC</em> modal has a <strong>Coordinates</strong> tab. Columns are scanned and lat/lon candidates are detected inline — you confirm or override the pick.</li>
+<li><strong>At upload time</strong>: <code>POST /create_from_upload</code> accepts <code>latColumn</code> and <code>lonColumn</code> query params with column-existence validation.</li>
+<li><strong>In YAML</strong>: use <code>DCTableCoordinatesConfig</code> on the DC's config block (see <a href="../yaml-examples/">YAML examples</a>).</li>
+</ul>
+<p>Per-figure <code>lat_column</code>/<code>lon_column</code> overrides still work when set; if both are unset, the DC-level config is used.</p>
+<figure>
+  <img alt="Create DC modal — Table tab with a coordinates table detected, lat/lon column pickers, save-as-coordinates toggle" src="../../../images/v0.12/create_dc_modal_table.png" />
+<br />
+<figcaption><em>Create Data Collection</em> modal — Table tab. After dropping a TSV with lat/lon columns the modal surfaces a <em>"Looks like a coordinates table"</em> banner with column pickers and a save-as-coordinates toggle.</figcaption>
+</figure>
 <h2 id="template-projects">Template Projects<a class="headerlink" href="#template-projects" title="Permanent link">&para;</a></h2>
 <!-- prettier-ignore -->
 <div class="admonition success">
@@ -5263,16 +5463,17 @@
 <li>✅ You want fine-grained control over which files are included</li>
 </ul>
 <h3 id="template-workflow-diagram">Template workflow diagram<a class="headerlink" href="#template-workflow-diagram" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>graph LR
-    A["depictio run --template X --data-root /path"] --&gt; B["Step 0: Resolve template\nSubstitute {DATA_ROOT}"]
-    B --&gt; C["Validate data directory\n(Level 1 or Level 2 with --deep)"]
-    C --&gt; D["Steps 1-7: Standard pipeline\n(sync, scan, process recipes, ...)"]
-    D --&gt; E["Step 8: Import bundled dashboards"]
-    E --&gt; F["Project ready + badge shown in UI\n'Template: nf-core/ampliseq/2.16.0'"]
+<pre class="mermaid"><code>graph TD
+    A(["🚀 &lt;b&gt;depictio run --template X&lt;/b&gt;"])
+    A --&gt; B["📦 Resolve template&lt;br/&gt;&lt;i&gt;substitute {DATA_ROOT}&lt;/i&gt;"]
+    B --&gt; C["✅ Validate data dir&lt;br/&gt;&lt;i&gt;Level 1 / Level 2 (--deep)&lt;/i&gt;"]
+    C --&gt; D["⚙️ Sync · Scan · Process&lt;br/&gt;&lt;i&gt;standard pipeline + recipes&lt;/i&gt;"]
+    D --&gt; E["📊 Import bundled dashboards"]
+    E --&gt; F(["✨ &lt;b&gt;Project ready&lt;/b&gt;&lt;br/&gt;&lt;i&gt;badge: Template: nf-core/ampliseq/2.16.0&lt;/i&gt;"])
 
-    classDef default fill:#45B8AC,stroke:#2E7D73,stroke-width:2px,color:#fff
-    classDef highlight fill:#2E7D73,stroke:#45B8AC,stroke-width:2px,color:#fff
-    class A,F highlight</code></pre>
+    classDef default fill:#E0F2F1,stroke:#45B8AC,stroke-width:2px,color:#2E7D73
+    classDef endpoints fill:#45B8AC,stroke:#F68B33,stroke-width:3px,color:#fff
+    class A,F endpoints</code></pre>
 <h3 id="template-origin-badge">Template origin badge<a class="headerlink" href="#template-origin-badge" title="Permanent link">&para;</a></h3>
 <p>Once imported, every dashboard card in the UI shows a badge:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Template: nf-core/ampliseq/2.16.0
@@ -5295,8 +5496,8 @@
 <tr>
 <td><strong>Setup Complexity</strong></td>
 <td>Minimal - Web UI or CLI</td>
-<td>YAML config + CLI required</td>
-<td>Single command, no YAML needed</td>
+<td>CLI only today (WebUI planned), YAML config required</td>
+<td>Single CLI command, no YAML needed (WebUI planned)</td>
 </tr>
 <tr>
 <td><strong>Data Sources</strong></td>

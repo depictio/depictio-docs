@@ -115,23 +115,6 @@
     </div>
     <div data-md-component="announce">
       
-        <aside class="md-banner">
-          <div class="md-banner__inner md-grid md-typeset">
-            
-              <button class="md-banner__button md-icon" aria-label="Don't show this again">
-                
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-              </button>
-            
-            
-    Depictio is currently in active development and is not yet suitable for production use.
-
-          </div>
-          
-            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
-          
-        </aside>
-      
     </div>
     
       <div data-md-color-scheme="default" data-md-component="outdated" hidden>
@@ -4195,8 +4178,8 @@
 <h3 id="use-existing-demo-data"><span style="color: #E6779F;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 12V9c0 2.2 3.6 4 8 4s8-1.8 8-4v3c0 .5-.2.9-.5 1.4-.8-.3-1.6-.4-2.5-.4-2.5 0-4.9 1.1-6.4 2.9C6.8 15.6 4 14 4 12m8-1c4.4 0 8-1.8 8-4s-3.6-4-8-4-8 1.8-8 4 3.6 4 8 4m-2.9 8.7-.3-.7.3-.7c.1-.2.2-.3.2-.5-3.1-.6-5.3-2-5.3-3.8v3c0 1.8 2.4 3.3 5.7 3.8-.2-.3-.4-.7-.6-1.1M17 18c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1m6 1c-.9 2.3-3.3 4-6 4s-5.1-1.7-6-4c.9-2.3 3.3-4 6-4s5.1 1.7 6 4m-3.5 0c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5"/></svg></span></span> Use existing demo data<a class="headerlink" href="#use-existing-demo-data" title="Permanent link">&para;</a></h3>
 <p>If you want to explore Depictio with existing demo data, you can use the provided registered iris dataset. A demo dashboard is also already created for you to explore. You can access it by clicking on the <strong>"Iris Dashboard"</strong> on the landing page.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/pages/landing_page.png" target="_blank">
-        <img src="../../images/guides/pages/landing_page.png" width="600">
+    <a href="../../images/v0.12/react-beta/page_dashboards.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/page_dashboards.png" width="600">
     </a>
 </div>
 
@@ -4264,29 +4247,22 @@
 <p>Once you have installed the CLI tool, you need to create a configuration file to interact with Depictio. This configuration file contains the necessary information to connect to your Depictio instance, including the base URL and user credentials.
 To do so, go to the <strong>profile</strong> section in the web interface (bottom left corner).</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/profile_section.png" target="_blank">
-        <img src="../../images/guides/get_started/profile_section.png" width="600">
+    <a href="../../images/v0.12/react-beta/page_profile.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/page_profile.png" width="600">
     </a>
 </div>
 
-<p>Once in the profile section, click in the <strong>CLI Agents</strong> button.</p>
+<p>From the profile section, click the <strong>CLI Agents</strong> entry — you'll land on the <strong>CLI Agents</strong> page where you can manage your CLI configurations. To create a new configuration, click on the <strong>Add New Configuration</strong> button.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/cli_agents_button.png" target="_blank">
-        <img src="../../images/guides/get_started/cli_agents_button.png" width="600">
+    <a href="../../images/v0.12/react-beta/page_cli_agents.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/page_cli_agents.png" width="600">
     </a>
 </div>
 
-<p>You will land on the <strong>CLI Agents</strong> page, where you can manage your CLI configurations. To create a new configuration, click on the <strong>Add new configuration</strong> button.</p>
+<p>Pick a name for your configuration in the modal and confirm — the new token will appear in the list and a copy-to-clipboard prompt will surface the connection block to paste into <code>~/.depictio/CLI.yaml</code>.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/add_new_config.png" target="_blank">
-        <img src="../../images/guides/get_started/add_new_config.png" width="600">
-    </a>
-</div>
-
-<p>Select a name for your configuration and click on the <strong>Save</strong> button.</p>
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/config_save.png" target="_blank">
-        <img src="../../images/guides/get_started/config_save.png" width="600">
+    <a href="../../images/v0.12/react-beta/cli_config_create_modal.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/cli_config_create_modal.png" width="600">
     </a>
 </div>
 
@@ -4350,22 +4326,22 @@ To do so, go to the <strong>profile</strong> section in the web interface (botto
 <h4 id="creating-your-first-dashboard"><span style="color: #F68B33;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z"/></svg></span></span> Creating Your First Dashboard<a class="headerlink" href="#creating-your-first-dashboard" title="Permanent link">&para;</a></h4>
 <p>To create your first dashboard using the palmer penguins dataset, click on <strong>+ New Dashboard</strong> in the top right corner of the web interface.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/new_dashboard.png" target="_blank">
-        <img src="../../images/guides/get_started/new_dashboard.png" width="600">
+    <a href="../../images/v0.12/react-beta/page_dashboards.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/page_dashboards.png" width="600">
     </a>
 </div>
 
-<p>This will open the dashboard creation wizard. Select the <strong>Palmer Penguins Species Comparison</strong> project from the dropdown menu, and then click on <strong>Create Dashboard</strong>.</p>
+<p>This will open the dashboard creation modal. Pick the <strong>Palmer Penguins Species Comparison</strong> project, give the dashboard a name, and confirm.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/new_dashboard_project_selection.png" target="_blank">
-        <img src="../../images/guides/get_started/new_dashboard_project_selection.png" width="600">
+    <a href="../../images/v0.12/react-beta/new_dashboard_modal.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/new_dashboard_modal.png" width="600">
     </a>
 </div>
 
-<p>You will see a new dashboard created using the <strong>Palmer Penguins Species Comparison</strong> project.</p>
+<p>You will land in the editor for the new dashboard, where you can add components. The screenshot below shows the editor against an existing ampliseq dashboard for reference.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/new_dashboard_final.png" target="_blank">
-        <img src="../../images/guides/get_started/new_dashboard_final.png" width="600">
+    <a href="../../images/v0.12/react-beta/page_dashboard_editor.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/page_dashboard_editor.png" width="600">
     </a>
 </div>
 

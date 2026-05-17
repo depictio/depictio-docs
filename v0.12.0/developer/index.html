@@ -115,23 +115,6 @@
     </div>
     <div data-md-component="announce">
       
-        <aside class="md-banner">
-          <div class="md-banner__inner md-grid md-typeset">
-            
-              <button class="md-banner__button md-icon" aria-label="Don't show this again">
-                
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-              </button>
-            
-            
-    Depictio is currently in active development and is not yet suitable for production use.
-
-          </div>
-          
-            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
-          
-        </aside>
-      
     </div>
     
       <div data-md-color-scheme="default" data-md-component="outdated" hidden>
@@ -3793,12 +3776,13 @@
 <p>Depictio is an open-source project that welcomes contributions from the community. There are many ways to contribute:</p>
 <ul>
 <li><strong>Code contributions</strong>: Implement new features, develop new components, or fix bugs</li>
+<li><strong>Frontend ports</strong>: Port Dash components to the React (Beta) viewer</li>
 <li><strong>Testing</strong>: Help test features or report bugs</li>
 <li><strong>Design</strong>: Contribute to the UI/UX design</li>
 <li><strong>Documentation</strong>: Improve or expand the documentation</li>
 <li><strong>Community support</strong>: Help answer questions and support other users</li>
 </ul>
-<p>For detailed information on how to contribute, see the <a href="contributing/">Contributing Guide</a>.</p>
+<p>By contributing you agree to our <a href="contributing/#code-of-conduct">Code of Conduct</a>. For detailed setup, see the <a href="contributing/">Contributing Guide</a>.</p>
 <h2 id="in-this-section">In This Section<a class="headerlink" href="#in-this-section" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3811,6 +3795,10 @@
 <tr>
 <td><a href="contributing/">Contributing Guide</a></td>
 <td>How to set up development environment and contribute</td>
+</tr>
+<tr>
+<td><a href="contributing/#code-of-conduct">Code of Conduct</a></td>
+<td>Community standards (Contributor Covenant v2.1)</td>
 </tr>
 </tbody>
 </table>
@@ -3838,8 +3826,9 @@
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>pytest<span class="w"> </span>depictio/tests/<span class="w"> </span>-xvs
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1"># Start development server</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>pixi<span class="w"> </span>run<span class="w"> </span>api<span class="w">      </span><span class="c1"># FastAPI backend</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>pixi<span class="w"> </span>run<span class="w"> </span>dash<span class="w">     </span><span class="c1"># Dash frontend</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>pixi<span class="w"> </span>run<span class="w"> </span>api<span class="w">                      </span><span class="c1"># FastAPI backend</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>pixi<span class="w"> </span>run<span class="w"> </span>dash<span class="w">                     </span><span class="c1"># Dash frontend (legacy)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>pnpm<span class="w"> </span>-C<span class="w"> </span>depictio/viewer<span class="w"> </span>dev<span class="w">       </span><span class="c1"># React (Beta) viewer at http://localhost:5173</span>
 </code></pre></div>
 <p>See the <a href="contributing/">Contributing Guide</a> for detailed setup instructions.</p>
 <p>We look forward to your contributions and are here to help you get started!</p>
