@@ -266,9 +266,9 @@ Every row is classified client-side as **UP**, **DOWN**, or **NS** based on `sig
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Volcano example](../images/guides/advanced-visualizations/volcano_light.webp#only-light)
+[![Volcano example](../images/guides/advanced-visualizations/volcano_light.webp#only-light)](../images/guides/advanced-visualizations/volcano_light.webp){target=_blank}
 
-![Volcano example](../images/guides/advanced-visualizations/volcano_dark.webp#only-dark)
+[![Volcano example](../images/guides/advanced-visualizations/volcano_dark.webp#only-dark)](../images/guides/advanced-visualizations/volcano_dark.webp){target=_blank}
 ### MA
 
 Mean log intensity (x) vs log2 fold change (y) — same hits as volcano, classic DE / proteomics layout. Shares the UP / DOWN / NS tier scheme with [Volcano](#volcano).
@@ -297,9 +297,9 @@ Mirror of the [Volcano](#volcano) tier scheme — UP / DOWN / NS classification 
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![MA example](../images/guides/advanced-visualizations/ma_light.webp#only-light)
+[![MA example](../images/guides/advanced-visualizations/ma_light.webp#only-light)](../images/guides/advanced-visualizations/ma_light.webp){target=_blank}
 
-![MA example](../images/guides/advanced-visualizations/ma_dark.webp#only-dark)
+[![MA example](../images/guides/advanced-visualizations/ma_dark.webp#only-dark)](../images/guides/advanced-visualizations/ma_dark.webp){target=_blank}
 ### DA barplot
 
 Ranked signed-LFC horizontal bars for differential abundance — single panel or faceted across contrasts. Same input shape as the upstream tool (ANCOM-BC, ALDEx2, MaAsLin2): one row per `(feature, contrast)` with `lfc` and optional `significance`.
@@ -331,9 +331,9 @@ When `contrast_view == "all"` the renderer **facets by contrast** (one panel per
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![DA barplot example](../images/guides/advanced-visualizations/da_barplot_light.webp#only-light)
+[![DA barplot example](../images/guides/advanced-visualizations/da_barplot_light.webp#only-light)](../images/guides/advanced-visualizations/da_barplot_light.webp){target=_blank}
 
-![DA barplot example](../images/guides/advanced-visualizations/da_barplot_dark.webp#only-dark)
+[![DA barplot example](../images/guides/advanced-visualizations/da_barplot_dark.webp#only-dark)](../images/guides/advanced-visualizations/da_barplot_dark.webp){target=_blank}
 ### Enrichment
 
 GSEA / GO / KEGG / Reactome pathway-enrichment dot plot: term on y, NES on x, dot size = gene-set size, colour = -log10(padj).
@@ -361,9 +361,9 @@ Renderer **filters by source** (MultiSelect) and ranks by |nes|; only the top-N 
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Enrichment example](../images/guides/advanced-visualizations/enrichment_light.webp#only-light)
+[![Enrichment example](../images/guides/advanced-visualizations/enrichment_light.webp#only-light)](../images/guides/advanced-visualizations/enrichment_light.webp){target=_blank}
 
-![Enrichment example](../images/guides/advanced-visualizations/enrichment_dark.webp#only-dark)
+[![Enrichment example](../images/guides/advanced-visualizations/enrichment_dark.webp#only-dark)](../images/guides/advanced-visualizations/enrichment_dark.webp){target=_blank}
 ### Manhattan
 
 Generic chr / pos / score plot — works for true GWAS (variants), peak significance (ATAC/ChIP narrowPeak), or viral variant tracks. `score_kind` keeps the y-axis label honest.
@@ -391,9 +391,9 @@ Renderer **facets by chromosome** (one subplot per unique `chr` value). The opti
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Manhattan example](../images/guides/advanced-visualizations/manhattan_light.webp#only-light)
+[![Manhattan example](../images/guides/advanced-visualizations/manhattan_light.webp#only-light)](../images/guides/advanced-visualizations/manhattan_light.webp){target=_blank}
 
-![Manhattan example](../images/guides/advanced-visualizations/manhattan_dark.webp#only-dark)
+[![Manhattan example](../images/guides/advanced-visualizations/manhattan_dark.webp#only-dark)](../images/guides/advanced-visualizations/manhattan_dark.webp){target=_blank}
 ### Lollipop
 
 Needle / variant track along a gene — each gene body as a horizontal line, each variant as a vertical stem with a category-coloured marker on top.
@@ -419,9 +419,9 @@ Renderer **facets by feature** (one subplot per gene, or a picker once the unive
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Lollipop example](../images/guides/advanced-visualizations/lollipop_light.webp#only-light)
+[![Lollipop example](../images/guides/advanced-visualizations/lollipop_light.webp#only-light)](../images/guides/advanced-visualizations/lollipop_light.webp){target=_blank}
 
-![Lollipop example](../images/guides/advanced-visualizations/lollipop_dark.webp#only-dark)
+[![Lollipop example](../images/guides/advanced-visualizations/lollipop_dark.webp#only-dark)](../images/guides/advanced-visualizations/lollipop_dark.webp){target=_blank}
 ### Coverage track
 
 Read depth / signal along a coordinate axis. Universal genomics primitive — covers mosdepth bins, BigWig-derived transcript coverage, peak signal, methylseq depth, contig coverage, sarek QC.
@@ -454,9 +454,9 @@ Renderer **facets by chromosome** (subplot per chr) and optionally by **sample**
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Coverage track example](../images/guides/advanced-visualizations/coverage_track_light.webp#only-light)
+[![Coverage track example](../images/guides/advanced-visualizations/coverage_track_light.webp#only-light)](../images/guides/advanced-visualizations/coverage_track_light.webp){target=_blank}
 
-![Coverage track example](../images/guides/advanced-visualizations/coverage_track_dark.webp#only-dark)
+[![Coverage track example](../images/guides/advanced-visualizations/coverage_track_dark.webp#only-dark)](../images/guides/advanced-visualizations/coverage_track_dark.webp){target=_blank}
 ### Stacked taxonomy
 
 Per-sample stacked relative-abundance bar with a rank dropdown.
@@ -485,9 +485,9 @@ Renderer **filters by rank** (dropdown sourced from the unique `rank` values). W
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Stacked taxonomy example](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light)
+[![Stacked taxonomy example](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light)](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp){target=_blank}
 
-![Stacked taxonomy example](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark)
+[![Stacked taxonomy example](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark)](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp){target=_blank}
 ### Sunburst
 
 Hierarchical taxonomy / pathway viewer — concentric rings from root to leaf. Unlike most viz, Sunburst uses a multi-column `rank_cols` list rather than the standard single-column `<role>_col` pattern; the `abundance` role is bound via the `abundance_col` setting below.
@@ -511,9 +511,9 @@ Renderer **hierarchically aggregates** by the `rank_cols` sequence. Intermediate
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Sunburst example](../images/guides/advanced-visualizations/sunburst_light.webp#only-light)
+[![Sunburst example](../images/guides/advanced-visualizations/sunburst_light.webp#only-light)](../images/guides/advanced-visualizations/sunburst_light.webp){target=_blank}
 
-![Sunburst example](../images/guides/advanced-visualizations/sunburst_dark.webp#only-dark)
+[![Sunburst example](../images/guides/advanced-visualizations/sunburst_dark.webp#only-dark)](../images/guides/advanced-visualizations/sunburst_dark.webp){target=_blank}
 ### Rarefaction
 
 Alpha-diversity vs sequencing depth — one line per sample with optional ±SE band and group colouring.
@@ -540,9 +540,9 @@ Renderer **aggregates over `iter`** per `(sample_id, depth)` — computes mean �
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Rarefaction example](../images/guides/advanced-visualizations/rarefaction_light.webp#only-light)
+[![Rarefaction example](../images/guides/advanced-visualizations/rarefaction_light.webp#only-light)](../images/guides/advanced-visualizations/rarefaction_light.webp){target=_blank}
 
-![Rarefaction example](../images/guides/advanced-visualizations/rarefaction_dark.webp#only-dark)
+[![Rarefaction example](../images/guides/advanced-visualizations/rarefaction_dark.webp#only-dark)](../images/guides/advanced-visualizations/rarefaction_dark.webp){target=_blank}
 ### Phylogenetic
 
 Newick tree + tip metadata (Microreact-style) — 5 layouts, tip search, subtree highlight.
@@ -571,9 +571,9 @@ The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Phylogenetic example](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light)
+[![Phylogenetic example](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light)](../images/guides/advanced-visualizations/phylogenetic_light.webp){target=_blank}
 
-![Phylogenetic example](../images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark)
+[![Phylogenetic example](../images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark)](../images/guides/advanced-visualizations/phylogenetic_dark.webp){target=_blank}
 ### Dot plot
 
 scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction expressing, colour = mean expression.
@@ -596,9 +596,9 @@ scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction ex
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Dot plot example](../images/guides/advanced-visualizations/dot_plot_light.webp#only-light)
+[![Dot plot example](../images/guides/advanced-visualizations/dot_plot_light.webp#only-light)](../images/guides/advanced-visualizations/dot_plot_light.webp){target=_blank}
 
-![Dot plot example](../images/guides/advanced-visualizations/dot_plot_dark.webp#only-dark)
+[![Dot plot example](../images/guides/advanced-visualizations/dot_plot_dark.webp#only-dark)](../images/guides/advanced-visualizations/dot_plot_dark.webp){target=_blank}
 ### Embedding
 
 2D / 3D sample embedding (PCA / UMAP / t-SNE / PCoA) — supports a **precomputed** DC (`dim_1`, `dim_2` columns already materialised) or **live-compute** mode (run the reduction on the fly via a Celery task and cache by `(dc, method, params, filters)`).
@@ -633,9 +633,9 @@ In **precomputed mode** the renderer just plots the pre-existing coordinates. In
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Embedding example](../images/guides/advanced-visualizations/embedding_light.webp#only-light)
+[![Embedding example](../images/guides/advanced-visualizations/embedding_light.webp#only-light)](../images/guides/advanced-visualizations/embedding_light.webp){target=_blank}
 
-![Embedding example](../images/guides/advanced-visualizations/embedding_dark.webp#only-dark)
+[![Embedding example](../images/guides/advanced-visualizations/embedding_dark.webp#only-dark)](../images/guides/advanced-visualizations/embedding_dark.webp){target=_blank}
 ### ComplexHeatmap
 
 ComplexHeatmap-style clustered heatmap with dendrograms + annotation tracks, wrapping the in-tree [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" } library. Heavy compute (clustering, dendrogram layout) runs in a Celery worker and is cached by `(dc, params hash)`.
@@ -664,9 +664,9 @@ Numeric matrix columns are inferred from the rest of the DC schema at compute ti
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![ComplexHeatmap example](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light)
+[![ComplexHeatmap example](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light)](../images/guides/advanced-visualizations/complex_heatmap_light.webp){target=_blank}
 
-![ComplexHeatmap example](../images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark)
+[![ComplexHeatmap example](../images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark)](../images/guides/advanced-visualizations/complex_heatmap_dark.webp){target=_blank}
 ### QQ
 
 Quantile-quantile plot for p-value distributions (GWAS / DE / eQTL QC). Sorts p-values and plots `-log10(observed)` against the theoretical `-log10(expected)` under a uniform null.
@@ -691,9 +691,9 @@ When `category` is bound, the renderer produces **one trace per stratum** (e.g. 
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![QQ example](../images/guides/advanced-visualizations/qq_light.webp#only-light)
+[![QQ example](../images/guides/advanced-visualizations/qq_light.webp#only-light)](../images/guides/advanced-visualizations/qq_light.webp){target=_blank}
 
-![QQ example](../images/guides/advanced-visualizations/qq_dark.webp#only-dark)
+[![QQ example](../images/guides/advanced-visualizations/qq_dark.webp#only-dark)](../images/guides/advanced-visualizations/qq_dark.webp){target=_blank}
 ### UpSet
 
 Set-intersection visualisation (alternative to Venn diagrams). Server-side compute via the in-tree `plotly-upset` library, dispatched as a Celery task. Input DC: a binary table where each row is an element and each `set_col` is a 0/1 membership indicator.
@@ -721,9 +721,9 @@ Renderer **filters by intersection size and degree** — `min_size` drops inters
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![UpSet example](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light)
+[![UpSet example](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light)](../images/guides/advanced-visualizations/upset_plot_light.webp){target=_blank}
 
-![UpSet example](../images/guides/advanced-visualizations/upset_plot_dark.webp#only-dark)
+[![UpSet example](../images/guides/advanced-visualizations/upset_plot_dark.webp#only-dark)](../images/guides/advanced-visualizations/upset_plot_dark.webp){target=_blank}
 ### Sankey
 
 Categorical-flow diagram across N ordered categorical levels (e.g. `sample → lineage → clade`, `sample → kingdom → phylum → genus`). Server-side aggregation via Celery, client-side colour / opacity tweaks.
@@ -750,9 +750,9 @@ Renderer **aggregates by the `step_cols` sequence** (via Celery `compute_sankey`
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Sankey example](../images/guides/advanced-visualizations/sankey_light.webp#only-light)
+[![Sankey example](../images/guides/advanced-visualizations/sankey_light.webp#only-light)](../images/guides/advanced-visualizations/sankey_light.webp){target=_blank}
 
-![Sankey example](../images/guides/advanced-visualizations/sankey_dark.webp#only-dark)
+[![Sankey example](../images/guides/advanced-visualizations/sankey_dark.webp#only-dark)](../images/guides/advanced-visualizations/sankey_dark.webp){target=_blank}
 ### Oncoplot
 
 Sample × gene mutation matrix with discrete mutation-type colours and per-gene / per-sample frequency strips.
@@ -775,9 +775,9 @@ Cells are **coloured categorically by `mutation_type`** (NA cells stay blank). S
 
 > _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-![Oncoplot example](../images/guides/advanced-visualizations/oncoplot_light.webp#only-light)
+[![Oncoplot example](../images/guides/advanced-visualizations/oncoplot_light.webp#only-light)](../images/guides/advanced-visualizations/oncoplot_light.webp){target=_blank}
 
-![Oncoplot example](../images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark)
+[![Oncoplot example](../images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark)](../images/guides/advanced-visualizations/oncoplot_dark.webp){target=_blank}
 
 ---
 
