@@ -31,8 +31,8 @@ When you first access Depictio, you'll be prompted to log in. The default instal
 If you want to explore Depictio with existing demo data, you can use the provided registered iris dataset. A demo dashboard is also already created for you to explore. You can access it by clicking on the **"Iris Dashboard"** on the landing page.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/pages/landing_page.png" target="_blank">
-        <img src="../../images/guides/pages/landing_page.png" width="600">
+    <a href="../../images/v0.12/react-beta/page_dashboards.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/page_dashboards.png" width="600">
     </a>
 </div>
 
@@ -93,32 +93,24 @@ Once you have installed the CLI tool, you need to create a configuration file to
 To do so, go to the **profile** section in the web interface (bottom left corner).
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/profile_section.png" target="_blank">
-        <img src="../../images/guides/get_started/profile_section.png" width="600">
+    <a href="../../images/v0.12/react-beta/page_profile.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/page_profile.png" width="600">
     </a>
 </div>
 
-Once in the profile section, click in the **CLI Agents** button.
+From the profile section, click the **CLI Agents** entry — you'll land on the **CLI Agents** page where you can manage your CLI configurations. To create a new configuration, click on the **Add New Configuration** button.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/cli_agents_button.png" target="_blank">
-        <img src="../../images/guides/get_started/cli_agents_button.png" width="600">
+    <a href="../../images/v0.12/react-beta/page_cli_agents.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/page_cli_agents.png" width="600">
     </a>
 </div>
 
- You will land on the **CLI Agents** page, where you can manage your CLI configurations. To create a new configuration, click on the **Add new configuration** button.
+Pick a name for your configuration in the modal and confirm — the new token will appear in the list and a copy-to-clipboard prompt will surface the connection block to paste into `~/.depictio/CLI.yaml`.
 
- <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/add_new_config.png" target="_blank">
-        <img src="../../images/guides/get_started/add_new_config.png" width="600">
-    </a>
-</div>
-
- Select a name for your configuration and click on the **Save** button.
-
-  <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/config_save.png" target="_blank">
-        <img src="../../images/guides/get_started/config_save.png" width="600">
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../images/v0.12/react-beta/cli_config_create_modal.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/cli_config_create_modal.png" width="600">
     </a>
 </div>
 
@@ -195,24 +187,24 @@ Once the data ingested into the system, you can go to the web interface and see 
 To create your first dashboard using the palmer penguins dataset, click on **+ New Dashboard** in the top right corner of the web interface.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/new_dashboard.png" target="_blank">
-        <img src="../../images/guides/get_started/new_dashboard.png" width="600">
+    <a href="../../images/v0.12/react-beta/page_dashboards.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/page_dashboards.png" width="600">
     </a>
 </div>
 
- This will open the dashboard creation wizard. Select the **Palmer Penguins Species Comparison** project from the dropdown menu, and then click on **Create Dashboard**.
+This will open the dashboard creation modal. Pick the **Palmer Penguins Species Comparison** project, give the dashboard a name, and confirm.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/new_dashboard_project_selection.png" target="_blank">
-        <img src="../../images/guides/get_started/new_dashboard_project_selection.png" width="600">
+    <a href="../../images/v0.12/react-beta/new_dashboard_modal.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/new_dashboard_modal.png" width="600">
     </a>
 </div>
 
-You will see a new dashboard created using the **Palmer Penguins Species Comparison** project.
+You will land in the editor for the new dashboard, where you can add components. The screenshot below shows the editor against an existing ampliseq dashboard for reference.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/guides/get_started/new_dashboard_final.png" target="_blank">
-        <img src="../../images/guides/get_started/new_dashboard_final.png" width="600">
+    <a href="../../images/v0.12/react-beta/page_dashboard_editor.png" target="_blank">
+        <img src="../../images/v0.12/react-beta/page_dashboard_editor.png" width="600">
     </a>
 </div>
 

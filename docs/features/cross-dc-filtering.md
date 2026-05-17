@@ -141,9 +141,10 @@ Links can be defined in YAML (above) **or** managed interactively from the React
 | :material-pencil: **Edit** | Link row → *Edit* | Updates the resolver config in place |
 | :material-delete: **Delete** | Link row → *Delete* | Cascades automatically when the source or target DC is removed |
 
-<!-- TODO(figure): Cross-DC link create/edit modal — resolver selection -->
-!!! example "#TODO figure — link *Create/Edit* modal with resolver picker"
-    Screenshot placeholder — capture from `/dashboards-beta/<id>` → *Manage Links* → *Add link*.
+<figure markdown="span">
+  ![Cross-DC link Create modal — source/target DCs picked, Sample mapping resolver, mapping preview](../images/v0.12/link_create_modal.png)
+  <figcaption><em>Create cross-DC link</em> modal — source DC <code>sample_metadata</code>, target DC <code>multiqc_reports</code> (detected as <em>multiqc</em>), <em>Sample mapping</em> resolver, with the auto-loaded MultiQC sample mappings previewed.</figcaption>
+</figure>
 
 ## :material-view-dashboard: Dashboard Usage
 

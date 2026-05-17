@@ -373,9 +373,10 @@ MultiQC DCs support a full lifecycle from the *Manage Data Collection* modal:
 | :material-swap-horizontal: **Replace** | Swap the underlying report set in place |
 | :material-broom: **Clear** | Drop all data from the DC while keeping the definition |
 
-<!-- TODO(figure): MultiQC Manage Data Collection modal — append / replace / clear actions -->
-!!! example "#TODO figure — *Manage Data Collection* modal (MultiQC tab)"
-    Screenshot placeholder — capture from `/dashboards-beta/<id>` → DC actions menu.
+<figure markdown="span">
+  ![Manage Data Collection modal — Modify data / Clear contents tabs](../../images/v0.12/manage_dc_modal.png)
+  <figcaption><em>Manage Data Collection</em> modal — the <em>Modify data</em> tab handles append / replace; <em>Clear contents</em> drops data while keeping the DC definition. Shown against a Table DC; the same shell drives the MultiQC lifecycle, with the inner upload UI swapped for multiqc-folder ingest.</figcaption>
+</figure>
 
 #### Uniformity validation (React Beta)
 
@@ -386,9 +387,10 @@ Before ingest, MultiQC reports are checked for **uniformity** — the same modul
 
 Non-uniform reports surface a checklist of differences (missing modules, divergent columns) and block the destructive action until resolved.
 
-<!-- TODO(figure): MultiQC uniformity checklist — Check now button + failing rows -->
-!!! example "#TODO figure — uniformity checklist after a *Check now* run"
-    Screenshot placeholder — capture from the *Manage Data Collection* modal after appending a non-uniform report.
+<figure markdown="span">
+  ![MultiQC uniformity checks — Modules, Plot keys, version, Sample uniqueness all passing, with Check now button](../../images/v0.12/uniformity_checklist.png)
+  <figcaption>Uniformity checks panel inside the MultiQC create flow — module set, plot keys, MultiQC version, and sample uniqueness are validated; <em>Check now</em> re-runs the check on demand.</figcaption>
+</figure>
 
 ### Type-specific Data Collection configuration (React Beta)
 
@@ -409,9 +411,10 @@ Tabular DCs can be marked Map-capable so every Map figure built on them inherits
 
 Per-figure `lat_column`/`lon_column` overrides still work when set; if both are unset, the DC-level config is used.
 
-<!-- TODO(figure): Create DC modal — Coordinates tab with inline lat/lon detection -->
-!!! example "#TODO figure — *Coordinates* tab in the Create DC modal"
-    Screenshot placeholder — capture from `/dashboards-beta/<id>` → *Create Data Collection* → *Coordinates*.
+<figure markdown="span">
+  ![Create DC modal — Table tab with a coordinates table detected, lat/lon column pickers, save-as-coordinates toggle](../../images/v0.12/create_dc_modal_table.png)
+  <figcaption><em>Create Data Collection</em> modal — Table tab. After dropping a TSV with lat/lon columns the modal surfaces a <em>"Looks like a coordinates table"</em> banner with column pickers and a save-as-coordinates toggle.</figcaption>
+</figure>
 
 ## Template Projects
 
