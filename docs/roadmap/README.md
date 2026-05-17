@@ -26,19 +26,25 @@ hide:
   content: "Seamless integration with bioinformatics quality control reports"
   icon: "./multiqc.png"
   key: "multiqc"
-  sub_title: "Phase 2: Specialization ✅"
+  sub_title: "Phase 2: Specialized Components ✅"
 
 - title: "Image Grid Component"
   content: "S3-backed image galleries with configurable thumbnails and grid layout"
   icon: ":fontawesome-solid-images:"
   key: "completed"
-  sub_title: "Phase 2: Specialization ✅"
+  sub_title: "Phase 2: Specialized Components ✅"
 
 - title: "Geospatial Map Component"
-  content: "Scatter, density, and choropleth maps with cross-filtering and GeoJSON data collection support"
+  content: "Scatter, density, and choropleth maps with cross-filtering and GeoJSON / Map-capable Table DCs (v0.12.0)"
   icon: ":fontawesome-solid-map-location-dot:"
   key: "completed"
-  sub_title: "Phase 2: Specialization ✅"
+  sub_title: "Phase 2: Specialized Components ✅"
+
+- title: "Advanced Biology Visualizations"
+  content: "Omics plots extending the v0.12 DC-level type-config pattern — Volcano, Manhattan, Sunburst, and more"
+  icon: ":fontawesome-solid-dna:"
+  key: "planned"
+  sub_title: "Phase 2: Specialized Components 🔄"
 
 - title: "Templates & Community"
   content: "Reusable dashboard templates for standard bioinformatics workflows, nf-core integration, and nf-core plugin for automatic data ingestion"
@@ -46,8 +52,14 @@ hide:
   key: "nfcore"
   sub_title: "Phase 3: Templates ✅"
 
-- title: "Scientific Reproducibility"
-  content: "DOI integration, persistent access IDs, citable dashboards, full data provenance from sample to visualization"
+- title: "React (Beta) Viewer"
+  content: "Vite + Mantine SPA rewrite — ships in Beta at /*-beta routes in v0.12.0, graduates onto canonical URLs in v0.15.0 when the legacy Dash frontend is removed"
+  icon: ":fontawesome-brands-react:"
+  key: "planned"
+  sub_title: "Phase 3.5: UI Modernization 🔄"
+
+- title: "Citable Science"
+  content: "DOI-backed snapshots and sample-to-viz provenance on top of the existing Serve hosting"
   icon: ":fontawesome-solid-flask:"
   key: "planned"
   sub_title: "Phase 4: Reproducibility 📋"
@@ -62,28 +74,18 @@ hide:
 
 ---
 
-## The Reproducibility Challenge
+## Reproducibility & FAIR
 
-<!-- prettier-ignore -->
-!!! quote "The Reproducibility Crisis in Data Visualization"
-    - *"Dashboards disappear after papers are published."*
-    - *"Visualizations can't be reproduced months later."*
-    - *"Data lineage is lost between pipeline runs."*
-    - *"Cross-experiment comparisons are impossible."*
+Built with [FAIR principles](https://www.go-fair.org/fair-principles/) in mind. v0.12 ships YAML-defined dashboards, Cross-DC linking, nf-core/ampliseq templates, and hosting via [SciLifeLab Serve](https://serve.scilifelab.se/) ✅. Citable DOI snapshots, persistent IDs, and data lineage land in Phase 4.
 
-Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles/) in mind: **F**indable, **A**ccessible, **I**nteroperable, **R**eusable. Some challenges are already addressed today; others are part of our roadmap and will be tackled in future releases.
-
-**How Depictio will address the reproducibility crisis:**
-
-| Challenge                      | Solution                                                                                                                                                                                |
-| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Dashboards disappear           | :fontawesome-solid-database: *Will show in the future* — persistent, queryable dashboards for cross-experiment comparison                                                               |
-| Can't reproduce visualizations | :fontawesome-solid-file-code: YAML-defined dashboards + traceable data — export and re-import any dashboard as code                                                                     |
-| No data lineage                | :fontawesome-solid-clock-rotate-left: *Will show in the future* — Delta Lake time travel, auditing, and provenance                                                                      |
-| Siloed experiment data         | :fontawesome-solid-link: Cross-DC linking — meta-analysis across studies                                                                                                                |
-| Dashboards not citable         | :fontawesome-solid-id-card: *Will show in the future* — DOI integration, persistent access IDs, citable dashboard snapshots                                                             |
-| No sample-to-viz traceability  | :fontawesome-solid-fingerprint: *Will show in the future* — persistent URL / access ID from sample ([LabID](https://grp-gbcs.embl-community.io/labid-user-docs/)) to pipeline to Delta |
-| Reproducibility requires setup | :fontawesome-solid-puzzle-piece: Pre-built templates for nf-core/ampliseq **shipped** ([docs](../usage/projects/templates.md)); nf-core plugin for automatic data ingestion planned |
+| Challenge | Status |
+| --------- | ------ |
+| Reproducibility requires setup | :material-check-circle: nf-core/ampliseq templates **shipped** ([docs](../usage/projects/templates.md)); nf-core plugin planned |
+| Can't reproduce visualizations | :material-check-circle: YAML-defined dashboards + traceable data ([docs](../features/yaml-sync.md)) |
+| Siloed experiment data | :material-check-circle: Cross-DC linking ([docs](../features/cross-dc-filtering.md)) |
+| Dashboards disappear | :material-check-circle: Hosted on [SciLifeLab Serve](https://serve.scilifelab.se/) ([changelog](../changelog/README.md)) |
+| Not citable / no sample-to-viz traceability | :material-clock-outline: Phase 4 — DOI snapshots via [SciLifeLab Serve](https://serve.scilifelab.se/) + [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/) provenance |
+| No data lineage | :material-clock-outline: Phase 4 — Delta Lake time travel, auditing |
 
 ---
 
@@ -95,6 +97,8 @@ Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles
 - [x] Polars-compatible formats (Parquet, CSV, JSON, TSV) → [Delta Lake](https://delta.io/)
 - [x] S3/MinIO storage with backup/restore commands ([docs](../depictio-cli/usage.md#-backup-commands))
 - [x] MultiQC report integration ([docs](../features/components.md#multiqc-components) | [:material-github: #626](https://github.com/depictio/depictio/pull/626))
+- [x] **MultiQC data lifecycle** — append / replace / clear runs from the viewer with uniformity validation (v0.12.0, [docs](../usage/projects/guide.md#managing-data-collections-from-the-viewer-v0120))
+- [x] **DC-level type configuration** — Map-capable Table DCs (lat/lon column detection on upload, `DCTableCoordinatesConfig`); extensible to advanced-viz types (v0.12.0, [docs](../usage/projects/guide.md#type-specific-data-collection-configuration-react-beta))
 - [x] Client-side table joining in CLI ([:material-github: #634](https://github.com/depictio/depictio/pull/634))
 - [x] Recipe-based data transformation — Python recipes with 4-checkpoint validation ([docs](../usage/projects/recipes.md))
 - [x] Template-based project setup — one-command project creation with `{DATA_ROOT}` substitution ([docs](../usage/projects/templates.md))
@@ -102,25 +106,33 @@ Depictio is built with [FAIR principles](https://www.go-fair.org/fair-principles
 
 ### Dashboard Components
 
+Specialized components share a common pattern: a DC-level type-config (introduced for Map in v0.12.0) declares the columns that drive the visualization, so every figure built on top inherits the config — no per-figure boilerplate. Advanced biology visualizations extend the same pattern.
+
 - [x] Generic components: Figure, Table, Card, Interactive ([docs](../features/components.md))
 - [x] MultiQC components for QC reports ([docs](../features/components.md#multiqc-components))
 - [x] Image grid with S3/MinIO integration and configurable thumbnails ([:material-github: #664](https://github.com/depictio/depictio/pull/664))
-- [x] Geospatial map component: scatter, density, choropleth with GeoJSON DC support ([docs](../features/components.md#map-components))
+- [x] Geospatial map component: scatter, density, choropleth with GeoJSON DC support + Map-capable Table DCs (v0.12.0, [docs](../features/components.md#map-components))
 - [x] Figure code mode with live preview ([:material-github: #639](https://github.com/depictio/depictio/pull/639))
 
 ### Dashboard Interactivity
 
 - [x] Two-panel layout with tabs ([:material-github: #616](https://github.com/depictio/depictio/pull/616))
 - [x] Cross-DC filtering via universal linking ([docs](../features/cross-dc-filtering.md))
+- [x] **Cross-DC links UI** — Create / Edit / Delete links from the React Beta viewer with resolver picker and sample-mapping preview (v0.12.0, [docs](../features/cross-dc-filtering.md#data-collection-actions))
 - [x] Interactive selection filtering: scatter/table/map selections
 - [x] YAML dashboard import/export ([docs](../features/yaml-sync.md))
 
 ### Infrastructure
 
 - [x] Docker + Kubernetes with Helm charts ([docs](../installation/docker.md))
+- [x] [SciLifeLab Serve](https://serve.scilifelab.se/) hosting via `values-serve.yaml` overlay ([changelog](../changelog/README.md))
 - [x] Celery/Redis background processing
-- [x] Multi-app architecture (Management, Viewer, Editor)
 - [x] Authentication: local, Google OAuth, unauthenticated mode
+
+### Frontend
+
+- [x] **React (Beta) viewer** — Vite + Mantine SPA shipped at `/*-beta` routes (v0.12.0); graduates onto canonical URLs in v0.15.0
+- [x] Multi-app architecture (Management, Viewer, Editor) — *Dash, legacy; removal in v0.15.0*
 
 ---
 
@@ -147,14 +159,21 @@ Reusable dashboards for standard bioinformatics workflows, with a focus on nf-co
 - [ ] **`nextflow.config` template** — embed Depictio ingestion directly in your Nextflow config so data collection happens at pipeline runtime
 - [ ] **Snakemake report plugin** — Depictio as a drop-in replacement for Snakemake's built-in HTML report, with interactive dashboards instead of static outputs
 
-### Phase 4: Scientific Reproducibility (6-12 months)
+### Phase 3.5: React (Beta) viewer graduation — v0.15.0 :material-react:{ .priority }
 
-Publication-grade traceability and citation support for research outputs.
+The React (Beta) viewer ships in v0.12.0 alongside Dash; in **v0.15.0** it takes over the canonical URLs and the Dash frontend is removed. Track contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
 
-- [ ] **DOI integration** — citable dashboard snapshots and persistent access IDs
-- [ ] **Persistent access IDs** — stable URLs per dashboard version; link from sample ID → pipeline run → Delta table → visualization
-- [ ] **Data provenance** — via [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/) integration for pipeline versions, parameters, and timestamps
-- [ ] **Static export** — [Quarto](https://quarto.org/) integration for HTML/PDF publication supplements
+- [x] **React (Beta) viewer** shipped under `/*-beta` paths (v0.12.0) — `/dashboards-beta`, `/dashboard-beta/{id}`, `/dashboard-beta-edit/{id}`, `/projects-beta`, `/projects-beta/{id}`, `/profile-beta`, `/admin-beta`, `/cli-agents-beta`, `/about-beta`
+- [ ] **URL graduation (v0.15.0)** — React Beta takes over `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects` and the legacy Dash frontend is removed
+- [ ] **Component parity audit** — every Dash editor feature has a React equivalent before cutover
+
+### Phase 4: Citable Science
+
+DOI-backed citability and sample-to-viz provenance on top of the existing [SciLifeLab Serve](https://serve.scilifelab.se/) hosting.
+
+- [ ] **DOI snapshots** — persistent stable URLs per dashboard version, citable in publications
+- [ ] **Sample-to-viz provenance** — [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/) linking sample → pipeline run → Delta table → visualization
+- [ ] **Static export** — [Quarto](https://quarto.org/) for publication supplements
 
 ### Phase 5: AI & Intelligence (12+ months)
 
@@ -168,8 +187,8 @@ Publication-grade traceability and citation support for research outputs.
 
 - [ ] Reusable chart configurations catalog
 - [ ] High-dimensional methods (UMAP, PCA, t-SNE)
-- [ ] Omics visualizations (Volcano, MA, heatmaps)
 - [ ] [JBrowse2](https://jbrowse.org/) genome browser component
+- [ ] **Advanced biology visualizations** — Volcano, Manhattan, Sunburst, and more (see the [Advanced Biology Visualizations](#big-picture) tile in the timeline)
 
 ### UI & Components
 
@@ -183,4 +202,4 @@ Publication-grade traceability and citation support for research outputs.
 
 - [:material-github: GitHub Issues](https://github.com/depictio/depictio/issues) — feature requests, bug reports
 - [Contributing Guide](../developer/contributing.md) — detailed setup instructions
-- [Developer Docs](../developer/index.md) — architecture overview
+- [Developer Docs](../developer/README.md) — architecture overview

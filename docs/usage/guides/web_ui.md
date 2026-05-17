@@ -36,8 +36,8 @@ If you have configured Google OAuth for your Depictio instance (see [Configurati
 ## <span style="color: #F68B33;">:material-view-dashboard:</span> Landing page / Dashboards section (/dashboards)
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/pages/landing_page.png" target="_blank">
-        <img src="../../../images/guides/pages/landing_page.png" width="600">
+    <a href="../../../images/v0.12/react-beta/page_dashboards.png" target="_blank">
+        <img src="../../../images/v0.12/react-beta/page_dashboards.png" width="600">
     </a>
 </div>
 
@@ -138,8 +138,8 @@ At the bottom of the sidebar, you will find:
 You can access your user profile by clicking on the avatar icon in the bottom left corner of the sidebar.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/pages/profile.png" target="_blank">
-        <img src="../../../images/guides/pages/profile.png" width="600">
+    <a href="../../../images/v0.12/react-beta/page_profile.png" target="_blank">
+        <img src="../../../images/v0.12/react-beta/page_profile.png" width="600">
     </a>
 </div>
 
@@ -152,8 +152,8 @@ This section allows you to:
 ## <span style="color: #6495ED;">:material-information:</span> About section (/about)
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/pages/about.png" target="_blank">
-        <img src="../../../images/guides/pages/about.png" width="600">
+    <a href="../../../images/v0.12/react-beta/page_about.png" target="_blank">
+        <img src="../../../images/v0.12/react-beta/page_about.png" width="600">
     </a>
 </div>
 
@@ -162,9 +162,61 @@ The **About** section provides information about the GitHub repository and the d
 ## <span style="color: #E53935;">:material-shield-account:</span> Admin section (/admin)
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/pages/admin_users.png" target="_blank">
-        <img src="../../../images/guides/pages/admin_users.png" width="600">
+    <a href="../../../images/v0.12/react-beta/page_admin.png" target="_blank">
+        <img src="../../../images/v0.12/react-beta/page_admin.png" width="600">
     </a>
 </div>
 
 The **Admin** section is only accessible to users with admin privileges. It allows admins to view users, projects and dashboards. The **Users** tab displays a list/delete/change status (sysadmin/standard) of all users registered in the system. The **Dashboards** tab displays a list of all dashboards while the **Projects** tab lists all projects. Admins can delete any project or dashboard, regardless of ownership.
+
+## <span style="color: #45B8AC;">:material-react:</span> React (Beta) tour — additional v0.12 pages
+
+The screens below ship in the React (Beta) viewer under `/*-beta` paths and will become canonical in **v0.15.0**. They surface project-detail UI and the CLI-agents panel that the legacy Dash views don't.
+
+### <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects list (/projects-beta)
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../../images/v0.12/react-beta/page_projects.png" target="_blank">
+        <img src="../../../images/v0.12/react-beta/page_projects.png" width="600">
+    </a>
+</div>
+
+### <span style="color: #45B8AC;">:material-database-cog:</span> Project detail (/projects-beta/{id})
+
+Data collections, cross-DC links, and the joins graph for a single project.
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../../images/v0.12/react-beta/page_project_detail.png" target="_blank">
+        <img src="../../../images/v0.12/react-beta/page_project_detail.png" width="600">
+    </a>
+</div>
+
+### <span style="color: #45B8AC;">:material-monitor-eye:</span> Dashboard viewer (/dashboard-beta/{id})
+
+Read-only dashboard with filters and component interactions.
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../../images/v0.12/react-beta/page_dashboard_viewer.png" target="_blank">
+        <img src="../../../images/v0.12/react-beta/page_dashboard_viewer.png" width="600">
+    </a>
+</div>
+
+### <span style="color: #45B8AC;">:material-pencil-ruler:</span> Dashboard editor (/dashboard-beta-edit/{id})
+
+Design mode — add, configure, and arrange components.
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../../images/v0.12/react-beta/page_dashboard_editor.png" target="_blank">
+        <img src="../../../images/v0.12/react-beta/page_dashboard_editor.png" width="600">
+    </a>
+</div>
+
+### <span style="color: #45B8AC;">:material-key-chain:</span> CLI agents / tokens (/cli-agents-beta)
+
+Generate and manage CLI configurations for the [depictio-cli](../../depictio-cli/usage.md).
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../../images/v0.12/react-beta/page_cli_agents.png" target="_blank">
+        <img src="../../../images/v0.12/react-beta/page_cli_agents.png" width="600">
+    </a>
+</div>

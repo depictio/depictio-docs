@@ -13,18 +13,20 @@ This section provides information for developers who want to contribute to Depic
 Depictio is an open-source project that welcomes contributions from the community. There are many ways to contribute:
 
 - **Code contributions**: Implement new features, develop new components, or fix bugs
+- **Frontend ports**: Port Dash components to the React (Beta) viewer
 - **Testing**: Help test features or report bugs
 - **Design**: Contribute to the UI/UX design
 - **Documentation**: Improve or expand the documentation
 - **Community support**: Help answer questions and support other users
 
-For detailed information on how to contribute, see the [Contributing Guide](contributing.md).
+By contributing you agree to our [Code of Conduct](contributing.md#code-of-conduct). For detailed setup, see the [Contributing Guide](contributing.md).
 
 ## In This Section
 
 | Page | Description |
 |------|-------------|
 | [Contributing Guide](contributing.md) | How to set up development environment and contribute |
+| [Code of Conduct](contributing.md#code-of-conduct) | Community standards (Contributor Covenant v2.1) |
 
 ## Getting Started
 
@@ -53,8 +55,9 @@ uv sync
 pytest depictio/tests/ -xvs
 
 # Start development server
-pixi run api      # FastAPI backend
-pixi run dash     # Dash frontend
+pixi run api                      # FastAPI backend
+pixi run dash                     # Dash frontend (legacy)
+pnpm -C depictio/viewer dev       # React (Beta) viewer at http://localhost:5173
 ```
 
 See the [Contributing Guide](contributing.md) for detailed setup instructions.
