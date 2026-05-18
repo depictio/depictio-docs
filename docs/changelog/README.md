@@ -8,6 +8,33 @@ hide:
 
 # Changelog
 
+## **[v0.12.2](https://github.com/depictio/depictio/releases/tag/v0.12.2)** (May 18, 2026)
+
+!!! success "Stable Release — React viewer Code Mode polish & cross-filter fixes"
+    Patch focused on Figure Code Mode polish and tighter cross-filter
+    behaviour around joined / MultiQC data collections.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.12.2
+```
+
+### **🚀 Improvements**
+
+* **Figure Code Mode (React beta version only)** — collapsible help with module table, resizable editor, cross-filter preview under the chart, ownership-gated.
+* **Joined DC awareness (React beta version only)** — joined DCs marked in builder dropdown + info card; filter-source badge on cross-filtered components.
+* **availableValues (React beta version only)** — intersect MultiQC samples with table DCs (read-pair suffix matching), always include filter source.
+
+### **🐛 Fixes**
+
+* **Advanced viz types (React beta version only)** — heatmap / scatter_matrix removed, unsupported `px` kwargs filtered, no silent downgrade to scatter.
+* **Cross-filtering scope (React beta version only)** — restricted to scatter / scatter_3d.
+* **Plotly reset (React beta version only)** — reset now actually clears lasso/box selection.
+* **MultiQC sample mappings (API)** — fallback to `canonical_samples`.
+
+---
+
 ## **[v0.12.1](https://github.com/depictio/depictio/releases/tag/v0.12.1)** (May 18, 2026)
 
 !!! success "Stable Release — Text component, guided walkthrough, docs-screenshot tooling"
