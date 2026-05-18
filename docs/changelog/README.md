@@ -8,6 +8,47 @@ hide:
 
 # Changelog
 
+## **[v0.12.1](https://github.com/depictio/depictio/releases/tag/v0.12.1)** (May 18, 2026)
+
+!!! success "Stable Release — Text component, guided walkthrough, docs-screenshot tooling"
+    Patch release adding rich-text authoring on dashboards, a mode-aware
+    onboarding walkthrough in the React viewer, and a Playwright-driven
+    pipeline for capturing documentation screenshots.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.12.1
+```
+
+### **✨ New Features**
+
+* **Text component + notes footer (React beta version only)** — new
+  `text` component type with a Tiptap-backed rich-text editor, and a
+  collapsible **Notes** drawer pinned to the dashboard footer. Read-only
+  for non-owners; the Data Source step is hidden when building a text
+  component.
+* **Mode-aware guided walkthrough (React beta version only)** — first-run
+  spotlight tour with a backdrop overlay that adapts to the current
+  surface (projects / builder / public instance). The public tour walks
+  visitors through the duplicate-to-temp-session flow up front.
+
+### **🚀 Improvements**
+
+* **Dashboard ownership gating** — edit affordances in the viewer are now
+  gated on the current user's ownership of the dashboard.
+
+### **🛠 Tooling**
+
+* **Playwright-driven docs screenshots** —
+  `dev/playwright_debug/docs_screenshots.py` drives the React viewer at
+  `:5173` to capture documentation thumbnails. Registry-based with a
+  `--version` flag (no hardcoded releases). The admin-auth
+  localStorage-injection helper is shared with the existing
+  `/screenshot-dash-fixed` endpoint.
+
+---
+
 ## **[v0.12.0](https://github.com/depictio/depictio/releases/tag/v0.12.0)** (May 15, 2026)
 
 !!! success "Stable Release — MultiQC lifecycle and cross-DC links"
