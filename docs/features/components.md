@@ -686,7 +686,7 @@ When `category` is bound, the renderer produces **one trace per stratum** (e.g. 
 [![QQ example](../images/guides/advanced-visualizations/qq_dark.webp#only-dark)](../images/guides/advanced-visualizations/qq_dark.webp){target=_blank}
 ### UpSet
 
-Set-intersection visualisation (alternative to Venn diagrams). Server-side compute via the in-tree `plotly-upset` library, dispatched as a Celery task. Input DC: a binary table where each row is an element and each `set_col` is a 0/1 membership indicator.
+Set-intersection visualisation (alternative to Venn diagrams), à la R's [UpSetR](https://github.com/hms-dbmi/UpSetR). Wraps the in-tree [:material-open-in-new: plotly-upset](https://github.com/depictio/plotly-upset){ target="_blank" } library; intersection enumeration + sorting runs in a Celery worker and is cached by `(dc, params hash)`. Input DC: a binary table where each row is an element and each `set_col` is a 0/1 membership indicator.
 
 **Columns**
 
