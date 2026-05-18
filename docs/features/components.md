@@ -141,7 +141,7 @@ fig
 | Hover data | Additional columns shown on hover | None |
 
 !!! tip "Clustered heatmaps moved"
-    `ComplexHeatmap` is now part of the Advanced Visualizations section below — see [ComplexHeatmap](#complexheatmap) for the full config, alongside the rest of the domain-specific viz family (volcano, MA, sankey, …).
+    The ComplexHeatmap viz has been renamed and is now part of the Advanced Visualizations section below — see [Hierarchical Heatmap](#hierarchical-heatmap) for the full config, alongside the rest of the domain-specific viz family (volcano, MA, sankey, …).
 
 ### Selection Filtering (Scatter Plots)
 
@@ -202,7 +202,7 @@ Advanced Visualizations are a family of domain-specific scientific charts (catal
 
 Two ingredients work together:
 
-- a **viz `*Config`** (e.g. `VolcanoConfig`, `MAConfig`) that captures the role → column mapping plus per-viz display defaults (thresholds, top-N, sort order);
+- a **per-viz `Config` class** (e.g. `VolcanoConfig`, `MAConfig`) that captures the role → column mapping plus per-viz display defaults (thresholds, top-N, sort order);
 - a **`CANONICAL_SCHEMAS` entry** declaring the required and optional roles plus their accepted polars dtypes, used by the dashboard builder to validate the binding and surface errors before the viz renders.
 
 Source of truth in the codebase:
@@ -213,26 +213,28 @@ Source of truth in the codebase:
 
 ### Catalog
 
-| Viz | Description | Tool example |
-|-----|-------------|--------------|
-| :material-chart-scatter-plot: [Volcano](#volcano) | Effect size vs significance scatter for differential analysis. | DESeq2, limma, edgeR |
-| :material-chart-bell-curve-cumulative: [MA](#ma) | Mean intensity vs log fold change for DE / proteomics QC. | DESeq2, limma |
-| :material-view-grid-plus-outline: [DA barplot](#da-barplot) | Ranked signed-LFC bars for differential abundance — single panel or faceted by contrast. | ANCOM-BC, MaAsLin2 |
-| :material-chart-bubble: [Enrichment](#enrichment) | Pathway / GO-term enrichment dot plot. | fgsea, clusterProfiler |
-| :material-chart-histogram: [Manhattan](#manhattan) | Genome-wide signal scatter across chromosomes. | PLINK, MACS2 |
-| :material-chart-timeline-variant: [Lollipop](#lollipop) | Variant / mutation track along a gene body. | maftools, VEP |
-| :material-chart-areaspline: [Coverage track](#coverage-track) | Read depth / signal along genomic coordinates. | mosdepth, deepTools |
-| :material-chart-bar-stacked: [Stacked taxonomy](#stacked-taxonomy) | Per-sample relative-abundance composition by taxonomic rank. | QIIME2 |
-| :material-sun-wireless: [Sunburst](#sunburst) | Hierarchical taxonomy / pathway viewer. | QIIME2, Krona |
-| :material-chart-line: [Rarefaction](#rarefaction) | Alpha-diversity vs sequencing-depth saturation curve. | QIIME2, vegan |
-| :material-family-tree: [Phylogenetic](#phylogenetic) | Newick tree + tip metadata (Microreact-style). | IQ-TREE, RAxML, FastTree |
-| :material-circle-multiple-outline: [Dot plot](#dot-plot) | Single-cell marker-gene expression by cluster. | scanpy, Seurat |
-| :material-atom: [Embedding](#embedding) | 2D / 3D sample projection for cluster inspection (precomputed or live PCA / UMAP / t-SNE / PCoA). | scanpy, Seurat |
-| :material-grid: [ComplexHeatmap](#complexheatmap) | Clustered matrix with dendrograms + annotation tracks. | DESeq2 (normalised matrix) |
-| :material-chart-line-stacked: [QQ](#qq) | p-value distribution QC for inflation / deflation. | DESeq2, limma, PLINK |
-| :material-set-center: [UpSet](#upset) | Set-intersection visualisation, alternative to Venn. | Any binary membership matrix |
-| :material-chart-sankey: [Sankey](#sankey) | Categorical flow across N ordered levels. | taxprofiler, airrflow |
-| :material-grid-large: [Oncoplot](#oncoplot) | Sample × gene mutation matrix. | maftools, cBioPortal |
+Every advanced viz consumes a **tabular DC** (CSV / TSV / Parquet → polars) with the column roles documented per-viz below. The **Accepted input** column lists upstream tools whose output natively has — or trivially reshapes to — those columns. Web renderers that *look* like a viz (Microreact, iTOL, IGV, JBrowse, Krona, EnhancedVolcano, qqman, …) aren't listed here — they're peers, not data sources; we call them out in the per-viz prose where the framing helps.
+
+| Viz | Description | Accepted input (canonical producer) |
+|-----|-------------|-------------------------------------|
+| :material-chart-scatter-plot: [Volcano](#volcano) | Effect size vs significance scatter for differential analysis. | **DESeq2** results table (`results()` → TSV) |
+| :material-chart-bell-curve-cumulative: [MA](#ma) | Mean intensity vs log fold change for DE / proteomics QC. | **DESeq2** results table: `log2(baseMean+1)` (or `log10`) → `avg_log_intensity`, `log2FoldChange` straight |
+| :material-view-grid-plus-outline: [DA barplot](#da-barplot) | Ranked signed-LFC bars for differential abundance — single panel or faceted by contrast. | **ANCOM-BC** `output$res` (feature, contrast, lfc, q-value) |
+| :material-chart-bubble: [Enrichment](#enrichment) | Pathway / GO-term enrichment dot plot. | **clusterProfiler** GSEA / ORA result (term, NES, padj, gene-count) |
+| :material-chart-histogram: [Manhattan](#manhattan) | Genome-wide signal scatter across chromosomes (GWAS). | **PLINK** `.assoc` (chr, pos, p-value) |
+| :material-chart-timeline-variant: [Lollipop](#lollipop) | Variant / mutation track along a gene body. | **maftools / vcf2maf** Mutation Annotation Format table — `Hugo_Symbol`, `Start_Position`, `Variant_Classification` (file format, **not** Minor Allele Frequency) |
+| :material-chart-areaspline: [Coverage track](#coverage-track) | Read depth / signal along genomic coordinates. | **mosdepth** per-base / by-region BED (chrom, pos, depth) |
+| :material-chart-bar-stacked: [Stacked taxonomy](#stacked-taxonomy) | Per-sample relative-abundance composition by taxonomic rank. | **QIIME2** `taxa-collapse` table (sample × taxon abundance) |
+| :material-sun-wireless: [Sunburst](#sunburst) | Hierarchical taxonomy / pathway viewer. | **Kraken2** `.kreport` parsed into rank columns + `fraction_total_reads` (Bracken `.bracken` is flat single-rank, needs lineage expansion first) |
+| :material-chart-line: [Rarefaction](#rarefaction) | Alpha-diversity vs sequencing-depth saturation curve. | **QIIME2** `alpha-rarefaction` (sample, depth, alpha-metric) |
+| :material-family-tree: [Phylogenetic](#phylogenetic) | Newick tree + tip metadata. Renders Microreact-style. | **IQ-TREE** Newick + a tabular tip-metadata TSV |
+| :material-circle-multiple-outline: [Dot plot](#dot-plot) | Single-cell marker-gene expression by cluster. | **scanpy** aggregation (`sc.get.aggregate` or `groupby` on `adata.X`) producing `(cluster, gene, mean_expression, frac_expressing)` — `rank_genes_groups.to_df()` alone is DE stats, not the dot-plot schema |
+| :material-atom: [Embedding](#embedding) | 2D / 3D sample projection for cluster inspection (precomputed or live PCA / UMAP / t-SNE / PCoA). | **scanpy** `adata.obsm['X_umap']` (sample, dim1, dim2) |
+| :material-grid: [Hierarchical Heatmap](#hierarchical-heatmap) | Clustered matrix with dendrograms + annotation tracks. | **DESeq2** `vst()` matrix (sample × gene wide) |
+| :material-chart-line-stacked: [QQ](#qq) | p-value distribution QC for inflation / deflation. | **PLINK** `.assoc` (or any p-value column) |
+| :material-set-center: [UpSet](#upset) | Set-intersection visualisation, alternative to Venn. | Any binary membership matrix (sample × set) |
+| :material-chart-sankey: [Sankey](#sankey) | Categorical flow across N ordered levels. | Any tidy table with ≥2 ordered categorical columns |
+| :material-grid-large: [Oncoplot](#oncoplot) | Sample × gene mutation matrix. | **maftools / vcf2maf** Mutation Annotation Format table — `Tumor_Sample_Barcode`, `Hugo_Symbol`, `Variant_Classification` (file format, **not** Minor Allele Frequency) |
 
 !!! info "Reading the schema tables"
     Each viz subsection lists its **required** column roles (must be bound for the viz to render) and **optional** roles (extra colour / size / label dimensions). Types use polars dtype families — `Float` accepts `Float32` / `Float64`, `Int` accepts `Int8`–`Int64` and unsigned widths, `String` accepts `String` / `Utf8`, `Numeric` is `Int` ∪ `Float`. The dashboard builder validates the binding via `validate_binding()` and surfaces dtype mismatches in-place.
@@ -264,7 +266,6 @@ Effect size vs significance scatter — classic differential-expression view wit
 
 Every row is classified client-side as **UP**, **DOWN**, or **NS** based on `significance < threshold` combined with `|effect_size| > threshold`. The backend returns raw rows; classification + colouring happens in `VolcanoRenderer.tsx`.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Volcano example](../images/guides/advanced-visualizations/volcano_light.webp#only-light)](../images/guides/advanced-visualizations/volcano_light.webp){target=_blank}
 
@@ -278,8 +279,8 @@ Mean log intensity (x) vs log2 fold change (y) — same hits as volcano, classic
 | Role | Required | Type | Description |
 |------|:--------:|------|-------------|
 | `feature_id` | ✓ | String | Feature identifier |
-| `avg_log_intensity` | ✓ | Float | Mean log intensity (A in MA, x-axis) |
-| `log2_fold_change` | ✓ | Float | Log2 fold change (M in MA, y-axis) |
+| `avg_log_intensity` | ✓ | Float | Mean log intensity (A in MA, x-axis). For DESeq2: pre-transform `baseMean` with `log2(baseMean + 1)` (or `log10`) — `baseMean` itself is untransformed normalised counts. |
+| `log2_fold_change` | ✓ | Float | Log2 fold change (M in MA, y-axis). DESeq2 `log2FoldChange` maps directly. |
 | `significance` | — | Float | p / padj column for tier colouring |
 | `label` | — | String | Hover label override |
 
@@ -295,7 +296,6 @@ Mean log intensity (x) vs log2 fold change (y) — same hits as volcano, classic
 
 Mirror of the [Volcano](#volcano) tier scheme — UP / DOWN / NS classification (sig × FC thresholds), client-side in `MARenderer.tsx`.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![MA example](../images/guides/advanced-visualizations/ma_light.webp#only-light)](../images/guides/advanced-visualizations/ma_light.webp){target=_blank}
 
@@ -329,7 +329,6 @@ When `contrast_view == "all"` the renderer **facets by contrast** (one panel per
 !!! info "Legacy `viz_kind: ancombc_differentials`"
     Previously this single-panel layout was a separate viz kind named `ancombc_differentials`. It's now merged into DA barplot — `viz_kind: ancombc_differentials` is still accepted at deserialisation and rewritten to `da_barplot` with `contrast_view` defaulted from the persisted config.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![DA barplot example](../images/guides/advanced-visualizations/da_barplot_light.webp#only-light)](../images/guides/advanced-visualizations/da_barplot_light.webp){target=_blank}
 
@@ -359,7 +358,6 @@ GSEA / GO / KEGG / Reactome pathway-enrichment dot plot: term on y, NES on x, do
 
 Renderer **filters by source** (MultiSelect) and ranks by |nes|; only the top-N pathways are shown. Dot colour encodes -log10(padj).
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Enrichment example](../images/guides/advanced-visualizations/enrichment_light.webp#only-light)](../images/guides/advanced-visualizations/enrichment_light.webp){target=_blank}
 
@@ -389,7 +387,6 @@ Generic chr / pos / score plot — works for true GWAS (variants), peak signific
 
 Renderer **facets by chromosome** (one subplot per unique `chr` value). The optional `score_threshold` draws a horizontal cutoff line — no explicit per-row tag, but the line gives a visual significance reference.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Manhattan example](../images/guides/advanced-visualizations/manhattan_light.webp#only-light)](../images/guides/advanced-visualizations/manhattan_light.webp){target=_blank}
 
@@ -398,14 +395,14 @@ Renderer **facets by chromosome** (one subplot per unique `chr` value). The opti
 
 Needle / variant track along a gene — each gene body as a horizontal line, each variant as a vertical stem with a category-coloured marker on top.
 
-**Columns**
+**Columns** — straight rename from canonical Mutation Annotation Format (VEP / vcf2maf / maftools — the cancer-mutation file format, not Minor Allele Frequency):
 
-| Role | Required | Type | Description |
-|------|:--------:|------|-------------|
-| `feature_id` | ✓ | String | Gene / feature the variant is on |
-| `position` | ✓ | Int | Position along the feature |
-| `category` | ✓ | String | Variant consequence category (colour) |
-| `effect` | — | Float | Numeric effect (marker size) |
+| Role | Required | Type | Description | Mutation Annotation Format column |
+|------|:--------:|------|-------------|------------|
+| `feature_id` | ✓ | String | Gene / feature the variant is on | `Hugo_Symbol` |
+| `position` | ✓ | Int | Position along the feature | `Start_Position` (or `Protein_position` for AA-space tracks) |
+| `category` | ✓ | String | Variant consequence category (colour) | `Variant_Classification` |
+| `effect` | — | Float | Numeric effect (marker size) | e.g. `VAF`, `t_alt_count / t_depth` |
 
 **Settings**
 
@@ -417,7 +414,6 @@ Needle / variant track along a gene — each gene body as a horizontal line, eac
 
 Renderer **facets by feature** (one subplot per gene, or a picker once the universe exceeds `max_subplot_genes`). Markers are **coloured by category** and **sized by effect** when bound.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Lollipop example](../images/guides/advanced-visualizations/lollipop_light.webp#only-light)](../images/guides/advanced-visualizations/lollipop_light.webp){target=_blank}
 
@@ -452,7 +448,6 @@ Read depth / signal along a coordinate axis. Universal genomics primitive — co
 
 Renderer **facets by chromosome** (subplot per chr) and optionally by **sample** (stacked subplot rows). The `chromosomes_filter` / `samples_filter` whitelists narrow the view further; the category lane colour-segments the trace.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Coverage track example](../images/guides/advanced-visualizations/coverage_track_light.webp#only-light)](../images/guides/advanced-visualizations/coverage_track_light.webp){target=_blank}
 
@@ -483,7 +478,6 @@ Per-sample stacked relative-abundance bar with a rank dropdown.
 
 Renderer **filters by rank** (dropdown sourced from the unique `rank` values). Within the active rank, taxa are sorted by `sort_by`; everything past `top_n` is collapsed into an `Other` slice.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Stacked taxonomy example](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light)](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp){target=_blank}
 
@@ -492,11 +486,14 @@ Renderer **filters by rank** (dropdown sourced from the unique `rank` values). W
 
 Hierarchical taxonomy / pathway viewer — concentric rings from root to leaf. Unlike most viz, Sunburst uses a multi-column `rank_cols` list rather than the standard single-column `<role>_col` pattern; the `abundance` role is bound via the `abundance_col` setting below.
 
+!!! note "Bracken vs Kraken2 — what to ingest"
+    A raw `.bracken` file is **flat for a single target rank** (columns: `name`, `taxonomy_id`, `taxonomy_lvl`, `fraction_total_reads`, …) and does **not** carry explicit Kingdom→Genus rank columns. To bind it to Sunburst, either (a) ingest the Kraken2 `.kreport` instead and pivot the indented lineage into rank columns, or (b) map each Bracken `taxonomy_id` back to the NCBI taxonomy tree (e.g. `taxonkit lineage`, `ete3`) and expand to rank columns before upload. The DC must end up with one column per rank used in `rank_cols` plus one numeric `abundance_col`.
+
 **Columns**
 
 | Role | Required | Type | Description |
 |------|:--------:|------|-------------|
-| `abundance` | ✓ | Numeric | Leaf abundance weight (bound via `abundance_col`) |
+| `abundance` | ✓ | Numeric | Leaf abundance weight (bound via `abundance_col`). For Bracken: `fraction_total_reads` or `new_est_reads`. |
 
 **Settings**
 
@@ -509,7 +506,6 @@ Hierarchical taxonomy / pathway viewer — concentric rings from root to leaf. U
 
 Renderer **hierarchically aggregates** by the `rank_cols` sequence. Intermediate arc sizes are reconstructed via Plotly's `branchvalues='total'`. No per-row tag — aggregation is deterministic and lossless.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Sunburst example](../images/guides/advanced-visualizations/sunburst_light.webp#only-light)](../images/guides/advanced-visualizations/sunburst_light.webp){target=_blank}
 
@@ -538,7 +534,6 @@ Alpha-diversity vs sequencing depth — one line per sample with optional ±SE b
 
 Renderer **aggregates over `iter`** per `(sample_id, depth)` — computes mean ± CI. Optional `group` adds a colour split; otherwise one line per sample. No binary row tag.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Rarefaction example](../images/guides/advanced-visualizations/rarefaction_light.webp#only-light)](../images/guides/advanced-visualizations/rarefaction_light.webp){target=_blank}
 
@@ -569,14 +564,13 @@ The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `
 | `show_branch_lengths` | bool | `true` | Annotate branches with lengths |
 | `show_internal_labels` | bool | `false` | Annotate internal nodes with their labels |
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Phylogenetic example](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light)](../images/guides/advanced-visualizations/phylogenetic_light.webp){target=_blank}
 
 [![Phylogenetic example](../images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark)](../images/guides/advanced-visualizations/phylogenetic_dark.webp){target=_blank}
 ### Dot plot
 
-scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction expressing, colour = mean expression.
+scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction expressing, colour = mean expression. The schema expects a **cluster-aggregated long table** — derive it from `AnnData` via `sc.get.aggregate` (or a manual `groupby` on `adata.X`), not from `rank_genes_groups` (which returns DE statistics, not aggregates).
 
 **Columns**
 
@@ -584,8 +578,8 @@ scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction ex
 |------|:--------:|------|-------------|
 | `cluster` | ✓ | String | Cluster / group (x-axis) |
 | `gene` | ✓ | String | Gene / feature (y-axis) |
-| `mean_expression` | ✓ | Float | Mean expression value (dot colour) |
-| `frac_expressing` | ✓ | Float | Fraction of cells expressing in the cluster (dot size) |
+| `mean_expression` | ✓ | Float | Mean expression per (cluster, gene) — dot colour |
+| `frac_expressing` | ✓ | Float | Fraction of cells with `X > 0` per (cluster, gene) — dot size |
 
 **Settings**
 
@@ -594,7 +588,6 @@ scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction ex
 | `max_dot_size` | int (4–60) | `22` | Max marker size in pixels |
 | `min_dot_size` | int (0–20) | `2` | Min marker size in pixels |
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Dot plot example](../images/guides/advanced-visualizations/dot_plot_light.webp#only-light)](../images/guides/advanced-visualizations/dot_plot_light.webp){target=_blank}
 
@@ -631,14 +624,13 @@ scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction ex
 
 In **precomputed mode** the renderer just plots the pre-existing coordinates. In **live-compute mode** it dispatches `POST /advanced_viz/compute_embedding`, which runs the chosen reduction on the wide sample × feature matrix and returns coordinates. Results are cached by `(dc_id, method, params, filters)`; tweaking a slider re-dispatches a fresh job.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Embedding example](../images/guides/advanced-visualizations/embedding_light.webp#only-light)](../images/guides/advanced-visualizations/embedding_light.webp){target=_blank}
 
 [![Embedding example](../images/guides/advanced-visualizations/embedding_dark.webp#only-dark)](../images/guides/advanced-visualizations/embedding_dark.webp){target=_blank}
-### ComplexHeatmap
+### Hierarchical Heatmap
 
-ComplexHeatmap-style clustered heatmap with dendrograms + annotation tracks, wrapping the in-tree [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" } library. Heavy compute (clustering, dendrogram layout) runs in a Celery worker and is cached by `(dc, params hash)`.
+Clustered heatmap with dendrograms + annotation tracks, à la R's [ComplexHeatmap](https://github.com/jokergoo/ComplexHeatmap) / [pheatmap](https://cran.r-project.org/package=pheatmap). Wraps the in-tree [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" } library; heavy compute (clustering, dendrogram layout) runs in a Celery worker and is cached by `(dc, params hash)`.
 
 **Columns**
 
@@ -662,11 +654,10 @@ Numeric matrix columns are inferred from the rest of the DC schema at compute ti
 | `normalize` | `none` \| `row_z` \| `col_z` \| `log1p` | `none` | Pre-clustering normalisation |
 | `colorscale` | str \| null | `null` | Plotly colorscale name override |
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
-[![ComplexHeatmap example](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light)](../images/guides/advanced-visualizations/complex_heatmap_light.webp){target=_blank}
+[![Hierarchical Heatmap example](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light)](../images/guides/advanced-visualizations/complex_heatmap_light.webp){target=_blank}
 
-[![ComplexHeatmap example](../images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark)](../images/guides/advanced-visualizations/complex_heatmap_dark.webp){target=_blank}
+[![Hierarchical Heatmap example](../images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark)](../images/guides/advanced-visualizations/complex_heatmap_dark.webp){target=_blank}
 ### QQ
 
 Quantile-quantile plot for p-value distributions (GWAS / DE / eQTL QC). Sorts p-values and plots `-log10(observed)` against the theoretical `-log10(expected)` under a uniform null.
@@ -689,7 +680,6 @@ Quantile-quantile plot for p-value distributions (GWAS / DE / eQTL QC). Sorts p-
 
 When `category` is bound, the renderer produces **one trace per stratum** (e.g. genome partitions, ancestry groups). Otherwise a single trace plus the y = x reference line and the optional 95% null CI band.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![QQ example](../images/guides/advanced-visualizations/qq_light.webp#only-light)](../images/guides/advanced-visualizations/qq_light.webp){target=_blank}
 
@@ -719,7 +709,6 @@ No canonical role-based schema — the renderer enumerates binary columns at com
 
 Renderer **filters by intersection size and degree** — `min_size` drops intersections below the threshold, `max_degree` drops intersections involving more sets than the limit.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![UpSet example](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light)](../images/guides/advanced-visualizations/upset_plot_light.webp){target=_blank}
 
@@ -748,7 +737,6 @@ No canonical role-based schema — `step_cols` is a multi-column list (≥2 orde
 
 Renderer **aggregates by the `step_cols` sequence** (via Celery `compute_sankey`) and filters out links whose aggregated value is below `min_link_value`.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Sankey example](../images/guides/advanced-visualizations/sankey_light.webp#only-light)](../images/guides/advanced-visualizations/sankey_light.webp){target=_blank}
 
@@ -757,13 +745,13 @@ Renderer **aggregates by the `step_cols` sequence** (via Celery `compute_sankey`
 
 Sample × gene mutation matrix with discrete mutation-type colours and per-gene / per-sample frequency strips.
 
-**Columns**
+**Columns** — straight rename from canonical Mutation Annotation Format (VEP / vcf2maf / maftools — the cancer-mutation file format, not Minor Allele Frequency):
 
-| Role | Required | Type | Description |
-|------|:--------:|------|-------------|
-| `sample_id` | ✓ | String | Sample identifier (x-axis) |
-| `gene` | ✓ | String | Gene identifier (y-axis) |
-| `mutation_type` | ✓ | String | Categorical mutation type (cell colour) |
+| Role | Required | Type | Description | Mutation Annotation Format column |
+|------|:--------:|------|-------------|------------|
+| `sample_id` | ✓ | String | Sample identifier (x-axis) | `Tumor_Sample_Barcode` |
+| `gene` | ✓ | String | Gene identifier (y-axis) | `Hugo_Symbol` |
+| `mutation_type` | ✓ | String | Categorical mutation type (cell colour) | `Variant_Classification` |
 
 **Settings**
 
@@ -773,7 +761,6 @@ No additional knobs — the layout is fully determined by the column bindings.
 
 Cells are **coloured categorically by `mutation_type`** (NA cells stay blank). Side strips show per-gene and per-sample mutation counts.
 
-> _Screenshot pending — capture from `advanced_viz_showcase` dashboard._
 
 [![Oncoplot example](../images/guides/advanced-visualizations/oncoplot_light.webp#only-light)](../images/guides/advanced-visualizations/oncoplot_light.webp){target=_blank}
 
@@ -1117,7 +1104,6 @@ Map components require a Table DC that explicitly declares its latitude and long
 
 It inherits every standard Table DC capability (CSV / TSV / Parquet format, `polars_kwargs`, `keep_columns`, `columns_description`). The `dc_type` stays `"table"` — the variant is materialised at deserialisation when `lat_column` / `lon_column` are present. A model validator enforces that the two columns must differ.
 
-> _Screenshot pending — capture the Create-DC modal's Coordinates tab from a running instance and save as `docs/images/guides/map/coordinates_dc.png`._
 
 ![Coordinates DC example](../images/guides/map/coordinates_dc.png)
 
