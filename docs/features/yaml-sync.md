@@ -202,7 +202,7 @@ project_tag: Project_Name
 
 components:
   - tag: component-identifier
-    component_type: figure|card|interactive|table|image|multiqc|map
+    component_type: figure|card|text|interactive|table|image|multiqc|map|advanced_viz
     workflow_tag: engine/workflow_name
     data_collection_tag: dc_tag
     # Component-specific fields...
