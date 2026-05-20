@@ -12,59 +12,65 @@ Depictio provides a variety of component types for building interactive dashboar
 
 <div class="grid cards" markdown>
 
--   :material-chart-scatter-plot:{ .lg .middle } **Figure**
+-   :material-chart-scatter-plot:{ .lg .middle } **[Figure](#figure-components)**
 
     ---
 
     Charts and plots (scatter, bar, histogram, line, box, pie, and more)
 
--   :material-table:{ .lg .middle } **Table**
+-   :material-table:{ .lg .middle } **[Table](#table-components)**
 
     ---
 
     Interactive data tables with filtering and sorting
 
--   :material-card-text:{ .lg .middle } **Card**
+-   :material-card-text:{ .lg .middle } **[Card](#card-components)**
 
     ---
 
     Metric display with aggregations
 
--   :material-format-header-1:{ .lg .middle } **Text**
+-   :material-format-header-1:{ .lg .middle } **[Text](#text-components)**
 
     ---
 
     Section headers (H1, H2, H3)
 
--   :material-tune:{ .lg .middle } **Interactive**
+-   :material-tune:{ .lg .middle } **[Interactive](#interactive-components)**
 
     ---
 
     User input components for filtering (slider, dropdown, date picker)
 
--   :material-microscope:{ .lg .middle } **MultiQC**
+-   :material-microscope:{ .lg .middle } **[MultiQC](#multiqc-components)**
 
     ---
 
     Quality control report visualizations
 
--   :material-image-multiple:{ .lg .middle } **Image**
+-   :material-image-multiple:{ .lg .middle } **[Image](#image-components)**
 
     ---
 
     Image galleries with S3/MinIO storage integration
 
--   :material-map-marker-multiple:{ .lg .middle } **Map**
+-   :material-map-marker-multiple:{ .lg .middle } **[Map](#map-components)**
 
     ---
 
     Geospatial map visualization with markers
 
+-   :material-chart-multiline:{ .lg .middle } **[Advanced Visualizations](#advanced-visualizations)**
+
+    ---
+
+    Domain-specific scientific viz (volcano, MA, manhattan, ComplexHeatmap, UpSet, sankey, …) backed by canonical column schemas
+
 </div>
 
 ---
 
-## :material-chart-scatter-plot: Figure Components
+## :material-chart-scatter-plot: Figure Components <small>(v0.0.1+)</small> { #figure-components }
 
 Figure components display data visualizations using Plotly charts. They support both **UI Mode** (drag-and-drop configuration) and **Code Mode** (Python code for custom plots).
 
@@ -134,23 +140,8 @@ fig
 | Color | Column for color encoding | None |
 | Hover data | Additional columns shown on hover | None |
 
-### ComplexHeatmap
-
-ComplexHeatmap figures use the [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" } library to render clustered heatmaps with dendrograms and row/column annotations — similar to R's `ComplexHeatmap`.
-
-| Option | Description | Default |
-|--------|-------------|---------|
-| `index_column` | Column used as row labels | First column |
-| `value_columns` | Numeric columns for the matrix | All numeric |
-| `row_annotations` | Columns rendered as colored side bars | None |
-| `cluster_rows` / `cluster_cols` | Enable hierarchical clustering | `true` |
-| `normalize` | Row normalization (`zscore`, `minmax`, `none`) | `none` |
-| `colorscale` | Plotly colorscale name | `RdBu_r` |
-| `split_rows_by` | Split heatmap into groups by annotation | None |
-| `cluster_method` | Linkage method (`ward`, `average`, `complete`, `single`) | `ward` |
-| `cluster_metric` | Distance metric (`euclidean`, `correlation`, `cosine`) | `euclidean` |
-
-Heatmaps work in both **UI Mode** (parameter discovery in the stepper) and **YAML Mode** (see [YAML figure reference](yaml-sync.md#figure-component)).
+!!! tip "Clustered heatmaps moved"
+    The ComplexHeatmap viz has been renamed and is now part of the Advanced Visualizations section below — see [Hierarchical Heatmap](#hierarchical-heatmap) for the full config, alongside the rest of the domain-specific viz family (volcano, MA, sankey, …).
 
 ### Selection Filtering (Scatter Plots)
 
@@ -165,7 +156,7 @@ See [Interactive Selection Filtering](interactive-selection-filtering.md) for de
 
 ---
 
-## :material-table: Table Components
+## :material-table: Table Components <small>(v0.0.2+)</small> { #table-components }
 
 Table components display data in interactive tables with built-in filtering and sorting.
 
@@ -205,7 +196,617 @@ See [Interactive Selection Filtering](interactive-selection-filtering.md) for de
 
 ---
 
-## :material-card-text: Card Components
+## :material-chart-multiline: Advanced Visualizations <small>(v0.13.0+)</small> { #advanced-visualizations }
+
+Advanced Visualizations are a family of domain-specific scientific charts (catalogued below). Unlike the generic [Figure](#figure-components) component, which accepts any numeric columns, each advanced viz declares a **canonical column-role schema**: a volcano plot knows it needs a `feature_id`, an `effect_size`, and a `significance` column — wired to your DC's actual column names through the viz's config.
+
+Two ingredients work together:
+
+- a **per-viz `Config` class** (e.g. `VolcanoConfig`, `MAConfig`) that captures the role → column mapping plus per-viz display defaults (thresholds, top-N, sort order);
+- a **`CANONICAL_SCHEMAS` entry** declaring the required and optional roles plus their accepted polars dtypes, used by the dashboard builder to validate the binding and surface errors before the viz renders.
+
+Source of truth in the codebase:
+
+- `depictio/models/components/advanced_viz/configs.py` — per-viz Pydantic configs
+- `depictio/models/components/advanced_viz/schemas.py` — `CANONICAL_SCHEMAS` + `validate_binding()`
+- `depictio/models/components/types.py` — `AdvancedVizKind` literal enum
+
+### Catalog
+
+Every advanced viz consumes a **tabular DC** (CSV / TSV / Parquet → polars) with the column roles documented per-viz below. The **Accepted input** column lists upstream tools whose output natively has — or trivially reshapes to — those columns. Web renderers that *look* like a viz (Microreact, iTOL, IGV, JBrowse, Krona, EnhancedVolcano, qqman, …) aren't listed here — they're peers, not data sources; we call them out in the per-viz prose where the framing helps.
+
+| Viz | Description | Accepted input (canonical producer) |
+|-----|-------------|-------------------------------------|
+| :material-chart-scatter-plot: [Volcano](#volcano) | Effect size vs significance scatter for differential analysis. | **DESeq2** results table (`results()` → TSV) |
+| :material-chart-bell-curve-cumulative: [MA](#ma) | Mean intensity vs log fold change for DE / proteomics QC. | **DESeq2** results table: `log2(baseMean+1)` (or `log10`) → `avg_log_intensity`, `log2FoldChange` straight |
+| :material-view-grid-plus-outline: [DA barplot](#da-barplot) | Ranked signed-LFC bars for differential abundance — single panel or faceted by contrast. | **ANCOM-BC** `output$res` (feature, contrast, lfc, q-value) |
+| :material-chart-bubble: [Enrichment](#enrichment) | Pathway / GO-term enrichment dot plot. | **clusterProfiler** GSEA / ORA result (term, NES, padj, gene-count) |
+| :material-chart-histogram: [Manhattan](#manhattan) | Genome-wide signal scatter across chromosomes (GWAS). | **PLINK** `.assoc` (chr, pos, p-value) |
+| :material-chart-timeline-variant: [Lollipop](#lollipop) | Variant / mutation track along a gene body. | **maftools / vcf2maf** Mutation Annotation Format table — `Hugo_Symbol`, `Start_Position`, `Variant_Classification` (file format, **not** Minor Allele Frequency) |
+| :material-chart-areaspline: [Coverage track](#coverage-track) | Read depth / signal along genomic coordinates. | **mosdepth** per-base / by-region BED (chrom, pos, depth) |
+| :material-chart-bar-stacked: [Stacked taxonomy](#stacked-taxonomy) | Per-sample relative-abundance composition by taxonomic rank. | **QIIME2** `taxa-collapse` table (sample × taxon abundance) |
+| :material-sun-wireless: [Sunburst](#sunburst) | Hierarchical taxonomy / pathway viewer. | **Kraken2** `.kreport` parsed into rank columns + `fraction_total_reads` (Bracken `.bracken` is flat single-rank, needs lineage expansion first) |
+| :material-chart-line: [Rarefaction](#rarefaction) | Alpha-diversity vs sequencing-depth saturation curve. | **QIIME2** `alpha-rarefaction` (sample, depth, alpha-metric) |
+| :material-family-tree: [Phylogenetic](#phylogenetic) | Newick tree + tip metadata. Renders Microreact-style. | **IQ-TREE** Newick + a tabular tip-metadata TSV |
+| :material-circle-multiple-outline: [Dot plot](#dot-plot) | Single-cell marker-gene expression by cluster. | **scanpy** aggregation (`sc.get.aggregate` or `groupby` on `adata.X`) producing `(cluster, gene, mean_expression, frac_expressing)` — `rank_genes_groups.to_df()` alone is DE stats, not the dot-plot schema |
+| :material-atom: [Embedding](#embedding) | 2D / 3D sample projection for cluster inspection (precomputed or live PCA / UMAP / t-SNE / PCoA). | **scanpy** `adata.obsm['X_umap']` (sample, dim1, dim2) |
+| :material-grid: [Hierarchical Heatmap](#hierarchical-heatmap) | Clustered matrix with dendrograms + annotation tracks. | **DESeq2** `vst()` matrix (sample × gene wide) |
+| :material-chart-line-stacked: [QQ](#qq) | p-value distribution QC for inflation / deflation. | **PLINK** `.assoc` (or any p-value column) |
+| :material-set-center: [UpSet](#upset) | Set-intersection visualisation, alternative to Venn. | Any binary membership matrix (sample × set) |
+| :material-chart-sankey: [Sankey](#sankey) | Categorical flow across N ordered levels. | Any tidy table with ≥2 ordered categorical columns |
+| :material-grid-large: [Oncoplot](#oncoplot) | Sample × gene mutation matrix. | **maftools / vcf2maf** Mutation Annotation Format table — `Tumor_Sample_Barcode`, `Hugo_Symbol`, `Variant_Classification` (file format, **not** Minor Allele Frequency) |
+
+!!! info "Reading the schema tables"
+    Each viz subsection lists its **required** column roles (must be bound for the viz to render) and **optional** roles (extra colour / size / label dimensions). Types use polars dtype families — `Float` accepts `Float32` / `Float64`, `Int` accepts `Int8`–`Int64` and unsigned widths, `String` accepts `String` / `Utf8`, `Numeric` is `Int` ∪ `Float`. The dashboard builder validates the binding via `validate_binding()` and surfaces dtype mismatches in-place.
+
+### Volcano
+
+Effect size vs significance scatter — classic differential-expression view with threshold lines, point search, and top-N labels.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `feature_id` | ✓ | String | Feature identifier (gene, peak, …) |
+| `effect_size` | ✓ | Float | Effect size (e.g. log2FC, lfc) |
+| `significance` | ✓ | Float | p-value or padj/q-value |
+| `label` | — | String | Hover label override |
+| `category` | — | String | Categorical annotation (pathway, cluster…) for point colour |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `significance_is_neg_log10` | bool | `false` | True if `significance_col` already contains -log10(p); else applied client-side |
+| `significance_threshold` | float | `0.05` | Cutoff applied to the `significance` column |
+| `effect_threshold` | float | `1.0` | Absolute `effect_size` cutoff |
+| `top_n_labels` | int (≥0) | `20` | Max features to auto-label |
+
+**Filtering / row tagging**
+
+Every row is classified client-side as **UP**, **DOWN**, or **NS** based on `significance < threshold` combined with `|effect_size| > threshold`. The backend returns raw rows; classification + colouring happens in `VolcanoRenderer.tsx`.
+
+
+[![Volcano example](../images/guides/advanced-visualizations/volcano_light.webp#only-light)](../images/guides/advanced-visualizations/volcano_light.webp){target=_blank}
+
+[![Volcano example](../images/guides/advanced-visualizations/volcano_dark.webp#only-dark)](../images/guides/advanced-visualizations/volcano_dark.webp){target=_blank}
+### MA
+
+Mean log intensity (x) vs log2 fold change (y) — same hits as volcano, classic DE / proteomics layout. Shares the UP / DOWN / NS tier scheme with [Volcano](#volcano).
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `feature_id` | ✓ | String | Feature identifier |
+| `avg_log_intensity` | ✓ | Float | Mean log intensity (A in MA, x-axis). For DESeq2: pre-transform `baseMean` with `log2(baseMean + 1)` (or `log10`) — `baseMean` itself is untransformed normalised counts. |
+| `log2_fold_change` | ✓ | Float | Log2 fold change (M in MA, y-axis). DESeq2 `log2FoldChange` maps directly. |
+| `significance` | — | Float | p / padj column for tier colouring |
+| `label` | — | String | Hover label override |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `significance_threshold` | float (0–1) | `0.05` | Cutoff for `significance` |
+| `fold_change_threshold` | float (≥0) | `1.0` | Absolute `log2_fold_change` cutoff |
+| `top_n_labels` | int (≥0) | `15` | Max features to auto-label |
+
+**Filtering / row tagging**
+
+Mirror of the [Volcano](#volcano) tier scheme — UP / DOWN / NS classification (sig × FC thresholds), client-side in `MARenderer.tsx`.
+
+
+[![MA example](../images/guides/advanced-visualizations/ma_light.webp#only-light)](../images/guides/advanced-visualizations/ma_light.webp){target=_blank}
+
+[![MA example](../images/guides/advanced-visualizations/ma_dark.webp#only-dark)](../images/guides/advanced-visualizations/ma_dark.webp){target=_blank}
+### DA barplot
+
+Ranked signed-LFC horizontal bars for differential abundance — single panel or faceted across contrasts. Same input shape as the upstream tool (ANCOM-BC, ALDEx2, MaAsLin2): one row per `(feature, contrast)` with `lfc` and optional `significance`.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `feature_id` | ✓ | String | Feature / taxon identifier |
+| `contrast` | ✓ | String | Contrast name (faceting + single-panel filter) |
+| `lfc` | ✓ | Float | Log-fold-change (signed) |
+| `significance` | — | Float | FDR-adjusted p-value; significant bars are highlighted when bound |
+| `label` | — | String | Display label for bars |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `contrast_view` | str | `"all"` | `"all"` → faceted small-multiples (one panel per contrast); any specific contrast value → single-panel drill-in |
+| `significance_threshold` | float (0–1) | `0.05` | Highlight cutoff for `significance` |
+| `top_n` | int (≥1) | `15` | Top features by `\|lfc\|` shown per panel |
+
+**Filtering / row tagging**
+
+When `contrast_view == "all"` the renderer **facets by contrast** (one panel per unique value, top-N per panel). When `contrast_view` matches a specific contrast value, the renderer collapses to a **single panel** showing only that contrast — useful when one comparison is the focus.
+
+!!! info "Legacy `viz_kind: ancombc_differentials`"
+    Previously this single-panel layout was a separate viz kind named `ancombc_differentials`. It's now merged into DA barplot — `viz_kind: ancombc_differentials` is still accepted at deserialisation and rewritten to `da_barplot` with `contrast_view` defaulted from the persisted config.
+
+
+[![DA barplot example](../images/guides/advanced-visualizations/da_barplot_light.webp#only-light)](../images/guides/advanced-visualizations/da_barplot_light.webp){target=_blank}
+
+[![DA barplot example](../images/guides/advanced-visualizations/da_barplot_dark.webp#only-dark)](../images/guides/advanced-visualizations/da_barplot_dark.webp){target=_blank}
+### Enrichment
+
+GSEA / GO / KEGG / Reactome pathway-enrichment dot plot: term on y, NES on x, dot size = gene-set size, colour = -log10(padj).
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `term` | ✓ | String | Pathway / GO-term name |
+| `nes` | ✓ | Float | Normalised enrichment score (signed, x-axis) |
+| `padj` | ✓ | Float | FDR-adjusted p-value |
+| `gene_count` | ✓ | Numeric | Gene-set size (dot size) |
+| `source` | — | String | Ontology / source label (GO_BP, KEGG, Reactome, Hallmark, …) |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `padj_threshold` | float (0–1) | `0.05` | Filter cutoff |
+| `top_n` | int (≥1) | `20` | Max pathways shown |
+
+**Filtering / row tagging**
+
+Renderer **filters by source** (MultiSelect) and ranks by |nes|; only the top-N pathways are shown. Dot colour encodes -log10(padj).
+
+
+[![Enrichment example](../images/guides/advanced-visualizations/enrichment_light.webp#only-light)](../images/guides/advanced-visualizations/enrichment_light.webp){target=_blank}
+
+[![Enrichment example](../images/guides/advanced-visualizations/enrichment_dark.webp#only-dark)](../images/guides/advanced-visualizations/enrichment_dark.webp){target=_blank}
+### Manhattan
+
+Generic chr / pos / score plot — works for true GWAS (variants), peak significance (ATAC/ChIP narrowPeak), or viral variant tracks. `score_kind` keeps the y-axis label honest.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `chr` | ✓ | String | Chromosome label |
+| `pos` | ✓ | Int | Genomic position (1-based) |
+| `score` | ✓ | Float | Y-axis score (e.g. -log10(padj)) |
+| `feature` | — | String | Feature / locus id (gene, SNP, peak) |
+| `effect` | — | Float | Signed effect for point colouring |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `score_kind` | str | `-log10(padj)` | Y-axis label override |
+| `score_threshold` | float \| null | `null` | Horizontal threshold line; null hides it |
+| `highlight` | `above` \| `below` \| `none` | `above` | Which side of `score_threshold` gets emphasised. `above` colours and enlarges points at/above the threshold (GWAS / consensus-variant default); `below` inverts it (useful for minority-allele / sub-threshold candidates); `none` colours both sides equally. No effect when `score_threshold` is null. |
+| `marker_size_above` | int (1–30) | `6` | Marker size (px) for points at or above `score_threshold`. Only used when a threshold is set. |
+| `marker_size_below` | int (1–30) | `4` | Marker size (px) for sub-threshold points. Lower by default so the eye lands on the hits. |
+| `marker_size_uniform` | int (1–30) | `5` | Marker size when no threshold is set (uniform sizing). |
+| `color_by_columns` | list[str] | `[]` | Extra columns fetched alongside the required roles, exposed in the viz Colour-by dropdown. The renderer auto-detects numeric vs categorical (continuous colorscale vs palette). `Chromosome` and `Score` (the y-axis column) are always available without listing them here. Typical viralrecon usage: `['effect', 'lineage', 'sample']`. |
+| `default_color_by` | str \| null | `null` | Initial value for the Colour-by dropdown. Either `Chromosome`, `Score`, or one of `color_by_columns`. Defaults to `Chromosome` when null. |
+
+**Filtering / row tagging**
+
+Renderer **facets by chromosome** (one subplot per unique `chr` value). The optional `score_threshold` draws a horizontal cutoff line — no explicit per-row tag, but the line gives a visual significance reference.
+
+
+[![Manhattan example](../images/guides/advanced-visualizations/manhattan_light.webp#only-light)](../images/guides/advanced-visualizations/manhattan_light.webp){target=_blank}
+
+[![Manhattan example](../images/guides/advanced-visualizations/manhattan_dark.webp#only-dark)](../images/guides/advanced-visualizations/manhattan_dark.webp){target=_blank}
+### Lollipop
+
+Needle / variant track along a gene — each gene body as a horizontal line, each variant as a vertical stem with a category-coloured marker on top.
+
+**Columns** — straight rename from canonical Mutation Annotation Format (VEP / vcf2maf / maftools — the cancer-mutation file format, not Minor Allele Frequency):
+
+| Role | Required | Type | Description | Mutation Annotation Format column |
+|------|:--------:|------|-------------|------------|
+| `feature_id` | ✓ | String | Gene / feature the variant is on | `Hugo_Symbol` |
+| `position` | ✓ | Int | Position along the feature | `Start_Position` (or `Protein_position` for AA-space tracks) |
+| `category` | ✓ | String | Variant consequence category (colour) | `Variant_Classification` |
+| `effect` | — | Float | Numeric effect (marker size) | e.g. `VAF`, `t_alt_count / t_depth` |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `max_subplot_genes` | int (≥1) | `6` | If the gene universe exceeds this, switch to a single-gene picker |
+
+**Filtering / row tagging**
+
+Renderer **facets by feature** (one subplot per gene, or a picker once the universe exceeds `max_subplot_genes`). Markers are **coloured by category** and **sized by effect** when bound.
+
+
+[![Lollipop example](../images/guides/advanced-visualizations/lollipop_light.webp#only-light)](../images/guides/advanced-visualizations/lollipop_light.webp){target=_blank}
+
+[![Lollipop example](../images/guides/advanced-visualizations/lollipop_dark.webp#only-dark)](../images/guides/advanced-visualizations/lollipop_dark.webp){target=_blank}
+### Coverage track
+
+Read depth / signal along a coordinate axis. Universal genomics primitive — covers mosdepth bins, BigWig-derived transcript coverage, peak signal, methylseq depth, contig coverage, sarek QC.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `chromosome` | ✓ | String | Chromosome / contig label |
+| `position` | ✓ | Int | Bin centre or single-base position |
+| `value` | ✓ | Numeric | Coverage / signal value |
+| `end` | — | Int | Bin end — when set with `position`, treated as interval |
+| `sample` | — | String | Per-sample faceting (stacked subplots) |
+| `category` | — | String | Categorical annotation (gene region, peak class, …) |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `y_scale` | `linear` \| `log` | `linear` | Y-axis scale |
+| `smoothing_window` | int (0–200) | `5` | Rolling-mean window in bins (0 disables). Default 5 ≈ 1 kb at 200-bp mosdepth bins — kills high-frequency wiggle without flattening amplicon-scale dropouts. |
+| `color_by` | `single` \| `category` \| `sample` | `single` | Trace colour assignment mode |
+| `show_annotation_lane` | bool | `true` | Render annotation strip when `category` is bound |
+| `annotation_id` | str \| null | `null` | Optional bundled-annotation override for the genome-feature overlay strip. When null, the renderer auto-detects the assembly from the bound DC's chromosome value (e.g. `MN908947.3` → SARS-CoV-2). Pin this when your data uses non-standard chromosome names but corresponds to a known assembly. Valid ids: `sars_cov_2`, `rsv_a`, `hiv_1`, `mpox`, `hbv` (see `depictio-react-core`'s `genome_annotations` registry). |
+| `chromosomes_filter` | list[str] \| null | `null` | Whitelist of chromosomes; null = all |
+| `samples_filter` | list[str] \| null | `null` | Whitelist of samples; null = all |
+
+**Filtering / row tagging**
+
+Renderer **facets by chromosome** (subplot per chr) and optionally by **sample** (stacked subplot rows). The `chromosomes_filter` / `samples_filter` whitelists narrow the view further; the category lane colour-segments the trace.
+
+
+[![Coverage track example](../images/guides/advanced-visualizations/coverage_track_light.webp#only-light)](../images/guides/advanced-visualizations/coverage_track_light.webp){target=_blank}
+
+[![Coverage track example](../images/guides/advanced-visualizations/coverage_track_dark.webp#only-dark)](../images/guides/advanced-visualizations/coverage_track_dark.webp){target=_blank}
+### Stacked taxonomy
+
+Per-sample stacked relative-abundance bar with a rank dropdown.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `sample_id` | ✓ | String | Sample identifier |
+| `taxon` | ✓ | String | Taxon name |
+| `rank` | ✓ | String | Taxonomic rank label |
+| `abundance` | ✓ | Numeric | Relative or absolute abundance |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `default_rank` | str \| null | `null` | If `rank` carries multiple ranks, default-filter to this one |
+| `top_n` | int (≥1) | `20` | Show top-N taxa, lump rest into `Other` |
+| `sort_by` | `abundance` \| `alphabetical` | `abundance` | Stack-ordering rule |
+| `normalise_to_one` | bool | `true` | Force each sample's bars to sum to 1 (true % composition) |
+| `annotation_strips` | list[dict] \| null | `null` | Per-sample categorical annotation strips drawn above or below the stacked bars. Each entry is a dict with: `column` (str, required), `label` (str, optional — defaults to column name), `position` (`top` \| `bottom`, default `bottom`), `palette` (`{value: hex}`, optional). Reusable across any per-sample categorical metadata (habitat, batch, treatment, timepoint) — renderer pulls the columns automatically, no recipe change needed. |
+
+??? example "Annotation strips YAML"
+    ```yaml
+    annotation_strips:
+      - column: habitat
+        label: Habitat
+        position: top
+        palette:
+          Riverwater: "#377EB8"
+          Groundwater: "#4DAF4A"
+          Sediment: "#E41A1C"
+          Soil: "#FF7F00"
+    ```
+
+**Filtering / row tagging**
+
+Renderer **filters by rank** (dropdown sourced from the unique `rank` values). Within the active rank, taxa are sorted by `sort_by`; everything past `top_n` is collapsed into an `Other` slice.
+
+
+[![Stacked taxonomy example](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light)](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp){target=_blank}
+
+[![Stacked taxonomy example](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark)](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp){target=_blank}
+### Sunburst
+
+Hierarchical taxonomy / pathway viewer — concentric rings from root to leaf. Unlike most viz, Sunburst uses a multi-column `rank_cols` list rather than the standard single-column `<role>_col` pattern; the `abundance` role is bound via the `abundance_col` setting below.
+
+!!! note "Bracken vs Kraken2 — what to ingest"
+    A raw `.bracken` file is **flat for a single target rank** (columns: `name`, `taxonomy_id`, `taxonomy_lvl`, `fraction_total_reads`, …) and does **not** carry explicit Kingdom→Genus rank columns. To bind it to Sunburst, either (a) ingest the Kraken2 `.kreport` instead and pivot the indented lineage into rank columns, or (b) map each Bracken `taxonomy_id` back to the NCBI taxonomy tree (e.g. `taxonkit lineage`, `ete3`) and expand to rank columns before upload. The DC must end up with one column per rank used in `rank_cols` plus one numeric `abundance_col`.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `abundance` | ✓ | Numeric | Leaf abundance weight (bound via `abundance_col`). For Bracken: `fraction_total_reads` or `new_est_reads`. |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `rank_cols` | list[str] (≥2) | _required_ | Hierarchical columns from root to leaf (e.g. `[Kingdom, Phylum, Class, Order, Family, Genus]`) |
+| `abundance_col` | str | _required_ | DC column that satisfies the `abundance` role above |
+| `category_palette` | dict[str, str] \| null | `null` | Explicit value→colour overrides for the colour-key categories (whichever rank the user's Colour-by picker chooses). Pin domain palettes (e.g. `Habitat → Set1`) so the same category lands on the same colour across PCoA / UpSet / heatmap tiles. |
+
+**Filtering / row tagging**
+
+Renderer **hierarchically aggregates** by the `rank_cols` sequence. Intermediate arc sizes are reconstructed via Plotly's `branchvalues='total'`. No per-row tag — aggregation is deterministic and lossless.
+
+
+[![Sunburst example](../images/guides/advanced-visualizations/sunburst_light.webp#only-light)](../images/guides/advanced-visualizations/sunburst_light.webp){target=_blank}
+
+[![Sunburst example](../images/guides/advanced-visualizations/sunburst_dark.webp#only-dark)](../images/guides/advanced-visualizations/sunburst_dark.webp){target=_blank}
+### Rarefaction
+
+Alpha-diversity vs sequencing depth — one line per sample with optional ±SE band and group colouring.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `sample_id` | ✓ | String | Sample identifier |
+| `depth` | ✓ | Numeric | Subsampling depth (x-axis) |
+| `metric` | ✓ | Numeric | Alpha-diversity metric value (y-axis) |
+| `iter` | — | Numeric | Iteration column to aggregate over |
+| `group` | — | String | Categorical column for line colour grouping |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `show_ci` | bool | `true` | Shade ±1 SE band around each sample's curve |
+| `category_palette` | dict[str, str] \| null | `null` | Explicit value→colour overrides for the `group` categories. Pins domain palettes (e.g. `habitat → Set1`) across PCoA + UpSet + heatmap + rarefaction for cross-tab consistency. |
+
+**Filtering / row tagging**
+
+Renderer **aggregates over `iter`** per `(sample_id, depth)` — computes mean ± CI. Optional `group` adds a colour split; otherwise one line per sample. No binary row tag.
+
+
+[![Rarefaction example](../images/guides/advanced-visualizations/rarefaction_light.webp#only-light)](../images/guides/advanced-visualizations/rarefaction_light.webp){target=_blank}
+
+[![Rarefaction example](../images/guides/advanced-visualizations/rarefaction_dark.webp#only-dark)](../images/guides/advanced-visualizations/rarefaction_dark.webp){target=_blank}
+### Phylogenetic
+
+Newick tree + tip metadata (Microreact-style) — 5 layouts, tip search, subtree highlight.
+
+The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `/advanced_viz/phylogeny/{dc_id}/newick`). Tip annotations live in a regular Table DC and are joined to tip labels at render time via `taxon_col`. The schema below validates the **metadata** DC only.
+
+**Columns** (metadata DC)
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `taxon` | ✓ | String | Joins metadata rows to tip labels in the tree |
+| `color` | — | Numeric \| String | Tip colouring (categorical or continuous) |
+| `label` | — | String | Metadata column shown alongside the tip label (e.g. clade name) |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `tree_wf_id` / `tree_dc_id` | str | _required_ | Workflow + DC ids of the phylogeny DC |
+| `metadata_wf_id` / `metadata_dc_id` | str \| null | `null` | Optional metadata DC for tip annotations |
+| `taxon_col` | str | `"taxon"` | Column in the metadata DC matching tip labels in the tree |
+| `color_col` | str \| null | `null` | Metadata column for tip colouring (categorical or continuous) |
+| `label_col` | str \| null | `null` | Metadata column shown alongside the tip label (e.g. clade name) |
+| `extra_color_cols` | list[str] \| null | `null` | Extra metadata columns to pre-fetch so they appear in the viz Colour-by Select. Typical use: taxonomic ranks on ASV trees (Kingdom/Phylum/.../Species) so the user can re-colour tips at a different rank without reloading. |
+| `category_palettes` | dict[str, dict[str, str]] \| null | `null` | Per-column palette overrides for the Colour-by selector. Shape: `{column_name: {category_value: hex}}`. Pin domain palettes (e.g. `dominant_habitat → Set1`) so the same category lands on the same colour across PCoA / UpSet / heatmap / phylogeny tiles. |
+| `default_layout` | `rectangular` \| `circular` \| `radial` \| `diagonal` \| `hierarchical` | `rectangular` | Initial tree layout |
+| `ladderize` | bool | `true` | Ladderise the tree by default |
+| `show_metadata_strip` | bool | `true` | Render Microreact-style metadata strip next to each tip |
+| `show_branch_lengths` | bool | `true` | Annotate branches with lengths |
+| `show_internal_labels` | bool | `false` | Annotate internal nodes with their labels |
+
+
+[![Phylogenetic example](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light)](../images/guides/advanced-visualizations/phylogenetic_light.webp){target=_blank}
+
+[![Phylogenetic example](../images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark)](../images/guides/advanced-visualizations/phylogenetic_dark.webp){target=_blank}
+### Dot plot
+
+scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction expressing, colour = mean expression. The schema expects a **cluster-aggregated long table** — derive it from `AnnData` via `sc.get.aggregate` (or a manual `groupby` on `adata.X`), not from `rank_genes_groups` (which returns DE statistics, not aggregates).
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `cluster` | ✓ | String | Cluster / group (x-axis) |
+| `gene` | ✓ | String | Gene / feature (y-axis) |
+| `mean_expression` | ✓ | Float | Mean expression per (cluster, gene) — dot colour |
+| `frac_expressing` | ✓ | Float | Fraction of cells with `X > 0` per (cluster, gene) — dot size |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `max_dot_size` | int (4–60) | `22` | Max marker size in pixels |
+| `min_dot_size` | int (0–20) | `2` | Min marker size in pixels |
+
+
+[![Dot plot example](../images/guides/advanced-visualizations/dot_plot_light.webp#only-light)](../images/guides/advanced-visualizations/dot_plot_light.webp){target=_blank}
+
+[![Dot plot example](../images/guides/advanced-visualizations/dot_plot_dark.webp#only-dark)](../images/guides/advanced-visualizations/dot_plot_dark.webp){target=_blank}
+### Embedding
+
+2D / 3D sample embedding (PCA / UMAP / t-SNE / PCoA) — supports a **precomputed** DC (`dim_1`, `dim_2` columns already materialised) or **live-compute** mode (run the reduction on the fly via a Celery task and cache by `(dc, method, params, filters)`).
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `sample_id` | ✓ | String | Sample identifier |
+| `dim_1` | ✓ | Float | First embedding dim (precomputed mode) |
+| `dim_2` | ✓ | Float | Second embedding dim (precomputed mode) |
+| `dim_3` | — | Float | Third dim — enables 3D |
+| `cluster` | — | String | Cluster assignment column |
+| `color` | — | Numeric \| String | Point colouring (metadata or expression) |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `compute_method` | `pca` \| `umap` \| `tsne` \| `pcoa` \| null | `null` | When set, runs the reduction live on the server; null = precomputed mode |
+| `umap_n_neighbors` | int (2–100) | `15` | UMAP `n_neighbors` |
+| `umap_min_dist` | float (0–1) | `0.1` | UMAP `min_dist` |
+| `tsne_perplexity` | float (2–100) | `30.0` | t-SNE perplexity |
+| `tsne_n_iter` | int (250–5000) | `1000` | t-SNE iterations |
+| `pcoa_distance` | `bray_curtis` | `bray_curtis` | PCoA distance metric |
+| `show_density` | bool | `false` | Overlay density contours |
+| `point_size` | int (1–30) | `6` | Marker size |
+| `category_palette` | dict[str, str] \| null | `null` | Explicit value→colour overrides for the categorical `color` column. Wins over the default palette-index assignment so dashboards can pin domain-specific colours (e.g. `habitat → Set1`) without forking the renderer per project. |
+
+**Filtering / row tagging**
+
+In **precomputed mode** the renderer just plots the pre-existing coordinates. In **live-compute mode** it dispatches `POST /advanced_viz/compute_embedding`, which runs the chosen reduction on the wide sample × feature matrix and returns coordinates. Results are cached by `(dc_id, method, params, filters)`; tweaking a slider re-dispatches a fresh job.
+
+
+[![Embedding example](../images/guides/advanced-visualizations/embedding_light.webp#only-light)](../images/guides/advanced-visualizations/embedding_light.webp){target=_blank}
+
+[![Embedding example](../images/guides/advanced-visualizations/embedding_dark.webp#only-dark)](../images/guides/advanced-visualizations/embedding_dark.webp){target=_blank}
+### Hierarchical Heatmap
+
+Clustered heatmap with dendrograms + annotation tracks, à la R's [ComplexHeatmap](https://github.com/jokergoo/ComplexHeatmap) / [pheatmap](https://cran.r-project.org/package=pheatmap). Wraps the in-tree [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" } library; heavy compute (clustering, dendrogram layout) runs in a Celery worker and is cached by `(dc, params hash)`.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `index` | ✓ | String | Row-label column (typically `sample_id`) |
+
+Numeric matrix columns are inferred from the rest of the DC schema at compute time — there's no per-role binding for the value columns.
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `matrix_wf_id` / `matrix_dc_id` | str | _required_ | Workflow + DC ids of the wide matrix DC |
+| `index_column` | str | `sample_id` | Row-label column |
+| `value_columns` | list[str] \| null | `null` | Subset of numeric columns; null = all numeric |
+| `row_annotation_cols` | list[str] | `[]` | Categorical columns rendered as a right-side annotation strip |
+| `col_annotations` | dict[str, dict[str, str]] \| null | `null` | Per-column categorical annotations rendered as a top strip. Shape: `{annotation_name: {column_label: category_value}}` (e.g. `{'habitat': {'SRR10070130': 'Riverwater', ...}}`). The renderer aligns the values to the matrix's column order. Use when per-sample metadata (treatment / habitat / batch) needs to live on the column axis without joining a second DC. |
+| `col_annotation_colors` | dict[str, dict[str, str]] \| null | `null` | Per-annotation palette overrides for the column-annotation track. Shape: `{annotation_name: {category_value: hex}}`. When unset the server picks colours from a Dark2 palette (chosen to contrast with the row-track's Set2 pastels). Use to pin domain palettes (e.g. `habitat → Set1`) across PCoA + UpSet + heatmap. |
+| `cluster_rows` / `cluster_cols` | bool | `true` | Enable hierarchical clustering |
+| `cluster_method` | `ward` \| `single` \| `complete` \| `average` | `ward` | Linkage method |
+| `cluster_metric` | `euclidean` \| `correlation` \| `cosine` | `euclidean` | Distance metric |
+| `normalize` | `none` \| `row_z` \| `col_z` \| `log1p` | `none` | Pre-clustering normalisation |
+| `colorscale` | str \| null | `null` | Plotly colorscale name override |
+
+
+[![Hierarchical Heatmap example](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light)](../images/guides/advanced-visualizations/complex_heatmap_light.webp){target=_blank}
+
+[![Hierarchical Heatmap example](../images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark)](../images/guides/advanced-visualizations/complex_heatmap_dark.webp){target=_blank}
+### QQ
+
+Quantile-quantile plot for p-value distributions (GWAS / DE / eQTL QC). Sorts p-values and plots `-log10(observed)` against the theoretical `-log10(expected)` under a uniform null.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `p_value` | ✓ | Float | Raw p-value (0–1) |
+| `feature_id` | — | String | Hover-only id |
+| `category` | — | String | Stratification column (one trace per stratum) |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `show_ci` | bool | `true` | Shade the 95% null CI band |
+
+**Filtering / row tagging**
+
+When `category` is bound, the renderer produces **one trace per stratum** (e.g. genome partitions, ancestry groups). Otherwise a single trace plus the y = x reference line and the optional 95% null CI band.
+
+
+[![QQ example](../images/guides/advanced-visualizations/qq_light.webp#only-light)](../images/guides/advanced-visualizations/qq_light.webp){target=_blank}
+
+[![QQ example](../images/guides/advanced-visualizations/qq_dark.webp#only-dark)](../images/guides/advanced-visualizations/qq_dark.webp){target=_blank}
+### UpSet
+
+Set-intersection visualisation (alternative to Venn diagrams). Wraps the in-tree `plotly-upset` library (vendored under `packages/plotly-upset/`, not yet a standalone public repo); intersection enumeration + sorting runs in a Celery worker and is cached by `(dc, params hash)`. Input DC: a binary table where each row is an element and each `set_col` is a 0/1 membership indicator.
+
+**Columns**
+
+No canonical role-based schema — the renderer enumerates binary columns at compute time. Editor binding validation is a no-op.
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `matrix_wf_id` / `matrix_dc_id` | str | _required_ | Workflow + DC ids of the membership DC |
+| `set_columns` | list[str] \| null | `null` | Explicit list of set columns; null = auto-detect binary |
+| `sort_by` | `cardinality` \| `degree` \| `degree-cardinality` \| `input` | `cardinality` | Intersection ordering |
+| `sort_order` | `descending` \| `ascending` | `descending` | Ordering direction |
+| `min_size` | int (≥0) | `1` | Hide intersections smaller than this |
+| `max_degree` | int \| null | `null` | Hide intersections involving more than N sets |
+| `show_set_sizes` | bool | `true` | Show horizontal set-size bar chart |
+| `color_intersections_by` | `none` \| `set` \| `degree` | `none` | Intersection-bar colour mode |
+| `set_colors` | dict[str, str] \| null | `null` | Per-set colour overrides (set name → hex). Drives set-size bars + matrix dots + intersection bars (when `color_intersections_by="set"`). Pin domain palettes (e.g. `habitat → Set1`) so the same set lands on the same colour across tiles. |
+
+**Filtering / row tagging**
+
+Renderer **filters by intersection size and degree** — `min_size` drops intersections below the threshold, `max_degree` drops intersections involving more sets than the limit.
+
+
+[![UpSet example](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light)](../images/guides/advanced-visualizations/upset_plot_light.webp){target=_blank}
+
+[![UpSet example](../images/guides/advanced-visualizations/upset_plot_dark.webp#only-dark)](../images/guides/advanced-visualizations/upset_plot_dark.webp){target=_blank}
+### Sankey
+
+Categorical-flow diagram across N ordered categorical levels (e.g. `sample → lineage → clade`, `sample → kingdom → phylum → genus`). Server-side aggregation via Celery, client-side colour / opacity tweaks.
+
+**Columns**
+
+No canonical role-based schema — `step_cols` is a multi-column list (≥2 ordered categorical columns). The renderer validates step presence at compute time; the editor enforces `min_length=2`.
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `step_cols` | list[str] (≥2, unique) | _required_ | Ordered categorical columns from source to leaf |
+| `available_step_cols` | list[str] \| null | `null` | Full ordered list of columns the user can wire as steps. When set, the renderer exposes a Depth slider that picks the first N columns from this list; `step_cols` becomes the initial prefix. Leaving it null locks the diagram to `step_cols`. |
+| `value_col` | str \| null | `null` | Optional numeric weight; null = each row counts as 1 |
+| `value_label` | str \| null | `null` | Human-readable label for `value_col` shown in hover tooltips. Defaults to `value_col` when unset (e.g. `"abundance"`). |
+| `value_format` | `raw` \| `fraction` \| `count` | `raw` | Hover display mode. `fraction` multiplies by 100 and appends `%`; `count` uses thousands separators; `raw` adapts decimal precision to magnitude. |
+| `sort_mode` | `alphabetical` \| `total_flow` \| `input` | `total_flow` | Node-ordering rule |
+| `color_mode` | `source` \| `target` \| `step` | `source` | Link colouring rule |
+| `link_opacity` | float (0.05–1) | `0.5` | Link transparency |
+| `min_link_value` | float (≥0) | `0.0` | Hide links whose aggregated value is below this threshold |
+| `show_node_labels` | bool | `true` | Render node labels |
+
+!!! warning "Recipe-coupled normalisation (ampliseq)"
+    The bundled `sankey_canonical` recipe for nf-core/ampliseq pre-divides per-sample relative abundance by sample count so the renderer's sum-aggregation reads as a mean-per-sample at the root (≈1.0 = 100%). This bakes a sum-aggregation assumption into the canonical DC and is recomputed once at recipe time — cross-DC sample filters do **not** rescale the divisor, so heavy filtering yields scaled-down totals. Treat the values as relative composition, not absolute. See `depictio/projects/nf-core/ampliseq/recipes/sankey_canonical.py` for the full caveat.
+
+**Filtering / row tagging**
+
+Renderer **aggregates by the `step_cols` sequence** (via Celery `compute_sankey`) and filters out links whose aggregated value is below `min_link_value`.
+
+
+[![Sankey example](../images/guides/advanced-visualizations/sankey_light.webp#only-light)](../images/guides/advanced-visualizations/sankey_light.webp){target=_blank}
+
+[![Sankey example](../images/guides/advanced-visualizations/sankey_dark.webp#only-dark)](../images/guides/advanced-visualizations/sankey_dark.webp){target=_blank}
+### Oncoplot
+
+Sample × gene mutation matrix with discrete mutation-type colours and per-gene / per-sample frequency strips.
+
+**Columns** — straight rename from canonical Mutation Annotation Format (VEP / vcf2maf / maftools — the cancer-mutation file format, not Minor Allele Frequency):
+
+| Role | Required | Type | Description | Mutation Annotation Format column |
+|------|:--------:|------|-------------|------------|
+| `sample_id` | ✓ | String | Sample identifier (x-axis) | `Tumor_Sample_Barcode` |
+| `gene` | ✓ | String | Gene identifier (y-axis) | `Hugo_Symbol` |
+| `mutation_type` | ✓ | String | Categorical mutation type (cell colour) | `Variant_Classification` |
+
+**Settings**
+
+No additional knobs — the layout is fully determined by the column bindings.
+
+**Filtering / row tagging**
+
+Cells are **coloured categorically by `mutation_type`** (NA cells stay blank). Side strips show per-gene and per-sample mutation counts.
+
+
+[![Oncoplot example](../images/guides/advanced-visualizations/oncoplot_light.webp#only-light)](../images/guides/advanced-visualizations/oncoplot_light.webp){target=_blank}
+
+[![Oncoplot example](../images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark)](../images/guides/advanced-visualizations/oncoplot_dark.webp){target=_blank}
+
+---
+
+## :material-card-text: Card Components <small>(v0.0.1+)</small> { #card-components }
 
 Card components display metrics with aggregations. A card shows a **hero metric** (primary value) and can optionally display **secondary metrics** below it for at-a-glance summaries.
 
@@ -227,6 +828,9 @@ Card components display metrics with aggregations. A card shows a **hero metric*
 | :material-sine-wave: **kurtosis** | Distribution tailedness | Outlier tendency |
 | :material-percent: **percentile** | 50th percentile | Median coverage |
 | :material-poll: **mode** | Most frequent value | Dominant sample type |
+| :material-chart-bell-curve: **q1** | 25th percentile | Lower-quartile coverage |
+| :material-chart-bell-curve: **q3** | 75th percentile | Upper-quartile coverage |
+| :material-chart-box-outline: **box_plot_stats** | Tukey 5-number summary (min, Q1, median, Q3, max) | Required by `secondary_layout: box_plot` |
 
 ### Configuration
 
@@ -255,6 +859,71 @@ Cards can display multiple aggregation results in a single component. The primar
 └─────────────────────────────────┘
 ```
 
+### Secondary Layout Modes <small>(v0.13.0+)</small>
+
+The default layout above stacks `aggregations` as a vertical list under the hero metric. Set `secondary_layout` on the card to switch to one of five richer layouts — each tuned for a specific summary intent and with its own required companion field.
+
+| `secondary_layout` | Renders | Companion fields required |
+|--------------------|---------|---------------------------|
+| `vertical` (default) | Stacked rows from `aggregations` list | `aggregations` |
+| `compact` | Horizontal strip from `aggregations` | `aggregations` |
+| `box_plot` | Tukey box-and-whisker (min / Q1 / median / Q3 / max) | `aggregations: [box_plot_stats]` |
+| `top_n` | Mini bar chart of top-N most frequent `breakdown_col` values | `breakdown_col`, `top_n_count` (1–5) |
+| `coverage` | Fill bar showing `value / coverage_max` | `coverage_max` |
+| `concentration` | Top-N share (%) by `breakdown_col` | `breakdown_col`, `top_n_count` (1–5) |
+
+**YAML field reference (multi-metric extras)**
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `secondary_layout` | enum (see table above) | `vertical` | Layout mode for the secondary block. |
+| `aggregations` | list[str] \| null | `null` | Secondary aggregation functions (e.g. `[median, std_dev, min, max]` or `[box_plot_stats]`). Required by `vertical`, `compact`, `box_plot`. |
+| `breakdown_col` | str \| null | `null` | Group-by column for `top_n` / `concentration` layouts. |
+| `top_n_count` | int (1–5) | `3` | Number of top values rendered in `top_n` / `concentration` layouts. |
+| `coverage_max` | float \| null | `null` | Denominator for the `coverage` layout's fill bar. Falls back to `vertical` if missing. |
+
+**Examples (from `depictio/projects/init/iris/dashboards/overview.yaml`)**
+
+=== "box_plot"
+
+    ```yaml
+    - tag: sepal-length-summary
+      component_type: card
+      workflow_tag: python/iris_workflow
+      data_collection_tag: iris_table
+      aggregation: median
+      aggregations: [box_plot_stats]
+      secondary_layout: box_plot
+      column_name: sepal.length
+      column_type: float64
+      title: "Sepal Length"
+    ```
+
+=== "top_n"
+
+    ```yaml
+    - tag: variety-breakdown
+      component_type: card
+      aggregation: nunique
+      secondary_layout: top_n
+      breakdown_col: variety
+      top_n_count: 3
+      column_name: variety
+      column_type: object
+    ```
+
+=== "coverage"
+
+    ```yaml
+    - tag: sample-coverage
+      component_type: card
+      aggregation: count
+      secondary_layout: coverage
+      coverage_max: 150
+      column_name: variety
+      column_type: object
+    ```
+
 ### Conditional Aggregation (filter_expr)
 
 Cards support a `filter_expr` field — a Polars expression that pre-filters the data **before** computing the aggregation. This enables conditional metrics like "count of samples with coverage > 30x" without creating a separate data collection.
@@ -277,30 +946,52 @@ See [Filter Expressions](filter-expressions.md) for the complete expression refe
 
 ---
 
-## :material-format-header-1: Text Components
+## :material-format-header-1: Text Components <small>(v0.2.0+)</small> { #text-components }
 
-Text components display section headers to organize your dashboard.
+Text components are presentational tiles for section delimiters, narrative intros, and small inline annotations. They have no data binding — they just render a heading + optional paragraph at the position they occupy in the grid.
 
-### Supported Header Levels
+### YAML fields
 
-| Level | Syntax | Description |
-|-------|--------|-------------|
-| **H1** | `# Header` | Main section headers |
-| **H2** | `## Header` | Sub-section headers |
-| **H3** | `### Header` | Minor section headers |
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `component_type` | `"text"` | — | Discriminator |
+| `title` | str | `""` | Heading text |
+| `order` | int (1–6) | `1` | Heading level — renders as `<h1>` through `<h6>` (values outside 1–6 are clamped) |
+| `alignment` | `left` \| `center` \| `right` | `left` | Horizontal text alignment for both title and body |
+| `body` | str | `""` | Optional paragraph rendered below the title |
 
-!!! warning "Limited Markdown Support"
-    Currently, only H1, H2, and H3 headers are supported. Full markdown rendering (lists, links, bold, italic, code blocks, etc.) is not available in text components.
+### Inline markdown
+
+The body and title support a **limited inline subset** — no markdown library is loaded; rendering is done client-side in `TextRenderer.tsx`:
+
+- `**bold**` → **bold**
+- `*italic*` → *italic*
+- `` `code` `` → `code`
+
+Block-level constructs (lists, tables, blockquotes, fenced code, links, images) are **not** supported. For richer narrative content, use the dashboard's notes panel.
+
+### Example (from `depictio/projects/init/iris/dashboards/overview.yaml`)
+
+```yaml
+- tag: text-overview-intro
+  component_type: text
+  title: "Iris Dataset — Overview"
+  order: 2
+  alignment: left
+  body: "Fisher's classic 150-flower dataset across three varieties (*Setosa*, *Versicolor*, *Virginica*). Filters on the left refine every tile."
+  layout: {x: 0, y: 0, w: 8, h: 1}
+```
 
 ### Use Cases
 
 - :material-format-title: Dashboard section headers
 - :material-view-grid: Visual organization of content
 - :material-label: Labeling groups of related components
+- :material-text-long: Short narrative intros above an analytical section
 
 ---
 
-## :material-tune: Interactive Components
+## :material-tune: Interactive Components <small>(v0.0.1+)</small> { #interactive-components }
 
 Interactive components let users filter data across the dashboard. These components affect all linked visualization components.
 
@@ -372,7 +1063,7 @@ See [Filter Expressions](filter-expressions.md) for the complete expression refe
 
 ---
 
-## :material-microscope: MultiQC Components
+## :material-microscope: MultiQC Components <small>(v0.5.0+)</small> { #multiqc-components }
 
 MultiQC components display quality control reports generated by [:material-open-in-new: MultiQC](https://multiqc.info/){ target="_blank" }.
 
@@ -396,7 +1087,7 @@ MultiQC components display quality control reports generated by [:material-open-
 
 ---
 
-## :material-image-multiple: Image Components
+## :material-image-multiple: Image Components <small>(v0.7.0+)</small> { #image-components }
 
 Image components display image galleries from S3/MinIO storage, with metadata filtering and thumbnail previews.
 
@@ -525,12 +1216,27 @@ The CLI will:
 
 ---
 
-## :material-map-marker-multiple: Map Components
+## :material-map-marker-multiple: Map Components <small>(v0.8.0+)</small> { #map-components }
 
 Map components display geospatial data on interactive tile-based maps using Plotly Express (no API key required).
 
 !!! tip "Declaring coordinates at the DC level"
     `lat_column` / `lon_column` can be set per-figure (below) **or** at the Data Collection level so every Map figure on that DC inherits them. Map is the first example of [type-specific DC configuration](../usage/projects/guide.md#type-specific-data-collection-configuration-react-beta); more visualization types will follow.
+
+### Coordinates Data Collection <small>(v0.12.0+)</small> { #coordinates-dc }
+
+Map components require a Table DC that explicitly declares its latitude and longitude columns. The `DCTableCoordinatesConfig` variant — defined at `depictio/models/models/data_collections_types/table_coordinates.py:6` — extends the standard Table DC with three fields:
+
+| Field | Required | Type | Default | Description |
+|-------|:--------:|------|---------|-------------|
+| `lat_column` | ✓ | str | — | Column holding latitude values |
+| `lon_column` | ✓ | str | — | Column holding longitude values |
+| `crs` | — | str | `EPSG:4326` | Coordinate reference system |
+
+It inherits every standard Table DC capability (CSV / TSV / Parquet format, `polars_kwargs`, `keep_columns`, `columns_description`). The `dc_type` stays `"table"` — the variant is materialised at deserialisation when `lat_column` / `lon_column` are present. A model validator enforces that the two columns must differ.
+
+
+![Coordinates DC example](../images/guides/map/coordinates_dc.png)
 
 ### Map Types
 
@@ -636,3 +1342,4 @@ The component builder guides you through creation:
 - :material-drag: **Drag and drop** components in Edit Mode
 - :material-grid: Components snap to a **grid layout**
 - :material-resize: Resize by dragging corner handles
+WATCHER-VERIFY-1778951276
