@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "0.12.2",
-    "x-generated-at": "2026-05-18T13:34:38Z",
-    "x-depictio-version": "v0.12.2"
+    "version": "0.13.0",
+    "x-generated-at": "2026-05-20T17:42:34Z",
+    "x-depictio-version": "v0.13.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -1076,6 +1076,167 @@
         }
       }
     },
+    "/depictio/api/v1/datacollections/polars_schema/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Polars Schema",
+        "description": "Return the Delta-table schema as ``{column: polars-dtype-name}``.\n\nUsed by the advanced-viz builder UI for editor-time validation of column\nbindings (see depictio/models/components/advanced_viz/schemas.py).",
+        "operationId": "polars_schema_depictio_api_v1_datacollections_polars_schema__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Polars Schema Depictio Api V1 Datacollections Polars Schema  Data Collection Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/datacollections/viz-suggestions/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Viz Suggestions",
+        "description": "Reverse-lookup viz kinds + known producers compatible with this DC.\n\nDrives the React DC card's \"Suggested visualisations\" chip row and the\ncomponent-creation flow's DC pre-filter. Both surfaces share the same\npure-Python suggestion engine in\n`depictio/models/components/advanced_viz/schemas.py`:\n\n  - `viz_kinds`: every AdvancedVizKind whose required role schema can be\n    satisfied by some column-dtype combination in this DC. Each entry\n    carries per-role candidate columns the UI uses to pre-fill bindings.\n  - `producers`: known tool outputs (DESeq2 results, mosdepth coverage,\n    Bracken, …) whose column-name fingerprint matches this DC. When a\n    producer matches, the UI can pre-fill bindings exactly rather than\n    guessing.\n\nQuery params:\n    min_confidence: 0.0-1.0 — minimum fraction of required roles that\n        must have a candidate column for a viz kind to appear in the\n        suggestions list. Default 1.0 = strict (only full matches).",
+        "operationId": "viz_suggestions_depictio_api_v1_datacollections_viz_suggestions__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "min_confidence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 1.0,
+              "title": "Min Confidence"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Viz Suggestions Depictio Api V1 Datacollections Viz Suggestions  Data Collection Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/datacollections/suggest-from-columns": {
+      "post": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Suggest From Columns",
+        "description": "Run the producer suggestion engine on a bare column list (no DC required).\n\nUsed by the DC-creation modal to decide whether to surface a passive\n\"looks like X\" hint vs. the coordinates fallback toggle. Only producer\nfingerprints run here — viz-kind reverse lookup needs dtype info that\nisn't available until the file is parsed server-side.",
+        "operationId": "suggest_from_columns_depictio_api_v1_datacollections_suggest_from_columns_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SuggestFromColumnsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Suggest From Columns Depictio Api V1 Datacollections Suggest From Columns Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/datacollections/delete/{workflow_id}/{data_collection_id}": {
       "delete": {
         "tags": [
@@ -1343,6 +1504,164 @@
         "summary": "Delete Data Collection By Id",
         "description": "Delete a data collection by its ID.",
         "operationId": "delete_data_collection_by_id_depictio_api_v1_datacollections__data_collection_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/datacollections/{data_collection_id}/append": {
+      "post": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Append Table Dc",
+        "description": "Append uploaded files to an existing Table DC (preserves rows).\n\nMirrors the MultiQC `/append` semantics. Each file is read into memory\nunder per-file 50MB / total 500MB caps before being concatenated with\nthe existing delta-backed rows.",
+        "operationId": "append_table_dc_depictio_api_v1_datacollections__data_collection_id__append_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_append_table_dc_depictio_api_v1_datacollections__data_collection_id__append_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/datacollections/{data_collection_id}/replace": {
+      "post": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Replace Table Dc",
+        "description": "Replace all rows of a Table DC with the uploaded files.",
+        "operationId": "replace_table_dc_depictio_api_v1_datacollections__data_collection_id__replace_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_replace_table_dc_depictio_api_v1_datacollections__data_collection_id__replace_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/datacollections/{data_collection_id}/data": {
+      "delete": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Clear Table Dc",
+        "description": "Wipe a Table DC's rows on S3 + Mongo, keeping the DC config intact.",
+        "operationId": "clear_table_dc_depictio_api_v1_datacollections__data_collection_id__data_delete",
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -3660,8 +3979,9 @@
           "Utils"
         ],
         "summary": "Screenshot Dash Fixed",
-        "description": "Minimal screenshot endpoint - just take a full page screenshot.\nOnly dashboard owners can generate screenshots (except in single user mode).",
+        "description": "Minimal screenshot endpoint - just take a full page screenshot.\nOnly dashboard owners can generate screenshots (except in single user mode).\n\nDEPRECATED: production screenshot capture drives the React SPA via\n`/screenshot-react-dual/{dashboard_id}`. This endpoint is retained for\nemergency rollback only.",
         "operationId": "screenshot_dash_fixed_depictio_api_v1_utils_screenshot_dash_fixed__dashboard_id__get",
+        "deprecated": true,
         "parameters": [
           {
             "name": "dashboard_id",
@@ -3733,6 +4053,83 @@
             "schema": {
               "type": "string",
               "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/utils/screenshot-react-dual/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Screenshot React Dual",
+        "description": "Generate light + dark screenshots of the React beta viewer.\n\nSibling of `/screenshot-dash-dual` but drives the SPA bundle at\n`{settings.fastapi.url}/dashboard-beta/{dashboard_id}` (the React/Vite\nbuild that FastAPI itself serves) instead of the Dash app on port 5080.\n\nSingle-user mode skips auth; otherwise the caller must be a dashboard owner.\n\nQuery params:\n    open_settings: click the first `aria-label=\"Viz settings\"` ActionIcon\n        before capturing so the popover shows in the shot (best-effort —\n        silently disabled when no settings cog is present). When the\n        popover opens, we switch to a viewport capture because Mantine\n        portals dropdowns outside AppShell.Main.\n    filename_prefix: PNG filename prefix (default `\"\"` → writes the\n        canonical `{id}_{theme}.png` filenames that dashboard cards\n        already consume). Pass a non-empty prefix (e.g. `docs`) to keep\n        parallel batches in the same folder from clobbering each other:\n        `{prefix}_{id}_{theme}.png`.\n\nReturns:\n    ScreenshotResult dict with `light_screenshot` / `dark_screenshot`\n    paths (host-visible via the bind-mounted screenshots dir).",
+        "operationId": "screenshot_react_dual_depictio_api_v1_utils_screenshot_react_dual__dashboard_id__get",
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "open_settings",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Open Settings"
+            }
+          },
+          {
+            "name": "filename_prefix",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Filename Prefix"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
             }
           }
         ],
@@ -6174,6 +6571,625 @@
         ]
       }
     },
+    "/depictio/api/v1/advanced_viz/kinds": {
+      "get": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "List Kinds",
+        "description": "Return the metadata payload the React builder uses to populate the viz_kind picker.",
+        "operationId": "list_kinds_depictio_api_v1_advanced_viz_kinds_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response List Kinds Depictio Api V1 Advanced Viz Kinds Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/advanced_viz/data": {
+      "post": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Fetch Advanced Viz Data",
+        "description": "Project requested columns from a DC, apply filter metadata, return rows.\n\nInput shape:\n    {\n      \"wf_id\": str,\n      \"dc_id\": str,\n      \"columns\": [str],          # column names to project\n      \"filter_metadata\": [...],  # optional global filters\n      \"limit_rows\": int | None,  # optional cap (default 100k)\n    }\n\nOutput shape:\n    {\n      \"columns\": [str],          # echoed back for ordering\n      \"rows\": {col: [values]},   # column-oriented\n      \"row_count\": int,\n      \"filter_applied\": bool,\n    }",
+        "operationId": "fetch_advanced_viz_data_depictio_api_v1_advanced_viz_data_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Payload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Fetch Advanced Viz Data Depictio Api V1 Advanced Viz Data Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_embedding": {
+      "post": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Dispatch Compute Embedding",
+        "description": "Dispatch a clustering / dim-reduction Celery task.\n\nCache lookup first — if an identical computation already finished we\nreturn its result immediately. Otherwise enqueue the task and return a\n``job_id`` the frontend can poll via ``GET /compute_embedding/{job_id}``.",
+        "operationId": "dispatch_compute_embedding_depictio_api_v1_advanced_viz_compute_embedding_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Payload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Dispatch Compute Embedding Depictio Api V1 Advanced Viz Compute Embedding Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_embedding/{job_id}": {
+      "get": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Poll Compute Embedding",
+        "description": "Poll cache for a previously-dispatched embedding compute.\n\nReturns ``{status: 'done', result: {...}}`` when ready,\n``{status: 'pending'}`` while running, or\n``{status: 'failed', error: '...'}`` on error.",
+        "operationId": "poll_compute_embedding_depictio_api_v1_advanced_viz_compute_embedding__job_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Poll Compute Embedding Depictio Api V1 Advanced Viz Compute Embedding  Job Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_complex_heatmap": {
+      "post": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Dispatch Compute Complex Heatmap",
+        "description": "Dispatch a ComplexHeatmap Celery task. Same dispatch + poll +\ncache contract as ``compute_embedding`` — different task name and\nnamespace under the same ``compute_results`` collection.",
+        "operationId": "dispatch_compute_complex_heatmap_depictio_api_v1_advanced_viz_compute_complex_heatmap_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Payload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Dispatch Compute Complex Heatmap Depictio Api V1 Advanced Viz Compute Complex Heatmap Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_complex_heatmap/{job_id}": {
+      "get": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Poll Compute Complex Heatmap",
+        "description": "Poll a previously-dispatched ComplexHeatmap compute. Returns\n{status: 'done', result: {figure, row_count, col_count, ...}} or\n{status: 'pending'} / {status: 'failed', error: '...'}.",
+        "operationId": "poll_compute_complex_heatmap_depictio_api_v1_advanced_viz_compute_complex_heatmap__job_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Poll Compute Complex Heatmap Depictio Api V1 Advanced Viz Compute Complex Heatmap  Job Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_upset": {
+      "post": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Dispatch Compute Upset",
+        "description": "Dispatch an UpSet-plot Celery task. Same dispatch + poll + cache\ncontract as ``compute_complex_heatmap`` (cache namespace = upset_plot).",
+        "operationId": "dispatch_compute_upset_depictio_api_v1_advanced_viz_compute_upset_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Payload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Dispatch Compute Upset Depictio Api V1 Advanced Viz Compute Upset Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_upset/{job_id}": {
+      "get": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Poll Compute Upset",
+        "description": "Poll a previously-dispatched UpSet compute.",
+        "operationId": "poll_compute_upset_depictio_api_v1_advanced_viz_compute_upset__job_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Poll Compute Upset Depictio Api V1 Advanced Viz Compute Upset  Job Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_coverage_track": {
+      "post": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Dispatch Compute Coverage Track",
+        "description": "Dispatch a coverage-track aggregation Celery task.",
+        "operationId": "dispatch_compute_coverage_track_depictio_api_v1_advanced_viz_compute_coverage_track_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Payload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Dispatch Compute Coverage Track Depictio Api V1 Advanced Viz Compute Coverage Track Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_coverage_track/{job_id}": {
+      "get": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Poll Compute Coverage Track",
+        "description": "Poll a previously-dispatched coverage-track compute.",
+        "operationId": "poll_compute_coverage_track_depictio_api_v1_advanced_viz_compute_coverage_track__job_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Poll Compute Coverage Track Depictio Api V1 Advanced Viz Compute Coverage Track  Job Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_sankey": {
+      "post": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Dispatch Compute Sankey",
+        "description": "Dispatch a Sankey / categorical-flow Celery task.",
+        "operationId": "dispatch_compute_sankey_depictio_api_v1_advanced_viz_compute_sankey_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Payload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Dispatch Compute Sankey Depictio Api V1 Advanced Viz Compute Sankey Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_sankey/{job_id}": {
+      "get": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Poll Compute Sankey",
+        "description": "Poll a previously-dispatched Sankey compute.",
+        "operationId": "poll_compute_sankey_depictio_api_v1_advanced_viz_compute_sankey__job_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Poll Compute Sankey Depictio Api V1 Advanced Viz Compute Sankey  Job Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/advanced_viz/phylogeny/{data_collection_id}/newick": {
+      "get": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Get Phylogeny Newick",
+        "description": "Return the raw Newick string for a phylogeny DC.\n\nResolves the file location in two ways: (1) prefer the file registered\nby the CLI scan in ``files_collection``; (2) for reference datasets\n(seeded via db_init, never CLI-scanned), traverse the project document\nto find the matching DC under ``workflows[].data_collections[]`` and\nread its ``config.scan.scan_parameters.filename``. DCs are stored\nembedded in the project — there is no top-level ``data_collections``\ndocument for them — so we can't ``find_one({\"_id\": dc_oid})`` directly.\n\nReturns local file contents directly; stream S3-hosted trees via boto3.",
+        "operationId": "get_phylogeny_newick_depictio_api_v1_advanced_viz_phylogeny__data_collection_id__newick_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/celery/health": {
       "get": {
         "tags": [
@@ -8425,6 +9441,23 @@
         ],
         "title": "Body_append_multiqc_reports_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__append_post"
       },
+      "Body_append_table_dc_depictio_api_v1_datacollections__data_collection_id__append_post": {
+        "properties": {
+          "files": {
+            "items": {
+              "type": "string",
+              "format": "binary"
+            },
+            "type": "array",
+            "title": "Files"
+          }
+        },
+        "type": "object",
+        "required": [
+          "files"
+        ],
+        "title": "Body_append_table_dc_depictio_api_v1_datacollections__data_collection_id__append_post"
+      },
       "Body_compare_models_endpoint_depictio_api_v1_workflows_compare_workflow_models_post": {
         "properties": {
           "new_workflow": {
@@ -8664,6 +9697,23 @@
           "files"
         ],
         "title": "Body_replace_multiqc_reports_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__replace_post"
+      },
+      "Body_replace_table_dc_depictio_api_v1_datacollections__data_collection_id__replace_post": {
+        "properties": {
+          "files": {
+            "items": {
+              "type": "string",
+              "format": "binary"
+            },
+            "type": "array",
+            "title": "Files"
+          }
+        },
+        "type": "object",
+        "required": [
+          "files"
+        ],
+        "title": "Body_replace_table_dc_depictio_api_v1_datacollections__data_collection_id__replace_post"
       },
       "CLIConfig-Input": {
         "properties": {
@@ -9086,6 +10136,60 @@
         "type": "object",
         "title": "DCMultiQC"
       },
+      "DCPhylogenyConfig": {
+        "properties": {
+          "format": {
+            "type": "string",
+            "enum": [
+              "newick",
+              "nexus"
+            ],
+            "title": "Format",
+            "default": "newick"
+          },
+          "ladderize": {
+            "type": "boolean",
+            "title": "Ladderize",
+            "default": true
+          },
+          "metadata_dc_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metadata Dc Tag"
+          },
+          "metadata_taxon_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metadata Taxon Column",
+            "default": "taxon"
+          },
+          "tip_label_strategy": {
+            "type": "string",
+            "enum": [
+              "taxon",
+              "first_token"
+            ],
+            "title": "Tip Label Strategy",
+            "default": "taxon"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "DCPhylogenyConfig",
+        "description": "Config for a phylogeny (Newick / Nexus) data collection."
+      },
       "DCTableConfig": {
         "properties": {
           "format": {
@@ -9206,7 +10310,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -9464,7 +10568,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -9526,7 +10630,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -9588,7 +10692,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -9671,6 +10775,9 @@
               },
               {
                 "$ref": "#/components/schemas/DCGeoJSONConfig"
+              },
+              {
+                "$ref": "#/components/schemas/DCPhylogenyConfig"
               }
             ],
             "title": "Dc Specific Properties"
@@ -9710,7 +10817,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -9793,6 +10900,9 @@
               },
               {
                 "$ref": "#/components/schemas/DCGeoJSONConfig"
+              },
+              {
+                "$ref": "#/components/schemas/DCPhylogenyConfig"
               }
             ],
             "title": "Dc Specific Properties"
@@ -9843,7 +10953,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -9928,7 +11038,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-18 13:34:34"
+            "default": "2026-05-20 17:42:31"
           },
           "file_hash": {
             "type": "string",
@@ -11003,7 +12113,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -11210,7 +12320,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -11314,7 +12424,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-18 13:34:34"
+            "default": "2026-05-20 17:42:31"
           },
           "project_type": {
             "type": "string",
@@ -11360,7 +12470,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -11464,7 +12574,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-18 13:34:34"
+            "default": "2026-05-20 17:42:31"
           },
           "project_type": {
             "type": "string",
@@ -11860,6 +12970,24 @@
         "title": "SourceOverride",
         "description": "Override a recipe source path in project.yaml."
       },
+      "SuggestFromColumnsRequest": {
+        "properties": {
+          "columns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Columns"
+          }
+        },
+        "type": "object",
+        "required": [
+          "columns"
+        ],
+        "title": "SuggestFromColumnsRequest",
+        "description": "Body for the pre-DC viz suggestion endpoint.\n\nThe DC creation modal calls this with just column names parsed from the\nfile header — before the file is uploaded. Producer fingerprints match on\ncolumn names alone, so name-only input is enough to detect DESeq2 results,\nmosdepth, Bracken, QIIME2, etc."
+      },
       "TableJoinConfig": {
         "properties": {
           "on_columns": {
@@ -11941,7 +13069,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -12146,7 +13274,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -12377,7 +13505,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a0b15688a212bac06a80726"
+            "default": "6a0df285e490018364ac278d"
           }
         },
         "type": "object",
@@ -12495,7 +13623,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -12613,7 +13741,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -12694,7 +13822,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -12779,7 +13907,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -12864,7 +13992,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -13029,7 +14157,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -13152,7 +14280,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-18 13:34:32"
+            "default": "2026-05-20 17:42:29"
           }
         },
         "additionalProperties": false,
@@ -13171,7 +14299,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -13294,7 +14422,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-18 13:34:32"
+            "default": "2026-05-20 17:42:29"
           }
         },
         "additionalProperties": false,
@@ -13346,7 +14474,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -13414,7 +14542,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -13511,7 +14639,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -13584,7 +14712,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-18 13:34:32"
+            "default": "2026-05-20 17:42:29"
           },
           "run_hash": {
             "type": "string",
@@ -13629,7 +14757,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a0b15688a212bac06a80725"
+            "default": "6a0df285e490018364ac278c"
           },
           "description": {
             "anyOf": [
@@ -13702,7 +14830,7 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time",
-            "default": "2026-05-18 13:34:32"
+            "default": "2026-05-20 17:42:29"
           },
           "run_hash": {
             "type": "string",
@@ -13764,7 +14892,7 @@
           "scan_time": {
             "type": "string",
             "title": "Scan Time",
-            "default": "2026-05-18 13:34:32"
+            "default": "2026-05-20 17:42:29"
           },
           "dc_stats": {
             "anyOf": [
