@@ -146,6 +146,26 @@ hide:
         <h4>Map</h4>
         <p>Geospatial map visualization with markers</p>
       </div>
+      <div class="component-card component-card-upcoming">
+        <span class="component-badge">Coming soon</span>
+        <div class="component-icon" style="background: #6c757d;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5,4V7H10.5V19H13.5V7H19V4H5Z"/>
+          </svg>
+        </div>
+        <h4>Text</h4>
+        <p>Markdown blocks for documentation, narratives, and annotations</p>
+      </div>
+      <div class="component-card component-card-upcoming">
+        <span class="component-badge">Coming soon</span>
+        <div class="component-icon" style="background: #d6336c;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16,11.78L20.24,4.45L21.97,5.45L16.74,14.5L10.23,10.75L5.46,19H22V21H2V3H4V17.54L9.5,8L16,11.78Z"/>
+          </svg>
+        </div>
+        <h4>Advanced viz</h4>
+        <p>Omics plots — Volcano, Manhattan, Sunburst, and more</p>
+      </div>
     </div>
   </div>
 </section>
@@ -239,6 +259,10 @@ hide:
       <a href="https://dash.plotly.com/" target="_blank" rel="noopener" class="tech-badge plotly">
         <img src="https://images.plot.ly/logo/new-branding/plotly-logomark.png" alt="Plotly">
         <span>Dash</span>
+      </a>
+      <a href="https://react.dev/" target="_blank" rel="noopener" class="tech-badge react">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+        <span>React</span>
       </a>
       <a href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener" class="tech-badge fastapi">
         <img src="https://fastapi.tiangolo.com/img/icon-white.svg" alt="FastAPI">
@@ -1019,6 +1043,7 @@ hide:
     text-align: center;
     width: calc((100% - 3rem) / 3);
     box-sizing: border-box;
+    position: relative;
   }
 
   [data-md-color-scheme="slate"] .component-card {
@@ -1028,6 +1053,25 @@ hide:
   .component-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .component-card-upcoming {
+    border-style: dashed;
+    opacity: 0.85;
+  }
+
+  .component-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--depictio-orange, #f68b33);
+    color: white;
   }
 
   .component-icon {
@@ -1441,17 +1485,20 @@ hide:
     color: var(--md-default-fg-color);
   }
 
+  .tech-section .container {
+    max-width: 1200px;
+  }
+
   .tech-badges {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
     margin-top: 1rem;
-    overflow-x: auto;
   }
 
   .tech-badge {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 10px 16px;
@@ -1462,6 +1509,12 @@ hide:
     text-decoration: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+
+  .tech-badge span {
+    white-space: nowrap;
   }
 
   .tech-badge img {
@@ -1478,6 +1531,11 @@ hide:
   /* Individual technology colors */
   .tech-badge.plotly {
     background: linear-gradient(135deg, #5a6bc4 0%, #495ab3 100%);
+    color: white;
+  }
+
+  .tech-badge.react {
+    background: linear-gradient(135deg, #2d4f6d 0%, #1f3a52 100%);
     color: white;
   }
 

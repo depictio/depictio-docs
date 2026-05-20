@@ -4,6 +4,7 @@ Thank you for your interest in contributing to Depictio! This guide outlines the
 
 ## Table of Contents
 
+- [Code of Conduct](#code-of-conduct)
 - [Getting Started](#getting-started)
 - [Development Environment](#development-environment)
 - [Project Structure](#project-structure)
@@ -14,8 +15,16 @@ Thank you for your interest in contributing to Depictio! This guide outlines the
 - [Issue Reporting](#issue-reporting)
 - [Pull Requests](#pull-requests)
 - [Code Review Process](#code-review-process)
+- [Areas Needing Help](#areas-needing-help)
+- [How to pick up an issue](#how-to-pick-up-an-issue)
 - [Community](#community)
 - [License](#license)
+
+## Code of Conduct
+
+Depictio adopts the [Contributor Covenant v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/). In short: be respectful, assume good faith, prefer constructive feedback, and keep discussions focused on the work — not the person.
+
+Report unacceptable behaviour privately to the maintainers (see [Community](#community) for contact channels). Reports are handled confidentially.
 
 ## Getting Started
 
@@ -241,13 +250,17 @@ depictio/
 │       ├── services/    # Business logic, background tasks, lifespan
 │       ├── middleware/  # Analytics and request middleware
 │       └── db.py        # MongoDB / Beanie setup
-├── dash/                # Dash frontend (port 5080)
+├── dash/                # Dash frontend (port 5080) — legacy, removal in v0.15.0
 │   ├── pages/           # Multi-app entry points (management, viewer, editor)
 │   ├── layouts/         # Shared shell, sidebar, save logic
 │   └── modules/         # One sub-package per dashboard component type
-├── models/              # Shared Pydantic models (API + Dash)
+├── viewer/              # React (Beta) Vite SPA (dev port 5173) — future default
+├── models/              # Shared Pydantic models (API + Dash + viewer client)
 ├── cli/                 # Standalone CLI package (own pyproject.toml)
 └── tests/               # Test suites (api/, dash/, cli/)
+
+packages/
+└── depictio-react-core/ # Shared React renderers / types consumed by depictio/viewer
 ```
 
 ### API Endpoint Structure
@@ -374,13 +387,24 @@ We use pre-commit hooks to enforce:
 
 ### Frontend Guidelines
 
-<!-- prettier-ignore -->
-!!! warning "Required for all frontend contributions"
-    All new UI components **must** use DMC 2.0+ (Dash Mantine Components) and support dark/light themes.
+!!! warning "Two frontends, two sets of rules"
+    Depictio ships two frontends today. Target the **React (Beta) viewer** for new work; only touch the Dash app for maintenance. See the [Dash deprecation note](../changelog/README.md#v0120-may-15-2026) for the v0.15.0 cutover.
+
+#### React (Beta) frontend — preferred for new work
+
+Lives in `depictio/viewer/` and `packages/depictio-react-core/`. Stack: Vite + React + Mantine 7 + `pnpm@10`.
+
+- **Use default Mantine theming** — drop hardcoded color literals and custom CSS unless there's a strong reason. Mantine tokens cover light/dark automatically.
+- **Workspace**: `pnpm -C depictio/viewer dev` runs the dev server at port `5173` against the existing FastAPI backend.
+- **Shared logic** belongs in `packages/depictio-react-core/`, not in the viewer.
+
+#### Dash frontend — legacy
+
+Maintenance-only — no new components. Existing Dash UI **must** use DMC 2.0+ (Dash Mantine Components) and support dark/light themes.
 
 **Component library priority:**
 
-1. **Primary**: DMC 2.0+ components — use for all new UI
+1. **Primary**: DMC 2.0+ components — use for all remaining UI changes
 2. **Secondary**: Custom HTML/CSS — only when DMC is insufficient
 3. **Deprecated**: Bootstrap components — maintain only, do not extend
 
@@ -391,11 +415,11 @@ We use pre-commit hooks to enforce:
 - [ ] Test in both light and dark themes
 - [ ] Never hardcode colors (`#ffffff`, `#000000`)
 
-### Multi-App Architecture
+### Multi-App Architecture (Dash legacy)
 
 <!-- prettier-ignore -->
 !!! info "Critical for Dash contributors"
-    The Dash frontend uses **three separate applications**. Callbacks must be registered in the correct app(s).
+    The Dash frontend uses **three separate applications**. Callbacks must be registered in the correct app(s). The React (Beta) viewer runs on parallel `*-beta` routes and is unaffected by these rules.
 
 | App | URL Pattern | Purpose |
 |-----|-------------|---------|
@@ -513,18 +537,29 @@ We welcome contributions in these priority areas. See the [Roadmap](../roadmap/R
 
 | Area | What's Needed | Difficulty |
 |------|---------------|------------|
+| **React (Beta) ports** | Port a Dash component to a React renderer (`packages/depictio-react-core/`) + matching design UI in `depictio/viewer/` | Easy → Medium |
 | **Templates** | nf-core workflow dashboard templates | Medium |
 | **Quarto integration** | Static HTML/PDF export for publications | Medium |
-| **Documentation** | User guides, tutorials, examples | Easy |
+| **Documentation** | User guides, tutorials, examples — start with [`good-first-issue`](https://github.com/depictio/depictio/labels/good%20first%20issue) | Easy |
 | **Testing** | E2E tests, edge cases, coverage | Medium |
 | **Components** | Markdown component, date picker | Medium |
+
+## How to pick up an issue
+
+1. Browse the [`good-first-issue`](https://github.com/depictio/depictio/labels/good%20first%20issue) label or pick an *Easy* row above.
+2. Comment on the issue to claim it (or open one if it doesn't exist yet) — this avoids duplicate work.
+3. No maintainer response within ~5 working days? Ping in [GitHub Discussions](https://github.com/depictio/depictio/discussions). Don't be shy — we're a small team.
 
 ## Community
 
 ### Communication Channels
 
-- [GitHub Issues](https://github.com/depictio/depictio/issues) - Bug reports and feature requests
-- [GitHub Discussions](https://github.com/depictio/depictio/discussions) - Questions and ideas
+- [GitHub Issues](https://github.com/depictio/depictio/issues) — bug reports and feature requests
+- [GitHub Discussions](https://github.com/depictio/depictio/discussions) — questions, ideas, and contribution check-ins
+
+### Maintainer response time
+
+Best-effort within **5 working days** on issues, discussions, and PRs. If your PR has been idle longer, bump it — it's not intentional.
 
 ## License
 
