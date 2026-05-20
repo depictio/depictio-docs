@@ -382,6 +382,12 @@ Generic chr / pos / score plot — works for true GWAS (variants), peak signific
 |--------|------|---------|-------------|
 | `score_kind` | str | `-log10(padj)` | Y-axis label override |
 | `score_threshold` | float \| null | `null` | Horizontal threshold line; null hides it |
+| `highlight` | `above` \| `below` \| `none` | `above` | Which side of `score_threshold` gets emphasised. `above` colours and enlarges points at/above the threshold (GWAS / consensus-variant default); `below` inverts it (useful for minority-allele / sub-threshold candidates); `none` colours both sides equally. No effect when `score_threshold` is null. |
+| `marker_size_above` | int (1–30) | `6` | Marker size (px) for points at or above `score_threshold`. Only used when a threshold is set. |
+| `marker_size_below` | int (1–30) | `4` | Marker size (px) for sub-threshold points. Lower by default so the eye lands on the hits. |
+| `marker_size_uniform` | int (1–30) | `5` | Marker size when no threshold is set (uniform sizing). |
+| `color_by_columns` | list[str] | `[]` | Extra columns fetched alongside the required roles, exposed in the viz Colour-by dropdown. The renderer auto-detects numeric vs categorical (continuous colorscale vs palette). `Chromosome` and `Score` (the y-axis column) are always available without listing them here. Typical viralrecon usage: `['effect', 'lineage', 'sample']`. |
+| `default_color_by` | str \| null | `null` | Initial value for the Colour-by dropdown. Either `Chromosome`, `Score`, or one of `color_by_columns`. Defaults to `Chromosome` when null. |
 
 **Filtering / row tagging**
 
@@ -438,9 +444,10 @@ Read depth / signal along a coordinate axis. Universal genomics primitive — co
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `y_scale` | `linear` \| `log` | `linear` | Y-axis scale |
-| `smoothing_window` | int (0–200) | `0` | Rolling-mean window in bins (0 disables) |
+| `smoothing_window` | int (0–200) | `5` | Rolling-mean window in bins (0 disables). Default 5 ≈ 1 kb at 200-bp mosdepth bins — kills high-frequency wiggle without flattening amplicon-scale dropouts. |
 | `color_by` | `single` \| `category` \| `sample` | `single` | Trace colour assignment mode |
 | `show_annotation_lane` | bool | `true` | Render annotation strip when `category` is bound |
+| `annotation_id` | str \| null | `null` | Optional bundled-annotation override for the genome-feature overlay strip. When null, the renderer auto-detects the assembly from the bound DC's chromosome value (e.g. `MN908947.3` → SARS-CoV-2). Pin this when your data uses non-standard chromosome names but corresponds to a known assembly. Valid ids: `sars_cov_2`, `rsv_a`, `hiv_1`, `mpox`, `hbv` (see `depictio-react-core`'s `genome_annotations` registry). |
 | `chromosomes_filter` | list[str] \| null | `null` | Whitelist of chromosomes; null = all |
 | `samples_filter` | list[str] \| null | `null` | Whitelist of samples; null = all |
 
@@ -473,6 +480,20 @@ Per-sample stacked relative-abundance bar with a rank dropdown.
 | `top_n` | int (≥1) | `20` | Show top-N taxa, lump rest into `Other` |
 | `sort_by` | `abundance` \| `alphabetical` | `abundance` | Stack-ordering rule |
 | `normalise_to_one` | bool | `true` | Force each sample's bars to sum to 1 (true % composition) |
+| `annotation_strips` | list[dict] \| null | `null` | Per-sample categorical annotation strips drawn above or below the stacked bars. Each entry is a dict with: `column` (str, required), `label` (str, optional — defaults to column name), `position` (`top` \| `bottom`, default `bottom`), `palette` (`{value: hex}`, optional). Reusable across any per-sample categorical metadata (habitat, batch, treatment, timepoint) — renderer pulls the columns automatically, no recipe change needed. |
+
+??? example "Annotation strips YAML"
+    ```yaml
+    annotation_strips:
+      - column: habitat
+        label: Habitat
+        position: top
+        palette:
+          Riverwater: "#377EB8"
+          Groundwater: "#4DAF4A"
+          Sediment: "#E41A1C"
+          Soil: "#FF7F00"
+    ```
 
 **Filtering / row tagging**
 
@@ -501,6 +522,7 @@ Hierarchical taxonomy / pathway viewer — concentric rings from root to leaf. U
 |--------|------|---------|-------------|
 | `rank_cols` | list[str] (≥2) | _required_ | Hierarchical columns from root to leaf (e.g. `[Kingdom, Phylum, Class, Order, Family, Genus]`) |
 | `abundance_col` | str | _required_ | DC column that satisfies the `abundance` role above |
+| `category_palette` | dict[str, str] \| null | `null` | Explicit value→colour overrides for the colour-key categories (whichever rank the user's Colour-by picker chooses). Pin domain palettes (e.g. `Habitat → Set1`) so the same category lands on the same colour across PCoA / UpSet / heatmap tiles. |
 
 **Filtering / row tagging**
 
@@ -529,6 +551,7 @@ Alpha-diversity vs sequencing depth — one line per sample with optional ±SE b
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `show_ci` | bool | `true` | Shade ±1 SE band around each sample's curve |
+| `category_palette` | dict[str, str] \| null | `null` | Explicit value→colour overrides for the `group` categories. Pins domain palettes (e.g. `habitat → Set1`) across PCoA + UpSet + heatmap + rarefaction for cross-tab consistency. |
 
 **Filtering / row tagging**
 
@@ -558,6 +581,11 @@ The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `
 |--------|------|---------|-------------|
 | `tree_wf_id` / `tree_dc_id` | str | _required_ | Workflow + DC ids of the phylogeny DC |
 | `metadata_wf_id` / `metadata_dc_id` | str \| null | `null` | Optional metadata DC for tip annotations |
+| `taxon_col` | str | `"taxon"` | Column in the metadata DC matching tip labels in the tree |
+| `color_col` | str \| null | `null` | Metadata column for tip colouring (categorical or continuous) |
+| `label_col` | str \| null | `null` | Metadata column shown alongside the tip label (e.g. clade name) |
+| `extra_color_cols` | list[str] \| null | `null` | Extra metadata columns to pre-fetch so they appear in the viz Colour-by Select. Typical use: taxonomic ranks on ASV trees (Kingdom/Phylum/.../Species) so the user can re-colour tips at a different rank without reloading. |
+| `category_palettes` | dict[str, dict[str, str]] \| null | `null` | Per-column palette overrides for the Colour-by selector. Shape: `{column_name: {category_value: hex}}`. Pin domain palettes (e.g. `dominant_habitat → Set1`) so the same category lands on the same colour across PCoA / UpSet / heatmap / phylogeny tiles. |
 | `default_layout` | `rectangular` \| `circular` \| `radial` \| `diagonal` \| `hierarchical` | `rectangular` | Initial tree layout |
 | `ladderize` | bool | `true` | Ladderise the tree by default |
 | `show_metadata_strip` | bool | `true` | Render Microreact-style metadata strip next to each tip |
@@ -619,6 +647,7 @@ scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction ex
 | `pcoa_distance` | `bray_curtis` | `bray_curtis` | PCoA distance metric |
 | `show_density` | bool | `false` | Overlay density contours |
 | `point_size` | int (1–30) | `6` | Marker size |
+| `category_palette` | dict[str, str] \| null | `null` | Explicit value→colour overrides for the categorical `color` column. Wins over the default palette-index assignment so dashboards can pin domain-specific colours (e.g. `habitat → Set1`) without forking the renderer per project. |
 
 **Filtering / row tagging**
 
@@ -648,6 +677,8 @@ Numeric matrix columns are inferred from the rest of the DC schema at compute ti
 | `index_column` | str | `sample_id` | Row-label column |
 | `value_columns` | list[str] \| null | `null` | Subset of numeric columns; null = all numeric |
 | `row_annotation_cols` | list[str] | `[]` | Categorical columns rendered as a right-side annotation strip |
+| `col_annotations` | dict[str, dict[str, str]] \| null | `null` | Per-column categorical annotations rendered as a top strip. Shape: `{annotation_name: {column_label: category_value}}` (e.g. `{'habitat': {'SRR10070130': 'Riverwater', ...}}`). The renderer aligns the values to the matrix's column order. Use when per-sample metadata (treatment / habitat / batch) needs to live on the column axis without joining a second DC. |
+| `col_annotation_colors` | dict[str, dict[str, str]] \| null | `null` | Per-annotation palette overrides for the column-annotation track. Shape: `{annotation_name: {category_value: hex}}`. When unset the server picks colours from a Dark2 palette (chosen to contrast with the row-track's Set2 pastels). Use to pin domain palettes (e.g. `habitat → Set1`) across PCoA + UpSet + heatmap. |
 | `cluster_rows` / `cluster_cols` | bool | `true` | Enable hierarchical clustering |
 | `cluster_method` | `ward` \| `single` \| `complete` \| `average` | `ward` | Linkage method |
 | `cluster_metric` | `euclidean` \| `correlation` \| `cosine` | `euclidean` | Distance metric |
@@ -704,6 +735,7 @@ No canonical role-based schema — the renderer enumerates binary columns at com
 | `max_degree` | int \| null | `null` | Hide intersections involving more than N sets |
 | `show_set_sizes` | bool | `true` | Show horizontal set-size bar chart |
 | `color_intersections_by` | `none` \| `set` \| `degree` | `none` | Intersection-bar colour mode |
+| `set_colors` | dict[str, str] \| null | `null` | Per-set colour overrides (set name → hex). Drives set-size bars + matrix dots + intersection bars (when `color_intersections_by="set"`). Pin domain palettes (e.g. `habitat → Set1`) so the same set lands on the same colour across tiles. |
 
 **Filtering / row tagging**
 
@@ -726,12 +758,18 @@ No canonical role-based schema — `step_cols` is a multi-column list (≥2 orde
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `step_cols` | list[str] (≥2, unique) | _required_ | Ordered categorical columns from source to leaf |
+| `available_step_cols` | list[str] \| null | `null` | Full ordered list of columns the user can wire as steps. When set, the renderer exposes a Depth slider that picks the first N columns from this list; `step_cols` becomes the initial prefix. Leaving it null locks the diagram to `step_cols`. |
 | `value_col` | str \| null | `null` | Optional numeric weight; null = each row counts as 1 |
+| `value_label` | str \| null | `null` | Human-readable label for `value_col` shown in hover tooltips. Defaults to `value_col` when unset (e.g. `"abundance"`). |
+| `value_format` | `raw` \| `fraction` \| `count` | `raw` | Hover display mode. `fraction` multiplies by 100 and appends `%`; `count` uses thousands separators; `raw` adapts decimal precision to magnitude. |
 | `sort_mode` | `alphabetical` \| `total_flow` \| `input` | `total_flow` | Node-ordering rule |
 | `color_mode` | `source` \| `target` \| `step` | `source` | Link colouring rule |
 | `link_opacity` | float (0.05–1) | `0.5` | Link transparency |
 | `min_link_value` | float (≥0) | `0.0` | Hide links whose aggregated value is below this threshold |
 | `show_node_labels` | bool | `true` | Render node labels |
+
+!!! warning "Recipe-coupled normalisation (ampliseq)"
+    The bundled `sankey_canonical` recipe for nf-core/ampliseq pre-divides per-sample relative abundance by sample count so the renderer's sum-aggregation reads as a mean-per-sample at the root (≈1.0 = 100%). This bakes a sum-aggregation assumption into the canonical DC and is recomputed once at recipe time — cross-DC sample filters do **not** rescale the divisor, so heavy filtering yields scaled-down totals. Treat the values as relative composition, not absolute. See `depictio/projects/nf-core/ampliseq/recipes/sankey_canonical.py` for the full caveat.
 
 **Filtering / row tagging**
 
@@ -790,6 +828,9 @@ Card components display metrics with aggregations. A card shows a **hero metric*
 | :material-sine-wave: **kurtosis** | Distribution tailedness | Outlier tendency |
 | :material-percent: **percentile** | 50th percentile | Median coverage |
 | :material-poll: **mode** | Most frequent value | Dominant sample type |
+| :material-chart-bell-curve: **q1** | 25th percentile | Lower-quartile coverage |
+| :material-chart-bell-curve: **q3** | 75th percentile | Upper-quartile coverage |
+| :material-chart-box-outline: **box_plot_stats** | Tukey 5-number summary (min, Q1, median, Q3, max) | Required by `secondary_layout: box_plot` |
 
 ### Configuration
 
@@ -818,6 +859,71 @@ Cards can display multiple aggregation results in a single component. The primar
 └─────────────────────────────────┘
 ```
 
+### Secondary Layout Modes <small>(v0.13.0+)</small>
+
+The default layout above stacks `aggregations` as a vertical list under the hero metric. Set `secondary_layout` on the card to switch to one of five richer layouts — each tuned for a specific summary intent and with its own required companion field.
+
+| `secondary_layout` | Renders | Companion fields required |
+|--------------------|---------|---------------------------|
+| `vertical` (default) | Stacked rows from `aggregations` list | `aggregations` |
+| `compact` | Horizontal strip from `aggregations` | `aggregations` |
+| `box_plot` | Tukey box-and-whisker (min / Q1 / median / Q3 / max) | `aggregations: [box_plot_stats]` |
+| `top_n` | Mini bar chart of top-N most frequent `breakdown_col` values | `breakdown_col`, `top_n_count` (1–5) |
+| `coverage` | Fill bar showing `value / coverage_max` | `coverage_max` |
+| `concentration` | Top-N share (%) by `breakdown_col` | `breakdown_col`, `top_n_count` (1–5) |
+
+**YAML field reference (multi-metric extras)**
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `secondary_layout` | enum (see table above) | `vertical` | Layout mode for the secondary block. |
+| `aggregations` | list[str] \| null | `null` | Secondary aggregation functions (e.g. `[median, std_dev, min, max]` or `[box_plot_stats]`). Required by `vertical`, `compact`, `box_plot`. |
+| `breakdown_col` | str \| null | `null` | Group-by column for `top_n` / `concentration` layouts. |
+| `top_n_count` | int (1–5) | `3` | Number of top values rendered in `top_n` / `concentration` layouts. |
+| `coverage_max` | float \| null | `null` | Denominator for the `coverage` layout's fill bar. Falls back to `vertical` if missing. |
+
+**Examples (from `depictio/projects/init/iris/dashboards/overview.yaml`)**
+
+=== "box_plot"
+
+    ```yaml
+    - tag: sepal-length-summary
+      component_type: card
+      workflow_tag: python/iris_workflow
+      data_collection_tag: iris_table
+      aggregation: median
+      aggregations: [box_plot_stats]
+      secondary_layout: box_plot
+      column_name: sepal.length
+      column_type: float64
+      title: "Sepal Length"
+    ```
+
+=== "top_n"
+
+    ```yaml
+    - tag: variety-breakdown
+      component_type: card
+      aggregation: nunique
+      secondary_layout: top_n
+      breakdown_col: variety
+      top_n_count: 3
+      column_name: variety
+      column_type: object
+    ```
+
+=== "coverage"
+
+    ```yaml
+    - tag: sample-coverage
+      component_type: card
+      aggregation: count
+      secondary_layout: coverage
+      coverage_max: 150
+      column_name: variety
+      column_type: object
+    ```
+
 ### Conditional Aggregation (filter_expr)
 
 Cards support a `filter_expr` field — a Polars expression that pre-filters the data **before** computing the aggregation. This enables conditional metrics like "count of samples with coverage > 30x" without creating a separate data collection.
@@ -842,24 +948,46 @@ See [Filter Expressions](filter-expressions.md) for the complete expression refe
 
 ## :material-format-header-1: Text Components <small>(v0.2.0+)</small> { #text-components }
 
-Text components display section headers to organize your dashboard.
+Text components are presentational tiles for section delimiters, narrative intros, and small inline annotations. They have no data binding — they just render a heading + optional paragraph at the position they occupy in the grid.
 
-### Supported Header Levels
+### YAML fields
 
-| Level | Syntax | Description |
-|-------|--------|-------------|
-| **H1** | `# Header` | Main section headers |
-| **H2** | `## Header` | Sub-section headers |
-| **H3** | `### Header` | Minor section headers |
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `component_type` | `"text"` | — | Discriminator |
+| `title` | str | `""` | Heading text |
+| `order` | int (1–6) | `1` | Heading level — renders as `<h1>` through `<h6>` (values outside 1–6 are clamped) |
+| `alignment` | `left` \| `center` \| `right` | `left` | Horizontal text alignment for both title and body |
+| `body` | str | `""` | Optional paragraph rendered below the title |
 
-!!! warning "Limited Markdown Support"
-    Currently, only H1, H2, and H3 headers are supported. Full markdown rendering (lists, links, bold, italic, code blocks, etc.) is not available in text components.
+### Inline markdown
+
+The body and title support a **limited inline subset** — no markdown library is loaded; rendering is done client-side in `TextRenderer.tsx`:
+
+- `**bold**` → **bold**
+- `*italic*` → *italic*
+- `` `code` `` → `code`
+
+Block-level constructs (lists, tables, blockquotes, fenced code, links, images) are **not** supported. For richer narrative content, use the dashboard's notes panel.
+
+### Example (from `depictio/projects/init/iris/dashboards/overview.yaml`)
+
+```yaml
+- tag: text-overview-intro
+  component_type: text
+  title: "Iris Dataset — Overview"
+  order: 2
+  alignment: left
+  body: "Fisher's classic 150-flower dataset across three varieties (*Setosa*, *Versicolor*, *Virginica*). Filters on the left refine every tile."
+  layout: {x: 0, y: 0, w: 8, h: 1}
+```
 
 ### Use Cases
 
 - :material-format-title: Dashboard section headers
 - :material-view-grid: Visual organization of content
 - :material-label: Labeling groups of related components
+- :material-text-long: Short narrative intros above an analytical section
 
 ---
 
