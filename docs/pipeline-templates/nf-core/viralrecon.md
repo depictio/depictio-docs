@@ -3,14 +3,18 @@
 <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
   <img src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon" style="height:56px;" onerror="this.src='../../images/pipeline-templates/nf-core/viralrecon/nf-core-viralrecon_logo.png'">
   <div style="flex:1;">
-    <strong style="font-size:1.1em;">SARS-CoV-2 / viral genome surveillance — variant calling, lineage assignment, and coverage analysis</strong><br>
+    <strong style="font-size:1.1em;">Assembly and intrahost/low-frequency variant calling for viral samples — SARS-CoV-2 + other viral genomes via the reference-genomes config.</strong><br>
     <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/viralrecon" target="_blank">nf-co.re/viralrecon</a></span>
   </div>
   <div style="background:#2196F3;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;white-space:nowrap;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Reviewed</div>
 </div>
 
 The viralrecon template covers the main outputs of a standard
-nf-core/viralrecon run for SARS-CoV-2 / viral genome surveillance:
+nf-core/viralrecon run. The pipeline itself supports any viral genome
+configured in nf-core's reference-genomes config; the bundled depictio
+template was validated against SARS-CoV-2 / ARTIC amplicon data but the
+recipe / dashboard structure carries over to other viruses with the
+same iVar variant-calling + Pangolin / Nextclade lineage layout.
 
 - :material-chart-bar: **MultiQC quality control** — FastQC, Cutadapt, samtools/picard alignment metrics
 - :material-dna: **Variant calling** — iVar variants with gene, effect, and allele-frequency annotations
@@ -141,15 +145,16 @@ linked DC across the dashboard. See [Cross-DC links](#cross-dc-links) below.
 
 ## Dashboard tabs
 
-The viralrecon template ships a four-tab dashboard. Each tab targets a
-different analytical question; filters propagate across tabs via cross-DC
-links on the `summary_metrics.sample` column.
+The viralrecon template ships a five-tab dashboard (MultiQC parent +
+four child tabs). Each tab targets a different analytical question;
+filters propagate across tabs via cross-DC links on the
+`summary_metrics.sample` column.
 
 === "Main — MultiQC overview"
 
     Pipeline-level quality control powered by MultiQC.
 
-    ![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/tab_1_light.png)
+    [![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png)](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png){target="_blank" rel="noopener"}
 
     **Filters:** Sample ID, Lineage.
 
@@ -161,7 +166,7 @@ links on the `summary_metrics.sample` column.
 
     Per-sample and per-amplicon coverage view.
 
-    ![Coverage & Depth](../../images/pipeline-templates/nf-core/viralrecon/tab_2_light.png)
+    [![Coverage & Depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png)](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png){target="_blank" rel="noopener"}
 
     **Filters:** Sample ID.
 
@@ -173,37 +178,55 @@ links on the `summary_metrics.sample` column.
     - *Amplicon Coverage Data* table
     - *Genome Coverage Data* table
 
-=== "Lineage Analysis"
+=== "Lineage & Clustering"
 
-    Pangolin lineage and Nextclade clade assignment.
+    Pangolin lineage and Nextclade clade assignment, plus a Sankey
+    funnel from QC status → lineage → clade.
 
-    ![Lineage Analysis](../../images/pipeline-templates/nf-core/viralrecon/tab_3_light.png)
+    [![Lineage & Clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png)](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png){target="_blank" rel="noopener"}
 
     **Filters:** Sample ID, Lineage, Clade, QC Status.
 
     **Components:**
 
     - 4 summary cards: *Total Samples*, *Unique Lineages*, *Unique Clades*, *Avg Genome Coverage (10x)*
-    - 6 figures: *Pangolin Lineage Distribution*, *Nextclade QC Status Overview*, *Nextclade Clade Distribution*, *Coverage vs Total Variants by Lineage*, *Genome Coverage per Sample (>= 10x Depth)*, *Nextclade - Substitutions vs Deletions by Clade*
+    - 6 figures: *Pangolin Lineage Distribution*, *Nextclade QC Status Overview*, *Nextclade Clade Distribution*, *Coverage vs Total Variants by Lineage*, *Genome Coverage per Sample (>= 10x Depth)*, *Nextclade — Substitutions vs Deletions by Clade*
+    - Sankey funnel: qc_status → lineage → clade (canonical sankey)
     - 3 tables: *Pangolin Lineage Assignments*, *Nextclade Clade Assignments*, *Summary Metrics*
 
-=== "Variant Landscape"
+=== "Variants"
 
-    Variant calls and functional effects.
+    Variant calls and functional effects, with manhattan-style genome
+    landscape and oncoplot of high-impact mutations.
 
-    ![Variant Landscape](../../images/pipeline-templates/nf-core/viralrecon/tab_4_light.png)
+    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png)](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png){target="_blank" rel="noopener"}
 
     **Filters:** Sample ID, Gene, Variant Effect, Functional Class, Allele Frequency (range), Read Depth (range).
 
     **Components:**
 
     - 4 summary cards: *Total Variants*, *Unique Genes*, *Mean Allele Freq*, *Unique AA Changes*
-    - 5 figures: *Variant Landscape - Allele Frequency vs Genome Position*, *Variant Count by Gene and Functional Class*, *Variant Effect Distribution*, *Variant Functional Class Distribution*, *Variant Count per Sample*
+    - Manhattan plot: chr × pos × score (canonical manhattan)
+    - Lollipop: per-gene variants (canonical lollipop)
+    - Oncoplot: sample × gene × mutation_type (canonical oncoplot)
+    - 5 figures: *Allele Frequency vs Genome Position*, *Variant Count by Gene and Functional Class*, *Variant Effect Distribution*, *Variant Functional Class Distribution*, *Variant Count per Sample*
     - 1 table: *Variants Long Table*
 
-!!! note "Screenshots will be added in a follow-up doc update"
-    Image paths target `docs/images/pipeline-templates/nf-core/viralrecon/`.
-    Captures need to be generated against a representative dataset.
+=== "Sample QC"
+
+    Per-sample QC scorecard combining alignment, coverage, variant counts
+    and lineage / clade assignment in one place.
+
+    [![Sample QC](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png)](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png){target="_blank" rel="noopener"}
+
+    **Filters:** Sample ID, Lineage, QC Status.
+
+    **Components:**
+
+    - Summary cards: total samples, samples passing QC, mean coverage,
+      mean variants per sample
+    - Sample × metric heatmap (canonical complex heatmap)
+    - Summary metrics table
 
 ---
 
