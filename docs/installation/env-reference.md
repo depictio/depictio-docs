@@ -39,13 +39,13 @@ DEPICTIO_MINIO_ROOT_PASSWORD=minio123
 - [Celery Task Queue](#celery-task-queue)
 - [Performance & Timeouts](#performance-timeouts)
 - [Backup & Restore](#backup-restore)
-- [Internal Analytics](#internal-analytics)
+<!-- - [Internal Analytics](#internal-analytics) -->
 - [Google Analytics](#google-analytics)
 - [Logging](#logging)
 <!-- - [JBrowse Integration](#jbrowse-integration) -->
 - [S3 File Cache](#s3-file-cache)
-- [Application Profiling](#application-profiling)
-- [Dashboard YAML Sync](#dashboard-yaml-sync)
+<!-- - [Application Profiling](#application-profiling) -->
+<!-- - [Dashboard YAML Sync](#dashboard-yaml-sync) -->
 - [Global Settings](#global-settings)
 - [ServiceConfig](#serviceconfig)
 
@@ -274,7 +274,7 @@ Backup and restore configuration settings.
 
 ---
 
-## Internal Analytics
+<!-- ## Internal Analytics (opt-in — off by default, hidden from user-facing nav)
 
 **Config Class:** `AnalyticsConfig`
 **Environment Prefix:** `DEPICTIO_ANALYTICS_`
@@ -290,6 +290,7 @@ Configuration for analytics tracking.
 | `DEPICTIO_ANALYTICS_CLEANUP_ENABLED` | `true` | Enable automatic cleanup of old analytics data |
 
 ---
+-->
 
 ## Google Analytics
 
@@ -354,7 +355,7 @@ repeated downloads after system restarts.
 
 ---
 
-## Application Profiling
+<!-- ## Application Profiling (dev / debug only — off by default, hidden from user-facing nav)
 
 **Config Class:** `ProfilingConfig`
 **Environment Prefix:** `DEPICTIO_PROFILING_`
@@ -376,22 +377,26 @@ Configuration for application profiling.
 | `DEPICTIO_PROFILING_SLOW_CALLBACK_THRESHOLD` | `0.1` | Threshold in seconds for slow callbacks |
 
 ---
+-->
 
-## Dashboard YAML Sync
+<!-- ## Dashboard YAML Sync (DEPRECATED — JSON-based API has replaced it, hidden from user-facing nav)
 
 **Config Class:** `DashboardYAMLConfig`
 **Environment Prefix:** `DEPICTIO_DASHBOARD_YAML_`
 
-Configuration for YAML-based dashboard management.
-
-Enables file-based dashboard editing where users can read/write YAML files
-directly from a designated directory for version control and IaC workflows.
+YAML-based dashboard management. Marked DEPRECATED in
+`DashboardYAMLConfig`: the system is being phased out in favour of the
+JSON-based API. `enabled` now defaults to `false`, and
+`auto_export_on_save` / `auto_import_on_change` / `watch_local_dir` are
+likewise off by default and tagged DEPRECATED in code. Defaults here
+mirror the code so future-you finds correct values if the section is
+ever re-surfaced.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_DASHBOARD_YAML_ENABLED` | `true` | Enable YAML-based dashboard management |
-| `DEPICTIO_DASHBOARD_YAML_LOCAL_DIR` | `PydanticUndefined` | Directory for instance-specific dashboard YAML files (auto-synced) |
-| `DEPICTIO_DASHBOARD_YAML_TEMPLATES_DIR` | `PydanticUndefined` | Directory for template dashboard YAML files (version control) |
+| `DEPICTIO_DASHBOARD_YAML_ENABLED` | `false` | Enable YAML-based dashboard management (DEPRECATED) |
+| `DEPICTIO_DASHBOARD_YAML_LOCAL_DIR` | `<repo>/dashboards/local` | Directory for instance-specific dashboard YAML files (auto-synced) |
+| `DEPICTIO_DASHBOARD_YAML_TEMPLATES_DIR` | `<repo>/dashboards/templates` | Directory for template dashboard YAML files (version control) |
 | `DEPICTIO_DASHBOARD_YAML_BASE_DIR` | - | DEPRECATED: Use local_dir instead. Base directory for dashboard YAML files |
 | `DEPICTIO_DASHBOARD_YAML_ORGANIZE_BY_PROJECT` | `true` | Organize YAML files in subdirectories by project name |
 | `DEPICTIO_DASHBOARD_YAML_USE_DASHBOARD_TITLE` | `true` | Use dashboard title in filename (vs just ID) |
@@ -400,18 +405,21 @@ directly from a designated directory for version control and IaC workflows.
 | `DEPICTIO_DASHBOARD_YAML_MVP_MODE` | `true` | Use MVP minimal YAML format (60-80 lines, human-readable IDs, no layout) |
 | `DEPICTIO_DASHBOARD_YAML_REGENERATE_STATS` | `true` | Regenerate column statistics on import instead of storing in YAML |
 | `DEPICTIO_DASHBOARD_YAML_AUTO_LAYOUT` | `false` | Auto-generate component layout on import if missing |
-| `DEPICTIO_DASHBOARD_YAML_AUTO_EXPORT_ON_SAVE` | `true` | Automatically export to YAML when dashboard is saved |
-| `DEPICTIO_DASHBOARD_YAML_AUTO_IMPORT_ON_CHANGE` | `true` | Automatically import from YAML when files change (requires watcher) |
+| `DEPICTIO_DASHBOARD_YAML_AUTO_EXPORT_ON_SAVE` | `false` | Auto-export to YAML on save (DEPRECATED) |
+| `DEPICTIO_DASHBOARD_YAML_AUTO_IMPORT_ON_CHANGE` | `false` | Auto-import from YAML on file change (DEPRECATED) |
 | `DEPICTIO_DASHBOARD_YAML_WATCHER_DEBOUNCE_SECONDS` | `2.0` | Seconds to wait after file change before syncing |
-| `DEPICTIO_DASHBOARD_YAML_WATCHER_AUTO_START` | `true` | Automatically start the file watcher on API startup |
-| `DEPICTIO_DASHBOARD_YAML_WATCH_LOCAL_DIR` | `true` | Watch and auto-sync local dashboards directory |
+| `DEPICTIO_DASHBOARD_YAML_WATCH_LOCAL_DIR` | `false` | Watch and auto-sync local dashboards directory (DEPRECATED) |
 | `DEPICTIO_DASHBOARD_YAML_WATCH_TEMPLATES_DIR` | `false` | Watch and auto-sync templates directory (useful for template development) |
 | `DEPICTIO_DASHBOARD_YAML_ENABLE_VALIDATION` | `true` | Enable validation gate before syncing YAML to MongoDB |
 | `DEPICTIO_DASHBOARD_YAML_BLOCK_ON_VALIDATION_ERRORS` | `true` | Block sync if validation fails (set False to only warn) |
 | `DEPICTIO_DASHBOARD_YAML_VALIDATE_COLUMN_NAMES` | `true` | Validate that column names exist in data collection schema |
 | `DEPICTIO_DASHBOARD_YAML_VALIDATE_COMPONENT_TYPES` | `true` | Validate chart types, aggregation functions, and filter types |
 
+(`DEPICTIO_DASHBOARD_YAML_WATCHER_AUTO_START` removed — the field no
+longer exists on `DashboardYAMLConfig`.)
+
 ---
+-->
 
 ## Global Settings
 
