@@ -3980,7 +3980,7 @@
 <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
   <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:56px;" onerror="this.src='../../images/pipeline-templates/nf-core/ampliseq/nf-core-ampliseq_logo.png'">
   <div style="flex:1;">
-    <strong style="font-size:1.1em;">16S/ITS amplicon sequencing — microbial community analysis</strong><br>
+    <strong style="font-size:1.1em;">Amplicon sequencing analysis workflow using DADA2 and QIIME2 — 16S, ITS, CO1, 18S and other amplicons across Illumina, PacBio, IonTorrent.</strong><br>
     <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/ampliseq" target="_blank">nf-co.re/ampliseq</a></span>
   </div>
   <div style="background:#2196F3;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;white-space:nowrap;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Reviewed</div>
@@ -4157,50 +4157,91 @@
 </div>
 <hr />
 <h2 id="dashboard-tabs">Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">&para;</a></h2>
-<div class="tabbed-set" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">MultiQC</label><div class="tabbed-content">
+<p>The ampliseq dashboard ships as a six-tab funnel (MultiQC parent + five
+child tabs). Filters propagate across tabs via cross-DC links on the
+metadata <code>sample</code> column — see <a href="#cross-dc-links-7">Cross-DC links</a> below.</p>
+<div class="tabbed-set" data-tabs="3:6"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">MultiQC</label><div class="tabbed-content">
 <p>Quality control overview powered by MultiQC.</p>
-<p><img alt="MultiQC dashboard" src="../../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png" /></p>
+<p><a href="../../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" src="../../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png" /></a></p>
+<p><strong>Filters:</strong> Sample ID, Habitat Type, Sampling Period (DatePicker).</p>
 <p><strong>Components:</strong></p>
 <ul>
 <li>General stats table</li>
 <li>Cutadapt: filtered reads, trimmed sequence lengths</li>
-<li>FastQC: sequence counts, quality histograms, GC content, adapter content</li>
-<li>Sample ID filter (samplesheet)</li>
+<li>FastQC: sequence counts, quality histograms, GC content, adapter
+  content, status checks, Per-sequence quality / GC / N content,
+  sequence duplication levels, length distribution</li>
 </ul>
 </div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Community Analysis</label><div class="tabbed-content">
-<p>Taxonomy composition, diversity metrics, heatmap, and sampling map.</p>
-<p><img alt="Community Analysis dashboard" src="../../../images/pipeline-templates/nf-core/ampliseq/community_light.png" /></p>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Alpha Diversity</label><div class="tabbed-content">
+<p>Within-sample diversity metrics, rarefaction, and per-habitat
+comparisons. Extended mode only.</p>
+<p><a href="../../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png" rel="noopener" target="_blank"><img alt="Alpha Diversity dashboard" src="../../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png" /></a></p>
+<p><strong>Filters:</strong> Sample ID, Habitat.</p>
+<p><strong>Components:</strong></p>
+<ul>
+<li>4 metric cards: <em>Total Samples</em>, <em>Shannon (distribution)</em>,
+  <em>Faith PD (distribution)</em>, <em>Evenness (distribution)</em></li>
+<li>Rarefaction curves (multi-metric) — advanced viz, filterable by
+  habitat / sample via the in-tab DCLink</li>
+<li>Alpha diversity by habitat (per metric) — facetted boxplot</li>
+<li>Per-sample alpha diversity data table</li>
+</ul>
+</div>
+<input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><label for="__tabbed_3_3">Community &amp; Diversity</label><div class="tabbed-content">
+<p>Taxonomy composition + sampling-location map (extended mode).</p>
+<p><a href="../../../images/pipeline-templates/nf-core/ampliseq/community_light.png" rel="noopener" target="_blank"><img alt="Community &amp; Diversity dashboard" src="../../../images/pipeline-templates/nf-core/ampliseq/community_light.png" /></a></p>
 <p><strong>Components (base):</strong></p>
 <ul>
 <li>Metric cards: total samples, total taxa, kingdoms, unique phyla</li>
 <li>Sunburst: Kingdom → Phylum hierarchy</li>
 <li>Mean relative abundance by Phylum (± std)</li>
 <li>Stacked bar: taxonomic composition per sample</li>
-<li>ComplexHeatmap: z-score normalized, clustered, with Kingdom row annotations</li>
+<li>ComplexHeatmap: z-score normalized, clustered, with Kingdom row
+  annotations</li>
 <li>Data table: taxonomy relative abundance</li>
 <li>Filters: Kingdom, Phylum, relative abundance range</li>
 </ul>
 <p><strong>Additional components (extended):</strong></p>
 <ul>
-<li>Alpha diversity bar chart by GROUP_COL</li>
-<li>Rarefaction curves (Faith PD per sample)</li>
 <li>Facetted bar charts by GROUP_COL</li>
 <li>Sampling locations scatter map</li>
 <li>Heatmap with habitat + city column annotations</li>
 <li>Filters: sampling period (DatePicker), GROUP_COL, sample ID</li>
 </ul>
 </div>
-<input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><label for="__tabbed_3_3">Differential Abundance</label><div class="tabbed-content">
-<p>ANCOM-BC differential abundance results. Only in extended mode.</p>
-<p><img alt="Differential Abundance dashboard" src="../../../images/pipeline-templates/nf-core/ampliseq/differential_light.png" /></p>
+<input id="__tabbed_3_4" name="__tabbed_3" type="radio" /><label for="__tabbed_3_4">Differential Abundance</label><div class="tabbed-content">
+<p>ANCOM-BC differential abundance results. Extended mode only.</p>
+<p><a href="../../../images/pipeline-templates/nf-core/ampliseq/differential_light.png" rel="noopener" target="_blank"><img alt="Differential Abundance dashboard" src="../../../images/pipeline-templates/nf-core/ampliseq/differential_light.png" /></a></p>
 <p><strong>Components:</strong></p>
 <ul>
-<li>Metric cards: total taxa, significant taxa (q&lt;0.05), unique phyla, max log-fold change</li>
+<li>Metric cards: total taxa, significant taxa (q&lt;0.05), unique phyla,
+  max log-fold change</li>
 <li>Volcano plot: LFC vs -log10(q-value), facetted by contrast</li>
+<li>DA barplot: per-contrast log-fold change</li>
 <li>Top differential taxa bar chart</li>
 <li>Results data table</li>
 <li>Filters: contrast, Phylum, Kingdom, W statistic range, LFC range</li>
+</ul>
+</div>
+<input id="__tabbed_3_5" name="__tabbed_3" type="radio" /><label for="__tabbed_3_5">Ordination &amp; Clustering</label><div class="tabbed-content">
+<p>Beta-diversity / PCoA embedding + ComplexHeatmap on the canonical
+feature matrix. Surfaces clusters and outliers across samples.</p>
+<p><a href="../../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png" rel="noopener" target="_blank"><img alt="Ordination &amp; Clustering dashboard" src="../../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png" /></a></p>
+<p><strong>Components:</strong></p>
+<ul>
+<li>Embedding (PCoA): 2D sample projection, colour-coded by habitat</li>
+<li>ComplexHeatmap: clustered z-score heatmap on the canonical feature
+  matrix</li>
+<li>Bray-Curtis sample-distance heatmap</li>
+</ul>
+</div>
+<input id="__tabbed_3_6" name="__tabbed_3" type="radio" /><label for="__tabbed_3_6">Phylogeny</label><div class="tabbed-content">
+<p>Rooted phylogenetic tree of ASVs with tip metadata overlay.</p>
+<p><a href="../../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png" rel="noopener" target="_blank"><img alt="Phylogeny dashboard" src="../../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png" /></a></p>
+<p><strong>Components:</strong></p>
+<ul>
+<li>Phylogenetic tree viewer (Newick) with metadata-annotated tips</li>
 </ul>
 </div>
 </div>

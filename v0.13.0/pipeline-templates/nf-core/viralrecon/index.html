@@ -3936,14 +3936,18 @@
 <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
   <img src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon" style="height:56px;" onerror="this.src='../../images/pipeline-templates/nf-core/viralrecon/nf-core-viralrecon_logo.png'">
   <div style="flex:1;">
-    <strong style="font-size:1.1em;">SARS-CoV-2 / viral genome surveillance — variant calling, lineage assignment, and coverage analysis</strong><br>
+    <strong style="font-size:1.1em;">Assembly and intrahost/low-frequency variant calling for viral samples — SARS-CoV-2 + other viral genomes via the reference-genomes config.</strong><br>
     <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/viralrecon" target="_blank">nf-co.re/viralrecon</a></span>
   </div>
   <div style="background:#2196F3;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;white-space:nowrap;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Reviewed</div>
 </div>
 
 <p>The viralrecon template covers the main outputs of a standard
-nf-core/viralrecon run for SARS-CoV-2 / viral genome surveillance:</p>
+nf-core/viralrecon run. The pipeline itself supports any viral genome
+configured in nf-core's reference-genomes config; the bundled depictio
+template was validated against SARS-CoV-2 / ARTIC amplicon data but the
+recipe / dashboard structure carries over to other viruses with the
+same iVar variant-calling + Pangolin / Nextclade lineage layout.</p>
 <ul>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-5h4z"/></svg></span> <strong>MultiQC quality control</strong> — FastQC, Cutadapt, samtools/picard alignment metrics</li>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"/></svg></span> <strong>Variant calling</strong> — iVar variants with gene, effect, and allele-frequency annotations</li>
@@ -4123,12 +4127,13 @@ files via <code>glob_pattern</code>.</p>
 linked DC across the dashboard. See <a href="#cross-dc-links">Cross-DC links</a> below.</p>
 <hr />
 <h2 id="dashboard-tabs">Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">&para;</a></h2>
-<p>The viralrecon template ships a four-tab dashboard. Each tab targets a
-different analytical question; filters propagate across tabs via cross-DC
-links on the <code>summary_metrics.sample</code> column.</p>
-<div class="tabbed-set" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Main — MultiQC overview</label><div class="tabbed-content">
+<p>The viralrecon template ships a five-tab dashboard (MultiQC parent +
+four child tabs). Each tab targets a different analytical question;
+filters propagate across tabs via cross-DC links on the
+<code>summary_metrics.sample</code> column.</p>
+<div class="tabbed-set" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Main — MultiQC overview</label><div class="tabbed-content">
 <p>Pipeline-level quality control powered by MultiQC.</p>
-<p><img alt="MultiQC overview" src="../../images/pipeline-templates/nf-core/viralrecon/tab_1_light.png" /></p>
+<p><a href="../../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC overview" src="../../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png" /></a></p>
 <p><strong>Filters:</strong> Sample ID, Lineage.</p>
 <p><strong>Components:</strong> 11 MultiQC plots covering raw read counts, trimming
 statistics, alignment rate, duplication rate, samtools/picard metrics,
@@ -4136,7 +4141,7 @@ and variant counts.</p>
 </div>
 <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Coverage &amp; Depth</label><div class="tabbed-content">
 <p>Per-sample and per-amplicon coverage view.</p>
-<p><img alt="Coverage &amp; Depth" src="../../images/pipeline-templates/nf-core/viralrecon/tab_2_light.png" /></p>
+<p><a href="../../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png" rel="noopener" target="_blank"><img alt="Coverage &amp; Depth" src="../../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png" /></a></p>
 <p><strong>Filters:</strong> Sample ID.</p>
 <p><strong>Components:</strong></p>
 <ul>
@@ -4147,33 +4152,47 @@ and variant counts.</p>
 <li><em>Genome Coverage Data</em> table</li>
 </ul>
 </div>
-<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Lineage Analysis</label><div class="tabbed-content">
-<p>Pangolin lineage and Nextclade clade assignment.</p>
-<p><img alt="Lineage Analysis" src="../../images/pipeline-templates/nf-core/viralrecon/tab_3_light.png" /></p>
+<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Lineage &amp; Clustering</label><div class="tabbed-content">
+<p>Pangolin lineage and Nextclade clade assignment, plus a Sankey
+funnel from QC status → lineage → clade.</p>
+<p><a href="../../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png" rel="noopener" target="_blank"><img alt="Lineage &amp; Clustering" src="../../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png" /></a></p>
 <p><strong>Filters:</strong> Sample ID, Lineage, Clade, QC Status.</p>
 <p><strong>Components:</strong></p>
 <ul>
 <li>4 summary cards: <em>Total Samples</em>, <em>Unique Lineages</em>, <em>Unique Clades</em>, <em>Avg Genome Coverage (10x)</em></li>
-<li>6 figures: <em>Pangolin Lineage Distribution</em>, <em>Nextclade QC Status Overview</em>, <em>Nextclade Clade Distribution</em>, <em>Coverage vs Total Variants by Lineage</em>, <em>Genome Coverage per Sample (&gt;= 10x Depth)</em>, <em>Nextclade - Substitutions vs Deletions by Clade</em></li>
+<li>6 figures: <em>Pangolin Lineage Distribution</em>, <em>Nextclade QC Status Overview</em>, <em>Nextclade Clade Distribution</em>, <em>Coverage vs Total Variants by Lineage</em>, <em>Genome Coverage per Sample (&gt;= 10x Depth)</em>, <em>Nextclade — Substitutions vs Deletions by Clade</em></li>
+<li>Sankey funnel: qc_status → lineage → clade (canonical sankey)</li>
 <li>3 tables: <em>Pangolin Lineage Assignments</em>, <em>Nextclade Clade Assignments</em>, <em>Summary Metrics</em></li>
 </ul>
 </div>
-<input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><label for="__tabbed_1_4">Variant Landscape</label><div class="tabbed-content">
-<p>Variant calls and functional effects.</p>
-<p><img alt="Variant Landscape" src="../../images/pipeline-templates/nf-core/viralrecon/tab_4_light.png" /></p>
+<input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><label for="__tabbed_1_4">Variants</label><div class="tabbed-content">
+<p>Variant calls and functional effects, with manhattan-style genome
+landscape and oncoplot of high-impact mutations.</p>
+<p><a href="../../../images/pipeline-templates/nf-core/viralrecon/variants_light.png" rel="noopener" target="_blank"><img alt="Variants" src="../../../images/pipeline-templates/nf-core/viralrecon/variants_light.png" /></a></p>
 <p><strong>Filters:</strong> Sample ID, Gene, Variant Effect, Functional Class, Allele Frequency (range), Read Depth (range).</p>
 <p><strong>Components:</strong></p>
 <ul>
 <li>4 summary cards: <em>Total Variants</em>, <em>Unique Genes</em>, <em>Mean Allele Freq</em>, <em>Unique AA Changes</em></li>
-<li>5 figures: <em>Variant Landscape - Allele Frequency vs Genome Position</em>, <em>Variant Count by Gene and Functional Class</em>, <em>Variant Effect Distribution</em>, <em>Variant Functional Class Distribution</em>, <em>Variant Count per Sample</em></li>
+<li>Manhattan plot: chr × pos × score (canonical manhattan)</li>
+<li>Lollipop: per-gene variants (canonical lollipop)</li>
+<li>Oncoplot: sample × gene × mutation_type (canonical oncoplot)</li>
+<li>5 figures: <em>Allele Frequency vs Genome Position</em>, <em>Variant Count by Gene and Functional Class</em>, <em>Variant Effect Distribution</em>, <em>Variant Functional Class Distribution</em>, <em>Variant Count per Sample</em></li>
 <li>1 table: <em>Variants Long Table</em></li>
 </ul>
 </div>
+<input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><label for="__tabbed_1_5">Sample QC</label><div class="tabbed-content">
+<p>Per-sample QC scorecard combining alignment, coverage, variant counts
+and lineage / clade assignment in one place.</p>
+<p><a href="../../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png" rel="noopener" target="_blank"><img alt="Sample QC" src="../../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png" /></a></p>
+<p><strong>Filters:</strong> Sample ID, Lineage, QC Status.</p>
+<p><strong>Components:</strong></p>
+<ul>
+<li>Summary cards: total samples, samples passing QC, mean coverage,
+  mean variants per sample</li>
+<li>Sample × metric heatmap (canonical complex heatmap)</li>
+<li>Summary metrics table</li>
+</ul>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Screenshots will be added in a follow-up doc update</p>
-<p>Image paths target <code>docs/images/pipeline-templates/nf-core/viralrecon/</code>.
-Captures need to be generated against a representative dataset.</p>
 </div>
 <hr />
 <h2 id="recipes">Recipes<a class="headerlink" href="#recipes" title="Permanent link">&para;</a></h2>

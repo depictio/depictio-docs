@@ -1160,17 +1160,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#internal-analytics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Internal Analytics
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#google-analytics" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1197,28 +1186,6 @@
     <span class="md-ellipsis">
       
         S3 File Cache
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#application-profiling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Application Profiling
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dashboard-yaml-sync" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Dashboard YAML Sync
       
     </span>
   </a>
@@ -4139,17 +4106,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#internal-analytics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Internal Analytics
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#google-analytics" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4176,28 +4132,6 @@
     <span class="md-ellipsis">
       
         S3 File Cache
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#application-profiling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Application Profiling
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dashboard-yaml-sync" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Dashboard YAML Sync
       
     </span>
   </a>
@@ -4285,15 +4219,19 @@
 <li><a href="#celery-task-queue">Celery Task Queue</a></li>
 <li><a href="#performance-timeouts">Performance &amp; Timeouts</a></li>
 <li><a href="#backup-restore">Backup &amp; Restore</a></li>
-<li><a href="#internal-analytics">Internal Analytics</a></li>
+</ul>
+<!-- - [Internal Analytics](#internal-analytics) -->
+<ul>
 <li><a href="#google-analytics">Google Analytics</a></li>
 <li><a href="#logging">Logging</a></li>
 </ul>
 <!-- - [JBrowse Integration](#jbrowse-integration) -->
 <ul>
 <li><a href="#s3-file-cache">S3 File Cache</a></li>
-<li><a href="#application-profiling">Application Profiling</a></li>
-<li><a href="#dashboard-yaml-sync">Dashboard YAML Sync</a></li>
+</ul>
+<!-- - [Application Profiling](#application-profiling) -->
+<!-- - [Dashboard YAML Sync](#dashboard-yaml-sync) -->
+<ul>
 <li><a href="#global-settings">Global Settings</a></li>
 <li><a href="#serviceconfig">ServiceConfig</a></li>
 </ul>
@@ -5017,47 +4955,24 @@
 </tbody>
 </table>
 <hr />
-<h2 id="internal-analytics">Internal Analytics<a class="headerlink" href="#internal-analytics" title="Permanent link">&para;</a></h2>
-<p><strong>Config Class:</strong> <code>AnalyticsConfig</code>
-<strong>Environment Prefix:</strong> <code>DEPICTIO_ANALYTICS_</code></p>
-<p>Configuration for analytics tracking.</p>
-<table>
-<thead>
-<tr>
-<th>Variable</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>DEPICTIO_ANALYTICS_ENABLED</code></td>
-<td><code>false</code></td>
-<td>Enable analytics tracking</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_ANALYTICS_SESSION_TIMEOUT_MINUTES</code></td>
-<td><code>30</code></td>
-<td>Session timeout in minutes</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_ANALYTICS_CLEANUP_DAYS</code></td>
-<td><code>90</code></td>
-<td>Days to retain analytics data</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_ANALYTICS_TRACK_ANONYMOUS_USERS</code></td>
-<td><code>true</code></td>
-<td>Track anonymous user sessions</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_ANALYTICS_CLEANUP_ENABLED</code></td>
-<td><code>true</code></td>
-<td>Enable automatic cleanup of old analytics data</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<!-- ## Internal Analytics (opt-in — off by default, hidden from user-facing nav)
+
+**Config Class:** `AnalyticsConfig`
+**Environment Prefix:** `DEPICTIO_ANALYTICS_`
+
+Configuration for analytics tracking.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_ANALYTICS_ENABLED` | `false` | Enable analytics tracking |
+| `DEPICTIO_ANALYTICS_SESSION_TIMEOUT_MINUTES` | `30` | Session timeout in minutes |
+| `DEPICTIO_ANALYTICS_CLEANUP_DAYS` | `90` | Days to retain analytics data |
+| `DEPICTIO_ANALYTICS_TRACK_ANONYMOUS_USERS` | `true` | Track anonymous user sessions |
+| `DEPICTIO_ANALYTICS_CLEANUP_ENABLED` | `true` | Enable automatic cleanup of old analytics data |
+
+---
+-->
+
 <h2 id="google-analytics">Google Analytics<a class="headerlink" href="#google-analytics" title="Permanent link">&para;</a></h2>
 <p><strong>Config Class:</strong> <code>GoogleAnalyticsConfig</code>
 <strong>Environment Prefix:</strong> <code>DEPICTIO_GOOGLE_ANALYTICS_</code></p>
@@ -5150,200 +5065,72 @@ repeated downloads after system restarts.</p>
 </tbody>
 </table>
 <hr />
-<h2 id="application-profiling">Application Profiling<a class="headerlink" href="#application-profiling" title="Permanent link">&para;</a></h2>
-<p><strong>Config Class:</strong> <code>ProfilingConfig</code>
-<strong>Environment Prefix:</strong> <code>DEPICTIO_PROFILING_</code></p>
-<p>Configuration for application profiling.</p>
-<table>
-<thead>
-<tr>
-<th>Variable</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>DEPICTIO_PROFILING_ENABLED</code></td>
-<td><code>false</code></td>
-<td>Enable application profiling</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_PROFILING_PROFILE_DIR</code></td>
-<td><code>./prof_files</code></td>
-<td>Directory to save profile files</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_PROFILING_SORT_BY</code></td>
-<td><code>cumtime,tottime</code></td>
-<td>Profile sorting criteria</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_PROFILING_RESTRICTIONS</code></td>
-<td><code>50</code></td>
-<td>Number of top functions to show in reports</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_PROFILING_MEMORY_PROFILING</code></td>
-<td><code>false</code></td>
-<td>Enable memory usage profiling</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_PROFILING_WERKZEUG_ENABLED</code></td>
-<td><code>true</code></td>
-<td>Enable Werkzeug request profiling</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_PROFILING_WERKZEUG_STREAM</code></td>
-<td><code>false</code></td>
-<td>Stream profiling output to terminal</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_PROFILING_WERKZEUG_SAFE_MODE</code></td>
-<td><code>true</code></td>
-<td>Enable safe mode to prevent profiler conflicts</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_PROFILING_PROFILE_CALLBACKS</code></td>
-<td><code>false</code></td>
-<td>Enable automatic callback profiling</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_PROFILING_PROFILE_SLOW_CALLBACKS_ONLY</code></td>
-<td><code>true</code></td>
-<td>Only profile callbacks slower than threshold</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_PROFILING_SLOW_CALLBACK_THRESHOLD</code></td>
-<td><code>0.1</code></td>
-<td>Threshold in seconds for slow callbacks</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="dashboard-yaml-sync">Dashboard YAML Sync<a class="headerlink" href="#dashboard-yaml-sync" title="Permanent link">&para;</a></h2>
-<p><strong>Config Class:</strong> <code>DashboardYAMLConfig</code>
-<strong>Environment Prefix:</strong> <code>DEPICTIO_DASHBOARD_YAML_</code></p>
-<p>Configuration for YAML-based dashboard management.</p>
-<p>Enables file-based dashboard editing where users can read/write YAML files
-directly from a designated directory for version control and IaC workflows.</p>
-<table>
-<thead>
-<tr>
-<th>Variable</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_ENABLED</code></td>
-<td><code>true</code></td>
-<td>Enable YAML-based dashboard management</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_LOCAL_DIR</code></td>
-<td><code>PydanticUndefined</code></td>
-<td>Directory for instance-specific dashboard YAML files (auto-synced)</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_TEMPLATES_DIR</code></td>
-<td><code>PydanticUndefined</code></td>
-<td>Directory for template dashboard YAML files (version control)</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_BASE_DIR</code></td>
-<td>-</td>
-<td>DEPRECATED: Use local_dir instead. Base directory for dashboard YAML files</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_ORGANIZE_BY_PROJECT</code></td>
-<td><code>true</code></td>
-<td>Organize YAML files in subdirectories by project name</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_USE_DASHBOARD_TITLE</code></td>
-<td><code>true</code></td>
-<td>Use dashboard title in filename (vs just ID)</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_INCLUDE_EXPORT_METADATA</code></td>
-<td><code>true</code></td>
-<td>Include export timestamp and version in YAML files</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_COMPACT_MODE</code></td>
-<td><code>true</code></td>
-<td>Use compact YAML format with references (75-80% smaller files)</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_MVP_MODE</code></td>
-<td><code>true</code></td>
-<td>Use MVP minimal YAML format (60-80 lines, human-readable IDs, no layout)</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_REGENERATE_STATS</code></td>
-<td><code>true</code></td>
-<td>Regenerate column statistics on import instead of storing in YAML</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_AUTO_LAYOUT</code></td>
-<td><code>false</code></td>
-<td>Auto-generate component layout on import if missing</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_AUTO_EXPORT_ON_SAVE</code></td>
-<td><code>true</code></td>
-<td>Automatically export to YAML when dashboard is saved</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_AUTO_IMPORT_ON_CHANGE</code></td>
-<td><code>true</code></td>
-<td>Automatically import from YAML when files change (requires watcher)</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_WATCHER_DEBOUNCE_SECONDS</code></td>
-<td><code>2.0</code></td>
-<td>Seconds to wait after file change before syncing</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_WATCHER_AUTO_START</code></td>
-<td><code>true</code></td>
-<td>Automatically start the file watcher on API startup</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_WATCH_LOCAL_DIR</code></td>
-<td><code>true</code></td>
-<td>Watch and auto-sync local dashboards directory</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_WATCH_TEMPLATES_DIR</code></td>
-<td><code>false</code></td>
-<td>Watch and auto-sync templates directory (useful for template development)</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_ENABLE_VALIDATION</code></td>
-<td><code>true</code></td>
-<td>Enable validation gate before syncing YAML to MongoDB</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_BLOCK_ON_VALIDATION_ERRORS</code></td>
-<td><code>true</code></td>
-<td>Block sync if validation fails (set False to only warn)</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_VALIDATE_COLUMN_NAMES</code></td>
-<td><code>true</code></td>
-<td>Validate that column names exist in data collection schema</td>
-</tr>
-<tr>
-<td><code>DEPICTIO_DASHBOARD_YAML_VALIDATE_COMPONENT_TYPES</code></td>
-<td><code>true</code></td>
-<td>Validate chart types, aggregation functions, and filter types</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<!-- ## Application Profiling (dev / debug only — off by default, hidden from user-facing nav)
+
+**Config Class:** `ProfilingConfig`
+**Environment Prefix:** `DEPICTIO_PROFILING_`
+
+Configuration for application profiling.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_PROFILING_ENABLED` | `false` | Enable application profiling |
+| `DEPICTIO_PROFILING_PROFILE_DIR` | `./prof_files` | Directory to save profile files |
+| `DEPICTIO_PROFILING_SORT_BY` | `cumtime,tottime` | Profile sorting criteria |
+| `DEPICTIO_PROFILING_RESTRICTIONS` | `50` | Number of top functions to show in reports |
+| `DEPICTIO_PROFILING_MEMORY_PROFILING` | `false` | Enable memory usage profiling |
+| `DEPICTIO_PROFILING_WERKZEUG_ENABLED` | `true` | Enable Werkzeug request profiling |
+| `DEPICTIO_PROFILING_WERKZEUG_STREAM` | `false` | Stream profiling output to terminal |
+| `DEPICTIO_PROFILING_WERKZEUG_SAFE_MODE` | `true` | Enable safe mode to prevent profiler conflicts |
+| `DEPICTIO_PROFILING_PROFILE_CALLBACKS` | `false` | Enable automatic callback profiling |
+| `DEPICTIO_PROFILING_PROFILE_SLOW_CALLBACKS_ONLY` | `true` | Only profile callbacks slower than threshold |
+| `DEPICTIO_PROFILING_SLOW_CALLBACK_THRESHOLD` | `0.1` | Threshold in seconds for slow callbacks |
+
+---
+-->
+
+<!-- ## Dashboard YAML Sync (DEPRECATED — JSON-based API has replaced it, hidden from user-facing nav)
+
+**Config Class:** `DashboardYAMLConfig`
+**Environment Prefix:** `DEPICTIO_DASHBOARD_YAML_`
+
+YAML-based dashboard management. Marked DEPRECATED in
+`DashboardYAMLConfig`: the system is being phased out in favour of the
+JSON-based API. `enabled` now defaults to `false`, and
+`auto_export_on_save` / `auto_import_on_change` / `watch_local_dir` are
+likewise off by default and tagged DEPRECATED in code. Defaults here
+mirror the code so future-you finds correct values if the section is
+ever re-surfaced.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_DASHBOARD_YAML_ENABLED` | `false` | Enable YAML-based dashboard management (DEPRECATED) |
+| `DEPICTIO_DASHBOARD_YAML_LOCAL_DIR` | `<repo>/dashboards/local` | Directory for instance-specific dashboard YAML files (auto-synced) |
+| `DEPICTIO_DASHBOARD_YAML_TEMPLATES_DIR` | `<repo>/dashboards/templates` | Directory for template dashboard YAML files (version control) |
+| `DEPICTIO_DASHBOARD_YAML_BASE_DIR` | - | DEPRECATED: Use local_dir instead. Base directory for dashboard YAML files |
+| `DEPICTIO_DASHBOARD_YAML_ORGANIZE_BY_PROJECT` | `true` | Organize YAML files in subdirectories by project name |
+| `DEPICTIO_DASHBOARD_YAML_USE_DASHBOARD_TITLE` | `true` | Use dashboard title in filename (vs just ID) |
+| `DEPICTIO_DASHBOARD_YAML_INCLUDE_EXPORT_METADATA` | `true` | Include export timestamp and version in YAML files |
+| `DEPICTIO_DASHBOARD_YAML_COMPACT_MODE` | `true` | Use compact YAML format with references (75-80% smaller files) |
+| `DEPICTIO_DASHBOARD_YAML_MVP_MODE` | `true` | Use MVP minimal YAML format (60-80 lines, human-readable IDs, no layout) |
+| `DEPICTIO_DASHBOARD_YAML_REGENERATE_STATS` | `true` | Regenerate column statistics on import instead of storing in YAML |
+| `DEPICTIO_DASHBOARD_YAML_AUTO_LAYOUT` | `false` | Auto-generate component layout on import if missing |
+| `DEPICTIO_DASHBOARD_YAML_AUTO_EXPORT_ON_SAVE` | `false` | Auto-export to YAML on save (DEPRECATED) |
+| `DEPICTIO_DASHBOARD_YAML_AUTO_IMPORT_ON_CHANGE` | `false` | Auto-import from YAML on file change (DEPRECATED) |
+| `DEPICTIO_DASHBOARD_YAML_WATCHER_DEBOUNCE_SECONDS` | `2.0` | Seconds to wait after file change before syncing |
+| `DEPICTIO_DASHBOARD_YAML_WATCH_LOCAL_DIR` | `false` | Watch and auto-sync local dashboards directory (DEPRECATED) |
+| `DEPICTIO_DASHBOARD_YAML_WATCH_TEMPLATES_DIR` | `false` | Watch and auto-sync templates directory (useful for template development) |
+| `DEPICTIO_DASHBOARD_YAML_ENABLE_VALIDATION` | `true` | Enable validation gate before syncing YAML to MongoDB |
+| `DEPICTIO_DASHBOARD_YAML_BLOCK_ON_VALIDATION_ERRORS` | `true` | Block sync if validation fails (set False to only warn) |
+| `DEPICTIO_DASHBOARD_YAML_VALIDATE_COLUMN_NAMES` | `true` | Validate that column names exist in data collection schema |
+| `DEPICTIO_DASHBOARD_YAML_VALIDATE_COMPONENT_TYPES` | `true` | Validate chart types, aggregation functions, and filter types |
+
+(`DEPICTIO_DASHBOARD_YAML_WATCHER_AUTO_START` removed — the field no
+longer exists on `DashboardYAMLConfig`.)
+
+---
+-->
+
 <h2 id="global-settings">Global Settings<a class="headerlink" href="#global-settings" title="Permanent link">&para;</a></h2>
 <p><strong>Config Class:</strong> <code>Settings</code>
 <strong>Environment Prefix:</strong> <code>DEPICTIO_</code></p>
@@ -5365,7 +5152,12 @@ directly from a designated directory for version control and IaC workflows.</p>
 <tr>
 <td><code>DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS</code></td>
 <td><code>false</code></td>
-<td>Skip seeding the bundled reference projects (Iris, Penguins, Advanced Visualisations, nf-core/ampliseq, nf-core/viralrecon) and their dashboards on API startup. Useful for production deployments that ship their own catalogue and don't want the demo content cluttering the project / admin views. Opt-in: default <code>false</code> preserves the existing behaviour.</td>
+<td>Skip seeding the bundled reference projects (Iris, Penguins, Advanced Visualisations, nf-core/ampliseq, nf-core/viralrecon) and their dashboards on API startup. Opt-in: default preserves current behaviour.</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_WALKTHROUGH_DISABLED</code></td>
+<td><code>false</code></td>
+<td>Hide the onboarding walkthrough overlay for every user. Useful for embedded iframes, staging envs used for screenshot capture, and demos with their own narration. <code>DEPICTIO_DEV_MODE=true</code> also suppresses it.</td>
 </tr>
 </tbody>
 </table>
