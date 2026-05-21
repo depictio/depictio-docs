@@ -8,12 +8,18 @@ hide:
 
 # Changelog
 
-## **v0.13.1** (unreleased)
+## **[v0.13.1](https://github.com/depictio/depictio/releases/tag/v0.13.1)** (May 21, 2026)
 
-!!! note "Patch — seed projects, MultiQC filter, /admin-beta polish"
+!!! success "Stable Release — seed projects, MultiQC filter, /admin-beta polish"
     Adds nf-core/viralrecon as a fifth seed project and fixes
     cross-DC filtering on MultiQC, the date range picker, and a few
     React viewer rough edges.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.1
+```
 
 ### **✨ New Features**
 
