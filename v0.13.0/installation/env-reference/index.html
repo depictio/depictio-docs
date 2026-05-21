@@ -5362,6 +5362,11 @@ directly from a designated directory for version control and IaC workflows.</p>
 <td><code>server</code></td>
 <td>-</td>
 </tr>
+<tr>
+<td><code>DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS</code></td>
+<td><code>false</code></td>
+<td>Skip seeding the bundled reference projects (Iris, Penguins, Advanced Visualisations, nf-core/ampliseq, nf-core/viralrecon) and their dashboards on API startup. Useful for production deployments that ship their own catalogue and don't want the demo content cluttering the project / admin views. Opt-in: default <code>false</code> preserves the existing behaviour.</td>
+</tr>
 </tbody>
 </table>
 <hr />
