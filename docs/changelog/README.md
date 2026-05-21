@@ -8,6 +8,112 @@ hide:
 
 # Changelog
 
+## **[v0.13.0](https://github.com/depictio/depictio/releases/tag/v0.13.0)** (May 20, 2026)
+
+!!! success "Stable Release — Advanced Visualization component type"
+    Introduces **[Advanced Visualization](../features/components.md#advanced-visualizations)**,
+    a new component type providing ready-to-use visualizations for standard
+    bioinformatics outputs.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.0
+```
+
+### **✨ New Features**
+
+* **Advanced viz renderers (React beta version only)** — ComplexHeatmap,
+  UpSet (vendored `plotly-upset`), GSEA / enrichment dot plot, rarefaction,
+  ancombc, DA barplot, MA, Lollipop, Dot, QQ, Sunburst, Oncoplot — each
+  with a Celery task and dispatch / poll endpoints.
+* **Text tiles + multi-metric cards** — new `text` variants and multi-metric
+  card layouts (e.g. `box_plot`).
+* **Table DC lifecycle endpoints (API)** — append / replace / clear.
+* **`DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS` env var** — skip seeding the
+  bundled reference projects (Iris, Penguins, Advanced Visualisations,
+  nf-core/ampliseq, nf-core/viralrecon) on API startup. Default `false`
+  preserves the existing behaviour; set to `true` in production to keep
+  the project / admin views free of demo content. See
+  [env reference](../installation/env-reference.md#global-settings).
+* **nf-core/viralrecon reference project** — fifth bundled seed
+  project (5 dashboards: MultiQC, Coverage & Depth, Lineage &
+  Clustering, Variants, Sample QC).
+* **Advanced Visualisations seed project** — renamed (was "Advanced
+  Visualisation Showcase") and the overview tab dropped; Volcano is
+  now the entry point.
+* **Producer fingerprints for nf-core column shapes** — the React DC
+  creation modal now surfaces a "Looks like X" hint and the
+  AdvancedVizBuilder pre-selects the matching viz when the upload
+  matches ANCOM-BC joined results, viralrecon variants_long, or any
+  of the 11 canonical role-named table shapes (volcano, da_barplot,
+  manhattan, lollipop, oncoplot, coverage_track, embedding,
+  stacked_taxonomy, rarefaction, ma, dot_plot, enrichment).
+
+### **🚀 Improvements**
+
+* **Reset action (React beta version only)** — moved to filters panel header.
+* **Auto-screenshot pipeline** — switched to React SPA, ~2× faster.
+* **`/dashboards-beta` sections (React)** — reorganised as
+  Owned → Accessed → Public → **nf-core** → **Demo**. The previous
+  "Example" section is now **Demo dashboards** (Iris + Penguins +
+  Advanced Visualisations) and a dedicated **nf-core dashboards**
+  section groups ampliseq + viralrecon.
+* **`/admin-beta` Projects panel (React)** — replaced the per-project
+  badge cluster with a bullet list and now nests every dashboard tab
+  (parent + children) under its project, each rendered as an anchor
+  link to `/dashboard-beta/{id}` so middle-click / Cmd+Click opens in
+  a new tab. Admin endpoint `/dashboards/list_all?include_child_tabs=true`
+  surfaces the full tree.
+* **`/admin-beta` Maintenance panel (React)** — bullet list (was a
+  badge cluster) covering all five seed projects, with the canonical
+  project ID alongside each name. `SEED_PROJECT_IDS` extended so the
+  "Delete example projects" action cascades through all five.
+* **Anchor-based card / tab navigation (React)** — `/dashboards-beta`
+  cards (thumbnail + title + HoverCard slides) and the dashboard
+  sidebar tabs are real anchors now, so middle-click and Cmd+Click
+  open in a new tab. Left-click still SPA-navigates in place.
+
+### **🐛 Bug fixes**
+
+* **MultiQC cross-DC filtering (React beta version only)** —
+  `_resolve_multiqc_sample_filter` now passes `init_data` to
+  `load_deltatable_lite`, so the metadata-DC fetch hits the delta
+  location directly instead of falling back to an unauthenticated
+  internal API hop (which 404'd on non-public projects and silently
+  dropped the filter). Added a `metadata → multiqc_data` DCLink to
+  the ampliseq template so dashboards bound to metadata-driven
+  interactive filters (habitat, sampling_date, sample) can also
+  filter MultiQC plots via `sample_mapping` resolution.
+* **Date range picker (React beta version only)** — the controlled
+  `DatePickerInput type="range"` never advanced through partial
+  picks, so the user could only ever pick a "start" date and never
+  the "end". Now tracks intermediate `[Date, null]` picks locally
+  and emits upward only once both ends are set; defaults the picker
+  to the full bounds (oldest → most recent) on first load.
+* **Interactive component reset button (React beta version only)** —
+  the per-component reset icon was always rendered disabled; now
+  it lights up (filled orange) when the component has sourced a
+  non-empty filter, mirroring the chart / table / map selection
+  reset behaviour.
+* **`availableValues` greying out unrelated columns (React)** —
+  MultiQC DCs contributed sample names to the "available values"
+  intersection for any filter column, which greyed out every option
+  on non-sample filters (`habitat ∩ sample_names = ∅`). MultiQC DCs
+  are now skipped from the intersection unless the filter column is
+  sample-like.
+* **Alpha Diversity tab → rarefaction filter (ampliseq)** — added an
+  `alpha_diversity_multi_canonical → rarefaction_canonical` DCLink
+  so the in-tab habitat / sample filter narrows the rarefaction
+  curves viz, not just the same-DC cards / table / figure.
+* **`_register_links` idempotency** — YAML-declared links are now
+  upserted on existing projects by (source_dc_id, target_dc_id,
+  source_column) triple, preserving user-added links and adding
+  only the missing entries. Previously, new YAML links only took
+  effect on a full reseed.
+
+---
+
 ## **[v0.12.2](https://github.com/depictio/depictio/releases/tag/v0.12.2)** (May 18, 2026)
 
 !!! success "Stable Release — React viewer Code Mode polish & cross-filter fixes"
@@ -170,7 +276,7 @@ ghcr.io/depictio/depictio:0.11.1
 
 ## **[v0.11.0](https://github.com/depictio/depictio/releases/tag/v0.11.0)** (May 6, 2026)
 
-!!! warning "Major Release — React viewer is in Beta"
+!!! success "Major Release — React viewer is in Beta"
     Major release: React viewer (Beta), realtime dashboard refresh, and a
     Dash 3.2 → 4.1 upgrade.
 

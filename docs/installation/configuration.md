@@ -411,6 +411,24 @@ DEPICTIO_PLAYWRIGHT_DEV_MODE=true
 DEPICTIO_VERSION=0.7.3-b7
 ```
 
+## Skip Bundled Example Projects
+
+Production deployments that ship their own catalogue can opt out of the
+bundled reference projects (Iris, Penguins, Advanced Visualisations,
+nf-core/ampliseq, nf-core/viralrecon) that Depictio otherwise seeds at
+API startup:
+
+```bash
+# Skip seeding the demo projects + dashboards on boot.
+# Default: false — preserves the current behaviour.
+DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS=true
+```
+
+When enabled, neither the seed projects nor their dashboards are
+created, so the project listing and admin views stay scoped to
+user-created content only. The toggle is opt-in so existing deployments
+keep their demo set after upgrading.
+
 ## Analytics Configuration
 
 Depictio provides comprehensive analytics capabilities to track user interactions and system usage. You can configure both internal analytics and external Google Analytics integration.

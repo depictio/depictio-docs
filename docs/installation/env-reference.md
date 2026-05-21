@@ -423,6 +423,7 @@ Top-level application settings including context configuration.
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `DEPICTIO_CONTEXT` | `server` | - |
+| `DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS` | `false` | Skip seeding the bundled reference projects (Iris, Penguins, Advanced Visualisations, nf-core/ampliseq, nf-core/viralrecon) and their dashboards on API startup. Useful for production deployments that ship their own catalogue and don't want the demo content cluttering the project / admin views. Opt-in: default `false` preserves the existing behaviour. |
 
 ---
 
