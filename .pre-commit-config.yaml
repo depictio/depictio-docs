@@ -7,6 +7,10 @@ repos:
       - id: check-yaml
         args: [--unsafe]  # Allow Python tags used by MkDocs Material
       - id: check-added-large-files
+        # Default 500 kB is too tight for high-DPI dashboard screenshots
+        # (anti-aliased UI text + plotly charts). Cap at ~2 MB so we
+        # still catch accidental binary commits.
+        args: [--maxkb=2000]
       - id: mixed-line-ending
 
   - repo: https://github.com/igorshubovych/markdownlint-cli

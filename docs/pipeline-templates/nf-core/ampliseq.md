@@ -3,7 +3,7 @@
 <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
   <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:56px;" onerror="this.src='../../images/pipeline-templates/nf-core/ampliseq/nf-core-ampliseq_logo.png'">
   <div style="flex:1;">
-    <strong style="font-size:1.1em;">16S/ITS amplicon sequencing — microbial community analysis</strong><br>
+    <strong style="font-size:1.1em;">Amplicon sequencing analysis workflow using DADA2 and QIIME2 — 16S, ITS, CO1, 18S and other amplicons across Illumina, PacBio, IonTorrent.</strong><br>
     <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/ampliseq" target="_blank">nf-co.re/ampliseq</a></span>
   </div>
   <div style="background:#2196F3;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;white-space:nowrap;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Reviewed</div>
@@ -92,24 +92,49 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 
 ## Dashboard tabs
 
+The ampliseq dashboard ships as a six-tab funnel (MultiQC parent + five
+child tabs). Filters propagate across tabs via cross-DC links on the
+metadata `sample` column — see [Cross-DC links](#cross-dc-links-7) below.
+
 === "MultiQC"
 
     Quality control overview powered by MultiQC.
 
-    ![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png)
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png)](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png){target="_blank" rel="noopener"}
+
+    **Filters:** Sample ID, Habitat Type, Sampling Period (DatePicker).
 
     **Components:**
 
     - General stats table
     - Cutadapt: filtered reads, trimmed sequence lengths
-    - FastQC: sequence counts, quality histograms, GC content, adapter content
-    - Sample ID filter (samplesheet)
+    - FastQC: sequence counts, quality histograms, GC content, adapter
+      content, status checks, Per-sequence quality / GC / N content,
+      sequence duplication levels, length distribution
 
-=== "Community Analysis"
+=== "Alpha Diversity"
 
-    Taxonomy composition, diversity metrics, heatmap, and sampling map.
+    Within-sample diversity metrics, rarefaction, and per-habitat
+    comparisons. Extended mode only.
 
-    ![Community Analysis dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png)
+    [![Alpha Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png)](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png){target="_blank" rel="noopener"}
+
+    **Filters:** Sample ID, Habitat.
+
+    **Components:**
+
+    - 4 metric cards: *Total Samples*, *Shannon (distribution)*,
+      *Faith PD (distribution)*, *Evenness (distribution)*
+    - Rarefaction curves (multi-metric) — advanced viz, filterable by
+      habitat / sample via the in-tab DCLink
+    - Alpha diversity by habitat (per metric) — facetted boxplot
+    - Per-sample alpha diversity data table
+
+=== "Community & Diversity"
+
+    Taxonomy composition + sampling-location map (extended mode).
+
+    [![Community & Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png)](../../images/pipeline-templates/nf-core/ampliseq/community_light.png){target="_blank" rel="noopener"}
 
     **Components (base):**
 
@@ -117,14 +142,13 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
     - Sunburst: Kingdom → Phylum hierarchy
     - Mean relative abundance by Phylum (± std)
     - Stacked bar: taxonomic composition per sample
-    - ComplexHeatmap: z-score normalized, clustered, with Kingdom row annotations
+    - ComplexHeatmap: z-score normalized, clustered, with Kingdom row
+      annotations
     - Data table: taxonomy relative abundance
     - Filters: Kingdom, Phylum, relative abundance range
 
     **Additional components (extended):**
 
-    - Alpha diversity bar chart by GROUP_COL
-    - Rarefaction curves (Faith PD per sample)
     - Facetted bar charts by GROUP_COL
     - Sampling locations scatter map
     - Heatmap with habitat + city column annotations
@@ -132,17 +156,43 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 
 === "Differential Abundance"
 
-    ANCOM-BC differential abundance results. Only in extended mode.
+    ANCOM-BC differential abundance results. Extended mode only.
 
-    ![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png)
+    [![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png)](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png){target="_blank" rel="noopener"}
 
     **Components:**
 
-    - Metric cards: total taxa, significant taxa (q<0.05), unique phyla, max log-fold change
+    - Metric cards: total taxa, significant taxa (q<0.05), unique phyla,
+      max log-fold change
     - Volcano plot: LFC vs -log10(q-value), facetted by contrast
+    - DA barplot: per-contrast log-fold change
     - Top differential taxa bar chart
     - Results data table
     - Filters: contrast, Phylum, Kingdom, W statistic range, LFC range
+
+=== "Ordination & Clustering"
+
+    Beta-diversity / PCoA embedding + ComplexHeatmap on the canonical
+    feature matrix. Surfaces clusters and outliers across samples.
+
+    [![Ordination & Clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png)](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png){target="_blank" rel="noopener"}
+
+    **Components:**
+
+    - Embedding (PCoA): 2D sample projection, colour-coded by habitat
+    - ComplexHeatmap: clustered z-score heatmap on the canonical feature
+      matrix
+    - Bray-Curtis sample-distance heatmap
+
+=== "Phylogeny"
+
+    Rooted phylogenetic tree of ASVs with tip metadata overlay.
+
+    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png)](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png){target="_blank" rel="noopener"}
+
+    **Components:**
+
+    - Phylogenetic tree viewer (Newick) with metadata-annotated tips
 
 ---
 
