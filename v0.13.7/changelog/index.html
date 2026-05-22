@@ -12945,20 +12945,20 @@ the React data-fetch + bundled-seed paths in preparation for that cutover.</p>
 </div>
 <h2 id="v0137-may-22-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.13.7">v0.13.7</a></strong> (May 22, 2026)<a class="headerlink" href="#v0137-may-22-2026" title="Permanent link">&para;</a></h2>
 <div class="admonition success">
-<p class="admonition-title">Stable patch — <code>pangolin_lineages</code> tiles render</p>
+<p class="admonition-title">Stable patch — viralrecon Pangolin lineage tiles render</p>
 </div>
 <ul>
-<li><strong>🐛</strong> <code>precompute_columns_specs</code> now uses positional <code>.iloc[0]</code> for <code>mode()</code> results (was <code>KeyError(0)</code> on viralrecon's non-default-index Series).</li>
+<li><strong>🐛</strong> <strong>viralrecon Lineage tab</strong> — <em>Unique Lineages</em> card and <em>Pangolin lineage distribution</em> figure (sourced from the <code>pangolin_lineages</code> DC, SARS-CoV-2 lineage assignment) returned 500 because <code>precompute_columns_specs</code> aborted on sparse-string columns whose aggregated <code>mode()</code> carried a non-default index. Switched to positional <code>.iloc[0]</code>.</li>
 </ul>
 <hr />
 <h2 id="v0136-may-22-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.13.6">v0.13.6</a></strong> (May 22, 2026)<a class="headerlink" href="#v0136-may-22-2026" title="Permanent link">&para;</a></h2>
 <div class="admonition success">
-<p class="admonition-title">Stable patch — seed format, screenshot guard, EMBL resource tune</p>
+<p class="admonition-title">Stable patch — recipe seed format, screenshot guard, EMBL resource tune</p>
 </div>
 <ul>
-<li><strong>🐛</strong> Init resolver now force-sets <code>format=tsv</code> on converted recipe DCs (fixes 12 viralrecon <code>ColumnNotFoundError</code>s from CSV-vs-TSV separator mismatch).</li>
-<li><strong>🐛</strong> <code>/dashboards/save/{id}</code> skips screenshot enqueue when fresh PNGs (&lt;1h) exist — unblocks celery during startup.</li>
-<li><strong>🚀</strong> EMBL demo + demodev: celery concurrency 2 → 8, 8 CPU / 16 GiB limits within tenant quota.</li>
+<li><strong>🐛</strong> <strong>viralrecon Variants / Lineages / Clustering / Coverage tabs</strong> — 12 of 13 recipe DCs render-error'd because the init resolver kept the template's <code>format: csv</code> (describing the recipe <em>input</em>) after converting them to file-scans against the bundled <code>.tsv</code> seeds; polars then read each TSV with a comma separator, collapsing every header line into a single column. Resolver now force-sets <code>format=tsv</code> after conversion.</li>
+<li><strong>🐛</strong> <strong>Startup unresponsive</strong> — <code>/dashboards/save/{id}</code> enqueued a Playwright screenshot on every tab open / duplicate / rename, saturating celery and stalling advanced-viz <code>compute_*</code> tasks. Skip enqueue when both dual-theme PNGs exist and are &lt;1h old (mirrors the auto-screenshot heuristic).</li>
+<li><strong>🚀</strong> <strong>EMBL <code>demo</code> + <code>demodev</code> namespaces</strong> — celery is the bottleneck for advanced-viz compute, so concurrency 2 → 8 and limits move to 8 CPU / 16 GiB. Combined requests fit the 32 CPU / 64 GiB tenant quota.</li>
 </ul>
 <hr />
 <h2 id="v0135-may-21-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.13.5">v0.13.5</a></strong> (May 21, 2026)<a class="headerlink" href="#v0135-may-21-2026" title="Permanent link">&para;</a></h2>
@@ -12966,8 +12966,8 @@ the React data-fetch + bundled-seed paths in preparation for that cutover.</p>
 <p class="admonition-title">Stable patch — viralrecon canonical seed TSVs</p>
 </div>
 <ul>
-<li><strong>🚀</strong> Bundle 15 viralrecon canonical seed TSVs (~1.5 MB) — all 5 dashboards render out-of-the-box on fresh helm install. Ports <code>variants_long</code> + <code>variant_feature_matrix_canonical</code> recipes.</li>
-<li><strong>🧪</strong> CI asserts all 19 viralrecon scan/seed files ship in the image.</li>
+<li><strong>🚀</strong> <strong>Helm installs ship viralrecon dashboards working out of the box</strong> — bundle 15 canonical recipe outputs (<code>summary_metrics</code>, <code>variants_long</code>, <code>pangolin_lineages</code>, <code>nextclade_results</code>, <code>manhattan_variants_canonical</code>, <code>complex_heatmap_canonical</code>, <code>coverage_track_canonical</code>, <code>sankey_canonical</code>, <code>upset_canonical</code>, <code>lollipop_canonical</code>, <code>oncoplot_canonical</code>, <code>variant_feature_matrix_canonical</code>, three <code>mosdepth_*</code> aggregations) as <code>.tsv</code> seeds (~1.5 MB total), matching ampliseq's bundled pattern. Ports the <code>variants_long</code> + <code>variant_feature_matrix_canonical</code> recipes that were missing from the bundled set.</li>
+<li><strong>🧪</strong> CI's <code>cli-comprehensive-test</code> job asserts all 19 viralrecon scan / seed files land in the image — catches future <code>.gitignore</code> / <code>.dockerignore</code> regressions.</li>
 </ul>
 <hr />
 <h2 id="v0134-may-21-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.13.4">v0.13.4</a></strong> (May 21, 2026)<a class="headerlink" href="#v0134-may-21-2026" title="Permanent link">&para;</a></h2>
@@ -12975,7 +12975,7 @@ the React data-fetch + bundled-seed paths in preparation for that cutover.</p>
 <p class="admonition-title">Stable patch — bundled viralrecon raw data</p>
 </div>
 <ul>
-<li><strong>🚀</strong> Bundle the 4 raw nf-core viralrecon scan targets (<code>multiqc.parquet</code> + 3 mosdepth TSVs, ~25 MB) — Coverage &amp; Depth + MultiQC tiles work without <code>kubectl cp</code>.</li>
+<li><strong>🚀</strong> <strong>viralrecon Coverage &amp; Depth + MultiQC tabs</strong> — bundle the 4 raw nf-core scan targets (<code>multiqc.parquet</code> + 3 <code>mosdepth</code> TSVs, ~25 MB) under <code>depictio/projects/nf-core/viralrecon/3.0.0/run_1/</code> so a fresh helm install renders these tiles without <code>kubectl cp</code> or an external S3 sync.</li>
 </ul>
 <hr />
 <h2 id="v0133-may-21-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.13.3">v0.13.3</a></strong> (May 21, 2026)<a class="headerlink" href="#v0133-may-21-2026" title="Permanent link">&para;</a></h2>
@@ -12983,9 +12983,9 @@ the React data-fetch + bundled-seed paths in preparation for that cutover.</p>
 <p class="admonition-title">Stable patch — viralrecon seed dashboards + public-mode pinning</p>
 </div>
 <ul>
-<li><strong>🐛</strong> Viralrecon seed dashboards remapped to <code>STATIC_IDS</code> (46 stale ObjectIds → 404s on fresh installs); pytest invariant locks this in.</li>
-<li><strong>🐛</strong> Register <code>coverage_track_demo</code> + <code>categorical_flow_demo</code> in <code>STATIC_IDS</code>.</li>
-<li><strong>🚀</strong> Pinning works in public/demo mode (localStorage-only, no server write).</li>
+<li><strong>🐛</strong> <strong>All 5 viralrecon dashboards 404'd on fresh installs</strong> — the bundled <code>dashboard_*.json</code> seeds referenced auto-generated ObjectIds that don't reproduce across deploys (46 stale IDs across the 5 dashboards). Remapped to <code>STATIC_IDS["viralrecon"]</code>, and added a pytest invariant covering every reference project.</li>
+<li><strong>🐛</strong> <strong>Advanced Visualisations showcase: Coverage Track + Categorical Flow demos 404'd</strong> — the <code>coverage_track_demo</code> and <code>categorical_flow_demo</code> DCs were referenced in their seed dashboards but never registered in <code>STATIC_IDS</code>. Surfaced by the new pytest invariant.</li>
+<li><strong>🚀</strong> <strong>Anonymous / demo sessions can now pin dashboards</strong> — pin state lives in <code>localStorage</code> (no server write), so there was no privacy reason to gate it on auth mode.</li>
 </ul>
 <hr />
 <h2 id="v0132-may-21-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.13.2">v0.13.2</a></strong> (May 21, 2026)<a class="headerlink" href="#v0132-may-21-2026" title="Permanent link">&para;</a></h2>
@@ -12993,10 +12993,10 @@ the React data-fetch + bundled-seed paths in preparation for that cutover.</p>
 <p class="admonition-title">Stable patch — K8s deploy + ampliseq/viralrecon seed fixes</p>
 </div>
 <ul>
-<li><strong>🐛</strong> All 17 init containers get explicit <code>pullPolicy: Always</code> — Capsule admission webhook no longer denies pods on fresh helm install.</li>
-<li><strong>🐛</strong> Init resolver skips <code>DATA_ROOT</code> in <code>reference.vars</code> — viralrecon scan hits the caller-resolved path, not the literal placeholder.</li>
-<li><strong>🐛</strong> File-scan fallback when a materialised recipe DC has no <code>transform</code> block — fixes 13 ampliseq DCs (taxonomy / alpha-diversity / heatmap).</li>
-<li><strong>🐛</strong> Mirror the <code>metadata → multiqc_data</code> DCLink into ampliseq 2.16.0 (was only in 2.14.0).</li>
+<li><strong>🐛</strong> <strong>Fresh helm installs stalled at <code>0 READY</code></strong> — all 17 init containers (15 busybox <code>wait-for-mongo</code> / <code>wait-for-redis</code> / <code>fix-permissions-*</code> and 2 curl seeders) had no <code>imagePullPolicy</code>, so Kubernetes defaulted to <code>IfNotPresent</code> and the <code>pods.projectcapsule.dev</code> admission webhook denied pod creation. Each one is now templated through a new <code>initContainerImage</code> / <code>curlInitContainerImage</code> value block with <code>pullPolicy: Always</code>.</li>
+<li><strong>🐛</strong> <strong>viralrecon scan errored "directory <code>/path/to/viralrecon/output</code> does not exist"</strong> — the init resolver iterated <code>template.reference.vars</code> and overwrote the caller-resolved <code>DATA_ROOT</code> with the template's placeholder. Only viralrecon declared <code>DATA_ROOT</code> in <code>reference.vars</code>, so only viralrecon hit it. <code>DATA_ROOT</code> is now skipped in the vars loop.</li>
+<li><strong>🐛</strong> <strong>13 ampliseq DCs ("Transformed DC has no transform config")</strong> — once the init resolver converted a recipe DC to a file_scan it kept <code>source: "transformed"</code> (for viewer lineage display) but cleared the <code>transform</code> block. The CLI processor erred on <code>stacked_taxonomy_canonical</code>, <code>alpha_diversity_multi_canonical</code>, <code>complex_heatmap_canonical</code>, … — most of the <strong>Alpha Diversity / Taxonomy / Clustering</strong> tabs. Now falls through to file-scan when <code>transform</code> is absent.</li>
+<li><strong>🐛</strong> <strong>ampliseq 2.16.0 MultiQC habitat / sample / sampling_date filters silently dropped</strong> — the <code>metadata → multiqc_data</code> DCLink added in v0.13.1 only touched 2.14.0; the active 2.16.0 reference dataset had no link to resolve sample mappings against. Mirrored into 2.16.0.</li>
 </ul>
 <hr />
 <h2 id="v0131-may-21-2026"><strong><a href="https://github.com/depictio/depictio/releases/tag/v0.13.1">v0.13.1</a></strong> (May 21, 2026)<a class="headerlink" href="#v0131-may-21-2026" title="Permanent link">&para;</a></h2>
