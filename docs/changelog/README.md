@@ -17,19 +17,19 @@ hide:
 
 ## **[v0.13.7](https://github.com/depictio/depictio/releases/tag/v0.13.7)** (May 22, 2026)
 
-!!! success "Stable patch — `pangolin_lineages` tiles render"
+!!! success "Stable patch — viralrecon Pangolin lineage tiles render"
 
-* **🐛** `precompute_columns_specs` now uses positional `.iloc[0]` for `mode()` results (was `KeyError(0)` on viralrecon's non-default-index Series).
+* **🐛** **viralrecon Lineage tab** — *Unique Lineages* card and *Pangolin lineage distribution* figure (sourced from the `pangolin_lineages` DC, SARS-CoV-2 lineage assignment) returned 500 because `precompute_columns_specs` aborted on sparse-string columns whose aggregated `mode()` carried a non-default index. Switched to positional `.iloc[0]`.
 
 ---
 
 ## **[v0.13.6](https://github.com/depictio/depictio/releases/tag/v0.13.6)** (May 22, 2026)
 
-!!! success "Stable patch — seed format, screenshot guard, EMBL resource tune"
+!!! success "Stable patch — recipe seed format, screenshot guard, EMBL resource tune"
 
-* **🐛** Init resolver now force-sets `format=tsv` on converted recipe DCs (fixes 12 viralrecon `ColumnNotFoundError`s from CSV-vs-TSV separator mismatch).
-* **🐛** `/dashboards/save/{id}` skips screenshot enqueue when fresh PNGs (<1h) exist — unblocks celery during startup.
-* **🚀** EMBL demo + demodev: celery concurrency 2 → 8, 8 CPU / 16 GiB limits within tenant quota.
+* **🐛** **viralrecon Variants / Lineages / Clustering / Coverage tabs** — 12 of 13 recipe DCs render-error'd because the init resolver kept the template's `format: csv` (describing the recipe *input*) after converting them to file-scans against the bundled `.tsv` seeds; polars then read each TSV with a comma separator, collapsing every header line into a single column. Resolver now force-sets `format=tsv` after conversion.
+* **🐛** **Startup unresponsive** — `/dashboards/save/{id}` enqueued a Playwright screenshot on every tab open / duplicate / rename, saturating celery and stalling advanced-viz `compute_*` tasks. Skip enqueue when both dual-theme PNGs exist and are <1h old (mirrors the auto-screenshot heuristic).
+* **🚀** **EMBL `demo` + `demodev` namespaces** — celery is the bottleneck for advanced-viz compute, so concurrency 2 → 8 and limits move to 8 CPU / 16 GiB. Combined requests fit the 32 CPU / 64 GiB tenant quota.
 
 ---
 
@@ -37,8 +37,8 @@ hide:
 
 !!! success "Stable patch — viralrecon canonical seed TSVs"
 
-* **🚀** Bundle 15 viralrecon canonical seed TSVs (~1.5 MB) — all 5 dashboards render out-of-the-box on fresh helm install. Ports `variants_long` + `variant_feature_matrix_canonical` recipes.
-* **🧪** CI asserts all 19 viralrecon scan/seed files ship in the image.
+* **🚀** **Helm installs ship viralrecon dashboards working out of the box** — bundle 15 canonical recipe outputs (`summary_metrics`, `variants_long`, `pangolin_lineages`, `nextclade_results`, `manhattan_variants_canonical`, `complex_heatmap_canonical`, `coverage_track_canonical`, `sankey_canonical`, `upset_canonical`, `lollipop_canonical`, `oncoplot_canonical`, `variant_feature_matrix_canonical`, three `mosdepth_*` aggregations) as `.tsv` seeds (~1.5 MB total), matching ampliseq's bundled pattern. Ports the `variants_long` + `variant_feature_matrix_canonical` recipes that were missing from the bundled set.
+* **🧪** CI's `cli-comprehensive-test` job asserts all 19 viralrecon scan / seed files land in the image — catches future `.gitignore` / `.dockerignore` regressions.
 
 ---
 
@@ -46,7 +46,7 @@ hide:
 
 !!! success "Stable patch — bundled viralrecon raw data"
 
-* **🚀** Bundle the 4 raw nf-core viralrecon scan targets (`multiqc.parquet` + 3 mosdepth TSVs, ~25 MB) — Coverage & Depth + MultiQC tiles work without `kubectl cp`.
+* **🚀** **viralrecon Coverage & Depth + MultiQC tabs** — bundle the 4 raw nf-core scan targets (`multiqc.parquet` + 3 `mosdepth` TSVs, ~25 MB) under `depictio/projects/nf-core/viralrecon/3.0.0/run_1/` so a fresh helm install renders these tiles without `kubectl cp` or an external S3 sync.
 
 ---
 
@@ -54,9 +54,9 @@ hide:
 
 !!! success "Stable patch — viralrecon seed dashboards + public-mode pinning"
 
-* **🐛** Viralrecon seed dashboards remapped to `STATIC_IDS` (46 stale ObjectIds → 404s on fresh installs); pytest invariant locks this in.
-* **🐛** Register `coverage_track_demo` + `categorical_flow_demo` in `STATIC_IDS`.
-* **🚀** Pinning works in public/demo mode (localStorage-only, no server write).
+* **🐛** **All 5 viralrecon dashboards 404'd on fresh installs** — the bundled `dashboard_*.json` seeds referenced auto-generated ObjectIds that don't reproduce across deploys (46 stale IDs across the 5 dashboards). Remapped to `STATIC_IDS["viralrecon"]`, and added a pytest invariant covering every reference project.
+* **🐛** **Advanced Visualisations showcase: Coverage Track + Categorical Flow demos 404'd** — the `coverage_track_demo` and `categorical_flow_demo` DCs were referenced in their seed dashboards but never registered in `STATIC_IDS`. Surfaced by the new pytest invariant.
+* **🚀** **Anonymous / demo sessions can now pin dashboards** — pin state lives in `localStorage` (no server write), so there was no privacy reason to gate it on auth mode.
 
 ---
 
@@ -64,10 +64,10 @@ hide:
 
 !!! success "Stable patch — K8s deploy + ampliseq/viralrecon seed fixes"
 
-* **🐛** All 17 init containers get explicit `pullPolicy: Always` — Capsule admission webhook no longer denies pods on fresh helm install.
-* **🐛** Init resolver skips `DATA_ROOT` in `reference.vars` — viralrecon scan hits the caller-resolved path, not the literal placeholder.
-* **🐛** File-scan fallback when a materialised recipe DC has no `transform` block — fixes 13 ampliseq DCs (taxonomy / alpha-diversity / heatmap).
-* **🐛** Mirror the `metadata → multiqc_data` DCLink into ampliseq 2.16.0 (was only in 2.14.0).
+* **🐛** **Fresh helm installs stalled at `0 READY`** — all 17 init containers (15 busybox `wait-for-mongo` / `wait-for-redis` / `fix-permissions-*` and 2 curl seeders) had no `imagePullPolicy`, so Kubernetes defaulted to `IfNotPresent` and the `pods.projectcapsule.dev` admission webhook denied pod creation. Each one is now templated through a new `initContainerImage` / `curlInitContainerImage` value block with `pullPolicy: Always`.
+* **🐛** **viralrecon scan errored "directory `/path/to/viralrecon/output` does not exist"** — the init resolver iterated `template.reference.vars` and overwrote the caller-resolved `DATA_ROOT` with the template's placeholder. Only viralrecon declared `DATA_ROOT` in `reference.vars`, so only viralrecon hit it. `DATA_ROOT` is now skipped in the vars loop.
+* **🐛** **13 ampliseq DCs ("Transformed DC has no transform config")** — once the init resolver converted a recipe DC to a file_scan it kept `source: "transformed"` (for viewer lineage display) but cleared the `transform` block. The CLI processor erred on `stacked_taxonomy_canonical`, `alpha_diversity_multi_canonical`, `complex_heatmap_canonical`, … — most of the **Alpha Diversity / Taxonomy / Clustering** tabs. Now falls through to file-scan when `transform` is absent.
+* **🐛** **ampliseq 2.16.0 MultiQC habitat / sample / sampling_date filters silently dropped** — the `metadata → multiqc_data` DCLink added in v0.13.1 only touched 2.14.0; the active 2.16.0 reference dataset had no link to resolve sample mappings against. Mirrored into 2.16.0.
 
 ---
 
