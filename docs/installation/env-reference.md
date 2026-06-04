@@ -31,7 +31,7 @@ DEPICTIO_MINIO_ROOT_PASSWORD=minio123
 ### Quick Navigation
 
 - [FastAPI Backend](#fastapi-backend)
-- [Dash Frontend](#dash-frontend)
+- [React Viewer Frontend](#react-viewer-frontend)
 - [MongoDB Database](#mongodb-database)
 - [MinIO/S3 Storage](#minios3-storage)
 - [Authentication](#authentication)
@@ -74,26 +74,23 @@ Base class for service configurations with internal/external URL handling.
 
 ---
 
-## Dash Frontend
+## React Viewer Frontend
 
-**Config Class:** `DashConfig`
-**Environment Prefix:** `DEPICTIO_DASH_`
+**Config Class:** `ViewerConfig`
+**Environment Prefix:** `DEPICTIO_VIEWER_`
 
 Base class for service configurations with internal/external URL handling.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_DASH_SERVICE_NAME` | `depictio-frontend` | - |
-| `DEPICTIO_DASH_SERVICE_PORT` | `5080` | - |
-| `DEPICTIO_DASH_EXTERNAL_HOST` | `localhost` | - |
-| `DEPICTIO_DASH_EXTERNAL_PORT` | `5080` | - |
-| `DEPICTIO_DASH_EXTERNAL_PROTOCOL` | `http` | - |
-| `DEPICTIO_DASH_PUBLIC_URL` | - | - |
-| `DEPICTIO_DASH_EXTERNAL_SERVICE` | `false` | - |
-| `DEPICTIO_DASH_HOST` | `0.0.0.0` | - |
-| `DEPICTIO_DASH_WORKERS` | `4` | - |
-| `DEPICTIO_DASH_DEBUG` | `true` | - |
-| `DEPICTIO_DASH_AUTO_GENERATE_FIGURES` | `false` | Enable automatic figure generation in UI mode |
+| `DEPICTIO_VIEWER_SERVICE_NAME` | `depictio-viewer` | - |
+| `DEPICTIO_VIEWER_SERVICE_PORT` | `5080` | - |
+| `DEPICTIO_VIEWER_EXTERNAL_HOST` | `localhost` | - |
+| `DEPICTIO_VIEWER_EXTERNAL_PORT` | `5080` | - |
+| `DEPICTIO_VIEWER_EXTERNAL_PROTOCOL` | `http` | - |
+| `DEPICTIO_VIEWER_PUBLIC_URL` | - | - |
+| `DEPICTIO_VIEWER_EXTERNAL_SERVICE` | `false` | - |
+| `DEPICTIO_VIEWER_HOST` | `0.0.0.0` | - |
 
 ---
 

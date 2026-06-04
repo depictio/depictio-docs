@@ -91,7 +91,7 @@ Depictio is built on a state-of-the-art microservices architecture combining mod
 
     ---
 
-    Plotly Dash (React-based) interactive interface with Mantine UI components
+    React + Vite + Mantine interactive interface
 
 - :material-server:{ .fastapi } __Asynchronous Backend__
 
