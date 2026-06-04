@@ -16,7 +16,7 @@ hide:
     The 0.13.x patch series tightened the React data-fetch + bundled-seed
     paths in preparation for that cutover.
 
-## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)** (upcoming)
+## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)**
 
 !!! success "Stable Major Release — React sole frontend, first 1.x stable"
 
@@ -31,7 +31,7 @@ ghcr.io/depictio/depictio:1.0.0
 
 ---
 
-## **[v1.0.0-b1](https://github.com/depictio/depictio/releases/tag/v1.0.0-b1)** (upcoming)
+## **[v1.0.0-b1](https://github.com/depictio/depictio/releases/tag/v1.0.0-b1)**
 
 !!! warning "Beta Release — URL graduation + security hardening"
 
