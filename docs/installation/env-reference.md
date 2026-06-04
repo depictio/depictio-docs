@@ -94,9 +94,6 @@ Base class for service configurations with internal/external URL handling.
 | `DEPICTIO_VIEWER_PUBLIC_URL` | - | - |
 | `DEPICTIO_VIEWER_EXTERNAL_SERVICE` | `false` | - |
 | `DEPICTIO_VIEWER_HOST` | `0.0.0.0` | - |
-| `DEPICTIO_VIEWER_WORKERS` | `4` | Number of worker processes |
-| `DEPICTIO_VIEWER_DEBUG` | `true` | Enable debug mode with hot reload |
-| `DEPICTIO_VIEWER_AUTO_GENERATE_FIGURES` | `false` | Enable automatic figure generation in UI mode |
 
 ---
 
