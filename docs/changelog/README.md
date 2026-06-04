@@ -9,11 +9,60 @@ hide:
 # Changelog
 
 !!! info "React viewer becomes the default UI in v0.14.0"
-    The Dash frontend is in its final stable cycle. From **v0.14.0** the React
+    The Dash frontend was removed in **v0.13.12**. From **v0.14.0** the React
     viewer (currently at `/*-beta` paths) takes over the canonical URLs
-    (`/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`),
-    and the Dash editor is removed. The 0.13.x patch series below tightened
-    the React data-fetch + bundled-seed paths in preparation for that cutover.
+    (`/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`).
+    The 0.13.x patch series tightened the React data-fetch + bundled-seed
+    paths in preparation for that cutover.
+
+## **[v0.13.12](https://github.com/depictio/depictio/releases/tag/v0.13.12)** (June 4, 2026)
+
+!!! success "Stable patch — Dash removal, security hardening, cross-DC filter correctness"
+
+* **🔒** **Security hardening (CRITICAL + HIGH)** — removes `initial_users.yaml` (admin credentials are now env-driven via `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD`); MinIO root password becomes `SecretStr` with a ≥16-char validator and no default; CORS `allow_origins=["*"]` + `allow_credentials=True` replaced by an env-configured allowlist; JWT verification now decodes and validates the RS256/RS512 signature (plus `exp`) before hitting MongoDB, closing the `alg=none` / alg-confusion holes; `/register` can no longer set `is_admin`; `/import-project-zip` requires a real authenticated user and gains a zip-slip guard; IDOR file-delete predicate now branches on `current_user.is_admin`; JBrowse iframe loses `allow-same-origin`; OAuth callback is guarded against open-redirect; Helm moves MinIO creds out of ConfigMap (was kubectl-describe-readable), pins `mongo:8.0.5` + a fixed MinIO release, and adds `runAsNonRoot` + `drop ALL` capabilities; nginx viewer adds CSP, `Permissions-Policy`, HSTS, and `client_max_body_size`.
+* **🔒** **TLS verification on S3 clients** — replaces all `verify=False` boto3 clients with the `settings.minio.verify_tls` flag.
+* **🔒** **Reference dashboards default to `is_public=False`** — removes the per-restart forced flip back to public.
+* **♻️** **Dash frontend removed** — `depictio/dash/` is deleted; `DashConfig` renamed to `ViewerConfig`, env prefix `DEPICTIO_DASH_` → `DEPICTIO_VIEWER_`; new per-service Dockerfiles (`Dockerfile.api`, `Dockerfile.worker`, `Dockerfile.viewer`) and a matching nginx SPA config are scaffolded for the split-image architecture.
+* **🐛** **Cross-DC link filter join-column resolution** — `extend_filters_via_links` was using the *user's filter column* (`habitat`) as the fallback target column instead of the link's join column (`sample_id`). `apply_runtime_filters` silently dropped any filter naming a column absent from the target DC, so every row was returned and the component never refreshed.
+
+---
+
+## **[v0.13.11](https://github.com/depictio/depictio/releases/tag/v0.13.11)** (May 29, 2026)
+
+!!! success "Stable patch — cross-DC filter target column fix"
+
+* **🐛** **Cross-DC link filter `target_column=None`** — `extend_filters_via_links` used `dict.get("target_field", source_column)` which returns the stored value even when it is `None`, so the `source_column` default never fired for direct-resolver links (where `target_field: null` is common). `target_column` collapsed to `None` and propagated into the synthetic `link_filter` as `metadata.column_name=None`. On `/advanced_viz/data` this caused `pl.col(None)` → 500; on `/render_figure` / `/render_table` the None-column synthetic was silently dropped, leaving only the original filter which `apply_runtime_filters` then skipped (column absent from target DC → every row returned). Fixed with an explicit `or`-chain fallback and an additional guard in `/advanced_viz/data`.
+
+---
+
+## **[v0.13.10](https://github.com/depictio/depictio/releases/tag/v0.13.10)** (May 29, 2026)
+
+!!! success "Stable patch — builder UX: viz suggestions, text-step skip, screenshot regen"
+
+* **🐛** **Viz suggestion engine** — the drop modal showed nothing for rarefaction, sankey, sunburst, alpha-diversity, and taxonomy-heatmap source files; the post-create DC card emitted a 13-viz "suggestion soup" for every file. Root causes: no producer fingerprints for those file shapes (column-name path returned ∅) and `suggest_viz_kinds` only checked dtype compatibility so any Numeric+String DC matched every viz role. Added 4 new producers (`taxonomy_levels_long`, `rarefaction_iter_long`, `alpha_diversity_wide`, `taxonomy_abundance_long`), renamed 12 `*_canonical_table` producers to `*_role_table`, and rewrote `suggest_viz_kinds` to require a column matching the role's alias set *and* dtype.
+* **🐛** **Text component creation stuck on "Type" step** — `StepType` called `setStep(1)` for every type, but step 1 (Data Source) is hidden for text components, leaving the user visually on step 0 with the internal counter at 1. Now jumps directly to step 2 (Configuration) for text.
+* **🐛** **Screenshot not regenerated after Save** — the builder's Save handler skipped the screenshot enqueue when `editMode=false`, so edits made in view mode (code mode, etc.) never produced an updated thumbnail. Now enqueues regardless of edit mode.
+
+---
+
+## **[v0.13.9](https://github.com/depictio/depictio/releases/tag/v0.13.9)** (May 28, 2026)
+
+!!! success "Stable patch — admin bypass for public/demo-mode write gates"
+
+* **🐛** **Admin locked out of their own deployment in public/demo mode** — project creation, CLI token creation, and CLI agent-config generation were hard-disabled for *everyone* in public/demo deployments, including the logged-in admin. The gate is meant to keep anonymous/temporary visitors from seeding the instance. Each gate is now `is_public_mode AND NOT current_user.is_admin`; the React and Dash frontends mirror the change and update tooltip copy accordingly.
+
+---
+
+## **[v0.13.8](https://github.com/depictio/depictio/releases/tag/v0.13.8)** (May 28, 2026)
+
+!!! success "Stable patch — React project import fix + screenshot ownership + Helm ingress"
+
+* **🐛** **React project import 404** — the React `importProjectZip` client pointed at `/projects/import` (non-existent) instead of the real backend route `/migrate/import-project-zip`. Import modal warning removed.
+* **🐛** **Per-instance creation timestamps all identical** — bare class-level `datetime.now()` defaults across `Aggregation`, `File`, `Project`, and `Workflow` models were evaluated once at module-import time. Replaced with `Field(default_factory=datetime.now)`.
+* **🐛** **Screenshots denied on duplicated dashboards** — `check_dashboard_owner_permission_sync` only consulted the *project* owners; dashboard duplication writes the new owner into `dashboard.permissions.owners` while keeping `project_id` pointing at the original project. Every screenshot task on a duplicated dashboard was rejected with "user is not owner of dashboard". Ownership check now consults dashboard-level owners first, falls back to project owners for seeded dashboards.
+* **🚀** **Helm: dedicated ingress for MinIO and backend API** — separate `Ingress` resources for MinIO and the backend API, with permission-based auth annotations and Serve-specific ingress values. Base nginx annotations are always rendered; `allow-same-origin` removed from the JBrowse sandbox.
+
+---
 
 ## **[v0.13.7](https://github.com/depictio/depictio/releases/tag/v0.13.7)** (May 22, 2026)
 
