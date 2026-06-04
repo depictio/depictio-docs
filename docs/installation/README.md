@@ -15,8 +15,8 @@ curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose
 ```bash title="2 — Create .env"
 cat > .env << EOF
 DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
-DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=$(openssl rand -base64 24)
-DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 24)
+DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=changeme
+DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 EOF
 ```
 

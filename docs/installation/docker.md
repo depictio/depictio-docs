@@ -15,11 +15,14 @@ curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose
 ```bash
 cat > .env << EOF
 DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
-DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=$(openssl rand -base64 24)
-DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 24)
+DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=changeme
+DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 EOF
-cat .env  # note down the generated passwords
+cat .env  # note down the MinIO password
 ```
+
+!!! warning "Change before exposing to the network"
+    `changeme` is fine for local use. Set a real password for any shared or internet-facing deployment.
 
 ### Step 3 — Start
 

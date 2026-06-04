@@ -38,7 +38,7 @@ DEPICTIO_MINIO_ROOT_PASSWORD=change-me-strong-password-here
 
 !!! warning "Password strength"
 
-    `DEPICTIO_MINIO_ROOT_PASSWORD` must be **≥ 16 characters**. The server enforces this at startup and will refuse to start with a short or well-known default value.
+    `DEPICTIO_MINIO_ROOT_PASSWORD` must be **≥ 8 characters**. The server enforces this at startup and will refuse to start with a short or well-known default value.
 
 ## Advanced Configuration
 
@@ -96,7 +96,7 @@ On first boot, Depictio seeds an initial admin account using two **required** en
 | Variable | Description |
 |---|---|
 | `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | Email address for the initial admin account (required) |
-| `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` | Password for the initial admin account — must be ≥ 16 characters; the server **refuses to start** if the variable is absent or the value is too short or matches a known-default |
+| `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` | Password for the initial admin account — must be ≥ 8 characters; the server **refuses to start** if the variable is absent or the value is too short or matches a known-default |
 
 **Minimal Docker Compose snippet:**
 

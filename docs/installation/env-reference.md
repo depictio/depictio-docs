@@ -18,8 +18,9 @@ For most deployments, you only need to configure a few variables. See the [Quick
 
 ```bash
 # Minimal required configuration
-DEPICTIO_MINIO_ROOT_USER=minio
-DEPICTIO_MINIO_ROOT_PASSWORD=minio123
+DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
+DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=changeme
+DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 ```
 
 !!! tip "Complete Environment File"
@@ -135,7 +136,7 @@ S3 configuration inheriting service URL management.
 | `DEPICTIO_MINIO_PUBLIC_URL` | - | - |
 | `DEPICTIO_MINIO_EXTERNAL_SERVICE` | `false` | - |
 | `DEPICTIO_MINIO_ROOT_USER` | `minio` | - |
-| `DEPICTIO_MINIO_ROOT_PASSWORD` | _(required, ≥16 chars)_ | MinIO root secret key. REQUIRED in server context — must not match a known-default value. |
+| `DEPICTIO_MINIO_ROOT_PASSWORD` | _(required, ≥8 chars)_ | MinIO root secret key. REQUIRED in server context — must not match a known-default value. |
 | `DEPICTIO_MINIO_BUCKET` | `depictio-bucket` | - |
 | `DEPICTIO_MINIO_VERIFY_TLS` | `true` | Verify TLS certificates when connecting to S3/MinIO. Set to `false` only for local dev with self-signed certificates. |
 
@@ -178,7 +179,7 @@ First-boot admin seeding — replaces the legacy `initial_users.yaml`. Idempoten
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | _(required)_ | Email address for the initial admin. REQUIRED when no admin exists in MongoDB. |
-| `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` | _(required, ≥16 chars)_ | Password for the bootstrap admin. Must not match any known-default value. |
+| `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` | _(required, ≥8 chars)_ | Password for the bootstrap admin. `changeme` is accepted for local dev. |
 | `DEPICTIO_BOOTSTRAP_SEED_TEST_USER` | `false` | Seed a non-admin test user for CI/Cypress fixtures. Leave `false` in production. |
 | `DEPICTIO_BOOTSTRAP_TEST_USER_EMAIL` | `test_user@example.com` | Email for the CI test user (only when `seed_test_user=true`). |
 | `DEPICTIO_BOOTSTRAP_TEST_USER_PASSWORD` | `test_pwd` | Password for the CI test user (only when `seed_test_user=true`). |
