@@ -254,10 +254,6 @@ hide:
   <div class="container text-center">
     <h2>Powered by Modern Technologies</h2>
     <div class="tech-badges">
-      <a href="https://dash.plotly.com/" target="_blank" rel="noopener" class="tech-badge plotly">
-        <img src="https://images.plot.ly/logo/new-branding/plotly-logomark.png" alt="Plotly">
-        <span>Dash</span>
-      </a>
       <a href="https://react.dev/" target="_blank" rel="noopener" class="tech-badge react">
         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
         <span>React</span>

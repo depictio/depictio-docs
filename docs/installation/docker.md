@@ -123,7 +123,7 @@ All default ports:
 
 | Service | Default port |
 |---------|-------------|
-| Frontend (Dash) | 5080 |
+| Frontend (React viewer) | 5080 |
 | Backend API | 8058 |
 | MongoDB | 27018 |
 | MinIO API | 9000 |

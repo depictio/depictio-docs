@@ -585,7 +585,7 @@ Embeds a specific plot from a MultiQC quality control report. Both `selected_mod
 ```
 
 !!! warning "Both fields are required"
-    Omitting either `selected_module` or `selected_plot` will fail validation. Unlike the Dash runtime (which can auto-select), YAML-defined components must be explicit about which plot to display.
+    Omitting either `selected_module` or `selected_plot` will fail validation. YAML-defined components must be explicit about which plot to display.
 
 ### Map Component
 

@@ -32,14 +32,14 @@ All pods should reach `Running` status: backend, frontend, mongo, minio, redis, 
 By default services are `ClusterIP`. Use port-forwarding to access locally:
 
 ```bash
-kubectl port-forward -n depictio service/depictio-frontend 5080:5080
+kubectl port-forward -n depictio service/depictio-viewer 5080:5080
 ```
 
 Then open <http://localhost:5080>.
 
 | Service | Port |
 |---------|------|
-| Frontend (Dash) | 5080 |
+| Frontend (React viewer) | 5080 |
 | Backend API | 8058 |
 | MinIO Console | 9001 |
 

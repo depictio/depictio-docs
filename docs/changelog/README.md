@@ -18,7 +18,7 @@ hide:
 
 ## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)**
 
-!!! success "Stable Major Release — React sole frontend, first 1.x stable"
+!!! success "Stable Major Release — React sole frontend, Dash → React migration complete"
 
 ```bash
 ghcr.io/depictio/depictio:1.0.0
@@ -26,19 +26,19 @@ ghcr.io/depictio/depictio:1.0.0
 
 * **✨** **URL graduation** — `*-beta` paths retired; React SPA serves canonical `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, `/profile`, `/admin`, `/cli-agents`, `/about`.
 * **✨** **Split-image production** — `depictio-api`, `depictio-worker`, `depictio-viewer` published individually; monolithic image kept for compatibility.
-* **🚀** **Component parity** — all Dash editor affordances available in the React editor.
 * **🚀** **Helm chart 1.0** — `image.tag` defaults to `1.x`; viewer runs in its own nginx container.
 
 ---
 
 ## **[v1.0.0-b1](https://github.com/depictio/depictio/releases/tag/v1.0.0-b1)**
 
-!!! warning "Beta Release — URL graduation + security hardening"
+!!! warning "Beta Release — URL graduation + Dash removal + security hardening"
 
 ```bash
 ghcr.io/depictio/depictio:1.0.0-b1
 ```
 
+* **♻️** **Dash removed** — `depictio/dash/` deleted; `DashConfig` → `ViewerConfig`; `DEPICTIO_DASH_` → `DEPICTIO_VIEWER_`; per-service Dockerfiles (`Dockerfile.api`, `Dockerfile.worker`, `Dockerfile.viewer`) scaffolded.
 * **✨** **`/*-beta` → canonical redirect** — all `*-beta` paths issue HTTP 301s; existing bookmarks continue to work.
 * **✨** **React on canonical URLs** — FastAPI mounts SPA at `/dashboards`, `/dashboard/{id}`, etc.; Vite base path and nginx fallback updated.
 * **🔒** **Auth bootstrap from env** — `initial_users.yaml` removed; admin seeded via `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` (idempotent; fail-fast if absent and no admin in DB).
@@ -51,9 +51,8 @@ ghcr.io/depictio/depictio:1.0.0-b1
 
 ## **[v0.13.12](https://github.com/depictio/depictio/releases/tag/v0.13.12)** (June 4, 2026)
 
-!!! success "Stable patch — Dash removal + cross-DC filter fix"
+!!! success "Stable patch — cross-DC filter fix"
 
-* **♻️** **Dash removed** — `depictio/dash/` deleted; `DashConfig` → `ViewerConfig`; `DEPICTIO_DASH_` → `DEPICTIO_VIEWER_`; per-service Dockerfiles scaffolded.
 * **🐛** **Cross-DC filter join column** — link resolver fell back to the user's filter column instead of the link's join column; target DC silently returned every row.
 
 ---
