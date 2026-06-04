@@ -16,6 +16,45 @@ hide:
     The 0.13.x patch series tightened the React data-fetch + bundled-seed
     paths in preparation for that cutover.
 
+## **v1.0.0** *(upcoming)*
+
+!!! success "Stable Major Release — React sole frontend, Dash → React migration complete"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.0.0
+```
+
+### **♻️ Migration**
+
+* **Dash removed** — `depictio/dash/` deleted; `DashConfig` → `ViewerConfig`; `DEPICTIO_DASH_` → `DEPICTIO_VIEWER_`; per-service Dockerfiles scaffolded.
+
+### **✨ New Features**
+
+* **URL graduation** — `*-beta` paths retired; React SPA serves canonical `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, `/profile`, `/admin`, `/cli-agents`, `/about`.
+* **Split-image production** — `depictio-api`, `depictio-worker`, `depictio-viewer` published individually.
+* **Tool→viz catalog** — module-granular bioinformatics catalog (nf-core / bio.tools / EDAM ontology).
+
+### **🔒 Security**
+
+* **Auth bootstrap from env** — `initial_users.yaml` removed; admin seeded via `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` (idempotent).
+* **Secrets hardened** — MinIO root password ≥8 chars, no default; CORS allowlist replaces `allow_origins=["*"]`; JWT verifies RS256/RS512 + `exp` before MongoDB; `/register` cannot set `is_admin`; IDOR file-delete fixed; JBrowse `allow-same-origin` removed; nginx CSP/HSTS/Permissions-Policy added.
+* **Password constraints** — min length 8; `changeme` allowed for bootstrap admin (not MinIO); single-user mode skips all enforcement.
+
+### **🚀 Improvements**
+
+* **Helm chart 1.0** — `image.tag` defaults to `1.x`; viewer runs nginx container; no default MinIO credentials.
+* **Rate limiter** — Redis-backed per-IP fixed window; uses `X-Real-IP` in k8s.
+* **Playwright e2e** — CI covers auth + dashboards-management slice in parallel.
+
+### **🐛 Bug Fixes**
+
+* Screenshot debounce wrong path; Sign In hidden in public mode.
+* Demo mode: public reference dashboards restored; temp users kept for the full session.
+
+---
+
 ## **[v1.0.0-b4](https://github.com/depictio/depictio/releases/tag/v1.0.0-b4)**
 
 !!! warning "Beta Release — demo fixes + Playwright e2e"
@@ -71,27 +110,6 @@ ghcr.io/depictio/depictio:1.0.0-b2
 * **Password constraints** — min length 16 → 8; `changeme` allowed for bootstrap admin (not MinIO); single-user mode skips all enforcement (#786).
 * **Screenshot** — fix debounce wrong path; hide Sign In button in public mode (#784).
 * **React routes** — remove `-beta` suffix from route definitions (post-Dash cutover) (#785).
-
----
-
-## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)**
-
-!!! success "Stable Major Release — React sole frontend, Dash → React migration complete"
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:1.0.0
-```
-
-### **✨ New Features**
-
-* **URL graduation** — `*-beta` paths retired; React SPA serves canonical `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, `/profile`, `/admin`, `/cli-agents`, `/about`.
-* **Split-image production** — `depictio-api`, `depictio-worker`, `depictio-viewer` published individually; monolithic image kept for compatibility.
-
-### **🚀 Improvements**
-
-* **Helm chart 1.0** — `image.tag` defaults to `1.x`; viewer runs in its own nginx container.
 
 ---
 
