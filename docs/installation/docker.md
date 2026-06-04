@@ -2,8 +2,6 @@
 
 ## :material-rocket-launch: Quick Start
 
-Up and running in two commands — no git clone, no configuration file needed.
-
 **Prerequisites**: [Docker](https://docs.docker.com/get-docker/) 20.10+ and [Docker Compose](https://docs.docker.com/compose/install/) V2.
 
 ### Step 1 — Download the compose file
@@ -12,7 +10,23 @@ Up and running in two commands — no git clone, no configuration file needed.
 curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml
 ```
 
-### Step 2 — Start
+### Step 2 — Set credentials
+
+Create a `.env` file in the same directory with your admin account and MinIO password:
+
+```bash
+# Admin account — created on first boot, idempotent afterwards
+DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
+DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=change-me-strong-password-here
+
+# MinIO root password — must be ≥ 16 characters
+DEPICTIO_MINIO_ROOT_PASSWORD=change-me-strong-password-here
+```
+
+!!! warning "Required before first start"
+    The server refuses to start if `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` or `DEPICTIO_MINIO_ROOT_PASSWORD` are absent or too short (< 16 chars).
+
+### Step 3 — Start
 
 ```bash
 docker compose up -d
@@ -20,17 +34,16 @@ docker compose up -d
 
 All services start automatically: MongoDB, Redis, MinIO, backend, viewer, and Celery worker.
 
-### Step 3 — Open
+### Step 4 — Open
 
 | Service | URL | Credentials |
 |---------|-----|-------------|
 | Depictio | <http://localhost:5080> | _(single-user mode, no login)_ |
 | API docs | <http://localhost:8058/docs> | — |
-| MinIO console | <http://localhost:9001> | `minio` / see `.env` |
+| MinIO console | <http://localhost:9001> | `minio` / your `.env` password |
 
 !!! success "That's it!"
-    Depictio starts in **single-user mode** by default — no account or login required.
-    Set MinIO credentials in `.env` before exposing to the network (see [Custom credentials](#custom-credentials-env-file) below).
+    Depictio starts in **single-user mode** by default — no login required to use the UI.
 
 ---
 

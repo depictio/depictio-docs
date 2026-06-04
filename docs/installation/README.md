@@ -8,15 +8,21 @@ description: "Get started with Depictio by choosing the installation method that
 
 ## :material-rocket-launch: Quickstart
 
-No git clone, no configuration file.
-
-```bash title="Terminal" linenums="1"
-curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml # (1)!
-docker compose up -d # (2)!
+```bash title="1 — Download"
+curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml
 ```
 
-1.  :material-download: Downloads the single compose file — nothing else needed locally.
-2.  :material-play-circle: Starts **all six services** in the background: MongoDB, Redis, MinIO, backend API, viewer, and Celery worker.
+```bash title="2 — Set credentials (.env)"
+cat > .env << 'EOF'
+DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
+DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=change-me-strong-password-here
+DEPICTIO_MINIO_ROOT_PASSWORD=change-me-strong-password-here
+EOF
+```
+
+```bash title="3 — Start"
+docker compose up -d
+```
 
 !!! success "Open Depictio"
 
@@ -24,7 +30,7 @@ docker compose up -d # (2)!
     |-|---------|-----|-------|
     | :material-view-dashboard: | **Depictio** | [localhost:5080](http://localhost:5080) | Single-user mode — no login required |
     | :material-api: | **API docs** | [localhost:8058/docs](http://localhost:8058/docs) | Interactive OpenAPI interface |
-    | :simple-minio: | **MinIO console** | [localhost:9001](http://localhost:9001) | `minio` / see `.env` |
+    | :simple-minio: | **MinIO console** | [localhost:9001](http://localhost:9001) | `minio` / your `.env` password |
 
 <div class="grid cards" markdown>
 
