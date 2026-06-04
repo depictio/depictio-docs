@@ -10,21 +10,7 @@
 curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml
 ```
 
-### Step 2 — Create your `.env`
-
-```bash
-cat > .env << EOF
-DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
-DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=changeme
-DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
-EOF
-cat .env  # note down the MinIO password
-```
-
-!!! warning "Change before exposing to the network"
-    `changeme` is fine for local use. Set a real password for any shared or internet-facing deployment.
-
-### Step 3 — Start
+### Step 2 — Start
 
 ```bash
 docker compose up -d
@@ -32,16 +18,19 @@ docker compose up -d
 
 All services start automatically: MongoDB, Redis, MinIO, backend, viewer, and Celery worker.
 
-### Step 4 — Open
+### Step 3 — Open
 
 | Service | URL | Credentials |
 |---------|-----|-------------|
 | Depictio | <http://localhost:5080> | _(single-user mode, no login)_ |
 | API docs | <http://localhost:8058/docs> | — |
-| MinIO console | <http://localhost:9001> | `minio` / your `.env` password |
+| MinIO console | <http://localhost:9001> | `minio` / `minio123` |
 
 !!! success "That's it!"
-    Depictio starts in **single-user mode** by default — no login required to use the UI.
+    Depictio starts in **single-user mode** by default — no login, no configuration needed.
+
+!!! warning "Exposing to the network?"
+    Single-user mode disables credential enforcement. Before sharing or deploying beyond localhost, switch to multi-user mode and set strong credentials — see [Custom credentials](#custom-credentials-env-file) below.
 
 ---
 
@@ -59,13 +48,23 @@ Depictio ships in **single-user mode** by default: no login, no accounts, one ad
 | **Multi-user** | `false` | `false` | Team deployment with login |
 | **Public (read-only)** | `false` | `true` | Shared dashboards, no auth required |
 
-Switch to multi-user mode in your `.env`:
+Switch to multi-user mode and set strong credentials in your `.env`:
 
 ```bash
 DEPICTIO_AUTH_SINGLE_USER_MODE=false
+
+# Required in multi-user mode — set on first boot
+DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
+DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=changeme
+
+# MinIO password must be ≥ 8 chars and not a known default
+DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 ```
 
 Users can then register accounts and log in via the Depictio UI.
+
+!!! info "Bootstrap is idempotent"
+    The admin account is created only when no non-anonymous admin exists in MongoDB. Changing the bootstrap vars after first boot has no effect.
 
 !!! warning "Expose to the network?"
     If making Depictio accessible beyond `localhost`, disable single-user mode and change the MinIO credentials.

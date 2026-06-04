@@ -12,15 +12,7 @@ description: "Get started with Depictio by choosing the installation method that
 curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml
 ```
 
-```bash title="2 — Create .env"
-cat > .env << EOF
-DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
-DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=changeme
-DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
-EOF
-```
-
-```bash title="3 — Start"
+```bash title="2 — Start"
 docker compose up -d
 ```
 
@@ -30,7 +22,7 @@ docker compose up -d
     |-|---------|-----|-------|
     | :material-view-dashboard: | **Depictio** | [localhost:5080](http://localhost:5080) | Single-user mode — no login required |
     | :material-api: | **API docs** | [localhost:8058/docs](http://localhost:8058/docs) | Interactive OpenAPI interface |
-    | :simple-minio: | **MinIO console** | [localhost:9001](http://localhost:9001) | `minio` / your `.env` password |
+    | :simple-minio: | **MinIO console** | [localhost:9001](http://localhost:9001) | `minio` / `minio123` |
 
 <div class="grid cards" markdown>
 
