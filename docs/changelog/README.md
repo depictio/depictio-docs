@@ -16,6 +16,64 @@ hide:
     The 0.13.x patch series tightened the React data-fetch + bundled-seed
     paths in preparation for that cutover.
 
+## **[v1.0.0-b4](https://github.com/depictio/depictio/releases/tag/v1.0.0-b4)**
+
+!!! warning "Beta Release — demo fixes + Playwright e2e"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.0.0-b4
+```
+
+### **🐛 Bug Fixes**
+
+* **Demo mode** — restore public reference dashboards; keep temp users alive for the full session (#789).
+
+### **🧪 Testing**
+
+* **Playwright e2e** — parallel React frontend tests covering auth + dashboards-management slice; CI runs frontend + backend suites concurrently (#782).
+
+---
+
+## **[v1.0.0-b3](https://github.com/depictio/depictio/releases/tag/v1.0.0-b3)**
+
+!!! warning "Beta Release — bioinformatics catalog + rate-limit fix"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.0.0-b3
+```
+
+### **✨ New Features**
+
+* **Tool→viz catalog** — module-granular bioinformatics catalog (nf-core / bio.tools / EDAM ontology) (#783).
+
+### **🐛 Bug Fixes**
+
+* **Rate limiter** — use `X-Real-IP` instead of TCP source so k8s nginx pod IP doesn't collapse all users into one bucket (#787).
+
+---
+
+## **[v1.0.0-b2](https://github.com/depictio/depictio/releases/tag/v1.0.0-b2)**
+
+!!! warning "Beta Release — password relaxation + screenshot fix"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.0.0-b2
+```
+
+### **🐛 Bug Fixes**
+
+* **Password constraints** — min length 16 → 8; `changeme` allowed for bootstrap admin (not MinIO); single-user mode skips all enforcement (#786).
+* **Screenshot** — fix debounce wrong path; hide Sign In button in public mode (#784).
+* **React routes** — remove `-beta` suffix from route definitions (post-Dash cutover) (#785).
+
+---
+
 ## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)**
 
 !!! success "Stable Major Release — React sole frontend, Dash → React migration complete"
