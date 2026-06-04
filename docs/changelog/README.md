@@ -181,13 +181,11 @@ ghcr.io/depictio/depictio:0.13.1
     a new component type providing ready-to-use visualizations for standard
     bioinformatics outputs.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.13.0
 ```
 
-### **✨ New Features**
+**✨ New Features**
 
 * **Advanced viz renderers (React beta version only)** — ComplexHeatmap,
   UpSet (vendored `plotly-upset`), GSEA / enrichment dot plot, rarefaction,
@@ -197,7 +195,7 @@ ghcr.io/depictio/depictio:0.13.0
   card layouts (e.g. `box_plot`).
 * **Table DC lifecycle endpoints (API)** — append / replace / clear.
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Reset action (React beta version only)** — moved to filters panel header.
 * **Auto-screenshot pipeline** — switched to React SPA, ~2× faster.
@@ -210,19 +208,17 @@ ghcr.io/depictio/depictio:0.13.0
     Patch focused on Figure Code Mode polish and tighter cross-filter
     behaviour around joined / MultiQC data collections.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.12.2
 ```
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Figure Code Mode (React beta version only)** — collapsible help with module table, resizable editor, cross-filter preview under the chart, ownership-gated.
 * **Joined DC awareness (React beta version only)** — joined DCs marked in builder dropdown + info card; filter-source badge on cross-filtered components.
 * **availableValues (React beta version only)** — intersect MultiQC samples with table DCs (read-pair suffix matching), always include filter source.
 
-### **🐛 Fixes**
+**🐛 Fixes**
 
 * **Advanced viz types (React beta version only)** — heatmap / scatter_matrix removed, unsupported `px` kwargs filtered, no silent downgrade to scatter.
 * **Cross-filtering scope (React beta version only)** — restricted to scatter / scatter_3d.
@@ -238,13 +234,11 @@ ghcr.io/depictio/depictio:0.12.2
     onboarding walkthrough in the React viewer, and a Playwright-driven
     pipeline for capturing documentation screenshots.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.12.1
 ```
 
-### **✨ New Features**
+**✨ New Features**
 
 * **Text component + notes footer (React beta version only)** — new
   `text` component type with a Tiptap-backed rich-text editor, and a
@@ -256,12 +250,12 @@ ghcr.io/depictio/depictio:0.12.1
   surface (projects / builder / public instance). The public tour walks
   visitors through the duplicate-to-temp-session flow up front.
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Dashboard ownership gating** — edit affordances in the viewer are now
   gated on the current user's ownership of the dashboard.
 
-### **🛠 Tooling**
+**🛠 Tooling**
 
 * **Playwright-driven docs screenshots** —
   `dev/playwright_debug/docs_screenshots.py` drives the React viewer at
@@ -279,13 +273,11 @@ ghcr.io/depictio/depictio:0.12.1
 !!! info "Dash → React migration timeline"
     This release ships the React viewer in Beta at `/*-beta` routes. The Dash frontend was removed in **v0.13.12**. The React viewer graduates onto the canonical URLs in **v1.0.0**, when the `*-beta` suffix paths are retired. Track contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.12.0
 ```
 
-### **✨ New Features**
+**✨ New Features**
 
 * **MultiQC DC management** — full create / append / replace / clear
   lifecycle
@@ -302,7 +294,7 @@ ghcr.io/depictio/depictio:0.12.0
   and filters across `/dashboards-beta` and `/projects-beta`; canonical
   `selected_*` keys.
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * MultiQC: disk-persistent prerender store + Celery worker rebuild, longer
   preview offload timeout, collapsed multi-line log, safer append, cache-key
@@ -318,26 +310,24 @@ ghcr.io/depictio/depictio:0.12.0
 !!! success "Stable Release"
     Patch release: viewer Docker prod build fix and dev-compose Vite HMR.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.11.2
 ```
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **Viewer Docker prod build**: `Dockerfile_depictio_uv.dockerfile` viewer-builder
   stage now produces a working bundle (`pnpm --filter depictio-viewer build`).
 * **Dev compose HMR**: viewer service in `docker-compose.dev.yaml` runs the
   Vite dev server with HMR (`pnpm --filter depictio-viewer dev`).
 
-### **📦 Packaging**
+**📦 Packaging**
 
 * `react-resizable ^3.0.5` declared as a direct dep in
   `depictio/viewer/package.json` (was a transitive that pnpm strict resolution
   refused).
 
-### **🧹 Internal**
+**🧹 Internal**
 
 * viralrecon recipes moved under the canonical `projects/` path.
 
@@ -349,13 +339,11 @@ ghcr.io/depictio/depictio:0.11.2
     Housekeeping release: stop tracking instance/runtime-only files. No
     user-facing changes.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.11.1
 ```
 
-### **🧹 Internal**
+**🧹 Internal**
 
 * Untrack `depictio/dashboards_yaml/` (instance/runtime-only).
 * Untrack AI session-handoff scratch under `depictio/viewer/`.
@@ -370,13 +358,11 @@ ghcr.io/depictio/depictio:0.11.1
     Major release: React viewer (Beta), realtime dashboard refresh, and a
     Dash 3.2 → 4.1 upgrade.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.11.0
 ```
 
-### **✨ Highlights**
+**✨ Highlights**
 
 * **React viewer (Beta)** — new Vite-built SPA at `/dashboard-beta/{id}`
   (viewer) and `/dashboard-beta-edit/{id}` (component builder), plus
@@ -395,7 +381,7 @@ ghcr.io/depictio/depictio:0.11.0
 * **Dash 3.2 → 4.1 upgrade** — `dash[async]>=4.1,<5` for a
   pattern-matching callback perf fix.
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * Demo / public mode: in-viewer banner, guided tour, and write actions
   (Create Project, Import, Upload) **disabled** rather than hidden.
@@ -404,7 +390,7 @@ ghcr.io/depictio/depictio:0.11.0
 * Filter-aware MultiQC caching with Celery prewarm; SVG re-encode + N+1
   cache fixes for MultiQC samples.
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Editor duplicate-component visibility and ref staleness.
 * Heatmap recipe: None-value handling, date serialization, and
@@ -420,13 +406,11 @@ ghcr.io/depictio/depictio:0.11.0
     Patch release: manual workflow for adding additional OCI tags to the
     published Helm chart image.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.10.3
 ```
 
-### **🔧 CI / Tooling**
+**🔧 CI / Tooling**
 
 * **OCI tag workflow**: new `workflow_dispatch` GitHub Actions workflow
   to add additional tags to the already-published Helm chart OCI image
@@ -441,19 +425,17 @@ ghcr.io/depictio/depictio:0.10.3
     Patch release: pod rollouts on config changes via Helm checksum
     annotations, and re-enable the CLI Agents button for single-user mode.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.10.2
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Config-checksum annotations on Helm deployments**: Backend and frontend
   pod templates carry a `checksum/config` annotation derived from rendered
   ConfigMaps, so `helm upgrade` rolls pods automatically on config changes.
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **CLI Agents button enabled in single-user mode**: Single-user mode has
   a real authenticated user, so CLI agent token management should be
@@ -467,13 +449,11 @@ ghcr.io/depictio/depictio:0.10.2
     Adds the nf-core/viralrecon template with a four-tab analysis dashboard
     and recipe enhancements for per-sample inputs.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.10.1
 ```
 
-### **✨ Highlights**
+**✨ Highlights**
 
 * **nf-core/viralrecon template (3.0.0)**: SARS-CoV-2 / viral genome
   surveillance pipeline support. Ships eight aggregated data collections
@@ -492,13 +472,11 @@ ghcr.io/depictio/depictio:0.10.1
     Major release: project template system, Python recipe pipeline, the
     nf-core/ampliseq template, and dedicated ingress for MinIO and backend.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.10.0
 ```
 
-### **✨ Highlights**
+**✨ Highlights**
 
 * **Project template system** with `template_origin` metadata, template
   variables (e.g. `DATA_ROOT`, `METADATA_FILE`), and an automatic dashboard
@@ -513,12 +491,12 @@ ghcr.io/depictio/depictio:0.10.0
   `values-serve.yaml` overlay used by the [hosted depictio instance on
   SciLifeLab Serve](https://serve.scilifelab.se/). See [Kubernetes installation](../installation/kubernetes.md#ingress).
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Cross-DC link filtering for figures, MultiQC, and heatmap components.
 * `/projects` 500 error from ObjectId serialization in template metadata.
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * Recipe path resolution for cross-DC dependencies; fallback import for
   `depictio.recipes` from source tree.
@@ -532,13 +510,11 @@ ghcr.io/depictio/depictio:0.10.0
     Adds project migrate (cross-instance export/import) and cascade delete
     on project deletion.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.9.0
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Project migrate command**: `depictio-cli migrate` exports a project as
   a ZIP bundle (config, dashboards, embedded workflows/DCs, S3 objects)
@@ -550,14 +526,14 @@ ghcr.io/depictio/depictio:0.9.0
   and S3 objects, preventing orphaned storage. See
   [project deletion](../usage/projects/guide.md#project-deletion).
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * `depictio-cli migrate` invokes via `app.callback()` (no spurious sub-prompt).
 * Skip S3 copy for self-migration.
 * Datetime JSON serialization in export bundle.
 * Dashboard export `string vs ObjectId` `project_id` mismatch.
 
-### **📦 Packaging**
+**📦 Packaging**
 
 * Logo and Codespaces badge in CLI README for PyPI.
 
@@ -568,17 +544,15 @@ ghcr.io/depictio/depictio:0.9.0
 !!! success "Stable Release"
     Security fix: disable CLI config generation in public/demo mode to prevent S3 credential exposure.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.8.2
 ```
 
-### **🔒 Security**
+**🔒 Security**
 
 * **Disable CLI config generation in public/demo mode**: The `/cli_configs` page exposed MinIO root credentials (`root_user`, `root_password`) to any user in public/demo mode. The "Add New Configuration" button, "CLI Agents" navigation, and "Logout" button are now disabled in public/demo/single-user modes. A server-side 403 guard was added on the `POST /generate_agent_config` API endpoint.
 
-### **📦 Packaging**
+**📦 Packaging**
 
 * **Fix PyPI images**: Added depictio logo and GitHub Codespaces badge to CLI README so they render on [pypi.org/project/depictio-cli](https://pypi.org/project/depictio-cli/)
 
@@ -589,9 +563,9 @@ ghcr.io/depictio/depictio:0.8.2
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
 
-### **[v0.8.2-b1](https://github.com/depictio/depictio/releases/tag/v0.8.2-b1)** (March 4, 2026)
+## **[v0.8.2-b1](https://github.com/depictio/depictio/releases/tag/v0.8.2-b1)** (March 4, 2026)
 
-#### **🔒 Security**
+**🔒 Security**
 * Disable CLI config generation and logout in public/demo/single-user modes
 * Add server-side 403 guard on `POST /generate_agent_config` endpoint
 
@@ -602,18 +576,16 @@ ghcr.io/depictio/depictio:0.8.2
 !!! success "Stable Release"
     This release fixes the blank `/auth` page bug on fresh Docker installs caused by internal API key mismatch between containers.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.8.1
 ```
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **Fix blank `/auth` page on fresh Docker install**: Add shared `depictio_keys` volume so backend, frontend, and celery-worker containers use the same internal API key. Previously each container generated a different key (based on PID/UID), causing 403 errors on every internal API call in single-user mode.
 * **Upgrade internal API key generation**: Replace deterministic `sha256(uid+salt)` with cryptographically random `secrets.token_hex(32)` for improved security.
 
-### **📖 Documentation**
+**📖 Documentation**
 
 * Add update, backup & restore guide to Docker installation docs
 
@@ -624,27 +596,27 @@ ghcr.io/depictio/depictio:0.8.1
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
 
-### **[v0.8.1-b2](https://github.com/depictio/depictio/releases/tag/v0.8.1-b2)** (March 4, 2026)
+## **[v0.8.1-b2](https://github.com/depictio/depictio/releases/tag/v0.8.1-b2)** (March 4, 2026)
 
-#### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 * Shared `depictio_keys` Docker volume for internal API key consistency across containers
 * Upgrade key generation from deterministic hash to `secrets.token_hex(32)`
 
 ---
 
-### **[v0.8.1-b1](https://github.com/depictio/depictio/releases/tag/v0.8.1-b1)** (March 3, 2026)
+## **[v0.8.1-b1](https://github.com/depictio/depictio/releases/tag/v0.8.1-b1)** (March 3, 2026)
 
-#### **✨ Features**
+**✨ Features**
 * **Heatmap Title & Description**: Taxonomy heatmap components now support configurable `title` and `description` fields
 
-#### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 * Fix fresh install auth redirect dead-end
 * Fix random `/auth` page landing in public mode
 * Fix burger icon out of sync on single-tab dashboard sidebar collapse
 * Fix data tripling in K8s multi-worker initialization and correct Faith PD axis labeling
 * Fix table rendering consistency when heatmap title/description are updated
 
-#### **🔧 CI / Tooling**
+**🔧 CI / Tooling**
 * Add stable tag auto-update to `bump-with-helm.sh` release script
 
 ---
@@ -654,13 +626,11 @@ ghcr.io/depictio/depictio:0.8.1
 !!! success "Stable Release"
     This is a stable release consolidating all v0.8.0 beta improvements over v0.7.6.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.8.0
 ```
 
-### **✨ Highlights**
+**✨ Highlights**
 
 This release brings major new visualization and data-filtering capabilities:
 
@@ -673,7 +643,7 @@ This release brings major new visualization and data-filtering capabilities:
 * **Debug UI Toggle** — `DEPICTIO_DASH_DEBUG_UI` environment variable to control Dash debug UI visibility
 * **MultiQC General Statistics Table** — interactive DataTable from `multiqc.parquet` general stats (carried over from v0.7.5)
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Fix cross-DC filtering for figures, MultiQC, and heatmap components
 * Fix map component viewport stability — no more resets on filter/theme changes
@@ -683,7 +653,7 @@ This release brings major new visualization and data-filtering capabilities:
 * Fix screenshot timeouts — configurable settings with increased defaults
 * Fix alpha diversity chart rendering with average + error bars
 
-### **📖 Full Beta History**
+**📖 Full Beta History**
 
 For detailed per-beta changelogs, see: [v0.8.0-b1](#v080-b1-february-27-2026) through [v0.8.0-b6](#v080-b6-march-3-2026) below.
 
@@ -694,13 +664,11 @@ For detailed per-beta changelogs, see: [v0.8.0-b1](#v080-b1-february-27-2026) th
 !!! warning "Beta Release"
     This is a beta release. Use in production at your own risk.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.8.0-b6
 ```
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Fix alpha diversity chart — use average + error bars and `df_modified` pattern for code executor
 * Regenerate all JSON seeds via proper YAML import roundtrip for fresh deployments
@@ -712,13 +680,11 @@ ghcr.io/depictio/depictio:0.8.0-b6
 !!! warning "Beta Release"
     This is a beta release. Use in production at your own risk.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.8.0-b5
 ```
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Regenerate community JSON seed with map and heatmap components for fresh deployments
 
@@ -729,17 +695,15 @@ ghcr.io/depictio/depictio:0.8.0-b5
 !!! warning "Beta Release"
     This is a beta release. Use in production at your own risk.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.8.0-b4
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Ampliseq Reference Dashboard**: Add map, heatmap, and geo metadata to the nf-core/ampliseq reference dashboard showcasing all new component types
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Fix cross-DC filtering for figures, MultiQC, and heatmap components — filters now propagate correctly across linked data collections
 * Fix General Statistics table dark mode styling for header, data bars, and hover highlight
@@ -753,13 +717,11 @@ ghcr.io/depictio/depictio:0.8.0-b4
 !!! warning "Beta Release"
     This is a beta release. Use in production at your own risk.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.8.0-b3
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Multi-Metric Summary Cards**: Cards can now display multiple aggregation results — a primary hero metric plus secondary metrics (median, std_dev, min, max, etc.) rendered as compact rows below the main value
 * **Conditional Aggregation (filter_expr)**: Cards support a `filter_expr` field — a Polars expression that pre-filters data before computing aggregations (e.g., "count samples where coverage > 30x")
@@ -767,7 +729,7 @@ ghcr.io/depictio/depictio:0.8.0-b3
 * **Bioinformatics Filter Methods**: `filter_expr` expanded with window functions (`.over()`), string methods (`.str.contains()`), range checks (`.is_between()`), and group-level filtering patterns
 * **Multi-Tier MultiQC Caching**: Optimize MultiQC data loading with multi-tier caching for faster dashboard rendering
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Fix secondary metrics rendering — display in dedicated container instead of being appended to hero value
 * Fix single-metric cards missing the secondary-metrics container
@@ -779,13 +741,11 @@ ghcr.io/depictio/depictio:0.8.0-b3
 !!! warning "Beta Release"
     This is a beta release. Use in production at your own risk.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.8.0-b2
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Debug UI Toggle**: New `DEPICTIO_DASH_DEBUG_UI` environment variable to show/hide Dash debug UI independently of full dev mode. Debug UI is hidden by default in production.
 
@@ -796,13 +756,11 @@ ghcr.io/depictio/depictio:0.8.0-b2
 !!! warning "Beta Release"
     This is a beta release. Use in production at your own risk.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.8.0-b1
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Geospatial Map Component**: New interactive map component supporting scatter maps (GPS markers), density maps, and choropleth maps (colored regions from GeoJSON). Supports cross-filtering and selection propagation. No API key required (uses Plotly's built-in tile providers).
 * **Choropleth GeoJSON Support**: New `geojson` Data Collection type that loads GeoJSON from S3. Choropleth maps can reference boundaries via URL, Data Collection tag, or inline data.
@@ -810,13 +768,13 @@ ghcr.io/depictio/depictio:0.8.0-b1
 * **Table Title & Description**: Tables now support configurable `title`, `description`, `title_size` (h1/h2/h3/sm), and `title_align` (left/center/right) in both the stepper UI and YAML format.
 * **Projects Directory Reorganization**: Reference project files reorganized under `depictio/projects/` with a consistent `dashboards/` subdirectory layout for better versioning support.
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Fix map component viewport stability — viewport no longer resets on filter/theme changes
 * Fix map theme switching — promote `theme-store` to Input for reliable dark/light tile swapping
 * Fix map component stepper save support
 
-### **🔧 CI/CD**
+**🔧 CI/CD**
 
 * Fix absolute path from `pixi.lock` for CI portability
 * Fix CI `dashboard_lite.yaml` references to new `dashboards/` paths
@@ -827,8 +785,6 @@ ghcr.io/depictio/depictio:0.8.0-b1
 
 !!! success "Stable Release"
     This is a stable release consolidating all v0.7.6 beta improvements over v0.7.5.
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.7.6
@@ -843,8 +799,6 @@ No user-facing changes — version bump only to promote v0.7.6-b1 to stable.
 !!! warning "Beta Release"
     This is a beta release. Use in production at your own risk.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.7.6-b1
 ```
@@ -858,17 +812,15 @@ No user-facing changes — version bump only after v0.7.5 stable release.
 !!! success "Stable Release"
     This is a stable release consolidating all v0.7.5 beta improvements over v0.7.4.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.7.5
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **MultiQC General Statistics Table**: New "General Statistics" module option in MultiQC components renders an interactive DataTable from `multiqc.parquet` general stats data. Includes column visibility toggles, search filtering, and theme-aware styling.
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Fix infinite React re-render loop (`Maximum update depth exceeded`) that could occur when multiple interactive components were linked
 
@@ -879,17 +831,15 @@ ghcr.io/depictio/depictio:0.7.5
 !!! warning "Beta Release"
     This is a beta release. Use in production at your own risk.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.7.5-b2
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **MultiQC General Statistics Table**: New "General Statistics" module option in MultiQC components renders an interactive DataTable from `multiqc.parquet` general stats data. Includes column visibility toggles, search filtering, and theme-aware styling.
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Fix infinite React re-render loop (`Maximum update depth exceeded`) that could occur when multiple interactive components were linked
 
@@ -899,8 +849,6 @@ ghcr.io/depictio/depictio:0.7.5-b2
 
 !!! warning "Beta Release"
     This is a beta release. Use in production at your own risk.
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.7.5-b1
@@ -915,17 +863,15 @@ No user-facing changes — version bump only after v0.7.4 stable release.
 !!! success "Stable Release"
     This is a stable release consolidating all v0.7.4 beta improvements over v0.7.3.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.7.4
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Ampliseq Dashboard Updates**: Use relative abundance and ANCOM-BC data for ampliseq dashboards
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Fix dashboard YAML import HTTP 400 errors and improve import robustness
 * Fix MultiQC plots not updating on interactive filter changes
@@ -936,14 +882,14 @@ ghcr.io/depictio/depictio:0.7.4
 * Fix single-user mode in Helm chart CI to fix screenshot 401 error
 * Fix CI roundtrip import to handle duplicate check with `--overwrite`
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * Update ampliseq init dashboard JSONs from YAML-imported dashboards
 * Update `.env` for single-user mode configuration and clean up comments
 * Replace Gitpod with GitHub Codespaces and remove Gitpod files
 * Remove leftover analysis and summary markdown files
 
-### **🔧 CI/CD**
+**🔧 CI/CD**
 
 * Multi-arch Docker build: native arm64 runner, amd64 early tag push, imagetools-based multi-arch merge
 * Add version input for manual workflow\_dispatch
@@ -957,13 +903,11 @@ ghcr.io/depictio/depictio:0.7.4
 !!! warning "Beta Release"
     This is a beta release. Use in production at your own risk.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.7.4-b1
 ```
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Fix single-user mode: auto-create admin user, auto-login as admin, redirect `/auth` to `/dashboards`
 * Fix stale local-store tokens after instance recreation in single-user mode
@@ -972,13 +916,13 @@ ghcr.io/depictio/depictio:0.7.4-b1
 * Fix CI environment variable handling for UID/GID/DATA\_DIR in backup jobs
 * Fix CI e2e test sed patterns to match docker-compose/.env defaults
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * Replace Gitpod with GitHub Codespaces and remove Gitpod files
 * Update `.env` for single-user mode configuration and clean up comments
 * Remove leftover analysis and summary markdown files
 
-### **🔧 CI/CD**
+**🔧 CI/CD**
 
 * Multi-arch Docker build: native arm64 runner, amd64 early tag push, imagetools-based multi-arch merge
 * Add version input for manual workflow\_dispatch
@@ -991,13 +935,11 @@ ghcr.io/depictio/depictio:0.7.4-b1
 !!! success "Stable Release"
     This is a stable release consolidating all v0.7.3 beta improvements over v0.7.2.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.7.3
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Demo & Public Mode Architecture**: Replaced unauthenticated mode with a dedicated demo mode (walkthrough tour, temporary users) and a distinct public mode for read-only access
 * **YAML Dashboard Sync — Full Overhaul**: Multi-tab export/import, minimal metadata, server-side Pydantic validation, icon field preservation, code-mode figure content, and stable component tags across round-trips
@@ -1005,7 +947,7 @@ ghcr.io/depictio/depictio:0.7.3
 * **MultiQC Enhancements**: DateRangePicker filter with value normalisation, theme switching via CSS variables, human-readable filter titles
 * **Fullscreen Mode**: Native browser Fullscreen API replacing the previous workaround; correct chart dimensions in fullscreen
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Fix demo mode: owner edit-button visibility, tab copy naming, MultiQC s3\_location on restore, dashboard ownership, MultiQC habitat filter, TabsTab href crash
 * Fix cross-DC filtering for card components and anonymous users in single-user mode
@@ -1016,14 +958,14 @@ ghcr.io/depictio/depictio:0.7.3
 * Fix stepper navigation (duplicate edit-page-context stores)
 * Fix interactive component JavaScript callback errors
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Docker Compose**: MinIO embedded by default; `.env` truly optional (critical defaults inlined); named MongoDB volume for zero-clone quick-start; frozen image and package versions
 * **Theme Variables**: Consistent CSS theme variables across all dashboard styles (MultiQC, Figure, card trend subtitles)
 * **WebSocket**: Fix WebSocket connection for K8s deployments; enable background callbacks on initial page load
 * Simplify fullscreen and interactive filtering callback code; improve card trend subtitle readability
 
-### **🧹 Internal**
+**🧹 Internal**
 
 * Reorganise and clean up `settings_models.py` — remove dead code, add structured sections and field docs
 * Add YAML export/import round-trip CI test and comprehensive CLI validation unit tests
@@ -1036,40 +978,40 @@ ghcr.io/depictio/depictio:0.7.3
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
 
-### **[v0.7.3-b8](https://github.com/depictio/depictio/releases/tag/v0.7.3-b8)** (February 18, 2026)
+## **[v0.7.3-b8](https://github.com/depictio/depictio/releases/tag/v0.7.3-b8)** (February 18, 2026)
 
-#### **✨ Features**
+**✨ Features**
 * Complete YAML export/import overhaul: multi-tab support, minimal metadata for MultiQC/Image components, stable component tags, layout position preservation, icon field preservation, code-mode figure content export, server-side Pydantic validation in CLI `validate` and `import` commands
 * Add YAML dashboard definitions for iris, penguins, and ampliseq reference projects
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Resolve demo mode round-2 issues: dashboard ownership checks, MultiQC habitat filter, TabsTab href crash
 * Resolve CI failures: ruff import format and pyyaml version conflict
 * Add missing child tab screenshots for ampliseq demo dashboard
 
-#### **🚀 Improvements**
+**🚀 Improvements**
 * Streamline Docker Compose: embed MinIO by default, freeze image/package versions, inline critical env defaults so `.env` is optional, switch MongoDB to named volume for zero-clone quick-start
 * Reorganise and clean up `settings_models.py`
 * Add round-trip CI test and unit tests for YAML CLI validation
 
 ---
 
-### **[v0.7.3-b7](https://github.com/depictio/depictio/releases/tag/v0.7.3-b7)** (February 17, 2026)
+## **[v0.7.3-b7](https://github.com/depictio/depictio/releases/tag/v0.7.3-b7)** (February 17, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Resolve three demo mode issues: owner edit button visibility, tab copy naming, and MultiQC s3_location population on restore
 * Update CI/CD YAML files to use current naming conventions
 
-### **[v0.7.3-b6](https://github.com/depictio/depictio/releases/tag/v0.7.3-b6)** (February 17, 2026)
+## **[v0.7.3-b6](https://github.com/depictio/depictio/releases/tag/v0.7.3-b6)** (February 17, 2026)
 
-#### **✨ Features**
+**✨ Features**
 * Add DateRangePicker filter to MultiQC component with proper value normalization
 * Add theme switching support for MultiQC and Figure components using CSS theme variables
 * Add human-readable titles to interactive filter components
 * Improve stepper component selection UX with empty states and visual feedback
 * Add colored border around image tab icons for better visual distinction
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Allow screenshot generation in single-user mode (remove auth dependency)
 * Resolve missing Add Tab and Edit Tab buttons in single-user mode
 * Fix MultiQC callback errors by separating view and design mode callbacks
@@ -1084,37 +1026,37 @@ ghcr.io/depictio/depictio:0.7.3
 * Skip validation for empty-valued filters in runtime filter application
 * Fix DateRangePicker validation and normalization for figure and table callbacks
 
-#### **🚀 Improvements**
+**🚀 Improvements**
 * Add owner-only permission checks for screenshot generation
 * Implement consistent theme variables across dashboard styles
 * Simplify fullscreen and interactive filtering callback code
 * Improve card trend subtitle readability (2 decimal places)
 
-### **[v0.7.3-b5](https://github.com/depictio/depictio/releases/tag/v0.7.3-b5)** (February 9, 2026)
+## **[v0.7.3-b5](https://github.com/depictio/depictio/releases/tag/v0.7.3-b5)** (February 9, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Fix debug menu auto-collapse script path in HTML templates (local dev + production)
 
-### **[v0.7.3-b4](https://github.com/depictio/depictio/releases/tag/v0.7.3-b4)** (February 9, 2026)
+## **[v0.7.3-b4](https://github.com/depictio/depictio/releases/tag/v0.7.3-b4)** (February 9, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Fix demo tour popover callback errors across Management App pages
 * Enhance debug menu auto-collapse for Dash 3.x compatibility
 
-### **[v0.7.3-b3](https://github.com/depictio/depictio/releases/tag/v0.7.3-b3)** (February 9, 2026)
+## **[v0.7.3-b3](https://github.com/depictio/depictio/releases/tag/v0.7.3-b3)** (February 9, 2026)
 
-#### **🚀 Improvements**
+**🚀 Improvements**
 * Optimize dashboard interactivity and fix WebSocket connection for K8s deployments
 
-### **[v0.7.3-b2](https://github.com/depictio/depictio/releases/tag/v0.7.3-b2)** (February 9, 2026)
+## **[v0.7.3-b2](https://github.com/depictio/depictio/releases/tag/v0.7.3-b2)** (February 9, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Enable WebSocket callback on initial page load
 * Remove conflicting NGINX annotations for WebSocket
 
-### **[v0.7.3-b1](https://github.com/depictio/depictio/releases/tag/v0.7.3-b1)** (February 9, 2026)
+## **[v0.7.3-b1](https://github.com/depictio/depictio/releases/tag/v0.7.3-b1)** (February 9, 2026)
 
-#### **🚀 Improvements**
+**🚀 Improvements**
 * Migrate from unauthenticated mode to demo + public mode architecture
 * Improve demo mode with walkthrough tour and temporary user support
 
@@ -1125,13 +1067,11 @@ ghcr.io/depictio/depictio:0.7.3
 !!! success "Stable Release"
     This is a stable release with auth mode improvements and guided tour features.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.7.2
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Single User Mode**: Badge now clickable to navigate to /profile
 * **Guided Tour**: Added demo mode onboarding tour for new users
@@ -1139,7 +1079,7 @@ ghcr.io/depictio/depictio:0.7.2
 * **WebSocket Events**: Real-time event system for dashboard updates
 * **Tab Management**: Enhanced tab editing with full CRUD and reordering capabilities
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Skip auth modal callbacks in single-user mode
 * Fix scatter selection preservation on figure re-render
@@ -1148,7 +1088,7 @@ ghcr.io/depictio/depictio:0.7.2
 * Harden public/demo mode dashboard visibility and tour behavior
 * Various E2E test fixes for auth flow changes
 
-### **🧹 Internal Changes**
+**🧹 Internal Changes**
 
 * Cypress upgrade and E2E tests for demo/single-user modes
 * UI refinements for Single User Mode badge and welcome section
@@ -1160,24 +1100,22 @@ ghcr.io/depictio/depictio:0.7.2
 !!! success "Stable Release"
     This is a stable release based on v0.7.1-b1, introducing tab management features.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.7.1
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Tab Management**: Full CRUD operations with drag-and-drop reordering
 * **Smart Sidebar**: Dynamic tab selection with improved navigation
 * **Breadcrumb Navigation**: Dashboard/tab breadcrumb in header title
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * Fix header to use dashboard title instead of main_tab_name for parent display
 * Add parent_dashboard_title field to DashboardData model
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * Simplify and consolidate tab management code
 * Add comprehensive unit tests for tab functionality
@@ -1189,13 +1127,13 @@ ghcr.io/depictio/depictio:0.7.1
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
 
-### **[v0.7.1-b1](https://github.com/depictio/depictio/releases/tag/v0.7.1-b1)** (February 4, 2026)
+## **[v0.7.1-b1](https://github.com/depictio/depictio/releases/tag/v0.7.1-b1)** (February 4, 2026)
 
-#### **✨ Features**
+**✨ Features**
 * Implement full tab CRUD with reordering and smart sidebar
 * Show dashboard/tab breadcrumb in header title
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Fix header parent display and add parent_dashboard_title field
 
 ---
@@ -1205,15 +1143,13 @@ ghcr.io/depictio/depictio:0.7.1
 !!! success "Stable Release"
     This is a stable release based on v0.7.0-b1, introducing Image component support.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.7.0
 ghcr.io/depictio/depictio:latest
 ghcr.io/depictio/depictio:stable
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Image Component**: New Image data collection type with full dashboard integration
     * Add images to dashboards with gallery and modal views
@@ -1222,11 +1158,11 @@ ghcr.io/depictio/depictio:stable
     * YAML dashboard import support for Image components
     * Public image serving endpoint for authenticated access
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Code Refactoring**: Moved cross-DC filtering logic to shared utilities for better reuse across components
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **Environment Safety**: Commented out `DEPICTIO_MONGODB_WIPE` for safer development environments
 
@@ -1237,9 +1173,9 @@ ghcr.io/depictio/depictio:stable
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
 
-### **[v0.7.0-b1](https://github.com/depictio/depictio/releases/tag/v0.7.0-b1)** (February 3, 2026)
+## **[v0.7.0-b1](https://github.com/depictio/depictio/releases/tag/v0.7.0-b1)** (February 3, 2026)
 
-#### **✨ Features**
+**✨ Features**
 * Add image support to DC links and cross-filtering
 * Add Image component CLI registration and duplication support
 * Integrate Image component into dashboard stepper and viewer
@@ -1249,10 +1185,10 @@ ghcr.io/depictio/depictio:stable
 * Add Image DC model with Table DC capabilities
 * Add image component support in YAML dashboard import
 
-#### **🚀 Improvements**
+**🚀 Improvements**
 * Refactor cross-DC filtering to shared utils for reuse
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Comment out DEPICTIO_MONGODB_WIPE for safety in development
 * Various CI/CD fixes for Image component testing and validation
 
@@ -1263,24 +1199,22 @@ ghcr.io/depictio/depictio:stable
 !!! warning "Beta Release"
     This is a pre-release version intended for testing. Use in production at your own risk.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.6.3-b1
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Image Component Foundation**: Initial infrastructure for Image data collection type
 * **API Health Endpoint**: Added `/health` endpoint for Kubernetes readiness checks
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **S3 Handling**: Handle `BucketAlreadyOwnedByYou` error gracefully
 * **S3 Cleanup**: Prevent HTTPException from killing worker during S3 cleanup, delay cleanup on startup
 * **CI/CD**: Multiple fixes for health checks, token handling, and dashboard verification
 
-### **🧹 Internal Changes**
+**🧹 Internal Changes**
 
 * Comprehensive unit tests for Image component changes
 * Extended dashboard CLI testing with DB verification
@@ -1292,15 +1226,13 @@ ghcr.io/depictio/depictio:0.6.3-b1
 !!! success "Stable Release"
     This is a stable release based on v0.6.2-b7.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.6.2
 ghcr.io/depictio/depictio:latest
 ghcr.io/depictio/depictio:stable
 ```
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **MultiQC Data Processing**: Removed incorrect deltatable registration from MultiQC processor to fix HTTP 400 errors on re-processing. MultiQC uses dedicated API endpoints, not the deltatables collection.
 * **S3 Cleanup**: Fixed orphaned file cleanup to skip MultiQC consistency checks that caused false positives.
@@ -1310,7 +1242,7 @@ ghcr.io/depictio/depictio:stable
 * **Race Condition**: Handle duplicate project creation race condition in multi-worker Gunicorn initialization.
 * **Reference Datasets**: Pre-create screenshot files for reference dashboards to ensure proper display.
 
-### **🧹 Internal Changes**
+**🧹 Internal Changes**
 
 * Removed MultiQC from automatic reference dataset initialization (data files require separate setup)
 * Version synchronization across all configuration files
@@ -1322,32 +1254,32 @@ ghcr.io/depictio/depictio:stable
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
 
-### **[v0.6.2-b7](https://github.com/depictio/depictio/releases/tag/v0.6.2-b7)** (January 29, 2026)
+## **[v0.6.2-b7](https://github.com/depictio/depictio/releases/tag/v0.6.2-b7)** (January 29, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Restore pre-created screenshot files for reference dashboards
 
 ---
 
-### **[v0.6.2-b6](https://github.com/depictio/depictio/releases/tag/v0.6.2-b6)** (January 29, 2026)
+## **[v0.6.2-b6](https://github.com/depictio/depictio/releases/tag/v0.6.2-b6)** (January 29, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Fix auth redirect on stale token (NoneType attribute error)
 * Fix screenshot cleanup bug (strip _dark/_light suffix from dashboard ID)
 
 ---
 
-### **[v0.6.2-b5](https://github.com/depictio/depictio/releases/tag/v0.6.2-b5)** (January 29, 2026)
+## **[v0.6.2-b5](https://github.com/depictio/depictio/releases/tag/v0.6.2-b5)** (January 29, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Correct corrupted version strings in pyproject.toml files
 * Correct corrupted Helm chart YAML from version bump script
 
 ---
 
-### **[v0.6.2-b4](https://github.com/depictio/depictio/releases/tag/v0.6.2-b4)** (January 29, 2026)
+## **[v0.6.2-b4](https://github.com/depictio/depictio/releases/tag/v0.6.2-b4)** (January 29, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Handle race condition in reference dataset init (duplicate project error)
 * Remove multiqc from automatic reference dataset initialization
 * Mount screenshots PVC in Celery worker for shared access
@@ -1356,25 +1288,25 @@ ghcr.io/depictio/depictio:stable
 
 ---
 
-### **[v0.6.2-b3](https://github.com/depictio/depictio/releases/tag/v0.6.2-b3)** (January 29, 2026)
+## **[v0.6.2-b3](https://github.com/depictio/depictio/releases/tag/v0.6.2-b3)** (January 29, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Set reference projects/dashboards as public
 * Add frontend screenshots for reference dashboards
 
 ---
 
-### **[v0.6.2-b2](https://github.com/depictio/depictio/releases/tag/v0.6.2-b2)** (January 28, 2026)
+## **[v0.6.2-b2](https://github.com/depictio/depictio/releases/tag/v0.6.2-b2)** (January 28, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Add missing ampliseq data files and multiqc reference project
 * Fix K8s Celery background callbacks and screenshot init container
 
 ---
 
-### **[v0.6.2-b1](https://github.com/depictio/depictio/releases/tag/v0.6.2-b1)** (January 28, 2026)
+## **[v0.6.2-b1](https://github.com/depictio/depictio/releases/tag/v0.6.2-b1)** (January 28, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Fix K8s deployment CORS, Celery screenshots, and delta table errors
 * Remove incorrect deltatable registration from MultiQC processor
 
@@ -1385,19 +1317,17 @@ ghcr.io/depictio/depictio:stable
 !!! success "Stable Release"
     This is a stable release based on v0.6.1-b1.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.6.1
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Reference Dashboards**: Added pre-configured dashboard screenshots for improved visual representation in the dashboard gallery.
 * **Dashboard UI**: Enhanced dashboards management page with new categories, tab count badges, and screenshot carousel tooltips.
 * **Auto-Screenshots**: Added automatic screenshot generation callback for dashboard viewer.
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **Kubernetes Deployment**: Fixed K8s CORS configuration, Celery screenshot handling, and delta table errors.
 * **Helm Chart**: Added master switch to completely disable YAML dashboard sync feature.
@@ -1405,13 +1335,13 @@ ghcr.io/depictio/depictio:0.6.1
 * **Authentication**: Removed premature validation error on auth modal landing.
 * **Theme Compatibility**: Made "Back to Dashboards" link theme-compatible.
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Reference Projects**: Reorganized demo datasets with improved project configurations.
 * **Dashboard Gallery**: Added dashboard counts to section headers and expand all non-empty sections by default.
 * **Tab Preview**: Added zoom preview to multi-tab dashboard carousel with HoverCard.
 
-### **🧹 Internal Changes**
+**🧹 Internal Changes**
 
 * Refactored screenshot processing from API endpoint to Celery task
 * Reorganized project configs to use project-level joins/links
@@ -1424,13 +1354,13 @@ ghcr.io/depictio/depictio:0.6.1
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
 
-### **[v0.6.1-b1](https://github.com/depictio/depictio/releases/tag/v0.6.1-b1)** (January 28, 2026)
+## **[v0.6.1-b1](https://github.com/depictio/depictio/releases/tag/v0.6.1-b1)** (January 28, 2026)
 
-#### **✨ Features**
+**✨ Features**
 * Update dashboard screenshots for improved visual representation
 * Add reference dashboard screenshots and improve CI verification
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Add master switch to completely disable YAML dashboard sync
 * Make reference dataset deltatable checks non-fatal in CLI jobs
 * Use correct Ampliseq project name in CI verification
@@ -1443,19 +1373,17 @@ ghcr.io/depictio/depictio:0.6.1
 !!! success "Stable Release"
     This is a stable release based on v0.6.0-b18.
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.6.0
 ghcr.io/depictio/depictio:latest
 ghcr.io/depictio/depictio:stable
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Dashboard UI**: Integrated fullscreen button into ActionIconGroup for improved component controls and better user experience
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **Kubernetes Deployment**: Allow explicit `DEPICTIO_FASTAPI_PUBLIC_URL` override in ConfigMaps for flexible API URL configuration
 * **Kubernetes Deployment**: Generate `api_internal_key.pem` during backend startup to ensure proper key management
@@ -1463,7 +1391,7 @@ ghcr.io/depictio/depictio:stable
 * **Kubernetes Deployment**: Disable YAML auto-export for K8s deployments to prevent configuration conflicts
 * **EMBL Deployment**: Add explicit API URL configuration and reduce replicas for EMBL dev environment optimization
 
-### **🧹 Internal Changes**
+**🧹 Internal Changes**
 
 * Version synchronization across all configuration files (pyproject.toml, Chart.yaml, values.yaml)
 * Helm chart version updates with date-based versioning
@@ -1475,126 +1403,124 @@ ghcr.io/depictio/depictio:stable
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
 
-### **[v0.6.0-b18](https://github.com/depictio/depictio/releases/tag/v0.6.0-b18)** (January 24, 2026)
+## **[v0.6.0-b18](https://github.com/depictio/depictio/releases/tag/v0.6.0-b18)** (January 24, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Sync Chart.yaml appVersion to 0.6.0-b17
 * Allow explicit DEPICTIO_FASTAPI_PUBLIC_URL override in ConfigMaps
 * Add explicit API URL and reduce replicas for EMBL dev
 
 ---
 
-### **[v0.6.0-b17](https://github.com/depictio/depictio/releases/tag/v0.6.0-b17)** (January 24, 2026)
+## **[v0.6.0-b17](https://github.com/depictio/depictio/releases/tag/v0.6.0-b17)** (January 24, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Sync all version files to 0.6.0-b17
 
 ---
 
-### **[v0.6.0-b16](https://github.com/depictio/depictio/releases/tag/v0.6.0-b16)** (January 24, 2026)
+## **[v0.6.0-b16](https://github.com/depictio/depictio/releases/tag/v0.6.0-b16)** (January 24, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Correct corrupted appVersion in Chart.yaml
 
 ---
 
-### **[v0.6.0-b15](https://github.com/depictio/depictio/releases/tag/v0.6.0-b15)** (January 24, 2026)
+## **[v0.6.0-b15](https://github.com/depictio/depictio/releases/tag/v0.6.0-b15)** (January 24, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Correct corrupted version strings across all files
 
 ---
 
-### **[v0.6.0-b14](https://github.com/depictio/depictio/releases/tag/v0.6.0-b14)** (January 24, 2026)
+## **[v0.6.0-b14](https://github.com/depictio/depictio/releases/tag/v0.6.0-b14)** (January 24, 2026)
 
-#### **✨ Features**
+**✨ Features**
 * Integrated fullscreen button into ActionIconGroup
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Generate `api_internal_key.pem` during backend startup
 * Init containers wait for `private_key.pem` instead of `api_internal_key.pem`
 * Disable YAML auto-export for K8s deployments
 
 ---
 
-### **[v0.6.0-b13](https://github.com/depictio/depictio/releases/tag/v0.6.0-b13)** (January 24, 2026)
+## **[v0.6.0-b13](https://github.com/depictio/depictio/releases/tag/v0.6.0-b13)** (January 24, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Add YAML watcher environment variables to Helm ConfigMap
 
 ---
 
-### **[v0.6.0-b12](https://github.com/depictio/depictio/releases/tag/v0.6.0-b12)** (January 24, 2026)
+## **[v0.6.0-b12](https://github.com/depictio/depictio/releases/tag/v0.6.0-b12)** (January 24, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Disable YAML watcher for Kubernetes deployments
 
 ---
 
-### **[v0.6.0-b11](https://github.com/depictio/depictio/releases/tag/v0.6.0-b11)** (January 23, 2026)
+## **[v0.6.0-b11](https://github.com/depictio/depictio/releases/tag/v0.6.0-b11)** (January 23, 2026)
 
-#### **✨ Features**
+**✨ Features**
 * Wait for Docker build and add post-deploy CLI registration
 
-#### **🧹 CI/CD**
+**🧹 CI/CD**
 * Update all Docker builds to use uv-based Dockerfile
 
 ---
 
-### **[v0.6.0-b10](https://github.com/depictio/depictio/releases/tag/v0.6.0-b10)** (January 23, 2026)
+## **[v0.6.0-b10](https://github.com/depictio/depictio/releases/tag/v0.6.0-b10)** (January 23, 2026)
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 * Use absolute path for secrets file on self-hosted runner
 
 ---
 
-### **[v0.6.0-b9](https://github.com/depictio/depictio/releases/tag/v0.6.0-b9)** (January 23, 2026)
+## **[v0.6.0-b9](https://github.com/depictio/depictio/releases/tag/v0.6.0-b9)** (January 23, 2026)
 
-#### **✨ Features**
+**✨ Features**
 * Add EMBL self-hosted deployment workflow
 
 ---
 
-### **[v0.6.0-b8](https://github.com/depictio/depictio/releases/tag/v0.6.0-b8)** (January 23, 2026)
+## **[v0.6.0-b8](https://github.com/depictio/depictio/releases/tag/v0.6.0-b8)** (January 23, 2026)
 
-#### **🧹 CI/CD**
+**🧹 CI/CD**
 
 * Fixed race condition in documentation workflow
 
 ---
 
-### **[v0.6.0-b7](https://github.com/depictio/depictio/releases/tag/v0.6.0-b7)** (January 23, 2026)
+## **[v0.6.0-b7](https://github.com/depictio/depictio/releases/tag/v0.6.0-b7)** (January 23, 2026)
 
-#### **🧹 CI/CD**
+**🧹 CI/CD**
 
 * Move API docs workflow to depictio-docs repo
 
 ---
 
-### **v0.6.0-b6** (January 23, 2026)
+**v0.6.0-b6** (January 23, 2026)
 
 !!! info "Internal Release"
     Version bump only - no public release
 
 ---
 
-### **[v0.6.0-b5](https://github.com/depictio/depictio/releases/tag/v0.6.0-b5)** (January 23, 2026)
-
-#### Docker Images
+## **[v0.6.0-b5](https://github.com/depictio/depictio/releases/tag/v0.6.0-b5)** (January 23, 2026)
 
 ```bash
 ghcr.io/depictio/depictio:0.6.0-b5
 ghcr.io/depictio/depictio:edge
 ```
 
-#### **✨ Features**
+**✨ Features**
 
 * **Gunicorn Token Masking**: Added gunicorn config with token masking in access logs for improved security. ([e22778d9](https://github.com/depictio/depictio/commit/e22778d9))
 * **Celery Worker Deployment**: Added Celery worker deployment to Helm charts for background task processing. ([c702296c](https://github.com/depictio/depictio/commit/c702296c))
 * **Docker Health Checks**: Added healthchecks and restart policies for production readiness. ([89e8522a](https://github.com/depictio/depictio/commit/89e8522a))
 * **Automated OpenAPI Docs**: Added automated OpenAPI spec extraction for documentation. ([0173ecc4](https://github.com/depictio/depictio/commit/0173ecc4))
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 
 * Fixed slider mark labels visibility in dark mode using dmc.Text components. ([a59f9802](https://github.com/depictio/depictio/commit/a59f9802), [d2a0d765](https://github.com/depictio/depictio/commit/d2a0d765))
 * Fixed parameter order in update_aggregation_options callback. ([c114b5ec](https://github.com/depictio/depictio/commit/c114b5ec))
@@ -1603,14 +1529,14 @@ ghcr.io/depictio/depictio:edge
 * Added fallback on non-200 status in _check_deltatables. ([adf75978](https://github.com/depictio/depictio/commit/adf75978))
 * Fixed triangle background animations visibility on auth page. ([6370fc53](https://github.com/depictio/depictio/commit/6370fc53))
 
-#### **🚀 Improvements**
+**🚀 Improvements**
 
 * Comprehensive code simplification and modularization of Dash components. ([bbf8395e](https://github.com/depictio/depictio/commit/bbf8395e))
 * Simplified figure and table component callbacks. ([b83ecf0d](https://github.com/depictio/depictio/commit/b83ecf0d))
 * Cleaned up verbose logs in table, text, and multiqc components. ([ebb6c18e](https://github.com/depictio/depictio/commit/ebb6c18e))
 * Removed verbose runtime logs from frontend callbacks. ([af750d3f](https://github.com/depictio/depictio/commit/af750d3f))
 
-#### **🧹 CI/CD**
+**🧹 CI/CD**
 
 * Use content-based hash for Docker image tags. ([aa9da340](https://github.com/depictio/depictio/commit/aa9da340))
 * Switched to uv-based Dockerfile for faster Helm builds. ([8afa0a36](https://github.com/depictio/depictio/commit/8afa0a36))
@@ -1618,23 +1544,21 @@ ghcr.io/depictio/depictio:edge
 
 ---
 
-### **[v0.6.0-b4](https://github.com/depictio/depictio/releases/tag/v0.6.0-b4)** (January 22, 2026)
-
-#### Docker Images
+## **[v0.6.0-b4](https://github.com/depictio/depictio/releases/tag/v0.6.0-b4)** (January 22, 2026)
 
 ```bash
 ghcr.io/depictio/depictio:0.6.0-b4
 ghcr.io/depictio/depictio:edge
 ```
 
-#### **✨ Features**
+**✨ Features**
 
 * **Universal DC Linking System**: New cross-DC filtering system that allows linking data collections for runtime filtering without pre-computed joins. ([#640](https://github.com/depictio/depictio/pull/640))
 * **Figure Code Mode Refactor**: Complete refactor of figure code mode with live preview, bidirectional editor resize, and improved theme switching. ([#639](https://github.com/depictio/depictio/pull/639))
 * **YAML Dashboard Validation**: Pydantic-based validation for dashboard YAML configuration with column name, chart type, and aggregation validation.
 * **Client-Side Table Joining**: Moved table joining from server to CLI for better performance and flexibility. ([#634](https://github.com/depictio/depictio/pull/634))
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 
 * Fixed Ace editor theme switching and Execute button functionality in figure code mode.
 * Fixed HTTP status code checks for link create/delete in CLI.
@@ -1642,21 +1566,19 @@ ghcr.io/depictio/depictio:edge
 
 ---
 
-### **[v0.6.0-b3](https://github.com/depictio/depictio/releases/tag/v0.6.0-b3)** (January 20, 2026)
-
-#### Docker Images
+## **[v0.6.0-b3](https://github.com/depictio/depictio/releases/tag/v0.6.0-b3)** (January 20, 2026)
 
 ```bash
 ghcr.io/depictio/depictio:0.6.0-b3
 ```
 
-#### **✨ Features**
+**✨ Features**
 
 * **Figure Component Improvements**: Loading indicator for figure preview rendering, improved stepper UX. ([#622](https://github.com/depictio/depictio/pull/622))
 * **Celery by Default**: Celery is now enabled by default for design mode with Docker Compose profiles for flexible deployment.
 * **AI Development Tools**: Added Claude Code development toolkit and AI tools support in devcontainer.
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 
 * Eliminated multiple scrollbars in dashboard edit mode.
 * Fixed optional parameters persisting incorrectly in figure component.
@@ -1664,21 +1586,19 @@ ghcr.io/depictio/depictio:0.6.0-b3
 
 ---
 
-### **[v0.6.0-b2](https://github.com/depictio/depictio/releases/tag/v0.6.0-b2)** (January 8, 2026)
-
-#### Docker Images
+## **[v0.6.0-b2](https://github.com/depictio/depictio/releases/tag/v0.6.0-b2)** (January 8, 2026)
 
 ```bash
 ghcr.io/depictio/depictio:0.6.0-b2
 ```
 
-#### **✨ Features**
+**✨ Features**
 
 * **Dashboard Performance & UX**: Major performance improvements with ALL pattern rendering for cards and interactive components. ([#616](https://github.com/depictio/depictio/pull/616))
 * **Local Delta Table Caching**: Added local filesystem caching for Delta tables to improve API performance.
 * **Client-Side Performance Monitoring**: Added performance monitoring utilities for frontend optimization.
 
-#### **🐛 Fixes**
+**🐛 Fixes**
 
 * Suppressed third-party console warnings and fixed favicon issues.
 * Fixed frontend container startup issues in CI.
@@ -1686,15 +1606,13 @@ ghcr.io/depictio/depictio:0.6.0-b2
 
 ---
 
-### **[v0.6.0-b1](https://github.com/depictio/depictio/releases/tag/v0.6.0-b1)** (January 7, 2026)
-
-#### Docker Images
+## **[v0.6.0-b1](https://github.com/depictio/depictio/releases/tag/v0.6.0-b1)** (January 7, 2026)
 
 ```bash
 ghcr.io/depictio/depictio:0.6.0-b1
 ```
 
-#### **✨ Major Features**
+**✨ Major Features**
 
 * **Multi-App Architecture**: Refactored frontend into three independent Dash applications for improved performance and callback isolation. ([#615](https://github.com/depictio/depictio/pull/615), [#616](https://github.com/depictio/depictio/pull/616))
     * **Management App** (`/`): Auth, dashboards, projects, admin
@@ -1705,7 +1623,7 @@ ghcr.io/depictio/depictio:0.6.0-b1
 * **Table Component Export**: Export table data to CSV with support for filters and sorting. ([#625](https://github.com/depictio/depictio/pull/625))
 * **Celery Background Processing**: Redis/Celery integration for heavy computations in design mode.
 
-#### **🚀 Improvements**
+**🚀 Improvements**
 
 * Dual-panel grid system with save/restore functionality.
 * Enhanced interactive component design and edit mode callbacks.
@@ -1716,8 +1634,6 @@ ghcr.io/depictio/depictio:0.6.0-b1
 
 ## **[v0.5.3](https://github.com/depictio/depictio/releases/tag/v0.5.3)**
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.5.3
 ghcr.io/depictio/depictio:latest
@@ -1725,13 +1641,11 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-### **🐛 Fixes**
+**🐛 Fixes**
 
 * Preserve original IDs during project creation to ensure consistency across K8s instances  [d4a57a5d](https://github.com/depictio/depictio/commit/d4a57a5d)
 
 ## **[v0.5.2](https://github.com/depictio/depictio/releases/tag/v0.5.2)**
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.5.2
@@ -1740,7 +1654,7 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **S3 & Project Management**: Added S3 delta table checks, improved project ID handling, and auto-promotion for data collection IDs with join configurations. ([bc31ff79](https://github.com/depictio/depictio/commit/bc31ff79), [103baee8](https://github.com/depictio/depictio/commit/103baee8), [7dfdcc24](https://github.com/depictio/depictio/commit/7dfdcc24))
 * **Dashboard Enhancements**: Improved filtering logic, enhanced permission checks, component resizing, and metadata synchronization. ([3e259297](https://github.com/depictio/depictio/commit/3e259297), [c913dd2b](https://github.com/depictio/depictio/commit/c913dd2b), [aa03799f](https://github.com/depictio/depictio/commit/aa03799f), [d03deeb8](https://github.com/depictio/depictio/commit/d03deeb8))
@@ -1750,14 +1664,12 @@ ghcr.io/depictio/depictio:edge
 
 ---
 
-### **🐛 Fixes**
+**🐛 Fixes**
 
 * **UI & Layout**: Prevented horizontal scrollbar, removed default background on draggable components, adjusted theme switch behavior. ([310a8d9f](https://github.com/depictio/depictio/commit/310a8d9f), [6e06fd6c](https://github.com/depictio/depictio/commit/6e06fd6c), [937e08b1](https://github.com/depictio/depictio/commit/937e08b1))
 * **Standardization & Cleanup**: Fixed naming inconsistencies in Iris Dashboard demo and commented out redundant tests/code. ([ca6ee804](https://github.com/depictio/depictio/commit/ca6ee804), [d7d8a3d8](https://github.com/depictio/depictio/commit/d7d8a3d8), [8a83fe7b](https://github.com/depictio/depictio/commit/8a83fe7b), [acf26a86](https://github.com/depictio/depictio/commit/acf26a86))
 
 ## **[v0.5.1](https://github.com/depictio/depictio/releases/tag/v0.5.1)**
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.5.1
@@ -1766,14 +1678,14 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-### **🐛 Fixes**
+**🐛 Fixes**
 
 * **UI & State**: Updated handle colors, navbar/logo sizing, layout IDs, and removed unused states. ([08938777](https://github.com/depictio/depictio/commit/08938777), [435aa448](https://github.com/depictio/depictio/commit/435aa448), [a164f8cb](https://github.com/depictio/depictio/commit/a164f8cb))
 * **Caching**: Fixed Redis cache stats logging. ([ffcfd7a1](https://github.com/depictio/depictio/commit/ffcfd7a1))
 
 ---
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Theming & Layout**: Enhanced clientside layout, padding, resize handle visibility, and logo updates. ([b10bf77b](https://github.com/depictio/depictio/commit/b10bf77b), [58b0690b](https://github.com/depictio/depictio/commit/58b0690b), [250437a2](https://github.com/depictio/depictio/commit/250437a2))
 * **Redis Integration in K8S**: Added support with configuration and connectivity tests. ([f86b4f10](https://github.com/depictio/depictio/commit/f86b4f10))
@@ -1783,8 +1695,6 @@ ghcr.io/depictio/depictio:edge
 
 ## **[v0.5.0](https://github.com/depictio/depictio/releases/tag/v0.5.0)**
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.5.0
 ghcr.io/depictio/depictio:latest
@@ -1792,7 +1702,7 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **MultiQC Integration**: Added a dedicated component to visualize and explore MultiQC outputs directly in the dashboard. This includes report scanning and aggregation, component creation through the MultiQC API, figure patching to link with external metadata, and dataset filtering to display resulting samples. ([2f1e9d31](https://github.com/depictio/depictio/commit/2f1e9d31))
 * **User Experience**: Introduced a new header design with cleaner layout and added iconography for better navigation. ([d6f0c1b2](https://github.com/depictio/depictio/commit/d6f0c1b2))
@@ -1801,22 +1711,20 @@ ghcr.io/depictio/depictio:edge
 
 ---
 
-### **🛠 Fixes**
+**🛠 Fixes**
 
 * **Data Handling**: Resolved issues with inconsistent plot rendering and duplicate state updates. ([02c5e7e4](https://github.com/depictio/depictio/commit/02c5e7e4))
 * **Theme Sync**: Fixed a race condition during theme switching that caused UI flickers. ([30b9f24d](https://github.com/depictio/depictio/commit/30b9f24d))
 
 ---
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Performance**: Optimized DataTable rendering and minimized unnecessary callback triggers. Introduced a new component update mechanism switching from full sequential rendering to initial rendering followed by parallel patching of components using Dash properties. ([f8e2f5a1](https://github.com/depictio/depictio/commit/f8e2f5a1))
 * **UI Responsiveness**: Moved more callbacks clientside for smoother interactions and reduced latency. ([a86bf22e](https://github.com/depictio/depictio/commit/a86bf22e))
 * **Code Cleanup**: Simplified logging and removed obsolete debug statements. ([bc2a93d4](https://github.com/depictio/depictio/commit/bc2a93d4))
 
 ## **[v0.4.0](https://github.com/depictio/depictio/releases/tag/v0.4.0)**
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.4.0
@@ -1825,7 +1733,7 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Caching & Performance**: Added `flask-caching` and `orjson` for faster data handling. ([b3bdd21f](https://github.com/depictio/depictio/commit/b3bdd21f))
 * **UI Interactivity**: Introduced Dock-style animations and live mode toggle. ([0b6d073e](https://github.com/depictio/depictio/commit/0b6d073e), [14fe2314](https://github.com/depictio/depictio/commit/14fe2314))
@@ -1833,15 +1741,13 @@ ghcr.io/depictio/depictio:edge
 
 ---
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Editing Flow**: Refined UI elements, edit mode logic, and live interactivity. ([71c78e83](https://github.com/depictio/depictio/commit/71c78e83), [a01f3ac9](https://github.com/depictio/depictio/commit/a01f3ac9))
 * **Theme & Rendering**: Optimized theme updates and fixed marginal plot loops. ([b05a5c9d](https://github.com/depictio/depictio/commit/b05a5c9d), [0149dcca](https://github.com/depictio/depictio/commit/0149dcca))
 * **Performance**: Moved UI state to clientside, added caching, and improved async handling. ([59c40d06](https://github.com/depictio/depictio/commit/59c40d06), [e80e57d2](https://github.com/depictio/depictio/commit/e80e57d2), [696748d1](https://github.com/depictio/depictio/commit/696748d1))
 
 ## **[v0.3.2](https://github.com/depictio/depictio/releases/tag/v0.3.2)**
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.3.2
@@ -1850,18 +1756,16 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Analytics & Session Management**: Enhanced analytics session management, including cleanup for anonymous sessions. Implemented both in-house analytics & Google Analytics integration to track unique connections and user activity. ([956d35f3](https://github.com/depictio/depictio/commit/956d35f3), [146e042a](https://github.com/depictio/depictio/commit/146e042a))
 * **Admin Dashboard**: Implemented a dedicated Admin Analytics Dashboard with related functionalities in admin section. Enhanced the analytics data service to include user ID validation and filtering for more precise data. ([8837a4fd](https://github.com/depictio/depictio/commit/8837a4fd), [41061497](https://github.com/depictio/depictio/commit/41061497))
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Configuration**: Updated MinIO and backend configurations to optimize resource limits and enhance security context. ([9e681bfc](https://github.com/depictio/depictio/commit/9e681bfc))
 
 ## **[v0.3.1](https://github.com/depictio/depictio/releases/tag/v0.3.1)**
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.3.1
@@ -1870,24 +1774,22 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **Helm Chart & Deployment**: Adjusted resource limits and logging verbosity for backend services. Ensured proper permissions for frontend mounted directories and fixed authentication defaults in values.yaml. ([1ddc1d5e](https://github.com/depictio/depictio/commit/1ddc1d5e), [47214581](https://github.com/depictio/depictio/commit/47214581), [e574a013](https://github.com/depictio/depictio/commit/e574a013))
 * **Data Integrity**: Ensured depictio_run_id is included in joins for proper run isolation and normalized column data types in precompute_columns_specs function. ([e21ef1eb](https://github.com/depictio/depictio/commit/e21ef1eb), [f5ce756d](https://github.com/depictio/depictio/commit/f5ce756d))
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Code Cleanliness & Consistency**: Standardized import statements across multiple files and removed unused imports. ([0349df19](https://github.com/depictio/depictio/commit/0349df19), [53b6b467](https://github.com/depictio/depictio/commit/53b6b467))
 * **Testing**: Implemented robust typing commands for improved input reliability in tests. ([f85a98e4](https://github.com/depictio/depictio/commit/f85a98e4))
 
-### **🧹 Chores**
+**🧹 Chores**
 
 * **Logging**: Enhanced logging in API calls and data collection processing functions. ([0d662764](https://github.com/depictio/depictio/commit/0d662764))
 * **UMAP**: Disabled UMAP visualization temporarily. ([593ad1dd](https://github.com/depictio/depictio/commit/593ad1dd))
 
 ## **[v0.3.0](https://github.com/depictio/depictio/releases/tag/v0.3.0)**
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.3.0
@@ -1896,24 +1798,22 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-### **✨ Major Features**
+**✨ Major Features**
 
 * **Enhanced Data Management**: Optimized DataFrame loading with lazy scanning and adaptive memory management. Implemented total storage size calculation and progress indicators for data collections. ([a308c300](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a308c300), [8afcdf2e](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/8afcdf2e), [bfcb6fd8](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/bfcb6fd8))
 * **Comprehensive Project & Data Collection Management**: Introduced new modal-based UI to manage workflows and data collection per project. Added features for creating, updating, deleting, and viewing data collections and projects. ([b9cb4727](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/b9cb4727), [78b93457](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/78b93457), [fb06d84e](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/fb06d84e))
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **Temp users data handling**: Improved error handling for temporary user cleanup. ([1253e8a6](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/1253e8a6), [6fd41333](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/6fd41333))
 * **Figures & Components Logic**: Added validation to prevent df reassignment in user code. Fix “Edit mode” for figure components. Enhanced figure generation to allow editing existing figures even with auto-generation disabled. ([318c7ae9](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/318c7ae9), [48f91115](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/48f91115))
 * **UI & Layout**: Corrected project update logic and improved modal ID handling. ([f6b68c73](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/f6b68c73), [93d72bba](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/93d72bba))
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **CLI & Theming Enhancements**: Added customizable ASCII logo display for the CLI. Implemented theme-aware color handling for card and interactive components. ([63a0e62f](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/63a0e62f), [7d5957f0](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/7d5957f0), [1c201684](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/1c201684))
 
 ## **[v0.2.1](https://github.com/depictio/depictio/releases/tag/v0.2.1)**
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.2.1
@@ -1922,29 +1822,27 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-### **✨ Features**
+**✨ Features**
 
 * **Theming & Components**: Plotly templates were updated to 'mantine_light' and 'mantine_dark'. AG Grid and text components now have theme-aware styling. ([04e4069e](https://github.com/depictio/depictio/commit/04e4069e), [97e6c0f5](https://github.com/depictio/depictio/commit/97e6c0f5))
 * **Interactivity & Access**: Interactive components can now restore saved configurations and values. Added EMBL-specific security contexts for unauthenticated mode. ([892de076](https://github.com/depictio/depictio/commit/892de076), [08a6e311](https://github.com/depictio/depictio/commit/08a6e311), [db18d84f](https://github.com/depictio/depictio/commit/db18d84f))
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **Security & Stability**: Addressed security vulnerabilities by updating seccompProfile. Fixed an UnboundLocalError and ensured metadata store indices are consistent. ([1b18d95a](https://github.com/depictio/depictio/commit/1b18d95a), [e828952a](https://github.com/depictio/depictio/commit/e828952a), [5a550856](https://github.com/depictio/depictio/commit/5a550856))
 * **Layout & Visuals**: Resolved footer positioning issues and adjusted default component dimensions for better layout consistency. ([f245982e](https://github.com/depictio/depictio/commit/f245982e), [2e16fdb9](https://github.com/depictio/depictio/commit/2e16fdb9))
 * **Visuals**: Updated logo images in the README for improved visibility in both light and dark modes. ([ca46ddc1](https://github.com/depictio/depictio/commit/ca46ddc1))
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Code Refactoring**: Simplified input handling in save and text component callbacks. ([8937bea3](https://github.com/depictio/depictio/commit/8937bea3))
 
-### **🧹 Chores**
+**🧹 Chores**
 
 * **Logging**: Refactored logging in various modules to reduce verbosity. ([322c80c1](https://github.com/depictio/depictio/commit/322c80c1))
 * **Version**: Bumped the project version from 0.2.0 to 0.2.1. ([8cd1e0e2](https://github.com/depictio/depictio/commit/8cd1e0e2))
 
 ## **[v0.2.0](https://github.com/depictio/depictio/releases/tag/v0.2.0)**
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.2.0
@@ -1953,7 +1851,7 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-### **✨ Major Features**
+**✨ Major Features**
 
 * **UI Theming & UX**: Fully functional dark/light theme ([68af2cc0](https://github.com/depictio/depictio/commit/68af2cc0), [b085b89b](https://github.com/depictio/depictio/commit/b085b89b)). Switched from dash-draggable to dash-dynamic-react-grid ([aacea638](https://github.com/depictio/depictio/commit/aacea638)). Revised UX with improved component buttons layout. Implemented progressive loading over dashboard restore + logo animation ([e40ba587](https://github.com/depictio/depictio/commit/e40ba587), [d8d696d2](https://github.com/depictio/depictio/commit/d8d696d2)).
 * **Figure component**: UI mode completely revised > switching from documentation parsing to function signature inspection and organisation into pydantic models. New code mode allowing user to write/port existing code with RestrictedPython providing code filtering and restricted execution environment to limit dangerous operations. ([691a2678](https://github.com/depictio/depictio/commit/691a2678), [b5c229b2](https://github.com/depictio/depictio/commit/b5c229b2))
@@ -1964,7 +1862,7 @@ ghcr.io/depictio/depictio:edge
 * **Notes & documentation footer**: notes taking using dmc.RichTextEditor (markdown style, links, bullet points, code blocks …) with fullscreen mode and responsive layout. ([d226f52b](https://github.com/depictio/depictio/commit/d226f52b), [3af94fd3](https://github.com/depictio/depictio/commit/3af94fd3), [b06eb2ee](https://github.com/depictio/depictio/commit/b06eb2ee), [f245982e](https://github.com/depictio/depictio/commit/f245982e))
 * **Buttons**: Reset button functionality and visibility logic for interactive components ([583aa04f](https://github.com/depictio/depictio/commit/583aa04f), [166a2af1](https://github.com/depictio/depictio/commit/166a2af1), [52684721](https://github.com/depictio/depictio/commit/52684721), [8e5ef9cc](https://github.com/depictio/depictio/commit/8e5ef9cc)).
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **Component & UI Fixes**:
   * Resolved circular reference issues in the dashboard context and fixed AG Grid popup visibility ([2b9e64c9](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/2b9e64c9), [f5bf946d](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/f5bf946d)).
@@ -1972,19 +1870,17 @@ ghcr.io/depictio/depictio:edge
 * **Authentication & CI**: Fixed Google OAuth configuration and routes, and addressed CI issues related to authentication ([19396605](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/19396605), [78dbc295](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/78dbc295)).
 * **Cypress Tests**: Updated header element selectors and improved modal visibility checks in Cypress tests ([b17fb7bb](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/b17fb7bb)).
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Dash Component Refactoring**: Refactored Dash components to use updated props and styling conventions, ensuring compatibility with Dash v3 and Dash Mantine 2.0+ ([8ed8f068](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/8ed8f068), [a7a0e3bb](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/a7a0e3bb)).
 * **Code & Styling Refactoring**: Improved overall code structure for enhanced readability and maintainability, and refactored auth modal styles for better appearance ([3ff3e54d](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/3ff3e54d), [7ed7c995](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/7ed7c995)).
 
-### **Chores 🧹**
+**Chores 🧹**
 
 * **Dependencies**: Added SVG format for logos ([9a9ceb9f](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/9a9ceb9f)).
 * **Pre-commit**: Improved pre-commit hooks for code quality enforcement ([75cb3058](https://www.google.com/search?q=https://github.com/depictio/depictio/commit/75cb3058)).
 
 ## **[v0.1.1](https://github.com/depictio/depictio/releases/tag/v0.1.1)**
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.1.1
@@ -1993,28 +1889,26 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-### **✨ Major Features**
+**✨ Major Features**
 
 * **UI Theming**: Implemented functional dark/light modes with auto-theming, including progress on Plotly figures, dashboard button visibility, and projects section theming ([a851f175](https://github.com/depictio/depictio/commit/a851f175), [d6d83410](https://github.com/depictio/depictio/commit/d6d83410)).
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **Cypress Tests**: Updated header element selectors and improved modal visibility checks in Cypress tests ([b17fb7bb](https://github.com/depictio/depictio/commit/b17fb7bb)).
 * **Authentication**: Removed unused expiry_minutes parameters from user upgrade API calls and fixed CI issues related to authentication ([b9c5241f](https://github.com/depictio/depictio/commit/b9c5241f), [78dbc295](https://github.com/depictio/depictio/commit/78dbc295)).
 * **CLI Configuration**: Resolved inconsistencies in CLI configuration field names and updated mock configurations for tests ([ce91c581](https://github.com/depictio/depictio/commit/ce91c581), [846fd4c1](https://github.com/depictio/depictio/commit/846fd4c1)).
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Dash Components**: Refactored Dash components to use updated props and styling conventions, ensuring compatibility with Dash v3 and Dash Mantine 2.0+ ([8ed8f068](https://github.com/depictio/depictio/commit/8ed8f068), [a7a0e3bb](https://github.com/depictio/depictio/commit/a7a0e3bb)).
 * **Code Structure**: Improved overall code structure for enhanced readability and maintainability across various modules ([3ff3e54d](https://github.com/depictio/depictio/commit/3ff3e54d), [89e62ec9](https://github.com/depictio/depictio/commit/89e62ec9)).
 
-### **🧹Chores**
+**🧹Chores**
 
 * **Pre-commit**: Initialized pre-commit hooks for code quality enforcement ([75cb3058](https://github.com/depictio/depictio/commit/75cb3058)).
 
 ## **[v0.1.0](https://github.com/depictio/depictio/releases/tag/v0.1.0)**
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.1.0
@@ -2023,18 +1917,18 @@ ghcr.io/depictio/depictio:stable
 ghcr.io/depictio/depictio:edge
 ```
 
-### **✨ Major Features**
+**✨ Major Features**
 
 * **Backup & Restore**: Implemented a comprehensive S3 backup and restore strategy manager, including CLI commands and endpoints for seamless integration ([92ce14ff](https://github.com/depictio/depictio/commit/92ce14ff), [c126e407](https://github.com/depictio/depictio/commit/c126e407)).
 
 * **Unauthenticated Mode & Temporary Users**: Added full support for an unauthenticated mode with automatic anonymous login and temporary user creation for defined time, including session management, upgrade options, and automated creation and cleanup features  ([38ff59d7](https://github.com/depictio/depictio/commit/38ff59d7), [6caf2863](https://github.com/depictio/depictio/commit/6caf2863), [7622d11f](https://github.com/depictio/depictio/commit/7622d11f), [a5d70429](https://github.com/depictio/depictio/commit/a5d70429)).
 * **Google OAuth**: Implemented Google OAuth authentication endpoints and updated related configurations ([a07364cb](https://github.com/depictio/depictio/commit/a07364cb), [19396605](https://github.com/depictio/depictio/commit/19396605)).
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **Screenshot Generation**: Resolved screenshot endpoint authentication and CI timeout issues, and simplified screenshot generation tests ([faecb4ec](https://github.com/depictio/depictio/commit/faecb4ec), [98598ee5](https://github.com/depictio/depictio/commit/98598ee5)).
 
-### **🚀 Improvements**
+**🚀 Improvements**
 
 * **Performance & Caching**: Implemented caching for iterative joins, component data, workflows, and data collection specs to significantly enhance performance ([78a7704a](https://github.com/depictio/depictio/commit/78a7704a), [cc7d7dbe](https://github.com/depictio/depictio/commit/cc7d7dbe)).
 * **E2E Tests**: Enhanced Cypress tests with improved Chrome configuration and reliability, including better login handling and dashboard navigation ([dba2e3e3](https://github.com/depictio/depictio/commit/dba2e3e3), [ca9fac6c](https://github.com/depictio/depictio/commit/ca9fac6c)).
@@ -2042,7 +1936,7 @@ ghcr.io/depictio/depictio:edge
 * **Type checking**: Implemented type checking with `ty` for better code quality and consistency.
 * **Logging**: Reduced logging verbosity across various modules for improved log management and clarity ([edd44b51](https://github.com/depictio/depictio/commit/edd44b51), [4e408f36](https://github.com/depictio/depictio/commit/4e408f36)).
 
-### **🧹Chores**
+**🧹Chores**
 
 * **Changelog & CI**: Updated changelog generation, fixed release DNS issues in Helm CI, and added a CODEOWNERS file ([dd019370](https://github.com/depictio/depictio/commit/dd019370)).
 
@@ -2057,39 +1951,37 @@ ghcr.io/depictio/depictio:edge
 
 This release focuses on significant enhancements across Authentication, User Management, and Security, making the application more robust and secure. Key improvements include refresh token, fix issues related to outdated tokens and provide a consolidated CI workflows for the CLI.
 
-### **✨ Features & Improvements**
+**✨ Features & Improvements**
 
 * **Authentication**: Implemented refresh token support across token management, enhancing security and user session persistence ([6a198be9](https://github.com/depictio/depictio/commit/6a198be9), [ae25380f](https://github.com/depictio/depictio/commit/ae25380f)).
 * **User Management**: Updated the user creation process to allow optional user IDs and group parameters, and improved user existence checks ([66d6aec9](https://github.com/depictio/depictio/commit/66d6aec9)).
 * **Security**: Added a Flask security assessment scanner for comprehensive application security checks ([caa5476c](https://github.com/depictio/depictio/commit/caa5476c)).
 
-### **⌨️ CLI Highlights**
+**⌨️ CLI Highlights**
 
 * **CI/CD**: Consolidated CI workflows by adding test, lint, build, and publish steps for depictio-cli ([83abfc65](https://github.com/depictio/depictio/commit/83abfc65)).
 * **Project Structure**: Updated CI workflows and initial CLI structure, removing setup.py and adjusting pyproject.toml for dependencies ([2915d3d2](https://github.com/depictio/depictio/commit/2915d3d2)).
 * **Packaging**: Fixed package directory mapping and license format in pyproject.toml ([9147327f](https://github.com/depictio/depictio/commit/9147327f), [af37c922](https://github.com/depictio/depictio/commit/af37c922)).
 
-### **💻 Gitpod & Dev Environment Highlights**
+**💻 Gitpod & Dev Environment Highlights**
 
 * **Setup**: Added and enhanced Gitpod workspace setup, including zsh, starship configuration, and Docker permissions ([e47b0c27](https://github.com/depictio/depictio/commit/e47b0c27), [a1e50c03](https://github.com/depictio/depictio/commit/a1e50c03)).
 * **Configuration**: Made backend and MinIO ports visible in Gitpod configuration for easier access during development ([d091cfc6](https://github.com/depictio/depictio/commit/d091cfc6)).
 * **Environment**: Updated environment configuration for Gitpod setup and adjusted logging verbosity for a cleaner development experience ([6b74b5f2](https://github.com/depictio/depictio/commit/6b74b5f2)).
 
-### **🧪 Testing & CI Highlights**
+**🧪 Testing & CI Highlights**
 
 * **Connectivity**: Enhanced inter-service connectivity tests with readiness checks and improved error handling ([ea147c59](https://github.com/depictio/depictio/commit/ea147c59)).
 * **Release Process**: Enhanced release name generation in CI to ensure DNS compliance ([86d5feaf](https://github.com/depictio/depictio/commit/86d5feaf)).
 * **Issue Templates**: Improved issue templates for bug reports and feature requests to streamline contributions ([a0fa5096](https://github.com/depictio/depictio/commit/a0fa5096)).
 
-### **🐳 Docker & Helm Highlights**
+**🐳 Docker & Helm Highlights**
 
 * **Gunicorn**: Fixed a single-worker issue with Gunicorn and optimized timeouts ([16d3a92d](https://github.com/depictio/depictio/commit/16d3a92d)).
 * **Helm**: Updated public URLs in ConfigMaps and improved MongoDB connection logic and MinIO configuration in Helm charts ([b93ee6cf](https://github.com/depictio/depictio/commit/b93ee6cf), [dce087f8](https://github.com/depictio/depictio/commit/dce087f8)).
 * **Helm**: Fixed an issue with backend service name in the ConfigMap to enable screenshot generation ([965ca53b](https://github.com/depictio/depictio/commit/965ca53b)).
 
 ## [v0.0.5](https://github.com/depictio/depictio/releases/tag/v0.0.5)
-
-### Docker Images
 
 ```bash
 ghcr.io/depictio/depictio:0.0.5
@@ -2100,30 +1992,30 @@ ghcr.io/depictio/depictio:edge
 
 This version brings substantial updates to S3 & Services configuration, streamlining data handling and external service integration. Notable progress has also been made in CLI execution logic and Docker build workflows, alongside critical Helm chart improvements.
 
-### **⚙️ Setup & Configuration Highlights**
+**⚙️ Setup & Configuration Highlights**
 
 * **S3 & Services**: Enhanced S3 configuration handling, logging, and URL management for better integration between internal and external services ([54fec27c](https://github.com/depictio/depictio/commit/54fec27c), [49ded59c](https://github.com/depictio/depictio/commit/49ded59c), [5eb17f50](https://github.com/depictio/depictio/commit/5eb17f50)).
 * **Data**: Added the Palmer Penguins dataset to test and validate the sequencing-runs ingestion pipeline ([0b7b1845](https://github.com/depictio/depictio/commit/0b7b1845)).
 * **Environment**: Added a step to generate the .env file from an example in deployment workflows to ensure consistency ([f5ad8f11](https://github.com/depictio/depictio/commit/f5ad8f11)).
 
-### **⌨️ CLI Highlights**
+**⌨️ CLI Highlights**
 
 * **CI/CD**: Added a dedicated GitHub Actions workflow for testing, linting, and building the depictio-cli package ([46503f33](https://github.com/depictio/depictio/commit/46503f33)).
 * **Execution**: Refactored the scan/processing logic to improve logging and implemented a run function for a full, end-to-end execution of all steps ([c3335e41](https://github.com/depictio/depictio/commit/c3335e41)).
 * **Commands**: Added run and standalone commands, improved logging, and updated command documentation ([0bad4848](https://github.com/depictio/depictio/commit/0bad4848), [b3d6a8a9](https://github.com/depictio/depictio/commit/b3d6a8a9)).
 
-### **🐳 Docker Highlights**
+**🐳 Docker Highlights**
 
 * **CI/CD**: Enhanced the Docker build workflow with improved security, better output management, and service health checks ([e684982b](https://github.com/depictio/depictio/commit/e684982b), [bb65a818](https://github.com/depictio/depictio/commit/bb65a818)).
 * **Configuration**: Corrected the path for admin_config.yaml in the Docker copy command ([77d3c4ee](https://github.com/depictio/depictio/commit/77d3c4ee)).
 
-### **🧪 Testing & CI Highlights**
+**🧪 Testing & CI Highlights**
 
 * **CI/CD Workflow Refactoring**: Refactored the main deployment workflow by splitting it into smaller, more manageable CI jobs with enhanced logging ([1d605c88](https://github.com/depictio/depictio/commit/1d605c88), [e8f1bbf2](https://github.com/depictio/depictio/commit/e8f1bbf2)).
 * **Integration Tests**: Enhanced the Iris dataset integration test with verification checks for project, deltatable, and dashboard creation ([9a8a6b00](https://github.com/depictio/depictio/commit/9a8a6b00)).
 * **Test Environment**: Added and refined test fixtures to properly set the DEPICTIO_CONTEXT environment variable for tests ([cb64d183](https://github.com/depictio/depictio/commit/cb64d183), [596395e6](https://github.com/depictio/depictio/commit/596395e6)).
 
-### **⎈ Helm Highlights**
+**⎈ Helm Highlights**
 
 * **CI/CD**: Added a dedicated GitHub Actions workflow for testing, building, and pushing the Helm chart ([4c965fa6](https://github.com/depictio/depictio/commit/4c965fa6)).
 * **Configuration**: Improved service port variables, initContainers, MongoDB connection logic, and MinIO configuration ([959ee2e9](https://github.com/depictio/depictio/commit/959ee2e9), [dce087f8](https://github.com/depictio/depictio/commit/dce087f8)).
@@ -2134,8 +2026,6 @@ This version brings substantial updates to S3 & Services configuration, streamli
 
 Generating changelog from dev to v0.0.4
 
-### Docker Images
-
 ```bash
 ghcr.io/depictio/depictio:0.0.4
 ghcr.io/depictio/depictio:latest
@@ -2145,59 +2035,59 @@ ghcr.io/depictio/depictio:edge
 
 This release introduces a first version of project-level permissions and user management features, enhancing access control for collaboration. Major UI/UX improvements and a fundamental backend refactoring to a project-centric architecture also define this version.
 
-### **✨ Features & Improvements**
+**✨ Features & Improvements**
 
 * **Permissions & User Management**: Introduced initial project-level permissions management, user and group management features, including endpoints and UI modals for creation, deletion, and management ([d17f3690](https://github.com/depictio/depictio/commit/d17f3690), [10af7623](https://github.com/depictio/depictio/commit/10af7623)).
 * **Authentication & API**: Added SAML integration, API calls for token management, password editing, user registration, and improved API key validation ([47e9cd43](https://github.com/depictio/depictio/commit/47e9cd43), [7b9f5437](https://github.com/depictio/depictio/commit/7b9f5437)).
 * **Dashboarding**: Enhanced dashboard public/private toggles, edit functionality, and project-specific handling, including screenshot capturing ([532e9b7c](https://github.com/depictio/depictio/commit/532e9b7c), [9c192bd0](https://github.com/depictio/depictio/commit/9c192bd0)).
 
-### **🎨 UI & UX Highlights**
+**🎨 UI & UX Highlights**
 
 * **Modals & Components**: Introduced new UI components like password editing modals and stylish modals for dashboard/item creation and deletion confirmations ([767908fc](https://github.com/depictio/depictio/commit/767908fc), [50e510b8](https://github.com/depictio/depictio/commit/50e510b8)).
 * **Layout & Styling**: Improved the layout and styling across the application, notably for project items and admin management sections, with added branding favicons ([c66f4d87](https://github.com/depictio/depictio/commit/c66f4d87), [6f70d027](https://github.com/depictio/depictio/commit/6f70d027)).
 
-### **⚙️ Setup & Configuration**
+**⚙️ Setup & Configuration**
 
 * **Environment & Logging**: Refined environment variable handling and implemented centralized logging initialization ([a835bb16](https://github.com/depictio/depictio/commit/a835bb16), [2f20b67c](https://github.com/depictio/depictio/commit/2f20b67c)).
 * **Database & Storage**: Enhanced MongoDB connection handling and initial project/user creation during database initialization, alongside MinIO configuration ([93e3d610](https://github.com/depictio/depictio/commit/93e3d610), [cd9fa0b9](https://github.com/depictio/depictio/commit/cd9fa0b9)).
 
-### **🐳 Docker & Dev Environment Highlights**
+**🐳 Docker & Dev Environment Highlights**
 
 * **Docker Workflows & Builds**: Refactored Docker workflows, enhanced environment variables, and added support for AMD64/ARM64 builds ([d052856e](https://github.com/depictio/depictio/commit/d052856e), [e0139c67](https://github.com/depictio/depictio/commit/e0139c67)).
 * **Devcontainer Configurations**: Enhanced Gitpod and devcontainer configurations to streamline local development setup ([2ae702cc](https://github.com/depictio/depictio/commit/2ae702cc)).
 
-### **🧪 Testing & CI Highlights**
+**🧪 Testing & CI Highlights**
 
 * **GitHub Actions Workflows**: Added comprehensive GitHub Actions workflows for automated release creation, changelog generation, and Docker image builds ([74536b3d](https://github.com/depictio/depictio/commit/74536b3d), [76544d7c](https://github.com/depictio/depictio/commit/76544d7c)).
 * **End-to-End & Unit Tests**: Implemented extensive end-to-end tests for user authentication and dashboard management, and comprehensive unit tests for various modules ([72550ffa](https://github.com/depictio/depictio/commit/72550ffa), [df44475b](https://github.com/depictio/depictio/commit/df44475b)).
 
-### **🧱 Beanie Implementation**
+**🧱 Beanie Implementation**
 
 * **User & Group Management**: Implemented FastAPI user and group management with Beanie ODM, including helpers for user and group creation ([6470af84](https://github.com/depictio/depictio/commit/6470af84)).
 * **Testing & Model Integration**: Added Beanie setup for various tests and updated model references for consistent integration ([ec008e0f](https://github.com/depictio/depictio/commit/ec008e0f)).
 
-### **♻️ Code Refactoring**
+**♻️ Code Refactoring**
 
 * **Code Organization & Clarity**: Performed refactoring of import statements, code organization, and whitespace across numerous files ([f8b0f913](https://github.com/depictio/depictio/commit/f8b0f913), [239ad86e](https://github.com/depictio/depictio/commit/239ad86e)).
 * **API & Data Models**: Refactored API and data models to use depictio-models as a centralized library and updated dependencies to Pydantic v2 ([2170ae17](https://github.com/depictio/depictio/commit/2170ae17), [e8397589](https://github.com/depictio/depictio/commit/e8397589)).
 
-### **🐛 Bug Fixes**
+**🐛 Bug Fixes**
 
 * **CI/CD & Deployment**: Corrected workflow triggers and addressed various Docker and Helm deployment issues, including volume paths and logging ([14539146](https://github.com/depictio/depictio/commit/14539146), [a376bf98](https://github.com/depictio/depictio/commit/a376bf98)).
 * **Data & Configuration Paths**: Corrected various file paths, IDs, and configurations for consistency and relative access ([a835bb16](https://github.com/depictio/depictio/commit/a835bb16), [214659e3](https://github.com/depictio/depictio/commit/214659e3)).
 * **User & Authentication**: Addressed issues with user fetching functions, replacing deprecated calls and ensuring proper asynchronous execution ([f334386c](https://github.com/depictio/depictio/commit/f334386c), [725c3d98](https://github.com/depictio/depictio/commit/725c3d98)).
 
-### Documentation
+Documentation
 
 Full documentation: <https://depictio.github.io/depictio-docs/>
 
 ## [v0.0.3](https://github.com/depictio/depictio/releases/tag/v0.0.3)
 
-### Bug Fixes
+Bug Fixes
 
 * Component size were modified to reflect better size on the dashboard
 
-### Features
+Features
 
 * Edit component (goes to design part (step 3 of component creation))
 * Display/hide component options
@@ -2211,12 +2101,12 @@ Full documentation: <https://depictio.github.io/depictio-docs/>
 
 ## [v0.0.2](https://github.com/depictio/depictio/releases/tag/v0.0.2)
 
-### Bug Fixes
+Bug Fixes
 
 * Switch from dashboard & component ID increment to UUID
 * Fix double click on add component button
 
-### Features
+Features
 
 * Autosave dashboard
 * Duplicate dashboard
@@ -2225,7 +2115,7 @@ Full documentation: <https://depictio.github.io/depictio-docs/>
 
 ## [v0.0.1](https://github.com/depictio/depictio/releases/tag/v0.0.1)
 
-### Features
+Features
 
 * Initial release of the project
 * Support for creating dashboards with multiple components (figure, metrics card, interactive & table)
