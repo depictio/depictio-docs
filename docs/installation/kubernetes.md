@@ -25,7 +25,7 @@ helm install depictio helm-charts/depictio \
 kubectl get pods -n depictio --watch
 ```
 
-All pods should reach `Running` status: backend, frontend, mongo, minio, redis, celery-worker.
+All pods should reach `Running` status: backend, viewer, mongo, minio, redis, celery-worker.
 
 ### Step 3 — Access Depictio
 
@@ -111,6 +111,20 @@ secrets:
   minioRootPassword: "mysecurepassword"
 ```
 
+!!! warning "Upgrading from pre-v1.0.0-b1 — rotate MinIO credentials"
+    From **v1.0.0-b1** onwards MinIO root credentials are stored exclusively
+    in a Kubernetes `Secret`. Earlier releases stored them in the `ConfigMap`,
+    which was readable via `kubectl describe` and stored in etcd as plain text.
+
+    If you are upgrading from an older release, **rotate your MinIO root
+    credentials** after the upgrade:
+
+    1. Update `secrets.minioRootUser` and `secrets.minioRootPassword` in your
+       values file (or a sealed secret / external-secrets source).
+    2. Run `helm upgrade` to apply the new Secret.
+    3. Restart the MinIO pod so it picks up the new credentials:
+       `kubectl rollout restart deployment/depictio-minio -n depictio`
+
 ### External S3 / Bring Your Own MinIO
 
 ```yaml
@@ -133,9 +147,9 @@ how your cluster's auth and TLS termination work.
 
 | Topology | Toggle | When to use |
 |---|---|---|
-| **Single ingress** (default) | `ingress.enabled: true` only | Frontend, backend API, and MinIO console all share one ingress + annotation set. Right for small/dev clusters or when one OIDC layer covers everything. |
-| **Frontend + dedicated backend** | `backend.ingress.separateRoute: true` | Apply different auth annotations (or no auth) on the API. Useful when the API needs a different OIDC scope, or when programmatic clients hit `/depictio/api/*` with mTLS or API tokens. |
-| **Frontend + dedicated MinIO** | `minio.ingress.separateRoute: true` | Same idea for MinIO — typically when MinIO is exposed for direct S3 access from CI runners and shouldn't sit behind the user-facing OIDC. |
+| **Single ingress** (default) | `ingress.enabled: true` only | Viewer, backend API, and MinIO console all share one ingress + annotation set. Right for small/dev clusters or when one OIDC layer covers everything. |
+| **Viewer + dedicated backend** | `backend.ingress.separateRoute: true` | Apply different auth annotations (or no auth) on the API. Useful when the API needs a different OIDC scope, or when programmatic clients hit `/depictio/api/*` with mTLS or API tokens. |
+| **Viewer + dedicated MinIO** | `minio.ingress.separateRoute: true` | Same idea for MinIO — typically when MinIO is exposed for direct S3 access from CI runners and shouldn't sit behind the user-facing OIDC. |
 
 You can combine the toggles to get all three ingresses separate.
 
@@ -153,7 +167,7 @@ ingress:
     secretName: depictio-tls
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "100m"
-    # OIDC annotations applied to the FRONTEND ingress only
+    # OIDC annotations applied to the viewer ingress only
 
 backend:
   ingress:
@@ -194,8 +208,26 @@ helm upgrade --install depictio ./helm-charts/depictio \
 
 The overlay sets `separateRoute: true` and `inheritDefaultAnnotations: false`
 on both backend and MinIO so the Serve-managed OIDC layer protects only the
-frontend ingress; backend and MinIO routes are then locked down at the
+viewer ingress; backend and MinIO routes are then locked down at the
 cluster network level.
+
+### Init container image pull policy
+
+All init containers must use `pullPolicy: Always`. Capsule and Pod Security
+Admission (PSA) webhooks on restricted namespaces reject pods whose init
+containers use `IfNotPresent`, which can leave the release stuck in `Pending`.
+
+```yaml
+# my-values.yaml
+initContainerImage:
+  pullPolicy: Always   # required on clusters with Capsule/PSA admission webhooks
+
+curlInitContainerImage:
+  pullPolicy: Always   # same requirement for the curl-based readiness init container
+```
+
+These keys map directly to the `initContainerImage.pullPolicy` and
+`curlInitContainerImage.pullPolicy` fields in `values.yaml`.
 
 ### Celery workers (background callbacks)
 
@@ -224,7 +256,7 @@ backend:
       memory: "4Gi"
       cpu: "2"
 
-frontend:
+viewer:
   resources:
     requests:
       memory: "512Mi"
@@ -264,7 +296,7 @@ kubectl get pods -n depictio
 
 # Inspect logs
 kubectl logs -n depictio deployment/depictio-backend
-kubectl logs -n depictio deployment/depictio-frontend
+kubectl logs -n depictio deployment/depictio-viewer
 
 # Describe a failing pod
 kubectl describe pod -n depictio <pod-name>

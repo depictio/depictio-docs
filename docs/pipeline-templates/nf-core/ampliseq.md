@@ -196,11 +196,12 @@ metadata `sample` column — see [Cross-DC links](#cross-dc-links-7) below.
 
 ---
 
-## Cross-DC links (7)
+## Cross-DC links (8)
 
 | Source | Column | Target | Description |
 |--------|--------|--------|-------------|
 | `samplesheet` | `sampleID` | `multiqc_data` | Filter MultiQC by samples |
+| `metadata` | `sample` | `multiqc_data` | Filter MultiQC by extended sample annotations (habitat, sampling_date) — added v0.13.2 for 2.14.0 & 2.16.0 |
 | `metadata` | `ID` | `alpha_diversity` | Filter diversity by metadata |
 | `metadata` | `ID` | `alpha_rarefaction` | Filter rarefaction by metadata |
 | `metadata` | `ID` | `taxonomy_composition` | Filter taxonomy by metadata |
