@@ -250,11 +250,7 @@ depictio/
 │       ├── services/    # Business logic, background tasks, lifespan
 │       ├── middleware/  # Analytics and request middleware
 │       └── db.py        # MongoDB / Beanie setup
-├── dash/                # Dash frontend (port 5080) — legacy, removal in v0.15.0
-│   ├── pages/           # Multi-app entry points (management, viewer, editor)
-│   ├── layouts/         # Shared shell, sidebar, save logic
-│   └── modules/         # One sub-package per dashboard component type
-├── viewer/              # React (Beta) Vite SPA (dev port 5173) — future default
+├── viewer/              # React Vite SPA (dev port 5173) — sole frontend from v1.0.0
 ├── models/              # Shared Pydantic models (API + Dash + viewer client)
 ├── cli/                 # Standalone CLI package (own pyproject.toml)
 └── tests/               # Test suites (api/, dash/, cli/)
@@ -274,32 +270,22 @@ Each resource domain lives in `depictio/api/v1/endpoints/<domain>_endpoints/` an
 └── utils.py         # Domain-specific helpers
 ```
 
-### Dash Component Structure
+### React Component Structure
 
-Depictio uses a modular component system in `depictio/dash/modules/`:
+Dashboard component renderers live in `packages/depictio-react-core/src/renderers/`:
 
-| Component | Purpose |
-|-----------|---------|
-| `card_component/` | Text and summary cards |
-| `figure_component/` | Plotly visualizations (Plotly Express, code mode, MultiQC plots) |
-| `image_component/` | Static image display from S3 |
-| `interactive_component/` | Filters, dropdowns, sliders |
-| `table_component/` | Interactive data tables (AG Grid) |
-| `text_component/` | Rich text / Markdown cards |
-| `multiqc_component/` | Embedded MultiQC HTML reports |
+| Renderer | Purpose |
+|----------|---------|
+| `CardRenderer` | Summary cards (single metric, multi-metric) |
+| `FigureRenderer` | Plotly figures (Plotly Express, code mode) |
+| `ImageRenderer` | Static image display from S3 |
+| `InteractiveRenderer` | Filters, dropdowns, sliders |
+| `TableRenderer` | Interactive data tables |
+| `TextRenderer` | Rich text / Markdown tiles |
+| `MultiQCRenderer` | Embedded MultiQC HTML reports |
+| `AdvancedVizRenderer` | Biology-specific plots (ComplexHeatmap, UpSet, …) |
 
-Each component typically contains a subset of:
-
-```
-component_name/
-├── frontend.py      # Entry point — layout and top-level callbacks
-├── utils.py         # Component building logic and helpers
-├── design_ui.py     # Stepper / configuration UI shown in edit mode
-├── models.py        # Component-specific Pydantic models
-└── callbacks/       # Callback modules split by concern
-```
-
-Not all files are present in every component — the structure grows with complexity.
+Viewer-specific wrappers (edit mode, drag-handle, builder stepper) live in `depictio/viewer/src/components/`.
 
 ## Development Workflow
 
@@ -387,10 +373,9 @@ We use pre-commit hooks to enforce:
 
 ### Frontend Guidelines
 
-!!! warning "Two frontends, two sets of rules"
-    Depictio ships two frontends today. Target the **React (Beta) viewer** for new work; only touch the Dash app for maintenance. See the [Dash deprecation note](../changelog/README.md#v0120-may-15-2026) for the v0.15.0 cutover.
+All frontend work targets the React viewer. The Dash frontend was removed in **v0.13.12**.
 
-#### React (Beta) frontend — preferred for new work
+#### React frontend
 
 Lives in `depictio/viewer/` and `packages/depictio-react-core/`. Stack: Vite + React + Mantine 7 + `pnpm@10`.
 
@@ -398,50 +383,17 @@ Lives in `depictio/viewer/` and `packages/depictio-react-core/`. Stack: Vite + R
 - **Workspace**: `pnpm -C depictio/viewer dev` runs the dev server at port `5173` against the existing FastAPI backend.
 - **Shared logic** belongs in `packages/depictio-react-core/`, not in the viewer.
 
-#### Dash frontend — legacy
+### React App Architecture
 
-Maintenance-only — no new components. Existing Dash UI **must** use DMC 2.0+ (Dash Mantine Components) and support dark/light themes.
+The React viewer (`depictio/viewer/`) serves three logical surfaces from a single SPA:
 
-**Component library priority:**
-
-1. **Primary**: DMC 2.0+ components — use for all remaining UI changes
-2. **Secondary**: Custom HTML/CSS — only when DMC is insufficient
-3. **Deprecated**: Bootstrap components — maintain only, do not extend
-
-**Theme compatibility checklist:**
-
-- [ ] Use DMC component props for theming whenever possible — DMC 2.0+ handles dark/light automatically
-- [ ] Only fall back to inline `style=` with CSS variables (`var(--app-bg-color)`, `var(--app-surface-color)`) when DMC has no built-in prop
-- [ ] Test in both light and dark themes
-- [ ] Never hardcode colors (`#ffffff`, `#000000`)
-
-### Multi-App Architecture (Dash legacy)
-
-<!-- prettier-ignore -->
-!!! info "Critical for Dash contributors"
-    The Dash frontend uses **three separate applications**. Callbacks must be registered in the correct app(s). The React (Beta) viewer runs on parallel `*-beta` routes and is unaffected by these rules.
-
-| App | URL Pattern | Purpose |
-|-----|-------------|---------|
-| **Management** | `/dashboards`, `/profile`, `/projects` | Dashboard listing, user settings |
+| Surface | URL Pattern | Purpose |
+|---------|-------------|---------|
+| **Management** | `/dashboards`, `/projects` | Dashboard and project listing |
 | **Viewer** | `/dashboard/{id}` | Read-only dashboard viewing |
-| **Editor** | `/dashboard/{id}/edit` | Dashboard editing, save operations |
+| **Editor** | `/dashboard-edit/{id}` | Dashboard editing, save operations |
 
-**Common pitfall:** Registering a callback only in Editor when it should also work in Viewer.
-
-```python
-# ✅ CORRECT: Register in both apps for view+edit features
-# In dashboard_viewer.py
-register_my_callback(app)
-# In dashboard_editor.py
-register_my_callback(app)
-
-# ❌ WRONG: Only in editor, won't work in view mode
-# In dashboard_editor.py only
-register_my_callback(app)
-```
-
-**Shared stores** must be defined in `depictio/dash/layouts/shared_app_shell.py` → `create_shared_stores()`
+Shared state lives in Zustand stores under `depictio/viewer/src/stores/`. Renderers shared with the docs screenshot pipeline live in `packages/depictio-react-core/`.
 
 ### Internal Technical Documentation
 

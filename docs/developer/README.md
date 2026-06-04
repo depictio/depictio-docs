@@ -56,8 +56,7 @@ pytest depictio/tests/ -xvs
 
 # Start development server
 pixi run api                      # FastAPI backend
-pixi run dash                     # Dash frontend (legacy)
-pnpm -C depictio/viewer dev       # React (Beta) viewer at http://localhost:5173
+pnpm -C depictio/viewer dev       # React viewer at http://localhost:5173
 ```
 
 See the [Contributing Guide](contributing.md) for detailed setup instructions.

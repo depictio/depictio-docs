@@ -52,8 +52,8 @@ hide:
   key: "nfcore"
   sub_title: "Phase 3: Templates ✅"
 
-- title: "React (Beta) Viewer"
-  content: "Vite + Mantine SPA rewrite — ships in Beta at /*-beta routes in v0.12.0, graduates onto canonical URLs in v0.15.0 when the legacy Dash frontend is removed"
+- title: "React Viewer"
+  content: "Vite + Mantine SPA rewrite — ships in Beta at /*-beta routes in v0.12.0, Dash removed in v0.13.12, graduates onto canonical URLs in v1.0.0"
   icon: ":fontawesome-brands-react:"
   key: "planned"
   sub_title: "Phase 3.5: UI Modernization 🔄"
@@ -131,8 +131,8 @@ Specialized components share a common pattern: a DC-level type-config (introduce
 
 ### Frontend
 
-- [x] **React (Beta) viewer** — Vite + Mantine SPA shipped at `/*-beta` routes (v0.12.0); graduates onto canonical URLs in v0.15.0
-- [x] Multi-app architecture (Management, Viewer, Editor) — *Dash, legacy; removal in v0.15.0*
+- [x] **React viewer** — Vite + Mantine SPA shipped at `/*-beta` routes (v0.12.0); graduates onto canonical URLs in v1.0.0
+- [x] Multi-app architecture (Management, Viewer, Editor) — *Dash removed in v0.13.12*
 
 ---
 
@@ -159,12 +159,13 @@ Reusable dashboards for standard bioinformatics workflows, with a focus on nf-co
 - [ ] **`nextflow.config` template** — embed Depictio ingestion directly in your Nextflow config so data collection happens at pipeline runtime
 - [ ] **Snakemake report plugin** — Depictio as a drop-in replacement for Snakemake's built-in HTML report, with interactive dashboards instead of static outputs
 
-### Phase 3.5: React (Beta) viewer graduation — v0.15.0 :material-react:{ .priority }
+### Phase 3.5: React viewer graduation — v1.0.0 :material-react:{ .priority }
 
-The React (Beta) viewer ships in v0.12.0 alongside Dash; in **v0.15.0** it takes over the canonical URLs and the Dash frontend is removed. Track contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
+The React viewer ships in v0.12.0 alongside Dash; the Dash frontend is removed in **v0.13.12**; in **v1.0.0** the React viewer takes over the canonical URLs and the `*-beta` suffix paths are retired. The 0.13.x patch series tightened the file-scan / canonical-seed / screenshot paths in preparation for the cutover. Track contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
 
-- [x] **React (Beta) viewer** shipped under `/*-beta` paths (v0.12.0) — `/dashboards-beta`, `/dashboard-beta/{id}`, `/dashboard-beta-edit/{id}`, `/projects-beta`, `/projects-beta/{id}`, `/profile-beta`, `/admin-beta`, `/cli-agents-beta`, `/about-beta`
-- [ ] **URL graduation (v0.15.0)** — React Beta takes over `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects` and the legacy Dash frontend is removed
+- [x] **React viewer** shipped under `/*-beta` paths (v0.12.0) — `/dashboards-beta`, `/dashboard-beta/{id}`, `/dashboard-beta-edit/{id}`, `/projects-beta`, `/projects-beta/{id}`, `/profile-beta`, `/admin-beta`, `/cli-agents-beta`, `/about-beta`
+- [x] **Dash frontend removed** (v0.13.12) — `depictio/dash/` deleted; `DashConfig` → `ViewerConfig`; per-service Dockerfiles scaffolded
+- [ ] **URL graduation (v1.0.0)** — React takes over `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`; `*-beta` paths redirect then retire
 - [ ] **Component parity audit** — every Dash editor feature has a React equivalent before cutover
 
 ### Phase 4: Citable Science

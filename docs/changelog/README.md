@@ -8,12 +8,61 @@ hide:
 
 # Changelog
 
-!!! info "React viewer becomes the default UI in v0.14.0"
-    The Dash frontend was removed in **v0.13.12**. From **v0.14.0** the React
+!!! info "React viewer becomes the sole frontend in v1.0.0"
+    The Dash frontend was removed in **v0.13.12**. In **v1.0.0** the React
     viewer (currently at `/*-beta` paths) takes over the canonical URLs
-    (`/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`).
+    (`/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`)
+    and the `*-beta` suffix paths are retired.
     The 0.13.x patch series tightened the React data-fetch + bundled-seed
     paths in preparation for that cutover.
+
+## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)** (upcoming)
+
+!!! success "Stable Major Release — React is the sole frontend, first 1.x stable"
+    First production-stable release of Depictio. The React viewer graduates
+    from Beta onto the canonical URLs; the `*-beta` suffix paths are retired.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.0.0
+```
+
+### **✨ New**
+
+* **URL graduation** — React takes over `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, `/profile`, `/admin`, `/cli-agents`, `/about`; the legacy `*-beta` paths return permanent redirects then are removed in a follow-on patch.
+* **Split-image production architecture** — `ghcr.io/depictio/depictio-api`, `depictio-worker`, and `depictio-viewer` are individually pullable; the monolithic image is still published for backwards compatibility.
+
+### **🚀 Improvements**
+
+* **Component parity** — every dashboard-editing affordance that existed in the Dash editor is available in the React editor.
+* **Helm chart v1.0.0** — default `image.tag` tracks the new `1.x` series; viewer served by its own nginx container with SPA fallback, CSP, and HSTS.
+
+---
+
+## **[v1.0.0-b1](https://github.com/depictio/depictio/releases/tag/v1.0.0-b1)** (upcoming)
+
+!!! warning "Beta Release — URL graduation under test"
+    First beta of the v1.0.0 milestone. React viewer moves to canonical paths;
+    `*-beta` redirects are live. Use in production at your own risk.
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.0.0-b1
+```
+
+### **✨ New**
+
+* **`/*-beta` → canonical redirect** — all `*-beta` paths (`/dashboards-beta`, `/dashboard-beta/{id}`, `/dashboard-beta-edit/{id}`, `/projects-beta`, `/projects-beta/{id}`, `/admin-beta`, `/cli-agents-beta`, `/profile-beta`, `/about-beta`) issue HTTP 301s to the canonical equivalents. Existing bookmarks and external links continue to work.
+* **React viewer on canonical URLs** — FastAPI now mounts the React SPA at `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, `/profile`, `/admin`, `/cli-agents`, `/about`; the `*-beta` variants forward to these.
+
+### **🚀 Improvements**
+
+* **`depictio/viewer` Vite config** — base path updated from `/*-beta` to `/`; nginx SPA fallback updated to match.
+* **Helm `values.yaml`** — viewer section updated to use the split `depictio-viewer` image and the canonical route prefix.
+
+---
 
 ## **[v0.13.12](https://github.com/depictio/depictio/releases/tag/v0.13.12)** (June 4, 2026)
 
@@ -276,8 +325,8 @@ ghcr.io/depictio/depictio:0.12.1
 
 !!! success "Stable Release — MultiQC lifecycle and cross-DC links"
 
-!!! warning "Dash deprecation — removal in v0.15.0"
-    From **v0.15.0**, the legacy Plotly Dash frontend will be removed. The React viewer — currently in Beta at `/dashboard-beta/*` — will **graduate onto the canonical URLs** (`/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, …) and become the sole frontend. The `*-beta` paths are temporary. Track migration progress and contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
+!!! info "Dash → React migration timeline"
+    This release ships the React viewer in Beta at `/*-beta` routes. The Dash frontend was removed in **v0.13.12**. The React viewer graduates onto the canonical URLs in **v1.0.0**, when the `*-beta` suffix paths are retired. Track contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
 
 ### Docker Images
 

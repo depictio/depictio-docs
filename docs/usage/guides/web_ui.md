@@ -171,7 +171,7 @@ The **Admin** section is only accessible to users with admin privileges. It allo
 
 ## <span style="color: #45B8AC;">:material-react:</span> React (Beta) tour — additional v0.12 pages
 
-The screens below ship in the React (Beta) viewer under `/*-beta` paths and will become canonical in **v0.15.0**. They surface project-detail UI and the CLI-agents panel that the legacy Dash views don't.
+The screens below ship in the React viewer under `/*-beta` paths and will become canonical in **v1.0.0**. They surface project-detail UI and the CLI-agents panel that the legacy Dash views didn't.
 
 ### <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects list (/projects-beta)
 

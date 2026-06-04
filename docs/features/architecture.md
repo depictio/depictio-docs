@@ -21,8 +21,7 @@ Depictio's architecture consists of six main components organized by category:
 | Component | Technology | Purpose |
 |-----------|------------|---------|
 | :material-api: **Backend** | FastAPI | RESTful API, authentication, business logic |
-| :material-view-dashboard: **Frontend (legacy)** | Plotly Dash | Interactive dashboards — removal in **v0.15.0** |
-| :material-react: **Frontend (Beta)** | React + Vite + Mantine | New viewer at `/dashboard-beta/*`; in v0.15.0 takes over the canonical URLs |
+| :material-react: **Frontend** | React + Vite + Mantine | Viewer at `/*-beta` (v0.12.0+); canonical URLs in **v1.0.0** |
 
 ### :material-database: Data Layer
 
@@ -75,55 +74,30 @@ Redis serves dual purposes in Depictio:
 - :material-cached: **Caching**: DataFrame caching and session storage for improved performance
 - :material-message-fast: **Task Broker**: Message broker and result backend for Celery background tasks
 
-### :material-view-dashboard: Frontend — Dash today, React (Beta) tomorrow
+### :material-react: Frontend — React viewer
 
-The current frontend is built with Plotly Dash (React under the hood), providing:
+The frontend is a Vite + Mantine **React SPA** (`depictio/viewer/`, shared `packages/depictio-react-core/`), currently served at the `/*-beta` routes and graduating onto canonical URLs in **v1.0.0**. It provides:
 
 - :material-chart-scatter-plot: Interactive data visualization components
 - :material-sync: Real-time data updates
 - :material-drag: Draggable and customizable dashboard layouts
 - :material-api: Integration with the backend API
 
-A second frontend — a Vite + Mantine **React SPA** (`depictio/viewer/`, shared `packages/depictio-react-core/`) — ships in Beta at `/dashboard-beta/{id}` and the related `*-beta` routes. See the [Dash deprecation note](../changelog/README.md#v0120-may-15-2026) for the v0.15.0 cutover plan.
+The legacy Plotly Dash frontend was removed in v0.13.12. See the [changelog](../changelog/README.md) for the full migration history.
 
 ---
 
-## :material-apps: Multi-App Architecture (Dash, v0.6.0+)
+## :material-apps: React SPA Surfaces (v1.0.0+)
 
-Starting with version 0.6.0, Depictio uses a **multi-app architecture** that separates the Dash frontend into three independent applications. The React (Beta) viewer runs alongside on parallel `*-beta` routes against the same FastAPI backend.
+The React viewer (`depictio/viewer/`) is a single Vite SPA served by nginx with a fallback rewrite. It exposes three logical surfaces against the same FastAPI backend:
 
-```text
-┌─────────────────────────────────────────────────────────────────┐
-│                     Flask Dispatcher                             │
-│                   (flask_dispatcher.py)                          │
-└───────────────┬───────────────┬───────────────┬─────────────────┘
-                │               │               │
-    ┌───────────▼───────┐ ┌─────▼─────┐ ┌───────▼───────────┐
-    │   Management App  │ │ Viewer App│ │    Editor App     │
-    │        /          │ │ /dashboard│ │  /dashboard-edit  │
-    │                   │ │           │ │                   │
-    │ • Authentication  │ │ • Read-   │ │ • Dashboard       │
-    │ • Dashboard list  │ │   only    │ │   editing         │
-    │ • Projects page   │ │   viewing │ │ • Component       │
-    │ • Admin panel     │ │ • Data    │ │   creation        │
-    │                   │ │   updates │ │ • Design mode     │
-    └───────────────────┘ └───────────┘ └───────────────────┘
-```
-
-### :material-format-list-group: App Responsibilities
-
-| App | URL Pattern | Purpose |
-|-----|-------------|---------|
-| :material-cog: **Management** | `/`, `/auth`, `/dashboards`, `/projects`, `/admin` | Authentication, listing, project management |
+| Surface | URL Pattern | Purpose |
+|---------|-------------|---------|
+| :material-cog: **Management** | `/dashboards`, `/projects`, `/admin` | Dashboard listing, project management, admin panel |
 | :material-eye: **Viewer** | `/dashboard/{id}` | Read-only dashboard viewing |
 | :material-pencil: **Editor** | `/dashboard-edit/{id}` | Dashboard editing and component creation |
 
-### :material-star: Benefits
-
-1. :material-call-split: **Callback Isolation**: Each app has its own callback registry, preventing conflicts
-2. :material-speedometer: **Performance**: Reduced callback overhead per app
-3. :material-shield-lock: **Security**: Editor functionality isolated from viewer mode
-4. :material-trending-up: **Scalability**: Apps can be optimized independently
+During the v0.12–v0.13 series the same surfaces ran at `/*-beta` paths alongside the legacy Dash frontend. Dash was removed in v0.13.12; the `*-beta` suffix paths redirect to canonical in v1.0.0.
 
 ---
 
@@ -133,12 +107,12 @@ Depictio supports **background task processing** using Celery and Redis for comp
 
 ```text
 ┌─────────────┐     ┌─────────────────┐     ┌─────────────┐
-│  Dash App   │────▶│  Celery Worker  │────▶│    Redis    │
+│ React/API   │────▶│  Celery Worker  │────▶│    Redis    │
 │  (Editor)   │     │                 │     │  (Broker)   │
 └─────────────┘     └─────────────────┘     └─────────────┘
 ```
 
-The Dash application submits tasks to Celery workers, which use Redis as both a message broker (for task queuing) and result backend (for storing task results).
+The FastAPI backend submits tasks to Celery workers, which use Redis as both a message broker (for task queuing) and result backend (for storing task results).
 
 ### :material-help-circle: When Background Processing is Used
 
