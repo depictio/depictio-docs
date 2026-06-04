@@ -55,87 +55,52 @@ ghcr.io/depictio/depictio:1.0.0
 
 ---
 
-## **[v1.0.0-b4](https://github.com/depictio/depictio/releases/tag/v1.0.0-b4)**
+## **v1.0.0 Beta Releases**
 
-!!! warning "Beta Release — demo fixes + Playwright e2e"
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
 
-### Docker Images
+### **[v1.0.0-b4](https://github.com/depictio/depictio/releases/tag/v1.0.0-b4)** (June 4, 2026)
 
-```bash
-ghcr.io/depictio/depictio:1.0.0-b4
-```
-
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * **Demo mode** — restore public reference dashboards; keep temp users alive for the full session (#789).
 
-### **🧪 Testing**
-
+#### **🧪 Testing**
 * **Playwright e2e** — parallel React frontend tests covering auth + dashboards-management slice; CI runs frontend + backend suites concurrently (#782).
 
 ---
 
-## **[v1.0.0-b3](https://github.com/depictio/depictio/releases/tag/v1.0.0-b3)**
+### **[v1.0.0-b3](https://github.com/depictio/depictio/releases/tag/v1.0.0-b3)** (June 4, 2026)
 
-!!! warning "Beta Release — bioinformatics catalog + rate-limit fix"
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:1.0.0-b3
-```
-
-### **✨ New Features**
-
+#### **✨ New Features**
 * **Tool→viz catalog** — module-granular bioinformatics catalog (nf-core / bio.tools / EDAM ontology) (#783).
 
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * **Rate limiter** — use `X-Real-IP` instead of TCP source so k8s nginx pod IP doesn't collapse all users into one bucket (#787).
 
 ---
 
-## **[v1.0.0-b2](https://github.com/depictio/depictio/releases/tag/v1.0.0-b2)**
+### **[v1.0.0-b2](https://github.com/depictio/depictio/releases/tag/v1.0.0-b2)** (June 4, 2026)
 
-!!! warning "Beta Release — password relaxation + screenshot fix"
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:1.0.0-b2
-```
-
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * **Password constraints** — min length 16 → 8; `changeme` allowed for bootstrap admin (not MinIO); single-user mode skips all enforcement (#786).
 * **Screenshot** — fix debounce wrong path; hide Sign In button in public mode (#784).
 * **React routes** — remove `-beta` suffix from route definitions (post-Dash cutover) (#785).
 
 ---
 
-## **[v1.0.0-b1](https://github.com/depictio/depictio/releases/tag/v1.0.0-b1)**
+### **[v1.0.0-b1](https://github.com/depictio/depictio/releases/tag/v1.0.0-b1)** (June 4, 2026)
 
-!!! warning "Beta Release — URL graduation + Dash removal + security hardening"
+#### **♻️ Migration**
+* **Dash removed** — `depictio/dash/` deleted; `DashConfig` → `ViewerConfig`; `DEPICTIO_DASH_` → `DEPICTIO_VIEWER_`; per-service Dockerfiles scaffolded.
 
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:1.0.0-b1
-```
-
-### **♻️ Migration**
-
-* **Dash removed** — `depictio/dash/` deleted; `DashConfig` → `ViewerConfig`; `DEPICTIO_DASH_` → `DEPICTIO_VIEWER_`; per-service Dockerfiles (`Dockerfile.api`, `Dockerfile.worker`, `Dockerfile.viewer`) scaffolded.
-
-### **✨ New Features**
-
+#### **✨ New Features**
 * **`/*-beta` → canonical redirect** — all `*-beta` paths issue HTTP 301s; existing bookmarks continue to work.
 * **React on canonical URLs** — FastAPI mounts SPA at `/dashboards`, `/dashboard/{id}`, etc.; Vite base path and nginx fallback updated.
 
-### **🔒 Security**
-
+#### **🔒 Security**
 * **Auth bootstrap from env** — `initial_users.yaml` removed; admin seeded via `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` (idempotent; fail-fast if absent and no admin in DB).
-* **Secrets hardened** — MinIO root password `SecretStr` ≥16 chars, no default; moved out of Helm ConfigMap; `mongo:8.0.5` + fixed MinIO release pinned; `runAsNonRoot` + `drop ALL` on Mongo/MinIO pods.
+* **Secrets hardened** — MinIO root password `SecretStr` ≥8 chars, no default; moved out of Helm ConfigMap; `mongo:8.0.5` + fixed MinIO release pinned; `runAsNonRoot` + `drop ALL` on Mongo/MinIO pods.
 * **API auth** — CORS `allow_origins=["*"]` replaced by env allowlist; JWT verifies RS256/RS512 signature + `exp` before MongoDB (closes alg=none); `/register` cannot set `is_admin`; import requires real user + zip-slip guard; IDOR file-delete fixed.
 * **Frontend + nginx** — JBrowse `allow-same-origin` removed; OAuth open-redirect closed; nginx viewer adds CSP, Permissions-Policy, HSTS.
 * **S3 + visibility** — `verify=False` boto3 → `settings.minio.verify_tls`; reference dashboards default `is_public=False`.
