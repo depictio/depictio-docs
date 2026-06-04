@@ -35,6 +35,7 @@ DEPICTIO_MINIO_ROOT_PASSWORD=minio123
 - [MongoDB Database](#mongodb-database)
 - [MinIO/S3 Storage](#minios3-storage)
 - [Authentication](#authentication)
+- [Bootstrap](#bootstrap)
 - [Redis Cache](#redis-cache)
 - [Celery Task Queue](#celery-task-queue)
 - [Performance & Timeouts](#performance-timeouts)
@@ -71,6 +72,8 @@ Base class for service configurations with internal/external URL handling.
 | `DEPICTIO_FASTAPI_WORKERS` | `4` | - |
 | `DEPICTIO_FASTAPI_SSL` | `false` | - |
 | `DEPICTIO_FASTAPI_LOGGING_LEVEL` | `INFO` | - |
+| `DEPICTIO_FASTAPI_CORS_ALLOWED_ORIGINS` | _(empty)_ | Allowed CORS origins — comma-separated list (e.g. `https://app.example.com,https://example.com`). Empty disables credentialed cross-origin requests. Wildcard `*` is rejected when used with credentials. |
+| `DEPICTIO_FASTAPI_CORS_ALLOW_CREDENTIALS` | `true` | Whether the CORS layer attaches credentials (cookies / Authorization header). |
 
 ---
 
@@ -84,13 +87,16 @@ Base class for service configurations with internal/external URL handling.
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `DEPICTIO_VIEWER_SERVICE_NAME` | `depictio-viewer` | - |
-| `DEPICTIO_VIEWER_SERVICE_PORT` | `5080` | - |
+| `DEPICTIO_VIEWER_SERVICE_PORT` | `80` | Internal bind port (nginx inside the container) |
 | `DEPICTIO_VIEWER_EXTERNAL_HOST` | `localhost` | - |
-| `DEPICTIO_VIEWER_EXTERNAL_PORT` | `5080` | - |
+| `DEPICTIO_VIEWER_EXTERNAL_PORT` | `5080` | Host-side port mapped to the viewer container |
 | `DEPICTIO_VIEWER_EXTERNAL_PROTOCOL` | `http` | - |
 | `DEPICTIO_VIEWER_PUBLIC_URL` | - | - |
 | `DEPICTIO_VIEWER_EXTERNAL_SERVICE` | `false` | - |
 | `DEPICTIO_VIEWER_HOST` | `0.0.0.0` | - |
+| `DEPICTIO_VIEWER_WORKERS` | `4` | Number of worker processes |
+| `DEPICTIO_VIEWER_DEBUG` | `true` | Enable debug mode with hot reload |
+| `DEPICTIO_VIEWER_AUTO_GENERATE_FIGURES` | `false` | Enable automatic figure generation in UI mode |
 
 ---
 
@@ -132,8 +138,9 @@ S3 configuration inheriting service URL management.
 | `DEPICTIO_MINIO_PUBLIC_URL` | - | - |
 | `DEPICTIO_MINIO_EXTERNAL_SERVICE` | `false` | - |
 | `DEPICTIO_MINIO_ROOT_USER` | `minio` | - |
-| `DEPICTIO_MINIO_ROOT_PASSWORD` | `minio123` | - |
+| `DEPICTIO_MINIO_ROOT_PASSWORD` | _(required, ≥16 chars)_ | MinIO root secret key. REQUIRED in server context — must not match a known-default value. |
 | `DEPICTIO_MINIO_BUCKET` | `depictio-bucket` | - |
+| `DEPICTIO_MINIO_VERIFY_TLS` | `true` | Verify TLS certificates when connecting to S3/MinIO. Set to `false` only for local dev with self-signed certificates. |
 
 ---
 
@@ -146,11 +153,14 @@ Authentication and authorization settings including JWT configuration, unauthent
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_AUTH_KEYS_DIR` | `PydanticUndefined` | - |
-| `DEPICTIO_AUTH_KEYS_ALGORITHM` | `RS256` | - |
-| `DEPICTIO_AUTH_CLI_CONFIG_DIR` | `PydanticUndefined` | - |
-| `DEPICTIO_AUTH_INTERNAL_API_KEY_ENV` | - | - |
+| `DEPICTIO_AUTH_KEYS_DIR` | `<repo>/keys` | Directory for JWT public/private key files |
+| `DEPICTIO_AUTH_KEYS_ALGORITHM` | `RS256` | JWT signing algorithm (RS256, RS512, ES256, SHA256) |
+| `DEPICTIO_AUTH_CLI_CONFIG_DIR` | `<repo>/.depictio` | Directory for CLI configuration files (admin token, etc.) |
+| `DEPICTIO_AUTH_INTERNAL_API_KEY_ENV` | _(auto-generated)_ | Internal API key for service-to-service communication |
 | `DEPICTIO_AUTH_UNAUTHENTICATED_MODE` | `false` | Enable unauthenticated mode |
+| `DEPICTIO_AUTH_SINGLE_USER_MODE` | `false` | Single-user mode for personal/self-hosted instances — grants admin privileges to the anonymous user |
+| `DEPICTIO_AUTH_PUBLIC_MODE` | `false` | Public mode for public instances — anonymous access with optional sign-in |
+| `DEPICTIO_AUTH_DEMO_MODE` | `false` | Demo mode — extends public mode with guided tour tooltips for first-time users |
 | `DEPICTIO_AUTH_ANONYMOUS_USER_EMAIL` | `anonymous@depict.io` | Default anonymous user email |
 | `DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS` | `24` | Number of hours until temporary users expire |
 | `DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_MINUTES` | `0` | Number of minutes until temporary users expire |
@@ -158,6 +168,23 @@ Authentication and authorization settings including JWT configuration, unauthent
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID` | - | Google OAuth client ID |
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET` | - | Google OAuth client secret |
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI` | - | Google OAuth redirect URI |
+
+---
+
+## Bootstrap
+
+**Config Class:** `AuthBootstrapConfig`
+**Environment Prefix:** `DEPICTIO_BOOTSTRAP_`
+
+First-boot admin seeding — replaces the legacy `initial_users.yaml`. Idempotent: the admin is only created when no admin exists in MongoDB, so operator-set passwords survive container restarts and Helm wipe-jobs.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | _(required)_ | Email address for the initial admin. REQUIRED when no admin exists in MongoDB. |
+| `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` | _(required, ≥16 chars)_ | Password for the bootstrap admin. Must not match any known-default value. |
+| `DEPICTIO_BOOTSTRAP_SEED_TEST_USER` | `false` | Seed a non-admin test user for CI/Cypress fixtures. Leave `false` in production. |
+| `DEPICTIO_BOOTSTRAP_TEST_USER_EMAIL` | `test_user@example.com` | Email for the CI test user (only when `seed_test_user=true`). |
+| `DEPICTIO_BOOTSTRAP_TEST_USER_PASSWORD` | `test_pwd` | Password for the CI test user (only when `seed_test_user=true`). |
 
 ---
 
@@ -213,6 +240,9 @@ Celery task queue configuration for background processing.
 | `DEPICTIO_CELERY_DEFAULT_QUEUE` | `dashboard_tasks` | Default task queue name |
 | `DEPICTIO_CELERY_WORKER_SEND_TASK_EVENTS` | `true` | Enable task event monitoring |
 | `DEPICTIO_CELERY_TASK_SEND_SENT_EVENT` | `true` | Send task sent events |
+| `DEPICTIO_CELERY_OFFLOAD_PREVIEW` | `true` | Offload component-design preview endpoints (`/figure/preview`, etc.) to Celery |
+| `DEPICTIO_CELERY_OFFLOAD_RENDERING` | `false` | Offload dashboard render endpoints (`/dashboards/render_*`) to Celery |
+| `DEPICTIO_CELERY_OFFLOAD_TIMEOUT_SECONDS` | `30.0` | Per-request Celery offload timeout in seconds before HTTP 504 |
 
 ---
 
@@ -268,6 +298,7 @@ Backup and restore configuration settings.
 | `DEPICTIO_BACKUP_BACKUP_S3_REGION` | `us-east-1` | Backup S3 region |
 | `DEPICTIO_BACKUP_COMPRESS_LOCAL_BACKUPS` | `true` | Compress local S3 data backups |
 | `DEPICTIO_BACKUP_BACKUP_FILE_RETENTION_DAYS` | `30` | Days to retain backup files |
+| `DEPICTIO_BACKUP_MIGRATION_ALLOWED_S3_ENDPOINTS` | _(empty)_ | Comma-separated allowlist of external S3/MinIO endpoints permitted for project migration. Empty = only the deployment's own MinIO is allowed (SSRF guard). |
 
 ---
 
@@ -348,7 +379,6 @@ repeated downloads after system restarts.
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `DEPICTIO_S3_CACHE_DIR` | `~/.depictio/s3_cache` | Local directory for S3 file cache. Use DEPICTIO_S3_CACHE_DIR to override. |
-| `DEPICTIO_S3_MOUNT_POINTS` | `""` | Comma-separated S3 FUSE mount points |
 
 ---
 
