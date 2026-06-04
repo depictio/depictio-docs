@@ -18,7 +18,7 @@ curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose
 docker compose up -d
 ```
 
-All services start automatically: MongoDB, Redis, MinIO, backend, frontend, and Celery worker.
+All services start automatically: MongoDB, Redis, MinIO, backend, viewer, and Celery worker.
 
 ### Step 3 — Open
 
@@ -26,11 +26,11 @@ All services start automatically: MongoDB, Redis, MinIO, backend, frontend, and 
 |---------|-----|-------------|
 | Depictio | <http://localhost:5080> | _(single-user mode, no login)_ |
 | API docs | <http://localhost:8058/docs> | — |
-| MinIO console | <http://localhost:9001> | `minio` / `minio123` |
+| MinIO console | <http://localhost:9001> | `minio` / see `.env` |
 
 !!! success "That's it!"
     Depictio starts in **single-user mode** by default — no account or login required.
-    Change MinIO credentials before exposing to the network (see [Custom credentials](#custom-credentials-env-file) below).
+    Set MinIO credentials in `.env` before exposing to the network (see [Custom credentials](#custom-credentials-env-file) below).
 
 ---
 
@@ -52,9 +52,16 @@ Switch to multi-user mode in your `.env`:
 
 ```bash
 DEPICTIO_AUTH_SINGLE_USER_MODE=false
+
+# Required in multi-user mode — sets the initial admin on first boot
+DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
+DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=change-me-strong-password-here
 ```
 
 Users can then register accounts and log in via the Depictio UI.
+
+!!! info "Bootstrap is idempotent"
+    The admin is only created when no admin exists in MongoDB. Changing these vars after first boot has no effect — use the admin UI to update credentials.
 
 !!! warning "Expose to the network?"
     If making Depictio accessible beyond `localhost`, disable single-user mode and change the MinIO credentials.
@@ -73,9 +80,9 @@ Edit `.env`:
 # Application version (default: latest)
 DEPICTIO_VERSION=latest
 
-# MinIO credentials — change these for production
-DEPICTIO_MINIO_ROOT_USER=minio
-DEPICTIO_MINIO_ROOT_PASSWORD=minio123
+# MinIO credentials — REQUIRED, ≥16 chars (enforced at startup from v1.0.0-b1)
+DEPICTIO_MINIO_ROOT_USER=myadmin
+DEPICTIO_MINIO_ROOT_PASSWORD=change-me-strong-password-here
 ```
 
 !!! tip "Full reference"

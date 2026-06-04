@@ -13,6 +13,28 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #16366 | 9:38 AM | 🔵 | Installation documentation identified as outdated for v1.0.0 | ~386 |
+| #16364 | 9:35 AM | ✅ | Second major documentation commit: 6 files updated with v0.13.x security hardening and v1.0.0-b1 architectural changes | ~731 |
+| #16362 | 9:34 AM | ✅ | Security documentation comprehensively updated with v1.0.0-b1 hardening details | ~940 |
+| #16361 | " | ✅ | Components documentation cleaned of React Beta references and enhanced with producer fingerprint details | ~559 |
+| #16360 | " | ✅ | Security documentation: added CORS and bootstrap admin configuration examples with hardening explanations | ~666 |
+| #16355 | 9:33 AM | ✅ | Security documentation: added JBrowse iframe sandbox and OAuth callback hardening sections | ~604 |
+| #16353 | " | ✅ | React Beta designator removed from documentation anchor link | ~389 |
+| #16350 | " | ✅ | Security documentation updated with file-delete IDOR vulnerability fix | ~468 |
+| #16349 | " | ✅ | Security documentation: added Registration Hardening subsection documenting admin privilege controls | ~526 |
+| #16346 | " | ✅ | Security documentation enhanced: JWT authentication table expanded with algorithm pinning and claim validation details | ~535 |
+| #16311 | 9:14 AM | 🔵 | Feature documentation audit reveals remaining React Beta references and missing v0.13.10 producer fingerprints | ~514 |
+| #16306 | " | 🔵 | Cross-DC filtering documentation references React Beta viewer at /dashboards-beta path | ~420 |
+| #16282 | 9:07 AM | ✅ | Architecture data flow diagram updated from Dash UI to React viewer | ~316 |
+| #16281 | " | ✅ | Removed temporal beta-route language from architecture documentation | ~308 |
+| #16280 | " | ✅ | Architecture table Frontend description simplified to remove beta path history | ~344 |
+| #16279 | " | ✅ | Architecture data flow diagram updated: Dash UI replaced with React Viewer in ASCII diagram and description | ~392 |
+| #16271 | 9:05 AM | 🔵 | Remaining Dash references identified in environment docs, blog posts, and meta-documentation | ~499 |
+| #16268 | 9:04 AM | 🔵 | Architecture diagram reference identified for potential update | ~278 |
+| #16262 | 8:58 AM | ✅ | Expanded documentation sweep: 8 files updated to remove remaining Dash references | ~494 |
+| #16258 | 8:57 AM | ✅ | YAML sync documentation Dash reference removed from MultiQC validation warning | ~346 |
+| #16250 | " | ✅ | FAQ updated to remove Dash from required services list | ~306 |
+| #16245 | 8:56 AM | 🔵 | Additional Dash references found in installation and configuration documentation | ~409 |
 | #16240 | 8:54 AM | ✅ | v1.0.0 changelog finalized with v0.13.8-v0.13.12 patch series and v0.14.0→v1.0.0 migration | ~595 |
 | #16223 | 8:17 AM | ✅ | Comprehensive documentation update committed: v1.0.0 timeline correction and Dash removal sweep | ~560 |
 | #16222 | 8:16 AM | ✅ | Architecture documentation rewrite: removed Dash multi-app section, replaced with React SPA surfaces | ~431 |

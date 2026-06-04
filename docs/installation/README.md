@@ -16,7 +16,7 @@ docker compose up -d # (2)!
 ```
 
 1.  :material-download: Downloads the single compose file — nothing else needed locally.
-2.  :material-play-circle: Starts **all six services** in the background: MongoDB, Redis, MinIO, backend API, frontend, and Celery worker.
+2.  :material-play-circle: Starts **all six services** in the background: MongoDB, Redis, MinIO, backend API, viewer, and Celery worker.
 
 !!! success "Open Depictio"
 
@@ -24,7 +24,7 @@ docker compose up -d # (2)!
     |-|---------|-----|-------|
     | :material-view-dashboard: | **Depictio** | [localhost:5080](http://localhost:5080) | Single-user mode — no login required |
     | :material-api: | **API docs** | [localhost:8058/docs](http://localhost:8058/docs) | Interactive OpenAPI interface |
-    | :simple-minio: | **MinIO console** | [localhost:9001](http://localhost:9001) | `minio` / `minio123` |
+    | :simple-minio: | **MinIO console** | [localhost:9001](http://localhost:9001) | `minio` / see `.env` |
 
 <div class="grid cards" markdown>
 
