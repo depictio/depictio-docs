@@ -21,7 +21,7 @@ Depictio's architecture consists of six main components organized by category:
 | Component | Technology | Purpose |
 |-----------|------------|---------|
 | :material-api: **Backend** | FastAPI | RESTful API, authentication, business logic |
-| :material-react: **Frontend** | React + Vite + Mantine | Viewer at `/*-beta` (v0.12.0+); canonical URLs in **v1.0.0** |
+| :material-react: **Frontend** | React + Vite + Mantine | Vite SPA; canonical URLs in **v1.0.0** |
 
 ### :material-database: Data Layer
 
@@ -76,7 +76,7 @@ Redis serves dual purposes in Depictio:
 
 ### :material-react: Frontend — React viewer
 
-The frontend is a Vite + Mantine **React SPA** (`depictio/viewer/`, shared `packages/depictio-react-core/`), currently served at the `/*-beta` routes and graduating onto canonical URLs in **v1.0.0**. It provides:
+The frontend is a Vite + Mantine **React SPA** (`depictio/viewer/`, shared `packages/depictio-react-core/`), graduating onto canonical URLs in **v1.0.0**. It provides:
 
 - :material-chart-scatter-plot: Interactive data visualization components
 - :material-sync: Real-time data updates
@@ -157,8 +157,8 @@ docker compose down && docker compose up -d
 
 ```text
 ┌─────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────┐
-│  CLI    │────▶│  FastAPI    │────▶│  MongoDB    │◀────│  Dash   │
-│         │     │  Backend    │     │             │     │  UI     │
+│  CLI    │────▶│  FastAPI    │────▶│  MongoDB    │◀────│  React  │
+│         │     │  Backend    │     │             │     │  Viewer │
 └─────────┘     └──────┬──────┘     └─────────────┘     └────┬────┘
                        │                                      │
                        ▼                                      │
@@ -170,7 +170,7 @@ docker compose down && docker compose up -d
 
 1. :material-console: **CLI** ingests data, validates, stores in Delta format, registers in MongoDB
 2. :material-api: **API** serves metadata and data access endpoints
-3. :material-view-dashboard: **Dash UI** renders interactive visualizations, calls API for data
+3. :material-react: **React viewer** renders interactive visualizations, calls API for data
 
 ---
 
