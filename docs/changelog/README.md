@@ -18,116 +18,98 @@ hide:
 
 ## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)** (upcoming)
 
-!!! success "Stable Major Release — React is the sole frontend, first 1.x stable"
-    First production-stable release of Depictio. The React viewer graduates
-    from Beta onto the canonical URLs; the `*-beta` suffix paths are retired.
-
-### Docker Images
+!!! success "Stable Major Release — React sole frontend, first 1.x stable"
 
 ```bash
 ghcr.io/depictio/depictio:1.0.0
 ```
 
-### **✨ New**
-
-* **URL graduation** — React takes over `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, `/profile`, `/admin`, `/cli-agents`, `/about`; the legacy `*-beta` paths return permanent redirects then are removed in a follow-on patch.
-* **Split-image production architecture** — `ghcr.io/depictio/depictio-api`, `depictio-worker`, and `depictio-viewer` are individually pullable; the monolithic image is still published for backwards compatibility.
-
-### **🚀 Improvements**
-
-* **Component parity** — every dashboard-editing affordance that existed in the Dash editor is available in the React editor.
-* **Helm chart v1.0.0** — default `image.tag` tracks the new `1.x` series; viewer served by its own nginx container with SPA fallback, CSP, and HSTS.
+* **✨** **URL graduation** — `*-beta` paths retired; React SPA serves canonical `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, `/profile`, `/admin`, `/cli-agents`, `/about`.
+* **✨** **Split-image production** — `depictio-api`, `depictio-worker`, `depictio-viewer` published individually; monolithic image kept for compatibility.
+* **🚀** **Component parity** — all Dash editor affordances available in the React editor.
+* **🚀** **Helm chart 1.0** — `image.tag` defaults to `1.x`; viewer runs in its own nginx container.
 
 ---
 
 ## **[v1.0.0-b1](https://github.com/depictio/depictio/releases/tag/v1.0.0-b1)** (upcoming)
 
-!!! warning "Beta Release — URL graduation under test"
-    First beta of the v1.0.0 milestone. React viewer moves to canonical paths;
-    `*-beta` redirects are live. Use in production at your own risk.
-
-### Docker Images
+!!! warning "Beta Release — URL graduation + security hardening"
 
 ```bash
 ghcr.io/depictio/depictio:1.0.0-b1
 ```
 
-### **✨ New**
-
-* **`/*-beta` → canonical redirect** — all `*-beta` paths (`/dashboards-beta`, `/dashboard-beta/{id}`, `/dashboard-beta-edit/{id}`, `/projects-beta`, `/projects-beta/{id}`, `/admin-beta`, `/cli-agents-beta`, `/profile-beta`, `/about-beta`) issue HTTP 301s to the canonical equivalents. Existing bookmarks and external links continue to work.
-* **React viewer on canonical URLs** — FastAPI now mounts the React SPA at `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, `/profile`, `/admin`, `/cli-agents`, `/about`; the `*-beta` variants forward to these.
-
-### **🚀 Improvements**
-
-* **`depictio/viewer` Vite config** — base path updated from `/*-beta` to `/`; nginx SPA fallback updated to match.
-* **Helm `values.yaml`** — viewer section updated to use the split `depictio-viewer` image and the canonical route prefix.
+* **✨** **`/*-beta` → canonical redirect** — all `*-beta` paths issue HTTP 301s; existing bookmarks continue to work.
+* **✨** **React on canonical URLs** — FastAPI mounts SPA at `/dashboards`, `/dashboard/{id}`, etc.; Vite base path and nginx fallback updated.
+* **🔒** **Auth bootstrap from env** — `initial_users.yaml` removed; admin seeded via `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` (idempotent; fail-fast if absent and no admin in DB).
+* **🔒** **Secrets hardened** — MinIO root password `SecretStr` ≥16 chars, no default; moved out of Helm ConfigMap; `mongo:8.0.5` + fixed MinIO release pinned; `runAsNonRoot` + `drop ALL` on Mongo/MinIO pods.
+* **🔒** **API auth** — CORS `allow_origins=["*"]` replaced by env allowlist; JWT verifies RS256/RS512 signature + `exp` before MongoDB (closes alg=none); `/register` cannot set `is_admin`; import requires real user + zip-slip guard; IDOR file-delete fixed.
+* **🔒** **Frontend + nginx** — JBrowse `allow-same-origin` removed; OAuth open-redirect closed; nginx viewer adds CSP, Permissions-Policy, HSTS.
+* **🔒** **S3 + visibility** — `verify=False` boto3 → `settings.minio.verify_tls`; reference dashboards default `is_public=False`.
 
 ---
 
 ## **[v0.13.12](https://github.com/depictio/depictio/releases/tag/v0.13.12)** (June 4, 2026)
 
-!!! success "Stable patch — Dash removal, security hardening, cross-DC filter correctness"
+!!! success "Stable patch — Dash removal + cross-DC filter fix"
 
-* **🔒** **Security hardening (CRITICAL + HIGH)** — removes `initial_users.yaml` (admin credentials are now env-driven via `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD`); MinIO root password becomes `SecretStr` with a ≥16-char validator and no default; CORS `allow_origins=["*"]` + `allow_credentials=True` replaced by an env-configured allowlist; JWT verification now decodes and validates the RS256/RS512 signature (plus `exp`) before hitting MongoDB, closing the `alg=none` / alg-confusion holes; `/register` can no longer set `is_admin`; `/import-project-zip` requires a real authenticated user and gains a zip-slip guard; IDOR file-delete predicate now branches on `current_user.is_admin`; JBrowse iframe loses `allow-same-origin`; OAuth callback is guarded against open-redirect; Helm moves MinIO creds out of ConfigMap (was kubectl-describe-readable), pins `mongo:8.0.5` + a fixed MinIO release, and adds `runAsNonRoot` + `drop ALL` capabilities; nginx viewer adds CSP, `Permissions-Policy`, HSTS, and `client_max_body_size`.
-* **🔒** **TLS verification on S3 clients** — replaces all `verify=False` boto3 clients with the `settings.minio.verify_tls` flag.
-* **🔒** **Reference dashboards default to `is_public=False`** — removes the per-restart forced flip back to public.
-* **♻️** **Dash frontend removed** — `depictio/dash/` is deleted; `DashConfig` renamed to `ViewerConfig`, env prefix `DEPICTIO_DASH_` → `DEPICTIO_VIEWER_`; new per-service Dockerfiles (`Dockerfile.api`, `Dockerfile.worker`, `Dockerfile.viewer`) and a matching nginx SPA config are scaffolded for the split-image architecture.
-* **🐛** **Cross-DC link filter join-column resolution** — `extend_filters_via_links` was using the *user's filter column* (`habitat`) as the fallback target column instead of the link's join column (`sample_id`). `apply_runtime_filters` silently dropped any filter naming a column absent from the target DC, so every row was returned and the component never refreshed.
+* **♻️** **Dash removed** — `depictio/dash/` deleted; `DashConfig` → `ViewerConfig`; `DEPICTIO_DASH_` → `DEPICTIO_VIEWER_`; per-service Dockerfiles scaffolded.
+* **🐛** **Cross-DC filter join column** — link resolver fell back to the user's filter column instead of the link's join column; target DC silently returned every row.
 
 ---
 
 ## **[v0.13.11](https://github.com/depictio/depictio/releases/tag/v0.13.11)** (May 29, 2026)
 
-!!! success "Stable patch — cross-DC filter target column fix"
+!!! success "Stable patch — cross-DC filter target column"
 
-* **🐛** **Cross-DC link filter `target_column=None`** — `extend_filters_via_links` used `dict.get("target_field", source_column)` which returns the stored value even when it is `None`, so the `source_column` default never fired for direct-resolver links (where `target_field: null` is common). `target_column` collapsed to `None` and propagated into the synthetic `link_filter` as `metadata.column_name=None`. On `/advanced_viz/data` this caused `pl.col(None)` → 500; on `/render_figure` / `/render_table` the None-column synthetic was silently dropped, leaving only the original filter which `apply_runtime_filters` then skipped (column absent from target DC → every row returned). Fixed with an explicit `or`-chain fallback and an additional guard in `/advanced_viz/data`.
+* **🐛** **Cross-DC filter `target_column=None`** — `dict.get("target_field", default)` returned `None` when key existed but was null; synthetic filter propagated `column_name=None` → 500 on advanced-viz, silent full-table return on figures.
 
 ---
 
 ## **[v0.13.10](https://github.com/depictio/depictio/releases/tag/v0.13.10)** (May 29, 2026)
 
-!!! success "Stable patch — builder UX: viz suggestions, text-step skip, screenshot regen"
+!!! success "Stable patch — builder: viz suggestions, text-step, screenshot regen"
 
-* **🐛** **Viz suggestion engine** — the drop modal showed nothing for rarefaction, sankey, sunburst, alpha-diversity, and taxonomy-heatmap source files; the post-create DC card emitted a 13-viz "suggestion soup" for every file. Root causes: no producer fingerprints for those file shapes (column-name path returned ∅) and `suggest_viz_kinds` only checked dtype compatibility so any Numeric+String DC matched every viz role. Added 4 new producers (`taxonomy_levels_long`, `rarefaction_iter_long`, `alpha_diversity_wide`, `taxonomy_abundance_long`), renamed 12 `*_canonical_table` producers to `*_role_table`, and rewrote `suggest_viz_kinds` to require a column matching the role's alias set *and* dtype.
-* **🐛** **Text component creation stuck on "Type" step** — `StepType` called `setStep(1)` for every type, but step 1 (Data Source) is hidden for text components, leaving the user visually on step 0 with the internal counter at 1. Now jumps directly to step 2 (Configuration) for text.
-* **🐛** **Screenshot not regenerated after Save** — the builder's Save handler skipped the screenshot enqueue when `editMode=false`, so edits made in view mode (code mode, etc.) never produced an updated thumbnail. Now enqueues regardless of edit mode.
+* **🐛** **Viz suggestion engine** — no fingerprints for rarefaction/sankey/sunburst/alpha-diversity; added 4 producers and rewrote matching to require alias set + dtype (not dtype alone).
+* **🐛** **Text component "Type" step freeze** — `setStep(1)` skipped the hidden Data Source step for text; now jumps to step 2.
+* **🐛** **Screenshot not regen'd on Save** — enqueue skipped when `editMode=false`; fixed.
 
 ---
 
 ## **[v0.13.9](https://github.com/depictio/depictio/releases/tag/v0.13.9)** (May 28, 2026)
 
-!!! success "Stable patch — admin bypass for public/demo-mode write gates"
+!!! success "Stable patch — admin bypass for public/demo write gates"
 
-* **🐛** **Admin locked out of their own deployment in public/demo mode** — project creation, CLI token creation, and CLI agent-config generation were hard-disabled for *everyone* in public/demo deployments, including the logged-in admin. The gate is meant to keep anonymous/temporary visitors from seeding the instance. Each gate is now `is_public_mode AND NOT current_user.is_admin`; the React and Dash frontends mirror the change and update tooltip copy accordingly.
+* **🐛** **Admin locked out in public/demo mode** — write gates (project creation, CLI token, agent-config) were unconditional; now `is_public AND NOT is_admin`.
 
 ---
 
 ## **[v0.13.8](https://github.com/depictio/depictio/releases/tag/v0.13.8)** (May 28, 2026)
 
-!!! success "Stable patch — React project import fix + screenshot ownership + Helm ingress"
+!!! success "Stable patch — React import, screenshot ownership, Helm ingress"
 
-* **🐛** **React project import 404** — the React `importProjectZip` client pointed at `/projects/import` (non-existent) instead of the real backend route `/migrate/import-project-zip`. Import modal warning removed.
-* **🐛** **Per-instance creation timestamps all identical** — bare class-level `datetime.now()` defaults across `Aggregation`, `File`, `Project`, and `Workflow` models were evaluated once at module-import time. Replaced with `Field(default_factory=datetime.now)`.
-* **🐛** **Screenshots denied on duplicated dashboards** — `check_dashboard_owner_permission_sync` only consulted the *project* owners; dashboard duplication writes the new owner into `dashboard.permissions.owners` while keeping `project_id` pointing at the original project. Every screenshot task on a duplicated dashboard was rejected with "user is not owner of dashboard". Ownership check now consults dashboard-level owners first, falls back to project owners for seeded dashboards.
-* **🚀** **Helm: dedicated ingress for MinIO and backend API** — separate `Ingress` resources for MinIO and the backend API, with permission-based auth annotations and Serve-specific ingress values. Base nginx annotations are always rendered; `allow-same-origin` removed from the JBrowse sandbox.
+* **🐛** **React project import 404** — client hit `/projects/import`; corrected to `/migrate/import-project-zip`.
+* **🐛** **Shared creation timestamps** — class-level `datetime.now()` defaults shared across instances; replaced with `Field(default_factory=datetime.now)`.
+* **🐛** **Screenshots denied on duplicated dashboards** — permission check consulted project owners only; now checks dashboard-level owners first.
+* **🚀** **Helm dedicated ingress** — separate `Ingress` objects for MinIO and backend API with Serve-specific annotations.
 
 ---
 
 ## **[v0.13.7](https://github.com/depictio/depictio/releases/tag/v0.13.7)** (May 22, 2026)
 
-!!! success "Stable patch — viralrecon Pangolin lineage tiles render"
+!!! success "Stable patch — viralrecon Lineage tab 500"
 
-* **🐛** **viralrecon Lineage tab** — *Unique Lineages* card and *Pangolin lineage distribution* figure (sourced from the `pangolin_lineages` DC, SARS-CoV-2 lineage assignment) returned 500 because `precompute_columns_specs` aborted on sparse-string columns whose aggregated `mode()` carried a non-default index. Switched to positional `.iloc[0]`.
+* **🐛** **viralrecon Lineage tab** — `precompute_columns_specs` aborted on sparse-string `mode()` with non-default index; switched to positional `.iloc[0]`.
 
 ---
 
 ## **[v0.13.6](https://github.com/depictio/depictio/releases/tag/v0.13.6)** (May 22, 2026)
 
-!!! success "Stable patch — recipe seed format, screenshot guard, EMBL resource tune"
+!!! success "Stable patch — recipe seed format, screenshot queue, EMBL resources"
 
-* **🐛** **viralrecon Variants / Lineages / Clustering / Coverage tabs** — 12 of 13 recipe DCs render-error'd because the init resolver kept the template's `format: csv` (describing the recipe *input*) after converting them to file-scans against the bundled `.tsv` seeds; polars then read each TSV with a comma separator, collapsing every header line into a single column. Resolver now force-sets `format=tsv` after conversion.
-* **🐛** **Startup unresponsive** — `/dashboards/save/{id}` enqueued a Playwright screenshot on every tab open / duplicate / rename, saturating celery and stalling advanced-viz `compute_*` tasks. Skip enqueue when both dual-theme PNGs exist and are <1h old (mirrors the auto-screenshot heuristic).
-* **🚀** **EMBL `demo` + `demodev` namespaces** — celery is the bottleneck for advanced-viz compute, so concurrency 2 → 8 and limits move to 8 CPU / 16 GiB. Combined requests fit the 32 CPU / 64 GiB tenant quota.
+* **🐛** **viralrecon recipe DCs** — init resolver kept `format: csv` after converting recipe DCs to file-scans against bundled TSVs; polars read them comma-delimited. Force-sets `format=tsv` after conversion.
+* **🐛** **Screenshot queue saturation** — save enqueued a screenshot on every tab open/duplicate/rename, saturating celery; now skips when dual-theme PNGs are <1h old.
+* **🚀** **EMBL demo/demodev** — celery concurrency 2→8, limits 8 CPU / 16 GiB.
 
 ---
 
@@ -135,8 +117,8 @@ ghcr.io/depictio/depictio:1.0.0-b1
 
 !!! success "Stable patch — viralrecon canonical seed TSVs"
 
-* **🚀** **Helm installs ship viralrecon dashboards working out of the box** — bundle 15 canonical recipe outputs (`summary_metrics`, `variants_long`, `pangolin_lineages`, `nextclade_results`, `manhattan_variants_canonical`, `complex_heatmap_canonical`, `coverage_track_canonical`, `sankey_canonical`, `upset_canonical`, `lollipop_canonical`, `oncoplot_canonical`, `variant_feature_matrix_canonical`, three `mosdepth_*` aggregations) as `.tsv` seeds (~1.5 MB total), matching ampliseq's bundled pattern. Ports the `variants_long` + `variant_feature_matrix_canonical` recipes that were missing from the bundled set.
-* **🧪** CI's `cli-comprehensive-test` job asserts all 19 viralrecon scan / seed files land in the image — catches future `.gitignore` / `.dockerignore` regressions.
+* **🚀** **viralrecon seed TSVs** — bundles 15 canonical recipe outputs (~1.5 MB); `variants_long` + `variant_feature_matrix_canonical` recipes added.
+* **🧪** CI asserts all 19 viralrecon scan/seed files land in the image.
 
 ---
 
@@ -144,82 +126,51 @@ ghcr.io/depictio/depictio:1.0.0-b1
 
 !!! success "Stable patch — bundled viralrecon raw data"
 
-* **🚀** **viralrecon Coverage & Depth + MultiQC tabs** — bundle the 4 raw nf-core scan targets (`multiqc.parquet` + 3 `mosdepth` TSVs, ~25 MB) under `depictio/projects/nf-core/viralrecon/3.0.0/run_1/` so a fresh helm install renders these tiles without `kubectl cp` or an external S3 sync.
+* **🚀** **viralrecon raw data** — bundles `multiqc.parquet` + 3 mosdepth TSVs (~25 MB); Coverage & Depth + MultiQC tabs render without `kubectl cp`.
 
 ---
 
 ## **[v0.13.3](https://github.com/depictio/depictio/releases/tag/v0.13.3)** (May 21, 2026)
 
-!!! success "Stable patch — viralrecon seed dashboards + public-mode pinning"
+!!! success "Stable patch — viralrecon seed IDs + public-mode pinning"
 
-* **🐛** **All 5 viralrecon dashboards 404'd on fresh installs** — the bundled `dashboard_*.json` seeds referenced auto-generated ObjectIds that don't reproduce across deploys (46 stale IDs across the 5 dashboards). Remapped to `STATIC_IDS["viralrecon"]`, and added a pytest invariant covering every reference project.
-* **🐛** **Advanced Visualisations showcase: Coverage Track + Categorical Flow demos 404'd** — the `coverage_track_demo` and `categorical_flow_demo` DCs were referenced in their seed dashboards but never registered in `STATIC_IDS`. Surfaced by the new pytest invariant.
-* **🚀** **Anonymous / demo sessions can now pin dashboards** — pin state lives in `localStorage` (no server write), so there was no privacy reason to gate it on auth mode.
+* **🐛** **viralrecon dashboards 404'd** — 46 stale auto-generated ObjectIds remapped to `STATIC_IDS["viralrecon"]`; pytest invariant added.
+* **🐛** **Advanced Viz Coverage Track + Categorical Flow demos 404'd** — DCs referenced in seeds but missing from `STATIC_IDS`.
+* **🚀** **Public/demo pinning** — dashboard pins stored in `localStorage`; no server write needed.
 
 ---
 
 ## **[v0.13.2](https://github.com/depictio/depictio/releases/tag/v0.13.2)** (May 21, 2026)
 
-!!! success "Stable patch — K8s deploy + ampliseq/viralrecon seed fixes"
+!!! success "Stable patch — K8s init containers, viralrecon scan, ampliseq seeds"
 
-* **🐛** **Fresh helm installs stalled at `0 READY`** — all 17 init containers (15 busybox `wait-for-mongo` / `wait-for-redis` / `fix-permissions-*` and 2 curl seeders) had no `imagePullPolicy`, so Kubernetes defaulted to `IfNotPresent` and the `pods.projectcapsule.dev` admission webhook denied pod creation. Each one is now templated through a new `initContainerImage` / `curlInitContainerImage` value block with `pullPolicy: Always`.
-* **🐛** **viralrecon scan errored "directory `/path/to/viralrecon/output` does not exist"** — the init resolver iterated `template.reference.vars` and overwrote the caller-resolved `DATA_ROOT` with the template's placeholder. Only viralrecon declared `DATA_ROOT` in `reference.vars`, so only viralrecon hit it. `DATA_ROOT` is now skipped in the vars loop.
-* **🐛** **13 ampliseq DCs ("Transformed DC has no transform config")** — once the init resolver converted a recipe DC to a file_scan it kept `source: "transformed"` (for viewer lineage display) but cleared the `transform` block. The CLI processor erred on `stacked_taxonomy_canonical`, `alpha_diversity_multi_canonical`, `complex_heatmap_canonical`, … — most of the **Alpha Diversity / Taxonomy / Clustering** tabs. Now falls through to file-scan when `transform` is absent.
-* **🐛** **ampliseq 2.16.0 MultiQC habitat / sample / sampling_date filters silently dropped** — the `metadata → multiqc_data` DCLink added in v0.13.1 only touched 2.14.0; the active 2.16.0 reference dataset had no link to resolve sample mappings against. Mirrored into 2.16.0.
+* **🐛** **Helm installs stalled at `0 READY`** — init containers had no `imagePullPolicy`; Capsule admission webhook denied pods. Added `initContainerImage.pullPolicy: Always`.
+* **🐛** **viralrecon scan "directory does not exist"** — init resolver overwrote caller-resolved `DATA_ROOT` from template vars; `DATA_ROOT` now skipped.
+* **🐛** **13 ampliseq DCs "no transform config"** — recipe→file_scan cleared `transform` block; falls through to file-scan when absent.
+* **🐛** **ampliseq 2.16.0 MultiQC filters dropped** — `metadata→multiqc_data` DCLink was 2.14.0-only; mirrored to 2.16.0.
 
 ---
 
 ## **[v0.13.1](https://github.com/depictio/depictio/releases/tag/v0.13.1)** (May 21, 2026)
 
-!!! success "Stable Release — seed projects, MultiQC filter, /admin-beta polish"
-    Adds nf-core/viralrecon as a fifth seed project and fixes
-    cross-DC filtering on MultiQC, the date range picker, and a few
-    React viewer rough edges.
-
-### Docker Images
+!!! success "Stable Release — nf-core/viralrecon seed, MultiQC filter, admin polish"
 
 ```bash
 ghcr.io/depictio/depictio:0.13.1
 ```
 
-### **✨ New Features**
-
-* **nf-core/viralrecon reference project** — fifth bundled seed
-  (5 dashboards). Advanced Visualisations renamed + overview tab dropped.
-* **Two new env vars** —
-  [`DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS`](../installation/env-reference.md#global-settings)
-  skips seeding the bundled reference projects;
-  [`DEPICTIO_WALKTHROUGH_DISABLED`](../installation/env-reference.md#global-settings)
-  hides the onboarding overlay.
-* **DC-creation viz hints** — uploads matching ANCOM-BC, viralrecon
-  variants, or canonical role-named tables get a "Looks like X" badge.
-
-### **🚀 Improvements**
-
-* **`/dashboards-beta` sections** — Owned → Accessed → Public →
-  **nf-core** → **Demo** (was a single "Example" section).
-* **`/admin-beta` (React)** — bullet list per project (was badges),
-  nested dashboard tabs as anchor links, Maintenance card covers all
-  five seed projects.
-* **Anchor-based navigation (React)** — dashboard cards and sidebar
-  tabs are real anchors; middle-click / Cmd+Click opens in a new tab.
-
-### **🐛 Bug fixes**
-
-* **MultiQC cross-DC filtering (React beta)** — interactive filters
-  on the metadata DC (habitat / sample / sampling_date) now actually
-  narrow MultiQC plots via sample-mapping resolution.
-* **Date range picker (React beta)** — could only pick the start
-  date, never the end; now defaults to the full bounds and completes
-  both ends correctly.
-* **Per-component reset icon (React beta)** — lights up when the
-  component sourced a filter (was always disabled).
-* **Interactive filter options greyed out (React)** — non-sample
-  columns like `habitat` no longer get masked by MultiQC sample
-  mappings.
-* **Alpha Diversity tab → rarefaction filter (ampliseq)** — the
-  habitat / sample filter now also narrows the rarefaction viz on
-  the same tab.
+* **✨** **nf-core/viralrecon** — fifth bundled seed (5 dashboards); Advanced Visualisations tab renamed + overview tab dropped.
+* **✨** **`DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS`** — skips seeding bundled reference projects on startup.
+* **✨** **`DEPICTIO_WALKTHROUGH_DISABLED`** — hides the onboarding overlay.
+* **✨** **DC-creation viz hints** — uploads matching ANCOM-BC, viralrecon variants, or role-named tables get a "Looks like X" badge.
+* **🚀** **`/dashboards-beta` sections** — Owned → Accessed → Public → nf-core → Demo (was a single "Example" section).
+* **🚀** **`/admin-beta`** — bullet list per project, nested dashboard anchor tabs, Maintenance card covers all five seed projects.
+* **🚀** **Anchor navigation** — dashboard cards and sidebar tabs are real anchors; Cmd+Click opens in a new tab.
+* **🐛** **MultiQC cross-DC filtering** — habitat / sample / sampling_date filters now resolve sample mappings and narrow MultiQC plots.
+* **🐛** **Date range picker** — could only pick start date; now defaults to full bounds.
+* **🐛** **Per-component reset icon** — now lights up when the component sourced a filter.
+* **🐛** **Interactive filter options greyed out** — non-sample columns like `habitat` no longer masked by MultiQC sample mappings.
+* **🐛** **Alpha Diversity rarefaction filter** — habitat / sample filter now also narrows the rarefaction viz.
 
 ---
 
