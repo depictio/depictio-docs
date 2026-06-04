@@ -12,12 +12,9 @@ description: "Get started with Depictio by choosing the installation method that
 curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml
 ```
 
-```bash title="2 — Set credentials (.env)"
-cat > .env << 'EOF'
-DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
-DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=change-me-strong-password-here
-DEPICTIO_MINIO_ROOT_PASSWORD=change-me-strong-password-here
-EOF
+```bash title="2 — Generate passwords & write .env"
+printf "DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com\nDEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=$(openssl rand -base64 24)\nDEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 24)\n" > .env
+cat .env   # verify before starting
 ```
 
 ```bash title="3 — Start"

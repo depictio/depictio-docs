@@ -12,19 +12,48 @@ curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose
 
 ### Step 2 — Set credentials
 
-Create a `.env` file in the same directory with your admin account and MinIO password:
+Generate strong passwords, then write your `.env`:
 
-```bash
-# Admin account — created on first boot, idempotent afterwards
-DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
-DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=change-me-strong-password-here
+=== "bash / openssl"
 
-# MinIO root password — must be ≥ 16 characters
-DEPICTIO_MINIO_ROOT_PASSWORD=change-me-strong-password-here
-```
+    ```bash
+    # Generate two passwords
+    ADMIN_PWD=$(openssl rand -base64 24)
+    MINIO_PWD=$(openssl rand -base64 24)
+
+    cat > .env << EOF
+    DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
+    DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=${ADMIN_PWD}
+    DEPICTIO_MINIO_ROOT_PASSWORD=${MINIO_PWD}
+    EOF
+
+    echo "Admin password : ${ADMIN_PWD}"
+    echo "MinIO password : ${MINIO_PWD}"
+    ```
+
+=== "Python"
+
+    ```python
+    import secrets, pathlib
+
+    admin_pwd = secrets.token_urlsafe(24)
+    minio_pwd = secrets.token_urlsafe(24)
+
+    pathlib.Path(".env").write_text(
+        f"DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com\n"
+        f"DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD={admin_pwd}\n"
+        f"DEPICTIO_MINIO_ROOT_PASSWORD={minio_pwd}\n"
+    )
+
+    print(f"Admin password : {admin_pwd}")
+    print(f"MinIO password : {minio_pwd}")
+    ```
 
 !!! warning "Required before first start"
     The server refuses to start if `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` or `DEPICTIO_MINIO_ROOT_PASSWORD` are absent or too short (< 16 chars).
+
+!!! tip "Save your passwords"
+    Note them down — the bootstrap is idempotent so the admin password cannot be recovered from the env var after first boot.
 
 ### Step 3 — Start
 
