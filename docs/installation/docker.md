@@ -52,16 +52,9 @@ Switch to multi-user mode in your `.env`:
 
 ```bash
 DEPICTIO_AUTH_SINGLE_USER_MODE=false
-
-# Required in multi-user mode — sets the initial admin on first boot
-DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
-DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=change-me-strong-password-here
 ```
 
 Users can then register accounts and log in via the Depictio UI.
-
-!!! info "Bootstrap is idempotent"
-    The admin is only created when no admin exists in MongoDB. Changing these vars after first boot has no effect — use the admin UI to update credentials.
 
 !!! warning "Expose to the network?"
     If making Depictio accessible beyond `localhost`, disable single-user mode and change the MinIO credentials.
@@ -80,10 +73,17 @@ Edit `.env`:
 # Application version (default: latest)
 DEPICTIO_VERSION=latest
 
+# Admin account — REQUIRED on first boot (all modes)
+DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
+DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=change-me-strong-password-here
+
 # MinIO credentials — REQUIRED, ≥16 chars (enforced at startup from v1.0.0-b1)
 DEPICTIO_MINIO_ROOT_USER=myadmin
 DEPICTIO_MINIO_ROOT_PASSWORD=change-me-strong-password-here
 ```
+
+!!! info "Bootstrap is idempotent"
+    The admin account is created only on first boot (when no non-anonymous admin exists in MongoDB). Restarting the container or changing the bootstrap vars afterwards has no effect — use the admin UI to manage credentials.
 
 !!! tip "Full reference"
     - **Complete env file**: `.env.complete.example` — all 160+ variables with defaults
