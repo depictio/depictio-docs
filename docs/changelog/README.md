@@ -45,6 +45,7 @@ ghcr.io/depictio/depictio:1.0.0
 ### **🚀 Improvements**
 
 * **Helm chart 1.0** — `image.tag` defaults to `1.x`; viewer runs nginx container; no default MinIO credentials.
+* **MongoDB HA** — Percona PSMDB Operator replaces Community Operator; viewer startup order and resource rebalance.
 * **Rate limiter** — Redis-backed per-IP fixed window; uses `X-Real-IP` in k8s.
 * **Playwright e2e** — CI covers auth + dashboards-management slice in parallel.
 
@@ -52,6 +53,7 @@ ghcr.io/depictio/depictio:1.0.0
 
 * Screenshot debounce wrong path; Sign In hidden in public mode.
 * Demo mode: public reference dashboards restored; temp users kept for the full session.
+* Auth key-wipe race on multi-replica deployments fixed; React default thumbnail fallback added.
 
 ---
 
@@ -59,6 +61,22 @@ ghcr.io/depictio/depictio:1.0.0
 
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v1.0.0-b6](https://github.com/depictio/depictio/releases/tag/v1.0.0-b6)** (June 4, 2026)
+
+#### **🐛 Bug Fixes**
+* **Auth key-wipe race** — fix multi-replica race condition wiping internal API key during dev-demo ingestion (#791).
+* **React thumbnails** — default fallback thumbnail shown when screenshot is missing (#791).
+* **Release workflow** — fix shell injection and bad parameter expansion in bump/release scripts (#790).
+
+---
+
+### **[v1.0.0-b5](https://github.com/depictio/depictio/releases/tag/v1.0.0-b5)** (June 4, 2026)
+
+#### **🚀 Improvements**
+* **Helm / MongoDB HA** — migrate MongoDB from Community Operator to Percona PSMDB Operator; viewer startup order and resource rebalance (#788).
+
+---
 
 ### **[v1.0.0-b4](https://github.com/depictio/depictio/releases/tag/v1.0.0-b4)** (June 4, 2026)
 
