@@ -54,6 +54,8 @@ ghcr.io/depictio/depictio:1.0.0
 * Screenshot debounce wrong path; Sign In hidden in public mode.
 * Demo mode: public reference dashboards restored; temp users kept for the full session.
 * Auth key-wipe race on multi-replica deployments fixed; React default thumbnail fallback added.
+* Screenshots: fonts installed in worker image; settle delay before capture.
+* Viewer tab menu refresh and icon handling in modals.
 
 ---
 
@@ -61,6 +63,22 @@ ghcr.io/depictio/depictio:1.0.0
 
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v1.0.0-b7](https://github.com/depictio/depictio/releases/tag/v1.0.0-b7)** (June 8, 2026)
+
+#### **✨ New Features**
+* **Project export in public/demo mode** — export allowed for anonymous users (#793).
+
+#### **🚀 Improvements**
+* **MongoDB HA** — Percona PSMDB Operator migration landed in Helm (#792).
+* **CI** — build-images trigger narrowed to build-recipe files only (#796).
+* **Producers** — remove suggestion engine; migrate ampliseq `complex_heatmap` tiles (#797).
+
+#### **🐛 Bug Fixes**
+* **Screenshots** — install sans-serif fonts in worker image; settle delay before capture (#794).
+* **Viewer** — tab menu refresh + icon handling in tab/dashboard modals (#795).
+
+---
 
 ### **[v1.0.0-b6](https://github.com/depictio/depictio/releases/tag/v1.0.0-b6)** (June 4, 2026)
 
