@@ -66,15 +66,13 @@ ghcr.io/depictio/depictio:1.0.0
 
 ### **[v1.0.0-b7](https://github.com/depictio/depictio/releases/tag/v1.0.0-b7)** (June 8, 2026)
 
-#### **🐛 Bug Fixes**
-* **Project export in public/demo mode** — export allowed for anonymous users (#793).
-
 #### **🚀 Improvements**
 * **MongoDB HA** — Percona PSMDB Operator migration landed in Helm (#792).
 * **CI** — build-images trigger narrowed to build-recipe files only (#796).
 * **Producers** — remove suggestion engine; migrate ampliseq `complex_heatmap` tiles (#797).
 
 #### **🐛 Bug Fixes**
+* **Project export** — export allowed for anonymous users in public/demo mode (#793).
 * **Screenshots** — install sans-serif fonts in worker image; settle delay before capture (#794).
 * **Viewer** — tab menu refresh + icon handling in tab/dashboard modals (#795).
 
