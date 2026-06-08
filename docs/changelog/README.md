@@ -66,7 +66,7 @@ ghcr.io/depictio/depictio:1.0.0
 
 ### **[v1.0.0-b7](https://github.com/depictio/depictio/releases/tag/v1.0.0-b7)** (June 8, 2026)
 
-#### **✨ New Features**
+#### **🐛 Bug Fixes**
 * **Project export in public/demo mode** — export allowed for anonymous users (#793).
 
 #### **🚀 Improvements**
