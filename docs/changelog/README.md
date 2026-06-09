@@ -35,6 +35,8 @@ ghcr.io/depictio/depictio:1.0.0
 * **URL graduation** — `*-beta` paths retired; React SPA serves canonical `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, `/profile`, `/admin`, `/cli-agents`, `/about`.
 * **Split-image production** — `depictio-api`, `depictio-worker`, `depictio-viewer` published individually.
 * **Tool→viz catalog** — module-granular bioinformatics catalog (nf-core / bio.tools / EDAM ontology).
+* **CLI overhaul** — new banner, `depictio commands` reference table, slimmed surface, parallel image uploads.
+* **Advanced viz** — richer bindings UX; graded suggestion scoring.
 
 ### **🔒 Security**
 
@@ -63,6 +65,27 @@ ghcr.io/depictio/depictio:1.0.0
 
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v1.0.0-b8](https://github.com/depictio/depictio/releases/tag/v1.0.0-b8)** (June 9, 2026)
+
+#### **✨ New Features**
+* **CLI overhaul** — new startup banner (favicon), `depictio commands` grouped reference table, slimmed user-facing surface, cleaner `catalog list`, parallel image uploads.
+* **Advanced viz** — richer bindings UX (sankey/heatmap); suggestion model reworked to graded, tolerant scoring.
+* **API** — re-export admin agent config on every dev-mode boot.
+
+#### **🚀 Improvements**
+* **Deps bump** — Phase A (static tooling) + Phase B (runtime); data-layer majors (deltalake/pandas/polars); monthly Dependabot health-check added.
+
+#### **🔒 Security**
+* **CLI deps** — bump `depictio-cli` deps, fix `python-jose` CVEs; hold `redis` at 5.2.1 (redis-py 8.0 starves the API event loop).
+
+#### **🐛 Bug Fixes**
+* **Viewer** — tab three-dots menu no longer triggers URL refresh.
+* **Delta tables** — accept pandas 3.0 `str` dtype in column type detection.
+* **CLI** — don't force ANSI on piped output; catch `typer.Exit` in `recipe_run`.
+* **Devcontainer** — drop dangling `docker-compose.minio.yaml` ref; harmonize MinIO credentials across worktree envs.
+
+---
 
 ### **[v1.0.0-b7](https://github.com/depictio/depictio/releases/tag/v1.0.0-b7)** (June 8, 2026)
 
