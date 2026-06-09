@@ -71,8 +71,6 @@ ghcr.io/depictio/depictio:1.0.0
 #### **✨ New Features**
 * **CLI overhaul** — new startup banner (favicon), `depictio commands` grouped reference table, slimmed user-facing surface, cleaner `catalog list`, parallel image uploads.
 * **Advanced viz** — richer bindings UX (sankey/heatmap); suggestion model reworked to graded, tolerant scoring.
-* **API** — re-export admin agent config on every dev-mode boot.
-
 #### **🚀 Improvements**
 * **Deps bump** — Phase A (static tooling) + Phase B (runtime); data-layer majors (deltalake/pandas/polars); monthly Dependabot health-check added.
 
