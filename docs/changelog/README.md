@@ -16,7 +16,7 @@ hide:
     The 0.13.x patch series tightened the React data-fetch + bundled-seed
     paths in preparation for that cutover.
 
-## **v1.0.0** *(upcoming)*
+## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)** (June 10, 2026)
 
 !!! success "Stable Major Release — React sole frontend, Dash → React migration complete"
 
