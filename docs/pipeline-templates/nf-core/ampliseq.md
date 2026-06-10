@@ -1,21 +1,27 @@
 # nf-core/ampliseq
 
 <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
-  <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:56px;" onerror="this.src='../../images/pipeline-templates/nf-core/ampliseq/nf-core-ampliseq_logo.png'">
+  <div style="flex-shrink:0;">
+    <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_dark.png" alt="nf-core/ampliseq" style="height:56px;">
+    <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:56px;">
+  </div>
   <div style="flex:1;">
     <strong style="font-size:1.1em;">Amplicon sequencing analysis workflow using DADA2 and QIIME2 — 16S, ITS, CO1, 18S and other amplicons across Illumina, PacBio, IonTorrent.</strong><br>
     <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/ampliseq" target="_blank">nf-co.re/ampliseq</a></span>
   </div>
-  <div style="background:#2196F3;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;white-space:nowrap;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Reviewed</div>
+  <span class="template-status-reviewed" style="white-space:nowrap;"><i class="mdi mdi-check-circle-outline" style="vertical-align:-1px;"></i> Reviewed</span>
 </div>
 
 The ampliseq template covers the main outputs of a standard nf-core/ampliseq run:
 
 - :material-chart-bar: **MultiQC quality control** — FastQC read quality, Cutadapt trimming statistics
-- :material-bacteria: **Taxonomy composition** — phylum-level barplots, sunburst, heatmap with annotations
-- :material-chart-line: **Alpha diversity** — Faith's Phylogenetic Diversity, rarefaction curves (requires metadata)
-- :material-chart-scatter-plot: **Differential abundance** — ANCOM-BC volcano plots, log-fold change (requires metadata + `--ancombc`)
-- :material-map-marker: **Sampling locations** — geographic scatter map from metadata coordinates (requires metadata)
+- :material-bacteria: **Taxonomy composition** — stacked bar, sunburst, sankey flow, ComplexHeatmap with metadata annotations
+- :material-chart-line: **Alpha diversity** — Shannon, Faith PD, Observed features, Evenness; multi-metric rarefaction curves
+- :material-set-center: **Beta diversity / ordination** — PCoA embedding (Bray-Curtis), sample-distance heatmap
+- :material-chart-scatter-plot: **Differential abundance** — ANCOM-BC volcano, DA barplot, MA plot (requires metadata + `--ancombc`)
+- :material-set-center: **Set analysis** — UpSet of taxon presence/absence per habitat
+- :material-family-tree: **Phylogeny** — rooted ASV tree with Kingdom/Phylum/Genus tip annotations
+- :material-map-marker: **Sampling locations** — geographic scatter map (requires metadata coordinates)
 
 ---
 
@@ -62,17 +68,35 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 
 ## Data collections
 
+**Core data collections** — raw QIIME2 / samplesheet inputs:
+
 | Data Collection | Type | Recipe | Base | Extended |
 |-----------------|------|--------|:----:|:--------:|
 | `multiqc_data` | MultiQC | — | :material-check: | :material-check: |
 | `samplesheet` | Table | — | :material-check: | :material-check: |
-| `taxonomy_composition` | Table | `taxonomy_composition.py` | :material-check: | :material-check: |
-| `taxonomy_rel_abundance` | Table | `taxonomy_rel_abundance.py` | :material-check: | :material-check: |
-| `taxonomy_heatmap` | Table | `taxonomy_heatmap.py` | :material-check: | :material-check: |
-| `metadata` | Table | — | :material-close: | :material-check: |
-| `alpha_diversity` | Table | `alpha_diversity.py` | :material-close: | :material-check: |
-| `alpha_rarefaction` | Table | `alpha_rarefaction.py` | :material-close: | :material-check: |
-| `ancombc_results` | Table | `ancombc.py` | :material-close: | :material-check: |
+| `taxonomy_composition` | Table | `qiime2/taxonomy_composition.py` | :material-check: | :material-check: |
+| `taxonomy_rel_abundance` | Table | `nf-core/ampliseq/taxonomy_rel_abundance.py` | :material-check: | :material-check: |
+| `taxonomy_heatmap` | Table | `qiime2/taxonomy_heatmap.py` | :material-check: | :material-check: |
+| `metadata` | Table (Metadata) | — | :material-close: | :material-check: |
+| `alpha_rarefaction` | Table | `qiime2/alpha_rarefaction.py` | :material-close: | :material-check: |
+| `ancombc_results` | Table | `qiime2/ancombc.py` | :material-close: | :material-check: |
+
+**Advanced-viz canonical DCs** — reformatted to the role-based schema consumed by advanced viz renderers:
+
+| Data Collection | Drives | Recipe |
+|-----------------|--------|--------|
+| `stacked_taxonomy_canonical` | Stacked taxonomy | `qiime2/stacked_taxonomy_canonical.py` |
+| `sunburst_canonical` | Sunburst | `nf-core/ampliseq/sunburst_canonical.py` |
+| `sankey_canonical` | Sankey flow | `nf-core/ampliseq/sankey_canonical.py` |
+| `upset_canonical` | UpSet (taxon × habitat) | `nf-core/ampliseq/upset_canonical.py` |
+| `rarefaction_canonical` | Multi-metric rarefaction | `qiime2/rarefaction_canonical.py` |
+| `alpha_diversity_multi_canonical` | Alpha diversity (4 metrics) | `qiime2/alpha_diversity_multi_canonical.py` |
+| `embedding_pcoa` | PCoA embedding | `qiime2/embedding_pcoa.py` |
+| `complex_heatmap_canonical` | Hierarchical heatmap | `nf-core/ampliseq/complex_heatmap_canonical.py` |
+| `bray_curtis_canonical` | Sample-distance heatmap | `nf-core/ampliseq/bray_curtis_canonical.py` |
+| `ma_canonical` | MA plot (ANCOM-BC) | `nf-core/ampliseq/ma_canonical.py` |
+| `phylogenetic_tree_canonical` | Phylogenetic tree (Newick) | — (scan: `qiime2/phylogenetic_tree/tree.nwk`) |
+| `phylogenetic_tree_metadata_canonical` | Tree tip annotations | `nf-core/ampliseq/tree_metadata_canonical.py` |
 
 !!! info "Base vs Extended"
 
@@ -271,16 +295,34 @@ Point `--data-root` to the directory containing your ampliseq outputs. This can 
 
 ---
 
-## Recipes (6)
+## Recipes
+
+**QIIME2 recipes** (under `qiime2/`):
+
+| Recipe | Input | Key transformation |
+|--------|-------|--------------------|
+| `alpha_rarefaction.py` | `faith_pd.csv` | Wide → long, regex depth/iter extraction |
+| `alpha_diversity_multi_canonical.py` | Multiple `faith_pd_vector/metadata.tsv` files | Join Shannon, Faith PD, Observed features, Evenness per sample |
+| `rarefaction_canonical.py` | `faith_pd.csv` | Multi-metric long format with `group` from metadata |
+| `taxonomy_composition.py` | `barplot/level-2.csv` | Detect taxonomy cols (`;`), melt to long format |
+| `taxonomy_heatmap.py` | rel_abundance DC + metadata DC | Pivot to Phylum × sample matrix, embed metadata annotations |
+| `stacked_taxonomy_canonical.py` | `barplot/level-2.csv` | Produce `(sample_id, taxon, rank, abundance)` long format |
+| `embedding_pcoa.py` | QIIME2 PCoA artefact | Extract Bray-Curtis PCoA axes into `(sample_id, dim_1, dim_2)` |
+| `ancombc.py` | 5 ANCOM-BC CSVs via `source_overrides` | Melt 5 slices, join, compute `-log10(q)` and significance flag |
+
+**nf-core/ampliseq recipes** (under `nf-core/ampliseq/`):
 
 | Recipe | Input | Key transformation |
 |--------|-------|--------------------|
 | `alpha_diversity.py` | `faith_pd_vector/metadata.tsv` | Filter comment rows, rename `id` → `sample`, pass through metadata cols |
-| `alpha_rarefaction.py` | `faith_pd.csv` | Wide → long unpivot, regex depth/iter extraction |
-| `taxonomy_composition.py` | `barplot/level-2.csv` | Detect taxonomy by `;` in column names, melt to long format |
-| `taxonomy_rel_abundance.py` | `rel-table-2.tsv` + metadata DC | Wide → long, taxonomy split, generic metadata join |
-| `taxonomy_heatmap.py` | rel_abundance DC + metadata DC | Pivot to Phylum × sample matrix, embed metadata annotations with Plotly colors |
-| `ancombc.py` | 5 ANCOM-BC CSVs (via source_overrides) | Melt 5 slices, join, compute `-log10(q)` and significance |
+| `taxonomy_rel_abundance.py` | `rel-table-2.tsv` + metadata DC | Wide → long, Kingdom/Phylum split, generic metadata join |
+| `sunburst_canonical.py` | taxonomy_rel_abundance DC | Aggregate to `(Kingdom, Phylum, taxon, abundance)` hierarchy |
+| `sankey_canonical.py` | taxonomy_rel_abundance DC | Normalize per-sample flows to `(Kingdom → Phylum → taxon, abundance)` |
+| `upset_canonical.py` | taxonomy_rel_abundance DC | Pivot to binary `taxon × habitat` presence matrix |
+| `complex_heatmap_canonical.py` | taxonomy_rel_abundance DC + metadata DC | Phylum × sample matrix, embed Kingdom row annotations |
+| `bray_curtis_canonical.py` | taxonomy_rel_abundance DC | Compute symmetric Bray-Curtis distance matrix |
+| `ma_canonical.py` | ancombc_results DC | Compute `avg_log_intensity` (mean log10 count) vs ANCOM-BC LFC |
+| `tree_metadata_canonical.py` | QIIME2 taxonomy TSV | Map ASV → Kingdom/Phylum/…/Genus for tip annotation overlay |
 
 ---
 

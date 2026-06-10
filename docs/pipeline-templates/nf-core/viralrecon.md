@@ -1,12 +1,15 @@
 # nf-core/viralrecon
 
 <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
-  <img src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon" style="height:56px;" onerror="this.src='../../images/pipeline-templates/nf-core/viralrecon/nf-core-viralrecon_logo.png'">
-  <div style="flex:1;">
-    <strong style="font-size:1.1em;">Assembly and intrahost/low-frequency variant calling for viral samples — SARS-CoV-2 + other viral genomes via the reference-genomes config.</strong><br>
-    <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/viralrecon" target="_blank">nf-co.re/viralrecon</a></span>
+  <div style="flex-shrink:0;">
+    <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_dark.png" alt="nf-core/viralrecon" style="height:56px;">
+    <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon" style="height:56px;">
   </div>
-  <div style="background:#2196F3;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;white-space:nowrap;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Reviewed</div>
+  <div style="flex:1;">
+    <strong style="font-size:1.1em;">Assembly and intrahost/low-frequency variant calling for viral samples — SARS-CoV-2 + other viral genomes via the nf-core reference-genomes config.</strong><br>
+    <span style="font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/viralrecon" target="_blank">nf-co.re/viralrecon</a></span>
+  </div>
+  <span class="template-status-reviewed" style="white-space:nowrap;flex-shrink:0;"><i class="mdi mdi-check-circle-outline" style="vertical-align:-1px;"></i> Reviewed</span>
 </div>
 
 The viralrecon template covers the main outputs of a standard
@@ -16,12 +19,12 @@ template was validated against SARS-CoV-2 / ARTIC amplicon data but the
 recipe / dashboard structure carries over to other viruses with the
 same iVar variant-calling + Pangolin / Nextclade lineage layout.
 
-- :material-chart-bar: **MultiQC quality control** — FastQC, Cutadapt, samtools/picard alignment metrics
-- :material-dna: **Variant calling** — iVar variants with gene, effect, and allele-frequency annotations
-- :material-virus: **Lineage assignment** — Pangolin lineages with conflict and QC scores
+- :material-chart-bar: **MultiQC quality control** — fastp, FastQC, samtools, picard, mosdepth, iVar, bcftools, Pangolin, Nextclade, QUAST alignment metrics
+- :material-dna: **Variant calling** — iVar variants with gene, effect, and allele-frequency annotations; Oncoplot and UpSet views
+- :material-virus: **Lineage assignment** — Pangolin lineages with conflict and QC scores; Sankey funnel (QC status → lineage → clade)
 - :material-medical-bag: **Clade assignment** — Nextclade clades with substitution counts
-- :material-chart-line: **Coverage analysis** — Mosdepth amplicon coverage, genome coverage, and amplicon heatmap
-- :material-chart-scatter-plot: **Cross-sample landscape** — variant landscape and lineage analysis dashboards
+- :material-chart-line: **Coverage analysis** — Mosdepth amplicon coverage, genome coverage track, and amplicon heatmap
+- :material-chart-scatter-plot: **Cross-sample landscape** — variant feature matrix for PCA / UMAP embedding; sample × gene oncoplot
 
 ---
 
@@ -123,20 +126,33 @@ depictio run \
 
 ## Data collections
 
-| Data Collection | Type | Recipe | Key columns | Description |
-|-----------------|------|--------|-------------|-------------|
-| `multiqc_data` | MultiQC | — | (MultiQC native fields) | Native MultiQC parquet — FastQC, Cutadapt, alignment metrics |
-| `summary_metrics` | Table | `summary_metrics.py` | `sample`, `num_reads_mapped`, `pct_genome_covered_10x`, `num_variants_total`, `lineage` | Per-sample alignment, coverage, and variant counts |
-| `variants_long` | Table | `variants_long.py` | `sample`, `CHROM`, `POS`, `REF`, `ALT`, `FILTER`, `DP`, `AF` | Per-variant calls with gene, effect, allele frequency |
-| `pangolin_lineages` | Table | `pangolin_lineages.py` | `sample`, `lineage`, `conflict`, `scorpio_call`, `qc_status` | Per-sample Pangolin lineage with conflict / QC scores |
-| `nextclade_results` | Table | `nextclade_results.py` | `sample`, `clade`, `Nextclade_pango`, `totalSubstitutions`, `totalDeletions` | Per-sample Nextclade clade with substitution counts |
-| `mosdepth_amplicon_coverage` | Table | — | `sample`, `amplicon`, `coverage` | Per-amplicon Mosdepth coverage |
-| `mosdepth_genome_coverage` | Table | — | `sample`, `chrom`, `start`, `end`, `coverage` | Genome-window Mosdepth coverage |
-| `mosdepth_amplicon_heatmap` | Table | — | `sample`, `amplicon`, `coverage` | Mosdepth amplicon coverage heatmap |
+**Core data collections** (14 DCs total):
+
+| Data Collection | Recipe | Key columns | Description |
+|-----------------|--------|-------------|-------------|
+| `multiqc_data` | — | (MultiQC native fields) | Native MultiQC parquet — fastp, FastQC, samtools/picard metrics |
+| `summary_metrics` | `summary_metrics.py` | `sample`, `num_reads_mapped`, `pct_genome_covered_10x`, `num_variants_total`, `lineage` | Per-sample alignment, coverage, and variant counts |
+| `variants_long` | `variants_long.py` | `sample`, `CHROM`, `POS`, `REF`, `ALT`, `FILTER`, `DP`, `AF` | Per-variant calls with gene, effect, allele frequency |
+| `pangolin_lineages` | `pangolin_lineages.py` | `sample`, `lineage`, `conflict`, `scorpio_call`, `qc_status` | Per-sample Pangolin lineage with conflict / QC scores |
+| `nextclade_results` | `nextclade_results.py` | `sample`, `clade`, `Nextclade_pango`, `totalSubstitutions`, `totalDeletions` | Per-sample Nextclade clade with substitution counts |
+| `mosdepth_amplicon_coverage` | — | `sample`, `amplicon`, `coverage` | Per-amplicon Mosdepth coverage |
+| `mosdepth_genome_coverage` | — | `sample`, `chrom`, `start`, `end`, `coverage` | Genome-window Mosdepth coverage |
+| `mosdepth_amplicon_heatmap` | — | `sample`, `amplicon`, `coverage` | Mosdepth amplicon coverage heatmap |
 
 All DCs use `metatype: "Aggregated"`. The three Mosdepth DCs are native
 table scans (no recipe); the others are Polars recipes that fan per-sample
 files via `glob_pattern`.
+
+**Advanced-viz canonical DCs** — reformatted to the role-based schema consumed by advanced viz renderers:
+
+| Data Collection | Drives | Recipe |
+|-----------------|--------|--------|
+| `oncoplot_canonical` | Oncoplot (sample × gene × mutation type) | `nf-core/viralrecon/oncoplot_canonical.py` |
+| `complex_heatmap_canonical` | Hierarchical heatmap (samples × amplicons) | `mosdepth/complex_heatmap_canonical.py` |
+| `coverage_track_canonical` | Genome coverage track (chromosome / position / value) | `mosdepth/coverage_track_canonical.py` |
+| `sankey_canonical` | Sankey funnel (qc_status → lineage → clade) | `nf-core/viralrecon/sankey_canonical.py` |
+| `upset_canonical` | UpSet (mutation × lineage binary membership) | `nf-core/viralrecon/upset_canonical.py` |
+| `variant_feature_matrix_canonical` | Sample × mutation binary matrix (PCA / UMAP embedding) | `nf-core/viralrecon/variant_feature_matrix_canonical.py` |
 
 Cross-DC links are wired so a `sample` selection in any tab filters every
 linked DC across the dashboard. See [Cross-DC links](#cross-dc-links) below.
@@ -232,90 +248,30 @@ filters propagate across tabs via cross-DC links on the
 
 ## Recipes
 
-The viralrecon template ships four Polars recipes under
-`depictio/recipes/nf-core/viralrecon/`. Three use `glob_pattern` to fan
-per-sample files into a single delta table; one reads a single MultiQC-
-generated CSV.
+The viralrecon template ships ten Polars recipes. Four produce the core
+typed data collections; six produce canonical schemas for the advanced-viz
+renderers.
 
-=== "summary_metrics"
+**nf-core/viralrecon recipes** (under `nf-core/viralrecon/`):
 
-    `depictio/recipes/nf-core/viralrecon/summary_metrics.py`
+| Recipe | Input | Key transformation |
+|--------|-------|--------------------|
+| `summary_metrics.py` | `multiqc/summary_variants_metrics_mqc.csv` | Single file; passes through alignment, coverage, and variant count columns |
+| `variants_long.py` | `variants/ivar/variants_long_table.csv` | Single iVar long-format table; renames/coerces types |
+| `pangolin_lineages.py` | `variants/ivar/consensus/bcftools/pangolin/*.pangolin.csv` (glob) | Fan per-sample → unified table |
+| `nextclade_results.py` | `variants/ivar/consensus/bcftools/nextclade/*.csv` (glob, semicolon-sep) | Fan per-sample → unified table |
+| `oncoplot_canonical.py` | variants_long DC | Pivot to `(sample_id, gene, mutation_type, mutation_label)` |
+| `sankey_canonical.py` | summary_metrics + pangolin_lineages + nextclade_results DCs | Join, produce `(sample, qc_status, lineage, clade, value)` |
+| `upset_canonical.py` | variants_long DC | Binary mutation × lineage presence matrix |
+| `variant_feature_matrix_canonical.py` | variants_long DC | Binary sample × mutation matrix for PCA/UMAP |
 
-    **Source:** `multiqc/summary_variants_metrics_mqc.csv` (single file
-    produced by viralrecon's MultiQC step).
+**mosdepth recipes** (under `mosdepth/`, shared across pipelines):
 
-    **Output schema:**
+| Recipe | Input | Key transformation |
+|--------|-------|--------------------|
+| `complex_heatmap_canonical.py` | mosdepth_amplicon_heatmap DC | Amplicon × sample coverage matrix |
+| `coverage_track_canonical.py` | mosdepth_genome_coverage DC | Rename `chrom` → `chromosome`, `start` → `position` |
 
-    | Column | Type |
-    |--------|------|
-    | `sample` | `Utf8` |
-    | `num_reads_mapped` | `Float64` |
-    | `pct_reads_mapped` | `Float64` |
-    | `coverage_median` | `Float64` |
-    | `pct_genome_covered_1x`, `_10x` | `Float64` |
-    | `num_variants_snp`, `_indel`, `_total` | `Float64` |
-    | `lineage` | `Utf8` |
-
-=== "variants_long"
-
-    `depictio/recipes/nf-core/viralrecon/variants_long.py`
-
-    **Source:** `variants/ivar/variants_long_table.csv` (single ivar
-    long-format variant table covering all samples).
-
-    **Output schema:**
-
-    | Column | Type | Notes |
-    |--------|------|-------|
-    | `sample` | `Utf8` | Sample identifier |
-    | `CHROM` | `Utf8` | Reference contig |
-    | `POS` | `Int64` | 1-based position |
-    | `REF`, `ALT` | `Utf8` | Alleles |
-    | `FILTER` | `Utf8` | ivar filter status |
-    | `DP` | `Int64` | Total depth |
-    | `REF_DP`, `ALT_DP` | `Int64` | Per-allele depth |
-    | `AF` | `Float64` | Allele frequency |
-    | gene / effect / function annotations | | |
-
-=== "pangolin_lineages"
-
-    `depictio/recipes/nf-core/viralrecon/pangolin_lineages.py`
-
-    **Source (glob):**
-    `variants/ivar/consensus/bcftools/pangolin/*.pangolin.csv`
-    — one file per sample.
-
-    **Output schema:**
-
-    | Column | Type |
-    |--------|------|
-    | `sample` | `Utf8` |
-    | `lineage` | `Utf8` |
-    | `conflict`, `ambiguity_score` | `Float64` |
-    | `scorpio_call` | `Utf8` |
-    | `scorpio_support` | `Float64` |
-    | `pangolin_version` | `Utf8` |
-    | `qc_status` | `Utf8` |
-
-=== "nextclade_results"
-
-    `depictio/recipes/nf-core/viralrecon/nextclade_results.py`
-
-    **Source (glob):**
-    `variants/ivar/consensus/bcftools/nextclade/*.csv`
-    — one file per sample, **semicolon-separated** (recipe sets
-    `read_kwargs={"separator": ";"}`).
-
-    **Output schema:**
-
-    | Column | Type |
-    |--------|------|
-    | `sample` | `Utf8` |
-    | `clade` | `Utf8` |
-    | `Nextclade_pango` | `Utf8` |
-    | `totalSubstitutions`, `totalDeletions`, `totalInsertions` | `Int64` |
-    | `totalFrameShifts`, `totalMissing`, `totalNonACGTNs` | `Int64` |
-    | QC fields (`qc.overallStatus`, etc.) | `Utf8` |
 
 ---
 
