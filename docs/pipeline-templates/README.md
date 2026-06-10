@@ -17,31 +17,35 @@ depictio run \
 
 ## Available templates
 
-<div class="grid cards" markdown>
+<div class="template-cards">
 
--   <figure markdown style="margin:0 0 12px 0;">
-      <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:48px;">
-    </figure>
+  <a class="template-card" href="nf-core/ampliseq/">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_dark.png" alt="nf-core/ampliseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">16S · ITS · CO1 · 18S amplicon sequencing across Illumina, PacBio, and IonTorrent.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.16.0</span>
+        <span class="template-status-reviewed">✓ Reviewed</span>
+      </div>
+    </div>
+  </a>
 
-    **[nf-core/ampliseq](nf-core/ampliseq/)**
-
-    16S · ITS · CO1 · 18S amplicon sequencing across Illumina, PacBio, and IonTorrent.
-
-    ---
-
-    `v2.16.0` &nbsp; :material-check-circle-outline:{ style="color:#2196F3" } Reviewed
-
--   <figure markdown style="margin:0 0 12px 0;">
-      <img src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon" style="height:48px;">
-    </figure>
-
-    **[nf-core/viralrecon](nf-core/viralrecon/)**
-
-    Viral assembly and variant calling — SARS-CoV-2 and other genomes via the nf-core reference config.
-
-    ---
-
-    `v3.0.0` &nbsp; :material-check-circle-outline:{ style="color:#2196F3" } Reviewed
+  <a class="template-card" href="nf-core/viralrecon/">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_dark.png" alt="nf-core/viralrecon">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Viral assembly and variant calling — SARS-CoV-2 and other genomes via the nf-core reference config.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.0.0</span>
+        <span class="template-status-reviewed">✓ Reviewed</span>
+      </div>
+    </div>
+  </a>
 
 </div>
 

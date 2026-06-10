@@ -172,6 +172,127 @@ h1 {
     font-family: "Virgil", cursive !important;
 }
 
+/* ── Template cards ─────────────────────────────────────────────────── */
+
+.template-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+@media (max-width: 76.1875em) {
+  .template-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 44.9375em) {
+  .template-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.template-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none !important;
+  color: inherit;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.template-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+  transform: translateY(-3px);
+}
+
+.template-card-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 20px;
+  min-height: 90px;
+}
+
+[data-md-color-scheme="default"] .template-card-logo {
+  background: #24364b;
+}
+
+[data-md-color-scheme="slate"] .template-card-logo {
+  background: #111e2b;
+}
+
+.template-card-logo img {
+  max-height: 52px;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+.template-card-body {
+  padding: 14px 16px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.template-card-desc {
+  margin: 0;
+  font-size: 0.82em;
+  line-height: 1.5;
+  color: var(--md-default-fg-color--light);
+}
+
+.template-card-meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.template-version {
+  background: #e8f5e9;
+  color: #1b5e20;
+  border: 1px solid #a5d6a7;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78em;
+  font-weight: 600;
+  font-family: var(--md-code-font-family);
+  letter-spacing: 0.02em;
+}
+
+[data-md-color-scheme="slate"] .template-version {
+  background: #152b18;
+  color: #81c784;
+  border-color: #2e5d33;
+}
+
+.template-status-reviewed {
+  background: #e3f2fd;
+  color: #0d47a1;
+  border: 1px solid #90caf9;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78em;
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .template-status-reviewed {
+  background: #0d2137;
+  color: #64b5f6;
+  border-color: #1565c0;
+}
+
+/* nf-core section icon: brand green */
+.md-nav__link[href$="nf-core/"] .md-nav__icon {
+  color: #24B064;
+}
+
 /* Set up transform properties but NO animation by default */
 #shape-1, path#shape-1,
 #shape-2, path#shape-2,
