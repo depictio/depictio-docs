@@ -165,8 +165,8 @@ The React viewer ships in v0.12.0 alongside Dash; the Dash frontend is removed i
 
 - [x] **React viewer** shipped under `/*-beta` paths (v0.12.0) — `/dashboards-beta`, `/dashboard-beta/{id}`, `/dashboard-beta-edit/{id}`, `/projects-beta`, `/projects-beta/{id}`, `/profile-beta`, `/admin-beta`, `/cli-agents-beta`, `/about-beta`
 - [x] **Dash frontend removed** (v0.13.12) — `depictio/dash/` deleted; `DashConfig` → `ViewerConfig`; per-service Dockerfiles scaffolded
-- [ ] **URL graduation (v1.0.0)** — React takes over `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`; `*-beta` paths redirect then retire
-- [ ] **Component parity audit** — every Dash editor feature has a React equivalent before cutover
+- [x] **URL graduation (v1.0.0)** — React takes over `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`; `*-beta` paths redirect then retire
+- [x] **Component parity audit** — every Dash editor feature has a React equivalent before cutover
 
 ### Phase 4: Citable Science
 

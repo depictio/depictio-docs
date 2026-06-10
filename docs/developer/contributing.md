@@ -489,7 +489,7 @@ We welcome contributions in these priority areas. See the [Roadmap](../roadmap/R
 
 | Area | What's Needed | Difficulty |
 |------|---------------|------------|
-| **React (Beta) ports** | Port a Dash component to a React renderer (`packages/depictio-react-core/`) + matching design UI in `depictio/viewer/` | Easy → Medium |
+| **React components** | New renderers in `packages/depictio-react-core/` + matching design UI in `depictio/viewer/` | Easy → Medium |
 | **Templates** | nf-core workflow dashboard templates | Medium |
 | **Quarto integration** | Static HTML/PDF export for publications | Medium |
 | **Documentation** | User guides, tutorials, examples — start with [`good-first-issue`](https://github.com/depictio/depictio/labels/good%20first%20issue) | Easy |

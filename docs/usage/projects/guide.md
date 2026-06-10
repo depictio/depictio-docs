@@ -360,7 +360,7 @@ The CLI executes this pipeline:
 Data Collections can be created and managed directly from the viewer — no YAML edits or CLI runs required. Available for Basic projects today; some flows also work on Advanced projects.
 
 !!! info "Available from v0.12.0"
-    All flows in this section require Depictio **v0.12.0 or later**. See the [changelog](../../changelog/README.md#v0120-may-15-2026) for the full release notes. Where a flow is only wired in the **React (Beta) viewer** (`/dashboards-beta`), this is noted on the subsection.
+    All flows in this section require Depictio **v0.12.0 or later**. See the [changelog](../../changelog/README.md#v0120-may-15-2026) for the full release notes.
 
 ### MultiQC Data Collections
 
@@ -380,8 +380,8 @@ MultiQC DCs support a full lifecycle from the *Manage Data Collection* modal:
 
 #### Uniformity validation (React Beta)
 
-!!! warning "React Beta only"
-    The uniformity checklist UI and the *Check now* button ship in the **React (Beta) viewer** only. The validator endpoint can be called from any client.
+!!! info "Web interface"
+    The uniformity checklist UI and the *Check now* button are available in the web interface. The validator endpoint can be called from any client.
 
 Before ingest, MultiQC reports are checked for **uniformity** — the same module set and column schema across runs — so plot rendering stays consistent. The check runs automatically on **Create** and on every **Append**, and can be re-run on demand with the **Check now** button.
 
@@ -394,8 +394,8 @@ Non-uniform reports surface a checklist of differences (missing modules, diverge
 
 ### Type-specific Data Collection configuration (React Beta)
 
-!!! warning "React Beta only"
-    The UI for type-specific DC configuration ships in the **React (Beta) viewer** (`/dashboards-beta`). YAML-level configuration is supported everywhere.
+!!! info "Web interface"
+    The UI for type-specific DC configuration is available in the web interface. YAML-level configuration is supported everywhere.
 
 Some visualization types need extra metadata declared **at the Data Collection level** (e.g. which columns hold coordinates, which hold sample IDs, log-fold-change, p-values, …). Declaring this on the DC means every figure built on top inherits the config — no need to re-specify it per component.
 

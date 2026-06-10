@@ -13,7 +13,7 @@ This section provides information for developers who want to contribute to Depic
 Depictio is an open-source project that welcomes contributions from the community. There are many ways to contribute:
 
 - **Code contributions**: Implement new features, develop new components, or fix bugs
-- **Frontend ports**: Port Dash components to the React (Beta) viewer
+- **Frontend**: Develop new React components or renderers
 - **Testing**: Help test features or report bugs
 - **Design**: Contribute to the UI/UX design
 - **Documentation**: Improve or expand the documentation
