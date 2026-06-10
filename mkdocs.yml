@@ -236,7 +236,8 @@ nav:
       - FastAPI Docs: api/fastapi_docs.md
   - Templates:
       - pipeline-templates/README.md
-      - ":simple-nfcore: nf-core":
+      - nf-core:
+          - pipeline-templates/nf-core/index.md
           - ampliseq: pipeline-templates/nf-core/ampliseq.md
           - viralrecon: pipeline-templates/nf-core/viralrecon.md
   - Developer:

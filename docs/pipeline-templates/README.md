@@ -17,44 +17,31 @@ depictio run \
 
 ## Available templates
 
-<div style="display:flex;gap:20px;flex-wrap:wrap;margin:8px 0 24px 0;">
+<div class="grid cards" markdown>
 
-  <a href="nf-core/ampliseq/" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;border:1px solid var(--md-default-fg-color--lightest, #ddd);border-radius:16px;width:300px;overflow:hidden;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
-    <div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);display:flex;align-items:center;justify-content:center;padding:24px 16px;min-height:90px;">
-      <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:52px;max-width:240px;object-fit:contain;">
-    </div>
-    <div style="padding:16px 20px;flex:1;display:flex;flex-direction:column;gap:10px;">
-      <div style="font-size:0.82em;color:#666;">16S · ITS · CO1 · 18S amplicon sequencing (Illumina, PacBio, IonTorrent)</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;">
-        <span style="background:#e8f4f8;color:#1565C0;padding:2px 9px;border-radius:8px;font-size:0.78em;font-weight:600;">v2.14.0</span>
-        <span style="background:#e8f4f8;color:#1565C0;padding:2px 9px;border-radius:8px;font-size:0.78em;font-weight:600;">v2.16.0</span>
-      </div>
-      <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;">
-        <span style="background:#2196F3;color:#fff;padding:3px 12px;border-radius:10px;font-size:0.8em;font-weight:600;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:3px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Reviewed
-        </span>
-        <span style="font-size:0.82em;color:#2196F3;font-weight:500;">View template →</span>
-      </div>
-    </div>
-  </a>
+-   <figure markdown style="margin:0 0 12px 0;">
+      <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:48px;">
+    </figure>
 
-  <a href="nf-core/viralrecon/" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;border:1px solid var(--md-default-fg-color--lightest, #ddd);border-radius:16px;width:300px;overflow:hidden;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
-    <div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);display:flex;align-items:center;justify-content:center;padding:24px 16px;min-height:90px;">
-      <img src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon" style="height:52px;max-width:240px;object-fit:contain;">
-    </div>
-    <div style="padding:16px 20px;flex:1;display:flex;flex-direction:column;gap:10px;">
-      <div style="font-size:0.82em;color:#666;">Viral assembly and variant calling — SARS-CoV-2 and other genomes via nf-core reference config</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;">
-        <span style="background:#e8f4f8;color:#1565C0;padding:2px 9px;border-radius:8px;font-size:0.78em;font-weight:600;">v3.0.0</span>
-      </div>
-      <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;">
-        <span style="background:#2196F3;color:#fff;padding:3px 12px;border-radius:10px;font-size:0.8em;font-weight:600;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:3px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Reviewed
-        </span>
-        <span style="font-size:0.82em;color:#2196F3;font-weight:500;">View template →</span>
-      </div>
-    </div>
-  </a>
+    **[nf-core/ampliseq](nf-core/ampliseq/)**
+
+    16S · ITS · CO1 · 18S amplicon sequencing across Illumina, PacBio, and IonTorrent.
+
+    ---
+
+    `v2.16.0` &nbsp; :material-check-circle-outline:{ style="color:#2196F3" } Reviewed
+
+-   <figure markdown style="margin:0 0 12px 0;">
+      <img src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon" style="height:48px;">
+    </figure>
+
+    **[nf-core/viralrecon](nf-core/viralrecon/)**
+
+    Viral assembly and variant calling — SARS-CoV-2 and other genomes via the nf-core reference config.
+
+    ---
+
+    `v3.0.0` &nbsp; :material-check-circle-outline:{ style="color:#2196F3" } Reviewed
 
 </div>
 
@@ -66,7 +53,7 @@ Each template carries a status reflecting its review level.
 
 :material-shield-check:{ style="color:#4CAF50" } **Certified** — Validated by the **pipeline lead developer**. Highest trust.
 
-:material-check-circle-outline:{ style="color:#2196F3" } **Reviewed** — Tested, CI passes, reviewed by Depictio team or community.
+:material-check-circle-outline:{ style="color:#2196F3" } **Reviewed** — Tested, CI passes, reviewed by the Depictio team or community.
 
 :material-flask-outline:{ style="color:#FF9800" } **Experimental** — Shared as-is. Feedback and PRs welcome.
 
