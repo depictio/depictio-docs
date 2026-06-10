@@ -243,6 +243,8 @@ Every advanced viz consumes a **tabular DC** (CSV / TSV / Parquet → polars) wi
 
 Effect size vs significance scatter — classic differential-expression view with threshold lines, point search, and top-N labels.
 
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d00){ target=_blank }
+
 **Columns**
 
 | Role | Required | Type | Description |
@@ -274,6 +276,8 @@ Every row is classified client-side as **UP**, **DOWN**, or **NS** based on `sig
 
 Mean log intensity (x) vs log2 fold change (y) — same hits as volcano, classic DE / proteomics layout. Shares the UP / DOWN / NS tier scheme with [Volcano](#volcano).
 
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d40){ target=_blank }
+
 **Columns**
 
 | Role | Required | Type | Description |
@@ -303,6 +307,8 @@ Mirror of the [Volcano](#volcano) tier scheme — UP / DOWN / NS classification 
 ### DA barplot
 
 Ranked signed-LFC horizontal bars for differential abundance — single panel or faceted across contrasts. Same input shape as the upstream tool (ANCOM-BC, ALDEx2, MaAsLin2): one row per `(feature, contrast)` with `lfc` and optional `significance`.
+
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d24){ target=_blank }
 
 **Columns**
 
@@ -337,6 +343,8 @@ When `contrast_view == "all"` the renderer **facets by contrast** (one panel per
 
 GSEA / GO / KEGG / Reactome pathway-enrichment dot plot: term on y, NES on x, dot size = gene-set size, colour = -log10(padj).
 
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d26){ target=_blank }
+
 **Columns**
 
 | Role | Required | Type | Description |
@@ -365,6 +373,8 @@ Renderer **filters by source** (MultiSelect) and ranks by |nes|; only the top-N 
 ### Manhattan
 
 Generic chr / pos / score plot — works for true GWAS (variants), peak significance (ATAC/ChIP narrowPeak), or viral variant tracks. `score_kind` keeps the y-axis label honest.
+
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d13){ target=_blank }
 
 **Columns**
 
@@ -401,6 +411,8 @@ Renderer **facets by chromosome** (one subplot per unique `chr` value). The opti
 
 Needle / variant track along a gene — each gene body as a horizontal line, each variant as a vertical stem with a category-coloured marker on top.
 
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d42){ target=_blank }
+
 **Columns** — straight rename from canonical Mutation Annotation Format (VEP / vcf2maf / maftools — the cancer-mutation file format, not Minor Allele Frequency):
 
 | Role | Required | Type | Description | Mutation Annotation Format column |
@@ -427,6 +439,8 @@ Renderer **facets by feature** (one subplot per gene, or a picker once the unive
 ### Coverage track
 
 Read depth / signal along a coordinate axis. Universal genomics primitive — covers mosdepth bins, BigWig-derived transcript coverage, peak signal, methylseq depth, contig coverage, sarek QC.
+
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d46){ target=_blank }
 
 **Columns**
 
@@ -462,6 +476,8 @@ Renderer **facets by chromosome** (subplot per chr) and optionally by **sample**
 ### Stacked taxonomy
 
 Per-sample stacked relative-abundance bar with a rank dropdown.
+
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d14){ target=_blank }
 
 **Columns**
 
@@ -507,6 +523,8 @@ Renderer **filters by rank** (dropdown sourced from the unique `rank` values). W
 
 Hierarchical taxonomy / pathway viewer — concentric rings from root to leaf. Unlike most viz, Sunburst uses a multi-column `rank_cols` list rather than the standard single-column `<role>_col` pattern; the `abundance` role is bound via the `abundance_col` setting below.
 
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d44){ target=_blank }
+
 !!! note "Bracken vs Kraken2 — what to ingest"
     A raw `.bracken` file is **flat for a single target rank** (columns: `name`, `taxonomy_id`, `taxonomy_lvl`, `fraction_total_reads`, …) and does **not** carry explicit Kingdom→Genus rank columns. To bind it to Sunburst, either (a) ingest the Kraken2 `.kreport` instead and pivot the indented lineage into rank columns, or (b) map each Bracken `taxonomy_id` back to the NCBI taxonomy tree (e.g. `taxonkit lineage`, `ete3`) and expand to rank columns before upload. The DC must end up with one column per rank used in `rank_cols` plus one numeric `abundance_col`.
 
@@ -536,6 +554,8 @@ Renderer **hierarchically aggregates** by the `rank_cols` sequence. Intermediate
 
 Alpha-diversity vs sequencing depth — one line per sample with optional ±SE band and group colouring.
 
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d22){ target=_blank }
+
 **Columns**
 
 | Role | Required | Type | Description |
@@ -564,6 +584,8 @@ Renderer **aggregates over `iter`** per `(sample_id, depth)` — computes mean �
 ### Phylogenetic
 
 Newick tree + tip metadata (Microreact-style) — 5 layouts, tip search, subtree highlight.
+
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d18){ target=_blank }
 
 The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `/advanced_viz/phylogeny/{dc_id}/newick`). Tip annotations live in a regular Table DC and are joined to tip labels at render time via `taxon_col`. The schema below validates the **metadata** DC only.
 
@@ -600,6 +622,8 @@ The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `
 
 scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction expressing, colour = mean expression. The schema expects a **cluster-aggregated long table** — derive it from `AnnData` via `sc.get.aggregate` (or a manual `groupby` on `adata.X`), not from `rank_genes_groups` (which returns DE statistics, not aggregates).
 
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d41){ target=_blank }
+
 **Columns**
 
 | Role | Required | Type | Description |
@@ -623,6 +647,8 @@ scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction ex
 ### Embedding
 
 2D / 3D sample embedding (PCA / UMAP / t-SNE / PCoA) — supports a **precomputed** DC (`dim_1`, `dim_2` columns already materialised) or **live-compute** mode (run the reduction on the fly via a Celery task and cache by `(dc, method, params, filters)`).
+
+[:material-open-in-new: PCA demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d12){ target=_blank } · [:material-open-in-new: UMAP demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d15){ target=_blank } · [:material-open-in-new: t-SNE demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d16){ target=_blank } · [:material-open-in-new: PCoA demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d17){ target=_blank }
 
 **Columns**
 
@@ -661,6 +687,8 @@ In **precomputed mode** the renderer just plots the pre-existing coordinates. In
 
 Clustered heatmap with dendrograms + annotation tracks, à la R's [ComplexHeatmap](https://github.com/jokergoo/ComplexHeatmap) / [pheatmap](https://cran.r-project.org/package=pheatmap). Wraps the in-tree [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" } library; heavy compute (clustering, dendrogram layout) runs in a Celery worker and is cached by `(dc, params hash)`.
 
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d27){ target=_blank }
+
 **Columns**
 
 | Role | Required | Type | Description |
@@ -693,6 +721,8 @@ Numeric matrix columns are inferred from the rest of the DC schema at compute ti
 
 Quantile-quantile plot for p-value distributions (GWAS / DE / eQTL QC). Sorts p-values and plots `-log10(observed)` against the theoretical `-log10(expected)` under a uniform null.
 
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d43){ target=_blank }
+
 **Columns**
 
 | Role | Required | Type | Description |
@@ -718,6 +748,8 @@ When `category` is bound, the renderer produces **one trace per stratum** (e.g. 
 ### UpSet
 
 Set-intersection visualisation (alternative to Venn diagrams). Wraps the in-tree `plotly-upset` library (vendored under `packages/plotly-upset/`, not yet a standalone public repo); intersection enumeration + sorting runs in a Celery worker and is cached by `(dc, params hash)`. Input DC: a binary table where each row is an element and each `set_col` is a 0/1 membership indicator.
+
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d29){ target=_blank }
 
 **Columns**
 
@@ -748,6 +780,8 @@ Renderer **filters by intersection size and degree** — `min_size` drops inters
 ### Sankey
 
 Categorical-flow diagram across N ordered categorical levels (e.g. `sample → lineage → clade`, `sample → kingdom → phylum → genus`). Server-side aggregation via Celery, client-side colour / opacity tweaks.
+
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d47){ target=_blank }
 
 **Columns**
 
@@ -782,6 +816,8 @@ Renderer **aggregates by the `step_cols` sequence** (via Celery `compute_sankey`
 ### Oncoplot
 
 Sample × gene mutation matrix with discrete mutation-type colours and per-gene / per-sample frequency strips.
+
+[:material-open-in-new: Live demo](https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8d45){ target=_blank }
 
 **Columns** — straight rename from canonical Mutation Annotation Format (VEP / vcf2maf / maftools — the cancer-mutation file format, not Minor Allele Frequency):
 
