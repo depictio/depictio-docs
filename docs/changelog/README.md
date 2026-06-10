@@ -74,6 +74,14 @@ ghcr.io/depictio/depictio:1.0.0
 
 ---
 
+### **[v1.0.0-b9](https://github.com/depictio/depictio/releases/tag/v1.0.0-b9)** (June 10, 2026)
+
+#### **🐛 Bug Fixes**
+* **MultiQC** — drop `matplotlib` dep from general-stats colormap.
+* **Screenshots** — regenerate reference dashboard thumbnails.
+
+---
+
 ### **[v1.0.0-b8](https://github.com/depictio/depictio/releases/tag/v1.0.0-b8)** (June 9, 2026)
 
 #### **✨ New Features**
