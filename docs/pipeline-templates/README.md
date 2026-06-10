@@ -28,7 +28,7 @@ depictio run \
       <p class="template-card-desc">16S · ITS · CO1 · 18S amplicon sequencing across Illumina, PacBio, and IonTorrent.</p>
       <div class="template-card-meta">
         <span class="template-version">v2.16.0</span>
-        <span class="template-status-reviewed">✓ Reviewed</span>
+        <span class="template-status-reviewed"><i class="mdi mdi-check-circle-outline" style="vertical-align:-1px;"></i> Reviewed</span>
       </div>
     </div>
   </a>
@@ -42,7 +42,7 @@ depictio run \
       <p class="template-card-desc">Viral assembly and variant calling — SARS-CoV-2 and other genomes via the nf-core reference config.</p>
       <div class="template-card-meta">
         <span class="template-version">v3.0.0</span>
-        <span class="template-status-reviewed">✓ Reviewed</span>
+        <span class="template-status-reviewed"><i class="mdi mdi-check-circle-outline" style="vertical-align:-1px;"></i> Reviewed</span>
       </div>
     </div>
   </a>
@@ -53,13 +53,33 @@ depictio run \
 
 ## Status levels
 
-Each template carries a status reflecting its review level.
+<div class="status-cards">
 
-:material-shield-check:{ style="color:#4CAF50" } **Certified** — Validated by the **pipeline lead developer**. Highest trust.
+  <div class="status-card status-certified">
+    <div class="status-card-header">
+      <i class="mdi mdi-shield-check status-icon"></i>
+      <span class="status-title">Certified</span>
+    </div>
+    <p class="status-desc">Validated by the <strong>pipeline lead developer</strong>. Highest trust level.</p>
+  </div>
 
-:material-check-circle-outline:{ style="color:#2196F3" } **Reviewed** — Tested, CI passes, reviewed by the Depictio team or community.
+  <div class="status-card status-reviewed">
+    <div class="status-card-header">
+      <i class="mdi mdi-check-circle-outline status-icon"></i>
+      <span class="status-title">Reviewed</span>
+    </div>
+    <p class="status-desc">Tested, CI passes, reviewed by the Depictio team or community.</p>
+  </div>
 
-:material-flask-outline:{ style="color:#FF9800" } **Experimental** — Shared as-is. Feedback and PRs welcome.
+  <div class="status-card status-experimental">
+    <div class="status-card-header">
+      <i class="mdi mdi-flask-outline status-icon"></i>
+      <span class="status-title">Experimental</span>
+    </div>
+    <p class="status-desc">Shared as-is. Feedback and PRs welcome.</p>
+  </div>
+
+</div>
 
 ---
 
