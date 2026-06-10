@@ -146,10 +146,6 @@ Reusable dashboards for standard bioinformatics workflows, with a focus on nf-co
 - [x] **Depictio templates system** — one-command project setup via `depictio run --template`, with `{DATA_ROOT}` substitution, template provenance tracking, and automatic dashboard import ([docs](../usage/projects/templates.md))
 - [x] **Recipe-based data transformation** — versioned Python recipes with 4-checkpoint validation, co-located with templates ([docs](../usage/projects/recipes.md))
 
-| Template | Pipeline | Versions | Recipes |
-|----------|----------|----------|---------|
-| `nf-core/ampliseq` | 16S/ITS amplicon sequencing | 2.14.0, 2.16.0 | Alpha diversity, rarefaction, taxonomy composition, relative abundance, differential abundance (ANCOM-BC) |
-
 **Planned**
 
 - [ ] **nf-core plugin** — automatically registers nf-core pipeline outputs in Depictio at run time, no manual CLI step required
