@@ -36,51 +36,6 @@ ghcr.io/depictio/depictio:1.0.1
 
 ---
 
-## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)** (June 10, 2026)
-
-!!! success "Stable Major Release — React sole frontend, Dash → React migration complete"
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:1.0.0
-```
-
-### **♻️ Migration**
-
-* **Dash removed** — `depictio/dash/` deleted; `DashConfig` → `ViewerConfig`; `DEPICTIO_DASH_` → `DEPICTIO_VIEWER_`; per-service Dockerfiles scaffolded.
-
-### **✨ New Features**
-
-* **URL graduation** — `*-beta` paths retired; React SPA serves canonical `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, `/profile`, `/admin`, `/cli-agents`, `/about`.
-* **Split-image production** — `depictio-api`, `depictio-worker`, `depictio-viewer` published individually.
-* **Tool→viz catalog** — module-granular bioinformatics catalog (nf-core / bio.tools / EDAM ontology).
-* **CLI overhaul** — new banner, `depictio commands` reference table, slimmed surface, parallel image uploads.
-* **Advanced viz** — richer bindings UX; graded suggestion scoring.
-
-### **🔒 Security**
-
-* **Auth bootstrap from env** — `initial_users.yaml` removed; admin seeded via `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` (idempotent).
-* **Secrets hardened** — MinIO root password ≥8 chars, no default; CORS allowlist replaces `allow_origins=["*"]`; JWT verifies RS256/RS512 + `exp` before MongoDB; `/register` cannot set `is_admin`; IDOR file-delete fixed; JBrowse `allow-same-origin` removed; nginx CSP/HSTS/Permissions-Policy added.
-* **Password constraints** — min length 8; `changeme` allowed for bootstrap admin (not MinIO); single-user mode skips all enforcement.
-
-### **🚀 Improvements**
-
-* **Helm chart 1.0** — `image.tag` defaults to `1.x`; viewer runs nginx container; no default MinIO credentials.
-* **MongoDB HA** — Percona PSMDB Operator replaces Community Operator; viewer startup order and resource rebalance.
-* **Rate limiter** — Redis-backed per-IP fixed window; uses `X-Real-IP` in k8s.
-* **Playwright e2e** — CI covers auth + dashboards-management slice in parallel.
-
-### **🐛 Bug Fixes**
-
-* Screenshot debounce wrong path; Sign In hidden in public mode.
-* Demo mode: public reference dashboards restored; temp users kept for the full session.
-* Auth key-wipe race on multi-replica deployments fixed; React default thumbnail fallback added.
-* Screenshots: fonts installed in worker image; settle delay before capture.
-* Viewer tab menu refresh and icon handling in modals.
-
----
-
 ## **v1.0.1 Beta Releases**
 
 !!! warning "Beta Releases"
@@ -135,6 +90,51 @@ ghcr.io/depictio/depictio:1.0.0
 
 #### **🚀 Improvements**
 * **Zero-config quickstart** — `docker compose up -d` with no `.env`; multi-arch images; auto-seed default admin in single-user mode; working creds kept in `.env.example` for CI.
+
+---
+
+## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)** (June 10, 2026)
+
+!!! success "Stable Major Release — React sole frontend, Dash → React migration complete"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.0.0
+```
+
+### **♻️ Migration**
+
+* **Dash removed** — `depictio/dash/` deleted; `DashConfig` → `ViewerConfig`; `DEPICTIO_DASH_` → `DEPICTIO_VIEWER_`; per-service Dockerfiles scaffolded.
+
+### **✨ New Features**
+
+* **URL graduation** — `*-beta` paths retired; React SPA serves canonical `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, `/profile`, `/admin`, `/cli-agents`, `/about`.
+* **Split-image production** — `depictio-api`, `depictio-worker`, `depictio-viewer` published individually.
+* **Tool→viz catalog** — module-granular bioinformatics catalog (nf-core / bio.tools / EDAM ontology).
+* **CLI overhaul** — new banner, `depictio commands` reference table, slimmed surface, parallel image uploads.
+* **Advanced viz** — richer bindings UX; graded suggestion scoring.
+
+### **🔒 Security**
+
+* **Auth bootstrap from env** — `initial_users.yaml` removed; admin seeded via `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` (idempotent).
+* **Secrets hardened** — MinIO root password ≥8 chars, no default; CORS allowlist replaces `allow_origins=["*"]`; JWT verifies RS256/RS512 + `exp` before MongoDB; `/register` cannot set `is_admin`; IDOR file-delete fixed; JBrowse `allow-same-origin` removed; nginx CSP/HSTS/Permissions-Policy added.
+* **Password constraints** — min length 8; `changeme` allowed for bootstrap admin (not MinIO); single-user mode skips all enforcement.
+
+### **🚀 Improvements**
+
+* **Helm chart 1.0** — `image.tag` defaults to `1.x`; viewer runs nginx container; no default MinIO credentials.
+* **MongoDB HA** — Percona PSMDB Operator replaces Community Operator; viewer startup order and resource rebalance.
+* **Rate limiter** — Redis-backed per-IP fixed window; uses `X-Real-IP` in k8s.
+* **Playwright e2e** — CI covers auth + dashboards-management slice in parallel.
+
+### **🐛 Bug Fixes**
+
+* Screenshot debounce wrong path; Sign In hidden in public mode.
+* Demo mode: public reference dashboards restored; temp users kept for the full session.
+* Auth key-wipe race on multi-replica deployments fixed; React default thumbnail fallback added.
+* Screenshots: fonts installed in worker image; settle delay before capture.
+* Viewer tab menu refresh and icon handling in modals.
 
 ---
 
