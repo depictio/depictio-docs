@@ -12,7 +12,9 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: depictio/depictio
+  # The monolithic depictio/depictio image was split into per-service images;
+  # the FastAPI app (and thus the OpenAPI schema) now lives in depictio-api.
+  IMAGE_NAME: depictio/depictio-api
 
 jobs:
   create-update-pr:
@@ -56,8 +58,16 @@ jobs:
           # Generate OpenAPI schema directly without starting the server
           # This avoids the need for MongoDB and other dependencies
           echo "Generating OpenAPI specification..."
+          # Importing depictio.api.main builds the Settings model, which in
+          # server context rejects an unset/default MinIO root password — even
+          # in single-user mode (that flag only relaxes the auth-password
+          # checks). Pass a throwaway strong password so the model validates;
+          # no server, DB or real secrets are started — we only need the app
+          # object to call app.openapi().
           docker run --rm \
             -e DEPICTIO_CONTEXT=server \
+            -e DEPICTIO_AUTH_SINGLE_USER_MODE=true \
+            -e DEPICTIO_MINIO_ROOT_PASSWORD=openapi-extract-not-a-real-secret \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.image_tag }} \
             python -c "import json; from depictio.api.main import app; print(json.dumps(app.openapi(), indent=2))" \
             > docs/api/openapi.json
