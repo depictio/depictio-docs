@@ -15,6 +15,27 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.0.1](https://github.com/depictio/depictio/releases/tag/v1.0.1)** (June 11, 2026)
+
+!!! success "Patch — zero-config quickstart hardening"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.0.1
+```
+
+### **🚀 Improvements**
+
+* **Zero-config quickstart** — `docker compose up -d` boots with no `.env`; multi-arch (amd64/arm64) images; default admin auto-seeded in single-user mode.
+* **Self-pinned compose** — the published `docker-compose.yaml` pins every service to its release tag; quick-start file trimmed to essentials.
+
+### **🐛 Bug Fixes**
+
+* **Compose security contexts** — MongoDB starts under `cap_drop: [ALL]`; viewer and backend get writable paths for nginx config and admin bootstrap.
+
+---
+
 ## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)** (June 10, 2026)
 
 !!! success "Stable Major Release — React sole frontend, Dash → React migration complete"
@@ -60,18 +81,67 @@ ghcr.io/depictio/depictio:1.0.0
 
 ---
 
+## **v1.0.1 Beta Releases**
+
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk. The v1.0.1 cycle hardened the zero-config quickstart compose.
+
+### **[v1.0.1-b7](https://github.com/depictio/depictio/releases/tag/v1.0.1-b7)** (June 11, 2026)
+
+#### **🚀 Improvements**
+* **Docker caching** — split dependency and project layers so the build cache survives version bumps.
+
+---
+
+### **[v1.0.1-b6](https://github.com/depictio/depictio/releases/tag/v1.0.1-b6)** (June 11, 2026)
+
+#### **🚀 Improvements**
+* **Prod compose** — collapse to a single light file; cache CI builds.
+
+#### **🐛 Bug Fixes**
+* **Backend** — drop read-only rootfs so admin bootstrap can write.
+
+---
+
+### **[v1.0.1-b5](https://github.com/depictio/depictio/releases/tag/v1.0.1-b5)** (June 11, 2026)
+
+#### **🐛 Bug Fixes**
+* **Viewer** — make `conf.d` tmpfs writable by the nginx user; drop read-only rootfs so nginx can render its config.
+
+---
+
+### **[v1.0.1-b4](https://github.com/depictio/depictio/releases/tag/v1.0.1-b4)** (June 10, 2026)
+
+#### **🐛 Bug Fixes**
+* **Viewer** — give nginx a writable `/etc/nginx/conf.d`.
+
+---
+
+### **[v1.0.1-b3](https://github.com/depictio/depictio/releases/tag/v1.0.1-b3)** (June 10, 2026)
+
+#### **🚀 Improvements**
+* **Smoke test** — poll the viewer instead of a single eager curl.
+
+---
+
+### **[v1.0.1-b2](https://github.com/depictio/depictio/releases/tag/v1.0.1-b2)** (June 10, 2026)
+
+#### **🐛 Bug Fixes**
+* **MongoDB** — start under `cap_drop: [ALL]`.
+
+---
+
+### **[v1.0.1-b1](https://github.com/depictio/depictio/releases/tag/v1.0.1-b1)** (June 10, 2026)
+
+#### **🚀 Improvements**
+* **Zero-config quickstart** — `docker compose up -d` with no `.env`; multi-arch images; auto-seed default admin in single-user mode; working creds kept in `.env.example` for CI.
+
+---
+
 ## **v1.0.0 Beta Releases**
 
 !!! warning "Beta Releases"
     These are pre-release versions intended for testing. Use in production at your own risk.
-
-### **[v1.0.0-b9](https://github.com/depictio/depictio/releases/tag/v1.0.0-b9)** (June 10, 2026)
-
-#### **🐛 Bug Fixes**
-* **MultiQC** — drop `matplotlib` dep from general-stats colormap.
-* **Screenshots** — regenerate reference dashboard thumbnails.
-
----
 
 ### **[v1.0.0-b9](https://github.com/depictio/depictio/releases/tag/v1.0.0-b9)** (June 10, 2026)
 
