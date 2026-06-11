@@ -15,6 +15,10 @@ on:
         description: 'Alias (latest, beta, or none)'
         required: false
         default: 'beta'
+      depictio_ref:
+        description: 'depictio/depictio ref to build the component catalog from'
+        required: false
+        default: 'main'
 
 jobs:
   deploy-mike:
@@ -57,6 +61,43 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
+
+      # The component catalog gallery is generated on the fly from the depictio
+      # source repo and is NOT committed to this repo (see .gitignore). mkdocs
+      # copies docs/assets/ into the build regardless of gitignore, so the freshly
+      # generated HTML ships with this mike version.
+      - name: Checkout depictio source (catalog gallery)
+        uses: actions/checkout@v4
+        with:
+          repository: depictio/depictio
+          ref: ${{ github.event.inputs.depictio_ref || 'main' }}
+          path: depictio-src
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Build catalog gallery bundle
+        working-directory: depictio-src
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm --filter ./depictio/viewer run build:catalog-preview
+
+      # Run from depictio-src so uv resolves its pyproject.toml (installs the
+      # depictio package + deps into an isolated env, separate from the docs env).
+      - name: Generate catalog gallery HTML (light + dark)
+        working-directory: depictio-src
+        run: |
+          uv run python -m depictio.cli catalog gallery \
+            --theme light --no-open --out "$GITHUB_WORKSPACE/docs/assets/component-catalog-light.html"
+          uv run python -m depictio.cli catalog gallery \
+            --theme dark --no-open --out "$GITHUB_WORKSPACE/docs/assets/component-catalog-dark.html"
 
       - name: Deploy with mike
         run: |

@@ -911,3 +911,193 @@ svg:hover path#shape-7 {
         gap: 1rem !important;
     }
 }
+
+/* ==========================================================================
+   Component Catalog page
+   ========================================================================== */
+
+/* Theme-aware live gallery iframes — mirrors the .logo-light/.logo-dark trick
+   above (the image #only-light/#only-dark hash does not apply to iframes). */
+[data-md-color-scheme="default"] .catalog-iframe-light { display: block; }
+[data-md-color-scheme="default"] .catalog-iframe-dark { display: none; }
+[data-md-color-scheme="slate"] .catalog-iframe-light { display: none; }
+[data-md-color-scheme="slate"] .catalog-iframe-dark { display: block; }
+
+/* Full-height gallery: fill the viewport (the page hides nav + toc, so it can
+   use the whole content column). The height="" attribute is just a fallback. */
+.catalog-embed {
+    position: relative;
+}
+
+.catalog-embed iframe {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    min-height: 1100px;
+    border-radius: 4px;
+    border: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* Fullscreen toggle (reused from the live-demo pattern). */
+.catalog-fs-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.catalog-fs-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+/* Header bar (with close button) shown only in fullscreen. */
+.catalog-demo-header {
+    display: none;
+}
+
+/* Page-fill overlay: fixed over the docs page, not native OS fullscreen. */
+.catalog-embed--fs {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    margin: 0;
+    padding: 0;
+    background: var(--md-default-bg-color);
+}
+
+/* Freeze the page scroll behind the overlay (set by catalog-fullscreen.js). */
+body.catalog-fs-lock {
+    overflow: hidden;
+}
+
+/* The footer fix pins .md-main to z-index:1, which traps the overlay in a
+   stacking context below the sticky Material header (z-index:4). While the
+   overlay is open, lift the whole content stacking context above it. */
+body.catalog-fs-lock .md-main {
+    z-index: 1001;
+}
+
+.catalog-embed--fs .catalog-demo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.catalog-demo-title {
+    font-weight: 600;
+}
+
+.catalog-fs-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--md-default-fg-color);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.catalog-fs-close:hover {
+    background: var(--md-default-fg-color--lightest);
+}
+
+.catalog-embed--fs .catalog-fs-btn {
+    display: none;
+}
+
+.catalog-embed--fs .catalog-iframe-light,
+.catalog-embed--fs .catalog-iframe-dark {
+    height: calc(100vh - 48px);
+}
+
+.catalog-embed--fs iframe {
+    width: 100vw;
+    height: calc(100vh - 48px);
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+}
+
+/* Module flow: a flat horizontal stepper (Detect -> Reshape -> Render). */
+.module-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    margin: 1rem 0 1.5rem;
+}
+
+.module-flow__step {
+    position: relative;
+    flex: 1 1 200px;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-top: 3px solid var(--md-default-fg-color--light);
+    border-radius: 6px;
+}
+
+.module-flow__step > :first-child { margin-top: 0; }
+.module-flow__step > :last-child { margin-bottom: 0; }
+
+/* Intro mapping (file -> module -> visualization) and how-it-works steps
+   (detect -> reshape -> render) share the same positional accent colors. */
+.module-flow__step--detect,
+.module-flow__step--file { border-top-color: #6495ED; }    /* blue */
+.module-flow__step--reshape,
+.module-flow__step--module { border-top-color: #9966CC; }  /* purple */
+.module-flow__step--render,
+.module-flow__step--component { border-top-color: #45B8AC; } /* teal */
+
+.module-flow__step--detect .twemoji,
+.module-flow__step--file .twemoji { color: #6495ED; }
+.module-flow__step--reshape .twemoji,
+.module-flow__step--module .twemoji { color: #9966CC; }
+.module-flow__step--render .twemoji,
+.module-flow__step--component .twemoji { color: #45B8AC; }
+
+/* Connecting arrows between steps (hidden on the last step and on mobile). */
+.module-flow__step:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    line-height: 1;
+    color: var(--md-default-fg-color--light);
+}
+
+.module-flow__opt {
+    font-size: 0.7em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--md-default-fg-color--light);
+}
+
+@media screen and (max-width: 44.9375em) {
+    .module-flow__step:not(:last-child)::after { content: none; }
+}
+
+/* Flat brand-color accents for the catalog intro cards (no gradients). */
+.cat-figure { color: #6495ED; }   /* blue */
+.cat-table { color: #45B8AC; }    /* teal */
+.cat-card { color: #9966CC; }     /* purple */
+.cat-advviz { color: #7A5DC7; }   /* violet */
+.cat-multiqc { color: #8BC34A; }  /* green */
