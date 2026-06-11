@@ -9,7 +9,7 @@ Up and running in two commands — no git clone, no configuration file needed.
 ### Step 1 — Download the compose file
 
 ```bash
-curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml
+curl -LO https://raw.githubusercontent.com/depictio/depictio/stable/docker-compose.yaml
 ```
 
 ### Step 2 — Start

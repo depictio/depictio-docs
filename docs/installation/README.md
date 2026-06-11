@@ -11,7 +11,7 @@ description: "Get started with Depictio by choosing the installation method that
 No git clone, no configuration file.
 
 ```bash title="Terminal" linenums="1"
-curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml # (1)!
+curl -LO https://raw.githubusercontent.com/depictio/depictio/stable/docker-compose.yaml # (1)!
 docker compose up -d # (2)!
 ```
 
