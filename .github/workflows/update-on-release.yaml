@@ -12,7 +12,9 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: depictio/depictio
+  # The monolithic depictio/depictio image was split into per-service images;
+  # the FastAPI app (and thus the OpenAPI schema) now lives in depictio-api.
+  IMAGE_NAME: depictio/depictio-api
 
 jobs:
   create-update-pr:
