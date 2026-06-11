@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Swagger UI</title>
   <link rel="stylesheet" type="text/css" href="../../assets/stylesheets/swagger-ui.css" />
+  <link rel="stylesheet" type="text/css" id="slate-css" media="none" href="../../assets/stylesheets/swagger-ui-dark.css" />
   
 </head>
 
@@ -14,10 +15,6 @@
   <script src="../../assets/javascripts/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
   <script>
     window.onload = function () {
-      
-        var url = "../openapi.json";
-        
-      
       window.ui = SwaggerUIBundle({
         dom_id: "#swagger-ui",
         onComplete: onComplete,
@@ -26,7 +23,7 @@
           SwaggerUIStandalonePreset
         ],
         
-        url,
+        url: "../openapi.json",
         
         
         "oauth2RedirectUrl": new URL("../../assets/swagger-ui/oauth2-redirect.html",window.location.href).href,
@@ -62,15 +59,15 @@
     }
 
     enable_dark_mode = function(){
-      document.documentElement.classList.add("dark-mode");
+      document.getElementById("slate-css").media = ""
     }
 
     disable_dark_mode = function(){
-      document.documentElement.classList.remove("dark-mode");
+      document.getElementById("slate-css").media = "none"
     }
 
     const resize_ob = new ResizeObserver(function(entries) {
-      parent.update_swagger_ui_iframe_height("f5446e2e");
+      parent.update_swagger_ui_iframe_height("354247b3");
     });
 
     // start observing for resizing
