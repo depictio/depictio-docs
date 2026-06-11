@@ -58,8 +58,13 @@ jobs:
           # Generate OpenAPI schema directly without starting the server
           # This avoids the need for MongoDB and other dependencies
           echo "Generating OpenAPI specification..."
+          # Single-user mode relaxes the production secret checks (the Settings
+          # model otherwise rejects the default/unset MinIO password at import
+          # time). We only need the app object to call app.openapi(); no server,
+          # DB or real secrets are started.
           docker run --rm \
             -e DEPICTIO_CONTEXT=server \
+            -e DEPICTIO_AUTH_SINGLE_USER_MODE=true \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.image_tag }} \
             python -c "import json; from depictio.api.main import app; print(json.dumps(app.openapi(), indent=2))" \
             > docs/api/openapi.json
