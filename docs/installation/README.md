@@ -8,8 +8,10 @@ description: "Get started with Depictio by choosing the installation method that
 
 ## :material-rocket-launch: Quickstart
 
+No git clone, no configuration file.
+
 ```bash title="1 — Download"
-curl -LO https://raw.githubusercontent.com/depictio/depictio/main/docker-compose.yaml
+curl -LO https://raw.githubusercontent.com/depictio/depictio/stable/docker-compose.yaml
 ```
 
 ```bash title="2 — Start"
