@@ -242,8 +242,8 @@ hide:
         <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
       </svg>
     </button>
-    <iframe id="demo-iframe" src="https://api.demo.depictio.embl.org/dashboards-beta" width="100%" height="1080" frameborder="0" allowfullscreen style="zoom: 0.56;">
-      <p>Your browser does not support iframes. <a href="https://api.demo.depictio.embl.org/dashboards-beta">Click here to view the Depictio dashboard</a></p>
+    <iframe id="demo-iframe" src="https://demo.depictio.embl.org/dashboards" width="100%" height="1080" frameborder="0" allowfullscreen style="zoom: 0.56;">
+      <p>Your browser does not support iframes. <a href="https://demo.depictio.embl.org/dashboards">Click here to view the Depictio dashboard</a></p>
     </iframe>
   </div>
 </section>
@@ -254,10 +254,6 @@ hide:
   <div class="container text-center">
     <h2>Powered by Modern Technologies</h2>
     <div class="tech-badges">
-      <a href="https://dash.plotly.com/" target="_blank" rel="noopener" class="tech-badge plotly">
-        <img src="https://images.plot.ly/logo/new-branding/plotly-logomark.png" alt="Plotly">
-        <span>Dash</span>
-      </a>
       <a href="https://react.dev/" target="_blank" rel="noopener" class="tech-badge react">
         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
         <span>React</span>
@@ -2107,7 +2103,7 @@ function toggleFullscreen() {
 async function checkDemoAvailability() {
   const demoSection = document.querySelector('.live-demo-section');
   const iframe = document.getElementById('demo-iframe');
-  const demoUrl = 'https://api.demo.depictio.embl.org/dashboards-beta';
+  const demoUrl = 'https://demo.depictio.embl.org/dashboards';
 
   if (!demoSection || !iframe) return;
 
@@ -2144,7 +2140,7 @@ async function checkDemoAvailability() {
           </svg>
         </div>
         <h3>Live Demo Temporarily Unavailable</h3>
-        <p>The interactive demo is currently not accessible. Please try again later or <a href="https://api.demo.depictio.embl.org/dashboards-beta" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
+        <p>The interactive demo is currently not accessible. Please try again later or <a href="https://demo.depictio.embl.org/dashboards" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
         <div class="demo-alternative-actions">
           <a href="https://codespaces.new/depictio/depictio" class="md-button" target="_blank" rel="noopener">Open in Codespaces</a>
           <a href="usage/get_started/" class="md-button">View Documentation</a>

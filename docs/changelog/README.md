@@ -8,28 +8,297 @@ hide:
 
 # Changelog
 
-!!! info "React viewer becomes the default UI in v0.14.0"
-    The Dash frontend is in its final stable cycle. From **v0.14.0** the React
-    viewer (currently at `/*-beta` paths) takes over the canonical URLs
-    (`/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`),
-    and the Dash editor is removed. The 0.13.x patch series below tightened
-    the React data-fetch + bundled-seed paths in preparation for that cutover.
+!!! success "React viewer is the sole frontend as of v1.0.0"
+    The Dash frontend was removed in **v0.13.12**. As of **v1.0.0** the React
+    viewer serves canonical URLs (`/dashboards`, `/dashboard/{id}`,
+    `/dashboard-edit/{id}`, `/projects`); the `*-beta` suffix paths redirect
+    to canonical. The 0.13.x patch series prepared the data-fetch and
+    bundled-seed paths for this cutover.
+
+## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)** (June 10, 2026)
+
+!!! success "Stable Major Release — React sole frontend, Dash → React migration complete"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.0.0
+```
+
+### **♻️ Migration**
+
+* **Dash removed** — `depictio/dash/` deleted; `DashConfig` → `ViewerConfig`; `DEPICTIO_DASH_` → `DEPICTIO_VIEWER_`; per-service Dockerfiles scaffolded.
+
+### **✨ New Features**
+
+* **URL graduation** — `*-beta` paths retired; React SPA serves canonical `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, `/profile`, `/admin`, `/cli-agents`, `/about`.
+* **Split-image production** — `depictio-api`, `depictio-worker`, `depictio-viewer` published individually.
+* **Tool→viz catalog** — module-granular bioinformatics catalog (nf-core / bio.tools / EDAM ontology).
+* **CLI overhaul** — new banner, `depictio commands` reference table, slimmed surface, parallel image uploads.
+* **Advanced viz** — richer bindings UX; graded suggestion scoring.
+
+### **🔒 Security**
+
+* **Auth bootstrap from env** — `initial_users.yaml` removed; admin seeded via `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` (idempotent).
+* **Secrets hardened** — MinIO root password ≥8 chars, no default; CORS allowlist replaces `allow_origins=["*"]`; JWT verifies RS256/RS512 + `exp` before MongoDB; `/register` cannot set `is_admin`; IDOR file-delete fixed; JBrowse `allow-same-origin` removed; nginx CSP/HSTS/Permissions-Policy added.
+* **Password constraints** — min length 8; `changeme` allowed for bootstrap admin (not MinIO); single-user mode skips all enforcement.
+
+### **🚀 Improvements**
+
+* **Helm chart 1.0** — `image.tag` defaults to `1.x`; viewer runs nginx container; no default MinIO credentials.
+* **MongoDB HA** — Percona PSMDB Operator replaces Community Operator; viewer startup order and resource rebalance.
+* **Rate limiter** — Redis-backed per-IP fixed window; uses `X-Real-IP` in k8s.
+* **Playwright e2e** — CI covers auth + dashboards-management slice in parallel.
+
+### **🐛 Bug Fixes**
+
+* Screenshot debounce wrong path; Sign In hidden in public mode.
+* Demo mode: public reference dashboards restored; temp users kept for the full session.
+* Auth key-wipe race on multi-replica deployments fixed; React default thumbnail fallback added.
+* Screenshots: fonts installed in worker image; settle delay before capture.
+* Viewer tab menu refresh and icon handling in modals.
+
+---
+
+## **v1.0.0 Beta Releases**
+
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
+
+### **[v1.0.0-b9](https://github.com/depictio/depictio/releases/tag/v1.0.0-b9)** (June 10, 2026)
+
+#### **🐛 Bug Fixes**
+* **MultiQC** — drop `matplotlib` dep from general-stats colormap.
+* **Screenshots** — regenerate reference dashboard thumbnails.
+
+---
+
+### **[v1.0.0-b9](https://github.com/depictio/depictio/releases/tag/v1.0.0-b9)** (June 10, 2026)
+
+#### **🐛 Bug Fixes**
+* **MultiQC** — drop `matplotlib` dep from general-stats colormap.
+* **Screenshots** — regenerate reference dashboard thumbnails.
+
+---
+
+### **[v1.0.0-b8](https://github.com/depictio/depictio/releases/tag/v1.0.0-b8)** (June 9, 2026)
+
+#### **✨ New Features**
+* **CLI overhaul** — new startup banner (favicon), `depictio commands` grouped reference table, slimmed user-facing surface, cleaner `catalog list`, parallel image uploads.
+* **Advanced viz** — richer bindings UX (sankey/heatmap); suggestion model reworked to graded, tolerant scoring.
+#### **🚀 Improvements**
+* **Deps bump** — Phase A (static tooling) + Phase B (runtime); data-layer majors (deltalake/pandas/polars); monthly Dependabot health-check added.
+
+#### **🔒 Security**
+* **CLI deps** — bump `depictio-cli` deps, fix `python-jose` CVEs; hold `redis` at 5.2.1 (redis-py 8.0 starves the API event loop).
+
+#### **🐛 Bug Fixes**
+* **Viewer** — tab three-dots menu no longer triggers URL refresh.
+* **Delta tables** — accept pandas 3.0 `str` dtype in column type detection.
+* **CLI** — don't force ANSI on piped output; catch `typer.Exit` in `recipe_run`.
+* **Devcontainer** — drop dangling `docker-compose.minio.yaml` ref; harmonize MinIO credentials across worktree envs.
+
+---
+
+### **[v1.0.0-b7](https://github.com/depictio/depictio/releases/tag/v1.0.0-b7)** (June 8, 2026)
+
+#### **🚀 Improvements**
+* **MongoDB HA** — Percona PSMDB Operator migration landed in Helm (#792).
+* **CI** — build-images trigger narrowed to build-recipe files only (#796).
+* **Producers** — remove suggestion engine; migrate ampliseq `complex_heatmap` tiles (#797).
+
+#### **🐛 Bug Fixes**
+* **Project export** — export allowed for anonymous users in public/demo mode (#793).
+* **Screenshots** — install sans-serif fonts in worker image; settle delay before capture (#794).
+* **Viewer** — tab menu refresh + icon handling in tab/dashboard modals (#795).
+
+---
+
+### **[v1.0.0-b6](https://github.com/depictio/depictio/releases/tag/v1.0.0-b6)** (June 4, 2026)
+
+#### **🐛 Bug Fixes**
+* **Auth key-wipe race** — fix multi-replica race condition wiping internal API key during dev-demo ingestion (#791).
+* **React thumbnails** — default fallback thumbnail shown when screenshot is missing (#791).
+* **Release workflow** — fix shell injection and bad parameter expansion in bump/release scripts (#790).
+
+---
+
+### **[v1.0.0-b5](https://github.com/depictio/depictio/releases/tag/v1.0.0-b5)** (June 4, 2026)
+
+#### **🚀 Improvements**
+* **Helm / MongoDB HA** — migrate MongoDB from Community Operator to Percona PSMDB Operator; viewer startup order and resource rebalance (#788).
+
+---
+
+### **[v1.0.0-b4](https://github.com/depictio/depictio/releases/tag/v1.0.0-b4)** (June 4, 2026)
+
+#### **🐛 Bug Fixes**
+* **Demo mode** — restore public reference dashboards; keep temp users alive for the full session (#789).
+
+#### **🧪 Testing**
+* **Playwright e2e** — parallel React frontend tests covering auth + dashboards-management slice; CI runs frontend + backend suites concurrently (#782).
+
+---
+
+### **[v1.0.0-b3](https://github.com/depictio/depictio/releases/tag/v1.0.0-b3)** (June 4, 2026)
+
+#### **✨ New Features**
+* **Tool→viz catalog** — module-granular bioinformatics catalog (nf-core / bio.tools / EDAM ontology) (#783).
+
+#### **🐛 Bug Fixes**
+* **Rate limiter** — use `X-Real-IP` instead of TCP source so k8s nginx pod IP doesn't collapse all users into one bucket (#787).
+
+---
+
+### **[v1.0.0-b2](https://github.com/depictio/depictio/releases/tag/v1.0.0-b2)** (June 4, 2026)
+
+#### **🐛 Bug Fixes**
+* **Password constraints** — min length 16 → 8; `changeme` allowed for bootstrap admin (not MinIO); single-user mode skips all enforcement (#786).
+* **Screenshot** — fix debounce wrong path; hide Sign In button in public mode (#784).
+* **React routes** — remove `-beta` suffix from route definitions (post-Dash cutover) (#785).
+
+---
+
+### **[v1.0.0-b1](https://github.com/depictio/depictio/releases/tag/v1.0.0-b1)** (June 4, 2026)
+
+#### **♻️ Migration**
+* **Dash removed** — `depictio/dash/` deleted; `DashConfig` → `ViewerConfig`; `DEPICTIO_DASH_` → `DEPICTIO_VIEWER_`; per-service Dockerfiles scaffolded.
+
+#### **✨ New Features**
+* **`/*-beta` → canonical redirect** — all `*-beta` paths issue HTTP 301s; existing bookmarks continue to work.
+* **React on canonical URLs** — FastAPI mounts SPA at `/dashboards`, `/dashboard/{id}`, etc.; Vite base path and nginx fallback updated.
+
+#### **🔒 Security**
+* **Auth bootstrap from env** — `initial_users.yaml` removed; admin seeded via `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` (idempotent; fail-fast if absent and no admin in DB).
+* **Secrets hardened** — MinIO root password `SecretStr` ≥8 chars, no default; moved out of Helm ConfigMap; `mongo:8.0.5` + fixed MinIO release pinned; `runAsNonRoot` + `drop ALL` on Mongo/MinIO pods.
+* **API auth** — CORS `allow_origins=["*"]` replaced by env allowlist; JWT verifies RS256/RS512 signature + `exp` before MongoDB (closes alg=none); `/register` cannot set `is_admin`; import requires real user + zip-slip guard; IDOR file-delete fixed.
+* **Frontend + nginx** — JBrowse `allow-same-origin` removed; OAuth open-redirect closed; nginx viewer adds CSP, Permissions-Policy, HSTS.
+* **S3 + visibility** — `verify=False` boto3 → `settings.minio.verify_tls`; reference dashboards default `is_public=False`.
+
+---
+
+## **[v0.13.12](https://github.com/depictio/depictio/releases/tag/v0.13.12)** (June 4, 2026)
+
+!!! success "Stable patch — cross-DC filter fix"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.12
+```
+
+### **🐛 Bug Fixes**
+
+* **Cross-DC filter join column** — link resolver fell back to the user's filter column instead of the link's join column; target DC silently returned every row.
+
+---
+
+## **[v0.13.11](https://github.com/depictio/depictio/releases/tag/v0.13.11)** (May 29, 2026)
+
+!!! success "Stable patch — cross-DC filter target column"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.11
+```
+
+### **🐛 Bug Fixes**
+
+* **Cross-DC filter `target_column=None`** — `dict.get("target_field", default)` returned `None` when key existed but was null; synthetic filter propagated `column_name=None` → 500 on advanced-viz, silent full-table return on figures.
+
+---
+
+## **[v0.13.10](https://github.com/depictio/depictio/releases/tag/v0.13.10)** (May 29, 2026)
+
+!!! success "Stable patch — builder: viz suggestions, text-step, screenshot regen"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.10
+```
+
+### **🐛 Bug Fixes**
+
+* **Viz suggestion engine** — no fingerprints for rarefaction/sankey/sunburst/alpha-diversity; added 4 producers and rewrote matching to require alias set + dtype (not dtype alone).
+* **Text component "Type" step freeze** — `setStep(1)` skipped the hidden Data Source step for text; now jumps to step 2.
+* **Screenshot not regen'd on Save** — enqueue skipped when `editMode=false`; fixed.
+
+---
+
+## **[v0.13.9](https://github.com/depictio/depictio/releases/tag/v0.13.9)** (May 28, 2026)
+
+!!! success "Stable patch — admin bypass for public/demo write gates"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.9
+```
+
+### **🐛 Bug Fixes**
+
+* **Admin locked out in public/demo mode** — write gates (project creation, CLI token, agent-config) were unconditional; now `is_public AND NOT is_admin`.
+
+---
+
+## **[v0.13.8](https://github.com/depictio/depictio/releases/tag/v0.13.8)** (May 28, 2026)
+
+!!! success "Stable patch — React import, screenshot ownership, Helm ingress"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.8
+```
+
+### **🐛 Bug Fixes**
+
+* **React project import 404** — client hit `/projects/import`; corrected to `/migrate/import-project-zip`.
+* **Shared creation timestamps** — class-level `datetime.now()` defaults shared across instances; replaced with `Field(default_factory=datetime.now)`.
+* **Screenshots denied on duplicated dashboards** — permission check consulted project owners only; now checks dashboard-level owners first.
+
+### **🚀 Improvements**
+
+* **Helm dedicated ingress** — separate `Ingress` objects for MinIO and backend API with Serve-specific annotations.
+
+---
 
 ## **[v0.13.7](https://github.com/depictio/depictio/releases/tag/v0.13.7)** (May 22, 2026)
 
-!!! success "Stable patch — viralrecon Pangolin lineage tiles render"
+!!! success "Stable patch — viralrecon Lineage tab 500"
 
-* **🐛** **viralrecon Lineage tab** — *Unique Lineages* card and *Pangolin lineage distribution* figure (sourced from the `pangolin_lineages` DC, SARS-CoV-2 lineage assignment) returned 500 because `precompute_columns_specs` aborted on sparse-string columns whose aggregated `mode()` carried a non-default index. Switched to positional `.iloc[0]`.
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.7
+```
+
+### **🐛 Bug Fixes**
+
+* **viralrecon Lineage tab** — `precompute_columns_specs` aborted on sparse-string `mode()` with non-default index; switched to positional `.iloc[0]`.
 
 ---
 
 ## **[v0.13.6](https://github.com/depictio/depictio/releases/tag/v0.13.6)** (May 22, 2026)
 
-!!! success "Stable patch — recipe seed format, screenshot guard, EMBL resource tune"
+!!! success "Stable patch — recipe seed format, screenshot queue, EMBL resources"
 
-* **🐛** **viralrecon Variants / Lineages / Clustering / Coverage tabs** — 12 of 13 recipe DCs render-error'd because the init resolver kept the template's `format: csv` (describing the recipe *input*) after converting them to file-scans against the bundled `.tsv` seeds; polars then read each TSV with a comma separator, collapsing every header line into a single column. Resolver now force-sets `format=tsv` after conversion.
-* **🐛** **Startup unresponsive** — `/dashboards/save/{id}` enqueued a Playwright screenshot on every tab open / duplicate / rename, saturating celery and stalling advanced-viz `compute_*` tasks. Skip enqueue when both dual-theme PNGs exist and are <1h old (mirrors the auto-screenshot heuristic).
-* **🚀** **EMBL `demo` + `demodev` namespaces** — celery is the bottleneck for advanced-viz compute, so concurrency 2 → 8 and limits move to 8 CPU / 16 GiB. Combined requests fit the 32 CPU / 64 GiB tenant quota.
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.6
+```
+
+### **🐛 Bug Fixes**
+
+* **viralrecon recipe DCs** — init resolver kept `format: csv` after converting recipe DCs to file-scans against bundled TSVs; polars read them comma-delimited. Force-sets `format=tsv` after conversion.
+* **Screenshot queue saturation** — save enqueued a screenshot on every tab open/duplicate/rename, saturating celery; now skips when dual-theme PNGs are <1h old.
+
+### **🚀 Improvements**
+
+* **EMBL demo/demodev** — celery concurrency 2→8, limits 8 CPU / 16 GiB.
 
 ---
 
@@ -37,8 +306,19 @@ hide:
 
 !!! success "Stable patch — viralrecon canonical seed TSVs"
 
-* **🚀** **Helm installs ship viralrecon dashboards working out of the box** — bundle 15 canonical recipe outputs (`summary_metrics`, `variants_long`, `pangolin_lineages`, `nextclade_results`, `manhattan_variants_canonical`, `complex_heatmap_canonical`, `coverage_track_canonical`, `sankey_canonical`, `upset_canonical`, `lollipop_canonical`, `oncoplot_canonical`, `variant_feature_matrix_canonical`, three `mosdepth_*` aggregations) as `.tsv` seeds (~1.5 MB total), matching ampliseq's bundled pattern. Ports the `variants_long` + `variant_feature_matrix_canonical` recipes that were missing from the bundled set.
-* **🧪** CI's `cli-comprehensive-test` job asserts all 19 viralrecon scan / seed files land in the image — catches future `.gitignore` / `.dockerignore` regressions.
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.5
+```
+
+### **🚀 Improvements**
+
+* **viralrecon seed TSVs** — bundles 15 canonical recipe outputs (~1.5 MB); `variants_long` + `variant_feature_matrix_canonical` recipes added.
+
+### **🧪 CI**
+
+* Asserts all 19 viralrecon scan/seed files land in the image.
 
 ---
 
@@ -46,37 +326,61 @@ hide:
 
 !!! success "Stable patch — bundled viralrecon raw data"
 
-* **🚀** **viralrecon Coverage & Depth + MultiQC tabs** — bundle the 4 raw nf-core scan targets (`multiqc.parquet` + 3 `mosdepth` TSVs, ~25 MB) under `depictio/projects/nf-core/viralrecon/3.0.0/run_1/` so a fresh helm install renders these tiles without `kubectl cp` or an external S3 sync.
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.4
+```
+
+### **🚀 Improvements**
+
+* **viralrecon raw data** — bundles `multiqc.parquet` + 3 mosdepth TSVs (~25 MB); Coverage & Depth + MultiQC tabs render without `kubectl cp`.
 
 ---
 
 ## **[v0.13.3](https://github.com/depictio/depictio/releases/tag/v0.13.3)** (May 21, 2026)
 
-!!! success "Stable patch — viralrecon seed dashboards + public-mode pinning"
+!!! success "Stable patch — viralrecon seed IDs + public-mode pinning"
 
-* **🐛** **All 5 viralrecon dashboards 404'd on fresh installs** — the bundled `dashboard_*.json` seeds referenced auto-generated ObjectIds that don't reproduce across deploys (46 stale IDs across the 5 dashboards). Remapped to `STATIC_IDS["viralrecon"]`, and added a pytest invariant covering every reference project.
-* **🐛** **Advanced Visualisations showcase: Coverage Track + Categorical Flow demos 404'd** — the `coverage_track_demo` and `categorical_flow_demo` DCs were referenced in their seed dashboards but never registered in `STATIC_IDS`. Surfaced by the new pytest invariant.
-* **🚀** **Anonymous / demo sessions can now pin dashboards** — pin state lives in `localStorage` (no server write), so there was no privacy reason to gate it on auth mode.
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.3
+```
+
+### **🐛 Bug Fixes**
+
+* **viralrecon dashboards 404'd** — 46 stale auto-generated ObjectIds remapped to `STATIC_IDS["viralrecon"]`; pytest invariant added.
+* **Advanced Viz Coverage Track + Categorical Flow demos 404'd** — DCs referenced in seeds but missing from `STATIC_IDS`.
+
+### **🚀 Improvements**
+
+* **Public/demo pinning** — dashboard pins stored in `localStorage`; no server write needed.
 
 ---
 
 ## **[v0.13.2](https://github.com/depictio/depictio/releases/tag/v0.13.2)** (May 21, 2026)
 
-!!! success "Stable patch — K8s deploy + ampliseq/viralrecon seed fixes"
+!!! success "Stable patch — K8s init containers, viralrecon scan, ampliseq seeds"
 
-* **🐛** **Fresh helm installs stalled at `0 READY`** — all 17 init containers (15 busybox `wait-for-mongo` / `wait-for-redis` / `fix-permissions-*` and 2 curl seeders) had no `imagePullPolicy`, so Kubernetes defaulted to `IfNotPresent` and the `pods.projectcapsule.dev` admission webhook denied pod creation. Each one is now templated through a new `initContainerImage` / `curlInitContainerImage` value block with `pullPolicy: Always`.
-* **🐛** **viralrecon scan errored "directory `/path/to/viralrecon/output` does not exist"** — the init resolver iterated `template.reference.vars` and overwrote the caller-resolved `DATA_ROOT` with the template's placeholder. Only viralrecon declared `DATA_ROOT` in `reference.vars`, so only viralrecon hit it. `DATA_ROOT` is now skipped in the vars loop.
-* **🐛** **13 ampliseq DCs ("Transformed DC has no transform config")** — once the init resolver converted a recipe DC to a file_scan it kept `source: "transformed"` (for viewer lineage display) but cleared the `transform` block. The CLI processor erred on `stacked_taxonomy_canonical`, `alpha_diversity_multi_canonical`, `complex_heatmap_canonical`, … — most of the **Alpha Diversity / Taxonomy / Clustering** tabs. Now falls through to file-scan when `transform` is absent.
-* **🐛** **ampliseq 2.16.0 MultiQC habitat / sample / sampling_date filters silently dropped** — the `metadata → multiqc_data` DCLink added in v0.13.1 only touched 2.14.0; the active 2.16.0 reference dataset had no link to resolve sample mappings against. Mirrored into 2.16.0.
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:0.13.2
+```
+
+### **🐛 Bug Fixes**
+
+* **Helm installs stalled at `0 READY`** — init containers had no `imagePullPolicy`; Capsule admission webhook denied pods. Added `initContainerImage.pullPolicy: Always`.
+* **viralrecon scan "directory does not exist"** — init resolver overwrote caller-resolved `DATA_ROOT` from template vars; `DATA_ROOT` now skipped.
+* **13 ampliseq DCs "no transform config"** — recipe→file_scan cleared `transform` block; falls through to file-scan when absent.
+* **ampliseq 2.16.0 MultiQC filters dropped** — `metadata→multiqc_data` DCLink was 2.14.0-only; mirrored to 2.16.0.
 
 ---
 
 ## **[v0.13.1](https://github.com/depictio/depictio/releases/tag/v0.13.1)** (May 21, 2026)
 
-!!! success "Stable Release — seed projects, MultiQC filter, /admin-beta polish"
-    Adds nf-core/viralrecon as a fifth seed project and fixes
-    cross-DC filtering on MultiQC, the date range picker, and a few
-    React viewer rough edges.
+!!! success "Stable Release — nf-core/viralrecon seed, MultiQC filter, admin polish"
 
 ### Docker Images
 
@@ -86,42 +390,24 @@ ghcr.io/depictio/depictio:0.13.1
 
 ### **✨ New Features**
 
-* **nf-core/viralrecon reference project** — fifth bundled seed
-  (5 dashboards). Advanced Visualisations renamed + overview tab dropped.
-* **Two new env vars** —
-  [`DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS`](../installation/env-reference.md#global-settings)
-  skips seeding the bundled reference projects;
-  [`DEPICTIO_WALKTHROUGH_DISABLED`](../installation/env-reference.md#global-settings)
-  hides the onboarding overlay.
-* **DC-creation viz hints** — uploads matching ANCOM-BC, viralrecon
-  variants, or canonical role-named tables get a "Looks like X" badge.
+* **nf-core/viralrecon** — fifth bundled seed (5 dashboards); Advanced Visualisations tab renamed + overview tab dropped.
+* **`DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS`** — skips seeding bundled reference projects on startup.
+* **`DEPICTIO_WALKTHROUGH_DISABLED`** — hides the onboarding overlay.
+* **DC-creation viz hints** — uploads matching ANCOM-BC, viralrecon variants, or role-named tables get a "Looks like X" badge.
 
 ### **🚀 Improvements**
 
-* **`/dashboards-beta` sections** — Owned → Accessed → Public →
-  **nf-core** → **Demo** (was a single "Example" section).
-* **`/admin-beta` (React)** — bullet list per project (was badges),
-  nested dashboard tabs as anchor links, Maintenance card covers all
-  five seed projects.
-* **Anchor-based navigation (React)** — dashboard cards and sidebar
-  tabs are real anchors; middle-click / Cmd+Click opens in a new tab.
+* **`/dashboards-beta` sections** — Owned → Accessed → Public → nf-core → Demo (was a single "Example" section).
+* **`/admin-beta`** — bullet list per project, nested dashboard anchor tabs, Maintenance card covers all five seed projects.
+* **Anchor navigation** — dashboard cards and sidebar tabs are real anchors; Cmd+Click opens in a new tab.
 
-### **🐛 Bug fixes**
+### **🐛 Bug Fixes**
 
-* **MultiQC cross-DC filtering (React beta)** — interactive filters
-  on the metadata DC (habitat / sample / sampling_date) now actually
-  narrow MultiQC plots via sample-mapping resolution.
-* **Date range picker (React beta)** — could only pick the start
-  date, never the end; now defaults to the full bounds and completes
-  both ends correctly.
-* **Per-component reset icon (React beta)** — lights up when the
-  component sourced a filter (was always disabled).
-* **Interactive filter options greyed out (React)** — non-sample
-  columns like `habitat` no longer get masked by MultiQC sample
-  mappings.
-* **Alpha Diversity tab → rarefaction filter (ampliseq)** — the
-  habitat / sample filter now also narrows the rarefaction viz on
-  the same tab.
+* **MultiQC cross-DC filtering** — habitat / sample / sampling_date filters now resolve sample mappings and narrow MultiQC plots.
+* **Date range picker** — could only pick start date; now defaults to full bounds.
+* **Per-component reset icon** — now lights up when the component sourced a filter.
+* **Interactive filter options greyed out** — non-sample columns like `habitat` no longer masked by MultiQC sample mappings.
+* **Alpha Diversity rarefaction filter** — habitat / sample filter now also narrows the rarefaction viz.
 
 ---
 
@@ -227,8 +513,8 @@ ghcr.io/depictio/depictio:0.12.1
 
 !!! success "Stable Release — MultiQC lifecycle and cross-DC links"
 
-!!! warning "Dash deprecation — removal in v0.15.0"
-    From **v0.15.0**, the legacy Plotly Dash frontend will be removed. The React viewer — currently in Beta at `/dashboard-beta/*` — will **graduate onto the canonical URLs** (`/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects`, …) and become the sole frontend. The `*-beta` paths are temporary. Track migration progress and contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
+!!! info "Dash → React migration timeline"
+    This release ships the React viewer in Beta at `/*-beta` routes. The Dash frontend was removed in **v0.13.12**. The React viewer graduates onto the canonical URLs in **v1.0.0**, when the `*-beta` suffix paths are retired. Track contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
 
 ### Docker Images
 
@@ -634,64 +920,34 @@ This release brings major new visualization and data-filtering capabilities:
 * Fix screenshot timeouts — configurable settings with increased defaults
 * Fix alpha diversity chart rendering with average + error bars
 
-### **📖 Full Beta History**
-
-For detailed per-beta changelogs, see: [v0.8.0-b1](#v080-b1-february-27-2026) through [v0.8.0-b6](#v080-b6-march-3-2026) below.
-
 ---
 
-## **[v0.8.0-b6](https://github.com/depictio/depictio/releases/tag/v0.8.0-b6)** (March 3, 2026)
+## **v0.8.0 Beta Releases**
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
 
-### Docker Images
+### **[v0.8.0-b6](https://github.com/depictio/depictio/releases/tag/v0.8.0-b6)** (March 3, 2026)
 
-```bash
-ghcr.io/depictio/depictio:0.8.0-b6
-```
-
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Fix alpha diversity chart — use average + error bars and `df_modified` pattern for code executor
 * Regenerate all JSON seeds via proper YAML import roundtrip for fresh deployments
 
 ---
 
-## **[v0.8.0-b5](https://github.com/depictio/depictio/releases/tag/v0.8.0-b5)** (March 3, 2026)
+### **[v0.8.0-b5](https://github.com/depictio/depictio/releases/tag/v0.8.0-b5)** (March 3, 2026)
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.8.0-b5
-```
-
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Regenerate community JSON seed with map and heatmap components for fresh deployments
 
 ---
 
-## **[v0.8.0-b4](https://github.com/depictio/depictio/releases/tag/v0.8.0-b4)** (March 2, 2026)
+### **[v0.8.0-b4](https://github.com/depictio/depictio/releases/tag/v0.8.0-b4)** (March 2, 2026)
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.8.0-b4
-```
-
-### **✨ Features**
-
+#### **✨ Features**
 * **Ampliseq Reference Dashboard**: Add map, heatmap, and geo metadata to the nf-core/ampliseq reference dashboard showcasing all new component types
 
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Fix cross-DC filtering for figures, MultiQC, and heatmap components — filters now propagate correctly across linked data collections
 * Fix General Statistics table dark mode styling for header, data bars, and hover highlight
 * Fix screenshot timeouts — increase defaults and use configurable settings
@@ -699,76 +955,43 @@ ghcr.io/depictio/depictio:0.8.0-b4
 
 ---
 
-## **[v0.8.0-b3](https://github.com/depictio/depictio/releases/tag/v0.8.0-b3)** (March 2, 2026)
+### **[v0.8.0-b3](https://github.com/depictio/depictio/releases/tag/v0.8.0-b3)** (March 2, 2026)
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.8.0-b3
-```
-
-### **✨ Features**
-
+#### **✨ Features**
 * **Multi-Metric Summary Cards**: Cards can now display multiple aggregation results — a primary hero metric plus secondary metrics (median, std_dev, min, max, etc.) rendered as compact rows below the main value
 * **Conditional Aggregation (filter_expr)**: Cards support a `filter_expr` field — a Polars expression that pre-filters data before computing aggregations (e.g., "count samples where coverage > 30x")
 * **Scoped Interactive Components**: Interactive components (MultiSelect, RangeSlider, etc.) now support `filter_expr` to restrict their available options to a filtered data subset
 * **Bioinformatics Filter Methods**: `filter_expr` expanded with window functions (`.over()`), string methods (`.str.contains()`), range checks (`.is_between()`), and group-level filtering patterns
 * **Multi-Tier MultiQC Caching**: Optimize MultiQC data loading with multi-tier caching for faster dashboard rendering
 
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Fix secondary metrics rendering — display in dedicated container instead of being appended to hero value
 * Fix single-metric cards missing the secondary-metrics container
 
 ---
 
-## **[v0.8.0-b2](https://github.com/depictio/depictio/releases/tag/v0.8.0-b2)** (March 2, 2026)
+### **[v0.8.0-b2](https://github.com/depictio/depictio/releases/tag/v0.8.0-b2)** (March 2, 2026)
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.8.0-b2
-```
-
-### **✨ Features**
-
+#### **✨ Features**
 * **Debug UI Toggle**: New `DEPICTIO_DASH_DEBUG_UI` environment variable to show/hide Dash debug UI independently of full dev mode. Debug UI is hidden by default in production.
 
 ---
 
-## **[v0.8.0-b1](https://github.com/depictio/depictio/releases/tag/v0.8.0-b1)** (February 27, 2026)
+### **[v0.8.0-b1](https://github.com/depictio/depictio/releases/tag/v0.8.0-b1)** (February 27, 2026)
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.8.0-b1
-```
-
-### **✨ Features**
-
+#### **✨ Features**
 * **Geospatial Map Component**: New interactive map component supporting scatter maps (GPS markers), density maps, and choropleth maps (colored regions from GeoJSON). Supports cross-filtering and selection propagation. No API key required (uses Plotly's built-in tile providers).
 * **Choropleth GeoJSON Support**: New `geojson` Data Collection type that loads GeoJSON from S3. Choropleth maps can reference boundaries via URL, Data Collection tag, or inline data.
 * **ComplexHeatmap Integration**: Clustered heatmap with dendrograms and row/column annotations — similar to R's `ComplexHeatmap` — available as native `visu_type: heatmap` via the [:material-open-in-new: plotly-complexheatmap](https://github.com/weber8thomas/plotly-complexheatmap){ target="_blank" } library.
 * **Table Title & Description**: Tables now support configurable `title`, `description`, `title_size` (h1/h2/h3/sm), and `title_align` (left/center/right) in both the stepper UI and YAML format.
 * **Projects Directory Reorganization**: Reference project files reorganized under `depictio/projects/` with a consistent `dashboards/` subdirectory layout for better versioning support.
 
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Fix map component viewport stability — viewport no longer resets on filter/theme changes
 * Fix map theme switching — promote `theme-store` to Input for reliable dark/light tile swapping
 * Fix map component stepper save support
 
-### **🔧 CI/CD**
-
+#### **🔧 CI/CD**
 * Fix absolute path from `pixi.lock` for CI portability
 * Fix CI `dashboard_lite.yaml` references to new `dashboards/` paths
 
@@ -789,16 +1012,12 @@ No user-facing changes — version bump only to promote v0.7.6-b1 to stable.
 
 ---
 
-## **[v0.7.6-b1](https://github.com/depictio/depictio/releases/tag/v0.7.6-b1)** (February 25, 2026)
+## **v0.7.6 Beta Releases**
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
 
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.7.6-b1
-```
+### **[v0.7.6-b1](https://github.com/depictio/depictio/releases/tag/v0.7.6-b1)** (February 25, 2026)
 
 No user-facing changes — version bump only after v0.7.5 stable release.
 
@@ -825,37 +1044,22 @@ ghcr.io/depictio/depictio:0.7.5
 
 ---
 
-## **[v0.7.5-b2](https://github.com/depictio/depictio/releases/tag/v0.7.5-b2)** (February 25, 2026)
+## **v0.7.5 Beta Releases**
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
 
-### Docker Images
+### **[v0.7.5-b2](https://github.com/depictio/depictio/releases/tag/v0.7.5-b2)** (February 25, 2026)
 
-```bash
-ghcr.io/depictio/depictio:0.7.5-b2
-```
-
-### **✨ Features**
-
+#### **✨ Features**
 * **MultiQC General Statistics Table**: New "General Statistics" module option in MultiQC components renders an interactive DataTable from `multiqc.parquet` general stats data. Includes column visibility toggles, search filtering, and theme-aware styling.
 
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Fix infinite React re-render loop (`Maximum update depth exceeded`) that could occur when multiple interactive components were linked
 
 ---
 
-## **[v0.7.5-b1](https://github.com/depictio/depictio/releases/tag/v0.7.5-b1)** (February 25, 2026)
-
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio:0.7.5-b1
-```
+### **[v0.7.5-b1](https://github.com/depictio/depictio/releases/tag/v0.7.5-b1)** (February 25, 2026)
 
 No user-facing changes — version bump only after v0.7.4 stable release.
 
@@ -903,19 +1107,14 @@ ghcr.io/depictio/depictio:0.7.4
 
 ---
 
-## **[v0.7.4-b1](https://github.com/depictio/depictio/releases/tag/v0.7.4-b1)** (February 23, 2026)
+## **v0.7.4 Beta Releases**
 
-!!! warning "Beta Release"
-    This is a beta release. Use in production at your own risk.
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
 
-### Docker Images
+### **[v0.7.4-b1](https://github.com/depictio/depictio/releases/tag/v0.7.4-b1)** (February 23, 2026)
 
-```bash
-ghcr.io/depictio/depictio:0.7.4-b1
-```
-
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * Fix single-user mode: auto-create admin user, auto-login as admin, redirect `/auth` to `/dashboards`
 * Fix stale local-store tokens after instance recreation in single-user mode
 * Fix CLI config generation in public/demo mode
@@ -923,14 +1122,12 @@ ghcr.io/depictio/depictio:0.7.4-b1
 * Fix CI environment variable handling for UID/GID/DATA\_DIR in backup jobs
 * Fix CI e2e test sed patterns to match docker-compose/.env defaults
 
-### **🚀 Improvements**
-
+#### **🚀 Improvements**
 * Replace Gitpod with GitHub Codespaces and remove Gitpod files
 * Update `.env` for single-user mode configuration and clean up comments
 * Remove leftover analysis and summary markdown files
 
-### **🔧 CI/CD**
-
+#### **🔧 CI/CD**
 * Multi-arch Docker build: native arm64 runner, amd64 early tag push, imagetools-based multi-arch merge
 * Add version input for manual workflow\_dispatch
 * Add docs repo notification to stable multi-arch build merge job
@@ -1209,30 +1406,23 @@ ghcr.io/depictio/depictio:stable
 
 ---
 
-## **[v0.6.3-b1](https://github.com/depictio/depictio/releases/tag/v0.6.3-b1)** (February 1, 2026)
+## **v0.6.3 Beta Releases**
 
-!!! warning "Beta Release"
-    This is a pre-release version intended for testing. Use in production at your own risk.
+!!! warning "Beta Releases"
+    These are pre-release versions intended for testing. Use in production at your own risk.
 
-### Docker Images
+### **[v0.6.3-b1](https://github.com/depictio/depictio/releases/tag/v0.6.3-b1)** (February 1, 2026)
 
-```bash
-ghcr.io/depictio/depictio:0.6.3-b1
-```
-
-### **✨ Features**
-
+#### **✨ Features**
 * **Image Component Foundation**: Initial infrastructure for Image data collection type
 * **API Health Endpoint**: Added `/health` endpoint for Kubernetes readiness checks
 
-### **🐛 Bug Fixes**
-
+#### **🐛 Bug Fixes**
 * **S3 Handling**: Handle `BucketAlreadyOwnedByYou` error gracefully
 * **S3 Cleanup**: Prevent HTTPException from killing worker during S3 cleanup, delay cleanup on startup
 * **CI/CD**: Multiple fixes for health checks, token handling, and dashboard verification
 
-### **🧹 Internal Changes**
-
+#### **🧹 Internal Changes**
 * Comprehensive unit tests for Image component changes
 * Extended dashboard CLI testing with DB verification
 

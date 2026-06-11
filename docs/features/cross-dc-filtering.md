@@ -131,9 +131,9 @@ workflows:
           # ... scan config ...
 ```
 
-## :material-pencil-box: Managing links from the viewer (React Beta)
+## :material-pencil-box: Managing links from the viewer
 
-Links can be defined in YAML (above) **or** managed interactively from the React viewer (`/dashboards-beta`). Both paths target the same `links:` data; UI-managed links are persisted alongside YAML-defined ones.
+Links can be defined in YAML (above) **or** managed interactively from the web viewer. Both paths target the same `links:` data; UI-managed links are persisted alongside YAML-defined ones.
 
 | Action | Where | Notes |
 |--------|-------|-------|

@@ -36,7 +36,7 @@ color_sequences = {
     "alert": [colors["green"], colors["yellow"], colors["orange"], colors["red"]],
 }
 
-# Example usage in Dash
+# Example usage with Mantine
 import dash_mantine_components as dmc
 
 button = dmc.Button(

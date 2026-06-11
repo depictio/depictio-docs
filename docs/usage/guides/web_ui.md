@@ -169,11 +169,11 @@ The **About** section provides information about the GitHub repository and the d
 
 The **Admin** section is only accessible to users with admin privileges. It allows admins to view users, projects and dashboards. The **Users** tab displays a list/delete/change status (sysadmin/standard) of all users registered in the system. The **Dashboards** tab displays a list of all dashboards while the **Projects** tab lists all projects. Admins can delete any project or dashboard, regardless of ownership.
 
-## <span style="color: #45B8AC;">:material-react:</span> React (Beta) tour — additional v0.12 pages
+## <span style="color: #45B8AC;">:material-react:</span> React viewer — additional pages
 
-The screens below ship in the React (Beta) viewer under `/*-beta` paths and will become canonical in **v0.15.0**. They surface project-detail UI and the CLI-agents panel that the legacy Dash views don't.
+These pages are part of the React viewer (v1.0.0+) and surface project-detail UI and the CLI-agents panel.
 
-### <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects list (/projects-beta)
+### <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects list (/projects)
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/v0.12/react-beta/page_projects.png" target="_blank">
@@ -181,7 +181,7 @@ The screens below ship in the React (Beta) viewer under `/*-beta` paths and will
     </a>
 </div>
 
-### <span style="color: #45B8AC;">:material-database-cog:</span> Project detail (/projects-beta/{id})
+### <span style="color: #45B8AC;">:material-database-cog:</span> Project detail (/projects/{id})
 
 Data collections, cross-DC links, and the joins graph for a single project.
 
@@ -191,7 +191,7 @@ Data collections, cross-DC links, and the joins graph for a single project.
     </a>
 </div>
 
-### <span style="color: #45B8AC;">:material-monitor-eye:</span> Dashboard viewer (/dashboard-beta/{id})
+### <span style="color: #45B8AC;">:material-monitor-eye:</span> Dashboard viewer (/dashboard/{id})
 
 Read-only dashboard with filters and component interactions.
 
@@ -201,7 +201,7 @@ Read-only dashboard with filters and component interactions.
     </a>
 </div>
 
-### <span style="color: #45B8AC;">:material-pencil-ruler:</span> Dashboard editor (/dashboard-beta-edit/{id})
+### <span style="color: #45B8AC;">:material-pencil-ruler:</span> Dashboard editor (/dashboard-edit/{id})
 
 Design mode — add, configure, and arrange components.
 
@@ -211,7 +211,7 @@ Design mode — add, configure, and arrange components.
     </a>
 </div>
 
-### <span style="color: #45B8AC;">:material-key-chain:</span> CLI agents / tokens (/cli-agents-beta)
+### <span style="color: #45B8AC;">:material-key-chain:</span> CLI agents / tokens (/cli-agents)
 
 Generate and manage CLI configurations for the [depictio-cli](../../depictio-cli/usage.md).
 

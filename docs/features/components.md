@@ -211,6 +211,23 @@ Source of truth in the codebase:
 - `depictio/models/components/advanced_viz/schemas.py` — `CANONICAL_SCHEMAS` + `validate_binding()`
 - `depictio/models/components/types.py` — `AdvancedVizKind` literal enum
 
+### Automatic DC recognition <small>(v0.13.10+)</small>
+
+When a file is registered as a Data Collection, Depictio scans its column set against a library of **producer fingerprints** — named patterns that recognise the output of common upstream tools or standard tidy-table shapes. When a fingerprint matches, the dashboard builder surfaces a "Looks like X" hint and pre-selects the matching visualization type in the add-component wizard, saving manual column-binding work.
+
+The four fingerprints added in v0.13.10 cover the metagenomics / ampliseq family:
+
+| Fingerprint name | Detected columns | Suggested viz types |
+|-----------------|-----------------|---------------------|
+| `taxonomy_levels_long` | Taxonomic rank columns (e.g. Kingdom, Phylum, …, Genus/Species) **+** an abundance / fraction column | Sankey, Sunburst |
+| `rarefaction_iter_long` | `sample_id`, a sequencing-depth column, an iteration column, and ≥1 alpha-diversity metric | Rarefaction |
+| `alpha_diversity_wide` | `sample_id`, `shannon` (or `shannon_entropy`), `observed_features`, `evenness` | Advanced viz > alpha diversity |
+| `taxonomy_abundance_long` | `sample_id`, a taxonomy column, a relative-abundance column | ComplexHeatmap, Stacked taxonomy, Sunburst |
+
+Fingerprint matching is additive: a single DC can match several fingerprints (e.g. a long taxonomy table with per-iteration depth columns would match both `taxonomy_levels_long` and `rarefaction_iter_long`). Unmatched DCs behave as before — all viz types remain available for manual binding.
+
+Source of truth: `depictio/models/components/advanced_viz/producer_fingerprints.py`.
+
 ### Catalog
 
 Every advanced viz consumes a **tabular DC** (CSV / TSV / Parquet → polars) with the column roles documented per-viz below. The **Accepted input** column lists upstream tools whose output natively has — or trivially reshapes to — those columns. Web renderers that *look* like a viz (Microreact, iTOL, IGV, JBrowse, Krona, EnhancedVolcano, qqman, …) aren't listed here — they're peers, not data sources; we call them out in the per-viz prose where the framing helps.
@@ -1221,7 +1238,7 @@ The CLI will:
 Map components display geospatial data on interactive tile-based maps using Plotly Express (no API key required).
 
 !!! tip "Declaring coordinates at the DC level"
-    `lat_column` / `lon_column` can be set per-figure (below) **or** at the Data Collection level so every Map figure on that DC inherits them. Map is the first example of [type-specific DC configuration](../usage/projects/guide.md#type-specific-data-collection-configuration-react-beta); more visualization types will follow.
+    `lat_column` / `lon_column` can be set per-figure (below) **or** at the Data Collection level so every Map figure on that DC inherits them. Map is the first example of [type-specific DC configuration](../usage/projects/guide.md#type-specific-data-collection-configuration); more visualization types will follow.
 
 ### Coordinates Data Collection <small>(v0.12.0+)</small> { #coordinates-dc }
 

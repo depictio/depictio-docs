@@ -33,8 +33,12 @@ cp .env.example .env
 
 ```bash
 DEPICTIO_MINIO_ROOT_USER=minio
-DEPICTIO_MINIO_ROOT_PASSWORD=minio123
+DEPICTIO_MINIO_ROOT_PASSWORD=change-me-strong-password-here
 ```
+
+!!! warning "Password strength"
+
+    `DEPICTIO_MINIO_ROOT_PASSWORD` must be **≥ 8 characters**. The server enforces this at startup and will refuse to start with a short or well-known default value.
 
 ## Advanced Configuration
 
@@ -81,6 +85,33 @@ minio:
 
 Setting those values will disable the built-in MinIO service and use the external one instead.
 
+## Bootstrap Authentication
+
+On first boot, Depictio seeds an initial admin account using two **required** environment variables. The seeding is idempotent — if the admin account already exists the step is a no-op, so the variables can be kept set across container restarts without side-effects.
+
+!!! warning "Breaking change in v0.13.12"
+
+    `initial_users.yaml` has been removed as of v0.13.12. The admin account is now seeded exclusively via the env vars below. Remove any volume mount or reference to `initial_users.yaml` from existing deployments.
+
+| Variable | Description |
+|---|---|
+| `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | Email address for the initial admin account (required) |
+| `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` | Password for the initial admin account — must be ≥ 8 characters; the server **refuses to start** if the variable is absent or the value is too short or matches a known-default |
+
+**Minimal Docker Compose snippet:**
+
+```yaml
+services:
+  depictio-backend:
+    environment:
+      DEPICTIO_BOOTSTRAP_ADMIN_EMAIL: admin@example.com
+      DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD: change-me-very-strong-password
+```
+
+!!! tip "Container restarts"
+
+    These variables survive container restarts safely. On every boot the API checks whether the admin already exists; if it does, the bootstrap step is skipped and the variables have no further effect.
+
 ## Authentication Configuration
 
 Depictio supports four authentication modes. See [Authentication Modes](../usage/guides/authentication-modes.md) for a full comparison.
@@ -102,6 +133,10 @@ DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS=24
 # Backward-compatible alias for Public Mode:
 # DEPICTIO_AUTH_UNAUTHENTICATED_MODE=true
 ```
+
+!!! info "Admin bypass in public / demo mode (v0.13.9+)"
+
+    Logged-in administrators are **not** subject to the public/demo read-only gate. Admins can still create projects and generate CLI tokens even when `DEPICTIO_AUTH_PUBLIC_MODE` or `DEPICTIO_AUTH_DEMO_MODE` is enabled. The gate logic is `is_public AND NOT is_admin`, so regular users (and anonymous visitors) are restricted while admins retain full write access.
 
 ### Google OAuth Integration
 
@@ -170,6 +205,25 @@ openssl rand -hex 32
 # Or use Python
 python -c "import secrets; print(secrets.token_hex(32))"
 ```
+
+### CORS Configuration
+
+Control which browser origins are allowed to make credentialed cross-origin requests to the FastAPI backend:
+
+```bash
+# Comma-separated list of allowed origins (scheme + host + optional port)
+DEPICTIO_FASTAPI_CORS_ALLOWED_ORIGINS=https://app.example.com,https://dash.example.com
+```
+
+| Value | Behaviour |
+|---|---|
+| *(empty / unset)* | No credentialed cross-origin requests are permitted |
+| `https://app.example.com` | Only the listed origins are allowed |
+| `*` | **Rejected when credentials are used** — do not use a bare wildcard in production |
+
+!!! note
+
+    For single-host deployments where the browser and API share the same origin you can leave this variable unset.
 
 ### Custom Public/Private Key Pairs
 

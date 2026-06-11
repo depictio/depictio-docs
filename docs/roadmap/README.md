@@ -43,8 +43,8 @@ hide:
 - title: "Advanced Biology Visualizations"
   content: "Omics plots extending the v0.12 DC-level type-config pattern — Volcano, Manhattan, Sunburst, and more"
   icon: ":fontawesome-solid-dna:"
-  key: "planned"
-  sub_title: "Phase 2: Specialized Components 🔄"
+  key: "completed"
+  sub_title: "Phase 2: Specialized Components ✅"
 
 - title: "Templates & Community"
   content: "Reusable dashboard templates for standard bioinformatics workflows, nf-core integration, and nf-core plugin for automatic data ingestion"
@@ -52,11 +52,11 @@ hide:
   key: "nfcore"
   sub_title: "Phase 3: Templates ✅"
 
-- title: "React (Beta) Viewer"
-  content: "Vite + Mantine SPA rewrite — ships in Beta at /*-beta routes in v0.12.0, graduates onto canonical URLs in v0.15.0 when the legacy Dash frontend is removed"
+- title: "React Viewer"
+  content: "Vite + Mantine SPA — Dash removed in v0.13.12, canonical URLs live in v1.0.0"
   icon: ":fontawesome-brands-react:"
-  key: "planned"
-  sub_title: "Phase 3.5: UI Modernization 🔄"
+  key: "completed"
+  sub_title: "Phase 3.5: UI Modernization ✅"
 
 - title: "Citable Science"
   content: "DOI-backed snapshots and sample-to-viz provenance on top of the existing Serve hosting"
@@ -131,8 +131,7 @@ Specialized components share a common pattern: a DC-level type-config (introduce
 
 ### Frontend
 
-- [x] **React (Beta) viewer** — Vite + Mantine SPA shipped at `/*-beta` routes (v0.12.0); graduates onto canonical URLs in v0.15.0
-- [x] Multi-app architecture (Management, Viewer, Editor) — *Dash, legacy; removal in v0.15.0*
+- [x] **React viewer** — Vite + Mantine SPA on canonical URLs (v1.0.0); Dash removed in v0.13.12
 
 ---
 
@@ -147,25 +146,20 @@ Reusable dashboards for standard bioinformatics workflows, with a focus on nf-co
 - [x] **Depictio templates system** — one-command project setup via `depictio run --template`, with `{DATA_ROOT}` substitution, template provenance tracking, and automatic dashboard import ([docs](../usage/projects/templates.md))
 - [x] **Recipe-based data transformation** — versioned Python recipes with 4-checkpoint validation, co-located with templates ([docs](../usage/projects/recipes.md))
 
-**Shipped templates** — peer-reviewed by developers, ready to use
-
-| Template | Pipeline | Versions | Recipes |
-|----------|----------|----------|---------|
-| `nf-core/ampliseq` | 16S/ITS amplicon sequencing | 2.14.0, 2.16.0 | Alpha diversity, rarefaction, taxonomy composition, relative abundance, differential abundance (ANCOM-BC) |
-
 **Planned**
 
 - [ ] **nf-core plugin** — automatically registers nf-core pipeline outputs in Depictio at run time, no manual CLI step required
 - [ ] **`nextflow.config` template** — embed Depictio ingestion directly in your Nextflow config so data collection happens at pipeline runtime
 - [ ] **Snakemake report plugin** — Depictio as a drop-in replacement for Snakemake's built-in HTML report, with interactive dashboards instead of static outputs
 
-### Phase 3.5: React (Beta) viewer graduation — v0.15.0 :material-react:{ .priority }
+### Phase 3.5: React viewer — v1.0.0 ✅ :material-react:
 
-The React (Beta) viewer ships in v0.12.0 alongside Dash; in **v0.15.0** it takes over the canonical URLs and the Dash frontend is removed. Track contribution paths in [Contributing → Frontend Guidelines](../developer/contributing.md#frontend-guidelines).
+The React viewer (Vite + Mantine SPA) is the sole frontend as of v1.0.0. Dash was removed in v0.13.12; canonical URLs went live in v1.0.0.
 
-- [x] **React (Beta) viewer** shipped under `/*-beta` paths (v0.12.0) — `/dashboards-beta`, `/dashboard-beta/{id}`, `/dashboard-beta-edit/{id}`, `/projects-beta`, `/projects-beta/{id}`, `/profile-beta`, `/admin-beta`, `/cli-agents-beta`, `/about-beta`
-- [ ] **URL graduation (v0.15.0)** — React Beta takes over `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}`, `/projects` and the legacy Dash frontend is removed
-- [ ] **Component parity audit** — every Dash editor feature has a React equivalent before cutover
+- [x] React viewer shipped (v0.12.0)
+- [x] Dash frontend removed (v0.13.12)
+- [x] URL graduation — canonical `/dashboards`, `/dashboard/{id}`, `/dashboard-edit/{id}` (v1.0.0)
+- [x] Component parity audit complete
 
 ### Phase 4: Citable Science
 
@@ -180,21 +174,6 @@ DOI-backed citability and sample-to-viz provenance on top of the existing [SciLi
 - [ ] **Smart dashboard creation** — describe the analysis you need; AI proposes a layout and component configuration
 - [ ] **AI-assisted analysis** — automated anomaly detection, visualization recommendations, and plain-language report narration
 - [ ] **MCP server** — expose Depictio as a tool for AI agents to create dashboards, query data, and manage projects programmatically
-
----
-
-### Visualization Modules
-
-- [ ] Reusable chart configurations catalog
-- [ ] High-dimensional methods (UMAP, PCA, t-SNE)
-- [ ] [JBrowse2](https://jbrowse.org/) genome browser component
-- [ ] **Advanced biology visualizations** — Volcano, Manhattan, Sunburst, and more (see the [Advanced Biology Visualizations](#big-picture) tile in the timeline)
-
-### UI & Components
-
-- [ ] Markdown component for documentation
-- [ ] Extended interactive components (radio buttons, improved sliders, …)
-- [ ] Project creation wizard with workflow selection
 
 ---
 

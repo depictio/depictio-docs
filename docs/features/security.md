@@ -19,6 +19,8 @@ Depictio uses JSON Web Tokens (JWT) for secure authentication:
 | Feature | Description |
 |---------|-------------|
 | **Token Security** | Public/private key encryption (RS256) |
+| **Algorithm Pinning** | Algorithm pinned server-side (RS256/RS512); `alg=none` and algorithm-confusion attacks are rejected before any MongoDB access |
+| **Claim Validation** | Signature and `exp` claim are both verified on every request; expired tokens are rejected immediately |
 | **Session Management** | Configurable token lifetime and refresh |
 | **Secure Storage** | Tokens stored in HTTP-only cookies |
 | **Token Refresh** | Automatic refresh before expiration |
@@ -36,6 +38,10 @@ Depictio uses JSON Web Tokens (JWT) for secure authentication:
                      │  (Token in Authorization)  │
                      └────────────────────────────┘
 ```
+
+### Registration Hardening
+
+The `/register` endpoint strips the `is_admin` field from any incoming payload, so self-promotion to admin at registration is not possible. Admin privileges are granted exclusively via the `/auth/turn_sysadmin` endpoint, which enforces two guards: at least one admin must remain in the system at all times (last-admin guard), and a user cannot demote themselves (no-self-demote guard).
 
 ### Session Configuration
 
@@ -171,6 +177,7 @@ RestrictedPython prevents these operations at compile-time:
 - **Project boundaries**: Data strictly isolated between projects
 - **User isolation**: Users can only access authorized projects
 - **Delta Lake**: Versioned data with access controls
+- **File-delete IDOR fix**: File-deletion permission is checked against `current_user.is_admin` (the requesting user's flag), not the file-owner's flag. This closes an IDOR where a non-admin could delete files owned by an admin account.
 
 ### Input Validation
 
@@ -211,6 +218,14 @@ Configure logging via environment variables:
 
 ## Security Best Practices
 
+### JBrowse Iframe Sandbox
+
+The JBrowse iframe uses a restricted `sandbox` attribute that omits `allow-same-origin`. Previously, combining `allow-same-origin` with `allow-scripts` would have allowed iframe content to access the parent page's `localStorage` and read authentication tokens; removing `allow-same-origin` closes this vector.
+
+### OAuth Callback Security
+
+The OAuth callback validates that the redirect URL is same-origin before calling `window.location.assign`. This closes an open-redirect vulnerability where a crafted authorization response could send the user (and any attached tokens) to an attacker-controlled domain.
+
 ### Deployment Recommendations
 
 1. **Use HTTPS**: Always deploy behind TLS termination
@@ -226,7 +241,7 @@ Configure logging via environment variables:
 | JWT Keys | Generate unique keys per environment |
 | Database Credentials | Use strong passwords, rotate regularly |
 | API Keys | Use environment variables, not config files |
-| MinIO Credentials | Separate credentials per environment |
+| MinIO Credentials | Separate credentials per environment; root password is a `SecretStr` with a ≥16-character validator and no default — the server refuses to start if the value is absent or matches a known-default string |
 
 ### Environment Configuration
 
@@ -237,7 +252,17 @@ JWT_PUBLIC_KEY_PATH=/secrets/jwt_public.pem
 MONGODB_URI=mongodb://user:pass@mongo:27017/depictio?authSource=admin
 MINIO_ACCESS_KEY=<generated-access-key>
 MINIO_SECRET_KEY=<generated-secret-key>
+
+# CORS — list allowed origins explicitly (comma-separated); wildcard with credentials is rejected
+DEPICTIO_FASTAPI_CORS_ALLOWED_ORIGINS=https://your-domain.example.com
+
+# Bootstrap admin (replaces initial_users.yaml)
+DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=<strong-password>
 ```
+
+**CORS**: `allow_origins=["*"]` has been removed. Origins are configured via `DEPICTIO_FASTAPI_CORS_ALLOWED_ORIGINS` (comma-separated list). A wildcard combined with `allow_credentials=True` is explicitly rejected by the framework and will raise a startup error.
+
+**Admin bootstrap**: `initial_users.yaml` is replaced by env-driven bootstrap via `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD`. This avoids shipping a default credentials file and ensures the admin password is injected as a secret at deploy time.
 
 ### Kubernetes Security
 

@@ -18,13 +18,15 @@ http://localhost:5080
 
 ### <span style="color: #8BC34A;">:material-login:</span> Logging In
 
-When you first access Depictio, you'll be prompted to log in. The default installation creates an admin user with:
+When you first access Depictio, you'll be prompted to log in with the admin credentials you set before starting the service.
 
-- **Email**: `admin@example.com`
-- **Password**: `changeme`
+!!! info "Admin credentials are set at installation time"
+    The initial admin account is created from two environment variables that must be configured **before the first start**:
 
-!!! warning "**Important**"
-    Change the default password after your first login for security reasons.
+    - `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` — the admin email address
+    - `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` — the admin password (≥ 16 characters; the server refuses to start if this is absent or too short)
+
+    See the [installation configuration guide](../installation/configuration.md) for details on where and how to set these variables.
 
 ### <span style="color: #E6779F;">:material-database-eye:</span> Use existing demo data
 
