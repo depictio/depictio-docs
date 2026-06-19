@@ -51,6 +51,8 @@ Recipes are the data transformation layer of the Depictio CLI. They convert raw 
 
 ## What is a Recipe?
 
+> **In one sentence:** a recipe is the reshaping step a [template](templates.md) runs for you to turn a raw pipeline output into a tidy, dashboard-ready table. Templates bundle their recipes — *you rarely write one unless you're adding support for a new pipeline output.*
+
 A recipe is a plain Python module that describes how to transform one or more raw files into a single tidy DataFrame. Each recipe lives in `depictio/projects/<pipeline>/recipes/` and declares:
 
 - **`SOURCES`** — input files to read (paths relative to `--data-dir`, or references to other data collections via `dc_ref`)
@@ -156,91 +158,9 @@ depictio recipe run nf-core/ampliseq/alpha_diversity.py \
 
 ## Recipe Anatomy: Ampliseq Examples
 
-The six bundled ampliseq recipes cover the full spectrum of transformation patterns. Study them as templates for writing your own recipes.
+The two examples below show the patterns specific to Depictio — referencing another data collection, and parameterising source paths from the template. The file parsing itself is just standard Polars; study these as a basis for writing your own recipes.
 
-### Example 1 — Simple file transformation (`alpha_diversity.py`)
-
-**Pattern:** Filter comment rows, rename columns, cast types. Metadata columns embedded by the pipeline are passed through dynamically.
-
-```python
-"""Transform QIIME2 alpha diversity vector to per-sample Faith PD table."""
-
-import polars as pl
-from depictio.models.models.transforms import RecipeSource
-
-SOURCES: list[RecipeSource] = [
-    RecipeSource(
-        ref="faith_pd",
-        path="qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv",
-        format="TSV",
-    ),
-]
-
-EXPECTED_SCHEMA: dict[str, type[pl.DataType]] = {
-    "sample": pl.Utf8,
-    "faith_pd": pl.Float64,
-}
-# Any metadata columns embedded by QIIME2 (e.g. habitat) are passed through.
-OPTIONAL_SCHEMA: dict[str, type[pl.DataType]] = {}
-
-
-def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
-    df = sources["faith_pd"]
-    df = df.filter(~pl.col("id").str.starts_with("#"))
-    df = df.rename({"id": "sample"})
-    df = df.with_columns(pl.col("faith_pd").cast(pl.Float64))
-    return df  # all columns preserved, including any embedded metadata
-```
-
----
-
-### Example 2 — Wide-to-long reshape (`alpha_rarefaction.py`)
-
-**Pattern:** Unpivot wide columns into long format with regex extraction.
-
-Input: Wide CSV where columns are `depth-500_iter-3`, `depth-1000_iter-1`, etc.
-Output: Long-format `(sample, depth, iter, faith_pd)` — ready for line charts.
-
-```python
-"""Transform QIIME2 alpha rarefaction wide CSV to long-format rarefaction curves."""
-
-import polars as pl
-from depictio.models.models.transforms import RecipeSource
-
-SOURCES: list[RecipeSource] = [
-    RecipeSource(
-        ref="faith_pd_csv",
-        path="qiime2/alpha-rarefaction/faith_pd.csv",
-        format="CSV",
-    ),
-]
-
-EXPECTED_SCHEMA = {
-    "sample": pl.Utf8,
-    "depth": pl.Int64,
-    "iter": pl.Int64,
-    "faith_pd": pl.Float64,
-}
-
-
-def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
-    df = sources["faith_pd_csv"]
-    value_cols = [c for c in df.columns if c.startswith("depth-")]
-    df = df.unpivot(
-        on=value_cols, index="sample-id", variable_name="depth_iter", value_name="faith_pd"
-    )
-    df = df.rename({"sample-id": "sample"})
-    df = df.with_columns(
-        pl.col("depth_iter").str.extract(r"depth-(\d+)", 1).cast(pl.Int64).alias("depth"),
-        pl.col("depth_iter").str.extract(r"iter-(\d+)", 1).cast(pl.Int64).alias("iter"),
-        pl.col("faith_pd").cast(pl.Float64),
-    )
-    return df.drop_nulls(subset=["faith_pd"]).select("sample", "depth", "iter", "faith_pd")
-```
-
----
-
-### Example 3 — Cross-DC join with optional metadata (`taxonomy_rel_abundance.py`)
+### Example 1 — Cross-DC join with optional metadata (`taxonomy_rel_abundance.py`)
 
 **Pattern:** Reference another data collection via `dc_ref`, join generically on a shared key. The metadata source is **optional** — when absent, the recipe produces core columns only.
 
@@ -302,7 +222,7 @@ def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
 
 ---
 
-### Example 4 — Multi-file merge with source overrides (`ancombc.py`)
+### Example 2 — Multi-file merge with source overrides (`ancombc.py`)
 
 **Pattern:** Merge multiple slices of the same analysis into one long-format table. The recipe declares default source paths, but the **template overrides them** via `source_overrides` to parameterize the directory name with `{GROUP_COL}`.
 
@@ -371,6 +291,15 @@ def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
 | `glob_pattern` | `str` | no | Glob pattern for matching multiple files (concatenated) |
 
 Exactly one of `path`, `dc_ref`, or `glob_pattern` must be set per source.
+
+<!-- prettier-ignore -->
+!!! note "Why a `RecipeSource` but no `RecipeTarget`?"
+    A recipe can have **several inputs but always exactly one output**, so only the input side needs a model.
+    Inputs are polymorphic — a file path, a glob, or another data collection (`dc_ref`) — and that
+    variability is what `RecipeSource` disambiguates. The output is always a single `pl.DataFrame`:
+    its **shape** is declared by `EXPECTED_SCHEMA` / `OPTIONAL_SCHEMA`, and its **destination** is the
+    data collection that references the recipe (`source: "transformed"`). Persisting it to Delta Lake is
+    the CLI runner's job, not the recipe's — recipes stay pure `sources → DataFrame` functions.
 
 ### `glob_pattern` (per-sample inputs)
 
@@ -459,8 +388,10 @@ depictio/projects/
         └── 2.16.0/
             ├── template.yaml                 ← no overrides, inherits shared
             └── dashboards/
-                ├── base.yaml                 ← minimal (no metadata)
-                └── full_analysis.yaml        ← metadata-aware with {GROUP_COL}
+                └── base.yaml                 ← single dashboard; adapts via
+                                                template conditionals (metadata-
+                                                dependent tabs/components are
+                                                pruned when no metadata is given)
 ```
 
 To add a recipe for a new pipeline, create `depictio/projects/{org}/{pipeline}/recipes/{name}.py` following the contract: define `SOURCES`, `EXPECTED_SCHEMA`, and `transform()`.
