@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # nf-core/ampliseq
 
 <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
@@ -47,46 +52,13 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 
 ---
 
-## Template variables
+## Reference
 
-| Variable | Required | Auto | Description |
-|----------|:--------:|:----:|-------------|
-| `DATA_ROOT` | :material-check: | — | Pipeline output root (set via `--data-root`) |
-| `SAMPLESHEET_FILE` | :material-check: | — | Path to ampliseq samplesheet CSV |
-| `METADATA_FILE` | — | — | Sample metadata TSV. Enables extended mode. |
-| `GROUP_COL` | — | :material-check: | Grouping column for facetting. Auto: first annotation column. |
-| `GROUP_COL_DISPLAY` | — | :material-check: | Title-cased GROUP_COL for chart labels |
-| `ANNOTATION_COLS` | — | :material-check: | All annotation columns from metadata |
+Running without `METADATA_FILE` prunes the metadata-dependent collections
+(see the *Conditional routes* table); the `--skip_qiime` / `--skip_taxonomy`
+/ multi-region routes are auto-detected from the run's `params.json`.
 
----
-
-## Data collections
-
-| Data Collection | Type | Recipe | Base | Extended |
-|-----------------|------|--------|:----:|:--------:|
-| `multiqc_data` | MultiQC | — | :material-check: | :material-check: |
-| `samplesheet` | Table | — | :material-check: | :material-check: |
-| `taxonomy_composition` | Table | `taxonomy_composition.py` | :material-check: | :material-check: |
-| `taxonomy_rel_abundance` | Table | `taxonomy_rel_abundance.py` | :material-check: | :material-check: |
-| `taxonomy_heatmap` | Table | `taxonomy_heatmap.py` | :material-check: | :material-check: |
-| `metadata` | Table | — | :material-close: | :material-check: |
-| `alpha_diversity` | Table | `alpha_diversity.py` | :material-close: | :material-check: |
-| `alpha_rarefaction` | Table | `alpha_rarefaction.py` | :material-close: | :material-check: |
-| `ancombc_results` | Table | `ancombc.py` | :material-close: | :material-check: |
-
-!!! info "Base vs Extended"
-
-    === "Base"
-
-        No `METADATA_FILE` provided. The template removes metadata-dependent DCs (alpha diversity, rarefaction, ANCOM-BC) and imports a single dashboard with MultiQC + taxonomy composition.
-
-        **Use when:** Quick QC check, no sample metadata available, or testing the pipeline setup.
-
-    === "Extended"
-
-        `METADATA_FILE` provided. All 9 DCs active. Dashboard includes facetted charts by `GROUP_COL`, sampling location map, heatmap with metadata annotations, and ANCOM-BC differential abundance.
-
-        **Use when:** Full analysis with sample grouping, geographic data, and differential abundance.
+--8<-- "pipeline-templates/nf-core/_generated/ampliseq-2.16.0.md"
 
 ---
 
@@ -94,7 +66,8 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 
 The ampliseq dashboard ships as a six-tab funnel (MultiQC parent + five
 child tabs). Filters propagate across tabs via cross-DC links on the
-metadata `sample` column — see [Cross-DC links](#cross-dc-links-7) below.
+metadata `sample` column — see [Cross-DC links](#cross-dc-links) in the
+Reference section.
 
 === "MultiQC"
 
@@ -196,23 +169,6 @@ metadata `sample` column — see [Cross-DC links](#cross-dc-links-7) below.
 
 ---
 
-## Cross-DC links (8)
-
-| Source | Column | Target | Description |
-|--------|--------|--------|-------------|
-| `samplesheet` | `sampleID` | `multiqc_data` | Filter MultiQC by samples |
-| `metadata` | `sample` | `multiqc_data` | Filter MultiQC by extended sample annotations (habitat, sampling_date) — added v0.13.2 for 2.14.0 & 2.16.0 |
-| `metadata` | `ID` | `alpha_diversity` | Filter diversity by metadata |
-| `metadata` | `ID` | `alpha_rarefaction` | Filter rarefaction by metadata |
-| `metadata` | `ID` | `taxonomy_composition` | Filter taxonomy by metadata |
-| `metadata` | `ID` | `taxonomy_rel_abundance` | Filter rel abundance by metadata |
-| `samplesheet` | `sampleID` | `taxonomy_heatmap` | Filter heatmap (base) |
-| `metadata` | `ID` | `taxonomy_heatmap` | Filter heatmap (extended) |
-
-Metadata links are auto-pruned when `METADATA_FILE` is absent.
-
----
-
 ## Running the pipeline
 
 Depictio reads the **output** of nf-core/ampliseq — it does not run the pipeline. Run the pipeline first:
@@ -269,19 +225,6 @@ Point `--data-root` to the directory containing your ampliseq outputs. This can 
         └── rel_abundance_tables/
             └── rel-table-2.tsv
 ```
-
----
-
-## Recipes (6)
-
-| Recipe | Input | Key transformation |
-|--------|-------|--------------------|
-| `alpha_diversity.py` | `faith_pd_vector/metadata.tsv` | Filter comment rows, rename `id` → `sample`, pass through metadata cols |
-| `alpha_rarefaction.py` | `faith_pd.csv` | Wide → long unpivot, regex depth/iter extraction |
-| `taxonomy_composition.py` | `barplot/level-2.csv` | Detect taxonomy by `;` in column names, melt to long format |
-| `taxonomy_rel_abundance.py` | `rel-table-2.tsv` + metadata DC | Wide → long, taxonomy split, generic metadata join |
-| `taxonomy_heatmap.py` | rel_abundance DC + metadata DC | Pivot to Phylum × sample matrix, embed metadata annotations with Plotly colors |
-| `ancombc.py` | 5 ANCOM-BC CSVs (via source_overrides) | Melt 5 slices, join, compute `-log10(q)` and significance |
 
 ---
 
