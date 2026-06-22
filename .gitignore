@@ -9,6 +9,10 @@ __pycache__/
 site/
 docs/site/
 
+# Generated on the fly in CI (catalog gallery, see deploy-docs.yaml) — never committed
+docs/assets/component-catalog-light.html
+docs/assets/component-catalog-dark.html
+
 # Editor/IDE
 .vscode/
 .idea/

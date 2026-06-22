@@ -8,6 +8,11 @@ description: "Complete guide to Depictio's dashboard component types and their c
 
 Depictio provides a variety of component types for building interactive dashboards. This guide covers each component type, when to use it, and how to configure it.
 
+!!! tip "Browse the live catalog"
+    To see which bioinformatics tool outputs map to these components, explore the
+    interactive [:material-view-module: Depictio Modules](../modules/index.md) gallery —
+    a live, offline catalog of tool-to-component integrations.
+
 ## :material-format-list-bulleted: Component Overview
 
 <div class="grid cards" markdown>
