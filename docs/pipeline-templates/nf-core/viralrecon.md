@@ -80,7 +80,11 @@ Recipe DCs fan per-sample files into one delta table via `glob_pattern`; the
 coverage/lineage DCs at the `artic_minion/` layout and drops the
 illumina-only variant DCs.
 
---8<-- "pipeline-templates/nf-core/_generated/viralrecon-3.0.0.md"
+!!! info "Self-adapting layout"
+    The dashboard adapts to whatever the run actually produced: components bound to
+    pruned or unparsed data collections are hidden, tabs left with no real
+    visualizations are dropped, and the rest are re-packed with no empty rows. One
+    template therefore covers both the Illumina and nanopore/ARTIC routes without edits.
 
 ---
 

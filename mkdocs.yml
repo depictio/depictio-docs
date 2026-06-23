@@ -227,6 +227,7 @@ nav:
           - YAML Dashboard Sync: features/yaml-sync.md
       - System Design:
           - Architecture: features/architecture.md
+          - Performance & Scaling: features/performance.md
           - Data Model: features/data-model.md
           - Security: features/security.md
   - API:

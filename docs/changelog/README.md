@@ -15,6 +15,42 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **v1.1.0** (unreleased)
+
+!!! success "Minor release — self-adapting nf-core templates, ingestion report, render-path performance work"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.1.0
+```
+
+### **✨ New Features**
+
+* **Self-adapting nf-core templates** — single ampliseq and viralrecon templates adapt to the pipeline route (ITS / SIDLE / skip_qiime, Illumina / nanopore-ARTIC); irrelevant data collections, components and tabs are pruned automatically.
+* **Ingestion report** — viewer panel comparing template-expected vs ingested data collections with per-collection health and a dashboard health banner; new `/ingestion-report` and `/ingestion-health` endpoints.
+* **Component catalog** — browse the live [Depictio Modules](../modules/index.md) catalog mapping tool outputs to visualizations; `depictio-cli catalog preview` / `gallery` render components on bundled fixtures locally or export standalone HTML with `--out`.
+* **`depictio-cli run --dashboard-name`** — override a template's dashboard title at import without editing the template; SIDLE multiregion runs auto-detected from `params.json`.
+* **`DEPICTIO_SEED_PROJECTS`** — allowlist scoping which reference projects are seeded on boot.
+
+### **⚡ Performance**
+
+* **Rendering & caching** — Delta column projection, adaptive render offload, Polars-native figures, Arrow-IPC/LZ4 cache, and scatter downsampling (WebGL above 50k points), with new `offload_rendering` and `offload_size_threshold_bytes` settings. Reduces redundant work when building figures; not yet extensively benchmarked.
+
+### **🚀 Improvements**
+
+* **Project detail tabs** — Overview / Data Collections / Links / Ingestion, with a sortable data-collection table and clickable project badges.
+* **Dashboard logo** — used as the card thumbnail fallback.
+* **Codespaces** — single-project (iris) seed, reliable port forwarding, and deterministic single-user mode.
+
+### **🐛 Bug Fixes**
+
+* FastQC alpha-channel colorscales (`#RRGGBBAA`) now render; empty heatmap categories fold into "Unclassified".
+* Unparsed MultiQC modules and metadata-only tabs are hidden; a Delta schema-read failure falls back to a full load.
+* viralrecon coverage cards use the average instead of the median; compose shares the screenshots directory between worker and backend.
+
+---
+
 ## **[v1.0.1](https://github.com/depictio/depictio/releases/tag/v1.0.1)** (June 11, 2026)
 
 !!! success "Patch — zero-config quickstart hardening"

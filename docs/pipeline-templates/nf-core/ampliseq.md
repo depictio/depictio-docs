@@ -58,7 +58,12 @@ Running without `METADATA_FILE` prunes the metadata-dependent collections
 (see the *Conditional routes* table); the `--skip_qiime` / `--skip_taxonomy`
 / multi-region routes are auto-detected from the run's `params.json`.
 
---8<-- "pipeline-templates/nf-core/_generated/ampliseq-2.16.0.md"
+!!! info "Self-adapting layout"
+    The dashboard adapts to whatever the run actually produced: components bound to
+    pruned or unparsed data collections are hidden, tabs left with no real
+    visualizations are dropped entirely, and the remaining components are re-packed so
+    there are no empty rows. One template therefore covers 16S/ITS, single- vs.
+    multi-region (SIDLE), and `skip_qiime` runs without edits.
 
 ---
 

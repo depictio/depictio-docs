@@ -1055,6 +1055,17 @@ body.catalog-fs-lock .md-main {
 .module-flow__step > :first-child { margin-top: 0; }
 .module-flow__step > :last-child { margin-bottom: 0; }
 
+/* Vertically center the (enlarged) icon with its bold label on the step's
+   first line — applies to both the intro and how-it-works triptychs. */
+.module-flow__step > p:first-child {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+.module-flow__step > p:first-child .twemoji {
+    flex: 0 0 auto;
+}
+
 /* Intro mapping (file -> module -> visualization) and how-it-works steps
    (detect -> reshape -> render) share the same positional accent colors. */
 .module-flow__step--detect,
