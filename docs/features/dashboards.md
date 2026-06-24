@@ -174,6 +174,45 @@ After repositioning or resizing components, use the **Save Layout** button in th
 
 ---
 
+## :material-clipboard-check-outline: Ingestion Report & Health
+
+Dashboards created from a [pipeline template](../pipeline-templates/README.md) carry an
+**ingestion report** that compares the data collections the template *expected* against
+what was actually found and aggregated during the CLI scan. It answers "did all the data
+this dashboard needs actually land?" at a glance.
+
+### :material-magnify: What the report shows
+
+The report lists every expected data collection with a status:
+
+| Status | Meaning |
+| --- | --- |
+| :material-check-circle:{ style="color: #2e7d32" } **Identified** | Included in this configuration and files were found and/or aggregated. |
+| :material-alert-circle:{ style="color: #ef6c00" } **Found zero** | Included but nothing matched — no files identified and not aggregated. |
+| :material-minus-circle:{ style="color: #757575" } **Gated out** | Intentionally excluded by a template conditional or missing-file prune (not a gap). |
+
+Expand a row to see its files (or the Delta-table path once aggregated), and filter or
+group rows by status.
+
+### :material-heart-pulse: Health status & banner
+
+The report rolls up into a single project **health** value:
+
+- :material-check:{ style="color: #2e7d32" } **ok** — every required collection was identified.
+- :material-alert:{ style="color: #ef6c00" } **partial** — some optional collections are missing.
+- :material-close-octagon:{ style="color: #c62828" } **missing required** — a required collection is missing or empty.
+
+When a template-derived dashboard is missing or only partially has a required collection,
+a dismissible **health banner** appears above the dashboard. The full report is reachable
+from the **settings drawer** of any template-derived project.
+
+!!! note "Legacy projects"
+    The report relies on the expected-data-collection manifest frozen at template
+    resolution time. Projects created before this manifest existed fall back to the live
+    project state, where intentionally gated-out collections cannot be distinguished.
+
+---
+
 ## :material-share-variant: Sharing Dashboards
 
 ### :material-shield-account: Permissions

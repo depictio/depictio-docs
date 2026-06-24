@@ -1,17 +1,23 @@
 ---
+title: Amplicon Sequencing
 hide:
   - navigation
 ---
 
-# nf-core/ampliseq
-
-<div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
-  <img src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq" style="height:56px;" onerror="this.src='../../images/pipeline-templates/nf-core/ampliseq/nf-core-ampliseq_logo.png'">
-  <div style="flex:1;">
-    <strong style="font-size:1.1em;">Amplicon sequencing analysis workflow using DADA2 and QIIME2 — 16S, ITS, CO1, 18S and other amplicons across Illumina, PacBio, IonTorrent.</strong><br>
-    <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/ampliseq" target="_blank">nf-co.re/ampliseq</a></span>
+<div class="template-banner">
+  <a class="template-banner-logo" href="https://nf-co.re/ampliseq" target="_blank" title="nf-core/ampliseq on nf-co.re">
+    <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_dark.png" alt="nf-core/ampliseq">
+    <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq">
+  </a>
+  <div class="template-banner-body">
+    <h1 class="template-title">Amplicon Sequencing</h1>
+    <p class="template-subtitle">Amplicon sequencing analysis workflow using DADA2 and QIIME2 — 16S, ITS, CO1, 18S and other amplicons across Illumina, PacBio, IonTorrent.</p>
+    <p class="template-links">
+      <a href="https://nf-co.re/ampliseq" target="_blank"><i class="mdi mdi-open-in-new"></i> nf-co.re</a>
+      <a href="https://github.com/nf-core/ampliseq" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
+    </p>
   </div>
-  <div style="background:#2196F3;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;white-space:nowrap;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Reviewed</div>
+  <span class="template-status-reviewed template-banner-badge" data-tooltip="Reviewed — tested, CI passes, and reviewed by the Depictio team or community."><i class="mdi mdi-check-circle-outline"></i> Reviewed</span>
 </div>
 
 The ampliseq template covers the main outputs of a standard nf-core/ampliseq run:
@@ -57,6 +63,13 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 Running without `METADATA_FILE` prunes the metadata-dependent collections
 (see the *Conditional routes* table); the `--skip_qiime` / `--skip_taxonomy`
 / multi-region routes are auto-detected from the run's `params.json`.
+
+!!! info "Self-adapting layout"
+    The dashboard adapts to whatever the run actually produced: components bound to
+    pruned or unparsed data collections are hidden, tabs left with no real
+    visualizations are dropped entirely, and the remaining components are re-packed so
+    there are no empty rows. One template therefore covers 16S/ITS, single- vs.
+    multi-region (SIDLE), and `skip_qiime` runs without edits.
 
 --8<-- "pipeline-templates/nf-core/_generated/ampliseq-2.16.0.md"
 

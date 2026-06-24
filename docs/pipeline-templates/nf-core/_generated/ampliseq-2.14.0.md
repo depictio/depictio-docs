@@ -6,6 +6,10 @@
 .gtd-badge{display:inline-block;padding:0 .5em;border-radius:10px;font-size:.78em;font-weight:600;line-height:1.5;white-space:nowrap;}
 .gtd-scan{background:#eef1fb;color:#3949ab;}
 .gtd-transformed{background:#e6f7f5;color:#2a8c82;}
+.gtd-direct{background:#eaf2ff;color:#2563c9;}
+.gtd-derived{background:#f3e8fd;color:#8e44ad;}
+.gtd-recipe{background:#fbe9f1;color:#b4337a;}
+.gtd-file{background:#eef0f2;color:#5a6573;}
 .gtd-opt{background:#fff6e6;color:#b9770e;}
 .gtd-req{background:#e9f7ef;color:#1e8e5a;}
 .gtd-plus-chip{background:#e9f7ef;color:#1e8e5a;}
@@ -21,6 +25,8 @@
    only the other columns' long paths may wrap. */
 .md-typeset table td:first-child{white-space:nowrap;}
 .md-typeset table td:not(:first-child) code{overflow-wrap:anywhere;}
+/* Reads-column paths: smaller monospace + wrap so long scan targets keep the row tidy. */
+.md-typeset table code.gtd-path{font-size:.62rem;overflow-wrap:anywhere;}
 .gtd-mtx{margin:.8rem 0;}
 .gtd-mtx table{border-collapse:separate;border-spacing:0;font-size:.7rem;}
 .gtd-mtx th,.gtd-mtx td{border:1px solid var(--md-default-fg-color--lightest,#e6e6e6);padding:2px 5px;text-align:center;}
@@ -51,7 +57,7 @@
 
 ### Template variables
 
-Variables you provide when running the template — `DATA_ROOT` via `--data-root`, the rest via `--var NAME=value`:
+`DATA_ROOT` (via `--data-root`) is the only required input. The rest mirror the pipeline's own nf-core parameters and are **auto-derived from the run's `params.json`** — pass `--var NAME=value` only to override what the run recorded:
 
 | Variable | Required | Description |
 |---|:--:|---|
@@ -61,18 +67,20 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 
 ### Data collections
 
-8 data collections — <span class="gtd-badge gtd-req">7 required</span> <span class="gtd-badge gtd-opt">1 optional</span>.
+8 data collections — <span class="gtd-badge gtd-req">7 required</span> <span class="gtd-badge gtd-opt">1 optional</span> · <span class="gtd-badge gtd-direct">7 direct</span> <span class="gtd-badge gtd-derived">1 derived</span>.
 
-| Tag | Type | Source | Recipe / scan target | Status |
-|---|---|---|---|:--:|
-| `multiqc_data` | MultiQC | <span class="gtd-badge gtd-scan">scan</span> | `multiqc/multiqc_data/multiqc.parquet` | <span class="gtd-badge gtd-req">required</span> |
-| `samplesheet` | Table | <span class="gtd-badge gtd-scan">scan</span> | `{SAMPLESHEET_FILE}` | <span class="gtd-badge gtd-req">required</span> |
-| `metadata` | Table | <span class="gtd-badge gtd-scan">scan</span> | `{METADATA_FILE}` | <span class="gtd-badge gtd-opt">optional</span> |
-| `alpha_diversity` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/alpha_diversity.py` | <span class="gtd-badge gtd-req">required</span> |
-| `alpha_rarefaction` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `qiime2/alpha_rarefaction.py` | <span class="gtd-badge gtd-req">required</span> |
-| `taxonomy_composition` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `qiime2/taxonomy_composition.py` | <span class="gtd-badge gtd-req">required</span> |
-| `taxonomy_rel_abundance` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/taxonomy_rel_abundance.py` | <span class="gtd-badge gtd-req">required</span> |
-| `ancombc_results` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `qiime2/ancombc.py` | <span class="gtd-badge gtd-req">required</span> |
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+
+| Tag | Origin | Type | Reads | Status |
+|---|:--:|---|---|:--:|
+| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">multiqc/multiqc_data/multiqc.parquet</code> | <span class="gtd-badge gtd-req">required</span> |
+| `samplesheet` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{SAMPLESHEET_FILE}</code> | <span class="gtd-badge gtd-req">required</span> |
+| `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{METADATA_FILE}</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `alpha_diversity` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/alpha_diversity.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `alpha_rarefaction` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/alpha_rarefaction.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `taxonomy_composition` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/taxonomy_composition.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `taxonomy_rel_abundance` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/taxonomy_rel_abundance.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `ancombc_results` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/ancombc.py</code> | <span class="gtd-badge gtd-req">required</span> |
 
 ### Conditional routes
 

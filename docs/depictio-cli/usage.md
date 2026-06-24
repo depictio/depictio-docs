@@ -128,6 +128,7 @@ depictio-cli run --project-config-path ./config.yaml
     | `--template` | `string` | `null` | Template ID (e.g. `nf-core/ampliseq/2.16.0`) |
     | `--data-root` | `path` | `null` | Root directory substituted for `{DATA_ROOT}` in template. Required when `--template` is set. |
     | `--project-name` | `string` | `null` | Custom project name (auto-generated from template if omitted) |
+    | `--dashboard-name` | `string` | `null` | Override the template's main dashboard title at import (the template file is left untouched). |
     | `--dashboard` | `path` | `null` | Override default dashboard(s) to import. Repeatable. |
     | `--skip-dashboard-import` | `flag` | `false` | Skip the automatic dashboard import step (Step 8) |
 
@@ -207,7 +208,7 @@ depictio-cli run \
   --skip-s3-check
 ```
 
-### 🍳 Recipe Commands
+### 🧑‍🍳 Recipe Commands
 
 <!-- prettier-ignore -->
 !!! info "Command Group: `depictio-cli recipe`"
@@ -626,6 +627,43 @@ depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admi
 ---
 
 For more information about dashboard YAML format and workflows, see [Dashboard YAML Management](../features/yaml-sync.md).
+
+---
+
+### 🗂️ Catalog Commands
+
+<!-- prettier-ignore -->
+!!! info "Command Group: `depictio-cli catalog`"
+    Browse the bioinformatics tool→viz catalog by rendering its components on their bundled fixture data. Handy for previewing what a module produces before wiring it into a dashboard. For the live, hosted version see the [Depictio Modules](../modules/index.md) catalog.
+
+#### `catalog preview`
+
+Render a single catalog output on its fixture and serve it on a throwaway localhost server (nothing is written to disk). Pass `--out` to export a portable, self-contained HTML file instead.
+
+```bash
+# Serve an ephemeral preview (Ctrl-C to stop)
+depictio-cli catalog preview <output-id>
+
+# Export a standalone HTML file instead of serving
+depictio-cli catalog preview <output-id> --out preview.html
+```
+
+#### `catalog gallery`
+
+Same as `preview`, but renders the whole catalog as a browsable gallery.
+
+```bash
+depictio-cli catalog gallery
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `--out`, `-o` | `path` | `null` | Export the self-contained HTML here instead of serving it |
+| `--port` | `int` | `0` | Port for the ephemeral server (`0` = auto) |
+| `--theme`, `-t` | `string` | `light` | Theme: `light` or `dark` |
+| `--no-open` | `flag` | `false` | Do not open a browser tab automatically |
+
+---
 
 ### 💾 Backup Commands
 
