@@ -1112,3 +1112,286 @@ body.catalog-fs-lock .md-main {
 .cat-card { color: #9966CC; }     /* purple */
 .cat-advviz { color: #7A5DC7; }   /* violet */
 .cat-multiqc { color: #8BC34A; }  /* green */
+
+/* ── Template cards ─────────────────────────────────────────────────── */
+
+.template-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+@media (max-width: 76.1875em) {
+  .template-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 44.9375em) {
+  .template-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.template-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none !important;
+  color: inherit;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.template-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+  transform: translateY(-3px);
+}
+
+.template-card-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 20px;
+  min-height: 90px;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+[data-md-color-scheme="default"] .template-card-logo {
+  background: var(--md-code-bg-color);
+}
+
+[data-md-color-scheme="slate"] .template-card-logo {
+  background: #111e2b;
+}
+
+.template-card-logo img {
+  max-height: 52px;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+.template-card-body {
+  padding: 14px 16px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.template-card-desc {
+  margin: 0;
+  font-size: 0.82em;
+  line-height: 1.5;
+  color: var(--md-default-fg-color--light);
+}
+
+.template-card-meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.template-version {
+  background: #e8f5e9;
+  color: #1b5e20;
+  border: 1px solid #a5d6a7;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78em;
+  font-weight: 600;
+  font-family: var(--md-code-font-family);
+  letter-spacing: 0.02em;
+}
+
+[data-md-color-scheme="slate"] .template-version {
+  background: #152b18;
+  color: #81c784;
+  border-color: #2e5d33;
+}
+
+.template-status-reviewed {
+  background: #e3f2fd;
+  color: #0d47a1;
+  border: 1px solid #90caf9;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78em;
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .template-status-reviewed {
+  background: #0d2137;
+  color: #64b5f6;
+  border-color: #1565c0;
+}
+
+/* ── Status level cards ─────────────────────────────────────────────── */
+
+.status-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+@media (max-width: 44.9375em) {
+  .status-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.status-card {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.status-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-icon {
+  font-size: 1.4em;
+  line-height: 1;
+}
+
+.status-title {
+  font-weight: 700;
+  font-size: 0.95em;
+}
+
+.status-desc {
+  margin: 0;
+  font-size: 0.82em;
+  color: var(--md-default-fg-color--light);
+  line-height: 1.5;
+}
+
+.status-certified  { border-top: 3px solid #4CAF50; }
+.status-certified  .status-icon { color: #4CAF50; }
+
+.status-reviewed   { border-top: 3px solid #2196F3; }
+.status-reviewed   .status-icon { color: #2196F3; }
+
+.status-experimental { border-top: 3px solid #FF9800; }
+.status-experimental .status-icon { color: #FF9800; }
+
+/* ── Individual template page banner (tinted card) ── */
+.template-banner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 22px;
+  align-items: center;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 8px 0 22px;
+}
+.template-banner-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+}
+.template-banner-logo img {
+  max-height: 72px;
+  max-width: 240px;
+  object-fit: contain;
+}
+.template-banner-body { min-width: 0; }
+
+/* Title: standard font (override the site-wide Virgil h1), compact in the banner */
+.md-typeset .template-banner-body h1.template-title {
+  font-family: var(--md-text-font-family), -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif !important;
+  font-size: 1.55em;
+  margin: 0 0 4px;
+}
+/* Subtitle: highlighted */
+.template-banner-body .template-subtitle {
+  font-size: 1.05em;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 8px;
+}
+/* Compact icon links (no chip border) */
+.template-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 0;
+}
+.template-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.85em;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--md-primary-fg-color);
+}
+.template-links a:hover { text-decoration: underline; }
+.template-links .mdi { font-size: 1.15em; }
+
+/* Reviewed pill — own column, vertically centered (via the grid's align-items) */
+.template-status-reviewed.template-banner-badge {
+  position: relative;
+  justify-self: end;
+  white-space: nowrap;
+  font-size: 0.95em;
+  padding: 7px 16px;
+  border-radius: 8px;
+  cursor: help;
+}
+.template-banner-badge .mdi { vertical-align: -2px; margin-right: 5px; font-size: 1.15em; }
+
+/* Custom tooltip for the Reviewed badge — bigger, short delay, help cursor */
+.template-banner-badge::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: max-content;
+  max-width: 300px;
+  white-space: normal;
+  text-align: left;
+  font-size: 0.82rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--md-default-bg-color);
+  background: var(--md-default-fg-color);
+  padding: 9px 13px;
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-3px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+  transition-delay: 0s;
+  pointer-events: none;
+  z-index: 20;
+}
+.template-banner-badge:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+
+@media (max-width: 44.9375em) {
+  .template-banner {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 16px 18px;
+  }
+  .template-banner-badge { justify-self: start; }
+}

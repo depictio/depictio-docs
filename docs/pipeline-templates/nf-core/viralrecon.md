@@ -1,17 +1,23 @@
 ---
+title: Viral Genome Reconstruction
 hide:
   - navigation
 ---
 
-# nf-core/viralrecon
-
-<div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
-  <img src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon" style="height:56px;" onerror="this.src='../../images/pipeline-templates/nf-core/viralrecon/nf-core-viralrecon_logo.png'">
-  <div style="flex:1;">
-    <strong style="font-size:1.1em;">Assembly and intrahost/low-frequency variant calling for viral samples — SARS-CoV-2 + other viral genomes via the reference-genomes config.</strong><br>
-    <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/viralrecon" target="_blank">nf-co.re/viralrecon</a></span>
+<div class="template-banner">
+  <a class="template-banner-logo" href="https://nf-co.re/viralrecon" target="_blank" title="nf-core/viralrecon on nf-co.re">
+    <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_dark.png" alt="nf-core/viralrecon">
+    <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon">
+  </a>
+  <div class="template-banner-body">
+    <h1 class="template-title">Viral Genome Reconstruction</h1>
+    <p class="template-subtitle">Assembly and intrahost/low-frequency variant calling for viral samples — SARS-CoV-2 + other viral genomes via the reference-genomes config.</p>
+    <p class="template-links">
+      <a href="https://nf-co.re/viralrecon" target="_blank"><i class="mdi mdi-open-in-new"></i> nf-co.re</a>
+      <a href="https://github.com/nf-core/viralrecon" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
+    </p>
   </div>
-  <div style="background:#2196F3;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;white-space:nowrap;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Reviewed</div>
+  <span class="template-status-reviewed template-banner-badge" data-tooltip="Reviewed — tested, CI passes, and reviewed by the Depictio team or community."><i class="mdi mdi-check-circle-outline"></i> Reviewed</span>
 </div>
 
 The viralrecon template covers the main outputs of a standard nf-core/viralrecon run:
@@ -85,6 +91,8 @@ illumina-only variant DCs.
     pruned or unparsed data collections are hidden, tabs left with no real
     visualizations are dropped, and the rest are re-packed with no empty rows. One
     template therefore covers both the Illumina and nanopore/ARTIC routes without edits.
+
+--8<-- "pipeline-templates/nf-core/_generated/viralrecon-3.0.0.md"
 
 ---
 

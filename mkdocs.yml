@@ -239,6 +239,7 @@ nav:
   - Templates:
       - pipeline-templates/README.md
       - nf-core:
+          - pipeline-templates/nf-core/index.md
           - ampliseq: pipeline-templates/nf-core/ampliseq.md
           - viralrecon: pipeline-templates/nf-core/viralrecon.md
   - Modules: modules/index.md
