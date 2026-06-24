@@ -271,37 +271,19 @@ svg:hover path#shape-7 {
     animation-delay: 0.6s;
 }
 
-/* Fix sidebar heights to use full viewport */
-.md-sidebar {
-    height: 100vh !important;
-    position: sticky !important;
-    top: 0 !important;
-}
-
-.md-sidebar--primary {
-    height: 100vh !important;
-}
-
-.md-sidebar--secondary {
-    height: 100vh !important;
-}
-
-.md-sidebar__scrollwrap {
-    height: 100vh !important;
-    max-height: 100vh !important;
-}
-
-/* Adjust for header height */
+/* Sidebar: pin to full viewport height — DESKTOP ONLY. Below Material's nav
+   breakpoint (76.25em) the primary sidebar is a slide-in hamburger drawer
+   (position: fixed, translated off-screen). Forcing position/height at all
+   widths pinned it open on mobile and squeezed the content — so these overrides
+   are scoped to desktop and mobile keeps Material's native responsive drawer. */
 @media screen and (min-width: 76.25em) {
     .md-sidebar {
         height: calc(100vh - 2.4rem) !important;
+        position: sticky !important;
         top: 2.4rem !important;
     }
 
-    .md-sidebar--primary {
-        height: calc(100vh - 2.4rem) !important;
-    }
-
+    .md-sidebar--primary,
     .md-sidebar--secondary {
         height: calc(100vh - 2.4rem) !important;
     }
@@ -312,15 +294,17 @@ svg:hover path#shape-7 {
     }
 }
 
-/* Account for tabs when present */
-.md-tabs ~ .md-main .md-sidebar {
-    height: calc(100vh - 4.8rem) !important;
-    top: 4.8rem !important;
-}
+/* Account for tabs when present (desktop only — see note above) */
+@media screen and (min-width: 76.25em) {
+    .md-tabs ~ .md-main .md-sidebar {
+        height: calc(100vh - 4.8rem) !important;
+        top: 4.8rem !important;
+    }
 
-.md-tabs ~ .md-main .md-sidebar__scrollwrap {
-    height: calc(100vh - 4.8rem) !important;
-    max-height: calc(100vh - 4.8rem) !important;
+    .md-tabs ~ .md-main .md-sidebar__scrollwrap {
+        height: calc(100vh - 4.8rem) !important;
+        max-height: calc(100vh - 4.8rem) !important;
+    }
 }
 
 /* Custom Demo Note Section */
@@ -692,16 +676,24 @@ svg:hover path#shape-7 {
     background-color: transparent !important;
 }
 
-/* Fix for landing page - ensure content doesn't cover footer */
-.md-main {
-    position: relative;
-    z-index: 1;
+/* Fix for landing page - ensure content doesn't cover footer. DESKTOP ONLY:
+   on mobile, position+z-index here build a stacking context that traps the nav
+   drawer beneath Material's overlay scrim (drawer renders blurry and swallows
+   taps). Mobile keeps Material's native stacking so the drawer works. */
+@media screen and (min-width: 76.25em) {
+    .md-main {
+        position: relative;
+        z-index: 1;
+    }
+
+    .md-content {
+        position: relative;
+        z-index: 1;
+    }
 }
 
-/* Ensure content container doesn't extend over footer */
+/* Ensure the content/article doesn't clip anything below it (all widths) */
 .md-content {
-    position: relative;
-    z-index: 1;
     overflow: visible !important;
 }
 
