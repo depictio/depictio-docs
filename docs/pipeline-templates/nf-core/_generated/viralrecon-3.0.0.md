@@ -142,7 +142,6 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 
 | Recipe | Transforms | Output |
 |---|---|---|
-| [`artic/variants_long.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/artic/variants_long.py) | Parse ARTIC/clair3 (or medaka) nanopore per-sample VCFs into variants_long. | `sample`, `CHROM`, `POS`, `REF`, `ALT`, `AF`, `GENE`, `AA`, `EFFECT`, `FUNCLASS`, `mutation_label` |
 | [`ivar/variants_long.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/ivar/variants_long.py) | Clean and normalize viralrecon variants_long_table.csv for dashboard consumption. | `sample`, `CHROM`, `POS`, `REF`, `ALT`, `FILTER`, `DP`, `REF_DP`, `ALT_DP`, `AF`, `GENE`, `AA`, `EFFECT`, `FUNCLASS`, `mutation_label` |
 | [`mosdepth/complex_heatmap_canonical.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/mosdepth/complex_heatmap_canonical.py) | Canonical-schema ComplexHeatmap DC for viralrecon amplicon coverage. | `sample` |
 | [`mosdepth/coverage_track_canonical.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/mosdepth/coverage_track_canonical.py) | Canonical-schema Coverage Track DC for viralrecon. | `chromosome`, `position`, `value` |
