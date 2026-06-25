@@ -1,3 +1,42 @@
+/* Tools Catalog hero: logo beside the page title (theme Virgil display font).
+   align-items:center vertically centres the two; the `> * { margin:0 }` kills any
+   stray <p>/h1 margins that would offset that centring; the negative top margin
+   tightens the gap under the nav. */
+.catalog-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    margin: -0.6rem 0 1.1rem;
+}
+.catalog-hero > * {
+    margin: 0;
+}
+.catalog-hero__logo {
+    width: 58px;
+    height: auto;
+    flex-shrink: 0;
+}
+/* Selector specific enough to beat Material's `.md-typeset h1`, whose bottom
+   margin would otherwise shift the title's text up relative to the logo under
+   `align-items: center` (the margin box, not the text box, gets centred). */
+.catalog-hero .catalog-hero__title {
+    line-height: 1;
+    margin: 0;
+}
+/* The "T" of "Tools" is a hand-drawn brush letter (inline SVG) in the brand
+   purple, matching the Virgil display font of the surrounding title. Sized to
+   the cap height and nudged onto the baseline so it sits flush with the text. */
+.catalog-hero__title .accent-t {
+    font-weight: inherit;
+}
+.catalog-hero__title .accent-t .accent-t-svg {
+    height: 0.86em;
+    width: auto;
+    vertical-align: -0.12em;
+    display: inline-block;
+}
+
 /* Limit TOC depth to level 2 on changelog page */
 body.page-changelog .md-sidebar--secondary .md-nav__list .md-nav__list {
     display: none;
@@ -964,11 +1003,18 @@ svg:hover path#shape-7 {
     z-index: 1000;
     margin: 0;
     padding: 0;
+    overflow: hidden;
     background: var(--md-default-bg-color);
 }
 
-/* Freeze the page scroll behind the overlay (set by catalog-fullscreen.js). */
+/* Freeze the page scroll behind the overlay (set by catalog-fullscreen.js).
+   Lock BOTH html and body: `body` alone leaves the (taller) document scrolling
+   on the root element, whose scrollbar then sits beside the iframe's own —
+   the "double scrollbar". `:has` targets html from the body-level lock class. */
 body.catalog-fs-lock {
+    overflow: hidden;
+}
+html:has(> body.catalog-fs-lock) {
     overflow: hidden;
 }
 
@@ -979,14 +1025,31 @@ body.catalog-fs-lock .md-main {
     z-index: 1001;
 }
 
+/* In fullscreen the gallery iframe shows its OWN header, so the wrapper's title
+   bar would just duplicate it. Drop the bar + title and float ONLY the close
+   button in the corner (fixed, above the overlay) so the iframe fills the view. */
 .catalog-embed--fs .catalog-demo-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 48px;
-    padding: 0 1rem;
-    box-sizing: border-box;
-    border-bottom: 1px solid var(--md-default-fg-color--lightest);
+    /* Re-enable display (base rule hides the header) so the fixed close button
+       inside it can render — a display:none ancestor would keep it invisible.
+       The header itself generates no box, so it adds no height to the overlay. */
+    display: contents;
+    border: none;
+    background: transparent;
+    padding: 0;
+}
+.catalog-embed--fs .catalog-demo-title {
+    display: none;
+}
+.catalog-embed--fs .catalog-fs-close {
+    position: fixed;
+    top: 12px;
+    right: 16px;
+    z-index: 1002;
+    width: 36px;
+    height: 36px;
+    background: var(--md-default-bg-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+    border-radius: 8px;
 }
 
 .catalog-demo-title {
@@ -1016,15 +1079,60 @@ body.catalog-fs-lock .md-main {
 
 .catalog-embed--fs .catalog-iframe-light,
 .catalog-embed--fs .catalog-iframe-dark {
-    height: calc(100vh - 48px);
+    height: 100vh;
 }
 
 .catalog-embed--fs iframe {
     width: 100vw;
-    height: calc(100vh - 48px);
+    height: 100vh;
     min-height: 0;
     border: none;
     border-radius: 0;
+}
+
+/* Contribute CTA: a brand-purple pill that lifts on hover and nudges its arrow —
+   replaces the flat Material primary button. The `.md-typeset` prefix outweighs
+   the theme's default link colour so the label stays white. */
+.catalog-cta-wrap {
+    text-align: center;
+}
+/* Small Depictio logo on the left of the CTA, via ::before so the markdown link
+   text stays clean (an inline <img> inside link text gets mangled/inlined). */
+.md-typeset .catalog-cta::before {
+    content: "";
+    width: 1.35em;
+    height: 1.35em;
+    flex-shrink: 0;
+    background: url("../images/logo/animated_favicon.svg") center / contain no-repeat;
+}
+.md-typeset .catalog-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 0.6rem;
+    padding: 0.55rem 1.2rem;
+    border-radius: 9px;
+    font-weight: 600;
+    color: #7d5dec;
+    background: #fff;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease,
+        border-color 0.15s ease;
+}
+.md-typeset .catalog-cta:hover,
+.md-typeset .catalog-cta:focus-visible {
+    color: #7d5dec;
+    background: #faf8ff;
+    border-color: #9870ff;
+    box-shadow: 0 6px 18px rgba(152, 112, 255, 0.28);
+    transform: translateY(-1px);
+}
+.md-typeset .catalog-cta .twemoji {
+    transition: transform 0.15s ease;
+}
+.md-typeset .catalog-cta:hover .twemoji {
+    transform: translateX(3px);
 }
 
 /* Module flow: a flat horizontal stepper (Detect -> Reshape -> Render). */
@@ -1093,3 +1201,192 @@ body.catalog-fs-lock .md-main {
 .cat-card { color: #9966CC; }     /* purple */
 .cat-advviz { color: #7A5DC7; }   /* violet */
 .cat-multiqc { color: #8BC34A; }  /* green */
+
+
+/* Ported from docs/changelog-v1.1.0 — templates landing cards */
+/* ── Template cards ─────────────────────────────────────────────────── */
+
+.template-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+@media (max-width: 76.1875em) {
+  .template-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 44.9375em) {
+  .template-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.template-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none !important;
+  color: inherit;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.template-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+  transform: translateY(-3px);
+}
+
+.template-card-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 20px;
+  min-height: 90px;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+[data-md-color-scheme="default"] .template-card-logo {
+  background: var(--md-code-bg-color);
+}
+
+[data-md-color-scheme="slate"] .template-card-logo {
+  background: #111e2b;
+}
+
+.template-card-logo img {
+  max-height: 52px;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+.template-card-body {
+  padding: 14px 16px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.template-card-desc {
+  margin: 0;
+  font-size: 0.82em;
+  line-height: 1.5;
+  color: var(--md-default-fg-color--light);
+}
+
+.template-card-meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.template-version {
+  background: #e8f5e9;
+  color: #1b5e20;
+  border: 1px solid #a5d6a7;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78em;
+  font-weight: 600;
+  font-family: var(--md-code-font-family);
+  letter-spacing: 0.02em;
+}
+
+[data-md-color-scheme="slate"] .template-version {
+  background: #152b18;
+  color: #81c784;
+  border-color: #2e5d33;
+}
+
+.template-status-reviewed {
+  background: #e3f2fd;
+  color: #0d47a1;
+  border: 1px solid #90caf9;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78em;
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .template-status-reviewed {
+  background: #0d2137;
+  color: #64b5f6;
+  border-color: #1565c0;
+}
+
+/* ── Status level cards ─────────────────────────────────────────────── */
+
+.status-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+@media (max-width: 44.9375em) {
+  .status-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.status-card {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.status-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-icon {
+  font-size: 1.4em;
+  line-height: 1;
+}
+
+.status-title {
+  font-weight: 700;
+  font-size: 0.95em;
+}
+
+.status-desc {
+  margin: 0;
+  font-size: 0.82em;
+  color: var(--md-default-fg-color--light);
+  line-height: 1.5;
+}
+
+.status-certified  { border-top: 3px solid #4CAF50; }
+.status-certified  .status-icon { color: #4CAF50; }
+
+.status-reviewed   { border-top: 3px solid #2196F3; }
+.status-reviewed   .status-icon { color: #2196F3; }
+
+.status-experimental { border-top: 3px solid #FF9800; }
+.status-experimental .status-icon { color: #FF9800; }
+
+
+/* nf-core logo beside the "nf-core" group label in the left nav sidebar.
+   :has() targets the nested <li> that directly holds the pipeline links, so the
+   icon lands on the "nf-core" label only — not its "Templates" parent. */
+.md-nav__item--nested:has(> nav > ul > li > .md-nav__link[href$="nf-core/ampliseq/"]) > .md-nav__link::before {
+  content: "";
+  display: inline-block;
+  width: 1.05em;
+  height: 1.05em;
+  margin-right: 0.45em;
+  flex-shrink: 0;
+  background: url("../images/pipeline-templates/nf-core/ampliseq/nf-core.png") center / contain no-repeat;
+}

@@ -240,21 +240,22 @@ nav:
       - nf-core:
           - ampliseq: pipeline-templates/nf-core/ampliseq.md
           - viralrecon: pipeline-templates/nf-core/viralrecon.md
-  - Modules: modules/index.md
+  - Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md
       - Contributing: developer/contributing.md
+      - Contributing a Tool: developer/contributing-a-tool.md
       - Contributing Templates: developer/contributing-templates.md
   - Roadmap: roadmap/README.md
   - Changelog: changelog/README.md
+  - Blog:
+      - blog/index.md
   - More:
       - Overview: more/README.md
       # - Stories: more/stories.md
       - FAQ:
           - Overview: FAQ/README.md
           - General: FAQ/general.md
-      - Blog:
-          - blog/index.md
       - Funding: more/funding.md
       - Color Palette: more/palette.md
       - Animated Logo: animated-logo.md
