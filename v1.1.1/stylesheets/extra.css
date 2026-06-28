@@ -1,0 +1,1408 @@
+/* Tools Catalog hero: logo beside the page title (theme Virgil display font).
+   align-items:center vertically centres the two; the `> * { margin:0 }` kills any
+   stray <p>/h1 margins that would offset that centring; the negative top margin
+   tightens the gap under the nav. */
+.catalog-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    margin: -0.6rem 0 1.1rem;
+}
+.catalog-hero > * {
+    margin: 0;
+}
+.catalog-hero__logo {
+    width: 58px;
+    height: auto;
+    flex-shrink: 0;
+}
+/* Selector specific enough to beat Material's `.md-typeset h1`, whose bottom
+   margin would otherwise shift the title's text up relative to the logo under
+   `align-items: center` (the margin box, not the text box, gets centred). */
+.catalog-hero .catalog-hero__title {
+    line-height: 1;
+    margin: 0;
+}
+/* The "T" of "Tools" is a hand-drawn brush letter (inline SVG) in the brand
+   purple, matching the Virgil display font of the surrounding title. Sized to
+   the cap height and nudged onto the baseline so it sits flush with the text. */
+.catalog-hero__title .accent-t {
+    font-weight: inherit;
+}
+.catalog-hero__title .accent-t .accent-t-svg {
+    height: 0.86em;
+    width: auto;
+    vertical-align: -0.12em;
+    display: inline-block;
+}
+
+/* Limit TOC depth to level 2 on changelog page */
+body.page-changelog .md-sidebar--secondary .md-nav__list .md-nav__list {
+    display: none;
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  font-size: 17px
+}
+
+.banner {
+    height: 12px;       /* Height of the banner */
+    position: sticky;   /* Follows as you scroll */
+    top: 0;             /* Absolute top of page */
+    left: 0;
+    width: 100%;
+    z-index: 1;         /* Tells the renderer "this is important", otherwise Admonition and Code Blocks will render into it */
+    text-align: center;
+    background-color: #f4b136; /* Red */
+}
+
+.md-banner {
+    background-color: #f4b136; /* Red */
+}
+
+.md-header {
+    /* grey */
+    background-color: #f7f7f7;
+}
+.md-tabs {
+    /* grey */
+    background-color: #f7f7f7;
+}
+
+/* Theme-aware logo switching */
+/* Light theme - show dark logo */
+[data-md-color-scheme="default"] .logo-dark {
+    display: inline-block;
+}
+
+[data-md-color-scheme="default"] .logo-light {
+    display: none;
+}
+
+/* Dark theme - show light logo */
+[data-md-color-scheme="slate"] .logo-dark {
+    display: none;
+}
+
+[data-md-color-scheme="slate"] .logo-light {
+    display: inline-block;
+}
+
+/* Theme-aware card styling */
+/* Light theme cards */
+[data-md-color-scheme="default"] .funding-card,
+[data-md-color-scheme="default"] .partner-card,
+[data-md-color-scheme="default"] .installation-card {
+    background-color: white;
+    border-color: rgba(0,0,0,0.1);
+    color: var(--md-default-fg-color);
+}
+
+/* Dark theme cards */
+[data-md-color-scheme="slate"] .funding-card,
+[data-md-color-scheme="slate"] .partner-card,
+[data-md-color-scheme="slate"] .installation-card {
+    background-color: var(--md-default-bg-color);
+    border-color: var(--md-default-fg-color--lighter);
+    color: var(--md-default-fg-color);
+}
+
+
+/* NF-core logo theme change */
+
+/* Show light logo by default */
+.nf-core-light { display: inline; }
+.nf-core-dark { display: none; }
+
+/* If using Material theme's dark mode toggle */
+[data-md-color-scheme="slate"] .nf-core-light { display: none; }
+[data-md-color-scheme="slate"] .nf-core-dark { display: inline; }
+
+/* Virgil font definition */
+@font-face {
+    font-family: 'Virgil';
+    src: url('../fonts/Virgil.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Custom Depictio favicon icon */
+.depictio-icon {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background-image: url('../images/logo/logo_icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+}
+
+/* Triangular animation keyframes - based on original Depictio script */
+@keyframes triangular-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+/* Container to prevent clipping */
+#inline-svg-container {
+    overflow: visible !important;
+    padding: 15px;
+}
+
+#inline-svg-container svg {
+    overflow: visible !important;
+}
+
+/* FOUC Prevention - hide logo until JS loads, but show after delay as fallback */
+.md-header__button.md-logo {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    overflow: visible !important;
+    padding: 8px;
+    min-width: 64px;
+    min-height: 64px;
+    margin-right: -8px;
+    animation: showLogoFallback 0.1s ease 2s forwards; /* Show after 2s if JS fails */
+}
+
+.md-header__button.md-logo.logo-ready {
+    opacity: 1;
+    animation: none; /* Cancel fallback animation when JS succeeds */
+}
+
+@keyframes showLogoFallback {
+    to { opacity: 1; }
+}
+
+/* Header logo specific styling */
+.md-header__button.md-logo svg {
+    overflow: visible !important;
+    width: 48px !important;
+    height: 48px !important;
+}
+
+.md-header__button.md-logo img {
+    width: 48px !important;
+    height: 48px !important;
+}
+
+/* Reduce space between logo and title and change to Virgil font */
+.md-header__title {
+    margin-left: -12px;
+    font-size: 1.2rem !important;
+    font-weight: 600;
+    font-family: "Virgil", cursive !important;
+}
+
+/* Apply Virgil font to all H1 titles */
+h1 {
+    font-family: "Virgil", cursive !important;
+}
+
+.md-typeset h1 {
+    font-family: "Virgil", cursive !important;
+}
+
+/* Set up transform properties but NO animation by default */
+#shape-1, path#shape-1,
+#shape-2, path#shape-2,
+#shape-3, path#shape-3,
+#shape-4, path#shape-4,
+#shape-5, path#shape-5,
+#shape-6, path#shape-6,
+#shape-7, path#shape-7 {
+    transform-origin: center;
+    transform-box: fill-box;
+    transition: transform 0.2s ease;
+}
+
+/* ONLY animate on hover */
+svg:hover #shape-1,
+svg:hover path#shape-1 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+svg:hover #shape-2,
+svg:hover path#shape-2 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.1s;
+}
+
+svg:hover #shape-3,
+svg:hover path#shape-3 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.2s;
+}
+
+svg:hover #shape-4,
+svg:hover path#shape-4 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.3s;
+}
+
+svg:hover #shape-5,
+svg:hover path#shape-5 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.4s;
+}
+
+svg:hover #shape-6,
+svg:hover path#shape-6 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+svg:hover #shape-7,
+svg:hover path#shape-7 {
+    animation: triangular-pulse 1.0s ease-in-out infinite;
+    animation-delay: 0.6s;
+}
+
+/* Enhanced animation when active */
+.triangular-active #shape-1,
+.triangular-active path#shape-1 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+.triangular-active #shape-2,
+.triangular-active path#shape-2 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.1s;
+}
+
+.triangular-active #shape-3,
+.triangular-active path#shape-3 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.2s;
+}
+
+.triangular-active #shape-4,
+.triangular-active path#shape-4 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.3s;
+}
+
+.triangular-active #shape-5,
+.triangular-active path#shape-5 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.4s;
+}
+
+.triangular-active #shape-6,
+.triangular-active path#shape-6 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+.triangular-active #shape-7,
+.triangular-active path#shape-7 {
+    animation: triangular-pulse 0.8s ease-in-out infinite;
+    animation-delay: 0.6s;
+}
+
+/* Sidebar: pin to full viewport height — DESKTOP ONLY. Below Material's nav
+   breakpoint (76.25em) the primary sidebar is a slide-in hamburger drawer
+   (position: fixed, translated off-screen). Forcing position/height at all
+   widths pinned it open on mobile and squeezed the content — so these overrides
+   are scoped to desktop and mobile keeps Material's native responsive drawer. */
+@media screen and (min-width: 76.25em) {
+    .md-sidebar {
+        height: calc(100vh - 2.4rem) !important;
+        position: sticky !important;
+        top: 2.4rem !important;
+    }
+
+    .md-sidebar--primary,
+    .md-sidebar--secondary {
+        height: calc(100vh - 2.4rem) !important;
+    }
+
+    .md-sidebar__scrollwrap {
+        height: calc(100vh - 2.4rem) !important;
+        max-height: calc(100vh - 2.4rem) !important;
+    }
+}
+
+/* Account for tabs when present (desktop only — see note above) */
+@media screen and (min-width: 76.25em) {
+    .md-tabs ~ .md-main .md-sidebar {
+        height: calc(100vh - 4.8rem) !important;
+        top: 4.8rem !important;
+    }
+
+    .md-tabs ~ .md-main .md-sidebar__scrollwrap {
+        height: calc(100vh - 4.8rem) !important;
+        max-height: calc(100vh - 4.8rem) !important;
+    }
+}
+
+/* Custom Demo Note Section */
+.demo-note-section {
+    margin: 2rem 0;
+    padding: 0 2rem;
+}
+
+.live-demo-info .demo-note-card {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    margin: 2rem auto;
+    max-width: 600px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+[data-md-color-scheme="slate"] .live-demo-info .demo-note-card {
+    background: #374151 !important;
+    border: 1px solid #4b5563 !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.demo-note-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.demo-note-header {
+    background: #f8f9fa !important;
+    color: var(--md-default-fg-color) !important;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+[data-md-color-scheme="slate"] .demo-note-header {
+    background: #4b5563 !important;
+    color: var(--md-default-fg-color) !important;
+    border-bottom: 1px solid #6b7280;
+}
+
+.demo-badge-integrated {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.demo-badge-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.demo-badge-content strong {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.demo-direct-link {
+    color: var(--md-default-fg-color);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.demo-direct-link:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+[data-md-color-scheme="slate"] .demo-direct-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.demo-note-header:hover {
+    background: #e9ecef !important;
+}
+
+[data-md-color-scheme="slate"] .demo-note-header:hover {
+    background: #374151 !important;
+}
+
+.demo-note-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.demo-note-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    flex: 1;
+}
+
+.demo-note-toggle {
+    color: var(--md-default-fg-color);
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.demo-note-toggle:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+[data-md-color-scheme="slate"] .demo-note-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.demo-toggle-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.demo-note-toggle.expanded .demo-toggle-icon {
+    transform: rotate(180deg);
+}
+
+.demo-note-content {
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.demo-note-content.expanded {
+    padding: 1.5rem;
+    max-height: 800px;
+}
+
+.demo-note-content p {
+    margin: 0 0 1rem 0;
+    color: var(--md-default-fg-color--light);
+    line-height: 1.6;
+    text-align: center;
+}
+
+.demo-note-content p:last-of-type {
+    margin-bottom: 1.5rem;
+}
+
+.demo-note-content strong {
+    color: var(--md-default-fg-color);
+    font-weight: 600;
+}
+
+.demo-alternatives {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+[data-md-color-scheme="slate"] .demo-alternatives {
+    background: #374151;
+    border: 1px solid #4b5563;
+}
+
+.demo-alternatives h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--md-default-fg-color);
+}
+
+.demo-alt-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.demo-alt-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.demo-alt-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+}
+
+.install-btn {
+    background: rgba(69, 184, 172, 0.8);
+    color: white !important;
+    border: 2px solid rgba(69, 184, 172, 1);
+}
+
+.install-btn:hover {
+    background: rgba(69, 184, 172, 0.9);
+    color: white !important;
+    border: 2px solid rgba(69, 184, 172, 1);
+}
+
+.demo-btn {
+    background: rgba(100, 149, 237, 0.8);
+    color: white !important;
+    border: 2px solid rgba(100, 149, 237, 1);
+}
+
+.demo-btn:hover {
+    background: rgba(100, 149, 237, 0.9);
+    color: white !important;
+    border: 2px solid rgba(100, 149, 237, 1);
+}
+
+.demo-alt-btn img,
+.demo-alt-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .demo-note-section {
+        padding: 0 1rem;
+    }
+
+    .demo-alt-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .demo-alt-btn {
+        width: 100%;
+        max-width: 200px;
+        justify-content: center;
+    }
+}
+
+/* Simple and direct - exclude Virgil font from version dropdown */
+.md-version {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* ===== FOOTER STYLING ===== */
+/* Ensure footer is always visible and properly styled */
+.md-footer {
+    position: relative !important;
+    z-index: 1000 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: transparent !important;
+    margin-top: 4rem !important;
+    padding: 0 !important;
+    clear: both !important;
+    width: 100% !important;
+}
+
+.md-footer-meta {
+    background-color: #1a1a1a !important;
+    display: block !important;
+    visibility: visible !important;
+    padding: 1rem 0 !important;
+}
+
+.md-footer-meta__inner {
+    display: flex !important;
+    visibility: visible !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 1rem !important;
+}
+
+/* Footer copyright text - dark background, light text */
+.md-copyright,
+.md-copyright__highlight,
+.md-footer-meta .md-typeset,
+.md-footer-meta .md-copyright {
+    color: #b0b0b0 !important;
+    font-size: 0.85rem !important;
+}
+
+.md-copyright a,
+.md-footer-meta a {
+    color: #9966cc !important;
+}
+
+.md-copyright a:hover,
+.md-footer-meta a:hover {
+    color: #b388e8 !important;
+}
+
+/* Social icons in footer */
+.md-social__link {
+    color: #b0b0b0 !important;
+}
+
+.md-social__link:hover {
+    color: #9966cc !important;
+}
+
+.md-social__link svg {
+    fill: currentColor !important;
+}
+
+/* Light theme - copyright bar */
+[data-md-color-scheme="default"] .md-footer-meta {
+    background-color: #e0e0e0 !important;
+}
+
+[data-md-color-scheme="default"] .md-copyright,
+[data-md-color-scheme="default"] .md-copyright__highlight,
+[data-md-color-scheme="default"] .md-footer-meta .md-typeset {
+    color: #333333 !important;
+}
+
+[data-md-color-scheme="default"] .md-copyright a,
+[data-md-color-scheme="default"] .md-footer-meta a {
+    color: #7a5dc7 !important;
+}
+
+[data-md-color-scheme="default"] .md-social__link {
+    color: #555555 !important;
+}
+
+[data-md-color-scheme="default"] .md-social__link:hover {
+    color: #7a5dc7 !important;
+}
+
+/* Footer social links */
+.md-footer-social {
+    color: #ffffff !important;
+}
+
+.md-footer-social__link {
+    color: #ffffff !important;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.md-footer-social__link:hover {
+    opacity: 1;
+    color: #9966cc !important;
+}
+
+/* Dark theme base footer */
+[data-md-color-scheme="slate"] .md-footer {
+    background-color: transparent !important;
+}
+
+/* Fix for landing page - ensure content doesn't cover footer. DESKTOP ONLY:
+   on mobile, position+z-index here build a stacking context that traps the nav
+   drawer beneath Material's overlay scrim (drawer renders blurry and swallows
+   taps). Mobile keeps Material's native stacking so the drawer works. */
+@media screen and (min-width: 76.25em) {
+    .md-main {
+        position: relative;
+        z-index: 1;
+    }
+
+    .md-content {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* Ensure the content/article doesn't clip anything below it (all widths) */
+.md-content {
+    overflow: visible !important;
+}
+
+/* Ensure the article doesn't clip or hide anything below it */
+.md-content__inner {
+    overflow: visible !important;
+    padding-bottom: 2rem !important;
+}
+
+/* Landing page specific - ensure sections don't extend into footer space */
+.md-typeset section:last-of-type {
+    margin-bottom: 3rem !important;
+    padding-bottom: 2rem !important;
+}
+
+/* ===== CUSTOM DEPICTIO FOOTER ===== */
+.depictio-footer {
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;
+    padding: 2.5rem 0 1.5rem 0 !important;
+    border-top: 4px solid #9966cc !important;
+}
+
+.depictio-footer__grid {
+    display: grid !important;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr !important;
+    gap: 2rem !important;
+    align-items: start !important;
+}
+
+.depictio-footer__section {
+    padding: 0 1rem !important;
+}
+
+.depictio-footer__brand {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+}
+
+.depictio-footer__logo {
+    width: 48px !important;
+    height: 48px !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.depictio-footer__title {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+}
+
+.depictio-footer__tagline {
+    font-size: 0.85rem !important;
+    color: #b0b0b0 !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+}
+
+.depictio-footer__heading {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    margin: 0 0 1rem 0 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+.depictio-footer__links {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.depictio-footer__links li {
+    margin: 0.5rem 0 !important;
+}
+
+.depictio-footer__links a {
+    color: #b0b0b0 !important;
+    text-decoration: none !important;
+    font-size: 0.85rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    transition: color 0.2s ease !important;
+}
+
+.depictio-footer__links a:hover {
+    color: #9966cc !important;
+}
+
+.depictio-footer__links svg {
+    flex-shrink: 0 !important;
+}
+
+/* Light theme custom footer */
+[data-md-color-scheme="default"] .depictio-footer {
+    background-color: #f5f5f5 !important;
+    color: #333333 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__title {
+    color: #333333 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__tagline {
+    color: #666666 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__heading {
+    color: #333333 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__links a {
+    color: #555555 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__links a:hover {
+    color: #7a5dc7 !important;
+}
+
+/* Footer Funding/Supported By Section */
+.depictio-footer__funding {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1.5rem !important;
+    padding: 1.5rem 0 !important;
+    margin-top: 1.5rem !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.depictio-footer__funding-label {
+    font-size: 0.8rem !important;
+    color: #888888 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    white-space: nowrap !important;
+}
+
+.depictio-footer__funding-logos {
+    display: flex !important;
+    align-items: center !important;
+    gap: 2rem !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+}
+
+.depictio-footer__funding-logo {
+    height: 55px !important;
+    width: auto !important;
+    filter: brightness(0) invert(0.8) !important;
+    opacity: 0.8 !important;
+    transition: opacity 0.2s ease, filter 0.2s ease !important;
+}
+
+.depictio-footer__funding-logo:hover {
+    opacity: 1 !important;
+    filter: brightness(0) invert(1) !important;
+}
+
+/* Light theme funding logos */
+[data-md-color-scheme="default"] .depictio-footer__funding {
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__funding-label {
+    color: #666666 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__funding-logo {
+    filter: none !important;
+    opacity: 0.7 !important;
+}
+
+[data-md-color-scheme="default"] .depictio-footer__funding-logo:hover {
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+/* Responsive footer */
+@media (max-width: 960px) {
+    .depictio-footer__grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .depictio-footer__grid {
+        grid-template-columns: 1fr !important;
+        text-align: center !important;
+    }
+
+    .depictio-footer__brand {
+        align-items: center !important;
+    }
+
+    .depictio-footer__section {
+        padding: 1rem 0 !important;
+    }
+
+    .depictio-footer__funding {
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+}
+
+/* ==========================================================================
+   Component Catalog page
+   ========================================================================== */
+
+/* Theme-aware live gallery iframes — mirrors the .logo-light/.logo-dark trick
+   above (the image #only-light/#only-dark hash does not apply to iframes). */
+[data-md-color-scheme="default"] .catalog-iframe-light { display: block; }
+[data-md-color-scheme="default"] .catalog-iframe-dark { display: none; }
+[data-md-color-scheme="slate"] .catalog-iframe-light { display: none; }
+[data-md-color-scheme="slate"] .catalog-iframe-dark { display: block; }
+
+/* Full-height gallery: fill the viewport (the page hides nav + toc, so it can
+   use the whole content column). The height="" attribute is just a fallback. */
+.catalog-embed {
+    position: relative;
+}
+
+.catalog-embed iframe {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    min-height: 1100px;
+    border-radius: 4px;
+    border: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* Fullscreen toggle (reused from the live-demo pattern). */
+.catalog-fs-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.catalog-fs-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+/* Header bar (with close button) shown only in fullscreen. */
+.catalog-demo-header {
+    display: none;
+}
+
+/* Page-fill overlay: fixed over the docs page, not native OS fullscreen. */
+.catalog-embed--fs {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--md-default-bg-color);
+}
+
+/* Freeze the page scroll behind the overlay (set by catalog-fullscreen.js).
+   Lock BOTH html and body: `body` alone leaves the (taller) document scrolling
+   on the root element, whose scrollbar then sits beside the iframe's own —
+   the "double scrollbar". `:has` targets html from the body-level lock class. */
+body.catalog-fs-lock {
+    overflow: hidden;
+}
+html:has(> body.catalog-fs-lock) {
+    overflow: hidden;
+}
+
+/* The footer fix pins .md-main to z-index:1, which traps the overlay in a
+   stacking context below the sticky Material header (z-index:4). While the
+   overlay is open, lift the whole content stacking context above it. */
+body.catalog-fs-lock .md-main {
+    z-index: 1001;
+}
+
+/* In fullscreen the gallery iframe shows its OWN header, so the wrapper's title
+   bar would just duplicate it. Drop the bar + title and float ONLY the close
+   button in the corner (fixed, above the overlay) so the iframe fills the view. */
+.catalog-embed--fs .catalog-demo-header {
+    /* Re-enable display (base rule hides the header) so the fixed close button
+       inside it can render — a display:none ancestor would keep it invisible.
+       The header itself generates no box, so it adds no height to the overlay. */
+    display: contents;
+    border: none;
+    background: transparent;
+    padding: 0;
+}
+.catalog-embed--fs .catalog-demo-title {
+    display: none;
+}
+.catalog-embed--fs .catalog-fs-close {
+    position: fixed;
+    top: 12px;
+    right: 16px;
+    z-index: 1002;
+    width: 36px;
+    height: 36px;
+    background: var(--md-default-bg-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+    border-radius: 8px;
+}
+
+.catalog-demo-title {
+    font-weight: 600;
+}
+
+.catalog-fs-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--md-default-fg-color);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.catalog-fs-close:hover {
+    background: var(--md-default-fg-color--lightest);
+}
+
+.catalog-embed--fs .catalog-fs-btn {
+    display: none;
+}
+
+/* Markdown wraps the (absolutely-positioned) fullscreen button of
+   `<div class="catalog-embed" markdown>` in a <p>. The button adds no height,
+   but the <p>'s default block margin (~18px) pushed the iframe down — in the
+   overlay it clipped the bottom of the 100vh iframe off the viewport, and in
+   the inline embed it left a phantom gap. Strip the margin on these wrapper
+   paragraphs so the embed has no spurious offset in either state. */
+.catalog-embed > p {
+    margin: 0;
+}
+
+/* Fill the fixed overlay by positioning the visible iframe wrapper to its
+   edges — robust against any residual sibling margin (a top:auto block would
+   still be offset by a preceding element's margin; inset:0 is not). */
+.catalog-embed--fs .catalog-iframe-light,
+.catalog-embed--fs .catalog-iframe-dark {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+}
+
+.catalog-embed--fs iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+}
+
+/* Contribute CTA: a brand-purple pill that lifts on hover and nudges its arrow —
+   replaces the flat Material primary button. The `.md-typeset` prefix outweighs
+   the theme's default link colour so the label stays white. */
+.catalog-cta-wrap {
+    text-align: center;
+}
+/* Small Depictio logo on the left of the CTA, via ::before so the markdown link
+   text stays clean (an inline <img> inside link text gets mangled/inlined). */
+.md-typeset .catalog-cta::before {
+    content: "";
+    width: 1.6em;
+    height: 1.6em;
+    flex-shrink: 0;
+    background: url("../images/logo/animated_favicon.svg") center / contain no-repeat;
+}
+.md-typeset .catalog-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65em;
+    margin-top: 0.8rem;
+    padding: 0.85rem 1.9rem;
+    border-radius: 11px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #7d5dec;
+    background: #fff;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease,
+        border-color 0.15s ease;
+}
+.md-typeset .catalog-cta:hover,
+.md-typeset .catalog-cta:focus-visible {
+    color: #7d5dec;
+    background: #faf8ff;
+    border-color: #9870ff;
+    box-shadow: 0 6px 18px rgba(152, 112, 255, 0.28);
+    transform: translateY(-1px);
+}
+.md-typeset .catalog-cta .twemoji {
+    transition: transform 0.15s ease;
+}
+.md-typeset .catalog-cta:hover .twemoji {
+    transform: translateX(3px);
+}
+
+/* Module flow: a flat horizontal stepper (Detect -> Reshape -> Render). */
+.module-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    margin: 1rem 0 1.5rem;
+}
+
+.module-flow__step {
+    position: relative;
+    flex: 1 1 200px;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-top: 3px solid var(--md-default-fg-color--light);
+    border-radius: 6px;
+}
+
+.module-flow__step > :first-child { margin-top: 0; }
+.module-flow__step > :last-child { margin-bottom: 0; }
+
+/* Intro mapping (file -> module -> visualization) and how-it-works steps
+   (detect -> reshape -> render) share the same positional accent colors. */
+.module-flow__step--detect,
+.module-flow__step--file { border-top-color: #6495ED; }    /* blue */
+.module-flow__step--reshape,
+.module-flow__step--module { border-top-color: #9966CC; }  /* purple */
+.module-flow__step--render,
+.module-flow__step--component { border-top-color: #45B8AC; } /* teal */
+
+.module-flow__step--detect .twemoji,
+.module-flow__step--file .twemoji { color: #6495ED; }
+.module-flow__step--reshape .twemoji,
+.module-flow__step--module .twemoji { color: #9966CC; }
+.module-flow__step--render .twemoji,
+.module-flow__step--component .twemoji { color: #45B8AC; }
+
+/* Connecting arrows between steps (hidden on the last step and on mobile). */
+.module-flow__step:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    line-height: 1;
+    color: var(--md-default-fg-color--light);
+}
+
+.module-flow__opt {
+    font-size: 0.7em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--md-default-fg-color--light);
+}
+
+@media screen and (max-width: 44.9375em) {
+    .module-flow__step:not(:last-child)::after { content: none; }
+}
+
+/* Flat brand-color accents for the catalog intro cards (no gradients). */
+.cat-figure { color: #6495ED; }   /* blue */
+.cat-table { color: #45B8AC; }    /* teal */
+.cat-card { color: #9966CC; }     /* purple */
+.cat-advviz { color: #7A5DC7; }   /* violet */
+.cat-multiqc { color: #8BC34A; }  /* green */
+
+
+/* Ported from docs/changelog-v1.1.0 — templates landing cards */
+/* ── Template cards ─────────────────────────────────────────────────── */
+
+.template-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+@media (max-width: 76.1875em) {
+  .template-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 44.9375em) {
+  .template-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.template-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none !important;
+  color: inherit;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.template-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+  transform: translateY(-3px);
+}
+
+.template-card-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 20px;
+  min-height: 90px;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+[data-md-color-scheme="default"] .template-card-logo {
+  background: var(--md-code-bg-color);
+}
+
+[data-md-color-scheme="slate"] .template-card-logo {
+  background: #111e2b;
+}
+
+.template-card-logo img {
+  max-height: 52px;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+.template-card-body {
+  padding: 14px 16px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.template-card-desc {
+  margin: 0;
+  font-size: 0.82em;
+  line-height: 1.5;
+  color: var(--md-default-fg-color--light);
+}
+
+.template-card-meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.template-version {
+  background: #e8f5e9;
+  color: #1b5e20;
+  border: 1px solid #a5d6a7;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78em;
+  font-weight: 600;
+  font-family: var(--md-code-font-family);
+  letter-spacing: 0.02em;
+}
+
+[data-md-color-scheme="slate"] .template-version {
+  background: #152b18;
+  color: #81c784;
+  border-color: #2e5d33;
+}
+
+.template-status-reviewed {
+  background: #e3f2fd;
+  color: #0d47a1;
+  border: 1px solid #90caf9;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78em;
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .template-status-reviewed {
+  background: #0d2137;
+  color: #64b5f6;
+  border-color: #1565c0;
+}
+
+/* ── Status level cards ─────────────────────────────────────────────── */
+
+.status-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+@media (max-width: 44.9375em) {
+  .status-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.status-card {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.status-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-icon {
+  font-size: 1.4em;
+  line-height: 1;
+}
+
+.status-title {
+  font-weight: 700;
+  font-size: 0.95em;
+}
+
+.status-desc {
+  margin: 0;
+  font-size: 0.82em;
+  color: var(--md-default-fg-color--light);
+  line-height: 1.5;
+}
+
+.status-certified  { border-top: 3px solid #4CAF50; }
+.status-certified  .status-icon { color: #4CAF50; }
+
+.status-reviewed   { border-top: 3px solid #2196F3; }
+.status-reviewed   .status-icon { color: #2196F3; }
+
+.status-experimental { border-top: 3px solid #FF9800; }
+.status-experimental .status-icon { color: #FF9800; }
+
+
+/* nf-core logo beside the "nf-core" group label in the left nav sidebar.
+   :has() targets the nested <li> that directly holds the pipeline links, so the
+   icon lands on the "nf-core" label only — not its "Templates" parent. */
+.md-nav__item--nested:has(> nav > ul > li > .md-nav__link[href$="nf-core/ampliseq/"]) > .md-nav__link::before {
+  content: "";
+  display: inline-block;
+  width: 1.05em;
+  height: 1.05em;
+  margin-right: 0.45em;
+  flex-shrink: 0;
+  background: url("../images/pipeline-templates/nf-core/ampliseq/nf-core.png") center / contain no-repeat;
+}
