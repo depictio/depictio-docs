@@ -17,18 +17,23 @@ renders — so users get visualizations automatically, with no manual wiring.
 Adding a tool is a **single-folder pull request** under
 `depictio/catalog/<tool>/` — no Depictio internals to learn, and no Python
 unless an output needs reshaping. Everything is validated in CI by
-`depictio dev catalog validate`.
+`depictio-cli dev catalog validate`.
 
-## The three files
+## The files
 
-Each tool is one folder containing co-located files:
+A tool is one folder: `module.yaml` identifies it, and the rest repeat per
+output file.
 
 | File | One per | Purpose |
 |------|---------|---------|
-| `module.yaml` | tool | The tool's **identity** — `id`, `name`, and an `nf_core_url` pointer. |
-| `<output>.yaml` | output file | **`find`** the raw file, optionally **`recipe`** it into tidy columns, and list the **`renders_as`** it offers. |
-| `<output>.tsv` | output file | A small **fixture** sample of that file, so every render is previewed and checked in CI. |
-| `<output>.py` | output file *(optional)* | A **recipe** — only when the raw file needs reshaping. |
+| `module.yaml` | tool | Tool **identity** — `id`, `name`, `nf_core_url`. |
+| `<output>.yaml` | output | **`find`** the file, optional **`recipe`**, and the **`renders_as`** it offers. |
+| `<output>.tsv` | output | **Fixture** — a small sample, so CI previews & checks every render. |
+| `<output>.py` | output · optional | **Recipe** — only when the raw file needs reshaping. |
+
+The `.tsv` fixture and `.py` recipe are **not alternatives** — they do different
+jobs and a tool often ships both (the `ivar` example below has both). The recipe
+is the only optional piece: skip it when the raw file is already tidy.
 
 A real single-output tool (`depictio/catalog/ivar/`):
 
@@ -80,16 +85,20 @@ find: { path_glob: "**/mosdepth/genome/*.coverage.tsv" } # glob on the path (sup
 ```
 
 **`renders_as`** — each entry binds the output's columns to a dashboard
-component. Common shapes:
+component (see the YAML above for full examples). Besides `component`, each takes:
 
-| Component | Required keys | Example |
-|-----------|---------------|---------|
-| `advanced_viz` | `kind`, `roles` | `{component: advanced_viz, kind: volcano, roles: {feature_id: id, effect_size: lfc, significance: q_val}}` |
-| `figure` (UI) | `visu_type`, `dict_kwargs` | `{component: figure, visu_type: box, dict_kwargs: {x: habitat, y: shannon}}` |
-| `figure` (code) | `code` | inline Python that sets `fig` from `df` and `px` |
-| `card` | `column`, `aggregation` | `{component: card, column: coverage, aggregation: average}` |
-| `table` | — | `{component: table}` |
-| `multiqc` | `section` | `{component: multiqc, section: fastqc}` |
+| Component | Keys |
+|-----------|------|
+| `advanced_viz` | `kind` + `roles` |
+| `figure` (UI) | `visu_type` + `dict_kwargs` |
+| `figure` (code) | `code` (Python that sets `fig` from `df` + `px`) |
+| `card` | `column` + `aggregation` |
+| `table` | — |
+| `multiqc` | `section` |
+
+Give an `advanced_viz` render an optional `id:` to address it from a dashboard as
+`use: <tool>/<id>` — e.g. the `id: manhattan` in the YAML above is referenced as
+`use: ivar/manhattan`.
 
 > **Schema-ownership rule:** if you set `recipe`, the recipe owns the columns —
 > do **not** also declare `columns`. If the raw file is already tidy and bindable,
@@ -124,7 +133,7 @@ def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
 `EXPECTED_SCHEMA` is what the catalog grounds every render binding against. This
 is the same recipe contract used by [templates](contributing-templates.md). To
 see a recipe's output columns while writing `roles`:
-`depictio dev catalog columns ivar/variants_long.py`.
+`depictio-cli dev catalog columns ivar/variants_long.py`.
 
 ## Step 4 — Fixture
 
@@ -137,15 +146,15 @@ each render.
 
 ```bash
 # Validate just your tool (load → find → recipe → render bindings)
-depictio dev catalog validate --path depictio/catalog/<tool>
+depictio-cli dev catalog validate --path depictio/catalog/<tool>
 
 # Live-preview an output rendered on its fixture
-depictio catalog preview <tool>_<output>
+depictio-cli catalog preview <tool>_<output>
 
 # Helpful while authoring
-depictio catalog list                 # every tool + output + render targets
-depictio catalog info <tool>          # one tool in detail
-depictio dev catalog match /path/run  # which outputs are recognised in a run
+depictio-cli catalog list                 # every tool + output + render targets
+depictio-cli catalog info <tool>          # one tool in detail
+depictio-cli dev catalog match /path/run  # which outputs are recognised in a run
 ```
 
 Tip — add this header to each catalog YAML for live validation and autocomplete
@@ -159,9 +168,9 @@ Before submitting, check:
 
 - [ ] `module.yaml` has `id`, `name`, and (where applicable) `nf_core_url`.
 - [ ] Each `<output>.yaml` has a unique `id`, a `find`, and at least one `renders_as`.
-- [ ] Either `recipe` **or** `columns` is set on each output — never both.
+- [ ] On outputs that bind columns, set `recipe` **or** `columns` (declare one) — never both.
 - [ ] A fixture is committed for every output that binds columns, covering all bound columns.
-- [ ] `depictio dev catalog validate --path depictio/catalog/<tool>` passes green.
+- [ ] `depictio-cli dev catalog validate --path depictio/catalog/<tool>` passes green.
 
 In the PR, link the tool's nf-core module / homepage and note the pipeline whose
 output you tested against.

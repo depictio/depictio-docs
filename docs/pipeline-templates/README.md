@@ -101,4 +101,8 @@ See [Template System Reference](../usage/projects/templates.md) for the YAML for
 
 ## Contributing a template
 
-Want to add a template for another pipeline? See the [Contributing Templates](../developer/contributing-templates.md) guide for the directory layout, recipe requirements, and review process.
+Want to add a template for another pipeline? The contributing guide covers the directory layout, recipe requirements, and review process.
+
+<div class="catalog-cta-wrap" markdown>
+[Read the contributing guide :material-arrow-right:](../developer/contributing-templates.md){ .catalog-cta }
+</div>
