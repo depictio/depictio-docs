@@ -6,7 +6,48 @@ This page demonstrates the Depictio brand colors and how to use them in your app
 
 The Depictio brand uses a consistent color palette to maintain visual identity across all platforms and applications.
 
-<iframe src="../../assets/color_palette.html" width="100%" height="850px" frameborder="0"></iframe>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;margin:1.4rem 0;">
+  <div style="border-radius:10px;overflow:hidden;border:1px solid var(--md-default-fg-color--lightest);">
+    <div style="background:#9966CC;height:80px;"></div>
+    <div style="padding:8px 10px;line-height:1.4;"><strong>Purple</strong><br><code>#9966CC</code></div>
+  </div>
+  <div style="border-radius:10px;overflow:hidden;border:1px solid var(--md-default-fg-color--lightest);">
+    <div style="background:#7A5DC7;height:80px;"></div>
+    <div style="padding:8px 10px;line-height:1.4;"><strong>Violet</strong><br><code>#7A5DC7</code></div>
+  </div>
+  <div style="border-radius:10px;overflow:hidden;border:1px solid var(--md-default-fg-color--lightest);">
+    <div style="background:#6495ED;height:80px;"></div>
+    <div style="padding:8px 10px;line-height:1.4;"><strong>Blue</strong><br><code>#6495ED</code></div>
+  </div>
+  <div style="border-radius:10px;overflow:hidden;border:1px solid var(--md-default-fg-color--lightest);">
+    <div style="background:#45B8AC;height:80px;"></div>
+    <div style="padding:8px 10px;line-height:1.4;"><strong>Teal</strong><br><code>#45B8AC</code></div>
+  </div>
+  <div style="border-radius:10px;overflow:hidden;border:1px solid var(--md-default-fg-color--lightest);">
+    <div style="background:#8BC34A;height:80px;"></div>
+    <div style="padding:8px 10px;line-height:1.4;"><strong>Green</strong><br><code>#8BC34A</code></div>
+  </div>
+  <div style="border-radius:10px;overflow:hidden;border:1px solid var(--md-default-fg-color--lightest);">
+    <div style="background:#F9CB40;height:80px;"></div>
+    <div style="padding:8px 10px;line-height:1.4;"><strong>Yellow</strong><br><code>#F9CB40</code></div>
+  </div>
+  <div style="border-radius:10px;overflow:hidden;border:1px solid var(--md-default-fg-color--lightest);">
+    <div style="background:#F68B33;height:80px;"></div>
+    <div style="padding:8px 10px;line-height:1.4;"><strong>Orange</strong><br><code>#F68B33</code></div>
+  </div>
+  <div style="border-radius:10px;overflow:hidden;border:1px solid var(--md-default-fg-color--lightest);">
+    <div style="background:#E6779F;height:80px;"></div>
+    <div style="padding:8px 10px;line-height:1.4;"><strong>Pink</strong><br><code>#E6779F</code></div>
+  </div>
+  <div style="border-radius:10px;overflow:hidden;border:1px solid var(--md-default-fg-color--lightest);">
+    <div style="background:#E53935;height:80px;"></div>
+    <div style="padding:8px 10px;line-height:1.4;"><strong>Red</strong><br><code>#E53935</code></div>
+  </div>
+  <div style="border-radius:10px;overflow:hidden;border:1px solid var(--md-default-fg-color--lightest);">
+    <div style="background:#000000;height:80px;"></div>
+    <div style="padding:8px 10px;line-height:1.4;"><strong>Black</strong><br><code>#000000</code></div>
+  </div>
+</div>
 
 ## Using the Colors in Your Code
 
