@@ -26,6 +26,8 @@ By contributing you agree to our [Code of Conduct](contributing.md#code-of-condu
 | Page | Description |
 |------|-------------|
 | [Contributing Guide](contributing.md) | How to set up development environment and contribute |
+| [Contributing a Tool](contributing-a-tool.md) | Add a bioinformatics tool to the Tools Catalog (manual YAML reference) |
+| [Catalog Studio](catalog-studio.md) | Author a catalog tool visually — no YAML — with a one-click PR |
 | [Code of Conduct](contributing.md#code-of-conduct) | Community standards (Contributor Covenant v2.1) |
 
 ## Getting Started

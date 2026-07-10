@@ -11,6 +11,7 @@ Everything you need to configure and manage Depictio projects.
 | Page | Description |
 |------|-------------|
 | [Guide](guide.md) | Project types (Basic, Advanced, Template) and lifecycle |
+| [Project Builder](project-builder.md) | Author an Advanced `depictio_project.yaml` visually — no hand-written YAML |
 | [YAML Examples](yaml-examples.md) | Configuration patterns with annotated examples |
 | [Full Reference](reference.md) | Complete YAML field reference |
 | [Recipes](recipes.md) | Data transformation recipes for bioinformatics pipelines |

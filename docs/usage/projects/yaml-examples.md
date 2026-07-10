@@ -15,6 +15,11 @@
 
 This guide provides comprehensive YAML configuration examples for Depictio projects, from simple setups to complex bioinformatics workflows. For a complete reference of all options, see the [Configuration Reference](reference.md).
 
+!!! tip "Prefer not to write YAML by hand?"
+    The Advanced configs below can be generated for you by the
+    [**Project Builder**](project-builder.md) — a local visual wizard that turns
+    a data folder into a validated `depictio_project.yaml`.
+
 ## <span style="color: #45B8AC;">:material-rocket-launch:</span> Quick Start Examples
 
 Choose your starting point based on your project complexity:

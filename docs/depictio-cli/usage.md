@@ -29,6 +29,7 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | Command                                | Description                             | Access Level   |
 | -------------------------------------- | --------------------------------------- | -------------- |
 | `version`                              | Show CLI version                        | All users      |
+| `project-builder <dir>`                | Launch the visual project-authoring wizard | All users   |
 | `run`                                  | Execute complete workflow               | All users      |
 | `recipe list`                          | List all bundled recipes                | All users      |
 | `recipe info <name>`                   | Show recipe sources and schema          | All users      |
@@ -83,6 +84,21 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `--verbose-level` | `-vl` | `string`  | `"INFO"` | Set verbose logging level |
 
 ## 🚀 Commands
+
+### 🧭 Project Builder Command
+
+Launch a local visual wizard that turns a folder into a validated Advanced
+`depictio_project.yaml` — no server, no hand-written YAML.
+
+```bash
+depictio project-builder /path/to/your/data   # serves http://127.0.0.1:8129/
+```
+
+**Options:** `--port <n>` (default `8129`), `--host <addr>`, `--no-open`.
+
+The wizard walks you through Source → Data Collections → Create and exports the
+project config. See the full walkthrough in
+[Project Builder](../usage/projects/project-builder.md).
 
 ### 🏃 Run Command
 

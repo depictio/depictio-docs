@@ -162,6 +162,11 @@ Basic projects provide an **easy onboarding experience** - upload your data and 
 
 Advanced projects are designed for **core facility-like setups** where standardized workflows generate structured data across multiple samples, timepoints, or experimental conditions.
 
+!!! tip "Author this config visually"
+    Rather than hand-writing the `depictio_project.yaml`, point the
+    [**Project Builder**](project-builder.md) at your data folder — it turns a
+    folder into a validated Advanced config through a local visual wizard.
+
 ### Core Features
 
 - **🔬 Workflow Integration** - Connect to nf-core, Nextflow, Snakemake, Galaxy pipelines

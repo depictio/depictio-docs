@@ -96,7 +96,9 @@ For the configuration reference of each component type, see the
 
 ## :material-hammer-wrench: Contribute a tool
 
-Adding a tool is a **single-folder pull request** under `depictio/catalog/<tool>/`
+The fastest way is **[Catalog Studio](../developer/catalog-studio.md)** — a
+no-YAML web app that authors a tool for you and opens a one-click PR. Under the
+hood, a tool is a **single-folder pull request** under `depictio/catalog/<tool>/`
 — no Depictio internals to learn, and no Python unless an output needs reshaping.
 Three co-located files:
 
@@ -123,5 +125,8 @@ A small sample of that file, right beside its YAML, so `depictio catalog validat
 </div>
 
 <div class="catalog-cta-wrap" markdown>
-[Read the contributing guide :material-arrow-right:](../developer/contributing-a-tool.md){ .catalog-cta }
+[Author a tool in the Studio :material-arrow-right:](../developer/catalog-studio.md){ .catalog-cta }
 </div>
+
+Prefer to write the YAML by hand? See the
+[Contributing a Tool](../developer/contributing-a-tool.md) guide.

@@ -15,6 +15,28 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.2.0](https://github.com/depictio/depictio/releases/tag/v1.2.0)** (July 2026)
+
+!!! success "Minor — visual authoring: Project Builder & Catalog Studio"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.2.0
+```
+
+### **✨ New Features**
+
+* **Project Builder** — `depictio project-builder <dir>` opens a local, no-services authoring wizard (file tree → data collections → project) that turns a folder into a validated Advanced `depictio_project.yaml`. Supports multiple workflows (each with its own engine and data location), glob/regex scan modes with a live match preview and cross-file schema-consistency checks, advanced `max_depth` / `ignore` scan controls, and best-effort repository-metadata auto-fill (`ro-crate-metadata.json`, `nextflow.config`, GitHub API) that degrades gracefully offline. See [Project Builder](../usage/projects/project-builder.md).
+* **Catalog Studio** — a no-backend GitHub Pages app to author [Tools Catalog](../catalog/index.md) entries without writing YAML: nf-core import, fixture upload with dtype inference, a visualization designer with live Plotly / Pyodide previews, an *Add to existing tools* flow, and one-click PR export via GitHub OAuth (zip fallback). Now the recommended way to [contribute a tool](../developer/catalog-studio.md).
+
+### **🚀 Improvements**
+
+* **Catalog validation** — `dev catalog validate` now checks component configuration, column names, and **column-dtype compatibility with render roles**. The catalog covers 7 tools / 28 outputs / 47 renders (26 dtype-checked).
+* **Ingestion scan controls** — `max_depth` and `ignore` are now honoured end-to-end in file scanning (`scan.py`) and are configurable from the Project Builder's advanced options.
+
+---
+
 ## **[v1.1.2](https://github.com/depictio/depictio/releases/tag/v1.1.2)** (June 28, 2026)
 
 !!! success "Patch — auth, links & template seeds"

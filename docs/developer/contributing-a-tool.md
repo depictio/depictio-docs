@@ -19,6 +19,13 @@ Adding a tool is a **single-folder pull request** under
 unless an output needs reshaping. Everything is validated in CI by
 `depictio-cli dev catalog validate`.
 
+!!! tip "Fastest path: Catalog Studio"
+    You don't have to write these files by hand. [**Catalog Studio**](catalog-studio.md)
+    is a no-YAML web app that generates exactly the files below — import an
+    nf-core module, upload a fixture, design the renders on live previews, and
+    open a one-click PR. The rest of this page documents **the files Studio
+    generates, and how to write them by hand.**
+
 ## The files
 
 A tool is one folder: `module.yaml` identifies it, and the rest repeat per
@@ -170,6 +177,7 @@ Before submitting, check:
 - [ ] Each `<output>.yaml` has a unique `id`, a `find`, and at least one `renders_as`.
 - [ ] On outputs that bind columns, set `recipe` **or** `columns` (declare one) — never both.
 - [ ] A fixture is committed for every output that binds columns, covering all bound columns.
+- [ ] Each bound column's dtype is compatible with the render role it fills (the `dev catalog validate` dtype check passes).
 - [ ] `depictio-cli dev catalog validate --path depictio/catalog/<tool>` passes green.
 
 In the PR, link the tool's nf-core module / homepage and note the pipeline whose

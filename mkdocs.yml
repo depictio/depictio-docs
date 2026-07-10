@@ -200,6 +200,7 @@ nav:
       - Projects:
           - usage/projects/index.md
           - Guide: usage/projects/guide.md
+          - Project Builder: usage/projects/project-builder.md
           - YAML project configuration breakdown: usage/projects/yaml-examples.md
           - Full Reference Configuration: usage/projects/reference.md
           - Recipes: usage/projects/recipes.md
@@ -207,6 +208,7 @@ nav:
       - CLI:
           - depictio-cli/index.md
           - Usage: depictio-cli/usage.md
+          - Project Builder: usage/projects/project-builder.md
           - Minimal YAML config: depictio-cli/minimal_config.md
       - Administration:
           - usage/administration/index.md
@@ -245,6 +247,7 @@ nav:
       - Overview: developer/README.md
       - Contributing: developer/contributing.md
       - Contributing a Tool: developer/contributing-a-tool.md
+      - Catalog Studio: developer/catalog-studio.md
       - Contributing Templates: developer/contributing-templates.md
   - Roadmap: roadmap/README.md
   - Changelog: changelog/README.md
