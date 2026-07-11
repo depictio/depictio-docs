@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.0.1",
-    "x-generated-at": "2026-06-11T13:03:27Z",
-    "x-depictio-version": "v1.0.1"
+    "version": "1.1.0",
+    "x-generated-at": "2026-06-23T08:27:13Z",
+    "x-depictio-version": "v1.1.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -175,6 +175,104 @@
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/ingestion-report/{project_id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Ingestion Report",
+        "description": "Traceable summary of what a template execution ingested vs. what it expected.\n\nCompares the project's frozen expected-DC manifest (required + optional, with\ngating reasons) against the latest scan stats and aggregation state, so the UI\ncan show which data collections were identified, found-empty, or gated out.",
+        "operationId": "get_ingestion_report_depictio_api_v1_projects_ingestion_report__project_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestionReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/ingestion-health/{project_id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Ingestion Health",
+        "description": "Lightweight ingestion health summary (counts + health flag) for the dashboard banner.",
+        "operationId": "get_ingestion_health_depictio_api_v1_projects_ingestion_health__project_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestionSummary"
+                }
               }
             }
           },
@@ -5227,7 +5325,7 @@
           "Dashboards"
         ],
         "summary": "Render Figure Endpoint",
-        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when\n`settings.celery.offload_rendering` is true. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\"}\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}",
+        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when the render is\nactually heavy — code mode, or a source frame at/above\n`offload_size_threshold_bytes` — or unconditionally if\n`offload_rendering` is forced on (see `should_offload_render`). Cheap\ninteractive figures build inline to skip the broker round-trip. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\"}\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}",
         "operationId": "render_figure_endpoint_depictio_api_v1_dashboards_render_figure__dashboard_id___component_id__post",
         "security": [
           {
@@ -6946,6 +7044,172 @@
             "description": "Successful Response",
             "content": {
               "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/catalog/project/{project_id}/compose": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "summary": "Compose Project",
+        "description": "Return recognized catalog modules for a project, grouped by tool_id.",
+        "operationId": "compose_project_depictio_api_v1_catalog_project__project_id__compose_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Compose Project Depictio Api V1 Catalog Project  Project Id  Compose Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/catalog/output/{output_id}/preview-payload": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "summary": "Preview Output Payload",
+        "description": "Compute and return the preview payload for a catalog output (from its fixture).\n\nThe payload contains pre-rendered Plotly JSON (figures), card values, table\nschemas, and advanced-viz data — ready for the React preview panel to render\nwithout any live API calls.",
+        "operationId": "preview_output_payload_depictio_api_v1_catalog_output__output_id__preview_payload_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "output_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Output Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Preview Output Payload Depictio Api V1 Catalog Output  Output Id  Preview Payload Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/catalog/output/{output_id}/preview-html": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "summary": "Preview Output Html",
+        "description": "Serve the standalone catalog-preview HTML for an output (uses fixture data).\n\nThe HTML embeds the pre-built catalog-preview bundle with the real\nComponentRenderer and the pre-computed payload — no live API calls inside.\nPass ``?render_id=<output_id>-<idx>`` to preview a single component in isolation.",
+        "operationId": "preview_output_html_depictio_api_v1_catalog_output__output_id__preview_html_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "output_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Output Id"
+            }
+          },
+          {
+            "name": "render_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "If given, only this render index is shown",
+              "title": "Render Id"
+            },
+            "description": "If given, only this render index is shown"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "text/html": {
                 "schema": {
                   "type": "string"
                 }
@@ -9458,7 +9722,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -9720,7 +9984,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -9783,7 +10047,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -9914,13 +10178,64 @@
         "title": "DataCollectionSource",
         "description": "Origin/source type of a data collection."
       },
+      "ExpectedDataCollection": {
+        "properties": {
+          "data_collection_tag": {
+            "type": "string",
+            "title": "Data Collection Tag",
+            "description": "DC tag as declared in the template"
+          },
+          "type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "DC type (table, multiqc, jbrowse2, ...) if known"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "description": "False = required/mandatory; True = optional",
+            "default": false
+          },
+          "included": {
+            "type": "boolean",
+            "title": "Included",
+            "description": "Whether this DC survived conditional + missing-file pruning",
+            "default": true
+          },
+          "removal_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Removal Reason",
+            "description": "Why an excluded DC was dropped (e.g. 'gated: METADATA_FILE absent (if_var_absent)')"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data_collection_tag"
+        ],
+        "title": "ExpectedDataCollection",
+        "description": "One entry in a project's frozen expected-DC manifest (see TemplateOrigin).\n\nRecords the *full* template DC superset at resolution time — including DCs that\nwere conditionally gated out — so the ingestion report can show what the template\nexpected vs. what was actually identified, faithful to the template version used."
+      },
       "File": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -10172,6 +10487,361 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "IngestionDataCollection": {
+        "properties": {
+          "data_collection_tag": {
+            "type": "string",
+            "title": "Data Collection Tag"
+          },
+          "type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "removal_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Removal Reason"
+          },
+          "files_found": {
+            "type": "integer",
+            "title": "Files Found",
+            "default": 0
+          },
+          "files_new": {
+            "type": "integer",
+            "title": "Files New",
+            "default": 0
+          },
+          "files_skipped": {
+            "type": "integer",
+            "title": "Files Skipped",
+            "default": 0
+          },
+          "files_failed": {
+            "type": "integer",
+            "title": "Files Failed",
+            "default": 0
+          },
+          "ingested": {
+            "type": "boolean",
+            "title": "Ingested",
+            "default": false
+          },
+          "table_location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Table Location"
+          },
+          "source_inputs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Source Inputs"
+          },
+          "recipe": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recipe"
+          },
+          "recipe_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recipe Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data_collection_tag",
+          "status"
+        ],
+        "title": "IngestionDataCollection"
+      },
+      "IngestionReport": {
+        "properties": {
+          "project": {
+            "$ref": "#/components/schemas/IngestionReportProject"
+          },
+          "template": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IngestionTemplate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "manifest_source": {
+            "type": "string",
+            "title": "Manifest Source",
+            "default": "live_project"
+          },
+          "variables": {
+            "items": {
+              "$ref": "#/components/schemas/IngestionVariable"
+            },
+            "type": "array",
+            "title": "Variables"
+          },
+          "data_collections": {
+            "items": {
+              "$ref": "#/components/schemas/IngestionDataCollection"
+            },
+            "type": "array",
+            "title": "Data Collections"
+          },
+          "runs": {
+            "items": {
+              "$ref": "#/components/schemas/IngestionRun"
+            },
+            "type": "array",
+            "title": "Runs"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/IngestionSummary"
+          },
+          "scanned_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scanned At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project"
+        ],
+        "title": "IngestionReport"
+      },
+      "IngestionReportProject": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "project_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "IngestionReportProject"
+      },
+      "IngestionRun": {
+        "properties": {
+          "run_tag": {
+            "type": "string",
+            "title": "Run Tag"
+          },
+          "run_location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Location"
+          },
+          "scan_time": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scan Time"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "run_tag",
+          "status"
+        ],
+        "title": "IngestionRun"
+      },
+      "IngestionSummary": {
+        "properties": {
+          "required_total": {
+            "type": "integer",
+            "title": "Required Total",
+            "default": 0
+          },
+          "required_identified": {
+            "type": "integer",
+            "title": "Required Identified",
+            "default": 0
+          },
+          "required_missing": {
+            "type": "integer",
+            "title": "Required Missing",
+            "default": 0
+          },
+          "optional_total": {
+            "type": "integer",
+            "title": "Optional Total",
+            "default": 0
+          },
+          "optional_identified": {
+            "type": "integer",
+            "title": "Optional Identified",
+            "default": 0
+          },
+          "optional_missing": {
+            "type": "integer",
+            "title": "Optional Missing",
+            "default": 0
+          },
+          "gated": {
+            "type": "integer",
+            "title": "Gated",
+            "default": 0
+          },
+          "health": {
+            "type": "string",
+            "title": "Health",
+            "default": "ok"
+          }
+        },
+        "type": "object",
+        "title": "IngestionSummary"
+      },
+      "IngestionTemplate": {
+        "properties": {
+          "template_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Id"
+          },
+          "template_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Version"
+          },
+          "applied_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applied At"
+          },
+          "data_root": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Root"
+          }
+        },
+        "type": "object",
+        "title": "IngestionTemplate"
+      },
+      "IngestionVariable": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "value": {
+            "type": "string",
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "value"
+        ],
+        "title": "IngestionVariable"
       },
       "JoinDefinition": {
         "properties": {
@@ -10861,7 +11531,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -11069,7 +11739,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -11498,17 +12168,32 @@
       "SourceOverride": {
         "properties": {
           "path": {
-            "type": "string",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Path"
+          },
+          "glob_pattern": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Glob Pattern"
           }
         },
         "additionalProperties": false,
         "type": "object",
-        "required": [
-          "path"
-        ],
         "title": "SourceOverride",
-        "description": "Override a recipe source path in project.yaml."
+        "description": "Override a recipe source binding in project.yaml.\n\nRepoints a recipe source at a different file without editing the recipe — used\nby route conditionals (e.g. nanopore) to point the same recipe at a divergent\nsub-workflow's output layout. Set ``path`` for single-file sources or\n``glob_pattern`` for multi-file (glob) sources; exactly one is required."
       },
       "TableJoinConfig": {
         "properties": {
@@ -11575,6 +12260,14 @@
             "type": "object",
             "title": "Config Snapshot",
             "description": "Frozen copy of the resolved template config (for reproducibility)"
+          },
+          "expected_data_collections": {
+            "items": {
+              "$ref": "#/components/schemas/ExpectedDataCollection"
+            },
+            "type": "array",
+            "title": "Expected Data Collections",
+            "description": "Full template DC superset at resolution time (required + optional), each marked included/excluded with a removal reason — drives the ingestion report"
           }
         },
         "type": "object",
@@ -11592,7 +12285,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -11698,7 +12391,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -11931,7 +12624,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a2ab21b04cf80b5027eb4de"
+            "default": "6a3a435c917098425c6cfbcb"
           }
         },
         "type": "object",
@@ -12049,7 +12742,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -12168,7 +12861,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -12250,7 +12943,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -12336,7 +13029,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -12509,7 +13202,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -12684,7 +13377,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -12754,7 +13447,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [
@@ -12852,7 +13545,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a2ab21b04cf80b5027eb4dd"
+            "default": "6a3a435c917098425c6cfbca"
           },
           "description": {
             "anyOf": [

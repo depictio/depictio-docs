@@ -1,134 +1,114 @@
-# Contributing Templates
-
-This guide explains how to create, test, and contribute a new template to Depictio.
-
-A template bundles a pipeline-specific project configuration, recipes, and dashboards so that users can set up a complete analysis with a single command. Before writing your template, check [Templates](../pipeline-templates/README.md) to see what already exists.
-
-The path from pipeline output to a merged template, at a glance:
-
-1. **Analyse the pipeline output** — list the files a typical run produces.
-2. **Write `template.yaml`** — declare variables and data collections.
-3. **Dry-run** — `depictio run --dry-run` to confirm which DCs resolve for your data.
-4. **Write recipes** — reshape raw outputs into the DC schemas.
-5. **Build dashboards** and **bake seeds** with the template's `generate_seeds.sh`.
-6. **Document** — write the narrative page, then run `gen_template_docs.py` to generate its reference tables.
-7. **Open a PR**.
-
-!!! tip "What fields actually exist"
-    The per-pipeline reference pages (e.g. [nf-core/ampliseq](../pipeline-templates/nf-core/ampliseq.md#reference)) are **generated from each `template.yaml`** by `depictio/dev_scripts/gen_template_docs.py` — use them as the authoritative list of variables, data collections, conditional routes and recipe schemas. The Pydantic models in `depictio/models/models/templates.py` are the source of truth for which `template:` fields are valid.
-
+---
+title: "Contributing a Template"
+icon: material/view-dashboard-variant
+description: "How to add a pipeline template to Depictio — a single-folder bundle of project config, recipes, and dashboards that turns a pipeline run into a complete analysis with one command."
 ---
 
-## Prerequisites
+<div class="catalog-hero">
+  <img class="catalog-hero__logo" style="width: 104px;" src="../../images/logo/templates_catalog_logo.png" alt="Depictio Templates">
+  <h1 class="catalog-hero__title" id="contributing-a-template">Contributing a Template</h1>
+</div>
 
-- Depictio CLI installed and working (`depictio --version`)
-- Access to real pipeline output data for testing
-- Familiarity with [Recipes](../usage/projects/recipes.md)
+A **template** turns a whole pipeline run into a ready-made Depictio project —
+data collections, recipes, and dashboards — that a user sets up with a single
+`depictio-cli run --template …` command. Where a [catalog tool](contributing-a-tool.md)
+wires up *one* tool's outputs, a template assembles *many* into a complete,
+opinionated analysis for a specific pipeline.
 
----
+Adding one is a **single-folder pull request** under
+`depictio/projects/<pipeline>/<version>/`. Before you start, browse the existing
+[Templates](../pipeline-templates/README.md) and skim the
+[Recipes](../usage/projects/recipes.md) reference.
 
-## Directory layout
+## The building blocks
 
-Templates live inside the Depictio repository under `depictio/projects/`:
+Each template version is one folder:
 
-```text
-depictio/projects/
-└── <pipeline>/                         # e.g. nf-core/ampliseq
-    ├── recipes/                        # Shared recipes (all versions)
-    │   ├── alpha_diversity.py
-    │   └── ...
-    └── <version>/                      # e.g. 2.16.0
-        ├── template.yaml               # Required — defines the template
-        ├── dashboards/                 # Dashboard YAML files
-        │   └── full_analysis.yaml
-        ├── .db_seeds/                  # Pre-built dashboard JSON seeds
-        │   ├── dashboard_community.json
-        │   └── ...
-        └── recipes/                    # Version-specific recipe overrides (optional)
-            └── taxonomy_rel_abundance.py
+| Path | Purpose |
+|------|---------|
+| `template.yaml` | **Required.** Project config + a `template:` block declaring variables (e.g. `DATA_ROOT`) and which dashboards to load. |
+| `dashboards/*.yaml` | One or more dashboard layouts, exported from the UI. |
+| `recipes/*.py` | Optional reshapes for outputs that aren't already tidy. Shared across versions, with per-version overrides. |
+
+A real template (`depictio/projects/nf-core/ampliseq/`):
+
+```
+nf-core/ampliseq/
+├── recipes/                     # shared across all versions
+│   ├── alpha_diversity.py
+│   └── …
+└── 2.16.0/
+    ├── template.yaml            # the template definition
+    ├── dashboards/
+    │   └── full_analysis.yaml
+    └── recipes/                 # version-specific overrides (optional)
 ```
 
-The recipe lookup follows a **versioned-then-shared fallback**: Depictio first looks for `<version>/recipes/<name>.py`; if not found, it falls back to the shared `recipes/<name>.py`. Only add version-specific overrides when the output schema genuinely differs between versions.
+Recipe lookup is **versioned-then-shared**: Depictio tries
+`<version>/recipes/<name>.py` first, then falls back to the shared
+`recipes/<name>.py`. Only add a version-specific override when an output's schema
+genuinely changes between pipeline versions.
 
----
-
-## Step 1 — Create the template directory
+## Step 1 — Scaffold the folder
 
 ```bash
-mkdir -p depictio/projects/<your-pipeline>/<version>/dashboards
-mkdir -p depictio/projects/<your-pipeline>/recipes
+mkdir -p depictio/projects/<pipeline>/<version>/dashboards
+mkdir -p depictio/projects/<pipeline>/recipes
 ```
-
----
 
 ## Step 2 — Write `template.yaml`
 
-The `template.yaml` is a standard Depictio project YAML with an extra `template:` metadata block at the top.
+It's a standard Depictio project YAML with an extra `template:` block on top.
+Every file path uses `{DATA_ROOT}` (and any custom variables) so it resolves
+against the user's run at runtime.
 
 ```yaml
-# ── Template metadata ────────────────────────────────────────────────────────
+# ── Template metadata ─────────────────────────────────────────────
 template:
-  template_id: "<your-pipeline>/<version>"   # e.g. nf-core/rnaseq/3.14.0
+  template_id: "<pipeline>/<version>"        # e.g. nf-core/rnaseq/3.14.0
   description: "Short description for the template index"
   version: "1.0.0"                           # template version, not pipeline version
   variables:
     - name: "DATA_ROOT"
-      description: "Root directory of your pipeline output"
+      description: "Root directory of the pipeline output"
       required: true
   dashboards:
-    - "dashboards/main.yaml"                 # relative to this directory
+    - "dashboards/main.yaml"                  # relative to this folder
 
-# ── Standard project config with {DATA_ROOT} placeholders ────────────────────
+# ── Standard project config with {DATA_ROOT} placeholders ─────────
 name: "My Pipeline Analysis"
 project_type: "advanced"
 is_public: true
 workflows:
   - name: "my-pipeline"
     version: "<version>"
-    engine:
-      name: "nextflow"
-      version: "24.10.4"
+    engine: { name: "nextflow", version: "24.10.4" }
     data_location:
       structure: "flat"
-      locations:
-        - "{DATA_ROOT}"
+      locations: ["{DATA_ROOT}"]
     data_collections:
       - data_collection_tag: "metadata"
         config:
           type: "Table"
           metatype: "Metadata"
-          scan:
-            mode: "single"
-            scan_parameters:
-              filename: "{DATA_ROOT}/path/to/metadata.tsv"
-      - data_collection_tag: "my_transformed_dc"
+          scan: { mode: "single", scan_parameters: { filename: "{DATA_ROOT}/path/to/metadata.tsv" } }
+      - data_collection_tag: "my_dc"
         config:
           type: "Table"
           source: "transformed"
-          transform:
-            recipe: "<your-pipeline>/my_recipe.py"
+          transform: { recipe: "<pipeline>/my_recipe.py" }
 ```
 
-Every file path under `data_location` and `scan_parameters` must use `{DATA_ROOT}` so they are resolved at runtime.
-
-### Dry-run to see which collections resolve
-
-Before writing any recipes, resolve the template against real data without ingesting anything:
+**Dry-run early** to confirm your scan patterns match real files and the right
+data collections resolve — without ingesting anything:
 
 ```bash
-depictio run \
-  --template <your-pipeline>/<version> \
-  --data-root /path/to/real/pipeline/output \
-  --dry-run
+depictio-cli run --template <pipeline>/<version> --data-root /path/to/run --dry-run
 ```
 
-In template mode this runs **Step 0** only — it resolves the template, applies the conditional routes, and logs the surviving data collections per workflow. Use it to confirm your scan patterns match real files and that the right DCs are kept/pruned for your run before investing in recipes.
+## Step 3 — Write recipes (only for outputs that need reshaping)
 
----
-
-## Step 3 — Write recipes
-
-Each recipe is a plain Python module placed in `depictio/projects/<pipeline>/recipes/`.
+Same recipe contract as the catalog: `SOURCES`, `EXPECTED_SCHEMA`, `transform`.
 
 ```python
 """Short description of what this recipe produces."""
@@ -137,11 +117,7 @@ import polars as pl
 from depictio.models.models.transforms import RecipeSource
 
 SOURCES: list[RecipeSource] = [
-    RecipeSource(
-        ref="my_file",
-        path="relative/path/from/DATA_ROOT/to/file.csv",
-        format="CSV",
-    ),
+    RecipeSource(ref="my_file", path="relative/path/from/DATA_ROOT/to/file.csv", format="CSV"),
 ]
 
 EXPECTED_SCHEMA: dict[str, type[pl.DataType]] = {
@@ -151,117 +127,56 @@ EXPECTED_SCHEMA: dict[str, type[pl.DataType]] = {
 
 def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
     df = sources["my_file"]
-    # ... reshape, rename, cast ...
-    return df.select("sample", "value")
+    return df.select("sample", "value")        # exactly the EXPECTED_SCHEMA columns
 ```
 
-Test the recipe locally before moving on:
+Test it against real data before moving on (all four checkpoints — load →
+resolve → transform → schema — must pass green):
 
 ```bash
-depictio dev recipe info <your-pipeline>/my_recipe.py
-depictio dev recipe run <your-pipeline>/my_recipe.py --data-dir /path/to/real/data --head 10
+depictio-cli dev recipe info <pipeline>/my_recipe.py
+depictio-cli dev recipe run  <pipeline>/my_recipe.py --data-dir /path/to/run --head 10
 ```
 
-All 4 checkpoints (load → resolve → transform → schema) must pass with green output.
+## Step 4 — Build the dashboards
 
-See [Recipes](../usage/projects/recipes.md) for the full recipe reference and annotated examples.
+The fastest path is to build interactively and export:
 
----
+1. Ingest the run without importing dashboards:
+   `depictio-cli run --template <id> --data-root <path> --skip-dashboard-import`
+2. Build the dashboard in the Depictio UI.
+3. **Dashboard settings → Export YAML**, and save it as `dashboards/main.yaml`.
 
-## Step 4 — Build dashboards
-
-Create at least one dashboard YAML under `dashboards/`. The easiest workflow:
-
-1. Run the template manually against real data: `depictio run --template <id> --data-root <path> --skip-dashboard-import`
-2. Use the Depictio UI to build the dashboard interactively
-3. Export it: **Dashboard settings → Export YAML**
-4. Save the exported YAML as `dashboards/main.yaml`
-
-Regenerate the `.db_seeds/*.json` files so fresh deployments load the dashboards correctly. Each template version ships a `generate_seeds.sh` that ingests a test run and exports the resulting dashboard documents as seeds — model yours on an existing one (e.g. `depictio/projects/nf-core/ampliseq/2.16.0/generate_seeds.sh`):
+## Step 5 — Test end-to-end & open a PR
 
 ```bash
-bash depictio/projects/<pipeline>/<version>/generate_seeds.sh /path/to/test-data
+depictio-cli run --template <pipeline>/<version> --data-root /path/to/run
 ```
 
-!!! info "Why a script, not a single command"
-    Seeding ingests the template against real data, then exports and remaps the Mongo dashboard documents to the static reference IDs so tiles resolve on a fresh deploy. The per-template `generate_seeds.sh` captures that sequence — see the script header for its prerequisites.
+Check before submitting:
 
----
+- [ ] `template_id` follows `<org>/<pipeline>/<version>`.
+- [ ] Every recipe has a docstring and a typed `EXPECTED_SCHEMA`; `depictio-cli dev recipe run` passes for each.
+- [ ] Dashboard YAML is committed.
+- [ ] No hardcoded absolute paths — only `{DATA_ROOT}` / template variables.
+- [ ] A full `depictio-cli run --template …` completes without error and dashboards render with the template badge.
 
-## Step 5 — Test end-to-end
+In the PR, include: the pipeline name + docs link, the version tested, the
+reference dataset used (e.g. an nf-core AWS results URL), and a screenshot of at
+least one dashboard.
 
-Run the full template against real pipeline output:
+## Badge promotion
 
-```bash
-depictio run \
-  --template <your-pipeline>/<version> \
-  --data-root /path/to/real/pipeline/output
-```
-
-Verify:
-- [ ] All steps 0–8 complete without error
-- [ ] Dashboards appear in the UI with the template badge
-- [ ] Cross-DC filtering works across data collections
-- [ ] Recipe outputs match expected schemas
-
----
-
-## Step 6 — Document the template
-
-Each pipeline gets a narrative page under `docs/pipeline-templates/nf-core/<pipeline>.md` in the [depictio-docs](https://github.com/depictio/depictio-docs) repo — intro, screenshots, and a dashboard-tab walkthrough. The **reference tables** (variables, data collections, conditional routes, cross-DC links, recipe schemas) are *not* hand-written: they are generated from your `template.yaml` so they never drift from the code.
-
-From the `depictio` repo, with `depictio-docs` checked out alongside it:
-
-```bash
-python -m depictio.dev_scripts.gen_template_docs
-```
-
-This writes `docs/pipeline-templates/nf-core/_generated/<pipeline>-<version>.md`. Pull it into your narrative page with an mkdocs snippet:
-
-```markdown
-## Reference
-
---8<-- "pipeline-templates/nf-core/_generated/<pipeline>-<version>.md"
-```
-
-Re-run the script whenever you touch the template — `gen_template_docs.py --check` (exit 1 if any partial is stale) is available for a CI guard. Commit **both** the narrative page and the generated partial.
-
----
-
-## Step 7 — Open a pull request
-
-Before submitting, check:
-
-- [ ] `template_id` follows the `<org>/<pipeline>/<version>` convention
-- [ ] All recipe files have a module docstring and typed `EXPECTED_SCHEMA`
-- [ ] `depictio dev recipe run` passes for all recipes against the reference dataset
-- [ ] Dashboard YAML and `.db_seeds/*.json` are both committed
-- [ ] Narrative page added and its generated reference partial regenerated (`gen_template_docs.py --check` passes)
-- [ ] No hardcoded absolute paths — only `{DATA_ROOT}` placeholders
-
-In the PR description, include:
-
-- Pipeline name and link to the official docs
-- Pipeline version tested
-- Reference dataset used (e.g. nf-core AWS results URL)
-- Screenshot of at least one dashboard
-
-Submitted templates start as **Experimental** and are promoted to **Verified** after core review, then **Official** once tested against a reference dataset.
-
----
-
-## Badge promotion criteria
+Submitted templates start **Experimental** and are promoted as they're reviewed
+and tested:
 
 | Badge | Criteria |
-|-------|---------|
-| :material-flask:{ style="color: #FF9800" } **Experimental** | PR submitted; CI passes; basic recipe validation |
-| :material-check-circle:{ style="color: #4CAF50" } **Verified** | Reviewed by a core team member; schema tested; dashboard renders correctly |
-| :material-check-decagram:{ style="color: #45B8AC" } **Official** | Developed or co-developed by core team; tested against official reference data; supported across releases |
-
----
+|-------|----------|
+| <span style="white-space: nowrap">:material-flask-outline:{ style="color: #FF9800" } **Experimental**</span> | Shared as-is. PR submitted; feedback and PRs welcome. |
+| <span style="white-space: nowrap">:material-check-circle-outline:{ style="color: #2196F3" } **Reviewed**</span> | Tested, CI passes, reviewed by the Depictio team or community. |
+| <span style="white-space: nowrap">:material-shield-check:{ style="color: #4CAF50" } **Certified**</span> | Validated by the pipeline lead developer. Highest trust level. |
 
 ## Getting help
 
-- Open a [GitHub Discussion](https://github.com/depictio/depictio/discussions) for questions
-- Tag your PR with `template` for routing to the right reviewer
-- Check existing templates in `depictio/projects/nf-core/ampliseq/` as a reference implementation
+- Open a [GitHub Discussion](https://github.com/depictio/depictio/discussions) and tag your PR `template`.
+- Reference implementation: `depictio/projects/nf-core/ampliseq/`.

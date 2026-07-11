@@ -15,9 +15,52 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
-## **v1.1.0** (unreleased)
+## **[v1.1.2](https://github.com/depictio/depictio/releases/tag/v1.1.2)** (June 28, 2026)
 
-!!! success "Minor release — self-adapting nf-core templates, ingestion report, render-path performance work"
+!!! success "Patch — auth, links & template seeds"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.1.2
+```
+
+### **✨ New Features**
+
+* **Google OAuth registration gate** — `DEPICTIO_AUTH_REGISTRATION_DISABLED` is now honoured on the Google OAuth login path, not just email/password.
+
+### **🐛 Bug Fixes**
+
+* **Open-in-new-tab** — dashboard list and table titles are now standard links, so middle-click / ⌘-click opens them in a new tab.
+* **nf-core/ampliseq dashboard template** — the phylogenetic-tree input is now read from the run's `qiime2/` output directory, so the tree renders correctly on fresh deployments.
+
+---
+
+## **[v1.1.1](https://github.com/depictio/depictio/releases/tag/v1.1.1)** (June 27, 2026)
+
+!!! success "Patch — registration control & advanced-viz fixes"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.1.1
+```
+
+### **✨ New Features**
+
+* **Disable self-registration** — set `DEPICTIO_AUTH_REGISTRATION_DISABLED` to block new sign-ups on a public deployment while keeping existing logins working.
+
+### **🐛 Bug Fixes**
+
+* **Anonymous access** — public dashboards in any public project are now visible to anonymous users.
+* **MultiQC upload** — restored the folder picker for MultiQC click-to-upload.
+* **Advanced viz** — required/optional binding badges no longer clip; fixed a 500 on the DC schema fetch (deltalake `to_arrow` rename).
+
+---
+
+## **[v1.1.0](https://github.com/depictio/depictio/releases/tag/v1.1.0)** (June 23, 2026)
+
+!!! success "Minor — ingestion reports, DC linking UI, nf-core templates & performance"
 
 ### Docker Images
 
@@ -27,27 +70,26 @@ ghcr.io/depictio/depictio:1.1.0
 
 ### **✨ New Features**
 
-* **Self-adapting nf-core templates** — single ampliseq and viralrecon templates adapt to the pipeline route (ITS / SIDLE / skip_qiime, Illumina / nanopore-ARTIC); irrelevant data collections, components and tabs are pruned automatically.
-* **Ingestion report** — viewer panel comparing template-expected vs ingested data collections with per-collection health and a dashboard health banner; new `/ingestion-report` and `/ingestion-health` endpoints.
-* **Component catalog** — browse the live [Depictio Modules](../modules/index.md) catalog mapping tool outputs to visualizations; `depictio-cli catalog preview` / `gallery` render components on bundled fixtures locally or export standalone HTML with `--out`.
-* **`depictio-cli run --dashboard-name`** — override a template's dashboard title at import without editing the template; SIDLE multiregion runs auto-detected from `params.json`.
-* **`DEPICTIO_SEED_PROJECTS`** — allowlist scoping which reference projects are seeded on boot.
-
-### **⚡ Performance**
-
-* **Rendering & caching** — Delta column projection, adaptive render offload, Polars-native figures, Arrow-IPC/LZ4 cache, and scatter downsampling (WebGL above 50k points), with new `offload_rendering` and `offload_size_threshold_bytes` settings. Reduces redundant work when building figures; not yet extensively benchmarked.
+* **Data-collection linking UI** — create and manage cross-DC links from the interface, including MultiQC DC creation via the UI.
+* **Ingestion reports & health banner** — a new ingestion-report panel and dashboard health banner, backed by dedicated API endpoints and React-core types.
+* **Project detail** — clickable project badges, tabbed project-detail view, a sortable DC table, and filterable links.
+* **Self-adapting nf-core dashboard templates** — the nf-core/ampliseq and nf-core/viralrecon dashboard templates now adapt to how the pipeline was actually run: they pick the right input files for each workflow route (including viralrecon's Nanopore/ARTIC route and ampliseq's SIDLE and `skip_qiime` routes) and build a working dashboard even when no sample metadata is provided.
+* **CLI** — `--dashboard-name` override and multiregion params introspection.
+* **Deployment** — dedicated ingress for MinIO and the backend API, plus permission-based auth annotations.
 
 ### **🚀 Improvements**
 
-* **Project detail tabs** — Overview / Data Collections / Links / Ingestion, with a sortable data-collection table and clickable project badges.
-* **Dashboard logo** — used as the card thumbnail fallback.
-* **Codespaces** — single-project (iris) seed, reliable port forwarding, and deterministic single-user mode.
+* **Performance** — adaptive render offload, Polars-native figures with downsampling, Delta column projection + schema cache, higher worker concurrency, gzip responses, and async (202) MultiQC rendering.
+* **nf-core release monitoring** — weekly megatest drift check that opens one draft PR per pipeline.
+* **Helm** — EMBL-demo Celery high-availability.
 
 ### **🐛 Bug Fixes**
 
-* FastQC alpha-channel colorscales (`#RRGGBBAA`) now render; empty heatmap categories fold into "Unclassified".
-* Unparsed MultiQC modules and metadata-only tabs are hidden; a Delta schema-read failure falls back to a full load.
-* viralrecon coverage cards use the average instead of the median; compose shares the screenshots directory between worker and backend.
+* **Cross-DC filters** — fixed `target_column=None`; Add-link modal polish ([#776](https://github.com/depictio/depictio/pull/776)).
+* **Public mode** — screenshot debounce path corrected; "Sign In" no longer shown in public mode ([#784](https://github.com/depictio/depictio/pull/784)).
+* **Self-adapting layout** — dashboards reflow correctly when components are pruned; components for unparsed MultiQC modules and metadata-only tabs are hidden.
+* **MultiQC** — tolerate FastQC alpha-channel colorscales; empty heatmap annotation categories fold into "Unclassified".
+* **nf-core/viralrecon dashboard template** — the genome-coverage summary cards now report the mean (average) depth across positions instead of the median, so the headline coverage figure matches the convention used elsewhere in the dashboard.
 
 ---
 

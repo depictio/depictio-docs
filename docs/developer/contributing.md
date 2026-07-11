@@ -1,87 +1,63 @@
 # Contributing to Depictio
 
-Thank you for your interest in contributing to Depictio! This guide outlines the process for contributing to the project and provides resources to help you get started.
+Thanks for your interest in contributing! This guide gets you from a fresh clone
+to an open pull request.
 
 ## Table of Contents
 
 - [Code of Conduct](#code-of-conduct)
-- [Getting Started](#getting-started)
+- [Quick Start](#quick-start)
 - [Development Environment](#development-environment)
 - [Project Structure](#project-structure)
 - [Development Workflow](#development-workflow)
-- [Testing](#testing-local-changes)
-- [Code Style and Standards](#code-style-and-standards)
+- [Testing & Code Quality](#testing--code-quality)
+- [Frontend Guidelines](#frontend-guidelines)
 - [Documentation](#documentation)
-- [Issue Reporting](#issue-reporting)
-- [Pull Requests](#pull-requests)
-- [Code Review Process](#code-review-process)
+- [Issues & Pull Requests](#issues--pull-requests)
 - [Areas Needing Help](#areas-needing-help)
-- [How to pick up an issue](#how-to-pick-up-an-issue)
 - [Community](#community)
 - [License](#license)
 
 ## Code of Conduct
 
-Depictio adopts the [Contributor Covenant v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/). In short: be respectful, assume good faith, prefer constructive feedback, and keep discussions focused on the work — not the person.
+Depictio adopts the [Contributor Covenant v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
+In short: be respectful, assume good faith, keep feedback constructive and
+focused on the work. Report unacceptable behaviour privately to the maintainers
+(see [Community](#community)) — reports are handled confidentially.
 
-Report unacceptable behaviour privately to the maintainers (see [Community](#community) for contact channels). Reports are handled confidentially.
+## Quick Start
 
-## Getting Started
+```bash
+# 1. Fork on GitHub, then clone your fork
+git clone https://github.com/YOUR-USERNAME/depictio.git
+cd depictio
+git remote add upstream https://github.com/depictio/depictio.git
 
-### Prerequisites
+# 2. Run the full stack with hot-reload (MongoDB, Redis, MinIO, API, viewer)
+docker compose -f docker-compose.dev.yaml up --build -d
 
-Before you begin, ensure you have the following installed:
+# 3. Install local Python tooling for tests & pre-commit
+uv sync --all-extras
+uv run pre-commit install
+```
 
-- Python 3.11 or higher (3.12 recommended)
-- Docker and Docker Compose
-- Git
+Then open the app at **<http://localhost:5080>** and the API docs at
+**<http://localhost:8058/docs>**.
 
-### Fork and Clone
-
-1. Fork the repository on GitHub
-2. Clone your fork locally:
-
-   ```bash
-   git clone https://github.com/YOUR-USERNAME/depictio.git
-   cd depictio
-   ```
-
-3. Add the original repository as an upstream remote:
-
-   ```bash
-   git remote add upstream https://github.com/depictio/depictio.git
-   ```
+> **Prerequisites:** Python 3.11+ (3.12 recommended), Docker + Docker Compose,
+> Git, and [`uv`](https://docs.astral.sh/uv/). The React viewer dev server also
+> needs [`pnpm`](https://pnpm.io/) 10+.
 
 ## Development Environment
 
-### Option 1: Docker Compose
+### Recommended — Docker dev (hot-reload)
 
-There are two compose files depending on your goal:
-
-#### Quickstart — pre-built images (no build required)
-
-Uses images from GHCR. MinIO is bundled by default — no `.env` needed:
+`docker-compose.dev.yaml` mounts your local source and reloads on change. All
+critical defaults are baked into the compose file, so no `.env` is required.
 
 ```bash
-docker compose up -d
+docker compose -f docker-compose.dev.yaml up --build -d
 ```
-
-For external S3 / bring your own MinIO:
-
-```bash
-docker compose -f docker-compose/docker-compose.no-minio.yaml up -d
-```
-
-#### Development — source mounts with hot-reload
-
-Uses `docker-compose.dev.yaml` which mounts the local source tree and
-builds the image locally:
-
-```bash
-docker compose -f docker-compose.dev.yaml up --build --detach
-```
-
-#### Services
 
 | Service | URL |
 |---------|-----|
@@ -90,153 +66,63 @@ docker compose -f docker-compose.dev.yaml up --build --detach
 | API Docs | `http://localhost:8058/docs` |
 | MinIO Console | `http://localhost:9001` |
 
-The source code is mounted as a volume in the dev file for live reloading:
-
-```yaml
-volumes:
-  - ./depictio:/app/depictio
-```
-
-### Option 2: DevContainer & GitHub Codespaces
-
-For a cloud-based or containerized IDE experience, use the provided DevContainer configuration:
-
-**VS Code DevContainer:**
-
-1. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-2. Open the repository in VS Code
-3. Click "Reopen in Container" when prompted (or use Command Palette: `Dev Containers: Reopen in Container`)
-
-**GitHub Codespaces:**
-
-1. Go to the [Depictio repository](https://github.com/depictio/depictio)
-2. Click the green "Code" button
-3. Select "Codespaces" tab
-4. Click "Create codespace on main"
-
-Both options provide a pre-configured development environment with all dependencies installed.
-
-### Alternative: Local Python Setup
-
-For contributors who prefer local development without containers:
-
-=== "uv (Fast)"
-
-    ```bash
-    # Install uv: https://docs.astral.sh/uv/
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-
-    # Sync dependencies
-    uv sync --all-extras
-
-    # Install Playwright browsers
-    uv run playwright install chromium
-    ```
-
-=== "pixi (With infrastructure)"
-
-    ```bash
-    # Install pixi: https://pixi.sh
-    curl -fsSL https://pixi.sh/install.sh | bash
-
-    # Install all dependencies (includes MongoDB, Redis, MinIO)
-    pixi install
-
-    # Start infrastructure and services
-    pixi run start-infra
-    pixi run api      # FastAPI backend
-    pixi run dash     # Dash frontend
-    ```
-
-=== "pip (Traditional)"
-
-    ```bash
-    python -m venv depictio-dev-venv
-    source depictio-dev-venv/bin/activate
-    pip install -e ".[dev]"
-    playwright install chromium
-    ```
-
-### Setting up Pre-commit Hooks
-
-```bash
-uv run pre-commit install
-```
-
-### Docker Images
-
-The project provides multiple Dockerfile options:
-
-| Dockerfile | Description |
-|------------|-------------|
-| `Dockerfile_depictio_uv.dockerfile` | **Recommended** - Fast builds using uv |
-| `Dockerfile_depictio_prod.dockerfile` | Multi-stage production build |
-| `Dockerfile_depictio.dockerfile` | Legacy conda/mamba-based |
-
-### Environment Variables
-
-All critical defaults are embedded directly in the compose files, so `.env` is
-**optional** — `docker compose up -d` works out of the box.
-
-To override credentials or settings, copy `.env.example` to `.env`:
-
-```bash
-cp .env.example .env   # only 3 lines — version, MinIO user, MinIO password
-```
-
-For development with `docker-compose.dev.yaml`, the full config lives in
-`docker-compose/.env` (already populated for local dev).
-
-Key development variables:
+Useful environment overrides (set in `docker-compose/.env`, already populated for
+local dev):
 
 | Variable | Description |
 |----------|-------------|
-| `DEPICTIO_CONTEXT` | Set to `server` for API, `dash` for frontend |
-| `DEPICTIO_MONGODB_WIPE` | Set to `true` to reset the database on startup |
-| `DEPICTIO_LOGGING_VERBOSITY_LEVEL` | Set to `DEBUG` for detailed logs |
-| `DEPICTIO_AUTH_SINGLE_USER_MODE` | `true` by default — disables login prompt |
-| `DEPICTIO_MINIO_ROOT_USER` | MinIO access key (default: `minio`) |
-| `DEPICTIO_MINIO_ROOT_PASSWORD` | MinIO secret (default: `minio123`) |
+| `DEPICTIO_CONTEXT` | Runtime context — `server` for the API |
+| `DEPICTIO_MONGODB_WIPE` | `true` resets the database on startup |
+| `DEPICTIO_LOGGING_VERBOSITY_LEVEL` | `DEBUG` for detailed logs |
+| `DEPICTIO_AUTH_SINGLE_USER_MODE` | `true` by default — disables the login prompt |
 
-### Local Python Environment (Development)
+### Quickstart — pre-built images
 
-Regardless of which development option you choose, you need local Python packages for running tests, pre-commit hooks, and the CLI.
-
-**1. Main package (tests & pre-commit)**
+To run released images from GHCR without building (MinIO bundled by default):
 
 ```bash
-# Install uv (fast Python package manager)
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Install depictio with all dev dependencies
-uv sync --all-extras
-
-# Set up pre-commit hooks
-uv run pre-commit install
+docker compose up -d
+# Bring your own S3 / external MinIO:
+docker compose -f docker-compose/docker-compose.no-minio.yaml up -d
 ```
 
-**2. CLI package (separate)**
+### Local Python (tests, pre-commit, CLI)
+
+You need a local Python environment for tests, pre-commit hooks, and the CLI —
+even when running the app in Docker.
+
+```bash
+# Install uv: https://docs.astral.sh/uv/
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+uv sync --all-extras                 # main package + all dev dependencies
+uv run playwright install chromium   # E2E browser
+uv run pre-commit install            # git hooks
+```
 
 The CLI is a standalone package with its own `pyproject.toml`:
 
 ```bash
-# Install depictio-cli
-cd depictio/cli
-uv sync
-
-# Verify installation
-uv run depictio --help
+cd depictio/cli && uv sync && uv run depictio --help
 ```
 
-**Available tools:**
+> Prefer a different tool? `pixi install` (bundles MongoDB/Redis/MinIO) or
+> `pip install -e ".[dev]"` both work as alternatives to `uv`.
 
-| Tool | Command | Purpose |
-|------|---------|---------|
-| **pytest** | `uv run pytest depictio/tests/ -xvs` | Run tests |
-| **pre-commit** | `uv run pre-commit run --all-files` | Code quality checks |
-| **ruff** | `uv run ruff check .` | Linting |
-| **ty** | `uv run ty check depictio/` | Type checking |
-| **depictio CLI** | `cd depictio/cli && uv run depictio --help` | CLI commands |
+### React viewer dev server
+
+For live frontend work, run Vite against the running backend:
+
+```bash
+pnpm -C depictio/viewer dev   # http://localhost:5173, hot-reload
+```
+
+### DevContainer / Codespaces
+
+A pre-configured environment is available via the
+[Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+("Reopen in Container") or **Codespaces** ("Code" → "Codespaces" → "Create
+codespace on main") on the [repository](https://github.com/depictio/depictio).
 
 ## Project Structure
 
@@ -248,271 +134,158 @@ depictio/
 │       ├── configs/     # Settings models and logging config
 │       ├── endpoints/   # One sub-package per resource domain
 │       ├── services/    # Business logic, background tasks, lifespan
-│       ├── middleware/  # Analytics and request middleware
 │       └── db.py        # MongoDB / Beanie setup
-├── viewer/              # React Vite SPA (dev port 5173) — sole frontend from v1.0.0
-├── models/              # Shared Pydantic models (API + Dash + viewer client)
+├── viewer/              # React + Vite SPA (dev port 5173) — sole frontend
+├── models/              # Shared Pydantic models (API + CLI + viewer client)
 ├── cli/                 # Standalone CLI package (own pyproject.toml)
-└── tests/               # Test suites (api/, dash/, cli/)
+└── tests/               # Test suites (api/, cli/, models/, e2e)
 
 packages/
 └── depictio-react-core/ # Shared React renderers / types consumed by depictio/viewer
 ```
 
-### API Endpoint Structure
-
-Each resource domain lives in `depictio/api/v1/endpoints/<domain>_endpoints/` and typically contains a subset of:
-
-```
-<domain>_endpoints/
-├── routes.py        # FastAPI router — path operations
-├── models.py        # Request / response Pydantic models
-└── utils.py         # Domain-specific helpers
-```
-
-### React Component Structure
-
-Dashboard component renderers live in `packages/depictio-react-core/src/renderers/`:
-
-| Renderer | Purpose |
-|----------|---------|
-| `CardRenderer` | Summary cards (single metric, multi-metric) |
-| `FigureRenderer` | Plotly figures (Plotly Express, code mode) |
-| `ImageRenderer` | Static image display from S3 |
-| `InteractiveRenderer` | Filters, dropdowns, sliders |
-| `TableRenderer` | Interactive data tables |
-| `TextRenderer` | Rich text / Markdown tiles |
-| `MultiQCRenderer` | Embedded MultiQC HTML reports |
-| `AdvancedVizRenderer` | Biology-specific plots (ComplexHeatmap, UpSet, …) |
-
-Viewer-specific wrappers (edit mode, drag-handle, builder stepper) live in `depictio/viewer/src/components/`.
+Each API resource domain lives in `depictio/api/v1/endpoints/<domain>_endpoints/`
+with `routes.py` (FastAPI router), `models.py` (request/response models), and
+`utils.py` (helpers). Dashboard renderers live in
+`packages/depictio-react-core/src/renderers/` (`CardRenderer`, `FigureRenderer`,
+`TableRenderer`, `InteractiveRenderer`, `AdvancedVizRenderer`, …); viewer-specific
+wrappers (edit mode, drag handles, builder) live in `depictio/viewer/src/components/`.
 
 ## Development Workflow
 
-1. Create a new branch for your feature or bugfix:
+1. Branch off `main`:
 
-    ```bash
-    git checkout -b <issue-type>/<issue-number>-<short-description>
-    # Example: feature/123-add-new-component
-    # Example: bugfix/456-fix-data-processing
-    ```
+   ```bash
+   git checkout -b <type>/<issue-number>-<short-description>
+   # e.g. feature/123-add-new-component  •  bugfix/456-fix-data-processing
+   ```
 
-2. Make your changes and commit them:
+2. Commit using [Conventional Commits](https://www.conventionalcommits.org/) with
+   a scope, matching the repo history:
 
-    ```bash
-    git add .
-    git commit -m "Description of your changes"
-    ```
+   ```bash
+   git commit -m "feat(viewer): add markdown renderer"
+   # types: feat, fix, chore, refactor, docs  •  scopes: api, viewer, cli, helm, …
+   ```
 
-3. Keep your branch updated with upstream:
+3. Keep up to date with upstream, then push and open a PR:
 
-    ```bash
-    git fetch upstream
-    git rebase upstream/main
-    ```
+   ```bash
+   git fetch upstream && git rebase upstream/main
+   git push origin <type>/<issue-number>-<short-description>
+   ```
 
-4. Push your branch to GitHub:
+## Testing & Code Quality
 
-    ```bash
-    git push origin <issue-type>/<issue-number>-<short-description>
-    ```
-
-5. Create a pull request on GitHub.
-
-## Testing Local Changes
-
-### Running Tests
+Run before pushing — these are the same checks CI enforces:
 
 ```bash
-# Run all tests
-pytest depictio/tests/ -xvs
+# Tests (-n auto for parallel)
+uv run pytest depictio/tests/ -xvs -n auto
 
-# Run with parallel execution
-pytest depictio/tests/ -xvs -n auto
+# Format, lint, type-check
+uv run ruff format .
+uv run ruff check .
+uv run ty check depictio/
 
-# Run specific test file
-pytest depictio/tests/api/test_endpoints.py -xvs
+# Or run everything via the hooks
+uv run pre-commit run --all-files
 ```
 
-### Code Quality Checks
+Place new tests under `depictio/tests/` following the existing layout
+(`tests/api/`, `tests/cli/`, `tests/models/`), and include both unit and
+integration coverage where relevant.
 
-```bash
-# Format code
-ruff format .
+Coding standards: PEP 8, type hints on public functions, and docstrings for
+modules/classes/functions. Formatting and linting are enforced by
+[`ruff`](https://github.com/astral-sh/ruff); types by
+[`ty`](https://github.com/astral-sh/ty).
 
-# Lint code
-ruff check .
+## Frontend Guidelines
 
-# Type checking
-ty check depictio/
+All frontend work targets the **React viewer** — the legacy Dash frontend was
+removed in the v1.0 release.
 
-# Run all pre-commit hooks
-pre-commit run --all-files
-```
+The viewer lives in `depictio/viewer/` and `packages/depictio-react-core/`.
+Stack: **Vite + React + Mantine 7 + `pnpm@10`**.
 
-### Writing Tests
-
-- Place tests in the `depictio/tests/` directory
-- Follow existing structure: `tests/api/`, `tests/dash/`, `tests/cli/`
-- Include both unit tests and integration tests
-
-## Code Style and Standards
-
-Depictio follows these coding standards:
-
-- **PEP 8** for Python code style
-- **Type hints** for all function parameters and return values
-- **Docstrings** for modules, classes, and functions
-
-We use pre-commit hooks to enforce:
-
-| Tool | Purpose |
-|------|---------|
-| [`ruff`](https://github.com/astral-sh/ruff) | Code formatting and linting |
-| [`ty`](https://github.com/astral-sh/ty) | Static type checking |
-
-### Frontend Guidelines
-
-All frontend work targets the React viewer. The Dash frontend was removed in **v0.13.12**.
-
-#### React frontend
-
-Lives in `depictio/viewer/` and `packages/depictio-react-core/`. Stack: Vite + React + Mantine 7 + `pnpm@10`.
-
-- **Use default Mantine theming** — drop hardcoded color literals and custom CSS unless there's a strong reason. Mantine tokens cover light/dark automatically.
-- **Workspace**: `pnpm -C depictio/viewer dev` runs the dev server at port `5173` against the existing FastAPI backend.
+- **Use default Mantine theming** — avoid hardcoded color literals and custom CSS
+  unless there's a strong reason; Mantine tokens handle light/dark automatically.
+- **Run the dev server** with `pnpm -C depictio/viewer dev` (port `5173`) against
+  the existing FastAPI backend.
 - **Shared logic** belongs in `packages/depictio-react-core/`, not in the viewer.
 
-### React App Architecture
-
-The React viewer (`depictio/viewer/`) serves three logical surfaces from a single SPA:
+The viewer serves three surfaces from a single SPA, with shared state in Zustand
+stores under `depictio/viewer/src/stores/`:
 
 | Surface | URL Pattern | Purpose |
 |---------|-------------|---------|
 | **Management** | `/dashboards`, `/projects` | Dashboard and project listing |
 | **Viewer** | `/dashboard/{id}` | Read-only dashboard viewing |
-| **Editor** | `/dashboard-edit/{id}` | Dashboard editing, save operations |
+| **Editor** | `/dashboard-edit/{id}` | Dashboard editing and save |
 
-Shared state lives in Zustand stores under `depictio/viewer/src/stores/`. Renderers shared with the docs screenshot pipeline live in `packages/depictio-react-core/`.
-
-### Internal Technical Documentation
-
-Detailed architecture notes, design decisions, and implementation internals are maintained in a **private repository**. If you need access (e.g. for a significant contribution), reach out to the maintainers.
+> Detailed architecture notes and design decisions are maintained in a private
+> repository. If you need access for a significant contribution, reach out to the
+> maintainers.
 
 ## Documentation
 
-### Repository
-
-Documentation is maintained in the [depictio-docs](https://github.com/depictio/depictio-docs) repository.
-
-### Setup
-
-1. Fork and clone the `depictio-docs` repository
-2. Install dependencies:
-
-   ```bash
-   cd depictio-docs
-   pip install -r requirements.txt
-   ```
-
-### Writing Documentation
-
-- Documentation is built using [MkDocs Material](https://squidfunk.github.io/mkdocs-material/)
-- Source files are in the `docs/` directory
-- Write in Markdown format
-- Include code examples where appropriate
-
-### Building Documentation
-
-Preview documentation locally:
+Docs live in the [depictio-docs](https://github.com/depictio/depictio-docs) repo
+and are built with [MkDocs Material](https://squidfunk.github.io/mkdocs-material/).
+To preview locally:
 
 ```bash
-cd depictio-docs
-mkdocs serve
+cd depictio-docs && pip install -r requirements.txt && mkdocs serve
+# open http://127.0.0.1:8000
 ```
 
-Then open `http://127.0.0.1:8000` in your browser.
+Building something specific?
 
-## Issue Reporting
+- **A catalog tool** (turn a pipeline's outputs into dashboard renders) → [Contributing a Tool](contributing-a-tool.md)
+- **A pipeline template** → [Contributing Templates](contributing-templates.md)
 
-### Bug Reports
+## Issues & Pull Requests
 
-When reporting a bug, please include:
+**Reporting issues** — for bugs, include a descriptive title, reproduction steps,
+expected vs actual behaviour, screenshots if relevant, and your environment
+(OS, browser, Python version). For features, describe the proposal and its
+rationale.
 
-- A clear, descriptive title
-- Steps to reproduce the issue
-- Expected behavior
-- Actual behavior
-- Screenshots if applicable
-- Environment information (OS, browser, Python version)
+**Pull requests** — keep each PR focused on a single feature or fix, add tests for
+new behaviour, update docs as needed, reference related issues, and make sure CI
+passes. In the description, cover **what** changed, **why**, and **how to test**.
 
-### Feature Requests
-
-When requesting a feature, please include:
-
-- A clear, descriptive title
-- Detailed description of the proposed feature
-- Rationale for adding the feature
-- Implementation suggestions if applicable
-
-## Pull Requests
-
-### PR Guidelines
-
-- Keep PRs focused on a single feature or bugfix
-- Include tests for new functionality
-- Update documentation as needed
-- Reference related issues
-- Ensure all CI checks pass
-
-### PR Template
-
-Your PR description should include:
-
-- What changes were made
-- Why the changes were made
-- How to test the changes
-- Any additional context or notes
-
-## Code Review Process
-
-All submissions require review. The review process includes:
-
-1. **Automated checks** - CI/CD pipeline runs tests and linting
-2. **Code review** - Maintainers review the changes
-3. **Feedback** - Address any requested changes
-4. **Approval** - Final approval and merge
+All submissions are reviewed: automated CI runs tests and linting, a maintainer
+reviews the change, you address feedback, and it's merged on approval.
 
 ## Areas Needing Help
 
-We welcome contributions in these priority areas. See the [Roadmap](../roadmap/README.md) for details.
+We welcome contributions in these areas. See the [Roadmap](../roadmap/README.md)
+for the current priorities and open issues.
 
 | Area | What's Needed | Difficulty |
 |------|---------------|------------|
-| **React components** | New renderers in `packages/depictio-react-core/` + matching design UI in `depictio/viewer/` | Easy → Medium |
-| **Templates** | nf-core workflow dashboard templates | Medium |
-| **Quarto integration** | Static HTML/PDF export for publications | Medium |
-| **Documentation** | User guides, tutorials, examples — start with [`good-first-issue`](https://github.com/depictio/depictio/labels/good%20first%20issue) | Easy |
-| **Testing** | E2E tests, edge cases, coverage | Medium |
-| **Components** | Markdown component, date picker | Medium |
+| **Catalog tools** | Wire a bioinformatics tool's outputs to dashboard renders — see [Contributing a Tool](contributing-a-tool.md) | Easy → Medium |
+| **Advanced-viz plots** | Biology-specific plots (volcano, embeddings, oncoplot, …) under `advanced_viz` | Medium |
+| **Templates** | nf-core workflow dashboard templates — see [Contributing Templates](contributing-templates.md) | Medium |
+| **Documentation** | Guides, tutorials, examples — start with [`good-first-issue`](https://github.com/depictio/depictio/labels/good%20first%20issue) | Easy |
+| **Testing** | E2E coverage, edge cases, fixtures | Medium |
 
-## How to pick up an issue
-
-1. Browse the [`good-first-issue`](https://github.com/depictio/depictio/labels/good%20first%20issue) label or pick an *Easy* row above.
-2. Comment on the issue to claim it (or open one if it doesn't exist yet) — this avoids duplicate work.
-3. No maintainer response within ~5 working days? Ping in [GitHub Discussions](https://github.com/depictio/depictio/discussions). Don't be shy — we're a small team.
+**Picking up an issue:** browse the
+[`good-first-issue`](https://github.com/depictio/depictio/labels/good%20first%20issue)
+label or an *Easy* row above, comment to claim it (or open one if it doesn't
+exist), and ping [Discussions](https://github.com/depictio/depictio/discussions)
+if there's no response within ~5 working days. We're a small team — don't be shy.
 
 ## Community
 
-### Communication Channels
+- [GitHub Issues](https://github.com/depictio/depictio/issues) — bugs and feature requests
+- [GitHub Discussions](https://github.com/depictio/depictio/discussions) — questions, ideas, contribution check-ins
 
-- [GitHub Issues](https://github.com/depictio/depictio/issues) — bug reports and feature requests
-- [GitHub Discussions](https://github.com/depictio/depictio/discussions) — questions, ideas, and contribution check-ins
-
-### Maintainer response time
-
-Best-effort within **5 working days** on issues, discussions, and PRs. If your PR has been idle longer, bump it — it's not intentional.
+Maintainers respond best-effort within **5 working days**. If your PR has been
+idle longer, bump it — it's not intentional.
 
 ## License
 
-By contributing to Depictio, you agree that your contributions will be licensed under the [MIT License](https://github.com/depictio/depictio/blob/main/LICENSE).
+By contributing, you agree that your contributions will be licensed under the
+[MIT License](https://github.com/depictio/depictio/blob/main/LICENSE).
