@@ -15,6 +15,28 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.2.0](https://github.com/depictio/depictio/releases/tag/v1.2.0)** (July 15, 2026)
+
+!!! success "Admin Log & Task monitoring with live updates"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.2.0
+```
+
+### **✨ New Features**
+
+* **Log & Task monitoring** — a new admin **Log & Task** panel surfaces ingestion and task activity from a server-side ledger, with live WebSocket push and a polling UI. See [Monitoring](../usage/administration/monitoring.md).
+
+### **🐛 Bug Fixes**
+
+* **Single-user mode** — the Log & Task tab is always shown in single-user mode.
+* **Project migration** — export/import now covers MultiQC and JBrowse data collections, with corrected export headers.
+* **Viewer** — "Start editing" targets `/dashboard-edit` (the removed beta route), plus data-collection upload, collapse persistence, and coordinate-map framing fixes.
+
+---
+
 ## **[v1.1.4](https://github.com/depictio/depictio/releases/tag/v1.1.4)** (July 9, 2026)
 
 !!! success "Real-time dashboard events over WebSocket, plus a dependency refresh"
