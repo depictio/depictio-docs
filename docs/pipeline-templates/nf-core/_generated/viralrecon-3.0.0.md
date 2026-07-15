@@ -6,6 +6,10 @@
 .gtd-badge{display:inline-block;padding:0 .5em;border-radius:10px;font-size:.78em;font-weight:600;line-height:1.5;white-space:nowrap;}
 .gtd-scan{background:#eef1fb;color:#3949ab;}
 .gtd-transformed{background:#e6f7f5;color:#2a8c82;}
+.gtd-direct{background:#eaf2ff;color:#2563c9;}
+.gtd-derived{background:#f3e8fd;color:#8e44ad;}
+.gtd-recipe{background:#fbe9f1;color:#b4337a;}
+.gtd-file{background:#eef0f2;color:#5a6573;}
 .gtd-opt{background:#fff6e6;color:#b9770e;}
 .gtd-req{background:#e9f7ef;color:#1e8e5a;}
 .gtd-plus-chip{background:#e9f7ef;color:#1e8e5a;}
@@ -21,6 +25,8 @@
    only the other columns' long paths may wrap. */
 .md-typeset table td:first-child{white-space:nowrap;}
 .md-typeset table td:not(:first-child) code{overflow-wrap:anywhere;}
+/* Reads-column paths: smaller monospace + wrap so long scan targets keep the row tidy. */
+.md-typeset table code.gtd-path{font-size:.62rem;overflow-wrap:anywhere;}
 .gtd-mtx{margin:.8rem 0;}
 .gtd-mtx table{border-collapse:separate;border-spacing:0;font-size:.7rem;}
 .gtd-mtx th,.gtd-mtx td{border:1px solid var(--md-default-fg-color--lightest,#e6e6e6);padding:2px 5px;text-align:center;}
@@ -51,55 +57,66 @@
 
 ### Template variables
 
-Variables you provide when running the template — `DATA_ROOT` via `--data-root`, the rest via `--var NAME=value`:
+`DATA_ROOT` (via `--data-root`) is the only required input. The rest mirror the pipeline's own nf-core parameters and are **auto-derived from the run's `params.json`** — pass `--var NAME=value` only to override what the run recorded:
 
 | Variable | Required | Description |
 |---|:--:|---|
 | `DATA_ROOT` | ✓ | Root directory containing viralrecon pipeline output (multiqc/, variants/) |
-
-**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `IS_NANOPORE`
+| `PLATFORM` | — | nf --platform: 'illumina' (ivar) or 'nanopore' (ARTIC/clair3). Auto-derived from params.json; override with --var PLATFORM=nanopore. |
+| `PROTOCOL` | — | nf --protocol: 'amplicon' or 'metagenomic'. Metagenomic runs have no amplicon mosdepth outputs. Auto-derived from params.json. |
+| `VARIANT_CALLER` | — | nf --variant_caller: 'ivar' (amplicon default) or 'bcftools' (metagenomic default). Repoints the consensus lineage/clade outputs at variants/<caller>/. Auto-derived from params.json. |
+| `SKIP_PANGOLIN` | — | nf --skip_pangolin. When true, Pangolin lineage outputs are absent. Auto-derived from params.json. |
+| `SKIP_NEXTCLADE` | — | nf --skip_nextclade. When true, Nextclade clade outputs are absent. Auto-derived from params.json. |
+| `SKIP_VARIANTS` | — | nf --skip_variants. When true, all variant calling AND read mapping are skipped (no variants, no mosdepth coverage). Auto-derived from params.json. |
+| `SKIP_VARIANTS_LONG_TABLE` | — | nf --skip_variants_long_table. When true, the per-variant long table is absent. Auto-derived from params.json. |
+| `SKIP_MOSDEPTH` | — | nf --skip_mosdepth. When true, amplicon/genome coverage plots are absent. Auto-derived from params.json. |
 
 ### Data collections
 
-14 data collections — <span class="gtd-badge gtd-req">2 required</span> <span class="gtd-badge gtd-opt">12 optional</span>.
+14 data collections — <span class="gtd-badge gtd-req">2 required</span> <span class="gtd-badge gtd-opt">12 optional</span> · <span class="gtd-badge gtd-direct">8 direct</span> <span class="gtd-badge gtd-derived">6 derived</span>.
 
-| Tag | Type | Source | Recipe / scan target | Status |
-|---|---|---|---|:--:|
-| `multiqc_data` | MultiQC | <span class="gtd-badge gtd-scan">scan</span> | `multiqc/multiqc_data/multiqc.parquet` | <span class="gtd-badge gtd-req">required</span> |
-| `summary_metrics` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `multiqc/summary_metrics.py` | <span class="gtd-badge gtd-req">required</span> |
-| `variants_long` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `ivar/variants_long.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `pangolin_lineages` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `pangolin/pangolin_lineages.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `nextclade_results` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nextclade/nextclade_results.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `mosdepth_amplicon_coverage` | Table | <span class="gtd-badge gtd-scan">scan</span> | `variants/bowtie2/mosdepth/amplicon/all_samples.mosdepth.coverage.tsv` | <span class="gtd-badge gtd-opt">optional</span> |
-| `mosdepth_genome_coverage` | Table | <span class="gtd-badge gtd-scan">scan</span> | `variants/bowtie2/mosdepth/genome/all_samples.mosdepth.coverage.tsv` | <span class="gtd-badge gtd-opt">optional</span> |
-| `mosdepth_amplicon_heatmap` | Table | <span class="gtd-badge gtd-scan">scan</span> | `variants/bowtie2/mosdepth/amplicon/all_samples.mosdepth.heatmap.tsv` | <span class="gtd-badge gtd-opt">optional</span> |
-| `oncoplot_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/viralrecon/oncoplot_canonical.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `complex_heatmap_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `mosdepth/complex_heatmap_canonical.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `coverage_track_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `mosdepth/coverage_track_canonical.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `sankey_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/viralrecon/sankey_canonical.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `upset_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/viralrecon/upset_canonical.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `variant_feature_matrix_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/viralrecon/variant_feature_matrix_canonical.py` | <span class="gtd-badge gtd-opt">optional</span> |
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+
+| Tag | Origin | Type | Reads | Status |
+|---|:--:|---|---|:--:|
+| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">multiqc/multiqc_data/multiqc.parquet</code> | <span class="gtd-badge gtd-req">required</span> |
+| `summary_metrics` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">multiqc/summary_metrics.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `variants_long` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">ivar/variants_long.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `pangolin_lineages` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">pangolin/pangolin_lineages.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `nextclade_results` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nextclade/nextclade_results.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `mosdepth_amplicon_coverage` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">variants/bowtie2/mosdepth/amplicon/all_samples.mosdepth.coverage.tsv</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `mosdepth_genome_coverage` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">variants/bowtie2/mosdepth/genome/all_samples.mosdepth.coverage.tsv</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `mosdepth_amplicon_heatmap` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">variants/bowtie2/mosdepth/amplicon/all_samples.mosdepth.heatmap.tsv</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `variant_oncoplot` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/viralrecon/oncoplot_canonical.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `amplicon_coverage_matrix` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">mosdepth/complex_heatmap_canonical.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `genome_coverage_track` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">mosdepth/coverage_track_canonical.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `classification_sankey` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/viralrecon/sankey_canonical.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `mutation_upset` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/viralrecon/upset_canonical.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `variant_pca_matrix` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/viralrecon/variant_feature_matrix_canonical.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
 
 ### Conditional routes
 
-Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (4 collections are unaffected by any variable — present on every run.)
+Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (1 collections are unaffected by any variable — present on every run.)
 
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 
-<div class="gtd-mtx">
+<div class="gtd-mtx scroll">
 <table>
-<thead><tr><th class="dc">Data collection</th><th><code>IS_NANOPORE</code></th></tr></thead>
+<thead><tr><th class="dc">Data collection</th><th><code>PLATFORM=nanopore</code></th><th><code>VARIANT_CALLER=bcftools</code></th><th><code>PROTOCOL=metagenomic</code></th><th><code>SKIP_PANGOLIN=true</code></th><th><code>SKIP_NEXTCLADE=true</code></th><th><code>SKIP_VARIANTS_LONG_TABLE=true</code></th><th><code>SKIP_MOSDEPTH=true</code></th><th><code>SKIP_VARIANTS=true</code></th></tr></thead>
 <tbody>
-<tr><th class="dc"><code>summary_metrics</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td></tr>
-<tr><th class="dc"><code>variants_long</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td></tr>
-<tr><th class="dc"><code>pangolin_lineages</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td></tr>
-<tr><th class="dc"><code>nextclade_results</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td></tr>
-<tr><th class="dc"><code>mosdepth_amplicon_coverage</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td></tr>
-<tr><th class="dc"><code>mosdepth_genome_coverage</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td></tr>
-<tr><th class="dc"><code>mosdepth_amplicon_heatmap</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td></tr>
-<tr><th class="dc"><code>oncoplot_canonical</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td></tr>
-<tr><th class="dc"><code>upset_canonical</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td></tr>
-<tr><th class="dc"><code>variant_feature_matrix_canonical</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td></tr>
+<tr><th class="dc"><code>summary_metrics</code></th><td class="minus" title="removed when PLATFORM=nanopore">−</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_VARIANTS=true">−</td></tr>
+<tr><th class="dc"><code>variants_long</code></th><td class="swap" title="re-sourced when PLATFORM=nanopore">⇄</td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_VARIANTS_LONG_TABLE=true">−</td><td></td><td class="minus" title="removed when SKIP_VARIANTS=true">−</td></tr>
+<tr><th class="dc"><code>pangolin_lineages</code></th><td class="swap" title="re-sourced when PLATFORM=nanopore">⇄</td><td class="swap" title="re-sourced when VARIANT_CALLER=bcftools">⇄</td><td></td><td class="minus" title="removed when SKIP_PANGOLIN=true">−</td><td></td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>nextclade_results</code></th><td class="swap" title="re-sourced when PLATFORM=nanopore">⇄</td><td class="swap" title="re-sourced when VARIANT_CALLER=bcftools">⇄</td><td></td><td></td><td class="minus" title="removed when SKIP_NEXTCLADE=true">−</td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>mosdepth_amplicon_coverage</code></th><td class="swap" title="re-sourced when PLATFORM=nanopore">⇄</td><td></td><td class="minus" title="removed when PROTOCOL=metagenomic">−</td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_MOSDEPTH=true">−</td><td class="minus" title="removed when SKIP_VARIANTS=true">−</td></tr>
+<tr><th class="dc"><code>mosdepth_genome_coverage</code></th><td class="swap" title="re-sourced when PLATFORM=nanopore">⇄</td><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_MOSDEPTH=true">−</td><td class="minus" title="removed when SKIP_VARIANTS=true">−</td></tr>
+<tr><th class="dc"><code>mosdepth_amplicon_heatmap</code></th><td class="swap" title="re-sourced when PLATFORM=nanopore">⇄</td><td></td><td class="minus" title="removed when PROTOCOL=metagenomic">−</td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_MOSDEPTH=true">−</td><td class="minus" title="removed when SKIP_VARIANTS=true">−</td></tr>
+<tr><th class="dc"><code>variant_oncoplot</code></th><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_VARIANTS_LONG_TABLE=true">−</td><td></td><td class="minus" title="removed when SKIP_VARIANTS=true">−</td></tr>
+<tr><th class="dc"><code>amplicon_coverage_matrix</code></th><td></td><td></td><td class="minus" title="removed when PROTOCOL=metagenomic">−</td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_MOSDEPTH=true">−</td><td class="minus" title="removed when SKIP_VARIANTS=true">−</td></tr>
+<tr><th class="dc"><code>genome_coverage_track</code></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_MOSDEPTH=true">−</td><td class="minus" title="removed when SKIP_VARIANTS=true">−</td></tr>
+<tr><th class="dc"><code>classification_sankey</code></th><td></td><td></td><td></td><td class="minus" title="removed when SKIP_PANGOLIN=true">−</td><td class="minus" title="removed when SKIP_NEXTCLADE=true">−</td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>mutation_upset</code></th><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_VARIANTS_LONG_TABLE=true">−</td><td></td><td class="minus" title="removed when SKIP_VARIANTS=true">−</td></tr>
+<tr><th class="dc"><code>variant_pca_matrix</code></th><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_VARIANTS_LONG_TABLE=true">−</td><td></td><td class="minus" title="removed when SKIP_VARIANTS=true">−</td></tr>
 </tbody></table></div>
 
 ### Cross-DC links

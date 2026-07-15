@@ -98,7 +98,7 @@ docker compose up -d
 
     ---
 
-    Launch a temporary cloud workspace with Depictio pre-configured — no local setup required.
+    Launch a temporary cloud workspace with Depictio pre-configured — no local setup required. Boots in single-user mode with the Iris reference project pre-seeded and the viewer opened automatically.
 
     [:octicons-arrow-right-24: Open in Codespaces](https://codespaces.new/depictio/depictio)
 

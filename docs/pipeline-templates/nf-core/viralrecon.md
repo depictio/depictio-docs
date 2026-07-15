@@ -1,23 +1,29 @@
 ---
+title: Viral Genome Reconstruction
 hide:
   - navigation
 ---
 
-# nf-core/viralrecon
-
-<div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
-  <img src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon" style="height:56px;" onerror="this.src='../../images/pipeline-templates/nf-core/viralrecon/nf-core-viralrecon_logo.png'">
-  <div style="flex:1;">
-    <strong style="font-size:1.1em;">Assembly and intrahost/low-frequency variant calling for viral samples — SARS-CoV-2 + other viral genomes via the reference-genomes config.</strong><br>
-    <span style="color:#666;font-size:0.9em;">nf-core pipeline · <a href="https://nf-co.re/viralrecon" target="_blank">nf-co.re/viralrecon</a></span>
+<div class="template-banner">
+  <a class="template-banner-logo" href="https://nf-co.re/viralrecon" target="_blank" title="nf-core/viralrecon on nf-co.re">
+    <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_dark.png" alt="nf-core/viralrecon">
+    <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon">
+  </a>
+  <div class="template-banner-body">
+    <h1 class="template-title">Viral Genome Reconstruction</h1>
+    <p class="template-subtitle">Assembly and intrahost/low-frequency variant calling for viral samples — SARS-CoV-2 + other viral genomes via the reference-genomes config.</p>
+    <p class="template-links">
+      <a href="https://nf-co.re/viralrecon" target="_blank"><i class="mdi mdi-open-in-new"></i> nf-co.re</a>
+      <a href="https://github.com/nf-core/viralrecon" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
+    </p>
   </div>
-  <div style="background:#2196F3;color:#fff;padding:4px 12px;border-radius:12px;font-size:0.85em;font-weight:600;white-space:nowrap;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Reviewed</div>
+  <span class="template-status-reviewed template-banner-badge" data-tooltip="Reviewed — tested, CI passes, and reviewed by the Depictio team or community."><i class="mdi mdi-check-circle-outline"></i> Reviewed</span>
 </div>
 
 The viralrecon template covers the main outputs of a standard nf-core/viralrecon run:
 
 - :material-chart-bar: **MultiQC quality control** — FastQC, Cutadapt, samtools/picard alignment metrics
-- :material-dna: **Variant calling** — iVar variants with gene, effect, and allele-frequency annotations (illumina only)
+- :material-dna: **Variant calling** — gene, effect, and allele-frequency annotations from iVar (Illumina) or ARTIC/clair3 (nanopore)
 - :material-virus: **Lineage assignment** — Pangolin lineages with conflict and QC scores
 - :material-medical-bag: **Clade assignment** — Nextclade clades with substitution counts
 - :material-chart-line: **Coverage analysis** — Mosdepth amplicon coverage, genome coverage, and amplicon heatmap
@@ -33,37 +39,29 @@ The viralrecon template covers the main outputs of a standard nf-core/viralrecon
 
 ## Quick start
 
-viralrecon needs no extra template variables — the **same command** works for
-both sequencing platforms, which Depictio auto-detects from the run's
-`params.json`:
+`--data-root` is the only thing you have to pass. The template's routing variables
+(`PLATFORM`, `PROTOCOL`, `VARIANT_CALLER`, and the `SKIP_*` flags) mirror nf-core's own
+parameters and are **auto-derived from the run's `params.json`** — so the *same command*
+works for an Illumina or a nanopore run:
 
-=== "Illumina"
+```bash
+depictio run \
+  --template nf-core/viralrecon/3.0.0 \
+  --data-root /path/to/viralrecon_results
+```
 
-    ```bash
-    depictio run \
-      --template nf-core/viralrecon/3.0.0 \
-      --data-root /path/to/viralrecon_results
-    ```
+A nanopore run (whose `params.json` records `platform: nanopore`) is detected
+automatically: the coverage and lineage collections are repointed at the
+`artic_minion/` layout and the variant calls are **re-sourced** from the ARTIC
+`*.pass.vcf.gz` files — so the variant views (oncoplot, lollipop, manhattan) keep
+working. Only `summary_metrics` is dropped (no nanopore equivalent yet).
 
-    Full dashboard: MultiQC, coverage & depth, lineage & clustering, variants, sample QC.
-
-=== "Nanopore (ARTIC minion)"
-
-    ```bash
-    depictio run \
-      --template nf-core/viralrecon/3.0.0 \
-      --data-root /path/to/viralrecon_results
-    ```
-
-    `IS_NANOPORE` is auto-detected: the coverage and lineage collections are
-    repointed at the `artic_minion/` layout and the illumina-only variant
-    collections are dropped — see *Conditional routes* in the [Reference](#reference).
-
-!!! warning "`--variant_caller ivar` is required"
-    The viralrecon template's recipes hardcode paths under `variants/ivar/`
-    (see `variants_long.py`, `pangolin_lineages.py`, `nextclade_results.py`).
-    Running nf-core/viralrecon with the alternative `--variant_caller bcftools`
-    produces a different output layout that the template won't match.
+!!! tip "Override the auto-derived values"
+    The derivation reads `pipeline_info/params*.json`. Pass `--var NAME=value` to
+    override any of it — e.g. `--var PLATFORM=nanopore` when a `DATA_ROOT` aggregates
+    mixed-platform runs, or `--var SKIP_PANGOLIN=true` to force-drop a collection. Each
+    auto-derived value is logged at resolution time. See the full list and routes in the
+    [Reference](#reference).
 
 !!! tip "Aggregated data collections"
     The viralrecon DCs use `metatype: "Aggregated"`. They are built
@@ -75,10 +73,32 @@ both sequencing platforms, which Depictio auto-detects from the run's
 
 ## Reference
 
-Recipe DCs fan per-sample files into one delta table via `glob_pattern`; the
-`IS_NANOPORE` route (auto-detected from `params.json`) repoints
-coverage/lineage DCs at the `artic_minion/` layout and drops the
-illumina-only variant DCs.
+Recipe DCs fan per-sample files into one delta table via `glob_pattern`. The
+`PLATFORM=nanopore` route repoints the coverage/lineage DCs at the
+`artic_minion/` layout and re-sources `variants_long` from the ARTIC VCFs;
+only `summary_metrics` is dropped.
+
+### Direct vs derived data collections
+
+The template exposes two kinds of data collection, and the **Origin** column of the
+reference table below flags each one explicitly — so you can tell real measurements
+from views at a glance:
+
+| Origin | What it is | Examples |
+|---|---|---|
+| <span class="gtd-badge gtd-direct">direct</span> | A real pipeline output — scanned straight off disk, or lightly cleaned by a recipe that reads the raw files. This *is* the data. | `variants_long`, `pangolin_lineages`, `nextclade_results`, `mosdepth_amplicon_coverage` |
+| <span class="gtd-badge gtd-derived">derived</span> | A *reshape* of one or more direct collections into the exact column layout an advanced visualization needs — a view, not new measurement (its recipe reads another collection via `dc_ref`). | `variant_oncoplot`, `amplicon_coverage_matrix`, `genome_coverage_track`, `classification_sankey`, `mutation_upset`, `variant_pca_matrix` |
+
+Derived collections used to carry a `_canonical` suffix; they were renamed to
+say what they *produce* (e.g. `variant_feature_matrix_canonical` →
+`variant_pca_matrix`). Each one names its source recipe in the reference table's
+*Reads* column.
+
+!!! info "Self-adapting layout"
+    The dashboard adapts to whatever the run actually produced: components bound to
+    pruned or unparsed data collections are hidden, tabs left with no real
+    visualizations are dropped, and the rest are re-packed with no empty rows. One
+    template therefore covers both the Illumina and nanopore/ARTIC routes without edits.
 
 --8<-- "pipeline-templates/nf-core/_generated/viralrecon-3.0.0.md"
 
@@ -136,7 +156,8 @@ filters propagate across tabs via cross-DC links on the
 
     - 4 summary cards: *Total Samples*, *Unique Lineages*, *Unique Clades*, *Avg Genome Coverage (10x)*
     - 6 figures: *Pangolin Lineage Distribution*, *Nextclade QC Status Overview*, *Nextclade Clade Distribution*, *Coverage vs Total Variants by Lineage*, *Genome Coverage per Sample (>= 10x Depth)*, *Nextclade — Substitutions vs Deletions by Clade*
-    - Sankey funnel: qc_status → lineage → clade (canonical sankey)
+    - Sankey funnel: qc_status → lineage → clade (`classification_sankey`)
+    - Variant-profile PCA embedding, coloured by lineage (`variant_pca_matrix`)
     - 3 tables: *Pangolin Lineage Assignments*, *Nextclade Clade Assignments*, *Summary Metrics*
 
 === "Variants"
@@ -151,9 +172,9 @@ filters propagate across tabs via cross-DC links on the
     **Components:**
 
     - 4 summary cards: *Total Variants*, *Unique Genes*, *Mean Allele Freq*, *Unique AA Changes*
-    - Manhattan plot: chr × pos × score (canonical manhattan)
-    - Lollipop: per-gene variants (canonical lollipop)
-    - Oncoplot: sample × gene × mutation_type (canonical oncoplot)
+    - Manhattan plot: chr × pos × score (bound directly to `variants_long`)
+    - Lollipop: per-gene variants (bound directly to `variants_long`)
+    - Oncoplot: sample × gene × mutation_type (`variant_oncoplot`)
     - 5 figures: *Allele Frequency vs Genome Position*, *Variant Count by Gene and Functional Class*, *Variant Effect Distribution*, *Variant Functional Class Distribution*, *Variant Count per Sample*
     - 1 table: *Variants Long Table*
 
@@ -170,7 +191,7 @@ filters propagate across tabs via cross-DC links on the
 
     - Summary cards: total samples, samples passing QC, mean coverage,
       mean variants per sample
-    - Sample × metric heatmap (canonical complex heatmap)
+    - Amplicon coverage matrix heatmap (`amplicon_coverage_matrix`)
     - Summary metrics table
 
 ---
@@ -195,13 +216,21 @@ depictio run --template nf-core/viralrecon/3.0.0 \
   --data-root results/
 ```
 
+A nanopore/ARTIC run (`nextflow … --platform nanopore`) needs no extra flags —
+Depictio reads `platform: nanopore` from the run's `params.json` and switches to the
+`artic_minion/` layout automatically.
+
 See [nf-co.re/viralrecon/usage](https://nf-co.re/viralrecon/3.0.0/docs/usage) for full pipeline documentation.
 
 ---
 
 ## Required data structure
 
-Point `--data-root` to the directory containing your viralrecon outputs. This can be a single run's `results/` folder or a parent directory containing multiple runs — Depictio scans recursively. Not all files are required; the template adapts to what's present and to the sequencing platform (`IS_NANOPORE` is auto-detected from the run's `params.json`).
+Point `--data-root` to the directory containing your viralrecon outputs. This can be a single run's `results/` folder or a parent directory containing multiple runs — Depictio scans recursively. Not all files are required; the template adapts to what's present and to the sequencing platform / caller / skip flags it reads from the run's `params.json` (override any with `--var`).
+
+The tree below shows the **Illumina** layout. On `PLATFORM=nanopore` the same
+collections are read from `artic_minion/` instead (coverage, lineage, and the
+ARTIC `*.pass.vcf.gz` variant calls).
 
 ```text
 <DATA_ROOT>/
@@ -210,12 +239,12 @@ Point `--data-root` to the directory containing your viralrecon outputs. This ca
 │   │   └── multiqc.parquet
 │   └── summary_variants_metrics_mqc.csv
 └── variants/
-    └── ivar/                                   # illumina layout (⚠ artic_minion/ on nanopore)
+    └── ivar/                                   # Illumina layout (artic_minion/ on PLATFORM=nanopore)
         ├── consensus/
         │   └── bcftools/
         │       ├── pangolin/*.pangolin.csv     # Pangolin lineage, one file per sample
         │       └── nextclade/*.csv             # Nextclade clade, one file per sample
-        ├── variants_long_table.csv             # ⚠ illumina only (dropped on nanopore)
+        ├── variants_long_table.csv             # Illumina variant calls (ARTIC *.pass.vcf.gz on nanopore)
         └── *.mosdepth.{coverage,heatmap}.tsv   # amplicon / genome coverage
 ```
 
