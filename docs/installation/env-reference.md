@@ -39,6 +39,7 @@ DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [Bootstrap](#bootstrap)
 - [Redis Cache](#redis-cache)
 - [Celery Task Queue](#celery-task-queue)
+- [Real-time Events](#real-time-events)
 - [Performance & Timeouts](#performance-timeouts)
 - [Backup & Restore](#backup-restore)
 <!-- - [Internal Analytics](#internal-analytics) -->
@@ -241,6 +242,35 @@ Celery task queue configuration for background processing.
 | `DEPICTIO_CELERY_OFFLOAD_PREVIEW` | `true` | Offload component-design preview endpoints (`/figure/preview`, etc.) to Celery |
 | `DEPICTIO_CELERY_OFFLOAD_RENDERING` | `false` | Offload dashboard render endpoints (`/dashboards/render_*`) to Celery |
 | `DEPICTIO_CELERY_OFFLOAD_TIMEOUT_SECONDS` | `30.0` | Per-request Celery offload timeout in seconds before HTTP 504 |
+
+---
+
+## Real-time Events
+
+**Config Class:** `EventsConfig`
+**Environment Prefix:** `DEPICTIO_EVENTS_`
+
+Real-time dashboard events (WebSocket live refresh). Disabled by default — set
+`DEPICTIO_EVENTS_ENABLED=true` to turn the system on. Uses Redis pub/sub to fan events out to
+connected viewers, so a reachable Redis instance is required when enabled. See
+[Real-time Events](../usage/guides/realtime-events.md) for the full setup.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_EVENTS_ENABLED` | `false` | Master switch for the real-time event system |
+| `DEPICTIO_EVENTS_REDIS_HOST` | `redis` | Redis hostname for pub/sub |
+| `DEPICTIO_EVENTS_REDIS_PORT` | `6379` | Redis port |
+| `DEPICTIO_EVENTS_REDIS_PASSWORD` | - | Redis password (optional) |
+| `DEPICTIO_EVENTS_REDIS_DB` | `3` | Redis database number (cache=0, celery=1,2) |
+| `DEPICTIO_EVENTS_MONGODB_CHANGE_STREAMS_ENABLED` | `true` | Enable MongoDB change streams for data collections (requires a replica set) |
+| `DEPICTIO_EVENTS_WS_HEARTBEAT_INTERVAL` | `30` | WebSocket heartbeat/ping interval in seconds |
+| `DEPICTIO_EVENTS_WS_CONNECTION_TIMEOUT` | `60` | WebSocket connection timeout in seconds |
+| `DEPICTIO_EVENTS_DEBOUNCE_MS` | `1000` | Debounce interval in milliseconds for rapid updates |
+
+!!! note "Dev-only trigger endpoint"
+    `DEPICTIO_ENABLE_DEV_ENDPOINTS` (default `false`, prefix `DEPICTIO_`) gates the
+    admin-only `/events/test-trigger/{dc_id}` route used to broadcast a test event by hand. It is
+    **not** required for normal event-driven refresh — data ingestion drives that on its own.
 
 ---
 
@@ -457,6 +487,7 @@ Top-level application settings including context configuration.
 |----------|---------|-------------|
 | `DEPICTIO_CONTEXT` | `server` | - |
 | `DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS` | `false` | Skip seeding the bundled reference projects (Iris, Penguins, Advanced Visualisations, nf-core/ampliseq, nf-core/viralrecon) and their dashboards on API startup. Opt-in: default preserves current behaviour. |
+| `DEPICTIO_SEED_PROJECTS` | _(empty = all)_ | Comma-separated allowlist of bundled reference datasets to seed on startup (e.g. `iris` or `iris,penguins`). Empty seeds all of them. Ignored when `DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS=true` (that takes precedence and seeds none). Used by the devcontainer/Codespaces setup to seed only `iris` for a faster boot. |
 | `DEPICTIO_WALKTHROUGH_DISABLED` | `false` | Hide the onboarding walkthrough overlay for every user. Useful for embedded iframes, staging envs used for screenshot capture, and demos with their own narration. `DEPICTIO_DEV_MODE=true` also suppresses it. |
 
 ---

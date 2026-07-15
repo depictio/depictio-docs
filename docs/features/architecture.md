@@ -153,6 +153,36 @@ docker compose down && docker compose up -d
 
 ---
 
+## :material-lightning-bolt: Real-time Events (v1.1.4+)
+
+Depictio can push **live dashboard updates over WebSocket** when the data behind a dashboard changes, so viewers refresh without polling. The subsystem is disabled by default (`DEPICTIO_EVENTS_ENABLED`) and opt-in per project.
+
+```text
+┌────────────┐   upsert    ┌─────────────┐   pub/sub   ┌─────────────┐
+│  Producer  │────────────▶│   FastAPI   │────────────▶│    Redis    │
+│  (CLI /    │             │  event svc  │             │  (fan-out)  │
+│ instrument)│             └──────┬──────┘             └──────┬──────┘
+└────────────┘                    │ WebSocket                 │
+                                  ▼                           │
+                          ┌───────────────┐                   │
+                          │  Subscribed   │◀──────────────────┘
+                          │  dashboards   │
+                          └───────────────┘
+```
+
+Moving parts:
+
+- :material-server-network: **Event service + connection manager** (FastAPI) — track WebSocket subscriptions per dashboard and broadcast `data_collection_updated` events.
+- :material-memory: **Redis pub/sub** — fans events out across API workers/replicas, on a dedicated Redis DB (default `3`, separate from cache and Celery).
+- :material-database-sync: **MongoDB change streams** (optional, requires a replica set) — detect data-collection changes at the database layer.
+- :material-transit-connection-variant: **WebSocket channel** `/depictio/api/v1/events/ws` — JWT-authenticated via a `token` query parameter and permission-checked at viewer level; the React viewer subscribes per dashboard and drives the live indicator.
+
+**Trigger path:** a producer re-ingests or upserts a data collection (`POST /deltatables/upsert`) → the API re-reads the Delta, recomputes column specs and bumps the version → broadcasts to subscribed dashboards, which refetch. Activation requires both the server flag and a `realtime` block in the project's `project.yaml`.
+
+See the [Real-time events guide](../usage/guides/realtime-events.md) for setup, and the [environment reference](../installation/env-reference.md#real-time-events) for the full `DEPICTIO_EVENTS_*` list.
+
+---
+
 ## :material-arrow-decision: Data Flow
 
 ```text
@@ -180,3 +210,4 @@ docker compose down && docker compose up -d
 - :material-puzzle: [Components](components.md) - Available component types
 - :material-database-outline: [Data Model](data-model.md) - Domain objects and relationship model
 - :material-shield-check: [Security](security.md) - Security features and code restrictions
+- :material-lightning-bolt: [Real-time events](../usage/guides/realtime-events.md) - Enabling live WebSocket dashboard refresh

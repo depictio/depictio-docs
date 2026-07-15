@@ -41,6 +41,10 @@ If you have configured Google OAuth for your Depictio instance (see [Configurati
     </a>
 </div>
 
+Each dashboard is shown as a card. Cards display the dashboard's screenshot thumbnail
+once one has been captured, and fall back to the dashboard's logo (when set) before the
+generic placeholder.
+
 ### <span style="color: #7A5DC7;">:material-menu:</span> Sidebar Navigation
 
 The left sidebar provides easy access to various sections of the application. This includes:
@@ -169,9 +173,9 @@ The **About** section provides information about the GitHub repository and the d
 
 The **Admin** section is only accessible to users with admin privileges. It allows admins to view users, projects and dashboards. The **Users** tab displays a list/delete/change status (sysadmin/standard) of all users registered in the system. The **Dashboards** tab displays a list of all dashboards while the **Projects** tab lists all projects. Admins can delete any project or dashboard, regardless of ownership.
 
-## <span style="color: #45B8AC;">:material-react:</span> React viewer — additional pages
+## <span style="color: #45B8AC;">:material-sitemap:</span> Page reference
 
-These pages are part of the React viewer (v1.0.0+) and surface project-detail UI and the CLI-agents panel.
+Depictio's main pages and their URLs:
 
 ### <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects list (/projects)
 
@@ -183,7 +187,15 @@ These pages are part of the React viewer (v1.0.0+) and surface project-detail UI
 
 ### <span style="color: #45B8AC;">:material-database-cog:</span> Project detail (/projects/{id})
 
-Data collections, cross-DC links, and the joins graph for a single project.
+A single project's data, organised into tabs:
+
+- **Overview** — project summary and metadata.
+- **Data Collections** — a sortable, filterable table of the project's data collections.
+- **Links** — cross-DC links and the joins graph, with sortable/filterable columns.
+- **Ingestion** — for projects created from a [pipeline template](../../pipeline-templates/README.md), the [ingestion report](../../features/dashboards.md#ingestion-report-health) of expected vs. ingested data collections.
+
+You can reach this page directly by clicking the **project badge** shown on any
+dashboard card or in the dashboards table.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/v0.12/react-beta/page_project_detail.png" target="_blank">

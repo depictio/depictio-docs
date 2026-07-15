@@ -6,6 +6,10 @@
 .gtd-badge{display:inline-block;padding:0 .5em;border-radius:10px;font-size:.78em;font-weight:600;line-height:1.5;white-space:nowrap;}
 .gtd-scan{background:#eef1fb;color:#3949ab;}
 .gtd-transformed{background:#e6f7f5;color:#2a8c82;}
+.gtd-direct{background:#eaf2ff;color:#2563c9;}
+.gtd-derived{background:#f3e8fd;color:#8e44ad;}
+.gtd-recipe{background:#fbe9f1;color:#b4337a;}
+.gtd-file{background:#eef0f2;color:#5a6573;}
 .gtd-opt{background:#fff6e6;color:#b9770e;}
 .gtd-req{background:#e9f7ef;color:#1e8e5a;}
 .gtd-plus-chip{background:#e9f7ef;color:#1e8e5a;}
@@ -21,6 +25,8 @@
    only the other columns' long paths may wrap. */
 .md-typeset table td:first-child{white-space:nowrap;}
 .md-typeset table td:not(:first-child) code{overflow-wrap:anywhere;}
+/* Reads-column paths: smaller monospace + wrap so long scan targets keep the row tidy. */
+.md-typeset table code.gtd-path{font-size:.62rem;overflow-wrap:anywhere;}
 .gtd-mtx{margin:.8rem 0;}
 .gtd-mtx table{border-collapse:separate;border-spacing:0;font-size:.7rem;}
 .gtd-mtx th,.gtd-mtx td{border:1px solid var(--md-default-fg-color--lightest,#e6e6e6);padding:2px 5px;text-align:center;}
@@ -51,7 +57,7 @@
 
 ### Template variables
 
-Variables you provide when running the template — `DATA_ROOT` via `--data-root`, the rest via `--var NAME=value`:
+`DATA_ROOT` (via `--data-root`) is the only required input. The rest mirror the pipeline's own nf-core parameters and are **auto-derived from the run's `params.json`** — pass `--var NAME=value` only to override what the run recorded:
 
 | Variable | Required | Description |
 |---|:--:|---|
@@ -60,38 +66,45 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 | `METADATA_FILE` | — | Path to sample metadata TSV (--metadata in ampliseq run). Optional. All non-ID columns become annotations. |
 | `METADATA_ID_COL` | — | Metadata sample-ID column name (links join on it). Auto-detected as the first metadata column; defaults to 'sample'. |
 | `GROUP_COL` | — | Metadata column for grouping/facetting in dashboards. Auto-detected as first annotation column if not provided. |
+| `SKIP_QIIME` | — | nf --skip_qiime. ITS/sintax runs (true) produce no QIIME2 outputs. Auto-derived from params.json. |
+| `SKIP_TAXONOMY` | — | nf --skip_taxonomy. When true, qiime2/{barplot,rel_abundance_tables,taxonomy}/ are absent. Auto-derived from params.json. |
+| `SKIP_ALPHA_RAREFACTION` | — | nf --skip_alpha_rarefaction. When true, qiime2/alpha-rarefaction/ is absent. Auto-derived from params.json. |
+| `ANCOMBC` | — | nf --ancombc (positive opt-in). When false (default), no qiime2/ancombc/ output exists, so the differential-abundance DCs are pruned. Auto-derived from params.json. |
+| `MULTIREGION` | — | nf --multiregion (path; present on SIDLE multi-region runs). When set, per-region ASVs are reconstructed under sidle/ and the QIIME2 diversity/phylogeny/ANCOM-BC DCs are absent. Auto-derived from params.json. |
 
-**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`, `IS_MULTIREGION`, `SKIP_TAXONOMY`, `SKIP_ALPHA_RAREFACTION`, `SKIP_ANCOM`
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`
 
 ### Data collections
 
-23 data collections — <span class="gtd-badge gtd-req">11 required</span> <span class="gtd-badge gtd-opt">12 optional</span>.
+23 data collections — <span class="gtd-badge gtd-req">11 required</span> <span class="gtd-badge gtd-opt">12 optional</span> · <span class="gtd-badge gtd-direct">9 direct</span> <span class="gtd-badge gtd-derived">14 derived</span>.
 
-| Tag | Type | Source | Recipe / scan target | Status |
-|---|---|---|---|:--:|
-| `multiqc_data` | MultiQC | <span class="gtd-badge gtd-scan">scan</span> | `multiqc/multiqc_data/multiqc.parquet` | <span class="gtd-badge gtd-req">required</span> |
-| `samplesheet` | Table | <span class="gtd-badge gtd-scan">scan</span> | `{SAMPLESHEET_FILE}` | <span class="gtd-badge gtd-req">required</span> |
-| `metadata` | Table | <span class="gtd-badge gtd-scan">scan</span> | `{METADATA_FILE}` | <span class="gtd-badge gtd-opt">optional</span> |
-| `alpha_rarefaction` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `qiime2/alpha_rarefaction.py` | <span class="gtd-badge gtd-req">required</span> |
-| `taxonomy_composition` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `qiime2/taxonomy_composition.py` | <span class="gtd-badge gtd-req">required</span> |
-| `taxonomy_rel_abundance` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/taxonomy_rel_abundance.py` | <span class="gtd-badge gtd-req">required</span> |
-| `sintax_rel_abundance` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/sintax_rel_abundance.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `taxonomy_heatmap` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `qiime2/taxonomy_heatmap.py` | <span class="gtd-badge gtd-req">required</span> |
-| `ancombc_results` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `qiime2/ancombc.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `stacked_taxonomy_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `qiime2/stacked_taxonomy_canonical.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `embedding_pcoa` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `qiime2/embedding_pcoa.py` | <span class="gtd-badge gtd-req">required</span> |
-| `rarefaction_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `qiime2/rarefaction_canonical.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `alpha_diversity_multi_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `qiime2/alpha_diversity_multi_canonical.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `complex_heatmap_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/complex_heatmap_canonical.py` | <span class="gtd-badge gtd-req">required</span> |
-| `sunburst_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/sunburst_canonical.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `sankey_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/sankey_canonical.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `upset_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/upset_canonical.py` | <span class="gtd-badge gtd-req">required</span> |
-| `ma_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/ma_canonical.py` | <span class="gtd-badge gtd-req">required</span> |
-| `bray_curtis_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/bray_curtis_canonical.py` | <span class="gtd-badge gtd-req">required</span> |
-| `phylogenetic_tree_canonical` | phylogeny | <span class="gtd-badge gtd-scan">scan</span> | `{DATA_ROOT}/qiime2/phylogenetic_tree/tree.nwk` | <span class="gtd-badge gtd-opt">optional</span> |
-| `phylogenetic_tree_metadata_canonical` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/tree_metadata_canonical.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `sidle_reconstructed` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/sidle_reconstructed.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `sidle_reconstruction_qc` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `nf-core/ampliseq/sidle_reconstruction_qc.py` | <span class="gtd-badge gtd-opt">optional</span> |
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+
+| Tag | Origin | Type | Reads | Status |
+|---|:--:|---|---|:--:|
+| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">multiqc/multiqc_data/multiqc.parquet</code> | <span class="gtd-badge gtd-req">required</span> |
+| `samplesheet` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{SAMPLESHEET_FILE}</code> | <span class="gtd-badge gtd-req">required</span> |
+| `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{METADATA_FILE}</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `alpha_rarefaction` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/alpha_rarefaction.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `taxonomy_composition` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/taxonomy_composition.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `taxonomy_rel_abundance` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/taxonomy_rel_abundance.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `sintax_rel_abundance` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/sintax_rel_abundance.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `taxonomy_heatmap` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/taxonomy_heatmap.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `ancombc_results` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/ancombc.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `stacked_taxonomy_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/stacked_taxonomy_canonical.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `embedding_pcoa` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/embedding_pcoa.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `rarefaction_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/rarefaction_canonical.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `alpha_diversity_multi_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/alpha_diversity_multi_canonical.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `complex_heatmap_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/complex_heatmap_canonical.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `sunburst_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/sunburst_canonical.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `sankey_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/sankey_canonical.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `upset_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/upset_canonical.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `ma_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/ma_canonical.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `bray_curtis_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/bray_curtis_canonical.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `phylogenetic_tree_canonical` | <span class="gtd-badge gtd-direct">direct</span> | :material-graph-outline: phylogeny | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{DATA_ROOT}/qiime2/phylogenetic_tree/tree.nwk</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `phylogenetic_tree_metadata_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/tree_metadata_canonical.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `sidle_reconstructed` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/sidle_reconstructed.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `sidle_reconstruction_qc` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/sidle_reconstruction_qc.py</code> | <span class="gtd-badge gtd-opt">optional</span> |
 
 ### Conditional routes
 
@@ -101,27 +114,27 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 
 <div class="gtd-mtx scroll">
 <table>
-<thead><tr><th class="dc">Data collection</th><th><code>METADATA_FILE</code></th><th><code>SKIP_QIIME</code></th><th><code>IS_MULTIREGION</code></th><th><code>SKIP_TAXONOMY</code></th><th><code>SKIP_ALPHA_RAREFACTION</code></th><th><code>SKIP_ANCOM</code></th></tr></thead>
+<thead><tr><th class="dc">Data collection</th><th><code>METADATA_FILE</code></th><th><code>SKIP_QIIME=true</code></th><th><code>SKIP_QIIME=false</code></th><th><code>MULTIREGION</code></th><th><code>SKIP_TAXONOMY=true</code></th><th><code>SKIP_ALPHA_RAREFACTION=true</code></th><th><code>ANCOMBC=false</code></th></tr></thead>
 <tbody>
-<tr><th class="dc"><code>metadata</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><th class="dc"><code>alpha_rarefaction</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td></td><td class="minus" title="removed when SKIP_ALPHA_RAREFACTION is set">−</td><td></td></tr>
-<tr><th class="dc"><code>taxonomy_composition</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td></td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td></tr>
-<tr><th class="dc"><code>taxonomy_rel_abundance</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td></tr>
-<tr><th class="dc"><code>sintax_rel_abundance</code></th><td></td><td class="plus" title="included only when SKIP_QIIME is set">+</td><td></td><td></td><td></td><td></td></tr>
-<tr><th class="dc"><code>taxonomy_heatmap</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td></tr>
-<tr><th class="dc"><code>ancombc_results</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td class="minus" title="removed when SKIP_ANCOM is set">−</td></tr>
-<tr><th class="dc"><code>stacked_taxonomy_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td></tr>
-<tr><th class="dc"><code>embedding_pcoa</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td></tr>
-<tr><th class="dc"><code>rarefaction_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td></td><td class="minus" title="removed when SKIP_ALPHA_RAREFACTION is set">−</td><td></td></tr>
-<tr><th class="dc"><code>alpha_diversity_multi_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td></td><td class="minus" title="removed when SKIP_ALPHA_RAREFACTION is set">−</td><td></td></tr>
-<tr><th class="dc"><code>complex_heatmap_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td></tr>
-<tr><th class="dc"><code>sunburst_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td></tr>
-<tr><th class="dc"><code>sankey_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td></tr>
-<tr><th class="dc"><code>upset_canonical</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td></tr>
-<tr><th class="dc"><code>ma_canonical</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td class="minus" title="removed when SKIP_ANCOM is set">−</td></tr>
-<tr><th class="dc"><code>bray_curtis_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td></tr>
-<tr><th class="dc"><code>phylogenetic_tree_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td></td><td></td><td></td></tr>
-<tr><th class="dc"><code>phylogenetic_tree_metadata_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>metadata</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>alpha_rarefaction</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td></td><td class="minus" title="removed when SKIP_ALPHA_RAREFACTION=true">−</td><td></td></tr>
+<tr><th class="dc"><code>taxonomy_composition</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td></td><td class="minus" title="removed when SKIP_TAXONOMY=true">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>taxonomy_rel_abundance</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY=true">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>sintax_rel_abundance</code></th><td></td><td></td><td class="minus" title="removed when SKIP_QIIME=false">−</td><td></td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>taxonomy_heatmap</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY=true">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>ancombc_results</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY=true">−</td><td></td><td class="minus" title="removed when ANCOMBC=false">−</td></tr>
+<tr><th class="dc"><code>stacked_taxonomy_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY=true">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>embedding_pcoa</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY=true">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>rarefaction_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td></td><td class="minus" title="removed when SKIP_ALPHA_RAREFACTION=true">−</td><td></td></tr>
+<tr><th class="dc"><code>alpha_diversity_multi_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td></td><td class="minus" title="removed when SKIP_ALPHA_RAREFACTION=true">−</td><td></td></tr>
+<tr><th class="dc"><code>complex_heatmap_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY=true">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>sunburst_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY=true">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>sankey_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY=true">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>upset_canonical</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY=true">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>ma_canonical</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY=true">−</td><td></td><td class="minus" title="removed when ANCOMBC=false">−</td></tr>
+<tr><th class="dc"><code>bray_curtis_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY=true">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>phylogenetic_tree_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>phylogenetic_tree_metadata_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME=true">−</td><td></td><td class="minus" title="removed when MULTIREGION is set">−</td><td></td><td></td><td></td></tr>
 </tbody></table></div>
 
 ### Cross-DC links

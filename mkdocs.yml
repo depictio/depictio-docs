@@ -197,6 +197,7 @@ nav:
           - WebUI: usage/guides/web_ui.md
           - Dashboard creation: usage/guides/dashboard_creation.md
           - Using the dashboard: usage/guides/dashboard_usage.md
+          - Real-time events: usage/guides/realtime-events.md
       - Projects:
           - usage/projects/index.md
           - Guide: usage/projects/guide.md
@@ -228,6 +229,7 @@ nav:
           - YAML Dashboard Sync: features/yaml-sync.md
       - System Design:
           - Architecture: features/architecture.md
+          - Performance & Scaling: features/performance.md
           - Data Model: features/data-model.md
           - Security: features/security.md
   - API:
@@ -239,6 +241,7 @@ nav:
   - Templates:
       - pipeline-templates/README.md
       - nf-core:
+          - pipeline-templates/nf-core/index.md
           - ampliseq: pipeline-templates/nf-core/ampliseq.md
           - viralrecon: pipeline-templates/nf-core/viralrecon.md
   - Catalog: catalog/index.md

@@ -15,6 +15,106 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.1.4](https://github.com/depictio/depictio/releases/tag/v1.1.4)** (July 9, 2026)
+
+!!! success "Real-time dashboard events over WebSocket, plus a dependency refresh"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.1.4
+```
+
+### **✨ New Features**
+
+* **Real-time dashboard events** — dashboards refresh live over WebSocket as new data is ingested, no manual reload. Opt in per project (`realtime.enabled` in `project.yaml`) and enable the server flag `DEPICTIO_EVENTS_ENABLED`; see [Real-time Events](../usage/guides/realtime-events.md). Ships with the `adapt_feedb_ms` microscopy demo and its `stream_test.sh` synthetic driver.
+
+### **🚀 Improvements**
+
+* **Real-time demo polish** — microscopy timeline, gallery new-item highlights, and dev tooling.
+* **Dependency refresh** — runtime and static-tooling dependency groups bumped (beanie and redis intentionally held at their pinned versions).
+
+### **🐛 Bug Fixes**
+
+* **Data-collection schema** — arro3 schemas are coerced to PyArrow in the `polars_schema` endpoint, fixing schema and bindings resolution.
+* **Deprecation** — replaced deprecated `datetime.utcnow` (for `ty` 0.0.56 compatibility).
+
+---
+
+## **v1.1.4 Beta Releases**
+
+!!! warning "Pre-release builds leading up to v1.1.4"
+    Beta images are published for testing ahead of the stable release. Use the stable `v1.1.4` image for production.
+
+### v1.1.4-b3
+
+#### **🚀 Improvements**
+
+* Real-time timeline and gallery polish for the microscopy demo, plus dev tooling ([#900](https://github.com/depictio/depictio/pull/900)).
+* Aligned the `stream_test.sh` synthetic schema with the simulator, tracked the demo seed CSV, and added the real-time deployment docs.
+
+### v1.1.4-b2
+
+#### **✨ New Features**
+
+* Real-time events over WebSocket land ([#899](https://github.com/depictio/depictio/pull/899)) — the event pipeline, plus the microscopy dashboard timeline binding and new-item highlights.
+
+#### **🐛 Bug Fixes**
+
+* Replaced deprecated `datetime.utcnow` (`ty` 0.0.56 compatibility).
+
+#### **🔧 Maintenance**
+
+* Dependency sweep — runtime group (15 updates, with beanie and redis held at pinned versions), static-tooling group (4), plus ipywidgets, fastcluster, jupyterlab, and a github-actions group bump.
+
+### v1.1.4-b1
+
+#### **🐛 Bug Fixes**
+
+* arro3 schemas coerced to PyArrow in the `polars_schema` endpoint ([#897](https://github.com/depictio/depictio/pull/897)).
+
+---
+
+## **[v1.1.3](https://github.com/depictio/depictio/releases/tag/v1.1.3)** (June 29, 2026)
+
+!!! success "Passwordless magic-link login and pipeline provisioning"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.1.3
+```
+
+### **✨ New Features**
+
+* **Passwordless magic-link login** — `depictio-cli run --user` provisions an account and emits a one-click magic-link that opens the run's dashboard, with no password required. The viewer gains a dedicated magic-link login route.
+* **Pipeline provisioning** — backend support for provisioning accounts and projects from a pipeline run, with the provisioning key wired into the dev Compose backend.
+
+### **🚀 Improvements**
+
+* **Magic-ticket lifecycle** — magic tickets are TTL-expired and reuse the run token; provisioned projects stay private.
+
+### **🐛 Bug Fixes**
+
+* **Single-user mode** — provisioning and magic-link login are disabled when running in single-user mode.
+* **Magic-link routing** — links target `/dashboard/{id}` on the canonical (non-beta) route, with a viewer StrictMode guard.
+* **nf-core/ampliseq reference seed** — a `METADATA_FILE` is now provided so metadata-dependent (differential) data collections survive fresh-deployment seeding.
+
+---
+
+## **v1.1.3 Beta Releases**
+
+!!! warning "Pre-release builds leading up to v1.1.3"
+    Beta images are published for testing ahead of the stable release. Use the stable `v1.1.3` image for production.
+
+### v1.1.3-b1
+
+#### **🐛 Bug Fixes**
+
+* nf-core/ampliseq reference seed now provides `METADATA_FILE`, so metadata-dependent differential data collections survive fresh-deployment seeding.
+
+---
+
 ## **[v1.1.2](https://github.com/depictio/depictio/releases/tag/v1.1.2)** (June 28, 2026)
 
 !!! success "Patch — auth, links & template seeds"
