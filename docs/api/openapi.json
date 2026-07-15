@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.1.4",
-    "x-generated-at": "2026-07-09T19:52:58Z",
-    "x-depictio-version": "v1.1.4"
+    "version": "1.2.0",
+    "x-generated-at": "2026-07-15T21:23:49Z",
+    "x-depictio-version": "v1.2.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -7304,6 +7304,556 @@
         ]
       }
     },
+    "/depictio/api/v1/monitoring/tasks": {
+      "get": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "List Tasks",
+        "description": "List Celery task events, newest-first, with optional filters.",
+        "operationId": "list_tasks_depictio_api_v1_monitoring_tasks_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Kind"
+            }
+          },
+          {
+            "name": "since_seconds",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only events updated within N seconds",
+              "title": "Since Seconds"
+            },
+            "description": "Only events updated within N seconds"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Skip"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/monitoring/tasks/{task_id}": {
+      "get": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "Get Task",
+        "description": "Return a single task event including captured logs and traceback.",
+        "operationId": "get_task_depictio_api_v1_monitoring_tasks__task_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/monitoring/ingestion/start": {
+      "post": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "Start Ingestion",
+        "description": "Open an ingestion-run record. Auth-only (the ingesting user), not admin-gated.\n\nBest-effort from the CLI's perspective — failures here must never abort a\nreal ingestion, so the CLI calls this in a try/except.",
+        "operationId": "start_ingestion_depictio_api_v1_monitoring_ingestion_start_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "x-depictio-cli-instance",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Cli-Instance"
+            }
+          },
+          {
+            "name": "x-depictio-cli-host",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Cli-Host"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngestionStartRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/monitoring/ingestion/{run_id}/finish": {
+      "post": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "Finish Ingestion",
+        "description": "Close an ingestion-run record with the final status + per-step tally.",
+        "operationId": "finish_ingestion_depictio_api_v1_monitoring_ingestion__run_id__finish_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngestionFinishRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/monitoring/ingestion": {
+      "get": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "List Ingestion",
+        "description": "List CLI ingestion runs, newest-first, with optional filters.",
+        "operationId": "list_ingestion_depictio_api_v1_monitoring_ingestion_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "instance",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Instance"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Skip"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/monitoring/ingestion/{run_id}": {
+      "get": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "Get Ingestion",
+        "operationId": "get_ingestion_depictio_api_v1_monitoring_ingestion__run_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/monitoring/logs": {
+      "get": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "List Logs",
+        "description": "Return recent application log records from the capped collection.",
+        "operationId": "list_logs_depictio_api_v1_monitoring_logs_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Level"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000,
+              "minimum": 1,
+              "default": 200,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/monitoring/health": {
+      "get": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "Monitoring Health",
+        "description": "Live worker/broker health + active task count (Celery inspect).",
+        "operationId": "monitoring_health_depictio_api_v1_monitoring_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/auth/login": {
       "post": {
         "tags": [
@@ -9285,6 +9835,17 @@
           },
           "s3_storage": {
             "$ref": "#/components/schemas/S3DepictioCLIConfig"
+          },
+          "instance_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Instance Label"
           }
         },
         "type": "object",
@@ -9852,7 +10413,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -10114,7 +10675,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -10177,7 +10738,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -10365,7 +10926,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -10728,6 +11289,36 @@
         ],
         "title": "IngestionDataCollection"
       },
+      "IngestionFinishRequest": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "running|success|partial|failed",
+            "default": "success"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/IngestionStep"
+            },
+            "type": "array",
+            "title": "Steps"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "title": "IngestionFinishRequest"
+      },
       "IngestionReport": {
         "properties": {
           "project": {
@@ -10858,6 +11449,85 @@
           "status"
         ],
         "title": "IngestionRun"
+      },
+      "IngestionStartRequest": {
+        "properties": {
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id",
+            "description": "Client-supplied run id (uuid). Generated if omitted."
+          },
+          "command": {
+            "type": "string",
+            "title": "Command",
+            "default": "run"
+          },
+          "project_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Id"
+          },
+          "project_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Name"
+          }
+        },
+        "type": "object",
+        "title": "IngestionStartRequest"
+      },
+      "IngestionStep": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Step name, e.g. 'sync', 'scan', 'process'"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "Step status",
+            "default": "running"
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detail",
+            "description": "Optional human-readable detail"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "IngestionStep",
+        "description": "One step of a CLI ingestion run (sync / scan / process / ...)."
       },
       "IngestionSummary": {
         "properties": {
@@ -11661,7 +12331,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -11869,7 +12539,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -12415,7 +13085,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -12521,7 +13191,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -12754,7 +13424,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a4ffc16f99a5aaeff0089a8"
+            "default": "6a57fa61cee8aca2811e4446"
           }
         },
         "type": "object",
@@ -12872,7 +13542,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -12991,7 +13661,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -13073,7 +13743,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -13159,7 +13829,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -13332,7 +14002,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -13507,7 +14177,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -13577,7 +14247,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -13675,7 +14345,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a4ffc16f99a5aaeff0089a7"
+            "default": "6a57fa61cee8aca2811e4445"
           },
           "description": {
             "anyOf": [
@@ -13896,6 +14566,10 @@
     {
       "name": "Celery",
       "description": "Admin/ops: Celery worker health and task stats. Not called by the frontend or CLI — intended for monitoring/diagnostics."
+    },
+    {
+      "name": "Monitoring",
+      "description": "Admin-only 'Log & Task' monitoring: Celery task history, CLI ingestion runs, recent application logs, and worker health. Feature-gated by DEPICTIO_MONITORING_ENABLED; hidden in public/demo mode."
     },
     {
       "name": "Analytics",

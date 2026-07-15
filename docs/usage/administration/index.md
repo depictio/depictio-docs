@@ -12,3 +12,4 @@ Operational tasks for managing Depictio deployments.
 |------|-------------|
 | [Project Migration](migrate.md) | Move projects between Depictio instances non-destructively |
 | [Backup & Restore](backup.md) | Snapshot and restore the MongoDB database |
+| [Monitoring (Log & Task)](monitoring.md) | Admin panel for Celery tasks, ingestion runs, logs, and worker health |
