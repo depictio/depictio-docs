@@ -75,6 +75,46 @@ ghcr.io/depictio/depictio:1.1.4
 
 ---
 
+## **[v1.1.3](https://github.com/depictio/depictio/releases/tag/v1.1.3)** (June 29, 2026)
+
+!!! success "Passwordless magic-link login and pipeline provisioning"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.1.3
+```
+
+### **✨ New Features**
+
+* **Passwordless magic-link login** — `depictio-cli run --user` provisions an account and emits a one-click magic-link that opens the run's dashboard, with no password required. The viewer gains a dedicated magic-link login route.
+* **Pipeline provisioning** — backend support for provisioning accounts and projects from a pipeline run, with the provisioning key wired into the dev Compose backend.
+
+### **🚀 Improvements**
+
+* **Magic-ticket lifecycle** — magic tickets are TTL-expired and reuse the run token; provisioned projects stay private.
+
+### **🐛 Bug Fixes**
+
+* **Single-user mode** — provisioning and magic-link login are disabled when running in single-user mode.
+* **Magic-link routing** — links target `/dashboard/{id}` on the canonical (non-beta) route, with a viewer StrictMode guard.
+* **nf-core/ampliseq reference seed** — a `METADATA_FILE` is now provided so metadata-dependent (differential) data collections survive fresh-deployment seeding.
+
+---
+
+## **v1.1.3 Beta Releases**
+
+!!! warning "Pre-release builds leading up to v1.1.3"
+    Beta images are published for testing ahead of the stable release. Use the stable `v1.1.3` image for production.
+
+### v1.1.3-b1
+
+#### **🐛 Bug Fixes**
+
+* nf-core/ampliseq reference seed now provides `METADATA_FILE`, so metadata-dependent differential data collections survive fresh-deployment seeding.
+
+---
+
 ## **[v1.1.2](https://github.com/depictio/depictio/releases/tag/v1.1.2)** (June 28, 2026)
 
 !!! success "Patch — auth, links & template seeds"
