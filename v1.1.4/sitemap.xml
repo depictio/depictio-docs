@@ -169,6 +169,10 @@
          <lastmod>2026-07-15</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.1.4/features/performance/</loc>
+         <lastmod>2026-07-15</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.1.4/features/security/</loc>
          <lastmod>2026-07-15</lastmod>
     </url>
@@ -226,6 +230,10 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.1.4/pipeline-templates/</loc>
+         <lastmod>2026-07-15</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.1.4/pipeline-templates/nf-core/</loc>
          <lastmod>2026-07-15</lastmod>
     </url>
     <url>
@@ -302,6 +310,10 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.1.4/usage/guides/guides/</loc>
+         <lastmod>2026-07-15</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.1.4/usage/guides/realtime-events/</loc>
          <lastmod>2026-07-15</lastmod>
     </url>
     <url>
