@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.2.0",
-    "x-generated-at": "2026-07-15T21:23:49Z",
-    "x-depictio-version": "v1.2.0"
+    "version": "1.2.1",
+    "x-generated-at": "2026-07-20T16:56:42Z",
+    "x-depictio-version": "v1.2.1"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -7595,6 +7595,62 @@
         }
       }
     },
+    "/depictio/api/v1/monitoring/ingestion/{run_id}/step": {
+      "post": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "Update Ingestion Step",
+        "description": "Upsert a single step of an in-flight ingestion and mark it as current.\n\nPlaceholder for future async/offloaded ingestion: a long-running worker calls\nthis to push per-step progress while the run stays ``running``, so the admin\nUI reflects live state instead of only the final tally. The current\nsynchronous CLI does not call this yet — it reports all steps at ``finish``.",
+        "operationId": "update_ingestion_step_depictio_api_v1_monitoring_ingestion__run_id__step_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngestionStepRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/monitoring/ingestion": {
       "get": {
         "tags": [
@@ -7827,6 +7883,74 @@
             }
           }
         }
+      }
+    },
+    "/depictio/api/v1/monitoring/logs/level": {
+      "get": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "Get Log Capture Level",
+        "description": "Current floor of what the app-log handler persists (this API process).",
+        "operationId": "get_log_capture_level_depictio_api_v1_monitoring_logs_level_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "Set Log Capture Level",
+        "description": "Change the app-log capture floor at runtime (admin-only).\n\nApplies immediately in the API process and is broadcast best-effort to Celery\nworkers so their logs follow the same floor. Not persisted — a restart reverts\nto ``settings.monitoring.app_log_min_level``.",
+        "operationId": "set_log_capture_level_depictio_api_v1_monitoring_logs_level_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogLevelRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/depictio/api/v1/monitoring/health": {
@@ -10413,7 +10537,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -10675,7 +10799,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -10738,7 +10862,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -10926,7 +11050,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -11179,7 +11303,91 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
-      "IngestionDataCollection": {
+      "IngestionDataCollection-Input": {
+        "properties": {
+          "tag": {
+            "type": "string",
+            "title": "Tag",
+            "description": "Data collection tag"
+          },
+          "type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "DC type, e.g. 'table', 'jbrowse2'"
+          },
+          "format": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Format",
+            "description": "Table format, e.g. 'csv', 'parquet'"
+          },
+          "scan_mode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scan Mode",
+            "description": "'recursive' or 'single'"
+          },
+          "scan_pattern": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scan Pattern",
+            "description": "Regex (recursive) or filename (single) the scan matched on"
+          },
+          "locations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Locations",
+            "description": "Local base directories scanned (workflow data location)"
+          },
+          "file_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Count",
+            "description": "Files matched, when known"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tag"
+        ],
+        "title": "IngestionDataCollection",
+        "description": "Per-data-collection summary captured for an ingestion run.\n\nMirrors what the DC manager surfaces (tag / type / format) *plus* the local\nscan paths the CLI resolved — base directories and the file-matching pattern\n(regex for recursive scans, or the single filename) — which the DC manager\nitself does not display."
+      },
+      "IngestionDataCollection-Output": {
         "properties": {
           "data_collection_tag": {
             "type": "string",
@@ -11314,6 +11522,24 @@
               }
             ],
             "title": "Error"
+          },
+          "project_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Id"
+          },
+          "data_collections": {
+            "items": {
+              "$ref": "#/components/schemas/IngestionDataCollection-Input"
+            },
+            "type": "array",
+            "title": "Data Collections"
           }
         },
         "type": "object",
@@ -11348,7 +11574,7 @@
           },
           "data_collections": {
             "items": {
-              "$ref": "#/components/schemas/IngestionDataCollection"
+              "$ref": "#/components/schemas/IngestionDataCollection-Output"
             },
             "type": "array",
             "title": "Data Collections"
@@ -11490,6 +11716,61 @@
               }
             ],
             "title": "Project Name"
+          },
+          "cli_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cli Version"
+          },
+          "command_line": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Command Line"
+          },
+          "cli_config_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cli Config Path"
+          },
+          "project_config_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Config Path"
+          },
+          "data_root": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Root"
           }
         },
         "type": "object",
@@ -11528,6 +11809,30 @@
         ],
         "title": "IngestionStep",
         "description": "One step of a CLI ingestion run (sync / scan / process / ...)."
+      },
+      "IngestionStepRequest": {
+        "properties": {
+          "step": {
+            "$ref": "#/components/schemas/IngestionStep"
+          },
+          "current_step": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Step"
+          }
+        },
+        "type": "object",
+        "required": [
+          "step"
+        ],
+        "title": "IngestionStepRequest",
+        "description": "Live per-step update. Placeholder for future async/offloaded ingestion:\na long-running worker PATCHes a step's status while the run is ``running``."
       },
       "IngestionSummary": {
         "properties": {
@@ -12146,6 +12451,20 @@
         "title": "LinkUpdateRequest",
         "description": "Request to update an existing DC link.\n\nAll fields are optional - only provided fields will be updated."
       },
+      "LogLevelRequest": {
+        "properties": {
+          "level": {
+            "type": "string",
+            "title": "Level",
+            "description": "DEBUG | INFO | WARNING | ERROR | CRITICAL"
+          }
+        },
+        "type": "object",
+        "required": [
+          "level"
+        ],
+        "title": "LogLevelRequest"
+      },
       "MigrateExportRequest": {
         "properties": {
           "project_id": {
@@ -12331,7 +12650,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -12539,7 +12858,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -13085,7 +13404,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -13191,7 +13510,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -13424,7 +13743,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a57fa61cee8aca2811e4446"
+            "default": "6a5e534667dcdb1688e15274"
           }
         },
         "type": "object",
@@ -13542,7 +13861,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -13661,7 +13980,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -13743,7 +14062,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -13829,7 +14148,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -14002,7 +14321,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -14177,7 +14496,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -14247,7 +14566,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
@@ -14345,7 +14664,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a57fa61cee8aca2811e4445"
+            "default": "6a5e534667dcdb1688e15273"
           },
           "description": {
             "anyOf": [
