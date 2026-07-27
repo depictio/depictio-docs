@@ -13,7 +13,7 @@ Viewer mode provides a **read-only** experience optimized for data exploration:
 - **No editing controls** - Clean interface focused on data
 - **Interactive filtering** - Use filter components to explore data
 - **Data updates** - Visualizations respond to filter changes in real-time
-- **Lightweight** - Faster loading with reduced callback overhead (~30 callbacks)
+- **Lightweight** - Read-only rendering path, with none of the editing machinery loaded
 
 !!! tip "When to Use Viewer Mode"
     Use Viewer mode when exploring dashboards, presenting to stakeholders, or sharing dashboard links with colleagues who don't need editing access.
@@ -104,6 +104,50 @@ Table components include a **data export** feature that allows you to download t
     - Tables with < 100,000 rows: Instant export
     - Tables with 100,000 - 1,000,000 rows: Export allowed with warning
     - Tables with > 1,000,000 rows: Export blocked (use CLI for large exports)
+
+---
+
+## How a Dashboard Loads (v1.3.0+)
+
+A dashboard can hold dozens of panels, each needing its own request, so Depictio loads
+them as you reach them rather than all at once.
+
+### <span style="color: #45B8AC;">:material-progress-clock:</span> While the page opens
+
+- **The Depictio logo animates in the centre of the page** while the dashboard itself is
+  being fetched. No panels are known yet, so there is nothing to count.
+- **Panels load when they scroll into view.** A panel below the fold shows a shimmering
+  placeholder and costs nothing until you scroll near it, so opening a large dashboard
+  stays responsive instead of waiting on every panel first.
+- **A progress ring and a count** (for example `6/8`) sit beside the dashboard title, then
+  disappear once everything on screen is ready. Hover it for a breakdown: how many are
+  still loading, how many failed, and how many are further down the page.
+
+!!! tip "Why the count can go backwards"
+    The count covers what is **on screen**, not the whole dashboard, so it always
+    completes. Scrolling brings more panels in and the count grows to include them — a
+    number that briefly drops is work which has just started, not a problem.
+
+### <span style="color: #9966CC;">:material-database-arrow-down:</span> Reduced views and the Load-all button
+
+Large data collections are not sent to the browser whole. Where a panel is showing a
+reduced view, it says so and offers a way out:
+
+- **Figures** show a badge such as `10,000 / 5,000,000 pts`. Hover the panel and click the
+  **Load all** icon (:material-database-arrow-down:) in the action cluster to fetch every
+  point; the badge switches to `(all)` and the button toggles back to the reduced view.
+  Loading everything can be slow on a very large collection.
+- **Tables** page rows on demand. On tables past roughly a million rows, **sorting is
+  turned off** — the chevron disappears from the column headers rather than offering a
+  sort that would silently return unsorted rows.
+- **Advanced visualisations** that compute their values from the rows they receive (stacked
+  taxonomy, DA barplot, enrichment, oncoplot, …) are normally sent the whole collection. If
+  it is too large for that, they carry an orange **estimated** badge, meaning the values on
+  screen are derived from a sample rather than being exact totals. The lollipop plot shows
+  the same badge whenever its rows were sampled, since its per-gene counts are an aggregate.
+
+See [Performance & Scaling](../../features/performance.md) for the thresholds behind these
+behaviours and how to change them.
 
 ---
 

@@ -99,7 +99,7 @@ Technical architecture and security features.
 | Page | Description |
 |------|-------------|
 | [Architecture](architecture.md) | Technical overview of Depictio's microservices |
-| [Performance & Scaling](performance.md) | How large tables and dashboards are kept responsive |
+| [Performance & Scaling](performance.md) | How large data collections stay responsive, and the settings that tune it |
 | [Data Model](data-model.md) | Domain objects, what is embedded where, and the MongoDB collections |
 | [Security](security.md) | Security features and code execution restrictions |
 
@@ -117,9 +117,9 @@ Technical architecture and security features.
 
     ---
 
-    What keeps large tables and busy dashboards responsive
+    Bounded payloads, scan-level pushdown, and benchmark numbers
 
-    [:octicons-arrow-right-24: Performance Notes](performance.md)
+    [:octicons-arrow-right-24: Performance Details](performance.md)
 
 -   :material-database-outline:{ .lg .middle } **Data Model**
 
