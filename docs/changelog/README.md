@@ -15,6 +15,67 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.2.2](https://github.com/depictio/depictio/releases/tag/v1.2.2)** (July 27, 2026)
+
+!!! success "Persistent timeline footer and table column control"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.2.2
+```
+
+### **✨ New Features**
+
+* **Pinned timeline footer** — a top-placed interactive component, such as an acquisition timeline, now renders in a full-width footer spanning the filter sidebar and the content column, so the selected time window stays visible while the dashboard scrolls.
+* **Compact tables** — table components accept `compact: true` for tighter row and header heights. See [YAML Sync](../features/yaml-sync.md#table-component).
+
+### **🚀 Improvements**
+
+* **Timeline header** — condensed to two rows: title and selected-range readout above, range slider and timescale picker below.
+* **Adaptive Feedback Microscopy demo** — reworked layout with a narrative intro, Tukey box-plot distribution cards, two focused scatter panels, a wider cell gallery, and a compact detail table.
+
+### **🐛 Bug Fixes**
+
+* **Table `columns` allowlist** — a non-empty `columns` list now restricts the rendered grid to exactly those columns; omitting it still shows all.
+* **Single-timestamp timelines** — a data collection with a single distinct timestamp, the normal early state of a live stream, renders a usable scrubber over a ±1 minute window around that timestamp instead of "Timeline unavailable".
+* **Dashboard export** — `compact` is written back on export, so an import → edit → export round trip no longer drops it.
+
+---
+
+## **[v1.2.1](https://github.com/depictio/depictio/releases/tag/v1.2.1)** (July 20, 2026)
+
+!!! success "Deeper ingestion detail and runtime log control in the admin Log & Task panel"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.2.1
+```
+
+### **✨ New Features**
+
+* **Runtime log capture floor** — the Logs pane sets what the server actually persists (`DEBUG` … `CRITICAL`) without a restart; the change is broadcast to Celery workers and reverts to `DEPICTIO_MONITORING_APP_LOG_MIN_LEVEL` when the process restarts.
+* **Per-phase ingestion steps** — an ingestion run records each phase it went through (provisioning, template resolve, server and S3 checks, config validation, project sync, scan, process, joins, dashboard import) with its own `success` / `failed` / `skipped` status and a detail line, replacing the single collapsed row.
+* **Ingestion run provenance** — the run detail shows the CLI version, the invoking command line with sensitive option values redacted, the CLI and project config paths, the data root, and a per-data-collection breakdown of what was scanned. See [Monitoring](../usage/administration/monitoring.md).
+* **Web UI uploads in the ledger** — data collections uploaded from the web UI are recorded alongside CLI runs, tagged with a `CLI` or `UI` source badge.
+* **Pane search** — the Tasks, Ingestion and Logs panes each gained a free-text search box alongside their existing filters.
+
+### **🚀 Improvements**
+
+* **Lazy panel rendering** — an expanded row renders its highlighted content on demand, so long Tasks and Logs lists stay responsive across auto-refreshes.
+* **Richer task detail** — arguments, result, error, traceback and logs are labelled blocks, and the stored argument/result excerpt cap was raised from 500 to 4000 characters for newly recorded tasks.
+* **Expandable log rows** — a log line expands to show its logger, `file:line`, and the full message.
+* **Local-time timestamps** — offset-less server timestamps are read as UTC, and the exact local clock time is shown next to the relative time.
+
+### **🐛 Bug Fixes**
+
+* **Log noise** — expired access tokens, a routine state before a client refreshes, log at `DEBUG` instead of `INFO`; genuinely invalid tokens still log at `WARNING`.
+* **Code-mode hint** — the "consider naming your variable `df_modified`" nudge dropped from `WARNING` to `DEBUG`.
+* **Code block copy button** — no longer overlaps the code it copies.
+
+---
+
 ## **[v1.2.0](https://github.com/depictio/depictio/releases/tag/v1.2.0)** (July 15, 2026)
 
 !!! success "Admin Log & Task monitoring with live updates"
