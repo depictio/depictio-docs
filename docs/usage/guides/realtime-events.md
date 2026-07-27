@@ -14,6 +14,9 @@ This makes Depictio suitable for **live feeds** — an instrument streaming acqu
 pipeline emitting results batch by batch, or any process that keeps appending to a data
 collection.
 
+![A live dashboard: status pill in the header, acquisition-window scrubber in the footer](../../images/react/realtime_dashboard_light.png#only-light)
+![A live dashboard: status pill in the header, acquisition-window scrubber in the footer](../../images/react/realtime_dashboard_dark.png#only-dark)
+
 ---
 
 ## <span style="color: #E53935;">:material-video:</span> Video example
@@ -105,9 +108,67 @@ indicator.
 
 ### 3. Open the dashboard
 
-Open any dashboard in an opted-in project. A **real-time indicator** appears and turns green
-once the viewer has subscribed. From then on the dashboard updates on its own whenever the
-underlying data collection is re-ingested.
+Open any dashboard in an opted-in project. A **real-time indicator** appears in the header
+and turns green once the viewer has subscribed. From then on the dashboard updates on its own
+whenever the underlying data collection is re-ingested.
+
+![The real-time indicator in the dashboard header](../../images/react/realtime_indicator_light.png#only-light)
+![The real-time indicator in the dashboard header](../../images/react/realtime_indicator_dark.png#only-dark)
+
+It reads *Connecting…* while the socket opens, **Live** once subscribed, and *Offline* if the
+connection drops. An orange dot on the icon marks an update you have not taken yet.
+
+---
+
+## Following the stream
+
+Click the indicator to open the **Live updates** menu.
+
+![The Live updates menu with the event log](../../images/react/realtime_live_menu_light.png#only-light)
+![The Live updates menu with the event log](../../images/react/realtime_live_menu_dark.png#only-dark)
+
+- **Auto-refresh on update** — on, the dashboard silently refetches on every event. Off, an
+  event only raises a notification and the orange dot, and you refresh when you are ready.
+  Useful when you are reading a figure and don't want it moving under you.
+- **Receiving events / Paused** — pausing stops updates from being applied but keeps the
+  socket open, so nothing is missed from the log.
+- **Event log** — the last 50 events, newest first: arrival time in your local clock, the row
+  delta, the data collection tag, the operation, and the aggregation version. It lives in the
+  browser's local storage, so it survives a reload; **Reset** empties it.
+
+Hover a log row for the whole event — project and data collection, the row count before and
+after, the Delta and aggregation versions, a sample of the ids that arrived, and the raw
+payload.
+
+![Hover-card on an event-log row showing the full payload](../../images/react/realtime_event_detail_light.png#only-light)
+![Hover-card on an event-log row showing the full payload](../../images/react/realtime_event_detail_dark.png#only-dark)
+
+### Re-highlighting a batch
+
+Rows glow briefly as they land, then fade. The highlight button on a log row brings that batch
+back: every component bound to the collection re-lights exactly the rows that event added, and
+keeps them lit until you choose another batch or select **Clear highlight**.
+
+![A past batch pinned from the event log, highlighted across the figures](../../images/react/realtime_highlight_light.png#only-light)
+![A past batch pinned from the event log, highlighted across the figures](../../images/react/realtime_highlight_dark.png#only-dark)
+
+The button only appears on events that carry a list of added ids — the first commit of a
+collection has nothing to diff against, so there is no batch to pin.
+
+---
+
+## Scoping to an acquisition window
+
+A dashboard that tracks a stream usually places its timeline component in the footer, where it
+spans the full width below both the filter panel and the components and stays visible as the
+page scrolls (v1.2.2+).
+
+![The acquisition-window scrubber pinned in the dashboard footer](../../images/react/realtime_timeline_footer_light.png#only-light)
+![The acquisition-window scrubber pinned in the dashboard footer](../../images/react/realtime_timeline_footer_dark.png#only-dark)
+
+Each mark on the track is a distinct timestamp in the column — one acquisition. Drag either
+handle to narrow the window and every component re-renders against the selection. The
+`Year … Min` buttons change only tick spacing and label format, not the selection itself.
 
 ---
 
