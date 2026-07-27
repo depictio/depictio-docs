@@ -77,18 +77,32 @@ color_sequences = {
     "alert": [colors["green"], colors["yellow"], colors["orange"], colors["red"]],
 }
 
-# Example usage with Mantine
-import dash_mantine_components as dmc
+# Example usage with Plotly
+import plotly.express as px
 
-button = dmc.Button(
-    "Primary Action",
-    styles={
-        "root": {
-            "backgroundColor": colors["blue"],
-            "&:hover": {"backgroundColor": colors["blue"] + "cc"},
-        }
-    },
-)
+fig = px.scatter(df, x="x", y="y", color="group",
+                 color_discrete_sequence=color_sequences["main"])
+```
+
+### React (Mantine)
+
+```tsx
+// Register the palette as a Mantine colour, then use it by name.
+import { Button, MantineProvider, createTheme } from "@mantine/core";
+
+const theme = createTheme({
+  colors: {
+    depictio: [
+      "#f2f6fd", "#e0e9fa", "#bed2f5", "#99b9f0", "#7aa4ec",
+      "#6495ed", "#5a8ad4", "#4a73b0", "#3b5c8d", "#2b456a",
+    ],
+  },
+  primaryColor: "depictio",
+});
+
+<MantineProvider theme={theme}>
+  <Button>Primary Action</Button>
+</MantineProvider>;
 ```
 
 ### CSS

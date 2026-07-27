@@ -18,3 +18,8 @@ dependencies = [
 ]
 version = "1.2.0"
 name = "depictio-docs"
+
+# Only needed to regenerate the figures in dev/diagrams/. The PNGs are
+# committed, so the docs build never touches this: `uv sync --group diagrams`.
+[dependency-groups]
+diagrams = ["playwright"]

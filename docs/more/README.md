@@ -10,8 +10,10 @@ This section provides supplementary information and resources related to the Dep
 
 ## In This Section
 
+- [FAQ](../FAQ/README.md) - Common questions about installing, using and extending Depictio
 - [Funding](funding.md) - Information about how the Depictio project is funded
 - [Color Palette](palette.md) - Official color palette and design guidelines
+- [Animated Logo](../animated-logo.md) - The animated triangular logo and how it is built
 
 ## Community
 
@@ -30,8 +32,9 @@ We thank all contributors and the following projects that make Depictio possible
 ### Core Framework
 
 - [FastAPI](https://fastapi.tiangolo.com/) — Backend API framework
-- [Plotly Dash](https://dash.plotly.com/) — Interactive web dashboards
-- [Dash Mantine Components](https://www.dash-mantine-components.com/) — UI component library
+- [React](https://react.dev/) + [Vite](https://vite.dev/) — Frontend viewer
+- [Mantine](https://mantine.dev/) — UI component library
+- [Plotly.js](https://plotly.com/javascript/) — Interactive charts
 - [Pydantic](https://docs.pydantic.dev/) — Data validation
 
 ### Data & Storage

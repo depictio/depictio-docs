@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="660" viewBox="0 0 1080 660">
+  <rect width="1080" height="660" fill="#1f2129"/>
+  <text x="46.0" y="52.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="25" fill="#e3e3e3" text-anchor="start" font-weight="normal">From configuration to data</text>
+  <text x="46.0" y="78.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#9aa0ac" text-anchor="start" font-weight="normal">a data collection describes a table; the deltatables entry is where it is</text>
+  <rect x="70.0" y="140.0" width="250.0" height="110.0" rx="6" fill="#23342a"/>
+  <path d="M70.1,139.8 C152.8,138.9 237.1,138.6 319.3,140.0" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M69.9,140.5 C151.9,139.8 235.3,138.7 319.4,139.6" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M320.8,139.3 C320.4,178.1 320.2,213.0 320.6,249.7" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M319.5,140.1 C318.9,175.4 319.4,214.3 320.2,249.8" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M320.3,249.9 C236.8,248.6 151.9,249.1 69.7,250.1" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M319.6,250.1 C236.5,249.4 154.3,250.6 70.0,250.6" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M69.9,250.4 C70.7,212.7 71.5,175.4 69.4,140.0" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M70.6,249.7 C68.5,213.9 70.8,176.9 70.3,140.2" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="195.0" y="167.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#e3e3e3" text-anchor="middle" font-weight="bold">WorkflowRun</text>
+  <text x="195.0" y="191.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">runs</text>
+  <text x="195.0" y="212.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">one pipeline execution</text>
+  <rect x="400.0" y="140.0" width="250.0" height="110.0" rx="6" fill="#363020"/>
+  <path d="M400.0,140.3 C483.6,139.9 567.8,141.4 649.3,140.3" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M399.8,140.3 C483.8,141.6 567.7,139.3 649.2,139.9" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M649.4,139.6 C648.9,175.4 648.6,214.2 649.8,250.6" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M650.5,140.6 C648.7,176.5 650.2,214.6 649.6,249.9" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M649.5,249.6 C566.2,251.2 484.8,248.9 399.6,250.0" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M649.8,250.1 C567.0,249.2 481.7,249.7 400.7,250.3" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M400.6,250.4 C400.0,213.7 400.6,175.2 400.6,140.5" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M399.3,249.3 C399.7,213.0 398.7,177.1 399.5,139.5" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="525.0" y="167.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#e3e3e3" text-anchor="middle" font-weight="bold">File</text>
+  <text x="525.0" y="191.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">files</text>
+  <text x="525.0" y="212.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">location · hash · size</text>
+  <path d="M319.2,194.7 C346.0,193.2 371.3,193.6 399.1,195.7" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M319.7,194.2 C347.1,193.6 372.3,194.4 400.7,196.0" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M399.8,194.8 C395.8,192.8 390.9,189.8 388.0,188.1" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M400.0,194.5 C394.9,198.1 391.8,198.7 387.7,202.1" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="360.0" y="180.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">scan</text>
+  <rect x="400.0" y="320.0" width="250.0" height="120.0" rx="6" fill="#382c22"/>
+  <path d="M399.5,320.4 C484.5,320.6 565.9,319.6 650.1,320.4" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M400.6,320.5 C482.8,319.1 567.7,321.6 650.5,320.4" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M649.2,319.6 C649.1,360.1 649.5,398.5 649.6,440.3" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M650.7,319.8 C651.5,359.8 651.4,401.6 649.6,439.6" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M650.5,440.0 C565.7,439.1 483.7,441.3 400.2,440.5" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M650.4,440.0 C565.3,440.5 484.6,440.9 399.5,440.5" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M399.8,440.7 C399.5,401.0 401.5,359.7 400.4,319.5" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M399.4,440.5 C398.8,398.9 401.3,361.0 400.8,320.3" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="525.0" y="347.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#e3e3e3" text-anchor="middle" font-weight="bold">DataCollection</text>
+  <text x="525.0" y="371.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">embedded in the project</text>
+  <text x="525.0" y="392.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">tag · type · scan</text>
+  <path d="M525.9,250.3 C524.4,273.5 523.5,294.7 525.1,320.9" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M524.5,249.6 C524.7,274.8 526.3,295.5 524.5,320.2" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M524.9,320.0 C526.7,315.7 528.6,312.6 531.7,308.0" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M525.0,319.5 C522.7,316.7 520.6,311.8 518.4,307.3" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="537.0" y="290.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="start" font-weight="normal">aggregate</text>
+  <rect x="730.0" y="320.0" width="280.0" height="120.0" rx="6" fill="#24303d"/>
+  <path d="M730.4,320.1 C821.7,321.0 915.6,319.9 1009.7,320.0" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M729.6,319.6 C823.5,320.9 915.4,320.2 1010.4,320.0" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1010.2,320.0 C1010.2,360.8 1011.3,399.8 1010.0,440.3" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1010.3,320.6 C1009.8,360.1 1009.9,401.4 1010.7,439.6" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1009.4,439.9 C916.9,441.4 824.4,438.8 729.3,439.6" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1009.4,440.3 C915.3,440.5 824.2,441.3 730.3,439.4" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M729.8,440.0 C731.2,401.5 729.1,361.4 730.8,320.5" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M729.5,439.7 C728.9,399.8 730.0,359.5 730.4,319.2" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="870.0" y="347.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#e3e3e3" text-anchor="middle" font-weight="bold">DeltaTableAggregated</text>
+  <text x="870.0" y="371.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">deltatables</text>
+  <text x="870.0" y="392.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">location + schema history</text>
+  <path d="M650.2,380.0 C676.9,379.8 701.4,379.3 729.1,381.0" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M649.1,380.6 C677.8,381.9 701.8,379.1 729.5,379.3" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M729.6,380.4 C725.7,378.6 722.4,375.1 717.7,373.6" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M729.6,380.4 C725.1,381.3 722.1,384.2 717.8,386.9" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="690.0" y="365.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">1:1</text>
+  <rect x="730.0" y="510.0" width="280.0" height="100.0" rx="6" fill="#282b33"/>
+  <path d="M729.9,509.7 C822.0,511.1 915.3,511.2 1010.1,510.7" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M729.4,509.5 C822.6,508.8 916.8,509.2 1009.3,509.5" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1010.0,509.5 C1009.4,542.7 1010.8,576.0 1009.8,609.2" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1009.5,510.0 C1009.2,541.8 1010.7,576.8 1010.7,609.4" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1009.8,610.0 C917.7,609.8 823.3,611.1 730.3,610.8" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1009.8,609.8 C916.2,611.1 824.0,610.4 729.3,609.4" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M729.3,610.5 C728.6,577.4 729.2,542.3 730.6,510.3" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M729.5,609.9 C729.3,575.8 729.3,543.2 729.6,510.7" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="870.0" y="537.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#e3e3e3" text-anchor="middle" font-weight="bold">Delta table</text>
+  <text x="870.0" y="561.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">in the S3 bucket,</text>
+  <text x="870.0" y="582.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">one per data collection</text>
+  <path d="M869.6,439.7 C871.9,463.5 869.0,488.5 869.0,509.8" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M869.0,439.5 C869.9,463.3 868.8,486.7 869.2,509.8" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M870.1,510.0 C871.3,504.9 874.0,501.2 876.8,497.8" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M870.5,509.6 C868.2,506.6 865.4,501.4 863.7,497.8" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="70.0" y="505.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="start" font-weight="normal">delta_location and last_aggregation are not stored</text>
+  <text x="70.0" y="527.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="start" font-weight="normal">on the DataCollection. The API joins them in from</text>
+  <text x="70.0" y="549.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="start" font-weight="normal">deltatables when it serves the project, so they</text>
+  <text x="70.0" y="571.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="start" font-weight="normal">only ever appear in responses.</text>
+</svg>

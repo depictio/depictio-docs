@@ -217,6 +217,7 @@ nav:
       - Special Modes:
           - Authentication Modes: usage/guides/authentication-modes.md
           - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md
+  - Tutorials: tutorials/index.md
   - Features:
       - Overview: features/README.md
       - Dashboard & Components:

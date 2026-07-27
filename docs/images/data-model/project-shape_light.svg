@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="675" viewBox="0 0 1240 675">
+  <rect width="1240" height="675" fill="#ffffff"/>
+  <text x="46.0" y="52.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="25" fill="#1e1e1e" text-anchor="start" font-weight="normal">The shape of a project</text>
+  <text x="46.0" y="78.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#5c5c5c" text-anchor="start" font-weight="normal">one document in the projects collection holds the whole configuration tree</text>
+  <rect x="70.0" y="130.0" width="660.0" height="450.0" rx="6" fill="#e7f5ff"/>
+  <path d="M70.1,129.8 C289.4,128.9 510.5,128.6 729.3,130.0" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M69.9,130.5 C288.5,129.8 508.6,128.7 729.4,129.6" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M730.8,129.3 C730.4,281.4 730.2,429.7 730.6,579.7" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M729.5,130.1 C728.9,278.8 729.4,431.0 730.2,579.8" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M730.3,579.9 C510.2,578.6 288.6,579.1 69.7,580.1" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M729.6,580.1 C509.9,579.4 290.9,580.6 70.0,580.6" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M69.9,580.4 C70.7,429.3 71.5,278.8 69.4,130.0" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M70.6,579.7 C68.5,430.5 70.8,280.2 70.3,130.2" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="400.0" y="157.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#1e1e1e" text-anchor="middle" font-weight="bold">Project</text>
+  <text x="400.0" y="181.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">projects · one document</text>
+  <rect x="105.0" y="215.0" width="590.0" height="200.0" rx="6" fill="#ebfbee"/>
+  <path d="M105.0,215.3 C301.9,214.9 499.4,216.4 694.3,215.3" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M104.8,215.3 C302.1,216.6 499.4,214.3 694.2,214.9" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M694.4,214.6 C693.9,280.4 693.6,349.2 694.8,415.6" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M695.5,215.6 C693.7,281.5 695.2,349.6 694.6,414.9" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M694.5,414.6 C497.9,416.2 303.1,413.9 104.6,415.0" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M694.8,415.1 C498.6,414.2 300.1,414.7 105.7,415.3" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M105.6,415.4 C105.0,348.7 105.6,280.2 105.6,215.5" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M104.3,414.3 C104.7,348.0 103.7,282.1 104.5,214.5" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="400.0" y="242.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#1e1e1e" text-anchor="middle" font-weight="bold">Workflow</text>
+  <text x="400.0" y="266.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">engine · data_location · runs</text>
+  <rect x="135.0" y="300.0" width="255.0" height="90.0" rx="6" fill="#ffe8cc"/>
+  <path d="M134.4,299.8 C219.5,298.6 303.4,298.9 389.2,300.6" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M134.8,299.4 C220.4,298.9 304.2,299.5 390.6,300.8" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M389.7,299.6 C389.9,329.9 388.7,358.7 390.5,389.5" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M390.1,299.2 C388.5,331.4 390.1,358.9 390.0,390.8" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M389.5,390.4 C306.2,390.6 219.2,389.6 135.1,390.4" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M390.6,390.5 C304.5,389.1 221.0,391.6 135.5,390.4" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M134.2,389.6 C134.1,360.1 134.5,328.5 134.6,300.3" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M135.7,389.8 C136.5,359.8 136.4,331.6 134.6,299.6" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="262.5" y="327.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#1e1e1e" text-anchor="middle" font-weight="bold">DataCollection</text>
+  <text x="262.5" y="351.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">tag: samplesheet</text>
+  <rect x="410.0" y="300.0" width="255.0" height="90.0" rx="6" fill="#ffe8cc"/>
+  <path d="M410.5,300.0 C494.0,299.1 580.4,301.3 665.2,300.5" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M410.4,300.0 C493.7,300.5 581.3,300.9 664.5,300.5" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M664.8,300.7 C664.5,331.0 666.5,359.7 665.4,389.5" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M664.4,300.5 C663.8,328.9 666.3,361.0 665.8,390.3" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M665.8,390.2 C579.5,390.2 493.8,388.4 410.0,390.7" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M664.6,389.7 C579.8,391.2 496.0,389.1 409.6,390.1" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M409.8,389.9 C409.2,359.7 408.8,331.3 410.1,300.6" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M410.0,389.2 C409.7,361.3 410.0,330.1 409.9,299.5" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="537.5" y="327.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#1e1e1e" text-anchor="middle" font-weight="bold">DataCollection</text>
+  <text x="537.5" y="351.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">tag: mosdepth</text>
+  <rect x="135.0" y="445.0" width="255.0" height="100.0" rx="6" fill="#ffe8cc"/>
+  <path d="M135.4,445.1 C218.4,446.0 304.0,444.9 389.7,445.0" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="9 7"/>
+  <path d="M134.6,444.6 C220.2,445.9 303.7,445.2 390.4,445.0" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="9 7"/>
+  <path d="M390.2,445.0 C390.2,479.2 391.3,511.5 390.0,545.3" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="9 7"/>
+  <path d="M390.3,445.6 C389.8,478.4 389.9,513.1 390.7,544.6" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="9 7"/>
+  <path d="M389.4,544.9 C305.2,546.4 221.1,543.8 134.3,544.6" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="9 7"/>
+  <path d="M389.4,545.3 C303.6,545.5 220.9,546.3 135.3,544.4" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="9 7"/>
+  <path d="M134.8,545.0 C136.2,513.2 134.1,479.8 135.8,445.5" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="9 7"/>
+  <path d="M134.5,544.7 C133.9,511.4 135.0,477.8 135.4,444.2" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="9 7"/>
+  <text x="262.5" y="472.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#1e1e1e" text-anchor="middle" font-weight="bold">DataCollection</text>
+  <text x="262.5" y="496.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">basic projects:</text>
+  <text x="262.5" y="517.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">no workflow layer</text>
+  <rect x="410.0" y="445.0" width="255.0" height="100.0" rx="6" fill="#f1f3f5"/>
+  <path d="M410.2,445.0 C495.2,444.8 578.5,444.5 664.3,445.8" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M409.3,445.4 C495.9,446.5 578.7,444.2 664.6,444.4" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M664.4,445.7 C664.8,479.6 666.0,510.9 665.1,545.3" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M664.3,445.7 C663.7,476.9 665.6,511.4 665.2,545.5" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M664.9,544.7 C578.7,546.1 493.6,546.2 410.1,545.7" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M664.4,544.5 C579.3,543.8 495.1,544.2 409.3,544.5" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M410.0,544.5 C409.4,511.0 410.8,477.7 409.8,444.2" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M409.5,545.0 C409.2,510.1 410.7,478.5 410.7,444.4" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="537.5" y="472.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#1e1e1e" text-anchor="middle" font-weight="bold">Embedded config</text>
+  <text x="537.5" y="496.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">permissions · joins · links</text>
+  <rect x="850.0" y="215.0" width="310.0" height="130.0" rx="6" fill="#f3f0ff"/>
+  <path d="M849.8,215.0 C954.4,214.8 1056.7,216.1 1160.3,215.8" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M849.8,214.8 C952.8,216.1 1057.3,215.4 1159.3,214.4" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1159.3,215.5 C1158.6,259.1 1159.2,300.6 1160.6,345.3" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1159.5,214.9 C1159.3,257.5 1159.3,301.5 1159.6,345.7" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1159.7,344.8 C1058.2,345.2 952.5,346.5 849.2,344.8" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1159.2,344.6 C1056.6,345.0 952.4,345.0 849.3,344.8" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M850.1,345.0 C848.5,300.1 849.4,257.5 850.4,215.3" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M850.8,344.4 C850.7,302.9 849.6,257.8 850.4,215.2" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="1005.0" y="242.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#1e1e1e" text-anchor="middle" font-weight="bold">Dashboard</text>
+  <text x="1005.0" y="266.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">dashboards</text>
+  <text x="1005.0" y="287.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">components carry dc_id</text>
+  <path d="M850.5,280.6 C808.2,281.3 771.6,280.5 729.3,280.0" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M850.2,280.8 C810.0,281.3 771.2,281.3 730.4,280.4" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M729.6,280.3 C733.6,281.3 737.5,284.1 742.4,286.7" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M730.3,280.2 C734.4,278.2 738.2,274.6 742.4,273.5" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="790.0" y="265.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">project_id</text>
+  <rect x="850.0" y="420.0" width="310.0" height="120.0" rx="6" fill="#f3f0ff"/>
+  <path d="M849.3,419.6 C953.8,418.6 1057.4,419.2 1160.4,419.5" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M850.0,420.3 C954.1,421.5 1056.6,419.6 1160.4,420.2" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1160.4,419.7 C1160.5,458.6 1158.9,499.2 1160.1,539.2" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1160.3,419.7 C1158.6,459.3 1160.6,500.6 1160.0,539.9" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1160.8,540.7 C1056.6,538.8 954.6,539.0 849.2,539.9" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1159.5,540.7 C1057.7,541.5 953.2,539.3 849.5,540.1" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M850.5,540.0 C848.9,500.1 851.4,458.8 850.6,420.3" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M849.2,540.0 C849.1,501.3 850.0,458.5 849.9,419.7" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="1005.0" y="447.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#1e1e1e" text-anchor="middle" font-weight="bold">Dashboard (tab)</text>
+  <text x="1005.0" y="471.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">parent_dashboard_id</text>
+  <text x="1005.0" y="492.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">tab_order</text>
+  <path d="M1004.0,420.5 C1003.6,397.7 1004.3,378.0 1005.7,354.2" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1004.7,419.8 C1006.7,399.2 1006.6,375.8 1006.0,355.2" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1004.6,355.3 C1002.5,359.0 1000.2,362.3 998.2,367.8" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1004.9,355.5 C1006.7,358.7 1009.4,362.6 1012.0,367.7" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="1017.0" y="393.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="start" font-weight="normal">tabs</text>
+  <text x="70.0" y="625.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="start" font-weight="normal">Nesting is embedding — same document. An arrow is an ObjectId reference between documents.</text>
+  <text x="70.0" y="648.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="start" font-weight="normal">Dashed: only in basic projects, which skip the workflow layer entirely.</text>
+</svg>
