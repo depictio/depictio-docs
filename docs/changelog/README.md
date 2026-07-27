@@ -17,7 +17,7 @@ hide:
 
 ## **[v1.3.0](https://github.com/depictio/depictio/releases/tag/v1.3.0)** (July 27, 2026)
 
-!!! success "Performance pass across ingest, serve and render — every heavier behaviour is opt-in"
+!!! success "Performance pass across ingest, serve and render — the heavier behaviours stay off by default"
 
 ### Docker Images
 
@@ -27,28 +27,21 @@ ghcr.io/depictio/depictio:1.3.0
 
 ### **✨ New Features**
 
-* **Load-all escape hatch** — figures and tables are served a bounded slice by default and say so; a new action icon in the panel's hover cluster loads every point or row on demand. See [Performance & Scaling](../features/performance.md).
-* **Dashboard load feedback** — panels mount as they scroll into view behind skeleton placeholders, a progress ring and count sit beside the dashboard title while they load, and an animated Depictio mark covers the phase before any panel is known.
-* **MultiQC figures prerendered at ingest** *(opt-in)* — the CLI can build a collection's aggregated figures during the parse it already pays for and upload them to S3, so the first cold open serves them directly instead of building them on the server.
-* **Benchmark harness** — a new `benchmark/` suite measures cold/warm dashboard opens, filter round-trips, per-component latency and ingest throughput; its first report is summarised on the performance page.
+* **Panels load as you reach them** — a dashboard can hold dozens of panels, each needing its own request, so a panel below the fold shows a placeholder and costs nothing until you scroll near it. A progress ring and a count (for example `6/8`) sit beside the dashboard title while the rest load. See [Performance & Scaling](../features/performance.md).
+* **Load all** — figures and tables are served a bounded slice by default and say so; one click in the panel's action cluster loads every point or row.
+* **Benchmark harness** — a new `benchmark/` suite measures dashboard opens, filter round-trips, per-component latency and ingest throughput end to end, so future changes can be compared against a baseline.
 
 ### **🚀 Improvements**
 
-* **Aggregation pushdown** — box plots and histograms are computed as a query over the Delta scan. The result is exact and the rows never leave storage; in the benchmark run 125 of 197 figure renders materialised zero rows.
-* **Per-kind sampling policy** — advanced visualisations are reduced according to what their renderer can survive: uniform sampling for point clouds, tail-preserving for volcano/MA/Manhattan, and never for the kinds that aggregate client-side. When a never-sampled chart does exceed its ceiling it is badged **estimated** rather than presenting an approximation as a total.
-* **Bounded payloads** — scan-level table paging so deep pages cost the same as shallow ones, a sort gate above a row ceiling that removes the sort affordance instead of returning unsorted rows under a sorted header, and figure point caps.
-* **Lighter first paint** — route trees and the heavy visualisation libraries load as on-demand chunks rather than as one block parsed before first paint.
-* **WebGL budget** — concurrent WebGL contexts are capped and surplus plots fall back to a lighter renderer, so markers stop vanishing on dense dashboards.
-* **Cheaper ingest** — image keys are resolved with a single S3 `LIST` instead of one `HEAD` per image, and Delta tables are clustered on the columns they get filtered by so downstream scans skip more row groups.
-* **Optional ingest tuning** — four opt-in `DEPICTIO_INGEST_*` flags trade memory or CPU for ingest wall-time: streamed Delta writes, concurrent data-collection ingestion, and concurrent MultiQC parsing. Note that the streamed write skips the clustering sort, since sorting the whole dataset would materialise exactly what streaming avoids.
-* **Table page size** now defaults to 100 rows instead of 10.
+* **Less data leaves storage** — the database reads only the rows and columns it needs: box plots and histograms are computed as an exact query over the Delta scan without materialising a single row, and filters are pushed into the scan rather than applied after it.
+* **Bounded responses** — the server returns a capped slice instead of the whole table, and advanced visualisations are reduced only in ways their renderer can survive — never silently for the charts that aggregate client-side, which are badged *estimated* instead.
+* **Lighter first paint** — the browser downloads only the code the current page needs, and concurrent WebGL contexts are capped so markers stop vanishing on dense dashboards.
+* **Opt-in ingest tuning** — `DEPICTIO_INGEST_*` flags trade memory or CPU for ingest wall-time, including MultiQC figure prerendering that removes the cold build on a collection's first open.
 
 ### **🐛 Bug Fixes**
 
-* **MultiQC sample filter** — the dropdown listed samples from whichever single report Mongo returned; it now unions across every report in the collection. The canonical-sample regex also stopped splitting names on any hyphen (MultiQC's delimiter is `" - "`), which was collapsing `run01-SRR10070130` to `run01`.
-* **Dark MultiQC figures** — prewarming never produced a usable dark variant because the Mantine template was not registered on the cached path; every dark figure failed while light succeeded, and a warm cache made it worse.
-* **Filter correctness** — temporal filter pushdown and link-key clustering corrected.
-* **Advanced viz** — stopped a publish effect from looping, and the lollipop plot is now flagged as estimated when its rows are sampled.
+* **MultiQC** — the sample filter now unions across every report in a collection instead of listing whichever single report the database returned, and dark figures warm correctly rather than failing behind a warm cache.
+* **Filter correctness** — temporal filter pushdown and link-key clustering corrected; the lollipop plot is flagged *estimated* when its rows are sampled.
 * **Admin monitoring** — the panel probes `events_enabled` before opening its WebSocket, ending a 403 reconnect loop that spammed the API access log on deployments with events off.
 
 ---
