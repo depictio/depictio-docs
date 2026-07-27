@@ -26,10 +26,10 @@ Celery task history — figures, screenshots, MultiQC, advanced viz, Delta table
 
 Ingestion runs, newest first: **status**, a `CLI` or `UI` source badge, instance label or hostname, project, and user. Uploads made through the web UI are recorded alongside CLI runs; recording is best-effort and never blocks an upload.
 
-Expand a run for its **provenance** — run id, host, CLI version, the invoking command line, the CLI and project config paths, and the data root — plus two tables:
+Expand a run for its **provenance** field grid — run id, host, CLI version, the resolved project id, the invoking command line, the CLI and project config paths, and the data root. Long paths are shortened to `head/…/tail`, with the full value in a tooltip and click-to-copy. Below it are two tables:
 
 - **Steps** — every phase the run went through (provisioning, template resolve, server and S3 checks, config validation, project sync, scan, process, joins, dashboard import), each with `success` / `failed` / `skipped` and a detail line such as *3 data collection(s) processed*. The summary line tallies ok / failed / skipped and the wall-clock duration.
-- **Data collections** — one row per data collection with its type, format, scan mode (`recursive` / `single`), the regex or filename it matched on, and the local directories that were scanned.
+- **Data collections** — one row per data collection: tag, type, format, scan mode (`recursive` / `single`), the regex or filename it matched on, the local directories scanned, and the file count when known. These local scan paths are not shown anywhere else in the UI.
 
 ![Log & Task — Ingestion pane](../../images/v0.12/react-beta/admin_monitoring_ingestion_light.png#only-light)
 ![Log & Task — Ingestion pane](../../images/v0.12/react-beta/admin_monitoring_ingestion_dark.png#only-dark)
