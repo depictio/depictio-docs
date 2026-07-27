@@ -133,38 +133,37 @@ Depictio consists of several integrated components:
 
 ```text
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│   Dash UI   │────▶│  FastAPI    │────▶│   MongoDB   │
+│React Viewer │────▶│  FastAPI    │────▶│   MongoDB   │
 │  (Frontend) │     │  (Backend)  │     │  (Database) │
-└──────┬──────┘     └──────┬──────┘     └─────────────┘
-       │                   │
-       │                   ├───────────▶┌─────────────┐
-       │                   │            │    MinIO    │
-       │                   │            │  (Storage)  │
-       │                   │            └─────────────┘
-       │                   │
-       │                   └───────────▶┌─────────────┐
-       │                                │    Redis    │
-       │                                │   (Cache)   │
-       │                                └──────▲──────┘
-       │                                       │
-       └──────────────────▶┌─────────────┐─────┘
-                           │   Celery    │
-                           │  (Workers)  │
-                           └─────────────┘
+└─────────────┘     └──────┬──────┘     └─────────────┘
+                           │
+                           ├───────────▶┌─────────────┐
+                           │            │    MinIO    │
+                           │            │  (Storage)  │
+                           │            └─────────────┘
+                           │
+                           └───────────▶┌─────────────┐
+                                        │    Redis    │
+                                        │   (Cache)   │
+                                        └──────▲──────┘
+                                               │
+                                        ┌─────────────┐
+                                        │   Celery    │
+                                        │  (Workers)  │
+                                        └─────────────┘
 ```
 
 **Component Connections:**
 
 | Connection | Description |
 |------------|-------------|
-| **Dash → FastAPI** | API calls for data retrieval, authentication, and CRUD operations |
-| **Dash → Celery** | Background callbacks for long-running operations |
+| **React viewer → FastAPI** | API calls for data retrieval, authentication, and CRUD operations |
 | **FastAPI → MongoDB** | Document storage for metadata, users, projects, and configurations |
 | **FastAPI → MinIO** | Object storage for Delta tables, files, and dashboard screenshots |
 | **FastAPI → Redis** | Caching, session storage, and task result backend |
 | **Celery → Redis** | Task queue and results backend for background job processing |
 
-- **Frontend** (Plotly Dash) - Interactive dashboard interface
+- **Frontend** (React + Mantine) - Interactive dashboard interface
 - **Backend API** (FastAPI) - Data processing and business logic
 - **Database** (MongoDB) - Metadata and configuration storage
 - **Storage** (MinIO/S3) - Data files and Delta Lake tables
