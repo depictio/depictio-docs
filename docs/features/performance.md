@@ -15,10 +15,14 @@ The guiding idea is that a dashboard should stay usable at any collection size: 
 pushed as close to the stored data as possible, payloads are bounded by default, and when
 a bound is applied it is made visible rather than hidden.
 
+![Where the work got bounded: at each of the three stages — CLI ingest, API serve, viewer render — what used to be materialised in full, and what bounds it now](../images/v0.12/react/schema_perf_stages.png)
+
 ## Opening a dashboard
 
 A dashboard can hold dozens of panels, each needing its own request. Rather than
 requesting all of them up front, Depictio loads them as you reach them.
+
+![Opening a 30-panel dashboard, before and after the viewport gate: every panel above and just below the fold used to start fetching at mount, where now only the ones actually on screen do](../images/v0.12/react/schema_panel_loading.png)
 
 - **Panels load when they scroll into view.** A panel below the fold shows a placeholder
   and issues **no data request** until you scroll near it, so opening a large dashboard
@@ -140,6 +144,8 @@ See the [environment reference](../installation/env-reference.md) for how to set
   aggregation, so the existing background build takes over). Collections that never opted in
   are not penalised — a short-lived marker records that a collection has no prerendered
   figures, so the server does a Redis lookup rather than an S3 round-trip per panel.
+
+![A MultiQC figure request: the CLI builds and uploads the figures at ingest, the render endpoint probes the S3 prefix before enqueueing a build, and a Redis presence marker spares collections that never opted in](../images/v0.12/react/schema_multiqc_prerender.png)
 
 ## Measured behaviour
 
