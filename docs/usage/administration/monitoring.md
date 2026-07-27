@@ -34,6 +34,9 @@ Expand a run for its **provenance** field grid — run id, host, CLI version, th
 ![Log & Task — Ingestion pane](../../images/v0.12/react-beta/admin_monitoring_ingestion_light.png#only-light)
 ![Log & Task — Ingestion pane](../../images/v0.12/react-beta/admin_monitoring_ingestion_dark.png#only-dark)
 
+![Log & Task — expanded ingestion run detail](../../images/v0.12/react-beta/admin_monitoring_ingestion_detail_light.png#only-light)
+![Log & Task — expanded ingestion run detail](../../images/v0.12/react-beta/admin_monitoring_ingestion_detail_dark.png#only-dark)
+
 ## Logs
 
 Recent application logs from a capped collection, tagged by **level** and **source** (`api` / `celery`). Filter by level, source, or text; expand a row for the logger, the source `file:line`, and the full message.
