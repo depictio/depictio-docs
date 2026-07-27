@@ -27,19 +27,18 @@ ghcr.io/depictio/depictio:1.2.2
 
 ### **✨ New Features**
 
-* **Pinned timeline footer** — a top-placed interactive component, such as an acquisition timeline, now renders in a full-width footer spanning the filter sidebar and the content column, so the selected time window stays visible while the dashboard scrolls.
-* **Compact tables** — table components accept `compact: true` for tighter row and header heights. See [YAML Sync](../features/yaml-sync.md#table-component).
+* **Pinned timeline footer** — a top-placed interactive component renders in a full-width footer, so the selected time window stays visible while the dashboard scrolls.
+* **Compact tables** — table components accept `compact: true` for tighter rows. See [YAML Sync](../features/yaml-sync.md#table-component).
 
 ### **🚀 Improvements**
 
-* **Timeline header** — condensed to two rows: title and selected-range readout above, range slider and timescale picker below.
-* **Adaptive Feedback Microscopy demo** — reworked layout with a narrative intro, Tukey box-plot distribution cards, two focused scatter panels, a wider cell gallery, and a compact detail table.
+* **Timeline header** — condensed to two rows.
+* **Adaptive Feedback Microscopy demo** — reworked layout with box-plot distribution cards and a tighter figure set.
 
 ### **🐛 Bug Fixes**
 
-* **Table `columns` allowlist** — a non-empty `columns` list now restricts the rendered grid to exactly those columns; omitting it still shows all.
-* **Single-timestamp timelines** — a data collection with a single distinct timestamp, the normal early state of a live stream, renders a usable scrubber over a ±1 minute window around that timestamp instead of "Timeline unavailable".
-* **Dashboard export** — `compact` is written back on export, so an import → edit → export round trip no longer drops it.
+* **Table `columns`** — a non-empty list now restricts the grid to exactly those columns, and `compact` is no longer dropped on export.
+* **Single-timestamp timelines** — a lone timestamp renders a usable scrubber over a ±1 minute window instead of "Timeline unavailable".
 
 ---
 
@@ -55,23 +54,19 @@ ghcr.io/depictio/depictio:1.2.1
 
 ### **✨ New Features**
 
-* **Runtime log capture floor** — the Logs pane sets what the server actually persists (`DEBUG` … `CRITICAL`) without a restart; the change is broadcast to Celery workers and reverts to `DEPICTIO_MONITORING_APP_LOG_MIN_LEVEL` when the process restarts.
-* **Per-phase ingestion steps** — an ingestion run records each phase it went through (provisioning, template resolve, server and S3 checks, config validation, project sync, scan, process, joins, dashboard import) with its own `success` / `failed` / `skipped` status and a detail line, replacing the single collapsed row.
-* **Ingestion run provenance** — the run detail shows the CLI version, the invoking command line with sensitive option values redacted, the CLI and project config paths, the data root, and a per-data-collection breakdown of what was scanned. See [Monitoring](../usage/administration/monitoring.md).
-* **Web UI uploads in the ledger** — data collections uploaded from the web UI are recorded alongside CLI runs, tagged with a `CLI` or `UI` source badge.
-* **Pane search** — the Tasks, Ingestion and Logs panes each gained a free-text search box alongside their existing filters.
+* **Runtime log capture floor** — set what the server persists (`DEBUG` … `CRITICAL`) from the Logs pane without a restart; reverts to `DEPICTIO_MONITORING_APP_LOG_MIN_LEVEL` on restart.
+* **Per-phase ingestion steps** — a run records every phase from provisioning to dashboard import with its own `success` / `failed` / `skipped` status and detail line.
+* **Ingestion run provenance** — CLI version, the invoking command line with secrets redacted, config paths, data root, and a per-data-collection scan breakdown. See [Monitoring](../usage/administration/monitoring.md).
+* **Web UI uploads** — recorded alongside CLI runs with a `CLI` or `UI` source badge.
 
 ### **🚀 Improvements**
 
-* **Lazy panel rendering** — an expanded row renders its highlighted content on demand, so long Tasks and Logs lists stay responsive across auto-refreshes.
-* **Richer task detail** — arguments, result, error, traceback and logs are labelled blocks, and the stored argument/result excerpt cap was raised from 500 to 4000 characters for newly recorded tasks.
-* **Expandable log rows** — a log line expands to show its logger, `file:line`, and the full message.
-* **Local-time timestamps** — offset-less server timestamps are read as UTC, and the exact local clock time is shown next to the relative time.
+* **Responsive panes** — expanded rows render on demand, and Tasks, Ingestion and Logs gained a free-text search box.
+* **Richer detail** — labelled task blocks (arguments, result, error, logs) with the excerpt cap raised to 4000 characters, expandable log rows, and exact local clock times.
 
 ### **🐛 Bug Fixes**
 
-* **Log noise** — expired access tokens, a routine state before a client refreshes, log at `DEBUG` instead of `INFO`; genuinely invalid tokens still log at `WARNING`.
-* **Code-mode hint** — the "consider naming your variable `df_modified`" nudge dropped from `WARNING` to `DEBUG`.
+* **Log noise** — expired access tokens and the code-mode `df_modified` hint dropped to `DEBUG`; genuinely invalid tokens still log at `WARNING`.
 * **Code block copy button** — no longer overlaps the code it copies.
 
 ---
