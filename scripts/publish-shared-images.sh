@@ -37,10 +37,13 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-# Two modes. Directory mode mirrors a whole tree and prunes the destination
-# first, so source deletions propagate. File mode publishes named files only
-# and never prunes, for destinations shared with content this script does not
-# own (the site-root assets/ directory, for instance).
+# Two modes, neither of which deletes. Directory mode copies a whole tree up,
+# file mode publishes named files. Both only ever add or overwrite.
+#
+# The destination is deliberately a superset of what the current docs use: it
+# serves every version ever published, and the archived ones still point at
+# images that main has since dropped. Mirroring main's deletions up here broke
+# 138 archived pages the one time it ran.
 if [ ${#FILES[@]} -eq 0 ]; then
   [ -d "$SOURCE" ] || { echo "source directory not found: $SOURCE" >&2; exit 1; }
 else
@@ -67,11 +70,6 @@ add_file() {
 
 count=0
 if [ ${#FILES[@]} -eq 0 ]; then
-  # Clear the destination first so files deleted from the source disappear here
-  # too, rather than lingering forever on the deploy branch.
-  git ls-tree -r --name-only "$BASE" -- "$DEST" \
-    | git update-index --force-remove --stdin
-
   while IFS= read -r -d '' file; do
     rel="${file#"$SOURCE"/}"
     case "$rel" in .DS_Store|*/.DS_Store) continue ;; esac
