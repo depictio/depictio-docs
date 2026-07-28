@@ -142,7 +142,7 @@ Links can be defined in YAML (above) **or** managed interactively from the web v
 | :material-delete: **Delete** | Link row → *Delete* | Cascades automatically when the source or target DC is removed |
 
 <figure markdown="span">
-  ![Cross-DC link Create modal — source/target DCs picked, Sample mapping resolver, mapping preview](../images/v0.12/link_create_modal.png)
+  ![Cross-DC link Create modal — source/target DCs picked, Sample mapping resolver, mapping preview](../images/react/link_create_modal.png)
   <figcaption><em>Create cross-DC link</em> modal — source DC <code>sample_metadata</code>, target DC <code>multiqc_reports</code> (detected as <em>multiqc</em>), <em>Sample mapping</em> resolver, with the auto-loaded MultiQC sample mappings previewed.</figcaption>
 </figure>
 

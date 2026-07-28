@@ -374,7 +374,7 @@ MultiQC DCs support a full lifecycle from the *Manage Data Collection* modal:
 | :material-broom: **Clear** | Drop all data from the DC while keeping the definition |
 
 <figure markdown="span">
-  ![Manage Data Collection modal — Modify data / Clear contents tabs](../../images/v0.12/manage_dc_modal.png)
+  ![Manage Data Collection modal — Modify data / Clear contents tabs](../../images/react/manage_dc_modal.png)
   <figcaption><em>Manage Data Collection</em> modal — the <em>Modify data</em> tab handles append / replace; <em>Clear contents</em> drops data while keeping the DC definition. Shown against a Table DC; the same shell drives the MultiQC lifecycle, with the inner upload UI swapped for multiqc-folder ingest.</figcaption>
 </figure>
 
@@ -388,11 +388,11 @@ Before ingest, MultiQC reports are checked for **uniformity** — the same modul
 Non-uniform reports surface a checklist of differences (missing modules, divergent columns) and block the destructive action until resolved.
 
 <figure markdown="span">
-  ![MultiQC uniformity checks — Modules, Plot keys, version, Sample uniqueness all passing, with Check now button](../../images/v0.12/uniformity_checklist.png)
+  ![MultiQC uniformity checks — Modules, Plot keys, version, Sample uniqueness all passing, with Check now button](../../images/react/uniformity_checklist.png)
   <figcaption>Uniformity checks panel inside the MultiQC create flow — module set, plot keys, MultiQC version, and sample uniqueness are validated; <em>Check now</em> re-runs the check on demand.</figcaption>
 </figure>
 
-### Type-specific Data Collection configuration (React Beta)
+### Type-specific Data Collection configuration
 
 !!! info "Web interface"
     The UI for type-specific DC configuration is available in the web interface. YAML-level configuration is supported everywhere.
@@ -412,7 +412,7 @@ Tabular DCs can be marked Map-capable so every Map figure built on them inherits
 Per-figure `lat_column`/`lon_column` overrides still work when set; if both are unset, the DC-level config is used.
 
 <figure markdown="span">
-  ![Create DC modal — Table tab with a coordinates table detected, lat/lon column pickers, save-as-coordinates toggle](../../images/v0.12/create_dc_modal_table.png)
+  ![Create DC modal — Table tab with a coordinates table detected, lat/lon column pickers, save-as-coordinates toggle](../../images/react/create_dc_modal_table.png)
   <figcaption><em>Create Data Collection</em> modal — Table tab. After dropping a TSV with lat/lon columns the modal surfaces a <em>"Looks like a coordinates table"</em> banner with column pickers and a save-as-coordinates toggle.</figcaption>
 </figure>
 

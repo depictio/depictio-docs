@@ -180,8 +180,9 @@ Table components display data in interactive tables with built-in filtering and 
 | Option | Description | Default |
 |--------|-------------|---------|
 | Data Collection | Source data for the table | Required |
-| Visible Columns | Columns to display | All columns |
+| Visible Columns | Allowlist of columns to display; omit to show all | All columns |
 | Page Size | Rows per page | 10, 25, 50, or 100 |
+| Compact (v1.2.2+) | Tighter row and header heights | Off |
 | Style | Column width, text alignment | Auto |
 | Title | Header text above the table | Auto (from DC tag) |
 | Description | Subtitle text below the title | None |

@@ -36,8 +36,8 @@ If you have configured Google OAuth for your Depictio instance (see [Configurati
 ## <span style="color: #F68B33;">:material-view-dashboard:</span> Landing page / Dashboards section (/dashboards)
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/v0.12/react-beta/page_dashboards.png" target="_blank">
-        <img src="../../../images/v0.12/react-beta/page_dashboards.png" width="600">
+    <a href="../../../images/react/page_dashboards.png" target="_blank">
+        <img src="../../../images/react/page_dashboards.png" width="600">
     </a>
 </div>
 
@@ -142,8 +142,8 @@ At the bottom of the sidebar, you will find:
 You can access your user profile by clicking on the avatar icon in the bottom left corner of the sidebar.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/v0.12/react-beta/page_profile.png" target="_blank">
-        <img src="../../../images/v0.12/react-beta/page_profile.png" width="600">
+    <a href="../../../images/react/page_profile.png" target="_blank">
+        <img src="../../../images/react/page_profile.png" width="600">
     </a>
 </div>
 
@@ -156,8 +156,8 @@ This section allows you to:
 ## <span style="color: #6495ED;">:material-information:</span> About section (/about)
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/v0.12/react-beta/page_about.png" target="_blank">
-        <img src="../../../images/v0.12/react-beta/page_about.png" width="600">
+    <a href="../../../images/react/page_about.png" target="_blank">
+        <img src="../../../images/react/page_about.png" width="600">
     </a>
 </div>
 
@@ -166,8 +166,8 @@ The **About** section provides information about the GitHub repository and the d
 ## <span style="color: #E53935;">:material-shield-account:</span> Admin section (/admin)
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/v0.12/react-beta/page_admin.png" target="_blank">
-        <img src="../../../images/v0.12/react-beta/page_admin.png" width="600">
+    <a href="../../../images/react/page_admin.png" target="_blank">
+        <img src="../../../images/react/page_admin.png" width="600">
     </a>
 </div>
 
@@ -180,8 +180,8 @@ Depictio's main pages and their URLs:
 ### <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects list (/projects)
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/v0.12/react-beta/page_projects.png" target="_blank">
-        <img src="../../../images/v0.12/react-beta/page_projects.png" width="600">
+    <a href="../../../images/react/page_projects.png" target="_blank">
+        <img src="../../../images/react/page_projects.png" width="600">
     </a>
 </div>
 
@@ -198,8 +198,8 @@ You can reach this page directly by clicking the **project badge** shown on any
 dashboard card or in the dashboards table.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/v0.12/react-beta/page_project_detail.png" target="_blank">
-        <img src="../../../images/v0.12/react-beta/page_project_detail.png" width="600">
+    <a href="../../../images/react/page_project_detail.png" target="_blank">
+        <img src="../../../images/react/page_project_detail.png" width="600">
     </a>
 </div>
 
@@ -208,8 +208,8 @@ dashboard card or in the dashboards table.
 Read-only dashboard with filters and component interactions.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/v0.12/react-beta/page_dashboard_viewer.png" target="_blank">
-        <img src="../../../images/v0.12/react-beta/page_dashboard_viewer.png" width="600">
+    <a href="../../../images/react/page_dashboard_viewer.png" target="_blank">
+        <img src="../../../images/react/page_dashboard_viewer.png" width="600">
     </a>
 </div>
 
@@ -218,8 +218,8 @@ Read-only dashboard with filters and component interactions.
 Design mode — add, configure, and arrange components.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/v0.12/react-beta/page_dashboard_editor.png" target="_blank">
-        <img src="../../../images/v0.12/react-beta/page_dashboard_editor.png" width="600">
+    <a href="../../../images/react/page_dashboard_editor.png" target="_blank">
+        <img src="../../../images/react/page_dashboard_editor.png" width="600">
     </a>
 </div>
 
@@ -228,7 +228,7 @@ Design mode — add, configure, and arrange components.
 Generate and manage CLI configurations for the [depictio-cli](../../depictio-cli/usage.md).
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/v0.12/react-beta/page_cli_agents.png" target="_blank">
-        <img src="../../../images/v0.12/react-beta/page_cli_agents.png" width="600">
+    <a href="../../../images/react/page_cli_agents.png" target="_blank">
+        <img src="../../../images/react/page_cli_agents.png" width="600">
     </a>
 </div>

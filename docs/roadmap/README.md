@@ -98,7 +98,7 @@ Built with [FAIR principles](https://www.go-fair.org/fair-principles/) in mind. 
 - [x] S3/MinIO storage with backup/restore commands ([docs](../depictio-cli/usage.md#-backup-commands))
 - [x] MultiQC report integration ([docs](../features/components.md#multiqc-components) | [:material-github: #626](https://github.com/depictio/depictio/pull/626))
 - [x] **MultiQC data lifecycle** — append / replace / clear runs from the viewer with uniformity validation (v0.12.0, [docs](../usage/projects/guide.md#managing-data-collections-from-the-viewer-v0120))
-- [x] **DC-level type configuration** — Map-capable Table DCs (lat/lon column detection on upload, `DCTableCoordinatesConfig`); extensible to advanced-viz types (v0.12.0, [docs](../usage/projects/guide.md#type-specific-data-collection-configuration-react-beta))
+- [x] **DC-level type configuration** — Map-capable Table DCs (lat/lon column detection on upload, `DCTableCoordinatesConfig`); extensible to advanced-viz types (v0.12.0, [docs](../usage/projects/guide.md#type-specific-data-collection-configuration))
 - [x] Client-side table joining in CLI ([:material-github: #634](https://github.com/depictio/depictio/pull/634))
 - [x] Recipe-based data transformation — Python recipes with 4-checkpoint validation ([docs](../usage/projects/recipes.md))
 - [x] Template-based project setup — one-command project creation with `{DATA_ROOT}` substitution ([docs](../usage/projects/templates.md))
