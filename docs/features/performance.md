@@ -147,6 +147,21 @@ See the [environment reference](../installation/env-reference.md) for how to set
 
 ![A MultiQC figure request: the CLI builds and uploads the figures at ingest, the render endpoint probes the S3 prefix before enqueueing a build, and a Redis presence marker spares collections that never opted in](../images/v0.12/react/schema_multiqc_prerender.png)
 
+<div style="max-width: 1200px; margin: 1.5rem auto 2rem auto;">
+<div style="padding: 62.19% 0 0 0; position: relative">
+  <iframe
+    src="https://player.vimeo.com/video/1213726492?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1&amp;muted=1"
+    frameborder="0"
+    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
+    title="Opening a MultiQC dashboard aggregating many reports in Depictio"
+  ></iframe>
+  </div>
+  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 Opening a MultiQC dashboard that aggregates <strong>many reports</strong>, with caches warm.</p>
+</div>
+<script src="https://player.vimeo.com/api/player.js"></script>
+
 ## Measured behaviour
 
 The numbers below come from a single benchmark run on a linked 3-collection project. They
@@ -163,6 +178,20 @@ not as a specification.
 
 The single dev worker matters: a production deployment runs several, so these figures are
 pessimistic in that respect.
+
+<div style="max-width: 1200px; margin: 1.5rem auto 2rem auto;">
+<div style="padding: 62.19% 0 0 0; position: relative">
+  <iframe
+    src="https://player.vimeo.com/video/1213726629?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1&amp;muted=1"
+    frameborder="0"
+    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
+    title="Opening a 30-component Depictio dashboard on a 17.2 million row project"
+  ></iframe>
+  </div>
+  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 Opening a <strong>30-component</strong> dashboard on the linked project described above, with caches warm. Captured in the browser, so what you see includes rendering and painting, not only the server timings tabulated below.</p>
+</div>
 
 ### Opening a dashboard
 
