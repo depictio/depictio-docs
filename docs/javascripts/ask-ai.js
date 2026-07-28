@@ -89,10 +89,16 @@ function mountAskAi() {
     'aria-controls': 'askai-panel',
     'aria-label': 'Ask a question about the Depictio documentation',
   });
-  fab.innerHTML =
-    '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor">' +
-    '<path d="M12 2l1.9 5.6L19.5 9l-4.3 3.5 1.4 5.7L12 15l-4.6 3.2 1.4-5.7L4.5 9l5.6-1.4z"/>' +
-    '</svg><span class="askai-fab__label">Ask the docs</span>';
+  // Reuse the real mark rather than approximating it: a hand-drawn pinwheel at
+  // this size reads as a flower. The header <img> already carries a correctly
+  // resolved src for whatever page and mike version we are on, and .src gives
+  // it back absolute, so it stays valid across instant navigation.
+  const icon = el('span', { class: 'askai-fab__icon' });
+  const logo = document.querySelector('.md-logo img');
+  if (logo && logo.src) {
+    icon.appendChild(el('img', { src: logo.src, alt: '', 'aria-hidden': 'true' }));
+  }
+  fab.append(icon, el('span', { class: 'askai-fab__label' }, 'Ask the docs'));
 
   const panel = el('section', {
     id: 'askai-panel',
