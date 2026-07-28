@@ -34,6 +34,15 @@ SHARED_SUBTREES = (
     "react",
 )
 
+# Generated catalog gallery, ~16 MB per theme. Regenerated on every deploy and
+# identical across versions until the catalog itself changes, so it is by far
+# the largest thing a version was carrying. Shared like the images, with the
+# same drift caveat, which docs/catalog/index.md states on the page.
+SHARED_FILES = (
+    "assets/component-catalog-light.html",
+    "assets/component-catalog-dark.html",
+)
+
 _PREFIXES = tuple(f"images/{name}/" for name in SHARED_SUBTREES)
 
 # Matches the output-relative form mkdocs emits ("../../images/guides/x.png")
@@ -42,30 +51,50 @@ _URL_RE = re.compile(
     r"(?:\.\./)*images/(" + "|".join(re.escape(n) for n in SHARED_SUBTREES) + r")/"
 )
 
+# Same, for the individually shared files: "../assets/component-catalog-*.html".
+_FILE_RE = re.compile(
+    r"(?:\.\./)*(" + "|".join(re.escape(f) for f in SHARED_FILES) + r")"
+)
+
 
 def _enabled() -> bool:
     return os.environ.get("DEPICTIO_DOCS_SHARED_IMAGES") == "1"
 
 
-def _shared_base(config) -> str:
-    """Absolute URL of the shared image root, e.g. https://host/docs/images/."""
-    site_url = config.get("site_url") or "/"
-    return site_url.rstrip("/") + "/images/"
+def _site_root(config) -> str:
+    """Absolute URL of the site root, e.g. https://host/depictio-docs/.
+
+    Not simply config["site_url"]: mike's mkdocs plugin rewrites that to
+    urljoin(site_url, version) so each version gets its own canonical URL. The
+    shared copies live at the root, above every version, so the version segment
+    mike appended has to come back off.
+    """
+    site_url = (config.get("site_url") or "/").rstrip("/") + "/"
+    version = os.environ.get("MIKE_DOCS_VERSION", "").strip("/")
+    if version and site_url.endswith(f"/{version}/"):
+        site_url = site_url[: -len(version) - 1]
+    return site_url
 
 
 def on_files(files: Files, config, **kwargs) -> Files:
-    """Drop the shared subtrees so mike does not copy them into this version."""
+    """Drop the shared content so mike does not copy it into this version."""
     if not _enabled():
         return files
-    kept = [f for f in files if not f.src_uri.startswith(_PREFIXES)]
+    kept = [
+        f
+        for f in files
+        if not f.src_uri.startswith(_PREFIXES) and f.src_uri not in SHARED_FILES
+    ]
     dropped = len(files) - len(kept)
     if dropped:
-        print(f"[shared_images] excluded {dropped} image files from the versioned build")
+        print(f"[shared_images] excluded {dropped} files from the versioned build")
     return Files(kept)
 
 
 def on_post_page(output: str, page, config, **kwargs) -> str:
-    """Repoint image URLs at the shared root."""
+    """Repoint URLs at the shared copies."""
     if not _enabled():
         return output
-    return _URL_RE.sub(_shared_base(config) + r"\1/", output)
+    root = _site_root(config)
+    output = _URL_RE.sub(root + r"images/\1/", output)
+    return _FILE_RE.sub(root + r"\1", output)
