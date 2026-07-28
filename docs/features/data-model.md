@@ -75,40 +75,15 @@ API joins them in as it serves the project, which is why `delta_location` and
 
 ---
 
-## Objects at a glance
+## Data collection types
 
-| Object | Lives in | Key fields | Notes |
+| | Type | Content | Materialised as |
 | --- | --- | --- | --- |
-| **Project** | `projects` | `name`, `project_type`, `workflows`, `data_collections`, `joins`, `links`, `permissions`, `is_public` | The aggregate root. |
-| **Workflow** | embedded in Project | `name`, `engine`, `catalog`, `data_location`, `data_collections` | The pipeline definition. |
-| **WorkflowRun** | `runs` | `run_tag`, `run_location`, `workflow_id`, `files_id`, `creation_time`, `last_modification_time`, `run_hash`, `scan_results` | One execution. `scan_results` holds per-scan file counts. |
-| **DataCollection** | embedded in Workflow or Project | `data_collection_tag`, `config`, `optional` | `config` carries the type, the scan and the type-specific properties. |
-| **File** | `files` | `filename`, `file_location`, `file_hash`, `filesize`, `data_collection_id`, `run_id` | One per ingested file. |
-| **DeltaTableAggregated** | `deltatables` | `data_collection_id`, `delta_table_location`, `aggregation` | One per table-like data collection. |
-| **Dashboard** | `dashboards` | `dashboard_id`, `project_id`, `title`, `permissions`, `stored_metadata`, `is_main_tab`, `parent_dashboard_id`, `tab_order` | One document per tab. |
-| **User** | `users` | `email`, `is_admin`, `is_anonymous`, `is_temporary` | Group membership lives on the group, not the user. |
-| **Group** | `groups` | `name`, `users_ids` | |
-
-The "lives in" column names the MongoDB collection. The rest of the database holds derived
-or operational data: pre-rendered MultiQC output, cached visualisation results, task
-progress, logs, analytics. `show collections` in `mongosh` lists whatever a given
-deployment has, and [Backup & Restore](../usage/administration/backup.md) covers which of
-them the CLI dumps.
-
-!!! note "Legacy collections"
-
-    `workflows` and `data_collections` still exist in older databases. Both are embedded in
-    `projects` now. They are read during migration and cleaned up, never written to.
-
-### Data collection types
-
-| Type | Content | Materialised as |
-| --- | --- | --- |
-| `table` | Tabular data: CSV, TSV, Parquet, Excel | A Delta Lake table on S3 |
-| `image` | Image files | A Delta Lake table whose `image_column` holds the paths |
-| `multiqc` | MultiQC report data | The report's parsed data, as Parquet on S3 |
-| `geojson` | GeoJSON boundaries for choropleth maps | The file, copied to S3 unchanged |
-| `phylogeny` | Newick or Nexus trees | Nothing. The file is read where it was found |
+| :material-table: | `table` | Tabular data: CSV, TSV, Parquet, Excel | A Delta Lake table on S3 |
+| :material-image-multiple: | `image` | Image files | A Delta Lake table whose `image_column` holds the S3 paths |
+| ![MultiQC](../images/logos/multiqc_light.svg#only-light){ width="18" }![MultiQC](../images/logos/multiqc_dark.svg#only-dark){ width="18" } | `multiqc` | MultiQC report data | The report's parsed data, as Parquet on S3 |
+| :material-map-marker: | `geojson` | GeoJSON boundaries for choropleth maps | The file, copied to S3 unchanged |
+| :material-family-tree: | `phylogeny` | Newick or Nexus trees | Nothing. The file is read where it was found |
 
 A `table` collection that declares latitude and longitude columns becomes map-capable
 without changing its type. See [Components](components.md#map-components).
@@ -169,9 +144,9 @@ Project, Dashboard, WorkflowRun and File, holding three disjoint sets of users:
 | **editors** | Modify dashboard content, run data updates |
 | **viewers** | Read-only access to dashboards and data |
 
-`viewers` additionally accepts the wildcard `*`, which is how a project or dashboard is
-made public. See [Authentication Modes](../usage/guides/authentication-modes.md) for how
-this interacts with anonymous and unauthenticated deployments.
+A project also carries an `is_public` flag, which is what opens it to readers with no
+account. See [Authentication Modes](../usage/guides/authentication-modes.md) for how that
+interacts with anonymous and unauthenticated deployments.
 
 ---
 

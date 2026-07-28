@@ -98,7 +98,7 @@ def files_to_data(theme: Theme) -> Sketch:
     not, and a reader who assumes they do will go looking for a Delta table
     that was never written.
     """
-    s = Sketch(1240, 700, theme=theme)
+    s = Sketch(1240, 760, theme=theme)
     s.heading(
         46,
         52,
@@ -115,7 +115,8 @@ def files_to_data(theme: Theme) -> Sketch:
             "green",
             "Run",
             ("one execution of a workflow:", "an output folder, one or", "more samples processed"),
-        )
+        ),
+        icon="folder",
     )
 
     s.stack(
@@ -127,7 +128,8 @@ def files_to_data(theme: Theme) -> Sketch:
             "yellow",
             "Files",
             ("everything the scan matched:", "path, size, checksum"),
-        )
+        ),
+        icon="page",
     )
     s.arrow(360, 195, 470, 195)
     s.text(415, 180, "scan", size=14, colour=theme.dim)
@@ -145,48 +147,24 @@ def files_to_data(theme: Theme) -> Sketch:
                 "gathered into the one thing",
                 "a dashboard reads",
             ),
-        )
+        ),
+        icon="layers",
     )
     s.arrow(630, 260, 600, 340)
     s.text(645, 305, "grouped by type", size=14, colour=theme.dim, anchor="start")
 
-    s.text(1015, 165, "materialised by type:", size=15, colour=theme.dim)
-    s.box(
-        Box(
-            830,
-            190,
-            370,
-            95,
-            "blue",
-            "table, image",
-            ("a Delta table on S3,", "appended run after run"),
-        )
+    s.text(1015, 150, "materialised by type:", size=15, colour=theme.dim)
+    types = (
+        ("table", "table", ("a Delta table on S3,", "appended run after run")),
+        ("image", "image", ("a Delta table of S3 paths;", "the API streams the images")),
+        ("multiqc", "multiqc", ("the report's parsed data,", "as Parquet on S3")),
+        ("geojson", "map", ("the file itself, copied to S3",)),
+        ("phylogeny", "tree", ("the tree, read from wherever", "the scan found it")),
     )
-    s.box(
-        Box(
-            830,
-            310,
-            370,
-            95,
-            "blue",
-            "multiqc",
-            ("the report's parsed data,", "as Parquet on S3"),
-        )
-    )
-    s.box(Box(830, 430, 370, 95, "blue", "geojson", ("the file itself, copied to S3",)))
-    s.box(
-        Box(
-            830,
-            550,
-            370,
-            95,
-            "blue",
-            "phylogeny",
-            ("the tree, read from wherever", "the scan found it"),
-        )
-    )
-    for y in (237, 357, 477, 597):
-        s.arrow(770, 405, 830, y)
+    for i, (title, icon, lines) in enumerate(types):
+        y = 175 + i * 108
+        s.box(Box(830, y, 370, 90, "blue", title, lines), icon=icon)
+        s.arrow(770, 405, 830, y + 45)
 
     for i, line in enumerate(
         (
@@ -196,7 +174,7 @@ def files_to_data(theme: Theme) -> Sketch:
             "and joined back in when the API serves it.",
         )
     ):
-        s.text(60, 530 + i * 24, line, size=15, colour=theme.dim, anchor="start")
+        s.text(60, 540 + i * 24, line, size=15, colour=theme.dim, anchor="start")
 
     return s
 
@@ -210,7 +188,7 @@ def join_vs_link(theme: Theme) -> Sketch:
     what the first version did, hid exactly the difference the figure exists to
     show. The palettes differ for the same reason.
     """
-    s = Sketch(1340, 640, theme=theme)
+    s = Sketch(1380, 640, theme=theme)
     s.heading(
         46,
         52,
@@ -222,23 +200,24 @@ def join_vs_link(theme: Theme) -> Sketch:
     s.text(350, 122, "Join", size=19, weight="bold")
     s.text(350, 146, "run by the CLI, at ingestion. Tables only.", size=15, colour=theme.dim)
 
-    s.box(Box(70, 190, 230, 95, "green", "samplesheet", ("sample_id, condition",)))
-    s.box(Box(70, 345, 230, 95, "green", "mosdepth", ("sample_id, coverage",)))
+    s.box(Box(70, 190, 250, 95, "green", "samplesheet", ("sample_id, condition",)), icon="table")
+    s.box(Box(70, 345, 250, 95, "green", "mosdepth", ("sample_id, coverage",)), icon="table")
 
     s.box(
         Box(
-            400,
+            410,
             255,
-            250,
+            270,
             120,
             "blue",
             "joined table",
             ("one new data collection,", "written to S3"),
-        )
+        ),
+        icon="table",
     )
-    s.arrow(300, 230, 400, 290)
-    s.arrow(300, 397, 400, 337)
-    s.text(348, 325, "on sample_id", size=14, colour=theme.dim)
+    s.arrow(320, 230, 410, 290)
+    s.arrow(320, 397, 410, 337)
+    s.text(362, 325, "on sample_id", size=14, colour=theme.dim)
 
     s.text(360, 500, "One data collection from here on.", size=15, colour=theme.dim)
     s.text(360, 524, "The rows are merged on disk.", size=15, colour=theme.dim)
@@ -246,21 +225,21 @@ def join_vs_link(theme: Theme) -> Sketch:
     s.line(700, 120, 700, 570, colour=theme.muted, width=1.4, dashed=True)
 
     # -- link ---------------------------------------------------------------
-    s.text(1020, 122, "Link", size=19, weight="bold")
-    s.text(1020, 146, "run by the dashboard, at render time. Any type.", size=15, colour=theme.dim)
+    s.text(1030, 122, "Link", size=19, weight="bold")
+    s.text(1030, 146, "run by the dashboard, at render time. Any type.", size=15, colour=theme.dim)
 
-    s.box(Box(750, 235, 220, 95, "violet", "samplesheet", ("sample_id, condition",)))
+    s.box(Box(750, 235, 250, 95, "violet", "samplesheet", ("sample_id, condition",)), icon="table")
 
-    s.box(Box(1060, 180, 230, 70, "pink", "mosdepth table", ()))
-    s.box(Box(1060, 270, 230, 70, "pink", "MultiQC report", ()))
-    s.box(Box(1060, 360, 230, 70, "pink", "image gallery", ()))
+    s.box(Box(1060, 180, 280, 70, "pink", "mosdepth table", ()), icon="table")
+    s.box(Box(1060, 270, 280, 70, "pink", "MultiQC report", ()), icon="multiqc")
+    s.box(Box(1060, 360, 280, 70, "pink", "image gallery", ()), icon="image")
     for y in (215, 305, 395):
-        s.arrow(970, 282, 1060, y, dashed=True, colour=theme.accent)
-    s.text(1015, 460, "filters, at query time", size=14, colour=theme.accent)
+        s.arrow(1000, 282, 1060, y, dashed=True, colour=theme.accent)
+    s.text(1030, 460, "filters, at query time", size=14, colour=theme.accent)
 
-    s.text(1015, 500, "Nothing is merged. Picking samples on the", size=15, colour=theme.dim)
-    s.text(1015, 524, "left narrows everything on the right, whatever", size=15, colour=theme.dim)
-    s.text(1015, 548, "kind of data it holds.", size=15, colour=theme.dim)
+    s.text(1030, 500, "Nothing is merged. Picking samples on the", size=15, colour=theme.dim)
+    s.text(1030, 524, "left narrows everything on the right, whatever", size=15, colour=theme.dim)
+    s.text(1030, 548, "kind of data it holds.", size=15, colour=theme.dim)
 
     return s
 
