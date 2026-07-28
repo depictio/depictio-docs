@@ -1,7 +1,7 @@
 ---
 title: "Tutorials"
 icon: material/school-outline
-description: "Recorded talks and video walkthroughs — watch Depictio being used end to end, from ingesting a dataset to sharing a dashboard by URL."
+description: "Recorded talks and video walkthroughs: watch Depictio being used end to end, from ingesting a dataset to sharing a dashboard by URL."
 ---
 
 # :material-school-outline: Tutorials
@@ -25,7 +25,7 @@ Recorded talks and video walkthroughs. If you would rather read than watch, star
   ></iframe>
 </div>
 
-<p class="video-caption">🎬 <strong>SciLifeLab Data Centre webinar, 2 June 2026</strong> — building a multi-dataset dashboard and sharing it through a public URL.</p>
+<p class="video-caption">🎬 <strong>SciLifeLab Data Centre webinar, 2 June 2026</strong>: building a multi-dataset dashboard and sharing it through a public URL.</p>
 
 A one-hour webinar in the SciLifeLab Data Centre's
 [Tools for AI/ML research in life sciences](https://www.scilifelab.se/data-ai/tools-event-series/)
@@ -35,7 +35,7 @@ via [SciLifeLab Serve](https://serve.scilifelab.se/).
 !!! info "Recorded on v0.13.2"
 
     This was filmed shortly before the 1.0 release. The React viewer shown is the one
-    still in use, but some URLs and menu labels moved in v1.0.0 — see the
+    still in use, but some URLs and menu labels moved in v1.0.0, so check the
     [changelog](../changelog/README.md) if something doesn't match what you see.
 
 ---
@@ -55,9 +55,9 @@ Shorter clips, embedded alongside the documentation they belong to:
 
 ## Try it yourself
 
-- **[Live demo](https://demo.depictio.embl.org/)** — a running instance with example
+- **[Live demo](https://demo.depictio.embl.org/)** is a running instance with example
   projects. No account needed, and it resets periodically.
-- **[Open in Codespaces](https://codespaces.new/depictio/depictio)** — a full stack in the
+- **[Open in Codespaces](https://codespaces.new/depictio/depictio)** is a full stack in the
   browser, nothing to install.
-- **[Getting Started](../usage/get_started.md)** — the same ground as the webinar, in
+- **[Getting Started](../usage/get_started.md)** covers the same ground as the webinar, in
   written form, on your own machine.

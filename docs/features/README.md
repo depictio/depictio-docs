@@ -158,37 +158,20 @@ Technical architecture and security features.
 
 Depictio consists of several integrated components:
 
-```text
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│ React viewer│────▶│  FastAPI    │────▶│   MongoDB   │
-│  (Frontend) │     │  (Backend)  │     │  (Database) │
-└─────────────┘     └──────┬──────┘     └─────────────┘
-                           │
-                           ├───────────▶┌─────────────┐
-                           │            │    MinIO    │
-                           │            │  (Storage)  │
-                           │            └─────────────┘
-                           │
-                           └───────────▶┌─────────────┐
-                                        │    Redis    │
-                                        │   (Cache)   │
-                                        └──────▲──────┘
-                                               │
-                           ┌─────────────┐─────┘
-                           │   Celery    │
-                           │  (Workers)  │
-                           └─────────────┘
-```
+[![Depictio system architecture](../images/architecture/system_light.png#only-light)](../images/architecture/system_light.png){target=_blank}
+
+[![Depictio system architecture](../images/architecture/system_dark.png#only-dark)](../images/architecture/system_dark.png){target=_blank}
 
 **Component Connections:**
 
 | Connection | Description |
 |------------|-------------|
 | **React viewer → FastAPI** | API calls for data retrieval, authentication, and CRUD operations |
+| **FastAPI → React viewer** | WebSocket push for real-time dashboard refresh (optional, v1.1.4+) |
 | **FastAPI → MongoDB** | Document storage for metadata, users, projects, and configurations |
 | **FastAPI → MinIO** | Object storage for Delta tables, files, and dashboard screenshots |
 | **FastAPI → Redis** | Caching, session storage, and task result backend |
-| **FastAPI → Celery** | Dispatch of long-running work — ingestion, screenshots, pre-rendering |
+| **FastAPI → Celery** | Dispatch of long-running work: ingestion, screenshots, pre-rendering |
 | **Celery → Redis** | Task queue and results backend for background job processing |
 
 - **Frontend** (React + Vite + Mantine) - Interactive dashboard interface

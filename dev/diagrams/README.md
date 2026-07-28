@@ -1,17 +1,18 @@
 # Hand-drawn figures
 
-The diagrams on the [Data Model](../../docs/features/data-model.md) page are generated,
-not drawn. Regenerate them with:
+The figures on the [Data Model](../../docs/features/data-model.md) and
+[Features](../../docs/features/README.md) pages are generated, not drawn.
+Regenerate them with:
 
 ```bash
-uv sync --group diagrams          # once — pulls playwright
+uv sync --group diagrams           # once, pulls playwright
 uv run playwright install chromium # once
-cd dev/diagrams && uv run python data_model.py
+cd dev/diagrams && uv run python data_model.py && uv run python architecture.py
 ```
 
 Each script writes `<name>_light` and `<name>_dark`, as both SVG and PNG, into
-`docs/images/data-model/`. Pages embed the **PNG** with mkdocs-material's
-`#only-light` / `#only-dark` fragments — an `<img>`-embedded SVG is an isolated
+`docs/images/`. Pages embed the **PNG** with mkdocs-material's
+`#only-light` / `#only-dark` fragments. An `<img>`-embedded SVG is an isolated
 document that cannot see the page's `@font-face`, so Virgil would fall back to a
 cursive substitute and the fixed text coordinates would overflow their boxes.
 The SVG is committed as the reviewable artefact: it is what shows a real diff
@@ -19,8 +20,8 @@ when a figure changes.
 
 ## Why generated
 
-A hand-made PNG goes stale silently. These describe things that move — which
-objects are embedded, where a Delta table lives — so they are written as code,
+A hand-made PNG goes stale silently. These describe things that move (which
+objects are embedded, where a Delta table lives), so they are written as code,
 reviewed as a diff, and corrected in the same commit as the thing they describe.
 
 The jitter that gives the strokes their wobble comes from a fixed seed, so
@@ -32,7 +33,8 @@ status` is dirty after a regeneration, something in the figure actually changed.
 | File | What |
 | --- | --- |
 | `sketch.py` | The toolkit: jittered strokes, boxes, arrows, the light and dark palettes, and the PNG pass. |
-| `data_model.py` | The two Data Model figures. |
+| `data_model.py` | Data Model: the two project shapes, config to data, join vs link. |
+| `architecture.py` | The system architecture figure on the Features overview. |
 
 `sketch.py` is a port of the generator in the main
 [depictio](https://github.com/depictio/depictio) repository, which produces the
@@ -43,7 +45,7 @@ if you fix a drawing bug here, it is worth carrying over.
 ## Adding a figure
 
 Write a `build(theme) -> Sketch` function and hand it to `write_themed`. Name
-fills semantically (`"blue"`, `"orange"`, `"grey"`) rather than by hex — the
+fills semantically (`"blue"`, `"orange"`, `"grey"`) rather than by hex. The
 theme resolves them, which is what lets one function render both palettes.
 
 ```python

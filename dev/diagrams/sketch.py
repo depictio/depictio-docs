@@ -12,7 +12,7 @@ and the text uses Virgil (Excalidraw's font). Jitter comes from a fixed seed, so
 re-running a diagram produces a byte-identical file instead of a spurious diff.
 
 Diagrams are generated rather than drawn so they can be corrected in a diff when
-the thing they describe changes — a hand-made PNG goes stale silently.
+the thing they describe changes; a hand-made PNG goes stale silently.
 """
 
 from __future__ import annotations
@@ -215,6 +215,17 @@ class Sketch:
                 passes=1,
             )
 
+    def stack(self, box: Box, *, depth: int = 3, offset: float = 9) -> None:
+        """A box drawn as a pile, for "many of these" without listing them.
+
+        The sheets behind are drawn first and outline-only, so the front box
+        still reads as the labelled one.
+        """
+        for i in range(depth - 1, 0, -1):
+            back = Box(box.x + i * offset, box.y - i * offset, box.w, box.h, box.fill, "")
+            self.rect(back, colour=self.theme.muted)
+        self.box(box)
+
     def curve(self, points: list[tuple[float, float]], *, colour: str | None = None) -> None:
         """A multi-segment stroke, for the loops that no straight line can express."""
         colour = colour or self.theme.dim
@@ -270,8 +281,8 @@ def _png_host_page(svg: str) -> str:
     """An HTML shell that inlines the SVG and declares the bundled Virgil.
 
     Loading the .svg directly would leave the render at the mercy of the host's
-    installed fonts, and an <img>-embedded SVG cannot see an @font-face at all —
-    the text would fall back to a cursive substitute and overflow its boxes.
+    installed fonts, and an <img>-embedded SVG cannot see an @font-face at all,
+    so the text would fall back to a cursive substitute and overflow its boxes.
     """
     return (
         "<!doctype html><meta charset='utf-8'><style>"
