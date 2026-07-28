@@ -17,7 +17,7 @@
         <link rel="next" href="../../changelog/changelog/">
       
       
-      <link rel="icon" href="../../images/logo/logo_icon.png">
+      <link rel="icon" href="https://depictio.github.io/depictio-docs/images/logo/logo_icon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
     
     
@@ -121,7 +121,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../images/logo/logo_icon.png" alt="logo">
+  <img src="https://depictio.github.io/depictio-docs/images/logo/logo_icon.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -346,7 +346,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../images/logo/logo_icon.png" alt="logo">
+  <img src="https://depictio.github.io/depictio-docs/images/logo/logo_icon.png" alt="logo">
 
     </a>
     Depictio Documentation
@@ -1062,10 +1062,10 @@
 <li><strong>Data Collections</strong>: Aggregated data from files following the same structure.</li>
 </ul>
 <p>The following diagram illustrates the relationships between different entities in Depictio:</p>
-<p><img src="../../images/modularity/schema.png" width="600"></p>
+<p><img src="https://depictio.github.io/depictio-docs/images/modularity/schema.png" width="600"></p>
 <h2 id="code-architecture">Code architecture<a class="headerlink" href="#code-architecture" title="Permanent link">&para;</a></h2>
 <p>The code organisation clearly separates each of the frontend components and the API endpoints, making it easy to understand and extend the platform. </p>
-<p><img src="../../images/modularity/image-1.png" width="600"></p>
+<p><img src="https://depictio.github.io/depictio-docs/images/modularity/image-1.png" width="600"></p>
 <h3 id="api-structure">API structure<a class="headerlink" href="#api-structure" title="Permanent link">&para;</a></h3>
 <p>The API is structured to mirror the object design specified above, with each major component of the workflow having its own set of endpoints and models. The organization within <code>depictio/api/v1/endpoints</code> is as follows:</p>
 <ul>
@@ -1079,7 +1079,7 @@
 <li><strong>workflow_endpoints</strong>: Focuses on managing workflows, run configurations, and runs, reflecting the core of the workflow architecture.</li>
 </ul>
 <p>Each endpoint is defined in a separate subfolder, where the <code>routes.py</code> file contains the API routes and the <code>models.py</code> file contains the object models associated.</p>
-<p><img src="../../images/modularity/image-2.png" width="600"></p>
+<p><img src="https://depictio.github.io/depictio-docs/images/modularity/image-2.png" width="600"></p>
 <h3 id="dashboard-components">Dashboard components<a class="headerlink" href="#dashboard-components" title="Permanent link">&para;</a></h3>
 <p>The frontend components in Depictio are organized in the depictio/dash/modules folder, with each component defined in a separate subfolder. This modular design ensures easy integration and maintainability.</p>
 <h4 id="component-structure">Component Structure<a class="headerlink" href="#component-structure" title="Permanent link">&para;</a></h4>
@@ -1089,7 +1089,7 @@
 <li><strong>utils.py</strong>: Contains helper functions for rendering and state management.</li>
 </ul>
 <p>Each of the frontend components is designed to be modular and can be easily integrated into the dashboard. Each component is defined in a separate folder, containing the component logic and styling. The <code>frontend.py</code> file contains the dash callback functions implementation and the <code>utils.py</code> file contains the helpers functions used by the component, allowing the component to be re-rendered in different scenarios (first design, reload/restore, refresh after data update).</p>
-<p><img src="../../images/modularity/image-3.png" width="600"></p>
+<p><img src="https://depictio.github.io/depictio-docs/images/modularity/image-3.png" width="600"></p>
 
 
 

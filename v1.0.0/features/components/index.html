@@ -22,7 +22,7 @@
         
       
       
-      <link rel="icon" href="../../images/logo/logo_icon.png">
+      <link rel="icon" href="https://depictio.github.io/depictio-docs/images/logo/logo_icon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
@@ -130,7 +130,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../images/logo/animated_favicon.svg" alt="logo">
+  <img src="https://depictio.github.io/depictio-docs/images/logo/animated_favicon.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -564,7 +564,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../images/logo/animated_favicon.svg" alt="logo">
+  <img src="https://depictio.github.io/depictio-docs/images/logo/animated_favicon.svg" alt="logo">
 
     </a>
     Depictio Documentation
@@ -6023,8 +6023,8 @@
 </table>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Every row is classified client-side as <strong>UP</strong>, <strong>DOWN</strong>, or <strong>NS</strong> based on <code>significance &lt; threshold</code> combined with <code>|effect_size| &gt; threshold</code>. The backend returns raw rows; classification + colouring happens in <code>VolcanoRenderer.tsx</code>.</p>
-<p><a href="../../images/guides/advanced-visualizations/volcano_light.webp" target="_blank"><img alt="Volcano example" src="../../images/guides/advanced-visualizations/volcano_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/volcano_dark.webp" target="_blank"><img alt="Volcano example" src="../../images/guides/advanced-visualizations/volcano_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/volcano_light.webp" target="_blank"><img alt="Volcano example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/volcano_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/volcano_dark.webp" target="_blank"><img alt="Volcano example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/volcano_dark.webp#only-dark" /></a></p>
 <h3 id="ma">MA<a class="headerlink" href="#ma" title="Permanent link">&para;</a></h3>
 <p>Mean log intensity (x) vs log2 fold change (y) — same hits as volcano, classic DE / proteomics layout. Shares the UP / DOWN / NS tier scheme with <a href="#volcano">Volcano</a>.</p>
 <p><strong>Columns</strong></p>
@@ -6103,8 +6103,8 @@
 </table>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Mirror of the <a href="#volcano">Volcano</a> tier scheme — UP / DOWN / NS classification (sig × FC thresholds), client-side in <code>MARenderer.tsx</code>.</p>
-<p><a href="../../images/guides/advanced-visualizations/ma_light.webp" target="_blank"><img alt="MA example" src="../../images/guides/advanced-visualizations/ma_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/ma_dark.webp" target="_blank"><img alt="MA example" src="../../images/guides/advanced-visualizations/ma_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/ma_light.webp" target="_blank"><img alt="MA example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/ma_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/ma_dark.webp" target="_blank"><img alt="MA example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/ma_dark.webp#only-dark" /></a></p>
 <h3 id="da-barplot">DA barplot<a class="headerlink" href="#da-barplot" title="Permanent link">&para;</a></h3>
 <p>Ranked signed-LFC horizontal bars for differential abundance — single panel or faceted across contrasts. Same input shape as the upstream tool (ANCOM-BC, ALDEx2, MaAsLin2): one row per <code>(feature, contrast)</code> with <code>lfc</code> and optional <code>significance</code>.</p>
 <p><strong>Columns</strong></p>
@@ -6187,8 +6187,8 @@
 <p class="admonition-title">Legacy <code>viz_kind: ancombc_differentials</code></p>
 <p>Previously this single-panel layout was a separate viz kind named <code>ancombc_differentials</code>. It's now merged into DA barplot — <code>viz_kind: ancombc_differentials</code> is still accepted at deserialisation and rewritten to <code>da_barplot</code> with <code>contrast_view</code> defaulted from the persisted config.</p>
 </div>
-<p><a href="../../images/guides/advanced-visualizations/da_barplot_light.webp" target="_blank"><img alt="DA barplot example" src="../../images/guides/advanced-visualizations/da_barplot_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/da_barplot_dark.webp" target="_blank"><img alt="DA barplot example" src="../../images/guides/advanced-visualizations/da_barplot_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/da_barplot_light.webp" target="_blank"><img alt="DA barplot example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/da_barplot_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/da_barplot_dark.webp" target="_blank"><img alt="DA barplot example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/da_barplot_dark.webp#only-dark" /></a></p>
 <h3 id="enrichment">Enrichment<a class="headerlink" href="#enrichment" title="Permanent link">&para;</a></h3>
 <p>GSEA / GO / KEGG / Reactome pathway-enrichment dot plot: term on y, NES on x, dot size = gene-set size, colour = -log10(padj).</p>
 <p><strong>Columns</strong></p>
@@ -6261,8 +6261,8 @@
 </table>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Renderer <strong>filters by source</strong> (MultiSelect) and ranks by |nes|; only the top-N pathways are shown. Dot colour encodes -log10(padj).</p>
-<p><a href="../../images/guides/advanced-visualizations/enrichment_light.webp" target="_blank"><img alt="Enrichment example" src="../../images/guides/advanced-visualizations/enrichment_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/enrichment_dark.webp" target="_blank"><img alt="Enrichment example" src="../../images/guides/advanced-visualizations/enrichment_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/enrichment_light.webp" target="_blank"><img alt="Enrichment example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/enrichment_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/enrichment_dark.webp" target="_blank"><img alt="Enrichment example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/enrichment_dark.webp#only-dark" /></a></p>
 <h3 id="manhattan">Manhattan<a class="headerlink" href="#manhattan" title="Permanent link">&para;</a></h3>
 <p>Generic chr / pos / score plot — works for true GWAS (variants), peak significance (ATAC/ChIP narrowPeak), or viral variant tracks. <code>score_kind</code> keeps the y-axis label honest.</p>
 <p><strong>Columns</strong></p>
@@ -6371,8 +6371,8 @@
 </table>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Renderer <strong>facets by chromosome</strong> (one subplot per unique <code>chr</code> value). The optional <code>score_threshold</code> draws a horizontal cutoff line — no explicit per-row tag, but the line gives a visual significance reference.</p>
-<p><a href="../../images/guides/advanced-visualizations/manhattan_light.webp" target="_blank"><img alt="Manhattan example" src="../../images/guides/advanced-visualizations/manhattan_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/manhattan_dark.webp" target="_blank"><img alt="Manhattan example" src="../../images/guides/advanced-visualizations/manhattan_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/manhattan_light.webp" target="_blank"><img alt="Manhattan example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/manhattan_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/manhattan_dark.webp" target="_blank"><img alt="Manhattan example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/manhattan_dark.webp#only-dark" /></a></p>
 <h3 id="lollipop">Lollipop<a class="headerlink" href="#lollipop" title="Permanent link">&para;</a></h3>
 <p>Needle / variant track along a gene — each gene body as a horizontal line, each variant as a vertical stem with a category-coloured marker on top.</p>
 <p><strong>Columns</strong> — straight rename from canonical Mutation Annotation Format (VEP / vcf2maf / maftools — the cancer-mutation file format, not Minor Allele Frequency):</p>
@@ -6438,8 +6438,8 @@
 </table>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Renderer <strong>facets by feature</strong> (one subplot per gene, or a picker once the universe exceeds <code>max_subplot_genes</code>). Markers are <strong>coloured by category</strong> and <strong>sized by effect</strong> when bound.</p>
-<p><a href="../../images/guides/advanced-visualizations/lollipop_light.webp" target="_blank"><img alt="Lollipop example" src="../../images/guides/advanced-visualizations/lollipop_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/lollipop_dark.webp" target="_blank"><img alt="Lollipop example" src="../../images/guides/advanced-visualizations/lollipop_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/lollipop_light.webp" target="_blank"><img alt="Lollipop example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/lollipop_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/lollipop_dark.webp" target="_blank"><img alt="Lollipop example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/lollipop_dark.webp#only-dark" /></a></p>
 <h3 id="coverage-track">Coverage track<a class="headerlink" href="#coverage-track" title="Permanent link">&para;</a></h3>
 <p>Read depth / signal along a coordinate axis. Universal genomics primitive — covers mosdepth bins, BigWig-derived transcript coverage, peak signal, methylseq depth, contig coverage, sarek QC.</p>
 <p><strong>Columns</strong></p>
@@ -6548,8 +6548,8 @@
 </table>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Renderer <strong>facets by chromosome</strong> (subplot per chr) and optionally by <strong>sample</strong> (stacked subplot rows). The <code>chromosomes_filter</code> / <code>samples_filter</code> whitelists narrow the view further; the category lane colour-segments the trace.</p>
-<p><a href="../../images/guides/advanced-visualizations/coverage_track_light.webp" target="_blank"><img alt="Coverage track example" src="../../images/guides/advanced-visualizations/coverage_track_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/coverage_track_dark.webp" target="_blank"><img alt="Coverage track example" src="../../images/guides/advanced-visualizations/coverage_track_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/coverage_track_light.webp" target="_blank"><img alt="Coverage track example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/coverage_track_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/coverage_track_dark.webp" target="_blank"><img alt="Coverage track example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/coverage_track_dark.webp#only-dark" /></a></p>
 <h3 id="stacked-taxonomy">Stacked taxonomy<a class="headerlink" href="#stacked-taxonomy" title="Permanent link">&para;</a></h3>
 <p>Per-sample stacked relative-abundance bar with a rank dropdown.</p>
 <p><strong>Columns</strong></p>
@@ -6647,8 +6647,8 @@
 </details>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Renderer <strong>filters by rank</strong> (dropdown sourced from the unique <code>rank</code> values). Within the active rank, taxa are sorted by <code>sort_by</code>; everything past <code>top_n</code> is collapsed into an <code>Other</code> slice.</p>
-<p><a href="../../images/guides/advanced-visualizations/stacked_taxonomy_light.webp" target="_blank"><img alt="Stacked taxonomy example" src="../../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp" target="_blank"><img alt="Stacked taxonomy example" src="../../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/stacked_taxonomy_light.webp" target="_blank"><img alt="Stacked taxonomy example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/stacked_taxonomy_dark.webp" target="_blank"><img alt="Stacked taxonomy example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark" /></a></p>
 <h3 id="sunburst">Sunburst<a class="headerlink" href="#sunburst" title="Permanent link">&para;</a></h3>
 <p>Hierarchical taxonomy / pathway viewer — concentric rings from root to leaf. Unlike most viz, Sunburst uses a multi-column <code>rank_cols</code> list rather than the standard single-column <code>&lt;role&gt;_col</code> pattern; the <code>abundance</code> role is bound via the <code>abundance_col</code> setting below.</p>
 <div class="admonition note">
@@ -6707,8 +6707,8 @@
 </table>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Renderer <strong>hierarchically aggregates</strong> by the <code>rank_cols</code> sequence. Intermediate arc sizes are reconstructed via Plotly's <code>branchvalues='total'</code>. No per-row tag — aggregation is deterministic and lossless.</p>
-<p><a href="../../images/guides/advanced-visualizations/sunburst_light.webp" target="_blank"><img alt="Sunburst example" src="../../images/guides/advanced-visualizations/sunburst_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/sunburst_dark.webp" target="_blank"><img alt="Sunburst example" src="../../images/guides/advanced-visualizations/sunburst_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/sunburst_light.webp" target="_blank"><img alt="Sunburst example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/sunburst_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/sunburst_dark.webp" target="_blank"><img alt="Sunburst example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/sunburst_dark.webp#only-dark" /></a></p>
 <h3 id="rarefaction">Rarefaction<a class="headerlink" href="#rarefaction" title="Permanent link">&para;</a></h3>
 <p>Alpha-diversity vs sequencing depth — one line per sample with optional ±SE band and group colouring.</p>
 <p><strong>Columns</strong></p>
@@ -6781,8 +6781,8 @@
 </table>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Renderer <strong>aggregates over <code>iter</code></strong> per <code>(sample_id, depth)</code> — computes mean ± CI. Optional <code>group</code> adds a colour split; otherwise one line per sample. No binary row tag.</p>
-<p><a href="../../images/guides/advanced-visualizations/rarefaction_light.webp" target="_blank"><img alt="Rarefaction example" src="../../images/guides/advanced-visualizations/rarefaction_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/rarefaction_dark.webp" target="_blank"><img alt="Rarefaction example" src="../../images/guides/advanced-visualizations/rarefaction_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/rarefaction_light.webp" target="_blank"><img alt="Rarefaction example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/rarefaction_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/rarefaction_dark.webp" target="_blank"><img alt="Rarefaction example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/rarefaction_dark.webp#only-dark" /></a></p>
 <h3 id="phylogenetic">Phylogenetic<a class="headerlink" href="#phylogenetic" title="Permanent link">&para;</a></h3>
 <p>Newick tree + tip metadata (Microreact-style) — 5 layouts, tip search, subtree highlight.</p>
 <p>The tree itself comes from a separate DC with <code>dc_type: phylogeny</code> (served via <code>/advanced_viz/phylogeny/{dc_id}/newick</code>). Tip annotations live in a regular Table DC and are joined to tip labels at render time via <code>taxon_col</code>. The schema below validates the <strong>metadata</strong> DC only.</p>
@@ -6902,8 +6902,8 @@
 </tr>
 </tbody>
 </table>
-<p><a href="../../images/guides/advanced-visualizations/phylogenetic_light.webp" target="_blank"><img alt="Phylogenetic example" src="../../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/phylogenetic_dark.webp" target="_blank"><img alt="Phylogenetic example" src="../../images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/phylogenetic_light.webp" target="_blank"><img alt="Phylogenetic example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/phylogenetic_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/phylogenetic_dark.webp" target="_blank"><img alt="Phylogenetic example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark" /></a></p>
 <h3 id="dot-plot">Dot plot<a class="headerlink" href="#dot-plot" title="Permanent link">&para;</a></h3>
 <p>scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction expressing, colour = mean expression. The schema expects a <strong>cluster-aggregated long table</strong> — derive it from <code>AnnData</code> via <code>sc.get.aggregate</code> (or a manual <code>groupby</code> on <code>adata.X</code>), not from <code>rank_genes_groups</code> (which returns DE statistics, not aggregates).</p>
 <p><strong>Columns</strong></p>
@@ -6968,8 +6968,8 @@
 </tr>
 </tbody>
 </table>
-<p><a href="../../images/guides/advanced-visualizations/dot_plot_light.webp" target="_blank"><img alt="Dot plot example" src="../../images/guides/advanced-visualizations/dot_plot_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/dot_plot_dark.webp" target="_blank"><img alt="Dot plot example" src="../../images/guides/advanced-visualizations/dot_plot_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/dot_plot_light.webp" target="_blank"><img alt="Dot plot example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/dot_plot_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/dot_plot_dark.webp" target="_blank"><img alt="Dot plot example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/dot_plot_dark.webp#only-dark" /></a></p>
 <h3 id="embedding">Embedding<a class="headerlink" href="#embedding" title="Permanent link">&para;</a></h3>
 <p>2D / 3D sample embedding (PCA / UMAP / t-SNE / PCoA) — supports a <strong>precomputed</strong> DC (<code>dim_1</code>, <code>dim_2</code> columns already materialised) or <strong>live-compute</strong> mode (run the reduction on the fly via a Celery task and cache by <code>(dc, method, params, filters)</code>).</p>
 <p><strong>Columns</strong></p>
@@ -7090,8 +7090,8 @@
 </table>
 <p><strong>Filtering / row tagging</strong></p>
 <p>In <strong>precomputed mode</strong> the renderer just plots the pre-existing coordinates. In <strong>live-compute mode</strong> it dispatches <code>POST /advanced_viz/compute_embedding</code>, which runs the chosen reduction on the wide sample × feature matrix and returns coordinates. Results are cached by <code>(dc_id, method, params, filters)</code>; tweaking a slider re-dispatches a fresh job.</p>
-<p><a href="../../images/guides/advanced-visualizations/embedding_light.webp" target="_blank"><img alt="Embedding example" src="../../images/guides/advanced-visualizations/embedding_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/embedding_dark.webp" target="_blank"><img alt="Embedding example" src="../../images/guides/advanced-visualizations/embedding_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/embedding_light.webp" target="_blank"><img alt="Embedding example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/embedding_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/embedding_dark.webp" target="_blank"><img alt="Embedding example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/embedding_dark.webp#only-dark" /></a></p>
 <h3 id="hierarchical-heatmap">Hierarchical Heatmap<a class="headerlink" href="#hierarchical-heatmap" title="Permanent link">&para;</a></h3>
 <p>Clustered heatmap with dendrograms + annotation tracks, à la R's <a href="https://github.com/jokergoo/ComplexHeatmap">ComplexHeatmap</a> / <a href="https://cran.r-project.org/package=pheatmap">pheatmap</a>. Wraps the in-tree <a href="https://github.com/weber8thomas/plotly-complexheatmap" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span> plotly-complexheatmap</a> library; heavy compute (clustering, dendrogram layout) runs in a Celery worker and is cached by <code>(dc, params hash)</code>.</p>
 <p><strong>Columns</strong></p>
@@ -7193,8 +7193,8 @@
 </tr>
 </tbody>
 </table>
-<p><a href="../../images/guides/advanced-visualizations/complex_heatmap_light.webp" target="_blank"><img alt="Hierarchical Heatmap example" src="../../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/complex_heatmap_dark.webp" target="_blank"><img alt="Hierarchical Heatmap example" src="../../images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/complex_heatmap_light.webp" target="_blank"><img alt="Hierarchical Heatmap example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/complex_heatmap_dark.webp" target="_blank"><img alt="Hierarchical Heatmap example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark" /></a></p>
 <h3 id="qq">QQ<a class="headerlink" href="#qq" title="Permanent link">&para;</a></h3>
 <p>Quantile-quantile plot for p-value distributions (GWAS / DE / eQTL QC). Sorts p-values and plots <code>-log10(observed)</code> against the theoretical <code>-log10(expected)</code> under a uniform null.</p>
 <p><strong>Columns</strong></p>
@@ -7249,8 +7249,8 @@
 </table>
 <p><strong>Filtering / row tagging</strong></p>
 <p>When <code>category</code> is bound, the renderer produces <strong>one trace per stratum</strong> (e.g. genome partitions, ancestry groups). Otherwise a single trace plus the y = x reference line and the optional 95% null CI band.</p>
-<p><a href="../../images/guides/advanced-visualizations/qq_light.webp" target="_blank"><img alt="QQ example" src="../../images/guides/advanced-visualizations/qq_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/qq_dark.webp" target="_blank"><img alt="QQ example" src="../../images/guides/advanced-visualizations/qq_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/qq_light.webp" target="_blank"><img alt="QQ example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/qq_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/qq_dark.webp" target="_blank"><img alt="QQ example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/qq_dark.webp#only-dark" /></a></p>
 <h3 id="upset">UpSet<a class="headerlink" href="#upset" title="Permanent link">&para;</a></h3>
 <p>Set-intersection visualisation (alternative to Venn diagrams). Wraps the in-tree <code>plotly-upset</code> library (vendored under <code>packages/plotly-upset/</code>, not yet a standalone public repo); intersection enumeration + sorting runs in a Celery worker and is cached by <code>(dc, params hash)</code>. Input DC: a binary table where each row is an element and each <code>set_col</code> is a 0/1 membership indicator.</p>
 <p><strong>Columns</strong></p>
@@ -7324,8 +7324,8 @@
 </table>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Renderer <strong>filters by intersection size and degree</strong> — <code>min_size</code> drops intersections below the threshold, <code>max_degree</code> drops intersections involving more sets than the limit.</p>
-<p><a href="../../images/guides/advanced-visualizations/upset_plot_light.webp" target="_blank"><img alt="UpSet example" src="../../images/guides/advanced-visualizations/upset_plot_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/upset_plot_dark.webp" target="_blank"><img alt="UpSet example" src="../../images/guides/advanced-visualizations/upset_plot_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/upset_plot_light.webp" target="_blank"><img alt="UpSet example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/upset_plot_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/upset_plot_dark.webp" target="_blank"><img alt="UpSet example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/upset_plot_dark.webp#only-dark" /></a></p>
 <h3 id="sankey">Sankey<a class="headerlink" href="#sankey" title="Permanent link">&para;</a></h3>
 <p>Categorical-flow diagram across N ordered categorical levels (e.g. <code>sample → lineage → clade</code>, <code>sample → kingdom → phylum → genus</code>). Server-side aggregation via Celery, client-side colour / opacity tweaks.</p>
 <p><strong>Columns</strong></p>
@@ -7409,8 +7409,8 @@
 </div>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Renderer <strong>aggregates by the <code>step_cols</code> sequence</strong> (via Celery <code>compute_sankey</code>) and filters out links whose aggregated value is below <code>min_link_value</code>.</p>
-<p><a href="../../images/guides/advanced-visualizations/sankey_light.webp" target="_blank"><img alt="Sankey example" src="../../images/guides/advanced-visualizations/sankey_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/sankey_dark.webp" target="_blank"><img alt="Sankey example" src="../../images/guides/advanced-visualizations/sankey_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/sankey_light.webp" target="_blank"><img alt="Sankey example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/sankey_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/sankey_dark.webp" target="_blank"><img alt="Sankey example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/sankey_dark.webp#only-dark" /></a></p>
 <h3 id="oncoplot">Oncoplot<a class="headerlink" href="#oncoplot" title="Permanent link">&para;</a></h3>
 <p>Sample × gene mutation matrix with discrete mutation-type colours and per-gene / per-sample frequency strips.</p>
 <p><strong>Columns</strong> — straight rename from canonical Mutation Annotation Format (VEP / vcf2maf / maftools — the cancer-mutation file format, not Minor Allele Frequency):</p>
@@ -7452,8 +7452,8 @@
 <p>No additional knobs — the layout is fully determined by the column bindings.</p>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Cells are <strong>coloured categorically by <code>mutation_type</code></strong> (NA cells stay blank). Side strips show per-gene and per-sample mutation counts.</p>
-<p><a href="../../images/guides/advanced-visualizations/oncoplot_light.webp" target="_blank"><img alt="Oncoplot example" src="../../images/guides/advanced-visualizations/oncoplot_light.webp#only-light" /></a></p>
-<p><a href="../../images/guides/advanced-visualizations/oncoplot_dark.webp" target="_blank"><img alt="Oncoplot example" src="../../images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/oncoplot_light.webp" target="_blank"><img alt="Oncoplot example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/oncoplot_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/oncoplot_dark.webp" target="_blank"><img alt="Oncoplot example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark" /></a></p>
 <hr />
 <h2 id="card-components"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2M5 13v2h11v-2zm0-4v2h14V9z"/></svg></span> Card Components <small>(v0.0.1+)</small><a class="headerlink" href="#card-components" title="Permanent link">&para;</a></h2>
 <p>Card components display metrics with aggregations. A card shows a <strong>hero metric</strong> (primary value) and can optionally display <strong>secondary metrics</strong> below it for at-a-glance summaries.</p>
@@ -8222,7 +8222,7 @@
 </tbody>
 </table>
 <p>It inherits every standard Table DC capability (CSV / TSV / Parquet format, <code>polars_kwargs</code>, <code>keep_columns</code>, <code>columns_description</code>). The <code>dc_type</code> stays <code>"table"</code> — the variant is materialised at deserialisation when <code>lat_column</code> / <code>lon_column</code> are present. A model validator enforces that the two columns must differ.</p>
-<p><img alt="Coordinates DC example" src="../images/guides/map/coordinates_dc.png" /></p>
+<p><img alt="Coordinates DC example" src="https://depictio.github.io/depictio-docs/images/guides/map/coordinates_dc.png" /></p>
 <h3 id="map-types">Map Types<a class="headerlink" href="#map-types" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -8427,7 +8427,7 @@ WATCHER-VERIFY-1778951276</li>
 
       <!-- Logo Column -->
       <div class="depictio-footer__section depictio-footer__brand">
-        <img src="../../images/logo/logo_icon.png" alt="Depictio" class="depictio-footer__logo">
+        <img src="https://depictio.github.io/depictio-docs/images/logo/logo_icon.png" alt="Depictio" class="depictio-footer__logo">
         <span class="depictio-footer__title">Depictio</span>
         <p class="depictio-footer__tagline">Interactive dashboards for bioinformatics</p>
       </div>

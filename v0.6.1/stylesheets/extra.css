@@ -89,7 +89,7 @@
     display: inline-block;
     width: 36px;
     height: 36px;
-    background-image: url('../images/logo/logo_icon.png');
+    background-image: url('https://depictio.github.io/depictio-docs/images/logo/logo_icon.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

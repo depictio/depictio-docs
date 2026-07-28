@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('inline-svg-container');
         if (!container) return;
         
-        fetch(getBasePath() + 'images/logo/animated_favicon.svg')
+        fetch(getBasePath() + 'https://depictio.github.io/depictio-docs/images/logo/animated_favicon.svg')
             .then(response => response.text())
             .then(svgContent => {
                 container.innerHTML = svgContent;
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
         headerLogo.style.width = '48px';
         headerLogo.style.height = '48px';
         
-        fetch(getBasePath() + 'images/logo/animated_favicon.svg')
+        fetch(getBasePath() + 'https://depictio.github.io/depictio-docs/images/logo/animated_favicon.svg')
             .then(response => response.text())
             .then(svgContent => {
                 // Create a wrapper div
