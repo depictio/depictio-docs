@@ -71,6 +71,29 @@ body.page-changelog .md-sidebar--secondary .md-nav__list .md-nav__list {
     background-color: #f7f7f7;
 }
 
+/* Room for the tab row.
+ *
+ * Material lays the tabs out inside .md-grid, whose width is sized for body
+ * text. The tabs are not body text: with 13 of them the row needs ~70px more
+ * than it is given, so the last tab is clipped even on a 1920px screen with
+ * 600px of window to spare. Widening it is what lets the nav grow without
+ * pruning entries, and the tighter item padding leaves enough headroom that
+ * the next tab does not reopen this.
+ *
+ * The header gets the same width, not a wider one: the two rows are stacked
+ * and a mismatch shows up immediately as the tabs starting left of the logo.
+ * Article content keeps its own, narrower measure. */
+.md-header .md-grid,
+.md-tabs .md-grid {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.md-tabs__item {
+    padding: 0 0.35rem;
+}
+
 /* Theme-aware logo switching */
 /* Light theme - show dark logo */
 [data-md-color-scheme="default"] .logo-dark {
