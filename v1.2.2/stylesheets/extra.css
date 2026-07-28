@@ -156,7 +156,7 @@ body.page-changelog .md-sidebar--secondary .md-nav__list .md-nav__list {
     display: inline-block;
     width: 36px;
     height: 36px;
-    background-image: url('https://depictio.github.io/depictio-docs/images/logo/logo_icon.png');
+    background-image: url('../images/logo/logo_icon.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -1141,7 +1141,7 @@ body.catalog-fs-lock .md-main {
     width: 1.6em;
     height: 1.6em;
     flex-shrink: 0;
-    background: url("https://depictio.github.io/depictio-docs/images/logo/animated_favicon.svg") center / contain no-repeat;
+    background: url("../images/logo/animated_favicon.svg") center / contain no-repeat;
 }
 .md-typeset .catalog-cta {
     display: inline-flex;
@@ -1438,7 +1438,7 @@ body.catalog-fs-lock .md-main {
   height: 1.05em;
   margin-right: 0.45em;
   flex-shrink: 0;
-  background: url("https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/nf-core.png") center / contain no-repeat;
+  background: url("../images/pipeline-templates/nf-core/ampliseq/nf-core.png") center / contain no-repeat;
 }
 
 

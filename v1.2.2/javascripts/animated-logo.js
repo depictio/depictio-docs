@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load the actual animated SVG content
     function loadAnimatedSVG() {
-        return fetch('https://depictio.github.io/depictio-docs/images/logo/animated_favicon.svg')
+        return fetch('images/logo/animated_favicon.svg')
             .then(response => response.text())
             .catch(error => {
                 console.log('Could not load animated_favicon.svg');
