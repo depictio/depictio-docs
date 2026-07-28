@@ -71,6 +71,29 @@ body.page-changelog .md-sidebar--secondary .md-nav__list .md-nav__list {
     background-color: #f7f7f7;
 }
 
+/* Room for the tab row.
+ *
+ * Material lays the tabs out inside .md-grid, whose width is sized for body
+ * text. The tabs are not body text: with 13 of them the row needs ~70px more
+ * than it is given, so the last tab is clipped even on a 1920px screen with
+ * 600px of window to spare. Widening it is what lets the nav grow without
+ * pruning entries, and the tighter item padding leaves enough headroom that
+ * the next tab does not reopen this.
+ *
+ * The header gets the same width, not a wider one: the two rows are stacked
+ * and a mismatch shows up immediately as the tabs starting left of the logo.
+ * Article content keeps its own, narrower measure. */
+.md-header .md-grid,
+.md-tabs .md-grid {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.md-tabs__item {
+    padding: 0 0.35rem;
+}
+
 /* Theme-aware logo switching */
 /* Light theme - show dark logo */
 [data-md-color-scheme="default"] .logo-dark {
@@ -1416,4 +1439,33 @@ body.catalog-fs-lock .md-main {
   margin-right: 0.45em;
   flex-shrink: 0;
   background: url("../images/pipeline-templates/nf-core/ampliseq/nf-core.png") center / contain no-repeat;
+}
+
+
+/* Video embeds.
+
+   Replaces the per-embed `padding: NN% 0 0 0` ratio hack that the older pages
+   repeat inline, and gives captions a colour that follows the palette instead
+   of a hard-coded grey that disappears in dark mode. */
+.video-embed {
+  max-width: 1200px;
+  margin: 1rem auto 0.5rem auto;
+}
+
+.video-embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+  border-radius: 6px;
+}
+
+.md-typeset .video-caption {
+  max-width: 1200px;
+  margin: 0 auto 2rem auto;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light);
 }

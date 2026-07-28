@@ -1,266 +1,158 @@
 ---
 title: "Data Model"
 icon: material/database-outline
-description: "Conceptual overview of Depictio's domain objects and relationship model — how Projects, Workflows, Runs, Files, DataCollections, and Dashboards fit together."
+description: "How Depictio's domain objects fit together: what a project document actually contains, how a data collection reaches the storage it is served from, and how joins differ from links."
 ---
 
 # :material-database-outline: Data Model
 
-Depictio's object model is designed to reflect **production-oriented, FAIR-compliant workflows**. The hierarchy mirrors how pipelines actually run: a project contains workflows, each workflow execution produces files, and those files are aggregated into typed data collections that power interactive dashboards.
+A **project** is the unit everything else hangs off. It names one or more
+**workflows**, each workflow declares the **data collections** it produces, and every
+data collection becomes one thing a dashboard can read.
+
+Two details are worth having in mind before reading further, because neither is visible
+from the object names alone:
+
+1. **Almost none of that hierarchy is stored as separate documents.** Workflows and data
+   collections are fields inside the project document, not rows in their own collections.
+   One read gets you the whole configuration.
+2. **The configuration contains no storage paths.** Nothing in a project says where its
+   data ended up; that is recorded separately, at ingestion, and added back when the API
+   serves the project. Which is what lets the same YAML file be ingested on a laptop and
+   on a cluster without editing a line of it.
 
 ---
 
-## Object Hierarchy
+## The two shapes of a project
 
-The core chain of objects, from the user-facing dashboard down to individual files:
+[![The two shapes of a project](../images/data-model/project-shape_light.png#only-light)](../images/data-model/project-shape_light.png){target=_blank}
 
-<div style="max-width: 420px; margin: 0 auto;" markdown="1">
-```mermaid
-%%{init: {"look": "handDrawn", "themeVariables": {"fontFamily": "Virgil", "fontSize": "20px"}}}%%
-graph TD
-    D[Dashboard] --> P[Project]
-    P --> W[Workflow]
-    W --> WR[WorkflowRun]
-    WR --> DC[DataCollection]
-    DC --> F[File]
-    P -.->|basic project| DC
+[![The two shapes of a project](../images/data-model/project-shape_dark.png#only-dark)](../images/data-model/project-shape_dark.png){target=_blank}
 
-    classDef dashboard fill:#9966CC,stroke:#9966CC,color:#fff
-    classDef project   fill:#6495ED,stroke:#6495ED,color:#fff
-    classDef workflow  fill:#45B8AC,stroke:#45B8AC,color:#fff
-    classDef run       fill:#8BC34A,stroke:#8BC34A,color:#333
-    classDef dc        fill:#F68B33,stroke:#F68B33,color:#fff
-    classDef file      fill:#F9CB40,stroke:#F9CB40,color:#333
+| | Structure | Typical use |
+| --- | --- | --- |
+| **`advanced`** | Project :material-arrow-right: Workflow :material-arrow-right: DataCollection | Pipeline output. Defined in a YAML file and ingested by the CLI. |
+| **`basic`** | Project :material-arrow-right: DataCollection | A few files you want on a dashboard. Created in the web UI, or with the CLI. |
 
-    class D dashboard
-    class P project
-    class W workflow
-    class WR run
-    class DC dc
-    class F file
-```
-</div>
+Nothing else changes between the two. The same data collection types, joins, links,
+permissions and dashboards apply either way. The workflow layer only exists to answer
+"which pipeline produced this, and in which of its runs".
 
-The dashed arrow shows the shortcut for **basic projects**: DataCollections can attach directly to the project, skipping the Workflow and WorkflowRun layers.
-
-The remaining domain objects attach to the hierarchy as support structures:
-
-<div style="max-width: 650px; margin: 0 auto;" markdown="1">
-```mermaid
-%%{init: {"look": "handDrawn", "themeVariables": {"fontFamily": "Virgil", "fontSize": "20px"}}}%%
-graph TD
-    P[Project] & D[Dashboard] --> PERM[Permission]
-    P --> JD[JoinDefinition]
-    P --> DCL[DCLink]
-    PERM --> U[User]
-
-    classDef project   fill:#6495ED,stroke:#6495ED,color:#fff
-    classDef dashboard fill:#9966CC,stroke:#9966CC,color:#fff
-    classDef perm      fill:#E6779F,stroke:#E6779F,color:#fff
-    classDef join      fill:#45B8AC,stroke:#45B8AC,color:#fff
-    classDef link      fill:#7A5DC7,stroke:#7A5DC7,color:#fff
-    classDef user      fill:#8BC34A,stroke:#8BC34A,color:#333
-
-    class P project
-    class D dashboard
-    class PERM perm
-    class JD join
-    class DCL link
-    class U user
-```
-</div>
+The word **workflow** is used in the sense [nf-core](https://nf-co.re/) and
+[WorkflowHub](https://workflowhub.eu/) use it: the pipeline definition, not a particular
+execution of it. Executions are **runs**, and they are the subject of the next section.
 
 ---
 
-## Core Objects
+## How files become dashboard data
 
-### <span style="color:#6495ED">Project</span>
+[![How files become dashboard data](../images/data-model/files-to-data_light.png#only-light)](../images/data-model/files-to-data_light.png){target=_blank}
 
-The **top-level container** for all related pipelines and visualizations.
+[![How files become dashboard data](../images/data-model/files-to-data_dark.png#only-dark)](../images/data-model/files-to-data_dark.png){target=_blank}
 
-| Field | Description |
-|-------|-------------|
-| `name` | Human-readable project identifier |
-| `project_type` | `basic` or `workflow` |
-| `workflows` | List of associated Workflow objects |
-| `data_collections` | DataCollections for basic projects |
-| `joins` | JoinDefinition list for cross-DC merging |
-| `links` | DCLink list for cross-DC filter propagation |
-| `permissions` | Embedded Permission object (owners/editors/viewers) |
-| `is_public` | Whether the project is publicly accessible |
+A **run** is one execution of a workflow: an output folder, produced by processing one or
+many samples. Re-running a pipeline adds a run rather than replacing one, so a project
+accumulates runs over time.
 
----
+Each run's output folder is scanned, and every matching file becomes a **File** record
+holding its path, size and checksum. A **data collection** then gathers every file of the
+same type, across every run, into the one thing a dashboard reads. The checksum is what
+keeps re-ingestion incremental: an unchanged file is recognised and skipped rather than
+processed again.
 
-### <span style="color:#45B8AC">Workflow</span>
+What that "one thing" is depends on the type, and it is not always a table. Tabular data
+gets a [Delta Lake](https://delta.io/) table on S3, because Delta is what turns a
+re-ingestion into an append with history rather than an overwrite. A MultiQC report gets
+its parsed data copied as Parquet, a GeoJSON file is copied unchanged, and a phylogeny is
+not copied at all: the tree is read from wherever the scan found it. The
+[types table](#data-collection-types) below has the full mapping.
 
-Represents a **standardised production pipeline** (Nextflow, Snakemake, or custom).
-
-| Field | Description |
-|-------|-------------|
-| `name` | Workflow identifier |
-| `engine` | Pipeline engine (`nextflow`, `snakemake`, etc.) |
-| `catalog` | External pipeline registry reference (e.g., nf-core) |
-| `data_collections` | DataCollections produced by this workflow |
-| `runs` | List of WorkflowRun instances |
-
-Multiple workflows can belong to a single project, enabling multi-omics or multi-pipeline dashboards (e.g., combining [nf-core/rnaseq](https://nf-co.re/rnaseq) and [nf-core/atacseq](https://nf-co.re/atacseq) outputs).
+None of those destinations appear in the project you configured. For table-like
+collections the location and the schema of each aggregation live in a separate
+`deltatables` document; for the rest they are recorded on the file entries. Either way the
+API joins them in as it serves the project, which is why `delta_location` and
+`last_aggregation` show up in API responses and nowhere in your YAML.
 
 ---
 
-### <span style="color:#8BC34A">WorkflowRun</span>
+## Data collection types
 
-A **single execution instance** of a workflow.
+| | Type | Content | Materialised as |
+| --- | --- | --- | --- |
+| :material-table: | `table` | Tabular data: CSV, TSV, Parquet, Excel | A Delta Lake table on S3 |
+| :material-image-multiple: | `image` | Image files | A Delta Lake table whose `image_column` holds the S3 paths |
+| ![MultiQC](../images/logos/multiqc_light.svg#only-light){ width="18" }![MultiQC](../images/logos/multiqc_dark.svg#only-dark){ width="18" } | `multiqc` | MultiQC report data | The report's parsed data, as Parquet on S3 |
+| :material-map-marker: | `geojson` | GeoJSON boundaries for choropleth maps | The file, copied to S3 unchanged |
+| :material-family-tree: | `phylogeny` | Newick or Nexus trees | Nothing. The file is read where it was found |
 
-| Field | Description |
-|-------|-------------|
-| `run_tag` | Unique tag identifying this execution |
-| `start_time` / `end_time` | Execution timestamps |
-| `file_count` | Number of output files generated |
-| `scan_stats` | Metadata from the file-scan step |
+A `table` collection that declares latitude and longitude columns becomes map-capable
+without changing its type. See [Components](components.md#map-components).
 
-Files produced by each run share a consistent structure across runs, making them suitable for aggregation into DataCollections.
+### Where a data collection came from
 
----
+| Source | Meaning |
+| --- | --- |
+| `native` | Scanned directly from workflow output files. Requires a `scan` configuration. |
+| `joined` | Produced by a [join](#joining-and-linking) merging two other collections. |
+| `transformed` | Produced by a [Python recipe](../usage/projects/recipes.md). |
+| `aggregated` | Reserved. |
 
-### <span style="color:#F68B33">DataCollection</span>
-
-An **aggregated view of output files** from one or more runs, typed by content.
-
-| Type | Description |
-|------|-------------|
-| `table` | Tabular data (CSV/TSV/Parquet → Delta Lake) |
-| `multiqc` | MultiQC JSON report files |
-| `image` | Image files (PNG, SVG, …) |
-| `geojson` | GeoJSON boundary files for choropleth maps |
-
-DataCollections also carry a **source** attribute describing how they were created:
-
-| Source | Description |
-|--------|-------------|
-| `NATIVE` | Directly scanned from workflow output files |
-| `JOINED` | Derived by merging two or more native DCs via a JoinDefinition |
-| `AGGREGATED` | Combined from multiple DCs across runs or projects |
+Only `native` collections need a scan. Derived ones are written by whatever process
+creates them.
 
 ---
 
-### <span style="color:#D4960A">File</span>
+## Joining and linking
 
-An **individual artifact** produced by a workflow run.
+[![Joining and linking](../images/data-model/join-vs-link_light.png#only-light)](../images/data-model/join-vs-link_light.png){target=_blank}
 
-| Field | Description |
-|-------|-------------|
-| `filename` | File name |
-| `file_hash` | Content hash for deduplication |
-| `filesize` | Size in bytes |
-| `data_collection_id` | Parent DataCollection reference |
-| `run_id` | Parent WorkflowRun reference |
+[![Joining and linking](../images/data-model/join-vs-link_dark.png#only-dark)](../images/data-model/join-vs-link_dark.png){target=_blank}
 
----
+Two mechanisms that sound alike and behave nothing alike. The difference that matters most
+is *when* and *to what* each one applies:
 
-### <span style="color:#9966CC">Dashboard</span>
+- A **JoinDefinition** (`Project.joins`) runs in the CLI, at ingestion. It reads two Delta
+  tables, merges them on shared columns (`left_dc`, `right_dc`, `on_columns`, `how`, plus a
+  granularity policy) and writes the result to S3 as a new data collection with
+  `source: joined`. Because it merges rows, it only works between `table` collections.
+- A **DCLink** (`Project.links`) merges nothing and writes nothing. It runs in the
+  dashboard, at render time, propagating *filters* from one data collection to another and
+  resolving identifiers between them by one of several strategies (`direct`,
+  `sample_mapping`, `pattern`, `regex`, `wildcard`). Since it only has to translate
+  identifiers, it works across types: a selection on a metadata table can narrow a MultiQC
+  report and an image gallery at the same time.
 
-A **visualization container** linked to a project, composed of draggable components.
+Use a join when you want one table. Use a link when you want to keep several things
+separate and filter them together. [Cross-DC Filtering](cross-dc-filtering.md) covers the
+resolver strategies in depth.
 
-| Field | Description |
-|-------|-------------|
-| `title` | Dashboard name |
-| `project_id` | Reference to parent Project |
-| `tabs` | Optional tab grouping of components |
-| `permissions` | Embedded Permission (may differ from project) |
+!!! note "Legacy join configuration"
 
-Dashboards support tabbed layouts, allowing a single dashboard to present multiple analytical views of the same underlying data.
-
----
-
-### <span style="color:#8BC34A">User</span>
-
-| Field | Description |
-|-------|-------------|
-| `email` | Unique user identifier |
-| `is_admin` | Whether the user has admin privileges |
-| `is_anonymous` | Whether the user is unauthenticated (anonymous access mode) |
-
-Access control is enforced through `Permission` objects embedded in Projects and Dashboards.
+    A `join` block on an individual data collection's config still deserialises, but it is
+    superseded by project-level `joins` and is no longer read.
 
 ---
 
-## Relationship Models
+## Access control
 
-### <span style="color:#E6779F">Permission</span>
-
-Permissions are **embedded** in Projects, Dashboards, and Files. They define a three-tier access model:
-
-```mermaid
-classDiagram
-    class Permission {
-        owners: List[User]
-        editors: List[User]
-        viewers: List[User]
-    }
-    Permission "1" --> "*" User
-```
+Permissions are not a separate document. A `Permission` object is **embedded** into every
+Project, Dashboard, WorkflowRun and File, holding three disjoint sets of users:
 
 | Tier | Can do |
-|------|--------|
-| **owners** | Full control — edit, share, delete |
+| --- | --- |
+| **owners** | Full control: edit, share, delete |
 | **editors** | Modify dashboard content, run data updates |
 | **viewers** | Read-only access to dashboards and data |
 
----
-
-### <span style="color:#45B8AC">JoinDefinition</span>
-
-Defines **how two DataCollections are merged** to produce a JOINED DataCollection.
-
-| Field | Description |
-|-------|-------------|
-| `on_columns` | Column(s) used as join key(s) |
-| `join_type` | `inner`, `left`, `outer`, etc. |
-| `granularity` | Row-level or aggregation granularity |
-| `persist` | Whether the join result is materialised in storage |
-
----
-
-### <span style="color:#7A5DC7">DCLink</span>
-
-Controls **cross-DC filter propagation** — when a user selects a value in one component, DCLinks determine which other DataCollections are filtered accordingly.
-
-| Field | Description |
-|-------|-------------|
-| `source_dc` | DataCollection whose selection triggers the link |
-| `target_dc` | DataCollection that receives the filter |
-| `resolver` | Strategy for mapping source values to target |
-
-**Resolver strategies:**
-
-| Strategy | When to use |
-|----------|-------------|
-| `direct` | Shared column with identical values |
-| `sample_mapping` | Lookup table maps source → target identifiers |
-| `pattern` | String pattern extraction (e.g., strip suffix) |
-| `regex` | Regex-based value transformation |
-| `wildcard` | Glob-style matching across identifiers |
-
----
-
-## MongoDB Collections
-
-| Collection | Domain Object | Key Fields |
-|------------|--------------|------------|
-| `projects` | Project | name, workflows (embedded), permissions, joins, links |
-| `runs` | WorkflowRun | creation_time, files_id, last_modification_time |
-| `files` | File | filename, file_hash, file_location, data_collection_id |
-| `deltatables` | DataCollection — table | data_collection_id, delta_table_location, aggregation |
-| `multiqc` | DataCollection — multiqc | data_collection_id, metadata |
-| `dashboards` | Dashboard | dashboard_id, description, permissions |
-| `users` | User | email, is_admin, is_anonymous |
-| `tokens` | Auth token | access_token, expire_datetime |
+A project also carries an `is_public` flag, which is what opens it to readers with no
+account. See [Authentication Modes](../usage/guides/authentication-modes.md) for how that
+interacts with anonymous and unauthenticated deployments.
 
 ---
 
 ## Related Documentation
 
-- :material-sitemap: [Architecture](architecture.md) — Microservices stack and data flow
-- :material-filter: [Cross-DC Filtering](cross-dc-filtering.md) — DCLink resolver strategies in depth
-- :material-sync: [YAML Dashboard Sync](yaml-sync.md) — Declarative dashboard export/import
-- :material-code-braces: [Contributing](../developer/contributing.md) — How to extend the platform
+- :material-sitemap: [Architecture](architecture.md) - Microservices stack and data flow
+- :material-filter: [Cross-DC Filtering](cross-dc-filtering.md) - DCLink resolver strategies in depth
+- :material-sync: [YAML Dashboard Sync](yaml-sync.md) - Declarative dashboard export and import
+- :material-code-braces: [Contributing](../developer/contributing.md) - How to extend the platform

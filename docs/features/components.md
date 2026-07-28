@@ -1258,9 +1258,6 @@ Map components require a Table DC that explicitly declares its latitude and long
 
 It inherits every standard Table DC capability (CSV / TSV / Parquet format, `polars_kwargs`, `keep_columns`, `columns_description`). The `dc_type` stays `"table"` — the variant is materialised at deserialisation when `lat_column` / `lon_column` are present. A model validator enforces that the two columns must differ.
 
-
-![Coordinates DC example](../images/guides/map/coordinates_dc.png)
-
 ### Map Types
 
 | Type | Function | Best For |

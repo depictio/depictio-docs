@@ -22,7 +22,7 @@ Yes, Depictio is free to use under the MIT License. You can deploy it on your ow
 
 ### Who is behind Depictio?
 
-Depictio is currently actively and mainly developed by Thomas Weber, an ARISE fellow working in the [European Molecular Biology Laboratory (EMBL) Data Science Centre](https://www.embl.org/about/info/science/data-science-centre/). The project is open to contributions from the community, and we welcome pull requests and feedback.
+Depictio is actively and mainly developed by Thomas Weber, a Scientific Workflow Developer at the [European Molecular Biology Laboratory (EMBL) Data Science Centre](https://www.embl.org/about/info/data-science-centre/) in Heidelberg. The project started during his ARISE fellowship there and continues as part of his work at the Data Science Centre. It is open to contributions from the community, and we welcome pull requests and feedback.
 
 ## Installation and Setup
 

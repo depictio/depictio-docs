@@ -59,6 +59,7 @@ Features for connecting, filtering, and synchronizing data across collections.
 | Page | Description |
 |------|-------------|
 | [Cross-DC Filtering](cross-dc-filtering.md) | Link data collections for interactive filtering |
+| [Filter Expressions](filter-expressions.md) | Polars expression syntax for narrowing what a component reads |
 | [YAML Dashboard Sync](yaml-sync.md) | Bidirectional YAML sync for IaC and version control |
 
 <div class="grid cards" markdown>
@@ -70,6 +71,14 @@ Features for connecting, filtering, and synchronizing data across collections.
     Link data collections for interactive filtering across components
 
     [:octicons-arrow-right-24: Cross-DC Guide](cross-dc-filtering.md)
+
+-   :material-filter-variant:{ .lg .middle } **Filter Expressions**
+
+    ---
+
+    Narrow a component's data with a Polars expression
+
+    [:octicons-arrow-right-24: Filter Expressions](filter-expressions.md)
 
 -   :material-sync:{ .lg .middle } **YAML Dashboard Sync**
 
@@ -90,6 +99,8 @@ Technical architecture and security features.
 | Page | Description |
 |------|-------------|
 | [Architecture](architecture.md) | Technical overview of Depictio's microservices |
+| [Performance & Scaling](performance.md) | How large tables and dashboards are kept responsive |
+| [Data Model](data-model.md) | Domain objects, what is embedded where, and the MongoDB collections |
 | [Security](security.md) | Security features and code execution restrictions |
 
 <div class="grid cards" markdown>
@@ -101,6 +112,22 @@ Technical architecture and security features.
     Technical overview of the microservices architecture
 
     [:octicons-arrow-right-24: Architecture Details](architecture.md)
+
+-   :material-speedometer:{ .lg .middle } **Performance & Scaling**
+
+    ---
+
+    What keeps large tables and busy dashboards responsive
+
+    [:octicons-arrow-right-24: Performance Notes](performance.md)
+
+-   :material-database-outline:{ .lg .middle } **Data Model**
+
+    ---
+
+    Domain objects, embedding vs references, and the MongoDB collections
+
+    [:octicons-arrow-right-24: Data Model](data-model.md)
 
 -   :material-shield-check:{ .lg .middle } **Security**
 
@@ -131,39 +158,23 @@ Technical architecture and security features.
 
 Depictio consists of several integrated components:
 
-```text
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│React Viewer │────▶│  FastAPI    │────▶│   MongoDB   │
-│  (Frontend) │     │  (Backend)  │     │  (Database) │
-└─────────────┘     └──────┬──────┘     └─────────────┘
-                           │
-                           ├───────────▶┌─────────────┐
-                           │            │    MinIO    │
-                           │            │  (Storage)  │
-                           │            └─────────────┘
-                           │
-                           └───────────▶┌─────────────┐
-                                        │    Redis    │
-                                        │   (Cache)   │
-                                        └──────▲──────┘
-                                               │
-                                        ┌─────────────┐
-                                        │   Celery    │
-                                        │  (Workers)  │
-                                        └─────────────┘
-```
+[![Depictio system architecture](../images/architecture/system_light.png#only-light)](../images/architecture/system_light.png){target=_blank}
+
+[![Depictio system architecture](../images/architecture/system_dark.png#only-dark)](../images/architecture/system_dark.png){target=_blank}
 
 **Component Connections:**
 
 | Connection | Description |
 |------------|-------------|
 | **React viewer → FastAPI** | API calls for data retrieval, authentication, and CRUD operations |
+| **FastAPI → React viewer** | WebSocket push for real-time dashboard refresh (optional, v1.1.4+) |
 | **FastAPI → MongoDB** | Document storage for metadata, users, projects, and configurations |
 | **FastAPI → MinIO** | Object storage for Delta tables, files, and dashboard screenshots |
 | **FastAPI → Redis** | Caching, session storage, and task result backend |
+| **FastAPI → Celery** | Dispatch of long-running work: ingestion, screenshots, pre-rendering |
 | **Celery → Redis** | Task queue and results backend for background job processing |
 
-- **Frontend** (React + Mantine) - Interactive dashboard interface
+- **Frontend** (React + Vite + Mantine) - Interactive dashboard interface
 - **Backend API** (FastAPI) - Data processing and business logic
 - **Database** (MongoDB) - Metadata and configuration storage
 - **Storage** (MinIO/S3) - Data files and Delta Lake tables
