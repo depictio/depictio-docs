@@ -125,3 +125,15 @@ A small sample of that file, right beside its YAML, so `depictio catalog validat
 <div class="catalog-cta-wrap" markdown>
 [Read the contributing guide :material-arrow-right:](../developer/contributing-a-tool.md){ .catalog-cta }
 </div>
+
+!!! note "The catalog always shows the latest version"
+
+    The gallery above is served from a single shared copy, so it shows the
+    current catalog no matter which documentation version you are reading.
+    Browsing the docs for an older release will still show today's tools and
+    renders, which may not all have existed in that release.
+
+    This is a deliberate trade-off: the gallery is ~32 MB, and publishing a
+    copy inside every released version is what pushed the documentation site
+    past the size limit its hosting allows. Serving per-version catalogs again
+    is planned.

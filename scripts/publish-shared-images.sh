@@ -22,6 +22,7 @@ SOURCE="docs/images"
 DEST="images"
 REMOTE="origin"
 DRY_RUN=0
+FILES=()
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -30,12 +31,23 @@ while [ $# -gt 0 ]; do
     --source)  SOURCE="$2"; shift 2 ;;
     --dest)    DEST="$2"; shift 2 ;;
     --remote)  REMOTE="$2"; shift 2 ;;
-    -h|--help) sed -n '2,20p' "$0"; exit 0 ;;
+    --file)    FILES+=("$2"); shift 2 ;;
+    -h|--help) sed -n '2,24p' "$0"; exit 0 ;;
     *) echo "unknown argument: $1" >&2; exit 2 ;;
   esac
 done
 
-[ -d "$SOURCE" ] || { echo "source directory not found: $SOURCE" >&2; exit 1; }
+# Two modes. Directory mode mirrors a whole tree and prunes the destination
+# first, so source deletions propagate. File mode publishes named files only
+# and never prunes, for destinations shared with content this script does not
+# own (the site-root assets/ directory, for instance).
+if [ ${#FILES[@]} -eq 0 ]; then
+  [ -d "$SOURCE" ] || { echo "source directory not found: $SOURCE" >&2; exit 1; }
+else
+  for f in "${FILES[@]}"; do
+    [ -f "$f" ] || { echo "file not found: $f" >&2; exit 1; }
+  done
+fi
 
 git fetch -q "$REMOTE" "$BRANCH"
 BASE="$(git rev-parse "${REMOTE}/${BRANCH}")"
@@ -46,25 +58,36 @@ trap 'rm -f "$GIT_INDEX_FILE"' EXIT
 
 git read-tree "$BASE"
 
-# Clear the destination first so files deleted from the source disappear here
-# too, rather than lingering forever on the deploy branch.
-git ls-tree -r --name-only "$BASE" -- "$DEST" \
-  | git update-index --force-remove --stdin
-
-count=0
-while IFS= read -r -d '' file; do
-  rel="${file#"$SOURCE"/}"
-  case "$rel" in .DS_Store|*/.DS_Store) continue ;; esac
-  mode=100644
+add_file() {
+  local file="$1" path="$2" mode=100644 sha
   [ -x "$file" ] && mode=100755
   sha="$(git hash-object -w "$file")"
-  git update-index --add --cacheinfo "${mode},${sha},${DEST}/${rel}"
-  count=$((count + 1))
-done < <(find "$SOURCE" -type f -print0)
+  git update-index --add --cacheinfo "${mode},${sha},${path}"
+}
+
+count=0
+if [ ${#FILES[@]} -eq 0 ]; then
+  # Clear the destination first so files deleted from the source disappear here
+  # too, rather than lingering forever on the deploy branch.
+  git ls-tree -r --name-only "$BASE" -- "$DEST" \
+    | git update-index --force-remove --stdin
+
+  while IFS= read -r -d '' file; do
+    rel="${file#"$SOURCE"/}"
+    case "$rel" in .DS_Store|*/.DS_Store) continue ;; esac
+    add_file "$file" "${DEST}/${rel}"
+    count=$((count + 1))
+  done < <(find "$SOURCE" -type f -print0)
+else
+  for file in "${FILES[@]}"; do
+    add_file "$file" "${DEST}/$(basename "$file")"
+    count=$((count + 1))
+  done
+fi
 
 TREE="$(git write-tree)"
 if [ "$TREE" = "$(git rev-parse "${BASE}^{tree}")" ]; then
-  echo "shared images already up to date on ${BRANCH} (${count} files)"
+  echo "${DEST}/ already up to date on ${BRANCH} (${count} files)"
   exit 0
 fi
 

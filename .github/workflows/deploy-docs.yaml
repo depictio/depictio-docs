@@ -119,9 +119,17 @@ jobs:
             uv run mike deploy --push "$VERSION"
           fi
 
-      # Runs after mike has pushed, so both writes to gh-pages stay ordered.
+      # Runs after mike has pushed, so writes to gh-pages stay ordered. The
+      # catalog gallery goes to the site-root assets/, which holds other files,
+      # so it is published by name rather than by mirroring a directory.
       - name: Publish shared image root
         run: ./scripts/publish-shared-images.sh
+
+      - name: Publish shared catalog gallery
+        run: |
+          ./scripts/publish-shared-images.sh --dest assets \
+            --file docs/assets/component-catalog-light.html \
+            --file docs/assets/component-catalog-dark.html
 
       - name: Summary
         run: |
