@@ -15,6 +15,62 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.2.2](https://github.com/depictio/depictio/releases/tag/v1.2.2)** (July 27, 2026)
+
+!!! success "Persistent timeline footer and table column control"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.2.2
+```
+
+### **✨ New Features**
+
+* **Pinned timeline footer** — a top-placed interactive component renders in a full-width footer, so the selected time window stays visible while the dashboard scrolls.
+* **Compact tables** — table components accept `compact: true` for tighter rows. See [YAML Sync](../features/yaml-sync.md#table-component).
+
+### **🚀 Improvements**
+
+* **Timeline header** — condensed to two rows.
+* **Adaptive Feedback Microscopy demo** — reworked layout with box-plot distribution cards and a tighter figure set.
+
+### **🐛 Bug Fixes**
+
+* **Table `columns`** — a non-empty list now restricts the grid to exactly those columns, and `compact` is no longer dropped on export.
+* **Single-timestamp timelines** — a lone timestamp renders a usable scrubber over a ±1 minute window instead of "Timeline unavailable".
+
+---
+
+## **[v1.2.1](https://github.com/depictio/depictio/releases/tag/v1.2.1)** (July 20, 2026)
+
+!!! success "Deeper ingestion detail and runtime log control in the admin Log & Task panel"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.2.1
+```
+
+### **✨ New Features**
+
+* **Runtime log capture floor** — set what the server persists (`DEBUG` … `CRITICAL`) from the Logs pane without a restart; reverts to `DEPICTIO_MONITORING_APP_LOG_MIN_LEVEL` on restart.
+* **Per-phase ingestion steps** — a run records every phase from provisioning to dashboard import with its own `success` / `failed` / `skipped` status and detail line.
+* **Ingestion run provenance** — CLI version, the invoking command line with secrets redacted, config paths, data root, and a per-data-collection scan breakdown. See [Monitoring](../usage/administration/monitoring.md).
+* **Web UI uploads** — recorded alongside CLI runs with a `CLI` or `UI` source badge.
+
+### **🚀 Improvements**
+
+* **Responsive panes** — expanded rows render on demand, and Tasks, Ingestion and Logs gained a free-text search box.
+* **Richer detail** — labelled task blocks (arguments, result, error, logs) with the excerpt cap raised to 4000 characters, expandable log rows, and exact local clock times.
+
+### **🐛 Bug Fixes**
+
+* **Log noise** — expired access tokens and the code-mode `df_modified` hint dropped to `DEBUG`; genuinely invalid tokens still log at `WARNING`.
+* **Code block copy button** — no longer overlaps the code it copies.
+
+---
+
 ## **[v1.2.0](https://github.com/depictio/depictio/releases/tag/v1.2.0)** (July 15, 2026)
 
 !!! success "Admin Log & Task monitoring with live updates"

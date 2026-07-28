@@ -16,7 +16,7 @@ dependencies = [
     "mkdocs-kroki-plugin",
     "mkdocs-graphviz"
 ]
-version = "1.2.0"
+version = "1.2.2"
 name = "depictio-docs"
 
 # Only needed to regenerate the figures in dev/diagrams/. The PNGs are
