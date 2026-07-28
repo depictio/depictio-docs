@@ -100,6 +100,10 @@ jobs:
             --theme dark --no-open --out "$GITHUB_WORKSPACE/docs/assets/component-catalog-dark.html"
 
       - name: Deploy with mike
+        env:
+          # Keeps the bulky image subtrees out of the per-version build; they
+          # are published once by the next step. See hooks/shared_images.py.
+          DEPICTIO_DOCS_SHARED_IMAGES: '1'
         run: |
           VERSION="${{ steps.version.outputs.version }}"
           ALIAS="${{ steps.version.outputs.alias }}"
@@ -114,6 +118,10 @@ jobs:
           else
             uv run mike deploy --push "$VERSION"
           fi
+
+      # Runs after mike has pushed, so both writes to gh-pages stay ordered.
+      - name: Publish shared image root
+        run: ./scripts/publish-shared-images.sh
 
       - name: Summary
         run: |

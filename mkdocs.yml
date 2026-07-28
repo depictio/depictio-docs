@@ -121,6 +121,14 @@ markdown_extensions:
       title: On this page
       permalink: true
 
+# Build hooks
+# shared_images keeps the bulky image subtrees out of each versioned build and
+# serves them from one copy at the site root. Only active when
+# DEPICTIO_DOCS_SHARED_IMAGES=1 (set by the deploy workflow), so `mkdocs serve`
+# behaves exactly as before.
+hooks:
+  - hooks/shared_images.py
+
 # Plugins
 plugins:
   - search
