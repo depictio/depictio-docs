@@ -16,6 +16,31 @@ collection.
 
 ---
 
+## <span style="color: #E53935;">:material-video:</span> Video example
+
+<div style="max-width: 1200px; margin: 1rem auto 2rem auto;">
+  <div style="padding: 62.19% 0 0 0; position: relative">
+    <iframe
+      src="https://player.vimeo.com/video/1213687131?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
+      title="Real-time events streaming into a Depictio dashboard"
+    ></iframe>
+  </div>
+  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>Real-time events in action:</strong> a virtual-microscopy simulator streams acquisitions into a live dashboard</p>
+</div>
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+In this recording, a virtual-microscopy acquisition simulator stands in for the instrument.
+Each acquisition is segmented and pushed to Depictio through `/deltatables/upsert`, which
+broadcasts an event on the WebSocket. The dashboard on the left is open the whole time and is
+never reloaded: it refetches on every broadcast, so its figures and cards keep up with the
+acquisitions streaming in the terminal on the right.
+
+---
+
 ## How it works
 
 The refresh is driven entirely by data ingestion — there is no separate "push" API to call:
