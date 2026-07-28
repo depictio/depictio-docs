@@ -62,9 +62,18 @@ def _enabled() -> bool:
 
 
 def _site_root(config) -> str:
-    """Absolute URL of the site root, e.g. https://host/depictio-docs/."""
-    site_url = config.get("site_url") or "/"
-    return site_url.rstrip("/") + "/"
+    """Absolute URL of the site root, e.g. https://host/depictio-docs/.
+
+    Not simply config["site_url"]: mike's mkdocs plugin rewrites that to
+    urljoin(site_url, version) so each version gets its own canonical URL. The
+    shared copies live at the root, above every version, so the version segment
+    mike appended has to come back off.
+    """
+    site_url = (config.get("site_url") or "/").rstrip("/") + "/"
+    version = os.environ.get("MIKE_DOCS_VERSION", "").strip("/")
+    if version and site_url.endswith(f"/{version}/"):
+        site_url = site_url[: -len(version) - 1]
+    return site_url
 
 
 def on_files(files: Files, config, **kwargs) -> Files:

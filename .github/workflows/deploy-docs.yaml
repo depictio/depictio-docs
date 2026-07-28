@@ -131,6 +131,13 @@ jobs:
             --file docs/assets/component-catalog-light.html \
             --file docs/assets/component-catalog-dark.html
 
+      # A page and the images it points at now live in different places, so
+      # they can disagree, and nothing at build time notices: the deploy
+      # succeeds and the pages come out with broken images. Checked against the
+      # branch we just pushed, so there is no wait for Pages to publish.
+      - name: Verify shared assets resolve
+        run: ./scripts/verify-shared-assets.py --version "${{ steps.version.outputs.version }}"
+
       - name: Summary
         run: |
           echo "## Documentation Deployed" >> $GITHUB_STEP_SUMMARY
