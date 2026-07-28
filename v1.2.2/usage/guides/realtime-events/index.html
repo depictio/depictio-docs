@@ -1344,6 +1344,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#video-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4091,6 +4102,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#video-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4218,6 +4240,28 @@ figures recompute, and updated items briefly highlight.</p>
 <p>This makes Depictio suitable for <strong>live feeds</strong> — an instrument streaming acquisitions, a
 pipeline emitting results batch by batch, or any process that keeps appending to a data
 collection.</p>
+<hr />
+<h2 id="video-example"><span style="color: #E53935;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11z"/></svg></span></span> Video example<a class="headerlink" href="#video-example" title="Permanent link">&para;</a></h2>
+<div style="max-width: 1200px; margin: 1rem auto 2rem auto;">
+  <div style="padding: 62.19% 0 0 0; position: relative">
+    <iframe
+      src="https://player.vimeo.com/video/1213687131?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
+      title="Real-time events streaming into a Depictio dashboard"
+    ></iframe>
+  </div>
+  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>Real-time events in action:</strong> a virtual-microscopy simulator streams acquisitions into a live dashboard</p>
+</div>
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+<p>In this recording, a virtual-microscopy acquisition simulator stands in for the instrument.
+Each acquisition is segmented and pushed to Depictio through <code>/deltatables/upsert</code>, which
+broadcasts an event on the WebSocket. The dashboard on the left is open the whole time and is
+never reloaded: it refetches on every broadcast, so its figures and cards keep up with the
+acquisitions streaming in the terminal on the right.</p>
 <hr />
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <p>The refresh is driven entirely by data ingestion — there is no separate "push" API to call:</p>
