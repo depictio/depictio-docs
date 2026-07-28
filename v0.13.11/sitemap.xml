@@ -81,15 +81,7 @@
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/catalog/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
          <loc>https://depictio.github.io/depictio-docs/v0.13.11/changelog/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/changelog/CLAUDE/</loc>
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>
@@ -106,14 +98,6 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v0.13.11/developer/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/developer/CLAUDE/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/developer/contributing-a-tool/</loc>
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>
@@ -134,10 +118,6 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v0.13.11/features/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/features/CLAUDE/</loc>
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>
@@ -166,10 +146,6 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v0.13.11/features/interactive-selection-filtering/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/features/performance/</loc>
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>
@@ -233,10 +209,6 @@
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/pipeline-templates/nf-core/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
          <loc>https://depictio.github.io/depictio-docs/v0.13.11/pipeline-templates/nf-core/ampliseq/</loc>
          <lastmod>2026-07-28</lastmod>
     </url>
@@ -245,35 +217,11 @@
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/pipeline-templates/nf-core/_generated/ampliseq-2.14.0/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/pipeline-templates/nf-core/_generated/ampliseq-2.16.0/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/pipeline-templates/nf-core/_generated/viralrecon-3.0.0/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
          <loc>https://depictio.github.io/depictio-docs/v0.13.11/roadmap/</loc>
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/roadmap/CLAUDE/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/tutorials/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
          <loc>https://depictio.github.io/depictio-docs/v0.13.11/usage/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/usage/CLAUDE/</loc>
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>
@@ -297,10 +245,6 @@
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/usage/administration/monitoring/</loc>
-         <lastmod>2026-07-28</lastmod>
-    </url>
-    <url>
          <loc>https://depictio.github.io/depictio-docs/v0.13.11/usage/guides/</loc>
          <lastmod>2026-07-28</lastmod>
     </url>
@@ -317,11 +261,15 @@
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>
-         <loc>https://depictio.github.io/depictio-docs/v0.13.11/usage/guides/realtime-events/</loc>
+         <loc>https://depictio.github.io/depictio-docs/v0.13.11/usage/guides/guides/</loc>
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v0.13.11/usage/guides/unauthenticated_mode/</loc>
+         <lastmod>2026-07-28</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v0.13.11/usage/guides/usage/</loc>
          <lastmod>2026-07-28</lastmod>
     </url>
     <url>

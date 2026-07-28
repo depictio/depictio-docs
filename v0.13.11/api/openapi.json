@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.2.2",
-    "x-generated-at": "2026-07-27T08:23:34Z",
-    "x-depictio-version": "v1.2.2"
+    "version": "0.13.11",
+    "x-generated-at": "2026-05-29T08:48:40Z",
+    "x-depictio-version": "v0.13.11"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -22,7 +22,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/Project"
+                    "$ref": "#/components/schemas/Project-Output"
                   },
                   "type": "array",
                   "title": "Response Get All Projects Depictio Api V1 Projects Get All Get"
@@ -126,7 +126,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Project"
+                  "$ref": "#/components/schemas/Project-Output"
                 }
               }
             }
@@ -191,104 +191,6 @@
         }
       }
     },
-    "/depictio/api/v1/projects/ingestion-report/{project_id}": {
-      "get": {
-        "tags": [
-          "Projects"
-        ],
-        "summary": "Get Ingestion Report",
-        "description": "Traceable summary of what a template execution ingested vs. what it expected.\n\nCompares the project's frozen expected-DC manifest (required + optional, with\ngating reasons) against the latest scan stats and aggregation state, so the UI\ncan show which data collections were identified, found-empty, or gated out.",
-        "operationId": "get_ingestion_report_depictio_api_v1_projects_ingestion_report__project_id__get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "project_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "objectid",
-              "title": "Project Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/IngestionReport"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/projects/ingestion-health/{project_id}": {
-      "get": {
-        "tags": [
-          "Projects"
-        ],
-        "summary": "Get Ingestion Health",
-        "description": "Lightweight ingestion health summary (counts + health flag) for the dashboard banner.",
-        "operationId": "get_ingestion_health_depictio_api_v1_projects_ingestion_health__project_id__get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "project_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "objectid",
-              "title": "Project Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/IngestionSummary"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/depictio/api/v1/projects/create": {
       "post": {
         "tags": [
@@ -301,7 +203,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Project"
+                "$ref": "#/components/schemas/Project-Input"
               }
             }
           },
@@ -346,7 +248,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Project"
+                "$ref": "#/components/schemas/Project-Input"
               }
             }
           },
@@ -769,13 +671,12 @@
           "Workflows"
         ],
         "summary": "Create Workflow",
-        "description": "Create a new workflow.\n\nDeprecated: workflows are created/updated as part of a project via\nprojects/create and projects/update. This standalone route is scheduled\nfor removal and has no remaining callers.",
+        "description": "Create a new workflow.",
         "operationId": "create_workflow_depictio_api_v1_workflows_create_post",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
                 "title": "Workflow"
               }
@@ -803,7 +704,6 @@
             }
           }
         },
-        "deprecated": true,
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -817,13 +717,13 @@
           "Workflows"
         ],
         "summary": "Update Workflow",
-        "description": "Update an existing workflow.\n\nDeprecated: workflows are updated via projects/update. Scheduled for\nremoval; no remaining callers.",
+        "description": "Update an existing workflow.",
         "operationId": "update_workflow_depictio_api_v1_workflows_update_put",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Workflow"
+                "$ref": "#/components/schemas/Workflow-Input"
               }
             }
           },
@@ -849,7 +749,6 @@
             }
           }
         },
-        "deprecated": true,
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -863,9 +762,8 @@
           "Workflows"
         ],
         "summary": "Delete Workflow",
-        "description": "Delete a workflow by ID.\n\nDeprecated: workflow lifecycle is managed through the owning project.\nScheduled for removal; no remaining callers.",
+        "description": "Delete a workflow by ID.",
         "operationId": "delete_workflow_depictio_api_v1_workflows_delete__workflow_id__delete",
-        "deprecated": true,
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -910,7 +808,7 @@
           "Workflows"
         ],
         "summary": "Compare Models Endpoint",
-        "description": "Compare two workflow models for equality.\n\nDeprecated: scheduled for removal; no remaining callers.",
+        "description": "Compare two workflow models for equality.",
         "operationId": "compare_models_endpoint_depictio_api_v1_workflows_compare_workflow_models_post",
         "requestBody": {
           "content": {
@@ -942,7 +840,6 @@
             }
           }
         },
-        "deprecated": true,
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -1025,7 +922,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WorkflowRun"
+                  "$ref": "#/components/schemas/WorkflowRun-Output"
                 }
               }
             }
@@ -1238,7 +1135,7 @@
           "Data Collections"
         ],
         "summary": "Viz Suggestions",
-        "description": "Rank advanced-viz kinds by how well they fit this DC.\n\nDrives the React builder's \"suggest but tolerate\" picker (Recommended vs.\nthe rest) and the DC card's suggestion chips via the graded scoring engine\nin `depictio/models/components/advanced_viz/schemas.py`. Every viz kind is\nscored and returned (ranked) — nothing is filtered out by default — so the\nbuilder can still let the user pick a low-scoring kind and bind columns\nmanually. Each entry carries:\n\n  - `score`: 0.0-1.0 graded fit (dtype compatibility × column-name\n    similarity across required roles, plus optional-role and structural\n    nudges).\n  - `role_candidates`: per required role, dtype-compatible columns ranked\n    best-first — the UI uses these to pre-fill bindings.\n  - `unmet_roles` / `weak_roles`: required roles with no candidate, or\n    satisfied only by dtype/cast — drive the builder's inline guidance.\n\nQuery params:\n    min_confidence: optional score floor (0.0-1.0). Default 0.0 returns\n        every kind ranked; raise it to keep only confident matches.",
+        "description": "Reverse-lookup viz kinds + known producers compatible with this DC.\n\nDrives the React DC card's \"Suggested visualisations\" chip row and the\ncomponent-creation flow's DC pre-filter. Both surfaces share the same\npure-Python suggestion engine in\n`depictio/models/components/advanced_viz/schemas.py`:\n\n  - `viz_kinds`: every AdvancedVizKind whose required role schema can be\n    satisfied by some column-dtype combination in this DC. Each entry\n    carries per-role candidate columns the UI uses to pre-fill bindings.\n  - `producers`: known tool outputs (DESeq2 results, mosdepth coverage,\n    Bracken, …) whose column-name fingerprint matches this DC. When a\n    producer matches, the UI can pre-fill bindings exactly rather than\n    guessing.\n\nQuery params:\n    min_confidence: 0.0-1.0 — minimum fraction of required roles that\n        must have a candidate column for a viz kind to appear in the\n        suggestions list. Default 1.0 = strict (only full matches).",
         "operationId": "viz_suggestions_depictio_api_v1_datacollections_viz_suggestions__data_collection_id__get",
         "security": [
           {
@@ -1262,7 +1159,7 @@
             "required": false,
             "schema": {
               "type": "number",
-              "default": 0.0,
+              "default": 1.0,
               "title": "Min Confidence"
             }
           }
@@ -1274,7 +1171,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Viz Suggestions Depictio Api V1 Datacollections Viz Suggestions  Data Collection Id  Get"
                 }
               }
@@ -1291,6 +1187,54 @@
             }
           }
         }
+      }
+    },
+    "/depictio/api/v1/datacollections/suggest-from-columns": {
+      "post": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Suggest From Columns",
+        "description": "Run the producer suggestion engine on a bare column list (no DC required).\n\nUsed by the DC-creation modal to decide whether to surface a passive\n\"looks like X\" hint vs. the coordinates fallback toggle. Only producer\nfingerprints run here — viz-kind reverse lookup needs dtype info that\nisn't available until the file is parsed server-side.",
+        "operationId": "suggest_from_columns_depictio_api_v1_datacollections_suggest_from_columns_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SuggestFromColumnsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Suggest From Columns Depictio Api V1 Datacollections Suggest From Columns Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/depictio/api/v1/datacollections/delete/{workflow_id}/{data_collection_id}": {
@@ -1468,7 +1412,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Request Data"
               }
             }
@@ -1526,7 +1469,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Properties"
               }
             }
@@ -2089,7 +2031,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Delete Multiqc Report Depictio Api V1 Multiqc Reports  Report Id  Delete"
                 }
               }
@@ -2153,7 +2094,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Check Duplicate Report Depictio Api V1 Multiqc Reports Check Duplicate Get"
                 }
               }
@@ -2286,7 +2226,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Delete All Reports For Data Collection Depictio Api V1 Multiqc Reports Data Collection  Data Collection Id  Delete"
                 }
               }
@@ -2347,7 +2286,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Replace Multiqc Reports Depictio Api V1 Multiqc Reports Data Collection  Data Collection Id  Replace Post"
                 }
               }
@@ -2408,7 +2346,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Append Multiqc Reports Depictio Api V1 Multiqc Reports Data Collection  Data Collection Id  Append Post"
                 }
               }
@@ -2459,7 +2396,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Get Sample Mappings Depictio Api V1 Multiqc Reports  Report Id  Sample Mappings Get"
                 }
               }
@@ -2510,7 +2446,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Get Multiqc Report Metadata Depictio Api V1 Multiqc Reports  Report Id  Metadata Get"
                 }
               }
@@ -2563,7 +2498,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Get Multiqc Builder Options Depictio Api V1 Multiqc Builder Options Get"
                 }
               }
@@ -2595,7 +2529,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
                 "title": "Request"
               }
@@ -2609,7 +2542,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Multiqc Preview Depictio Api V1 Multiqc Preview Post"
                 }
@@ -2680,7 +2612,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Get Multiqc Download Url Depictio Api V1 Multiqc Reports  Report Id  Download Url Get"
                 }
               }
@@ -3389,7 +3320,7 @@
           "Files"
         ],
         "summary": "Serve Image",
-        "description": "Serve images from S3/MinIO via streaming.\n\nNOTE: Currently PUBLIC to allow HTML <img> tags to load images. Access is\nbucket-locked to the configured MinIO/S3 bucket and the key is\ntraversal-hardened, so this endpoint can only stream objects from\nDepictio's own bucket.\nTODO: Presigned, time-limited URLs remain future work for per-object\naccess control.",
+        "description": "Serve images from S3/MinIO via streaming.\n\nNOTE: Currently PUBLIC to allow HTML <img> tags to load images.\nTODO: Implement presigned URLs for secure, time-limited access.",
         "operationId": "serve_image_depictio_api_v1_files_serve_image_get",
         "parameters": [
           {
@@ -3524,7 +3455,7 @@
           "DeltaTables"
         ],
         "summary": "Batch Check Deltatables Exist",
-        "description": "Check existence of multiple deltatables in a single call.\n\nDeprecated: this batch helper served the old Dash design_draggable()\nflow and has no remaining callers. Scheduled for removal.\n\nThis endpoint eliminates the N+1 query pattern in design_draggable()\nby allowing batch checking of deltatable existence.\n\nData collections the caller cannot access are reported identically to\nnonexistent ones (``exists: False``) so the endpoint can't be used as an\nexistence oracle or to leak ``delta_table_location`` metadata.\n\nArgs:\n    data_collection_ids: List of data collection IDs to check.\n    current_user: Current authenticated user.\n\nReturns:\n    Dict mapping data collection ID to existence status and location.",
+        "description": "Check existence of multiple deltatables in a single call.\n\nThis endpoint eliminates the N+1 query pattern in design_draggable()\nby allowing batch checking of deltatable existence.\n\nArgs:\n    data_collection_ids: List of data collection IDs to check.\n    current_user: Current authenticated user.\n\nReturns:\n    Dict mapping data collection ID to existence status and location.",
         "operationId": "batch_check_deltatables_exist_depictio_api_v1_deltatables_batch_exists_post",
         "requestBody": {
           "content": {
@@ -3561,7 +3492,6 @@
             }
           }
         },
-        "deprecated": true,
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -3848,6 +3778,31 @@
         }
       }
     },
+    "/depictio/api/v1/utils/create_bucket": {
+      "get": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Create Bucket Endpoint",
+        "description": "Create an S3 bucket for the application.",
+        "operationId": "create_bucket_endpoint_depictio_api_v1_utils_create_bucket_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/utils/drop_S3_content": {
       "get": {
         "tags": [
@@ -4018,13 +3973,118 @@
         ]
       }
     },
+    "/depictio/api/v1/utils/screenshot-dash-fixed/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Screenshot Dash Fixed",
+        "description": "Minimal screenshot endpoint - just take a full page screenshot.\nOnly dashboard owners can generate screenshots (except in single user mode).\n\nDEPRECATED: production screenshot capture drives the React SPA via\n`/screenshot-react-dual/{dashboard_id}`. This endpoint is retained for\nemergency rollback only.",
+        "operationId": "screenshot_dash_fixed_depictio_api_v1_utils_screenshot_dash_fixed__dashboard_id__get",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/utils/screenshot-dash-dual/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Screenshot Dash Dual",
+        "description": "Generate both light and dark mode screenshots in single browser call.\nOnly dashboard owners can generate screenshots.\n\n**DEPRECATED**: This endpoint is deprecated. Use the Celery task\n`generate_dashboard_screenshot_dual.delay(dashboard_id, user_id)` directly for\nproduction use. This endpoint is maintained for backward compatibility\nand testing/debugging purposes only.\n\n**Migration Note**: The screenshot logic has been moved to\n`depictio.api.v1.services.screenshot_service` for code reuse between\nAPI and Celery tasks. This eliminates HTTP indirection and improves\nperformance by ~200-500ms.\n\nArgs:\n    dashboard_id: Dashboard ID to screenshot\n    current_user: Current authenticated user (for permission check)\n\nReturns:\n    dict: Status and paths to both screenshots\n\nRaises:\n    HTTPException: If screenshot generation fails or user lacks permission",
+        "operationId": "screenshot_dash_dual_depictio_api_v1_utils_screenshot_dash_dual__dashboard_id__get",
+        "deprecated": true,
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/utils/screenshot-react-dual/{dashboard_id}": {
       "get": {
         "tags": [
           "Utils"
         ],
         "summary": "Screenshot React Dual",
-        "description": "Generate light + dark screenshots of the React beta viewer.\n\nSibling of `/screenshot-dash-dual` but drives the SPA bundle at\n`{settings.fastapi.url}/dashboard/{dashboard_id}` (the React/Vite\nbuild that FastAPI itself serves) instead of the Dash app on port 5080.\n\nSingle-user mode skips auth; otherwise the caller must be a dashboard owner.\n\nQuery params:\n    open_settings: click the first `aria-label=\"Viz settings\"` ActionIcon\n        before capturing so the popover shows in the shot (best-effort —\n        silently disabled when no settings cog is present). When the\n        popover opens, we switch to a viewport capture because Mantine\n        portals dropdowns outside AppShell.Main.\n    filename_prefix: PNG filename prefix (default `\"\"` → writes the\n        canonical `{id}_{theme}.png` filenames that dashboard cards\n        already consume). Pass a non-empty prefix (e.g. `docs`) to keep\n        parallel batches in the same folder from clobbering each other:\n        `{prefix}_{id}_{theme}.png`.\n\nReturns:\n    ScreenshotResult dict with `light_screenshot` / `dark_screenshot`\n    paths (host-visible via the bind-mounted screenshots dir).",
+        "description": "Generate light + dark screenshots of the React beta viewer.\n\nSibling of `/screenshot-dash-dual` but drives the SPA bundle at\n`{settings.fastapi.url}/dashboard-beta/{dashboard_id}` (the React/Vite\nbuild that FastAPI itself serves) instead of the Dash app on port 5080.\n\nSingle-user mode skips auth; otherwise the caller must be a dashboard owner.\n\nQuery params:\n    open_settings: click the first `aria-label=\"Viz settings\"` ActionIcon\n        before capturing so the popover shows in the shot (best-effort —\n        silently disabled when no settings cog is present). When the\n        popover opens, we switch to a viewport capture because Mantine\n        portals dropdowns outside AppShell.Main.\n    filename_prefix: PNG filename prefix (default `\"\"` → writes the\n        canonical `{id}_{theme}.png` filenames that dashboard cards\n        already consume). Pass a non-empty prefix (e.g. `docs`) to keep\n        parallel batches in the same folder from clobbering each other:\n        `{prefix}_{id}_{theme}.png`.\n\nReturns:\n    ScreenshotResult dict with `light_screenshot` / `dark_screenshot`\n    paths (host-visible via the bind-mounted screenshots dir).",
         "operationId": "screenshot_react_dual_depictio_api_v1_utils_screenshot_react_dual__dashboard_id__get",
         "parameters": [
           {
@@ -4171,6 +4231,54 @@
         ]
       }
     },
+    "/depictio/api/v1/backup/create-enhanced": {
+      "post": {
+        "tags": [
+          "Backup"
+        ],
+        "summary": "Create Enhanced Backup",
+        "description": "DEPRECATED: Use /create endpoint instead.\n\nCreate an enhanced backup including optional S3 deltatable data.\nThis endpoint is deprecated and redirects to the unified /create endpoint.",
+        "operationId": "create_enhanced_backup_depictio_api_v1_backup_create_enhanced_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BackupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BackupResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true,
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/backup/list": {
       "get": {
         "tags": [
@@ -4298,7 +4406,7 @@
           "Migrate"
         ],
         "summary": "Export Project",
-        "description": "Export a project bundle from this instance.\n\nScoped to one project: cascades through workflows → data_collections →\nfiles / deltatables / runs → dashboards.  Optionally copies S3 data to\na target MinIO (modes all / files).\n\nAccess rules:\n- Admins can export any project, in every mode.\n- In public/demo mode the anonymous and temporary visitors are non-admin,\n  so they're allowed to export too — but only projects they can actually\n  read (public projects or ones shared with them), never arbitrary private\n  projects. Uses ``get_user_or_anonymous`` so tokenless public-mode\n  visitors resolve to the anonymous user instead of 401-ing.\n- On standard (non-public) instances export stays admin-only.\n\nNon-admin callers may not supply ``target_s3_config``: that triggers the\nserver-to-server S3 copy path (an exfiltration vector gated by\n``_validate_target_s3_endpoint``), which has no place in the UI export flow\nthat bundles S3 objects straight into the ZIP.",
+        "description": "Export a project bundle from this instance.\n\nScoped to one project: cascades through workflows → data_collections →\nfiles / deltatables / runs → dashboards.  Optionally copies S3 data to\na target MinIO (modes all / files).",
         "operationId": "export_project_depictio_api_v1_migrate_export_project_post",
         "requestBody": {
           "content": {
@@ -4390,7 +4498,7 @@
           "Migrate"
         ],
         "summary": "Import Project Zip",
-        "description": "Import a project bundle from a ZIP file (for UI use).\n\nAccepts a .zip file containing bundle.json and migrate_metadata.json.\nAlways remaps all owners to the calling user (force_owner_remap=True).\n\nRequires an authenticated admin caller — previously this used\n``get_user_or_anonymous`` which let an anonymous (admin-flagged)\npublic-mode user import arbitrary project ZIPs.",
+        "description": "Import a project bundle from a ZIP file (for UI use).\n\nAccepts a .zip file containing bundle.json and migrate_metadata.json.\nAlways remaps all owners to the calling user (force_owner_remap=True).\n\nTolerates missing tokens (single-user / public mode); the inline\n``is_admin`` gate below still rejects non-admin callers.",
         "operationId": "import_project_zip_depictio_api_v1_migrate_import_project_zip_post",
         "security": [
           {
@@ -4459,13 +4567,13 @@
           "CLI"
         ],
         "summary": "Validate Cli Config Endpoint",
-        "description": "Validate CLI configuration and token.\n\nSECURITY: now requires a valid bearer token in the ``Authorization`` header\n(``get_current_user``). Previously this endpoint had NO auth dependency, so\nany unauthenticated caller could submit a CLIConfig and probe whether the\nembedded token was valid. The CLI authenticates with a token anyway, so the\nheader is the right credential source.\n\nNOTE (client follow-up required): ``depictio/cli/cli/utils/api_calls.py:api_login``\ncurrently POSTs the CLIConfig as JSON WITHOUT an Authorization header (the\ntoken sits inside the body at ``cli_config.user.token``). With this change\nthat call will now receive 401 until the CLI is updated to also send\n``Authorization: Bearer <access_token>`` (it can reuse\n``generate_api_headers`` from ``depictio/cli/cli/utils/common.py``).",
+        "description": "Validate CLI configuration and token.",
         "operationId": "validate_cli_config_endpoint_depictio_api_v1_cli_validate_cli_config_post",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CLIConfig"
+                "$ref": "#/components/schemas/CLIConfig-Input"
               }
             }
           },
@@ -4492,12 +4600,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
+        }
       }
     },
     "/depictio/api/v1/dashboards/sync_with_projects": {
@@ -4672,7 +4775,7 @@
           "Dashboards"
         ],
         "summary": "List All Dashboards",
-        "description": "Fetch a list of all dashboards (admin only).\n\nTolerates missing tokens (single-user / public mode) so the React admin\n\"Dashboards\" tab loads — the inline ``is_admin`` gate below still blocks\nnon-admin users.\n\nBy default returns only main-tab dashboards (so multi-tab projects show\nup once). Pass ``?include_child_tabs=true`` to also surface every child\ntab — used by the /admin project panel to list the full dashboard\ntree under each seed project.",
+        "description": "Fetch a list of all dashboards (admin only).\n\nTolerates missing tokens (single-user / public mode) so the React admin\n\"Dashboards\" tab loads — the inline ``is_admin`` gate below still blocks\nnon-admin users.\n\nBy default returns only main-tab dashboards (so multi-tab projects show\nup once). Pass ``?include_child_tabs=true`` to also surface every child\ntab — used by the /admin-beta project panel to list the full dashboard\ntree under each seed project.",
         "operationId": "list_all_dashboards_depictio_api_v1_dashboards_list_all_get",
         "security": [
           {
@@ -4744,8 +4847,65 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Params"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/edit_name/{dashboard_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Edit Dashboard Name",
+        "description": "Edit the name of a dashboard with the given dashboard ID.\nNow uses project-based permissions (editor level required).\nDeprecated: Use /edit/{dashboard_id} instead.",
+        "operationId": "edit_dashboard_name_depictio_api_v1_dashboards_edit_name__dashboard_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Data"
               }
             }
           }
@@ -4803,7 +4963,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Data"
               }
             }
@@ -4876,6 +5035,48 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/screenshot/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Screenshot Dashboard",
+        "description": "DEPRECATED: Take a screenshot of a dashboard.\n\nThis endpoint is deprecated. Use /utils/screenshot-dash-fixed/{dashboard_id}\ninstead, which provides better component-based screenshots.",
+        "operationId": "screenshot_dashboard_depictio_api_v1_dashboards_screenshot__dashboard_id__get",
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -4976,7 +5177,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Data"
               }
             }
@@ -5061,7 +5261,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
                 "title": "Data"
               }
@@ -5206,9 +5405,8 @@
           "Dashboards"
         ],
         "summary": "Bulk Get Component Data Endpoint",
-        "description": "PERFORMANCE OPTIMIZATION: Fetch multiple component data in a single request.\n\nDeprecated: the React viewer uses bulk_compute_cards and the per-component\nget_component_data endpoint; this batch variant has no remaining callers\nand is scheduled for removal.\n\nReduces HTTP overhead from N individual requests to 1 batch request.\nExpected performance improvement: ~70% for dashboard loading.\n\nArgs:\n    dashboard_id: Dashboard ID\n    request: {\"component_ids\": [list of component UUIDs]}\n    current_user: Current authenticated user\n\nReturns:\n    Dict mapping component_id -> component_metadata",
+        "description": "PERFORMANCE OPTIMIZATION: Fetch multiple component data in a single request.\n\nReduces HTTP overhead from N individual requests to 1 batch request.\nExpected performance improvement: ~70% for dashboard loading.\n\nArgs:\n    dashboard_id: Dashboard ID\n    request: {\"component_ids\": [list of component UUIDs]}\n    current_user: Current authenticated user\n\nReturns:\n    Dict mapping component_id -> component_metadata",
         "operationId": "bulk_get_component_data_endpoint_depictio_api_v1_dashboards_bulk_component_data__dashboard_id__post",
-        "deprecated": true,
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -5232,7 +5430,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Request"
               }
             }
@@ -5291,7 +5488,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Request"
               }
             }
@@ -5325,7 +5521,7 @@
           "Dashboards"
         ],
         "summary": "Render Figure Endpoint",
-        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when the render is\nactually heavy — code mode, or a source frame at/above\n`offload_size_threshold_bytes` — or unconditionally if\n`offload_rendering` is forced on (see `should_offload_render`). Cheap\ninteractive figures build inline to skip the broker round-trip. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\"}\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}",
+        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when\n`settings.celery.offload_rendering` is true. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\"}\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}",
         "operationId": "render_figure_endpoint_depictio_api_v1_dashboards_render_figure__dashboard_id___component_id__post",
         "security": [
           {
@@ -5359,7 +5555,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Request"
               }
             }
@@ -5427,7 +5622,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Request"
               }
             }
@@ -5511,8 +5705,7 @@
               "schema": {
                 "anyOf": [
                   {
-                    "type": "object",
-                    "additionalProperties": true
+                    "type": "object"
                   },
                   {
                     "type": "null"
@@ -5585,7 +5778,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Request"
               }
             }
@@ -5653,7 +5845,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Request"
               }
             }
@@ -5721,7 +5912,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Request"
               }
             }
@@ -5789,7 +5979,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Request"
               }
             }
@@ -5945,9 +6134,8 @@
           "Dashboards"
         ],
         "summary": "Export Dashboard Family As Yaml",
-        "description": "Export dashboard family (main tab + all child tabs) as ZIP archive.\n\nDeprecated: no remaining callers (clients use the JSON export and the\nsingle-dashboard YAML export). Scheduled for removal.\n\nReturns a ZIP file containing YAML files for the main dashboard and\nall its child tabs, preserving the tab hierarchy for re-import.\n\nArgs:\n    dashboard_id: The main dashboard ID to export\n\nReturns:\n    ZIP file containing YAML files",
+        "description": "Export dashboard family (main tab + all child tabs) as ZIP archive.\n\nReturns a ZIP file containing YAML files for the main dashboard and\nall its child tabs, preserving the tab hierarchy for re-import.\n\nArgs:\n    dashboard_id: The main dashboard ID to export\n\nReturns:\n    ZIP file containing YAML files",
         "operationId": "export_dashboard_family_as_yaml_depictio_api_v1_dashboards__dashboard_id__yaml_family_get",
-        "deprecated": true,
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -5993,7 +6181,7 @@
           "Dashboards"
         ],
         "summary": "Validate Yaml Content",
-        "description": "Validate YAML content against DashboardDataLite schema.\n\nDeprecated: no remaining callers (the React clients validate via the\nJSON endpoint). Scheduled for removal.\n\nUses Pydantic validation to check if the YAML content is valid.\n\nArgs:\n    yaml_content: YAML string to validate\n\nReturns:\n    Validation result with is_valid flag and any errors",
+        "description": "Validate YAML content against DashboardDataLite schema.\n\nUses Pydantic validation to check if the YAML content is valid.\n\nArgs:\n    yaml_content: YAML string to validate\n\nReturns:\n    Validation result with is_valid flag and any errors",
         "operationId": "validate_yaml_content_depictio_api_v1_dashboards_yaml_validate_post",
         "requestBody": {
           "content": {
@@ -6012,7 +6200,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Validate Yaml Content Depictio Api V1 Dashboards Yaml Validate Post"
                 }
@@ -6030,7 +6217,6 @@
             }
           }
         },
-        "deprecated": true,
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -6044,7 +6230,7 @@
           "Dashboards"
         ],
         "summary": "Get Yaml Schema",
-        "description": "Get JSON Schema for YAML validation.\n\nDeprecated: no remaining callers. Scheduled for removal.\n\nReturns the JSON Schema that describes valid dashboard YAML structure.\nCan be used for IDE autocompletion and external validation tools.\n\nReturns:\n    JSON Schema for DashboardDataLite",
+        "description": "Get JSON Schema for YAML validation.\n\nReturns the JSON Schema that describes valid dashboard YAML structure.\nCan be used for IDE autocompletion and external validation tools.\n\nReturns:\n    JSON Schema for DashboardDataLite",
         "operationId": "get_yaml_schema_depictio_api_v1_dashboards_yaml_schema_get",
         "responses": {
           "200": {
@@ -6052,15 +6238,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Get Yaml Schema Depictio Api V1 Dashboards Yaml Schema Get"
                 }
               }
             }
           }
-        },
-        "deprecated": true
+        }
       }
     },
     "/depictio/api/v1/dashboards/{dashboard_id}/json": {
@@ -6094,7 +6278,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Export Dashboard As Json Depictio Api V1 Dashboards  Dashboard Id  Json Get"
                 }
               }
@@ -6160,7 +6343,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Json Content"
               }
             }
@@ -6173,7 +6355,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Import Dashboard From Json Depictio Api V1 Dashboards Import Json Post"
                 }
               }
@@ -6229,7 +6410,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Json Content"
               }
             }
@@ -6242,7 +6422,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Validate Json Import Depictio Api V1 Dashboards Json Validate Post"
                 }
               }
@@ -6344,7 +6523,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
                 "title": "Request"
               }
@@ -6391,7 +6569,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
                 "title": "Request"
               }
@@ -6432,7 +6609,7 @@
           "Advanced Viz"
         ],
         "summary": "List Kinds",
-        "description": "Return the metadata payload the React builder uses to populate the viz_kind picker.\n\n`roles` carries the per-role accepted dtypes (required + optional) so the\nbuilder drives its binding dropdowns + validation from the backend instead\nof duplicating the dtype tables in TypeScript. `required_roles` is kept for\nbackwards compatibility.",
+        "description": "Return the metadata payload the React builder uses to populate the viz_kind picker.",
         "operationId": "list_kinds_depictio_api_v1_advanced_viz_kinds_get",
         "responses": {
           "200": {
@@ -6441,7 +6618,6 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "additionalProperties": true,
                     "type": "object"
                   },
                   "type": "array",
@@ -6470,7 +6646,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
                 "title": "Payload"
               }
@@ -6484,7 +6659,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Fetch Advanced Viz Data Depictio Api V1 Advanced Viz Data Post"
                 }
@@ -6521,7 +6695,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
                 "title": "Payload"
               }
@@ -6535,7 +6708,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Dispatch Compute Embedding Depictio Api V1 Advanced Viz Compute Embedding Post"
                 }
@@ -6591,7 +6763,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Poll Compute Embedding Depictio Api V1 Advanced Viz Compute Embedding  Job Id  Get"
                 }
               }
@@ -6622,7 +6793,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
                 "title": "Payload"
               }
@@ -6636,7 +6806,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Dispatch Compute Complex Heatmap Depictio Api V1 Advanced Viz Compute Complex Heatmap Post"
                 }
@@ -6692,7 +6861,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Poll Compute Complex Heatmap Depictio Api V1 Advanced Viz Compute Complex Heatmap  Job Id  Get"
                 }
               }
@@ -6723,7 +6891,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
                 "title": "Payload"
               }
@@ -6737,7 +6904,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Dispatch Compute Upset Depictio Api V1 Advanced Viz Compute Upset Post"
                 }
@@ -6793,7 +6959,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Poll Compute Upset Depictio Api V1 Advanced Viz Compute Upset  Job Id  Get"
                 }
               }
@@ -6824,7 +6989,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
                 "title": "Payload"
               }
@@ -6838,7 +7002,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Dispatch Compute Coverage Track Depictio Api V1 Advanced Viz Compute Coverage Track Post"
                 }
@@ -6894,7 +7057,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Poll Compute Coverage Track Depictio Api V1 Advanced Viz Compute Coverage Track  Job Id  Get"
                 }
               }
@@ -6925,7 +7087,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
                 "title": "Payload"
               }
@@ -6939,7 +7100,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Dispatch Compute Sankey Depictio Api V1 Advanced Viz Compute Sankey Post"
                 }
@@ -6995,7 +7155,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Poll Compute Sankey Depictio Api V1 Advanced Viz Compute Sankey  Job Id  Get"
                 }
               }
@@ -7063,179 +7222,13 @@
         }
       }
     },
-    "/depictio/api/v1/catalog/project/{project_id}/compose": {
-      "get": {
-        "tags": [
-          "Catalog"
-        ],
-        "summary": "Compose Project",
-        "description": "Return recognized catalog modules for a project, grouped by tool_id.",
-        "operationId": "compose_project_depictio_api_v1_catalog_project__project_id__compose_get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "project_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Project Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Compose Project Depictio Api V1 Catalog Project  Project Id  Compose Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/catalog/output/{output_id}/preview-payload": {
-      "get": {
-        "tags": [
-          "Catalog"
-        ],
-        "summary": "Preview Output Payload",
-        "description": "Compute and return the preview payload for a catalog output (from its fixture).\n\nThe payload contains pre-rendered Plotly JSON (figures), card values, table\nschemas, and advanced-viz data — ready for the React preview panel to render\nwithout any live API calls.",
-        "operationId": "preview_output_payload_depictio_api_v1_catalog_output__output_id__preview_payload_get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "output_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Output Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Preview Output Payload Depictio Api V1 Catalog Output  Output Id  Preview Payload Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/catalog/output/{output_id}/preview-html": {
-      "get": {
-        "tags": [
-          "Catalog"
-        ],
-        "summary": "Preview Output Html",
-        "description": "Serve the standalone catalog-preview HTML for an output (uses fixture data).\n\nThe HTML embeds the pre-built catalog-preview bundle with the real\nComponentRenderer and the pre-computed payload — no live API calls inside.\nPass ``?render_id=<output_id>-<idx>`` to preview a single component in isolation.",
-        "operationId": "preview_output_html_depictio_api_v1_catalog_output__output_id__preview_html_get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "output_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Output Id"
-            }
-          },
-          {
-            "name": "render_id",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "If given, only this render index is shown",
-              "title": "Render Id"
-            },
-            "description": "If given, only this render index is shown"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "text/html": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/depictio/api/v1/celery/health": {
       "get": {
         "tags": [
           "Celery"
         ],
         "summary": "Celery Health",
-        "description": "Return broker connectivity + worker count + queue list.\n\nUseful for liveness/readiness probes and to confirm the offload flag is\nactually pointing at a live worker pool. Admin-only: it leaks broker host\nand worker topology. No external healthcheck probes this route (verified\nagainst docker-compose*.yaml and helm-charts/), so gating it is safe.",
+        "description": "Return broker connectivity + worker count + queue list.\n\nUseful for liveness/readiness probes and to confirm the offload flag is\nactually pointing at a live worker pool.",
         "operationId": "celery_health_depictio_api_v1_celery_health_get",
         "responses": {
           "200": {
@@ -7260,7 +7253,7 @@
           "Celery"
         ],
         "summary": "Celery Active",
-        "description": "Return tasks currently executing on each worker. Admin-only.",
+        "description": "Return tasks currently executing on each worker.",
         "operationId": "celery_active_depictio_api_v1_celery_active_get",
         "responses": {
           "200": {
@@ -7285,682 +7278,8 @@
           "Celery"
         ],
         "summary": "Celery Stats",
-        "description": "Aggregate per-worker stats (pool size, totals, prefetch count). Admin-only.",
+        "description": "Aggregate per-worker stats (pool size, totals, prefetch count).",
         "operationId": "celery_stats_depictio_api_v1_celery_stats_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
-      }
-    },
-    "/depictio/api/v1/monitoring/tasks": {
-      "get": {
-        "tags": [
-          "Monitoring"
-        ],
-        "summary": "List Tasks",
-        "description": "List Celery task events, newest-first, with optional filters.",
-        "operationId": "list_tasks_depictio_api_v1_monitoring_tasks_get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "status",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Status"
-            }
-          },
-          {
-            "name": "kind",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Kind"
-            }
-          },
-          {
-            "name": "since_seconds",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "Only events updated within N seconds",
-              "title": "Since Seconds"
-            },
-            "description": "Only events updated within N seconds"
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 500,
-              "minimum": 1,
-              "default": 100,
-              "title": "Limit"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "default": 0,
-              "title": "Skip"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/monitoring/tasks/{task_id}": {
-      "get": {
-        "tags": [
-          "Monitoring"
-        ],
-        "summary": "Get Task",
-        "description": "Return a single task event including captured logs and traceback.",
-        "operationId": "get_task_depictio_api_v1_monitoring_tasks__task_id__get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "task_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Task Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/monitoring/ingestion/start": {
-      "post": {
-        "tags": [
-          "Monitoring"
-        ],
-        "summary": "Start Ingestion",
-        "description": "Open an ingestion-run record. Auth-only (the ingesting user), not admin-gated.\n\nBest-effort from the CLI's perspective — failures here must never abort a\nreal ingestion, so the CLI calls this in a try/except.",
-        "operationId": "start_ingestion_depictio_api_v1_monitoring_ingestion_start_post",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "x-depictio-cli-instance",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "X-Depictio-Cli-Instance"
-            }
-          },
-          {
-            "name": "x-depictio-cli-host",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "X-Depictio-Cli-Host"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/IngestionStartRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/monitoring/ingestion/{run_id}/finish": {
-      "post": {
-        "tags": [
-          "Monitoring"
-        ],
-        "summary": "Finish Ingestion",
-        "description": "Close an ingestion-run record with the final status + per-step tally.",
-        "operationId": "finish_ingestion_depictio_api_v1_monitoring_ingestion__run_id__finish_post",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "run_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Run Id"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/IngestionFinishRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/monitoring/ingestion/{run_id}/step": {
-      "post": {
-        "tags": [
-          "Monitoring"
-        ],
-        "summary": "Update Ingestion Step",
-        "description": "Upsert a single step of an in-flight ingestion and mark it as current.\n\nPlaceholder for future async/offloaded ingestion: a long-running worker calls\nthis to push per-step progress while the run stays ``running``, so the admin\nUI reflects live state instead of only the final tally. The current\nsynchronous CLI does not call this yet — it reports all steps at ``finish``.",
-        "operationId": "update_ingestion_step_depictio_api_v1_monitoring_ingestion__run_id__step_post",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "run_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Run Id"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/IngestionStepRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/monitoring/ingestion": {
-      "get": {
-        "tags": [
-          "Monitoring"
-        ],
-        "summary": "List Ingestion",
-        "description": "List CLI ingestion runs, newest-first, with optional filters.",
-        "operationId": "list_ingestion_depictio_api_v1_monitoring_ingestion_get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "instance",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Instance"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Status"
-            }
-          },
-          {
-            "name": "project_id",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Project Id"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 500,
-              "minimum": 1,
-              "default": 100,
-              "title": "Limit"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "default": 0,
-              "title": "Skip"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/monitoring/ingestion/{run_id}": {
-      "get": {
-        "tags": [
-          "Monitoring"
-        ],
-        "summary": "Get Ingestion",
-        "operationId": "get_ingestion_depictio_api_v1_monitoring_ingestion__run_id__get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "run_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Run Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/monitoring/logs": {
-      "get": {
-        "tags": [
-          "Monitoring"
-        ],
-        "summary": "List Logs",
-        "description": "Return recent application log records from the capped collection.",
-        "operationId": "list_logs_depictio_api_v1_monitoring_logs_get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "level",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Level"
-            }
-          },
-          {
-            "name": "source",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Source"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 1000,
-              "minimum": 1,
-              "default": 200,
-              "title": "Limit"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/monitoring/logs/level": {
-      "get": {
-        "tags": [
-          "Monitoring"
-        ],
-        "summary": "Get Log Capture Level",
-        "description": "Current floor of what the app-log handler persists (this API process).",
-        "operationId": "get_log_capture_level_depictio_api_v1_monitoring_logs_level_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "Monitoring"
-        ],
-        "summary": "Set Log Capture Level",
-        "description": "Change the app-log capture floor at runtime (admin-only).\n\nApplies immediately in the API process and is broadcast best-effort to Celery\nworkers so their logs follow the same floor. Not persisted — a restart reverts\nto ``settings.monitoring.app_log_min_level``.",
-        "operationId": "set_log_capture_level_depictio_api_v1_monitoring_logs_level_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LogLevelRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
-      }
-    },
-    "/depictio/api/v1/monitoring/health": {
-      "get": {
-        "tags": [
-          "Monitoring"
-        ],
-        "summary": "Monitoring Health",
-        "description": "Live worker/broker health + active task count (Celery inspect).",
-        "operationId": "monitoring_health_depictio_api_v1_monitoring_health_get",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -7984,7 +7303,7 @@
           "Authentication"
         ],
         "summary": "Login",
-        "description": "Authenticate user and return access token.\n\nValidates user credentials and returns a JWT token for API access.\nIn unauthenticated mode, returns the anonymous user's token.\n\nArgs:\n    request: Incoming request (used for per-IP rate limiting).\n    login_request: OAuth2 form containing username (email) and password.\n\nReturns:\n    TokenBeanie with access token and metadata.\n\nRaises:\n    HTTPException: 401 if credentials are invalid.\n    HTTPException: 429 if too many requests from the same IP.",
+        "description": "Authenticate user and return access token.\n\nValidates user credentials and returns a JWT token for API access.\nIn unauthenticated mode, returns the anonymous user's token.\n\nArgs:\n    login_request: OAuth2 form containing username (email) and password.\n\nReturns:\n    TokenBeanie with access token and metadata.\n\nRaises:\n    HTTPException: 401 if credentials are invalid.",
         "operationId": "login_depictio_api_v1_auth_login_post",
         "requestBody": {
           "content": {
@@ -8026,9 +7345,8 @@
           "Authentication"
         ],
         "summary": "Create Token",
-        "description": "Create a new API token for a user.\n\nDeprecated: api-key-gated provisioning endpoint with no remaining callers\n(clients use the user-scoped /auth/me/tokens). Scheduled for removal.\n\nInternal endpoint that requires API key authentication.\n\nArgs:\n    token_data: Token configuration including name, lifetime, and user ID.\n    api_key: Internal API key for authentication.\n\nReturns:\n    Created TokenBeanie with access token and metadata.\n\nRaises:\n    HTTPException: 403 if API key is invalid.\n    HTTPException: 400 if token with same name already exists.",
+        "description": "Create a new API token for a user.\n\nInternal endpoint that requires API key authentication.\n\nArgs:\n    token_data: Token configuration including name, lifetime, and user ID.\n    api_key: Internal API key for authentication.\n\nReturns:\n    Created TokenBeanie with access token and metadata.\n\nRaises:\n    HTTPException: 403 if API key is invalid.\n    HTTPException: 400 if token with same name already exists.",
         "operationId": "create_token_depictio_api_v1_auth_create_token_post",
-        "deprecated": true,
         "parameters": [
           {
             "name": "api-key",
@@ -8076,136 +7394,6 @@
         }
       }
     },
-    "/depictio/api/v1/auth/provision_user": {
-      "post": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Provision User Endpoint",
-        "description": "Create-or-get a passwordless user and return a long-lived run token.\n\nCalled by pipelines (gated by the provisioning API key) so the CLI can act\nas ``email`` for the rest of a run. Idempotent: re-running for the same\nemail returns a fresh token for the existing user.",
-        "operationId": "provision_user_endpoint_depictio_api_v1_auth_provision_user_post",
-        "parameters": [
-          {
-            "name": "api-key",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "description": "Provisioning API key",
-              "title": "Api-Key"
-            },
-            "description": "Provisioning API key"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/_ProvisionUserRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Provision User Endpoint Depictio Api V1 Auth Provision User Post"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/auth/me/magic_link": {
-      "post": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Create My Magic Link",
-        "description": "Mint a short-lived, single-use magic-link login ticket for the caller.\n\nBearer-authed: the CLI calls this *as the provisioned user* at the end of a\nrun (once the dashboard exists) so the link's lifetime starts when it is\nhanded out, not when the long pipeline began.",
-        "operationId": "create_my_magic_link_depictio_api_v1_auth_me_magic_link_post",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": true,
-                  "type": "object",
-                  "title": "Response Create My Magic Link Depictio Api V1 Auth Me Magic Link Post"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
-      }
-    },
-    "/depictio/api/v1/auth/magic/exchange": {
-      "post": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Exchange Magic Link",
-        "description": "Redeem a magic-link ticket for a browser session (public, single-use).",
-        "operationId": "exchange_magic_link_depictio_api_v1_auth_magic_exchange_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/_ExchangeMagicLinkRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": true,
-                  "type": "object",
-                  "title": "Response Exchange Magic Link Depictio Api V1 Auth Magic Exchange Post"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/depictio/api/v1/auth/refresh": {
       "post": {
         "tags": [
@@ -8218,7 +7406,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
                 "type": "object",
                 "title": "Request"
               }
@@ -8232,7 +7419,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Refresh Token Browser Depictio Api V1 Auth Refresh Post"
                 }
@@ -8258,9 +7444,8 @@
           "Authentication"
         ],
         "summary": "Refresh Token Endpoint",
-        "description": "Refresh an access token using a valid refresh token.\n\nDeprecated: api-key-gated mirror of /auth/refresh (which clients use)\nwith no remaining callers. Scheduled for removal.\n\nArgs:\n    request: Dict containing 'refresh_token' key.\n    api_key: Internal API key for authentication.\n\nReturns:\n    Dict with new access_token and expire_datetime.\n\nRaises:\n    HTTPException: 403 if API key is invalid.\n    HTTPException: 401 if refresh token is invalid or expired.",
+        "description": "Refresh an access token using a valid refresh token.\n\nArgs:\n    request: Dict containing 'refresh_token' key.\n    api_key: Internal API key for authentication.\n\nReturns:\n    Dict with new access_token and expire_datetime.\n\nRaises:\n    HTTPException: 403 if API key is invalid.\n    HTTPException: 401 if refresh token is invalid or expired.",
         "operationId": "refresh_token_endpoint_depictio_api_v1_auth_refresh_token_post",
-        "deprecated": true,
         "parameters": [
           {
             "name": "api-key",
@@ -8280,7 +7465,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "additionalProperties": true,
                 "title": "Request"
               }
             }
@@ -8293,7 +7477,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Refresh Token Endpoint Depictio Api V1 Auth Refresh Token Post"
                 }
               }
@@ -8427,9 +7610,8 @@
           "Authentication"
         ],
         "summary": "Api Fetch User From Id",
-        "description": "Fetch user by ID.\n\nDeprecated: api-key-gated lookup with no remaining callers (internal code\nuses the _async_fetch_user_from_id helper directly). Scheduled for removal.\n\nArgs:\n    user_id: MongoDB ObjectId of the user to fetch.\n    api_key: Internal API key for authentication.\n\nReturns:\n    User object with the matching ID.\n\nRaises:\n    HTTPException: 403 if API key is invalid.\n    HTTPException: 404 if user not found for the ID.",
+        "description": "Fetch user by ID.\n\nArgs:\n    user_id: MongoDB ObjectId of the user to fetch.\n    api_key: Internal API key for authentication.\n\nReturns:\n    User object with the matching ID.\n\nRaises:\n    HTTPException: 403 if API key is invalid.\n    HTTPException: 404 if user not found for the ID.",
         "operationId": "api_fetch_user_from_id_depictio_api_v1_auth_fetch_user_from_id_get",
-        "deprecated": true,
         "parameters": [
           {
             "name": "user_id",
@@ -8516,7 +7698,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Get Current User Info Optional Depictio Api V1 Auth Me Optional Get"
                 }
@@ -8537,9 +7718,8 @@
           "Authentication"
         ],
         "summary": "Api Get Anonymous User Session",
-        "description": "Get the anonymous user session data for unauthenticated mode.\n\nDeprecated: api-key-gated variant with no remaining callers (clients use\n/auth/public/get_anonymous_user_session). Scheduled for removal.",
+        "description": "Get the anonymous user session data for unauthenticated mode.",
         "operationId": "api_get_anonymous_user_session_depictio_api_v1_auth_get_anonymous_user_session_get",
-        "deprecated": true,
         "parameters": [
           {
             "name": "api-key",
@@ -8560,7 +7740,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Api Get Anonymous User Session Depictio Api V1 Auth Get Anonymous User Session Get"
                 }
               }
@@ -8585,9 +7764,8 @@
           "Authentication"
         ],
         "summary": "Create Temporary User Endpoint",
-        "description": "Create a temporary user with automatic expiration.\n\nDeprecated: api-key-gated variant with no remaining callers (clients use\n/auth/public/create_temporary_user). Scheduled for removal.\n\nArgs:\n    expiry_hours: Number of hours until the user expires (default: 24)\n    api_key: Internal API key for authentication\n\nReturns:\n    Session data for the temporary user",
+        "description": "Create a temporary user with automatic expiration.\n\nArgs:\n    expiry_hours: Number of hours until the user expires (default: 24)\n    api_key: Internal API key for authentication\n\nReturns:\n    Session data for the temporary user",
         "operationId": "create_temporary_user_endpoint_depictio_api_v1_auth_create_temporary_user_post",
-        "deprecated": true,
         "parameters": [
           {
             "name": "expiry_hours",
@@ -8628,7 +7806,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Create Temporary User Endpoint Depictio Api V1 Auth Create Temporary User Post"
                 }
               }
@@ -8653,9 +7830,8 @@
           "Authentication"
         ],
         "summary": "Cleanup Expired Temporary Users Endpoint",
-        "description": "Clean up expired temporary users and their tokens.\n\nDeprecated: no remaining callers. Scheduled for removal.\n\nArgs:\n    api_key: Internal API key for authentication\n\nReturns:\n    Cleanup results",
+        "description": "Clean up expired temporary users and their tokens.\n\nArgs:\n    api_key: Internal API key for authentication\n\nReturns:\n    Cleanup results",
         "operationId": "cleanup_expired_temporary_users_endpoint_depictio_api_v1_auth_cleanup_expired_temporary_users_post",
-        "deprecated": true,
         "parameters": [
           {
             "name": "api-key",
@@ -8676,7 +7852,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Cleanup Expired Temporary Users Endpoint Depictio Api V1 Auth Cleanup Expired Temporary Users Post"
                 }
               }
@@ -8709,7 +7884,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Create Temporary User Public Depictio Api V1 Auth Public Create Temporary User Post"
                 }
@@ -8733,7 +7907,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Get Anonymous User Session Public Depictio Api V1 Auth Public Get Anonymous User Session Get"
                 }
@@ -8749,7 +7922,7 @@
           "Authentication"
         ],
         "summary": "Register",
-        "description": "Endpoint to register a new user.\n\nArgs:\n    registration: User registration data containing email and password.\n    request: Incoming request (used for per-IP rate limiting). FastAPI\n        injects this by type regardless of parameter order; kept second so\n        ``register(model)`` positional calls (tests) still bind correctly.\n\nReturns:\n    Dictionary with user data, success status and message.\n\nRaises:\n    HTTPException: 400 with a GENERIC message on any failure (e.g. duplicate\n        email) to avoid account enumeration. The real reason is logged.",
+        "description": "Endpoint to register a new user.\n\nArgs:\n    request: User registration data containing email and password\n\nReturns:\n    Dictionary with user data, success status and message",
         "operationId": "register_depictio_api_v1_auth_register_post",
         "requestBody": {
           "content": {
@@ -8767,7 +7940,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Register Depictio Api V1 Auth Register Post"
                 }
@@ -8811,7 +7983,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
                   "type": "object",
                   "title": "Response Edit Password Depictio Api V1 Auth Edit Password Post"
                 }
@@ -8842,9 +8013,7 @@
           "Authentication"
         ],
         "summary": "Delete Token",
-        "description": "Delete a token via the internal API key.\n\nDeprecated: clients use the user-scoped DELETE /auth/me/tokens/{id}.\nScheduled for removal; no remaining callers.",
         "operationId": "delete_token_depictio_api_v1_auth_delete_token_post",
-        "deprecated": true,
         "parameters": [
           {
             "name": "token_id",
@@ -8965,7 +8134,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "additionalProperties": true,
                   "title": "Response Delete My Token Depictio Api V1 Auth Me Tokens  Token Id  Delete"
                 }
               }
@@ -9014,8 +8182,17 @@
           "Authentication"
         ],
         "summary": "Check Token Validity Endpoint",
-        "description": "Check validity of the *presented* bearer token.\n\nSECURITY: the token is derived from the ``Authorization`` header, NOT from\nthe request body. Previously this accepted a ``TokenBase`` in the body,\nwhich let any unauthenticated caller probe the validity of arbitrary tokens\n(and learn refresh state). Now a caller can only ask about the credential it\nalready holds. Missing/unknown tokens return the same ``logout`` outcome as\nan expired one (no distinction leaked).",
         "operationId": "check_token_validity_endpoint_depictio_api_v1_auth_check_token_validity_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenBase-Input"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -9024,13 +8201,18 @@
                 "schema": {}
               }
             }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
+        }
       }
     },
     "/depictio/api/v1/auth/generate_agent_config": {
@@ -9039,7 +8221,6 @@
           "Authentication"
         ],
         "summary": "Generate Agent Config Endpoint",
-        "description": "Generate a CLI/agent config for the authenticated user.\n\nSerialized via ``cli_config_to_payload`` instead of ``response_model=CLIConfig``:\nthe response model would re-mask the ``SecretStr`` S3 secret as ``'**********'``,\nwhich silently breaks the CLI's direct-to-S3 Delta writes.",
         "operationId": "generate_agent_config_endpoint_depictio_api_v1_auth_generate_agent_config_post",
         "requestBody": {
           "content": {
@@ -9057,9 +8238,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
-                  "type": "object",
-                  "title": "Response Generate Agent Config Endpoint Depictio Api V1 Auth Generate Agent Config Post"
+                  "$ref": "#/components/schemas/CLIConfig-Output"
                 }
               }
             }
@@ -9146,7 +8325,7 @@
           "Authentication"
         ],
         "summary": "List Users",
-        "description": "List all users for the React admin Users tab. Admin-only.\n\nUses ``get_user_or_anonymous`` for parity with the admin projects list —\nthe anonymous user in single-user mode is admin, so no token is required\nthere — but the inline admin gate below blocks non-admin callers in\nmulti-user/public deployments (user listing = account enumeration).",
+        "description": "List all users for the React admin Users tab.\n\nUses ``get_user_or_anonymous`` for parity with the projects list — the\nanonymous user in single-user mode is admin, so no token is required.",
         "operationId": "list_users_depictio_api_v1_auth_list_get",
         "responses": {
           "200": {
@@ -9216,6 +8395,31 @@
         }
       }
     },
+    "/depictio/api/v1/auth/check_admin_default_password": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Check Admin Default Password",
+        "description": "Check if the admin user still has the default password 'changeme'.\nOnly accessible by authenticated users.\nReturns: {\"has_default_password\": bool}",
+        "operationId": "check_admin_default_password_depictio_api_v1_auth_check_admin_default_password_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/auth/turn_sysadmin/{user_id}/{is_admin}": {
       "post": {
         "tags": [
@@ -9245,6 +8449,147 @@
             "schema": {
               "type": "boolean",
               "title": "Is Admin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/auth/update_group_in_users/{group_id}": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Update Group In Users",
+        "operationId": "update_group_in_users_depictio_api_v1_auth_update_group_in_users__group_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/auth/get_group_with_users/{group_id}": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get Group With Users",
+        "operationId": "get_group_with_users_depictio_api_v1_auth_get_group_with_users__group_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/auth/get_group/{group_id}": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get Group",
+        "operationId": "get_group_depictio_api_v1_auth_get_group__group_id__get",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Group Id"
             }
           }
         ],
@@ -9350,6 +8695,469 @@
                 "schema": {
                   "$ref": "#/components/schemas/GoogleOAuthResponse"
                 }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dashboard-beta/favicon.svg": {
+      "get": {
+        "summary": " Serve Viewer Favicon",
+        "operationId": "_serve_viewer_favicon_dashboard_beta_favicon_svg_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dashboard-beta/{_dashboard_id}": {
+      "get": {
+        "summary": " Serve Viewer Spa",
+        "description": "Serve the React viewer SPA. All sub-paths fall through to index.html\nso React's client-side router handles the dashboard ID segment.",
+        "operationId": "_serve_viewer_spa_dashboard_beta___dashboard_id__get",
+        "parameters": [
+          {
+            "name": "_dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dashboard-beta-edit/{_dashboard_id}": {
+      "get": {
+        "summary": " Serve Editor Spa",
+        "description": "Serve the React editor SPA. Same bundle as the viewer; the SPA's\nboot routing inspects window.location.pathname to render EditorApp.\nAsset paths in index.html still resolve via /dashboard-beta/assets/.",
+        "operationId": "_serve_editor_spa_dashboard_beta_edit___dashboard_id__get",
+        "parameters": [
+          {
+            "name": "_dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth": {
+      "get": {
+        "summary": " Serve Auth Spa Root",
+        "operationId": "_serve_auth_spa_root_auth_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/{_auth_path}": {
+      "get": {
+        "summary": " Serve Auth Spa",
+        "operationId": "_serve_auth_spa_auth___auth_path__get",
+        "parameters": [
+          {
+            "name": "_auth_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Auth Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dashboards-beta": {
+      "get": {
+        "summary": " Serve Dashboards Spa Root",
+        "operationId": "_serve_dashboards_spa_root_dashboards_beta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dashboards-beta/{_path}": {
+      "get": {
+        "summary": " Serve Dashboards Spa",
+        "operationId": "_serve_dashboards_spa_dashboards_beta___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/about-beta": {
+      "get": {
+        "summary": " Serve About Spa Root",
+        "operationId": "_serve_about_spa_root_about_beta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/about-beta/{_path}": {
+      "get": {
+        "summary": " Serve About Spa",
+        "operationId": "_serve_about_spa_about_beta___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin-beta": {
+      "get": {
+        "summary": " Serve Admin Spa Root",
+        "operationId": "_serve_admin_spa_root_admin_beta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin-beta/{_path}": {
+      "get": {
+        "summary": " Serve Admin Spa",
+        "operationId": "_serve_admin_spa_admin_beta___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects-beta": {
+      "get": {
+        "summary": " Serve Projects Spa Root",
+        "operationId": "_serve_projects_spa_root_projects_beta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects-beta/{_path}": {
+      "get": {
+        "summary": " Serve Projects Spa",
+        "operationId": "_serve_projects_spa_projects_beta___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile-beta": {
+      "get": {
+        "summary": " Serve Profile Spa Root",
+        "operationId": "_serve_profile_spa_root_profile_beta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile-beta/{_path}": {
+      "get": {
+        "summary": " Serve Profile Spa",
+        "operationId": "_serve_profile_spa_profile_beta___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cli-agents-beta": {
+      "get": {
+        "summary": " Serve Cli Agents Spa Root",
+        "operationId": "_serve_cli_agents_spa_root_cli_agents_beta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cli-agents-beta/{_path}": {
+      "get": {
+        "summary": " Serve Cli Agents Spa",
+        "operationId": "_serve_cli_agents_spa_cli_agents_beta___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -9544,11 +9352,6 @@
               }
             ],
             "title": "Collections"
-          },
-          "allow_unverified": {
-            "type": "boolean",
-            "title": "Allow Unverified",
-            "default": false
           }
         },
         "type": "object",
@@ -9568,7 +9371,6 @@
             "title": "Message"
           },
           "restored_collections": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Restored Collections",
             "default": {}
@@ -9636,7 +9438,6 @@
             "default": 0
           },
           "collections_validated": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Collections Validated",
             "default": {}
@@ -9660,7 +9461,7 @@
           "files": {
             "items": {
               "type": "string",
-              "contentMediaType": "application/octet-stream"
+              "format": "binary"
             },
             "type": "array",
             "title": "Files"
@@ -9677,7 +9478,7 @@
           "files": {
             "items": {
               "type": "string",
-              "contentMediaType": "application/octet-stream"
+              "format": "binary"
             },
             "type": "array",
             "title": "Files"
@@ -9692,10 +9493,10 @@
       "Body_compare_models_endpoint_depictio_api_v1_workflows_compare_workflow_models_post": {
         "properties": {
           "new_workflow": {
-            "$ref": "#/components/schemas/Workflow"
+            "$ref": "#/components/schemas/Workflow-Input"
           },
           "existing_workflow": {
-            "$ref": "#/components/schemas/Workflow"
+            "$ref": "#/components/schemas/Workflow-Input"
           }
         },
         "type": "object",
@@ -9780,7 +9581,7 @@
           },
           "file": {
             "type": "string",
-            "contentMediaType": "application/octet-stream",
+            "format": "binary",
             "title": "File"
           }
         },
@@ -9810,7 +9611,7 @@
           "files": {
             "items": {
               "type": "string",
-              "contentMediaType": "application/octet-stream"
+              "format": "binary"
             },
             "type": "array",
             "title": "Files"
@@ -9828,7 +9629,7 @@
         "properties": {
           "file": {
             "type": "string",
-            "contentMediaType": "application/octet-stream",
+            "format": "binary",
             "title": "File"
           }
         },
@@ -9858,7 +9659,6 @@
           },
           "password": {
             "type": "string",
-            "format": "password",
             "title": "Password"
           },
           "scope": {
@@ -9886,7 +9686,6 @@
                 "type": "null"
               }
             ],
-            "format": "password",
             "title": "Client Secret"
           }
         },
@@ -9902,7 +9701,7 @@
           "files": {
             "items": {
               "type": "string",
-              "contentMediaType": "application/octet-stream"
+              "format": "binary"
             },
             "type": "array",
             "title": "Files"
@@ -9919,7 +9718,7 @@
           "files": {
             "items": {
               "type": "string",
-              "contentMediaType": "application/octet-stream"
+              "format": "binary"
             },
             "type": "array",
             "title": "Files"
@@ -9936,7 +9735,7 @@
           "files": {
             "items": {
               "type": "string",
-              "contentMediaType": "application/octet-stream"
+              "format": "binary"
             },
             "type": "array",
             "title": "Files"
@@ -9948,28 +9747,38 @@
         ],
         "title": "Body_replace_table_dc_depictio_api_v1_datacollections__data_collection_id__replace_post"
       },
-      "CLIConfig": {
+      "CLIConfig-Input": {
         "properties": {
           "api_base_url": {
             "type": "string",
             "title": "Api Base Url"
           },
           "user": {
-            "$ref": "#/components/schemas/UserBaseCLIConfig"
+            "$ref": "#/components/schemas/UserBaseCLIConfig-Input"
           },
           "s3_storage": {
             "$ref": "#/components/schemas/S3DepictioCLIConfig"
+          }
+        },
+        "type": "object",
+        "required": [
+          "api_base_url",
+          "user",
+          "s3_storage"
+        ],
+        "title": "CLIConfig"
+      },
+      "CLIConfig-Output": {
+        "properties": {
+          "api_base_url": {
+            "type": "string",
+            "title": "Api Base Url"
           },
-          "instance_label": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Instance Label"
+          "user": {
+            "$ref": "#/components/schemas/UserBaseCLIConfig-Output"
+          },
+          "s3_storage": {
+            "$ref": "#/components/schemas/S3DepictioCLIConfig"
           }
         },
         "type": "object",
@@ -10090,7 +9899,6 @@
             "description": "File format: csv, tsv, parquet, feather, xls, xlsx, or mixed"
           },
           "polars_kwargs": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Polars Kwargs",
             "description": "Additional arguments for Polars read functions"
@@ -10318,7 +10126,6 @@
             "default": []
           },
           "plots": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Plots",
             "default": {}
@@ -10422,7 +10229,6 @@
             "title": "Format"
           },
           "polars_kwargs": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Polars Kwargs",
             "default": {}
@@ -10472,7 +10278,6 @@
             "title": "Format"
           },
           "polars_kwargs": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Polars Kwargs",
             "default": {}
@@ -10537,7 +10342,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -10553,7 +10358,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -10633,7 +10437,6 @@
             "default": []
           },
           "buttons_data": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Buttons Data",
             "default": {
@@ -10644,7 +10447,6 @@
             }
           },
           "stored_add_button": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Stored Add Button",
             "default": {
@@ -10772,7 +10574,6 @@
           "project_realtime": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -10793,13 +10594,13 @@
         "title": "DashboardData",
         "description": "Full dashboard model with MongoDB and auth fields.\n\nExtends DashboardDataLite with:\n- MongoDB document fields (id, project_id, dashboard_id)\n- Permissions (owners, editors, viewers)\n- Versioning and timestamps\n- Tab support"
       },
-      "DataCollection": {
+      "DataCollection-Input": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -10815,7 +10616,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -10840,7 +10640,7 @@
             "title": "Data Collection Tag"
           },
           "config": {
-            "$ref": "#/components/schemas/DataCollectionConfig"
+            "$ref": "#/components/schemas/DataCollectionConfig-Input"
           },
           "optional": {
             "type": "boolean",
@@ -10856,13 +10656,13 @@
         ],
         "title": "DataCollection"
       },
-      "DataCollectionConfig": {
+      "DataCollection-Output": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -10878,7 +10678,68 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flexible Metadata"
+          },
+          "hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hash"
+          },
+          "data_collection_tag": {
+            "type": "string",
+            "title": "Data Collection Tag"
+          },
+          "config": {
+            "$ref": "#/components/schemas/DataCollectionConfig-Output"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "data_collection_tag",
+          "config"
+        ],
+        "title": "DataCollection"
+      },
+      "DataCollectionConfig-Input": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "objectid",
+            "title": "Id",
+            "default": "6a1952e18ce3915900319320"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "flexible_metadata": {
+            "anyOf": [
+              {
                 "type": "object"
               },
               {
@@ -10920,7 +10781,132 @@
           "scan": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/Scan"
+                "$ref": "#/components/schemas/Scan-Input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "dc_specific_properties": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DCTableCoordinatesConfig"
+              },
+              {
+                "$ref": "#/components/schemas/DCTableConfig"
+              },
+              {
+                "$ref": "#/components/schemas/DCJBrowse2Config"
+              },
+              {
+                "$ref": "#/components/schemas/DCMultiQC"
+              },
+              {
+                "$ref": "#/components/schemas/DCImageConfig"
+              },
+              {
+                "$ref": "#/components/schemas/DCGeoJSONConfig"
+              },
+              {
+                "$ref": "#/components/schemas/DCPhylogenyConfig"
+              }
+            ],
+            "title": "Dc Specific Properties"
+          },
+          "join": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TableJoinConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "transform": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TransformConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "type",
+          "dc_specific_properties"
+        ],
+        "title": "DataCollectionConfig"
+      },
+      "DataCollectionConfig-Output": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "objectid",
+            "title": "Id",
+            "default": "6a1952e18ce3915900319320"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "flexible_metadata": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flexible Metadata"
+          },
+          "hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hash"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "source": {
+            "$ref": "#/components/schemas/DataCollectionSource",
+            "default": "native"
+          },
+          "metatype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metatype"
+          },
+          "scan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Scan-Output"
               },
               {
                 "type": "null"
@@ -10993,64 +10979,13 @@
         "title": "DataCollectionSource",
         "description": "Origin/source type of a data collection."
       },
-      "ExpectedDataCollection": {
-        "properties": {
-          "data_collection_tag": {
-            "type": "string",
-            "title": "Data Collection Tag",
-            "description": "DC tag as declared in the template"
-          },
-          "type": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Type",
-            "description": "DC type (table, multiqc, jbrowse2, ...) if known"
-          },
-          "optional": {
-            "type": "boolean",
-            "title": "Optional",
-            "description": "False = required/mandatory; True = optional",
-            "default": false
-          },
-          "included": {
-            "type": "boolean",
-            "title": "Included",
-            "description": "Whether this DC survived conditional + missing-file pruning",
-            "default": true
-          },
-          "removal_reason": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Removal Reason",
-            "description": "Why an excluded DC was dropped (e.g. 'gated: METADATA_FILE absent (if_var_absent)')"
-          }
-        },
-        "type": "object",
-        "required": [
-          "data_collection_tag"
-        ],
-        "title": "ExpectedDataCollection",
-        "description": "One entry in a project's frozen expected-DC manifest (see TemplateOrigin).\n\nRecords the *full* template DC superset at resolution time — including DCs that\nwere conditionally gated out — so the ingestion report can show what the template\nexpected vs. what was actually identified, faithful to the template version used."
-      },
       "File": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -11066,7 +11001,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -11204,7 +11138,6 @@
           "user": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -11217,7 +11150,6 @@
           "token": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -11249,7 +11181,48 @@
         "title": "GoogleOAuthResponse",
         "description": "Response model for Google OAuth operations."
       },
-      "GranularityConfig": {
+      "GranularityConfig-Input": {
+        "properties": {
+          "aggregate_to": {
+            "type": "string",
+            "title": "Aggregate To",
+            "description": "Target granularity level - column name that defines the aggregation key"
+          },
+          "numeric_default": {
+            "$ref": "#/components/schemas/AggregationFunction",
+            "description": "Default aggregation function for numeric columns",
+            "default": "mean"
+          },
+          "categorical_default": {
+            "$ref": "#/components/schemas/AggregationFunction",
+            "description": "Default aggregation function for categorical/string columns",
+            "default": "first"
+          },
+          "column_overrides": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ColumnAggregation"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Column Overrides",
+            "description": "Custom aggregation functions for specific columns"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "aggregate_to"
+        ],
+        "title": "GranularityConfig",
+        "description": "Configuration for handling granularity mismatches between joined tables.\n\nWhen joining tables at different levels (e.g., samples vs cells), this\nconfiguration specifies how to aggregate data to the target granularity.\n\nExample:\n    DC A (samples): one row per sample\n    DC B (cells): multiple rows per sample (cells within samples)\n\n    When joining with granularity=\"sample\", DC B data will be aggregated\n    per sample using the specified aggregation functions."
+      },
+      "GranularityConfig-Output": {
         "properties": {
           "aggregate_to": {
             "type": "string",
@@ -11303,652 +11276,7 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
-      "IngestionDataCollection-Input": {
-        "properties": {
-          "tag": {
-            "type": "string",
-            "title": "Tag",
-            "description": "Data collection tag"
-          },
-          "type": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Type",
-            "description": "DC type, e.g. 'table', 'jbrowse2'"
-          },
-          "format": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Format",
-            "description": "Table format, e.g. 'csv', 'parquet'"
-          },
-          "scan_mode": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Scan Mode",
-            "description": "'recursive' or 'single'"
-          },
-          "scan_pattern": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Scan Pattern",
-            "description": "Regex (recursive) or filename (single) the scan matched on"
-          },
-          "locations": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Locations",
-            "description": "Local base directories scanned (workflow data location)"
-          },
-          "file_count": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "File Count",
-            "description": "Files matched, when known"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "tag"
-        ],
-        "title": "IngestionDataCollection",
-        "description": "Per-data-collection summary captured for an ingestion run.\n\nMirrors what the DC manager surfaces (tag / type / format) *plus* the local\nscan paths the CLI resolved — base directories and the file-matching pattern\n(regex for recursive scans, or the single filename) — which the DC manager\nitself does not display."
-      },
-      "IngestionDataCollection-Output": {
-        "properties": {
-          "data_collection_tag": {
-            "type": "string",
-            "title": "Data Collection Tag"
-          },
-          "type": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Type"
-          },
-          "optional": {
-            "type": "boolean",
-            "title": "Optional",
-            "default": false
-          },
-          "status": {
-            "type": "string",
-            "title": "Status"
-          },
-          "removal_reason": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Removal Reason"
-          },
-          "files_found": {
-            "type": "integer",
-            "title": "Files Found",
-            "default": 0
-          },
-          "files_new": {
-            "type": "integer",
-            "title": "Files New",
-            "default": 0
-          },
-          "files_skipped": {
-            "type": "integer",
-            "title": "Files Skipped",
-            "default": 0
-          },
-          "files_failed": {
-            "type": "integer",
-            "title": "Files Failed",
-            "default": 0
-          },
-          "ingested": {
-            "type": "boolean",
-            "title": "Ingested",
-            "default": false
-          },
-          "table_location": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Table Location"
-          },
-          "source_inputs": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Source Inputs"
-          },
-          "recipe": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Recipe"
-          },
-          "recipe_url": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Recipe Url"
-          }
-        },
-        "type": "object",
-        "required": [
-          "data_collection_tag",
-          "status"
-        ],
-        "title": "IngestionDataCollection"
-      },
-      "IngestionFinishRequest": {
-        "properties": {
-          "status": {
-            "type": "string",
-            "title": "Status",
-            "description": "running|success|partial|failed",
-            "default": "success"
-          },
-          "steps": {
-            "items": {
-              "$ref": "#/components/schemas/IngestionStep"
-            },
-            "type": "array",
-            "title": "Steps"
-          },
-          "error": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Error"
-          },
-          "project_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Project Id"
-          },
-          "data_collections": {
-            "items": {
-              "$ref": "#/components/schemas/IngestionDataCollection-Input"
-            },
-            "type": "array",
-            "title": "Data Collections"
-          }
-        },
-        "type": "object",
-        "title": "IngestionFinishRequest"
-      },
-      "IngestionReport": {
-        "properties": {
-          "project": {
-            "$ref": "#/components/schemas/IngestionReportProject"
-          },
-          "template": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/IngestionTemplate"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "manifest_source": {
-            "type": "string",
-            "title": "Manifest Source",
-            "default": "live_project"
-          },
-          "variables": {
-            "items": {
-              "$ref": "#/components/schemas/IngestionVariable"
-            },
-            "type": "array",
-            "title": "Variables"
-          },
-          "data_collections": {
-            "items": {
-              "$ref": "#/components/schemas/IngestionDataCollection-Output"
-            },
-            "type": "array",
-            "title": "Data Collections"
-          },
-          "runs": {
-            "items": {
-              "$ref": "#/components/schemas/IngestionRun"
-            },
-            "type": "array",
-            "title": "Runs"
-          },
-          "summary": {
-            "$ref": "#/components/schemas/IngestionSummary"
-          },
-          "scanned_at": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Scanned At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "project"
-        ],
-        "title": "IngestionReport"
-      },
-      "IngestionReportProject": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "title": "Id"
-          },
-          "name": {
-            "type": "string",
-            "title": "Name"
-          },
-          "project_type": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Project Type"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "name"
-        ],
-        "title": "IngestionReportProject"
-      },
-      "IngestionRun": {
-        "properties": {
-          "run_tag": {
-            "type": "string",
-            "title": "Run Tag"
-          },
-          "run_location": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Run Location"
-          },
-          "scan_time": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Scan Time"
-          },
-          "status": {
-            "type": "string",
-            "title": "Status"
-          }
-        },
-        "type": "object",
-        "required": [
-          "run_tag",
-          "status"
-        ],
-        "title": "IngestionRun"
-      },
-      "IngestionStartRequest": {
-        "properties": {
-          "run_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Run Id",
-            "description": "Client-supplied run id (uuid). Generated if omitted."
-          },
-          "command": {
-            "type": "string",
-            "title": "Command",
-            "default": "run"
-          },
-          "project_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Project Id"
-          },
-          "project_name": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Project Name"
-          },
-          "cli_version": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Cli Version"
-          },
-          "command_line": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Command Line"
-          },
-          "cli_config_path": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Cli Config Path"
-          },
-          "project_config_path": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Project Config Path"
-          },
-          "data_root": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Data Root"
-          }
-        },
-        "type": "object",
-        "title": "IngestionStartRequest"
-      },
-      "IngestionStep": {
-        "properties": {
-          "name": {
-            "type": "string",
-            "title": "Name",
-            "description": "Step name, e.g. 'sync', 'scan', 'process'"
-          },
-          "status": {
-            "type": "string",
-            "title": "Status",
-            "description": "Step status",
-            "default": "running"
-          },
-          "detail": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Detail",
-            "description": "Optional human-readable detail"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "name"
-        ],
-        "title": "IngestionStep",
-        "description": "One step of a CLI ingestion run (sync / scan / process / ...)."
-      },
-      "IngestionStepRequest": {
-        "properties": {
-          "step": {
-            "$ref": "#/components/schemas/IngestionStep"
-          },
-          "current_step": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Current Step"
-          }
-        },
-        "type": "object",
-        "required": [
-          "step"
-        ],
-        "title": "IngestionStepRequest",
-        "description": "Live per-step update. Placeholder for future async/offloaded ingestion:\na long-running worker PATCHes a step's status while the run is ``running``."
-      },
-      "IngestionSummary": {
-        "properties": {
-          "required_total": {
-            "type": "integer",
-            "title": "Required Total",
-            "default": 0
-          },
-          "required_identified": {
-            "type": "integer",
-            "title": "Required Identified",
-            "default": 0
-          },
-          "required_missing": {
-            "type": "integer",
-            "title": "Required Missing",
-            "default": 0
-          },
-          "optional_total": {
-            "type": "integer",
-            "title": "Optional Total",
-            "default": 0
-          },
-          "optional_identified": {
-            "type": "integer",
-            "title": "Optional Identified",
-            "default": 0
-          },
-          "optional_missing": {
-            "type": "integer",
-            "title": "Optional Missing",
-            "default": 0
-          },
-          "gated": {
-            "type": "integer",
-            "title": "Gated",
-            "default": 0
-          },
-          "health": {
-            "type": "string",
-            "title": "Health",
-            "default": "ok"
-          }
-        },
-        "type": "object",
-        "title": "IngestionSummary"
-      },
-      "IngestionTemplate": {
-        "properties": {
-          "template_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Template Id"
-          },
-          "template_version": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Template Version"
-          },
-          "applied_at": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Applied At"
-          },
-          "data_root": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Data Root"
-          }
-        },
-        "type": "object",
-        "title": "IngestionTemplate"
-      },
-      "IngestionVariable": {
-        "properties": {
-          "name": {
-            "type": "string",
-            "title": "Name"
-          },
-          "value": {
-            "type": "string",
-            "title": "Value"
-          }
-        },
-        "type": "object",
-        "required": [
-          "name",
-          "value"
-        ],
-        "title": "IngestionVariable"
-      },
-      "JoinDefinition": {
+      "JoinDefinition-Input": {
         "properties": {
           "id": {
             "anyOf": [
@@ -12009,7 +11337,191 @@
           "granularity": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/GranularityConfig"
+                "$ref": "#/components/schemas/GranularityConfig-Input"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Configuration for handling granularity mismatches"
+          },
+          "persist": {
+            "type": "boolean",
+            "title": "Persist",
+            "description": "Whether to persist the joined result as a Delta table",
+            "default": true
+          },
+          "workflow_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Workflow Name",
+            "description": "Workflow name to scope this join to (optional)"
+          },
+          "result_dc_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "objectid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result Dc Id",
+            "description": "DataCollection ID for the joined table (used in S3 path)"
+          },
+          "result_dc_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result Dc Tag",
+            "description": "DataCollection tag for the joined table (e.g., 'joined_penguins_complete')"
+          },
+          "delta_location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delta Location",
+            "description": "S3 path to the persisted Delta table"
+          },
+          "executed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Executed At",
+            "description": "Timestamp when the join was last executed"
+          },
+          "row_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Row Count",
+            "description": "Number of rows in the joined table"
+          },
+          "column_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Column Count",
+            "description": "Number of columns in the joined table"
+          },
+          "size_bytes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size Bytes",
+            "description": "Size of the Delta table in bytes"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "required": [
+          "name",
+          "left_dc",
+          "right_dc",
+          "on_columns"
+        ],
+        "title": "JoinDefinition",
+        "description": "Definition of a single join operation between data collections.\n\nThis is the primary configuration for specifying how tables should be joined.\nDefined at the project level in the YAML configuration.\n\nDC References Support:\n- Simple tag: \"physical_features\" (searches within workflow_name)\n- Scoped tag: \"workflow_a.physical_features\" (explicit workflow reference)\n- Cross-workflow: Use scoped tags when joining DCs from different workflows\n\nExample YAML (same-workflow join):\n    joins:\n      - name: \"gene_expression_with_metadata\"\n        left_dc: \"gene_tpm\"\n        right_dc: \"sample_metadata\"\n        on_columns:\n          - \"sample\"\n        how: \"inner\"\n        workflow_name: \"genomics_workflow\"\n        description: \"Join gene TPM with sample metadata\"\n\nExample YAML (cross-workflow join):\n    joins:\n      - name: \"multi_workflow_analysis\"\n        left_dc: \"workflow_a.sample_metadata\"\n        right_dc: \"workflow_b.results\"\n        on_columns:\n          - \"sample_id\"\n        how: \"inner\"\n        description: \"Join sample data from workflow A with results from workflow B\""
+      },
+      "JoinDefinition-Output": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "objectid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id",
+            "description": "Stable DataCollection ID for the joined table (optional, specified in YAML)"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Unique name for this join definition"
+          },
+          "left_dc": {
+            "type": "string",
+            "title": "Left Dc",
+            "description": "Data collection tag for the left side of the join"
+          },
+          "right_dc": {
+            "type": "string",
+            "title": "Right Dc",
+            "description": "Data collection tag for the right side of the join"
+          },
+          "on_columns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "On Columns",
+            "description": "Column(s) to join on - must exist in both data collections"
+          },
+          "how": {
+            "$ref": "#/components/schemas/JoinType",
+            "description": "Type of join: inner, left, right, or outer",
+            "default": "inner"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Human-readable description of the join purpose"
+          },
+          "granularity": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GranularityConfig-Output"
               },
               {
                 "type": "null"
@@ -12451,20 +11963,6 @@
         "title": "LinkUpdateRequest",
         "description": "Request to update an existing DC link.\n\nAll fields are optional - only provided fields will be updated."
       },
-      "LogLevelRequest": {
-        "properties": {
-          "level": {
-            "type": "string",
-            "title": "Level",
-            "description": "DEBUG | INFO | WARNING | ERROR | CRITICAL"
-          }
-        },
-        "type": "object",
-        "required": [
-          "level"
-        ],
-        "title": "LogLevelRequest"
-      },
       "MigrateExportRequest": {
         "properties": {
           "project_id": {
@@ -12503,7 +12001,6 @@
           "target_s3_config": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -12524,7 +12021,6 @@
       "MigrateImportRequest": {
         "properties": {
           "bundle": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Bundle"
           },
@@ -12572,7 +12068,6 @@
             "title": "Message"
           },
           "upserted": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Upserted",
             "default": {}
@@ -12614,7 +12109,6 @@
             "description": "List of MultiQC modules used in the analysis"
           },
           "plots": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Plots",
             "description": "Plot configuration and data from MultiQC"
@@ -12650,7 +12144,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -12666,7 +12160,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -12852,13 +12345,13 @@
         "type": "object",
         "title": "Permission"
       },
-      "Project": {
+      "Project-Input": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -12874,7 +12367,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -12911,7 +12403,7 @@
           },
           "workflows": {
             "items": {
-              "$ref": "#/components/schemas/Workflow"
+              "$ref": "#/components/schemas/Workflow-Input"
             },
             "type": "array",
             "title": "Workflows",
@@ -12919,7 +12411,7 @@
           },
           "data_collections": {
             "items": {
-              "$ref": "#/components/schemas/DataCollection"
+              "$ref": "#/components/schemas/DataCollection-Input"
             },
             "type": "array",
             "title": "Data Collections",
@@ -12927,7 +12419,156 @@
           },
           "joins": {
             "items": {
-              "$ref": "#/components/schemas/JoinDefinition"
+              "$ref": "#/components/schemas/JoinDefinition-Input"
+            },
+            "type": "array",
+            "title": "Joins",
+            "default": []
+          },
+          "links": {
+            "items": {
+              "$ref": "#/components/schemas/DCLink"
+            },
+            "type": "array",
+            "title": "Links",
+            "default": []
+          },
+          "yaml_config_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Yaml Config Path"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permission"
+          },
+          "is_public": {
+            "type": "boolean",
+            "title": "Is Public",
+            "default": false
+          },
+          "registration_time": {
+            "type": "string",
+            "title": "Registration Time"
+          },
+          "project_type": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "advanced"
+            ],
+            "title": "Project Type",
+            "default": "basic"
+          },
+          "realtime": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RealtimeConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "template_origin": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TemplateOrigin"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "permissions"
+        ],
+        "title": "Project"
+      },
+      "Project-Output": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "objectid",
+            "title": "Id",
+            "default": "6a1952e18ce3915900319320"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "flexible_metadata": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flexible Metadata"
+          },
+          "hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hash"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "data_management_platform_project_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Management Platform Project Url"
+          },
+          "workflows": {
+            "items": {
+              "$ref": "#/components/schemas/Workflow-Output"
+            },
+            "type": "array",
+            "title": "Workflows",
+            "default": []
+          },
+          "data_collections": {
+            "items": {
+              "$ref": "#/components/schemas/DataCollection-Output"
+            },
+            "type": "array",
+            "title": "Data Collections",
+            "default": []
+          },
+          "joins": {
+            "items": {
+              "$ref": "#/components/schemas/JoinDefinition-Output"
             },
             "type": "array",
             "title": "Joins",
@@ -13009,7 +12650,6 @@
             "title": "Project Id"
           },
           "permissions": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Permissions"
           }
@@ -13119,6 +12759,11 @@
           "password": {
             "type": "string",
             "title": "Password"
+          },
+          "is_admin": {
+            "type": "boolean",
+            "title": "Is Admin",
+            "default": false
           }
         },
         "type": "object",
@@ -13178,28 +12823,20 @@
           "root_user": {
             "type": "string",
             "title": "Root User",
-            "description": "MinIO/S3 root access key (not a secret on its own).",
+            "description": "MinIO/S3 root access key",
             "default": "minio"
           },
           "root_password": {
             "type": "string",
-            "format": "password",
             "title": "Root Password",
-            "description": "MinIO/S3 root secret key. REQUIRED in server context — set via DEPICTIO_MINIO_ROOT_PASSWORD. The server refuses to start when this is unset, shorter than 8 characters, or matches a well-known default.",
-            "default": "",
-            "writeOnly": true
+            "description": "MinIO/S3 root secret key",
+            "default": "minio123"
           },
           "bucket": {
             "type": "string",
             "title": "Bucket",
             "description": "Default S3 bucket name for Depictio data",
             "default": "depictio-bucket"
-          },
-          "verify_tls": {
-            "type": "boolean",
-            "title": "Verify Tls",
-            "description": "Verify TLS certificates when talking to S3/MinIO. Only set to false for local development against self-signed dev MinIO instances.",
-            "default": true
           }
         },
         "additionalProperties": false,
@@ -13207,7 +12844,7 @@
         "title": "S3DepictioCLIConfig",
         "description": "S3/MinIO object storage configuration."
       },
-      "Scan": {
+      "Scan-Input": {
         "properties": {
           "mode": {
             "type": "string",
@@ -13216,7 +12853,7 @@
           "scan_parameters": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/ScanRecursive"
+                "$ref": "#/components/schemas/ScanRecursive-Input"
               },
               {
                 "$ref": "#/components/schemas/ScanSingle"
@@ -13232,7 +12869,70 @@
         ],
         "title": "Scan"
       },
-      "ScanRecursive": {
+      "Scan-Output": {
+        "properties": {
+          "mode": {
+            "type": "string",
+            "title": "Mode"
+          },
+          "scan_parameters": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ScanRecursive-Output"
+              },
+              {
+                "$ref": "#/components/schemas/ScanSingle"
+              }
+            ],
+            "title": "Scan Parameters"
+          }
+        },
+        "type": "object",
+        "required": [
+          "mode",
+          "scan_parameters"
+        ],
+        "title": "Scan"
+      },
+      "ScanRecursive-Input": {
+        "properties": {
+          "regex_config": {
+            "$ref": "#/components/schemas/Regex"
+          },
+          "max_depth": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Depth"
+          },
+          "ignore": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ignore"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "regex_config"
+        ],
+        "title": "ScanRecursive"
+      },
+      "ScanRecursive-Output": {
         "properties": {
           "regex_config": {
             "$ref": "#/components/schemas/Regex"
@@ -13287,32 +12987,35 @@
       "SourceOverride": {
         "properties": {
           "path": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "type": "string",
             "title": "Path"
-          },
-          "glob_pattern": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Glob Pattern"
           }
         },
         "additionalProperties": false,
         "type": "object",
+        "required": [
+          "path"
+        ],
         "title": "SourceOverride",
-        "description": "Override a recipe source binding in project.yaml.\n\nRepoints a recipe source at a different file without editing the recipe — used\nby route conditionals (e.g. nanopore) to point the same recipe at a divergent\nsub-workflow's output layout. Set ``path`` for single-file sources or\n``glob_pattern`` for multi-file (glob) sources; exactly one is required."
+        "description": "Override a recipe source path in project.yaml."
+      },
+      "SuggestFromColumnsRequest": {
+        "properties": {
+          "columns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Columns"
+          }
+        },
+        "type": "object",
+        "required": [
+          "columns"
+        ],
+        "title": "SuggestFromColumnsRequest",
+        "description": "Body for the pre-DC viz suggestion endpoint.\n\nThe DC creation modal calls this with just column names parsed from the\nfile header — before the file is uploaded. Producer fingerprints match on\ncolumn names alone, so name-only input is enough to detect DESeq2 results,\nmosdepth, Bracken, QIIME2, etc."
       },
       "TableJoinConfig": {
         "properties": {
@@ -13375,18 +13078,9 @@
             "description": "Resolved template variables (DATA_ROOT, SAMPLESHEET_FILE, GROUP_COL, etc.)"
           },
           "config_snapshot": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Config Snapshot",
             "description": "Frozen copy of the resolved template config (for reproducibility)"
-          },
-          "expected_data_collections": {
-            "items": {
-              "$ref": "#/components/schemas/ExpectedDataCollection"
-            },
-            "type": "array",
-            "title": "Expected Data Collections",
-            "description": "Full template DC superset at resolution time (required + optional), each marked included/excluded with a removal reason — drives the ingestion report"
           }
         },
         "type": "object",
@@ -13398,13 +13092,13 @@
         "title": "TemplateOrigin",
         "description": "Stored on Project model to track that a template was used to create the project.\n\nThis enables the DB and UI to distinguish template-instantiated projects from\nmanually configured ones, and to show which template was used."
       },
-      "TokenBase": {
+      "TokenBase-Input": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -13420,7 +13114,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -13504,13 +13197,11 @@
         ],
         "title": "TokenBase"
       },
-      "TokenBeanie-Input": {
+      "TokenBase-Output": {
         "properties": {
-          "_id": {
+          "id": {
             "type": "string",
-            "format": "objectid",
-            "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "title": "Id"
           },
           "description": {
             "anyOf": [
@@ -13526,7 +13217,108 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flexible Metadata"
+          },
+          "hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hash"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "access_token": {
+            "type": "string",
+            "title": "Access Token"
+          },
+          "refresh_token": {
+            "type": "string",
+            "title": "Refresh Token"
+          },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "default": "bearer"
+          },
+          "token_lifetime": {
+            "type": "string",
+            "title": "Token Lifetime",
+            "default": "short-lived"
+          },
+          "expire_datetime": {
+            "type": "string",
+            "title": "Expire Datetime"
+          },
+          "refresh_expire_datetime": {
+            "type": "string",
+            "title": "Refresh Expire Datetime"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "logged_in": {
+            "type": "boolean",
+            "title": "Logged In",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "user_id",
+          "access_token",
+          "refresh_token",
+          "expire_datetime",
+          "refresh_expire_datetime"
+        ],
+        "title": "TokenBase"
+      },
+      "TokenBeanie-Input": {
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format": "objectid",
+            "title": "Id",
+            "default": "6a1952e18ce3915900319320"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "flexible_metadata": {
+            "anyOf": [
+              {
                 "type": "object"
               },
               {
@@ -13630,7 +13422,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -13743,7 +13534,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a67158140385157c0987229"
+            "default": "6a1952e18ce3915900319321"
           }
         },
         "type": "object",
@@ -13838,7 +13629,7 @@
         "properties": {
           "runs": {
             "items": {
-              "$ref": "#/components/schemas/WorkflowRun"
+              "$ref": "#/components/schemas/WorkflowRun-Input"
             },
             "type": "array",
             "title": "Runs"
@@ -13861,7 +13652,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -13877,7 +13668,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -13980,7 +13770,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -13996,7 +13786,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -14056,13 +13845,13 @@
         ],
         "title": "UserBase"
       },
-      "UserBaseCLIConfig": {
+      "UserBaseCLIConfig-Input": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -14078,7 +13867,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -14131,7 +13919,92 @@
             "title": "Expiration Time"
           },
           "token": {
-            "$ref": "#/components/schemas/TokenBase"
+            "$ref": "#/components/schemas/TokenBase-Input"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "email",
+          "token"
+        ],
+        "title": "UserBaseCLIConfig"
+      },
+      "UserBaseCLIConfig-Output": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "objectid",
+            "title": "Id",
+            "default": "6a1952e18ce3915900319320"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "flexible_metadata": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flexible Metadata"
+          },
+          "hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hash"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "is_admin": {
+            "type": "boolean",
+            "title": "Is Admin",
+            "default": false
+          },
+          "is_anonymous": {
+            "type": "boolean",
+            "title": "Is Anonymous",
+            "default": false
+          },
+          "is_temporary": {
+            "type": "boolean",
+            "title": "Is Temporary",
+            "default": false
+          },
+          "expiration_time": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expiration Time"
+          },
+          "token": {
+            "$ref": "#/components/schemas/TokenBase-Output"
           }
         },
         "additionalProperties": false,
@@ -14148,7 +14021,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -14164,7 +14037,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -14279,13 +14151,6 @@
           "type": {
             "type": "string",
             "title": "Error Type"
-          },
-          "input": {
-            "title": "Input"
-          },
-          "ctx": {
-            "type": "object",
-            "title": "Context"
           }
         },
         "type": "object",
@@ -14315,13 +14180,13 @@
         ],
         "title": "WildcardRegexBase"
       },
-      "Workflow": {
+      "Workflow-Input": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -14337,7 +14202,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -14409,7 +14273,7 @@
           },
           "data_collections": {
             "items": {
-              "$ref": "#/components/schemas/DataCollection"
+              "$ref": "#/components/schemas/DataCollection-Input"
             },
             "type": "array",
             "title": "Data Collections"
@@ -14418,7 +14282,148 @@
             "anyOf": [
               {
                 "additionalProperties": {
-                  "$ref": "#/components/schemas/WorkflowRun"
+                  "$ref": "#/components/schemas/WorkflowRun-Input"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runs",
+            "default": {}
+          },
+          "config": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WorkflowConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "data_location": {
+            "$ref": "#/components/schemas/WorkflowDataLocation"
+          },
+          "registration_time": {
+            "type": "string",
+            "title": "Registration Time"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "engine",
+          "data_collections",
+          "data_location"
+        ],
+        "title": "Workflow"
+      },
+      "Workflow-Output": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "objectid",
+            "title": "Id",
+            "default": "6a1952e18ce3915900319320"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "flexible_metadata": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flexible Metadata"
+          },
+          "hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hash"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "engine": {
+            "$ref": "#/components/schemas/WorkflowEngine"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "catalog": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WorkflowCatalog"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "workflow_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Workflow Tag"
+          },
+          "repository_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Repository Url"
+          },
+          "data_collections": {
+            "items": {
+              "$ref": "#/components/schemas/DataCollection-Output"
+            },
+            "type": "array",
+            "title": "Data Collections"
+          },
+          "runs": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/WorkflowRun-Output"
                 },
                 "type": "object"
               },
@@ -14496,7 +14501,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -14512,7 +14517,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -14546,7 +14550,6 @@
           "workflow_parameters": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -14566,7 +14569,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -14582,7 +14585,6 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
                 "type": "object"
               },
               {
@@ -14658,13 +14660,13 @@
         ],
         "title": "WorkflowEngine"
       },
-      "WorkflowRun": {
+      "WorkflowRun-Input": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a67158140385157c0987228"
+            "default": "6a1952e18ce3915900319320"
           },
           "description": {
             "anyOf": [
@@ -14680,7 +14682,123 @@
           "flexible_metadata": {
             "anyOf": [
               {
-                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flexible Metadata"
+          },
+          "hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hash"
+          },
+          "workflow_id": {
+            "type": "string",
+            "format": "objectid",
+            "title": "Workflow Id"
+          },
+          "run_tag": {
+            "type": "string",
+            "title": "Run Tag"
+          },
+          "files_id": {
+            "items": {
+              "type": "string",
+              "format": "objectid"
+            },
+            "type": "array",
+            "title": "Files Id",
+            "default": []
+          },
+          "workflow_config_id": {
+            "type": "string",
+            "format": "objectid",
+            "title": "Workflow Config Id"
+          },
+          "run_location": {
+            "type": "string",
+            "title": "Run Location"
+          },
+          "creation_time": {
+            "type": "string",
+            "title": "Creation Time"
+          },
+          "last_modification_time": {
+            "type": "string",
+            "title": "Last Modification Time"
+          },
+          "registration_time": {
+            "type": "string",
+            "title": "Registration Time"
+          },
+          "run_hash": {
+            "type": "string",
+            "title": "Run Hash",
+            "default": ""
+          },
+          "scan_results": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/WorkflowRunScan"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scan Results",
+            "default": []
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permission"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "workflow_id",
+          "run_tag",
+          "workflow_config_id",
+          "run_location",
+          "creation_time",
+          "last_modification_time",
+          "permissions"
+        ],
+        "title": "WorkflowRun"
+      },
+      "WorkflowRun-Output": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "objectid",
+            "title": "Id",
+            "default": "6a1952e18ce3915900319320"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "flexible_metadata": {
+            "anyOf": [
+              {
                 "type": "object"
               },
               {
@@ -14838,35 +14956,6 @@
         ],
         "title": "_CreateMeTokenRequest",
         "description": "Body for POST /auth/me/tokens — only the human-readable name is required."
-      },
-      "_ExchangeMagicLinkRequest": {
-        "properties": {
-          "ticket": {
-            "type": "string",
-            "title": "Ticket"
-          }
-        },
-        "type": "object",
-        "required": [
-          "ticket"
-        ],
-        "title": "_ExchangeMagicLinkRequest",
-        "description": "Body for POST /auth/magic/exchange — the opaque ticket from the URL."
-      },
-      "_ProvisionUserRequest": {
-        "properties": {
-          "email": {
-            "type": "string",
-            "format": "email",
-            "title": "Email"
-          }
-        },
-        "type": "object",
-        "required": [
-          "email"
-        ],
-        "title": "_ProvisionUserRequest",
-        "description": "Body for POST /auth/provision_user."
       }
     },
     "securitySchemes": {
@@ -14880,31 +14969,5 @@
         }
       }
     }
-  },
-  "tags": [
-    {
-      "name": "Celery",
-      "description": "Admin/ops: Celery worker health and task stats. Not called by the frontend or CLI — intended for monitoring/diagnostics."
-    },
-    {
-      "name": "Monitoring",
-      "description": "Admin-only 'Log & Task' monitoring: Celery task history, CLI ingestion runs, recent application logs, and worker health. Feature-gated by DEPICTIO_MONITORING_ENABLED; hidden in public/demo mode."
-    },
-    {
-      "name": "Analytics",
-      "description": "Admin/ops: usage analytics. Feature-gated by DEPICTIO_ANALYTICS_ENABLED and has no frontend client yet (kept pending a product decision)."
-    },
-    {
-      "name": "Analytics Data",
-      "description": "Admin/ops: analytics data maintenance. Feature-gated by DEPICTIO_ANALYTICS_ENABLED."
-    },
-    {
-      "name": "Real-time Events",
-      "description": "WebSocket event stream plus an admin status endpoint. Feature-gated by DEPICTIO_EVENTS_ENABLED."
-    },
-    {
-      "name": "Utils",
-      "description": "Mixed: public server status/health plus admin-only ops endpoints (orphaned-S3 cleanup, infrastructure diagnostics, screenshots). The destructive dev helpers require DEPICTIO_ENABLE_DEV_ENDPOINTS."
-    }
-  ]
+  }
 }
