@@ -158,7 +158,7 @@ See the [environment reference](../installation/env-reference.md) for how to set
     title="Opening a MultiQC dashboard aggregating many reports in Depictio"
   ></iframe>
   </div>
-  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 Opening a MultiQC dashboard that aggregates <strong>many reports</strong>, with caches warm.</p>
+  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 Opening a MultiQC dashboard that aggregates <strong>many reports</strong>.</p>
 </div>
 <script src="https://player.vimeo.com/api/player.js"></script>
 
@@ -190,7 +190,7 @@ pessimistic in that respect.
     title="Opening a 30-component Depictio dashboard on a 17.2 million row project"
   ></iframe>
   </div>
-  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 Opening a <strong>30-component</strong> dashboard on the linked project described above, with caches warm. Captured in the browser, so what you see includes rendering and painting, not only the server timings tabulated below.</p>
+  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 Opening a <strong>30-component</strong> dashboard on the linked project described above. Captured in the browser, so what you see includes rendering and painting, not only the server timings tabulated below.</p>
 </div>
 
 ### Opening a dashboard
