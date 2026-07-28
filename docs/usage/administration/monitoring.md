@@ -16,11 +16,11 @@ Each pane polls every 8 s; toggle **Auto** to pause. With live updates on, a gre
 
 Celery task history (figures, screenshots, MultiQC, advanced viz, Delta tables) with a **status** badge, duration, and timestamp. Filter by status, kind, or text. Expand a row for the task id, worker, and labelled **Arguments**, **Result**, **Error / Traceback** and **Logs** blocks.
 
-![Log & Task: Tasks pane](../../images/v0.12/react-beta/admin_monitoring_tasks_light.png#only-light)
-![Log & Task: Tasks pane](../../images/v0.12/react-beta/admin_monitoring_tasks_dark.png#only-dark)
+![Log & Task: Tasks pane](../../images/react/admin_monitoring_tasks_light.png#only-light)
+![Log & Task: Tasks pane](../../images/react/admin_monitoring_tasks_dark.png#only-dark)
 
-![Log & Task: expanded task detail](../../images/v0.12/react-beta/admin_monitoring_task_detail_light.png#only-light)
-![Log & Task: expanded task detail](../../images/v0.12/react-beta/admin_monitoring_task_detail_dark.png#only-dark)
+![Log & Task: expanded task detail](../../images/react/admin_monitoring_task_detail_light.png#only-light)
+![Log & Task: expanded task detail](../../images/react/admin_monitoring_task_detail_dark.png#only-dark)
 
 ## Ingestion
 
@@ -31,11 +31,11 @@ Expand a run for its **provenance** field grid: run id, host, CLI version, the r
 - **Steps**: every phase the run went through (provisioning, template resolve, server and S3 checks, config validation, project sync, scan, process, joins, dashboard import), each with `success` / `failed` / `skipped` and a detail line such as *3 data collection(s) processed*. The summary line tallies ok / failed / skipped and the wall-clock duration.
 - **Data collections**: one row per data collection: tag, type, format, scan mode (`recursive` / `single`), the regex or filename it matched on, the local directories scanned, and the file count when known. These local scan paths are not shown anywhere else in the UI.
 
-![Log & Task: Ingestion pane](../../images/v0.12/react-beta/admin_monitoring_ingestion_light.png#only-light)
-![Log & Task: Ingestion pane](../../images/v0.12/react-beta/admin_monitoring_ingestion_dark.png#only-dark)
+![Log & Task: Ingestion pane](../../images/react/admin_monitoring_ingestion_light.png#only-light)
+![Log & Task: Ingestion pane](../../images/react/admin_monitoring_ingestion_dark.png#only-dark)
 
-![Log & Task: expanded ingestion run detail](../../images/v0.12/react-beta/admin_monitoring_ingestion_detail_light.png#only-light)
-![Log & Task: expanded ingestion run detail](../../images/v0.12/react-beta/admin_monitoring_ingestion_detail_dark.png#only-dark)
+![Log & Task: expanded ingestion run detail](../../images/react/admin_monitoring_ingestion_detail_light.png#only-light)
+![Log & Task: expanded ingestion run detail](../../images/react/admin_monitoring_ingestion_detail_dark.png#only-dark)
 
 ## Logs
 
@@ -44,15 +44,15 @@ Recent application logs from a capped collection, tagged by **level** and **sour
 !!! tip "Runtime capture floor"
     The **capture floor** selector sets what the server persists, live. Drop it to `DEBUG` while debugging, then raise it back. It differs from the **Level** filter, which only narrows rows already captured. The change is broadcast to Celery workers and is not persisted: a restart falls back to `DEPICTIO_MONITORING_APP_LOG_MIN_LEVEL`.
 
-![Log & Task: Logs pane](../../images/v0.12/react-beta/admin_monitoring_logs_light.png#only-light)
-![Log & Task: Logs pane](../../images/v0.12/react-beta/admin_monitoring_logs_dark.png#only-dark)
+![Log & Task: Logs pane](../../images/react/admin_monitoring_logs_light.png#only-light)
+![Log & Task: Logs pane](../../images/react/admin_monitoring_logs_dark.png#only-dark)
 
 ## Health
 
 Celery worker and broker health: status, worker count, active tasks, live-updates state, and worker hostnames.
 
-![Log & Task: Health pane](../../images/v0.12/react-beta/admin_monitoring_health_light.png#only-light)
-![Log & Task: Health pane](../../images/v0.12/react-beta/admin_monitoring_health_dark.png#only-dark)
+![Log & Task: Health pane](../../images/react/admin_monitoring_health_light.png#only-light)
+![Log & Task: Health pane](../../images/react/admin_monitoring_health_dark.png#only-dark)
 
 ## Configuration
 
