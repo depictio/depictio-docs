@@ -1,5 +1,136 @@
 /* Blog Styling for Depictio */
 
+/* ------------------------------------------------------------------------ */
+/* Screenshot grids                                                          */
+/*                                                                           */
+/* Screenshots are captured at whatever size the dashboard happened to be    */
+/* (5120x3200, 1920x1080, 2880x2200), so a plain markdown table sized every  */
+/* cell differently and the grid came out ragged. Each tile is pinned to one  */
+/* aspect ratio and the image is contained inside it, so the grid is regular */
+/* whatever the source dimensions. Written against a markdown table so the   */
+/* source still previews outside mkdocs.                                     */
+/* ------------------------------------------------------------------------ */
+.shot-grid {
+  margin: 1.5rem 0 2rem;
+}
+
+/* Standalone logos in a post. These used to be <p align="center"><img>, which
+   the blog plugin does not rewrite when the post is excerpted onto the index
+   and archive views, so the images 404 there. As markdown they get rewritten,
+   and this centres them the way the raw HTML did. */
+.md-typeset img.blog-logo {
+  display: block;
+  margin: 1.5rem auto;
+}
+
+/* Material wraps every table in .md-typeset__scrollwrap > .md-typeset__table,
+   and the inner wrapper is display:inline-block so a wide table can scroll.
+   That makes the table shrink-to-fit, which silently defeats
+   `table-layout: fixed`: the columns size to their content and the tiles come
+   out different widths. Force the wrapper back to a full-width block. */
+.md-typeset .shot-grid .md-typeset__scrollwrap {
+  margin: 0;
+  overflow: visible;
+}
+
+.md-typeset .shot-grid .md-typeset__table {
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: visible;
+}
+
+.md-typeset .shot-grid table:not([class]) {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border: none;
+  box-shadow: none;
+  font-size: inherit;
+}
+
+.md-typeset .shot-grid table:not([class]) thead {
+  display: none;
+}
+
+.md-typeset .shot-grid table:not([class]) tr,
+.md-typeset .shot-grid table:not([class]) tbody tr:nth-child(odd),
+.md-typeset .shot-grid table:not([class]) tbody tr:hover {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* table-layout: fixed reads column widths off the first row only, so pin the
+   share explicitly rather than relying on the header row we just hid. */
+.md-typeset .shot-grid table:not([class]) td {
+  width: 50%;
+  border: none;
+  padding: 0.35rem 0.5rem 0.9rem;
+  vertical-align: top;
+  text-align: center;
+}
+
+/* The image cell: one fixed box per tile, image letterboxed inside it. */
+.md-typeset .shot-grid table:not([class]) td:has(img) {
+  padding-bottom: 0.35rem;
+}
+
+.md-typeset .shot-grid td a.glightbox,
+.md-typeset .shot-grid td img {
+  display: block;
+  width: 100%;
+}
+
+.md-typeset .shot-grid td img {
+  max-width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  object-position: center;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+/* Clickable: glightbox wraps each image in an anchor, so say so. */
+.md-typeset .shot-grid td a.glightbox img {
+  cursor: zoom-in;
+}
+
+.md-typeset .shot-grid td a.glightbox:hover img {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+  border-color: var(--md-primary-fg-color);
+}
+
+/* Caption rows: the text cells between image rows. */
+.md-typeset .shot-grid td:not(:has(img)) {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--md-default-fg-color--light);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .shot-grid td img {
+  background: var(--md-default-bg-color--light);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .shot-grid td a.glightbox:hover img {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 600px) {
+  .md-typeset .shot-grid table:not([class]),
+  .md-typeset .shot-grid table:not([class]) tbody,
+  .md-typeset .shot-grid table:not([class]) tr,
+  .md-typeset .shot-grid table:not([class]) td {
+    display: block;
+    width: 100%;
+  }
+}
+
 /* Blog Grid Layout */
 .blog-grid {
   display: grid;
