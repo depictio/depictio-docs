@@ -12,19 +12,19 @@ Three sections, one question each:
 
 <div class="grid cards roadmap-nav" markdown>
 
--   :material-check-circle:{ .lg .middle } **[Shipped](#shipped)**
+-   :material-check-circle:{ .lg .middle .rn-shipped } **[Shipped](#shipped)**
 
     ---
 
     Released and documented. Use it today.
 
--   :material-progress-wrench:{ .lg .middle } **[In progress](#in-progress)**
+-   :material-progress-wrench:{ .lg .middle .rn-progress } **[In progress](#in-progress)**
 
     ---
 
     Open pull requests with a target release.
 
--   :material-lightbulb-outline:{ .lg .middle } **[Ideas](#ideas)**
+-   :material-lightbulb-outline:{ .lg .middle .rn-idea } **[Ideas](#ideas)**
 
     ---
 
@@ -95,7 +95,7 @@ Three sections, one question each:
 
 ---
 
-## Shipped
+## :material-check-circle:{ .rn-shipped } Shipped
 
 One row per capability, newest first. The [feature docs](../features/README.md) are the
 reference; this table only says *when* something arrived.
@@ -120,7 +120,7 @@ reference; this table only says *when* something arrived.
 
 ---
 
-## In progress
+## :material-progress-wrench:{ .rn-progress } In progress
 
 Grouped by target release. Each item links the pull request that implements it, so its
 real state is always one click away.
@@ -162,7 +162,7 @@ Ingestion stops being a command someone has to remember, and nothing overwrites 
 
 ---
 
-## Ideas
+## :material-lightbulb-outline:{ .rn-idea } Ideas
 
 Wanted, discussed, not scheduled. Nothing here has a date, and some of it will never be
 built. Open or upvote an [issue](https://github.com/depictio/depictio/issues) to push
