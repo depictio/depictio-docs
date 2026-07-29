@@ -27,6 +27,7 @@ from mkdocs.structure.files import Files
 # (logo assets, one-off icons) is small and stays inside each version.
 SHARED_SUBTREES = (
     "architecture",
+    "blog",
     "data-model",
     "guides",
     "modularity",
