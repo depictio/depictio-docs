@@ -1,7 +1,7 @@
 ---
 title: "Environment Variables Reference"
 icon: material/cog-outline
-description: "Complete reference for all Depictio environment variables. Auto-generated on 2026-01-22."
+description: "Complete reference for all Depictio environment variables. Last synced with settings_models.py on 2026-07-27."
 ---
 
 # Environment Variables Reference
@@ -206,9 +206,24 @@ Redis cache configuration settings.
 | `DEPICTIO_CACHE_DEFAULT_TTL` | `3600` | Default cache TTL in seconds (1 hour) |
 | `DEPICTIO_CACHE_DATAFRAME_TTL` | `1800` | DataFrame cache TTL in seconds (30 minutes) |
 | `DEPICTIO_CACHE_MAX_DATAFRAME_SIZE_MB` | `100` | Maximum DataFrame size to cache (MB) |
-| `DEPICTIO_CACHE_REDIS_MAX_MEMORY_MB` | `1024` | Redis max memory limit (MB) |
+| `DEPICTIO_CACHE_REDIS_MAX_MEMORY_MB` | `1024` | **Not enforced.** Declared but never applied to the Redis server; see the note below. |
 | `DEPICTIO_CACHE_CACHE_KEY_PREFIX` | `depictio:df:` | Prefix for cache keys |
 | `DEPICTIO_CACHE_CACHE_VERSION` | `v1` | Cache version for key namespacing |
+
+!!! warning "Cap Redis on the server, not through Depictio"
+    `DEPICTIO_CACHE_REDIS_MAX_MEMORY_MB` is read into settings and then never applied:
+    Depictio issues no `CONFIG SET`, so setting it leaves Redis **uncapped**. A cache that
+    grows until the container's memory limit kills it takes the Celery broker down with it
+    when both share one Redis, which fails every figure offload until it recovers.
+
+    Set the limit on Redis itself instead, and give it an eviction policy:
+
+    ```bash
+    redis-server --maxmemory 1500mb --maxmemory-policy volatile-lru
+    ```
+
+    `volatile-lru` rather than `allkeys-lru` because the policy is server-wide: cache
+    entries are written with a TTL and broker keys are not, so only the cache is evicted.
 
 ---
 
@@ -240,7 +255,8 @@ Celery task queue configuration for background processing.
 | `DEPICTIO_CELERY_WORKER_SEND_TASK_EVENTS` | `true` | Enable task event monitoring |
 | `DEPICTIO_CELERY_TASK_SEND_SENT_EVENT` | `true` | Send task sent events |
 | `DEPICTIO_CELERY_OFFLOAD_PREVIEW` | `true` | Offload component-design preview endpoints (`/figure/preview`, etc.) to Celery |
-| `DEPICTIO_CELERY_OFFLOAD_RENDERING` | `false` | Offload dashboard render endpoints (`/dashboards/render_*`) to Celery |
+| `DEPICTIO_CELERY_OFFLOAD_RENDERING` | `false` | Force-offload *all* dashboard render endpoints (`/dashboards/render_*`) to Celery. Off by default: renders offload adaptively by size instead |
+| `DEPICTIO_CELERY_OFFLOAD_SIZE_THRESHOLD_BYTES` | `52428800` (50 MB) | Source Delta-table size at/above which a render is offloaded even when `OFFLOAD_RENDERING` is off. `0` disables size-based offload |
 | `DEPICTIO_CELERY_OFFLOAD_TIMEOUT_SECONDS` | `30.0` | Per-request Celery offload timeout in seconds before HTTP 504 |
 
 ---
@@ -302,6 +318,23 @@ Performance and timeout settings that can be tuned per environment.
 | `DEPICTIO_PERFORMANCE_DISABLE_LOADING_SPINNERS` | `true` | Disable all loading spinners for maximum performance |
 | `DEPICTIO_PERFORMANCE_DISABLE_ANIMATIONS` | `true` | Disable SVG and CSS animations for maximum performance |
 | `DEPICTIO_PERFORMANCE_DISABLE_THEME_ANIMATIONS` | `true` | Disable theme CSS injection and complex theme operations |
+
+### Render caps
+
+Bound how many rows a single figure, table or advanced-viz render materialises, so large
+data collections stay responsive. See [Performance & Scaling](../features/performance.md)
+for what each cap does to the rendered result.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_PERFORMANCE_FIGURE_MAX_POINTS` | `10000` | Target marker count for point plots (scatter family). Above it the figure is downsampled before serialising to Plotly. A per-component `max_points` overrides this |
+| `DEPICTIO_PERFORMANCE_FIGURE_MAX_LOAD_ROWS` | `500000` | Row ceiling loaded from Delta for a point-plot / code-mode figure. Bypassed when the client requests a full load |
+| `DEPICTIO_PERFORMANCE_TABLE_SORT_MAX_ROWS` | `1000000` | Post-filter row count above which a table is served in natural scan order instead of sorted; the response reports `sort_disabled` so the grid drops the sort affordance. `0` disables the gate |
+| `DEPICTIO_PERFORMANCE_ADVANCED_VIZ_NO_SAMPLE_MAX_ROWS` | `2000000` | Row ceiling for the advanced-viz kinds that must not be sampled. Past it the request falls back to a uniform sample and the chart is marked estimated. `0` disables the ceiling |
+| `DEPICTIO_PERFORMANCE_ADVANCED_VIZ_TAIL_P_THRESHOLD` | `0.05` | Significance cutoff below which a volcano/Manhattan row is kept whole rather than sampled. Fallback only, since a renderer's own threshold wins |
+| `DEPICTIO_PERFORMANCE_ADVANCED_VIZ_TAIL_EFFECT_THRESHOLD` | `1.0` | Same, for kinds whose tail is a signed effect size (MA's log2 fold change) |
+| `DEPICTIO_PERFORMANCE_BOX_SAMPLE_ROWS_PER_GROUP` | `0` | Rows sampled per box-plot group before computing quartiles; `0` computes them exactly. Trades a sort for an extra scan, so see the tuning notes |
+| `DEPICTIO_PERFORMANCE_BOX_SAMPLE_MAX_GROUPS` | `64` | Group-count ceiling above which box quartiles are always computed exactly (grouped quantiles get cheaper as cardinality rises) |
 
 ---
 

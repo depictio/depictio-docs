@@ -545,7 +545,7 @@ Heatmap `dict_kwargs` parameters:
   component_type: table
   workflow_tag: python/workflow_name
   data_collection_tag: table_dc
-  page_size: 25            # rows per page (default: 10)
+  page_size: 25            # rows per page (default: 100)
   columns: [col1, col2]   # optional: allowlist of visible columns (omit to show all)
   compact: false          # optional: tighter row and header heights (default: false)
   title: "Sample Data"    # optional: auto-generated from DC tag if omitted

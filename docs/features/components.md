@@ -144,6 +144,7 @@ fig
 | Y-axis label | Label for vertical axis | Column name |
 | Color | Column for color encoding | None |
 | Hover data | Additional columns shown on hover | None |
+| `max_points` | Point cap for scatter-family figures before downsampling (v1.3.0+) | Global default (10,000) |
 
 !!! tip "Clustered heatmaps moved"
     The ComplexHeatmap viz has been renamed and is now part of the Advanced Visualizations section below — see [Hierarchical Heatmap](#hierarchical-heatmap) for the full config, alongside the rest of the domain-specific viz family (volcano, MA, sankey, …).
@@ -181,7 +182,7 @@ Table components display data in interactive tables with built-in filtering and 
 |--------|-------------|---------|
 | Data Collection | Source data for the table | Required |
 | Visible Columns | Allowlist of columns to display; omit to show all | All columns |
-| Page Size | Rows per page | 10, 25, 50, or 100 |
+| Page Size | Rows per page (`10`, `25`, `50` or `100`) | `100` |
 | Compact (v1.2.2+) | Tighter row and header heights | Off |
 | Style | Column width, text alignment | Auto |
 | Title | Header text above the table | Auto (from DC tag) |
