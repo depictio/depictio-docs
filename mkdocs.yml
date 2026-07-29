@@ -132,6 +132,23 @@ hooks:
 # Plugins
 plugins:
   - search
+  # Click a screenshot to open it full size. manual: true keeps this opt-in, so
+  # a page only gets lightboxes when its front matter says `glightbox: true`
+  # (or an image carries `.on-glb`); every other page renders as before. Images
+  # marked `.off-glb` are skipped even on an opted-in page, which is what keeps
+  # inline logos from becoming clickable.
+  - glightbox:
+      manual: true
+      touchNavigation: true
+      loop: false
+      effect: zoom
+      slide_effect: slide
+      width: 100%
+      height: auto
+      zoomable: true
+      draggable: true
+      auto_caption: false
+      caption_position: bottom
   - inline-select-svg:
       pattern: "images/logo/animated_favicon.svg"
       replace_tag: true
