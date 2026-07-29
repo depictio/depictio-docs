@@ -154,8 +154,9 @@ thread pool, so they never needed the escape hatch.
 One benchmark run against the current build, on a linked 3-collection project. It
 describes *this* setup, so treat it as an order of magnitude for a comparably sized
 project rather than as a specification. The full run, including per-kind latency and a
-breakdown of every failure, is in
-[`benchmark/PERF_REPORT_v2.md`](https://github.com/depictio/depictio/blob/main/benchmark/PERF_REPORT_v2.md).
+breakdown of every failure, is committed alongside the harness as
+`benchmark/PERF_REPORT_v2.md` in the
+[depictio repository](https://github.com/depictio/depictio).
 
 | | |
 | --- | --- |
@@ -233,8 +234,7 @@ same few hundred sample ids before any data is touched. Link translation itself 
 ### Latency and data touched
 
 Median and 95th-percentile render time across all 1,434 successful renders. One row per
-family; the [full report](https://github.com/depictio/depictio/blob/main/benchmark/PERF_REPORT_v2.md)
-breaks these out per figure and per viz kind.
+family; the full report linked above breaks these out per figure and per viz kind.
 
 | Component | p50 | p95 | Median rows in memory |
 | --- | --- | --- | --- |
