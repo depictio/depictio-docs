@@ -8,8 +8,9 @@ description: "How Depictio keeps large data collections responsive, from the Del
 
 This page describes how Depictio handles **large data collections**: what the server
 does to avoid reading rows it doesn't need, how much data reaches the browser, and which
-settings let you tune that for your deployment. The [measured behaviour](#measured-behaviour)
-section at the bottom records real numbers from a 12-million-row benchmark project.
+settings let you tune that for your deployment. It is in three parts: how the design
+keeps things fast, [what that costs in practice](#what-that-costs-in-practice) on a
+12-million-row benchmark project, and [what you can change](#what-you-can-change).
 
 The guiding idea is that a dashboard should stay usable at any collection size: work is
 pushed as close to the stored data as possible, payloads are bounded by default, and when
@@ -17,7 +18,13 @@ a bound is applied it is made visible rather than hidden.
 
 ![How much of the table each stage still carries. The top band is what used to travel the whole pipeline; the lower band narrows at CLI ingest, API serve and viewer render](../images/v0.12/react/schema_perf_stages.png)
 
-## Opening a dashboard
+## How Depictio keeps it fast
+
+The design has one goal at every stage: touch less data. A panel does not fetch until
+it is on screen, the response it gets is a bounded slice, and the query behind that
+slice is pushed into the Delta scan so most rows are never read at all.
+
+### Opening a dashboard
 
 A dashboard can hold dozens of panels, each needing its own request. Rather than
 requesting all of them up front, Depictio loads them as you reach them.
@@ -45,7 +52,7 @@ parses the code it actually renders.
     now budgets contexts and falls back to a lighter SVG renderer for the plots that miss
     out, so a dense dashboard degrades in quality rather than showing nothing.
 
-## Bounded payloads and the Load-all control
+### Bounded payloads and the Load-all control
 
 By default every data panel is served a **bounded** slice rather than the whole
 collection. Where a bound has been applied, the panel says so, and you can override it.
@@ -81,7 +88,7 @@ the Load-all icon is the bottom entry in the action cluster, which appears on ho
     total. The lollipop plot carries the same badge whenever its rows were sampled, since
     it aggregates them into per-gene counts.
 
-## Server-side work
+### Server-side work
 
 Most of the work happens server-side, in a Polars + Delta Lake + Celery pipeline, so the
 browser receives compact, ready-to-draw payloads rather than raw data.
@@ -105,7 +112,7 @@ browser receives compact, ready-to-draw payloads rather than raw data.
   avoiding a second in-memory copy via pandas.
 - **Compressed responses** — large figure/table JSON is gzip-compressed in transit.
 
-## Render offload
+### Render offload
 
 Depictio renders figures **adaptively**: cheap figures render inline on the API process,
 while figures over a source-size threshold (50 MB by default) are dispatched to Celery
@@ -116,7 +123,7 @@ Only figure renders have a Celery path. Tables, cards, interactive components an
 advanced-viz data endpoint are synchronous handlers, which FastAPI already runs in its own
 thread pool, so they never needed the escape hatch.
 
-## Caching
+### Caching
 
 - **Arrow IPC (LZ4) cache** — cached Polars frames are stored with Arrow IPC + LZ4
   compression in Redis, a more compact serialization than pickle. Frames above the
@@ -149,7 +156,10 @@ thread pool, so they never needed the escape hatch.
 </div>
 <script src="https://player.vimeo.com/api/player.js"></script>
 
-## Measured behaviour
+## What that costs in practice
+
+The sections above describe the design. This is what it measured on a real project,
+including where it ran out of room.
 
 One benchmark run against the current build, on a linked 3-collection project. It
 describes *this* setup, so treat it as an order of magnitude for a comparably sized
@@ -183,7 +193,7 @@ pessimistic in that respect.
   <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 Opening a <strong>30-component</strong> dashboard on a comparable linked project. Captured in the browser, so what you see includes rendering and painting, not only the server timings tabulated below.</p>
 </div>
 
-### Opening a dashboard
+### Measured: opening a dashboard
 
 Every component fetched at once, the way the page does it. *First chart* is the first
 figure or advanced viz to appear. *Cold* means the server caches were flushed beforehand.
@@ -209,7 +219,7 @@ paint, which is the point of loading panels as they come into view. The two rows
 30 s are timeouts rather than slow renders: a component never arrived and the row records
 the ceiling.
 
-### Changing a filter
+### Measured: changing a filter
 
 Across the 3 linked collections. No round is a cache hit, since each applies a value no
 earlier round used.
@@ -231,7 +241,7 @@ sheet (2.4 s). That is what the bidirectional link graph buys, since both resolv
 same few hundred sample ids before any data is touched. Link translation itself is
 **25 ms** median.
 
-### Latency and data touched
+### Measured: cost per component
 
 Median and 95th-percentile render time across all 1,434 successful renders. One row per
 family; the full report linked above breaks these out per figure and per viz kind.
@@ -268,9 +278,10 @@ which is why their p95 is the widest here.
     than the earlier baseline used.
 
 
-## Tuning
+## What you can change
 
-All of these are environment variables; see the
+Those numbers come from the defaults. These are the settings that move them, and the
+order worth trying them in. All are environment variables; see the
 [environment reference](../installation/env-reference.md) for how to set them.
 
 | Variable | Default | Purpose |
