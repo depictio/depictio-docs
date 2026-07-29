@@ -31,16 +31,16 @@ ghcr.io/depictio/depictio:1.3.0
 
 ### **✨ New Features**
 
-* **Panels load as you reach them** — a dashboard can hold dozens of panels, each needing its own request, so a panel below the fold shows a placeholder and costs nothing until you scroll near it. A progress ring and a count (for example `6/8`) sit beside the dashboard title while the rest load. See [Performance & Scaling](../features/performance.md).
-* **Load all** — figures and tables are served a bounded slice by default and say so; one click in the panel's action cluster loads every point or row.
-* **Benchmark harness** — a new `benchmark/` suite measures dashboard opens, filter round-trips, per-component latency and ingest throughput end to end, so future changes can be compared against a baseline.
+* **Panels load as you reach them** — a dashboard can hold dozens of panels, each needing its own request, so a panel below the fold shows a placeholder and costs nothing until you scroll near it. A progress ring and a count (for example `6/8`) sit beside the dashboard title while the rest load. See [Performance & Scaling](../features/performance.md). ([baa83b05](https://github.com/depictio/depictio/commit/baa83b05), [5bfdb0c6](https://github.com/depictio/depictio/commit/5bfdb0c6), [638d49f3](https://github.com/depictio/depictio/commit/638d49f3))
+* **Load all** — figures and tables are served a bounded slice by default and say so; one click in the panel's action cluster loads every point or row. ([24c196c4](https://github.com/depictio/depictio/commit/24c196c4), [80cafdc2](https://github.com/depictio/depictio/commit/80cafdc2))
+* **Benchmark harness** — a new `benchmark/` suite measures dashboard opens, filter round-trips, per-component latency and ingest throughput end to end, so future changes can be compared against a baseline. ([ce855cd1](https://github.com/depictio/depictio/commit/ce855cd1), [e0638077](https://github.com/depictio/depictio/commit/e0638077))
 
 ### **🚀 Improvements**
 
-* **Less data leaves storage** — the database reads only the rows and columns it needs: box plots, histograms and bar charts are computed as an exact query over the Delta scan without materialising a single row, and filters are pushed into the scan rather than applied after it.
-* **Bounded responses** — the server returns a capped slice instead of the whole table, and advanced visualisations are reduced only in ways their renderer can survive. The charts that aggregate client-side are never silently sampled; they are badged *estimated* instead.
-* **Lighter first paint** — the browser downloads only the code the current page needs, and concurrent WebGL contexts are capped so markers stop vanishing on dense dashboards.
-* **Opt-in ingest tuning** — `DEPICTIO_INGEST_*` flags trade memory or CPU for ingest wall-time, including MultiQC figure prerendering that removes the cold build on a collection's first open.
+* **Less data leaves storage** — the database reads only the rows and columns it needs: box plots, histograms and bar charts are computed as an exact query over the Delta scan without materialising a single row, and filters are pushed into the scan rather than applied after it. ([95556ae4](https://github.com/depictio/depictio/commit/95556ae4), [f3b4ffa0](https://github.com/depictio/depictio/commit/f3b4ffa0), [352b847e](https://github.com/depictio/depictio/commit/352b847e))
+* **Bounded responses** — the server returns a capped slice instead of the whole table, and advanced visualisations are reduced only in ways their renderer can survive. The charts that aggregate client-side are never silently sampled; they are badged *estimated* instead. ([1d1a8f7d](https://github.com/depictio/depictio/commit/1d1a8f7d), [7e902298](https://github.com/depictio/depictio/commit/7e902298), [bc3d6bab](https://github.com/depictio/depictio/commit/bc3d6bab))
+* **Lighter first paint** — the browser downloads only the code the current page needs, and concurrent WebGL contexts are capped so markers stop vanishing on dense dashboards. ([3b0e413b](https://github.com/depictio/depictio/commit/3b0e413b), [ec342497](https://github.com/depictio/depictio/commit/ec342497))
+* **Opt-in ingest tuning** — `DEPICTIO_INGEST_*` flags trade memory or CPU for ingest wall-time, including MultiQC figure prerendering that removes the cold build on a collection's first open. ([17621611](https://github.com/depictio/depictio/commit/17621611), [cee3db6b](https://github.com/depictio/depictio/commit/cee3db6b), [32ae62c7](https://github.com/depictio/depictio/commit/32ae62c7))
 * **Superseded requests cancelled** — changing a filter again drops the previous round's queued fetches instead of waiting for answers nobody needs. ([3cbb4ed6](https://github.com/depictio/depictio/commit/3cbb4ed6))
 * **Cheaper upserts** — `/deltatables/upsert` no longer materialises the table four times to write its realtime journal line. ([31630a4d](https://github.com/depictio/depictio/commit/31630a4d))
 * **Table page size** now defaults to 100 rows instead of 10. ([31630a4d](https://github.com/depictio/depictio/commit/31630a4d))
@@ -48,9 +48,9 @@ ghcr.io/depictio/depictio:1.3.0
 ### **🐛 Bug Fixes**
 
 * **Advanced viz and icons under CSP** — the shipped `script-src 'self'` blocked Plotly's WebGL renderer, so volcano, Manhattan, dot plot, QQ, lollipop and embedding drew nothing on deployed instances, and `connect-src` blocked the icon CDN, leaving empty boxes. WebGL is now allowed and the icon set is bundled rather than fetched. Only ever affected deployments, since the dev server sends no CSP. ([b6accd04](https://github.com/depictio/depictio/commit/b6accd04))
-* **MultiQC** — the sample filter now unions across every report in a collection instead of listing whichever single report the database returned, and dark figures warm correctly rather than failing behind a warm cache.
-* **Filter correctness** — temporal filter pushdown and link-key clustering corrected; the lollipop plot is flagged *estimated* when its rows are sampled.
-* **Admin monitoring** — the panel probes `events_enabled` before opening its WebSocket, ending a 403 reconnect loop that spammed the API access log on deployments with events off.
+* **MultiQC** — the sample filter now unions across every report in a collection instead of listing whichever single report the database returned, and dark figures warm correctly rather than failing behind a warm cache. ([0d1ef4c8](https://github.com/depictio/depictio/commit/0d1ef4c8), [c4f0b7e7](https://github.com/depictio/depictio/commit/c4f0b7e7))
+* **Filter correctness** — temporal filter pushdown and link-key clustering corrected; the lollipop plot is flagged *estimated* when its rows are sampled. ([ce00720a](https://github.com/depictio/depictio/commit/ce00720a), [841ae191](https://github.com/depictio/depictio/commit/841ae191))
+* **Admin monitoring** — the panel probes `events_enabled` before opening its WebSocket, ending a 403 reconnect loop that spammed the API access log on deployments with events off. ([633fdeed](https://github.com/depictio/depictio/commit/633fdeed))
 
 ---
 
