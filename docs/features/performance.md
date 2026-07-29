@@ -72,7 +72,7 @@ the Load-all icon is the bottom entry in the action cluster, which appears on ho
     | Policy | Applies to | Why |
     | --- | --- | --- |
     | Uniform sample | embedding, QQ, lollipop, coverage track | The renderer draws one mark per row and reads no aggregate, so a uniform subset is a faithful, lower-resolution picture. |
-    | Tail-preserving | volcano, MA, Manhattan | Significant rows are kept whole and the dense middle is strided. A uniform sample of a 12M-row DE table keeps almost none of the hits, so the plot would become a cloud with nothing to label. |
+    | Tail-preserving | volcano, MA, Manhattan | Significant rows are kept whole and the dense middle is strided. On a multi-million-row DE table a uniform sample keeps almost none of the hits, so the plot would become a cloud with nothing to label. |
     | Never sampled | stacked taxonomy, rarefaction, DA barplot, enrichment, sunburst, dot plot, oncoplot, UpSet, hierarchical heatmap, sankey, phylogenetic | These renderers aggregate client-side (per-sample sums, top-N rankings), so a sample would change the reported *values*, not their resolution. |
 
     The never-sampled kinds are served whole up to `advanced_viz_no_sample_max_rows`
@@ -302,6 +302,6 @@ All of these are environment variables; see the
   ask for it.
 - **`BOX_SAMPLE_ROWS_PER_GROUP` is not a free win.** It trades a sort for an *extra scan*,
   since the exact extremes have to be read before the per-group strides are known. On warm
-  local parquet that was worth it at 12M rows; on a cold S3-backed Delta table the extra
-  read can cost more than the sort it removes. Enable it only where the sort has been
-  measured to be the bottleneck.
+  local parquet it measured a 3.7x win on a 17M-row table; on a cold S3-backed Delta table
+  the extra read can cost more than the sort it removes. Enable it only where the sort has
+  been measured to be the bottleneck.
