@@ -9,7 +9,7 @@ description: "How Depictio keeps large data collections responsive, from the Del
 This page describes how Depictio handles **large data collections**: what the server
 does to avoid reading rows it doesn't need, how much data reaches the browser, and which
 settings let you tune that for your deployment. The [measured behaviour](#measured-behaviour)
-section at the bottom records real numbers from a 17-million-row benchmark project.
+section at the bottom records real numbers from a 12-million-row benchmark project.
 
 The guiding idea is that a dashboard should stay usable at any collection size: work is
 pushed as close to the stored data as possible, payloads are bounded by default, and when
@@ -142,10 +142,10 @@ thread pool, so they never needed the escape hatch.
     allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
     referrerpolicy="strict-origin-when-cross-origin"
     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
-    title="Opening a MultiQC dashboard aggregating many reports in Depictio"
+    title="Opening a MultiQC dashboard aggregating 50 reports across 600 samples in Depictio"
   ></iframe>
   </div>
-  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 Opening a MultiQC dashboard that aggregates <strong>many reports</strong>.</p>
+  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 Opening a MultiQC dashboard aggregating <strong>50 reports</strong> across <strong>600 samples</strong>.</p>
 </div>
 <script src="https://player.vimeo.com/api/player.js"></script>
 
