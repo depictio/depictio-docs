@@ -17,7 +17,7 @@ hide:
 
 ## **[v1.3.0](https://github.com/depictio/depictio/releases/tag/v1.3.0)** (July 27, 2026)
 
-!!! success "Performance pass across ingest, serve and render — the heavier behaviours stay off by default"
+!!! success "Performance pass across ingest, serve and render, with the heavier behaviours off by default"
 
 ### Docker Images
 
@@ -34,7 +34,7 @@ ghcr.io/depictio/depictio:1.3.0
 ### **🚀 Improvements**
 
 * **Less data leaves storage** — the database reads only the rows and columns it needs: box plots and histograms are computed as an exact query over the Delta scan without materialising a single row, and filters are pushed into the scan rather than applied after it.
-* **Bounded responses** — the server returns a capped slice instead of the whole table, and advanced visualisations are reduced only in ways their renderer can survive — never silently for the charts that aggregate client-side, which are badged *estimated* instead.
+* **Bounded responses** — the server returns a capped slice instead of the whole table, and advanced visualisations are reduced only in ways their renderer can survive. The charts that aggregate client-side are never silently sampled; they are badged *estimated* instead.
 * **Lighter first paint** — the browser downloads only the code the current page needs, and concurrent WebGL contexts are capped so markers stop vanishing on dense dashboards.
 * **Opt-in ingest tuning** — `DEPICTIO_INGEST_*` flags trade memory or CPU for ingest wall-time, including MultiQC figure prerendering that removes the cold build on a collection's first open.
 

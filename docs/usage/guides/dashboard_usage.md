@@ -125,7 +125,7 @@ them as you reach them rather than all at once.
 
 !!! tip "Why the count can go backwards"
     The count covers what is **on screen**, not the whole dashboard, so it always
-    completes. Scrolling brings more panels in and the count grows to include them — a
+    completes. Scrolling brings more panels in and the count grows to include them, so a
     number that briefly drops is work which has just started, not a problem.
 
 ### <span style="color: #9966CC;">:material-database-arrow-down:</span> Reduced views and the Load-all button
@@ -133,12 +133,19 @@ them as you reach them rather than all at once.
 Large data collections are not sent to the browser whole. Where a panel is showing a
 reduced view, it says so and offers a way out:
 
+[![A volcano panel with the badge 9,900 / 12,011,000 pts beside its title and the Load-all icon revealed in the hover action cluster](../../images/react/load_all_light.webp#only-light)](../../images/react/load_all_light.webp){target=_blank}
+
+[![A volcano panel with the badge 9,900 / 12,011,000 pts beside its title and the Load-all icon revealed in the hover action cluster](../../images/react/load_all_dark.webp#only-dark)](../../images/react/load_all_dark.webp){target=_blank}
+
+*Hover a panel to reveal its action cluster. **Load all** is the bottom icon, and the badge
+beside the title says how much of the collection you are currently seeing.*
+
 - **Figures** show a badge such as `10,000 / 5,000,000 pts`. Hover the panel and click the
   **Load all** icon (:material-database-arrow-down:) in the action cluster to fetch every
   point; the badge switches to `(all)` and the button toggles back to the reduced view.
   Loading everything can be slow on a very large collection.
 - **Tables** page rows on demand. On tables past roughly a million rows, **sorting is
-  turned off** — the chevron disappears from the column headers rather than offering a
+  turned off**: the chevron disappears from the column headers rather than offering a
   sort that would silently return unsorted rows.
 - **Advanced visualisations** that compute their values from the rows they receive (stacked
   taxonomy, DA barplot, enrichment, oncoplot, …) are normally sent the whole collection. If

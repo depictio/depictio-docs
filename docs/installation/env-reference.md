@@ -316,9 +316,9 @@ for what each cap does to the rendered result.
 | `DEPICTIO_PERFORMANCE_FIGURE_MAX_LOAD_ROWS` | `500000` | Row ceiling loaded from Delta for a point-plot / code-mode figure. Bypassed when the client requests a full load |
 | `DEPICTIO_PERFORMANCE_TABLE_SORT_MAX_ROWS` | `1000000` | Post-filter row count above which a table is served in natural scan order instead of sorted; the response reports `sort_disabled` so the grid drops the sort affordance. `0` disables the gate |
 | `DEPICTIO_PERFORMANCE_ADVANCED_VIZ_NO_SAMPLE_MAX_ROWS` | `2000000` | Row ceiling for the advanced-viz kinds that must not be sampled. Past it the request falls back to a uniform sample and the chart is marked estimated. `0` disables the ceiling |
-| `DEPICTIO_PERFORMANCE_ADVANCED_VIZ_TAIL_P_THRESHOLD` | `0.05` | Significance cutoff below which a volcano/Manhattan row is kept whole rather than sampled. Fallback only — a renderer's own threshold wins |
+| `DEPICTIO_PERFORMANCE_ADVANCED_VIZ_TAIL_P_THRESHOLD` | `0.05` | Significance cutoff below which a volcano/Manhattan row is kept whole rather than sampled. Fallback only, since a renderer's own threshold wins |
 | `DEPICTIO_PERFORMANCE_ADVANCED_VIZ_TAIL_EFFECT_THRESHOLD` | `1.0` | Same, for kinds whose tail is a signed effect size (MA's log2 fold change) |
-| `DEPICTIO_PERFORMANCE_BOX_SAMPLE_ROWS_PER_GROUP` | `0` | Rows sampled per box-plot group before computing quartiles; `0` computes them exactly. Trades a sort for an extra scan — see the tuning notes |
+| `DEPICTIO_PERFORMANCE_BOX_SAMPLE_ROWS_PER_GROUP` | `0` | Rows sampled per box-plot group before computing quartiles; `0` computes them exactly. Trades a sort for an extra scan, so see the tuning notes |
 | `DEPICTIO_PERFORMANCE_BOX_SAMPLE_MAX_GROUPS` | `64` | Group-count ceiling above which box quartiles are always computed exactly (grouped quantiles get cheaper as cardinality rises) |
 
 ---

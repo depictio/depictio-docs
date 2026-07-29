@@ -1,12 +1,12 @@
 ---
 title: "Performance & Scaling"
 icon: material/speedometer
-description: "How Depictio keeps large data collections responsive — from the Delta scan to the browser — and the settings that tune it."
+description: "How Depictio keeps large data collections responsive, from the Delta scan to the browser, and the settings that tune it."
 ---
 
 # :material-speedometer: Performance & Scaling
 
-This page describes how Depictio handles **large data collections** — what the server
+This page describes how Depictio handles **large data collections**: what the server
 does to avoid reading rows it doesn't need, how much data reaches the browser, and which
 settings let you tune that for your deployment. The [measured behaviour](#measured-behaviour)
 section at the bottom records real numbers from a 17-million-row benchmark project.
@@ -15,7 +15,7 @@ The guiding idea is that a dashboard should stay usable at any collection size: 
 pushed as close to the stored data as possible, payloads are bounded by default, and when
 a bound is applied it is made visible rather than hidden.
 
-![Where the work got bounded: at each of the three stages — CLI ingest, API serve, viewer render — what used to be materialised in full, and what bounds it now](../images/v0.12/react/schema_perf_stages.png)
+![How much of the table each stage still carries. The top band is what used to travel the whole pipeline; the lower band narrows at CLI ingest, API serve and viewer render](../images/v0.12/react/schema_perf_stages.png)
 
 ## Opening a dashboard
 
@@ -38,7 +38,7 @@ requesting all of them up front, Depictio loads them as you reach them.
   broken dashboard.
 - **The count covers what is on screen**, not the whole dashboard, so it always reaches
   100%. Scrolling brings more panels in and the count grows to include them, which means
-  it can briefly go backwards — that is work which has just started, not a problem.
+  it can briefly go backwards. That is work which has just started, not a problem.
 - **While the dashboard document itself is being fetched**, the Depictio logo animates in
   the centre of the page; no panels are known yet, so there is nothing to count. Under
   `prefers-reduced-motion` the animation is softened rather than removed.
@@ -58,6 +58,13 @@ parses the code it actually renders.
 By default every data panel is served a **bounded** slice rather than the whole
 collection. Where a bound has been applied, the panel says so, and you can override it.
 
+[![A volcano panel showing the badge 9,900 / 12,011,000 pts, with the Load-all icon at the bottom of the hover action cluster and its tooltip open](../images/react/load_all_light.webp#only-light)](../images/react/load_all_light.webp){target=_blank}
+
+[![A volcano panel showing the badge 9,900 / 12,011,000 pts, with the Load-all icon at the bottom of the hover action cluster and its tooltip open](../images/react/load_all_dark.webp#only-dark)](../images/react/load_all_dark.webp){target=_blank}
+
+*A figure serving 9,900 of 12 million points. The badge sits beside the panel title, and
+the Load-all icon is the bottom entry in the action cluster, which appears on hover.*
+
 - **The Load-all button** — an action icon in each panel's hover cluster (alongside
   metadata, fullscreen and reset) toggles between the reduced view and a full load of every
   point or row. Its tooltip warns that this may be slow on large datasets. Pressing it
@@ -67,7 +74,7 @@ collection. Where a bound has been applied, the panel says so, and you can overr
   default); a per-component `max_points` overrides it for a single figure.
 - **Tables** page at scan level, so a deep page costs the same as a shallow one. Above
   `table_sort_max_rows` (1,000,000 by default) the server serves rows in natural scan
-  order and the **sort control disappears from the column headers** — AG Grid drops the
+  order and the **sort control disappears from the column headers**. AG Grid drops the
   chevron and the click handler rather than offering a sort that silently does nothing.
 - **Advanced visualisations** are reduced according to what their renderer can survive,
   not by a single global rule:
@@ -75,14 +82,14 @@ collection. Where a bound has been applied, the panel says so, and you can overr
     | Policy | Applies to | What happens |
     | --- | --- | --- |
     | Uniform sample | embedding, QQ, lollipop, coverage track | The renderer draws one mark per row and reads no aggregate, so a uniform subset is a faithful, lower-resolution picture. |
-    | Tail-preserving | volcano, MA, Manhattan | Significant rows are kept whole and the dense middle is strided. A uniform sample of a 17M-row DE table keeps almost none of the hits — the plot would become a cloud with nothing to label. |
+    | Tail-preserving | volcano, MA, Manhattan | Significant rows are kept whole and the dense middle is strided. A uniform sample of a 17M-row DE table keeps almost none of the hits, so the plot would become a cloud with nothing to label. |
     | Never sampled | stacked taxonomy, rarefaction, DA barplot, enrichment, sunburst, dot plot, oncoplot, UpSet, hierarchical heatmap, sankey, phylogenetic | These renderers aggregate client-side (per-sample sums, top-N rankings), so a sample changes the reported *values*, not their resolution. |
 
     The never-sampled kinds are served whole up to `advanced_viz_no_sample_max_rows`
     (2,000,000 by default). Past that ceiling the request falls back to a uniform sample
     and the chart is marked with an orange **estimated** badge, so an approximation is
     never presented as a total. The badge also appears on the lollipop plot whenever its
-    rows were sampled — it is uniformly sampled by policy, but it still aggregates those
+    rows were sampled. It is uniformly sampled by policy, but it still aggregates those
     rows into per-gene counts, so the counts are estimates.
 
 ## Server-side work
@@ -123,7 +130,7 @@ stays responsive under concurrent load.
 
 Only figure renders have a Celery path. Tables, cards, interactive components and the
 advanced-viz data endpoint are synchronous handlers, which FastAPI already runs in its own
-thread pool — they never needed the escape hatch.
+thread pool, so they never needed the escape hatch.
 
 See the [environment reference](../installation/env-reference.md) for how to set these.
 
@@ -142,7 +149,7 @@ See the [environment reference](../installation/env-reference.md) for how to set
   `DEPICTIO_INGEST_MULTIQC_PRERENDER=1` on the CLI side; it costs ingest time and S3 storage,
   and only runs on a fresh ingest (on an append the local files cannot reproduce the full
   aggregation, so the existing background build takes over). Collections that never opted in
-  are not penalised — a short-lived marker records that a collection has no prerendered
+  are not penalised: a short-lived marker records that a collection has no prerendered
   figures, so the server does a Redis lookup rather than an S3 round-trip per panel.
 
 ![A MultiQC figure request: the CLI builds and uploads the figures at ingest, the render endpoint probes the S3 prefix before enqueueing a build, and a Redis presence marker spares collections that never opted in](../images/v0.12/react/schema_multiqc_prerender.png)
@@ -165,14 +172,14 @@ See the [environment reference](../installation/env-reference.md) for how to set
 ## Measured behaviour
 
 The numbers below come from a single benchmark run on a linked 3-collection project. They
-describe *this* setup — treat them as an order of magnitude for a comparably sized project,
-not as a specification.
+describe *this* setup, so treat them as an order of magnitude for a comparably sized
+project rather than as a specification.
 
 | | |
 | --- | --- |
 | Dataset | **17,232,000 rows** across 3 linked collections |
 | Size | 0.997 GB raw / **1.492 GB Delta** |
-| Host | Apple M1 Max, 10 CPU, 32 GB — Colima VM 8 vCPU / 20 GB |
+| Host | Apple M1 Max, 10 CPU, 32 GB, on a Colima VM with 8 vCPU / 20 GB |
 | API container | 4 CPU, **1 uvicorn worker, dev mode** |
 | Celery | 4 CPU / 4 workers |
 
@@ -208,7 +215,7 @@ appear; from 8 components up, the first thing to land **is** a chart.
 
 The parenthesised number is the dashboard's full panel count; the leading number is how
 many of those issue a timed render. Passive panels (text, interactive widgets reading
-precomputed specs) are on the page but not measured — so the last row is a 37-panel
+precomputed specs) are on the page but not measured, so the last row is a 37-panel
 dashboard, not a 32-panel one.
 
 ### Changing a filter
@@ -251,7 +258,7 @@ aggregation over the scan, exact), 100 for a table page, 40,000 for a scatter, a
 
 !!! warning "Read these numbers with their caveats"
     - One run, one sample per cell. The `32 (37)` *warm* full load (14.3 s) is slower than
-      its cold equivalent and is unexplained — do not build a scaling claim on that row.
+      its cold equivalent and is unexplained. Do not build a scaling claim on that row.
     - Only the `4 (9)` cold row is a genuine first visit; the other sizes shared an
       already-ingested project.
     - "Cold" means server caches are empty. Delta files may still sit in the OS or MinIO
@@ -274,7 +281,7 @@ All are `DEPICTIO_PERFORMANCE_`-prefixed environment variables; see the
 | `ADVANCED_VIZ_TAIL_P_THRESHOLD` | `0.05` | Significance cutoff below which a volcano/Manhattan row is kept whole. A renderer's own threshold wins over this fallback. |
 | `ADVANCED_VIZ_TAIL_EFFECT_THRESHOLD` | `1.0` | Same, for kinds whose tail is a signed effect size (MA's log2 fold change). |
 | `BOX_SAMPLE_ROWS_PER_GROUP` | `0` | Rows sampled per box-plot group before computing quartiles. `0` computes them exactly. |
-| `BOX_SAMPLE_MAX_GROUPS` | `64` | Group count above which box quartiles are always computed exactly — grouped quantiles get cheaper as cardinality rises. |
+| `BOX_SAMPLE_MAX_GROUPS` | `64` | Group count above which box quartiles are always computed exactly, since grouped quantiles get cheaper as cardinality rises. |
 
 ## Tuning for your deployment
 
