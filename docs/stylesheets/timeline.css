@@ -31,6 +31,26 @@
     color: #24B064 !important;
 }
 
+/* In-progress items - Depictio Orange */
+.nt-timeline-dot.inprogress {
+    background: #F68B33 !important; /* Depictio orange */
+    border-color: #F68B33 !important;
+}
+
+.nt-timeline-dot.inprogress .icon {
+    color: white !important;
+}
+
+/* Idea / unscheduled items - Depictio Purple */
+.nt-timeline-dot.idea {
+    background: #9870FF !important; /* Depictio purple */
+    border-color: #9870FF !important;
+}
+
+.nt-timeline-dot.idea .icon {
+    color: white !important;
+}
+
 /* Planned items - Depictio Blue */
 .nt-timeline-dot.planned {
     background: #6495ED !important; /* Depictio blue */
@@ -99,4 +119,15 @@
 
 [data-md-color-scheme="slate"] .nt-timeline .nt-timeline-content .sub-title {
     color: var(--md-default-fg-color--light);
+}
+
+/* Roadmap: the three-section nav stays 3-up rather than reflowing to 2 */
+.md-typeset .grid.cards.roadmap-nav {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media screen and (max-width: 44.9375em) {
+    .md-typeset .grid.cards.roadmap-nav {
+        grid-template-columns: 1fr;
+    }
 }
