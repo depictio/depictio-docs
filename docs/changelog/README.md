@@ -15,7 +15,7 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
-## **[v1.3.0](https://github.com/depictio/depictio/releases/tag/v1.3.0)** (July 27, 2026)
+## **[v1.3.0](https://github.com/depictio/depictio/releases/tag/v1.3.0)** (July 29, 2026)
 
 !!! success "Performance pass across ingest, serve and render, with the heavier behaviours off by default"
 
@@ -24,6 +24,10 @@ hide:
 ```bash
 ghcr.io/depictio/depictio:1.3.0
 ```
+
+### **♻️ Migration**
+
+* **Ingest flags renamed** — `DEPICTIO_MULTIQC_PRERENDER` and `DEPICTIO_MULTIQC_PARSE_WORKERS` are now `DEPICTIO_INGEST_MULTIQC_PRERENDER` and `DEPICTIO_INGEST_MULTIQC_PARSE_WORKERS`. The old names are ignored. ([65eeaa5f](https://github.com/depictio/depictio/commit/65eeaa5f))
 
 ### **✨ New Features**
 
@@ -37,9 +41,13 @@ ghcr.io/depictio/depictio:1.3.0
 * **Bounded responses** — the server returns a capped slice instead of the whole table, and advanced visualisations are reduced only in ways their renderer can survive. The charts that aggregate client-side are never silently sampled; they are badged *estimated* instead.
 * **Lighter first paint** — the browser downloads only the code the current page needs, and concurrent WebGL contexts are capped so markers stop vanishing on dense dashboards.
 * **Opt-in ingest tuning** — `DEPICTIO_INGEST_*` flags trade memory or CPU for ingest wall-time, including MultiQC figure prerendering that removes the cold build on a collection's first open.
+* **Superseded requests cancelled** — changing a filter again drops the previous round's queued fetches instead of waiting for answers nobody needs. ([3cbb4ed6](https://github.com/depictio/depictio/commit/3cbb4ed6))
+* **Cheaper upserts** — `/deltatables/upsert` no longer materialises the table four times to write its realtime journal line. ([31630a4d](https://github.com/depictio/depictio/commit/31630a4d))
+* **Table page size** now defaults to 100 rows instead of 10. ([31630a4d](https://github.com/depictio/depictio/commit/31630a4d))
 
 ### **🐛 Bug Fixes**
 
+* **Advanced viz and icons under CSP** — the shipped `script-src 'self'` blocked Plotly's WebGL renderer, so volcano, Manhattan, dot plot, QQ, lollipop and embedding drew nothing on deployed instances, and `connect-src` blocked the icon CDN, leaving empty boxes. WebGL is now allowed and the icon set is bundled rather than fetched. Only ever affected deployments, since the dev server sends no CSP. ([b6accd04](https://github.com/depictio/depictio/commit/b6accd04))
 * **MultiQC** — the sample filter now unions across every report in a collection instead of listing whichever single report the database returned, and dark figures warm correctly rather than failing behind a warm cache.
 * **Filter correctness** — temporal filter pushdown and link-key clustering corrected; the lollipop plot is flagged *estimated* when its rows are sampled.
 * **Admin monitoring** — the panel probes `events_enabled` before opening its WebSocket, ending a 403 reconnect loop that spammed the API access log on deployments with events off.
