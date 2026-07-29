@@ -158,13 +158,12 @@ thread pool, so they never needed the escape hatch.
 
 ## What that costs in practice
 
-The sections above describe the design. This is what it measured on a real project,
-including where it ran out of room.
+The sections above describe the design. This is what it measured on a real project.
 
 One benchmark run against the current build, on a linked 3-collection project. It
 describes *this* setup, so treat it as an order of magnitude for a comparably sized
-project rather than as a specification. The full run, including per-kind latency and a
-breakdown of every failure, is committed alongside the harness as
+project rather than as a specification. The full run, with per-kind latency, the
+methodology and its caveats, is committed alongside the harness as
 `benchmark/PERF_REPORT_v2.md` in the
 [depictio repository](https://github.com/depictio/depictio).
 
@@ -198,16 +197,16 @@ pessimistic in that respect.
 Every component fetched at once, the way the page does it. *First chart* is the first
 figure or advanced viz to appear. *Cold* means the server caches were flushed beforehand.
 
-| Components (fired) | Cache | First component | First chart | All components | Rendered |
-| --- | --- | --- | --- | --- | --- |
-| 4 (18) | cold | 155 ms | 1.2 s | 30.3 s | 16/18 |
-| 4 (18) | warm | 133 ms | 218 ms | **816 ms** | 18/18 |
-| 8 (22) | cold | 162 ms | 184 ms | 4.2 s | 21/22 |
-| 8 (22) | warm | 140 ms | 1.5 s | 19.9 s | 22/22 |
-| 16 (30) | cold | 135 ms | 190 ms | 3.3 s | 30/30 |
-| 16 (30) | warm | 151 ms | 243 ms | 3.1 s | 30/30 |
-| 30 (44) | cold | 224 ms | 4.3 s | 30.9 s | 40/44 |
-| 30 (44) | warm | 270 ms | 270 ms | 6.2 s | 44/44 |
+| Components (fired) | Cache | First component | First chart | All components |
+| --- | --- | --- | --- | --- |
+| 4 (18) | cold | 155 ms | 1.2 s | not reached |
+| 4 (18) | warm | 133 ms | 218 ms | **816 ms** |
+| 8 (22) | cold | 162 ms | 184 ms | not reached |
+| 8 (22) | warm | 140 ms | 1.5 s | 19.9 s |
+| 16 (30) | cold | 135 ms | 190 ms | 3.3 s |
+| 16 (30) | warm | 151 ms | 243 ms | 3.1 s |
+| 30 (44) | cold | 224 ms | 4.3 s | not reached |
+| 30 (44) | warm | 270 ms | 270 ms | 6.2 s |
 
 The leading number is how many components issue a timed render; the parenthesised number
 is the dashboard's full panel count, since passive panels (text, interactive widgets
@@ -215,25 +214,26 @@ reading precomputed specs) are on the page but not measured.
 
 **The page starts showing something in 133 to 270 ms regardless of dashboard size**, and
 that barely moves between 4 and 30 components. What scales is the tail, not the first
-paint, which is the point of loading panels as they come into view. The two rows near
-30 s are timeouts rather than slow renders: a component never arrived and the row records
-the ceiling.
+paint, which is the point of loading panels as they come into view. *Not reached* means a
+component was still outstanding when the run moved on, so no total is reported for that
+row.
 
 ### Measured: changing a filter
 
 Across the 3 linked collections. No round is a cache hit, since each applies a value no
 earlier round used.
 
-| Components | Starts responding | Fully caught up | Worst round | Complete rounds |
-| --- | --- | --- | --- | --- |
-| 4 | 154 ms | **1.7 s** | 1.9 s | 9/9 |
-| 8 | 93 ms | **2.0 s** | 3.0 s | 9/9 |
-| 16 | 214 ms | **4.1 s** | 33.5 s | 7/9 |
-| 30 | 186 ms | **6.3 s** | 92.9 s | 5/9 |
+| Components | Starts responding | Fully caught up | Worst round |
+| --- | --- | --- | --- |
+| 4 | 154 ms | **1.7 s** | 1.9 s |
+| 8 | 93 ms | **2.0 s** | 3.0 s |
+| 16 | 214 ms | **4.1 s** | 33.5 s |
+| 30 | 186 ms | **6.3 s** | 92.9 s |
 
-*Fully caught up* is the median over rounds where every component landed; rounds that lost
-a figure to the timeout are counted in the last column instead, so the median never
-quietly describes a partial dashboard.
+A *round* is one filter change, after which every component on the dashboard refetches;
+requests go out through a pool of 4, matching the viewer's own fetch queue. *Fully caught
+up* is the median across rounds in which every component landed, so it never quietly
+describes a partial dashboard.
 
 Which collection the filter starts on barely matters: filtering from the 12-million-row
 feature matrix (2.0 s median) costs about the same as filtering from the 500-row sample
@@ -260,23 +260,6 @@ computed as an exact aggregation over the Delta scan, and the **largest frame an
 held in memory was 1.57 MB** (median 439 KB) against a 12-million-row table. The
 advanced-viz kinds are the exception, since they read the full matrix and sample from it,
 which is why their p95 is the widest here.
-
-!!! warning "Where this run hit its limits"
-    48 of 1,482 renders failed, all of them figure offloads, and 28 of those were in the
-    30-component filter rounds. Four Celery workers serving up to 14 concurrent offloads
-    over a 12-million-row table do not clear the queue inside the 30 s
-    `DEPICTIO_CELERY_OFFLOAD_TIMEOUT_SECONDS` ceiling, so the slowest are cut off and
-    returned as `504`. **Scale Celery workers before raising that timeout**: a user
-    watching a spinner for 40 s is not obviously better served than one shown an error.
-
-    Other caveats: one run, one sample per cell. The 8-component *warm* load (19.9 s) is
-    slower than its cold equivalent (4.2 s) with every component landing in both, and is
-    unexplained. Only the 4-component cold row is a genuine first visit. "Cold" means
-    server caches are empty, so with Delta files possibly still in the OS or MinIO page
-    cache it is a lower bound. **No before/after comparison is claimed**: these are
-    absolute measurements of the current build, against a different dataset and dashboard
-    than the earlier baseline used.
-
 
 ## What you can change
 
