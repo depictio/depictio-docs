@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Complete reference for all Depictio environment variables. Auto-generated on 2026-01-22.">
+        <meta name="description" content="Complete reference for all Depictio environment variables. Last synced with settings_models.py on 2026-07-27.">
       
       
       
@@ -1185,6 +1185,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Performance &amp; Timeouts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#render-caps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Render caps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4356,6 +4373,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Performance &amp; Timeouts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#render-caps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Render caps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4970,7 +5004,7 @@
 <tr>
 <td><code>DEPICTIO_CACHE_REDIS_MAX_MEMORY_MB</code></td>
 <td><code>1024</code></td>
-<td>Redis max memory limit (MB)</td>
+<td><strong>Not enforced.</strong> Declared but never applied to the Redis server; see the note below.</td>
 </tr>
 <tr>
 <td><code>DEPICTIO_CACHE_CACHE_KEY_PREFIX</code></td>
@@ -4984,6 +5018,18 @@
 </tr>
 </tbody>
 </table>
+<div class="admonition warning">
+<p class="admonition-title">Cap Redis on the server, not through Depictio</p>
+<p><code>DEPICTIO_CACHE_REDIS_MAX_MEMORY_MB</code> is read into settings and then never applied:
+Depictio issues no <code>CONFIG SET</code>, so setting it leaves Redis <strong>uncapped</strong>. A cache that
+grows until the container's memory limit kills it takes the Celery broker down with it
+when both share one Redis, which fails every figure offload until it recovers.</p>
+<p>Set the limit on Redis itself instead, and give it an eviction policy:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>redis-server<span class="w"> </span>--maxmemory<span class="w"> </span>1500mb<span class="w"> </span>--maxmemory-policy<span class="w"> </span>volatile-lru
+</code></pre></div>
+<p><code>volatile-lru</code> rather than <code>allkeys-lru</code> because the policy is server-wide: cache
+entries are written with a TTL and broker keys are not, so only the cache is evicted.</p>
+</div>
 <hr />
 <h2 id="celery-task-queue">Celery Task Queue<a class="headerlink" href="#celery-task-queue" title="Permanent link">&para;</a></h2>
 <p><strong>Config Class:</strong> <code>CeleryConfig</code>
@@ -5096,7 +5142,12 @@
 <tr>
 <td><code>DEPICTIO_CELERY_OFFLOAD_RENDERING</code></td>
 <td><code>false</code></td>
-<td>Offload dashboard render endpoints (<code>/dashboards/render_*</code>) to Celery</td>
+<td>Force-offload <em>all</em> dashboard render endpoints (<code>/dashboards/render_*</code>) to Celery. Off by default: renders offload adaptively by size instead</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_CELERY_OFFLOAD_SIZE_THRESHOLD_BYTES</code></td>
+<td><code>52428800</code> (50 MB)</td>
+<td>Source Delta-table size at/above which a render is offloaded even when <code>OFFLOAD_RENDERING</code> is off. <code>0</code> disables size-based offload</td>
 </tr>
 <tr>
 <td><code>DEPICTIO_CELERY_OFFLOAD_TIMEOUT_SECONDS</code></td>
@@ -5283,6 +5334,61 @@ admin-only <code>/events/test-trigger/{dc_id}</code> route used to broadcast a t
 <td><code>DEPICTIO_PERFORMANCE_DISABLE_THEME_ANIMATIONS</code></td>
 <td><code>true</code></td>
 <td>Disable theme CSS injection and complex theme operations</td>
+</tr>
+</tbody>
+</table>
+<h3 id="render-caps">Render caps<a class="headerlink" href="#render-caps" title="Permanent link">&para;</a></h3>
+<p>Bound how many rows a single figure, table or advanced-viz render materialises, so large
+data collections stay responsive. See <a href="../../features/performance/">Performance &amp; Scaling</a>
+for what each cap does to the rendered result.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_FIGURE_MAX_POINTS</code></td>
+<td><code>10000</code></td>
+<td>Target marker count for point plots (scatter family). Above it the figure is downsampled before serialising to Plotly. A per-component <code>max_points</code> overrides this</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_FIGURE_MAX_LOAD_ROWS</code></td>
+<td><code>500000</code></td>
+<td>Row ceiling loaded from Delta for a point-plot / code-mode figure. Bypassed when the client requests a full load</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_TABLE_SORT_MAX_ROWS</code></td>
+<td><code>1000000</code></td>
+<td>Post-filter row count above which a table is served in natural scan order instead of sorted; the response reports <code>sort_disabled</code> so the grid drops the sort affordance. <code>0</code> disables the gate</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_ADVANCED_VIZ_NO_SAMPLE_MAX_ROWS</code></td>
+<td><code>2000000</code></td>
+<td>Row ceiling for the advanced-viz kinds that must not be sampled. Past it the request falls back to a uniform sample and the chart is marked estimated. <code>0</code> disables the ceiling</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_ADVANCED_VIZ_TAIL_P_THRESHOLD</code></td>
+<td><code>0.05</code></td>
+<td>Significance cutoff below which a volcano/Manhattan row is kept whole rather than sampled. Fallback only, since a renderer's own threshold wins</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_ADVANCED_VIZ_TAIL_EFFECT_THRESHOLD</code></td>
+<td><code>1.0</code></td>
+<td>Same, for kinds whose tail is a signed effect size (MA's log2 fold change)</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_BOX_SAMPLE_ROWS_PER_GROUP</code></td>
+<td><code>0</code></td>
+<td>Rows sampled per box-plot group before computing quartiles; <code>0</code> computes them exactly. Trades a sort for an extra scan, so see the tuning notes</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_BOX_SAMPLE_MAX_GROUPS</code></td>
+<td><code>64</code></td>
+<td>Group-count ceiling above which box quartiles are always computed exactly (grouped quantiles get cheaper as cardinality rises)</td>
 </tr>
 </tbody>
 </table>

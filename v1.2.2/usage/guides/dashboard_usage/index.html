@@ -1444,6 +1444,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-a-dashboard-loads-v130" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How a Dashboard Loads (v1.3.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How a Dashboard Loads (v1.3.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#while-the-page-opens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        While the page opens
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reduced-views-and-the-load-all-button" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reduced views and the Load-all button
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#interactivity" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4308,6 +4347,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-a-dashboard-loads-v130" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How a Dashboard Loads (v1.3.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How a Dashboard Loads (v1.3.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#while-the-page-opens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        While the page opens
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reduced-views-and-the-load-all-button" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reduced views and the Load-all button
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#interactivity" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4398,7 +4476,7 @@
 <li><strong>No editing controls</strong> - Clean interface focused on data</li>
 <li><strong>Interactive filtering</strong> - Use filter components to explore data</li>
 <li><strong>Data updates</strong> - Visualizations respond to filter changes in real-time</li>
-<li><strong>Lightweight</strong> - Faster loading with reduced callback overhead (~30 callbacks)</li>
+<li><strong>Lightweight</strong> - Read-only rendering path, with none of the editing machinery loaded</li>
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">When to Use Viewer Mode</p>
@@ -4497,6 +4575,50 @@
 <li>Tables with &gt; 1,000,000 rows: Export blocked (use CLI for large exports)</li>
 </ul>
 </div>
+<hr />
+<h2 id="how-a-dashboard-loads-v130">How a Dashboard Loads (v1.3.0+)<a class="headerlink" href="#how-a-dashboard-loads-v130" title="Permanent link">&para;</a></h2>
+<p>A dashboard can hold dozens of panels, each needing its own request, so Depictio loads
+them as you reach them rather than all at once.</p>
+<h3 id="while-the-page-opens"><span style="color: #45B8AC;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.03v2.02c4.39.54 7.5 4.53 6.96 8.92-.46 3.64-3.32 6.53-6.96 6.96v2c5.5-.55 9.5-5.43 8.95-10.93-.45-4.75-4.22-8.5-8.95-8.97m-2 .03c-1.95.19-3.81.94-5.33 2.2L7.1 5.74c1.12-.9 2.47-1.48 3.9-1.68zM4.26 5.67A9.9 9.9 0 0 0 2.05 11h2c.19-1.42.75-2.77 1.64-3.9zM2.06 13c.2 1.96.97 3.81 2.21 5.33l1.42-1.43A8 8 0 0 1 4.06 13zm5.04 5.37-1.43 1.37A10 10 0 0 0 11 22v-2a8 8 0 0 1-3.9-1.63M12.5 7v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg></span></span> While the page opens<a class="headerlink" href="#while-the-page-opens" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>The Depictio logo animates in the centre of the page</strong> while the dashboard itself is
+  being fetched. No panels are known yet, so there is nothing to count.</li>
+<li><strong>Panels load when they scroll into view.</strong> A panel below the fold shows a shimmering
+  placeholder and costs nothing until you scroll near it, so opening a large dashboard
+  stays responsive instead of waiting on every panel first.</li>
+<li><strong>A progress ring and a count</strong> (for example <code>6/8</code>) sit beside the dashboard title, then
+  disappear once everything on screen is ready. Hover it for a breakdown: how many are
+  still loading, how many failed, and how many are further down the page.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Why the count can go backwards</p>
+<p>The count covers what is <strong>on screen</strong>, not the whole dashboard, so it always
+completes. Scrolling brings more panels in and the count grows to include them, so a
+number that briefly drops is work which has just started, not a problem.</p>
+</div>
+<h3 id="reduced-views-and-the-load-all-button"><span style="color: #9966CC;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 13c-2.17 0-4.07 1.16-5.12 2.89-.6.07-1.23.11-1.88.11-4.42 0-8-1.79-8-4V9c0 2.21 3.58 4 8 4s8-1.79 8-4v3c0 .36-.1.71-.28 1.05C19.5 13 19.24 13 19 13m-7-2c4.42 0 8-1.79 8-4s-3.58-4-8-4-8 1.79-8 4 3.58 4 8 4m1.1 6.96c-.36.04-.73.04-1.1.04-4.42 0-8-1.79-8-4v3c0 2.21 3.58 4 8 4 .46 0 .9 0 1.33-.06A6 6 0 0 1 13 19c0-.36.04-.7.1-1.04M20 20v-4h-2v4h-2l3 3 3-3z"/></svg></span></span> Reduced views and the Load-all button<a class="headerlink" href="#reduced-views-and-the-load-all-button" title="Permanent link">&para;</a></h3>
+<p>Large data collections are not sent to the browser whole. Where a panel is showing a
+reduced view, it says so and offers a way out:</p>
+<p><a href="https://depictio.github.io/depictio-docs/images/react/load_all_light.webp" target="_blank"><img alt="A volcano panel with the badge 9,900 / 12,011,000 pts beside its title and the Load-all icon revealed in the hover action cluster" src="https://depictio.github.io/depictio-docs/images/react/load_all_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/react/load_all_dark.webp" target="_blank"><img alt="A volcano panel with the badge 9,900 / 12,011,000 pts beside its title and the Load-all icon revealed in the hover action cluster" src="https://depictio.github.io/depictio-docs/images/react/load_all_dark.webp#only-dark" /></a></p>
+<p><em>Hover a panel to reveal its action cluster. </em><em>Load all</em><em> is the bottom icon, and the badge
+beside the title says how much of the collection you are currently seeing.</em></p>
+<ul>
+<li><strong>Figures</strong> show a badge such as <code>9,900 / 12,011,000 pts</code>. Hover the panel and click the
+  <strong>Load all</strong> icon (<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 13c-2.17 0-4.07 1.16-5.12 2.89-.6.07-1.23.11-1.88.11-4.42 0-8-1.79-8-4V9c0 2.21 3.58 4 8 4s8-1.79 8-4v3c0 .36-.1.71-.28 1.05C19.5 13 19.24 13 19 13m-7-2c4.42 0 8-1.79 8-4s-3.58-4-8-4-8 1.79-8 4 3.58 4 8 4m1.1 6.96c-.36.04-.73.04-1.1.04-4.42 0-8-1.79-8-4v3c0 2.21 3.58 4 8 4 .46 0 .9 0 1.33-.06A6 6 0 0 1 13 19c0-.36.04-.7.1-1.04M20 20v-4h-2v4h-2l3 3 3-3z"/></svg></span>) in the action cluster to fetch every
+  point; the badge switches to <code>(all)</code> and the button toggles back to the reduced view.
+  Loading everything can be slow on a very large collection.</li>
+<li><strong>Tables</strong> page rows on demand. On tables past roughly a million rows, <strong>sorting is
+  turned off</strong>: the chevron disappears from the column headers rather than offering a
+  sort that would silently return unsorted rows.</li>
+<li><strong>Advanced visualisations</strong> that compute their values from the rows they receive (stacked
+  taxonomy, DA barplot, enrichment, oncoplot, …) are normally sent the whole collection. If
+  it is too large for that, they carry an orange <strong>estimated</strong> badge, meaning the values on
+  screen are derived from a sample rather than being exact totals. The lollipop plot shows
+  the same badge whenever its rows were sampled, since its per-gene counts are an aggregate.</li>
+</ul>
+<p>See <a href="../../../features/performance/">Performance &amp; Scaling</a> for the thresholds behind these
+behaviours and how to change them.</p>
 <hr />
 <h2 id="interactivity">Interactivity<a class="headerlink" href="#interactivity" title="Permanent link">&para;</a></h2>
 <h4 id="interactive-actions">Interactive Actions<a class="headerlink" href="#interactive-actions" title="Permanent link">&para;</a></h4>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Mechanisms Depictio uses in the render path to handle larger data collections.">
+        <meta name="description" content="How Depictio keeps large data collections responsive, from the Delta scan to the browser, and the settings that tune it.">
       
       
       
@@ -2578,17 +2578,51 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#rendering" class="md-nav__link">
+  <a href="#how-depictio-keeps-it-fast" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Rendering
+        How Depictio keeps it fast
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Depictio keeps it fast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#opening-a-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opening a dashboard
       
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#bounded-payloads-and-the-load-all-control" class="md-nav__link">
+    <span class="md-ellipsis">
       
-        <li class="md-nav__item">
+        Bounded payloads and the Load-all control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-side-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server-side work
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#render-offload" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2598,8 +2632,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#caching" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2609,15 +2643,87 @@
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#tuning-for-your-deployment" class="md-nav__link">
+  <a href="#what-that-costs-in-practice" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tuning for your deployment
+        What that costs in practice
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="What that costs in practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#measured-opening-a-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measured: opening a dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measured-changing-a-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measured: changing a filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measured-cost-per-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measured: cost per component
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-can-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you can change
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What you can change">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#where-to-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to start
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4031,17 +4137,51 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#rendering" class="md-nav__link">
+  <a href="#how-depictio-keeps-it-fast" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Rendering
+        How Depictio keeps it fast
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Depictio keeps it fast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#opening-a-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opening a dashboard
       
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#bounded-payloads-and-the-load-all-control" class="md-nav__link">
+    <span class="md-ellipsis">
       
-        <li class="md-nav__item">
+        Bounded payloads and the Load-all control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-side-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server-side work
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#render-offload" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4051,8 +4191,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#caching" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4062,15 +4202,87 @@
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#tuning-for-your-deployment" class="md-nav__link">
+  <a href="#what-that-costs-in-practice" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tuning for your deployment
+        What that costs in practice
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="What that costs in practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#measured-opening-a-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measured: opening a dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measured-changing-a-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measured: changing a filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measured-cost-per-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measured: cost per component
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-can-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you can change
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What you can change">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#where-to-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to start
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4095,78 +4307,486 @@
 
 
 <h1 id="performance-scaling"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 16a3 3 0 0 1-3-3c0-1.12.61-2.1 1.5-2.61l9.71-5.62-5.53 9.58c-.5.98-1.51 1.65-2.68 1.65m0-13c1.81 0 3.5.5 4.97 1.32l-2.1 1.21C14 5.19 13 5 12 5a8 8 0 0 0-8 8c0 2.21.89 4.21 2.34 5.65h.01c.39.39.39 1.02 0 1.41s-1.03.39-1.42.01A9.97 9.97 0 0 1 2 13 10 10 0 0 1 12 3m10 10c0 2.76-1.12 5.26-2.93 7.07-.39.38-1.02.38-1.41-.01a.996.996 0 0 1 0-1.41A7.95 7.95 0 0 0 20 13c0-1-.19-2-.54-2.9L20.67 8C21.5 9.5 22 11.18 22 13"/></svg></span> Performance &amp; Scaling<a class="headerlink" href="#performance-scaling" title="Permanent link">&para;</a></h1>
-<p>This page describes the mechanisms in Depictio's render path aimed at handling <strong>larger
-data collections</strong>, and the settings that let you tune them for your deployment.</p>
-<div class="admonition note">
-<p class="admonition-title">Work in progress</p>
-<p>These changes target the render and caching paths to reduce redundant work; they are
-recent and have <strong>not yet been extensively benchmarked</strong>, so this page describes <em>what
-each mechanism does</em> rather than promising specific speed-ups. Real-world figures will
-be added as they are measured.</p>
-</div>
-<h2 id="rendering">Rendering<a class="headerlink" href="#rendering" title="Permanent link">&para;</a></h2>
-<p>Most of the work happens server-side, in a Polars + Delta Lake + Celery pipeline, so the
-browser receives compact, pre-rendered payloads rather than raw data.</p>
+<p>This page describes how Depictio handles <strong>large data collections</strong>: what the server
+does to avoid reading rows it doesn't need, how much data reaches the browser, and which
+settings let you tune that for your deployment. It is in three parts: how the design
+keeps things fast, <a href="#what-that-costs-in-practice">what that costs in practice</a> on a
+12-million-row benchmark project, and <a href="#what-you-can-change">what you can change</a>.</p>
+<p>The guiding idea is that a dashboard should stay usable at any collection size: work is
+pushed as close to the stored data as possible, payloads are bounded by default, and when
+a bound is applied it is made visible rather than hidden.</p>
+<p><img alt="How much of the table each stage still carries. The top band is what used to travel the whole pipeline; the lower band narrows at CLI ingest, API serve and viewer render" src="../../images/v0.12/react/schema_perf_stages.png" /></p>
+<h2 id="how-depictio-keeps-it-fast">How Depictio keeps it fast<a class="headerlink" href="#how-depictio-keeps-it-fast" title="Permanent link">&para;</a></h2>
+<p>The design has one goal at every stage: touch less data. A panel does not fetch until
+it is on screen, the response it gets is a bounded slice, and the query behind that
+slice is pushed into the Delta scan so most rows are never read at all.</p>
+<h3 id="opening-a-dashboard">Opening a dashboard<a class="headerlink" href="#opening-a-dashboard" title="Permanent link">&para;</a></h3>
+<p>A dashboard can hold dozens of panels, each needing its own request. Rather than
+requesting all of them up front, Depictio loads them as you reach them.</p>
+<p><img alt="Opening a 30-panel dashboard, before and after the viewport gate: every panel above and just below the fold used to start fetching at mount, where now only the ones actually on screen do" src="../../images/v0.12/react/schema_panel_loading.png" /></p>
 <ul>
-<li><strong>Column projection on Delta tables</strong> — figures and cards read only the columns they
-  need from the Delta table rather than the full frame, which reduces I/O on wide tables.</li>
-<li><strong>Polars-native figure building</strong> — figures are built directly from Polars frames,
-  avoiding a second in-memory copy of the frame via pandas.</li>
-<li><strong>Scatter downsampling + WebGL</strong> — scatter-type figures above <strong>50,000 points</strong> are
-  downsampled and switched to WebGL rendering, intended to keep large scatter plots
-  renderable in the browser rather than sending a multi-megabyte trace.</li>
-<li><strong>Server-side table pagination</strong> — tables stream rows on demand (capped per request)
-  and mount lazily as they scroll into view, so large tables aren't loaded into the
-  browser all at once.</li>
-<li><strong>Compressed responses</strong> — large figure/table JSON is gzip-compressed in transit.</li>
+<li><strong>Panels load when they scroll into view.</strong> A panel below the fold shows a placeholder
+  and issues <strong>no data request</strong> until you scroll near it, so opening a large dashboard
+  stays responsive instead of waiting on every panel first. Advanced-viz, MultiQC and
+  JBrowse panels defer their <strong>code chunk</strong> as well, since their renderers fetch on mount;
+  figure and table panels load their chunk when they mount but still gate the fetch.</li>
+<li><strong>Progress is scoped to the viewport.</strong> A ring and a count beside the dashboard title
+  cover what is on screen rather than the whole dashboard, so they always complete.</li>
 </ul>
-<h2 id="render-offload">Render offload<a class="headerlink" href="#render-offload" title="Permanent link">&para;</a></h2>
-<p>By default Depictio renders figures <strong>adaptively</strong>: cheap, interactive figures render
-inline on the API worker, while heavy figures (large frames, MultiQC) are offloaded to
-Celery workers so the API stays responsive under concurrent load.</p>
+<p>For what this looks like while a dashboard opens, see
+<a href="../../usage/guides/dashboard_usage/#how-a-dashboard-loads-v130">using the dashboard</a>.</p>
+<p>The viewer bundle is split along the same lines: route trees and the heavy visualisation
+libraries (Plotly, AG Grid, Cytoscape) load as separate chunks on demand, so a page only
+parses the code it actually renders.</p>
+<div class="admonition info">
+<p class="admonition-title">WebGL budget</p>
+<p>Browsers allow only a handful of simultaneous WebGL contexts. Past roughly five
+accelerated plots the oldest ones used to lose their context and blank out. Depictio
+now budgets contexts and falls back to a lighter SVG renderer for the plots that miss
+out, so a dense dashboard degrades in quality rather than showing nothing.</p>
+</div>
+<h3 id="bounded-payloads-and-the-load-all-control">Bounded payloads and the Load-all control<a class="headerlink" href="#bounded-payloads-and-the-load-all-control" title="Permanent link">&para;</a></h3>
+<p>By default every data panel is served a <strong>bounded</strong> slice rather than the whole
+collection. Where a bound has been applied, the panel says so, and you can override it.</p>
+<p><a href="https://depictio.github.io/depictio-docs/images/react/load_all_light.webp" target="_blank"><img alt="A volcano panel showing the badge 9,900 / 12,011,000 pts, with the Load-all icon at the bottom of the hover action cluster and its tooltip open" src="https://depictio.github.io/depictio-docs/images/react/load_all_light.webp#only-light" /></a></p>
+<p><a href="https://depictio.github.io/depictio-docs/images/react/load_all_dark.webp" target="_blank"><img alt="A volcano panel showing the badge 9,900 / 12,011,000 pts, with the Load-all icon at the bottom of the hover action cluster and its tooltip open" src="https://depictio.github.io/depictio-docs/images/react/load_all_dark.webp#only-dark" /></a></p>
+<p><em>A figure serving 9,900 of 12 million points. The badge sits beside the panel title, and
+the Load-all icon is the bottom entry in the action cluster, which appears on hover.</em></p>
+<ul>
+<li><strong>The Load-all button</strong> — an action icon in each panel's hover cluster toggles between
+  the reduced view and a full load of every point or row, and back again.</li>
+<li><strong>Figures</strong> carry a badge reading e.g. <code>9,900 / 12,011,000 pts</code>, or <code>12,011,000 pts (all)</code>
+  once fully loaded. Point plots are downsampled above <code>figure_max_points</code> (10,000 by
+  default); a per-component <code>max_points</code> overrides it for a single figure.</li>
+<li><strong>Tables</strong> page at scan level, so a deep page costs the same as a shallow one. Above
+  <code>table_sort_max_rows</code> (1,000,000 by default) rows are served in natural scan order and
+  the <strong>sort control disappears from the column headers</strong>, rather than offering a sort that
+  silently does nothing.</li>
+<li>
+<p><strong>Advanced visualisations</strong> are reduced according to what their renderer can survive,
+  not by a single global rule:</p>
 <table>
 <thead>
 <tr>
-<th>Setting</th>
+<th>Policy</th>
+<th>Applies to</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Uniform sample</td>
+<td>embedding, QQ, lollipop, coverage track</td>
+<td>The renderer draws one mark per row and reads no aggregate, so a uniform subset is a faithful, lower-resolution picture.</td>
+</tr>
+<tr>
+<td>Tail-preserving</td>
+<td>volcano, MA, Manhattan</td>
+<td>Significant rows are kept whole and the dense middle is strided. On a multi-million-row DE table a uniform sample keeps almost none of the hits, so the plot would become a cloud with nothing to label.</td>
+</tr>
+<tr>
+<td>Never sampled</td>
+<td>stacked taxonomy, rarefaction, DA barplot, enrichment, sunburst, dot plot, oncoplot, UpSet, hierarchical heatmap, sankey, phylogenetic</td>
+<td>These renderers aggregate client-side (per-sample sums, top-N rankings), so a sample would change the reported <em>values</em>, not their resolution.</td>
+</tr>
+</tbody>
+</table>
+<p>The never-sampled kinds are served whole up to <code>advanced_viz_no_sample_max_rows</code>
+(2,000,000 by default). Past that ceiling they fall back to a uniform sample and the
+chart is badged orange <strong>estimated</strong>, so an approximation is never presented as a
+total. The lollipop plot carries the same badge whenever its rows were sampled, since
+it aggregates them into per-gene counts.</p>
+</li>
+</ul>
+<h3 id="server-side-work">Server-side work<a class="headerlink" href="#server-side-work" title="Permanent link">&para;</a></h3>
+<p>Most of the work happens server-side, in a Polars + Delta Lake + Celery pipeline, so the
+browser receives compact, ready-to-draw payloads rather than raw data.</p>
+<ul>
+<li><strong>Aggregation pushdown</strong> — figures whose result is an aggregate (box plots, histograms,
+  bar charts) are computed <em>as a query over the Delta scan</em>. The result is exact; the rows
+  simply never leave storage. In the benchmark run below, 114 of 225 figure renders
+  materialised <strong>zero rows</strong>.</li>
+<li><strong>Column projection</strong> — figures and cards read only the columns they need, which reduces
+  I/O on wide tables.</li>
+<li><strong>Filters pushed into the scan</strong> — categorical and temporal filters are kept in a form
+  the parquet reader can use, so row groups that cannot match are skipped instead of being
+  read and discarded.</li>
+<li><strong>Delta clustering</strong> — tables are sorted on the columns they actually get filtered by
+  before being written, which makes that row-group skipping more effective. This sort is
+  skipped when the CLI's opt-in streamed write is enabled, since sorting the whole dataset
+  would materialise exactly what streaming avoids.</li>
+<li><strong>Cross-DC links resolved once</strong> — a link filter is resolved a single time per fan-out and
+  evaluated lazily, rather than re-derived for every component that depends on it.</li>
+<li><strong>Polars-native figure building</strong> — figures are built directly from Polars frames,
+  avoiding a second in-memory copy via pandas.</li>
+<li><strong>Compressed responses</strong> — large figure/table JSON is gzip-compressed in transit.</li>
+</ul>
+<h3 id="render-offload">Render offload<a class="headerlink" href="#render-offload" title="Permanent link">&para;</a></h3>
+<p>Depictio renders figures <strong>adaptively</strong>: cheap figures render inline on the API process,
+while figures over a source-size threshold (50 MB by default) are dispatched to Celery
+workers so the API stays responsive under concurrent load. A dispatched render that
+exceeds the offload timeout returns <code>504</code> rather than blocking indefinitely.</p>
+<p>Only figure renders have a Celery path. Tables, cards, interactive components and the
+advanced-viz data endpoint are synchronous handlers, which FastAPI already runs in its own
+thread pool, so they never needed the escape hatch.</p>
+<h3 id="caching">Caching<a class="headerlink" href="#caching" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Arrow IPC (LZ4) cache</strong> — cached Polars frames are stored with Arrow IPC + LZ4
+  compression in Redis, a more compact serialization than pickle. Frames above the
+  per-item cap are skipped rather than cached, so large frames don't silently bloat Redis.</li>
+<li><strong>MultiQC resident report</strong> — parsed MultiQC reports are kept resident in the worker
+  process across renders, so prewarming a dashboard's MultiQC figures doesn't
+  re-deserialize the full report for every plot.</li>
+<li><strong>MultiQC figures prerendered at ingest</strong> <em>(opt-in)</em> — the CLI already parses every
+  MultiQC report for metadata, so it can build the aggregated Plotly figures in that same
+  pass and upload them to S3. The render endpoint then serves them directly instead of
+  building them on the first cold open. Set <code>DEPICTIO_INGEST_MULTIQC_PRERENDER=1</code> on the
+  CLI; it costs ingest time and S3 storage, and applies to fresh ingests only. Collections
+  that never opted in are not penalised, since a short-lived Redis marker spares them the
+  S3 round-trip per panel.</li>
+</ul>
+<p><img alt="A MultiQC figure request: the CLI builds and uploads the figures at ingest, the render endpoint probes the S3 prefix before enqueueing a build, and a Redis presence marker spares collections that never opted in" src="../../images/v0.12/react/schema_multiqc_prerender.png" /></p>
+<div style="max-width: 1200px; margin: 1.5rem auto 2rem auto;">
+<div style="padding: 62.19% 0 0 0; position: relative">
+  <iframe
+    src="https://player.vimeo.com/video/1213726492?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1&amp;muted=1"
+    frameborder="0"
+    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
+    title="Opening a MultiQC dashboard aggregating 50 reports across 600 samples in Depictio"
+  ></iframe>
+  </div>
+  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 Opening a MultiQC dashboard aggregating <strong>50 reports</strong> across <strong>600 samples</strong>.</p>
+</div>
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+<h2 id="what-that-costs-in-practice">What that costs in practice<a class="headerlink" href="#what-that-costs-in-practice" title="Permanent link">&para;</a></h2>
+<p>The sections above describe the design. This is what it measured on a real project.</p>
+<p>One benchmark run against the current build, on a linked 3-collection project. It
+describes <em>this</em> setup, so treat it as an order of magnitude for a comparably sized
+project rather than as a specification. The full run, with per-kind latency, the
+methodology and its caveats, is committed alongside the harness as
+<code>benchmark/PERF_REPORT_v2.md</code> in the
+<a href="https://github.com/depictio/depictio">depictio repository</a>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dataset</td>
+<td><strong>12,019,500 rows</strong> across 3 linked collections</td>
+</tr>
+<tr>
+<td>Size</td>
+<td>1.025 GB raw / <strong>1.429 GB Delta</strong></td>
+</tr>
+<tr>
+<td>Host</td>
+<td>Apple M1 Max, 10 CPU, 32 GB, on a Colima VM with 8 vCPU / 20 GB</td>
+</tr>
+<tr>
+<td>API container</td>
+<td>4 CPU, <strong>1 uvicorn worker, dev mode</strong></td>
+</tr>
+<tr>
+<td>Celery</td>
+<td>4 CPU / 4 workers, 30 s offload timeout</td>
+</tr>
+</tbody>
+</table>
+<p>The single dev worker matters: a production deployment runs several, so these figures are
+pessimistic in that respect.</p>
+<div style="max-width: 1200px; margin: 1.5rem auto 2rem auto;">
+<div style="padding: 62.19% 0 0 0; position: relative">
+  <iframe
+    src="https://player.vimeo.com/video/1213726629?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1&amp;muted=1"
+    frameborder="0"
+    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
+    title="Opening a 30-component Depictio dashboard on a multi-million row project"
+  ></iframe>
+  </div>
+  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 Opening a <strong>30-component</strong> dashboard on a comparable linked project. Captured in the browser, so what you see includes rendering and painting, not only the server timings tabulated below.</p>
+</div>
+
+<h3 id="measured-opening-a-dashboard">Measured: opening a dashboard<a class="headerlink" href="#measured-opening-a-dashboard" title="Permanent link">&para;</a></h3>
+<p>Every component fetched at once, the way the page does it. <em>First chart</em> is the first
+figure or advanced viz to appear. <em>Cold</em> means the server caches were flushed beforehand.</p>
+<table>
+<thead>
+<tr>
+<th>Components (fired)</th>
+<th>Cache</th>
+<th>First component</th>
+<th>First chart</th>
+<th>All components</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4 (18)</td>
+<td>cold</td>
+<td>155 ms</td>
+<td>1.2 s</td>
+<td>not reached</td>
+</tr>
+<tr>
+<td>4 (18)</td>
+<td>warm</td>
+<td>133 ms</td>
+<td>218 ms</td>
+<td><strong>816 ms</strong></td>
+</tr>
+<tr>
+<td>8 (22)</td>
+<td>cold</td>
+<td>162 ms</td>
+<td>184 ms</td>
+<td>not reached</td>
+</tr>
+<tr>
+<td>8 (22)</td>
+<td>warm</td>
+<td>140 ms</td>
+<td>1.5 s</td>
+<td>19.9 s</td>
+</tr>
+<tr>
+<td>16 (30)</td>
+<td>cold</td>
+<td>135 ms</td>
+<td>190 ms</td>
+<td>3.3 s</td>
+</tr>
+<tr>
+<td>16 (30)</td>
+<td>warm</td>
+<td>151 ms</td>
+<td>243 ms</td>
+<td>3.1 s</td>
+</tr>
+<tr>
+<td>30 (44)</td>
+<td>cold</td>
+<td>224 ms</td>
+<td>4.3 s</td>
+<td>not reached</td>
+</tr>
+<tr>
+<td>30 (44)</td>
+<td>warm</td>
+<td>270 ms</td>
+<td>270 ms</td>
+<td>6.2 s</td>
+</tr>
+</tbody>
+</table>
+<p>The leading number is how many components issue a timed render; the parenthesised number
+is the dashboard's full panel count, since passive panels (text, interactive widgets
+reading precomputed specs) are on the page but not measured.</p>
+<p><strong>The page starts showing something in 133 to 270 ms regardless of dashboard size</strong>, and
+that barely moves between 4 and 30 components. What scales is the tail, not the first
+paint, which is the point of loading panels as they come into view. <em>Not reached</em> means a
+component was still outstanding when the run moved on, so no total is reported for that
+row.</p>
+<h3 id="measured-changing-a-filter">Measured: changing a filter<a class="headerlink" href="#measured-changing-a-filter" title="Permanent link">&para;</a></h3>
+<p>Across the 3 linked collections. No round is a cache hit, since each applies a value no
+earlier round used.</p>
+<table>
+<thead>
+<tr>
+<th>Components</th>
+<th>Starts responding</th>
+<th>Fully caught up</th>
+<th>Worst round</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>154 ms</td>
+<td><strong>1.7 s</strong></td>
+<td>1.9 s</td>
+</tr>
+<tr>
+<td>8</td>
+<td>93 ms</td>
+<td><strong>2.0 s</strong></td>
+<td>3.0 s</td>
+</tr>
+<tr>
+<td>16</td>
+<td>214 ms</td>
+<td><strong>4.1 s</strong></td>
+<td>33.5 s</td>
+</tr>
+<tr>
+<td>30</td>
+<td>186 ms</td>
+<td><strong>6.3 s</strong></td>
+<td>92.9 s</td>
+</tr>
+</tbody>
+</table>
+<p>A <em>round</em> is one filter change, after which every component on the dashboard refetches;
+requests go out through a pool of 4, matching the viewer's own fetch queue. <em>Fully caught
+up</em> is the median across rounds in which every component landed, so it never quietly
+describes a partial dashboard.</p>
+<p>Which collection the filter starts on barely matters: filtering from the 12-million-row
+feature matrix (2.0 s median) costs about the same as filtering from the 500-row sample
+sheet (2.4 s). That is what the bidirectional link graph buys, since both resolve to the
+same few hundred sample ids before any data is touched. Link translation itself is
+<strong>25 ms</strong> median.</p>
+<h3 id="measured-cost-per-component">Measured: cost per component<a class="headerlink" href="#measured-cost-per-component" title="Permanent link">&para;</a></h3>
+<p>Median and 95th-percentile render time across all 1,434 successful renders. One row per
+family; the full report linked above breaks these out per figure and per viz kind.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>p50</th>
+<th>p95</th>
+<th>Median rows in memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>interactive</td>
+<td>11 ms</td>
+<td>132 ms</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>card</td>
+<td>119 ms</td>
+<td>1.3 s</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>table</td>
+<td>222 ms</td>
+<td>1.2 s</td>
+<td>100 (one page)</td>
+</tr>
+<tr>
+<td>figure · aggregates (box, histogram, bar)</td>
+<td>271 ms to 709 ms</td>
+<td>4.3 s to 7.4 s</td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>figure · point plots (scatter, line)</td>
+<td>696 ms to 1.1 s</td>
+<td>3.4 s to 4.2 s</td>
+<td>40,000</td>
+</tr>
+<tr>
+<td>advanced viz (11 kinds)</td>
+<td>691 ms to 1.2 s</td>
+<td>2.6 s to 6.0 s</td>
+<td>6,005,500</td>
+</tr>
+</tbody>
+</table>
+<p>Two numbers carry the design: <strong>114 of 225 figure renders materialised zero rows</strong>,
+computed as an exact aggregation over the Delta scan, and the <strong>largest frame any render
+held in memory was 1.57 MB</strong> (median 439 KB) against a 12-million-row table. The
+advanced-viz kinds are the exception, since they read the full matrix and sample from it,
+which is why their p95 is the widest here.</p>
+<h2 id="what-you-can-change">What you can change<a class="headerlink" href="#what-you-can-change" title="Permanent link">&para;</a></h2>
+<p>Those numbers come from the defaults. These are the settings that move them, and the
+order worth trying them in. All are environment variables; see the
+<a href="../../installation/env-reference/">environment reference</a> for how to set them.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
 <th>Default</th>
 <th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>offload_rendering</code></td>
-<td><code>true</code></td>
-<td>Offload heavy figure rendering to Celery workers instead of building them on the API worker thread.</td>
+<td><code>DEPICTIO_PERFORMANCE_FIGURE_MAX_POINTS</code></td>
+<td><code>10000</code></td>
+<td>Target marker count for point plots before downsampling. Per-component <code>max_points</code> overrides it.</td>
 </tr>
 <tr>
-<td><code>offload_size_threshold_bytes</code></td>
+<td><code>DEPICTIO_PERFORMANCE_FIGURE_MAX_LOAD_ROWS</code></td>
+<td><code>500000</code></td>
+<td>Row ceiling loaded from Delta for a point-plot or code-mode figure. Bypassed on a full load.</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_TABLE_SORT_MAX_ROWS</code></td>
+<td><code>1000000</code></td>
+<td>Post-filter row count above which a table is served unsorted and the sort affordance is dropped. <code>0</code> disables the gate.</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_ADVANCED_VIZ_NO_SAMPLE_MAX_ROWS</code></td>
+<td><code>2000000</code></td>
+<td>Row ceiling for the never-sampled viz kinds. Past it they fall back to a sample and are badged <em>estimated</em>. <code>0</code> means unbounded.</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_ADVANCED_VIZ_TAIL_P_THRESHOLD</code></td>
+<td><code>0.05</code></td>
+<td>Significance cutoff below which a volcano/Manhattan row is kept whole. A renderer's own threshold wins over this fallback.</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_ADVANCED_VIZ_TAIL_EFFECT_THRESHOLD</code></td>
+<td><code>1.0</code></td>
+<td>Same, for kinds whose tail is a signed effect size (MA's log2 fold change).</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_BOX_SAMPLE_ROWS_PER_GROUP</code></td>
+<td><code>0</code></td>
+<td>Rows sampled per box-plot group before computing quartiles. <code>0</code> computes them exactly.</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_BOX_SAMPLE_MAX_GROUPS</code></td>
+<td><code>64</code></td>
+<td>Group count above which box quartiles are always computed exactly, since grouped quantiles get cheaper as cardinality rises.</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_CELERY_OFFLOAD_RENDERING</code></td>
+<td><code>false</code></td>
+<td>Force dashboard render endpoints onto Celery. Left off, offloading is adaptive rather than unconditional.</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_CELERY_OFFLOAD_SIZE_THRESHOLD_BYTES</code></td>
 <td><code>50 MB</code></td>
-<td>Frame size above which a render is offloaded rather than run inline.</td>
+<td>Source-collection size above which a figure render is dispatched to Celery instead of run inline.</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_CELERY_OFFLOAD_TIMEOUT_SECONDS</code></td>
+<td><code>30.0</code></td>
+<td>Per-request offload timeout before the API returns <code>504</code>.</td>
 </tr>
 </tbody>
 </table>
-<p>These are standard Depictio settings — see the
-<a href="../../installation/env-reference/">environment reference</a> for how to set them
-(<code>DEPICTIO_...</code> environment variables or the settings file).</p>
-<h2 id="caching">Caching<a class="headerlink" href="#caching" title="Permanent link">&para;</a></h2>
+<h3 id="where-to-start">Where to start<a class="headerlink" href="#where-to-start" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Arrow IPC (LZ4) cache</strong> — cached Polars frames are stored with Arrow IPC + LZ4
-  compression in Redis, a more compact serialization than the previous pickle format.
-  Frames above the per-item cap are skipped rather than cached, so large frames don't
-  silently bloat Redis.</li>
-<li><strong>MultiQC resident report</strong> — parsed MultiQC reports are kept resident in the worker
-  process across renders, so prewarming a dashboard's MultiQC figures no longer
-  re-deserializes the full report for every plot.</li>
-</ul>
-<h2 id="tuning-for-your-deployment">Tuning for your deployment<a class="headerlink" href="#tuning-for-your-deployment" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Scale workers, not the API</strong> — heavy rendering is CPU-bound. Add Celery worker
-  concurrency / replicas (and RAM, since each worker holds its own frame copies) rather
-  than overloading the API process.</li>
-<li><strong>Keep <code>offload_rendering</code> on</strong> for multi-user deployments serving large data
-  collections; inline rendering only makes sense for small single-user setups.</li>
+<li><strong>Scale workers, not the API</strong> — heavy figure rendering is CPU-bound. Add Celery worker
+  concurrency or replicas (and RAM, since each worker holds its own frame copies) rather
+  than overloading the API process. Running more than one uvicorn worker matters too. This
+  is also the first thing to reach for if renders are hitting the offload timeout, ahead of
+  raising the timeout itself.</li>
 <li><strong>Project your columns</strong> — narrower data collections (only the columns your components
   use) mean less data read and cached.</li>
+<li><strong>Leave the render caps at their defaults</strong> unless a specific panel needs more. Raising
+  <code>FIGURE_MAX_POINTS</code> costs payload size and browser draw time for every user, whereas the
+  per-panel <strong>Load all</strong> button gives the one person who needs the full picture a way to
+  ask for it.</li>
+<li><strong><code>BOX_SAMPLE_ROWS_PER_GROUP</code> is not a free win.</strong> It trades a sort for an <em>extra scan</em>,
+  since the exact extremes have to be read before the per-group strides are known. On warm
+  local parquet it measured a 3.7x win on a 17M-row table; on a cold S3-backed Delta table
+  the extra read can cost more than the sort it removes. Enable it only where the sort has
+  been measured to be the bottleneck.</li>
 </ul>
 
 
