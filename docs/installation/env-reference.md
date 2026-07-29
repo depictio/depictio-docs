@@ -206,9 +206,24 @@ Redis cache configuration settings.
 | `DEPICTIO_CACHE_DEFAULT_TTL` | `3600` | Default cache TTL in seconds (1 hour) |
 | `DEPICTIO_CACHE_DATAFRAME_TTL` | `1800` | DataFrame cache TTL in seconds (30 minutes) |
 | `DEPICTIO_CACHE_MAX_DATAFRAME_SIZE_MB` | `100` | Maximum DataFrame size to cache (MB) |
-| `DEPICTIO_CACHE_REDIS_MAX_MEMORY_MB` | `1024` | Redis max memory limit (MB) |
+| `DEPICTIO_CACHE_REDIS_MAX_MEMORY_MB` | `1024` | **Not enforced.** Declared but never applied to the Redis server; see the note below. |
 | `DEPICTIO_CACHE_CACHE_KEY_PREFIX` | `depictio:df:` | Prefix for cache keys |
 | `DEPICTIO_CACHE_CACHE_VERSION` | `v1` | Cache version for key namespacing |
+
+!!! warning "Cap Redis on the server, not through Depictio"
+    `DEPICTIO_CACHE_REDIS_MAX_MEMORY_MB` is read into settings and then never applied:
+    Depictio issues no `CONFIG SET`, so setting it leaves Redis **uncapped**. A cache that
+    grows until the container's memory limit kills it takes the Celery broker down with it
+    when both share one Redis, which fails every figure offload until it recovers.
+
+    Set the limit on Redis itself instead, and give it an eviction policy:
+
+    ```bash
+    redis-server --maxmemory 1500mb --maxmemory-policy volatile-lru
+    ```
+
+    `volatile-lru` rather than `allkeys-lru` because the policy is server-wide: cache
+    entries are written with a TTL and broker keys are not, so only the cache is evicted.
 
 ---
 

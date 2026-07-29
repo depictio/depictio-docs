@@ -140,7 +140,7 @@ reduced view, it says so and offers a way out:
 *Hover a panel to reveal its action cluster. **Load all** is the bottom icon, and the badge
 beside the title says how much of the collection you are currently seeing.*
 
-- **Figures** show a badge such as `10,000 / 5,000,000 pts`. Hover the panel and click the
+- **Figures** show a badge such as `9,900 / 12,011,000 pts`. Hover the panel and click the
   **Load all** icon (:material-database-arrow-down:) in the action cluster to fetch every
   point; the badge switches to `(all)` and the button toggles back to the reduced view.
   Loading everything can be slow on a very large collection.
