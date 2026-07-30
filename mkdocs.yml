@@ -69,6 +69,7 @@ extra_css:
   - stylesheets/timeline.css
   - stylesheets/blog.css
   - stylesheets/neoteroi-mkdocs-v1.1.3.css
+  - stylesheets/ask-ai.css
   # - stylesheets/css-v1.0.4.css
   - https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
   - https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css
@@ -77,6 +78,7 @@ extra_css:
 extra_javascript:
   - javascripts/triangular-animation.js
   - javascripts/catalog-fullscreen.js
+  - javascripts/ask-ai.js
 
 # Markdown Extensions
 markdown_extensions:

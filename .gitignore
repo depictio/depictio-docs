@@ -33,4 +33,6 @@ docs/.DS_Store
 node_modules/
 docs/images/.DS_Store
 .DS_Store
-src/
+# Anchored: this is the dead scratch dir at the repo root, not every directory
+# named src/ — unanchored it silently swallowed assistant/src/.
+/src/
