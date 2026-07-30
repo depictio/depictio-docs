@@ -4194,8 +4194,20 @@ those datasets relate, and get a dashboard where filtering one thing filters
 everything. What changed is that it now does that at the scale your pipelines
 actually produce, and at speed.</p>
 <p>That is what 1.0 means here. Not "feature complete", which no tool ever is, but
-fast, stable enough to leave running, and settled enough that building on top of
-it is a reasonable thing to do. Here is what changed.</p>
+four specific things:</p>
+<ul>
+<li><strong>It stopped moving.</strong> The data model, the API and the viewer are stable, so a
+  project you ingest today still opens next year and code you write against the
+  API does not need rewriting at the next release.</li>
+<li><strong>It is meant to be deployed.</strong> Independently scaling API and worker pools,
+  Docker or Kubernetes, and health reporting when an ingestion goes wrong,
+  instead of a thing you babysit.</li>
+<li><strong>It holds up on real data.</strong> Millions of rows across linked collections, on
+  hardware you already have.</li>
+<li><strong>A lot is already in it.</strong> Eighteen advanced visualisation types, MultiQC
+  rendered inline, images, maps and trees, not a roadmap promising them.</li>
+</ul>
+<p>Here is what changed.</p>
 <div style="max-width: 1200px; margin: 1.5rem auto 2rem auto;">
 <div style="padding: 64.29% 0 0 0; position: relative">
   <iframe src="https://player.vimeo.com/video/1194664914?h=4155d79379&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1&amp;muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%" title="Depictio, from project to dashboard"></iframe>
