@@ -190,6 +190,39 @@ All user input is validated:
 
 ---
 
+## Content Security Policy { #content-security-policy }
+
+Deployed instances send a Content-Security-Policy header. The development server sends
+none, so a policy violation only ever shows up on a deployment.
+
+Most of the policy is `'self'`. Three allowances are not obvious, and are the ones to carry
+across if you replace the policy at a reverse proxy or ingress:
+
+| Directive | Allowance | Needed for |
+|-----------|-----------|------------|
+| `script-src` | `'unsafe-eval' 'wasm-unsafe-eval'` | Plotly's WebGL renderer and the in-browser Python runtime |
+| `connect-src` | `ws: wss:` | The real-time events WebSocket |
+| `connect-src` | the basemap origins below | Map tiles |
+
+### Basemap origins { #basemap-origins }
+
+Maps load their style, glyphs, sprite and vector tiles over `fetch`, so `connect-src`
+governs them; allowing images is not enough. A map missing these renders blank.
+
+```text
+https://basemaps.cartocdn.com
+https://*.basemaps.cartocdn.com
+https://tile.openstreetmap.org
+```
+
+The apex domain is listed separately because a `*.` wildcard does not match it.
+
+!!! warning "The policy lives in two files"
+    The API middleware (`depictio/api/main.py`) and the viewer's nginx template
+    (`docker-images/nginx.conf.template`) each send their own copy, and the two must agree.
+
+---
+
 ## Audit Logging
 
 Depictio logs security-relevant events for compliance and troubleshooting.

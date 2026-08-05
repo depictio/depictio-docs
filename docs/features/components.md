@@ -856,6 +856,11 @@ Card components display metrics with aggregations. A card shows a **hero metric*
 | :material-chart-bell-curve: **q3** | 75th percentile | Upper-quartile coverage |
 | :material-chart-box-outline: **box_plot_stats** | Tukey 5-number summary (min, Q1, median, Q3, max) | Required by `secondary_layout: box_plot` |
 
+!!! note "Which aggregations a column accepts"
+    Validity depends on `column_type`; the compatibility table lives in [YAML Sync](yaml-sync.md#card-component). As of **v1.4.0** `percentile` is accepted on `int64` as well as `float64` — quantiles are well defined on integers, and the compute path already recorded them.
+
+    A distinct count is spelled **`nunique`**. The builder wrote `unique` before v1.4.0, which rendered correctly but failed every validating path (YAML export, CLI, catalog) with *"Invalid aggregation 'unique'"*. Collections ingested under the old spelling still resolve, so no re-ingest is needed.
+
 ### Configuration
 
 1. Select a **Data Collection**
@@ -883,30 +888,66 @@ Cards can display multiple aggregation results in a single component. The primar
 └─────────────────────────────────┘
 ```
 
-### Secondary Layout Modes <small>(v0.13.0+)</small>
+### Secondary Layout Modes <small>(v0.13.0+)</small> { #secondary-layout-modes }
 
-The default layout above stacks `aggregations` as a vertical list under the hero metric. Set `secondary_layout` on the card to switch to one of five richer layouts — each tuned for a specific summary intent and with its own required companion field.
+The default layout above stacks `aggregations` as a vertical list under the hero metric. Set `secondary_layout` on the card to switch to a richer one. Each is tuned for a specific summary intent, and most read a companion field naming the column or cut-off they work from.
+
+**From the `aggregations` list**
 
 | `secondary_layout` | Renders | Companion fields required |
 |--------------------|---------|---------------------------|
 | `vertical` (default) | Stacked rows from `aggregations` list | `aggregations` |
 | `compact` | Horizontal strip from `aggregations` | `aggregations` |
+| `grid` <small>(v1.4.0+)</small> | Two-column grid of `aggregations` | `aggregations` |
 | `box_plot` | Tukey box-and-whisker (min / Q1 / median / Q3 / max) | `aggregations: [box_plot_stats]` |
+
+**Distribution and quality** <small>(v1.4.0+)</small>
+
+| `secondary_layout` | Renders | Companion fields required |
+|--------------------|---------|---------------------------|
+| `histogram` | Binned sparkline of the column's distribution | _(none)_ |
+| `threshold` | Pass / warn / fail bar against a QC cut-off | `threshold_value`, optionally `threshold_warn`, `threshold_direction` |
+| `completeness` | Filled versus missing share of the column | _(none)_ |
+| `uniqueness` | Distinct versus repeated share of the column | _(none)_ |
+| `trend` | Sparkline of the hero aggregation across buckets of an ordered column | `trend_col` |
+| `attrition` | Retention across successive pipeline stages | `attrition_cols` |
+
+A `box_plot` summarises a distribution by its quartiles, which says nothing about
+modality — a bimodal column and a flat one can share the same five numbers. `histogram`
+is the layout that shows the shape.
+
+**Breakdown by a categorical column**
+
+| `secondary_layout` | Renders | Companion fields required |
+|--------------------|---------|---------------------------|
 | `top_n` | Mini bar chart of top-N most frequent `breakdown_col` values | `breakdown_col`, `top_n_count` (1–5) |
-| `coverage` | Fill bar showing `value / coverage_max` | `coverage_max` |
 | `concentration` | Top-N share (%) by `breakdown_col` | `breakdown_col`, `top_n_count` (1–5) |
+| `composition` <small>(v1.4.0+)</small> | One 100%-wide bar split into top-N segments plus a muted *Other*, captioned with Pielou evenness | `breakdown_col`, `top_n_count` (1–5) |
+| `donut` <small>(v1.4.0+)</small> | Same breakdown drawn as a ring | `breakdown_col`, `top_n_count` (1–5) |
+
+**Progress toward a maximum**
+
+| `secondary_layout` | Renders | Companion fields required |
+|--------------------|---------|---------------------------|
+| `coverage` | Fill bar showing `value / coverage_max` | `coverage_max` |
+| `gauge` <small>(v1.4.0+)</small> | Same ratio drawn as an arc | `coverage_max` |
 
 **YAML field reference (multi-metric extras)**
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `secondary_layout` | enum (see table above) | `vertical` | Layout mode for the secondary block. |
-| `aggregations` | list[str] \| null | `null` | Secondary aggregation functions (e.g. `[median, std_dev, min, max]` or `[box_plot_stats]`). Required by `vertical`, `compact`, `box_plot`. |
-| `breakdown_col` | str \| null | `null` | Group-by column for `top_n` / `concentration` layouts. |
-| `top_n_count` | int (1–5) | `3` | Number of top values rendered in `top_n` / `concentration` layouts. |
-| `coverage_max` | float \| null | `null` | Denominator for the `coverage` layout's fill bar. Falls back to `vertical` if missing. |
+| `secondary_layout` | enum (see tables above) | `vertical` | Layout mode for the secondary block. |
+| `aggregations` | list[str] \| null | `null` | Secondary aggregation functions (e.g. `[median, std_dev, min, max]` or `[box_plot_stats]`). Required by `vertical`, `compact`, `grid`, `box_plot`. |
+| `breakdown_col` | str \| null | `null` | Group-by column for `top_n` / `concentration` / `composition` / `donut`. |
+| `top_n_count` | int (1–5) | `3` | Number of top values rendered by `top_n`, `concentration`, `composition` and `donut`. Capped at 5, past which the strip is illegible at a typical card size. |
+| `coverage_max` | float \| null | `null` | Denominator for `coverage` and `gauge`. Falls back to `vertical` if missing. |
+| `threshold_value` | float \| null | `null` | QC cut-off for `threshold`. Without it the strip is not drawn. |
+| `threshold_direction` | `min` \| `max` | `min` | Which side passes. `min` is at-least (coverage, %Q30), `max` is at-most (duplication, contamination). Explicit, because inferring it would silently invert a QC verdict. |
+| `threshold_warn` | float \| null | `null` | Softer cut-off between pass and fail. Ignored unless it lies on the failing side of `threshold_value`. |
+| `trend_col` | str \| null | `null` | Ordered column the `trend` sparkline is bucketed along — a date, a timestamp, or any sortable number. The card's own column is what is aggregated inside each bucket. |
+| `attrition_cols` | list[str] | `[]` | Ordered stage columns for `attrition`, following the card's own column as the first stage. The order is the pipeline's order and is the content of the chart, so stages are never sorted by value. |
 
-**Examples (from `depictio/projects/init/iris/dashboards/overview.yaml`)**
+**Examples** — the first three are from `depictio/projects/init/iris/dashboards/overview.yaml`; the rest are illustrative.
 
 === "box_plot"
 
@@ -948,6 +989,52 @@ The default layout above stacks `aggregations` as a vertical list under the hero
       column_type: object
     ```
 
+=== "threshold"
+
+    ```yaml
+    - tag: mean-coverage
+      component_type: card
+      aggregation: average
+      secondary_layout: threshold
+      threshold_value: 30       # pass at 30x or better
+      threshold_warn: 20        # warn band between 20x and 30x
+      threshold_direction: min  # higher is better
+      column_name: coverage
+      column_type: float64
+      title: "Mean Coverage"
+    ```
+
+=== "composition"
+
+    ```yaml
+    - tag: variety-composition
+      component_type: card
+      aggregation: nunique
+      secondary_layout: composition
+      breakdown_col: variety
+      top_n_count: 3
+      column_name: variety
+      column_type: object
+    ```
+
+=== "trend"
+
+    ```yaml
+    - tag: reads-over-time
+      component_type: card
+      aggregation: average
+      secondary_layout: trend
+      trend_col: sampling_date  # ordered column the sparkline walks
+      column_name: read_count
+      column_type: int64
+    ```
+
+The seeded iris and penguins showcase dashboards exercise most of these at once:
+
+![Iris metrics showcase: a row of cards using box plot, histogram, compact strip and top-N breakdown layouts](../images/react/aggregation_cards_iris.png)
+
+![Penguins metrics showcase: cards using composition, donut, uniqueness, coverage, trend, threshold and gauge layouts](../images/react/aggregation_cards_penguins.png)
+
 ### Conditional Aggregation (filter_expr)
 
 Cards support a `filter_expr` field — a Polars expression that pre-filters the data **before** computing the aggregation. This enables conditional metrics like "count of samples with coverage > 30x" without creating a separate data collection.
@@ -981,8 +1068,15 @@ Text components are presentational tiles for section delimiters, narrative intro
 | `component_type` | `"text"` | — | Discriminator |
 | `title` | str | `""` | Heading text |
 | `order` | int (1–6) | `1` | Heading level — renders as `<h1>` through `<h6>` (values outside 1–6 are clamped) |
-| `alignment` | `left` \| `center` \| `right` | `left` | Horizontal text alignment for both title and body |
+| `alignment` | `left` \| `center` \| `right` | `left` | Horizontal alignment for both title and body |
+| `vertical_alignment` <small>(v1.4.0+)</small> | `top` \| `center` \| `bottom` | `center` | Where the text block sits vertically within its tile |
 | `body` | str | `""` | Optional paragraph rendered below the title |
+
+!!! note "`vertical_alignment` defaults to `center` as of v1.4.0"
+    The grid sizes a tile in whole row units, so a text tile is almost never the height of
+    its own text. Top-aligned, a one-line heading in an `h: 2` tile spent the remainder as
+    dead space beneath itself. Set `vertical_alignment: top` to restore the earlier
+    rendering.
 
 ### Inline markdown
 
@@ -1295,6 +1389,61 @@ Scatter maps support the same lasso/box/click selection as scatter plots. Enable
 
 !!! note "Choropleth Limitation"
     Choropleth maps do not support selection filtering (Plotly does not expose click/lasso on choropleth traces).
+
+### Dashboard-wide map panel <small>(v1.4.0+)</small> { #dashboard-wide-map-panel }
+
+A map is often the thing every tab of a dashboard filters on, but a map in the grid belongs to one tab. Set `placement: floating` and the map leaves the grid entirely: it claims no cell, belongs to the whole tab family, and stays reachable from every tab of it.
+
+```yaml
+- tag: sampling-sites
+  component_type: map
+  workflow_tag: python/my_workflow
+  data_collection_tag: sample_metadata
+  lat_column: latitude
+  lon_column: longitude
+  color_column: habitat
+  selection_enabled: true
+  selection_column: sample
+  placement: floating             # grid (default) or floating
+  floating_initial_state: docked  # compact (default), expanded, docked, hidden
+```
+
+`floating_initial_state` sets the state the panel opens in. Once a viewer moves, resizes or folds it, their own choice is remembered for that dashboard family.
+
+=== "Floating"
+
+    A draggable card over the dashboard: `compact` is the small footprint shown here, `expanded` the larger one. The basemap credit stays folded into the ⓘ in its corner.
+
+    ![A map panel floating as a draggable card above the dashboard grid](../images/react/map_panel_floating.png)
+
+=== "Docked"
+
+    A column pinned under the filter panel, resized by dragging its top edge. Three sites are selected here, so the panel header carries a `3 SELECTED` badge and its reset, the header control repeats the count, and the cards and the bar chart have all followed the selection.
+
+    ![A map panel docked under the filter panel with three sites selected, and the cards and chart filtered to match](../images/react/map_panel_docked.png)
+
+=== "Docked and folded"
+
+    Folding is something the viewer does, not a state you can author. The dock collapses to its title bar. The selection and its reset stay reachable, and the map gives its height back to the filter list.
+
+    ![The docked map panel folded down to its title bar, with the selection badge still visible](../images/react/map_panel_dock_collapsed.png)
+
+=== "Hidden"
+
+    Nothing but the header control, which keeps showing how many values the map is filtering on.
+
+    ![The map panel hidden, leaving only a header control showing the active selection count](../images/react/map_panel_hidden_header.png)
+
+!!! warning "A custom CSP must allow the basemap"
+    Maps fetch their style document, glyphs, sprite and vector tiles over `fetch`/XHR, so `connect-src` governs them and `img-src` does not. The shipped policy allows the basemap CDNs; if you override it at a proxy or ingress, see [Security](security.md#content-security-policy).
+
+#### The rows behind a map
+
+A map shows where the data sits, not which rows are behind it. Open the underlying data from the grid tile's chrome or the panel header to see those rows, with the map's own columns ordered first and a notice when the list is truncated.
+
+![The underlying-data table for a map, listing sample, habitat, city, latitude and longitude](../images/react/map_panel_underlying_data.png)
+
+Ticking rows selects them on the map. Lasso, click and row-ticking all build the same filter, so they replace one another rather than compounding, and opening the table after a lasso shows those rows already ticked.
 
 ### YAML Examples
 

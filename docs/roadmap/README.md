@@ -22,7 +22,7 @@ Three sections, one question each:
 
     ---
 
-    Open pull requests with a target release.
+    Open pull requests, grouped by theme.
 
 -   :material-lightbulb-outline:{ .lg .middle .rn-idea } **[Ideas](#ideas)**
 
@@ -32,7 +32,7 @@ Three sections, one question each:
 
 </div>
 
-!!! info "Current release: [v1.3.0](https://github.com/depictio/depictio/releases/tag/v1.3.0) (29 July 2026)"
+!!! info "Current release: [v1.4.0](https://github.com/depictio/depictio/releases/tag/v1.4.0) (5 August 2026)"
     Every dated claim below is traceable to the [changelog](../changelog/README.md).
     Dates are deliberately absent from *In progress* and *Ideas*: the pull request is
     the honest status, an estimate would not be.
@@ -73,17 +73,23 @@ Three sections, one question each:
   key: "completed"
   sub_title: "v1.3.0 ✅"
 
+- title: "Dashboard structure"
+  content: "Dashboard sections, a dashboard-wide map panel, ten new card layouts"
+  icon: ":fontawesome-solid-layer-group:"
+  key: "completed"
+  sub_title: "v1.4.0 ✅"
+
 - title: "Authoring & the catalog"
   content: "Tools catalog gallery, project builder, tools builder on GitHub Pages"
   icon: ":fontawesome-solid-screwdriver-wrench:"
   key: "inprogress"
-  sub_title: "1.4.x 🚧"
+  sub_title: "In progress 🚧"
 
 - title: "Versioning & automation"
   content: "Dataset and dashboard versioning, time travel, ingestion watcher, remote triggering"
   icon: ":fontawesome-solid-clock-rotate-left:"
   key: "inprogress"
-  sub_title: "1.5.0 🚧"
+  sub_title: "In progress 🚧"
 
 - title: "Ideas"
   content: "Serverless Depictio, journeys & funnels, citable DOI snapshots, AI-assisted analysis"
@@ -102,6 +108,7 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
+| Dashboard sections, dashboard-wide map panel, ten new card layouts | v1.4.0 | [Dashboards](../features/dashboards.md#sections) · [Components](../features/components.md#dashboard-wide-map-panel) |
 | Lazy panel loading, bounded payloads, *Load all*, benchmark harness | v1.3.0 | [Performance & Scaling](../features/performance.md) |
 | Pinned timeline footer, compact tables | v1.2.2 | [YAML Sync](../features/yaml-sync.md) |
 | Admin **Log & Task** monitoring, per-phase ingestion detail, run provenance | v1.2.0 – v1.2.1 | [Monitoring](../usage/administration/monitoring.md) |
@@ -122,19 +129,15 @@ reference; this table only says *when* something arrived.
 
 ## :material-progress-wrench:{ .rn-progress } In progress
 
-Grouped by target release. Each item links the pull request that implements it, so its
+Grouped by theme. Each item links the pull request that implements it, so its
 real state is always one click away.
 
-### 1.3.1 — Telemetry & backup compatibility
+### Telemetry & backup compatibility
 
 - [ ] **Anonymous installation telemetry** — an opt-out, aggregate heartbeat so we can answer "how many installations exist, on what version?". Counts are bucketed (`2-5`, `200+`), never exact ([#916](https://github.com/depictio/depictio/pull/916))
 - [ ] **Cross-version backup guard** — frozen backup fixtures validated against current models on every PR, so a model change cannot silently break restoring an older backup ([#871](https://github.com/depictio/depictio/pull/871))
 
-### 1.3.2 — Multi-metric card fix
-
-- [ ] **Real category names in the card preview** — categorical multi-metric cards showed `Bucket 1 / 2 / 3` instead of the actual values ([#836](https://github.com/depictio/depictio/pull/836))
-
-### 1.4.0 — Authoring: catalog, project builder, tools builder
+### Authoring: catalog, project builder, tools builder
 
 Lowering the cost of contributing a tool or standing up a project.
 
@@ -143,15 +146,15 @@ Lowering the cost of contributing a tool or standing up a project.
 - [ ] **Tools builder on GitHub Pages** — author a catalog entry in the browser using Depictio's real component builders, then open the PR in one click ([#902](https://github.com/depictio/depictio/pull/902))
 - [ ] **Catalog component picker in the viewer** — pick a catalog render while building a dashboard. *No PR open yet* ([#859](https://github.com/depictio/depictio/issues/859))
 
-### 1.4.1 — nf-core/variantbenchmarking template
+### Pipeline templates
 
-- [ ] **Variant-benchmarking template & modules** — germline small variants, somatic indels and structural variants as three per-variant-type projects, built from reusable catalog modules (hap.py, rtg-tools, som.py, truvari…) plus four benchmarking-specific visualization kinds ([#870](https://github.com/depictio/depictio/pull/870), closes [#865](https://github.com/depictio/depictio/issues/865))
+- [ ] **nf-core/variantbenchmarking template & modules** — germline small variants, somatic indels and structural variants as three per-variant-type projects, built from reusable catalog modules (hap.py, rtg-tools, som.py, truvari…) plus four benchmarking-specific visualization kinds ([#870](https://github.com/depictio/depictio/pull/870), closes [#865](https://github.com/depictio/depictio/issues/865))
 
-### 1.4.2 — Component export & embedding
+### Component export & embedding
 
 - [ ] **Embed a component in an external site** — serve one dashboard component either as a Plotly spec for your own `plotly.js`, or as a single self-contained offline page. Off by default ([#917](https://github.com/depictio/depictio/pull/917))
 
-### 1.5.0 — Versioning, time travel & automated ingestion
+### Versioning, time travel & automated ingestion
 
 Ingestion stops being a command someone has to remember, and nothing overwrites history.
 
@@ -192,7 +195,7 @@ mind. Most of the reproducibility story is shipped; citability is not.
 | A visualization can't be reproduced | :material-check-circle: YAML-defined dashboards over traceable data ([docs](../features/yaml-sync.md)) |
 | Experiment data sits in silos | :material-check-circle: Cross-DC linking ([docs](../features/cross-dc-filtering.md)) |
 | Dashboards disappear | :material-check-circle: Hosted on [SciLifeLab Serve](https://serve.scilifelab.se/) |
-| No data lineage | :material-progress-wrench: Delta dataset versioning and time travel — 1.5.0, [above](#150-versioning-time-travel-automated-ingestion) |
+| No data lineage | :material-progress-wrench: Delta dataset versioning and time travel — [in progress](#versioning-time-travel-automated-ingestion) |
 | Not citable, no sample-to-viz traceability | :material-lightbulb-outline: DOI snapshots + LabID provenance — [an idea](#ideas) |
 
 ---

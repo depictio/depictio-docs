@@ -47,6 +47,23 @@ Dashboards use a two-panel layout to organize components:
 
 Components are automatically assigned to the appropriate panel based on their type when created.
 
+### Working with the filter panel (v1.4.0+)
+
+- **Collapse it** with the control at its edge. It shrinks to a narrow rail rather than disappearing, and the rail keeps showing how many filters are active, so a filtered dashboard never looks unfiltered.
+- **Resize it** by dragging its edge. The width is remembered for that dashboard, and the grid re-lays out to match.
+- **Fold a section** with its header. A folded section fetches nothing until you open it, and keeps a badge with the number of active filters inside it.
+- **Read what is applied** from the summary above the controls: one aligned row per filter, each with its own control's icon and colour. Click a row's clear button to drop just that filter. The whole summary folds to a single line.
+
+Sections in the main grid work the same way, and a folded section of cards still shows its numbers in the header. See [Sections](../../features/dashboards.md#sections).
+
+### The map panel (v1.4.0+)
+
+When a dashboard has a map authored as a dashboard-wide panel, it follows you across every tab rather than living in one. Use the header control to move it between floating, docked and hidden, and the panel header's menu to edit, duplicate or delete it.
+
+- **Select on the map** by lassoing, box-selecting or clicking; every tab of the dashboard follows the selection.
+- **Open the rows behind it** from the panel header or the tile chrome. The map's own columns come first, and ticking rows selects them on the map.
+- Lasso, click and row-ticking all produce the same filter, so they replace one another instead of stacking.
+
 ---
 
 ## Right Sidebar Parameters
@@ -173,6 +190,10 @@ There are currently two types of interactive actions available in the dashboard:
 
 - **Reset all filters** You can reset all filters applied to the components by clicking the **Reset all filters** button in the right sidebar. This will clear all filters applied to the components and reset them to their default state.
 - **Reset interactive component/scatter plot filter** You can reset the filters applied to the graph components by clicking the orange <span style="color: #fd7e14;"><i class="bx bx-reset"></i> Reset</span> button in the component options at the top of the box. This will clear the filters applied to the graph component and reset it to its default state.
+- **Clear one filter from the summary** (v1.4.0+) Each row of the filter panel's active-filter summary has its own clear button, so you can drop a single filter without touching the rest.
+
+!!! note "Where the reset icon stays visible (v1.4.0+)"
+    On figures, tables and maps the reset icon stays pinned while a selection is active, since a selection there is easy to miss. On an interactive control it appears on hover, so that it cannot sit on top of the select's chevron or the slider track.
 
 ## Saving the Dashboard
 
