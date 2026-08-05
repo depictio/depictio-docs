@@ -96,22 +96,6 @@ filters into while editing is the order a viewer sees:
 - :material-format-list-bulleted: **Active-filter summary** - applied filters are listed above the controls as an aligned label/value list, each row carrying its own control's icon and accent, with a per-row clear. The list folds to a single line and its state persists per dashboard.
 - :material-cellphone: **Drawer on narrow screens** - the panel becomes an overlay rather than stealing canvas width.
 
-### :material-view-sequential: Sections <small>(v1.4.0+)</small> { #sections }
-
-Both panels can be grouped into named, foldable **sections**, each with its own icon,
-colour, description and default state. `grid_sections` organises the main canvas and
-`filter_sections` the left panel; a component joins one by naming it in its `section`
-field. See [YAML Sync](yaml-sync.md#dashboard-sections) for the schema.
-
-The two panels draw sections differently on purpose. The grid uses a box; the filter panel
-uses a rail and an indent, because at panel width a box would spend its border and padding
-on the very filters it is meant to organise.
-
-Folding is not just visual: a folded section fetches nothing until you open it. It still
-reports itself, though: a folded grid
-section of cards shows their numbers inline, and any other section shows a component count.
-A folded filter section keeps the count of active filters inside it.
-
 ### :material-chart-box: Right Panel (Visualizations)
 
 The **right panel** is the main canvas where visualization components are displayed:
@@ -120,6 +104,7 @@ The **right panel** is the main canvas where visualization components are displa
 - :material-resize: **Resized** by dragging edges/corners
 - :material-cog-outline: **Configured** through component edit menus
 - :material-link-variant: **Cross-panel filtering** - Responds to filters from the left panel
+- :material-view-sequential: **Grouped into sections** (v1.4.0+) - `grid_sections` splits the canvas into named, foldable boxes; see [Sections](#sections) below
 
 Available component types include:
 
@@ -139,6 +124,22 @@ viewer across every tab. See [Components](components.md#dashboard-wide-map-panel
 
 !!! note "Future Components"
     Additional component types may be added in future releases based on user needs and feedback (Network Graphs, JBrowse2).
+
+### :material-view-sequential: Sections <small>(v1.4.0+)</small> { #sections }
+
+Both panels can be grouped into named, foldable **sections**, each with its own icon,
+colour, description and default state. `grid_sections` organises the main canvas and
+`filter_sections` the left panel; a component joins one by naming it in its `section`
+field. See [YAML Sync](yaml-sync.md#dashboard-sections) for the schema.
+
+The two panels draw sections differently on purpose. The grid uses a box; the filter panel
+uses a rail and an indent, because at panel width a box would spend its border and padding
+on the very filters it is meant to organise.
+
+Folding is not just visual: a folded section fetches nothing until you open it. It still
+reports itself, though: a folded grid section of cards shows their numbers inline, and any
+other section shows a component count. A folded filter section keeps the count of active
+filters inside it.
 
 ---
 

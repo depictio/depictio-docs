@@ -234,19 +234,27 @@ These keys map directly to the `initContainerImage.pullPolicy` and
 Kubernetes injects a block of legacy Docker-link environment variables
 (`<SVC>_SERVICE_HOST`, `<SVC>_PORT_<port>_TCP_ADDR`, and several more) into every
 pod, once per service in the namespace. On a busy namespace that set grows large
-enough to overflow the argument limit, and the viewer crashlooped with
-`envsubst: Argument list too long` before nginx ever started.
+enough to overflow the process argument limit, and the viewer crashloops with
+`envsubst: Argument list too long` before nginx ever starts.
 
-Since **v1.4.0** the chart disables them on every pod, which is the opposite of
-Kubernetes' own default:
+Since **v1.4.0** the chart sets `enableServiceLinks: false` on every pod it owns,
+which is the opposite of Kubernetes' own default
+([#946](https://github.com/depictio/depictio/pull/946)):
 
 ```yaml
 # my-values.yaml
 enableServiceLinks: false   # chart default; Kubernetes itself defaults to true
 ```
 
-Set it back to `true` only if something in your deployment reads those legacy
-variables. Nothing in Depictio does.
+Depictio's own services address each other by DNS name, so nothing in the
+application reads those variables. Set it back to `true` only if something else in
+your deployment does.
+
+!!! note "What stays injected"
+    `KUBERNETES_SERVICE_HOST` and `KUBERNETES_SERVICE_PORT` are injected by the
+    kubelet regardless of this setting, so in-cluster API clients are unaffected.
+    Pods created by the Percona MongoDB operator are also untouched, since the
+    operator owns those pod specs.
 
 ### Celery workers (background callbacks)
 

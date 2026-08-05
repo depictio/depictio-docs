@@ -146,9 +146,9 @@ Lowering the cost of contributing a tool or standing up a project.
 - [ ] **Tools builder on GitHub Pages** — author a catalog entry in the browser using Depictio's real component builders, then open the PR in one click ([#902](https://github.com/depictio/depictio/pull/902))
 - [ ] **Catalog component picker in the viewer** — pick a catalog render while building a dashboard. *No PR open yet* ([#859](https://github.com/depictio/depictio/issues/859))
 
-### nf-core/variantbenchmarking template
+### Pipeline templates
 
-- [ ] **Variant-benchmarking template & modules** — germline small variants, somatic indels and structural variants as three per-variant-type projects, built from reusable catalog modules (hap.py, rtg-tools, som.py, truvari…) plus four benchmarking-specific visualization kinds ([#870](https://github.com/depictio/depictio/pull/870), closes [#865](https://github.com/depictio/depictio/issues/865))
+- [ ] **nf-core/variantbenchmarking template & modules** — germline small variants, somatic indels and structural variants as three per-variant-type projects, built from reusable catalog modules (hap.py, rtg-tools, som.py, truvari…) plus four benchmarking-specific visualization kinds ([#870](https://github.com/depictio/depictio/pull/870), closes [#865](https://github.com/depictio/depictio/issues/865))
 
 ### Component export & embedding
 

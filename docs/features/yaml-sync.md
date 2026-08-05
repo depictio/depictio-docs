@@ -274,12 +274,26 @@ title: Iris Dashboard Demo
 subtitle: Sample analysis dashboard
 project_tag: Iris_Dataset_Project
 
+grid_sections:              # optional — foldable groups in the main canvas
+  - name: Overview
+    icon: mdi:counter
+    color: teal
+  - name: Distributions
+    icon: mdi:chart-box
+    color: violet
+
+filter_sections:            # optional — foldable groups in the left filter panel
+  - name: Sample
+    icon: mdi:test-tube
+    color: blue
+
 components:
   # Figure: Box plot
   - tag: box-variety-sepal-length
     component_type: figure
     workflow_tag: python/iris_workflow
     data_collection_tag: iris_table
+    section: Distributions
     visu_type: box
     dict_kwargs:
       x: variety
@@ -292,6 +306,7 @@ components:
     component_type: figure
     workflow_tag: python/iris_workflow
     data_collection_tag: iris_table
+    section: Distributions
     visu_type: scatter
     dict_kwargs:
       x: sepal.length
@@ -303,6 +318,7 @@ components:
     component_type: card
     workflow_tag: python/iris_workflow
     data_collection_tag: iris_table
+    section: Overview
     aggregation: average
     column_name: sepal.length
     icon_name: mdi:leaf
@@ -313,6 +329,7 @@ components:
     component_type: interactive
     workflow_tag: python/iris_workflow
     data_collection_tag: iris_table
+    section: Sample
     interactive_component_type: MultiSelect
     column_name: variety
     custom_color: "#858585"
@@ -322,6 +339,7 @@ components:
     component_type: interactive
     workflow_tag: python/iris_workflow
     data_collection_tag: iris_table
+    section: Sample
     interactive_component_type: RangeSlider
     column_name: sepal.length
 
@@ -500,12 +518,17 @@ Heatmap `dict_kwargs` parameters:
     - std_dev
     - min
     - max
+  secondary_layout: grid         # optional — how the block below the hero is drawn
   column_name: petal.length
   column_type: float64
   icon_name: mdi:leaf
   icon_color: "#43A047"
   title: "Petal Length"
 ```
+
+`aggregations` is read by the four list-driven layouts (`vertical`, the default;
+`compact`; `grid`; `box_plot`). The other twelve `secondary_layout` values compute their
+own block and ignore it — see the field table below.
 
 **Conditional aggregation** — pre-filter data before computing metrics:
 
@@ -546,6 +569,7 @@ render is in [Components](components.md#secondary-layout-modes).
 
 | Field                 | Type            | Default    | Read by                                       |
 | --------------------- | --------------- | ---------- | --------------------------------------------- |
+| `secondary_layout`    | str             | `vertical` | *(picks the layout)* — one of the 16 modes    |
 | `aggregations`        | list[str]       | `null`     | `vertical`, `compact`, `grid`, `box_plot`     |
 | `breakdown_col`       | str             | `null`     | `top_n`, `concentration`, `composition`, `donut` |
 | `top_n_count`         | int (1–5)       | `3`        | `top_n`, `concentration`, `composition`, `donut` |
