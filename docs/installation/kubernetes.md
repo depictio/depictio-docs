@@ -229,6 +229,25 @@ curlInitContainerImage:
 These keys map directly to the `initContainerImage.pullPolicy` and
 `curlInitContainerImage.pullPolicy` fields in `values.yaml`.
 
+### Service link environment variables { #service-link-environment-variables }
+
+Kubernetes injects a block of legacy Docker-link environment variables
+(`<SVC>_SERVICE_HOST`, `<SVC>_PORT_<port>_TCP_ADDR`, and several more) into every
+pod, once per service in the namespace. On a busy namespace that set grows large
+enough to overflow the argument limit, and the viewer crashlooped with
+`envsubst: Argument list too long` before nginx ever started.
+
+Since **v1.4.0** the chart disables them on every pod, which is the opposite of
+Kubernetes' own default:
+
+```yaml
+# my-values.yaml
+enableServiceLinks: false   # chart default; Kubernetes itself defaults to true
+```
+
+Set it back to `true` only if something in your deployment reads those legacy
+variables. Nothing in Depictio does.
+
 ### Celery workers (background callbacks)
 
 The Celery worker is included and enabled by default (`celery.enabled: true`).

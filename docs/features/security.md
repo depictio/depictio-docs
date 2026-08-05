@@ -190,6 +190,47 @@ All user input is validated:
 
 ---
 
+## Content Security Policy { #content-security-policy }
+
+Deployed instances send a Content-Security-Policy header. The development server sends
+none, so a policy violation only ever shows up on a deployment.
+
+| Directive | Value | Why |
+|-----------|-------|-----|
+| `default-src` | `'self'` | Everything not named below comes from the app's own origin |
+| `script-src` | `'self' 'unsafe-eval' 'wasm-unsafe-eval'` | Plotly's WebGL renderer and the in-browser Python runtime need both eval forms |
+| `style-src` | `'self' 'unsafe-inline'` | Component styling is injected at runtime |
+| `img-src` | `'self' data: blob: https:` | Thumbnails, exported figures, and remote image collections |
+| `font-src` | `'self' data:` | Bundled fonts only |
+| `connect-src` | `'self' ws: wss:` plus the basemap origins below | API calls, the real-time WebSocket, and map tiles |
+| `frame-ancestors` | `'self'` | Depictio may not be framed by another origin |
+| `object-src` | `'none'` | No plugins |
+| `base-uri` / `form-action` | `'self'` | Blocks base-tag and form-target hijacking |
+
+### Basemap origins { #basemap-origins }
+
+Maps fetch their style document, glyphs, sprite and vector tiles over `fetch`/XHR, so
+`connect-src` governs them — `img-src https:` does not, which is why a map that is allowed
+to show images still renders its legend over blank white and logs *"Style is not done
+loading"*. Three origins are allowed:
+
+```text
+https://basemaps.cartocdn.com
+https://*.basemaps.cartocdn.com
+https://tile.openstreetmap.org
+```
+
+The apex domain is listed separately because a `*.` wildcard does not match it.
+
+!!! warning "Overriding the policy"
+    The policy is defined in two places that must agree: the API middleware
+    (`depictio/api/main.py`) and the viewer's nginx template
+    (`docker-images/nginx.conf.template`). If you replace or extend it at a reverse proxy
+    or ingress, carry all three basemap origins across, or every map on the deployment
+    renders blank.
+
+---
+
 ## Audit Logging
 
 Depictio logs security-relevant events for compliance and troubleshooting.
