@@ -21,13 +21,13 @@ hide:
 
 ### **✨ New Features**
 
-* **Anonymous installation telemetry**: the server (Docker Compose, Kubernetes) sends one aggregate heartbeat per UTC day and `depictio-cli` one event per command, so the project can count installations and versions; the container images and Helm chart live on GitHub Container Registry, which publishes no pull counts. Payloads carry a random installation ID, version, deployment kind, OS family, and deployment size as coarse buckets, never exact counts and never names, emails, paths or URLs. Enabled by default; opt out with `DEPICTIO_TELEMETRY_ENABLED=false` or `DO_NOT_TRACK=1`, and it disables itself in CI, under pytest and in dev mode. Admins can inspect the exact outgoing payload via `GET /utils/telemetry/preview`. See [Telemetry](../features/telemetry.md). ([#916](https://github.com/depictio/depictio/pull/916))
+* **Anonymous installation telemetry**: the server sends one aggregate heartbeat per UTC day and `depictio-cli` one event per command, so the project can count installations and versions. Nothing personal and nothing about your data is ever sent; sizes are coarse buckets, never exact counts. Enabled by default, opt out with `DEPICTIO_TELEMETRY_ENABLED=false` or `DO_NOT_TRACK=1`; admins can inspect the exact payload via `GET /utils/telemetry/preview`. See [Telemetry](../features/telemetry.md). ([#916](https://github.com/depictio/depictio/pull/916))
 * **CLI `--version` flag**: `depictio-cli --version` / `-V` prints the installed version. ([#916](https://github.com/depictio/depictio/pull/916))
 
 ### **🐛 Bug Fixes**
 
-* **Google Analytics never actually loaded**: `DEPICTIO_GOOGLE_ANALYTICS_*` was documented and set in demo deployments, but nothing in Python or React ever read it; the viewer is a static build with no runtime environment, so the values could not reach it. The viewer now fetches the GA4 measurement ID at boot from a new public `GET /utils/public-config` endpoint and injects `gtag` with advertising features off and IP anonymisation on. Already-configured properties start receiving data with no values change. ([#916](https://github.com/depictio/depictio/pull/916))
-* **CLI instance header**: `instance_label` was silently dropped during CLI config validation, so the `X-Depictio-CLI-Instance` header introduced in [#837](https://github.com/depictio/depictio/pull/837) never populated via `load_depictio_config`. ([#916](https://github.com/depictio/depictio/pull/916))
+* **Google Analytics never actually loaded**: `DEPICTIO_GOOGLE_ANALYTICS_*` was documented but nothing ever read it. The viewer now fetches the GA4 measurement ID at boot and injects `gtag` (IP anonymisation on); already-configured properties start receiving data with no values change. ([#916](https://github.com/depictio/depictio/pull/916))
+* **CLI instance header**: `instance_label` was dropped during config validation, so `X-Depictio-CLI-Instance` ([#837](https://github.com/depictio/depictio/pull/837)) never populated. ([#916](https://github.com/depictio/depictio/pull/916))
 
 ---
 
