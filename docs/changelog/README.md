@@ -15,9 +15,15 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
-## **v1.5.0** (August 6, 2026)
+## **[v1.5.0](https://github.com/depictio/depictio/releases/tag/v1.5.0)** (August 6, 2026)
 
 !!! success "Anonymous installation telemetry, and Google Analytics finally wired"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.5.0
+```
 
 ### **✨ New Features**
 
