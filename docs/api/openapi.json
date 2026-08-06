@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.4.0",
-    "x-generated-at": "2026-08-05T17:54:57Z",
-    "x-depictio-version": "v1.4.0"
+    "version": "1.5.0",
+    "x-generated-at": "2026-08-06T08:11:39Z",
+    "x-depictio-version": "v1.5.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -4111,6 +4111,51 @@
         }
       }
     },
+    "/depictio/api/v1/utils/public-config": {
+      "get": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Public Config",
+        "description": "Runtime configuration the frontend needs before a user is known.\n\nThe viewer is a static nginx-served Vite build, so it has no access to the\ndeployment's environment at runtime — per-deployment settings like the Google\nAnalytics measurement ID cannot be baked in at image build time and have to be\nfetched. This endpoint is that channel.\n\nPublic and unauthenticated, like ``/status``, because it is read before login.\nOnly values that are safe for anyone who can reach the frontend belong here: a\nGA measurement ID is already visible in the page's network traffic once\ninjected, so exposing it changes nothing.",
+        "operationId": "public_config_depictio_api_v1_utils_public_config_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/utils/telemetry/preview": {
+      "get": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Telemetry Preview",
+        "description": "Show exactly what anonymous installation telemetry would send. Admin only.\n\nTelemetry defaults to on, so operators are owed a way to verify the claim that\nit carries nothing identifying — on their own deployment, with their own data,\nrather than by trusting the documentation. This returns the real payload built\nby the real builder.\n\nReads the send guard rather than claiming it, so inspecting the payload never\nconsumes the day's slot and suppresses the actual heartbeat.",
+        "operationId": "telemetry_preview_depictio_api_v1_utils_telemetry_preview_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/utils/health/initialization": {
       "get": {
         "tags": [
@@ -4654,17 +4699,40 @@
           "CLI"
         ],
         "summary": "Validate Cli Config Endpoint",
-        "description": "Validate CLI configuration and token.\n\nSECURITY: now requires a valid bearer token in the ``Authorization`` header\n(``get_current_user``). Previously this endpoint had NO auth dependency, so\nany unauthenticated caller could submit a CLIConfig and probe whether the\nembedded token was valid. The CLI authenticates with a token anyway, so the\nheader is the right credential source.\n\nNOTE (client follow-up required): ``depictio/cli/cli/utils/api_calls.py:api_login``\ncurrently POSTs the CLIConfig as JSON WITHOUT an Authorization header (the\ntoken sits inside the body at ``cli_config.user.token``). With this change\nthat call will now receive 401 until the CLI is updated to also send\n``Authorization: Bearer <access_token>`` (it can reuse\n``generate_api_headers`` from ``depictio/cli/cli/utils/common.py``).",
+        "description": "Validate CLI configuration and token.\n\nAlso the point where the calling CLI's version is noted, since ``api_login``\nmakes this the de-facto preflight for every CLI command. Recording it here\nrather than in a middleware keeps the cost to the one request that already\nexists, and works even when the CLI's own outbound telemetry is switched off —\nthe version is a header on a request the user is making anyway. Only the\nversion string is kept; the hostname header the CLI also sends is never read\nfor telemetry.\n\nSECURITY: now requires a valid bearer token in the ``Authorization`` header\n(``get_current_user``). Previously this endpoint had NO auth dependency, so\nany unauthenticated caller could submit a CLIConfig and probe whether the\nembedded token was valid. The CLI authenticates with a token anyway, so the\nheader is the right credential source.\n\nNOTE (client follow-up required): ``depictio/cli/cli/utils/api_calls.py:api_login``\ncurrently POSTs the CLIConfig as JSON WITHOUT an Authorization header (the\ntoken sits inside the body at ``cli_config.user.token``). With this change\nthat call will now receive 401 until the CLI is updated to also send\n``Authorization: Bearer <access_token>`` (it can reuse\n``generate_api_headers`` from ``depictio/cli/cli/utils/common.py``).",
         "operationId": "validate_cli_config_endpoint_depictio_api_v1_cli_validate_cli_config_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "x-depictio-cli-version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Cli-Version"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CLIConfig"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -4687,12 +4755,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
+        }
       }
     },
     "/depictio/api/v1/dashboards/sync_with_projects": {
@@ -10847,7 +10910,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -11135,7 +11198,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -11198,7 +11261,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -11386,7 +11449,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -13044,7 +13107,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -13252,7 +13315,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -13803,7 +13866,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -13909,7 +13972,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -14142,7 +14205,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a7378ecd5da31786b7ba9e9"
+            "default": "6a7441b66b5162f9500d760e"
           }
         },
         "type": "object",
@@ -14260,7 +14323,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -14379,7 +14442,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -14461,7 +14524,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -14547,7 +14610,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -14720,7 +14783,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -14895,7 +14958,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -14965,7 +15028,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
@@ -15063,7 +15126,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a7378ecd5da31786b7ba9e8"
+            "default": "6a7441b66b5162f9500d760d"
           },
           "description": {
             "anyOf": [
