@@ -15,6 +15,27 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.5.1](https://github.com/depictio/depictio/releases/tag/v1.5.1)** (August 6, 2026)
+
+!!! success "Patch: telemetry counts real installations, not bots and CI runs"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.5.1
+```
+
+### **✨ New Features**
+
+* **CLI installation counting**: `depictio-cli` sends one anonymous `cli_install` event per machine; same privacy model and opt-outs as the rest of telemetry. ([#961](https://github.com/depictio/depictio/pull/961))
+
+### **🐛 Bug Fixes**
+
+* **Events no longer flagged as bot traffic**: telemetry requests now send a Depictio User-Agent instead of the python-httpx default, which PostHog classifies as a bot. ([#961](https://github.com/depictio/depictio/pull/961))
+* **CI deployments no longer counted as installations**: Helm chart tests and Docker Compose now forward `CI`/`GITHUB_ACTIONS` into the containers so the existing CI suppression actually applies. ([#961](https://github.com/depictio/depictio/pull/961))
+
+---
+
 ## **[v1.5.0](https://github.com/depictio/depictio/releases/tag/v1.5.0)** (August 6, 2026)
 
 !!! success "Anonymous installation telemetry, and Google Analytics finally wired"
