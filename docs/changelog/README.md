@@ -15,7 +15,7 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
-## **v1.5.0** (upcoming)
+## **v1.5.0** (August 6, 2026)
 
 !!! success "Anonymous installation telemetry, and Google Analytics finally wired"
 
