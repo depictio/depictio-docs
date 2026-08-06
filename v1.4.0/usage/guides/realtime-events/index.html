@@ -1423,6 +1423,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#following-the-stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Following the stream
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Following the stream">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#re-highlighting-a-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-highlighting a batch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scoping-to-an-acquisition-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scoping to an acquisition window
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#driving-updates" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4213,6 +4252,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#following-the-stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Following the stream
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Following the stream">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#re-highlighting-a-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-highlighting a batch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scoping-to-an-acquisition-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scoping to an acquisition window
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#driving-updates" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4273,12 +4351,26 @@
 
 <h1 id="real-time-events"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 15H6l7-14v8h5l-7 14z"></path></svg></span> Real-time Events<a class="headerlink" href="#real-time-events" title="Permanent link">¶</a></h1>
 <p>Real-time events let a dashboard <strong>refresh itself over a WebSocket</strong> the moment the data
-behind it changes — no manual reload, no polling. When new data is ingested into a data
+behind it changes, with no manual reload and no polling. When new data is ingested into a data
 collection, subscribed dashboards refetch and re-render automatically: new rows appear,
 figures recompute, and updated items briefly highlight.</p>
-<p>This makes Depictio suitable for <strong>live feeds</strong> — an instrument streaming acquisitions, a
+<p>This makes Depictio suitable for <strong>live feeds</strong>: an instrument streaming acquisitions, a
 pipeline emitting results batch by batch, or any process that keeps appending to a data
 collection.</p>
+<figure>
+  <img alt="A live dashboard with the status pill in the header and the acquisition window scrubber in the footer" src="https://depictio.github.io/depictio-docs/images/react/realtime_dashboard_light.png#only-light">
+  <img alt="A live dashboard with the status pill in the header and the acquisition window scrubber in the footer" src="https://depictio.github.io/depictio-docs/images/react/realtime_dashboard_dark.png#only-dark">
+<br>
+<figcaption>The <em>Adaptive Feedback Microscopy</em> dashboard part-way through a run. The status pill sits at the right of the header; the acquisition window scrubber is pinned in the footer.</figcaption>
+</figure>
+<div class="admonition info">
+<p class="admonition-title">Built with the ALMF at EMBL</p>
+<p>This dashboard was designed together with the Advanced Light Microscopy Facility at EMBL,
+on top of <a href="https://git.embl.org/grp-almf/svlt"><strong>SVLT</strong> (Serving Vision to Living Things)</a>:
+on-demand computer vision that segments each acquired image into RoiSets and classifies
+every object while the experiment is still running. SVLT posts each batch of phenotypes to
+Depictio, which is what the dashboard above is reacting to.</p>
+</div>
 <hr>
 <h2 id="video-example"><span style="color: #E53935;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11z"></path></svg></span></span> Video example<a class="headerlink" href="#video-example" title="Permanent link">¶</a></h2>
 <div style="max-width: 1200px; margin: 1rem auto 2rem auto;">
@@ -4296,7 +4388,7 @@ never reloaded: it refetches on every broadcast, so its figures and cards keep u
 acquisitions streaming in the terminal on the right.</p>
 <hr>
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">¶</a></h2>
-<p>The refresh is driven entirely by data ingestion — there is no separate "push" API to call:</p>
+<p>The refresh is driven entirely by data ingestion. There is no separate "push" API to call:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>producer ingests / upserts a data collection
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        │  (depictio-cli run …, or a POST to /deltatables/upsert)
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        ▼
@@ -4308,7 +4400,7 @@ acquisitions streaming in the terminal on the right.</p>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        ▼
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>subscribed dashboards refetch and re-render (updated items highlight)
 </code></pre></div>
-<p>Any producer that re-ingests or upserts a data collection triggers this — the CLI does it on
+<p>Any producer that re-ingests or upserts a data collection triggers this. The CLI does it on
 every <code>depictio-cli run</code>, and an external instrument or pipeline can do the same by POSTing to
 the <code>/deltatables/upsert</code> endpoint.</p>
 <hr>
@@ -4332,7 +4424,7 @@ viewers via Redis pub/sub):</p>
 <tr>
 <td><code>DEPICTIO_EVENTS_ENABLED</code></td>
 <td><code>false</code></td>
-<td>Master switch — nothing happens until this is <code>true</code></td>
+<td>Master switch; nothing happens until this is <code>true</code></td>
 </tr>
 <tr>
 <td><code>DEPICTIO_EVENTS_REDIS_HOST</code></td>
@@ -4359,38 +4451,97 @@ timeout, change streams).</p>
 <p>Projects without this block never open a WebSocket, and their dashboards show no live
 indicator.</p>
 <h3 id="3-open-the-dashboard">3. Open the dashboard<a class="headerlink" href="#3-open-the-dashboard" title="Permanent link">¶</a></h3>
-<p>Open any dashboard in an opted-in project. A <strong>real-time indicator</strong> appears and turns green
-once the viewer has subscribed. From then on the dashboard updates on its own whenever the
-underlying data collection is re-ingested.</p>
+<p>Open any dashboard in an opted-in project. A <strong>real-time indicator</strong> appears in the header
+and turns green once the viewer has subscribed. From then on the dashboard updates on its own
+whenever the underlying data collection is re-ingested.</p>
+<figure>
+  <img alt="The real-time indicator at the right of the dashboard header" src="https://depictio.github.io/depictio-docs/images/react/realtime_indicator_light.png#only-light">
+  <img alt="The real-time indicator at the right of the dashboard header" src="https://depictio.github.io/depictio-docs/images/react/realtime_indicator_dark.png#only-dark">
+<br>
+<figcaption>The indicator sits at the far right of the header, past <em>Edit</em> and <em>Settings</em>.</figcaption>
+</figure>
+<p>It reads <em>Connecting…</em> while the socket opens, <strong>Live</strong> once subscribed, and <em>Offline</em> if the
+connection drops. An orange dot on the icon marks an update you have not taken yet.</p>
+<hr>
+<h2 id="following-the-stream">Following the stream<a class="headerlink" href="#following-the-stream" title="Permanent link">¶</a></h2>
+<p>Click the indicator to open the <strong>Live updates</strong> menu.</p>
+<figure>
+  <img alt="The Live updates menu showing the refresh switches and the event log" src="https://depictio.github.io/depictio-docs/images/react/realtime_live_menu_light.png#only-light">
+  <img alt="The Live updates menu showing the refresh switches and the event log" src="https://depictio.github.io/depictio-docs/images/react/realtime_live_menu_dark.png#only-dark">
+<br>
+<figcaption>Refresh mode and pause sit above the event log. Each row is one broadcast: local arrival time, row delta, data collection tag, operation and aggregation version.</figcaption>
+</figure>
+<ul>
+<li><strong>Auto-refresh on update</strong>: on, the dashboard silently refetches on every event. Off, an
+  event only raises a notification and the orange dot, and you refresh when you are ready.
+  Useful when you are reading a figure and don't want it moving under you.</li>
+<li><strong>Receiving events / Paused</strong>: pausing stops updates from being applied but keeps the
+  socket open, so nothing is missed from the log.</li>
+<li><strong>Event log</strong>: the last 50 events, newest first. It lives in the browser's local storage, so
+  it survives a reload; <strong>Reset</strong> empties it.</li>
+</ul>
+<p>Hover a log row for the whole event.</p>
+<figure>
+  <img alt="Hover card on an event log row showing the full event payload" src="https://depictio.github.io/depictio-docs/images/react/realtime_event_detail_light.png#only-light">
+  <img alt="Hover card on an event log row showing the full event payload" src="https://depictio.github.io/depictio-docs/images/react/realtime_event_detail_dark.png#only-dark">
+<br>
+<figcaption>The hover card carries the project and data collection, the row count before and after, the Delta and aggregation versions, a sample of the ids that arrived, and the raw payload.</figcaption>
+</figure>
+<h3 id="re-highlighting-a-batch">Re-highlighting a batch<a class="headerlink" href="#re-highlighting-a-batch" title="Permanent link">¶</a></h3>
+<p>Rows glow briefly as they land, then fade. The highlight button on a log row brings that batch
+back: every component bound to the collection re-lights exactly the rows that event added, and
+keeps them lit until you choose another batch or select <strong>Clear highlight</strong>.</p>
+<figure>
+  <img alt="A past batch pinned from the event log and highlighted across both figures" src="https://depictio.github.io/depictio-docs/images/react/realtime_highlight_light.png#only-light">
+  <img alt="A past batch pinned from the event log and highlighted across both figures" src="https://depictio.github.io/depictio-docs/images/react/realtime_highlight_dark.png#only-dark">
+<br>
+<figcaption>The pinned batch of 293 cells, ringed in yellow across every figure bound to the collection. The source row stays marked in the log, and <em>Clear highlight</em> appears next to <em>Reset</em>.</figcaption>
+</figure>
+<p>The button only appears on events that carry a list of added ids. The first commit of a
+collection has nothing to diff against, so there is no batch to pin.</p>
+<hr>
+<h2 id="scoping-to-an-acquisition-window">Scoping to an acquisition window<a class="headerlink" href="#scoping-to-an-acquisition-window" title="Permanent link">¶</a></h2>
+<p>A dashboard that tracks a stream usually places its timeline component in the footer, where it
+spans the full width below both the filter panel and the components and stays visible as the
+page scrolls (v1.2.2+).</p>
+<figure>
+  <img alt="The acquisition window scrubber pinned in the dashboard footer" src="https://depictio.github.io/depictio-docs/images/react/realtime_timeline_footer_light.png#only-light">
+  <img alt="The acquisition window scrubber pinned in the dashboard footer" src="https://depictio.github.io/depictio-docs/images/react/realtime_timeline_footer_dark.png#only-dark">
+<br>
+<figcaption>Every mark on the track is one acquisition timestamp. The buttons on the right change tick spacing and label format only.</figcaption>
+</figure>
+<p>Drag either handle to narrow the window and every component re-renders against the selection.
+The <code>Year … Min</code> buttons do not change the selection itself.</p>
 <hr>
 <h2 id="driving-updates">Driving updates<a class="headerlink" href="#driving-updates" title="Permanent link">¶</a></h2>
 <p>Once enabled, any of these will move a live dashboard:</p>
 <ul>
-<li><strong>Re-ingest with the CLI</strong> — <code>depictio-cli run --project-config-path &lt;project.yaml&gt; …</code>
+<li><strong>Re-ingest with the CLI</strong>: <code>depictio-cli run --project-config-path &lt;project.yaml&gt; …</code>
   re-scans and upserts the data collection, which broadcasts the refresh.</li>
-<li><strong>An external producer</strong> — an instrument or pipeline that POSTs new data to the
+<li><strong>An external producer</strong>: an instrument or pipeline that POSTs new data to the
   <code>/deltatables/upsert</code> API endpoint (with a valid token) triggers the same path. This is the
-  intended integration point for a live experimental feed.</li>
+  intended integration point for a live experimental feed, and how SVLT feeds the dashboard
+  above.</li>
 </ul>
 <h3 id="try-it-locally">Try it locally<a class="headerlink" href="#try-it-locally" title="Permanent link">¶</a></h3>
 <p>The bundled <code>adapt_feedb_ms</code> demo project ships with the <code>realtime</code> block already set and a
-small synthetic driver that needs no extra dependencies — just the CLI and a token:</p>
+small synthetic driver that needs no extra dependencies, just the CLI and a token:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>depictio/projects/test/adapt_feedb_ms
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>./stream_test.sh<span class="w"> </span>reset<span class="w">       </span><span class="c1"># seed a couple of rows and ingest</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>./stream_test.sh<span class="w"> </span>stream<span class="w"> </span><span class="m">3</span><span class="w">    </span><span class="c1"># append one row every 3s until Ctrl+C</span>
 </code></pre></div>
 <p>Open the project's dashboard and watch each tick land live: new gallery items, recomputed
-cards, and a moving timeline — with no manual refresh.</p>
+cards, and a moving timeline, with no manual refresh.</p>
 <hr>
 <h2 id="requirements-notes">Requirements &amp; notes<a class="headerlink" href="#requirements-notes" title="Permanent link">¶</a></h2>
 <ul>
 <li><strong>Redis</strong> is required for pub/sub when events are enabled.</li>
 <li><strong>MongoDB change streams</strong> (<code>DEPICTIO_EVENTS_MONGODB_CHANGE_STREAMS_ENABLED</code>, on by default)
   require MongoDB to run as a <strong>replica set</strong>.</li>
-<li><strong>Reverse proxy</strong> — the WebSocket route <code>/depictio/api/v1/events/ws</code> needs the HTTP upgrade
+<li><strong>Reverse proxy</strong>: the WebSocket route <code>/depictio/api/v1/events/ws</code> needs the HTTP upgrade
   proxied. If you front Depictio with nginx, forward the <code>Upgrade</code> and <code>Connection</code> headers on
   that path, and allow <code>connect-src 'self' ws: wss:</code> in your Content-Security-Policy.</li>
-<li><strong>Authentication</strong> — the WebSocket carries its JWT as a <code>token</code> query parameter (browsers
+<li><strong>Authentication</strong>: the WebSocket carries its JWT as a <code>token</code> query parameter (browsers
   can't set <code>Authorization</code> headers on WS connections) and is permission-checked against the
   dashboard's project at viewer level before any events are delivered.</li>
 </ul>
