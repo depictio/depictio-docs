@@ -487,6 +487,10 @@ keep their demo set after upgrading.
 
 Depictio provides comprehensive analytics capabilities to track user interactions and system usage. You can configure both internal analytics and external Google Analytics integration.
 
+!!! info "Anonymous installation telemetry"
+
+    Separate from the analytics below, Depictio also sends an anonymous daily installation report (enabled by default, `DEPICTIO_TELEMETRY_*`). See the [Telemetry](../features/telemetry.md) page for what is sent and how to opt out.
+
 ### Internal Analytics System
 
 Configure Depictio's built-in analytics tracking system:

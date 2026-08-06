@@ -15,6 +15,28 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.5.0](https://github.com/depictio/depictio/releases/tag/v1.5.0)** (August 6, 2026)
+
+!!! success "Anonymous installation telemetry, and Google Analytics finally wired"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio:1.5.0
+```
+
+### **✨ New Features**
+
+* **Anonymous installation telemetry**: the server sends one aggregate heartbeat per UTC day and `depictio-cli` one event per command, so the project can count installations and versions. Nothing personal and nothing about your data is ever sent; sizes are coarse buckets, never exact counts. Enabled by default, opt out with `DEPICTIO_TELEMETRY_ENABLED=false` or `DO_NOT_TRACK=1`; admins can inspect the exact payload via `GET /utils/telemetry/preview`. See [Telemetry](../features/telemetry.md). ([#916](https://github.com/depictio/depictio/pull/916))
+* **CLI `--version` flag**: `depictio-cli --version` / `-V` prints the installed version. ([#916](https://github.com/depictio/depictio/pull/916))
+
+### **🐛 Bug Fixes**
+
+* **Google Analytics never actually loaded**: `DEPICTIO_GOOGLE_ANALYTICS_*` was documented but nothing ever read it. The viewer now fetches the GA4 measurement ID at boot and injects `gtag` (IP anonymisation on); already-configured properties start receiving data with no values change. ([#916](https://github.com/depictio/depictio/pull/916))
+* **CLI instance header**: `instance_label` was dropped during config validation, so `X-Depictio-CLI-Instance` ([#837](https://github.com/depictio/depictio/pull/837)) never populated. ([#916](https://github.com/depictio/depictio/pull/916))
+
+---
+
 ## **[v1.4.0](https://github.com/depictio/depictio/releases/tag/v1.4.0)** (August 5, 2026)
 
 !!! success "Minor — dashboard sections, a dashboard-wide map panel, and ten new card layouts"

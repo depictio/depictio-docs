@@ -258,6 +258,7 @@ nav:
           - Performance & Scaling: features/performance.md
           - Data Model: features/data-model.md
           - Security: features/security.md
+          - Telemetry: features/telemetry.md
   - API:
       - Overview: api/README.md
       # - Endpoints: api/endpoints.md
