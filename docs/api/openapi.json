@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.3.1",
-    "x-generated-at": "2026-07-30T18:03:21Z",
-    "x-depictio-version": "v1.3.1"
+    "version": "1.4.0",
+    "x-generated-at": "2026-08-05T17:54:57Z",
+    "x-depictio-version": "v1.4.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -3749,6 +3749,150 @@
         }
       }
     },
+    "/depictio/api/v1/deltatables/breakdown/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Breakdown",
+        "description": "Top-N breakdown of ``breakdown_col``, for the card builder's live preview.\n\nReturns the same ``__breakdown__`` payload ``bulk_compute_cards`` attaches to\na saved card — same helper, same per-group aggregation, same evenness — so\nthe preview shows the card's real categories and real distribution instead\nof guessing. The preview used to synthesise ``Bucket 1/2/3`` split evenly at\n33/33/34; the names and the shape were both invented, which made a correct\nbuilder look broken.\n\nComputed against the *unfiltered* table: the builder has no interactive\nfilter state, and the saved card recomputes under whatever filters the\ndashboard carries.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: The card's hero column (decides the per-group reduction).\n    breakdown_col: Categorical column to group by.\n    aggregation: The card's hero aggregation (``count`` / ``nunique`` / ``sum``).\n    top_n_count: How many groups to surface, clamped to 1..5 by the helper.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\", \"total\", \"top\": [{name, count, percent}], \"top_share\",\n    \"unique_values\", \"breakdown_kind\", \"evenness\"}``.\n\nRaises:\n    HTTPException: 404 if the DC / delta table / column is missing, 403 if\n    the user may not read it, 500 on a read error.",
+        "operationId": "get_breakdown_depictio_api_v1_deltatables_breakdown__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "column",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Column"
+            }
+          },
+          {
+            "name": "breakdown_col",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Breakdown Col"
+            }
+          },
+          {
+            "name": "aggregation",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "count",
+              "title": "Aggregation"
+            }
+          },
+          {
+            "name": "top_n_count",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 3,
+              "title": "Top N Count"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/deltatables/card_metric/{data_collection_id}": {
+      "post": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Card Metric",
+        "description": "Payload for a card's numeric / QC secondary layout, for the live preview.\n\nRuns the same dispatcher ``bulk_compute_cards`` runs for a saved card, so\nthe builder shows the values the dashboard will show. POST rather than GET\nbecause ``attrition`` carries an ordered column list, which does not belong\nin a query string.\n\nBody: ``{\"layout\": ..., \"column\": ..., ...card config fields...}`` — the\nsame field names the card metadata uses (``threshold_value``,\n``threshold_direction``, ``threshold_warn``, ``attrition_cols``,\n``aggregation``).\n\nReturns the layout's payload, or ``null`` when the config is incomplete or\nthe data cannot support it (a constant column has no histogram). The\nbuilder then renders no strip rather than a misleading one.",
+        "operationId": "get_card_metric_depictio_api_v1_deltatables_card_metric__data_collection_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/deltatables/shape/{data_collection_id}": {
       "get": {
         "tags": [
@@ -5642,6 +5786,121 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/map_data/{dashboard_id}/{component_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Map Data Endpoint",
+        "description": "Return the rows behind a map component, for the viewer's \"show data\" table.\n\nNothing is rendered here, hence the name: this is the map's equivalent of\n``POST /advanced_viz/data``, and it deliberately answers in the same\ncolumn-oriented shape so the viewer can reuse that popover's grid verbatim.\n\nEvery column of the data collection is returned, reordered so the map's own\ncolumns lead (see ``_map_column_order``). Callers are expected to send the\ndashboard's filters *minus* the map's own ``map_selection``, so the table\nmatches the points currently drawn rather than only the lassoed ones.\n\nResponse:\n    {\n      \"columns\": [str],           # ordering, map columns first\n      \"rows\": {col: [values]},    # column-oriented\n      \"row_count\": int,           # rows actually returned\n      \"total_rows\": int,          # rows matching the filters, before the cap\n      \"truncated\": bool,          # row_count < total_rows because of the cap\n      \"filter_applied\": bool,\n    }",
+        "operationId": "map_data_endpoint_depictio_api_v1_dashboards_map_data__dashboard_id___component_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/floating_components/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Get Floating Components",
+        "description": "Return the floating components of a dashboard's whole tab family.\n\nA floating map is authored on one tab but rendered on every tab, so the\nviewer needs the components of its *siblings*, not just its own. The\n`/dashboards/list` projection deliberately omits `stored_metadata` for\nnon-admins, hence this narrow endpoint: one request per page load,\nreturning only the components that actually float.\n\nEach entry carries its owning `dashboard_id`, which the viewer passes\nstraight to `render_map` — that endpoint takes the dashboard id as a path\nparameter and gates on the same project-level permission, so rendering tab\nA's map while viewing tab B needs no special casing.",
+        "operationId": "get_floating_components_depictio_api_v1_dashboards_floating_components__dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -10588,7 +10847,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -10683,6 +10942,22 @@
             "title": "Right Panel Layout Data",
             "default": []
           },
+          "filter_sections": {
+            "items": {
+              "$ref": "#/components/schemas/FilterSectionSpec"
+            },
+            "type": "array",
+            "title": "Filter Sections",
+            "default": []
+          },
+          "grid_sections": {
+            "items": {
+              "$ref": "#/components/schemas/FilterSectionSpec"
+            },
+            "type": "array",
+            "title": "Grid Sections",
+            "default": []
+          },
           "buttons_data": {
             "additionalProperties": true,
             "type": "object",
@@ -10747,6 +11022,16 @@
           "last_saved_ts": {
             "type": "string",
             "title": "Last Saved Ts",
+            "default": ""
+          },
+          "creation_time": {
+            "type": "string",
+            "title": "Creation Time",
+            "default": ""
+          },
+          "screenshot_ts": {
+            "type": "string",
+            "title": "Screenshot Ts",
             "default": ""
           },
           "project_id": {
@@ -10850,7 +11135,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -10913,7 +11198,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -11101,7 +11386,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -11213,6 +11498,64 @@
           "permissions"
         ],
         "title": "File"
+      },
+      "FilterSectionSpec": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Section name, matched against a component's `section`"
+          },
+          "icon": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Icon",
+            "description": "Iconify id shown in the section header"
+          },
+          "color": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color",
+            "description": "Mantine palette name (e.g. 'teal') tinting the section's icon and badge. Left unset the header renders neutral. Not validated against the palette: an unknown name falls back to the theme default rather than failing the import."
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Short hint rendered under the section header"
+          },
+          "collapsed": {
+            "type": "boolean",
+            "title": "Collapsed",
+            "description": "Start the section collapsed. Defaults to expanded so no filter is hidden on first visit.",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "FilterSectionSpec",
+        "description": "Presentation of one left-panel filter section.\n\nOnly needed to override a section's defaults. A section named by a\ncomponent's ``section`` field but absent from ``filter_sections`` still\nrenders — expanded, no icon — and sorts after the declared ones.\n\nExample YAML:\n    filter_sections:\n      - name: Sample\n        icon: mdi:test-tube\n        color: teal\n      - name: Quality\n        icon: mdi:check-decagram\n        collapsed: true"
       },
       "GoogleOAuthLoginResponse": {
         "properties": {
@@ -12701,7 +13044,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -12909,7 +13252,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -13014,6 +13357,11 @@
           "registration_time": {
             "type": "string",
             "title": "Registration Time"
+          },
+          "last_modified": {
+            "type": "string",
+            "title": "Last Modified",
+            "default": ""
           },
           "project_type": {
             "type": "string",
@@ -13455,7 +13803,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -13561,7 +13909,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -13794,7 +14142,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a6b91e5502e1a5b084d0837"
+            "default": "6a7378ecd5da31786b7ba9e9"
           }
         },
         "type": "object",
@@ -13912,7 +14260,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -14031,7 +14379,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -14113,7 +14461,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -14199,7 +14547,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -14372,7 +14720,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -14547,7 +14895,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -14617,7 +14965,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [
@@ -14715,7 +15063,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a6b91e5502e1a5b084d0836"
+            "default": "6a7378ecd5da31786b7ba9e8"
           },
           "description": {
             "anyOf": [

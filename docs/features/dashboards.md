@@ -46,26 +46,30 @@ The dashboard interface uses a **three-panel layout** with a collapsible sidebar
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────┐
-│                              Header Bar                                  │
+│                                Header Bar                                │
 ├────────┬──────────────────┬──────────────────────────────────────────────┤
-│        │                  │                                              │
-│ Side-  │   LEFT PANEL     │            RIGHT PANEL                       │
-│  bar   │   (Filters)      │          (Visualizations)                    │
-│        │                  │                                              │
-│ Tab 1  │ ┌──────────────┐ │  ┌─────────────┐  ┌─────────────┐            │
-│ Tab 2  │ │  DatePicker  │ │  │   Figure    │  │   Figure    │            │
-│ Tab 3  │ └──────────────┘ │  │  (Scatter)  │  │ (Histogram) │            │
-│        │                  │  └─────────────┘  └─────────────┘            │
-│ [+]    │ ┌──────────────┐ │                                              │
-│        │ │ MultiSelect  │ │  ┌─────────────┐  ┌─────────────┐            │
-│ [=]    │ └──────────────┘ │  │    Table    │  │    Card     │            │
-│        │                  │  │             │  │  (Metric)   │            │
-│        │ ┌──────────────┐ │  └─────────────┘  └─────────────┘            │
-│        │ │ RangeSlider  │ │                                              │
-│        │ └──────────────┘ │                                              │
-│        │                  │                                              │
+│        │   LEFT PANEL     │            RIGHT PANEL                       │
+│ Side-  │   (Filters)      │          (Visualizations)                    │
+│  bar   │ ┌──────────────┐ │                                              │
+│        │ │ 2 active   ▾ │ │                                              │
+│ Tab 1  │ └──────────────┘ │  ▾ Cohort                                    │
+│ Tab 2  │ ▾ Sample         │  ┌─────────────┐  ┌─────────────┐            │
+│ Tab 3  │ ┌──────────────┐ │  │    Card     │  │    Card     │            │
+│        │ │ MultiSelect  │ │  └─────────────┘  └─────────────┘            │
+│ [+]    │ └──────────────┘ │                                              │
+│        │ ▸ Time  (folded) │  ▸ Quality control                  (folded) │
+│ [=]    ├──────────────────┤                                              │
+│        │ Map dock     (3) │  ▾ Detail                                    │
+│        │ ┌──────────────┐ │  ┌─────────────┐  ┌─────────────┐            │
+│        │ │  (map here)  │ │  │   Figure    │  │    Table    │            │
+│        │ └──────────────┘ │  └─────────────┘  └─────────────┘            │
 └────────┴──────────────────┴──────────────────────────────────────────────┘
 ```
+
+Both panels can be organised into foldable **sections** <small>(v1.4.0+)</small>, and the
+left panel collapses to a narrow rail. `2 active` is the active-filter summary; `(3)` on
+the map dock is how many values that map is filtering on. A map can be lifted out of the
+grid into that dock, or float above the canvas.
 
 ### :material-tab: Sidebar (Tab Navigation)
 
@@ -84,6 +88,14 @@ The **left panel** contains interactive filter components:
 - :material-gesture-tap: **Automatic assignment** - Interactive components go here by default
 - :material-grid: **Independent grid** - Drag and resize filters within this panel
 
+Since **v1.4.0** the editor and the viewer draw the same panel, so the order you drag
+filters into while editing is the order a viewer sees:
+
+- :material-arrow-collapse-left: **Collapses to a rail** - 44px wide rather than nothing, so the active-filter count stays on screen. A dashboard showing filtered numbers must never look like it is showing everything.
+- :material-arrow-split-vertical: **Resizable** - drag the panel's edge; the width is remembered per dashboard and the grid re-lays out to match.
+- :material-format-list-bulleted: **Active-filter summary** - applied filters are listed above the controls as an aligned label/value list, each row carrying its own control's icon and accent, with a per-row clear. The list folds to a single line and its state persists per dashboard.
+- :material-cellphone: **Drawer on narrow screens** - the panel becomes an overlay rather than stealing canvas width.
+
 ### :material-chart-box: Right Panel (Visualizations)
 
 The **right panel** is the main canvas where visualization components are displayed:
@@ -92,6 +104,7 @@ The **right panel** is the main canvas where visualization components are displa
 - :material-resize: **Resized** by dragging edges/corners
 - :material-cog-outline: **Configured** through component edit menus
 - :material-link-variant: **Cross-panel filtering** - Responds to filters from the left panel
+- :material-view-sequential: **Grouped into sections** (v1.4.0+) - `grid_sections` splits the canvas into named, foldable boxes; see [Sections](#sections) below
 
 Available component types include:
 
@@ -102,11 +115,31 @@ Available component types include:
 | :material-card-text: **Cards**              | Summary statistics and KPIs                    |
 | :material-tune: **Interactive Filters**     | Dropdowns, sliders, and other controls         |
 | :material-format-header-1: **Text/Headers** | Section headers (H1, H2, H3)                   |
+| :material-map-marker-multiple: **Maps**     | Geospatial scatter, density and choropleth maps |
 | :material-microscope: **MultiQC**           | Quality control report visualizations          |
 | :material-image: **Images**                 | Display grid of static images (PNG, JPEG, SVG) |
 
+A map can also leave the grid entirely and become a dashboard-wide panel that follows the
+viewer across every tab. See [Components](components.md#dashboard-wide-map-panel).
+
 !!! note "Future Components"
-    Additional component types may be added in future releases based on user needs and feedback (Geomap, Network Graphs, JBrowse2.).
+    Additional component types may be added in future releases based on user needs and feedback (Network Graphs, JBrowse2).
+
+### :material-view-sequential: Sections <small>(v1.4.0+)</small> { #sections }
+
+Both panels can be grouped into named, foldable **sections**, each with its own icon,
+colour, description and default state. `grid_sections` organises the main canvas and
+`filter_sections` the left panel; a component joins one by naming it in its `section`
+field. See [YAML Sync](yaml-sync.md#dashboard-sections) for the schema.
+
+The two panels draw sections differently on purpose. The grid uses a box; the filter panel
+uses a rail and an indent, because at panel width a box would spend its border and padding
+on the very filters it is meant to organise.
+
+Folding is not just visual: a folded section fetches nothing until you open it. It still
+reports itself, though: a folded grid section of cards shows their numbers inline, and any
+other section shows a component count. A folded filter section keeps the count of active
+filters inside it.
 
 ---
 
