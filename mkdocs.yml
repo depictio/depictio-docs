@@ -212,7 +212,6 @@ nav:
       - CLI:
           - installation/cli.md
       - Configuration: installation/configuration.md
-      - Telemetry: installation/telemetry.md
       - Environment Reference: installation/env-reference.md
 
   - Usage:
@@ -259,6 +258,7 @@ nav:
           - Performance & Scaling: features/performance.md
           - Data Model: features/data-model.md
           - Security: features/security.md
+          - Telemetry: features/telemetry.md
   - API:
       - Overview: api/README.md
       # - Endpoints: api/endpoints.md
