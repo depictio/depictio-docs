@@ -200,72 +200,13 @@ title: Dashboard Title
 subtitle: Optional subtitle
 project_tag: Project_Name
 
-grid_sections: []      # optional — see Dashboard Sections below
-filter_sections: []    # optional
-
 components:
   - tag: component-identifier
     component_type: figure|card|text|interactive|table|image|multiqc|map|advanced_viz
     workflow_tag: engine/workflow_name
     data_collection_tag: dc_tag
-    section: Section Name   # optional — the section this component belongs to
     # Component-specific fields...
 ```
-
-### Dashboard Sections <small>(v1.4.0+)</small> { #dashboard-sections }
-
-Two independent lists group a dashboard into named, foldable sections: `grid_sections`
-organises the main canvas, `filter_sections` organises the left filter panel. A component
-joins one by naming it in its own `section` field.
-
-```yaml
-grid_sections:
-  - name: Cohort
-    icon: mdi:counter
-    color: teal
-    description: How many samples, and of what
-    collapsed: false
-  - name: Quality control
-    icon: mdi:check-decagram
-    color: orange
-    collapsed: true
-
-filter_sections:
-  - name: Sample
-    icon: mdi:test-tube
-    color: blue
-
-components:
-  - tag: sample-count
-    component_type: card
-    section: Cohort
-    # ...
-  - tag: habitat-filter
-    component_type: interactive
-    section: Sample
-    # ...
-```
-
-| Field         | Type   | Default    | Description                                                        |
-| ------------- | ------ | ---------- | ------------------------------------------------------------------ |
-| `name`        | str    | *required* | Matched against each component's `section`                          |
-| `icon`        | str    | `null`     | Iconify id, drawn in the section header                             |
-| `color`       | str    | `null`     | Mantine palette name (`teal`, `orange`, …). An unknown name falls back to the theme default rather than failing the import |
-| `description` | str    | `null`     | Hint line under the header                                          |
-| `collapsed`   | bool   | `false`    | Start folded                                                        |
-
-Both lists default to empty, so a dashboard that declares no sections renders exactly the
-flat grid it did before.
-
-!!! note "What `section` accepts"
-    - `section` is valid on **every** component type, not just interactive ones.
-    - A component with no `section` renders above the first section.
-    - Section specs reject unknown keys outright, so a typo fails the import rather than
-      being silently ignored.
-    - An interactive `group` may not span two sections — grouped controls must sit
-      together, or the import fails with *"Interactive component groups must sit in a
-      single section"*.
-    - Folding is not just visual: a folded section fetches nothing until you open it.
 
 ### Complete Example
 
@@ -274,26 +215,12 @@ title: Iris Dashboard Demo
 subtitle: Sample analysis dashboard
 project_tag: Iris_Dataset_Project
 
-grid_sections:              # optional — foldable groups in the main canvas
-  - name: Overview
-    icon: mdi:counter
-    color: teal
-  - name: Distributions
-    icon: mdi:chart-box
-    color: violet
-
-filter_sections:            # optional — foldable groups in the left filter panel
-  - name: Sample
-    icon: mdi:test-tube
-    color: blue
-
 components:
   # Figure: Box plot
   - tag: box-variety-sepal-length
     component_type: figure
     workflow_tag: python/iris_workflow
     data_collection_tag: iris_table
-    section: Distributions
     visu_type: box
     dict_kwargs:
       x: variety
@@ -306,7 +233,6 @@ components:
     component_type: figure
     workflow_tag: python/iris_workflow
     data_collection_tag: iris_table
-    section: Distributions
     visu_type: scatter
     dict_kwargs:
       x: sepal.length
@@ -318,7 +244,6 @@ components:
     component_type: card
     workflow_tag: python/iris_workflow
     data_collection_tag: iris_table
-    section: Overview
     aggregation: average
     column_name: sepal.length
     icon_name: mdi:leaf
@@ -329,7 +254,6 @@ components:
     component_type: interactive
     workflow_tag: python/iris_workflow
     data_collection_tag: iris_table
-    section: Sample
     interactive_component_type: MultiSelect
     column_name: variety
     custom_color: "#858585"
@@ -339,7 +263,6 @@ components:
     component_type: interactive
     workflow_tag: python/iris_workflow
     data_collection_tag: iris_table
-    section: Sample
     interactive_component_type: RangeSlider
     column_name: sepal.length
 
@@ -401,7 +324,6 @@ components:
 | `card`        | Metric cards with aggregations                 | `aggregation`, `column_name`                             |
 | `interactive` | Filters (RangeSlider, MultiSelect, etc.)       | `interactive_component_type`, `column_name`              |
 | `table`       | Data tables                                    | _(none required — title auto-generated from DC tag)_     |
-| `text`        | Headings and prose tiles                       | _(none required — `title` is the heading, `body` the prose)_ |
 | `image`       | Image galleries from S3/MinIO                  | `image_column`                                           |
 | `multiqc`     | MultiQC quality control report viewer          | `selected_module`, `selected_plot`                       |
 | `map`         | Geospatial maps (scatter, density, choropleth) | `lat_column`, `lon_column` (scatter/density) or `locations_column`, GeoJSON source (choropleth) |
@@ -518,17 +440,12 @@ Heatmap `dict_kwargs` parameters:
     - std_dev
     - min
     - max
-  secondary_layout: grid         # optional — how the block below the hero is drawn
   column_name: petal.length
   column_type: float64
   icon_name: mdi:leaf
   icon_color: "#43A047"
   title: "Petal Length"
 ```
-
-`aggregations` is read by the four list-driven layouts (`vertical`, the default;
-`compact`; `grid`; `box_plot`). The other twelve `secondary_layout` values compute their
-own block and ignore it — see the field table below.
 
 **Conditional aggregation** — pre-filter data before computing metrics:
 
@@ -552,8 +469,8 @@ own block and ignore it — see the field table below.
 
 | column_type  | Valid aggregations                                                              |
 | ------------ | ------------------------------------------------------------------------------- |
-| `int64`      | `count`, `nunique`, `sum`, `average`, `median`, `min`, `max`, `range`, `variance`, `std_dev`, `percentile`, `q1`, `q3`, `box_plot_stats`, `skewness`, `kurtosis` |
-| `float64`    | `count`, `nunique`, `sum`, `average`, `median`, `min`, `max`, `range`, `variance`, `std_dev`, `percentile`, `q1`, `q3`, `box_plot_stats`, `skewness`, `kurtosis` |
+| `int64`      | `count`, `sum`, `average`, `median`, `min`, `max`, `range`, `variance`, `std_dev`, `skewness`, `kurtosis` |
+| `float64`    | `count`, `sum`, `average`, `median`, `min`, `max`, `range`, `variance`, `std_dev`, `percentile`, `skewness`, `kurtosis` |
 | `bool`       | `count`, `sum`, `min`, `max`                                                    |
 | `datetime`   | `count`, `min`, `max`                                                           |
 | `timedelta`  | `count`, `sum`, `min`, `max`                                                    |
@@ -562,39 +479,6 @@ own block and ignore it — see the field table below.
 
 !!! tip "column_type is optional"
     If you omit `column_type`, validation against the compatibility table is skipped offline. When `--config` is provided, the column type is inferred from the server schema and used for validation automatically.
-
-**Secondary layout fields** — `secondary_layout` picks how the block under the hero value is
-drawn, and each layout reads one companion field. The full list of layouts and what they
-render is in [Components](components.md#secondary-layout-modes).
-
-| Field                 | Type            | Default    | Read by                                       |
-| --------------------- | --------------- | ---------- | --------------------------------------------- |
-| `secondary_layout`    | str             | `vertical` | *(picks the layout)* — one of the 16 modes    |
-| `aggregations`        | list[str]       | `null`     | `vertical`, `compact`, `grid`, `box_plot`     |
-| `breakdown_col`       | str             | `null`     | `top_n`, `concentration`, `composition`, `donut` |
-| `top_n_count`         | int (1–5)       | `3`        | `top_n`, `concentration`, `composition`, `donut` |
-| `coverage_max`        | float           | `null`     | `coverage`, `gauge`                           |
-| `threshold_value` <small>(v1.4.0+)</small> | float | `null` | `threshold` — the QC cut-off; without it the strip is not drawn |
-| `threshold_direction` <small>(v1.4.0+)</small> | `min` \| `max` | `min` | `threshold` — `min` is at-least (coverage, %Q30), `max` is at-most (duplication, contamination) |
-| `threshold_warn` <small>(v1.4.0+)</small> | float | `null` | `threshold` — ignored unless on the failing side of `threshold_value` |
-| `attrition_cols` <small>(v1.4.0+)</small> | list[str] | `[]` | `attrition` — ordered stage columns after the card's own, never re-sorted by value |
-| `trend_col` <small>(v1.4.0+)</small> | str | `null` | `trend` — the ordered column the sparkline buckets along |
-
-```yaml
-# Pass/warn/fail against a QC cut-off
-- tag: mean-coverage
-  component_type: card
-  workflow_tag: python/samples_workflow
-  data_collection_tag: samples
-  aggregation: average
-  column_name: coverage
-  column_type: float64
-  secondary_layout: threshold
-  threshold_value: 30
-  threshold_warn: 20
-  threshold_direction: min
-  title: "Mean Coverage"
-```
 
 ### Interactive Component
 
@@ -671,34 +555,6 @@ render is in [Components](components.md#secondary-layout-modes).
 ```
 
 **Title / description** fields are rendered as a header above the AG Grid table. When `title` is omitted, it is auto-generated from `data_collection_tag`.
-
-### Text Component
-
-Headings and prose used to document and organise a dashboard. Text tiles bind to no data
-source, so `workflow_tag` and `data_collection_tag` are unused.
-
-```yaml
-- tag: section-overview
-  component_type: text
-  title: Within-Sample Diversity
-  order: 2                    # heading level H1–H6 (default: 1)
-  alignment: left             # horizontal: left (default), center, right
-  vertical_alignment: center  # vertical: top, center (default), bottom
-  body: |
-    Shannon, observed features and Faith's PD measure within-sample
-    richness and evenness.
-```
-
-| Field                | Type                          | Default  | Description                                        |
-| -------------------- | ----------------------------- | -------- | -------------------------------------------------- |
-| `order`              | int (1–6)                     | `1`      | Heading level, H1 through H6                        |
-| `alignment`          | `left` \| `center` \| `right` | `left`   | Horizontal alignment of the title and body          |
-| `vertical_alignment` | `top` \| `center` \| `bottom` | `center` | Where the text block sits vertically in its tile    |
-| `body`               | str                           | `""`     | Optional paragraph below the heading                |
-
-!!! note "`vertical_alignment` defaults to `center` <small>(v1.4.0+)</small>"
-    Set `vertical_alignment: top` for the pre-v1.4.0 rendering. See
-    [Components](components.md#text-components) for why the default changed.
 
 ### Image Component
 
@@ -778,25 +634,6 @@ Supports three map types: `scatter_map` (default), `density_map`, and `choroplet
 
 !!! note "Choropleth requirements"
     Choropleth maps require `locations_column`, `color_column`, and a GeoJSON source (`geojson_url`, `geojson_dc_tag`, or `geojson_data`). Selection filtering is not supported on choropleth maps.
-
-**Placement** <small>(v1.4.0+)</small> — a map can stay in the grid or be lifted into a
-dashboard-wide panel that follows the viewer across every tab. See
-[Components](components.md#dashboard-wide-map-panel) for what each state looks like.
-
-```yaml
-# two extra keys on any map component
-placement: floating            # grid (default) or floating
-floating_initial_state: docked # compact (default), expanded, docked, hidden
-```
-
-| Field                    | Values                                        | Default   | Description                                              |
-| ------------------------ | --------------------------------------------- | --------- | -------------------------------------------------------- |
-| `placement`              | `grid`, `floating`                            | `grid`    | `floating` claims no grid cell; the map belongs to the whole tab family |
-| `floating_initial_state` | `compact`, `expanded`, `docked`, `hidden`     | `compact` | The state the panel opens in. Ignored when `placement: grid` |
-
-!!! tip "State is remembered per viewer"
-    `floating_initial_state` only sets where the panel starts. Once a viewer moves, resizes
-    or folds it, their own choice is remembered for that dashboard family.
 
 ## Validation
 
