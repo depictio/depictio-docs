@@ -212,6 +212,7 @@ nav:
       - CLI:
           - installation/cli.md
       - Configuration: installation/configuration.md
+      - Telemetry: installation/telemetry.md
       - Environment Reference: installation/env-reference.md
 
   - Usage:
