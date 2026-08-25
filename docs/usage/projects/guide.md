@@ -416,6 +416,54 @@ Per-figure `lat_column`/`lon_column` overrides still work when set; if both are 
   <figcaption><em>Create Data Collection</em> modal — Table tab. After dropping a TSV with lat/lon columns the modal surfaces a <em>"Looks like a coordinates table"</em> banner with column pickers and a save-as-coordinates toggle.</figcaption>
 </figure>
 
+#### :material-family-tree: Example: Phylogeny DCs and their metadata table
+
+A `phylogeny` DC is file-backed: the `.nwk` / `.nex` file is read where it was
+found, never parsed or converted. What it declares at the DC level is **where its
+tip annotations come from** — a separate Table DC keyed by taxon name, the same
+split Microreact uses. Every phylogenetic figure built on the tree inherits that
+join.
+
+```yaml
+- data_collection_tag: "bacterial_tree"
+  description: "Bacterial phylogeny (21 taxa) — Newick"
+  config:
+    type: "phylogeny"
+    metatype: "Aggregate"
+    scan:
+      mode: "single"
+      scan_parameters:
+        filename: "{DATA_ROOT}/trees/bacterial_tree.nwk"
+    dc_specific_properties:
+      format: "newick"          # or "nexus"
+      ladderize: true
+      metadata_dc_tag: "bacterial_metadata"
+      metadata_taxon_column: "taxon"
+
+- data_collection_tag: "bacterial_metadata"
+  description: "Tip metadata (group / habitat / resistance)"
+  config:
+    type: "Table"
+    metatype: "Aggregate"
+    scan:
+      mode: "single"
+      scan_parameters:
+        filename: "{DATA_ROOT}/trees/bacterial_metadata.tsv"
+    dc_specific_properties:
+      format: "TSV"
+      polars_kwargs:
+        separator: "\t"
+```
+
+Leave the three metadata keys out and the tree still renders, just unannotated.
+Use `tip_label_strategy: "first_token"` when leaf names carry a suffix
+(`Escherichia_coli_K12` → `Escherichia_coli`).
+
+A component then points at the tree with `tree_wf_id` / `tree_dc_id` and colours
+its tips from any column of the metadata DC — see
+[Phylogenetic](../../features/components.md#phylogenetic) for the component
+schema and its controls.
+
 ## Template Projects
 
 <!-- prettier-ignore -->
