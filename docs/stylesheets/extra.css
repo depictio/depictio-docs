@@ -1143,7 +1143,7 @@ body.catalog-fs-lock .md-main {
     flex-shrink: 0;
     background: url("../images/logo/animated_favicon.svg") center / contain no-repeat;
 }
-/* Catalog Studio CTA: same button, but badged with the Tools Catalog logo
+/* Tools Studio CTA: same button, but badged with the Tools Catalog logo
    rather than the Depictio mark, since it is the catalog's own companion app. */
 .md-typeset .catalog-cta--studio::before {
     background-image: url("../images/logo/tools_catalog_logo.png");
@@ -1237,6 +1237,45 @@ body.catalog-fs-lock .md-main {
     line-height: 1;
     color: var(--md-default-fg-color--light);
 }
+
+/* Folding variant of the triptych: the file name is the card's header, centred,
+   and what the file holds folds away under it. Material styles a bare <details>
+   as an admonition, so the box, padding and left icon are unset here; its
+   ::after chevron is kept as the only affordance. */
+.md-typeset .module-flow__step--folding > p:first-child {
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+}
+.md-typeset .module-flow__more {
+    margin: 0.7rem 0 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 0.72rem;
+    line-height: 1.6;
+}
+.md-typeset .module-flow__more > summary {
+    margin: 0;
+    padding: 0 1.1rem;
+    background: none;
+    border: none;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.72rem;
+    color: var(--md-default-fg-color--light);
+    cursor: pointer;
+    list-style: none;
+}
+.md-typeset .module-flow__more > summary::before { display: none; }
+.md-typeset .module-flow__more > summary::-webkit-details-marker { display: none; }
+.md-typeset .module-flow__more > summary::after {
+    top: 0.15rem;
+    right: 0;
+}
+.md-typeset .module-flow__more > summary:hover { color: var(--md-typeset-a-color); }
+.md-typeset .module-flow__more > p { margin: 0.5rem 0 0; }
 
 .module-flow__opt {
     font-size: 0.7em;

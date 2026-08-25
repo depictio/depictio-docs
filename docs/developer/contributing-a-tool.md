@@ -20,7 +20,7 @@ unless an output needs reshaping. Everything is validated in CI by
 `depictio-cli dev catalog validate`.
 
 The steps below author that folder by hand. The
-[Depictio Catalog Studio](https://depictio.github.io/depictio-catalog-studio/)
+[Depictio Tools Studio](https://depictio.github.io/depictio-catalog-studio/)
 is the companion app for the same job.
 
 ## The files
