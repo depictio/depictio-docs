@@ -66,30 +66,22 @@ When a dashboard has a map authored as a dashboard-wide panel, it follows you ac
 
 ---
 
-## Right Sidebar Parameters
+## Dashboard settings drawer
+
+**Settings**, at the top right, opens a read-only drawer describing the dashboard: its project, owner, visibility and last-modified date, then the dashboard and project IDs, each with a copy button.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/offcanvas.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/offcanvas.png" width="600">
+    <a href="../../../images/guides/dashboard_creation/dashboard_settings.png" target="_blank">
+        <img src="../../../images/guides/dashboard_creation/dashboard_settings.png" width="600">
     </a>
 </div>
 
-The right sidebar allows you to customize the appearance and behavior of the dashboard. Currently it includes the following options:
-
-
-#### Switches
-
-- **Edit Dashboard layout**: allow you to enable or disable the layout editing mode, which allows you to modify the size and position of the components, as well as show or hide the options of the components at the top of each component. When hidden, the options will not be displayed (except the reset button). See the [Component-wise options](#component-wise-options) section for more details. Interactions with the components are still enabled in this mode and you can still interact with the components.
-- **Toggle interactivity**: enable or disable the interactivity of the components. When disabled, the components will not respond to user interactions.
-
-#### Buttons
-
-- **Remove all components**: remove all components from the dashboard.
-- **Reset all filters**: reset all filters applied to the components.
+!!! note "This replaced the Parameters panel (v1.0.0)"
+    The Dash UI put a *Parameters* panel here, with switches for edit mode and interactivity and buttons to remove every component or reset every filter. Only one of those survived the React rewrite: **Reset all**, now at the top of the filter panel. Editing is the **Edit** button, and there is no global interactivity switch.
 
 ## Component-wise options
 
-When the **Display components options** switch is enabled, each component will display a set of options at the top of the component. These options allow you to perform the following actions:
+In edit mode, hovering a component reveals three icons in its top-right corner, and resize handles on its edges and corners.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/component_options.png" target="_blank">
@@ -97,13 +89,9 @@ When the **Display components options** switch is enabled, each component will d
     </a>
 </div>
 
-- <span style="color: #888888;"><i class="mdi mdi-dots-grid"></i> Draggable</span>: Move and reposition components within the dashboard layout using drag handles.
-- <span style="color: #e03131;"><i class="mdi mdi-trash-can-outline"></i> Delete</span>: Remove the component from the dashboard.
-- <span style="color: #339af0;"><i class="mdi mdi-pen"></i> Edit</span>: Open a modal to modify the component settings.
-- <span style="color: #868e96;"><i class="mdi mdi-content-copy"></i> Clone</span>: Create a copy of the component.
-- <span style="color: #fd7e14;"><i class="bx bx-reset"></i> Reset filters</span>: Clear all filters applied to the component.
-- <span style="color: #E6779F;"><i class="mdi mdi-format-align-left"></i> Align</span>: Choose text alignment (left, center, right) for text components.
-- <span style="color: #15aabf;"><i class="mdi mdi-information-outline"></i> Component metadata</span>: View detailed metadata about the component, including its type, data source, and configuration settings.
+- <span style="color: #888888;"><i class="mdi mdi-dots-grid"></i> **Drag handle**</span>: grab it to move the component in the grid.
+- <span style="color: #15aabf;"><i class="mdi mdi-information-outline"></i> **Info**</span>: the component's metadata — type, data source, configuration.
+- <span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> **Menu**</span>: **Edit** reopens the builder on this component, **Duplicate** copies it, **Move to section** hands it to another section, **Delete** removes it.
 
 ---
 
@@ -197,16 +185,15 @@ There are currently two types of interactive actions available in the dashboard:
 
 ## Saving the Dashboard
 
-1. Once your dashboard is ready, click the **Save** icon (green button at the top right).
-2. A **modal** will appear confirming that your dashboard has been saved (e.g., "Your amazing dashboard was successfully saved!").
-3. Click **Close** to dismiss the modal.
-4. Your dashboard will now appear with a thumbnail under the **Recently Viewed** section on the landing page.
+Layout and section changes persist on their own, about half a second after you stop editing — there is no unsaved state to lose if you close the tab.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/save.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/save.png" width="600">
+    <a href="../../../images/guides/dashboard_creation/editor_toolbar.png" target="_blank">
+        <img src="../../../images/guides/dashboard_creation/editor_toolbar.png" width="461">
     </a>
 </div>
+
+**Save** writes immediately instead of waiting for that delay, and queues a fresh thumbnail for the dashboard card; a short *Dashboard saved* notification confirms it. **Exit Edit** returns to viewer mode. The dashboard then shows up with its new thumbnail under **Recently opened** on the dashboards page.
 
 ## Example Dashboard result
 
