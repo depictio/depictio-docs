@@ -1143,6 +1143,11 @@ body.catalog-fs-lock .md-main {
     flex-shrink: 0;
     background: url("../images/logo/animated_favicon.svg") center / contain no-repeat;
 }
+/* Catalog Studio CTA: same button, but badged with the Tools Catalog logo
+   rather than the Depictio mark, since it is the catalog's own companion app. */
+.md-typeset .catalog-cta--studio::before {
+    background-image: url("../images/logo/tools_catalog_logo.png");
+}
 .md-typeset .catalog-cta {
     display: inline-flex;
     align-items: center;
