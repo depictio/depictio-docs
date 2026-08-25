@@ -32,8 +32,9 @@ Three sections, one question each:
 
 </div>
 
-!!! info "Current release: [v1.5.2](https://github.com/depictio/depictio/releases/tag/v1.5.2) (24 August 2026)"
-    Every dated claim below is traceable to the [changelog](../changelog/README.md).
+!!! info "How to read this page"
+    Every dated claim below is traceable to the [changelog](../changelog/README.md),
+    which is also where you will find the current release.
     Dates are deliberately absent from *In progress* and *Ideas*: the pull request is
     the honest status, an estimate would not be.
 
@@ -108,6 +109,9 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
+| Filters carried into the component builder, bucket-scoped S3 startup | v1.5.2 | [Dashboard creation](../usage/guides/dashboard_creation.md#previewing-with-active-filters-v152) |
+| Cross-version backup compatibility guard | v1.5.2 | [Backup & Restore](../usage/administration/backup.md#restoring-across-versions) |
+| Anonymous installation telemetry | v1.5.0 | [Telemetry](../features/telemetry.md) |
 | Dashboard sections, dashboard-wide map panel, ten new card layouts | v1.4.0 | [Dashboards](../features/dashboards.md#sections) · [Components](../features/components.md#dashboard-wide-map-panel) |
 | Lazy panel loading, bounded payloads, *Load all*, benchmark harness | v1.3.0 | [Performance & Scaling](../features/performance.md) |
 | Pinned timeline footer, compact tables | v1.2.2 | [YAML Sync](../features/yaml-sync.md) |
@@ -131,11 +135,6 @@ reference; this table only says *when* something arrived.
 
 Grouped by theme. Each item links the pull request that implements it, so its
 real state is always one click away.
-
-### Telemetry & backup compatibility
-
-- [ ] **Anonymous installation telemetry** — an opt-out, aggregate heartbeat so we can answer "how many installations exist, on what version?". Counts are bucketed (`2-5`, `200+`), never exact ([#916](https://github.com/depictio/depictio/pull/916))
-- [ ] **Cross-version backup guard** — frozen backup fixtures validated against current models on every PR, so a model change cannot silently break restoring an older backup ([#871](https://github.com/depictio/depictio/pull/871))
 
 ### Authoring: catalog, project builder, tools builder
 
