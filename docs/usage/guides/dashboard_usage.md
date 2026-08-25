@@ -187,13 +187,15 @@ There are currently two types of interactive actions available in the dashboard:
 
 Layout and section changes persist on their own, about half a second after you stop editing — there is no unsaved state to lose if you close the tab.
 
+**Save**, in the editor toolbar, writes immediately instead of waiting for that delay, and queues a fresh thumbnail for the dashboard card. A short notification confirms it.
+
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/editor_toolbar.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/editor_toolbar.png" width="461">
+    <a href="../../../images/guides/dashboard_creation/save_notification.png" target="_blank">
+        <img src="../../../images/guides/dashboard_creation/save_notification.png" width="600">
     </a>
 </div>
 
-**Save** writes immediately instead of waiting for that delay, and queues a fresh thumbnail for the dashboard card; a short *Dashboard saved* notification confirms it. **Exit Edit** returns to viewer mode. The dashboard then shows up with its new thumbnail under **Recently opened** on the dashboards page.
+**Exit Edit** returns to viewer mode. The dashboard then shows up with its new thumbnail under **Recently opened** on the dashboards page.
 
 ## Example Dashboard result
 
