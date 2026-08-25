@@ -15,6 +15,57 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.5.2](https://github.com/depictio/depictio/releases/tag/v1.5.2)** (August 24, 2026)
+
+!!! success "Patch: filters follow you into the component builder, plus two deployment unblocks"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.5.2
+ghcr.io/depictio/depictio-viewer:1.5.2
+ghcr.io/depictio/depictio-worker:1.5.2
+```
+
+### **♻️ Migration**
+
+* **`DEPICTIO_DEV_MODE` no longer skips OAuth state validation** — the flag silently disabled CSRF protection on the Google OAuth callback wherever it was set. It now only affects hot-reload and verbose logging. See [Configuration](../installation/configuration.md#development-settings) ([#991](https://github.com/depictio/depictio/pull/991), [2863e0d8](https://github.com/depictio/depictio/commit/2863e0d8)).
+
+### **✨ New Features**
+
+* **Active filters follow you into the component builder** — a new **Apply to preview** toggle, on by default, makes figure, card, table, map, image and advanced-viz previews reflect the dashboard's current filter state instead of always showing unfiltered data. Returning from the builder no longer resets the grid, and a component added under an active filter comes back already filtered. Turn the toggle off to bring the full dataset back, so a filter combination that empties a preview is never a dead end. See [Dashboard creation](../usage/guides/dashboard_creation.md) ([#977](https://github.com/depictio/depictio/pull/977), [faccc810](https://github.com/depictio/depictio/commit/faccc810)).
+* **Version-less template ids** — `--template nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, resolves to the newest shipped version, so pipelines and docs stop tracking version numbers by hand. Explicit versions still work. See [CLI usage](../depictio-cli/usage.md#run-command) ([#973](https://github.com/depictio/depictio/pull/973), [ba10cd87](https://github.com/depictio/depictio/commit/ba10cd87)).
+
+### **🚀 Improvements**
+
+* **Backup compatibility is now guaranteed and tested** — frozen backup fixtures are validated against the current models on every pull request, and a weekly job restores a backup from the previous release with an image built from current code. Restores are supported from **v1.0.0 onwards**; backups also record their real version instead of a hardcoded `0.1.0`. See [Backup & Restore](../usage/administration/backup.md) ([#871](https://github.com/depictio/depictio/pull/871), [19af63df](https://github.com/depictio/depictio/commit/19af63df)).
+
+### **🐛 Bug Fixes**
+
+* **Bucket-scoped S3 credentials can start the server** — the startup check ran an account-wide `ListBuckets`, so a credential restricted to a single bucket failed with `AccessDenied` and the app refused to boot. It now runs `HeadBucket` plus a put/delete round trip on the configured bucket. See [Environment Reference](../installation/env-reference.md#minios3-storage) ([#990](https://github.com/depictio/depictio/pull/990), [ff207d5f](https://github.com/depictio/depictio/commit/ff207d5f)).
+* **Google OAuth works behind multiple workers** — the CSRF state lived in a per-process dictionary, so on two replicas of four workers a login landed on the right process about one time in eight and otherwise failed with "Invalid or expired state parameter". State now lives in MongoDB, single-use and self-expiring. See [Security](../features/security.md#oauth-callback-security) ([#991](https://github.com/depictio/depictio/pull/991), [2863e0d8](https://github.com/depictio/depictio/commit/2863e0d8)).
+* **Multi-metric cards show real category names** — the breakdown listed placeholder `Bucket 1/2/3` labels because the categorical sampling used a pandas call that never matched Polars ([#836](https://github.com/depictio/depictio/pull/836), [31766a82](https://github.com/depictio/depictio/commit/31766a82), [2006d9c2](https://github.com/depictio/depictio/commit/2006d9c2)).
+* **`depictio run` reports the resolved template** — the summary printed the raw `latest` argument, and auto-generated project names collided across runs ([#973](https://github.com/depictio/depictio/pull/973), [d07fb0a7](https://github.com/depictio/depictio/commit/d07fb0a7)).
+
+---
+
+## **v1.5.2 Beta Releases**
+
+!!! warning "Pre-release builds leading up to v1.5.2"
+    Beta images are published for testing ahead of the stable release. Use the stable `v1.5.2` image for production.
+
+### v1.5.2-b2
+
+#### **🐛 Bug Fixes**
+
+* Google OAuth state moved to MongoDB so sign-in works across workers and replicas ([#991](https://github.com/depictio/depictio/pull/991)).
+
+### v1.5.2-b1
+
+Everything else in v1.5.2: the builder filter propagation, version-less template ids, the bucket-scoped S3 startup check, the backup compatibility guard and the card and CLI fixes above. The stable `v1.5.2` tag adds no code on top of `v1.5.2-b2`.
+
+---
+
 ## **[v1.5.1](https://github.com/depictio/depictio/releases/tag/v1.5.1)** (August 6, 2026)
 
 !!! success "Patch: telemetry counts real installations, not bots and CI runs"
