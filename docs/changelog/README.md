@@ -29,23 +29,23 @@ ghcr.io/depictio/depictio-worker:1.5.2
 
 ### **♻️ Migration**
 
-* **`DEPICTIO_DEV_MODE` no longer skips OAuth state validation** — the flag silently disabled CSRF protection on the Google OAuth callback wherever it was set. It now only affects hot-reload and verbose logging. See [Configuration](../installation/configuration.md#development-settings) ([#991](https://github.com/depictio/depictio/pull/991), [2863e0d8](https://github.com/depictio/depictio/commit/2863e0d8)).
+* **`DEPICTIO_DEV_MODE` no longer skips OAuth state validation** — it silently disabled CSRF protection on the Google OAuth callback wherever it was set. See [Configuration](../installation/configuration.md#development-settings) ([#991](https://github.com/depictio/depictio/pull/991), [2863e0d8](https://github.com/depictio/depictio/commit/2863e0d8)).
 
 ### **✨ New Features**
 
-* **Active filters follow you into the component builder** — a new **Apply to preview** toggle, on by default, makes figure, card, table, map, image and advanced-viz previews reflect the dashboard's current filter state instead of always showing unfiltered data. Returning from the builder no longer resets the grid, and a component added under an active filter comes back already filtered. Turn the toggle off to bring the full dataset back, so a filter combination that empties a preview is never a dead end. See [Dashboard creation](../usage/guides/dashboard_creation.md) ([#977](https://github.com/depictio/depictio/pull/977), [faccc810](https://github.com/depictio/depictio/commit/faccc810)).
-* **Version-less template ids** — `--template nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, resolves to the newest shipped version, so pipelines and docs stop tracking version numbers by hand. Explicit versions still work. See [CLI usage](../depictio-cli/usage.md#run-command) ([#973](https://github.com/depictio/depictio/pull/973), [ba10cd87](https://github.com/depictio/depictio/commit/ba10cd87)).
+* **Active filters follow you into the component builder** — a new **Apply to preview** toggle, on by default, makes previews reflect the dashboard's current filter state; turn it off to get the full dataset back. Components added under a filter come back already filtered. See [Dashboard creation](../usage/guides/dashboard_creation.md) ([#977](https://github.com/depictio/depictio/pull/977), [faccc810](https://github.com/depictio/depictio/commit/faccc810)).
+* **Version-less template ids** — `--template nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, resolves to the newest shipped version. See [CLI usage](../depictio-cli/usage.md#run-command) ([#973](https://github.com/depictio/depictio/pull/973), [ba10cd87](https://github.com/depictio/depictio/commit/ba10cd87)).
 
 ### **🚀 Improvements**
 
-* **Backup compatibility is now guaranteed and tested** — frozen backup fixtures are validated against the current models on every pull request, and a weekly job restores a backup from the previous release with an image built from current code. Restores are supported from **v1.0.0 onwards**; backups also record their real version instead of a hardcoded `0.1.0`. See [Backup & Restore](../usage/administration/backup.md) ([#871](https://github.com/depictio/depictio/pull/871), [19af63df](https://github.com/depictio/depictio/commit/19af63df)).
+* **Backup restores are verified across versions in CI**, and supported from **v1.0.0 onwards**. See [Backup & Restore](../usage/administration/backup.md) ([#871](https://github.com/depictio/depictio/pull/871), [19af63df](https://github.com/depictio/depictio/commit/19af63df)).
 
 ### **🐛 Bug Fixes**
 
-* **Bucket-scoped S3 credentials can start the server** — the startup check ran an account-wide `ListBuckets`, so a credential restricted to a single bucket failed with `AccessDenied` and the app refused to boot. It now runs `HeadBucket` plus a put/delete round trip on the configured bucket. See [Environment Reference](../installation/env-reference.md#minios3-storage) ([#990](https://github.com/depictio/depictio/pull/990), [ff207d5f](https://github.com/depictio/depictio/commit/ff207d5f)).
-* **Google OAuth works behind multiple workers** — the CSRF state lived in a per-process dictionary, so on two replicas of four workers a login landed on the right process about one time in eight and otherwise failed with "Invalid or expired state parameter". State now lives in MongoDB, single-use and self-expiring. See [Security](../features/security.md#oauth-callback-security) ([#991](https://github.com/depictio/depictio/pull/991), [2863e0d8](https://github.com/depictio/depictio/commit/2863e0d8)).
-* **Multi-metric cards show real category names** — the breakdown listed placeholder `Bucket 1/2/3` labels because the categorical sampling used a pandas call that never matched Polars ([#836](https://github.com/depictio/depictio/pull/836), [31766a82](https://github.com/depictio/depictio/commit/31766a82), [2006d9c2](https://github.com/depictio/depictio/commit/2006d9c2)).
-* **`depictio run` reports the resolved template** — the summary printed the raw `latest` argument, and auto-generated project names collided across runs ([#973](https://github.com/depictio/depictio/pull/973), [d07fb0a7](https://github.com/depictio/depictio/commit/d07fb0a7)).
+* **Bucket-scoped S3 credentials can start the server** — the startup check no longer needs account-wide `ListBuckets`. See [Environment Reference](../installation/env-reference.md#minios3-storage) ([#990](https://github.com/depictio/depictio/pull/990), [ff207d5f](https://github.com/depictio/depictio/commit/ff207d5f)).
+* **Google OAuth works behind multiple workers** — CSRF state moved from per-process memory to MongoDB, so sign-in no longer succeeds roughly one time in eight. See [Security](../features/security.md#oauth-callback-security) ([#991](https://github.com/depictio/depictio/pull/991), [2863e0d8](https://github.com/depictio/depictio/commit/2863e0d8)).
+* **Multi-metric cards show real category names** instead of placeholder `Bucket 1/2/3` labels ([#836](https://github.com/depictio/depictio/pull/836), [31766a82](https://github.com/depictio/depictio/commit/31766a82), [2006d9c2](https://github.com/depictio/depictio/commit/2006d9c2)).
+* **`depictio run` reports the resolved template** instead of the raw `latest` argument ([#973](https://github.com/depictio/depictio/pull/973), [d07fb0a7](https://github.com/depictio/depictio/commit/d07fb0a7)).
 
 ---
 
@@ -56,13 +56,11 @@ ghcr.io/depictio/depictio-worker:1.5.2
 
 ### v1.5.2-b2
 
-#### **🐛 Bug Fixes**
-
 * Google OAuth state moved to MongoDB so sign-in works across workers and replicas ([#991](https://github.com/depictio/depictio/pull/991)).
 
 ### v1.5.2-b1
 
-Everything else in v1.5.2: the builder filter propagation, version-less template ids, the bucket-scoped S3 startup check, the backup compatibility guard and the card and CLI fixes above. The stable `v1.5.2` tag adds no code on top of `v1.5.2-b2`.
+* Everything else listed above. The stable `v1.5.2` tag adds no code on top of `v1.5.2-b2`.
 
 ---
 
@@ -91,7 +89,7 @@ ghcr.io/depictio/depictio-worker:1.5.1
 
 ## **[v1.5.0](https://github.com/depictio/depictio/releases/tag/v1.5.0)** (August 6, 2026)
 
-!!! success "Anonymous installation telemetry, and Google Analytics finally wired"
+!!! success "Minor: anonymous installation telemetry, and Google Analytics finally wired"
 
 ### Docker Images
 
@@ -115,7 +113,7 @@ ghcr.io/depictio/depictio-worker:1.5.0
 
 ## **[v1.4.0](https://github.com/depictio/depictio/releases/tag/v1.4.0)** (August 5, 2026)
 
-!!! success "Minor — dashboard sections, a dashboard-wide map panel, and ten new card layouts"
+!!! success "Minor: dashboard sections, a dashboard-wide map panel, and ten new card layouts"
 
 ### Docker Images
 
@@ -156,7 +154,7 @@ ghcr.io/depictio/depictio-worker:1.4.0
 
 ## **[v1.3.1](https://github.com/depictio/depictio/releases/tag/v1.3.1)** (July 30, 2026)
 
-!!! success "Patch — date-column ingestion and the seeded default thumbnails"
+!!! success "Patch: date-column ingestion and the seeded default thumbnails"
 
 ### Docker Images
 
@@ -195,7 +193,7 @@ ghcr.io/depictio/depictio-worker:1.3.1
 
 ## **[v1.3.0](https://github.com/depictio/depictio/releases/tag/v1.3.0)** (July 29, 2026)
 
-!!! success "Performance pass across ingest, serve and render, with the heavier behaviours off by default"
+!!! success "Minor: performance pass across ingest, serve and render, with the heavier behaviours off by default"
 
 ### Docker Images
 
@@ -236,7 +234,7 @@ ghcr.io/depictio/depictio-worker:1.3.0
 
 ## **[v1.2.2](https://github.com/depictio/depictio/releases/tag/v1.2.2)** (July 27, 2026)
 
-!!! success "Persistent timeline footer and table column control"
+!!! success "Patch: persistent timeline footer and table column control"
 
 ### Docker Images
 
@@ -265,7 +263,7 @@ ghcr.io/depictio/depictio-worker:1.2.2
 
 ## **[v1.2.1](https://github.com/depictio/depictio/releases/tag/v1.2.1)** (July 20, 2026)
 
-!!! success "Deeper ingestion detail and runtime log control in the admin Log & Task panel"
+!!! success "Patch: deeper ingestion detail and runtime log control in the admin Log & Task panel"
 
 ### Docker Images
 
@@ -296,7 +294,7 @@ ghcr.io/depictio/depictio-worker:1.2.1
 
 ## **[v1.2.0](https://github.com/depictio/depictio/releases/tag/v1.2.0)** (July 15, 2026)
 
-!!! success "Admin Log & Task monitoring with live updates"
+!!! success "Minor: admin Log & Task monitoring with live updates"
 
 ### Docker Images
 
@@ -320,7 +318,7 @@ ghcr.io/depictio/depictio-worker:1.2.0
 
 ## **[v1.1.4](https://github.com/depictio/depictio/releases/tag/v1.1.4)** (July 9, 2026)
 
-!!! success "Real-time dashboard events over WebSocket, plus a dependency refresh"
+!!! success "Patch: real-time dashboard events over WebSocket, plus a dependency refresh"
 
 ### Docker Images
 
@@ -382,7 +380,7 @@ ghcr.io/depictio/depictio-worker:1.1.4
 
 ## **[v1.1.3](https://github.com/depictio/depictio/releases/tag/v1.1.3)** (June 29, 2026)
 
-!!! success "Passwordless magic-link login and pipeline provisioning"
+!!! success "Patch: passwordless magic-link login and pipeline provisioning"
 
 ### Docker Images
 
@@ -424,7 +422,7 @@ ghcr.io/depictio/depictio-worker:1.1.3
 
 ## **[v1.1.2](https://github.com/depictio/depictio/releases/tag/v1.1.2)** (June 28, 2026)
 
-!!! success "Patch — auth, links & template seeds"
+!!! success "Patch: auth, links & template seeds"
 
 ### Docker Images
 
@@ -447,7 +445,7 @@ ghcr.io/depictio/depictio-worker:1.1.2
 
 ## **[v1.1.1](https://github.com/depictio/depictio/releases/tag/v1.1.1)** (June 27, 2026)
 
-!!! success "Patch — registration control & advanced-viz fixes"
+!!! success "Patch: registration control & advanced-viz fixes"
 
 ### Docker Images
 
@@ -471,7 +469,7 @@ ghcr.io/depictio/depictio-worker:1.1.1
 
 ## **[v1.1.0](https://github.com/depictio/depictio/releases/tag/v1.1.0)** (June 23, 2026)
 
-!!! success "Minor — ingestion reports, DC linking UI, nf-core templates & performance"
+!!! success "Minor: ingestion reports, DC linking UI, nf-core templates & performance"
 
 ### Docker Images
 
@@ -508,7 +506,7 @@ ghcr.io/depictio/depictio-worker:1.1.0
 
 ## **[v1.0.1](https://github.com/depictio/depictio/releases/tag/v1.0.1)** (June 11, 2026)
 
-!!! success "Patch — zero-config quickstart hardening"
+!!! success "Patch: zero-config quickstart hardening"
 
 ### Docker Images
 
@@ -588,7 +586,7 @@ ghcr.io/depictio/depictio-worker:1.0.1
 
 ## **[v1.0.0](https://github.com/depictio/depictio/releases/tag/v1.0.0)** (June 10, 2026)
 
-!!! success "Stable Major Release — React sole frontend, Dash → React migration complete"
+!!! success "Major: React sole frontend, Dash → React migration complete"
 
 ### Docker Images
 
