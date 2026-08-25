@@ -32,7 +32,7 @@ Three sections, one question each:
 
 </div>
 
-!!! info "Current release: [v1.4.0](https://github.com/depictio/depictio/releases/tag/v1.4.0) (5 August 2026)"
+!!! info "Current release: [v1.5.2](https://github.com/depictio/depictio/releases/tag/v1.5.2) (24 August 2026)"
     Every dated claim below is traceable to the [changelog](../changelog/README.md).
     Dates are deliberately absent from *In progress* and *Ideas*: the pull request is
     the honest status, an estimate would not be.

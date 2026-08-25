@@ -34,6 +34,12 @@ DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID=your-client-id
 DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET=your-secret
 ```
 
+!!! tip "Google OAuth behind multiple workers"
+    Since **v1.5.2** the OAuth CSRF state is shared through MongoDB, so sign-in
+    works with any number of workers or replicas. On earlier versions the state
+    was per-process and the callback only succeeded when it happened to reach the
+    process that issued it. See [Security](../../features/security.md#oauth-callback-security).
+
 **Behavior:**
 
 - Users register or are created by admins

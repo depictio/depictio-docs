@@ -142,6 +142,20 @@ S3 configuration inheriting service URL management.
 | `DEPICTIO_MINIO_BUCKET` | `depictio-bucket` | - |
 | `DEPICTIO_MINIO_VERIFY_TLS` | `true` | Verify TLS certificates when connecting to S3/MinIO. Set to `false` only for local dev with self-signed certificates. |
 
+### Required S3 permissions
+
+At startup the server checks that the configured bucket is usable. Since
+**v1.5.2** those checks are scoped to that single bucket: `HeadBucket`, then a
+put/delete round trip on a test object.
+
+A credential that can only reach `DEPICTIO_MINIO_BUCKET` is therefore enough —
+useful on managed S3 where keys are issued per bucket rather than per account.
+
+!!! note "Account-wide `ListBuckets` is no longer required"
+    Before v1.5.2 the check called `ListBuckets`, an account-level operation.
+    Bucket-scoped credentials got `AccessDenied` and the server refused to start,
+    even though the bucket itself was perfectly usable.
+
 ---
 
 ## Authentication

@@ -29,12 +29,12 @@ ghcr.io/depictio/depictio-worker:1.5.2
 
 ### **✨ New Features**
 
-* **Active filters follow you into the component builder** — a new **Apply to preview** toggle, on by default, makes previews reflect the dashboard's current filter state; turn it off to get the full dataset back. Components added under a filter come back already filtered. See [Dashboard creation](../usage/guides/dashboard_creation.md) ([#977](https://github.com/depictio/depictio/pull/977), [faccc810](https://github.com/depictio/depictio/commit/faccc810)).
+* **Active filters follow you into the component builder** — a new **Apply to preview** toggle, on by default, makes previews reflect the dashboard's current filter state; turn it off to get the full dataset back. Components added under a filter come back already filtered. See [Dashboard creation](../usage/guides/dashboard_creation.md#previewing-with-active-filters-v152) ([#977](https://github.com/depictio/depictio/pull/977), [faccc810](https://github.com/depictio/depictio/commit/faccc810)).
 * **Version-less template ids** — `--template nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, resolves to the newest shipped version. See [CLI usage](../depictio-cli/usage.md#run-command) ([#973](https://github.com/depictio/depictio/pull/973), [ba10cd87](https://github.com/depictio/depictio/commit/ba10cd87)).
 
 ### **🚀 Improvements**
 
-* **Backup restores are verified across versions in CI**, and supported from **v1.0.0 onwards**. See [Backup & Restore](../usage/administration/backup.md) ([#871](https://github.com/depictio/depictio/pull/871), [19af63df](https://github.com/depictio/depictio/commit/19af63df)).
+* **Backup restores are verified across versions in CI**, and supported from **v1.0.0 onwards**. See [Backup & Restore](../usage/administration/backup.md#restoring-across-versions) ([#871](https://github.com/depictio/depictio/pull/871), [19af63df](https://github.com/depictio/depictio/commit/19af63df)).
 
 ### **🐛 Bug Fixes**
 
