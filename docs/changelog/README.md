@@ -73,7 +73,9 @@ Everything else in v1.5.2: the builder filter propagation, version-less template
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.5.1
+ghcr.io/depictio/depictio-api:1.5.1
+ghcr.io/depictio/depictio-viewer:1.5.1
+ghcr.io/depictio/depictio-worker:1.5.1
 ```
 
 ### **✨ New Features**
@@ -94,7 +96,9 @@ ghcr.io/depictio/depictio:1.5.1
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.5.0
+ghcr.io/depictio/depictio-api:1.5.0
+ghcr.io/depictio/depictio-viewer:1.5.0
+ghcr.io/depictio/depictio-worker:1.5.0
 ```
 
 ### **✨ New Features**
@@ -116,7 +120,9 @@ ghcr.io/depictio/depictio:1.5.0
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.4.0
+ghcr.io/depictio/depictio-api:1.4.0
+ghcr.io/depictio/depictio-viewer:1.4.0
+ghcr.io/depictio/depictio-worker:1.4.0
 ```
 
 ### **♻️ Migration**
@@ -155,7 +161,9 @@ ghcr.io/depictio/depictio:1.4.0
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.3.1
+ghcr.io/depictio/depictio-api:1.3.1
+ghcr.io/depictio/depictio-viewer:1.3.1
+ghcr.io/depictio/depictio-worker:1.3.1
 ```
 
 ### **🐛 Bug Fixes**
@@ -192,7 +200,9 @@ ghcr.io/depictio/depictio:1.3.1
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.3.0
+ghcr.io/depictio/depictio-api:1.3.0
+ghcr.io/depictio/depictio-viewer:1.3.0
+ghcr.io/depictio/depictio-worker:1.3.0
 ```
 
 ### **♻️ Migration**
@@ -231,7 +241,9 @@ ghcr.io/depictio/depictio:1.3.0
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.2.2
+ghcr.io/depictio/depictio-api:1.2.2
+ghcr.io/depictio/depictio-viewer:1.2.2
+ghcr.io/depictio/depictio-worker:1.2.2
 ```
 
 ### **✨ New Features**
@@ -258,7 +270,9 @@ ghcr.io/depictio/depictio:1.2.2
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.2.1
+ghcr.io/depictio/depictio-api:1.2.1
+ghcr.io/depictio/depictio-viewer:1.2.1
+ghcr.io/depictio/depictio-worker:1.2.1
 ```
 
 ### **✨ New Features**
@@ -287,7 +301,9 @@ ghcr.io/depictio/depictio:1.2.1
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.2.0
+ghcr.io/depictio/depictio-api:1.2.0
+ghcr.io/depictio/depictio-viewer:1.2.0
+ghcr.io/depictio/depictio-worker:1.2.0
 ```
 
 ### **✨ New Features**
@@ -309,7 +325,9 @@ ghcr.io/depictio/depictio:1.2.0
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.1.4
+ghcr.io/depictio/depictio-api:1.1.4
+ghcr.io/depictio/depictio-viewer:1.1.4
+ghcr.io/depictio/depictio-worker:1.1.4
 ```
 
 ### **✨ New Features**
@@ -369,7 +387,9 @@ ghcr.io/depictio/depictio:1.1.4
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.1.3
+ghcr.io/depictio/depictio-api:1.1.3
+ghcr.io/depictio/depictio-viewer:1.1.3
+ghcr.io/depictio/depictio-worker:1.1.3
 ```
 
 ### **✨ New Features**
@@ -409,7 +429,9 @@ ghcr.io/depictio/depictio:1.1.3
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.1.2
+ghcr.io/depictio/depictio-api:1.1.2
+ghcr.io/depictio/depictio-viewer:1.1.2
+ghcr.io/depictio/depictio-worker:1.1.2
 ```
 
 ### **✨ New Features**
@@ -430,7 +452,9 @@ ghcr.io/depictio/depictio:1.1.2
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.1.1
+ghcr.io/depictio/depictio-api:1.1.1
+ghcr.io/depictio/depictio-viewer:1.1.1
+ghcr.io/depictio/depictio-worker:1.1.1
 ```
 
 ### **✨ New Features**
@@ -452,7 +476,9 @@ ghcr.io/depictio/depictio:1.1.1
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.1.0
+ghcr.io/depictio/depictio-api:1.1.0
+ghcr.io/depictio/depictio-viewer:1.1.0
+ghcr.io/depictio/depictio-worker:1.1.0
 ```
 
 ### **✨ New Features**
@@ -487,7 +513,9 @@ ghcr.io/depictio/depictio:1.1.0
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.0.1
+ghcr.io/depictio/depictio-api:1.0.1
+ghcr.io/depictio/depictio-viewer:1.0.1
+ghcr.io/depictio/depictio-worker:1.0.1
 ```
 
 ### **🚀 Improvements**
@@ -565,7 +593,9 @@ ghcr.io/depictio/depictio:1.0.1
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio:1.0.0
+ghcr.io/depictio/depictio-api:1.0.0
+ghcr.io/depictio/depictio-viewer:1.0.0
+ghcr.io/depictio/depictio-worker:1.0.0
 ```
 
 ### **♻️ Migration**
