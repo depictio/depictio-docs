@@ -197,7 +197,7 @@ needs a fundamentally different auth chain.
 #### Gateway API instead of Ingress (v1.1.4+)
 
 On clusters that have moved to the [Gateway API](https://gateway-api.sigs.k8s.io/),
-`gateway.enabled: true` emits `HTTPRoute` resources instead of Ingress objects —
+`gateway.enabled: true` emits `HTTPRoute` resources instead of Ingress objects:
 one for the viewer, one for the API, one for MinIO. `parentRefs` is the only
 required key; per-route filters live under `backend.httpRoute` and
 `minio.httpRoute`, and `gateway.filters` applies to the viewer route alone.
@@ -214,8 +214,8 @@ gateway:
 ```
 
 Gateway API has no equivalent of the `nginx.ingress.kubernetes.io/*`
-annotations, so raw nginx config goes through `gateway.snippetsFilter` —
-`enabled: true` plus a list of `snippets` emits a `SnippetsFilter` and wires it
+annotations, so raw nginx config goes through `gateway.snippetsFilter`. Setting
+`enabled: true` with a list of `snippets` emits a `SnippetsFilter` and wires it
 into the viewer route. Both keys are ignored while `gateway.enabled` is `false`.
 
 ### Init container image pull policy

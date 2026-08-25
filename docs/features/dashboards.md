@@ -158,10 +158,10 @@ a table, so they report a component count instead.
 </div>
 
 The same dashboard's filter panel, drawn with a rail and an indent rather than a
-box — *Cohort* and *Measurements* open, *Scoped views* folded.
+box. *Cohort* and *Measurements* are open, *Scoped views* is folded.
 
 Folding is remembered per viewer, in the browser, under
-`grid-section-collapsed:<dashboard id>` — it is not part of the dashboard, so
+`grid-section-collapsed:<dashboard id>`: it is not part of the dashboard, so
 collapsing a section you are reading never changes what anyone else sees.
 
 ---

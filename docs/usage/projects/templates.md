@@ -91,7 +91,7 @@ The recipe Python code stays generic — path resolution happens via variable su
 
 | Flag | Type | Required | Description |
 |------|------|----------|-------------|
-| `--template` | `string` | yes | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest` — or just `nf-core/ampliseq` — to resolve the newest shipped version (v1.5.2+) |
+| `--template` | `string` | yes | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+) |
 | `--data-root` | `path` | yes | Root directory substituted for `{DATA_ROOT}` |
 | `--var` | `KEY=VALUE` | depends on template | Pass template-specific variables; repeatable |
 | `--dashboard` | `path` | no | Override default dashboard(s); repeatable |

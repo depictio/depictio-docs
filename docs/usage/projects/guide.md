@@ -420,13 +420,13 @@ Per-figure `lat_column`/`lon_column` overrides still work when set; if both are 
 
 A `phylogeny` DC is file-backed: the `.nwk` / `.nex` file is read where it was
 found, never parsed or converted. What it declares at the DC level is **where its
-tip annotations come from** — a separate Table DC keyed by taxon name, the same
+tip annotations come from**: a separate Table DC keyed by taxon name, the same
 split Microreact uses. Every phylogenetic figure built on the tree inherits that
 join.
 
 ```yaml
 - data_collection_tag: "bacterial_tree"
-  description: "Bacterial phylogeny (21 taxa) — Newick"
+  description: "Bacterial phylogeny (21 taxa), Newick format"
   config:
     type: "phylogeny"
     metatype: "Aggregate"
@@ -460,7 +460,7 @@ Use `tip_label_strategy: "first_token"` when leaf names carry a suffix
 (`Escherichia_coli_K12` → `Escherichia_coli`).
 
 A component then points at the tree with `tree_wf_id` / `tree_dc_id` and colours
-its tips from any column of the metadata DC — see
+its tips from any column of the metadata DC. See
 [Phylogenetic](../../features/components.md#phylogenetic) for the component
 schema and its controls.
 

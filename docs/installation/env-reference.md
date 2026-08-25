@@ -158,8 +158,9 @@ At startup the server checks that the configured bucket is usable. Since
 **v1.5.2** those checks are scoped to that single bucket: `HeadBucket`, then a
 put/delete round trip on a test object.
 
-A credential that can only reach `DEPICTIO_MINIO_BUCKET` is therefore enough —
-useful on managed S3 where keys are issued per bucket rather than per account.
+A credential that can only reach `DEPICTIO_MINIO_BUCKET` is therefore enough,
+which is useful on managed S3 where keys are issued per bucket rather than per
+account.
 
 !!! note "Account-wide `ListBuckets` is no longer required"
     Before v1.5.2 the check called `ListBuckets`, an account-level operation.
@@ -577,7 +578,7 @@ Five more are stated by the Helm chart from its own `values.yaml` and are unset
 outside Helm: `DEPICTIO_TELEMETRY_REPLICAS`, `DEPICTIO_TELEMETRY_CPU_REQUEST`,
 `DEPICTIO_TELEMETRY_CPU_LIMIT`, `DEPICTIO_TELEMETRY_MEMORY_REQUEST` and
 `DEPICTIO_TELEMETRY_MEMORY_LIMIT`. CPU quantities are parsed to millicores and
-memory to MiB before they can reach the payload — never sent as raw strings.
+memory to MiB before they can reach the payload; neither is ever sent raw.
 
 ---
 

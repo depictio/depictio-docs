@@ -87,7 +87,7 @@ uv run python scripts/check_deployment.py --host localhost:5080 --scheme http
 ```
 
 With no token it sends no `Authorization` header, which on a public-mode
-instance is what an ordinary visitor gets — so the run reproduces what a visitor
+instance is what an ordinary visitor gets, so the run reproduces what a visitor
 sees. Pass `--token-file` with an admin bearer token to cover private dashboards
 too.
 
@@ -95,17 +95,17 @@ too.
 |--------|---------|-------------|
 | `--host` | required | Viewer or API host, with or without scheme. |
 | `--scheme` | `https` | `https` or `http`. |
-| `--token-file` | — | File holding an admin bearer token, one line. |
-| `--only` | — | Restrict to these dashboard ids. |
+| `--token-file` | - | File holding an admin bearer token, one line. |
+| `--only` | - | Restrict to these dashboard ids. |
 | `--concurrency` | `4` | Parallel in-flight requests. |
 | `--timeout` | `60` | Per-request timeout, seconds. |
-| `--json` / `--markdown` | — | Write the per-component report to a file. |
+| `--json` / `--markdown` | - | Write the per-component report to a file. |
 | `--strict` | `false` | Exit 1 when any component fails. |
 | `--dry-run` | `false` | List dashboards and exit. |
 | `--insecure` | `false` | Skip TLS verification. |
 
-The exit code is 0 unless the deployment is unreachable or preflight fails —
-add `--strict` to fail CI on any broken component.
+The exit code is 0 unless the deployment is unreachable or preflight fails. Add
+`--strict` to fail CI on any broken component.
 
 !!! tip "Finding the admin token on Kubernetes"
     It lives in the backend pod under `/app/depictio/.depictio/`, at

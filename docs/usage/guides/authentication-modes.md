@@ -141,12 +141,12 @@ the same value, through `--provisioning-key` or the identically-named variable.
 
 !!! warning "Treat the key like a password"
     Anyone holding it can create accounts on the instance. Keep it separate
-    from `DEPICTIO_AUTH_INTERNAL_API_KEY_ENV` — the scopes are deliberately
-    different — pass it through a secret store rather than a shell history, and
+    from `DEPICTIO_AUTH_INTERNAL_API_KEY_ENV`, whose scope is deliberately
+    different. Pass it through a secret store rather than a shell history, and
     rotate it if a CI log ever captures it.
 
 A magic link is single-use and expires; redeeming it exchanges the ticket for a
-normal session. Sending it to the user is the pipeline's job — Depictio only
+normal session. Sending it to the user is the pipeline's job; Depictio only
 emits it on stdout.
 
 ## Choosing a Mode

@@ -312,7 +312,7 @@ workflows:
       - data_collection_tag:
           "bacterial_tree" # Required: Unique identifier for the tree
 
-        description: "Bacterial phylogeny — Newick file" # Optional
+        description: "Bacterial phylogeny, Newick file" # Optional
 
         config:
           type:
@@ -338,7 +338,7 @@ workflows:
               # Viewers can toggle this in the viz controls
 
             # Tip annotations live in a SEPARATE Table DC, keyed by taxon
-            # name — the same pattern Microreact uses. All three keys are
+            # name, the same pattern Microreact uses. All three keys are
             # optional; without them the tree renders unannotated.
             metadata_dc_tag:
               "bacterial_metadata" # Optional: tag of the metadata Table DC

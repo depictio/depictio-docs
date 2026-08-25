@@ -125,7 +125,7 @@ depictio-cli run --project-config-path ./config.yaml
 
     | Parameter | Type | Default | Description |
     |-----------|------|---------|-------------|
-    | `--template` | `string` | `null` | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest` — or just `nf-core/ampliseq` — to resolve the newest shipped version (v1.5.2+) |
+    | `--template` | `string` | `null` | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`: or just `nf-core/ampliseq`: to resolve the newest shipped version (v1.5.2+) |
     | `--data-root` | `path` | `null` | Root directory substituted for `{DATA_ROOT}` in template. Required when `--template` is set. |
     | `--project-name` | `string` | `null` | Custom project name (auto-generated from template if omitted) |
     | `--dashboard-name` | `string` | `null` | Override the template's main dashboard title at import (the template file is left untouched). |
@@ -153,7 +153,7 @@ depictio-cli run --project-config-path ./config.yaml
       --provisioning-key "$DEPICTIO_AUTH_PROVISIONING_API_KEY"
     ```
 
-    The key is a **server-side secret** — the instance must be started with the
+    The key is a **server-side secret**: the instance must be started with the
     matching `DEPICTIO_AUTH_PROVISIONING_API_KEY`, otherwise the provisioning
     endpoints stay disabled and the run is rejected. The CLI redacts the value
     from its own logs. See
@@ -192,7 +192,7 @@ depictio-cli run --project-config-path ./config.yaml
 
     | Parameter | Type | Default | Description |
     |-----------|------|---------|-------------|
-    | `--streaming` | `boolean` | `false` | Stream the Delta write instead of materialising the whole table in memory. Lowers peak RSS on large ingests. Experimental — falls back to the standard write on any failure. |
+    | `--streaming` | `boolean` | `false` | Stream the Delta write instead of materialising the whole table in memory. Lowers peak RSS on large ingests. Experimental, falls back to the standard write on any failure. |
 
     | Variable | Default | Description |
     |----------|---------|-------------|
