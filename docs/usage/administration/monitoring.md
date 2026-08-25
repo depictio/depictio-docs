@@ -73,3 +73,42 @@ Set `instance_label` in the CLI YAML; each request then sends `X-Depictio-CLI-In
 
 !!! warning "What leaves the machine"
     Sensitive option values such as `--provisioning-key` are redacted to `***` before the run is reported, but the rest of the invocation and the local paths listed above (CLI and project config, data root, scanned directories) **are visible to server admins** whenever monitoring is enabled.
+
+## Post-deployment check (v1.3.0+)
+
+`scripts/check_deployment.py` walks every dashboard and every tab the API
+returns and replays, per component, the exact data fetch the viewer issues for
+that component type. It reports which components fail and attributes each
+failure to a root cause. No browser involved.
+
+```bash
+uv run python scripts/check_deployment.py --host demo.example.org
+uv run python scripts/check_deployment.py --host localhost:5080 --scheme http
+```
+
+With no token it sends no `Authorization` header, which on a public-mode
+instance is what an ordinary visitor gets — so the run reproduces what a visitor
+sees. Pass `--token-file` with an admin bearer token to cover private dashboards
+too.
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `--host` | required | Viewer or API host, with or without scheme. |
+| `--scheme` | `https` | `https` or `http`. |
+| `--token-file` | — | File holding an admin bearer token, one line. |
+| `--only` | — | Restrict to these dashboard ids. |
+| `--concurrency` | `4` | Parallel in-flight requests. |
+| `--timeout` | `60` | Per-request timeout, seconds. |
+| `--json` / `--markdown` | — | Write the per-component report to a file. |
+| `--strict` | `false` | Exit 1 when any component fails. |
+| `--dry-run` | `false` | List dashboards and exit. |
+| `--insecure` | `false` | Skip TLS verification. |
+
+The exit code is 0 unless the deployment is unreachable or preflight fails —
+add `--strict` to fail CI on any broken component.
+
+!!! tip "Finding the admin token on Kubernetes"
+    It lives in the backend pod under `/app/depictio/.depictio/`, at
+    `user.token.access_token`. The file is named after the admin account
+    (`<username>_config.yaml`), **not** `admin_config.yaml`, so glob for
+    `*_config.yaml` rather than assuming a fixed name.

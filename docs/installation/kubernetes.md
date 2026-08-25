@@ -194,6 +194,57 @@ needs a fundamentally different auth chain.
     NetworkPolicies, ingress controller IP whitelisting, or a dedicated
     private DNS — don't rely on obscurity.
 
+#### Gateway API instead of Ingress (v1.1.4+)
+
+On clusters that have moved to the [Gateway API](https://gateway-api.sigs.k8s.io/),
+set `gateway.enabled: true` and the chart emits `HTTPRoute` resources instead of
+relying on Ingress objects — `<release>-httproute` for the viewer,
+`<release>-backend-httproute` for the API, and `<release>-minio-httproute`
+when MinIO is enabled.
+
+```yaml
+# my-values.yaml
+gateway:
+  enabled: true
+  parentRefs:
+    - name: nginx-gateway
+      namespace: nginx-gateway
+      sectionName: https
+  labels: {}
+  annotations: {}
+```
+
+`parentRefs` is the one required key: it names the Gateway the routes attach to.
+Per-route filters and annotations live next to the route they belong to, under
+`backend.httpRoute` and `minio.httpRoute`, exactly like the per-route Ingress
+annotations above. `gateway.filters` applies to the frontend route only —
+the backend and MinIO routes never inherit it.
+
+##### Injecting nginx config with a SnippetsFilter
+
+NGINX Gateway Fabric has no equivalent of the `nginx.ingress.kubernetes.io/*`
+annotations, so raw nginx config goes through a `SnippetsFilter`. Enabling it
+emits a `<release>-auth` SnippetsFilter and wires it into the frontend route as
+an `ExtensionRef` filter:
+
+```yaml
+gateway:
+  enabled: true
+  parentRefs:
+    - name: nginx-gateway
+      namespace: nginx-gateway
+  snippetsFilter:
+    enabled: true
+    snippets:
+      - context: http.server.location
+        value: |
+          auth_request /oauth2/auth;
+```
+
+This is how the hosted deployment applies `auth_request` for private and
+project-scoped access. Both keys are ignored when `gateway.enabled` is `false`,
+so the block is safe to leave in a shared values file.
+
 #### Hosted deployment overlay
 
 The `values-serve.yaml` overlay at `helm-charts/depictio/values-serve.yaml`

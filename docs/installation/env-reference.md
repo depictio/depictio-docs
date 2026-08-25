@@ -45,6 +45,9 @@ DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 <!-- - [Internal Analytics](#internal-analytics) -->
 - [Google Analytics](#google-analytics)
 - [Logging](#logging)
+- [Monitoring](#monitoring)
+- [Telemetry](#telemetry)
+- [MultiQC Prerender](#multiqc-prerender)
 <!-- - [JBrowse Integration](#jbrowse-integration) -->
 - [S3 File Cache](#s3-file-cache)
 <!-- - [Application Profiling](#application-profiling) -->
@@ -96,6 +99,9 @@ Base class for service configurations with internal/external URL handling.
 | `DEPICTIO_VIEWER_PUBLIC_URL` | - | - |
 | `DEPICTIO_VIEWER_EXTERNAL_SERVICE` | `false` | - |
 | `DEPICTIO_VIEWER_HOST` | `0.0.0.0` | - |
+| `DEPICTIO_VIEWER_WORKERS` | `4` | Gunicorn worker processes |
+| `DEPICTIO_VIEWER_DEBUG` | `true` | Debug mode with hot reload |
+| `DEPICTIO_VIEWER_AUTO_GENERATE_FIGURES` | `false` | Automatic figure generation in UI mode |
 | `DEPICTIO_VIEWER_INSPECTOR_ENABLED` | `false` | Docked component inspector, replacing the per-component popovers for advanced-visualisation controls, notes and metadata. Experimental (v1.4.0+) |
 
 ---
@@ -118,6 +124,10 @@ Base class for service configurations with internal/external URL handling.
 | `DEPICTIO_MONGODB_EXTERNAL_SERVICE` | `false` | - |
 | `DEPICTIO_MONGODB_DB_NAME` | `depictioDB` | - |
 | `DEPICTIO_MONGODB_WIPE` | `false` | - |
+| `DEPICTIO_MONGODB_USERNAME` | - | Username, for operator-managed replica-set auth |
+| `DEPICTIO_MONGODB_PASSWORD` | - | Password, for operator-managed replica-set auth |
+| `DEPICTIO_MONGODB_REPLICA_SET` | - | Replica set name, e.g. `rs0` |
+| `DEPICTIO_MONGODB_AUTH_SOURCE` | `admin` | Authentication source database |
 
 ---
 
@@ -182,6 +192,9 @@ Authentication and authorization settings including JWT configuration, unauthent
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID` | - | Google OAuth client ID |
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET` | - | Google OAuth client secret |
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI` | - | Google OAuth redirect URI |
+| `DEPICTIO_AUTH_REGISTRATION_DISABLED` | `false` | Block self-service registration: `/register` returns 403 and the Register UI is hidden, so only pre-provisioned accounts can log in. Independent of public/single-user mode |
+| `DEPICTIO_AUTH_PROVISIONING_API_KEY` | - | Shared secret for pipeline-side user provisioning (`POST /auth/provision_user`). Scoped to provisioning only, kept separate from the internal API key. Also accepted as `DEPICTIO_AUTH_PROVISIONING_API_KEY_ENV`. **The provisioning endpoints are disabled while this is unset.** See [Pipeline provisioning](../usage/guides/authentication-modes.md#pipeline-provisioning-and-magic-links-v113) |
+| `DEPICTIO_AUTH_MAGIC_LINK_EXPIRY_MINUTES` | `15` | Lifetime of a single-use magic-link login ticket |
 
 ---
 
@@ -523,6 +536,61 @@ longer exists on `DashboardYAMLConfig`.)
 
 ---
 -->
+
+## Monitoring
+
+**Config Class:** `MonitoringConfig`
+**Environment Prefix:** `DEPICTIO_MONITORING_`
+
+Feeds the admin Log & Task panel. See [Monitoring](../usage/administration/monitoring.md).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_MONITORING_ENABLED` | `true` | Enable the admin monitoring feature |
+| `DEPICTIO_MONITORING_RETENTION_DAYS` | `14` | TTL in days for `task_events` records before automatic expiry |
+| `DEPICTIO_MONITORING_APP_LOG_MIN_LEVEL` | `WARNING` | Minimum level captured into `app_logs`. One of `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL` |
+| `DEPICTIO_MONITORING_APP_LOG_CAPPED_MB` | `64` | Size cap in MB of the capped `app_logs` collection |
+| `DEPICTIO_MONITORING_LIVE_UPDATES` | `true` | Push live task and ingestion status over the events WebSocket. Only active when `DEPICTIO_EVENTS_ENABLED` is also true |
+
+---
+
+## Telemetry
+
+**Config Class:** `TelemetryConfig`
+**Environment Prefix:** `DEPICTIO_TELEMETRY_`
+
+Anonymous installation heartbeat. See [Telemetry](../features/telemetry.md) for
+what is sent and how to inspect it.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_TELEMETRY_ENABLED` | `true` | Send anonymous installation telemetry. Also suppressed by `DO_NOT_TRACK`, in CI, under pytest, and when `DEPICTIO_MONGODB_WIPE` is set |
+| `DEPICTIO_TELEMETRY_ENDPOINT` | PostHog Cloud EU | Collector ingestion URL, PostHog-compatible capture endpoint |
+| `DEPICTIO_TELEMETRY_API_KEY` | Depictio's own project | Collector project token. Public write-only key, carries no read access. Override only to point at your own collector |
+| `DEPICTIO_TELEMETRY_INTERVAL_HOURS` | `24` | Hours between heartbeat attempts, 1–168. At most one send per UTC day either way |
+| `DEPICTIO_TELEMETRY_DEPLOYMENT_KIND` | auto-detected | Override the detected kind: `helm`, `kubernetes`, `docker-compose`, `docker-compose-dev`, `docker`, `devcontainer`, `local` |
+| `DEPICTIO_TELEMETRY_INCLUDE_USAGE_METRICS` | `true` | Include bucketed deployment-size counts. Disable to send only install identity and version |
+| `DEPICTIO_TELEMETRY_DEBUG` | `false` | Log the payload instead of sending it, so an operator can audit telemetry before deciding |
+| `DEPICTIO_TELEMETRY_STATE_DIR` | `~/.depictio` | Where the CLI stores its anonymous ID |
+
+Four more are stated by the Helm chart from its own `values.yaml` and are unset
+outside Helm: `DEPICTIO_TELEMETRY_REPLICAS`, `DEPICTIO_TELEMETRY_CPU_REQUEST`,
+`DEPICTIO_TELEMETRY_CPU_LIMIT`, `DEPICTIO_TELEMETRY_MEMORY_REQUEST` and
+`DEPICTIO_TELEMETRY_MEMORY_LIMIT`. CPU quantities are parsed to millicores and
+memory to MiB before they can reach the payload — never sent as raw strings.
+
+---
+
+## MultiQC Prerender
+
+**Config Class:** `MultiQCPrerenderConfig`
+**Environment Prefix:** `DEPICTIO_MULTIQC_`
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_MULTIQC_PRERENDER_DIR` | `~/.depictio/multiqc_prerender` | Local directory for pre-rendered MultiQC figures |
+
+---
 
 ## Global Settings
 
