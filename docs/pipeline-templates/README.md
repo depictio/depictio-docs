@@ -88,14 +88,16 @@ depictio-cli run \
 
 ## How templates work
 
-A template bundles:
+A template bundles four things, each documented on its own page:
 
-- :material-cog: **Project configuration** — workflows, data collections, and cross-DC links with `{VAR_NAME}` placeholders
-- :material-chef-hat: **Recipes** — Python transforms that convert raw pipeline outputs into dashboard-ready tables
-- :material-view-dashboard: **Dashboard YAML** — imported automatically on first run, with template variable substitution
-- :material-link: **Cross-DC links** — enable interactive filtering across data collections
+- :material-cog: [**Project configuration**](../usage/projects/reference.md): workflows, [data collections](../features/data-model.md) and cross-DC links, with `{VAR_NAME}` placeholders
+- :material-chef-hat: [**Recipes**](../usage/projects/recipes.md): Python transforms that convert raw pipeline outputs into dashboard-ready tables
+- :material-view-dashboard: [**Dashboard YAML**](../features/yaml-sync.md): imported automatically on first run, with template variable substitution
+- :material-link: [**Cross-DC links**](../features/cross-dc-filtering.md): interactive filtering across data collections
 
-See [Template System Reference](../usage/projects/templates.md) for the YAML format and resolution mechanics, and [Recipes](../usage/projects/recipes.md) for how data transformations work.
+See [Template System Reference](../usage/projects/templates.md) for the YAML
+format and resolution mechanics, and the [Project Guide](../usage/projects/guide.md)
+for how these pieces fit together outside a template.
 
 ---
 
