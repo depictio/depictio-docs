@@ -28,8 +28,7 @@
 </div>
 
 1. Open a dashboard, click **Edit**, then **Add component**.
-2. Pick a component type: **Figure**, **Card**, **Interactive**, **Table**, **MultiQC**, **Image**, **Map**, **Text** or **Advanced viz**.
-3. Click **Next Step**.
+2. Pick a component type: **Figure**, **Card**, **Interactive**, **Table**, **MultiQC**, **Image**, **Map**, **Text** or **Advanced viz**. Clicking a card takes you straight to the next step.
 
 ### <span style="color: #6495ED;">:material-numeric-2-circle:</span> Step 2: Data Selection
 
@@ -43,13 +42,13 @@
 2. Check **Data Collection Information** — type, row and column counts, Delta table version — and the column preview underneath.
 3. Click **Next Step**.
 
-    With a single data collection available, this step is filled in for you and the builder goes straight to the design step.
+    The first compatible data collection is pre-selected, so you only touch the dropdowns when you need another one — here `joined_penguins_complete`, the join of `physical_features` and `demographic_data`. **Text** components skip this step entirely, since they read no data collection.
 
 ### <span style="color: #F68B33;">:material-numeric-3-circle:</span> Step 3: Customize Your Component
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/design/figure_design.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/design/figure_design.png" width="600">
+    <a href="../../../images/guides/dashboard_creation/design/figure_design_scatter.png" target="_blank">
+        <img src="../../../images/guides/dashboard_creation/design/figure_design_scatter.png" width="600">
     </a>
 </div>
 
@@ -192,15 +191,9 @@ fig = px.scatter(df_modified, x="col_x", y="col_y", color="category")
 
 #### <span style="color: #8BC34A;">:material-palette:</span> Component design Examples:
 
-##### <span style="color: #F68B33;">:material-chart-line:</span> Figure design - visualization selection
-
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/design/figure_design.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/design/figure_design.png" width="600">
-    </a>
-</div>
-
 ##### <span style="color: #6495ED;">:material-scatter-plot:</span> Figure design - scatter plot - UI mode
+
+`bill_length_mm` against `flipper_length_mm`, coloured by `species`. The preview redraws on every change.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/design/figure_design_scatter.png" target="_blank">
@@ -209,6 +202,8 @@ fig = px.scatter(df_modified, x="col_x", y="col_y", color="category")
 </div>
 
 ##### <span style="color: #7A5DC7;">:material-code-braces:</span> Figure design - scatter plot - code mode
+
+Switching to Code Mode carries the UI settings over as a `px.scatter` call, which you can then take past what the form exposes — here marginal violins and a `fig.update_layout()` override.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/design/figure_design_code.png" target="_blank">
