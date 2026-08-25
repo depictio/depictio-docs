@@ -124,6 +124,7 @@ A small sample of that file, right beside its YAML, so `depictio catalog validat
 
 <div class="catalog-cta-wrap" markdown>
 [Read the contributing guide :material-arrow-right:](../developer/contributing-a-tool.md){ .catalog-cta }
+[Open the Catalog Studio :material-arrow-right:](https://depictio.github.io/depictio-catalog-studio/){ .catalog-cta target="_blank" rel="noopener" }
 </div>
 
 !!! note "The catalog always shows the latest version"
