@@ -573,7 +573,7 @@ what is sent and how to inspect it.
 | `DEPICTIO_TELEMETRY_DEBUG` | `false` | Log the payload instead of sending it, so an operator can audit telemetry before deciding |
 | `DEPICTIO_TELEMETRY_STATE_DIR` | `~/.depictio` | Where the CLI stores its anonymous ID |
 
-Four more are stated by the Helm chart from its own `values.yaml` and are unset
+Five more are stated by the Helm chart from its own `values.yaml` and are unset
 outside Helm: `DEPICTIO_TELEMETRY_REPLICAS`, `DEPICTIO_TELEMETRY_CPU_REQUEST`,
 `DEPICTIO_TELEMETRY_CPU_LIMIT`, `DEPICTIO_TELEMETRY_MEMORY_REQUEST` and
 `DEPICTIO_TELEMETRY_MEMORY_LIMIT`. CPU quantities are parsed to millicores and
