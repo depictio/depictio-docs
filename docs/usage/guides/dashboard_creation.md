@@ -236,8 +236,6 @@ As of version 0.5.0, Depictio includes dedicated support for MultiQC quality con
 - **Link figures** with external metadata for enhanced analysis
 - **Filter datasets** to display specific samples based on QC metrics
 
-<div style="padding:104.43% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1127490052?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Screen Recording 2025-10-13 at 22.23.16"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
-
 Components land on the dashboard with the report's own controls intact — here the general statistics table keeps its **Mean / R1 / R2 / All** read selector and its **Table / Violin** toggle, and the dashboard filters apply on top.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
