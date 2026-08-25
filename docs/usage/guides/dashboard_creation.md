@@ -27,10 +27,9 @@
     </a>
 </div>
 
-1. Begin by clicking on the **"+ New Dashboard"** button to create a new dashboard.
-2. In the **"Design your new dashboard component"** modal:
-   - Choose from the available components (e.g., **Figure**, **Card**, **Interactive**, **Table**, **Text**).
-3. Once you’ve chosen the component, click **Next Step**.
+1. Open a dashboard, click **Edit**, then **Add component**.
+2. Pick a component type: **Figure**, **Card**, **Interactive**, **Table**, **MultiQC**, **Image**, **Map**, **Text** or **Advanced viz**.
+3. Click **Next Step**.
 
 ### <span style="color: #6495ED;">:material-numeric-2-circle:</span> Step 2: Data Selection
 
@@ -40,9 +39,11 @@
     </a>
 </div>
 
-1. For each selected component, choose the corresponding **workflow** and **data collection** from the dropdowns.
-2. Verify the **Data Collection Info**, such as **Workflow ID**, **Table type**, **MongoDB ID**, and **Data preview**.
-3. Click **Next Step** to proceed.
+1. Choose the **workflow** and **data collection** from the dropdowns.
+2. Check **Data Collection Information** — type, row and column counts, Delta table version — and the column preview underneath.
+3. Click **Next Step**.
+
+    With a single data collection available, this step is filled in for you and the builder goes straight to the design step.
 
 ### <span style="color: #F68B33;">:material-numeric-3-circle:</span> Step 3: Customize Your Component
 
