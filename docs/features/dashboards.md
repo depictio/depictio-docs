@@ -141,6 +141,29 @@ reports itself, though: a folded grid section of cards shows their numbers inlin
 other section shows a component count. A folded filter section keeps the count of active
 filters inside it.
 
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../images/guides/dashboards/sections_folded.png" target="_blank">
+        <img src="../../images/guides/dashboards/sections_folded.png" width="600">
+    </a>
+</div>
+
+Four folded grid sections: *Cohort* and *Morphometrics* hold cards, so their
+numbers ride along on the header; *Composition* and *Raw Data* hold figures and
+a table, so they report a component count instead.
+
+<div style="border: 1px solid grey; width: 302px; padding: 1px;">
+    <a href="../../images/guides/dashboards/filter_sections.png" target="_blank">
+        <img src="../../images/guides/dashboards/filter_sections.png" width="300">
+    </a>
+</div>
+
+The same dashboard's filter panel, drawn with a rail and an indent rather than a
+box. *Cohort* and *Measurements* are open, *Scoped views* is folded.
+
+Folding is remembered per viewer, in the browser, under
+`grid-section-collapsed:<dashboard id>`: it is not part of the dashboard, so
+collapsing a section you are reading never changes what anyone else sees.
+
 ---
 
 ## :material-tab-plus: Dashboard Tabs

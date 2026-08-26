@@ -139,6 +139,8 @@ workflows:
             #   "MultiQC" - MultiQC quality control reports
             #   "Image" - Image files with metadata
             #   "geojson" - GeoJSON boundary files for choropleth maps
+            #   "phylogeny" - Newick / Nexus trees for the phylogenetic viz
+            #   "jbrowse2" - Genome browser tracks
 
           # Required: Data aggregation strategy
           metatype:
@@ -305,6 +307,47 @@ workflows:
               "properties.NAME" # Required: GeoJSON property path to match locations_column
               # Maps to Plotly's featureidkey parameter
               # Common values: "id", "properties.NAME", "properties.ISO_A3"
+
+      # --- PHYLOGENY DATA COLLECTION ---
+      - data_collection_tag:
+          "bacterial_tree" # Required: Unique identifier for the tree
+
+        description: "Bacterial phylogeny, Newick file" # Optional
+
+        config:
+          type:
+            "phylogeny" # Required: Identifies this as a tree data collection
+            # NOTE: file-backed, nothing is parsed or converted
+            #   - Read where it was found; served as raw Newick via
+            #     /advanced_viz/phylogeny/{dc_id}/newick
+            #   - Referenced by tree_dc_id in an advanced_viz component
+            #     of kind "phylogenetic"
+
+          metatype: "Aggregate" # Required: Metatype identifier
+
+          scan:
+            mode: single
+            scan_parameters:
+              filename: "path/to/tree.nwk"
+
+          dc_specific_properties:
+            format: "newick" # Optional: "newick" (default) or "nexus"
+
+            ladderize:
+              true # Optional: ladderise the tree by default (default true)
+              # Viewers can toggle this in the viz controls
+
+            # Tip annotations live in a SEPARATE Table DC, keyed by taxon
+            # name, the same pattern Microreact uses. All three keys are
+            # optional; without them the tree renders unannotated.
+            metadata_dc_tag:
+              "bacterial_metadata" # Optional: tag of the metadata Table DC
+            metadata_taxon_column:
+              "taxon" # Optional: column joining to tip labels (default "taxon")
+            tip_label_strategy:
+              "taxon" # Optional: "taxon" (leaf name IS the taxon id, default)
+              #                   or "first_token" (take the first
+              #                   underscore-separated token of the leaf name)
 ```
 
 ## See Also

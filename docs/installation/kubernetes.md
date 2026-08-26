@@ -194,22 +194,29 @@ needs a fundamentally different auth chain.
     NetworkPolicies, ingress controller IP whitelisting, or a dedicated
     private DNS — don't rely on obscurity.
 
-#### Hosted deployment overlay
+#### Gateway API instead of Ingress (v1.1.4+)
 
-The `values-serve.yaml` overlay at `helm-charts/depictio/values-serve.yaml`
-is the reference configuration used to deploy depictio on
-[SciLifeLab Serve](https://serve.scilifelab.se/):
+On clusters that have moved to the [Gateway API](https://gateway-api.sigs.k8s.io/),
+`gateway.enabled: true` emits `HTTPRoute` resources instead of Ingress objects:
+one for the viewer, one for the API, one for MinIO. `parentRefs` is the only
+required key; per-route filters live under `backend.httpRoute` and
+`minio.httpRoute`, and `gateway.filters` applies to the viewer route alone.
 
-```bash
-helm upgrade --install depictio ./helm-charts/depictio \
-  -f helm-charts/depictio/values.yaml \
-  -f helm-charts/depictio/values-serve.yaml
+```yaml
+# my-values.yaml
+ingress:
+  enabled: false
+gateway:
+  enabled: true
+  parentRefs:
+    - name: nginx-gateway
+      namespace: nginx-gateway
 ```
 
-The overlay sets `separateRoute: true` and `inheritDefaultAnnotations: false`
-on both backend and MinIO so the Serve-managed OIDC layer protects only the
-viewer ingress; backend and MinIO routes are then locked down at the
-cluster network level.
+Gateway API has no equivalent of the `nginx.ingress.kubernetes.io/*`
+annotations, so raw nginx config goes through `gateway.snippetsFilter`. Setting
+`enabled: true` with a list of `snippets` emits a `SnippetsFilter` and wires it
+into the viewer route. Both keys are ignored while `gateway.enabled` is `false`.
 
 ### Init container image pull policy
 

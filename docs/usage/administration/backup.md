@@ -99,3 +99,46 @@ depictio backup restore 20260315_143000 --dry-run
 # 4. Restore if needed
 depictio backup restore 20260315_143000
 ```
+
+---
+
+## What is covered
+
+A backup snapshots the MongoDB collections that hold your work: projects,
+dashboards, workflows, data collections, users and permissions. Short-lived
+tokens and temporary users are excluded automatically.
+
+Four collections are **deliberately not backed up**, because they are
+operational rather than authored data:
+
+| Collection | Why it is excluded |
+|------------|--------------------|
+| `task_events` | Celery task history, expired by a TTL index |
+| `app_logs` | Application logs, a capped collection |
+| `telemetry` | Anonymous aggregate counters |
+| `ingestion_runs` | Ingestion audit and lineage records |
+
+!!! note "`ingestion_runs` has no TTL"
+    Unlike the other three it is not self-expiring, so the ingestion history it
+    holds is genuinely not recoverable from a backup. Restoring a snapshot leaves
+    whatever is already in that collection untouched.
+
+Backups record the Depictio version that produced them, so a snapshot describes
+itself.
+
+## Restoring across versions
+
+!!! warning "Supported from v1.0.0 onwards"
+    Restoring a backup taken by **v1.0.0 or later** into a newer Depictio is
+    supported and covered by tests. Backups produced before v1.0.0 are out of
+    scope: the data models changed too much for deserialization to be reliable.
+
+Two checks guard this, so a model change cannot silently break older backups:
+frozen backup fixtures are validated against the current Pydantic models on every
+pull request, and a scheduled job restores a backup produced by the previous
+released image using an image built from current code, comparing document counts.
+
+This matters because restore is destructive: it deletes the target collections
+before inserting. A backup that failed to deserialize cleanly could otherwise
+drop data on an upgraded deployment. Run `backup validate` before any restore you
+have not just created yourself.
