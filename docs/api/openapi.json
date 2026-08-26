@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.5.1",
-    "x-generated-at": "2026-08-06T08:56:02Z",
-    "x-depictio-version": "v1.5.1"
+    "version": "1.6.0",
+    "x-generated-at": "2026-08-26T09:30:55Z",
+    "x-depictio-version": "v1.6.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -3755,7 +3755,7 @@
           "DeltaTables"
         ],
         "summary": "Get Breakdown",
-        "description": "Top-N breakdown of ``breakdown_col``, for the card builder's live preview.\n\nReturns the same ``__breakdown__`` payload ``bulk_compute_cards`` attaches to\na saved card — same helper, same per-group aggregation, same evenness — so\nthe preview shows the card's real categories and real distribution instead\nof guessing. The preview used to synthesise ``Bucket 1/2/3`` split evenly at\n33/33/34; the names and the shape were both invented, which made a correct\nbuilder look broken.\n\nComputed against the *unfiltered* table: the builder has no interactive\nfilter state, and the saved card recomputes under whatever filters the\ndashboard carries.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: The card's hero column (decides the per-group reduction).\n    breakdown_col: Categorical column to group by.\n    aggregation: The card's hero aggregation (``count`` / ``nunique`` / ``sum``).\n    top_n_count: How many groups to surface, clamped to 1..5 by the helper.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\", \"total\", \"top\": [{name, count, percent}], \"top_share\",\n    \"unique_values\", \"breakdown_kind\", \"evenness\"}``.\n\nRaises:\n    HTTPException: 404 if the DC / delta table / column is missing, 403 if\n    the user may not read it, 500 on a read error.",
+        "description": "Top-N breakdown of ``breakdown_col``, for the card builder's live preview.\n\nReturns the same ``__breakdown__`` payload ``bulk_compute_cards`` attaches to\na saved card — same helper, same per-group aggregation, same evenness — so\nthe preview shows the card's real categories and real distribution instead\nof guessing. The preview used to synthesise ``Bucket 1/2/3`` split evenly at\n33/33/34; the names and the shape were both invented, which made a correct\nbuilder look broken.\n\nComputed against the *unfiltered* table. When the builder carries active\ndashboard filters it uses the POST variant below instead, so the preview\nmatches what the saved card will show under those filters.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: The card's hero column (decides the per-group reduction).\n    breakdown_col: Categorical column to group by.\n    aggregation: The card's hero aggregation (``count`` / ``nunique`` / ``sum``).\n    top_n_count: How many groups to surface, clamped to 1..5 by the helper.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\", \"total\", \"top\": [{name, count, percent}], \"top_share\",\n    \"unique_values\", \"breakdown_kind\", \"evenness\"}``.\n\nRaises:\n    HTTPException: 404 if the DC / delta table / column is missing, 403 if\n    the user may not read it, 500 on a read error.",
         "operationId": "get_breakdown_depictio_api_v1_deltatables_breakdown__data_collection_id__get",
         "security": [
           {
@@ -3832,6 +3832,63 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Breakdown Filtered",
+        "description": "Filtered flavour of the breakdown preview.\n\nBody: ``{\"column\", \"breakdown_col\", \"aggregation\", \"top_n_count\",\n\"filters\": [InteractiveFilter, ...]}``. Same payload as the GET, computed\nunder the dashboard's active filters so the card builder previews the\ndistribution the saved card will actually show (#329). Filters whose\ncolumn isn't in this DC are skipped (see ``apply_filters_to_scan``);\nfiltered responses bypass the breakdown cache.",
+        "operationId": "get_breakdown_filtered_depictio_api_v1_deltatables_breakdown__data_collection_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/depictio/api/v1/deltatables/card_metric/{data_collection_id}": {
@@ -3840,7 +3897,7 @@
           "DeltaTables"
         ],
         "summary": "Get Card Metric",
-        "description": "Payload for a card's numeric / QC secondary layout, for the live preview.\n\nRuns the same dispatcher ``bulk_compute_cards`` runs for a saved card, so\nthe builder shows the values the dashboard will show. POST rather than GET\nbecause ``attrition`` carries an ordered column list, which does not belong\nin a query string.\n\nBody: ``{\"layout\": ..., \"column\": ..., ...card config fields...}`` — the\nsame field names the card metadata uses (``threshold_value``,\n``threshold_direction``, ``threshold_warn``, ``attrition_cols``,\n``aggregation``).\n\nReturns the layout's payload, or ``null`` when the config is incomplete or\nthe data cannot support it (a constant column has no histogram). The\nbuilder then renders no strip rather than a misleading one.",
+        "description": "Payload for a card's numeric / QC secondary layout, for the live preview.\n\nRuns the same dispatcher ``bulk_compute_cards`` runs for a saved card, so\nthe builder shows the values the dashboard will show. POST rather than GET\nbecause ``attrition`` carries an ordered column list, which does not belong\nin a query string.\n\nBody: ``{\"layout\": ..., \"column\": ..., ...card config fields...}`` — the\nsame field names the card metadata uses (``threshold_value``,\n``threshold_direction``, ``threshold_warn``, ``attrition_cols``,\n``aggregation``).\n\nReturns the layout's payload, or ``null`` when the config is incomplete or\nthe data cannot support it (a constant column has no histogram). The\nbuilder then renders no strip rather than a misleading one.\n\n``filters`` (optional, ``InteractiveFilter`` list) narrows the frame first,\nso the builder can preview the strip under the dashboard's active filters\n(#329). ``layout: \"hero\"`` is a preview-only pseudo-layout returning\n``{\"value\": <scalar>}`` — the card's hero aggregation computed on the\n(possibly filtered) frame, replacing the static precomputed spec value the\nbuilder shows when no filters are active.",
         "operationId": "get_card_metric_depictio_api_v1_deltatables_card_metric__data_collection_id__post",
         "security": [
           {
@@ -3975,6 +4032,63 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Preview Filtered",
+        "description": "Filtered flavour of the preview above, for the component builder.\n\nBody: ``{\"limit\": int = 100, \"filters\": [InteractiveFilter, ...]}``. The\nrows AND ``total_rows`` reflect the filtered frame, so the builder's\n\"Showing X of N rows\" matches what the dashboard's components show under\nthe same filters (#329). Filters whose column isn't in this DC are skipped\n(cross-DC filters can't be link-resolved without dashboard context — see\n``apply_filters_to_scan``). The GET stays for unfiltered callers.",
+        "operationId": "get_preview_filtered_depictio_api_v1_deltatables_preview__data_collection_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Request"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -5947,6 +6061,53 @@
         "summary": "Get Floating Components",
         "description": "Return the floating components of a dashboard's whole tab family.\n\nA floating map is authored on one tab but rendered on every tab, so the\nviewer needs the components of its *siblings*, not just its own. The\n`/dashboards/list` projection deliberately omits `stored_metadata` for\nnon-admins, hence this narrow endpoint: one request per page load,\nreturning only the components that actually float.\n\nEach entry carries its owning `dashboard_id`, which the viewer passes\nstraight to `render_map` — that endpoint takes the dashboard id as a path\nparameter and gates on the same project-level permission, so rendering tab\nA's map while viewing tab B needs no special casing.",
         "operationId": "get_floating_components_depictio_api_v1_dashboards_floating_components__dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/cross_tab_components/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Get Cross Tab Components",
+        "description": "Return everything a tab renders on behalf of its siblings, in one request.\n\nSupersedes ``/floating_components`` for the React viewer (that endpoint\nstays for compatibility): alongside the family's floating maps, this\nreturns every section marked ``persistent: true`` in a tab's\n``grid_sections`` / ``filter_sections``, with its member components and —\nfor grid sections — the owner tab's layout entries for those members. Each\nmember carries its owning ``dashboard_id``, so render calls target the\nowner tab exactly like floating maps do.\n\nSections are keyed ``(owner_dashboard_id, kind, name)``: two tabs each\ndeclaring a persistent section with the same name stay two sections.",
+        "operationId": "get_cross_tab_components_depictio_api_v1_dashboards_cross_tab_components__dashboard_id__get",
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -10910,7 +11071,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -11198,7 +11359,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -11261,7 +11422,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -11449,7 +11610,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -11610,6 +11771,22 @@
             "title": "Collapsed",
             "description": "Start the section collapsed. Defaults to expanded so no filter is hidden on first visit.",
             "default": false
+          },
+          "persistent": {
+            "type": "boolean",
+            "title": "Persistent",
+            "description": "Render this section on every tab of the dashboard family. Grid sections appear read-only alongside each sibling tab's own content; filter sections' controls appear in every tab's filter panel and their values survive tab switches. No effect on single-tab dashboards.",
+            "default": false
+          },
+          "pin": {
+            "type": "string",
+            "enum": [
+              "top",
+              "bottom"
+            ],
+            "title": "Pin",
+            "description": "Where a persistent section sits relative to the tab's other sections: 'top' before them, 'bottom' after. Applied on every tab of the family, the owning one included, so the section keeps the same place wherever the viewer lands. 'bottom' is what a reference block (a raw-data table, a legend) usually wants: present everywhere without preceding the tab's own introduction. Ignored unless `persistent` is set.",
+            "default": "top"
           }
         },
         "additionalProperties": false,
@@ -13107,7 +13284,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -13315,7 +13492,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -13866,7 +14043,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -13972,7 +14149,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -14205,7 +14382,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a744c1e300febafda13a3b6"
+            "default": "6a8eb24ab31e520c4bb8f165"
           }
         },
         "type": "object",
@@ -14323,7 +14500,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -14442,7 +14619,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -14524,7 +14701,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -14610,7 +14787,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -14783,7 +14960,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -14958,7 +15135,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -15028,7 +15205,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
@@ -15126,7 +15303,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a744c1e300febafda13a3b5"
+            "default": "6a8eb24ab31e520c4bb8f164"
           },
           "description": {
             "anyOf": [
