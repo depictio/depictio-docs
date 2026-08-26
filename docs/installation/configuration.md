@@ -462,8 +462,14 @@ DEPICTIO_DEV_MODE=true
 DEPICTIO_PLAYWRIGHT_DEV_MODE=true
 
 # Pin a specific version (default: latest)
-DEPICTIO_VERSION=0.7.3-b7
+DEPICTIO_VERSION=1.5.2
 ```
+
+!!! warning "`DEPICTIO_DEV_MODE` is not a security switch"
+    Up to v1.5.1 this flag also skipped OAuth state validation, so any deployment
+    that set it ran the Google OAuth callback without CSRF protection. That bypass
+    was removed in **v1.5.2**: the flag now only affects hot-reload and verbose
+    logging. See [Security](../features/security.md#oauth-callback-security).
 
 ## Skip Bundled Example Projects
 

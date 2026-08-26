@@ -12,7 +12,7 @@ Templates are pre-packaged project configurations that set up a complete bioinfo
 
 ```bash
 depictio-cli run \
-  --template nf-core/ampliseq/2.16.0 \
+  --template nf-core/ampliseq/latest \
   --data-root /data/my_ampliseq_run
 ```
 

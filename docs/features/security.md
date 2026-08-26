@@ -259,6 +259,13 @@ The JBrowse iframe uses a restricted `sandbox` attribute that omits `allow-same-
 
 The OAuth callback validates that the redirect URL is same-origin before calling `window.location.assign`. This closes an open-redirect vulnerability where a crafted authorization response could send the user (and any attached tokens) to an attacker-controlled domain.
 
+Since **v1.5.2** the CSRF `state` is stored in MongoDB (`oauth_states`), used once and expired by a TTL index. It was previously held in per-process memory, so sign-in only worked when the callback happened to reach the worker that issued the state.
+
+!!! warning "`DEPICTIO_DEV_MODE` no longer skips state validation"
+    The flag used to bypass this check entirely, leaving the callback without CSRF
+    protection on any deployment that set it. It now only affects hot-reload and
+    verbose logging.
+
 ### Deployment Recommendations
 
 1. **Use HTTPS**: Always deploy behind TLS termination

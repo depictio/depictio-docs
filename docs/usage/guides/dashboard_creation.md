@@ -79,6 +79,69 @@
    - Review the component preview and ensure all settings are accurate.
    - Once complete, click **Next Step** to proceed to the final stage.
 
+### <span style="color: #45B8AC;">:material-filter-check:</span> Previewing with active filters (v1.5.2+)
+
+When the dashboard already has filters applied, the component builder previews
+the **filtered** data rather than the whole data collection. Before v1.5.2 the
+builder always showed the unfiltered dataset, and returning to the dashboard
+reset the grid.
+
+Take a dashboard filtered on `variety = Virginica`. The card averages only the
+50 matching rows, not all 150:
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../../images/react/builder_filter_baseline.png" target="_blank">
+        <img src="../../../images/react/builder_filter_baseline.png" width="600">
+    </a>
+</div>
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../../images/react/builder_filter_active.png" target="_blank">
+        <img src="../../../images/react/builder_filter_active.png" width="600">
+    </a>
+</div>
+
+*No filter: 5.8433 across 150 rows. Filtered on Virginica: 6.588 across 50.*
+
+Open the builder from there and the design step carries that filter, with a
+banner naming how many filters are active:
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../../images/react/builder_filter_preview_on.png" target="_blank">
+        <img src="../../../images/react/builder_filter_preview_on.png" width="600">
+    </a>
+</div>
+
+The table reports **10 of 50 rows** — the filtered total, not the collection's
+150.
+
+**Apply to preview** is on by default. Switch it off to preview the full
+dataset, which matters when a narrow filter would otherwise leave you designing
+against an empty table:
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../../images/react/builder_filter_preview_off.png" target="_blank">
+        <img src="../../../images/react/builder_filter_preview_off.png" width="600">
+    </a>
+</div>
+
+!!! info "The toggle only affects the preview"
+    Whichever way you leave it, the saved component always follows the
+    dashboard's live filters. The toggle is a design-time convenience, not a
+    property of the component.
+
+Save, and the new component arrives already filtered — no flash of unfiltered
+data on the way, and the filters you had set are still applied:
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../../images/react/builder_filter_after_save.png" target="_blank">
+        <img src="../../../images/react/builder_filter_after_save.png" width="600">
+    </a>
+</div>
+
+The banner appears only when at least one filter is active, and is suppressed
+for **Text** and **MultiQC** components, which have no notion of row filtering.
+
 ### <span style="color: #7A5DC7;">:material-code-braces:</span> Figure Code Mode (v0.6.0+)
 
 The **Figure** component includes a **Code Mode** for advanced users who want to write custom Python/Plotly code to generate visualizations. This provides maximum flexibility for complex or custom figures.

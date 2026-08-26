@@ -73,6 +73,13 @@ Depictio provides a variety of component types for building interactive dashboar
 
 </div>
 
+### Building under active filters <small>(v1.5.2+)</small> { #building-under-filters }
+
+With filters applied, the builder previews the **filtered** data. An **Apply to
+preview** toggle switches back to the full dataset. Applies to every type except
+Text and MultiQC, which have no row filtering. See
+[Dashboard creation](../usage/guides/dashboard_creation.md#previewing-with-active-filters-v152).
+
 ---
 
 ## :material-chart-scatter-plot: Figure Components <small>(v0.0.1+)</small> { #figure-components }

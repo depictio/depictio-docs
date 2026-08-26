@@ -125,7 +125,7 @@ depictio-cli run --project-config-path ./config.yaml
 
     | Parameter | Type | Default | Description |
     |-----------|------|---------|-------------|
-    | `--template` | `string` | `null` | Template ID (e.g. `nf-core/ampliseq/2.16.0`) |
+    | `--template` | `string` | `null` | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest` — or just `nf-core/ampliseq` — to resolve the newest shipped version (v1.5.2+) |
     | `--data-root` | `path` | `null` | Root directory substituted for `{DATA_ROOT}` in template. Required when `--template` is set. |
     | `--project-name` | `string` | `null` | Custom project name (auto-generated from template if omitted) |
     | `--dashboard-name` | `string` | `null` | Override the template's main dashboard title at import (the template file is left untouched). |
@@ -175,7 +175,7 @@ depictio-cli run --project-config-path ./config.yaml
 ```bash
 # Set up a complete ampliseq project from raw pipeline output
 depictio-cli run \
-  --template nf-core/ampliseq/2.16.0 \
+  --template nf-core/ampliseq/latest \
   --data-root /data/my_ampliseq_run
 ```
 
