@@ -281,7 +281,7 @@ it. The flag is valid in both lists, and means something slightly different in e
 
 `pin` chooses which edge it sits at, on every tab including the one that declares it:
 `top` (the default) before that tab's own sections, `bottom` after them. `bottom` is what
-a reference block usually wants — a raw-data table present everywhere without pushing
+a reference block usually wants: a raw-data table present everywhere without pushing
 aside each tab's own introduction.
 
 ```yaml

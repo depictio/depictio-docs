@@ -194,7 +194,7 @@ The two panels use it differently:
   wanted everywhere had to be rebuilt on every tab.
 
 **Position on every tab** decides whether the shared section leads or trails each
-tab's own content — *before* suits a filter, *after* suits reference material
+tab's own content: *before* suits a filter, *after* suits reference material
 like a raw-data table, which would otherwise push every tab's own introduction
 down the page. The choice applies on all tabs, the owning one included, so the
 section keeps the same place wherever you land.
@@ -221,7 +221,7 @@ them are already narrowed to that variety. Both headers carry the pin.
 
 Editing stays with the tab that declares the section. From anywhere else the
 section's menu offers a jump to that tab rather than controls that would not
-work — and in edit mode the section is drawn where it will appear, so you can
+work. In edit mode the section is still drawn where it will appear, so you can
 see the space it takes on the tab you are laying out.
 
 !!! note "What carries across a tab switch, and what does not"
@@ -323,7 +323,7 @@ you are reading:
   was ever expected.
 
 !!! note "Templates seeded at first boot read as *Live project*"
-    The nf-core projects a fresh deployment seeds for you carry no manifest — only a
+    The nf-core projects a fresh deployment seeds for you carry no manifest. Only a
     project you create yourself with `depictio-cli run --template` does.
 
 ### :material-magnify: What the report shows

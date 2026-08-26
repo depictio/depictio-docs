@@ -128,7 +128,7 @@ data collection, the recipe is replaced by a plain scan of that file. The
 collection keeps `source: transformed`, so the viewer still shows its lineage.
 
 A data collection with no seed is left alone and its recipe runs as before. Seed
-coverage is uneven — `nf-core/viralrecon/3.0.0` ships one for all ten of its
+coverage is uneven: `nf-core/viralrecon/3.0.0` ships one for all ten of its
 recipe collections, `nf-core/ampliseq/2.16.0` for sixteen of nineteen.
 
 This runs *after* conditionals, so a collection a conditional gated out stays

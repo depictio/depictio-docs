@@ -163,7 +163,7 @@ which is useful on managed S3 where keys are issued per bucket rather than per
 account.
 
 Since **v1.6.0** the server creates the bucket before running those checks, so
-**you do not have to provision it first** — pointing a fresh deployment at empty
+**you do not have to provision it first**: pointing a fresh deployment at empty
 object storage is enough. A bucket that already exists is left alone: creation
 short-circuits and no `CreateBucket` call is made, so a credential issued
 against an existing bucket needs no extra permission.
