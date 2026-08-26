@@ -96,38 +96,64 @@ For the configuration reference of each component type, see the
 
 ## :material-hammer-wrench: Contribute a tool
 
-Adding a tool is a **single-folder pull request** under `depictio/catalog/<tool>/`
-— no Depictio internals to learn, and no Python unless an output needs reshaping.
-Three co-located files:
+The **Depictio Tools Studio** is the way in: it is the companion app for
+contributing a new tool to this catalog.
+
+<div class="catalog-cta-wrap" markdown>
+[Depictio Tools Studio :material-arrow-right:](https://depictio.github.io/depictio-catalog-studio/){ .catalog-cta .catalog-cta--studio target="_blank" rel="noopener" }
+</div>
+
+### What a contribution is
+
+Whichever way you author it, a tool is a **single-folder pull request** under
+`depictio/catalog/<tool>/`, with no Depictio internals to learn and no Python
+unless an output needs reshaping. Three co-located files:
 
 <div class="module-flow" markdown>
 
-<div class="module-flow__step module-flow__step--file" markdown>
+<div class="module-flow__step module-flow__step--file module-flow__step--folding" markdown>
 :material-identifier:{ .lg } **`module.yaml`**
 
-The tool's identity — `id`, display `name`, and a pointer to an upstream source (an nf-core module today; other catalogs later). Identity fields like homepage, bio.tools, and EDAM terms are derived from that source rather than duplicated.
+<details class="module-flow__more" markdown>
+<summary>What it holds</summary>
+
+The tool's identity: `id`, display `name`, and a pointer to an upstream source
+(an nf-core module today; other catalogs later). Identity fields like homepage,
+bio.tools, and EDAM terms are derived from that source rather than duplicated.
+
+</details>
 </div>
 
-<div class="module-flow__step module-flow__step--module" markdown>
+<div class="module-flow__step module-flow__step--module module-flow__step--folding" markdown>
 :material-file-cog-outline:{ .lg } **`<output>.yaml`** <span class="module-flow__opt">one per file</span>
 
-**`find`** the raw file, optionally **`recipe`** it into tidy columns, and list the **`renders_as`** it offers — figure, card, table, interactive filter, advanced viz, or MultiQC section.
+<details class="module-flow__more" markdown>
+<summary>What it holds</summary>
+
+**`find`** the raw file, optionally **`recipe`** it into tidy columns, and list
+the **`renders_as`** it offers: figure, card, table, interactive filter,
+advanced viz, or MultiQC section.
+
+</details>
 </div>
 
-<div class="module-flow__step module-flow__step--component" markdown>
+<div class="module-flow__step module-flow__step--component module-flow__step--folding" markdown>
 :material-table-check:{ .lg } **`<output>.tsv`** <span class="module-flow__opt">fixture</span>
 
-A small sample of that file, right beside its YAML, so `depictio catalog validate` previews and checks every render in CI before it ships.
+<details class="module-flow__more" markdown>
+<summary>What it holds</summary>
+
+A small sample of that file, right beside its YAML, so
+`depictio catalog validate` previews and checks every render in CI before it
+ships.
+
+</details>
 </div>
 
 </div>
-
-The **Depictio Catalog Studio** is the companion app for contributing a new
-module.
 
 <div class="catalog-cta-wrap" markdown>
 [Read the contributing guide :material-arrow-right:](../developer/contributing-a-tool.md){ .catalog-cta }
-[Depictio Catalog Studio :material-arrow-right:](https://depictio.github.io/depictio-catalog-studio/){ .catalog-cta .catalog-cta--studio target="_blank" rel="noopener" }
 </div>
 
 !!! note "The catalog always shows the latest version"

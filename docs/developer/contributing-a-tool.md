@@ -15,9 +15,13 @@ recognise a pipeline's output files and turn them into ready-made dashboard
 renders — so users get visualizations automatically, with no manual wiring.
 
 Adding a tool is a **single-folder pull request** under
-`depictio/catalog/<tool>/` — no Depictio internals to learn, and no Python
+`depictio/catalog/<tool>/`, with no Depictio internals to learn and no Python
 unless an output needs reshaping. Everything is validated in CI by
 `depictio-cli dev catalog validate`.
+
+The steps below author that folder by hand. The
+[Depictio Tools Studio](https://depictio.github.io/depictio-catalog-studio/)
+is the companion app for the same job.
 
 ## The files
 

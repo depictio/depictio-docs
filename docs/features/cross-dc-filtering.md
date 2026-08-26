@@ -12,13 +12,13 @@ Filter data in one collection and automatically update related visualizations—
 
 **Links** connect Data Collections for interactive filtering at runtime. When you filter a metadata table, linked MultiQC plots and other visualizations update automatically.
 
-```text
-┌─────────────────┐         ┌─────────────────┐
-│  Metadata Table │  link   │  MultiQC Plots  │
-│                 │────────▶│                 │
-│  [filter here]  │         │  [auto-updates] │
-└─────────────────┘         └─────────────────┘
-```
+[![Joining and linking](../images/data-model/join-vs-link_light.png#only-light)](../images/data-model/join-vs-link_light.png){target=_blank}
+
+[![Joining and linking](../images/data-model/join-vs-link_dark.png#only-dark)](../images/data-model/join-vs-link_dark.png){target=_blank}
+
+The right-hand half is what this page is about. See
+[Joining and linking](data-model.md#joining-and-linking) for the same diagram in
+the context of the data model.
 
 ## :material-cog-sync: How It Works
 
