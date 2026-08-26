@@ -1546,7 +1546,15 @@ body.catalog-fs-lock .md-main {
 
 /* nf-core logo beside the "nf-core" group label in the left nav sidebar.
    :has() targets the nested <li> that directly holds the pipeline links, so the
-   icon lands on the "nf-core" label only — not its "Templates" parent. */
+   icon lands on the "nf-core" label only — not its "Templates" parent.
+
+   Site-root-absolute path, not "../images/...": pipeline-templates/ is one of
+   the shared_images.py subtrees, so this file is excluded from every versioned
+   build and only exists at the site root (hooks/shared_images.py rewrites the
+   same path in rendered HTML pages, but never touches this stylesheet — a path
+   relative to the versioned stylesheets/ directory 404s on every deployed
+   version). images/logo/ above stays relative on purpose: it's the one
+   subtree the hook deliberately keeps per-version. */
 .md-nav__item--nested:has(> nav > ul > li > .md-nav__link[href$="nf-core/ampliseq/"]) > .md-nav__link::before {
   content: "";
   display: inline-block;
@@ -1554,7 +1562,7 @@ body.catalog-fs-lock .md-main {
   height: 1.05em;
   margin-right: 0.45em;
   flex-shrink: 0;
-  background: url("../images/pipeline-templates/nf-core/ampliseq/nf-core.png") center / contain no-repeat;
+  background: url("/depictio-docs/images/pipeline-templates/nf-core/ampliseq/nf-core.png") center / contain no-repeat;
 }
 
 
