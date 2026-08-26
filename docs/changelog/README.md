@@ -15,6 +15,44 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.6.0](https://github.com/depictio/depictio/releases/tag/v1.6.0)** (August 26, 2026)
+
+!!! success "Minor: sections that live on every tab, and filter values that survive the switch"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.6.0
+ghcr.io/depictio/depictio-viewer:1.6.0
+ghcr.io/depictio/depictio-worker:1.6.0
+```
+
+### **✨ New Features**
+
+* **Sections that live on every tab**: a section's new **Show on every tab** switch hands it to the whole dashboard rather than the tab that declares it. A grid section, a metadata or raw-data table say, then renders on every other tab, read-only and owned by its own tab; a filter section's controls join every tab's filter panel. **Position on every tab** puts it before or after each tab's own content. A pin marks it wherever it is drawn, and single-tab dashboards are unaffected. See [Dashboards](../features/dashboards.md#persistent-sections) ([#969](https://github.com/depictio/depictio/pull/969), [d15b0732](https://github.com/depictio/depictio/commit/d15b0732), [4622aabf](https://github.com/depictio/depictio/commit/4622aabf), [0371fee5](https://github.com/depictio/depictio/commit/0371fee5)).
+* **Filter values survive a tab switch**: a value picked in a persistent filter section is still there on the next tab, joining the floating map's selections, which already were. Switching tabs is a page navigation, so the values are kept for the browser tab and dropped once the control is re-pointed at another data collection or column. See [Dashboards](../features/dashboards.md#persistent-sections) ([#969](https://github.com/depictio/depictio/pull/969), [d15b0732](https://github.com/depictio/depictio/commit/d15b0732)).
+* **`persistent` and `pin` in dashboard YAML**: both section lists accept them, and both survive an export/import round trip. See [YAML Sync](../features/yaml-sync.md#persistent-sections) ([#969](https://github.com/depictio/depictio/pull/969), [d15b0732](https://github.com/depictio/depictio/commit/d15b0732)).
+* **The ingestion report is offered for every project**, not just the template-derived ones it was gated on: the report always worked without a manifest, it simply had no way in. A provenance badge now says which of the two it is showing, **Template manifest** or **Live project**, and the live reading drops the figures a manifest is required to state. See [Dashboards](../features/dashboards.md#ingestion-report-health) ([ff230e93](https://github.com/depictio/depictio/commit/ff230e93)).
+* **A dashboard links to its project**: the project name in the settings drawer and the inspector's Info tab is now a link to that project's page. See [Using the dashboard](../usage/guides/dashboard_usage.md#dashboard-settings-drawer) ([c6eebf03](https://github.com/depictio/depictio/commit/c6eebf03)).
+* **Bundled template seeds are ingestible by `depictio-cli`**: `--template` now reads a data collection's committed seed the way first-boot seeding always did, instead of looking for raw pipeline inputs the bundled projects do not ship. A collection with no seed still runs its recipe, and no flags change. See [CLI usage](../depictio-cli/usage.md#run-command) ([#997](https://github.com/depictio/depictio/pull/997), [fa6f49da](https://github.com/depictio/depictio/commit/fa6f49da)).
+
+### **🚀 Improvements**
+
+* **One `Add` menu for components and sections**, one dialog that both creates and edits a section, and a Sections manager reduced to reordering, editing and deleting ([0371fee5](https://github.com/depictio/depictio/commit/0371fee5)).
+* **The builder's section picker became a collapsed `Placement` panel** inside the controls, hidden entirely when the dashboard declares no sections rather than sitting there disabled. A figure's **Max points** likewise moved into a **Performance** panel, and no longer disappears while parameter specs load ([8395d1be](https://github.com/depictio/depictio/commit/8395d1be), [1fc24656](https://github.com/depictio/depictio/commit/1fc24656)).
+* **Previews say they are working**: the catalog panel and the advanced-viz preview share one loading treatment instead of painting blank while a heavy render arrives ([fb7e4d81](https://github.com/depictio/depictio/commit/fb7e4d81)).
+* **The bundled Iris demo is a two-tab family**, *Overview* and *Iris Petal Analysis*, sharing a *Variety* filter and a bottom-pinned *Raw Data* table; nf-core/ampliseq shares its *Sample filters* and *Sample metadata* the same way ([3ee81f6c](https://github.com/depictio/depictio/commit/3ee81f6c)).
+
+### **🐛 Bug Fixes**
+
+* **A fresh deployment starts**: the S3 check ran before the bucket was created, so a first boot against empty object storage died with *"Bucket 'depictio-bucket' does not exist"* before reaching the line that would have created it. The checks now follow creation, and a pre-provisioned bucket is untouched: it short-circuits creation and still needs no account-wide `ListBuckets`. See [Environment Reference](../installation/env-reference.md#minios3-storage) ([#993](https://github.com/depictio/depictio/pull/993), [8560249d](https://github.com/depictio/depictio/commit/8560249d)).
+* **An exported dashboard re-imports intact**: text components were dropped on import, and a whole tab could vanish because the self-adapting gate ran even when nothing had been filtered out. The gate now applies only when filtering removed something, and a filter inherited from a sibling tab's persistent section counts toward it ([86e17aa2](https://github.com/depictio/depictio/commit/86e17aa2), [837494d6](https://github.com/depictio/depictio/commit/837494d6)).
+* **Your own filter section stays editable** when a sibling tab happens to have a persistent one of the same name: its filters were frozen, and every later layout save dropped them ([fb7e4d81](https://github.com/depictio/depictio/commit/fb7e4d81)).
+* **The MultiQC badge is visible on the data source step**, rather than white on white leaving *"Selected Component:"* followed by nothing ([#996](https://github.com/depictio/depictio/pull/996), [ac6dd34b](https://github.com/depictio/depictio/commit/ac6dd34b)).
+* **Dashboard thumbnails no longer capture the sign-in page**: where a keys volume had been regenerated against a database that outlived it, the screenshot service authenticated with a token the current keypair could not verify and photographed `/auth` over every dashboard. It now picks the newest token that verifies, says so plainly when none does, and leaves the existing images alone rather than overwriting them ([#994](https://github.com/depictio/depictio/pull/994), [803ef8fb](https://github.com/depictio/depictio/commit/803ef8fb)).
+
+---
+
 ## **[v1.5.2](https://github.com/depictio/depictio/releases/tag/v1.5.2)** (August 24, 2026)
 
 !!! success "Patch: filters follow you into the component builder, plus two deployment unblocks"
