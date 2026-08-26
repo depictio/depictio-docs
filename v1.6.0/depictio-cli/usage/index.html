@@ -5416,6 +5416,7 @@
 </tr>
 </tbody>
 </table>
+<p>Since <strong>v1.6.0</strong>, resolving a template also picks up any <a href="../../usage/projects/templates/#recipe-seeds">recipe seed</a> committed beside the data: a <code>source: transformed</code> data collection with a <code>{DATA_ROOT}/{dc_tag}.tsv</code> next to it is scanned from that file instead of re-running its recipe against raw pipeline inputs the bundled projects do not ship. Collections without a seed still run their recipes, and no flags change.</p>
 <p>See <a href="../../usage/projects/templates/">Templates</a> for full documentation.</p>
 </details>
 <details class="info">

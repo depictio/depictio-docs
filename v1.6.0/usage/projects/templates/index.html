@@ -1657,6 +1657,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Resolution Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recipe-seeds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe seeds (v1.6.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4244,6 +4261,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Resolution Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recipe-seeds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe seeds (v1.6.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4429,7 +4463,7 @@
 <tr>
 <td><strong>0</strong></td>
 <td>Template resolution</td>
-<td>Load YAML, substitute variables, auto-detect metadata columns, apply conditionals</td>
+<td>Load YAML, substitute variables, auto-detect metadata columns, apply conditionals, then <a href="#recipe-seeds">materialise recipe seeds</a></td>
 </tr>
 <tr>
 <td>1</td>
@@ -4474,6 +4508,31 @@
 </tbody>
 </table>
 <p>Dashboard YAML files also undergo variable substitution (e.g. <code>{GROUP_COL}</code> in filter columns, chart titles).</p>
+<h3 id="recipe-seeds">Recipe seeds <small>(v1.6.0+)</small><a class="headerlink" href="#recipe-seeds" title="Permanent link">¶</a></h3>
+<p>A reference template ships each recipe's <em>output</em> as a committed
+<code>{DATA_ROOT}/{dc_tag}.tsv</code>, so the bundled projects can be explored without the
+pipeline run behind them. Since <strong>v1.6.0</strong> <code>--template</code> reads those seeds, the way
+first-boot seeding always did: where a seed exists for a <code>source: transformed</code>
+data collection, the recipe is replaced by a plain scan of that file. The
+collection keeps <code>source: transformed</code>, so the viewer still shows its lineage.</p>
+<p>A data collection with no seed is left alone and its recipe runs as before. Seed
+coverage is uneven: <code>nf-core/viralrecon/3.0.0</code> ships one for all ten of its
+recipe collections, <code>nf-core/ampliseq/2.16.0</code> for sixteen of nineteen.</p>
+<p>This runs <em>after</em> conditionals, so a collection a conditional gated out stays
+gated out even with a seed sitting beside it.</p>
+<div class="admonition note">
+<p class="admonition-title">A seed is matched by name, not assumed</p>
+<p>Only a <code>source: transformed</code> collection is redirected. A <code>{dc_tag}.tsv</code> next
+to a <code>source: native</code> collection of the same tag is that collection's own
+input, and is scanned normally.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Templates ship with the repository, not the wheel</p>
+<p>The bundled projects live under <code>depictio/projects/</code>, which is not part of the
+published <code>depictio-cli</code> package. Re-ingesting a bundled project from its own
+directory works from a repository checkout or a container image that carries
+them.</p>
+</div>
 <hr>
 <h2 id="template-origin">Template Origin<a class="headerlink" href="#template-origin" title="Permanent link">¶</a></h2>
 <p>Once a project is created from a template, the UI shows a template badge on dashboard cards and in the project data manager. This provenance is stored in the <code>template_origin</code> field:</p>

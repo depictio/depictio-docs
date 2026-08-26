@@ -2321,6 +2321,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#persistent-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sections on every tab (v1.6.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4428,6 +4439,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#persistent-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sections on every tab (v1.6.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4667,7 +4689,7 @@
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│  bar   │ ┌──────────────┐ │                                              │
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│        │ │ 2 active   ▾ │ │                                              │
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│ Tab 1  │ └──────────────┘ │  ▾ Cohort                                    │
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│ Tab 2  │ ▾ Sample         │  ┌─────────────┐  ┌─────────────┐            │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│ Tab 2  │ ▾ Sample      📌 │  ┌─────────────┐  ┌─────────────┐            │
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│ Tab 3  │ ┌──────────────┐ │  │    Card     │  │    Card     │            │
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│        │ │ MultiSelect  │ │  └─────────────┘  └─────────────┘            │
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│ [+]    │ └──────────────┘ │                                              │
@@ -4677,12 +4699,20 @@
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│        │ ┌──────────────┐ │  ┌─────────────┐  ┌─────────────┐            │
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│        │ │  (map here)  │ │  │   Figure    │  │    Table    │            │
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│        │ └──────────────┘ │  └─────────────┘  └─────────────┘            │
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>└────────┴──────────────────┴──────────────────────────────────────────────┘
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│        │                  │  ▾ Raw Data                              📌 │
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│        │                  │  ┌────────────────────────────────────────┐ │
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│        │                  │  │        (shared table, read-only)       │ │
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│        │                  │  └────────────────────────────────────────┘ │
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>└────────┴──────────────────┴──────────────────────────────────────────────┘
 </code></pre></div>
 <p>Both panels can be organised into foldable <strong>sections</strong> <small>(v1.4.0+)</small>, and the
 left panel collapses to a narrow rail. <code>2 active</code> is the active-filter summary; <code>(3)</code> on
 the map dock is how many values that map is filtering on. A map can be lifted out of the
 grid into that dock, or float above the canvas.</p>
+<p>📌 marks a <a href="#persistent-sections">section shown on every tab</a>
+<small>(v1.6.0+)</small>. Here <em>Sample</em> filters every tab and keeps its values
+across a switch, and <em>Raw Data</em> is pinned to the bottom of each one. This tab
+declares neither: both arrive from the tab that does.</p>
 <h3 id="sidebar-tab-navigation"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 3H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m0 16H3V5h10v4h8z"></path></svg></span> Sidebar (Tab Navigation)<a class="headerlink" href="#sidebar-tab-navigation" title="Permanent link">¶</a></h3>
 <p>The collapsible <strong>sidebar</strong> on the far left provides:</p>
 <ul>
@@ -4793,9 +4823,69 @@ a table, so they report a component count instead.</p>
 
 <p>The same dashboard's filter panel, drawn with a rail and an indent rather than a
 box. <em>Cohort</em> and <em>Measurements</em> are open, <em>Scoped views</em> is folded.</p>
-<p>Folding is remembered per viewer, in the browser, under
-<code>grid-section-collapsed:&lt;dashboard id&gt;</code>: it is not part of the dashboard, so
-collapsing a section you are reading never changes what anyone else sees.</p>
+<p>Folding is remembered per viewer, in the browser: it is not part of the
+dashboard, so collapsing a section you are reading never changes what anyone
+else sees. A section that lives on every tab is remembered once for the whole
+dashboard rather than per tab, so it does not unfold as you move between them.</p>
+<h3 id="persistent-sections"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2z"></path></svg></span> Sections on every tab <small>(v1.6.0+)</small><a class="headerlink" href="#persistent-sections" title="Permanent link">¶</a></h3>
+<p>A section normally belongs to the tab that declares it. Switch on <strong>Show on
+every tab</strong> and it belongs to the dashboard instead, which is what a filter
+everyone needs, or one table every tab refers back to, actually wants. A pin
+rides on the section header wherever it is drawn, so it is clear the section is
+shared rather than a copy someone made on each tab.</p>
+<p>The two panels use it differently:</p>
+<ul>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 11h8V3H3m0 18h8v-8H3m10 8h8v-8h-8m0-10v8h8V3"></path></svg></span> a <strong>grid section</strong> renders on every other tab as well,
+  read-only there. Its components cannot be dragged, resized or deleted from a
+  tab that does not own them, and they never enter that tab's saved layout.</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 13h12v-2H6M3 6v2h18V6M10 18h4v-2h-4z"></path></svg></span> a <strong>filter section</strong>'s controls join every tab's
+  filter panel as ordinary controls, and <strong>the values you pick in them survive a
+  tab switch</strong>. Switching tabs loads a new page, so this is a real change: before
+  v1.6.0 a variety picked on one tab was gone on the next, and a filter you
+  wanted everywhere had to be rebuilt on every tab.</li>
+</ul>
+<p><strong>Position on every tab</strong> decides whether the shared section leads or trails each
+tab's own content: <em>before</em> suits a filter, <em>after</em> suits reference material
+like a raw-data table, which would otherwise push every tab's own introduction
+down the page. The choice applies on all tabs, the owning one included, so the
+section keeps the same place wherever you land.</p>
+<div style="border: 1px solid grey; width: 542px; padding: 1px;">
+    <a href="https://depictio.github.io/depictio-docs/images/guides/dashboards/sections_every_tab_dialog.png" target="_blank">
+        <img src="https://depictio.github.io/depictio-docs/images/guides/dashboards/sections_every_tab_dialog.png" width="540">
+    </a>
+</div>
+
+<p>The bundled Iris demo's <em>Variety</em> filter section. <strong>Position on every tab</strong>
+appears only once <strong>Show on every tab</strong> is on.</p>
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="https://depictio.github.io/depictio-docs/images/guides/dashboards/sections_every_tab.png" target="_blank">
+        <img src="https://depictio.github.io/depictio-docs/images/guides/dashboards/sections_every_tab.png" width="600">
+    </a>
+</div>
+
+<p>The same dashboard's second tab, <em>Iris Petal Analysis</em>, which declares neither
+section. <em>Variety</em> arrives in its filter panel still holding the <strong>Setosa</strong>
+picked on the first tab, so the figures and the pinned <em>Raw Data</em> table below
+them are already narrowed to that variety. Both headers carry the pin.</p>
+<p>Editing stays with the tab that declares the section. From anywhere else the
+section's menu offers a jump to that tab rather than controls that would not
+work. In edit mode the section is still drawn where it will appear, so you can
+see the space it takes on the tab you are laying out.</p>
+<div class="admonition note">
+<p class="admonition-title">What carries across a tab switch, and what does not</p>
+<p>Only two things are carried: selections made in a <strong>floating map</strong> (which
+already were, before v1.6.0) and the values of controls <strong>inside a persistent
+filter section</strong>. A selection made by clicking a chart or picking table rows
+is not, nor is any ordinary per-tab control.</p>
+<p>Carried values are held for the browser tab you are working in, so they are
+gone when you close it and never leak into someone else's visit. They are
+also dropped if the control they belong to has since been pointed at another
+data collection or column, rather than being replayed against data they no
+longer describe.</p>
+</div>
+<p>Persistent sections do nothing on a dashboard with a single tab. See
+<a href="../yaml-sync/#persistent-sections">YAML Sync</a> for the <code>persistent</code> and <code>pin</code>
+keys.</p>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 2h10v4h8v10H3zm7 5v3H7v2h3v3h2v-3h3v-2h-3v-3z"></path></svg></span> Dashboard Tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
 <p>Organize complex dashboards with <strong>tabs</strong> (v0.6.0+):</p>
@@ -4804,15 +4894,15 @@ collapsing a section you are reading never changes what anyone else sees.</p>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 5h14v2H7zm0 8v-2h14v2zM4 4.5A1.5 1.5 0 0 1 5.5 6 1.5 1.5 0 0 1 4 7.5 1.5 1.5 0 0 1 2.5 6 1.5 1.5 0 0 1 4 4.5m0 6A1.5 1.5 0 0 1 5.5 12 1.5 1.5 0 0 1 4 13.5 1.5 1.5 0 0 1 2.5 12 1.5 1.5 0 0 1 4 10.5M7 19v-2h14v2zm-3-2.5A1.5 1.5 0 0 1 5.5 18 1.5 1.5 0 0 1 4 19.5 1.5 1.5 0 0 1 2.5 18 1.5 1.5 0 0 1 4 16.5"></path></svg></span> Tabs are displayed <strong>vertically</strong> in the collapsible left navbar</li>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.76 8.69a.76.76 0 0 0-.76.76V20.9c0 .42.34.76.76.76.19 0 .35-.06.48-.16l1.91-1.55 1.66 3.62c.13.27.4.43.69.43.11 0 .22 0 .33-.08l2.76-1.28c.38-.18.56-.64.36-1.01L17.28 18l2.41-.45a.9.9 0 0 0 .43-.26c.27-.32.23-.79-.12-1.08l-8.74-7.35-.01.01a.76.76 0 0 0-.49-.18M15 10V8h5v2zm-1.17-5.24 2.83-2.83 1.41 1.41-2.83 2.83zM10 0h2v5h-2zM3.93 14.66l2.83-2.83 1.41 1.41-2.83 2.83zm0-11.32 1.41-1.41 2.83 2.83-1.41 1.41zM7 10H2V8h5z"></path></svg></span> Click a tab name to switch views</li>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg></span> The navbar can be <strong>collapsed</strong> using the burger menu icon</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Each tab maintains its own component layout</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Each tab lays out its own components, apart from any <a href="#persistent-sections">section shown on every tab</a></li>
 </ul>
 <h3 id="tab-features"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21z"></path></svg></span> Tab Features<a class="headerlink" href="#tab-features" title="Permanent link">¶</a></h3>
 <ul>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 2h10v4h8v10H3zm7 5v3H7v2h3v3h2v-3h3v-2h-3v-3z"></path></svg></span> <strong>Multiple Tabs</strong>: Create multiple views within a single dashboard</li>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m3.5 6A1.5 1.5 0 0 1 17 9.5a1.5 1.5 0 0 1-1.5 1.5A1.5 1.5 0 0 1 14 9.5 1.5 1.5 0 0 1 15.5 8m-7 0A1.5 1.5 0 0 1 10 9.5 1.5 1.5 0 0 1 8.5 11 1.5 1.5 0 0 1 7 9.5 1.5 1.5 0 0 1 8.5 8m3.5 9.5c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.81 2.04-2.78 3.5-5.11 3.5"></path></svg></span> <strong>Custom Icons</strong>: Material Design icons for visual identification</li>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 12a1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 17.5 9a1.5 1.5 0 0 1 1.5 1.5 1.5 1.5 0 0 1-1.5 1.5m-3-4A1.5 1.5 0 0 1 13 6.5 1.5 1.5 0 0 1 14.5 5 1.5 1.5 0 0 1 16 6.5 1.5 1.5 0 0 1 14.5 8m-5 0A1.5 1.5 0 0 1 8 6.5 1.5 1.5 0 0 1 9.5 5 1.5 1.5 0 0 1 11 6.5 1.5 1.5 0 0 1 9.5 8m-3 4A1.5 1.5 0 0 1 5 10.5 1.5 1.5 0 0 1 6.5 9 1.5 1.5 0 0 1 8 10.5 1.5 1.5 0 0 1 6.5 12M12 3a9 9 0 0 0-9 9 9 9 0 0 0 9 9 1.5 1.5 0 0 0 1.5-1.5c0-.39-.15-.74-.39-1-.23-.27-.38-.62-.38-1a1.5 1.5 0 0 1 1.5-1.5H16a5 5 0 0 0 5-5c0-4.42-4.03-8-9-8"></path></svg></span> <strong>Custom Colors</strong>: Match your organization's theme</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 11h8V3H3m2 2h4v4H5m8 12h8v-8h-8m2 2h4v4h-4M3 21h8v-8H3m2 2h4v4H5m8-16v8h8V3m-2 6h-4V5h4Z"></path></svg></span> <strong>Independent Layouts</strong>: Each tab has its own layout</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.5 18.5c0-1.1.3-2.1.7-3H12c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5c0 .2 0 .4-.1.5.8-.3 1.6-.5 2.6-.5.5 0 1 .1 1.5.2V12c0-.3 0-.7-.1-1l2.1-1.6c.2-.2.2-.4.1-.6l-2-3.5c-.1-.3-.3-.3-.6-.3l-2.5 1c-.5-.4-1.1-.7-1.7-1l-.4-2.7c.1-.1-.2-.3-.4-.3h-4c-.2 0-.5.2-.5.4l-.4 2.7c-.6.2-1.1.6-1.7.9L5 5c-.3 0-.5 0-.7.3l-2 3.5c-.1.2 0 .4.2.6L4.6 11c0 .3-.1.7-.1 1s0 .7.1 1l-2.1 1.7c-.2.2-.2.4-.1.6l2 3.5c.1.2.3.2.6.2l2.5-1c.5.4 1.1.7 1.7 1l.4 2.7c0 .2.2.4.5.4h2.5c-.7-1.1-1.1-2.3-1.1-3.6m6.5-4V13l-2.2 2.2 2.2 2.2V16c1.4 0 2.5 1.1 2.5 2.5 0 .4-.1.8-.3 1.1l1.1 1.1c1.2-1.8.7-4.3-1.1-5.5-.6-.5-1.4-.7-2.2-.7m0 6.5c-1.4 0-2.5-1.1-2.5-2.5 0-.4.1-.8.3-1.1l-1.1-1.1c-1.2 1.8-.7 4.3 1.1 5.5.7.4 1.4.7 2.2.7V24l2.2-2.2-2.2-2.3z"></path></svg></span> <strong>Shared Settings</strong>: Theme and permissions apply across all tabs</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 11h8V3H3m2 2h4v4H5m8 12h8v-8h-8m2 2h4v4h-4M3 21h8v-8H3m2 2h4v4H5m8-16v8h8V3m-2 6h-4V5h4Z"></path></svg></span> <strong>Own Layouts</strong>: Each tab arranges its own components, and a tab cannot rearrange a section another tab shares with it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.5 18.5c0-1.1.3-2.1.7-3H12c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5c0 .2 0 .4-.1.5.8-.3 1.6-.5 2.6-.5.5 0 1 .1 1.5.2V12c0-.3 0-.7-.1-1l2.1-1.6c.2-.2.2-.4.1-.6l-2-3.5c-.1-.3-.3-.3-.6-.3l-2.5 1c-.5-.4-1.1-.7-1.7-1l-.4-2.7c.1-.1-.2-.3-.4-.3h-4c-.2 0-.5.2-.5.4l-.4 2.7c-.6.2-1.1.6-1.7.9L5 5c-.3 0-.5 0-.7.3l-2 3.5c-.1.2 0 .4.2.6L4.6 11c0 .3-.1.7-.1 1s0 .7.1 1l-2.1 1.7c-.2.2-.2.4-.1.6l2 3.5c.1.2.3.2.6.2l2.5-1c.5.4 1.1.7 1.7 1l.4 2.7c0 .2.2.4.5.4h2.5c-.7-1.1-1.1-2.3-1.1-3.6m6.5-4V13l-2.2 2.2 2.2 2.2V16c1.4 0 2.5 1.1 2.5 2.5 0 .4-.1.8-.3 1.1l1.1 1.1c1.2-1.8.7-4.3-1.1-5.5-.6-.5-1.4-.7-2.2-.7m0 6.5c-1.4 0-2.5-1.1-2.5-2.5 0-.4.1-.8.3-1.1l-1.1-1.1c-1.2 1.8-.7 4.3 1.1 5.5.7.4 1.4.7 2.2.7V24l2.2-2.2-2.2-2.3z"></path></svg></span> <strong>Shared Settings</strong>: Theme and permissions apply across all tabs, as do <a href="#persistent-sections">sections marked <em>Show on every tab</em></a> and the filter values set in them</li>
 </ul>
 <h3 id="creating-a-tab"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> Creating a Tab<a class="headerlink" href="#creating-a-tab" title="Permanent link">¶</a></h3>
 <ol>
@@ -4876,7 +4966,7 @@ collapsing a section you are reading never changes what anyone else sees.</p>
 </tr>
 <tr>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.39 1.73 1.11 3l8.39 8.37.47.63H10v5.87c-.04.29.06.6.29.83l2.01 2.01c.39.39 1.02.39 1.41 0 .23-.21.33-.53.29-.83v-3.99l6.84 6.84 1.27-1.27L14 13.35 9.41 8.76 4.15 3.5zM6.21 3l8.33 8.34 5.25-6.72a1 1 0 0 0-.17-1.4c-.19-.14-.4-.22-.62-.22z"></path></svg></span> <strong>Interactive Filter Values</strong></td>
-<td>Filter selections are session-only and reset on page reload</td>
+<td>Filter selections are never saved to the dashboard. Most reset on reload; values set in a <a href="#persistent-sections">section shown on every tab</a> are carried across tab switches for as long as the browser tab is open</td>
 </tr>
 <tr>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10.59 12 4-4H11V6h7v7h-2V9.41l-4 4V16h8V4H8v8zM22 2v16H12v4H2V12h4V2zM10 14H4v6h6z"></path></svg></span> <strong>Component Resize</strong></td>
@@ -4890,10 +4980,25 @@ collapsing a section you are reading never changes what anyone else sees.</p>
 <p>After repositioning or resizing components, use the <strong>Save Layout</strong> button in the dashboard toolbar to persist your layout changes.</p>
 <hr>
 <h2 id="ingestion-report-health"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-7 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M7 7h10V5h2v14H5V5h2zm.5 6.5L9 12l2 2 4.5-4.5L17 11l-6 6z"></path></svg></span> Ingestion Report &amp; Health<a class="headerlink" href="#ingestion-report-health" title="Permanent link">¶</a></h2>
-<p>Dashboards created from a <a href="../../pipeline-templates/">pipeline template</a> carry an
-<strong>ingestion report</strong> that compares the data collections the template <em>expected</em> against
-what was actually found and aggregated during the CLI scan. It answers "did all the data
-this dashboard needs actually land?" at a glance.</p>
+<p>Every project carries an <strong>ingestion report</strong>, answering "did all the data this dashboard
+needs actually land?" at a glance. What it can compare against depends on where the
+project came from, and since <strong>v1.6.0</strong> a badge in the report header says which of the two
+you are reading:</p>
+<ul>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23.5 17-5 5-3.5-3.5 1.5-1.5 2 2 3.5-3.5zM6 2c-1.11 0-2 .89-2 2v16c0 1.11.89 2 2 2h7.81c-.53-.91-.81-1.95-.81-3 0-.33.03-.67.08-1H6v-2h7.81c.46-.8 1.1-1.5 1.87-2H6v-2h12v1.08c.33-.05.67-.08 1-.08.34 0 .67.03 1 .08V8l-6-6m-1 1.5L18.5 9H13Z"></path></svg></span> <strong>Template manifest</strong> — the project was created from a
+  <a href="../../pipeline-templates/">pipeline template</a> by <code>depictio-cli run --template</code>,
+  which froze the list of data collections the template <em>expected</em>. The report compares
+  that list against what was actually found and aggregated during the scan.</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 12V9c0 2.2 3.6 4 8 4s8-1.8 8-4v3c0 .5-.2.9-.5 1.4-.8-.3-1.6-.4-2.5-.4-2.5 0-4.9 1.1-6.4 2.9C6.8 15.6 4 14 4 12m8-1c4.4 0 8-1.8 8-4s-3.6-4-8-4-8 1.8-8 4 3.6 4 8 4m-2.9 8.7-.3-.7.3-.7c.1-.2.2-.3.2-.5-3.1-.6-5.3-2-5.3-3.8v3c0 1.8 2.4 3.3 5.7 3.8-.2-.3-.4-.7-.6-1.1M17 18c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1m6 1c-.9 2.3-3.3 4-6 4s-5.1-1.7-6-4c.9-2.3 3.3-4 6-4s5.1 1.7 6 4m-3.5 0c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5"></path></svg></span> <strong>Live project</strong> — there is no such list, so the report is read
+  from the collections the project declares today. It tells you which of them have data;
+  it cannot tell you a collection is missing entirely, because nothing recorded that it
+  was ever expected.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Templates seeded at first boot read as <em>Live project</em></p>
+<p>The nf-core projects a fresh deployment seeds for you carry no manifest. Only a
+project you create yourself with <code>depictio-cli run --template</code> does.</p>
+</div>
 <h3 id="what-the-report-shows"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg></span> What the report shows<a class="headerlink" href="#what-the-report-shows" title="Permanent link">¶</a></h3>
 <p>The report lists every expected data collection with a status:</p>
 <table>
@@ -4920,6 +5025,18 @@ this dashboard needs actually land?" at a glance.</p>
 </table>
 <p>Expand a row to see its files (or the Delta-table path once aggregated), and filter or
 group rows by status.</p>
+<p>Reading a <strong>Live project</strong>, the report drops what it cannot honestly state: <strong>Gated out</strong>
+shows <code>—</code> rather than <code>0</code>, since only a manifest records what a conditional excluded, and
+the required and optional tiles count the collections that have data without a total to
+measure them against.</p>
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="https://depictio.github.io/depictio-docs/images/guides/dashboards/ingestion_live_project.png" target="_blank">
+        <img src="https://depictio.github.io/depictio-docs/images/guides/dashboards/ingestion_live_project.png" width="600">
+    </a>
+</div>
+
+<p>The report for a project never built from a template. Before v1.6.0 this tab was not
+offered at all, though the report behind it worked.</p>
 <h3 id="health-status-banner"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> Health status &amp; banner<a class="headerlink" href="#health-status-banner" title="Permanent link">¶</a></h3>
 <p>The report rolls up into a single project <strong>health</strong> value:</p>
 <ul>
@@ -4929,13 +5046,8 @@ group rows by status.</p>
 </ul>
 <p>When a template-derived dashboard is missing or only partially has a required collection,
 a dismissible <strong>health banner</strong> appears above the dashboard. The full report is reachable
-from the <strong>settings drawer</strong> of any template-derived project.</p>
-<div class="admonition note">
-<p class="admonition-title">Legacy projects</p>
-<p>The report relies on the expected-data-collection manifest frozen at template
-resolution time. Projects created before this manifest existed fall back to the live
-project state, where intentionally gated-out collections cannot be distinguished.</p>
-</div>
+from any project's <strong>Ingestion</strong> tab on its <a href="../../usage/guides/web_ui/">project page</a>, and
+from the <strong>View ingestion report</strong> row in a dashboard's settings drawer.</p>
 <hr>
 <h2 id="sharing-dashboards"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg></span> Sharing Dashboards<a class="headerlink" href="#sharing-dashboards" title="Permanent link">¶</a></h2>
 <h3 id="permissions"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.7 9.7 0 0 1 12 20.92 9.7 9.7 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53"></path></svg></span> Permissions<a class="headerlink" href="#permissions" title="Permanent link">¶</a></h3>

@@ -4707,6 +4707,12 @@ credentials</strong> after the upgrade:</p>
 <a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_ROOT_USER</span><span class="p">:</span><span class="w"> </span><span class="s">"your-access-key"</span>
 <a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="s">"your-secret-key"</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">The bucket does not have to exist</p>
+<p>From <strong>v1.6.0</strong> the backend creates <code>DEPICTIO_MINIO_BUCKET</code> at startup when it is
+missing, then verifies it; an existing bucket is left untouched. See
+<a href="../env-reference/#minios3-storage">Required S3 permissions</a>.</p>
+</div>
 <h3 id="ingress">Ingress<a class="headerlink" href="#ingress" title="Permanent link">¶</a></h3>
 <p>Depictio's Helm chart supports three ingress topologies. Pick based on
 how your cluster's auth and TLS termination work.</p>

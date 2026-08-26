@@ -4625,6 +4625,12 @@
 <p class="admonition-title">Network Configuration</p>
 <p>Set <code>DEPICTIO_MINIO_EXTERNAL_SERVICE=true</code> when MinIO is outside the Docker Compose network.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">The bucket does not have to exist</p>
+<p>From <strong>v1.6.0</strong> the server creates <code>DEPICTIO_MINIO_BUCKET</code> at startup when it is
+missing, then verifies it; an existing bucket is left untouched. See
+<a href="../env-reference/#minios3-storage">Required S3 permissions</a>.</p>
+</div>
 <div class="admonition info">
 <p class="admonition-title">S3-Compatible Storage</p>
 <p>Depictio uses the MinIO client library (S3 API compatible). AWS S3, DigitalOcean Spaces, Backblaze B2, and others may work but have not been officially tested.</p>

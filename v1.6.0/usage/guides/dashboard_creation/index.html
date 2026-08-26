@@ -4558,6 +4558,7 @@
 <li>
 <p>Click <strong>Next Step</strong>.</p>
 <p>The first compatible data collection is pre-selected, so you only touch the dropdowns when you need another one. Here that is <code>joined_penguins_complete</code>, the join of <code>physical_features</code> and <code>demographic_data</code>. <strong>Text</strong> components skip this step entirely, since they read no data collection.</p>
+<p>The <strong>Selected Component</strong> badge at the top of the step names the type you picked in step 1. Before v1.6.0 the MultiQC badge rendered white on white and read as an empty row.</p>
 </li>
 </ol>
 <h3 id="step-3-customize-your-component"><span style="color: #F68B33;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 15v-1.5a1.5 1.5 0 0 0-1.5-1.5 1.5 1.5 0 0 0 1.5-1.5V9a2 2 0 0 0-2-2H9v2h4v2h-2v2h2v2H9v2h4a2 2 0 0 0 2-2M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2"></path></svg></span></span> Step 3: Customize Your Component<a class="headerlink" href="#step-3-customize-your-component" title="Permanent link">¶</a></h3>
@@ -4614,6 +4615,11 @@
 </li>
 <li>
 <p>For <strong>Interactive</strong> components, you can set adjust sliders to have a given number of marks, use a linear or logarithmic scale.</p>
+<p>Two panels sit at the end of that list, both folded and both optional <small>(v1.6.0+)</small>:</p>
+<ul>
+<li><strong>Placement</strong> — which <a href="../../../features/dashboards/#sections">section</a> the component joins. It appears only once the dashboard has sections; you can also move a placed component later, from its own menu on the dashboard.</li>
+<li><strong>Performance</strong> — for figures, <strong>Max points</strong>, the point count above which a scatter-family figure downsamples. Leave it blank for the global default; viewers can still load every point on demand.</li>
+</ul>
 </li>
 <li>
 <p><strong>Finalize Customization</strong>:</p>

@@ -4465,7 +4465,7 @@
 <ol>
 <li>Verify that MinIO is running</li>
 <li>Check that your S3 credentials are correct</li>
-<li>Ensure the bucket exists and is accessible</li>
+<li>Ensure the bucket is reachable with those credentials. From v1.6.0 the server creates it at startup if it is missing, so a bucket that is still absent points at the credentials or the endpoint rather than at provisioning</li>
 </ol>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <p>Now that you have installed and configured the CLI, you can:</p>

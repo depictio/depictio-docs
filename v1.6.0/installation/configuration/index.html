@@ -5101,7 +5101,7 @@
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">DEPICTIO_MINIO_PUBLIC_URL</span><span class="o">=</span>http://minio.example.com
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">DEPICTIO_MINIO_ROOT_USER</span><span class="o">=</span>minioadmin
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nv">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="o">=</span>minioadmin123
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nv">DEPICTIO_MINIO_BUCKET_NAME</span><span class="o">=</span>your-bucket-name
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nv">DEPICTIO_MINIO_BUCKET</span><span class="o">=</span>your-bucket-name
 <a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_SERVICE</span><span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
 <p>For Kubernetes, you can set these values in your custom <code>values.yaml</code> file:</p>
@@ -5111,7 +5111,7 @@
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_PUBLIC_URL</span><span class="p">:</span><span class="w"> </span><span class="s">"http://minio.example.com"</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_ROOT_USER</span><span class="p">:</span><span class="w"> </span><span class="s">"minioadmin"</span>
 <a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="s">"minioadmin123"</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_BUCKET_NAME</span><span class="p">:</span><span class="w"> </span><span class="s">"your-bucket-name"</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_BUCKET</span><span class="p">:</span><span class="w"> </span><span class="s">"your-bucket-name"</span>
 <a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_EXTERNAL_SERVICE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 <p>Setting those values will disable the built-in MinIO service and use the external one instead.</p>

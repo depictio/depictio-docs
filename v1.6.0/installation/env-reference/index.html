@@ -5024,11 +5024,23 @@ put/delete round trip on a test object.</p>
 <p>A credential that can only reach <code>DEPICTIO_MINIO_BUCKET</code> is therefore enough,
 which is useful on managed S3 where keys are issued per bucket rather than per
 account.</p>
+<p>Since <strong>v1.6.0</strong> the server creates the bucket before running those checks, so
+<strong>you do not have to provision it first</strong>: pointing a fresh deployment at empty
+object storage is enough. A bucket that already exists is left alone: creation
+short-circuits and no <code>CreateBucket</code> call is made, so a credential issued
+against an existing bucket needs no extra permission.</p>
 <div class="admonition note">
 <p class="admonition-title">Account-wide <code>ListBuckets</code> is no longer required</p>
 <p>Before v1.5.2 the check called <code>ListBuckets</code>, an account-level operation.
 Bucket-scoped credentials got <code>AccessDenied</code> and the server refused to start,
 even though the bucket itself was perfectly usable.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Before v1.6.0, a first boot against empty storage failed</p>
+<p>The checks ran before the line that creates the bucket, so a deployment with
+nothing provisioned ahead of it died during startup with <em>"Bucket
+'depictio-bucket' does not exist"</em>. Genuinely broken storage still refuses to
+start, since the checks now simply follow creation.</p>
 </div>
 <hr>
 <h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">¶</a></h2>
