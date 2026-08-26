@@ -106,7 +106,7 @@ When `--template` is set, `depictio run` inserts **Step 0: Template resolution**
 
 | Step | Name | Description |
 |------|------|-------------|
-| **0** | Template resolution | Load YAML, substitute variables, auto-detect metadata columns, apply conditionals |
+| **0** | Template resolution | Load YAML, substitute variables, auto-detect metadata columns, apply conditionals, then [materialise recipe seeds](#recipe-seeds) |
 | 1 | Config validation | Pydantic validation of the resolved project config |
 | 2 | Authentication | Login + fetch JWT token |
 | 3 | Project sync | Create or update project on server |
@@ -117,6 +117,33 @@ When `--template` is set, `depictio run` inserts **Step 0: Template resolution**
 | **8** | Dashboard import | Import bundled dashboard YAML (with variable substitution) |
 
 Dashboard YAML files also undergo variable substitution (e.g. `{GROUP_COL}` in filter columns, chart titles).
+
+### Recipe seeds <small>(v1.6.0+)</small> { #recipe-seeds }
+
+A reference template ships each recipe's *output* as a committed
+`{DATA_ROOT}/{dc_tag}.tsv`, so the bundled projects can be explored without the
+pipeline run behind them. Since **v1.6.0** `--template` reads those seeds, the way
+first-boot seeding always did: where a seed exists for a `source: transformed`
+data collection, the recipe is replaced by a plain scan of that file. The
+collection keeps `source: transformed`, so the viewer still shows its lineage.
+
+A data collection with no seed is left alone and its recipe runs as before. Seed
+coverage is uneven: `nf-core/viralrecon/3.0.0` ships one for all ten of its
+recipe collections, `nf-core/ampliseq/2.16.0` for sixteen of nineteen.
+
+This runs *after* conditionals, so a collection a conditional gated out stays
+gated out even with a seed sitting beside it.
+
+!!! note "A seed is matched by name, not assumed"
+    Only a `source: transformed` collection is redirected. A `{dc_tag}.tsv` next
+    to a `source: native` collection of the same tag is that collection's own
+    input, and is scanned normally.
+
+!!! warning "Templates ship with the repository, not the wheel"
+    The bundled projects live under `depictio/projects/`, which is not part of the
+    published `depictio-cli` package. Re-ingesting a bundled project from its own
+    directory works from a repository checkout or a container image that carries
+    them.
 
 ---
 

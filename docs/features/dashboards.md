@@ -53,7 +53,7 @@ The dashboard interface uses a **three-panel layout** with a collapsible sidebar
 │  bar   │ ┌──────────────┐ │                                              │
 │        │ │ 2 active   ▾ │ │                                              │
 │ Tab 1  │ └──────────────┘ │  ▾ Cohort                                    │
-│ Tab 2  │ ▾ Sample         │  ┌─────────────┐  ┌─────────────┐            │
+│ Tab 2  │ ▾ Sample      📌 │  ┌─────────────┐  ┌─────────────┐            │
 │ Tab 3  │ ┌──────────────┐ │  │    Card     │  │    Card     │            │
 │        │ │ MultiSelect  │ │  └─────────────┘  └─────────────┘            │
 │ [+]    │ └──────────────┘ │                                              │
@@ -63,6 +63,10 @@ The dashboard interface uses a **three-panel layout** with a collapsible sidebar
 │        │ ┌──────────────┐ │  ┌─────────────┐  ┌─────────────┐            │
 │        │ │  (map here)  │ │  │   Figure    │  │    Table    │            │
 │        │ └──────────────┘ │  └─────────────┘  └─────────────┘            │
+│        │                  │  ▾ Raw Data                              📌 │
+│        │                  │  ┌────────────────────────────────────────┐ │
+│        │                  │  │        (shared table, read-only)       │ │
+│        │                  │  └────────────────────────────────────────┘ │
 └────────┴──────────────────┴──────────────────────────────────────────────┘
 ```
 
@@ -70,6 +74,11 @@ Both panels can be organised into foldable **sections** <small>(v1.4.0+)</small>
 left panel collapses to a narrow rail. `2 active` is the active-filter summary; `(3)` on
 the map dock is how many values that map is filtering on. A map can be lifted out of the
 grid into that dock, or float above the canvas.
+
+📌 marks a [section shown on every tab](#persistent-sections)
+<small>(v1.6.0+)</small>. Here *Sample* filters every tab and keeps its values
+across a switch, and *Raw Data* is pinned to the bottom of each one. This tab
+declares neither: both arrive from the tab that does.
 
 ### :material-tab: Sidebar (Tab Navigation)
 
@@ -160,9 +169,76 @@ a table, so they report a component count instead.
 The same dashboard's filter panel, drawn with a rail and an indent rather than a
 box. *Cohort* and *Measurements* are open, *Scoped views* is folded.
 
-Folding is remembered per viewer, in the browser, under
-`grid-section-collapsed:<dashboard id>`: it is not part of the dashboard, so
-collapsing a section you are reading never changes what anyone else sees.
+Folding is remembered per viewer, in the browser: it is not part of the
+dashboard, so collapsing a section you are reading never changes what anyone
+else sees. A section that lives on every tab is remembered once for the whole
+dashboard rather than per tab, so it does not unfold as you move between them.
+
+### :material-pin: Sections on every tab <small>(v1.6.0+)</small> { #persistent-sections }
+
+A section normally belongs to the tab that declares it. Switch on **Show on
+every tab** and it belongs to the dashboard instead, which is what a filter
+everyone needs, or one table every tab refers back to, actually wants. A pin
+rides on the section header wherever it is drawn, so it is clear the section is
+shared rather than a copy someone made on each tab.
+
+The two panels use it differently:
+
+- :material-view-grid: a **grid section** renders on every other tab as well,
+  read-only there. Its components cannot be dragged, resized or deleted from a
+  tab that does not own them, and they never enter that tab's saved layout.
+- :material-filter-variant: a **filter section**'s controls join every tab's
+  filter panel as ordinary controls, and **the values you pick in them survive a
+  tab switch**. Switching tabs loads a new page, so this is a real change: before
+  v1.6.0 a variety picked on one tab was gone on the next, and a filter you
+  wanted everywhere had to be rebuilt on every tab.
+
+**Position on every tab** decides whether the shared section leads or trails each
+tab's own content: *before* suits a filter, *after* suits reference material
+like a raw-data table, which would otherwise push every tab's own introduction
+down the page. The choice applies on all tabs, the owning one included, so the
+section keeps the same place wherever you land.
+
+<div style="border: 1px solid grey; width: 542px; padding: 1px;">
+    <a href="../../images/guides/dashboards/sections_every_tab_dialog.png" target="_blank">
+        <img src="../../images/guides/dashboards/sections_every_tab_dialog.png" width="540">
+    </a>
+</div>
+
+The bundled Iris demo's *Variety* filter section. **Position on every tab**
+appears only once **Show on every tab** is on.
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../images/guides/dashboards/sections_every_tab.png" target="_blank">
+        <img src="../../images/guides/dashboards/sections_every_tab.png" width="600">
+    </a>
+</div>
+
+The same dashboard's second tab, *Iris Petal Analysis*, which declares neither
+section. *Variety* arrives in its filter panel still holding the **Setosa**
+picked on the first tab, so the figures and the pinned *Raw Data* table below
+them are already narrowed to that variety. Both headers carry the pin.
+
+Editing stays with the tab that declares the section. From anywhere else the
+section's menu offers a jump to that tab rather than controls that would not
+work. In edit mode the section is still drawn where it will appear, so you can
+see the space it takes on the tab you are laying out.
+
+!!! note "What carries across a tab switch, and what does not"
+    Only two things are carried: selections made in a **floating map** (which
+    already were, before v1.6.0) and the values of controls **inside a persistent
+    filter section**. A selection made by clicking a chart or picking table rows
+    is not, nor is any ordinary per-tab control.
+
+    Carried values are held for the browser tab you are working in, so they are
+    gone when you close it and never leak into someone else's visit. They are
+    also dropped if the control they belong to has since been pointed at another
+    data collection or column, rather than being replayed against data they no
+    longer describe.
+
+Persistent sections do nothing on a dashboard with a single tab. See
+[YAML Sync](yaml-sync.md#persistent-sections) for the `persistent` and `pin`
+keys.
 
 ---
 
@@ -175,15 +251,15 @@ Organize complex dashboards with **tabs** (v0.6.0+):
 - :material-format-list-bulleted: Tabs are displayed **vertically** in the collapsible left navbar
 - :material-cursor-default-click: Click a tab name to switch views
 - :material-menu: The navbar can be **collapsed** using the burger menu icon
-- :material-view-dashboard-outline: Each tab maintains its own component layout
+- :material-view-dashboard-outline: Each tab lays out its own components, apart from any [section shown on every tab](#persistent-sections)
 
 ### :material-star: Tab Features
 
 - :material-tab-plus: **Multiple Tabs**: Create multiple views within a single dashboard
 - :material-emoticon: **Custom Icons**: Material Design icons for visual identification
 - :material-palette: **Custom Colors**: Match your organization's theme
-- :material-view-grid-outline: **Independent Layouts**: Each tab has its own layout
-- :material-cog-sync: **Shared Settings**: Theme and permissions apply across all tabs
+- :material-view-grid-outline: **Own Layouts**: Each tab arranges its own components, and a tab cannot rearrange a section another tab shares with it
+- :material-cog-sync: **Shared Settings**: Theme and permissions apply across all tabs, as do [sections marked *Show on every tab*](#persistent-sections) and the filter values set in them
 
 ### :material-creation: Creating a Tab
 
@@ -222,7 +298,7 @@ Depictio automatically saves certain changes to prevent data loss. Understanding
 | Action                                              | Description                                                 |
 | --------------------------------------------------- | ----------------------------------------------------------- |
 | :material-drag-variant: **Layout Positions**        | Dragging components to new positions requires manual save   |
-| :material-filter-off: **Interactive Filter Values** | Filter selections are session-only and reset on page reload |
+| :material-filter-off: **Interactive Filter Values** | Filter selections are never saved to the dashboard. Most reset on reload; values set in a [section shown on every tab](#persistent-sections) are carried across tab switches for as long as the browser tab is open |
 | :material-resize: **Component Resize**              | Resizing components requires manual save                    |
 
 !!! tip "Saving Layout Changes"
@@ -232,10 +308,23 @@ After repositioning or resizing components, use the **Save Layout** button in th
 
 ## :material-clipboard-check-outline: Ingestion Report & Health
 
-Dashboards created from a [pipeline template](../pipeline-templates/README.md) carry an
-**ingestion report** that compares the data collections the template *expected* against
-what was actually found and aggregated during the CLI scan. It answers "did all the data
-this dashboard needs actually land?" at a glance.
+Every project carries an **ingestion report**, answering "did all the data this dashboard
+needs actually land?" at a glance. What it can compare against depends on where the
+project came from, and since **v1.6.0** a badge in the report header says which of the two
+you are reading:
+
+- :material-file-document-check: **Template manifest** — the project was created from a
+  [pipeline template](../pipeline-templates/README.md) by `depictio-cli run --template`,
+  which froze the list of data collections the template *expected*. The report compares
+  that list against what was actually found and aggregated during the scan.
+- :material-database-eye: **Live project** — there is no such list, so the report is read
+  from the collections the project declares today. It tells you which of them have data;
+  it cannot tell you a collection is missing entirely, because nothing recorded that it
+  was ever expected.
+
+!!! note "Templates seeded at first boot read as *Live project*"
+    The nf-core projects a fresh deployment seeds for you carry no manifest. Only a
+    project you create yourself with `depictio-cli run --template` does.
 
 ### :material-magnify: What the report shows
 
@@ -250,6 +339,20 @@ The report lists every expected data collection with a status:
 Expand a row to see its files (or the Delta-table path once aggregated), and filter or
 group rows by status.
 
+Reading a **Live project**, the report drops what it cannot honestly state: **Gated out**
+shows `—` rather than `0`, since only a manifest records what a conditional excluded, and
+the required and optional tiles count the collections that have data without a total to
+measure them against.
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../images/guides/dashboards/ingestion_live_project.png" target="_blank">
+        <img src="../../images/guides/dashboards/ingestion_live_project.png" width="600">
+    </a>
+</div>
+
+The report for a project never built from a template. Before v1.6.0 this tab was not
+offered at all, though the report behind it worked.
+
 ### :material-heart-pulse: Health status & banner
 
 The report rolls up into a single project **health** value:
@@ -260,12 +363,8 @@ The report rolls up into a single project **health** value:
 
 When a template-derived dashboard is missing or only partially has a required collection,
 a dismissible **health banner** appears above the dashboard. The full report is reachable
-from the **settings drawer** of any template-derived project.
-
-!!! note "Legacy projects"
-    The report relies on the expected-data-collection manifest frozen at template
-    resolution time. Projects created before this manifest existed fall back to the live
-    project state, where intentionally gated-out collections cannot be distinguished.
+from any project's **Ingestion** tab on its [project page](../usage/guides/web_ui.md), and
+from the **View ingestion report** row in a dashboard's settings drawer.
 
 ---
 

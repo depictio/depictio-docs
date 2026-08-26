@@ -66,7 +66,7 @@ For Docker Compose, add the following to your `.env` file:
 DEPICTIO_MINIO_PUBLIC_URL=http://minio.example.com
 DEPICTIO_MINIO_ROOT_USER=minioadmin
 DEPICTIO_MINIO_ROOT_PASSWORD=minioadmin123
-DEPICTIO_MINIO_BUCKET_NAME=your-bucket-name
+DEPICTIO_MINIO_BUCKET=your-bucket-name
 DEPICTIO_MINIO_EXTERNAL_SERVICE=true
 ```
 
@@ -79,7 +79,7 @@ minio:
     DEPICTIO_MINIO_PUBLIC_URL: "http://minio.example.com"
     DEPICTIO_MINIO_ROOT_USER: "minioadmin"
     DEPICTIO_MINIO_ROOT_PASSWORD: "minioadmin123"
-    DEPICTIO_MINIO_BUCKET_NAME: "your-bucket-name"
+    DEPICTIO_MINIO_BUCKET: "your-bucket-name"
     DEPICTIO_MINIO_EXTERNAL_SERVICE: true
 ```
 

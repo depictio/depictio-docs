@@ -140,6 +140,11 @@ backend:
     DEPICTIO_MINIO_ROOT_PASSWORD: "your-secret-key"
 ```
 
+!!! note "The bucket does not have to exist"
+    From **v1.6.0** the backend creates `DEPICTIO_MINIO_BUCKET` at startup when it is
+    missing, then verifies it; an existing bucket is left untouched. See
+    [Required S3 permissions](env-reference.md#minios3-storage).
+
 ### Ingress
 
 Depictio's Helm chart supports three ingress topologies. Pick based on

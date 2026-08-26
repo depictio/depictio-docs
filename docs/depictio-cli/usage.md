@@ -132,6 +132,8 @@ depictio-cli run --project-config-path ./config.yaml
     | `--dashboard` | `path` | `null` | Override default dashboard(s) to import. Repeatable. |
     | `--skip-dashboard-import` | `flag` | `false` | Skip the automatic dashboard import step (Step 8) |
 
+    Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/projects/templates.md#recipe-seeds) committed beside the data: a `source: transformed` data collection with a `{DATA_ROOT}/{dc_tag}.tsv` next to it is scanned from that file instead of re-running its recipe against raw pipeline inputs the bundled projects do not ship. Collections without a seed still run their recipes, and no flags change.
+
     See [Templates](../usage/projects/templates.md) for full documentation.
 
 ??? info "🔑 Provisioning Options (v1.1.3+)"

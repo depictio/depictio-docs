@@ -15,6 +15,43 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.6.0](https://github.com/depictio/depictio/releases/tag/v1.6.0)** (August 26, 2026)
+
+!!! success "Minor: sections that live on every tab, and filter values that survive the switch"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.6.0
+ghcr.io/depictio/depictio-viewer:1.6.0
+ghcr.io/depictio/depictio-worker:1.6.0
+```
+
+### **✨ New Features**
+
+* **Sections that live on every tab**: **Show on every tab** hands a section to the whole dashboard. A grid section renders read-only on the others; a filter section's controls join every panel and keep their values across a tab switch. See [Dashboards](../features/dashboards.md#persistent-sections) ([#969](https://github.com/depictio/depictio/pull/969), [d15b0732](https://github.com/depictio/depictio/commit/d15b0732), [4622aabf](https://github.com/depictio/depictio/commit/4622aabf), [0371fee5](https://github.com/depictio/depictio/commit/0371fee5)).
+* **`persistent` and `pin` in dashboard YAML**, on both section lists. See [YAML Sync](../features/yaml-sync.md#persistent-sections) ([#969](https://github.com/depictio/depictio/pull/969), [d15b0732](https://github.com/depictio/depictio/commit/d15b0732)).
+* **The ingestion report is offered for every project**, badged **Template manifest** or **Live project**. See [Dashboards](../features/dashboards.md#ingestion-report-health) ([ff230e93](https://github.com/depictio/depictio/commit/ff230e93)).
+* **A dashboard links to its project** from the settings drawer. See [Using the dashboard](../usage/guides/dashboard_usage.md#dashboard-settings-drawer) ([c6eebf03](https://github.com/depictio/depictio/commit/c6eebf03)).
+* **`--template` reads bundled recipe seeds** rather than raw inputs the bundled projects do not ship. See [CLI usage](../depictio-cli/usage.md#run-command) ([#997](https://github.com/depictio/depictio/pull/997), [fa6f49da](https://github.com/depictio/depictio/commit/fa6f49da)).
+
+### **🚀 Improvements**
+
+* **One `Add` menu** for components and sections, and one dialog for both ([0371fee5](https://github.com/depictio/depictio/commit/0371fee5)).
+* **`Placement` and `Performance` panels** in the builder, replacing the loose section picker and **Max points** field ([8395d1be](https://github.com/depictio/depictio/commit/8395d1be), [1fc24656](https://github.com/depictio/depictio/commit/1fc24656)).
+* **Previews show a loading state** instead of painting blank ([fb7e4d81](https://github.com/depictio/depictio/commit/fb7e4d81)).
+* **The bundled Iris demo is a two-tab family**, sharing a filter and a table ([3ee81f6c](https://github.com/depictio/depictio/commit/3ee81f6c)).
+
+### **🐛 Bug Fixes**
+
+* **A fresh deployment starts**: the S3 check ran before the bucket was created. See [Environment Reference](../installation/env-reference.md#minios3-storage) ([#993](https://github.com/depictio/depictio/pull/993), [8560249d](https://github.com/depictio/depictio/commit/8560249d)).
+* **An exported dashboard re-imports intact**: text components were dropped, and a tab could vanish to the self-adapting gate ([86e17aa2](https://github.com/depictio/depictio/commit/86e17aa2), [837494d6](https://github.com/depictio/depictio/commit/837494d6)).
+* **Your own filter section stays editable** when a sibling tab has a persistent one of the same name ([fb7e4d81](https://github.com/depictio/depictio/commit/fb7e4d81)).
+* **The MultiQC badge is visible on the data source step** ([#996](https://github.com/depictio/depictio/pull/996), [ac6dd34b](https://github.com/depictio/depictio/commit/ac6dd34b)).
+* **Dashboard thumbnails no longer capture the sign-in page** ([#994](https://github.com/depictio/depictio/pull/994), [803ef8fb](https://github.com/depictio/depictio/commit/803ef8fb)).
+
+---
+
 ## **[v1.5.2](https://github.com/depictio/depictio/releases/tag/v1.5.2)** (August 24, 2026)
 
 !!! success "Patch: filters follow you into the component builder, plus two deployment unblocks"

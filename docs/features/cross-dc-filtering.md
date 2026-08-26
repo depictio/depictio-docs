@@ -153,6 +153,12 @@ Links can be defined in YAML (above) **or** managed interactively from the web v
 3. :material-chart-box-outline: Add visualizations for the target DCs
 4. :material-filter: Filter the source → targets update automatically
 
+!!! tip "One filter for a whole multi-tab dashboard <small>(v1.6.0+)</small>"
+    Put the filter component in a section marked **Show on every tab** and it
+    appears in every tab's filter panel, keeping its value as you switch, so the
+    targets on each tab are already filtered when you arrive. See
+    [Sections on every tab](dashboards.md#persistent-sections).
+
 ## :material-compare: Links vs Joins
 
 | Feature | :material-link-variant: Links | :material-table-merge-cells: Joins |
