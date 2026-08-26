@@ -199,6 +199,26 @@ like a raw-data table, which would otherwise push every tab's own introduction
 down the page. The choice applies on all tabs, the owning one included, so the
 section keeps the same place wherever you land.
 
+<div style="border: 1px solid grey; width: 542px; padding: 1px;">
+    <a href="../../images/guides/dashboards/sections_every_tab_dialog.png" target="_blank">
+        <img src="../../images/guides/dashboards/sections_every_tab_dialog.png" width="540">
+    </a>
+</div>
+
+The bundled Iris demo's *Variety* filter section. **Position on every tab**
+appears only once **Show on every tab** is on.
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../images/guides/dashboards/sections_every_tab.png" target="_blank">
+        <img src="../../images/guides/dashboards/sections_every_tab.png" width="600">
+    </a>
+</div>
+
+The same dashboard's second tab, *Iris Petal Analysis*, which declares neither
+section. *Variety* arrives in its filter panel still holding the **Setosa**
+picked on the first tab, so the figures and the pinned *Raw Data* table below
+them are already narrowed to that variety. Both headers carry the pin.
+
 Editing stays with the tab that declares the section. From anywhere else the
 section's menu offers a jump to that tab rather than controls that would not
 work — and in edit mode the section is drawn where it will appear, so you can
