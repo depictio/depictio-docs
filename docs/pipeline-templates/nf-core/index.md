@@ -1,4 +1,5 @@
 ---
+icon: simple/nfcore
 title: nf-core
 ---
 
