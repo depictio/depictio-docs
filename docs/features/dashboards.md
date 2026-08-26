@@ -344,6 +344,15 @@ shows `—` rather than `0`, since only a manifest records what a conditional ex
 the required and optional tiles count the collections that have data without a total to
 measure them against.
 
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../images/guides/dashboards/ingestion_live_project.png" target="_blank">
+        <img src="../../images/guides/dashboards/ingestion_live_project.png" width="600">
+    </a>
+</div>
+
+The report for a project never built from a template. Before v1.6.0 this tab was not
+offered at all, though the report behind it worked.
+
 ### :material-heart-pulse: Health status & banner
 
 The report rolls up into a single project **health** value:
