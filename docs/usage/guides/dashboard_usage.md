@@ -90,7 +90,7 @@ In edit mode, hovering a component reveals three icons in its top-right corner, 
 </div>
 
 - <span style="color: #888888;"><i class="mdi mdi-dots-grid"></i> **Drag handle**</span>: grab it to move the component in the grid.
-- <span style="color: #15aabf;"><i class="mdi mdi-information-outline"></i> **Info**</span>: the component's metadata — type, data source, configuration.
+- <span style="color: #15aabf;"><i class="mdi mdi-information-outline"></i> **Info**</span>: the component's metadata: type, data source, configuration.
 - <span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> **Menu**</span>: **Edit** reopens the builder on this component, **Duplicate** copies it, **Move to section** hands it to another section, **Delete** removes it.
 
 ---
@@ -185,7 +185,7 @@ There are currently two types of interactive actions available in the dashboard:
 
 ## Saving the Dashboard
 
-Layout and section changes persist on their own, about half a second after you stop editing — there is no unsaved state to lose if you close the tab.
+Layout and section changes persist on their own, about half a second after you stop editing. There is no unsaved state to lose if you close the tab.
 
 **Save**, in the editor toolbar, writes immediately instead of waiting for that delay, and queues a fresh thumbnail for the dashboard card. A short notification confirms it.
 

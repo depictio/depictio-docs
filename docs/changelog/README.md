@@ -29,8 +29,8 @@ ghcr.io/depictio/depictio-worker:1.5.2
 
 ### **✨ New Features**
 
-* **Active filters follow you into the component builder** — a new **Apply to preview** toggle, on by default, makes previews reflect the dashboard's current filter state; turn it off to get the full dataset back. Components added under a filter come back already filtered. See [Dashboard creation](../usage/guides/dashboard_creation.md#previewing-with-active-filters-v152) ([#977](https://github.com/depictio/depictio/pull/977), [faccc810](https://github.com/depictio/depictio/commit/faccc810)).
-* **Version-less template ids** — `--template nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, resolves to the newest shipped version. See [CLI usage](../depictio-cli/usage.md#run-command) ([#973](https://github.com/depictio/depictio/pull/973), [ba10cd87](https://github.com/depictio/depictio/commit/ba10cd87)).
+* **Active filters follow you into the component builder**: a new **Apply to preview** toggle, on by default, makes previews reflect the dashboard's current filter state; turn it off to get the full dataset back. Components added under a filter come back already filtered. See [Dashboard creation](../usage/guides/dashboard_creation.md#previewing-with-active-filters-v152) ([#977](https://github.com/depictio/depictio/pull/977), [faccc810](https://github.com/depictio/depictio/commit/faccc810)).
+* **Version-less template ids**: `--template nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, resolves to the newest shipped version. See [CLI usage](../depictio-cli/usage.md#run-command) ([#973](https://github.com/depictio/depictio/pull/973), [ba10cd87](https://github.com/depictio/depictio/commit/ba10cd87)).
 
 ### **🚀 Improvements**
 
@@ -38,8 +38,8 @@ ghcr.io/depictio/depictio-worker:1.5.2
 
 ### **🐛 Bug Fixes**
 
-* **Bucket-scoped S3 credentials can start the server** — the startup check no longer needs account-wide `ListBuckets`. See [Environment Reference](../installation/env-reference.md#minios3-storage) ([#990](https://github.com/depictio/depictio/pull/990), [ff207d5f](https://github.com/depictio/depictio/commit/ff207d5f)).
-* **Google OAuth works behind multiple workers** — CSRF state moved from per-process memory to MongoDB, so sign-in no longer succeeds only about one time in eight. This retires the `DEPICTIO_DEV_MODE` escape hatch that skipped state validation entirely: it was a workaround for this very bug, and it silently disabled CSRF protection wherever the flag was set. See [Security](../features/security.md#oauth-callback-security) ([#991](https://github.com/depictio/depictio/pull/991), [2863e0d8](https://github.com/depictio/depictio/commit/2863e0d8)).
+* **Bucket-scoped S3 credentials can start the server**: the startup check no longer needs account-wide `ListBuckets`. See [Environment Reference](../installation/env-reference.md#minios3-storage) ([#990](https://github.com/depictio/depictio/pull/990), [ff207d5f](https://github.com/depictio/depictio/commit/ff207d5f)).
+* **Google OAuth works behind multiple workers**: CSRF state moved from per-process memory to MongoDB, so sign-in no longer succeeds only about one time in eight. This retires the `DEPICTIO_DEV_MODE` escape hatch that skipped state validation entirely: it was a workaround for this very bug, and it silently disabled CSRF protection wherever the flag was set. See [Security](../features/security.md#oauth-callback-security) ([#991](https://github.com/depictio/depictio/pull/991), [2863e0d8](https://github.com/depictio/depictio/commit/2863e0d8)).
 * **Multi-metric cards show real category names** instead of placeholder `Bucket 1/2/3` labels ([#836](https://github.com/depictio/depictio/pull/836), [31766a82](https://github.com/depictio/depictio/commit/31766a82), [2006d9c2](https://github.com/depictio/depictio/commit/2006d9c2)).
 * **`depictio run` reports the resolved template** instead of the raw `latest` argument ([#973](https://github.com/depictio/depictio/pull/973), [d07fb0a7](https://github.com/depictio/depictio/commit/d07fb0a7)).
 

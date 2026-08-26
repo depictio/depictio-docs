@@ -455,7 +455,62 @@ config:
 - **Purpose**: Provides region boundaries for `choropleth_map` components
 - **Dashboard Reference**: Referenced via `geojson_dc_tag` in dashboard YAML
 - **File Format**: Standard GeoJSON FeatureCollection (`.geojson`)
-- **Feature ID Key**: Maps to Plotly's `featureidkey` parameter — identifies which GeoJSON property matches the `locations_column` in your tabular data
+- **Feature ID Key**: Maps to Plotly's `featureidkey` parameter, identifying which GeoJSON property matches the `locations_column` in your tabular data
+
+#### **Phylogeny** Data Collection Configuration
+
+Phylogeny data collections hold a Newick or Nexus tree. The file is read where it
+was found: nothing is parsed, converted or copied to S3. Tip annotations live in a
+**separate Table data collection** keyed by taxon name, and the phylogeny DC names
+it so every phylogenetic component inherits the same join.
+
+```yaml
+data_collections:
+  - data_collection_tag: "bacterial_tree"
+    description: "Bacterial phylogeny (21 taxa), Newick format"
+    config:
+      # === REQUIRED FIELDS ===
+
+      type: "phylogeny"        # Required: Identifies this as a tree data collection
+
+      metatype: "Aggregate"    # Required: Metatype identifier
+
+      scan:                    # Required: File discovery
+        mode: "single"
+        scan_parameters:
+          filename: "{DATA_ROOT}/trees/bacterial_tree.nwk"
+
+      # === OPTIONAL FIELDS ===
+
+      dc_specific_properties:
+        format: "newick"                      # "newick" (default) or "nexus"
+        ladderize: true                       # Ladderise by default; viewers can toggle
+        metadata_dc_tag: "bacterial_metadata" # Table DC supplying tip annotations
+        metadata_taxon_column: "taxon"        # Column joining to tip labels
+        tip_label_strategy: "taxon"           # "taxon" (default) or "first_token"
+
+  # The metadata table is an ordinary Table DC
+  - data_collection_tag: "bacterial_metadata"
+    description: "Tip metadata (group / habitat / resistance)"
+    config:
+      type: "Table"
+      metatype: "Aggregate"
+      scan:
+        mode: "single"
+        scan_parameters:
+          filename: "{DATA_ROOT}/trees/bacterial_metadata.tsv"
+      dc_specific_properties:
+        format: "TSV"
+        polars_kwargs:
+          separator: "\t"
+```
+
+**Phylogeny-Specific Notes:**
+
+- **No materialisation**: unlike a Table DC there is no Delta table and no Parquet copy. The backend serves the raw Newick over `/advanced_viz/phylogeny/{dc_id}/newick`
+- **Metadata is optional**: leave the three `metadata_*` keys out and the tree still renders, just unannotated
+- **Tip labels**: use `tip_label_strategy: "first_token"` when leaf names carry a suffix, so `Escherichia_coli_K12` joins as `Escherichia_coli`
+- **Component reference**: an `advanced_viz` component of kind `phylogenetic` points at the tree with `tree_wf_id` / `tree_dc_id`, then colours tips from any column of the metadata DC. See [Phylogenetic](../../features/components.md#phylogenetic)
 
 ---
 

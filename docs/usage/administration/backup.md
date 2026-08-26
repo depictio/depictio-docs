@@ -131,7 +131,7 @@ itself.
 !!! warning "Supported from v1.0.0 onwards"
     Restoring a backup taken by **v1.0.0 or later** into a newer Depictio is
     supported and covered by tests. Backups produced before v1.0.0 are out of
-    scope — the data models changed too much for deserialization to be reliable.
+    scope: the data models changed too much for deserialization to be reliable.
 
 Two checks guard this, so a model change cannot silently break older backups:
 frozen backup fixtures are validated against the current Pydantic models on every

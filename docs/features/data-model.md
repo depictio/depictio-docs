@@ -88,6 +88,10 @@ API joins them in as it serves the project, which is why `delta_location` and
 A `table` collection that declares latitude and longitude columns becomes map-capable
 without changing its type. See [Components](components.md#map-components).
 
+A `phylogeny` collection points at a `table` collection for its tip annotations rather
+than carrying them itself. See
+[Phylogeny DCs and their metadata table](../usage/projects/guide.md#example-phylogeny-dcs-and-their-metadata-table).
+
 ### Where a data collection came from
 
 | Source | Meaning |

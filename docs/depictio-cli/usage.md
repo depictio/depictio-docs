@@ -125,7 +125,7 @@ depictio-cli run --project-config-path ./config.yaml
 
     | Parameter | Type | Default | Description |
     |-----------|------|---------|-------------|
-    | `--template` | `string` | `null` | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest` — or just `nf-core/ampliseq` — to resolve the newest shipped version (v1.5.2+) |
+    | `--template` | `string` | `null` | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`: or just `nf-core/ampliseq`: to resolve the newest shipped version (v1.5.2+) |
     | `--data-root` | `path` | `null` | Root directory substituted for `{DATA_ROOT}` in template. Required when `--template` is set. |
     | `--project-name` | `string` | `null` | Custom project name (auto-generated from template if omitted) |
     | `--dashboard-name` | `string` | `null` | Override the template's main dashboard title at import (the template file is left untouched). |
@@ -133,6 +133,31 @@ depictio-cli run --project-config-path ./config.yaml
     | `--skip-dashboard-import` | `flag` | `false` | Skip the automatic dashboard import step (Step 8) |
 
     See [Templates](../usage/projects/templates.md) for full documentation.
+
+??? info "🔑 Provisioning Options (v1.1.3+)"
+
+    Run a pipeline **on behalf of a user who has no account yet**. The CLI
+    creates-or-gets the account, runs the whole pipeline as them, and prints a
+    passwordless login link straight to the dashboard it imported.
+
+    | Parameter | Type | Default | Description |
+    |-----------|------|---------|-------------|
+    | `--user` | `string` | `null` | Email of the user to provision and run as. Requires `--provisioning-key`. |
+    | `--provisioning-key` | `string` | `null` | Shared provisioning secret. Reads `DEPICTIO_AUTH_PROVISIONING_API_KEY` from the environment if the flag is omitted. |
+
+    ```bash
+    depictio-cli run \
+      --template nf-core/ampliseq/latest \
+      --data-root /data/ampliseq-run-42 \
+      --user alice@example.org \
+      --provisioning-key "$DEPICTIO_AUTH_PROVISIONING_API_KEY"
+    ```
+
+    The key is a **server-side secret**: the instance must be started with the
+    matching `DEPICTIO_AUTH_PROVISIONING_API_KEY`, otherwise the provisioning
+    endpoints stay disabled and the run is rejected. The CLI redacts the value
+    from its own logs. See
+    [Pipeline provisioning](../usage/guides/authentication-modes.md#pipeline-provisioning-and-magic-links-v113).
 
 ??? info "⚙️ Flow Control Options"
 
@@ -160,6 +185,19 @@ depictio-cli run --project-config-path ./config.yaml
     | `--rich-tables` | `boolean` | `false` | Show detailed execution summary |
     | `--continue-on-error` | `boolean` | `false` | Continue execution on step failure |
     | `--dry-run` | `boolean` | `false` | Show execution plan without running |
+
+??? info "⚡ Ingestion Performance (v1.3.0+)"
+
+    Both are opt-in and default to the previous behaviour.
+
+    | Parameter | Type | Default | Description |
+    |-----------|------|---------|-------------|
+    | `--streaming` | `boolean` | `false` | Stream the Delta write instead of materialising the whole table in memory. Lowers peak RSS on large ingests. Experimental, falls back to the standard write on any failure. |
+
+    | Variable | Default | Description |
+    |----------|---------|-------------|
+    | `DEPICTIO_INGEST_STREAMING_WRITE` | unset | Same as `--streaming`, as an environment toggle. |
+    | `DEPICTIO_INGEST_DC_WORKERS` | `1` | Ingest this many data collections concurrently. Clamped to 4 and to the number of data collections, so an over-large value degrades to the cap. An unparseable value logs a warning and falls back to sequential. |
 
 **Examples:**
 

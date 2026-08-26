@@ -39,10 +39,10 @@
 </div>
 
 1. Choose the **workflow** and **data collection** from the dropdowns.
-2. Check **Data Collection Information** — type, row and column counts, Delta table version — and the column preview underneath.
+2. Check **Data Collection Information**: type, row and column counts, Delta table version, and the column preview underneath.
 3. Click **Next Step**.
 
-    The first compatible data collection is pre-selected, so you only touch the dropdowns when you need another one — here `joined_penguins_complete`, the join of `physical_features` and `demographic_data`. **Text** components skip this step entirely, since they read no data collection.
+    The first compatible data collection is pre-selected, so you only touch the dropdowns when you need another one. Here that is `joined_penguins_complete`, the join of `physical_features` and `demographic_data`. **Text** components skip this step entirely, since they read no data collection.
 
 ### <span style="color: #F68B33;">:material-numeric-3-circle:</span> Step 3: Customize Your Component
 
@@ -112,7 +112,7 @@ banner naming how many filters are active:
     </a>
 </div>
 
-The table reports **10 of 50 rows** — the filtered total, not the collection's
+The table reports **10 of 50 rows**: the filtered total, not the collection's
 150.
 
 **Apply to preview** is on by default. Switch it off to preview the full
@@ -130,8 +130,8 @@ against an empty table:
     dashboard's live filters. The toggle is a design-time convenience, not a
     property of the component.
 
-Save, and the new component arrives already filtered — no flash of unfiltered
-data on the way, and the filters you had set are still applied:
+Save, and the new component arrives already filtered, with no flash of
+unfiltered data on the way, and the filters you had set are still applied:
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/react/builder_filter_after_save.png" target="_blank">
@@ -203,7 +203,7 @@ fig = px.scatter(df_modified, x="col_x", y="col_y", color="category")
 
 ##### <span style="color: #7A5DC7;">:material-code-braces:</span> Figure design - scatter plot - code mode
 
-Switching to Code Mode carries the UI settings over as a `px.scatter` call, which you can then take past what the form exposes — here marginal violins and a `fig.update_layout()` override.
+Switching to Code Mode carries the UI settings over as a `px.scatter` call, which you can then take past what the form exposes: here, marginal violins and a `fig.update_layout()` override.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/design/figure_design_code.png" target="_blank">
@@ -236,7 +236,7 @@ As of version 0.5.0, Depictio includes dedicated support for MultiQC quality con
 - **Link figures** with external metadata for enhanced analysis
 - **Filter datasets** to display specific samples based on QC metrics
 
-Components land on the dashboard with the report's own controls intact — here the general statistics table keeps its **Mean / R1 / R2 / All** read selector and its **Table / Violin** toggle, and the dashboard filters apply on top.
+Components land on the dashboard with the report's own controls intact: the general statistics table keeps its **Mean / R1 / R2 / All** read selector and its **Table / Violin** toggle, and the dashboard filters apply on top.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/multiqc/multiqc_dashboard.png" target="_blank">
@@ -247,7 +247,7 @@ Components land on the dashboard with the report's own controls intact — here 
 ### <span style="color: #6495ED;">:material-plus-circle:</span> Adding MultiQC Components
 
 1. Pick **MultiQC** in Step 1. The data collection dropdown then narrows to the MultiQC collections of your project, so Step 2 is usually already filled in.
-2. In Step 3, choose a **Module**, then a **Plot** inside it. Both lists are read from the report itself — for an nf-core/ampliseq run that means `General Stats Table`, `cutadapt` and `fastqc`. The preview renders on the right as soon as you pick.
+2. In Step 3, choose a **Module**, then a **Plot** inside it. Both lists are read from the report itself. For an nf-core/ampliseq run that means `General Stats Table`, `cutadapt` and `fastqc`. The preview renders on the right as soon as you pick.
 3. Repeat for every plot you want: each one becomes its own component, and they can sit in different sections or tabs.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
@@ -256,7 +256,7 @@ Components land on the dashboard with the report's own controls intact — here 
     </a>
 </div>
 
-MultiQC data collections show no data preview in Step 2 — they aren't tabular, so `Rows` and `Columns` read `N/A` and the visualizations are rendered by the MultiQC component itself.
+MultiQC data collections show no data preview in Step 2 because they aren't tabular, so `Rows` and `Columns` read `N/A` and the visualizations are rendered by the MultiQC component itself.
 
 !!! tip "MultiQC Data Ingestion"
     To ingest MultiQC reports into Depictio, use the Depictio-CLI with your project configuration file. MultiQC reports should be specified in your YAML configuration under the appropriate workflow section.

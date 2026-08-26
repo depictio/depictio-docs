@@ -117,6 +117,38 @@ DEPICTIO_AUTH_DEMO_MODE=true
 - Tour state is persisted in the browser (won't re-show after completion)
 - Sidebar shows a "Demo Mode" badge
 
+## Pipeline provisioning and magic links (v1.1.3+)
+
+A pipeline often finishes before its owner has an account. Provisioning closes
+that gap: `depictio-cli run --user alice@example.org` creates-or-gets the
+account, runs as them, and prints a passwordless link to the dashboard it just
+imported.
+
+Set the shared secret on the instance:
+
+```bash
+DEPICTIO_AUTH_PROVISIONING_API_KEY=<a long random string>
+```
+
+**The provisioning endpoints are disabled while this is unset**, so an instance
+that never sets it cannot have accounts created this way. The CLI must present
+the same value, through `--provisioning-key` or the identically-named variable.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_AUTH_PROVISIONING_API_KEY` | unset | Shared secret for `POST /depictio/api/v1/auth/provision_user`. Unset disables provisioning entirely. |
+| `DEPICTIO_AUTH_MAGIC_LINK_EXPIRY_MINUTES` | see [reference](../../installation/env-reference.md#authentication) | How long a magic link stays redeemable. |
+
+!!! warning "Treat the key like a password"
+    Anyone holding it can create accounts on the instance. Keep it separate
+    from `DEPICTIO_AUTH_INTERNAL_API_KEY_ENV`, whose scope is deliberately
+    different. Pass it through a secret store rather than a shell history, and
+    rotate it if a CI log ever captures it.
+
+A magic link is single-use and expires; redeeming it exchanges the ticket for a
+normal session. Sending it to the user is the pipeline's job; Depictio only
+emits it on stdout.
+
 ## Choosing a Mode
 
 ```
