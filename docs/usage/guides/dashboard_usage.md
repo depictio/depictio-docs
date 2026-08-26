@@ -56,6 +56,12 @@ Components are automatically assigned to the appropriate panel based on their ty
 
 Sections in the main grid work the same way, and a folded section of cards still shows its numbers in the header. See [Sections](../../features/dashboards.md#sections).
 
+### Sections shown on every tab (v1.6.0+)
+
+A section whose header carries a pin belongs to the whole dashboard rather than the tab you are on. In the filter panel that means the controls are the same on every tab **and keep the values you set** when you switch, which is what a filter the whole dashboard shares should do. In the grid it means the section is there on every tab, read-only unless you are on the tab that owns it, sitting either above or below that tab's own content.
+
+Folding one folds it everywhere, so it stays out of your way as you move around. See [Sections on every tab](../../features/dashboards.md#persistent-sections).
+
 ### The map panel (v1.4.0+)
 
 When a dashboard has a map authored as a dashboard-wide panel, it follows you across every tab rather than living in one. Use the header control to move it between floating, docked and hidden, and the panel header's menu to edit, duplicate or delete it.
@@ -68,7 +74,7 @@ When a dashboard has a map authored as a dashboard-wide panel, it follows you ac
 
 ## Dashboard settings drawer
 
-**Settings**, at the top right, opens a read-only drawer describing the dashboard: its project, owner, visibility and last-modified date, then the dashboard and project IDs, each with a copy button.
+**Settings**, at the top right, opens a read-only drawer describing the dashboard: its project, owner, visibility and last-modified date, then the dashboard and project IDs, each with a copy button. Since **v1.6.0** the project name is a link to that project's page, and **View ingestion report** below it opens the [ingestion report](../../features/dashboards.md#ingestion-report-health) for any project, not just one built from a template. The same body backs the inspector's **Info** tab.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/dashboard_settings.png" target="_blank">

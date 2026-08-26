@@ -94,8 +94,9 @@ A template bundles:
 - :material-chef-hat: **Recipes** — Python transforms that convert raw pipeline outputs into dashboard-ready tables
 - :material-view-dashboard: **Dashboard YAML** — imported automatically on first run, with template variable substitution
 - :material-link: **Cross-DC links** — enable interactive filtering across data collections
+- :material-seed: **Recipe seeds** — each recipe's output committed as a `.tsv`, so the bundled project can be explored, and re-ingested, without the pipeline run behind it <small>(read by the CLI since v1.6.0)</small>
 
-See [Template System Reference](../usage/projects/templates.md) for the YAML format and resolution mechanics, and [Recipes](../usage/projects/recipes.md) for how data transformations work.
+See [Template System Reference](../usage/projects/templates.md) for the YAML format and resolution mechanics, [Recipe seeds](../usage/projects/templates.md#recipe-seeds) for how the seeds are picked up, and [Recipes](../usage/projects/recipes.md) for how data transformations work.
 
 ---
 

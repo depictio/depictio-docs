@@ -162,10 +162,22 @@ A credential that can only reach `DEPICTIO_MINIO_BUCKET` is therefore enough,
 which is useful on managed S3 where keys are issued per bucket rather than per
 account.
 
+Since **v1.6.0** the server creates the bucket before running those checks, so
+**you do not have to provision it first** — pointing a fresh deployment at empty
+object storage is enough. A bucket that already exists is left alone: creation
+short-circuits and no `CreateBucket` call is made, so a credential issued
+against an existing bucket needs no extra permission.
+
 !!! note "Account-wide `ListBuckets` is no longer required"
     Before v1.5.2 the check called `ListBuckets`, an account-level operation.
     Bucket-scoped credentials got `AccessDenied` and the server refused to start,
     even though the bucket itself was perfectly usable.
+
+!!! note "Before v1.6.0, a first boot against empty storage failed"
+    The checks ran before the line that creates the bucket, so a deployment with
+    nothing provisioned ahead of it died during startup with *"Bucket
+    'depictio-bucket' does not exist"*. Genuinely broken storage still refuses to
+    start, since the checks now simply follow creation.
 
 ---
 

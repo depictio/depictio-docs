@@ -100,7 +100,7 @@ If you have issues with S3 storage:
 
 1. Verify that MinIO is running
 2. Check that your S3 credentials are correct
-3. Ensure the bucket exists and is accessible
+3. Ensure the bucket is reachable with those credentials. From v1.6.0 the server creates it at startup if it is missing, so a bucket that is still absent points at the credentials or the endpoint rather than at provisioning
 
 ## Next Steps
 

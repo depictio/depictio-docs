@@ -255,7 +255,7 @@ components:
 
 - **Same Data Collection**: Selection filtering works within the same Data Collection. For cross-DC filtering, use [Links](cross-dc-filtering.md).
 - **Scatter & Maps Only**: Currently scatter plots and scatter maps support selection (not bar charts, histograms, or choropleth maps).
-- **No Persistence**: Selections are cleared on page reload.
+- **No Persistence**: Selections are cleared on page reload, and are not carried between tabs. Only a floating map's selection and the values of controls in a [section shown on every tab](dashboards.md#persistent-sections) survive a tab switch — a selection made by clicking a chart or ticking table rows does not.
 
 ---
 

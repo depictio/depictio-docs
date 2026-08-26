@@ -44,6 +44,8 @@
 
     The first compatible data collection is pre-selected, so you only touch the dropdowns when you need another one. Here that is `joined_penguins_complete`, the join of `physical_features` and `demographic_data`. **Text** components skip this step entirely, since they read no data collection.
 
+    The **Selected Component** badge at the top of the step names the type you picked in step 1. Before v1.6.0 the MultiQC badge rendered white on white and read as an empty row.
+
 ### <span style="color: #F68B33;">:material-numeric-3-circle:</span> Step 3: Customize Your Component
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
@@ -74,6 +76,11 @@
      - **Advanced**: For advanced users, additional settings can be configured here like facetting, animation and more.
 
    - For **Interactive** components, you can set adjust sliders to have a given number of marks, use a linear or logarithmic scale.
+
+    Two panels sit at the end of that list, both folded and both optional <small>(v1.6.0+)</small>:
+
+    - **Placement** — which [section](../../features/dashboards.md#sections) the component joins. It appears only once the dashboard has sections; you can also move a placed component later, from its own menu on the dashboard.
+    - **Performance** — for figures, **Max points**, the point count above which a scatter-family figure downsamples. Leave it blank for the global default; viewers can still load every point on demand.
 
 3. **Finalize Customization**:
    - Review the component preview and ensure all settings are accurate.

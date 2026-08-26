@@ -192,10 +192,11 @@ A single project's data, organised into tabs:
 - **Overview** — project summary and metadata.
 - **Data Collections** — a sortable, filterable table of the project's data collections.
 - **Links** — cross-DC links and the joins graph, with sortable/filterable columns.
-- **Ingestion** — for projects created from a [pipeline template](../../pipeline-templates/README.md), the [ingestion report](../../features/dashboards.md#ingestion-report-health) of expected vs. ingested data collections.
+- **Ingestion** — the [ingestion report](../../features/dashboards.md#ingestion-report-health), offered for **every** project since v1.6.0. For one created from a [pipeline template](../../pipeline-templates/README.md) it compares expected against ingested data collections; for any other it reads the collections the project declares today, and a **Live project** badge says so.
 
 You can reach this page directly by clicking the **project badge** shown on any
-dashboard card or in the dashboards table.
+dashboard card or in the dashboards table, or the **project name** in an open
+dashboard's settings drawer <small>(v1.6.0+)</small>.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/react/page_project_detail.png" target="_blank">

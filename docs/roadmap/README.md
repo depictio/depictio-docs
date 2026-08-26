@@ -109,6 +109,7 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
+| Sections and filters that span every tab of a dashboard | v1.6.0 | [Dashboards](../features/dashboards.md#persistent-sections) · [YAML Sync](../features/yaml-sync.md#persistent-sections) |
 | Filters carried into the component builder, bucket-scoped S3 startup | v1.5.2 | [Dashboard creation](../usage/guides/dashboard_creation.md#previewing-with-active-filters-v152) |
 | Cross-version backup compatibility guard | v1.5.2 | [Backup & Restore](../usage/administration/backup.md#restoring-across-versions) |
 | Anonymous installation telemetry | v1.5.0 | [Telemetry](../features/telemetry.md) |
@@ -173,7 +174,7 @@ something up.
 | Idea | What it would give you | Link |
 | ---- | ---------------------- | ---- |
 | :material-cloud-off-outline: **Serverless Depictio** | Explore a dashboard with no server to deploy or maintain | — |
-| :material-filter-multiple-outline: **Journeys, funnels & global filters** | Filters promoted to dashboard scope, named paths through tabs, live row counts as the data narrows | [#756](https://github.com/depictio/depictio/pull/756) |
+| :material-filter-multiple-outline: **Journeys & funnels** | Named paths through tabs, and live row counts as the data narrows. Promoting filters to dashboard scope [shipped in v1.6.0](../features/dashboards.md#persistent-sections) | [#756](https://github.com/depictio/depictio/pull/756) |
 | :material-magic-staff: **Auto-compose from a run** | Point Depictio at a pipeline output directory and get a dashboard, no template chosen by hand (nf-core + Snakemake) | [#811](https://github.com/depictio/depictio/pull/811) |
 | :material-file-document-edit-outline: **Project → template via the UI** | Turn a working project and its dashboards into a reusable template without touching YAML | [#861](https://github.com/depictio/depictio/issues/861) |
 | :material-flask-outline: **Citable science** | DOI-backed snapshots per dashboard version, sample-to-viz provenance via [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/), static export to [Quarto](https://quarto.org/) | — |

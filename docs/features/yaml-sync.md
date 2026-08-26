@@ -253,6 +253,8 @@ components:
 | `color`       | str    | `null`     | Mantine palette name (`teal`, `orange`, …). An unknown name falls back to the theme default rather than failing the import |
 | `description` | str    | `null`     | Hint line under the header                                          |
 | `collapsed`   | bool   | `false`    | Start folded                                                        |
+| `persistent`  | bool   | `false`    | Render on every tab of the dashboard <small>(v1.6.0+)</small>       |
+| `pin`         | str    | `top`      | `top` or `bottom`: which edge a persistent section sits at. Ignored unless `persistent` <small>(v1.6.0+)</small> |
 
 Both lists default to empty, so a dashboard that declares no sections renders exactly the
 flat grid it did before.
@@ -266,6 +268,54 @@ flat grid it did before.
       together, or the import fails with *"Interactive component groups must sit in a
       single section"*.
     - Folding is not just visual: a folded section fetches nothing until you open it.
+
+### Sections on every tab <small>(v1.6.0+)</small> { #persistent-sections }
+
+`persistent: true` hands a section to the whole dashboard instead of the tab that declares
+it. The flag is valid in both lists, and means something slightly different in each:
+
+- a **grid section** renders on every other tab too, read-only, above or below that tab's
+  own content;
+- a **filter section**'s controls join every tab's filter panel, and the values picked in
+  them survive a tab switch.
+
+`pin` chooses which edge it sits at, on every tab including the one that declares it:
+`top` (the default) before that tab's own sections, `bottom` after them. `bottom` is what
+a reference block usually wants — a raw-data table present everywhere without pushing
+aside each tab's own introduction.
+
+```yaml
+filter_sections:
+  - name: Variety
+    icon: mdi:filter-variant
+    color: blue
+    description: Which flowers to look at, on every tab
+    persistent: true          # pin defaults to top
+
+grid_sections:
+  - name: Raw Data
+    icon: mdi:table
+    color: gray
+    description: Per-flower records behind every figure
+    collapsed: true
+    persistent: true
+    pin: bottom
+```
+
+Only the declaring tab lists the section and its components; the other tabs say nothing
+about it and receive it automatically. This is the bundled Iris demo, whose *Overview* tab
+declares both of the above while *Iris Petal Analysis* declares neither and shows both.
+
+!!! note "How a persistent section behaves"
+    - Sections are still matched by **name**, so two tabs may each declare a persistent
+      section called *Filters* without colliding: identity is the declaring tab plus the
+      list plus the name.
+    - A tab cannot edit a section it does not declare. In the editor the section's menu
+      offers a jump to the tab that owns it instead.
+    - Folding is shared: folding a persistent section on one tab folds it on all of them.
+    - `pin` accepts only `top` or `bottom`; anything else fails the import.
+    - Both keys round-trip through `dashboard export` unchanged.
+    - Neither key does anything on a dashboard with a single tab.
 
 ### Complete Example
 
