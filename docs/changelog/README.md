@@ -15,6 +15,36 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.6.1](https://github.com/depictio/depictio/releases/tag/v1.6.1)** (August 26, 2026)
+
+!!! success "Patch: geo tables keep their real type, plus a dashboard-visibility permission fix"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.6.1
+ghcr.io/depictio/depictio-viewer:1.6.1
+ghcr.io/depictio/depictio-worker:1.6.1
+```
+
+### **✨ New Features**
+
+* **`lat_column`/`lon_column` in project YAML**: geo tables can declare coordinates in the project YAML the same way React uploads do, with validation for half-configured pairs. ([382d4966](https://github.com/depictio/depictio/commit/382d4966))
+* **EMBL internal HA MongoDB (Helm)**: Percona-operator based 3-replica HA MongoDB for the EMBL internal tenant, gated on an authenticated readiness ping. ([#999](https://github.com/depictio/depictio/pull/999))
+* **`mongodump` helper script**: point-in-time dump against a running Kubernetes deployment (EMBL or generic) without an app-level admin token. ([#1000](https://github.com/depictio/depictio/pull/1000))
+
+### **🚀 Improvements**
+
+* **Coordinates is a capability, not a type**: a table with lat/lon columns keeps its real Metadata/Aggregate type and shows a Geomap badge instead of being silently reclassified as "Coordinates"; drawn identically across the manager, viewer, and create-DC modal. ([1569d6d8](https://github.com/depictio/depictio/commit/1569d6d8), [d46a0683](https://github.com/depictio/depictio/commit/d46a0683))
+* **Create Data Collection stays reachable** from the manager header even while the section is collapsed. ([7ceb7ce0](https://github.com/depictio/depictio/commit/7ceb7ce0))
+
+### **🐛 Bug Fixes**
+
+* **Dashboard visibility is project-driven**: a project's `is_public` flag is now the single source of truth and cascades to every dashboard and tab; fixes a privilege-escalation bug where a signed-in visitor to a public project could gain editor/owner-level access. ([#982](https://github.com/depictio/depictio/pull/982), [54bc971e](https://github.com/depictio/depictio/commit/54bc971e))
+* **No more false "Compatible advanced visualizations" banner** on plain metadata tables scored on structural shape alone. ([3cde9a67](https://github.com/depictio/depictio/commit/3cde9a67))
+
+---
+
 ## **[v1.6.0](https://github.com/depictio/depictio/releases/tag/v1.6.0)** (August 26, 2026)
 
 !!! success "Minor: sections that live on every tab, and filter values that survive the switch"
