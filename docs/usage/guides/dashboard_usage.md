@@ -87,14 +87,14 @@ When a dashboard has a map authored as a dashboard-wide panel, it follows you ac
 
 ### Appearance <small>(v1.8.0+)</small> { #appearance }
 
-The drawer gained an **Appearance** section. In viewer mode it holds one control, **Font size**. In edit mode it holds everything about how this dashboard looks.
+In viewer mode this section holds one control, **Font size**. In edit mode it holds everything about how this dashboard looks.
 
-**Font size.** **A-** and **A+** step the dashboard through 85%, 100%, 115% and 130%. The scale reaches the *content* only, meaning figures, tables and cards, through container-scoped Mantine CSS variables; the header, sidebar and panels keep their size so the chrome does not reflow. The preference is stored per browser, like the dark-mode toggle, so it follows the reader rather than the dashboard.
+**Font size.** **A-** and **A+** step the content through 85%, 100%, 115% and 130%. Figures, tables and cards scale; the header, sidebar and panels keep their size. The preference is stored per browser, like the dark-mode toggle, so it follows the reader rather than the dashboard.
 
 !!! tip "Scaling one figure rather than all of them"
     A single tile takes a `font_scale` of its own from its edit menu, between 0.7× and 2×, applied to the whole Plotly layout font. See [Components](../../features/components.md#figure-components).
 
-**Branding.** **Inherit instance** or **Customise**. Under *Customise*, anything left empty still follows the instance branding, so an override states only what differs. The controls, in order:
+**Branding.** **Inherit instance** or **Customise**. Under *Customise*, anything left empty still follows the instance branding, so an override states only what differs.
 
 | Group | What it holds |
 |-------|---------------|
@@ -105,18 +105,18 @@ The drawer gained an **Appearance** section. In viewer mode it holds one control
 | Typography & shape | Font stack, Heading font stack and Corner radius, with a live sample rendered beneath them |
 | Figures | **Plot template** for figures whose component picks none, and **Figure colorway**, either *From palette* (derived from the brand colours above) or *Custom* |
 
-A **Preview** at the bottom renders real components under the draft, with its own Light and Dark tabs, so you can check both schemes without switching the app over.
+A **Preview** at the bottom renders real components under the draft, with its own Light and Dark tabs, so both schemes can be checked without switching the app over.
 
 [![The dashboard's Appearance section](../../images/guides/branding/dashboard-appearance-branding.webp)](../../images/guides/branding/dashboard-appearance-branding.webp){target=_blank}
 
 [![Figure defaults and the live preview](../../images/guides/branding/dashboard-appearance-figures.webp)](../../images/guides/branding/dashboard-appearance-figures.webp){target=_blank}
 
-The override applies to this dashboard's page only, so it can wear its own identity inside a differently branded instance. The bundled penguins demo does exactly that, with a colour per species:
+The override applies to this dashboard's page only, so it can wear its own identity inside a differently branded instance. The bundled penguins demo does exactly that:
 
 [![The penguins dashboard wearing its own brand](../../images/guides/branding/dashboard-brand-override.webp)](../../images/guides/branding/dashboard-brand-override.webp){target=_blank}
 
 !!! warning "Uploads are instance-local"
-    An uploaded logo is served from the instance that received it, so it is deliberately excluded from YAML exports. A logo that has to survive a move belongs in `logo_url` as an absolute address.
+    An uploaded logo is served from the instance that received it, so it is excluded from YAML exports. A logo that has to survive a move belongs in `logo_url` as an absolute address.
 
 Figure theming resolves in this order:
 

@@ -627,54 +627,27 @@ The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `
 
 #### Reading and navigating the tree <small>(v1.8.0+)</small> { #phylogeny-interaction }
 
-Before v1.8.0 the only actions were in a hidden Settings popover and the viewport could not be moved. The renderer now carries its own controls.
+A fixed strip above the tree holds **undo** / **redo** over the view state, a **zoom and pan** toggle (off by default, so a click still selects; on, drag pans and the wheel zooms), **Reset view**, **focus mode**, which prunes to the tips in scope rather than ghosting the rest, and **Expand all**.
 
-**View controls.** A fixed strip sits above the tree and never rearranges, so the same control is always in the same place:
-
-| Control | What it does |
-|---------|--------------|
-| **Step back** / **Step forward** | Undo and redo over the view state. Steps that land in two renders are folded into one |
-| **Toggle zoom & pan** | Off by default, so a click selects and nothing drags. On: drag pans, the wheel zooms, double-click resets. Toggling it back off freezes the view where you left it |
-| **Reset view** | Re-applies the fitted ranges |
-| **Toggle focus mode** | Prunes the tree to the tips in scope instead of ghosting the rest, and reports `n of N tips` |
-| **Expand all** | Appears once clades are collapsed, next to a count of them |
-
-!!! note "Wheel zoom on a large tree"
-    The gesture drives a CSS transform on Plotly's own layers and commits a single relayout once the wheel goes quiet, rather than relayouting per notch, so it tracks the pointer on a tree with thousands of segments. The viewport is tracked by the renderer rather than left to Plotly's `uirevision`, so a zoom survives a figure recompute such as selecting another clade.
-
-**Selecting a clade.** Click an internal node and its clade is marked by taking contrast from everything else, rather than by colouring it, which used to compete with colour-by-metadata and disappear on a dense tree. A box floats over the tree (it used to sit above it, claiming vertical space and shifting the node under the pointer) describing what you picked:
-
-- a headline naming the clade by its tips
-- **Tips**, **Branch points** and **Max depth**
-- **Root support**, when the node carries one. A Newick node stores support where a name would go, so a clade "named" `0.822` has no name
-- one row per coloured column, counting how the clade breaks down by it
-
-and offering **Filter**, **Collapse**, **.nwk** and **Back to full tree**, which is spelled out on its own line rather than left as a bare ✕ at the end of the action row.
+Clicking an internal node marks its clade by taking contrast from everything else, and floats a box over the tree naming the clade and reporting **Tips**, **Branch points**, **Max depth**, **Root support** where the node carries one, and how the clade breaks down by each coloured column. It offers **Filter**, **Collapse**, **.nwk** and **Back to full tree**.
 
 [![A selected clade, with the rest of the tree dimmed](../images/guides/advanced-visualizations/phylogeny_selection_light.webp#only-light)](../images/guides/advanced-visualizations/phylogeny_selection_light.webp){target=_blank}
 
 [![A selected clade, with the rest of the tree dimmed](../images/guides/advanced-visualizations/phylogeny_selection_dark.webp#only-dark)](../images/guides/advanced-visualizations/phylogeny_selection_dark.webp){target=_blank}
 
-**Collapsing.** **Collapse** draws the clade as a wedge sized by its real depth; click the wedge to expand it again. The branches beneath a collapsed node are summed, so root-to-tip distances stay honest rather than silently short.
-
-[![A collapsed clade drawn as a wedge](../images/guides/advanced-visualizations/phylogeny_collapsed_light.webp#only-light)](../images/guides/advanced-visualizations/phylogeny_collapsed_light.webp){target=_blank}
-
-[![A collapsed clade drawn as a wedge](../images/guides/advanced-visualizations/phylogeny_collapsed_dark.webp#only-dark)](../images/guides/advanced-visualizations/phylogeny_collapsed_dark.webp){target=_blank}
-
-**Filtering the dashboard to a clade.** **Filter** emits an ordinary dashboard filter on the metadata DC's taxon column, carrying the clade's tip names. It appears in the sidebar like any other active filter and is cleared the same way, and the button flips to **Filtered** to offer the way back. Two details worth knowing:
-
-- The tree strips its own entry before fetching, so its tips never dim from its own selection.
-- The highlight is restored by taxon name after a tab switch or a re-parse, using the smallest clade whose leaf set matches exactly, never by parse-order node ids.
-
-Move the highlight elsewhere while a filter is live and a separate **Clear filter** appears, so an active filter is never left without a visible undo.
+**Filter** emits an ordinary dashboard filter on the metadata DC's taxon column, listed in the sidebar and cleared like any other. The tree strips its own entry before fetching, so its tips never dim from its own selection, and the highlight is restored by taxon name after a tab switch rather than by parse-order node ids. Move the highlight while a filter is live and a separate **Clear filter** appears.
 
 [![Filter to subtree active, listed in the filter panel](../images/guides/advanced-visualizations/phylogeny_filter_light.webp#only-light)](../images/guides/advanced-visualizations/phylogeny_filter_light.webp){target=_blank}
 
 [![Filter to subtree active, listed in the filter panel](../images/guides/advanced-visualizations/phylogeny_filter_dark.webp#only-dark)](../images/guides/advanced-visualizations/phylogeny_filter_dark.webp){target=_blank}
 
-**Colour, labels and scale.** **Colour by** and **Label by** re-colour and re-label the tips at view time from any pre-fetched metadata column, and **Scale bar** toggles the substitutions ruler. One colour scale per column feeds the tips, the strips and the legend, where three scales built from three different value sets could disagree, and the legend lists only what is actually drawn, shortening as you focus or collapse. Support values render as dots at any density, with figures when there are few enough to read, and aligned tip labels get leader lines.
+**Collapse** draws the clade as a wedge sized by its real depth, summing the branches beneath it so root-to-tip distances stay honest; click the wedge to expand it.
 
-**Export.** **.nwk** downloads the selected clade as Newick.
+[![A collapsed clade drawn as a wedge](../images/guides/advanced-visualizations/phylogeny_collapsed_light.webp#only-light)](../images/guides/advanced-visualizations/phylogeny_collapsed_light.webp){target=_blank}
+
+[![A collapsed clade drawn as a wedge](../images/guides/advanced-visualizations/phylogeny_collapsed_dark.webp#only-dark)](../images/guides/advanced-visualizations/phylogeny_collapsed_dark.webp){target=_blank}
+
+**Colour by**, **Label by** and **Scale bar** re-colour, re-label and annotate at view time. One colour scale per column feeds the tips, the strips and the legend, and the legend lists only what is drawn, shortening as you focus or collapse.
 
 [![Phylogenetic example](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light)](../images/guides/advanced-visualizations/phylogenetic_light.webp){target=_blank}
 
