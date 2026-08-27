@@ -208,15 +208,11 @@ its toggle disabled and its value kept for when you clear the column again.
 ### :material-compare-horizontal: Comparing groups in the cards
 
 With **Compare groups in cards** on, each card reduces its hero aggregation once per group
-and draws the results side by side in each group's colour: meters, mini donuts, slim box
-plots, shared-bin sparkbars, gauge dials or a trend overlay, depending on the layout.
-Layouts with no meaningful per-group form fall back to plain chips.
-
-The scales come from the whole frame rather than from each group (one box-plot domain, one
-histogram bin grid, one trend axis grid), so the shapes are genuinely comparable instead of
-each being drawn to its own extent. Two optional reference entries sit alongside: **All**,
-the unsplit frame, and **Other**, the rows in no group. Donut and gauge layouts cap at
-three groups and summarise the rest as *+N more*.
+and draws the results side by side in the group's colour, as meters, mini donuts, slim box
+plots, sparkbars, gauge dials or a trend overlay depending on the layout. The scales come
+from the whole frame rather than from each group, so the shapes are genuinely comparable.
+Two optional references sit alongside: **All**, the unsplit frame, and **Other**, the rows
+in no group.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../images/guides/selection-groups/overview_groups_compare.jpg" target="_blank">
@@ -224,9 +220,8 @@ three groups and summarise the rest as *+N more*.
     </a>
 </div>
 
-Two saved groups on the bundled Penguins dashboard, with figures coloured by group and
-every card comparing them. The neutral *All* reference leads each card and the ungrouped
-rows trail as a dimmed *Other*.
+Two saved groups on the bundled Penguins dashboard, with every card comparing them: the
+neutral *All* reference leads, and the ungrouped rows trail as a dimmed *Other*.
 
 ---
 
