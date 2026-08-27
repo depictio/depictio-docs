@@ -173,7 +173,7 @@ label carries a hover explanation:
 
 | Matched via | Meaning |
 |-------------|---------|
-| :material-key: **Canonical ID** | The source value is a mapping key. A key expands to the canonical ID **plus** every MultiQC variant recorded for it — which is why one value can resolve to a whole list. |
+| :material-key: **Canonical ID** | The source value is a mapping key. A key expands to the canonical ID **plus** every MultiQC variant recorded for it, which is why one value can resolve to a whole list. |
 | :material-content-duplicate: **Variant** | The source value is itself one of the recorded variants. |
 | :material-scissors-cutting: **Suffix stripped** | Matched after removing a read/lane suffix from the key or from the source value. |
 | :material-map-marker-path: `direct`, `pattern`, `regex`, `wildcard` | For links that do not use sample mapping, the resolver's own name. |

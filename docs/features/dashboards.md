@@ -112,10 +112,10 @@ would leave anything on screen. **Funnel filtering** answers the other question:
 everything else you have already picked, which of these values still lead somewhere?
 
 For each control, the answer is computed against every **other** active filter, with that
-control's own selection excluded — otherwise a control would grey out everything it did
-not itself select. Values that can still narrow the data carry a teal marker; values that
-would return nothing are dimmed, disabled and sorted last, and each control carries an
-`n/N available` badge that turns orange when nothing remains.
+control's own selection excluded, since otherwise a control would grey out everything it
+did not itself select. Values that can still narrow the data carry a teal marker; values
+that would return nothing are dimmed, disabled and sorted last, and each control carries
+an `n/N available` badge that turns orange when nothing remains.
 
 <div style="border: 1px solid grey; width: 294px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-panel-highlighting.png" target="_blank">
@@ -126,9 +126,9 @@ would return nothing are dimmed, disabled and sorted last, and each control carr
 The Palmer Penguins filter set with funnelling on: *Species*, *Island* and *Sex* each
 state how many of their values are still live.
 
-The panel header carries the two funnel controls as one attached pair — the toggle, and
-the overview beside it. The overview button stays mounted but disabled while funnelling
-is off, so switching it on does not reflow the header.
+The panel header carries the two funnel controls as one attached pair: the toggle, and the
+overview beside it. The overview button stays mounted but disabled while funnelling is off,
+so switching it on does not reflow the header.
 
 <div style="border: 1px solid grey; width: 294px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-panel-header.png" target="_blank">
@@ -151,7 +151,7 @@ with rows, percent of start, or percent of the previous stage.
 </div>
 
 The stage order is editable, because the intermediate counts depend on the order the
-filters are applied in — and only the intermediate ones do.
+filters are applied in, and only the intermediate ones do.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-overview-reordered.png" target="_blank">
@@ -162,7 +162,7 @@ filters are applied in — and only the intermediate ones do.
 The same three filters with *Sex* moved ahead of *Island*: the middle stage reads 73
 instead of 95, while the last still lands on 45 rows, because an intersection does not
 care about sequence. That invariant is precisely what makes the middle of the funnel the
-interesting part — it tells you which filter is doing the work, and reordering is how you
+interesting part: it tells you which filter is doing the work, and reordering is how you
 find out.
 
 !!! note "Scope and defaults"

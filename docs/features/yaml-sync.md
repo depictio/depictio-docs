@@ -333,7 +333,7 @@ The key round-trips through `dashboard export` / import like any other dashboard
 !!! note "What the flag does and does not control"
     - It is the **author's default**, not a lock. The button in the filter panel flips
       funnelling for a single page view without writing anything, so a viewer with no edit
-      rights can still turn it off — and a viewer turning it on cannot change what the next
+      rights can still turn it off, and a viewer turning it on cannot change what the next
       person sees.
     - A dashboard saved before v1.7.0 has no such key. Readers test `!== false` rather than
       truthiness, so an absent value inherits the funnel rather than falling through
