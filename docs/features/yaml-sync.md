@@ -317,6 +317,32 @@ declares both of the above while *Iris Petal Analysis* declares neither and show
     - Both keys round-trip through `dashboard export` unchanged.
     - Neither key does anything on a dashboard with a single tab.
 
+### Funnel filtering <small>(v1.7.0+)</small> { #funnel-filtering }
+
+`funnel_filtering` is a dashboard-level boolean deciding whether the filter panel marks
+which values still lead to a non-empty result. It **defaults to `true`**, so it only needs
+writing when opting a dashboard out:
+
+```yaml
+title: Palmer Penguins
+funnel_filtering: false   # omit, or set true, to keep the funnel on
+```
+
+The key round-trips through `dashboard export` / import like any other dashboard field.
+
+!!! note "What the flag does and does not control"
+    - It is the **author's default**, not a lock. The button in the filter panel flips
+      funnelling for a single page view without writing anything, so a viewer with no edit
+      rights can still turn it off — and a viewer turning it on cannot change what the next
+      person sees.
+    - A dashboard saved before v1.7.0 has no such key. Readers test `!== false` rather than
+      truthiness, so an absent value inherits the funnel rather than falling through
+      `undefined` to off; only an explicit `false` opts out.
+    - It gates both affordances at once: the per-value highlighting *and* the funnel
+      overview button.
+
+See [Funnel filtering](dashboards.md#funnel-filtering) for what it looks like in the panel.
+
 ### Complete Example
 
 ```yaml

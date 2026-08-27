@@ -15,6 +15,44 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.7.0](https://github.com/depictio/depictio/releases/tag/v1.7.0)** (August 26, 2026)
+
+!!! success "Minor: selections you can name and compare, and filters that show what still leads somewhere"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.7.0
+ghcr.io/depictio/depictio-viewer:1.7.0
+ghcr.io/depictio/depictio-worker:1.7.0
+```
+
+### **✨ New Features**
+
+* **Selection groups**: a lasso, a set of table rows or a map polygon saves as a named, coloured group you can rename, recolour and switch on as a filter. Groups belong to the dashboard family, so they carry across tabs, and they persist in the browser between visits. See [Interactive Selection Filtering](../features/interactive-selection-filtering.md#selection-groups) ([#962](https://github.com/depictio/depictio/pull/962), [00050d14](https://github.com/depictio/depictio/commit/00050d14), [3d3bc360](https://github.com/depictio/depictio/commit/3d3bc360)).
+* **The Analysis panel**: one header popover recolours every figure at once, from a categorical column or from your saved groups, as an **Overlay** or as **Split** panels, one per category and capped at 12. See [Interactive Selection Filtering](../features/interactive-selection-filtering.md#analysis-panel) ([#962](https://github.com/depictio/depictio/pull/962), [1adc7082](https://github.com/depictio/depictio/commit/1adc7082)).
+* **Compare groups in cards**: each card reduces its hero aggregation once per group and draws them side by side, as meters, slim box plots, shared-bin sparkbars, donut and gauge rings or a trend overlay, on scales derived from the whole frame so the shapes stay comparable ([#962](https://github.com/depictio/depictio/pull/962), [1adc7082](https://github.com/depictio/depictio/commit/1adc7082)).
+* **Funnel filtering**, on by default: every *other* active filter is taken into account to show which of a control's values still lead somewhere. Exhausted values are dimmed, disabled and sorted last, each control carries an `n/N available` badge, and an overview charts the cascading restriction with reorderable stages. See [Dashboards](../features/dashboards.md#funnel-filtering) ([#975](https://github.com/depictio/depictio/pull/975), [b5215a67](https://github.com/depictio/depictio/commit/b5215a67), [0c58c254](https://github.com/depictio/depictio/commit/0c58c254)).
+* **Mapping inspector**: a magnifier on every cross-DC link row resolves each source value through the link's own resolver and reports whether and *how* it matched, plus target-side orphans. It is read-only, so unlike Edit and Delete it stays available in public and demo mode. See [Cross-DC Filtering](../features/cross-dc-filtering.md#mapping-inspector) ([#975](https://github.com/depictio/depictio/pull/975), [9917b7d2](https://github.com/depictio/depictio/commit/9917b7d2)).
+
+### **🚀 Improvements**
+
+* **The filter panel header fits again**: the funnel toggle and its overview are one attached pair with distinct icons, expand-all and density moved into an overflow menu, and the active-filter count is stated once by the summary row rather than by a badge that appeared and vanished mid-session, shoving the title until *Filters* itself was ellipsed away ([#975](https://github.com/depictio/depictio/pull/975), [0c58c254](https://github.com/depictio/depictio/commit/0c58c254), [003683b0](https://github.com/depictio/depictio/commit/003683b0)).
+* **Analysis mode shows where a group can come from**: a component able to feed one is outlined and marked while analysis is engaged, and any component holding a live selection carries a **Save selection as group** action in its hover chrome ([#962](https://github.com/depictio/depictio/pull/962), [91896817](https://github.com/depictio/depictio/commit/91896817), [3d3bc360](https://github.com/depictio/depictio/commit/3d3bc360)).
+
+### **🐛 Bug Fixes**
+
+* **A second MultiQC sample filter narrows instead of widening**: a direct sample filter and a metadata-DC filter were concatenated rather than intersected, so adding a filter *added* samples. Every active filter is now an AND constraint ([#975](https://github.com/depictio/depictio/pull/975), [a8eb55b9](https://github.com/depictio/depictio/commit/a8eb55b9)).
+* **Every linked metadata DC is honoured**: filters from any DC beyond the first were silently dropped, which made the outcome depend on the order the filters happened to be applied in ([#975](https://github.com/depictio/depictio/pull/975), [a8eb55b9](https://github.com/depictio/depictio/commit/a8eb55b9)).
+* **MultiQC sample matching is symmetric**: suffix stripping ran on mapping keys only, so a source value that *was* a variant (`SRR001_1`), or a suffixed form of a key (`HG001_R1` against key `HG001`), never matched. Whitespace is normalised on both sides and canonical-only mappings no longer read as unmapped ([#975](https://github.com/depictio/depictio/pull/975), [a8eb55b9](https://github.com/depictio/depictio/commit/a8eb55b9)).
+* **A selection matching no sample renders an empty figure** rather than the full one: "matched nothing" and "no filter" were indistinguishable ([#975](https://github.com/depictio/depictio/pull/975), [a8eb55b9](https://github.com/depictio/depictio/commit/a8eb55b9)).
+* **A filter parked on `0` counts as active** in the funnel: the active test rejected `0` alongside `None` and `[]` because `0 == False` in Python, so a slider sitting at a column minimum of zero never became a stage while still being applied to the data ([#975](https://github.com/depictio/depictio/pull/975), [9e30bc7c](https://github.com/depictio/depictio/commit/9e30bc7c)).
+* **Exporting a dashboard with a selection-enabled figure works**: `selection_column` was dropped from the lite model while `selection_enabled` was kept, so the export failed validation ([#962](https://github.com/depictio/depictio/pull/962), [c33b900e](https://github.com/depictio/depictio/commit/c33b900e)).
+* **Cross-DC links stop freezing their mapping snapshot**: MultiQC `sample_mapping` links wrote the auto-loaded mappings into `link_config.mappings`, which went stale on every re-ingest, and were stored case-sensitive because the model default was never surfaced by the UI ([#975](https://github.com/depictio/depictio/pull/975), [b5215a67](https://github.com/depictio/depictio/commit/b5215a67)).
+* **Neutral card rows are grey**: the *All* and *Other* reference entries fell back to a hardcoded teal in rank-tinted mini charts, because the alpha helper only parsed `#rrggbb` and not the `rgba()` token they use ([#962](https://github.com/depictio/depictio/pull/962), [be66c51c](https://github.com/depictio/depictio/commit/be66c51c)).
+
+---
+
 ## **[v1.6.1](https://github.com/depictio/depictio/releases/tag/v1.6.1)** (August 26, 2026)
 
 !!! success "Patch: geo tables keep their real type, plus a dashboard-visibility permission fix"
