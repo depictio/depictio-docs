@@ -74,7 +74,7 @@ When a dashboard has a map authored as a dashboard-wide panel, it follows you ac
 
 ## Dashboard settings drawer
 
-**Settings**, at the top right, opens a read-only drawer describing the dashboard: its project, owner, visibility and last-modified date, then the dashboard and project IDs, each with a copy button. Since **v1.6.0** the project name is a link to that project's page, and **View ingestion report** below it opens the [ingestion report](../../features/dashboards.md#ingestion-report-health) for any project, not just one built from a template. The same body backs the inspector's **Info** tab.
+**Settings**, at the top right, opens a drawer describing the dashboard: its project, owner, visibility and last-modified date, then the dashboard and project IDs, each with a copy button. Since **v1.6.0** the project name is a link to that project's page, and **View ingestion report** below it opens the [ingestion report](../../features/dashboards.md#ingestion-report-health) for any project, not just one built from a template. The same body backs the inspector's **Info** tab. Since **v1.8.0** the drawer is no longer read-only: in edit mode it also carries the [Appearance](#appearance) controls.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/dashboard_settings.png" target="_blank">
@@ -84,6 +84,28 @@ When a dashboard has a map authored as a dashboard-wide panel, it follows you ac
 
 !!! note "This replaced the Parameters panel (v1.0.0)"
     The Dash UI put a *Parameters* panel here, with switches for edit mode and interactivity and buttons to remove every component or reset every filter. Only one of those survived the React rewrite: **Reset all**, now at the top of the filter panel. Editing is the **Edit** button, and there is no global interactivity switch.
+
+### Appearance <small>(v1.8.0+)</small> { #appearance }
+
+In edit mode the drawer gains an **Appearance** section, holding everything about how this dashboard looks. Info stays at the top; Appearance sits below it.
+
+**Font size.** **A-** and **A+** step the dashboard through 85%, 100%, 115% and 130%. The scale reaches the *content* only, meaning figures, tables and cards, through container-scoped Mantine CSS variables; the header, sidebar and panels keep their size so the chrome does not reflow. The preference is stored per browser, like the dark-mode toggle, so it follows the reader rather than the dashboard.
+
+!!! tip "Scaling one figure rather than all of them"
+    A single tile takes a `font_scale` of its own from its edit menu, between 0.7× and 2×, applied to the whole Plotly layout font. See [Components](../../features/components.md#figure-components).
+
+**Logo.** Upload a PNG, JPEG or WebP up to 2 MB and it is shown centred at the bottom of the dashboard sidebar. The control is tri-state, so besides a custom upload you can say **inherit the instance logo** or **none**. Inheritance is live: change the instance logo and every dashboard that never uploaded its own follows.
+
+!!! warning "Uploads are instance-local"
+    An uploaded logo is served from the instance that received it, so it is deliberately excluded from YAML exports. A logo that has to survive a move belongs in `logo_url` as an absolute address. See [Branding](../administration/branding.md#a-dashboard-override).
+
+**Default plot theme.** Pickers on the left, a live palette preview on the right, and a free-form colorway editor for a palette of your own. It sets the default for every figure component in this dashboard that does not pick its own theme. Precedence runs:
+
+```text
+component explicit  >  dashboard default  >  instance branding  >  Mantine default
+```
+
+**Branding → Customise.** The full brand theme for this dashboard: colours, chrome surfaces, typography and figure palette, with the instance's values showing through as placeholders and a live preview beside them. It applies to this dashboard's page only. See [Branding](../administration/branding.md) for the model and for the `brand_theme:` YAML equivalent.
 
 ## Component-wise options
 

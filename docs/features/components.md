@@ -152,6 +152,8 @@ fig
 | Color | Column for color encoding | None |
 | Hover data | Additional columns shown on hover | None |
 | `max_points` | Point cap for scatter-family figures before downsampling (v1.3.0+) | Global default (10,000) |
+| `font_scale` | Font-size multiplier for the whole figure layout font: axis labels, ticks and legend. Set from the tile's edit menu, 0.7× to 2×, with a full lite-YAML round trip (v1.8.0+) | Unset (1×) |
+| Theme | Plotly template for this figure. `mantine_light` / `mantine_dark` mean *follow the UI colour scheme*. Unset falls back to the dashboard default, then to [instance branding](../usage/administration/branding.md) (v1.8.0+) | Unset |
 
 !!! tip "Clustered heatmaps moved"
     The ComplexHeatmap viz has been renamed and is now part of the Advanced Visualizations section below — see [Hierarchical Heatmap](#hierarchical-heatmap) for the full config, alongside the rest of the domain-specific viz family (volcano, MA, sankey, …).
@@ -594,7 +596,7 @@ Renderer **aggregates over `iter`** per `(sample_id, depth)` — computes mean �
 [![Rarefaction example](../images/guides/advanced-visualizations/rarefaction_dark.webp#only-dark)](../images/guides/advanced-visualizations/rarefaction_dark.webp){target=_blank}
 ### Phylogenetic
 
-Newick tree + tip metadata (Microreact-style) — 5 layouts, tip search, subtree highlight.
+Newick tree + tip metadata (Microreact-style): 5 layouts, tip search, subtree highlight, and since **v1.8.0** a navigable viewport with cross-filtering. See [Reading and navigating the tree](#phylogeny-interaction).
 
 The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `/advanced_viz/phylogeny/{dc_id}/newick`). Tip annotations live in a regular Table DC and are joined to tip labels at render time via `taxon_col`. The schema below validates the **metadata** DC only.
 
@@ -614,15 +616,52 @@ The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `
 | `metadata_wf_id` / `metadata_dc_id` | str \| null | `null` | Optional metadata DC for tip annotations |
 | `taxon_col` | str | `"taxon"` | Column in the metadata DC matching tip labels in the tree |
 | `color_col` | str \| null | `null` | Metadata column for tip colouring (categorical or continuous) |
-| `label_col` | str \| null | `null` | Metadata column shown alongside the tip label (e.g. clade name) |
+| `label_col` | str \| null | `null` | Metadata column used to **label the tips**, so a tree whose tip names are hashes can read as something else. Changeable at view time from **Label by** (v1.8.0+) |
 | `extra_color_cols` | list[str] \| null | `null` | Extra metadata columns to pre-fetch so they appear in the viz Colour-by Select. Typical use: taxonomic ranks on ASV trees (Kingdom/Phylum/.../Species) so the user can re-colour tips at a different rank without reloading. |
 | `category_palettes` | dict[str, dict[str, str]] \| null | `null` | Per-column palette overrides for the Colour-by selector. Shape: `{column_name: {category_value: hex}}`. Pin domain palettes (e.g. `dominant_habitat → Set1`) so the same category lands on the same colour across PCoA / UpSet / heatmap / phylogeny tiles. |
 | `default_layout` | `rectangular` \| `circular` \| `radial` \| `diagonal` \| `hierarchical` | `rectangular` | Initial tree layout |
 | `ladderize` | bool | `true` | Ladderise the tree by default |
-| `show_metadata_strip` | bool | `true` | Render Microreact-style metadata strip next to each tip |
-| `show_branch_lengths` | bool | `true` | Annotate branches with lengths |
+| `show_metadata_strip` | bool | `true` | Render Microreact-style metadata strips beside the tips. Strips get their own legend sections (v1.8.0+) |
+| `show_branch_lengths` | bool | `true` | Annotate branches with lengths. Drawn as a clipped trace capped at the longest branches, so a dense tree is not buried in text (v1.8.0+) |
 | `show_internal_labels` | bool | `false` | Annotate internal nodes with their labels |
 
+#### Reading and navigating the tree <small>(v1.8.0+)</small> { #phylogeny-interaction }
+
+Before v1.8.0 the only actions were in a hidden Settings popover and the viewport could not be moved. The renderer now carries its own controls.
+
+**View controls.** A fixed strip sits above the tree and never rearranges, so the same control is always in the same place:
+
+| Control | What it does |
+|---------|--------------|
+| **Step back** / **Step forward** | Undo and redo over the view state. Steps that land in two renders are folded into one |
+| **Toggle zoom & pan** | Off by default, so a click selects and nothing drags. On: drag pans, the wheel zooms, double-click resets. Toggling it back off freezes the view where you left it |
+| **Reset view** | Re-applies the fitted ranges |
+| **Toggle focus mode** | Prunes the tree to the tips in scope instead of ghosting the rest, and reports `n of N tips` |
+| **Expand all** | Appears once clades are collapsed, next to a count of them |
+
+!!! note "Wheel zoom on a large tree"
+    The gesture drives a CSS transform on Plotly's own layers and commits a single relayout once the wheel goes quiet, rather than relayouting per notch, so it tracks the pointer on a tree with thousands of segments. The viewport is tracked by the renderer rather than left to Plotly's `uirevision`, so a zoom survives a figure recompute such as selecting another clade.
+
+**Selecting a clade.** Click an internal node and its clade is marked by taking contrast from everything else, rather than by colouring it, which used to compete with colour-by-metadata and disappear on a dense tree. A box floats over the tree (it used to sit above it, claiming vertical space and shifting the node under the pointer) describing what you picked:
+
+- a headline naming the clade by its tips
+- **Tips**, **Branch points** and **Max depth**
+- **Root support**, when the node carries one. A Newick node stores support where a name would go, so a clade "named" `0.822` has no name
+
+and offering **Filter**, **Collapse**, **.nwk** and **Back to full tree**.
+
+**Collapsing.** **Collapse** draws the clade as a wedge sized by its real depth; click the wedge to expand it again. The branches beneath a collapsed node are summed, so root-to-tip distances stay honest rather than silently short.
+
+**Filtering the dashboard to a clade.** **Filter** emits an ordinary dashboard filter on the metadata DC's taxon column, carrying the clade's tip names. It appears in the sidebar like any other active filter and is cleared the same way, and the button flips to **Filtered** to offer the way back. Two details worth knowing:
+
+- The tree strips its own entry before fetching, so its tips never dim from its own selection.
+- The highlight is restored by taxon name after a tab switch or a re-parse, using the smallest clade whose leaf set matches exactly, never by parse-order node ids.
+
+Move the highlight elsewhere while a filter is live and a separate **Clear filter** appears, so an active filter is never left without a visible undo.
+
+**Colour, labels and scale.** **Colour by** and **Label by** re-colour and re-label the tips at view time from any pre-fetched metadata column, and **Scale bar** toggles the substitutions ruler. One colour scale per column feeds the tips, the strips and the legend, where three scales built from three different value sets could disagree, and the legend lists only what is actually drawn, shortening as you focus or collapse. Support values render as dots at any density, with figures when there are few enough to read, and aligned tip labels get leader lines.
+
+**Export.** **.nwk** downloads the selected clade as Newick.
 
 [![Phylogenetic example](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light)](../images/guides/advanced-visualizations/phylogenetic_light.webp){target=_blank}
 
