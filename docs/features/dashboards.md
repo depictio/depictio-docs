@@ -105,6 +105,79 @@ filters into while editing is the order a viewer sees:
 - :material-format-list-bulleted: **Active-filter summary** - applied filters are listed above the controls as an aligned label/value list, each row carrying its own control's icon and accent, with a per-row clear. The list folds to a single line and its state persists per dashboard.
 - :material-cellphone: **Drawer on narrow screens** - the panel becomes an overlay rather than stealing canvas width.
 
+### :material-filter-check: Funnel filtering <small>(v1.7.0+)</small> { #funnel-filtering }
+
+A filter panel usually shows every value a column ever had, whether or not picking it
+would leave anything on screen. **Funnel filtering** answers the other question: given
+everything else you have already picked, which of these values still lead somewhere?
+
+For each control, the answer is computed against every **other** active filter, with that
+control's own selection excluded, since otherwise a control would grey out everything it
+did not itself select. Values that can still narrow the data carry a teal marker; values
+that would return nothing are dimmed, disabled and sorted last, and each control carries
+an `n/N available` badge that turns orange when nothing remains.
+
+<div style="border: 1px solid grey; width: 294px; padding: 1px;">
+    <a href="../../images/guides/funnel-filtering/funnel-panel-highlighting.png" target="_blank">
+        <img src="../../images/guides/funnel-filtering/funnel-panel-highlighting.png" width="292">
+    </a>
+</div>
+
+The Palmer Penguins filter set with funnelling on: *Species*, *Island* and *Sex* each
+state how many of their values are still live.
+
+The panel header carries the two funnel controls as one attached pair: the toggle, and the
+overview beside it. The overview button stays mounted but disabled while funnelling is off,
+so switching it on does not reflow the header.
+
+<div style="border: 1px solid grey; width: 294px; padding: 1px;">
+    <a href="../../images/guides/funnel-filtering/funnel-panel-header.png" target="_blank">
+        <img src="../../images/guides/funnel-filtering/funnel-panel-header.png" width="292">
+    </a>
+</div>
+
+#### :material-filter-multiple: The funnel overview
+
+The overview charts the restriction the filters apply *as a whole*: one band per filter,
+starting at the unfiltered row count and narrowing as each is applied. Every delta-backed
+data collection gets its own bar in each band, side by side, so a filter that guts one
+collection while leaving another untouched is visible at a glance. Bars can be labelled
+with rows, percent of start, or percent of the previous stage.
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../images/guides/funnel-filtering/funnel-overview-modal.png" target="_blank">
+        <img src="../../images/guides/funnel-filtering/funnel-overview-modal.png" width="600">
+    </a>
+</div>
+
+The stage order is editable, because the intermediate counts depend on the order the
+filters are applied in, and only the intermediate ones do.
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../images/guides/funnel-filtering/funnel-overview-reordered.png" target="_blank">
+        <img src="../../images/guides/funnel-filtering/funnel-overview-reordered.png" width="600">
+    </a>
+</div>
+
+The same three filters with *Sex* moved ahead of *Island*: the middle stage reads 73
+instead of 95, while the last still lands on 45 rows, because an intersection does not
+care about sequence. That invariant is precisely what makes the middle of the funnel the
+interesting part: it tells you which filter is doing the work, and reordering is how you
+find out.
+
+!!! note "Scope and defaults"
+    Funnel filtering is **on by default**: knowing which values still lead somewhere is
+    rather the point of a filter panel, so authors opt out rather than in. The author-level
+    default is a switch in the editor's settings drawer, stored on the dashboard as
+    `funnel_filtering` and round-tripping through [YAML Sync](yaml-sync.md#funnel-filtering);
+    the button in the filter panel flips it for your page view only and writes nothing, so
+    viewers without edit rights can still turn it off.
+
+    In this first version the live availability sets cover **categorical controls**
+    (multi-select, select, segmented control); sliders and date pickers are untouched. The
+    overview counts delta-backed data collections, so MultiQC collections, which have no
+    row table, do not appear. Caps: 32 controls, 12 stages, 1000 values per control.
+
 ### :material-chart-box: Right Panel (Visualizations)
 
 The **right panel** is the main canvas where visualization components are displayed:

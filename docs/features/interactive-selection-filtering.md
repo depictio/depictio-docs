@@ -139,6 +139,93 @@ Selected markers dim unselected points and filter other components on the same D
 
 ---
 
+## :material-select-group: Selection groups <small>(v1.7.0+)</small> { #selection-groups }
+
+A selection is normally a passing thing: draw the next one and the first is gone. **Save
+it as a group** and it becomes something you can name, colour and come back to.
+
+Any component holding a live selection offers **Save selection as group** in its hover
+chrome. The group takes a name and a colour, both editable later, and saving clears the
+source selection so the component is free for the next one. Once saved, a group can be:
+
+- :material-filter: **toggled as a filter**, narrowing the dashboard like any ordinary
+  control. Groups project into the same filter machinery as everything else, so cross-DC
+  links resolve through them and an active group appears as a removable row in the
+  active-filter summary;
+- :material-palette: **used to colour every figure**, so several groups are visible at
+  once rather than one at a time;
+- :material-card-text: **compared in the cards**, which is where a group stops being a
+  filter and becomes a cohort.
+
+!!! info "Where groups live"
+    Groups are held in your browser, scoped to the **dashboard family**, so they survive a
+    tab switch and are still there on your next visit. They are yours alone: saving one
+    changes nothing for anyone else looking at the same dashboard, and nothing is written
+    to the dashboard document. Sharing groups is a follow-up.
+
+### :material-tune-variant: The Analysis panel { #analysis-panel }
+
+One **Analysis** popover in the dashboard header drives all of it, in three sections:
+**Color by column**, **Groups**, and **Group options**. Its **Reset** restores the
+defaults while keeping your saved groups.
+
+<div style="border: 1px solid grey; width: 232px; padding: 1px;">
+    <a href="../../images/guides/selection-groups/analysis_panel.png" target="_blank">
+        <img src="../../images/guides/selection-groups/analysis_panel.png" width="230">
+    </a>
+</div>
+
+While analysis mode is engaged, any component that can feed a group (a scatter figure, a
+table, a map, an image gallery) is outlined and marked, so it is clear where a selection
+is worth making before you make one.
+
+### :material-palette-swatch: Colouring every figure at once
+
+**Color by column** recolours every figure whose dataset carries that column, from one
+stable palette, so a category keeps its colour across figures and survives filtering.
+Each recoloured figure carries a `by <column>` badge.
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../images/guides/selection-groups/color_by_species.jpg" target="_blank">
+        <img src="../../images/guides/selection-groups/color_by_species.jpg" width="600">
+    </a>
+</div>
+
+**Split** draws one panel per category instead of overlaying them, capped at 12. Where the
+number of categories cannot be known ahead of time, both client and server fall back to an
+overlay rather than faceting an unbounded column.
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../images/guides/selection-groups/split_by_species.jpg" target="_blank">
+        <img src="../../images/guides/selection-groups/split_by_species.jpg" width="600">
+    </a>
+</div>
+
+Colouring by a column and comparing groups in cards are two ways of grouping the same
+screen, so they are mutually exclusive: pick a column and card comparison is suspended,
+its toggle disabled and its value kept for when you clear the column again.
+
+### :material-compare-horizontal: Comparing groups in the cards
+
+With **Compare groups in cards** on, each card reduces its hero aggregation once per group
+and draws the results side by side in the group's colour, as meters, mini donuts, slim box
+plots, sparkbars, gauge dials or a trend overlay depending on the layout. The scales come
+from the whole frame rather than from each group, so the shapes are genuinely comparable.
+Two optional references sit alongside: **All**, the unsplit frame, and **Other**, the rows
+in no group.
+
+<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+    <a href="../../images/guides/selection-groups/overview_groups_compare.jpg" target="_blank">
+        <img src="../../images/guides/selection-groups/overview_groups_compare.jpg" width="600">
+    </a>
+</div>
+
+Two saved groups on the bundled Penguins dashboard, with every card comparing them: the
+neutral *All* reference leads, and the ungrouped rows trail as a dimmed *Other*.
+
+---
+
+
 ## :material-link-variant: How It Works
 
 Selection filtering integrates with the existing interactive filtering system:
@@ -253,9 +340,10 @@ components:
 
 ## :material-alert-circle-outline: Limitations
 
-- **Same Data Collection**: Selection filtering works within the same Data Collection. For cross-DC filtering, use [Links](cross-dc-filtering.md).
+- **Same Data Collection**: a *live* selection filters within its own Data Collection; for cross-DC filtering, use [Links](cross-dc-filtering.md). Saving it as a [selection group](#selection-groups) lifts this: a group projects into an ordinary filter, so links resolve through it like any other.
 - **Scatter & Maps Only**: Currently scatter plots and scatter maps support selection (not bar charts, histograms, or choropleth maps).
-- **No Persistence**: Selections are cleared on page reload, and are not carried between tabs. Only a floating map's selection and the values of controls in a [section shown on every tab](dashboards.md#persistent-sections) survive a tab switch; a selection made by clicking a chart or ticking table rows does not.
+- **Live selections do not persist**: a selection is cleared on page reload and is not carried between tabs. Only a floating map's selection and the values of controls in a [section shown on every tab](dashboards.md#persistent-sections) survive a tab switch; a selection made by clicking a chart or ticking table rows does not. Save it as a [selection group](#selection-groups) <small>(v1.7.0+)</small> and it survives both, for you, in that browser.
+- **Groups are per browser**: a saved group is not shared with other viewers and is not written to the dashboard, so it is gone if you clear site data or open the dashboard elsewhere.
 
 ---
 
