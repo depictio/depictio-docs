@@ -26,6 +26,14 @@ Each layer states only what differs; anything it leaves out is inherited from th
 !!! info "Availability"
     The layered engine landed in **v1.8.0** ([#1003](https://github.com/depictio/depictio/pull/1003)). Dashboards written before it, carrying the older `logo_url` or `plot_theme` fields, fold into `brand_theme` on read and keep working.
 
+**Administration → Branding** puts the whole theme on one page, with a live preview beside it that renders real components under the draft, in either colour scheme:
+
+[![The Branding panel in /admin](../../images/guides/branding/branding-admin-panel_light.webp#only-light)](../../images/guides/branding/branding-admin-panel_light.webp){target=_blank}
+
+[![The Branding panel in /admin](../../images/guides/branding/branding-admin-panel_dark.webp#only-dark)](../../images/guides/branding/branding-admin-panel_dark.webp){target=_blank}
+
+The form groups the fields as **Identity**, **Brand colors**, **Status colors**, **Surfaces**, **Typography & shape** and **Figures**, in that order. They are the same fields described below, and the same ones a dashboard override offers.
+
 ## The fields
 
 **Identity.** `app_name` (browser tab title and login greeting), `logo_url`, `logo_url_dark`, and `logo_mode`, which is `inherit` (the default), `custom` or `none`. A dashboard set to `none` shows no logo even when the instance has one.
@@ -72,11 +80,15 @@ State `colorway` or `sequential` yourself and the derivation steps aside for tha
 
 **Export** writes the current theme as JSON and **Import** reads one back, so a brand can be reviewed, version-controlled and moved between deployments.
 
+[![The Presets menu](../../images/guides/branding/branding-presets.webp)](../../images/guides/branding/branding-presets.webp){target=_blank}
+
 ## A dashboard override
 
 From a dashboard in edit mode: **Settings → Appearance → Branding → Customise**. The same fields appear, with the instance's values shown as placeholders, and a live preview beside them renders real components under the draft. See [Using the dashboard](../guides/dashboard_usage.md#appearance) for the rest of the Appearance section.
 
 The override applies to that dashboard's page only. The dashboard list, the admin pages and every other dashboard stay on the instance theme.
+
+[![A dashboard wearing its own brand](../../images/guides/branding/dashboard-brand-override.webp)](../../images/guides/branding/dashboard-brand-override.webp){target=_blank}
 
 In YAML it is a `brand_theme:` block at the top level. The bundled penguins demo dashboard carries one as a worked example:
 

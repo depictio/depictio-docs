@@ -647,10 +647,19 @@ Before v1.8.0 the only actions were in a hidden Settings popover and the viewpor
 - a headline naming the clade by its tips
 - **Tips**, **Branch points** and **Max depth**
 - **Root support**, when the node carries one. A Newick node stores support where a name would go, so a clade "named" `0.822` has no name
+- one row per coloured column, counting how the clade breaks down by it
 
-and offering **Filter**, **Collapse**, **.nwk** and **Back to full tree**.
+and offering **Filter**, **Collapse**, **.nwk** and **Back to full tree**, which is spelled out on its own line rather than left as a bare ✕ at the end of the action row.
+
+[![A selected clade, with the rest of the tree dimmed](../images/guides/advanced-visualizations/phylogeny_selection_light.webp#only-light)](../images/guides/advanced-visualizations/phylogeny_selection_light.webp){target=_blank}
+
+[![A selected clade, with the rest of the tree dimmed](../images/guides/advanced-visualizations/phylogeny_selection_dark.webp#only-dark)](../images/guides/advanced-visualizations/phylogeny_selection_dark.webp){target=_blank}
 
 **Collapsing.** **Collapse** draws the clade as a wedge sized by its real depth; click the wedge to expand it again. The branches beneath a collapsed node are summed, so root-to-tip distances stay honest rather than silently short.
+
+[![A collapsed clade drawn as a wedge](../images/guides/advanced-visualizations/phylogeny_collapsed_light.webp#only-light)](../images/guides/advanced-visualizations/phylogeny_collapsed_light.webp){target=_blank}
+
+[![A collapsed clade drawn as a wedge](../images/guides/advanced-visualizations/phylogeny_collapsed_dark.webp#only-dark)](../images/guides/advanced-visualizations/phylogeny_collapsed_dark.webp){target=_blank}
 
 **Filtering the dashboard to a clade.** **Filter** emits an ordinary dashboard filter on the metadata DC's taxon column, carrying the clade's tip names. It appears in the sidebar like any other active filter and is cleared the same way, and the button flips to **Filtered** to offer the way back. Two details worth knowing:
 
@@ -658,6 +667,10 @@ and offering **Filter**, **Collapse**, **.nwk** and **Back to full tree**.
 - The highlight is restored by taxon name after a tab switch or a re-parse, using the smallest clade whose leaf set matches exactly, never by parse-order node ids.
 
 Move the highlight elsewhere while a filter is live and a separate **Clear filter** appears, so an active filter is never left without a visible undo.
+
+[![Filter to subtree active, listed in the filter panel](../images/guides/advanced-visualizations/phylogeny_filter_light.webp#only-light)](../images/guides/advanced-visualizations/phylogeny_filter_light.webp){target=_blank}
+
+[![Filter to subtree active, listed in the filter panel](../images/guides/advanced-visualizations/phylogeny_filter_dark.webp#only-dark)](../images/guides/advanced-visualizations/phylogeny_filter_dark.webp){target=_blank}
 
 **Colour, labels and scale.** **Colour by** and **Label by** re-colour and re-label the tips at view time from any pre-fetched metadata column, and **Scale bar** toggles the substitutions ruler. One colour scale per column feeds the tips, the strips and the legend, where three scales built from three different value sets could disagree, and the legend lists only what is actually drawn, shortening as you focus or collapse. Support values render as dots at any density, with figures when there are few enough to read, and aligned tip labels get leader lines.
 

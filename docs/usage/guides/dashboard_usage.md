@@ -87,25 +87,44 @@ When a dashboard has a map authored as a dashboard-wide panel, it follows you ac
 
 ### Appearance <small>(v1.8.0+)</small> { #appearance }
 
-In edit mode the drawer gains an **Appearance** section, holding everything about how this dashboard looks. Info stays at the top; Appearance sits below it.
+The drawer gained an **Appearance** section. In viewer mode it holds one control, **Font size**. In edit mode it holds everything about how this dashboard looks.
 
 **Font size.** **A-** and **A+** step the dashboard through 85%, 100%, 115% and 130%. The scale reaches the *content* only, meaning figures, tables and cards, through container-scoped Mantine CSS variables; the header, sidebar and panels keep their size so the chrome does not reflow. The preference is stored per browser, like the dark-mode toggle, so it follows the reader rather than the dashboard.
 
 !!! tip "Scaling one figure rather than all of them"
     A single tile takes a `font_scale` of its own from its edit menu, between 0.7× and 2×, applied to the whole Plotly layout font. See [Components](../../features/components.md#figure-components).
 
-**Logo.** Upload a PNG, JPEG or WebP up to 2 MB and it is shown centred at the bottom of the dashboard sidebar. The control is tri-state, so besides a custom upload you can say **inherit the instance logo** or **none**. Inheritance is live: change the instance logo and every dashboard that never uploaded its own follows.
+**Branding.** **Inherit instance** or **Customise**. Under *Customise*, anything left empty still follows the instance branding, so an override states only what differs. The controls, in order:
+
+| Group | What it holds |
+|-------|---------------|
+| Logo | **Instance logo**, **Upload** or **None**. Shown at the bottom of the dashboard sidebar |
+| Brand colors | Primary, Secondary, Tertiary, and **Reach**: *Primary accent* re-tints the primary only, *Full palette* carries all three into buttons, tabs, badges and section accents |
+| Status colors | Success, Warning, Danger, left alone by the reach above so pass, warn and fail keep reading as meaning |
+| Surfaces | Page background, Cards & sections, Header & sidebar and Titles, stated separately for light and for dark |
+| Typography & shape | Font stack, Heading font stack and Corner radius, with a live sample rendered beneath them |
+| Figures | **Plot template** for figures whose component picks none, and **Figure colorway**, either *From palette* (derived from the brand colours above) or *Custom* |
+
+A **Preview** at the bottom renders real components under the draft, with its own Light and Dark tabs, so you can check both schemes without switching the app over.
+
+[![The dashboard's Appearance section](../../images/guides/branding/dashboard-appearance-branding.webp)](../../images/guides/branding/dashboard-appearance-branding.webp){target=_blank}
+
+[![Figure defaults and the live preview](../../images/guides/branding/dashboard-appearance-figures.webp)](../../images/guides/branding/dashboard-appearance-figures.webp){target=_blank}
+
+The override applies to this dashboard's page only, so it can wear its own identity inside a differently branded instance. The bundled penguins demo does exactly that, with a colour per species:
+
+[![The penguins dashboard wearing its own brand](../../images/guides/branding/dashboard-brand-override.webp)](../../images/guides/branding/dashboard-brand-override.webp){target=_blank}
 
 !!! warning "Uploads are instance-local"
-    An uploaded logo is served from the instance that received it, so it is deliberately excluded from YAML exports. A logo that has to survive a move belongs in `logo_url` as an absolute address. See [Branding](../administration/branding.md#a-dashboard-override).
+    An uploaded logo is served from the instance that received it, so it is deliberately excluded from YAML exports. A logo that has to survive a move belongs in `logo_url` as an absolute address.
 
-**Default plot theme.** Pickers on the left, a live palette preview on the right, and a free-form colorway editor for a palette of your own. It sets the default for every figure component in this dashboard that does not pick its own theme. Precedence runs:
+Figure theming resolves in this order:
 
 ```text
 component explicit  >  dashboard default  >  instance branding  >  Mantine default
 ```
 
-**Branding → Customise.** The full brand theme for this dashboard: colours, chrome surfaces, typography and figure palette, with the instance's values showing through as placeholders and a live preview beside them. It applies to this dashboard's page only. See [Branding](../administration/branding.md) for the model and for the `brand_theme:` YAML equivalent.
+See [Branding](../administration/branding.md) for the model behind all of this, and for the `brand_theme:` YAML equivalent.
 
 ## Component-wise options
 
