@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.7.0",
-    "x-generated-at": "2026-08-26T21:33:20Z",
-    "x-depictio-version": "v1.7.0"
+    "version": "1.8.0",
+    "x-generated-at": "2026-08-27T18:26:51Z",
+    "x-depictio-version": "v1.8.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -4316,6 +4316,222 @@
         }
       }
     },
+    "/depictio/api/v1/utils/branding/presets": {
+      "get": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "List Branding Presets",
+        "description": "Named starting palettes offered by the /admin Branding panel.\n\nPublic: these are static design constants, and the login page is already\nbranded before a user is known.",
+        "operationId": "list_branding_presets_depictio_api_v1_utils_branding_presets_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/utils/branding/resolve": {
+      "post": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Resolve Branding",
+        "description": "Resolve a brand theme without saving it — the live-preview channel.\n\nThe derived figure colors are deliberately computed in one place\n(``models/branding.py``) so the server and the SPA can't drift. That means\nan unsaved draft in the Branding panel has to come here to be resolved\nrather than re-deriving client-side. Pure computation on the supplied\ninput: no instance state is read or written, so any signed-in user may\ncall it (the dashboard appearance panel is used by editors, not admins).",
+        "operationId": "resolve_branding_depictio_api_v1_utils_branding_resolve_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrandTheme"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/utils/branding": {
+      "get": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Get Branding Admin",
+        "description": "Current branding state for the admin panel: overrides, env, effective.",
+        "operationId": "get_branding_admin_depictio_api_v1_utils_branding_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Put Branding Admin",
+        "description": "Replace the admin brand-theme overrides. Null/omitted fields fall back to env.",
+        "operationId": "put_branding_admin_depictio_api_v1_utils_branding_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrandTheme"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Delete Branding Admin",
+        "description": "Clear every override — the deployment's env defaults apply again.",
+        "operationId": "delete_branding_admin_depictio_api_v1_utils_branding_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/utils/branding/logo/{variant}": {
+      "post": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Upload Branding Logo",
+        "description": "Store an instance logo (light or dark variant) and point the override at it.",
+        "operationId": "upload_branding_logo_depictio_api_v1_utils_branding_logo__variant__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "variant",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "enum": [
+                "light",
+                "dark"
+              ],
+              "type": "string",
+              "title": "Variant"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_branding_logo_depictio_api_v1_utils_branding_logo__variant__post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/utils/telemetry/preview": {
       "get": {
         "tags": [
@@ -5256,6 +5472,120 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/DashboardData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/appearance/{dashboard_id}": {
+      "patch": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Update Dashboard Appearance",
+        "description": "Replace a dashboard's brand override with ``brand_theme``.\n\nAppearance edits used to ride the full-document `/save`, which is\nlast-writer-wins: opening the settings drawer while a layout save was in\nflight could resurrect a stale grid. This touches one field, so the two\ncan't fight. An empty theme clears the override (the dashboard inherits\nthe instance branding again).",
+        "operationId": "update_dashboard_appearance_depictio_api_v1_dashboards_appearance__dashboard_id__patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrandTheme"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/upload_logo/{dashboard_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Upload Dashboard Logo",
+        "description": "Store a dashboard logo image and stamp it on the document's brand theme.\n\nFile write and field update happen in one ownership-checked call so the\nstored URL can never point at a file that was rejected. Removal goes\nthrough `/appearance` (`logo_mode: \"inherit\"` or `\"none\"`); the file on\ndisk is simply overwritten by the next upload for this dashboard.\n\nValidation is the shared one from `services/branding.py` — same PNG/JPEG/\nWebP + magic-byte + 2MB rules as the instance logo, deliberately not a\nsecond copy that can drift.",
+        "operationId": "upload_dashboard_logo_depictio_api_v1_dashboards_upload_logo__dashboard_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_dashboard_logo_depictio_api_v1_dashboards_upload_logo__dashboard_id__post"
               }
             }
           }
@@ -6943,7 +7273,7 @@
           "Figure Builder"
         ],
         "summary": "Preview Figure",
-        "description": "Build a figure from the supplied builder metadata and return its JSON.\n\nDiffers from ``/dashboards/render_figure/{id}/{cid}`` in that the metadata\nis supplied directly, not looked up. Suitable for live preview during the\ncreate / edit flow.\n\nHeavy work (delta-table load + Plotly build) runs on a Celery worker by\ndefault — see `settings.celery.offload_preview`. The endpoint awaits the\ntask via a non-blocking poll loop so the FastAPI event loop stays free.\n\nRequest body::\n\n    {\n      \"metadata\": { ...full figure stored_metadata shape... },\n      \"filters\": [...] (optional),\n      \"theme\": \"light\" | \"dark\" (default \"light\")\n    }",
+        "description": "Build a figure from the supplied builder metadata and return its JSON.\n\nDiffers from ``/dashboards/render_figure/{id}/{cid}`` in that the metadata\nis supplied directly, not looked up. Suitable for live preview during the\ncreate / edit flow.\n\nHeavy work (delta-table load + Plotly build) runs on a Celery worker by\ndefault — see `settings.celery.offload_preview`. The endpoint awaits the\ntask via a non-blocking poll loop so the FastAPI event loop stays free.\n\nRequest body::\n\n    {\n      \"metadata\": { ...full figure stored_metadata shape... },\n      \"filters\": [...] (optional),\n      \"theme\": \"light\" | \"dark\" (default \"light\"),\n      \"dashboard_id\": \"...\" (optional)\n    }\n\n``dashboard_id``, when supplied, pulls that dashboard's ``brand_theme``\ndefaults into the preview so it matches what the saved component will\nrender (#397).",
         "operationId": "preview_figure_depictio_api_v1_figure_preview_post",
         "requestBody": {
           "content": {
@@ -10553,6 +10883,375 @@
         ],
         "title": "Body_replace_table_dc_depictio_api_v1_datacollections__data_collection_id__replace_post"
       },
+      "Body_upload_branding_logo_depictio_api_v1_utils_branding_logo__variant__post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_branding_logo_depictio_api_v1_utils_branding_logo__variant__post"
+      },
+      "Body_upload_dashboard_logo_depictio_api_v1_dashboards_upload_logo__dashboard_id__post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_dashboard_logo_depictio_api_v1_dashboards_upload_logo__dashboard_id__post"
+      },
+      "BrandPlots": {
+        "properties": {
+          "template": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template",
+            "description": "Plotly template name (e.g. 'seaborn', 'plotly_white') used by all figures whose component doesn't pick one. Unset/`mantine_light`/`mantine_dark` mean 'follow the UI theme'."
+          },
+          "colorway": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Colorway",
+            "description": "Categorical color sequence (hex list) for figures that set neither `color_discrete_sequence` nor `color_discrete_map`. Unset means 'derive from the brand palette'."
+          },
+          "sequential": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sequential",
+            "description": "Continuous colorscale stops (hex list, light to dark). Unset means 'derive from the primary color'."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "BrandPlots",
+        "description": "Figure defaults. Component-explicit values always win over these."
+      },
+      "BrandSurfaces": {
+        "properties": {
+          "app_bg": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "App Bg",
+            "description": "Page background (Mantine `--mantine-color-body`)."
+          },
+          "section_bg": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Bg",
+            "description": "Card / Paper / section-accordion background."
+          },
+          "nav_bg": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nav Bg",
+            "description": "App shell navbar and header background."
+          },
+          "heading": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Heading",
+            "description": "Title and section-title text color."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "BrandSurfaces",
+        "description": "Chrome colors for one color scheme. All optional, all hex."
+      },
+      "BrandTheme": {
+        "properties": {
+          "app_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "App Name",
+            "description": "Instance display name: browser tab title and login-page greeting."
+          },
+          "logo_mode": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "inherit",
+                  "none",
+                  "custom"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Logo Mode",
+            "description": "'inherit' uses the layer below's logo, 'none' shows no logo, 'custom' uses `logo_url`. Unset resolves to 'inherit'."
+          },
+          "logo_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Logo Url"
+          },
+          "logo_url_dark": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Logo Url Dark",
+            "description": "Dark-scheme variant; falls back to `logo_url`."
+          },
+          "primary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary",
+            "description": "Primary brand color: hex, or a Mantine palette name."
+          },
+          "secondary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Secondary",
+            "description": "Secondary brand color."
+          },
+          "tertiary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tertiary",
+            "description": "Tertiary / accent brand color."
+          },
+          "success": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Success",
+            "description": "Overrides Mantine green."
+          },
+          "warning": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Warning",
+            "description": "Overrides Mantine yellow."
+          },
+          "danger": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Danger",
+            "description": "Overrides Mantine red."
+          },
+          "tint_mode": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "accent",
+                  "full"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tint Mode",
+            "description": "How far the brand hues reach into the existing UI. 'accent' re-tints the primary accent only; 'full' also remaps the secondary/tertiary accent families. Unset resolves to 'accent'."
+          },
+          "surfaces_light": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BrandSurfaces"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "surfaces_dark": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BrandSurfaces"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "font_family": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 300
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Font Family"
+          },
+          "headings_font_family": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 300
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Headings Font Family"
+          },
+          "default_radius": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Default Radius",
+            "description": "Mantine radius token: xs, sm, md, lg or xl."
+          },
+          "plots": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BrandPlots"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "palettes": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Palettes",
+            "description": "Derived Mantine color tuples, keyed by role (primary, secondary, tertiary, success, warning, danger). Filled in by `resolve_brand_theme`; authors never set this."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "BrandTheme",
+        "description": "A deployment's (or a dashboard's) visual identity.\n\nUnset fields inherit from the layer below — see ``merge_brand_themes()``."
+      },
       "CLIConfig": {
         "properties": {
           "api_base_url": {
@@ -11142,7 +11841,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -11257,6 +11956,16 @@
             "type": "boolean",
             "title": "Funnel Filtering",
             "default": true
+          },
+          "brand_theme": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BrandTheme"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "buttons_data": {
             "additionalProperties": true,
@@ -11435,7 +12144,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -11498,7 +12207,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -11686,7 +12395,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -13489,7 +14198,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -13697,7 +14406,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -14248,7 +14957,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -14354,7 +15063,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -14587,7 +15296,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a8f5b9cb7d795f0260160ed"
+            "default": "6a90816662fc93c51b2fdfb8"
           }
         },
         "type": "object",
@@ -14705,7 +15414,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -14824,7 +15533,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -14906,7 +15615,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -14992,7 +15701,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -15165,7 +15874,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -15340,7 +16049,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -15410,7 +16119,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
@@ -15508,7 +16217,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8f5b9cb7d795f0260160ec"
+            "default": "6a90816662fc93c51b2fdfb7"
           },
           "description": {
             "anyOf": [
