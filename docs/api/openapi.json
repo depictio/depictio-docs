@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.6.0",
-    "x-generated-at": "2026-08-26T09:30:55Z",
-    "x-depictio-version": "v1.6.0"
+    "version": "1.7.0",
+    "x-generated-at": "2026-08-26T21:33:20Z",
+    "x-depictio-version": "v1.7.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -3229,6 +3229,77 @@
         }
       }
     },
+    "/depictio/api/v1/links/{project_id}/{link_id}/mapping-preview": {
+      "get": {
+        "tags": [
+          "DC Links"
+        ],
+        "summary": "Inspect how source values map through a link",
+        "description": "Full sample ↔ link mapping table for one link — the debug/inspect view.\n\nLoads the distinct values of ``link.source_column`` from the source DC,\nresolves each one through the link's actual resolver (with the same\neffective mappings the ``/resolve`` endpoint would use, fetched live from\nMultiQC reports when the link doesn't freeze its own), and reports per\nvalue whether and how it matched. Also lists the target-side sample names\nno source value reaches, so mismatches are visible from both directions.",
+        "operationId": "link_mapping_preview_depictio_api_v1_links__project_id___link_id__mapping_preview_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Project ID",
+              "title": "Project Id"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "link_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Link ID to inspect",
+              "title": "Link Id"
+            },
+            "description": "Link ID to inspect"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 500,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LinkMappingPreviewResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/links/{project_id}/multiqc/{dc_id}/sample-mappings": {
       "get": {
         "tags": [
@@ -5085,65 +5156,6 @@
         }
       }
     },
-    "/depictio/api/v1/dashboards/toggle_public_status/{dashboard_id}": {
-      "post": {
-        "tags": [
-          "Dashboards"
-        ],
-        "summary": "Make Dashboard Public",
-        "description": "Toggle dashboard visibility. Dashboard visibility now inherits from project visibility.\nOnly project owners can change project (and thus dashboard) visibility.",
-        "operationId": "make_dashboard_public_depictio_api_v1_dashboards_toggle_public_status__dashboard_id__post",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "dashboard_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "objectid",
-              "title": "Dashboard Id"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "additionalProperties": true,
-                "title": "Params"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/depictio/api/v1/dashboards/edit/{dashboard_id}": {
       "post": {
         "tags": [
@@ -5697,7 +5709,7 @@
           "Dashboards"
         ],
         "summary": "Render Figure Endpoint",
-        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when the render is\nactually heavy — code mode, or a source frame at/above\n`offload_size_threshold_bytes` — or unconditionally if\n`offload_rendering` is forced on (see `should_offload_render`). Cheap\ninteractive figures build inline to skip the broker round-trip. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\", \"full_load\": bool}\n\n``full_load`` (default False) bypasses the point-plot row cap so the client\ncan explicitly render every point on demand (slow on large datasets).\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}",
+        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when the render is\nactually heavy — code mode, or a source frame at/above\n`offload_size_threshold_bytes` — or unconditionally if\n`offload_rendering` is forced on (see `should_offload_render`). Cheap\ninteractive figures build inline to skip the broker round-trip. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\", \"full_load\": bool,\n     \"groups\": [{name, column_name, values, color}], \"color_by_group\": bool,\n     \"color_by_column\": {\"column_name\": str, \"color_map\": {value: \"#rrggbb\"}},\n     \"grouping_display\": \"color\" | \"facet\",\n     \"include_other\": bool}\n\n``full_load`` (default False) bypasses the point-plot row cap so the client\ncan explicitly render every point on demand (slow on large datasets).\n\n``groups`` + ``color_by_group`` (optional) ask for the figure to be colored\nby the caller's selection groups (issue #89); ``color_by_column`` asks for\nthe dashboard-global color-by-a-real-column override instead (groups win\nwhen both are present). All sanitized here at the trust boundary, applied\nin ``build_figure_preview``.\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}",
         "operationId": "render_figure_endpoint_depictio_api_v1_dashboards_render_figure__dashboard_id___component_id__post",
         "security": [
           {
@@ -6779,6 +6791,65 @@
                   "additionalProperties": true,
                   "title": "Response Validate Json Import Depictio Api V1 Dashboards Json Validate Post"
                 }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/funnel_values/{dashboard_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Funnel Values Endpoint",
+        "description": "Compute funnel-filtering data for the React viewer (issue #939).\n\nFor each requested interactive component, answers: given every OTHER\nactive filter (the component's own selection excluded — a value you\nalready picked must never grey itself out), which of this component's\nvalues still lead to a non-empty result set? Cross-DC filters are\ntranslated through the project's DC links exactly like figure/table\nrenders do (``_resolve_link_filters_cached``), so the funnel works across\nlinked data collections.\n\nRequest body:\n    {\n        \"filters\": [...],                # current filter list (viewer shape)\n        \"target_indexes\": [\"...\", ...],  # interactive components to compute\n        \"include_stages\": bool           # also compute the funnel overview\n    }\n\nResponse:\n    {\n        \"targets\": {\"<index>\": {\"status\": \"ok\"|\"unrestricted\"|\"unsupported\"|\"error\",\n                                 \"column\": str, \"dc_id\": str,\n                                 \"values\": [...], \"truncated\": bool}},\n        \"stages\": [...] | None,          # cumulative per-DC row counts\n        \"initial_rows_by_dc\": {...} | None,\n        \"dc_labels\": {\"<dc_id>\": str},\n        \"filter_count\": int\n    }",
+        "operationId": "funnel_values_endpoint_depictio_api_v1_dashboards_funnel_values__dashboard_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -11071,7 +11142,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -11181,6 +11252,11 @@
             "type": "array",
             "title": "Grid Sections",
             "default": []
+          },
+          "funnel_filtering": {
+            "type": "boolean",
+            "title": "Funnel Filtering",
+            "default": true
           },
           "buttons_data": {
             "additionalProperties": true,
@@ -11359,7 +11435,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -11422,7 +11498,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -11610,7 +11686,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -12904,6 +12980,135 @@
         "title": "LinkCreateRequest",
         "description": "Request to create a new DC link.\n\nExample:\n    LinkCreateRequest(\n        source_dc_id=\"metadata_dc_id\",\n        source_column=\"sample_id\",\n        target_dc_id=\"multiqc_dc_id\",\n        target_type=\"multiqc\",\n        link_config=LinkConfig(resolver=\"sample_mapping\"),\n        description=\"Link metadata to MultiQC\"\n    )"
       },
+      "LinkMappingPreviewResponse": {
+        "properties": {
+          "link_id": {
+            "type": "string",
+            "title": "Link Id"
+          },
+          "resolver": {
+            "type": "string",
+            "title": "Resolver"
+          },
+          "source_dc_id": {
+            "type": "string",
+            "title": "Source Dc Id"
+          },
+          "source_column": {
+            "type": "string",
+            "title": "Source Column"
+          },
+          "target_dc_id": {
+            "type": "string",
+            "title": "Target Dc Id"
+          },
+          "target_type": {
+            "type": "string",
+            "title": "Target Type"
+          },
+          "case_sensitive": {
+            "type": "boolean",
+            "title": "Case Sensitive"
+          },
+          "mappings_source": {
+            "type": "string",
+            "enum": [
+              "link_config",
+              "multiqc_live",
+              "none"
+            ],
+            "title": "Mappings Source",
+            "description": "Where the effective mappings came from: frozen on the link, fetched live from MultiQC reports, or absent"
+          },
+          "source_values_total": {
+            "type": "integer",
+            "title": "Source Values Total",
+            "description": "Distinct source values in the DC"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated",
+            "description": "True when rows were capped by the request limit",
+            "default": false
+          },
+          "matched_count": {
+            "type": "integer",
+            "title": "Matched Count",
+            "default": 0
+          },
+          "unmapped_count": {
+            "type": "integer",
+            "title": "Unmapped Count",
+            "default": 0
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/LinkMappingPreviewRow"
+            },
+            "type": "array",
+            "title": "Rows"
+          },
+          "orphan_targets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Orphan Targets",
+            "description": "Target-side sample names not reached by any listed source value"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "link_id",
+          "resolver",
+          "source_dc_id",
+          "source_column",
+          "target_dc_id",
+          "target_type",
+          "case_sensitive",
+          "mappings_source",
+          "source_values_total"
+        ],
+        "title": "LinkMappingPreviewResponse",
+        "description": "Full sample ↔ link mapping table for one DC link.\n\nBacks the debug/inspection view: every distinct source value with its\nresolution outcome, plus the target-side names no source value reaches\n(orphans) so mismatches are visible from both directions."
+      },
+      "LinkMappingPreviewRow": {
+        "properties": {
+          "source_value": {
+            "type": "string",
+            "title": "Source Value",
+            "description": "Distinct value from the source DC's link column"
+          },
+          "matched": {
+            "type": "boolean",
+            "title": "Matched",
+            "description": "Whether the value resolved through the link"
+          },
+          "via": {
+            "type": "string",
+            "title": "Via",
+            "description": "How it matched: exact | variant | base | source-suffix | passthrough, or the resolver name for non-sample_mapping resolvers"
+          },
+          "resolved": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Resolved",
+            "description": "Target identifiers this value resolves to"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source_value",
+          "matched",
+          "via"
+        ],
+        "title": "LinkMappingPreviewRow",
+        "description": "One source value's resolution outcome, for the mapping-inspection UI."
+      },
       "LinkResolutionRequest": {
         "properties": {
           "source_dc_id": {
@@ -13284,7 +13489,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -13492,7 +13697,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -14043,7 +14248,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -14149,7 +14354,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -14382,7 +14587,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a8eb24ab31e520c4bb8f165"
+            "default": "6a8f5b9cb7d795f0260160ed"
           }
         },
         "type": "object",
@@ -14500,7 +14705,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -14619,7 +14824,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -14701,7 +14906,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -14787,7 +14992,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -14960,7 +15165,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -15135,7 +15340,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -15205,7 +15410,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
@@ -15303,7 +15508,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a8eb24ab31e520c4bb8f164"
+            "default": "6a8f5b9cb7d795f0260160ec"
           },
           "description": {
             "anyOf": [
