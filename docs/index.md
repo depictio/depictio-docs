@@ -179,7 +179,7 @@ hide:
         <div class="demo-badge-integrated">
           <span class="live-indicator"></span>
           <div class="demo-badge-content">
-            <strong>Live demo: a real nf-core/ampliseq run - Try it!</strong>
+            <strong>Live interactive demo - Try it!</strong>
             <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener" class="demo-direct-link">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
@@ -375,151 +375,67 @@ hide:
     From the command line that reads your pipeline output to the instance an admin runs in production.
   </p>
 
-  <div class="feature-group ingest">
-    <div class="feature-group-label">Ingest</div>
-    <div class="feature-tiles">
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/></svg></span>
-        <div>
-          <h4>Client-side ingestion</h4>
-          <p>The CLI scans your output tree locally and pushes only the results, so the data never leaves your control by accident.</p>
-        </div>
+  <div class="feature-scroll">
+    <div class="feature-stage">
+      <div class="feature-stage-frame">
+        <img class="feature-shot is-active only-light" data-step="0" src="images/landing/ingest_light.webp" alt="The ingestion report, listing what the CLI found and the parameters the run used" loading="lazy">
+        <img class="feature-shot is-active only-dark" data-step="0" src="images/landing/ingest_dark.webp" alt="" loading="lazy">
+        <img class="feature-shot only-light" data-step="1" src="images/landing/build_light.webp" alt="A dashboard being laid out on the grid" loading="lazy">
+        <img class="feature-shot only-dark" data-step="1" src="images/landing/build_dark.webp" alt="" loading="lazy">
+        <img class="feature-shot" data-step="2" src="images/landing/catalog_light.webp" alt="The catalog browser, offering components matched to the data" loading="lazy">
+        <img class="feature-shot only-light" data-step="3" src="images/guides/advanced-visualizations/complex_heatmap_light.webp" alt="A hierarchical heatmap with clustered rows and columns" loading="lazy">
+        <img class="feature-shot only-dark" data-step="3" src="images/guides/advanced-visualizations/complex_heatmap_dark.webp" alt="" loading="lazy">
+        <img class="feature-shot only-light" data-step="4" src="images/landing/live_light.webp" alt="A dashboard refreshing itself as new results land" loading="lazy">
+        <img class="feature-shot only-dark" data-step="4" src="images/landing/live_dark.webp" alt="" loading="lazy">
+        <img class="feature-shot only-light" data-step="5" src="images/guides/branding/branding-admin-panel_light.webp" alt="The branding panel in the admin settings" loading="lazy">
+        <img class="feature-shot only-dark" data-step="5" src="images/guides/branding/branding-admin-panel_dark.webp" alt="" loading="lazy">
       </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V5H19V19M17,17H7V15H17V17M17,13H7V11H17V13M17,9H7V7H17V9Z"/></svg></span>
-        <div>
-          <h4>Pipeline templates</h4>
-          <p>Point <code>--template</code> at an nf-core run and get a dashboard shaped by what that run actually produced.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,3L2,12H5V20H19V12H22L12,3M12,8.75A2.25,2.25 0 0,1 14.25,11A2.25,2.25 0 0,1 12,13.25A2.25,2.25 0 0,1 9.75,11A2.25,2.25 0 0,1 12,8.75Z"/></svg></span>
-        <div>
-          <h4>MultiQC built in</h4>
-          <p>QC reports are parsed at ingest and become dashboard components, not an attachment sitting next to one.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"/></svg></span>
-        <div>
-          <h4>Ingestion report</h4>
-          <p>What was found, what was missing, and the parameters and tool versions the run used.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,3C7.58,3 4,4.79 4,7C4,9.21 7.58,11 12,11C16.42,11 20,9.21 20,7C20,4.79 16.42,3 12,3M4,9V12C4,14.21 7.58,16 12,16C16.42,16 20,14.21 20,12V9C20,11.21 16.42,13 12,13C7.58,13 4,11.21 4,9M4,14V17C4,19.21 7.58,21 12,21C16.42,21 20,19.21 20,17V14C20,16.21 16.42,18 12,18C7.58,18 4,16.21 4,14Z"/></svg></span>
-        <div>
-          <h4>Any tabular format</h4>
-          <p>Parquet, CSV, TSV and JSON, read with Polars and stored as versioned Delta Lake tables.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0,1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z"/></svg></span>
-        <div>
-          <h4>Runs aggregated</h4>
-          <p>Files scattered across many workflow runs are combined into one collection you can filter as a whole.</p>
-        </div>
-      </div>
+    </div>
+
+    <div class="feature-steps">
+      <article class="feature-step is-active" data-step="0">
+        <span class="feature-step-kicker">Ingest</span>
+        <h3>Read where your data lives</h3>
+        <p>The CLI scans the run on your own machine and pushes only the results. The ingestion report says what it found, what was missing, and the parameters the pipeline ran with.</p>
+      </article>
+
+      <article class="feature-step" data-step="1">
+        <span class="feature-step-kicker">Build</span>
+        <h3>Drag, drop, resize</h3>
+        <p>Lay a dashboard out visually: figures, tables, metric cards, filters and MultiQC reports, arranged on a grid, no code required.</p>
+      </article>
+
+      <article class="feature-step" data-step="2">
+        <span class="feature-step-kicker">Catalog</span>
+        <h3>Or skip the building</h3>
+        <p>Depictio recognises the tool behind each output and offers the visualizations that tool is known to support, pre-configured and previewed on your own data.</p>
+      </article>
+
+      <article class="feature-step" data-step="3">
+        <span class="feature-step-kicker">Visualize</span>
+        <h3>Plots built for omics</h3>
+        <p>Volcano, Manhattan, UpSet, hierarchical heatmaps, phylogeny, ordination and a dozen more, alongside the usual scatter and bar charts.</p>
+      </article>
+
+      <article class="feature-step" data-step="4">
+        <span class="feature-step-kicker">Live</span>
+        <h3>Watch a run as it lands</h3>
+        <p>Turn on live mode and the dashboard refreshes itself while the pipeline is still going, with the events that changed it listed as they arrive.</p>
+      </article>
+
+      <article class="feature-step" data-step="5">
+        <span class="feature-step-kicker">Operate</span>
+        <h3>Run it like your own</h3>
+        <p>Projects and permissions, YAML export for version control, scheduled backups with a retention policy, and branding down to the figure palette.</p>
+      </article>
     </div>
   </div>
 
-  <div class="feature-group visualize">
-    <div class="feature-group-label">Visualize</div>
-    <div class="feature-tiles">
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,3V9H21V3M13,21H21V11H13M3,21H11V15H3M3,13H11V3H3V13Z"/></svg></span>
-        <div>
-          <h4>Drag-and-drop dashboards</h4>
-          <p>Build the layout visually, resize and rearrange cards, no code required.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm12 12.5L12 18H7.94l-2.02-3.5L7.94 11H12zm.08-8L12.06 10H8L6 6.5L8 3h4.06zm7.17 4L19.23 14h-4.04l-2.02-3.5L15.19 7h4.04z"/></svg></span>
-        <div>
-          <h4>Omics-grade plots</h4>
-          <p>Volcano, Manhattan, UpSet, hierarchical heatmaps, phylogeny and more, next to the usual scatter and bar charts.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"/></svg></span>
-        <div>
-          <h4>Ready-made components</h4>
-          <p>Pick a visualization the <a href="catalog/">Tools Catalog</a> already matched to your data instead of building one.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,2H21V2H21V4H20.92L14,10.92V22.91L10,18.91V10.91L3.09,4H3V2Z"/></svg></span>
-        <div>
-          <h4>Cross-component filtering</h4>
-          <p>One filter reaches every linked component, across data collections, not just within one table.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6Z"/></svg></span>
-        <div>
-          <h4>Code Mode</h4>
-          <p>Drop into Python and Plotly when the builder stops short, with the preprocessing you need above the figure.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,18.17L8.83,15L7.42,16.41L12,21L16.59,16.41L15.17,15M12,5.83L15.17,9L16.58,7.59L12,3L7.41,7.59L8.83,9L12,5.83Z"/></svg></span>
-        <div>
-          <h4>Live dashboards</h4>
-          <p>An optional WebSocket refresh, so a dashboard updates while the pipeline is still running.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="feature-group operate">
-    <div class="feature-group-label">Operate</div>
-    <div class="feature-tiles">
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg></span>
-        <div>
-          <h4>Projects and permissions</h4>
-          <p>Group dashboards into projects, share them with a team, and control who can see or edit what.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/></svg></span>
-        <div>
-          <h4>YAML sync</h4>
-          <p>Export and import dashboards as readable YAML, so a layout can live in version control like the rest of the pipeline.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,3C7.58,3 4,4.79 4,7V17C4,19.21 7.58,21 12,21C16.42,21 20,19.21 20,17V7C20,4.79 16.42,3 12,3M12,5C15.87,5 18,6.5 18,7C18,7.5 15.87,9 12,9C8.13,9 6,7.5 6,7C6,6.5 8.13,5 12,5M18,17C18,17.5 15.87,19 12,19C8.13,19 6,17.5 6,17V14.77C7.61,15.55 9.72,16 12,16C14.28,16 16.39,15.55 18,14.77V17M18,12.45C16.7,13.4 14.42,14 12,14C9.58,14 7.3,13.4 6,12.45V9.64C7.47,10.47 9.61,11 12,11C14.39,11 16.53,10.47 18,9.64V12.45Z"/></svg></span>
-        <div>
-          <h4>S3 and Delta Lake</h4>
-          <p>Object storage with ACID transactions and versioned tables, on MinIO or the cloud bucket you already have.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"/></svg></span>
-        <div>
-          <h4>Backup and restore</h4>
-          <p>Snapshot the database from <code>/admin</code>, on a schedule, with a retention policy and a gated restore.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A1.5,1.5 0 0,0 13.5,19.5C13.5,19.11 13.35,18.76 13.11,18.5C12.88,18.23 12.73,17.88 12.73,17.5A1.5,1.5 0 0,1 14.23,16H16A5,5 0 0,0 21,11C21,6.58 16.97,3 12,3Z"/></svg></span>
-        <div>
-          <h4>Make it yours</h4>
-          <p>Logo, name, colours, typography and figure palette, set per instance or per dashboard.</p>
-        </div>
-      </div>
-      <div class="feature-tile">
-        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z"/></svg></span>
-        <div>
-          <h4>Authentication to fit</h4>
-          <p>Google OAuth, magic links, a registration gate, or a shared access code in front of public mode.</p>
-        </div>
-      </div>
-      </div>
-      </div>
-    </div>
-  </div>
+  <p class="key-features-more">
+    Also: Parquet, CSV, TSV and JSON read with Polars, S3 and Delta Lake storage, cross-component
+    filtering across data collections, Code Mode for custom Plotly, Google OAuth and magic-link
+    sign-in, Kubernetes and Docker Compose.
+  </p>
 </section>
 
 <section class="getting-started-section">
@@ -1897,124 +1813,155 @@ hide:
     max-width: 62ch;
   }
 
-  .feature-group {
-    margin-top: 2.25rem;
-  }
-
-  .feature-group.ingest {
-    --group-color: #9966CC;
-  }
-
-  .feature-group.visualize {
-    --group-color: #6495ED;
-  }
-
-  .feature-group.operate {
-    --group-color: #45B8AC;
-  }
-
-  .feature-group-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.9rem;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--group-color);
-  }
-
-  .feature-group-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: currentColor;
-    opacity: 0.3;
-  }
-
-  .feature-tiles {
+  .feature-scroll {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 0.85rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
   }
 
-  .feature-tile {
+  .feature-stage {
+    position: sticky;
+    top: 3.6rem;
+    z-index: 1;
+  }
+
+  .feature-stage-frame {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 18px 40px -12px rgba(0, 0, 0, 0.22);
+  }
+
+  [data-md-color-scheme="slate"] .feature-stage-frame {
+    background: #0f1114;
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 18px 40px -12px rgba(0, 0, 0, 0.6);
+  }
+
+  .feature-shot {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    opacity: 0;
+    transform: scale(0.985);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+    pointer-events: none;
+  }
+
+  .feature-shot.is-active {
+    opacity: 1;
+    transform: none;
+  }
+
+  .feature-shot.only-dark {
+    display: none;
+  }
+
+  [data-md-color-scheme="slate"] .feature-shot.only-dark {
+    display: block;
+  }
+
+  [data-md-color-scheme="slate"] .feature-shot.only-light {
+    display: none;
+  }
+
+  .feature-steps {
     display: flex;
-    align-items: flex-start;
-    gap: 0.8rem;
-    padding: 0.95rem 1.05rem;
-    background: var(--md-default-bg-color);
-    border: 1px solid var(--md-default-fg-color--lightest);
-    border-left: 3px solid var(--group-color);
-    border-radius: 10px;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    flex-direction: column;
   }
 
-  .feature-tile:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.09);
+  .feature-step {
+    padding: 1.75rem 0;
+    border-top: 1px solid var(--md-default-fg-color--lightest);
+    opacity: 0.4;
+    transition: opacity 0.35s ease;
   }
 
-  [data-md-color-scheme="slate"] .feature-tile {
-    background: rgba(255, 255, 255, 0.04);
+  .feature-step:first-child {
+    border-top: none;
   }
 
-  [data-md-color-scheme="slate"] .feature-tile:hover {
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  .feature-step.is-active {
+    opacity: 1;
   }
 
-  .feature-tile-icon {
-    width: 30px;
-    height: 30px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    background: var(--group-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
+  .feature-step-kicker {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--depictio-purple);
   }
 
-  .feature-tile-icon svg {
-    width: 17px;
-    height: 17px;
-    fill: currentColor;
-  }
-
-  .feature-tile h4 {
-    margin: 0 0 0.2rem 0;
-    font-size: 0.93rem;
+  .feature-step h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.35rem;
     font-weight: 600;
-    line-height: 1.3;
+    line-height: 1.25;
     color: var(--md-default-fg-color);
   }
 
-  .feature-tile p {
+  .feature-step p {
     margin: 0;
-    font-size: 0.82rem;
-    line-height: 1.5;
+    font-size: 0.95rem;
+    line-height: 1.6;
     color: var(--md-default-fg-color--light);
+    max-width: 46ch;
   }
 
-  .feature-tile code {
-    font-size: 0.78em;
-    padding: 0.1em 0.35em;
+  .key-features-more {
+    margin: 2rem 0 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--md-default-fg-color--lightest);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--md-default-fg-color--light);
+    max-width: 78ch;
   }
 
-  .feature-tile a {
-    color: var(--group-color);
-    text-decoration: none;
-    font-weight: 600;
+  @media (min-width: 1000px) {
+    .feature-scroll {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    .feature-steps {
+      order: 1;
+      padding: 6vh 0;
+    }
+
+    .feature-stage {
+      order: 2;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .feature-step {
+      min-height: 42vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem 0;
+    }
   }
 
-  .feature-tile a:hover {
-    text-decoration: underline;
-  }
+  @media (prefers-reduced-motion: reduce) {
+    .feature-step {
+      opacity: 1;
+    }
 
-  @media (max-width: 768px) {
-    .feature-tiles {
-      grid-template-columns: 1fr;
+    .feature-shot {
+      transition: none;
     }
   }
   /* Getting Started Section */
@@ -2420,4 +2367,43 @@ document.addEventListener('DOMContentLoaded', function() {
   // Check demo availability when page loads
   checkDemoAvailability();
 });
+
+// Key Features: light the step crossing the middle of the viewport and swap the screenshot
+function initFeatureScroll() {
+  const steps = Array.from(document.querySelectorAll('.feature-step'));
+  const shots = Array.from(document.querySelectorAll('.feature-shot'));
+  if (!steps.length || !shots.length) return;
+
+  let current = -1;
+
+  function activate(index) {
+    if (index === current) return;
+    current = index;
+    steps.forEach(function(step) {
+      step.classList.toggle('is-active', step.dataset.step === String(index));
+    });
+    shots.forEach(function(shot) {
+      shot.classList.toggle('is-active', shot.dataset.step === String(index));
+    });
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    steps.forEach(function(step) { step.classList.add('is-active'); });
+    return;
+  }
+
+  const observer = new IntersectionObserver(function(entries) {
+    const visible = entries.filter(function(e) { return e.isIntersecting; });
+    if (!visible.length) return;
+    visible.sort(function(a, b) {
+      return Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top);
+    });
+    activate(Number(visible[0].target.dataset.step));
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+  steps.forEach(function(step) { observer.observe(step); });
+  activate(0);
+}
+
+document.addEventListener('DOMContentLoaded', initFeatureScroll);
 </script>
