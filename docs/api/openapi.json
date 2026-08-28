@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.8.0",
-    "x-generated-at": "2026-08-27T18:26:51Z",
-    "x-depictio-version": "v1.8.0"
+    "version": "1.8.2",
+    "x-generated-at": "2026-08-28T08:40:34Z",
+    "x-depictio-version": "v1.8.2"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -4478,7 +4478,7 @@
           "Utils"
         ],
         "summary": "Upload Branding Logo",
-        "description": "Store an instance logo (light or dark variant) and point the override at it.",
+        "description": "Store an instance logo (light or dark variant) and point the override at it.\n\nThe bytes go to MongoDB, not to the container's filesystem: the theme\ndocument survives a rebuild and its logo has to survive with it.",
         "operationId": "upload_branding_logo_depictio_api_v1_utils_branding_logo__variant__post",
         "security": [
           {
@@ -4510,6 +4510,49 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Get Branding Logo",
+        "description": "Serve a stored instance logo.\n\nDeliberately unauthenticated: the login card renders the deployment's logo\nbefore anyone has signed in, and this is the same image `/static/branding`\nserved to everyone before the bytes moved into MongoDB.",
+        "operationId": "get_branding_logo_depictio_api_v1_utils_branding_logo__variant__get",
+        "parameters": [
+          {
+            "name": "variant",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "enum": [
+                "light",
+                "dark"
+              ],
+              "type": "string",
+              "title": "Variant"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -5561,7 +5604,7 @@
           "Dashboards"
         ],
         "summary": "Upload Dashboard Logo",
-        "description": "Store a dashboard logo image and stamp it on the document's brand theme.\n\nFile write and field update happen in one ownership-checked call so the\nstored URL can never point at a file that was rejected. Removal goes\nthrough `/appearance` (`logo_mode: \"inherit\"` or `\"none\"`); the file on\ndisk is simply overwritten by the next upload for this dashboard.\n\nValidation is the shared one from `services/branding.py` — same PNG/JPEG/\nWebP + magic-byte + 2MB rules as the instance logo, deliberately not a\nsecond copy that can drift.",
+        "description": "Store a dashboard logo image and stamp it on the document's brand theme.\n\nAsset write and field update happen in one ownership-checked call so the\nstored URL can never point at an image that was rejected. Removal goes\nthrough `/appearance` (`logo_mode: \"inherit\"` or `\"none\"`); the stored\nbytes are simply overwritten by the next upload for this dashboard.\n\nValidation is the shared one from `services/branding.py` — same PNG/JPEG/\nWebP + magic-byte + 2MB rules as the instance logo, deliberately not a\nsecond copy that can drift.",
         "operationId": "upload_dashboard_logo_depictio_api_v1_dashboards_upload_logo__dashboard_id__post",
         "security": [
           {
@@ -5590,6 +5633,48 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/logo/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Get Dashboard Logo",
+        "description": "Serve a dashboard's stored logo.\n\nUnauthenticated, matching what `/static/dashboard_logos` served before the\nbytes moved into MongoDB: the image is one an editor deliberately put on a\ndashboard, and gating it would break the public/demo viewer.",
+        "operationId": "get_dashboard_logo_depictio_api_v1_dashboards_logo__dashboard_id__get",
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -9636,8 +9721,26 @@
           "Authentication"
         ],
         "summary": "Create Temporary User Public",
-        "description": "Create a temporary user for the React /auth SPA in public mode.\n\nPublic-facing variant of ``/create_temporary_user`` (no API key). Disabled\noutside public mode and rate-limited per IP. Expiry is taken from settings\nso the SPA doesn't need to (and shouldn't be able to) override it.",
+        "description": "Create a temporary user for the React /auth SPA in public mode.\n\nPublic-facing variant of ``/create_temporary_user`` (no API key). Disabled\noutside public mode and rate-limited per IP. Expiry is taken from settings\nso the SPA doesn't need to (and shouldn't be able to) override it.\n\nWhen ``DEPICTIO_AUTH_PUBLIC_ACCESS_CODE`` is set, the request must carry it\nas ``access_code``. That is what separates a link-shareable deployment from\na world-open one: without it, public mode hands a session to anyone who\nloads the page. The check is server-side because the SPA hiding a form\nwould stop nobody from calling this endpoint directly.",
         "operationId": "create_temporary_user_public_depictio_api_v1_auth_public_create_temporary_user_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -9647,6 +9750,16 @@
                   "additionalProperties": true,
                   "type": "object",
                   "title": "Response Create Temporary User Public Depictio Api V1 Auth Public Create Temporary User Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -11841,7 +11954,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -12144,7 +12257,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -12207,7 +12320,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -12395,7 +12508,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -14198,7 +14311,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -14406,7 +14519,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -14957,7 +15070,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -15063,7 +15176,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -15296,7 +15409,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a90816662fc93c51b2fdfb8"
+            "default": "6a91497c60c8c2a300c0e776"
           }
         },
         "type": "object",
@@ -15414,7 +15527,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -15533,7 +15646,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -15615,7 +15728,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -15701,7 +15814,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -15874,7 +15987,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -16049,7 +16162,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -16119,7 +16232,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
@@ -16217,7 +16330,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a90816662fc93c51b2fdfb7"
+            "default": "6a91497c60c8c2a300c0e775"
           },
           "description": {
             "anyOf": [
