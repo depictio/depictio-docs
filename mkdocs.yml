@@ -278,6 +278,7 @@ nav:
       - Overview: developer/README.md
       - Contributing: developer/contributing.md
       - Contributing a Tool: developer/contributing-a-tool.md
+      - Tool Studio: developer/tool-studio.md
       - Contributing Templates: developer/contributing-templates.md
   - Roadmap: roadmap/README.md
   - Changelog: changelog/README.md

@@ -168,6 +168,7 @@ hide:
   </div>
 </section>
 
+
 <!-- Live Demo Section -->
 
 <section class="live-demo-section">
@@ -178,8 +179,8 @@ hide:
         <div class="demo-badge-integrated">
           <span class="live-indicator"></span>
           <div class="demo-badge-content">
-            <strong>Live interactive demo - Try it!</strong>
-            <a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener" class="demo-direct-link">
+            <strong>Live demo: a real nf-core/ampliseq run - Try it!</strong>
+            <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener" class="demo-direct-link">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
               </svg>
@@ -193,7 +194,7 @@ hide:
         </div>
       </div>
       <div class="demo-note-content" id="demo-note-content">
-        <p>The demo is running an <strong>"unauthenticated mode"</strong> to allow anyone to try it out without needing an account. However, you can create a temporary account to create your own projects and upload datasets.</p>
+        <p>The dashboard below is the output of an <a href="pipeline-templates/nf-core/ampliseq/">nf-core/ampliseq</a> run, ingested with the CLI and built from a pipeline template. The demo runs in <strong>"unauthenticated mode"</strong> so anyone can try it without an account, and you can create a temporary account to add your own projects and datasets.</p>
         <p><strong>Note:</strong> Accounts and related data will be reset after 1 hour to keep the demo environment clean.</p>
 
         <div class="demo-alternatives">
@@ -242,38 +243,56 @@ hide:
         <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
       </svg>
     </button>
-    <iframe id="demo-iframe" src="https://demo.depictio.embl.org/dashboards" width="100%" height="1080" frameborder="0" allowfullscreen style="zoom: 0.56;">
-      <p>Your browser does not support iframes. <a href="https://demo.depictio.embl.org/dashboards">Click here to view the Depictio dashboard</a></p>
+    <iframe id="demo-iframe" src="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" width="100%" height="1080" frameborder="0" allowfullscreen style="zoom: 0.56;">
+      <p>Your browser does not support iframes. <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2">Click here to view the Depictio dashboard</a></p>
     </iframe>
   </div>
 </section>
 
 
-<!-- Technology Stack Section -->
-<section class="tech-section">
-  <div class="container text-center">
-    <h2>Powered by Modern Technologies</h2>
-    <div class="tech-badges">
-      <a href="https://react.dev/" target="_blank" rel="noopener" class="tech-badge react">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
-        <span>React</span>
+<!-- Tools Catalog Section -->
+<section class="catalog-landing-section">
+  <div class="catalog-landing-content">
+    <h2 class="catalog-landing-title">Tools Catalog</h2>
+    <p class="catalog-landing-description">
+      Depictio recognises the bioinformatics tools behind your data and offers the
+      visualizations those tools are known to support, ready to drop on a dashboard.
+    </p>
+    <div class="catalog-landing-grid">
+
+      <a href="catalog/" class="catalog-landing-card">
+        <div class="catalog-landing-icon" style="background: var(--depictio-purple);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"/>
+          </svg>
+        </div>
+        <h4>Browse the catalog</h4>
+        <p>Every recognised tool, every output, and what each one renders as. Previewed on real fixture data.</p>
+        <span class="catalog-landing-link">Open the catalog &rarr;</span>
       </a>
-      <a href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener" class="tech-badge fastapi">
-        <img src="https://fastapi.tiangolo.com/img/icon-white.svg" alt="FastAPI">
-        <span>FastAPI</span>
+
+      <a href="usage/guides/catalog-picker/" class="catalog-landing-card">
+        <div class="catalog-landing-icon" style="background: var(--depictio-teal);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.13 22.19L11.5 18.36C13.07 17.78 14.54 17 15.9 16.09L13.13 22.19M5.64 12.5L1.81 10.87L7.91 8.1C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39C21.61 2.39 16.66 .269 11 5.93C8.81 8.12 7.5 10.53 6.65 12.64C6.37 13.39 6.56 14.21 7.11 14.77L9.24 16.89C9.79 17.44 10.61 17.63 11.36 17.35C13.5 16.53 15.88 15.19 18.07 13C23.73 7.34 21.61 2.39 21.61 2.39M14.54 9.46C13.76 8.68 13.76 7.41 14.54 6.63S16.59 5.85 17.37 6.63C18.14 7.41 18.15 8.68 17.37 9.46C16.59 10.24 15.32 10.24 14.54 9.46M8.88 16.53L7.47 15.12L8.88 16.53M6.24 22L9.88 18.36C9.54 18.27 9.21 18.12 8.91 17.91L4.83 22H6.24M2 22H3.41L8.18 17.24L6.76 15.83L2 20.59V22M2 19.17L6.09 15.09C5.88 14.79 5.73 14.47 5.64 14.12L2 17.76V19.17Z"/>
+          </svg>
+        </div>
+        <h4>Pick, don't build</h4>
+        <p>Adding a component starts with a choice: build it yourself, or pick a pre-configured one the catalog matched to your data.</p>
+        <span class="catalog-landing-link">See the picker &rarr;</span>
       </a>
-      <a href="https://www.mongodb.com/" target="_blank" rel="noopener" class="tech-badge mongodb">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
-        <span>MongoDB</span>
+
+      <a href="developer/tool-studio/" class="catalog-landing-card">
+        <div class="catalog-landing-icon" style="background: var(--depictio-pink);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.71,20.29L20.29,21.71A1,1 0 0,1 18.88,21.71L7,9.85A3.81,3.81 0 0,1 6,10A4,4 0 0,1 2,6C2,5.6 2.07,5.21 2.21,4.84L4.93,7.56L5.5,7C5.75,6.75 6.16,6.75 6.41,7L7,7.56L9.71,4.84C9.35,4.7 8.96,4.63 8.56,4.63A4,4 0 0,1 12.56,0.63C12.96,0.63 13.35,0.7 13.72,0.84L11,3.56L13.72,6.28L16.44,3.56C16.58,3.93 16.65,4.32 16.65,4.72A4,4 0 0,1 12.65,8.72L21.71,18.88A1,1 0 0,1 21.71,20.29M2.29,18.88L11.06,10.11L12.88,11.93L4.12,20.71A1,1 0 0,1 2.71,20.71L2.29,20.29A1,1 0 0,1 2.29,18.88Z"/>
+          </svg>
+        </div>
+        <h4>Contribute a tool</h4>
+        <p>Tool Studio authors an entry in the browser: drop an output file, bind its columns, and it opens the pull request for you.</p>
+        <span class="catalog-landing-link">Open Tool Studio &rarr;</span>
       </a>
-      <a href="https://min.io/" target="_blank" rel="noopener" class="tech-badge minio">
-        <img src="https://cdn.prod.website-files.com/681c8426519d8db8f867c1e8/682dcb06620717ccd769b572_MINIO_Bird.png" alt="MinIO">
-        <span>MinIO</span>
-      </a>
-      <a href="https://pola.rs/" target="_blank" rel="noopener" class="tech-badge polars">
-        <img src="https://raw.githubusercontent.com/pola-rs/polars-static/master/logos/polars-logo-dark.svg" alt="Polars">
-        <span>Polars</span>
-      </a>
+
     </div>
   </div>
 </section>
@@ -352,51 +371,153 @@ hide:
 
 <section class="key-features-section">
   <h2>Key Features</h2>
-  <div class="features-container">
-    <div class="feature-box data-ingestion">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-        </svg>
-      </div>
-      <h3>Data Ingestion</h3>
-      <ul>
-        <li><strong>Client-side processing:</strong> Depictio-CLI scans and processes data locally, pushing results to S3</li>
-        <li><strong>Multiple formats:</strong> Support for Parquet, CSV, JSON, TSV using Polars and Delta Lake</li>
-        <li><strong>Automatic aggregation:</strong> Combine files across workflow runs into unified datasets</li>
-        <li><strong>MultiQC integration:</strong> Seamless QC report visualization with dedicated components</li>
-      </ul>
-    </div>
+  <p class="key-features-intro">
+    From the command line that reads your pipeline output to the instance an admin runs in production.
+  </p>
 
-    <div class="feature-box frontend">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M13,3V9H21V3M13,21H21V11H13M3,21H11V15H3M3,13H11V3H3V13Z"/>
-        </svg>
+  <div class="feature-group ingest">
+    <div class="feature-group-label">Ingest</div>
+    <div class="feature-tiles">
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/></svg></span>
+        <div>
+          <h4>Client-side ingestion</h4>
+          <p>The CLI scans your output tree locally and pushes only the results, so the data never leaves your control by accident.</p>
+        </div>
       </div>
-      <h3>Frontend & Visualization</h3>
-      <ul>
-        <li><strong>Drag-and-drop dashboards:</strong> Build layouts visually without coding</li>
-        <li><strong>Cross-component filtering:</strong> Interactive filters affect all linked visualizations</li>
-        <li><strong>Code Mode:</strong> Write custom Python/Plotly code for advanced visualizations</li>
-        <li><strong>Project organization:</strong> Group dashboards by projects with user permissions</li>
-      </ul>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V5H19V19M17,17H7V15H17V17M17,13H7V11H17V13M17,9H7V7H17V9Z"/></svg></span>
+        <div>
+          <h4>Pipeline templates</h4>
+          <p>Point <code>--template</code> at an nf-core run and get a dashboard shaped by what that run actually produced.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,3L2,12H5V20H19V12H22L12,3M12,8.75A2.25,2.25 0 0,1 14.25,11A2.25,2.25 0 0,1 12,13.25A2.25,2.25 0 0,1 9.75,11A2.25,2.25 0 0,1 12,8.75Z"/></svg></span>
+        <div>
+          <h4>MultiQC built in</h4>
+          <p>QC reports are parsed at ingest and become dashboard components, not an attachment sitting next to one.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"/></svg></span>
+        <div>
+          <h4>Ingestion report</h4>
+          <p>What was found, what was missing, and the parameters and tool versions the run used.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,3C7.58,3 4,4.79 4,7C4,9.21 7.58,11 12,11C16.42,11 20,9.21 20,7C20,4.79 16.42,3 12,3M4,9V12C4,14.21 7.58,16 12,16C16.42,16 20,14.21 20,12V9C20,11.21 16.42,13 12,13C7.58,13 4,11.21 4,9M4,14V17C4,19.21 7.58,21 12,21C16.42,21 20,19.21 20,17V14C20,16.21 16.42,18 12,18C7.58,18 4,16.21 4,14Z"/></svg></span>
+        <div>
+          <h4>Any tabular format</h4>
+          <p>Parquet, CSV, TSV and JSON, read with Polars and stored as versioned Delta Lake tables.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0,1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z"/></svg></span>
+        <div>
+          <h4>Runs aggregated</h4>
+          <p>Files scattered across many workflow runs are combined into one collection you can filter as a whole.</p>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="feature-box system">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z"/>
-        </svg>
+  <div class="feature-group visualize">
+    <div class="feature-group-label">Visualize</div>
+    <div class="feature-tiles">
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,3V9H21V3M13,21H21V11H13M3,21H11V15H3M3,13H11V3H3V13Z"/></svg></span>
+        <div>
+          <h4>Drag-and-drop dashboards</h4>
+          <p>Build the layout visually, resize and rearrange cards, no code required.</p>
+        </div>
       </div>
-      <h3>System & Infrastructure</h3>
-      <ul>
-        <li><strong>Cloud-ready:</strong> Built for Kubernetes and Docker-Compose environments</li>
-        <li><strong>YAML Dashboard Sync:</strong> Import and export dashboards as human-readable YAML files for version control and Infrastructure-as-Code workflows</li>
-        <li><strong>S3/MinIO Storage:</strong> Scalable object storage for data files and images</li>
-        <li><strong>Delta Lake:</strong> ACID transactions and versioned data tables</li>
-        <li><strong>Open-source:</strong> Community-driven development with transparent deployment</li>
-      </ul>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm12 12.5L12 18H7.94l-2.02-3.5L7.94 11H12zm.08-8L12.06 10H8L6 6.5L8 3h4.06zm7.17 4L19.23 14h-4.04l-2.02-3.5L15.19 7h4.04z"/></svg></span>
+        <div>
+          <h4>Omics-grade plots</h4>
+          <p>Volcano, Manhattan, UpSet, hierarchical heatmaps, phylogeny and more, next to the usual scatter and bar charts.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"/></svg></span>
+        <div>
+          <h4>Ready-made components</h4>
+          <p>Pick a visualization the <a href="catalog/">Tools Catalog</a> already matched to your data instead of building one.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,2H21V2H21V4H20.92L14,10.92V22.91L10,18.91V10.91L3.09,4H3V2Z"/></svg></span>
+        <div>
+          <h4>Cross-component filtering</h4>
+          <p>One filter reaches every linked component, across data collections, not just within one table.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6Z"/></svg></span>
+        <div>
+          <h4>Code Mode</h4>
+          <p>Drop into Python and Plotly when the builder stops short, with the preprocessing you need above the figure.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,18.17L8.83,15L7.42,16.41L12,21L16.59,16.41L15.17,15M12,5.83L15.17,9L16.58,7.59L12,3L7.41,7.59L8.83,9L12,5.83Z"/></svg></span>
+        <div>
+          <h4>Live dashboards</h4>
+          <p>An optional WebSocket refresh, so a dashboard updates while the pipeline is still running.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-group operate">
+    <div class="feature-group-label">Operate</div>
+    <div class="feature-tiles">
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg></span>
+        <div>
+          <h4>Projects and permissions</h4>
+          <p>Group dashboards into projects, share them with a team, and control who can see or edit what.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/></svg></span>
+        <div>
+          <h4>YAML sync</h4>
+          <p>Export and import dashboards as readable YAML, so a layout can live in version control like the rest of the pipeline.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,3C7.58,3 4,4.79 4,7V17C4,19.21 7.58,21 12,21C16.42,21 20,19.21 20,17V7C20,4.79 16.42,3 12,3M12,5C15.87,5 18,6.5 18,7C18,7.5 15.87,9 12,9C8.13,9 6,7.5 6,7C6,6.5 8.13,5 12,5M18,17C18,17.5 15.87,19 12,19C8.13,19 6,17.5 6,17V14.77C7.61,15.55 9.72,16 12,16C14.28,16 16.39,15.55 18,14.77V17M18,12.45C16.7,13.4 14.42,14 12,14C9.58,14 7.3,13.4 6,12.45V9.64C7.47,10.47 9.61,11 12,11C14.39,11 16.53,10.47 18,9.64V12.45Z"/></svg></span>
+        <div>
+          <h4>S3 and Delta Lake</h4>
+          <p>Object storage with ACID transactions and versioned tables, on MinIO or the cloud bucket you already have.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"/></svg></span>
+        <div>
+          <h4>Backup and restore</h4>
+          <p>Snapshot the database from <code>/admin</code>, on a schedule, with a retention policy and a gated restore.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A1.5,1.5 0 0,0 13.5,19.5C13.5,19.11 13.35,18.76 13.11,18.5C12.88,18.23 12.73,17.88 12.73,17.5A1.5,1.5 0 0,1 14.23,16H16A5,5 0 0,0 21,11C21,6.58 16.97,3 12,3Z"/></svg></span>
+        <div>
+          <h4>Make it yours</h4>
+          <p>Logo, name, colours, typography and figure palette, set per instance or per dashboard.</p>
+        </div>
+      </div>
+      <div class="feature-tile">
+        <span class="feature-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z"/></svg></span>
+        <div>
+          <h4>Authentication to fit</h4>
+          <p>Google OAuth, magic links, a registration gate, or a shared access code in front of public mode.</p>
+        </div>
+      </div>
+      </div>
+      </div>
     </div>
   </div>
 </section>
@@ -498,6 +619,35 @@ hide:
       <h3>SciLifeLab Data Centre</h3>
       <p>SciLifeLab Data Centre provides data-driven life science research infrastructure and expertise to accelerate open science in Sweden and beyond.</p>
       <a href="https://www.scilifelab.se/data/" class="md-button" target="_blank">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- Technology Stack Section -->
+<section class="tech-section">
+  <div class="container text-center">
+    <h2>Powered by Modern Technologies</h2>
+    <div class="tech-badges">
+      <a href="https://react.dev/" target="_blank" rel="noopener" class="tech-badge react">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+        <span>React</span>
+      </a>
+      <a href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener" class="tech-badge fastapi">
+        <img src="https://fastapi.tiangolo.com/img/icon-white.svg" alt="FastAPI">
+        <span>FastAPI</span>
+      </a>
+      <a href="https://www.mongodb.com/" target="_blank" rel="noopener" class="tech-badge mongodb">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
+        <span>MongoDB</span>
+      </a>
+      <a href="https://min.io/" target="_blank" rel="noopener" class="tech-badge minio">
+        <img src="https://cdn.prod.website-files.com/681c8426519d8db8f867c1e8/682dcb06620717ccd769b572_MINIO_Bird.png" alt="MinIO">
+        <span>MinIO</span>
+      </a>
+      <a href="https://pola.rs/" target="_blank" rel="noopener" class="tech-badge polars">
+        <img src="https://raw.githubusercontent.com/pola-rs/polars-static/master/logos/polars-logo-dark.svg" alt="Polars">
+        <span>Polars</span>
+      </a>
     </div>
   </div>
 </section>
@@ -1234,6 +1384,101 @@ hide:
     text-align: center;
   }
 
+  /* Tools Catalog section */
+  .catalog-landing-section {
+    padding: 3rem 2rem;
+  }
+
+  .catalog-landing-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .catalog-landing-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--md-default-fg-color);
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+  }
+
+  .catalog-landing-description {
+    font-size: 1.2rem;
+    color: var(--md-default-fg-color--light);
+    max-width: 720px;
+    margin: 0 auto 2.5rem auto;
+    line-height: 1.6;
+  }
+
+  .catalog-landing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .catalog-landing-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 0.75rem;
+    padding: 1.75rem 1.5rem;
+    border-radius: 16px;
+    background: var(--md-default-bg-color);
+    border: 1px solid var(--md-default-fg-color--lightest);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    color: inherit;
+  }
+
+  .catalog-landing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.14);
+    color: inherit;
+  }
+
+  .catalog-landing-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+
+  .catalog-landing-icon svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .catalog-landing-card h4 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--md-default-fg-color);
+  }
+
+  .catalog-landing-card p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--md-default-fg-color--light);
+  }
+
+  .catalog-landing-link {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--depictio-purple);
+  }
+
+  [data-md-color-scheme="slate"] .catalog-landing-card {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  }
+
   .workflow-title {
     font-size: 2.5rem;
     font-weight: 800;
@@ -1644,129 +1889,134 @@ hide:
     margin: 3rem 0;
   }
 
-  .features-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+  .key-features-intro {
+    margin: 0.5rem 0 0 0;
+    color: var(--md-default-fg-color--light);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 62ch;
   }
 
-  .feature-box {
-    background: var(--md-default-bg-color);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--md-default-fg-color--lightest);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    position: relative;
-    overflow: hidden;
+  .feature-group {
+    margin-top: 2.25rem;
   }
 
-  [data-md-color-scheme="slate"] .feature-box {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  .feature-group.ingest {
+    --group-color: #9966CC;
   }
 
-  .feature-box:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  .feature-group.visualize {
+    --group-color: #6495ED;
   }
 
-  .feature-box::before {
+  .feature-group.operate {
+    --group-color: #45B8AC;
+  }
+
+  .feature-group-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--group-color);
+  }
+
+  .feature-group-label::after {
     content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--feature-color);
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.3;
   }
 
-  .feature-box.data-ingestion {
-    --feature-color: #9966CC;
+  .feature-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 0.85rem;
   }
 
-  .feature-box.frontend {
-    --feature-color: #6495ED;
+  .feature-tile {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.95rem 1.05rem;
+    background: var(--md-default-bg-color);
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-left: 3px solid var(--group-color);
+    border-radius: 10px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
   }
 
-  .feature-box.system {
-    --feature-color: #45B8AC;
+  .feature-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.09);
   }
 
-  .feature-icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 1rem;
-    background: var(--feature-color);
-    border-radius: 12px;
+  [data-md-color-scheme="slate"] .feature-tile {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  [data-md-color-scheme="slate"] .feature-tile:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  }
+
+  .feature-tile-icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: var(--group-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    flex-shrink: 0;
-    position: relative;
+    color: #ffffff;
   }
 
-  .feature-icon svg {
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .feature-tile-icon svg {
+    width: 17px;
+    height: 17px;
     fill: currentColor;
   }
 
-  .feature-box h3 {
-    margin: 0 0 1rem 0;
+  .feature-tile h4 {
+    margin: 0 0 0.2rem 0;
+    font-size: 0.93rem;
+    font-weight: 600;
+    line-height: 1.3;
     color: var(--md-default-fg-color);
-    font-size: 1.25rem;
+  }
+
+  .feature-tile p {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--md-default-fg-color--light);
+  }
+
+  .feature-tile code {
+    font-size: 0.78em;
+    padding: 0.1em 0.35em;
+  }
+
+  .feature-tile a {
+    color: var(--group-color);
+    text-decoration: none;
     font-weight: 600;
   }
 
-  .feature-box ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .feature-box li {
-    margin-bottom: 0.75rem;
-    color: var(--md-default-fg-color--light);
-    line-height: 1.5;
-    position: relative;
-    padding-left: 1.5rem;
-  }
-
-  .feature-box li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.6rem;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--feature-color);
-  }
-
-  .feature-box li:last-child {
-    margin-bottom: 0;
-  }
-
-  .feature-box strong {
-    color: var(--md-default-fg-color);
+  .feature-tile a:hover {
+    text-decoration: underline;
   }
 
   @media (max-width: 768px) {
-    .features-container {
+    .feature-tiles {
       grid-template-columns: 1fr;
     }
-
-    .feature-box {
-      padding: 1.5rem;
-    }
   }
-
   /* Getting Started Section */
   .getting-started-section {
     margin: 3rem 0;
@@ -2103,7 +2353,7 @@ function toggleFullscreen() {
 async function checkDemoAvailability() {
   const demoSection = document.querySelector('.live-demo-section');
   const iframe = document.getElementById('demo-iframe');
-  const demoUrl = 'https://demo.depictio.embl.org/dashboards';
+  const demoUrl = 'https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2';
 
   if (!demoSection || !iframe) return;
 
@@ -2140,7 +2390,7 @@ async function checkDemoAvailability() {
           </svg>
         </div>
         <h3>Live Demo Temporarily Unavailable</h3>
-        <p>The interactive demo is currently not accessible. Please try again later or <a href="https://demo.depictio.embl.org/dashboards" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
+        <p>The interactive demo is currently not accessible. Please try again later or <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
         <div class="demo-alternative-actions">
           <a href="https://codespaces.new/depictio/depictio" class="md-button" target="_blank" rel="noopener">Open in Codespaces</a>
           <a href="usage/get_started/" class="md-button">View Documentation</a>

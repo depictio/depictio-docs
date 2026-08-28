@@ -157,7 +157,7 @@ Once a project is created from a template, the UI shows a template badge on dash
 - `variables` — all resolved variable values
 - `applied_at` — timestamp
 - `config_snapshot` — frozen copy of the resolved config
-- `run_provenance` — the pipeline's own run parameters, see below <small>(v1.8.3+)</small>
+- `run_provenance`: the pipeline's own run parameters, see below <small>(v1.8.3+)</small>
 
 ---
 

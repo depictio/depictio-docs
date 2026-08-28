@@ -26,6 +26,9 @@ By contributing you agree to our [Code of Conduct](contributing.md#code-of-condu
 | Page | Description |
 |------|-------------|
 | [Contributing Guide](contributing.md) | How to set up development environment and contribute |
+| [Contributing a Tool](contributing-a-tool.md) | Teach Depictio to recognise a tool's output and render it |
+| [Tool Studio](tool-studio.md) | Author a catalog entry in the browser, no YAML |
+| [Contributing Templates](contributing-templates.md) | Ship a ready-made dashboard for a pipeline |
 | [Code of Conduct](contributing.md#code-of-conduct) | Community standards (Contributor Covenant v2.1) |
 
 ## Getting Started

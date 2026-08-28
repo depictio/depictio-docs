@@ -8,16 +8,9 @@ hide:
 
 # Changelog
 
-!!! success "React viewer is the sole frontend as of v1.0.0"
-    The Dash frontend was removed in **v0.13.12**. As of **v1.0.0** the React
-    viewer serves canonical URLs (`/dashboards`, `/dashboard/{id}`,
-    `/dashboard-edit/{id}`, `/projects`); the `*-beta` suffix paths redirect
-    to canonical. The 0.13.x patch series prepared the data-fetch and
-    bundled-seed paths for this cutover.
-
 ## **[v1.9.0](https://github.com/depictio/depictio/releases/tag/v1.9.0)** (August 28, 2026)
 
-!!! success "Minor: backups you can drive from the UI, and components you can pick"
+!!! success "Minor: backups you can drive from the UI, and a catalog you can pick from and contribute to"
 
 ### Docker Images
 
@@ -33,6 +26,7 @@ ghcr.io/depictio/depictio-worker:1.9.0
 * **Scheduled backups**, off by default, with an optional `HH:MM` UTC anchor: slots sit on a fixed grid from that time, so a run that fires late never pushes the next one back. Every API worker runs the loop and one claims each slot. See [Scheduled backups](../usage/administration/backup.md#scheduled-backups) ([#976](https://github.com/depictio/depictio/pull/976), [6a2a51d5](https://github.com/depictio/depictio/commit/6a2a51d5), [bd73cc76](https://github.com/depictio/depictio/commit/bd73cc76)).
 * **Retention in two modes**: a fixed age cutoff, or smart retention, a single 30 days / 4 weeks / 12 months policy that is a strict superset of the fixed default. See [Retention](../usage/administration/backup.md#retention) ([#976](https://github.com/depictio/depictio/pull/976), [8d8741cf](https://github.com/depictio/depictio/commit/8d8741cf), [7480058d](https://github.com/depictio/depictio/commit/7480058d)).
 * **Pick from catalog**: adding a component now starts with a choice, and the catalog side opens a full-screen browser of the visualizations Depictio recognises in the project's ingested data, previewed at the exact grid box the component will occupy. See [Picking a component from the catalog](../usage/guides/catalog-picker.md) ([#988](https://github.com/depictio/depictio/pull/988), [25e1f024](https://github.com/depictio/depictio/commit/25e1f024), [0ad04175](https://github.com/depictio/depictio/commit/0ad04175)).
+* **Tool Studio**, a fully client-side app for contributing a tool to the catalog: drop one output file, bind its columns in depictio's own component builder, and it forks the repo and opens the pull request for you. nf-core, Snakemake and Galaxy metadata import from a URL. See [Tool Studio](../developer/tool-studio.md) ([#902](https://github.com/depictio/depictio/pull/902), [23f4f285](https://github.com/depictio/depictio/commit/23f4f285), [93e4499d](https://github.com/depictio/depictio/commit/93e4499d)).
 * **A component remembers where it came from**: a copyable `use: <tool>/<render-id>` snippet, a `catalog_source` stamp that survives later edits and YAML import, and a rebuilt metadata inspector covering identity, resolved configuration, data source and catalog origin. See [Provenance](../usage/guides/catalog-picker.md#provenance) ([#988](https://github.com/depictio/depictio/pull/988), [51bc006e](https://github.com/depictio/depictio/commit/51bc006e)).
 
 ### **🚀 Improvements**

@@ -122,13 +122,14 @@ A small sample of that file, right beside its YAML, so `depictio catalog validat
 
 </div>
 
-The **Depictio Catalog Studio** is the companion app for contributing a new
-module.
+[**Tool Studio**](../developer/tool-studio.md) authors an entry in the browser: drop one
+output file, bind its columns, and it opens the pull request for you. The guide below is
+the hand-authored path, needed when the output has to be reshaped first.
 
 <div class="catalog-cta-wrap" markdown>
 [Use the catalog in a dashboard :material-arrow-right:](../usage/guides/catalog-picker.md){ .catalog-cta }
 [Read the contributing guide :material-arrow-right:](../developer/contributing-a-tool.md){ .catalog-cta }
-[Depictio Catalog Studio :material-arrow-right:](https://depictio.github.io/depictio-catalog-studio/){ .catalog-cta .catalog-cta--studio target="_blank" rel="noopener" }
+[Depictio Tool Studio :material-arrow-right:](../developer/tool-studio.md){ .catalog-cta .catalog-cta--studio }
 </div>
 
 !!! note "The catalog always shows the latest version"

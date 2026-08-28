@@ -19,6 +19,35 @@ Adding a tool is a **single-folder pull request** under
 unless an output needs reshaping. Everything is validated in CI by
 `depictio-cli dev catalog validate`.
 
+## Two ways in <small>(v1.9.0+)</small> { #two-ways-in }
+
+<div class="grid cards" markdown>
+
+-   :material-cursor-default-click:{ .lg .middle } **In the browser**
+
+    ---
+
+    [**Tool Studio**](tool-studio.md) does all of the below without YAML: drop one
+    output file, bind its columns in depictio's own component builder, and the app
+    opens the pull request for you.
+
+    Use it when your output file is already a table with a header row.
+
+-   :material-file-code:{ .lg .middle } **By hand**
+
+    ---
+
+    Write the three files yourself, following this page. You need this when the
+    output has to be reshaped first, so the entry carries a
+    [recipe](#step-3-recipe-only-if-the-file-needs-reshaping).
+
+    About half the committed catalog outputs are in this case.
+
+</div>
+
+Both routes produce the same folder and pass the same CI check, so switching between
+them costs nothing.
+
 ## The files
 
 A tool is one folder: `module.yaml` identifies it, and the rest repeat per
