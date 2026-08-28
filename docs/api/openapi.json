@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.8.2",
-    "x-generated-at": "2026-08-28T08:40:34Z",
-    "x-depictio-version": "v1.8.2"
+    "version": "1.9.0",
+    "x-generated-at": "2026-08-28T15:51:35Z",
+    "x-depictio-version": "v1.9.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -4855,6 +4855,78 @@
         ]
       }
     },
+    "/depictio/api/v1/backup/schedule": {
+      "get": {
+        "tags": [
+          "Backup"
+        ],
+        "summary": "Get Backup Schedule",
+        "description": "Report whether scheduled backups run, how often, and when they last did.",
+        "operationId": "get_backup_schedule_depictio_api_v1_backup_schedule_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BackupScheduleResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Backup"
+        ],
+        "summary": "Update Backup Schedule",
+        "description": "Turn scheduled backups on or off, and set the interval and retention.\n\nStored in MongoDB rather than pushed back into the environment: the running\nscheduler re-reads this on every tick, so a change takes effect without a\nrestart, and every worker picks it up at once.",
+        "operationId": "update_backup_schedule_depictio_api_v1_backup_schedule_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BackupScheduleUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BackupScheduleResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/backup/list": {
       "get": {
         "tags": [
@@ -4929,13 +5001,106 @@
         ]
       }
     },
+    "/depictio/api/v1/backup/download/{backup_id}": {
+      "get": {
+        "tags": [
+          "Backup"
+        ],
+        "summary": "Download Backup",
+        "description": "Download a backup file from the server.\n\nStreams the backup JSON as an attachment so admins can keep off-server\ncopies (and re-upload them later via ``/upload``).",
+        "operationId": "download_backup_depictio_api_v1_backup_download__backup_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "backup_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Backup Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/backup/upload": {
+      "post": {
+        "tags": [
+          "Backup"
+        ],
+        "summary": "Upload Backup",
+        "description": "Upload a backup file to the server and validate it.\n\nThe uploaded file is stored in the backup directory under a freshly minted\nserver-side backup_id (with a SHA-256 sidecar), making it a first-class\nbackup: it appears in ``/list`` and can be validated, downloaded, and\nrestored like any server-created backup. Validation runs automatically and\nits result is returned; a failing validation does not reject the upload —\nthe restore endpoint refuses invalid backups by default.",
+        "operationId": "upload_backup_depictio_api_v1_backup_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_backup_depictio_api_v1_backup_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BackupUploadResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/backup/restore": {
       "post": {
         "tags": [
           "Backup"
         ],
         "summary": "Restore Backup",
-        "description": "Restore data from a backup file.\n\nWARNING: This is a destructive operation that will replace existing data.\nUse dry_run=True to preview what would be restored.",
+        "description": "Restore data from a backup file.\n\nWARNING: This is a destructive operation that will replace existing data.\nUse dry_run=True to preview what would be restored.\n\nBefore any data is touched, the backup is validated against the current\nPydantic models (same validator as /validate); restores of invalid backups\nare refused unless skip_validation=true.",
         "operationId": "restore_backup_depictio_api_v1_backup_restore_post",
         "requestBody": {
           "content": {
@@ -7452,7 +7617,7 @@
           "Advanced Viz"
         ],
         "summary": "List Kinds",
-        "description": "Return the metadata payload the React builder uses to populate the viz_kind picker.\n\n`roles` carries the per-role accepted dtypes (required + optional) so the\nbuilder drives its binding dropdowns + validation from the backend instead\nof duplicating the dtype tables in TypeScript. `required_roles` is kept for\nbackwards compatibility.",
+        "description": "The metadata payload the React builder populates its viz_kind picker from.\n\nComposed in ``models.components.advanced_viz.schemas`` so the offline\nsnapshot Tool Studio ships (``depictio dev catalog kinds --json``) is the\nsame payload this endpoint returns — its picker would otherwise be a\nlookalike built from a narrower map.",
         "operationId": "list_kinds_depictio_api_v1_advanced_viz_kinds_get",
         "responses": {
           "200": {
@@ -10455,6 +10620,95 @@
         "title": "AggregationFunction",
         "description": "Supported aggregation functions for granularity mismatches."
       },
+      "BackupListItem": {
+        "properties": {
+          "backup_id": {
+            "type": "string",
+            "title": "Backup Id"
+          },
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "size_mb": {
+            "type": "number",
+            "title": "Size Mb"
+          },
+          "created": {
+            "type": "string",
+            "title": "Created"
+          },
+          "created_by": {
+            "type": "string",
+            "title": "Created By",
+            "default": "unknown"
+          },
+          "total_documents": {
+            "type": "integer",
+            "title": "Total Documents",
+            "default": 0
+          },
+          "collections": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Collections",
+            "default": []
+          },
+          "depictio_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Depictio Version"
+          },
+          "restored_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Restored At"
+          },
+          "restored_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Restored By"
+          },
+          "has_checksum": {
+            "type": "boolean",
+            "title": "Has Checksum",
+            "default": false
+          },
+          "is_automatic": {
+            "type": "boolean",
+            "title": "Is Automatic",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "backup_id",
+          "filename",
+          "size_mb",
+          "created"
+        ],
+        "title": "BackupListItem"
+      },
       "BackupListResponse": {
         "properties": {
           "success": {
@@ -10462,7 +10716,9 @@
             "title": "Success"
           },
           "backups": {
-            "items": {},
+            "items": {
+              "$ref": "#/components/schemas/BackupListItem"
+            },
             "type": "array",
             "title": "Backups"
           },
@@ -10559,6 +10815,18 @@
               }
             ],
             "title": "Filename"
+          },
+          "s3_backup_metadata": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "S3 Backup Metadata"
           }
         },
         "type": "object",
@@ -10596,6 +10864,11 @@
           "allow_unverified": {
             "type": "boolean",
             "title": "Allow Unverified",
+            "default": false
+          },
+          "skip_validation": {
+            "type": "boolean",
+            "title": "Skip Validation",
             "default": false
           }
         },
@@ -10639,6 +10912,210 @@
           "message"
         ],
         "title": "BackupRestoreResponse"
+      },
+      "BackupScheduleResponse": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "interval_hours": {
+            "type": "integer",
+            "title": "Interval Hours"
+          },
+          "retention_days": {
+            "type": "integer",
+            "title": "Retention Days"
+          },
+          "weekly_weeks": {
+            "type": "integer",
+            "title": "Weekly Weeks",
+            "default": 0
+          },
+          "monthly_months": {
+            "type": "integer",
+            "title": "Monthly Months",
+            "default": 0
+          },
+          "time_of_day": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Time Of Day"
+          },
+          "last_run": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Run"
+          },
+          "next_run": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Run"
+          },
+          "is_customized": {
+            "type": "boolean",
+            "title": "Is Customized",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "enabled",
+          "interval_hours",
+          "retention_days"
+        ],
+        "title": "BackupScheduleResponse",
+        "description": "The schedule in force, plus when it last ran and when it runs next."
+      },
+      "BackupScheduleUpdate": {
+        "properties": {
+          "enabled": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Enabled"
+          },
+          "interval_hours": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 8760.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interval Hours"
+          },
+          "retention_days": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 3650.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retention Days"
+          },
+          "weekly_weeks": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 520.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weekly Weeks"
+          },
+          "monthly_months": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 120.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Months"
+          },
+          "time_of_day": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^$|^([01]\\d|2[0-3]):([0-5]\\d)$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Time Of Day"
+          }
+        },
+        "type": "object",
+        "title": "BackupScheduleUpdate",
+        "description": "Partial update of the schedule. Omitted fields are left as they are."
+      },
+      "BackupUploadResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "backup_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Backup Id"
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename"
+          },
+          "validation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BackupValidateResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message"
+        ],
+        "title": "BackupUploadResponse"
       },
       "BackupValidateRequest": {
         "properties": {
@@ -10693,6 +11170,12 @@
             "items": {},
             "type": "array",
             "title": "Errors",
+            "default": []
+          },
+          "warnings": {
+            "items": {},
+            "type": "array",
+            "title": "Warnings",
             "default": []
           }
         },
@@ -10995,6 +11478,20 @@
           "files"
         ],
         "title": "Body_replace_table_dc_depictio_api_v1_datacollections__data_collection_id__replace_post"
+      },
+      "Body_upload_backup_depictio_api_v1_backup_upload_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_backup_depictio_api_v1_backup_upload_post"
       },
       "Body_upload_branding_logo_depictio_api_v1_utils_branding_logo__variant__post": {
         "properties": {
@@ -11954,7 +12451,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -12257,7 +12754,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -12320,7 +12817,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -12508,7 +13005,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -13103,6 +13600,20 @@
             },
             "type": "array",
             "title": "Variables"
+          },
+          "run_provenance": {
+            "items": {
+              "$ref": "#/components/schemas/ProvenanceReportGroup"
+            },
+            "type": "array",
+            "title": "Run Provenance"
+          },
+          "run_provenance_files": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Run Provenance Files"
           },
           "data_collections": {
             "items": {
@@ -14311,7 +14822,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -14519,7 +15030,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -14686,6 +15197,94 @@
           "permissions"
         ],
         "title": "ProjectPermissionRequest"
+      },
+      "ProvenanceEntry": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "title": "Source",
+            "description": "ProvenanceSource name (or 'user' for --provenance-file)"
+          },
+          "group": {
+            "type": "string",
+            "title": "Group",
+            "description": "Group the key was assigned to"
+          },
+          "key": {
+            "type": "string",
+            "title": "Key",
+            "description": "Flattened key (nested files use dotted paths)"
+          },
+          "value": {
+            "type": "string",
+            "title": "Value",
+            "description": "Stringified value ('null' for unset params)"
+          },
+          "highlight": {
+            "type": "boolean",
+            "title": "Highlight",
+            "description": "Listed in the spec's highlight set",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "group",
+          "key",
+          "value"
+        ],
+        "title": "ProvenanceEntry",
+        "description": "One collected provenance fact: a parameter, threshold or tool version."
+      },
+      "ProvenanceReportEntry": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "value": {
+            "type": "string",
+            "title": "Value"
+          },
+          "highlight": {
+            "type": "boolean",
+            "title": "Highlight",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "key",
+          "value"
+        ],
+        "title": "ProvenanceReportEntry"
+      },
+      "ProvenanceReportGroup": {
+        "properties": {
+          "group": {
+            "type": "string",
+            "title": "Group"
+          },
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/ProvenanceReportEntry"
+            },
+            "type": "array",
+            "title": "Entries"
+          }
+        },
+        "type": "object",
+        "required": [
+          "group"
+        ],
+        "title": "ProvenanceReportGroup",
+        "description": "One display group of run-provenance entries (Cutadapt, DADA2, ...)."
       },
       "PydanticObjectId": {
         "type": "string",
@@ -15053,6 +15652,22 @@
             "type": "array",
             "title": "Expected Data Collections",
             "description": "Full template DC superset at resolution time (required + optional), each marked included/excluded with a removal reason — drives the ingestion report"
+          },
+          "run_provenance": {
+            "items": {
+              "$ref": "#/components/schemas/ProvenanceEntry"
+            },
+            "type": "array",
+            "title": "Run Provenance",
+            "description": "Collected run provenance (pipeline parameters, filtering thresholds, tool versions), grouped and ordered — drives the ingestion report's 'Run provenance' card and the dashboard Settings highlights"
+          },
+          "run_provenance_files": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Run Provenance Files",
+            "description": "The files the provenance was collected from (relative to data_root where possible)"
           }
         },
         "type": "object",
@@ -15070,7 +15685,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -15176,7 +15791,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -15409,7 +16024,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a91497c60c8c2a300c0e776"
+            "default": "6a91ae81c26a05fd19179e89"
           }
         },
         "type": "object",
@@ -15434,6 +16049,11 @@
               }
             ],
             "title": "Source Overrides"
+          },
+          "materialized": {
+            "type": "boolean",
+            "title": "Materialized",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -15527,7 +16147,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -15646,7 +16266,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -15728,7 +16348,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -15814,7 +16434,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -15987,7 +16607,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -16162,7 +16782,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -16232,7 +16852,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [
@@ -16330,7 +16950,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a91497c60c8c2a300c0e775"
+            "default": "6a91ae81c26a05fd19179e88"
           },
           "description": {
             "anyOf": [

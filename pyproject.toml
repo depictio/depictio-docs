@@ -17,7 +17,7 @@ dependencies = [
     "mkdocs-graphviz",
     "mkdocs-glightbox>=0.5.2",
 ]
-version = "1.8.2"
+version = "1.9.0"
 name = "depictio-docs"
 
 # Only needed to regenerate the figures in dev/diagrams/. The PNGs are
