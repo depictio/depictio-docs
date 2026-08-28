@@ -239,6 +239,7 @@ nav:
           - Project Migration: usage/administration/migrate.md
           - Backup & Restore: usage/administration/backup.md
           - Monitoring (Log & Task): usage/administration/monitoring.md
+          - Branding: usage/administration/branding.md
       - Special Modes:
           - Authentication Modes: usage/guides/authentication-modes.md
           - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md

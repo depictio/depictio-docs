@@ -53,6 +53,7 @@ DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 <!-- - [Application Profiling](#application-profiling) -->
 <!-- - [Dashboard YAML Sync](#dashboard-yaml-sync) -->
 - [Global Settings](#global-settings)
+- [Branding](#branding)
 - [ServiceConfig](#serviceconfig)
 
 ---
@@ -618,6 +619,46 @@ Top-level application settings including context configuration.
 | `DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS` | `false` | Skip seeding the bundled reference projects (Iris, Penguins, Advanced Visualisations, nf-core/ampliseq, nf-core/viralrecon) and their dashboards on API startup. Opt-in: default preserves current behaviour. |
 | `DEPICTIO_SEED_PROJECTS` | _(empty = all)_ | Comma-separated allowlist of bundled reference datasets to seed on startup (e.g. `iris` or `iris,penguins`). Empty seeds all of them. Ignored when `DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS=true` (that takes precedence and seeds none). Used by the devcontainer/Codespaces setup to seed only `iris` for a faster boot. |
 | `DEPICTIO_WALKTHROUGH_DISABLED` | `false` | Hide the onboarding walkthrough overlay for every user. Useful for embedded iframes, staging envs used for screenshot capture, and demos with their own narration. `DEPICTIO_DEV_MODE=true` also suppresses it. |
+
+---
+
+## Branding
+
+**Config Class:** `BrandingSettings`
+**Environment Prefix:** `DEPICTIO_BRANDING_`
+
+Deployment-level defaults for the [brand theme](../usage/administration/branding.md). Every one of these is the leftmost layer: the `/admin` Branding panel and a dashboard's own override sit on top of them, and neither needs a redeploy. Leave a variable unset and the layer above, or Depictio's own look, applies.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_BRANDING_PRESET` | - | Starting point seeded into the theme: `depictio`, `trec`, `embl` or `ocean`. The flat variables below override it field by field. |
+| `DEPICTIO_BRANDING_APP_NAME` | `Depictio` | Browser tab title and login greeting |
+| `DEPICTIO_BRANDING_LOGO_URL` | - | Logo for light mode. Absolute (`https://`) or a path this deployment serves |
+| `DEPICTIO_BRANDING_LOGO_URL_DARK` | - | Logo for dark mode. Falls back to `DEPICTIO_BRANDING_LOGO_URL` |
+| `DEPICTIO_BRANDING_PRIMARY_COLOR` | - | Primary brand colour. Hex, or a Mantine palette name (`blue`, `teal`, `grape`, ...). A hex value is expanded server-side into a 10-shade tuple with your colour on the shade a filled button paints |
+| `DEPICTIO_BRANDING_SECONDARY_COLOR` | - | Secondary brand colour |
+| `DEPICTIO_BRANDING_TERTIARY_COLOR` | - | Tertiary / accent brand colour |
+| `DEPICTIO_BRANDING_TINT_MODE` | `accent` | How far the brand reaches. `accent` re-tints the primary accent only; `full` also gives the secondary and tertiary the app's existing teal and orange accent families. `gray`, `red`, `green` and `yellow` are never remapped |
+| `DEPICTIO_BRANDING_SUCCESS_COLOR` | - | Overrides Mantine green. Status colours stay outside the brand reach so pass / warn / fail keep reading as meaning |
+| `DEPICTIO_BRANDING_WARNING_COLOR` | - | Overrides Mantine yellow |
+| `DEPICTIO_BRANDING_DANGER_COLOR` | - | Overrides Mantine red |
+| `DEPICTIO_BRANDING_FONT_FAMILY` | - | Body font stack. Must be installed or served by this deployment; none is fetched for you |
+| `DEPICTIO_BRANDING_HEADINGS_FONT_FAMILY` | - | Headings font stack |
+| `DEPICTIO_BRANDING_DEFAULT_RADIUS` | - | Corner radius as a Mantine token, `xs` to `xl` |
+| `DEPICTIO_BRANDING_COLORWAY` | _(derived)_ | Categorical figure palette, comma-separated hex. Derived from the brand palette when unset |
+| `DEPICTIO_BRANDING_SEQUENTIAL` | _(derived)_ | Continuous figure scale, comma-separated hex. Derived from the brand palette when unset |
+| `DEPICTIO_BRANDING_PLOT_TEMPLATE` | - | Plotly template for figures whose component picks none. Unset means follow the UI colour scheme, using Depictio's brand-aware `mantine_light` / `mantine_dark` |
+| `DEPICTIO_BRANDING_THEME` | - | Escape hatch: a whole brand theme as JSON, for fields with no flat variable of their own (the per-scheme chrome surfaces). Merged **under** the flat variables above |
+
+!!! example "Full commented block"
+    The depictio repository ships the whole set with inline commentary in [`.env.example`](https://github.com/depictio/depictio/blob/main/.env.example), and a Kubernetes equivalent in [`helm-charts/depictio/examples/values-branding.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/examples/values-branding.yaml).
+
+!!! tip "Chrome surfaces need the JSON variable"
+    `app_bg`, `section_bg`, `nav_bg` and `heading` are set per colour scheme, so they have no flat variable. Pass them through `DEPICTIO_BRANDING_THEME`:
+
+    ```bash
+    DEPICTIO_BRANDING_THEME={"surfaces_light":{"app_bg":"#f8faf9","nav_bg":"#ffffff","heading":"#00514b"}}
+    ```
 
 ---
 

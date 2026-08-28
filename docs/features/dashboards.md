@@ -88,6 +88,9 @@ The collapsible **sidebar** on the far left provides:
 - :material-playlist-edit: **Tab management** - Add (+), rename, or delete tabs
 - :material-menu: **Burger menu** (☰) - Collapse/expand the sidebar
 - :material-cog: **Navigation controls** - Quick access to project settings
+- :material-image-outline: **Logo** <small>(v1.8.0+)</small> - Centred at the bottom: the dashboard's own upload, the instance logo it inherits, or nothing. See [Appearance](../usage/guides/dashboard_usage.md#appearance)
+
+Long tab names truncate rather than overflow, with the full name in a tooltip when it is actually cut off.
 
 ### :material-filter-variant: Left Panel (Filters)
 
