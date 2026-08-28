@@ -15,6 +15,28 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.8.1](https://github.com/depictio/depictio/releases/tag/v1.8.1)** (August 28, 2026)
+
+!!! success "Patch: instance branding reaches Kubernetes deployments"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.8.1
+ghcr.io/depictio/depictio-viewer:1.8.1
+ghcr.io/depictio/depictio-worker:1.8.1
+```
+
+### **🚀 Improvements**
+
+* **A branded overlay for the EMBL internal deployment**: `values-embl-internal-dev-trec.yaml` applies the TREC preset, the instance name, the logo and a registration gate as a thin last `-f`, so the base values file stays generic and dropping the overlay is the whole *deploy this unbranded* operation. See [Authentication Modes](../usage/guides/authentication-modes.md#disabling-self-service-registration) ([#1005](https://github.com/depictio/depictio/pull/1005), [0be409e3](https://github.com/depictio/depictio/commit/0be409e3)).
+
+### **🐛 Bug Fixes**
+
+* **`DEPICTIO_BRANDING_*` reaches the cluster**: the backend and worker configmaps were a hand-written allowlist, so every branding variable was dropped at render time with no warning anywhere and a Helm deployment stayed unbranded. Both forward the block by prefix now, the worker included, so exported screenshots carry the brand palette too. See [Branding](../usage/administration/branding.md) ([#1005](https://github.com/depictio/depictio/pull/1005), [20033446](https://github.com/depictio/depictio/commit/20033446)).
+
+---
+
 ## **[v1.8.0](https://github.com/depictio/depictio/releases/tag/v1.8.0)** (August 27, 2026)
 
 !!! success "Minor: an instance that wears its own identity, and a tree you can navigate"

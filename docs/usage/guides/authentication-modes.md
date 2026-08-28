@@ -42,7 +42,7 @@ DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET=your-secret
 
 **Behavior:**
 
-- Users register or are created by admins
+- Users register or are created by admins, unless [registration is disabled](#disabling-self-service-registration)
 - JWT-based authentication (RS256)
 - Role-based access: admin and regular users
 - Project and dashboard-level permissions (owner, editor, viewer)
@@ -148,6 +148,22 @@ the same value, through `--provisioning-key` or the identically-named variable.
 A magic link is single-use and expires; redeeming it exchanges the ticket for a
 normal session. Sending it to the user is the pipeline's job; Depictio only
 emits it on stdout.
+
+## Disabling self-service registration
+
+Registration is a separate switch from the four modes above, and works with any of them. Set it on an instance where accounts are provisioned by an admin rather than claimed by whoever finds the URL:
+
+```bash
+DEPICTIO_AUTH_REGISTRATION_DISABLED=true
+```
+
+**Behavior:**
+
+- `POST /auth/register` returns 403, and the Register view and the link to it are hidden
+- Google OAuth becomes a login-only door: a known email signs in, an unknown one is refused instead of being provisioned an account
+- Existing accounts, roles and permissions are untouched
+
+On Kubernetes, set it under `backend.env` in your values file.
 
 ## Choosing a Mode
 
