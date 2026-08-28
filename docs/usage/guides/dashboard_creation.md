@@ -30,6 +30,12 @@
 1. Open a dashboard, click **Edit**, then **Add component**.
 2. Pick a component type: **Figure**, **Card**, **Interactive**, **Table**, **MultiQC**, **Image**, **Map**, **Text** or **Advanced viz**. Clicking a card takes you straight to the next step.
 
+!!! tip "Or skip the stepper entirely (v1.9.0+)"
+    **Add component** now opens a chooser first. Alongside **New component**,
+    which is the flow described here, **Pick from catalog** offers
+    pre-configured visualizations that Depictio recognised in the project's
+    ingested data. See [Picking a component from the catalog](catalog-picker.md).
+
 ### <span style="color: #6495ED;">:material-numeric-2-circle:</span> Step 2: Data Selection
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
@@ -176,16 +182,37 @@ In Code Mode, the following variables are pre-loaded:
 Your code must follow this structure:
 
 ```python
-# Optional: Data preprocessing (single assignment)
-df_modified = df.filter(pl.col("value") > 0)
+# Optional: any number of preprocessing statements
+threshold = 0.5
+keep = ["alpha", "beta"]
+df_modified = (
+    df.filter(pl.col("value") > threshold)
+      .filter(pl.col("category").is_in(keep))
+)
 
-# Required: Create figure using px or go
+# Required: create the figure using px or go
 fig = px.scatter(df_modified, x="col_x", y="col_y", color="category")
+
+# Optional: post-figure customization
+fig.update_layout(showlegend=False)
 ```
 
+Everything before the `fig =` statement counts as preprocessing, whatever the
+variables are called, and a statement may span several lines: parentheses and
+brackets are both tracked, so `agg([` continues across a line break just as
+`agg(` does.
+
+<!-- prettier-ignore -->
+!!! info "Changed in v1.8.3"
+    Preprocessing used to be recognised by variable *name*: a line had to mention
+    `df_modified` or start with `df_`, and every other line was silently
+    discarded. The figure then ran without it and failed on the first name it
+    could no longer resolve, pointing at the `fig =` line rather than at the
+    dropped one.
+
 !!! warning "Code Constraints"
-    - Use `df_modified` for any data preprocessing (single line)
     - The final `fig` variable must be a Plotly Figure object
+    - The figure must use something the preprocessing produced, or `df` itself
     - Only the pre-loaded libraries are available for security
 
 #### Code Mode Features

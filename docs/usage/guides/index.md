@@ -12,5 +12,6 @@ Hands-on guides for common tasks in the Depictio web interface.
 |------|-------------|
 | [Web UI](web_ui.md) | Navigate and use the Depictio web interface |
 | [Dashboard Creation](dashboard_creation.md) | Create and configure interactive dashboards |
+| [Picking from the catalog](catalog-picker.md) | Add a pre-configured visualization Depictio recognised in your data |
 | [Using the Dashboard](dashboard_usage.md) | Explore data through filters and selections |
 | [Authentication Modes](authentication-modes.md) | Configure authentication for your deployment |

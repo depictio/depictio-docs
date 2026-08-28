@@ -126,6 +126,7 @@ The **Depictio Catalog Studio** is the companion app for contributing a new
 module.
 
 <div class="catalog-cta-wrap" markdown>
+[Use the catalog in a dashboard :material-arrow-right:](../usage/guides/catalog-picker.md){ .catalog-cta }
 [Read the contributing guide :material-arrow-right:](../developer/contributing-a-tool.md){ .catalog-cta }
 [Depictio Catalog Studio :material-arrow-right:](https://depictio.github.io/depictio-catalog-studio/){ .catalog-cta .catalog-cta--studio target="_blank" rel="noopener" }
 </div>

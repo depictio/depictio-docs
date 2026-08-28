@@ -1,133 +1,144 @@
 ---
 title: Backup & Restore
-description: Back up and restore Depictio MongoDB data using the CLI.
+description: Snapshot and restore the Depictio database from the admin panel or the CLI, schedule backups, and cover the data they do not include.
 ---
 
 # :material-database-export: Backup & Restore
 
-The `depictio backup` commands let administrators snapshot the MongoDB database and restore it from a previous backup. All backup operations require admin credentials.
+Depictio stores state in two independent places, and they are backed up by two
+independent mechanisms.
 
-!!! warning "Admin only"
-    All `backup` sub-commands require the authenticated user to be an administrator.
+<!-- prettier-ignore -->
+!!! warning "Backups cover the database, not your data"
+    A snapshot covers MongoDB: users, projects, dashboards, data collection
+    definitions, file records, the *locations* of your Delta tables, instance
+    settings and branding assets. The Delta tables themselves live in S3 or
+    MinIO, are **not** included, and are never restored from the admin panel.
+    Restoring the database restores the pointers; whether they resolve depends
+    on the object store being in a matching state. See
+    [Your data: S3 and Delta Lake](#your-data-s3-and-delta-lake).
 
----
-
-## Commands
-
-### `backup create`
-
-Create a server-side snapshot of the MongoDB database. Short-lived tokens and temporary users are excluded automatically.
-
-```bash
-depictio backup create
-
-# Also back up S3 Delta Lake files
-depictio backup create --include-s3-data --s3-backup-prefix my-backup
-```
-
-| Flag | Default | Description |
-|------|---------|-------------|
-| `--include-s3-data` | `false` | Also back up S3 Delta Lake files |
-| `--s3-backup-prefix` | `"backup"` | Prefix for the S3 backup folder |
-| `--dry-run` | `false` | Validate the backup process without writing anything |
-
-On success, prints a backup ID (format `YYYYMMDD_HHMMSS`) and document counts per collection.
+Everything on this page requires an administrator account.
 
 ---
 
-### `backup list`
+## From the admin panel <small>(v1.9.0+)</small> { #from-the-admin-panel }
 
-List all available backups stored on the server.
+**Administration → Backups** drives the whole loop without a shell.
 
-```bash
-depictio backup list
-```
+[![The Backups tab, with a backup on the server and the Automated backups card below it](../../images/guides/backup/backups-tab.webp)](../../images/guides/backup/backups-tab.webp){target=_blank}
 
----
+| Action | What it does |
+|--------|--------------|
+| **Create backup** | Snapshots the database server-side and adds it to the list |
+| **Download** | Fetches `depictio_backup_<id>.json` for off-site storage |
+| **Restore from file** | Uploads a backup taken elsewhere, up to 200 MB |
+| **Restore** | Replaces the database contents, behind the gate below |
 
-### `backup validate`
-
-Check that a backup file is well-formed and passes Pydantic model validation before attempting a restore.
-
-```bash
-depictio backup validate 20260315_143000
-```
-
----
-
-### `backup restore`
-
-!!! danger "Destructive operation"
-    Restore **replaces existing data** in the selected collections. Use `--dry-run` first to preview what would change.
-
-Restore all or selected collections from a backup snapshot.
-
-```bash
-# Preview first
-depictio backup restore 20260315_143000 --dry-run
-
-# Restore everything (prompts for confirmation)
-depictio backup restore 20260315_143000
-
-# Restore specific collections only
-depictio backup restore 20260315_143000 --collections projects,dashboards
-
-# Skip confirmation prompt (automation / CI)
-depictio backup restore 20260315_143000 --force
-```
-
-| Flag | Default | Description |
-|------|---------|-------------|
-| `--dry-run` | `false` | Simulate restore without writing any changes |
-| `--collections` | all | Comma-separated list of collections to restore |
-| `--force` | `false` | Skip the confirmation prompt |
+Each backup is a single JSON document named `depictio_backup_<id>.json`, written
+to `DEPICTIO_BACKUP_BACKUP_DIR` (`backups/` by default) with a `.sha256` sidecar
+alongside it. The **backup id is the creation timestamp**, which is what ties a
+downloaded file back to a row in the list, and what retention reads a backup's
+age from, since a file's mtime does not survive a volume restore or an rsync.
 
 ---
 
-## Typical workflow
+## Scheduled backups <small>(v1.9.0+)</small> { #scheduled-backups }
 
-```bash
-# 1. Create a backup before a major operation
-depictio backup create
+The **Automated backups** card holds the schedule and its retention policy.
+Scheduling is **off by default**: a snapshot is the size of the whole database,
+and a deployment that has not sized its backup volume should not start filling
+it on upgrade.
 
-# 2. Validate the backup
-depictio backup validate 20260315_143000
+**Anchored or rolling.** Give the schedule a time of day (`HH:MM`, UTC) and its
+slots sit on a fixed grid running from there: daily at 03:00 stays at 03:00, and
+a six-hourly schedule anchored at 03:00 runs at 03:00, 09:00, 15:00 and 21:00.
+The grid is anchored to a fixed epoch rather than to the previous run, so a run
+that fires a few minutes late never pushes every later one back with it. Leave
+the anchor empty for a rolling schedule, due whenever an interval has passed
+since the last run.
 
-# 3. Dry-run a restore to see what would change
-depictio backup restore 20260315_143000 --dry-run
+**No restart needed.** The configuration is re-read from the database on every
+tick, so a change made in the UI reaches every API worker within a few minutes.
+Every worker runs the loop, and the due time is claimed with a single
+conditional update, so exactly one worker takes each backup. Workers poll at
+most every 15 minutes, so an anchored backup starts within that of its slot.
 
-# 4. Restore if needed
-depictio backup restore 20260315_143000
-```
+---
+
+## Retention <small>(v1.9.0+)</small> { #retention }
+
+Two modes, both pruned after every backup, scheduled or manual.
+
+| Mode | Policy |
+|------|--------|
+| **Keep for a fixed time** | Delete anything older than N days. `0` keeps everything forever. |
+| **Smart retention** | Grandfather-father-son: every backup for 30 days, then one per ISO week for 4 weeks, then one per calendar month for 12 months. Nothing to configure. |
+
+Smart retention keeps 30 days of full fidelity rather than the textbook 7,
+specifically so that it is a strict superset of the default fixed policy, which
+is also 30 days. Switching a deployment to smart can only ever keep *more*
+history than it had, never less.
+
+<!-- prettier-ignore -->
+!!! note "Retention is the only way a backup is removed"
+    There is no delete action, and nothing else prunes the backup directory.
+
+---
+
+## Restoring
+
+Restore is destructive: each selected collection is emptied and refilled. Three
+things guard it, and only the first two can be waived.
+
+1. **The SHA-256 sidecar is verified.** A missing sidecar (legacy backups) can
+   be waived with `allow_unverified`; a *mismatch* is never bypassable.
+2. **Every document is validated against the current models** before anything is
+   touched, and the restore is refused if any document in a selected collection
+   fails, unless `skip_validation` is set. A failed insert rolls that collection
+   back to its previous contents.
+3. **A typed `RESTORE` unlocks the button.** The modal shows per-collection
+   counts and states plainly that this cannot be undone.
+
+[![The restore confirmation modal, with per-collection counts and the typed confirmation](../../images/guides/backup/restore-gate.webp)](../../images/guides/backup/restore-gate.webp){target=_blank}
+
+Tokens are never part of a backup, which is why the admin session you are
+restoring from survives the operation.
+
+[![Restore completed, reporting what was written per collection](../../images/guides/backup/restore-complete.webp)](../../images/guides/backup/restore-complete.webp){target=_blank}
+
+Afterwards the list marks the snapshot this deployment's data was last restored
+from, so it is always possible to tell which backup the live data came from. The
+marker is written only when a restore completes without errors, and it lives
+outside the collections a restore overwrites.
 
 ---
 
 ## What is covered
 
-A backup snapshots the MongoDB collections that hold your work: projects,
-dashboards, workflows, data collections, users and permissions. Short-lived
-tokens and temporary users are excluded automatically.
+Eleven collections: `users`, `groups`, `projects`, `dashboards`,
+`data_collections`, `workflows`, `files`, `deltatables`, `runs`,
+`instance_settings` and `branding_assets`.
 
-Four collections are **deliberately not backed up**, because they are
-operational rather than authored data:
+Deliberately excluded:
 
-| Collection | Why it is excluded |
-|------------|--------------------|
-| `task_events` | Celery task history, expired by a TTL index |
-| `app_logs` | Application logs, a capped collection |
-| `telemetry` | Anonymous aggregate counters |
-| `ingestion_runs` | Ingestion audit and lineage records |
+| Excluded | Why |
+|----------|-----|
+| `tokens` | Restoring them would be circular, and leaving them out is why an admin session survives a restore |
+| Temporary users and their dashboards | Short-lived by construction |
+| `jbrowse`, `multiqc`, `multiqc_prerender` | Derived, regenerated from source data |
+| `task_events`, `app_logs`, `telemetry` | Operational, and self-expiring by design |
+| `ingestion_runs` | Audit and lineage data with no TTL. A known gap, not a decision that it should never be backed up. |
 
-!!! note "`ingestion_runs` has no TTL"
-    Unlike the other three it is not self-expiring, so the ingestion history it
-    holds is genuinely not recoverable from a backup. Restoring a snapshot leaves
-    whatever is already in that collection untouched.
+A coverage test fails CI when a new collection is added without being
+classified, so this list cannot silently drift. Backups record the Depictio
+version that produced them, so a snapshot describes itself.
 
-Backups record the Depictio version that produced them, so a snapshot describes
-itself.
+---
 
 ## Restoring across versions
 
+<!-- prettier-ignore -->
 !!! warning "Supported from v1.0.0 onwards"
     Restoring a backup taken by **v1.0.0 or later** into a newer Depictio is
     supported and covered by tests. Backups produced before v1.0.0 are out of
@@ -138,7 +149,126 @@ frozen backup fixtures are validated against the current Pydantic models on ever
 pull request, and a scheduled job restores a backup produced by the previous
 released image using an image built from current code, comparing document counts.
 
-This matters because restore is destructive: it deletes the target collections
-before inserting. A backup that failed to deserialize cleanly could otherwise
-drop data on an upgraded deployment. Run `backup validate` before any restore you
-have not just created yourself.
+---
+
+## Your data: S3 and Delta Lake { #your-data-s3-and-delta-lake }
+
+None of the above touches your data. There are three ways to cover it, in
+descending order of preference.
+
+**1. Object store replication (recommended for production).** S3 bucket
+versioning plus Cross-Region Replication, or MinIO's `mc mirror` and site
+replication, gives point-in-time recovery of the Delta tables without Depictio
+being in the path at all. Delta Lake is append-structured, so object versioning
+composes well with it. This is the only option that scales to a real dataset,
+and the only one that survives losing the Depictio deployment itself.
+
+**2. The CLI, with `--include-s3-data`.**
+
+```bash
+depictio-cli backup create --include-s3-data --s3-backup-prefix backup
+```
+
+Driven by `DEPICTIO_BACKUP_S3_BACKUP_STRATEGY`:
+
+| Strategy | Effect |
+|----------|--------|
+| `s3_to_s3` (default) | Copy tables into a second bucket |
+| `local` | Copy tables to `DEPICTIO_BACKUP_S3_LOCAL_BACKUP_DIR` on the server, optionally gzipped |
+| `both` | Both of the above |
+
+See [Backup and Restore Configuration](../../installation/configuration.md#backup-and-restore-configuration)
+for the bucket and credential settings. This flag is deliberately **not** in the
+admin UI: it needs a second bucket and credentials that are deployment
+configuration, and it runs synchronously inside the request.
+
+**3. Snapshot the volume.** For a single-node MinIO deployment, a filesystem or
+block-device snapshot of the MinIO data volume, taken alongside a database
+backup, is a coherent pair.
+
+### Recovering, in order
+
+There is **no S3 restore path in Depictio**. The strategies above copy tables
+out; nothing copies them back. Recovering data means restoring the bucket
+yourself, with `mc mirror`, `aws s3 sync`, object-version rollback or a volume
+snapshot, and then restoring the matching database backup.
+
+1. Restore the object store to the state it had when the database backup was taken.
+2. Restore the database backup from **Administration → Backups**.
+3. Confirm dashboards render before letting users back in.
+
+<!-- prettier-ignore -->
+!!! danger "A database-only restore can delete live data from S3"
+    A periodic task deletes bucket prefixes that no live data collection
+    references. After a restore rewinds the database, every Delta table ingested
+    *after* that snapshot is an orphan by that definition, and the next cleanup
+    pass deletes it permanently. Its safety check only aborts when *all*
+    prefixes look orphaned, so a partial rewind passes straight through it.
+
+    Until that interaction is guarded, treat a database restore on a deployment
+    with live data as an operation that requires the object store to be rewound
+    to match, or the cleanup task to be disabled first.
+
+---
+
+## From the CLI
+
+The same operations, for automation and for the S3 flags the UI does not expose.
+Full reference: [Backup Commands](../../depictio-cli/usage.md#backup-commands).
+
+```bash
+# Snapshot the database
+depictio-cli backup create
+
+# List what the server holds
+depictio-cli backup list
+
+# Check a backup deserializes against the current models
+depictio-cli backup validate 20260315_143000
+
+# Preview, then restore
+depictio-cli backup restore 20260315_143000 --dry-run
+depictio-cli backup restore 20260315_143000
+```
+
+| Flag | Applies to | Description |
+|------|-----------|-------------|
+| `--include-s3-data` | `create` | Also copy the Delta tables (see above) |
+| `--s3-backup-prefix` | `create` | Prefix for the S3 backup folder, default `backup` |
+| `--dry-run` | `create`, `restore` | Validate without writing anything |
+| `--collections` | `restore` | Comma-separated list, default all |
+| `--force` | `restore` | Skip the confirmation prompt |
+
+<!-- prettier-ignore -->
+!!! danger "Restore replaces existing data"
+    Run `--dry-run` first on any backup you did not just create yourself.
+
+---
+
+## Configuration
+
+Environment variables supply the **defaults**. Anything saved from the Backups
+tab overrides them from then on, so an admin's click is never silently reverted
+on the next restart.
+
+| Variable | Default | Meaning |
+|----------|---------|---------|
+| `DEPICTIO_BACKUP_BACKUP_DIR` | `backups` | Where backup files are written |
+| `DEPICTIO_BACKUP_AUTO_BACKUP_ENABLED` | `false` | Run scheduled backups |
+| `DEPICTIO_BACKUP_AUTO_BACKUP_INTERVAL_HOURS` | `24` | Hours between scheduled backups |
+| `DEPICTIO_BACKUP_AUTO_BACKUP_TIME_OF_DAY` | unset | `HH:MM` UTC anchor for the slot grid; unset means a rolling schedule |
+| `DEPICTIO_BACKUP_BACKUP_FILE_RETENTION_DAYS` | `30` | Keep every backup for this long; `0` keeps forever |
+| `DEPICTIO_BACKUP_BACKUP_RETENTION_WEEKLY_WEEKS` | `0` | Weekly tier length; `0` disables it |
+| `DEPICTIO_BACKUP_BACKUP_RETENTION_MONTHLY_MONTHS` | `0` | Monthly tier length; `0` disables it |
+
+With both tiers at `0`, retention is a plain age cutoff. The full list, including
+the S3 strategy settings, is in the
+[Environment Reference](../../installation/env-reference.md#backup-restore).
+
+---
+
+## See also
+
+- [Backup Commands](../../depictio-cli/usage.md#backup-commands) for the full CLI reference
+- [Backup and Restore Configuration](../../installation/configuration.md#backup-and-restore-configuration) for the S3 backup bucket
+- [Project Migration](migrate.md) to move a single project between instances instead

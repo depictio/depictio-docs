@@ -104,8 +104,9 @@ Since **v1.4.0** the editor and the viewer draw the same panel, so the order you
 filters into while editing is the order a viewer sees:
 
 - :material-arrow-collapse-left: **Collapses to a rail** - 44px wide rather than nothing, so the active-filter count stays on screen. A dashboard showing filtered numbers must never look like it is showing everything.
-- :material-arrow-split-vertical: **Resizable** - drag the panel's edge; the width is remembered per dashboard and the grid re-lays out to match.
-- :material-format-list-bulleted: **Active-filter summary** - applied filters are listed above the controls as an aligned label/value list, each row carrying its own control's icon and accent, with a per-row clear. The list folds to a single line and its state persists per dashboard.
+- :material-arrow-split-vertical: **Resizable** - drag the panel's edge; the width is remembered and the grid re-lays out to match.
+- :material-format-list-bulleted: **Active-filter summary** - applied filters are listed above the controls as an aligned label/value list, each row carrying its own control's icon and accent, with a per-row clear. The list folds to a single line.
+- :material-tab: **Remembered per tab family** <small>(v1.8.3+)</small> - the collapse, the width and the section folds are keyed on the dashboard family, the same convention as the map panel and cross-tab sections, so they survive a tab switch instead of resetting on it.
 - :material-cellphone: **Drawer on narrow screens** - the panel becomes an overlay rather than stealing canvas width.
 
 ### :material-filter-check: Funnel filtering <small>(v1.7.0+)</small> { #funnel-filtering }
@@ -337,13 +338,32 @@ Organize complex dashboards with **tabs** (v0.6.0+):
 - :material-view-grid-outline: **Own Layouts**: Each tab arranges its own components, and a tab cannot rearrange a section another tab shares with it
 - :material-cog-sync: **Shared Settings**: Theme and permissions apply across all tabs, as do [sections marked *Show on every tab*](#persistent-sections) and the filter values set in them
 
+### :material-format-title: Canvas tab header <small>(v1.8.3+)</small> { #canvas-tab-header }
+
+The canvas opens with the tab's own header rather than going straight to the grid:
+its **icon**, its **name** and its **description**, all fields a tab already carried
+and none of which were shown here before. A tab can therefore state what it is for
+without spending a grid row on a text component, and a
+[section shown on every tab](#persistent-sections) with `pin: top` lands *below* that
+statement rather than introducing someone else's tab first.
+
+Image-path icons render too, which is the only kind a MultiQC tab has; previously such
+a tab opened on a bare title while every other tab got its glyph.
+
+<!-- prettier-ignore -->
+!!! info "Reading order is the authored order"
+    The viewer sorted child tabs alphabetically while the editor sorted them by
+    `tab_order`, so a reader never saw the order the dashboard laid out. Since
+    **v1.8.3** both honour `tab_order`.
+
 ### :material-creation: Creating a Tab
 
 1. :material-plus-circle: Click **"+ New Tab"** in the navbar
 2. :material-form-textbox: Enter a **tab name**
-3. :material-emoticon-outline: Select an **icon** from the dropdown
-4. :material-palette-outline: Choose an **icon color**
-5. :material-check: Click **Create**
+3. :material-text-short: Optionally add a **description**, shown in the canvas header
+4. :material-emoticon-outline: Select an **icon** from the dropdown
+5. :material-palette-outline: Choose an **icon color**
+6. :material-check: Click **Create**
 
 <!-- ### :material-tools: Tab Operations
 
@@ -428,6 +448,18 @@ measure them against.
 
 The report for a project never built from a template. Before v1.6.0 this tab was not
 offered at all, though the report behind it worked.
+
+### :material-tune-variant: Run provenance <small>(v1.8.3+)</small> { #run-provenance-card }
+
+Below the collections, a **Run provenance** card lists the parameters the pipeline
+actually ran with, read from the run's own `params`, software-version and recap files.
+Entries are grouped into accordions, each row copyable, with a full-text search across
+keys and values and the source files named at the bottom.
+
+What is collected is declared by the template, so the card is complete by construction:
+only keys the template explicitly excludes are omitted, and anything no group rule
+matches lands in **Other**. See
+[Run provenance](../usage/projects/templates.md#run-provenance).
 
 ### :material-heart-pulse: Health status & banner
 

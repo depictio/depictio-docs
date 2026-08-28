@@ -131,6 +131,7 @@ depictio-cli run --project-config-path ./config.yaml
     | `--dashboard-name` | `string` | `null` | Override the template's main dashboard title at import (the template file is left untouched). |
     | `--dashboard` | `path` | `null` | Override default dashboard(s) to import. Repeatable. |
     | `--skip-dashboard-import` | `flag` | `false` | Skip the automatic dashboard import step (Step 8) |
+    | `--provenance-file` | `path` | `null` | Extra recap file (JSON, YAML or two-column key/value TSV) listed in the project's [run provenance](../usage/projects/templates.md#run-provenance) under *User provided*. Repeatable. (v1.8.3+) |
 
     Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/projects/templates.md#recipe-seeds) committed beside the data: a `source: transformed` data collection with a `{DATA_ROOT}/{dc_tag}.tsv` next to it is scanned from that file instead of re-running its recipe against raw pipeline inputs the bundled projects do not ship. Collections without a seed still run their recipes, and no flags change.
 

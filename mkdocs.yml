@@ -221,6 +221,7 @@ nav:
           - usage/guides/index.md
           - WebUI: usage/guides/web_ui.md
           - Dashboard creation: usage/guides/dashboard_creation.md
+          - Picking from the catalog: usage/guides/catalog-picker.md
           - Using the dashboard: usage/guides/dashboard_usage.md
           - Real-time events: usage/guides/realtime-events.md
       - Projects:

@@ -50,8 +50,10 @@ Components are automatically assigned to the appropriate panel based on their ty
 ### Working with the filter panel (v1.4.0+)
 
 - **Collapse it** with the control at its edge. It shrinks to a narrow rail rather than disappearing, and the rail keeps showing how many filters are active, so a filtered dashboard never looks unfiltered.
-- **Resize it** by dragging its edge. The width is remembered for that dashboard, and the grid re-lays out to match.
-- **Fold a section** with its header. A folded section fetches nothing until you open it, and keeps a badge with the number of active filters inside it.
+- **Resize it** by dragging its edge. The width is remembered, and the grid re-lays out to match.
+- **Fold a section** with its header. A folded section fetches nothing until you open it, and keeps a badge with the number of active filters inside it. A folded grid section of cards shows its numbers as summary chips.
+
+Since **v1.8.3** the collapse, the width and the section folds are remembered for the whole tab family. A tab switch is a navigation to a sibling dashboard document, so before that each of the three reset on every switch: a panel collapsed on one tab reopened on the next.
 - **Read what is applied** from the summary above the controls: one aligned row per filter, each with its own control's icon and colour. Click a row's clear button to drop just that filter. The whole summary folds to a single line.
 
 Sections in the main grid work the same way, and a folded section of cards still shows its numbers in the header. See [Sections](../../features/dashboards.md#sections).
@@ -81,6 +83,8 @@ When a dashboard has a map authored as a dashboard-wide panel, it follows you ac
         <img src="../../../images/guides/dashboard_creation/dashboard_settings.png" width="600">
     </a>
 </div>
+
+Since **v1.8.3** a **Run parameters** row sits alongside it, showing the parameters the pipeline ran with. Only the keys the template highlights appear inline; the full grouped listing is one click away in the ingestion report. See [Run provenance](../projects/templates.md#run-provenance).
 
 !!! note "This replaced the Parameters panel (v1.0.0)"
     The Dash UI put a *Parameters* panel here, with switches for edit mode and interactivity and buttons to remove every component or reset every filter. Only one of those survived the React rewrite: **Reset all**, now at the top of the filter panel. Editing is the **Edit** button, and there is no global interactivity switch.
