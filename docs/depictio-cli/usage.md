@@ -675,7 +675,7 @@ For more information about dashboard YAML format and workflows, see [Dashboard Y
 
 <!-- prettier-ignore -->
 !!! info "Command Group: `depictio-cli catalog`"
-    Browse the bioinformatics tool→viz catalog by rendering its components on their bundled fixture data. Handy for previewing what a module produces before wiring it into a dashboard. For the live, hosted version see the [Depictio Modules](../modules/index.md) catalog.
+    Browse the bioinformatics tool→viz catalog by rendering its components on their bundled fixture data. Handy for previewing what a tool produces before wiring it into a dashboard. For the live, hosted version see the [Depictio Tools Catalog](../catalog/index.md).
 
 #### `catalog preview`
 

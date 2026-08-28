@@ -10,8 +10,9 @@ Depictio provides a variety of component types for building interactive dashboar
 
 !!! tip "Browse the live catalog"
     To see which bioinformatics tool outputs map to these components, explore the
-    interactive [:material-view-module: Depictio Modules](../modules/index.md) gallery —
-    a live, offline catalog of tool-to-component integrations.
+    [:material-hammer-wrench: Depictio Tools Catalog](../catalog/index.md): every
+    recognised tool, the data collections it emits, and the renders they offer,
+    previewed on real fixture data.
 
 ## :material-format-list-bulleted: Component Overview
 
