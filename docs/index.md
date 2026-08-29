@@ -277,7 +277,7 @@ hide:
 
     <article class="feature-row">
       <div class="feature-row-visual">
-        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the projects table">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the project page">
           <img src="images/landing/project_light.webp" alt="A project page showing its type, the template it was built from, its workflow and its data collections" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
@@ -295,8 +295,23 @@ hide:
 
     <article class="feature-row">
       <div class="feature-row-visual">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the Create a Data Collection dialog">
+          <img src="images/landing/upload_light.webp" alt="The Create a Data Collection dialog, with a drop zone for a table file and a tab for MultiQC reports" loading="lazy">
+          <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
+        </button>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"/></svg><span>Upload</span></span>
+        <h3>Or just drop the file in</h3>
+        <p>No pipeline to point at yet? Drop a CSV, TSV, Parquet or Feather file straight into a project from the browser, or a MultiQC report, and Depictio scans it and aggregates it into a Delta table for you. The collection is ready to build on without touching the CLI.</p>
+        <a class="feature-link" href="usage/projects/guide/">Start a project &rarr;</a>
+      </div>
+    </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the ingestion report">
-          <img class="only-light" src="images/landing/ingest_light.webp" alt="The ingestion report listing what the CLI found and the parameters the run used" loading="lazy">
+          <img class="only-light" src="images/landing/ingest_light.webp" alt="The project ingestion view, listing every data collection with its requirement, its status and its file count" loading="lazy">
           <img class="only-dark" src="images/landing/ingest_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
@@ -311,7 +326,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a dashboard in edit mode">
-          <img src="images/landing/build_light.webp" alt="A dashboard in edit mode, with Add component, Save and Exit Edit in the header" loading="lazy">
+          <img src="images/landing/build_light.webp" alt="A card held mid-drag, over the dashed outline of the slot it is about to land in" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -325,7 +340,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the component design step">
-          <img src="images/landing/design_light.webp" alt="The Component Design step, with the visualisations ranked by how well they fit the collection and the columns each one binds" loading="lazy">
+          <img src="images/landing/design_light.webp" alt="The Figure Component Design step, with a box plot preview beside its parameter groups" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -430,7 +445,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a floating map panel">
-          <img src="images/landing/map_light.webp" alt="The sampling sites on a map, each marker coloured by habitat, beside the order they were visited in" loading="lazy">
+          <img src="images/landing/map_light.webp" alt="The map docked at the foot of the filter panel, beside the dashboard it filters" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
