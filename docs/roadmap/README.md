@@ -210,7 +210,7 @@ something up.
 | :material-flask-outline: **Citable science** | DOI-backed snapshots per dashboard version, sample-to-viz provenance via [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/), static export to [Quarto](https://quarto.org/). Nothing is open for it yet; [#931](https://github.com/depictio/depictio/issues/931) is the nearest neighbour, surfacing pipeline and filtering provenance in a dashboard | [#931](https://github.com/depictio/depictio/issues/931) |
 | :material-robot-outline: **AI-assisted analysis** | Describe the analysis and get a proposed layout; anomaly detection, narration, and an MCP server for AI agents | [#844](https://github.com/depictio/depictio/issues/844) · [#79](https://github.com/depictio/depictio/issues/79) |
 | :material-table-merge-cells: **Grain-aware joins** | Detect each table's grain so a cross-DC join cannot silently explode rows | [#877](https://github.com/depictio/depictio/pull/877) · [#876](https://github.com/depictio/depictio/issues/876) |
-| :material-snake: **Snakemake report plugin** | Depictio as a drop-in replacement for Snakemake's static HTML report. Nothing is open for it yet | — |
+| :material-snake: **Snakemake report plugin** | Depictio as a drop-in replacement for Snakemake's static HTML report | *none yet* |
 
 ---
 
