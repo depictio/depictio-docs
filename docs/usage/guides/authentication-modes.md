@@ -42,7 +42,7 @@ DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET=your-secret
 
 **Behavior:**
 
-- Users register or are created by admins
+- Users register or are created by admins, unless [registration is disabled](#registration)
 - JWT-based authentication (RS256)
 - Role-based access: admin and regular users
 - Project and dashboard-level permissions (owner, editor, viewer)
@@ -148,6 +148,55 @@ the same value, through `--provisioning-key` or the identically-named variable.
 A magic link is single-use and expires; redeeming it exchanges the ticket for a
 normal session. Sending it to the user is the pipeline's job; Depictio only
 emits it on stdout.
+
+## Restricting access
+
+Three switches, all opt-in, all independent of the four modes above.
+
+### Self-service registration { #registration }
+
+Set it on an instance where accounts are provisioned by an admin rather than claimed by whoever finds the URL:
+
+```bash
+DEPICTIO_AUTH_REGISTRATION_DISABLED=true
+```
+
+**Behavior:**
+
+- `POST /auth/register` returns 403, and the Register view and the link to it are hidden
+- Google OAuth becomes a login-only door: a known email signs in, an unknown one is refused instead of being provisioned an account
+- Existing accounts, roles and permissions are untouched
+
+### Password sign-in <small>(v1.8.2+)</small> { #password-login }
+
+Closes email and password sign-in so Google OAuth is the only way in, for an instance whose accounts all come from one identity provider:
+
+```bash
+DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED=true
+```
+
+**Behavior:**
+
+- `POST /auth/login` refuses before reading any credential, so a valid password is not a way around the setting, and the sign-in card hides the form rather than showing one that always fails
+- Ignored unless Google OAuth is configured, so forgetting the OAuth variables gives you the password form back instead of a locked instance
+- `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` is no longer required: OAuth matches the admin by email, so pointing `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` at your own Google address is what makes you the admin, with no seeded local account
+
+### Public-mode access code <small>(v1.8.2+)</small> { #public-access-code }
+
+Public mode hands a temporary session to anyone who loads the page. A code makes the instance link-shareable without being world-open:
+
+```bash
+DEPICTIO_AUTH_PUBLIC_MODE=true
+DEPICTIO_AUTH_PUBLIC_ACCESS_CODE=your-shared-code
+```
+
+**Behavior:**
+
+- A visitor enters the code before a temporary user is minted, and still gets their own throwaway account: it is a shared secret, not a login
+- Checked in `/auth/public/create_temporary_user` after the rate limiter, so it is no more brute-forceable than any other credential there
+- Ignored outside public and demo mode
+
+On Kubernetes, all three go under `backend.env` in your values file.
 
 ## Choosing a Mode
 

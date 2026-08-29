@@ -53,6 +53,56 @@ ghcr.io/depictio/depictio-worker:1.8.3
 
 ---
 
+## **[v1.8.2](https://github.com/depictio/depictio/releases/tag/v1.8.2)** (August 28, 2026)
+
+!!! success "Patch: two more ways to close the front door, and logos that survive a redeploy"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.8.2
+ghcr.io/depictio/depictio-viewer:1.8.2
+ghcr.io/depictio/depictio-worker:1.8.2
+```
+
+### **✨ New Features**
+
+* **Password sign-in can be closed**: `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED` leaves Google OAuth as the only way in, refusing at `/auth/login` before any credential is read. It is ignored unless OAuth is configured, so a half-done setup cannot lock everyone out, and the admin bootstrap no longer demands a password it could never use. See [Authentication Modes](../usage/guides/authentication-modes.md#password-login) ([#1007](https://github.com/depictio/depictio/pull/1007), [b778f77e](https://github.com/depictio/depictio/commit/b778f77e)).
+* **A shared code can gate public mode**: with `DEPICTIO_AUTH_PUBLIC_ACCESS_CODE` set, a visitor enters it before a temporary user is minted, so a deployment can be link-shareable without being world-open. See [Authentication Modes](../usage/guides/authentication-modes.md#public-access-code) ([#1007](https://github.com/depictio/depictio/pull/1007), [b778f77e](https://github.com/depictio/depictio/commit/b778f77e), [632110e9](https://github.com/depictio/depictio/commit/632110e9)).
+
+### **🚀 Improvements**
+
+* **Uploaded logos live in the database**: a `branding_assets` collection served from the API, so a rebuild or a pod redeploy no longer leaves a theme pointing at bytes that are gone, and no volume has to be provisioned. Logos still on disk are imported once at startup, and both new collections join the backup set. See [Branding](../usage/administration/branding.md#logo-storage) ([#1007](https://github.com/depictio/depictio/pull/1007), [cffc3d0a](https://github.com/depictio/depictio/commit/cffc3d0a), [a24bb09d](https://github.com/depictio/depictio/commit/a24bb09d)).
+* **The Depictio attribution is scoped**: the badge renders exactly when the wordmark does not, once per surface, rather than twice on a dashboard, and a branded login card gains one where it had none. See [Branding](../usage/administration/branding.md#attribution) ([#1007](https://github.com/depictio/depictio/pull/1007), [cffc3d0a](https://github.com/depictio/depictio/commit/cffc3d0a)).
+
+### **🐛 Bug Fixes**
+
+* **Importing a theme JSON stops orphaning the logo**: the import replaced the whole draft, so the next save dropped `logo_url` while the image stayed behind. Import carries the logo fields forward, as applying a preset already did ([#1007](https://github.com/depictio/depictio/pull/1007), [cffc3d0a](https://github.com/depictio/depictio/commit/cffc3d0a)).
+
+---
+
+## **[v1.8.1](https://github.com/depictio/depictio/releases/tag/v1.8.1)** (August 28, 2026)
+
+!!! success "Patch: instance branding reaches Kubernetes deployments"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.8.1
+ghcr.io/depictio/depictio-viewer:1.8.1
+ghcr.io/depictio/depictio-worker:1.8.1
+```
+
+### **🚀 Improvements**
+
+* **A branded overlay for the EMBL internal deployment**: `values-embl-internal-dev-trec.yaml` applies the TREC preset, the instance name, the logo and a registration gate as a thin last `-f`, so the base values file stays generic and dropping the overlay is the whole *deploy this unbranded* operation. See [Authentication Modes](../usage/guides/authentication-modes.md#registration) ([#1005](https://github.com/depictio/depictio/pull/1005), [0be409e3](https://github.com/depictio/depictio/commit/0be409e3)).
+
+### **🐛 Bug Fixes**
+
+* **`DEPICTIO_BRANDING_*` reaches the cluster**: the backend and worker configmaps were a hand-written allowlist, so every branding variable was dropped at render time with no warning anywhere and a Helm deployment stayed unbranded. Both forward the block by prefix now, the worker included, so exported screenshots carry the brand palette too. See [Branding](../usage/administration/branding.md) ([#1005](https://github.com/depictio/depictio/pull/1005), [20033446](https://github.com/depictio/depictio/commit/20033446)).
+
+---
+
 ## **[v1.8.0](https://github.com/depictio/depictio/releases/tag/v1.8.0)** (August 27, 2026)
 
 !!! success "Minor: an instance that wears its own identity, and a tree you can navigate"

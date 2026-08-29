@@ -58,9 +58,19 @@ A hex brand colour is expanded into a 10-shade tuple with **your colour on shade
 
 ## Presets, import and export
 
-**Presets** seeds the form from a starting point, namely the stock Depictio look, TREC, EMBL or Ocean, also settable at deploy time with `DEPICTIO_BRANDING_PRESET`. Everything a preset fills in stays editable, and the flat environment variables override it field by field. **Export** writes the current theme as JSON and **Import** reads one back, so a brand can be version-controlled and moved between deployments.
+**Presets** seeds the form from a starting point, namely the stock Depictio look, TREC, EMBL or Ocean, also settable at deploy time with `DEPICTIO_BRANDING_PRESET`. Everything a preset fills in stays editable, and the flat environment variables override it field by field. **Export** writes the current theme as JSON and **Import** reads one back, so a brand can be version-controlled and moved between deployments. An imported file keeps the instance's uploaded logos unless it names logos of its own, on the same reasoning as a preset: a theme file is a palette, not an identity.
 
 [![The Presets menu](../../images/guides/branding/branding-presets.webp)](../../images/guides/branding/branding-presets.webp){target=_blank}
+
+## Where the logos live <small>(v1.8.2+)</small> { #logo-storage }
+
+Uploaded logos are stored in a `branding_assets` collection and served from the API, at `/utils/branding/logo/{variant}` for the instance and `/dashboards/logo/{id}` for a dashboard. Nothing is written to the container filesystem, so a rebuild or a pod redeploy cannot leave a theme pointing at an image that no longer exists, and no volume or PVC has to be provisioned. Each is capped at 2 MB, as PNG, JPEG or WebP; SVG is refused because it can carry scripts and would be served same-origin.
+
+`branding_assets` and the overrides document in `instance_settings` are both part of the backup set, so a restore brings back the instance identity that every dashboard theme inherits from. A deployment branded before v1.8.2 keeps working: logos still on disk are imported into the database at startup, once, and their stored URLs rewritten.
+
+## The "Powered by Depictio" attribution <small>(v1.8.2+)</small> { #attribution }
+
+The badge renders exactly when the Depictio wordmark does not, meaning when the logo in scope resolves to `custom` or `none`. A stock deployment already carries the wordmark in the app rail and on the login card, so a badge there would only repeat it; a branded one is where it is the only thing saying what the app is built on. It appears once per surface: under the logo on the login card, in the app rail outside dashboards, and in a dashboard header.
 
 ## A dashboard override
 
@@ -79,7 +89,7 @@ brand_theme:
 ```
 
 !!! warning "Uploaded logos do not travel"
-    Logos uploaded through the UI are stripped on export, since the file lives on the instance that received it. Use `logo_url` with an absolute address for a logo that should survive a move.
+    Logos uploaded through the UI are stripped on export: the image lives in the instance's own database, so a reference to it would resolve to nothing elsewhere. Use `logo_url` with an absolute address for a logo that should survive a move.
 
 ## See Also
 
