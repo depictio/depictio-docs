@@ -1266,7 +1266,9 @@ depictio-cli config migrate --input legacy_config.yaml --output new_config.yaml
 
 # Validate migrated configuration
 depictio-cli config validate-project-config --project-config-path new_config.yaml
-``` -->
+```
+
+-->
 
 ### Pattern: Template project with recipe-transformed data collections { #pattern-template-project }
 

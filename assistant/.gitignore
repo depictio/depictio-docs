@@ -1,0 +1,9 @@
+# Secrets, never committed. Mirrors the Cloudflare secrets, which are write-only.
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+
+node_modules/
+.wrangler/
+.last-run-summary.md
