@@ -408,7 +408,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><img class="feature-kicker-logo only-light" src="images/logos/multiqc_light.svg" alt="" aria-hidden="true"><img class="feature-kicker-logo only-dark" src="images/logos/multiqc_dark.svg" alt="" aria-hidden="true"><span>MultiQC</span></span>
         <h3>Every QC report, in the dashboard</h3>
-        <p>The CLI scans and aggregates the MultiQC reports a run produced, and their data becomes components you place like any other: General Statistics as a table, each module's plot as its own card. One sample filter reaches all of them, and several runs sit side by side rather than in as many HTML files.</p>
+        <p>The CLI scans and aggregates the MultiQC reports a run produced, across every sample and every run, and their data becomes components you place like any other: General Statistics as a table, each module's plot as its own card. Then it goes past what the HTML report can do: join those panels to your sample sheet and to any other collection in the project, and filter all of them at once from your own metadata, from a map, from a date picker, or from any other filter component on the dashboard.</p>
         <a class="feature-link" href="usage/guides/dashboard_creation/#multiqc-integration-v050">Working with MultiQC &rarr;</a>
       </div>
     </article>
