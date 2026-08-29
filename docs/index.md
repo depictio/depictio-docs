@@ -323,8 +323,23 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3,17V19H9V17H3M3,5V7H13V5H3M13,21V19H21V17H13V15H11V21H13M7,9V11H3V13H7V15H9V9H7M21,13V11H11V13H21M15,9H17V7H21V5H17V3H15V9Z"/></svg><span>Design</span></span>
         <h3>Design your component</h3>
-        <p>Pick the component type, connect it to a data collection, then tune it against a live preview: axes, colours, layout, cross-filtering. Switch to Code Mode when you want the Plotly figure itself.</p>
+        <p>Adding a component starts with a choice, and this is the first branch: pick the type, connect it to a data collection, then tune it against a live preview. Axes, colours, layout, cross-filtering, and Code Mode when you want the Plotly figure itself.</p>
         <a class="feature-link" href="usage/guides/dashboard_creation/">Build a dashboard &rarr;</a>
+      </div>
+    </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the catalog browser">
+          <img src="images/landing/catalog_light.webp" alt="The catalog browser, listing the tools recognised in the project and previewing one render" loading="lazy">
+          <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
+        </button>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5,11H19V7C19,5.89 18.1,5 17,5H13V3.5A2.5,2.5 0 0,0 10.5,1A2.5,2.5 0 0,0 8,3.5V5H4A2,2 0 0,0 2,7V10.8H3.5C5,10.8 6.2,12 6.2,13.5C6.2,15 5,16.2 3.5,16.2H2V20A2,2 0 0,0 4,22H7.8V20.5C7.8,19 9,17.8 10.5,17.8C12,17.8 13.2,19 13.2,20.5V22H17A2,2 0 0,0 19,20V16H20.5A2.5,2.5 0 0,0 23,13.5A2.5,2.5 0 0,0 20.5,11Z"/></svg><span>Catalog</span></span>
+        <h3>Or take one off the shelf</h3>
+        <p>The other branch: Depictio recognises the tool behind each output and offers the visualizations that tool is known to support, pre-configured and previewed at the exact grid box the component will occupy.</p>
+        <a class="feature-link" href="usage/guides/catalog-picker/">Pick from the catalog &rarr;</a>
       </div>
     </article>
 
@@ -338,7 +353,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><img class="feature-kicker-logo" src="images/logo/tools_catalog_icon.webp" alt="" aria-hidden="true"><span>Tools catalog</span></span>
         <h3>Add your tool without writing YAML</h3>
-        <p>Drop one output file, bind its columns in Depictio's own component builder, and Tool Studio writes the catalog entry and opens the pull request for you.</p>
+        <p>And the shelf is yours to stock. Drop one output file, bind its columns in Depictio's own component builder, and Tool Studio writes the catalog entry and opens the pull request for you, so the next person picks what you designed.</p>
         <a class="feature-link" href="developer/tool-studio/">Open Tool Studio &rarr;</a>
       </div>
     </article>
@@ -1958,62 +1973,69 @@ hide:
     }
   }
 
-  /* Reveal on scroll: everything rises from below. Only applied once the script
-     has taken over, so the content is never hidden when JavaScript does not run. */
+  /* Reveal on scroll: every part rises from below as it enters the viewport.
+     Driven by @keyframes rather than transitions, because the theme ships
+     `*{transition:none!important}` under prefers-reduced-motion, which would
+     silently flatten a transition-based reveal. */
+  @keyframes depictio-rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(48px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   .feature-flow.is-enhanced .feature-row-visual,
   .feature-flow.is-enhanced .feature-row-text > * {
     opacity: 0;
-    transform: translateY(46px);
-    transition: opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
-                transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
-                filter 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
     will-change: opacity, transform;
-  }
-
-  .feature-flow.is-enhanced .feature-row-visual {
-    filter: blur(8px);
-  }
-
-  .feature-flow.is-enhanced .feature-row-text > * {
-    transform: translateY(28px);
-    filter: blur(4px);
   }
 
   .feature-flow.is-enhanced .feature-row.is-visible .feature-row-visual,
   .feature-flow.is-enhanced .feature-row.is-visible .feature-row-text > * {
-    opacity: 1;
-    transform: none;
-    filter: none;
+    animation: depictio-rise-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .feature-flow.is-enhanced .feature-row.is-visible .feature-kicker {
-    transition-delay: 0.1s;
+    animation-delay: 0.1s;
   }
 
   .feature-flow.is-enhanced .feature-row.is-visible h3 {
-    transition-delay: 0.18s;
+    animation-delay: 0.18s;
   }
 
   .feature-flow.is-enhanced .feature-row.is-visible p {
-    transition-delay: 0.26s;
+    animation-delay: 0.26s;
   }
 
   .feature-flow.is-enhanced .feature-row.is-visible .feature-link {
-    transition-delay: 0.34s;
+    animation-delay: 0.34s;
   }
 
+  /* Reduced motion keeps the reveal, shorter and travelling less far. */
   @media (prefers-reduced-motion: reduce) {
-    .feature-flow.is-enhanced .feature-row-visual,
-    .feature-flow.is-enhanced .feature-row-text > * {
-      opacity: 1;
-      transform: none;
-      filter: none;
-      transition: none;
+    @keyframes depictio-rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
 
-    .feature-frame,
-    .feature-zoom {
-      transition: none;
+    .feature-flow.is-enhanced .feature-row.is-visible .feature-row-visual,
+    .feature-flow.is-enhanced .feature-row.is-visible .feature-row-text > * {
+      animation-duration: 0.45s;
+    }
+
+    .feature-frame:hover,
+    .feature-frame:focus-visible {
+      transform: none;
     }
   }
 
@@ -2484,8 +2506,18 @@ async function checkDemoAvailability() {
   }
 }
 
+// The theme runs with navigation.instant, which swaps the DOM over XHR, so
+// DOMContentLoaded fires once per session. document$ emits on every page view.
+function onPageReady(fn) {
+  if (window.document$ && typeof window.document$.subscribe === 'function') {
+    window.document$.subscribe(function() { fn(); });
+  } else {
+    document.addEventListener('DOMContentLoaded', fn);
+  }
+}
+
 // Handle ESC key to exit fullscreen
-document.addEventListener('DOMContentLoaded', function() {
+onPageReady(function() {
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       const container = document.getElementById('iframe-container');
@@ -2504,12 +2536,15 @@ function initFeatureFlow() {
   const flow = document.querySelector('.feature-flow');
   if (!flow) return;
 
+  if (flow.dataset.revealBound === 'true') return;
+
   const rows = Array.from(flow.querySelectorAll('.feature-row'));
   if (!rows.length) return;
 
   // Without IntersectionObserver the rows must stay visible, so only opt into
   // the hidden starting state once we know we can reveal them again.
   if (!('IntersectionObserver' in window)) return;
+  flow.dataset.revealBound = 'true';
   flow.classList.add('is-enhanced');
 
   const observer = new IntersectionObserver(function(entries) {
@@ -2518,17 +2553,39 @@ function initFeatureFlow() {
       entry.target.classList.add('is-visible');
       observer.unobserve(entry.target);
     });
-  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.2 });
+    // Anything already past the trigger line when the page opens mid-scroll
+    // is shown at once rather than waiting for a scroll that may never come.
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
 
   rows.forEach(function(row) { observer.observe(row); });
+
+  // Safety net: if the observer never fires (printing, a screenshot pass, a
+  // restored scroll position), nothing would ever become visible again. Reveal
+  // whatever is on screen at load, and once more on the first scroll.
+  function revealOnScreen() {
+    rows.forEach(function(row) {
+      if (row.getBoundingClientRect().top < window.innerHeight) {
+        row.classList.add('is-visible');
+      }
+    });
+  }
+
+  window.setTimeout(revealOnScreen, 800);
+  window.addEventListener('load', function() {
+    window.setTimeout(revealOnScreen, 400);
+  });
+  window.addEventListener('scroll', revealOnScreen, { passive: true, once: true });
 }
 
-document.addEventListener('DOMContentLoaded', initFeatureFlow);
+onPageReady(initFeatureFlow);
 
 // Screenshots open full size in a lightbox
 function initLightbox() {
   const frames = Array.from(document.querySelectorAll('.feature-frame'));
   if (!frames.length) return;
+
+  const stale = document.querySelector('.depictio-lightbox');
+  if (stale) stale.remove();
 
   const box = document.createElement('div');
   box.className = 'depictio-lightbox';
@@ -2584,5 +2641,5 @@ function initLightbox() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', initLightbox);
+onPageReady(initLightbox);
 </script>
