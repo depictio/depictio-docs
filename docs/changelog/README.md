@@ -8,6 +8,13 @@ hide:
 
 # Changelog
 
+!!! success "React viewer is the sole frontend as of v1.0.0"
+    The Dash frontend was removed in **v0.13.12**. As of **v1.0.0** the React
+    viewer serves canonical URLs (`/dashboards`, `/dashboard/{id}`,
+    `/dashboard-edit/{id}`, `/projects`); the `*-beta` suffix paths redirect
+    to canonical. The 0.13.x patch series prepared the data-fetch and
+    bundled-seed paths for this cutover.
+
 ## **[v1.9.0](https://github.com/depictio/depictio/releases/tag/v1.9.0)** (August 28, 2026)
 
 !!! success "Minor: backups you can drive from the UI, and a catalog you can pick from and contribute to"
