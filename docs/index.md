@@ -60,7 +60,7 @@ hide:
 <section class="workflow-section">
   <div class="workflow-content">
     <h2 class="section-heading workflow-title">
-      <span class="section-heading-icon is-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M13,14C9.64,14 8.54,15.35 8.18,16.24C9.25,16.7 10,17.76 10,19A3,3 0 0,1 7,22A3,3 0 0,1 4,19C4,17.69 4.83,16.58 6,16.17V7.83C4.83,7.42 4,6.31 4,5A3,3 0 0,1 7,2A3,3 0 0,1 10,5C10,6.31 9.17,7.42 8,7.83V13.12C8.88,12.47 10.16,12 12,12C14.67,12 15.56,10.66 15.85,9.77C14.77,9.32 14,8.25 14,7A3,3 0 0,1 17,4A3,3 0 0,1 20,7C20,8.34 19.12,9.5 17.91,9.86C17.65,11.29 16.68,14 13,14M7,18A1,1 0 0,0 6,19A1,1 0 0,0 7,20A1,1 0 0,0 8,19A1,1 0 0,0 7,18M7,4A1,1 0 0,0 6,5A1,1 0 0,0 7,6A1,1 0 0,0 8,5A1,1 0 0,0 7,4M17,6A1,1 0 0,0 16,7A1,1 0 0,0 17,8A1,1 0 0,0 18,7A1,1 0 0,0 17,6Z"/></svg></span>
+      <span class="section-heading-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M13,14C9.64,14 8.54,15.35 8.18,16.24C9.25,16.7 10,17.76 10,19A3,3 0 0,1 7,22A3,3 0 0,1 4,19C4,17.69 4.83,16.58 6,16.17V7.83C4.83,7.42 4,6.31 4,5A3,3 0 0,1 7,2A3,3 0 0,1 10,5C10,6.31 9.17,7.42 8,7.83V13.12C8.88,12.47 10.16,12 12,12C14.67,12 15.56,10.66 15.85,9.77C14.77,9.32 14,8.25 14,7A3,3 0 0,1 17,4A3,3 0 0,1 20,7C20,8.34 19.12,9.5 17.91,9.86C17.65,11.29 16.68,14 13,14M7,18A1,1 0 0,0 6,19A1,1 0 0,0 7,20A1,1 0 0,0 8,19A1,1 0 0,0 7,18M7,4A1,1 0 0,0 6,5A1,1 0 0,0 7,6A1,1 0 0,0 8,5A1,1 0 0,0 7,4M17,6A1,1 0 0,0 16,7A1,1 0 0,0 17,8A1,1 0 0,0 18,7A1,1 0 0,0 17,6Z"/></svg></span>
       <span>Workflow Ecosystem</span>
     </h2>
     <p class="workflow-description">
@@ -92,7 +92,7 @@ hide:
 <section class="components-section">
   <div class="components-content">
     <h2 class="section-heading components-title">
-      <span class="section-heading-icon is-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M13,3V11H21V3M13,21H21V13H13M3,21H11V13H3M3,11H11V3H3V11Z"/></svg></span>
+      <span class="section-heading-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M13,3V11H21V3M13,21H21V13H13M3,21H11V13H3M3,11H11V3H3V11Z"/></svg></span>
       <span>Dashboard Components</span>
     </h2>
     <p class="components-description">
@@ -541,7 +541,7 @@ hide:
 
 <section class="getting-started-section">
   <h2 class="section-heading">
-      <span class="section-heading-icon is-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M10,16.5V7.5L16,12M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg></span>
+      <span class="section-heading-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M10,16.5V7.5L16,12M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg></span>
       <span>Getting Started</span>
     </h2>
   <p class="getting-started-intro">Ready to get started with Depictio?</p>
@@ -602,7 +602,7 @@ hide:
 <!-- Funding Section -->
 <section class="funding-section">
   <h2 class="section-heading">
-      <span class="section-heading-icon is-yellow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z"/></svg></span>
+      <span class="section-heading-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4,3C2.89,3 2,3.89 2,5V15A2,2 0 0,0 4,17H12V22L15,19L18,22V17H20A2,2 0 0,0 22,15V5C22,3.89 21.1,3 20,3H4M12,5L15,7L18,5V8.5L21,10L18,11.5V15L15,13L12,15V11.5L9,10L12,8.5V5M4,5H9V7H4V5M4,9H7V11H4V9M4,13H9V15H4V13Z"/></svg></span>
       <span>Funding</span>
     </h2>
 
@@ -636,7 +636,7 @@ hide:
 <!-- Academic Partners Section -->
 <section class="partners-section">
   <h2 class="section-heading">
-      <span class="section-heading-icon is-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"/></svg></span>
+      <span class="section-heading-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"/></svg></span>
       <span>Academic Partners</span>
     </h2>
   <div class="partners-container">
@@ -653,7 +653,6 @@ hide:
 <section class="tech-section">
   <div class="container text-center">
     <h2 class="section-heading">
-      <span class="section-heading-icon is-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12,16L19.36,10.27L21,9L12,2L3,9L4.63,10.27M12,18.54L4.62,12.81L3,14.07L12,21.07L21,14.07L19.37,12.8L12,18.54Z"/></svg></span>
       <span>Powered by Modern Technologies</span>
     </h2>
     <div class="tech-badges">
@@ -1165,13 +1164,8 @@ hide:
 
   /* Dashboard Components Section */
   .components-section {
-    background: #ffffff;
     padding: 1.5rem 2rem 3rem 2rem;
     margin: 0 -2rem;
-  }
-
-  [data-md-color-scheme="slate"] .components-section {
-    background: transparent;
   }
 
   .components-content {
@@ -1307,7 +1301,6 @@ hide:
 
   /* Workflow Section */
   .workflow-section {
-    background: #f8fafc;
     padding: 1.5rem 2rem 3rem 2rem;
     margin: 0 -2rem;
     border-radius: 0;
@@ -1755,34 +1748,15 @@ hide:
     height: 2.3rem;
     flex-shrink: 0;
     border-radius: 12px;
-    background: var(--depictio-purple);
-    color: #fff;
+    background: var(--md-default-fg-color--light);
+    color: var(--md-default-bg-color);
   }
 
-  .section-heading-icon.is-blue {
-    background: var(--depictio-blue);
-  }
 
-  .section-heading-icon.is-teal {
-    background: var(--depictio-teal);
-  }
 
-  .section-heading-icon.is-green {
-    background: var(--depictio-green);
-  }
 
-  .section-heading-icon.is-yellow {
-    background: var(--depictio-yellow);
-    color: #3c2f00;
-  }
 
-  .section-heading-icon.is-pink {
-    background: var(--depictio-pink);
-  }
 
-  .section-heading-icon.is-violet {
-    background: var(--depictio-violet);
-  }
 
   .section-heading-icon svg {
     width: 1.3rem;
@@ -2378,7 +2352,6 @@ hide:
   .tech-section,
   .key-features-section,
   .funding-section {
-    background: #f8fafc;
     padding: 1.5rem 2rem 3rem 2rem;
     margin: 0 -2rem;
     border-radius: 0;
@@ -2386,23 +2359,9 @@ hide:
 
   .getting-started-section,
   .partners-section {
-    background: #ffffff;
     padding: 1.5rem 2rem 4rem 2rem;
     margin: 0 -2rem 0 -2rem;
     margin-bottom: 0 !important;
-  }
-
-  /* Dark theme section backgrounds */
-  [data-md-color-scheme="slate"] .workflow-section,
-  [data-md-color-scheme="slate"] .tech-section,
-  [data-md-color-scheme="slate"] .key-features-section,
-  [data-md-color-scheme="slate"] .funding-section {
-    background: rgba(255, 255, 255, 0.03);
-  }
-
-  [data-md-color-scheme="slate"] .getting-started-section,
-  [data-md-color-scheme="slate"] .partners-section {
-    background: transparent;
   }
 
   .workflow-section h2,
