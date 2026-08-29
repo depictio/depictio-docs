@@ -1281,7 +1281,8 @@ hide:
   }
 
   @media (max-width: 900px) {
-    .component-card {
+    .component-card,
+    .workflow-card {
       width: calc((100% - 1.5rem) / 2);
     }
   }
@@ -1294,7 +1295,8 @@ hide:
   }
 
   @media (max-width: 500px) {
-    .component-card {
+    .component-card,
+    .workflow-card {
       width: 100%;
     }
   }
@@ -1410,35 +1412,43 @@ hide:
 
   .workflow-logos {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap: 40px;
-    width: 100%;
-    overflow-x: auto;
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
   .workflow-card {
     background: var(--md-default-bg-color);
-    border-radius: 16px;
-    padding: 2rem 1.5rem;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--md-default-fg-color--lightest);
-    transition: all 0.3s ease;
-    min-width: 220px;
-    height: 220px;
+    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+                box-shadow 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+                border-color 0.45s ease;
+    width: calc((100% - 3rem) / 3);
+    min-height: 150px;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
   }
 
   [data-md-color-scheme="slate"] .workflow-card {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
 
   .workflow-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-6px);
+    box-shadow: 0 18px 38px -14px rgba(0, 0, 0, 0.22);
+    border-color: var(--md-default-fg-color--lighter);
+  }
+
+  [data-md-color-scheme="slate"] .workflow-card:hover {
+    box-shadow: 0 18px 38px -14px rgba(0, 0, 0, 0.6);
   }
 
   .workflow-card a {
@@ -2078,6 +2088,7 @@ hide:
     /* The theme sets `*{transition:none!important}` here, which would make every
        hover and the lightbox snap. Opt these back in, at half the duration. */
     .component-card,
+    .workflow-card,
     .catalog-landing-card,
     .feature-frame,
     .feature-zoom {
@@ -2085,7 +2096,8 @@ hide:
       transition-timing-function: ease-out !important;
     }
 
-    .component-card {
+    .component-card,
+    .workflow-card {
       transition-property: transform, box-shadow, border-color !important;
     }
 
