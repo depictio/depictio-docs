@@ -289,7 +289,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><img class="feature-kicker-logo" src="images/logo/templates_catalog_icon.webp" alt="" aria-hidden="true"><span>Project &amp; template</span></span>
         <h3>One pipeline, many runs, one place</h3>
-        <p>A project holds the workflows, the data collections and the dashboards that belong together, declared once in YAML. A template turns that declaration into a reusable recipe, so the same project stands up again from any run of the same pipeline.</p>
+        <p>A project holds the workflows, the data collections and the dashboards that belong together. Declare it in a YAML file or build it from the browser, whichever suits the run. A template turns that declaration into a reusable recipe, so the same project stands up again from any run of the same pipeline.</p>
         <span class="feature-links">
           <a class="feature-link" href="usage/projects/guide/">What a project is &rarr;</a>
           <a class="feature-link" href="usage/projects/templates/">Templates &rarr;</a>
@@ -456,7 +456,7 @@ hide:
       </div>
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9,2V8H11V10H5A2,2 0 0,0 3,12V14H1V20H7V14H5V12H11V14H9V20H15V14H13V12H19V14H17V20H23V14H21V12A2,2 0 0,0 19,10H13V8H15V2H9Z"/></svg><span>Explore</span></span>
-        <h3>Follow a subtree, not a table</h3>
+        <h3>Pick a clade, filter everything</h3>
         <p>Pick a clade and filter the whole dashboard down to it. Group samples once and every component colours by that grouping, side by side.</p>
         <a class="feature-link" href="features/components/#phylogeny-interaction">Phylogeny interaction &rarr;</a>
       </div>
