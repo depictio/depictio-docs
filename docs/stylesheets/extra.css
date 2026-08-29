@@ -387,23 +387,19 @@ svg:hover path#shape-7 {
     margin: 1.25rem auto;
     max-width: 600px;
     overflow: hidden;
-    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-                box-shadow 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-                border-color 0.45s ease;
+    transition: border-color 0.45s ease;
 }
 
 [data-md-color-scheme="slate"] .live-demo-info .demo-note-card {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* No lift. The workflow and component grids lift because hovering one of many
+   tiles is a choice; this is a single disclosure strip, and raising the whole
+   block above the iframe it introduces reads as a glitch. The header's own
+   background change is the affordance. */
 .demo-note-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 18px 38px -14px rgba(0, 0, 0, 0.22);
     border-color: var(--md-default-fg-color--lighter);
-}
-
-[data-md-color-scheme="slate"] .demo-note-card:hover {
-    box-shadow: 0 18px 38px -14px rgba(0, 0, 0, 0.6);
 }
 
 .demo-note-header {
