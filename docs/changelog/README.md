@@ -15,6 +15,44 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.8.3](https://github.com/depictio/depictio/releases/tag/v1.8.3)** (August 28, 2026)
+
+!!! success "Patch: a real ampliseq run, and the defects a seeded demo never reaches"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.8.3
+ghcr.io/depictio/depictio-viewer:1.8.3
+ghcr.io/depictio/depictio-worker:1.8.3
+```
+
+### **✨ New Features**
+
+* **Run provenance**: a template declares a `provenance:` block, the CLI collects the run's parameters, thresholds and tool versions into `template_origin`, and they surface as a grouped, searchable card in the ingestion report and in a modal on the dashboard. `--provenance-file` covers a pipeline with no template. See [Run provenance](../usage/projects/templates.md#run-provenance) ([#1002](https://github.com/depictio/depictio/pull/1002), [4ef63950](https://github.com/depictio/depictio/commit/4ef63950), [3fe35f5c](https://github.com/depictio/depictio/commit/3fe35f5c)).
+* **The canvas leads with a real tab header**: the tab's name, its description and its icon, all fields a tab already carried and none of which were ever shown there. See [Dashboard Tabs](../features/dashboards.md#dashboard-tabs) ([#1002](https://github.com/depictio/depictio/pull/1002), [4a5cf5e0](https://github.com/depictio/depictio/commit/4a5cf5e0), [587914d5](https://github.com/depictio/depictio/commit/587914d5)).
+* **Rarefaction curves are pre-aggregated at ingest**: `alpha_rarefaction_summary` collapses the 212,500-row sample × depth × iteration table once into a median and its interquartile spread, with the run's sample metadata joined on, so "Group by" lists every categorical column the collection carries. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md) ([#1002](https://github.com/depictio/depictio/pull/1002), [740fa643](https://github.com/depictio/depictio/commit/740fa643), [9baddb5a](https://github.com/depictio/depictio/commit/9baddb5a)).
+
+### **🚀 Improvements**
+
+* **Grid packing and widening run per section**: compaction ran across the flat layout, where `y` repeats between sections, so one section's cards collided with another's and lone rows widened to fill. The 8-column layout also holds down to 880px of content width, so a sidebar plus an open filter panel no longer drops a 1512px window to four columns ([#1002](https://github.com/depictio/depictio/pull/1002), [ff6e4f7b](https://github.com/depictio/depictio/commit/ff6e4f7b), [0dae8c1f](https://github.com/depictio/depictio/commit/0dae8c1f)).
+* **The filter panel remembers its state per tab family**, collapse, width and section folds alike, and a folded persistent section shows its cards as summary chips. See [Using the dashboard](../usage/guides/dashboard_usage.md#working-with-the-filter-panel-v140) ([#1002](https://github.com/depictio/depictio/pull/1002), [0712a5a8](https://github.com/depictio/depictio/commit/0712a5a8), [4fb707fa](https://github.com/depictio/depictio/commit/4fb707fa)).
+* **One card header layout**: the compact one-line form is restricted to the group-comparison case it was built for, so two cards side by side agree on where the value sits, and a title wraps rather than clipping to "Shann…" ([#1002](https://github.com/depictio/depictio/pull/1002), [bf370f53](https://github.com/depictio/depictio/commit/bf370f53)).
+* **A floating map panel resizes freely from its corner**, and its control sits next to "Reset all". See [Dashboard-wide map panel](../features/components.md#dashboard-wide-map-panel) ([#1002](https://github.com/depictio/depictio/pull/1002), [630662c1](https://github.com/depictio/depictio/commit/630662c1), [e3245009](https://github.com/depictio/depictio/commit/e3245009)).
+
+### **🐛 Bug Fixes**
+
+* **UpSet plots honour dashboard filters**: the grouping values are matrix columns, so a filter on that column had no row to match, and the fallback path was hardcoded to one column name. Sets are matched by value now. See [UpSet](../features/components.md#upset) ([#1002](https://github.com/depictio/depictio/pull/1002), [c99a6702](https://github.com/depictio/depictio/commit/c99a6702)).
+* **The hierarchical heatmap honours sample filters** that are not literally named `sample` or `sample_id`, which is what a metadata pick or a map lasso sends ([#1002](https://github.com/depictio/depictio/pull/1002), [edfdd7e2](https://github.com/depictio/depictio/commit/edfdd7e2)).
+* **`tag:` link placeholders resolve at read time**, so cross-DC filtering is no longer a silent no-op on a project imported without the sync step. See [Cross-DC Filtering](../features/cross-dc-filtering.md#link-fields) ([#1002](https://github.com/depictio/depictio/pull/1002), [b4dbf1ef](https://github.com/depictio/depictio/commit/b4dbf1ef)).
+* **A filter section declared on one tab and rendered family-wide no longer reads as "no constraint" elsewhere**: its components are absent from the other tabs' `stored_metadata`, and the funnel answered "unsupported", which the viewer took for no filter at all ([#1002](https://github.com/depictio/depictio/pull/1002), [a4620325](https://github.com/depictio/depictio/commit/a4620325)).
+* **Code-mode figures keep every preprocessing line** before the `fig =` statement, whatever the variables are called, with multi-line statements tracked over brackets as well as parentheses. Preprocessing used to be recognised by variable name, and every other line was silently discarded. See [Figure Code Mode](../usage/guides/dashboard_creation.md#figure-code-mode-v060) ([#1002](https://github.com/depictio/depictio/pull/1002), [4df84208](https://github.com/depictio/depictio/commit/4df84208)).
+* **The viewer honours `tab_order`** instead of sorting child tabs alphabetically, and server-rendered figures share the client's background, text and grid colours, so a code-mode figure is no longer a darker block in dark mode ([#1002](https://github.com/depictio/depictio/pull/1002), [d178da2d](https://github.com/depictio/depictio/commit/d178da2d)).
+* **`box_plot_stats` renders as a box plot under any secondary layout**, with a validator and the bundled templates corrected ([#1002](https://github.com/depictio/depictio/pull/1002), [054a1352](https://github.com/depictio/depictio/commit/054a1352)).
+* **A foreign `pin: top` section renders below the host tab's own header**, not above it, and a pinned family-wide section lands in the same place on every tab ([#1002](https://github.com/depictio/depictio/pull/1002), [08e92eb0](https://github.com/depictio/depictio/commit/08e92eb0), [698084bf](https://github.com/depictio/depictio/commit/698084bf)).
+
+---
+
 ## **[v1.8.0](https://github.com/depictio/depictio/releases/tag/v1.8.0)** (August 27, 2026)
 
 !!! success "Minor: an instance that wears its own identity, and a tree you can navigate"

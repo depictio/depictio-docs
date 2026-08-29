@@ -112,7 +112,12 @@ Reference section.
     - 4 metric cards: *Total Samples*, *Shannon (distribution)*,
       *Faith PD (distribution)*, *Evenness (distribution)*
     - Rarefaction curves (multi-metric) — advanced viz, filterable by
-      habitat / sample via the in-tab DCLink
+      habitat / sample via the in-tab DCLink. Since **v1.8.3** the curves
+      are drawn from `alpha_rarefaction_summary`, collapsed once at ingest
+      into the median over iterations plus its interquartile spread, with
+      the run's sample metadata joined on, so **Group by** offers every
+      categorical column the metadata carries rather than the one the YAML
+      happened to pick.
     - Alpha diversity by habitat (per metric) — facetted boxplot
     - Per-sample alpha diversity data table
 
@@ -179,6 +184,9 @@ Reference section.
     **Components:**
 
     - Phylogenetic tree viewer (Newick) with metadata-annotated tips
+
+    Zoom, pan, clade collapsing and filter-to-subtree are covered in
+    [Reading and navigating the tree](../../features/components.md#phylogeny-interaction).
 
 ---
 

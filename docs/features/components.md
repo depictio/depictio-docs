@@ -741,6 +741,10 @@ Numeric matrix columns are inferred from the rest of the DC schema at compute ti
 | `normalize` | `none` \| `row_z` \| `col_z` \| `log1p` | `none` | Pre-clustering normalisation |
 | `colorscale` | str \| null | `null` | Plotly colorscale name override |
 
+**Filtering / row tagging**
+
+A sample filter is mirrored as a **column subset**, since samples are the matrix's columns. Since **v1.8.3** this uses the same value-matching rule as [UpSet](#upset): a filter whose values are column names filters that axis, whatever the filter's own column is called. Before that it fired only for a filter literally named `sample` or `sample_id`, which is not what a metadata pick or a map lasso sends, so selecting samples left every column on screen.
+
 
 [![Hierarchical Heatmap example](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light)](../images/guides/advanced-visualizations/complex_heatmap_light.webp){target=_blank}
 
@@ -796,6 +800,8 @@ No canonical role-based schema — the renderer enumerates binary columns at com
 **Filtering / row tagging**
 
 Renderer **filters by intersection size and degree** — `min_size` drops intersections below the threshold, `max_degree` drops intersections involving more sets than the limit.
+
+Since **v1.8.3** dashboard filters reach the plot as well. The grouping values are matrix *columns*, so a filter on that column has no row to match; instead a filter whose values are set names is applied as a subset over the sets, whatever the filter's own column is called, with the sets auto-detected the same way the library detects them. A filter on any other column narrows rows as usual, provided the matrix carries that column: the ampliseq matrix now carries the source DC's per-taxon attributes, so a filter on a taxonomic rank has something to bite on.
 
 
 [![UpSet example](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light)](../images/guides/advanced-visualizations/upset_plot_light.webp){target=_blank}

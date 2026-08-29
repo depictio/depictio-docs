@@ -50,6 +50,15 @@ links:
 | `target_type` | :material-check: Yes | Type of target: `table` or `multiqc` |
 | `link_config` | :material-check: Yes | Resolution configuration (see below) |
 
+<!-- prettier-ignore -->
+!!! info "Tag placeholders resolve at read time <small>(v1.8.3+)</small>"
+    A template ships its links referencing data collections by **tag**, and the
+    CLI's sync step rewrites them to real ids. A project ingested with
+    `--skip-sync`, or whose sync failed, kept `tag:<dc_tag>` placeholders that no
+    link consumer matched, so every cross-DC fan-out resolved zero paths with no
+    error anywhere. Placeholders are now normalised against the project's own
+    data collections whenever links are read. Unknown tags are left untouched.
+
 ### :material-cog-outline: Link Config Options
 
 ```yaml

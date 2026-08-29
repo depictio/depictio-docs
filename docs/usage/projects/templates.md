@@ -157,6 +157,106 @@ Once a project is created from a template, the UI shows a template badge on dash
 - `variables` — all resolved variable values
 - `applied_at` — timestamp
 - `config_snapshot` — frozen copy of the resolved config
+- `run_provenance`: the pipeline's own run parameters, see below <small>(v1.8.3+)</small>
+
+---
+
+## Run provenance <small>(v1.8.3+)</small> { #run-provenance }
+
+`template_origin` records how *Depictio* was invoked. **Run provenance** records
+how the *pipeline* was, by reading the run's own parameter, version and recap
+files and storing them as ordered entries on `template_origin.run_provenance`.
+
+<!-- prettier-ignore -->
+!!! note "Three different things are called provenance"
+    This section is about **pipeline run parameters**. The
+    [ingestion run](../administration/monitoring.md#ingestion) provenance is
+    about how the CLI was invoked (host, CLI version, command line), and
+    [Template Origin](#template-origin) above is about which template produced
+    the project.
+
+A template declares the recipe under `template.provenance`:
+
+```yaml
+template:
+  provenance:
+    sources:
+      - name: "params"
+        glob: "pipeline_info/params*.json"
+        format: "json"
+        pick: "latest"
+        exclude_keys:
+          - "*_ref_databases*"     # bulky reference-DB catalogs
+      - name: "software_versions"
+        glob: "pipeline_info/*software*versions.yml"
+        format: "yaml"
+        group: "Software versions"
+    groups:
+      - group: "Cutadapt (primer trimming)"
+        key_patterns: ["FW_primer", "RV_primer", "cutadapt_*", "skip_cutadapt"]
+      - group: "DADA2 (denoising & filtering)"
+        key_patterns: ["trunclenf", "trunclenr", "trunc_qmin", "max_ee", "dada_*"]
+    highlight:
+      - "FW_primer"
+      - "RV_primer"
+      - "diversity_rarefaction_depth"
+```
+
+### `sources`
+
+One entry per file, or file family, to read.
+
+| Field | Default | Description |
+|-------|---------|-------------|
+| `name` | required | Label shown next to each entry |
+| `glob` | required | Glob relative to `DATA_ROOT`, so one spec fits every run |
+| `format` | `auto` | `json`, `yaml`, `tsv` (two-column key/value) or `auto`, by suffix |
+| `pick` | `latest` | When the glob matches several files: `latest` (last in sorted order, which is chronological for nf-core timestamps), `first`, or `all` (merged in order, later wins) |
+| `exclude_keys` | `[]` | fnmatch globs of keys to drop |
+| `group` | unset | Put every key of this source in one group, bypassing the group rules |
+
+Nested files are flattened to dotted keys.
+
+### `groups`
+
+Each rule assigns keys matching any of its `key_patterns` (fnmatch globs against
+the flattened key) to a named group, in declaration order, first match winning.
+
+### `highlight`
+
+Keys surfaced inline in the dashboard's settings drawer. The full listing always
+stays in the ingestion report.
+
+<!-- prettier-ignore -->
+!!! info "Complete by construction"
+    `exclude_keys` is the only way a key is omitted. Everything else is kept, and
+    keys no group rule matches land in a catch-all **Other** group rather than
+    being dropped.
+
+A template with no `provenance:` block gets a default spec: the latest
+`pipeline_info/params*.json`, everything in one *Parameters* group.
+
+### Files with no template
+
+`--provenance-file` takes an arbitrary recap file, JSON, YAML or two-column TSV,
+and lists its entries under a **User provided** group. The flag is repeatable.
+
+```bash
+depictio-cli run --provenance-file run_summary.yaml --provenance-file thresholds.tsv
+```
+
+### Where it surfaces
+
+- **Ingestion report**: a *Run provenance* card, one accordion per group, with
+  per-row copy, full-text search across keys and values, and the source files
+  listed. See [Ingestion Report & Health](../../features/dashboards.md#ingestion-report-health).
+- **Dashboard settings drawer**: a *Run parameters* row showing the highlighted
+  keys inline, linking to the full report. See
+  [Using the dashboard](../guides/dashboard_usage.md#dashboard-settings-drawer).
+
+The bundled `nf-core/ampliseq` template ships a spec covering Cutadapt, DADA2,
+taxonomy, QIIME2 filtering, diversity and rarefaction, differential abundance,
+skipped steps and software versions.
 
 ---
 
