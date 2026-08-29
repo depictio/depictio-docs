@@ -323,7 +323,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/></svg><span>Ingest</span></span>
         <h3>Read where your data lives</h3>
-        <p>The CLI scans the run on your own machine and pushes only the results. The ingestion report says what it found, what was missing, and the parameters the pipeline ran with.</p>
+        <p>Point the CLI at a finished run and it scans the output on your own machine, pushing only the aggregated results, never the raw files. Smaller collections can be added straight from the browser instead. Either way the ingestion report says what was found, what was missing, and the parameters the pipeline ran with.</p>
         <a class="feature-link" href="depictio-cli/usage/">Ingest with the CLI &rarr;</a>
       </div>
     </article>
@@ -345,7 +345,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M13,3V9H21V3M13,21H21V11H13M3,21H11V15H3M3,13H11V3H3V13Z"/></svg><span>Build</span></span>
         <h3>Drag, drop, resize</h3>
-        <p>Lay a dashboard out visually: figures, tables, metric cards, filters and MultiQC reports, arranged on a grid, no code required.</p>
+        <p>Every component sits on the same grid: drag one anywhere, pull its corner to resize it, and the cards around it move out of the way. Figures, tables, metric cards, images, maps, text, filters and MultiQC panels all behave the same way, and the layout is saved as you go. Nothing here needs code.</p>
         <a class="feature-link" href="usage/guides/dashboard_creation/#add-a-component-to-the-dashboard">Add a component &rarr;</a>
       </div>
     </article>
@@ -375,7 +375,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5,11H19V7C19,5.89 18.1,5 17,5H13V3.5A2.5,2.5 0 0,0 10.5,1A2.5,2.5 0 0,0 8,3.5V5H4A2,2 0 0,0 2,7V10.8H3.5C5,10.8 6.2,12 6.2,13.5C6.2,15 5,16.2 3.5,16.2H2V20A2,2 0 0,0 4,22H7.8V20.5C7.8,19 9,17.8 10.5,17.8C12,17.8 13.2,19 13.2,20.5V22H17A2,2 0 0,0 19,20V16H20.5A2.5,2.5 0 0,0 23,13.5A2.5,2.5 0 0,0 20.5,11Z"/></svg><span>Catalog</span></span>
         <h3>Or take one off the shelf</h3>
-        <p>The other branch: Depictio recognises the tool behind each output and offers the visualizations that tool is known to support, pre-configured and previewed at the exact grid box the component will occupy.</p>
+        <p>The other branch: the tools catalog recognises which tool produced each output in your project and offers the visualizations that tool is known to support, pre-configured and previewed at the exact grid box the component will occupy.</p>
         <a class="feature-link" href="usage/guides/catalog-picker/">Pick from the catalog &rarr;</a>
       </div>
     </article>
@@ -403,7 +403,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M14,17H17V19H14V17M14,5H17V7H14V5M14,11H17V13H14V11M4,3H12A2,2 0 0,1 14,5V19A2,2 0 0,1 12,21H4A2,2 0 0,1 2,19V5A2,2 0 0,1 4,3M5,7V9H11V7H5M5,11V13H11V11H5M5,15V17H11V15H5M20,3A2,2 0 0,1 22,5V19A2,2 0 0,1 20,21H19V3H20Z"/></svg><span>YAML</span></span>
         <h3>Or write the dashboard as code</h3>
-        <p>Export any dashboard to a YAML file, review it in a pull request, and import it back into another instance. Sections, filters and every component are plain fields, and <code>depictio-cli dashboard validate</code> checks the file against the server schema before it ever reaches the database.</p>
+        <p>Export any dashboard to a YAML file, review it in a pull request, and import it back into another instance. Sections, filters and every component are plain fields, and <code>depictio-cli dashboard validate</code> tells you whether it will land before you push it.</p>
         <a class="feature-link" href="features/yaml-sync/">Dashboards as YAML &rarr;</a>
       </div>
     </article>
@@ -441,7 +441,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 2h2v18h18v2H2zm12 12.5L12 18H7.94l-2.02-3.5L7.94 11H12zm.08-8L12.06 10H8L6 6.5L8 3h4.06zm7.17 4L19.23 14h-4.04l-2.02-3.5L15.19 7h4.04z"/></svg><span>Visualize</span></span>
         <h3>Plots built for omics</h3>
-        <p>Volcano, Manhattan, UpSet, hierarchical heatmaps, phylogeny, ordination and a dozen more, alongside the usual scatter and bar charts. Each one is an <em>advanced viz</em>: you bind it to any table or file whose columns fit it, rather than waiting for the tool that produced the data to draw it for you.</p>
+        <p>Volcano, Manhattan, UpSet, hierarchical heatmaps, phylogeny, ordination and many more, alongside the usual scatter and bar charts. Each one is an <em>advanced viz</em>: you bind it to any table or file whose columns fit it, rather than waiting for the tool that produced the data to draw it for you.</p>
         <a class="feature-link" href="features/components/#advanced-visualizations">Every advanced viz &rarr;</a>
       </div>
     </article>
@@ -472,7 +472,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><img class="feature-kicker-logo only-light" src="images/logos/multiqc_light.svg" alt="" aria-hidden="true"><img class="feature-kicker-logo only-dark" src="images/logos/multiqc_dark.svg" alt="" aria-hidden="true"><span>MultiQC</span></span>
         <h3>Every QC report, in the dashboard</h3>
-        <p>The CLI scans and aggregates the MultiQC reports a run produced, across every sample and every run, and their data becomes components you place like any other: General Statistics as a table, each module's plot as its own card. Then it goes past what the HTML report can do: join those panels to your sample sheet and to any other collection in the project, and filter all of them at once from your own metadata, from a map, from a date picker, or from any other filter component on the dashboard.</p>
+        <p>Hand Depictio the MultiQC reports a run produced, from the CLI or straight from the browser, and it aggregates them across every sample and every run; and their data becomes components you place like any other: General Statistics as a table, each module's plot as its own card. Then it goes past what the HTML report can do: join those panels to your sample sheet and to any other collection in the project, and filter all of them at once from your own metadata, from a map, from a date picker, or from any other filter component on the dashboard.</p>
         <a class="feature-link" href="usage/guides/dashboard_creation/#multiqc-integration-v050">Working with MultiQC &rarr;</a>
       </div>
     </article>
@@ -487,7 +487,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"/></svg><span>Group</span></span>
         <h3>Slice it, then compare</h3>
-        <p>Save a selection as a group and every component colours by that grouping at once, or splits into one panel per group, so two cohorts sit side by side rather than in two browser tabs.</p>
+        <p>Lasso points on a plot, pick rows in a table, or select a region on the map, then save what you picked as a named group. Every component on the dashboard then colours by that grouping at once, or splits into one panel per group, so treated and control sit side by side instead of in two browser tabs. Groups survive a reload and travel with the dashboard, so the comparison is something you share rather than something you rebuild.</p>
         <a class="feature-link" href="features/interactive-selection-filtering/#selection-groups">Selection groups &rarr;</a>
       </div>
     </article>
@@ -502,7 +502,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M15,19L9,16.89V5L15,7.11M20.5,3C20.44,3 20.39,3 20.34,3L15,5.1L9,3L3.36,4.9C3.15,4.97 3,5.15 3,5.38V20.5A0.5,0.5 0 0,0 3.5,21C3.55,21 3.61,21 3.66,20.97L9,18.9L15,21L20.64,19.1C20.85,19 21,18.85 21,18.62V3.5A0.5,0.5 0 0,0 20.5,3Z"/></svg><span>Map</span></span>
         <h3>Where the samples came from</h3>
-        <p>Dock a map beside the dashboard or float it over the grid. Lasso a region and every other component filters down to the samples inside it, like any other filter.</p>
+        <p>Any collection carrying coordinates becomes a map: points, choropleths from your own GeoJSON, or a panel that follows you across every tab. Dock it in the filter rail or float it over the grid, and lasso a region to filter every other component down to the samples inside it, exactly like a dropdown would. Geography stops being a column in a table and becomes a way to ask questions of the run.</p>
         <a class="feature-link" href="usage/guides/dashboard_usage/#the-map-panel-v140">The map panel &rarr;</a>
       </div>
     </article>
@@ -525,7 +525,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M11,15H6L13,1V9H18L11,23V15Z"/></svg><span>Live</span></span>
         <h3>Watch a run as it lands</h3>
-        <p>Turn on live mode and the dashboard refreshes itself while the pipeline is still going, with the events that changed it listed as they arrive.</p>
+        <p>Opt a project into real-time events and its dashboards hold a WebSocket open. Each time the CLI ingests new data the server broadcasts on that channel and the affected components refresh themselves, with no reload and no polling. A log beside the grid lists the events as they arrive, so you can watch a run fill a dashboard in while it is still running.</p>
         <a class="feature-link" href="usage/guides/realtime-events/">Real-time events &rarr;</a>
       </div>
     </article>
@@ -540,8 +540,8 @@ hide:
       </div>
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/></svg><span>Operate</span></span>
-        <h3>Run it like your own</h3>
-        <p>Tasks, ingestion runs, logs and health in one admin view. Scheduled backups with a retention policy, YAML export for version control, and branding down to the figure palette.</p>
+        <h3>Run your own instance</h3>
+        <p>Depictio is meant to be self-hosted, and the admin panel is built for that: tasks, ingestion runs, logs and service health in one view, scheduled backups with a retention policy and a gated restore, users and groups, and branding down to the figure palette.</p>
         <a class="feature-link" href="usage/administration/monitoring/">Monitoring and tasks &rarr;</a>
       </div>
     </article>
@@ -860,9 +860,12 @@ hide:
 .funding-card {
   flex: 1 1 250px;
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid var(--md-default-fg-color--lightest);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+              border-color 0.45s ease;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -870,7 +873,17 @@ hide:
 }
 
 [data-md-color-scheme="slate"] .funding-card {
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.funding-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 38px -14px rgba(0,0,0,0.22);
+  border-color: var(--md-default-fg-color--lighter);
+}
+
+[data-md-color-scheme="slate"] .funding-card:hover {
+  box-shadow: 0 18px 38px -14px rgba(0,0,0,0.6);
 }
 
 .funding-card img {
@@ -907,9 +920,12 @@ hide:
 .partner-card {
   max-width: 500px;
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid var(--md-default-fg-color--lightest);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+              border-color 0.45s ease;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -917,7 +933,17 @@ hide:
 }
 
 [data-md-color-scheme="slate"] .partner-card {
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.partner-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 38px -14px rgba(0,0,0,0.22);
+  border-color: var(--md-default-fg-color--lighter);
+}
+
+[data-md-color-scheme="slate"] .partner-card:hover {
+  box-shadow: 0 18px 38px -14px rgba(0,0,0,0.6);
 }
 
 .partner-card img {
@@ -1421,22 +1447,33 @@ hide:
   .catalog-landing-card {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
+    align-items: center;
+    text-align: center;
     gap: 0.75rem;
     padding: 1.75rem 1.5rem;
-    border-radius: 16px;
+    border-radius: 12px;
     background: var(--md-default-bg-color);
     border: 1px solid var(--md-default-fg-color--lightest);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+                box-shadow 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+                border-color 0.45s ease;
     color: inherit;
   }
 
+  [data-md-color-scheme="slate"] .catalog-landing-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
   .catalog-landing-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.14);
+    transform: translateY(-6px);
+    box-shadow: 0 18px 38px -14px rgba(0, 0, 0, 0.22);
+    border-color: var(--md-default-fg-color--lighter);
     color: inherit;
+  }
+
+  [data-md-color-scheme="slate"] .catalog-landing-card:hover {
+    box-shadow: 0 18px 38px -14px rgba(0, 0, 0, 0.6);
   }
 
   .catalog-landing-icon {
