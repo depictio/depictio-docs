@@ -449,7 +449,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a clade selected on a phylogenetic tree">
-          <img class="only-light" src="images/landing/explore_light.webp" alt="A phylogenetic tree beside the annotation strip built from its tip metadata" loading="lazy">
+          <img class="only-light" src="images/landing/explore_light.webp" alt="A clade selected on a phylogenetic tree, its summary panel open and the dashboard filtered to the 250 tips it holds" loading="lazy">
           <img class="only-dark" src="images/landing/explore_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
@@ -457,7 +457,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9,2V8H11V10H5A2,2 0 0,0 3,12V14H1V20H7V14H5V12H11V14H9V20H15V14H13V12H19V14H17V20H23V14H21V12A2,2 0 0,0 19,10H13V8H15V2H9Z"/></svg><span>Explore</span></span>
         <h3>Pick a clade, filter everything</h3>
-        <p>Pick a clade and filter the whole dashboard down to it. Group samples once and every component colours by that grouping, side by side.</p>
+        <p>Click any internal node and the panel names what you picked: how many tips it holds, how deep it runs, how well the branch is supported, and how those tips break down by taxonomy. Send it through as a filter and every other component on the dashboard narrows to the same samples.</p>
         <a class="feature-link" href="features/components/#phylogeny-interaction">Phylogeny interaction &rarr;</a>
       </div>
     </article>
