@@ -278,7 +278,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the projects table">
-          <img src="images/landing/project_light.webp" alt="The projects table, showing type, visibility, template version, workflows and data collections" loading="lazy">
+          <img src="images/landing/project_light.webp" alt="A project page showing its type, the template it was built from, its workflow and its data collections" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -325,7 +325,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the component design step">
-          <img src="images/landing/design_light.webp" alt="The Component Design step of the New component wizard, with a live scatter preview beside its parameters" loading="lazy">
+          <img src="images/landing/design_light.webp" alt="The Component Design step, with the visualisations ranked by how well they fit the collection and the columns each one binds" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -340,7 +340,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the catalog browser">
-          <img src="images/landing/catalog_light.webp" alt="The catalog browser, listing the tools recognised in the project and previewing one render" loading="lazy">
+          <img src="images/landing/catalog_light.webp" alt="The catalog browser, listing the tools recognised in the project and previewing a clustered heatmap" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -401,7 +401,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a clade selected on a phylogenetic tree">
-          <img class="only-light" src="images/landing/explore_light.webp" alt="A clade selected on a phylogenetic tree" loading="lazy">
+          <img class="only-light" src="images/landing/explore_light.webp" alt="A phylogenetic tree beside the annotation strip built from its tip metadata" loading="lazy">
           <img class="only-dark" src="images/landing/explore_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
@@ -430,7 +430,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a floating map panel">
-          <img src="images/landing/map_light.webp" alt="A floating map panel over a dashboard, ready to lasso a region" loading="lazy">
+          <img src="images/landing/map_light.webp" alt="The sampling sites on a map, each marker coloured by habitat, beside the order they were visited in" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
