@@ -88,7 +88,10 @@ hide:
 <!-- Dashboard Components Section -->
 <section class="components-section">
   <div class="components-content">
-    <h2 class="components-title">Dashboard Components</h2>
+    <h2 class="section-heading components-title">
+      <span class="section-heading-icon is-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M13,3V11H21V3M13,21H21V13H13M3,21H11V13H3M3,11H11V3H3V11Z"/></svg></span>
+      <span>Dashboard Components</span>
+    </h2>
     <p class="components-description">
       Build powerful dashboards with a rich library of interactive components.
     </p>
@@ -279,8 +282,11 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><img class="feature-kicker-logo" src="images/logo/templates_catalog_icon.webp" alt="" aria-hidden="true"><span>Project &amp; template</span></span>
         <h3>One pipeline, many runs, one place</h3>
-        <p>A project holds the workflows, the data collections and the dashboards that belong together. Point the CLI at an nf-core output tree with a template and it builds the whole set in one command.</p>
-        <a class="feature-link" href="usage/projects/templates/">How templates work &rarr;</a>
+        <p>A project holds the workflows, the data collections and the dashboards that belong together, declared once in YAML. A template turns that declaration into a reusable recipe, so the same project stands up again from any run of the same pipeline.</p>
+        <span class="feature-links">
+          <a class="feature-link" href="usage/projects/guide/">What a project is &rarr;</a>
+          <a class="feature-link" href="usage/projects/templates/">Templates &rarr;</a>
+        </span>
       </div>
     </article>
 
@@ -369,7 +375,23 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 2h2v18h18v2H2zm12 12.5L12 18H7.94l-2.02-3.5L7.94 11H12zm.08-8L12.06 10H8L6 6.5L8 3h4.06zm7.17 4L19.23 14h-4.04l-2.02-3.5L15.19 7h4.04z"/></svg><span>Visualize</span></span>
         <h3>Plots built for omics</h3>
-        <p>Volcano, Manhattan, UpSet, hierarchical heatmaps, phylogeny, ordination and a dozen more, alongside the usual scatter and bar charts.</p>
+        <p>Volcano, Manhattan, UpSet, hierarchical heatmaps, phylogeny, ordination and a dozen more, alongside the usual scatter and bar charts. Each one is an <em>advanced viz</em>: you bind it to any table or file whose columns fit it, rather than waiting for the tool that produced the data to draw it for you.</p>
+        <a class="feature-link" href="features/components/#advanced-visualizations">Every advanced viz &rarr;</a>
+      </div>
+    </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a MultiQC tab in a dashboard">
+          <img src="images/landing/multiqc_light.webp" alt="A MultiQC tab in a dashboard, with General Statistics and per-module plots beside the dashboard filters" loading="lazy">
+          <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
+        </button>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><img class="feature-kicker-logo only-light" src="images/logos/multiqc_light.svg" alt="" aria-hidden="true"><img class="feature-kicker-logo only-dark" src="images/logos/multiqc_dark.svg" alt="" aria-hidden="true"><span>MultiQC</span></span>
+        <h3>Every QC report, in the dashboard</h3>
+        <p>The CLI scans and aggregates the MultiQC reports a run produced, and their data becomes components you place like any other: General Statistics as a table, each module's plot as its own card. One sample filter reaches all of them, and several runs sit side by side rather than in as many HTML files.</p>
+        <a class="feature-link" href="usage/guides/dashboard_creation/#multiqc-integration-v050">Working with MultiQC &rarr;</a>
       </div>
     </article>
 
@@ -1143,14 +1165,6 @@ hide:
     text-align: center;
   }
 
-  .components-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--md-default-fg-color);
-    margin: 0 0 1rem 0;
-    line-height: 1.2;
-  }
-
   .components-description {
     font-size: 1.2rem;
     color: var(--md-default-fg-color--light);
@@ -1175,7 +1189,9 @@ hide:
     padding: 1.5rem 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--md-default-fg-color--lightest);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+                box-shadow 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+                border-color 0.45s ease;
     text-align: center;
     width: calc((100% - 3rem) / 3);
     box-sizing: border-box;
@@ -1187,8 +1203,13 @@ hide:
   }
 
   .component-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 18px 38px -14px rgba(0, 0, 0, 0.22);
+    border-color: var(--md-default-fg-color--lighter);
+  }
+
+  [data-md-color-scheme="slate"] .component-card:hover {
+    box-shadow: 0 18px 38px -14px rgba(0, 0, 0, 0.6);
   }
 
   .component-card-upcoming {
@@ -1292,14 +1313,6 @@ hide:
     max-width: 1100px;
     margin: 0 auto;
     text-align: center;
-  }
-
-  .catalog-landing-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--md-default-fg-color);
-    margin: 0 0 1rem 0;
-    line-height: 1.2;
   }
 
   .catalog-landing-description {
@@ -1719,7 +1732,7 @@ hide:
     align-items: center;
     justify-content: center;
     gap: 0.7rem;
-    margin: 0;
+    margin: 0 0 1rem 0;
     font-size: 2rem;
     font-weight: 800;
     line-height: 1.15;
@@ -1734,10 +1747,13 @@ hide:
     width: 2.3rem;
     height: 2.3rem;
     flex-shrink: 0;
-    border-radius: 14px;
-    background: linear-gradient(135deg, var(--depictio-purple), var(--depictio-blue));
+    border-radius: 12px;
+    background: var(--depictio-purple);
     color: #fff;
-    box-shadow: 0 10px 24px -10px rgba(153, 102, 204, 0.75);
+  }
+
+  .section-heading-icon.is-blue {
+    background: var(--depictio-blue);
   }
 
   .section-heading-icon svg {
@@ -1784,7 +1800,7 @@ hide:
   }
 
   .key-features-intro {
-    margin: 0.9rem auto 0 auto;
+    margin: 0 auto;
     color: var(--md-default-fg-color--light);
     font-size: 1.05rem;
     line-height: 1.6;
@@ -1923,6 +1939,29 @@ hide:
     flex-shrink: 0;
   }
 
+  .feature-kicker-logo.only-dark {
+    display: none;
+  }
+
+  [data-md-color-scheme="slate"] .feature-kicker-logo.only-dark {
+    display: block;
+  }
+
+  [data-md-color-scheme="slate"] .feature-kicker-logo.only-light {
+    display: none;
+  }
+
+  .feature-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    margin-top: 0.9rem;
+  }
+
+  .feature-links .feature-link {
+    margin-top: 0;
+  }
+
   .feature-row-text h3 {
     margin: 0 0 0.55rem 0;
     font-size: 1.5rem;
@@ -2011,7 +2050,8 @@ hide:
     animation-delay: 0.26s;
   }
 
-  .feature-flow.is-enhanced .feature-row.is-visible .feature-link {
+  .feature-flow.is-enhanced .feature-row.is-visible .feature-link,
+  .feature-flow.is-enhanced .feature-row.is-visible .feature-links {
     animation-delay: 0.34s;
   }
 
@@ -2033,9 +2073,27 @@ hide:
       animation-duration: 0.45s;
     }
 
-    .feature-frame:hover,
-    .feature-frame:focus-visible {
-      transform: none;
+    /* The theme sets `*{transition:none!important}` here, which would make every
+       hover and the lightbox snap. Opt these back in, at half the duration. */
+    .component-card,
+    .catalog-landing-card,
+    .feature-frame,
+    .feature-zoom {
+      transition-duration: 0.22s !important;
+      transition-timing-function: ease-out !important;
+    }
+
+    .component-card {
+      transition-property: transform, box-shadow, border-color !important;
+    }
+
+    .catalog-landing-card,
+    .feature-frame {
+      transition-property: transform, box-shadow !important;
+    }
+
+    .feature-zoom {
+      transition-property: opacity, transform !important;
     }
   }
 
@@ -2109,16 +2167,27 @@ hide:
     fill: currentColor;
   }
 
+  /* Same opt-in as the feature bands: the theme's blanket
+     `*{transition:none!important}` would make the lightbox snap open. */
   @media (prefers-reduced-motion: reduce) {
     .depictio-lightbox,
     .depictio-lightbox img,
     .depictio-lightbox-close {
-      transition: none;
+      transition-property: opacity, transform, background !important;
+      transition-duration: 0.2s !important;
+      transition-timing-function: ease-out !important;
     }
 
     .depictio-lightbox img {
+      transform: scale(0.98);
+    }
+
+    .depictio-lightbox.is-open img {
       transform: none;
-      opacity: 1;
+    }
+
+    .depictio-lightbox-close:hover {
+      transform: none;
     }
   }
   /* Getting Started Section */
