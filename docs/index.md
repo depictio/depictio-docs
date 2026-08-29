@@ -275,6 +275,10 @@ hide:
 
   <div class="feature-flow">
 
+    <div class="feature-group">
+      <h3 class="feature-group-title"><span class="feature-group-num">01</span><span>Your data, in one place</span><a class="feature-group-link" href="usage/projects/guide/">Projects &rarr;</a></h3>
+      <div class="feature-group-rows">
+
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the project page">
@@ -323,6 +327,13 @@ hide:
       </div>
     </article>
 
+      </div>
+    </div>
+
+    <div class="feature-group">
+      <h3 class="feature-group-title"><span class="feature-group-num">02</span><span>Build the dashboard</span><a class="feature-group-link" href="usage/guides/dashboard_creation/">Build a dashboard &rarr;</a></h3>
+      <div class="feature-group-rows">
+
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a dashboard in edit mode">
@@ -369,18 +380,52 @@ hide:
 
     <article class="feature-row">
       <div class="feature-row-visual">
-        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: Tool Studio">
-          <img src="images/landing/contribute_light.webp" alt="Tool Studio showing a render card and the catalog YAML it will write" loading="lazy">
+        <div class="feature-code" role="img" aria-label="A terminal exporting a dashboard to dashboard.yaml, the file itself, and the command that imports it back">
+          <div class="fc-line"><span class="fc-p">$ depictio-cli dashboard export \</span>
+<span class="fc-arg">    &lt;id&gt; -o dashboard.yaml</span></div>
+          <div class="fc-file">
+            <div class="fc-name">dashboard.yaml</div>
+<pre><code><span class="fc-k">components</span>:
+  - <span class="fc-w">component_type: card</span>
+    <span class="fc-g">data_collection_tag: metadata</span>
+    column_name: sample_id
+    aggregation: nunique
+  - <span class="fc-w">component_type: advanced_viz</span>
+    <span class="fc-g">data_collection_tag: ancombc</span>
+    viz_kind: volcano</code></pre>
+          </div>
+          <div class="fc-line"><span class="fc-p">$ depictio-cli dashboard import \</span>
+<span class="fc-arg">    dashboard.yaml</span></div>
+        </div>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M14,17H17V19H14V17M14,5H17V7H14V5M14,11H17V13H14V11M4,3H12A2,2 0 0,1 14,5V19A2,2 0 0,1 12,21H4A2,2 0 0,1 2,19V5A2,2 0 0,1 4,3M5,7V9H11V7H5M5,11V13H11V11H5M5,15V17H11V15H5M20,3A2,2 0 0,1 22,5V19A2,2 0 0,1 20,21H19V3H20Z"/></svg><span>YAML</span></span>
+        <h3>Or write the dashboard as code</h3>
+        <p>Export any dashboard to a YAML file, review it in a pull request, and import it back into another instance. Sections, filters and every component are plain fields, and <code>depictio-cli dashboard validate</code> checks the file against the server schema before it ever reaches the database.</p>
+        <a class="feature-link" href="features/yaml-sync/">Dashboards as YAML &rarr;</a>
+      </div>
+    </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: sections across tabs">
+          <img src="images/landing/organise_light.webp" alt="A dashboard split into named sections across tabs" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
       <div class="feature-row-text">
-        <span class="feature-kicker"><img class="feature-kicker-logo" src="images/logo/tools_catalog_icon.webp" alt="" aria-hidden="true"><span>Tools catalog</span></span>
-        <h3>Add your tool without writing YAML</h3>
-        <p>And the shelf is yours to stock. Drop one output file, bind its columns in Depictio's own component builder, and Tool Studio writes the catalog entry and opens the pull request for you, so the next person picks what you designed.</p>
-        <a class="feature-link" href="developer/tool-studio/">Open Tool Studio &rarr;</a>
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3,3H21V7H3V3M3,9H21V13H3V9M3,15H21V19H3V15Z"/></svg><span>Organise</span></span>
+        <h3>Room for a real dashboard</h3>
+        <p>Group cards into sections, keep one filter panel across a family of tabs, dock a map beside the data, and inspect any component to see where its numbers come from.</p>
       </div>
     </article>
+
+      </div>
+    </div>
+
+    <div class="feature-group">
+      <h3 class="feature-group-title"><span class="feature-group-num">03</span><span>Read the science</span><a class="feature-group-link" href="features/components/">Components &rarr;</a></h3>
+      <div class="feature-group-rows">
 
     <article class="feature-row">
       <div class="feature-row-visual">
@@ -456,19 +501,12 @@ hide:
       </div>
     </article>
 
-    <article class="feature-row">
-      <div class="feature-row-visual">
-        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: sections across tabs">
-          <img src="images/landing/organise_light.webp" alt="A dashboard split into named sections across tabs" loading="lazy">
-          <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
-        </button>
       </div>
-      <div class="feature-row-text">
-        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3,3H21V7H3V3M3,9H21V13H3V9M3,15H21V19H3V15Z"/></svg><span>Organise</span></span>
-        <h3>Room for a real dashboard</h3>
-        <p>Group cards into sections, keep one filter panel across a family of tabs, dock a map beside the data, and inspect any component to see where its numbers come from.</p>
-      </div>
-    </article>
+    </div>
+
+    <div class="feature-group">
+      <h3 class="feature-group-title"><span class="feature-group-num">04</span><span>Run it, extend it</span><a class="feature-group-link" href="usage/administration/">Administration &rarr;</a></h3>
+      <div class="feature-group-rows">
 
     <article class="feature-row">
       <div class="feature-row-visual">
@@ -499,6 +537,24 @@ hide:
         <p>Tasks, ingestion runs, logs and health in one admin view. Scheduled backups with a retention policy, YAML export for version control, and branding down to the figure palette.</p>
       </div>
     </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: Tool Studio">
+          <img src="images/landing/contribute_light.webp" alt="Tool Studio showing a render card and the catalog YAML it will write" loading="lazy">
+          <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
+        </button>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><img class="feature-kicker-logo" src="images/logo/tools_catalog_icon.webp" alt="" aria-hidden="true"><span>Tools catalog</span></span>
+        <h3>Add your tool without writing YAML</h3>
+        <p>And the shelf is yours to stock. Drop one output file, bind its columns in Depictio's own component builder, and Tool Studio writes the catalog entry and opens the pull request for you, so the next person picks what you designed.</p>
+        <a class="feature-link" href="developer/tool-studio/">Open Tool Studio &rarr;</a>
+      </div>
+    </article>
+
+      </div>
+    </div>
 
   </div>
 </section>
@@ -1845,11 +1901,165 @@ hide:
     margin-top: 2.5rem;
   }
 
+  /* Four groups, each a stage of the same story. The rows live in their own
+     wrapper so `:nth-child(even)` keeps counting rows rather than counting the
+     group heading as the first child and inverting the stagger. */
+  .feature-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .feature-group-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .md-typeset .feature-group-title {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin: 0;
+    text-align: left;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--md-default-fg-color--light);
+  }
+
+  /* Hairline between the label and the link, so the row reads as a divider
+     rather than as another row title. */
+  .md-typeset .feature-group-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    order: 1;
+    background: var(--md-default-fg-color--lightest);
+  }
+
+  .md-typeset .feature-group-link {
+    order: 2;
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--depictio-purple);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .md-typeset .feature-group-link:hover {
+    text-decoration: underline;
+  }
+
+  .feature-group-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.7rem;
+    height: 1.7rem;
+    flex-shrink: 0;
+    border-radius: 9px;
+    background: var(--md-default-fg-color--light);
+    color: var(--md-default-bg-color);
+    font-size: 0.72rem;
+    letter-spacing: 0;
+  }
+
   .feature-row {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.25rem;
     align-items: center;
+  }
+
+  /* The YAML band has no screenshot to show: the mode is a CLI round trip, not
+     a view. A terminal frame stands in the visual slot instead, in the same
+     export / file / import shape as the ECCB poster's "dashboards as code"
+     panel, so the two read as the same product. Height follows the content
+     rather than the 16/10 of a screenshot; the row centres it either way. */
+  .feature-code {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: 100%;
+    border-radius: 14px;
+    padding: 1.15rem 1.25rem;
+    box-sizing: border-box;
+    /* The section centres its text; a code block that inherits that is
+       unreadable. */
+    text-align: left;
+    font-family: var(--md-code-font-family, monospace);
+    font-size: 0.78rem;
+    line-height: 1.6;
+    background: #15171f;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 18px 40px -14px rgba(0, 0, 0, 0.22);
+  }
+
+  .fc-line {
+    white-space: pre;
+    overflow: hidden;
+    color: #d8dde5;
+  }
+
+  .fc-p {
+    color: #8ce563;
+  }
+
+  .fc-arg {
+    color: #d8dde5;
+  }
+
+  /* The exported file, one shade up from the terminal it was written by. */
+  .fc-file {
+    border-radius: 10px;
+    padding: 0.75rem 0.9rem;
+    background: #242832;
+  }
+
+  .fc-name {
+    color: #9aa0ab;
+    margin-bottom: 0.15rem;
+  }
+
+  .md-typeset .feature-code pre {
+    margin: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .md-typeset .feature-code pre > code {
+    display: block;
+    padding: 0;
+    background: none;
+    color: #c3c8d1;
+    font-size: inherit;
+    line-height: inherit;
+    white-space: pre;
+    overflow: hidden;
+  }
+
+  .fc-k {
+    color: #7aa2f7;
+  }
+
+  .fc-w {
+    color: #ffffff;
+  }
+
+  .fc-g {
+    color: #8ce563;
+  }
+
+  /* Material attaches a copy button to every `pre > code`. This block is an
+     illustration, not a snippet to run, and the button lands on top of it. */
+  .feature-code .md-clipboard,
+  .feature-code .md-code__nav,
+  .feature-code button {
+    display: none !important;
   }
 
   /* The frame is a button so the screenshot can be opened full size */
@@ -2021,6 +2231,10 @@ hide:
   /* Staggered layout: the visual changes side on every other row */
   @media (min-width: 900px) {
     .feature-flow {
+      gap: 6.5rem;
+    }
+
+    .feature-group-rows {
       gap: 5rem;
     }
 
@@ -2029,11 +2243,11 @@ hide:
       gap: 3.5rem;
     }
 
-    .feature-row:nth-child(even) .feature-row-visual {
+    .feature-group-rows .feature-row:nth-child(even) .feature-row-visual {
       order: 2;
     }
 
-    .feature-row:nth-child(even) .feature-row-text {
+    .feature-group-rows .feature-row:nth-child(even) .feature-row-text {
       order: 1;
       justify-self: end;
     }
