@@ -1244,6 +1244,9 @@ body.catalog-fs-lock .md-main {
     .module-flow__step:not(:last-child)::after { content: none; }
 }
 
+/* Independent alternatives rather than a pipeline: same cards, no arrows. */
+.module-flow--parallel .module-flow__step:not(:last-child)::after { content: none; }
+
 /* Flat brand-color accents for the catalog intro cards (no gradients). */
 .cat-figure { color: #6495ED; }   /* blue */
 .cat-table { color: #45B8AC; }    /* teal */

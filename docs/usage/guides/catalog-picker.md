@@ -5,42 +5,78 @@ description: "Add a pre-configured visualization that Depictio recognised in you
 
 # :material-hammer-wrench: Picking a component from the catalog <small>(v1.9.0+)</small>
 
-Adding a component starts with a choice. **New component** opens the manual
-stepper, where you pick a type, connect it to data and configure it yourself.
-**Pick from catalog** skips all of that: Depictio has already recognised the
-bioinformatics tools behind the project's ingested data, and offers the
-visualizations those tools are known to support.
+**Add component** opens a chooser with two routes:
 
-Nothing is guessed. The suggestions come from the tool outputs found in the
-project's data collections, so a project with no recognised output simply has
-nothing to offer.
+- **New component** is the manual stepper: pick a type, connect it to data,
+  configure it yourself. See [Dashboard Creation](dashboard_creation.md).
+- **Pick from catalog** skips all of it and offers visualizations already built
+  for the tool outputs Depictio found in this project.
 
 <figure markdown="span">
-  ![The Add-component chooser, offering New component on the left and Pick from catalog on the right](../../images/catalog/catalog_choice.png)
+  [![The Add-component chooser, offering New component on the left and Pick from catalog on the right](../../images/catalog/catalog_choice.webp)](../../images/catalog/catalog_choice.webp){target=_blank}
   <figcaption>The chooser, with a note that catalog suggestions come from the project's ingested data collections.</figcaption>
 </figure>
 
 ---
 
+## Where the offers come from { #matching }
+
+Nothing is inferred from the data itself. Every entry in the
+[Tools Catalog](../../catalog/index.md) declares **how to recognise the file**
+and **which columns it must carry**, and Depictio compares your ingested data
+collections against those declarations. A project whose outputs match no entry
+simply has nothing to offer.
+
+<div class="module-flow module-flow--parallel" markdown>
+
+<div class="module-flow__step module-flow__step--file" markdown>
+:material-file-search:{ .lg } **Filename**
+
+The collection's file matches the name the entry expects, such as `*.variants.tsv`.
+</div>
+
+<div class="module-flow__step module-flow__step--module" markdown>
+:material-folder-search-outline:{ .lg } **Path glob**
+
+The collection's path matches the entry's glob, such as `**/ivar/*.tsv`. This is how a real pipeline run is recognised.
+</div>
+
+<div class="module-flow__step module-flow__step--component" markdown>
+:material-cog-transfer:{ .lg } **Recipe**
+
+The collection came from a [recipe](../projects/recipes.md) the entry declares. Derived collections carry no raw pipeline path, so neither of the other two can fire.
+</div>
+
+</div>
+
+Any one of the three is enough to surface the tool. The entry's column schema
+then decides which of its renders are offered, so a render binding a column your
+file does not carry is never proposed.
+
+<!-- prettier-ignore -->
+!!! info "MultiQC is a special case"
+    Every `multiqc/*` output keys the same `multiqc.parquet`, so offers are
+    narrowed to the sections the ingested report actually holds, and the
+    originating tool is named on each one.
+
+---
+
 ## The browser
 
-The browser fills the page. On the left, offers are grouped by tool: each header
-names the tool, the sub-functions it covers and how many offers it has. Each row
-is one recognised output, with a coloured dot per component type it can become.
+Offers are grouped by tool on the left, one row per recognised output, with a
+coloured dot for each component type it can become. Selecting a row previews it
+on the right.
 
-On the right, the selected offer previews itself. The preview is the real
-component, not a mockup: it renders in an iframe framed at the exact grid box
-the component will occupy once added, so what you see is what lands on the
-dashboard.
+The preview is the real component, rendered in an iframe at the exact grid box
+it will occupy, so what you see is what lands on the dashboard.
 
 <figure markdown="span">
-  ![The catalog browser, with offers grouped by tool on the left and a lollipop plot previewing on the right](../../images/catalog/catalog_browser.png)
-  <figcaption>iVar's variant calls, previewing as a lollipop plot. Hovering a row lists the renders it can become.</figcaption>
+  [![The catalog browser, with offers grouped by tool on the left and a lollipop plot previewing on the right](../../images/catalog/catalog_browser.webp)](../../images/catalog/catalog_browser.webp){target=_blank}
+  <figcaption>iVar's variant calls, previewing as a lollipop plot.</figcaption>
 </figure>
 
-**Add** saves the component straight away. **Edit** drops it into the Design step
-first, so you can adjust it before it lands. Browser Back and Forward walk the
-picker's surfaces rather than leaving the flow.
+**Add** saves it straight away. **Edit** drops it into the Design step first.
+Browser Back and Forward walk the picker's surfaces rather than leaving the flow.
 
 ---
 
@@ -51,32 +87,31 @@ Search matches tool, output, description, file and collection at once, so
 together.
 
 <figure markdown="span">
-  ![Searching for coverage narrows the list to mosdepth's coverage outputs and the MultiQC sections that report coverage](../../images/catalog/catalog_search.png)
+  [![Searching for coverage narrows the list to mosdepth's coverage outputs and the MultiQC sections that report coverage](../../images/catalog/catalog_search.webp)](../../images/catalog/catalog_search.webp){target=_blank}
   <figcaption>One search box across every field an offer carries.</figcaption>
 </figure>
 
-**Filters** adds two facets, each with counts: **Component**, to keep only the
-offers that become a given component type, and **Data collection**, to keep only
-those reading a given collection. A violet badge on the Filters button says how
-many facets are active, so a hidden filter is never a mystery.
+**Filters** adds two facets with counts, **Component** and **Data collection**,
+computed against the current search rather than the whole catalog. A violet badge
+on the button says how many are active.
 
 <figure markdown="span">
-  ![The Filters popover, with a Component facet and a Data collection facet, both showing counts](../../images/catalog/catalog_filters.png)
-  <figcaption>Facet counts are computed against the current search, not the whole catalog.</figcaption>
+  [![The Filters popover, with a Component facet and a Data collection facet, both showing counts](../../images/catalog/catalog_filters.webp)](../../images/catalog/catalog_filters.webp){target=_blank}
+  <figcaption>Two facets, each counted against what the search already narrowed.</figcaption>
 </figure>
 
 ---
 
 ## One output, several renders
 
-A recognised output usually supports more than one visualization. iVar's variant
-calls, for instance, can be drawn as a lollipop plot, an oncoplot, a Manhattan
-plot or a plain histogram. The tab strip switches between them and reframes the
-preview at each target's own size.
+Most recognised outputs support more than one visualization: iVar's variant
+calls can be drawn as a lollipop plot, an oncoplot, a Manhattan plot or a
+histogram. The tab strip switches between them, each render carrying its own
+configuration and its own grid box.
 
 <figure markdown="span">
-  ![The render tab strip switched to Manhattan plot, with the preview reframed](../../images/catalog/catalog_render_tabs.png)
-  <figcaption>Each render declares its own grid box, so the preview reframes when you switch.</figcaption>
+  [![The render tab strip switched to Manhattan plot](../../images/catalog/catalog_render_tabs.webp)](../../images/catalog/catalog_render_tabs.webp){target=_blank}
+  <figcaption>The same iVar output, switched to its Manhattan render.</figcaption>
 </figure>
 
 Settings tuned inside the preview travel with the offer, on both the Add and the
@@ -84,37 +119,15 @@ Edit path.
 
 ---
 
-## What the catalog can recognise { #matching }
-
-An offer appears when a data collection matches a catalog entry on any of three
-independent signals:
-
-| Signal | When it applies |
-|--------|-----------------|
-| Filename | The collection's file matches the entry's expected name |
-| Path glob | The collection's path matches the entry's glob |
-| Recipe | The collection was produced by a recipe the entry declares |
-
-The third exists because a collection produced by a
-[recipe](../projects/recipes.md) carries no raw pipeline path, so neither of the
-first two can fire.
-
-MultiQC is a special case: every `multiqc/*` output keys the same
-`multiqc.parquet`, so offers are narrowed to the sections the ingested report
-actually holds, and the originating tool is named on each one.
-
----
-
 ## Provenance { #provenance }
 
-A component added from the catalog says so.
+A component added from the catalog says so:
 
-- A copyable `use: <tool>/<render-id>` snippet, which is the same identifier you
-  would write in a project YAML.
-- A `catalog_source` stamp carried through later edits and through YAML import,
-  so the origin survives a round trip.
-- A violet catalog action on the tile, and a metadata inspector covering
-  identity, resolved configuration, data source, catalog origin and the raw JSON.
+- a copyable `use: <tool>/<render-id>` snippet, the same identifier you would
+  write in a project YAML;
+- a `catalog_source` stamp carried through later edits and YAML import;
+- a violet catalog action on the tile, opening a metadata inspector with
+  identity, resolved configuration, data source, catalog origin and raw JSON.
 
 ---
 

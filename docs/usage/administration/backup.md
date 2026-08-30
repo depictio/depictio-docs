@@ -12,10 +12,11 @@ independent mechanisms.
 !!! warning "Backups cover the database, not your data"
     A snapshot covers MongoDB: users, projects, dashboards, data collection
     definitions, file records, the *locations* of your Delta tables, instance
-    settings and branding assets. The Delta tables themselves live in S3 or
-    MinIO, are **not** included, and are never restored from the admin panel.
-    Restoring the database restores the pointers; whether they resolve depends
-    on the object store being in a matching state. See
+    settings and branding assets. Nothing Depictio writes to object storage is
+    included: not the Delta tables, not the files ingested or exported alongside
+    them, and none of it is ever restored from the admin panel. Restoring the
+    database restores the pointers; whether they resolve depends on the object
+    store being in a matching state. See
     [Your data: S3 and Delta Lake](#your-data-s3-and-delta-lake).
 
 Everything on this page requires an administrator account.
@@ -50,19 +51,13 @@ Scheduling is **off by default**: a snapshot is the size of the whole database,
 and a deployment that has not sized its backup volume should not start filling
 it on upgrade.
 
-**Anchored or rolling.** Give the schedule a time of day (`HH:MM`, UTC) and its
-slots sit on a fixed grid running from there: daily at 03:00 stays at 03:00, and
-a six-hourly schedule anchored at 03:00 runs at 03:00, 09:00, 15:00 and 21:00.
-The grid is anchored to a fixed epoch rather than to the previous run, so a run
-that fires a few minutes late never pushes every later one back with it. Leave
-the anchor empty for a rolling schedule, due whenever an interval has passed
-since the last run.
+**Anchored or rolling.** With a time of day (`HH:MM`, UTC), slots sit on a fixed
+grid from there: six-hourly anchored at 03:00 runs at 03:00, 09:00, 15:00 and
+21:00, and a late run never pushes the next one back. Leave it empty and the
+schedule is rolling, due whenever an interval has passed.
 
-**No restart needed.** The configuration is re-read from the database on every
-tick, so a change made in the UI reaches every API worker within a few minutes.
-Every worker runs the loop, and the due time is claimed with a single
-conditional update, so exactly one worker takes each backup. Workers poll at
-most every 15 minutes, so an anchored backup starts within that of its slot.
+**No restart needed.** A change saved here reaches every worker within 15
+minutes, and exactly one worker takes each backup.
 
 ---
 
@@ -156,12 +151,11 @@ released image using an image built from current code, comparing document counts
 None of the above touches your data. There are three ways to cover it, in
 descending order of preference.
 
-**1. Object store replication (recommended for production).** S3 bucket
-versioning plus Cross-Region Replication, or MinIO's `mc mirror` and site
-replication, gives point-in-time recovery of the Delta tables without Depictio
-being in the path at all. Delta Lake is append-structured, so object versioning
+**1. Your object store's own replication (recommended).** Versioning plus
+replication, whatever your store calls it: AWS S3, MinIO, NetApp StorageGRID or
+any other S3 implementation. Delta Lake only appends, so object versioning
 composes well with it. This is the only option that scales to a real dataset,
-and the only one that survives losing the Depictio deployment itself.
+and the only one that survives losing the Depictio deployment.
 
 **2. The CLI, with `--include-s3-data`.**
 
@@ -186,16 +180,37 @@ configuration, and it runs synchronously inside the request.
 block-device snapshot of the MinIO data volume, taken alongside a database
 backup, is a coherent pair.
 
-### Recovering, in order
+### Restoring everything, data included { #restoring-everything }
 
-There is **no S3 restore path in Depictio**. The strategies above copy tables
-out; nothing copies them back. Recovering data means restoring the bucket
-yourself, with `mc mirror`, `aws s3 sync`, object-version rollback or a volume
-snapshot, and then restoring the matching database backup.
+Depictio restores the database. It has **no S3 restore path**: the strategies
+above copy tables out, nothing copies them back. A full recovery is therefore
+two operations, and the object store goes first, so that no window exists where
+the database points at tables that are not there yet.
 
-1. Restore the object store to the state it had when the database backup was taken.
-2. Restore the database backup from **Administration → Backups**.
-3. Confirm dashboards render before letting users back in.
+**1. Stop the orphan cleanup**, or you can lose live data between the two steps.
+See the warning below.
+
+**2. Put the object store back** to the state it had when the database snapshot
+was taken. Whichever route you used to copy it out:
+
+```bash
+# from a second bucket (s3_to_s3, or your own replication)
+aws s3 sync s3://depictio-backup/backup/ s3://depictio-bucket/ --delete
+mc mirror --overwrite --remove backup/backup/ depictio/depictio-bucket/
+
+# from a local copy (--include-s3-data with the local strategy)
+mc mirror --overwrite --remove /var/backups/depictio/s3/ depictio/depictio-bucket/
+```
+
+With bucket versioning, roll the bucket back to the timestamp of the snapshot
+instead. With a volume snapshot, restore the volume and restart the object
+store.
+
+**3. Restore the database** from **Administration → Backups**, picking the
+snapshot that matches the state you just restored the bucket to.
+
+**4. Check, then reopen.** Open a dashboard that reads a Delta table and confirm
+it renders, then re-enable the cleanup task and let users back in.
 
 <!-- prettier-ignore -->
 !!! danger "A database-only restore can delete live data from S3"
