@@ -1,0 +1,399 @@
+/* Blog Styling for Depictio */
+
+/* ------------------------------------------------------------------------ */
+/* Screenshot grids                                                          */
+/*                                                                           */
+/* Screenshots are captured at whatever size the dashboard happened to be    */
+/* (5120x3200, 1920x1080, 2880x2200), so a plain markdown table sized every  */
+/* cell differently and the grid came out ragged. Each tile is pinned to one  */
+/* aspect ratio and the image is contained inside it, so the grid is regular */
+/* whatever the source dimensions. Written against a markdown table so the   */
+/* source still previews outside mkdocs.                                     */
+/* ------------------------------------------------------------------------ */
+.shot-grid {
+  margin: 1.5rem 0 2rem;
+}
+
+/* Standalone logos in a post. These used to be <p align="center"><img>, which
+   the blog plugin does not rewrite when the post is excerpted onto the index
+   and archive views, so the images 404 there. As markdown they get rewritten,
+   and this centres them the way the raw HTML did. */
+.md-typeset img.blog-logo {
+  display: block;
+  margin: 1.5rem auto;
+}
+
+/* Material wraps every table in .md-typeset__scrollwrap > .md-typeset__table,
+   and the inner wrapper is display:inline-block so a wide table can scroll.
+   That makes the table shrink-to-fit, which silently defeats
+   `table-layout: fixed`: the columns size to their content and the tiles come
+   out different widths. Force the wrapper back to a full-width block. */
+.md-typeset .shot-grid .md-typeset__scrollwrap {
+  margin: 0;
+  overflow: visible;
+}
+
+.md-typeset .shot-grid .md-typeset__table {
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: visible;
+}
+
+.md-typeset .shot-grid table:not([class]) {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border: none;
+  box-shadow: none;
+  font-size: inherit;
+}
+
+.md-typeset .shot-grid table:not([class]) thead {
+  display: none;
+}
+
+.md-typeset .shot-grid table:not([class]) tr,
+.md-typeset .shot-grid table:not([class]) tbody tr:nth-child(odd),
+.md-typeset .shot-grid table:not([class]) tbody tr:hover {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* table-layout: fixed reads column widths off the first row only, so pin the
+   share explicitly rather than relying on the header row we just hid. */
+.md-typeset .shot-grid table:not([class]) td {
+  width: 50%;
+  border: none;
+  padding: 0.35rem 0.5rem 0.9rem;
+  vertical-align: top;
+  text-align: center;
+}
+
+/* The image cell: one fixed box per tile, image letterboxed inside it. */
+.md-typeset .shot-grid table:not([class]) td:has(img) {
+  padding-bottom: 0.35rem;
+}
+
+.md-typeset .shot-grid td a.glightbox,
+.md-typeset .shot-grid td img {
+  display: block;
+  width: 100%;
+}
+
+.md-typeset .shot-grid td img {
+  max-width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  object-position: center;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+/* Clickable: glightbox wraps each image in an anchor, so say so. */
+.md-typeset .shot-grid td a.glightbox img {
+  cursor: zoom-in;
+}
+
+.md-typeset .shot-grid td a.glightbox:hover img {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+  border-color: var(--md-primary-fg-color);
+}
+
+/* Caption rows: the text cells between image rows. */
+.md-typeset .shot-grid td:not(:has(img)) {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--md-default-fg-color--light);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .shot-grid td img {
+  background: var(--md-default-bg-color--light);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .shot-grid td a.glightbox:hover img {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 600px) {
+  .md-typeset .shot-grid table:not([class]),
+  .md-typeset .shot-grid table:not([class]) tbody,
+  .md-typeset .shot-grid table:not([class]) tr,
+  .md-typeset .shot-grid table:not([class]) td {
+    display: block;
+    width: 100%;
+  }
+}
+
+/* Blog Grid Layout */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+/* Blog Post Cards */
+.blog-post-card {
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: var(--md-primary-fg-color);
+}
+
+/* Blog Post Header */
+.blog-post-header h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.3rem;
+  line-height: 1.4;
+}
+
+.blog-post-header h3 a {
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.blog-post-header h3 a:hover {
+  color: var(--md-primary-fg-color);
+}
+
+/* Blog Post Meta */
+.blog-post-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.blog-date::before {
+  content: "📅 ";
+  margin-right: 0.25rem;
+}
+
+.blog-author::before {
+  content: "👤 ";
+  margin-right: 0.25rem;
+}
+
+/* Blog Post Excerpt */
+.blog-post-excerpt {
+  color: var(--md-default-fg-color--light);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* Blog Post Tags */
+.blog-post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background: var(--md-primary-fg-color--light);
+  color: var(--md-primary-bg-color);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Blog Article Styling */
+.blog-article {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.blog-article-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.blog-article-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  color: var(--md-primary-fg-color);
+}
+
+.blog-article-meta {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.blog-article-tags {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.blog-article-tags .tag {
+  background: linear-gradient(135deg, var(--depictio-blue), var(--depictio-teal));
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
+}
+
+/* Blog Content Styling */
+.blog-content {
+  line-height: 1.8;
+}
+
+.blog-content h2 {
+  color: var(--md-primary-fg-color);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--md-primary-fg-color--light);
+  padding-bottom: 0.5rem;
+}
+
+.blog-content h3 {
+  color: var(--md-default-fg-color);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Demo Highlight Box */
+.demo-highlight {
+  background: linear-gradient(135deg, var(--depictio-blue), var(--depictio-teal));
+  color: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  margin: 2rem 0;
+  box-shadow: 0 8px 25px rgba(100, 149, 237, 0.3);
+}
+
+.demo-highlight h3 {
+  color: white;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.demo-highlight .demo-button {
+  display: inline-block;
+  background: white;
+  color: var(--depictio-blue);
+  padding: 0.75rem 2rem;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.demo-highlight .demo-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Feature Grid */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.feature-item {
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-3px);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+/* Back to Blog Button */
+.back-to-blog {
+  display: inline-block;
+  background: var(--md-primary-fg-color);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.back-to-blog:hover {
+  background: var(--md-primary-fg-color--dark);
+  transform: translateX(-3px);
+}
+
+.back-to-blog::before {
+  content: "← ";
+  margin-right: 0.5rem;
+}
+
+/* Dark Mode Adjustments */
+[data-md-color-scheme="slate"] .blog-post-card {
+  background: var(--md-default-bg-color--light);
+  border-color: var(--md-default-fg-color--lightest);
+}
+
+[data-md-color-scheme="slate"] .demo-highlight {
+  box-shadow: 0 8px 25px rgba(100, 149, 237, 0.2);
+}
+
+[data-md-color-scheme="slate"] .feature-item {
+  background: var(--md-default-bg-color--light);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .blog-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .blog-article-title {
+    font-size: 2rem;
+  }
+
+  .blog-article-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}
