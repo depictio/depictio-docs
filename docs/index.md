@@ -289,7 +289,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><img class="feature-kicker-logo" src="images/logo/templates_catalog_icon.webp" alt="" aria-hidden="true"><span>Project &amp; template</span></span>
         <h3>One pipeline, many runs, one place</h3>
-        <p>A project holds the workflows, the data collections and the dashboards that belong together. Declare it in a YAML file or build it from the browser, whichever suits the run. A template turns that declaration into a reusable recipe, so the same project stands up again from any run of the same pipeline.</p>
+        <p>A project holds the workflows, the data collections and the dashboards that belong together. Declare it in a YAML file or build it from the browser, whichever suits the run. A template turns that declaration into a reusable recipe: one command against a new run of the same pipeline and the whole thing stands up again, project, data collections and dashboards included, ready to read.</p>
         <span class="feature-links">
           <a class="feature-link" href="usage/projects/guide/">What a project is &rarr;</a>
           <a class="feature-link" href="usage/projects/templates/">Templates &rarr;</a>
@@ -307,7 +307,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"/></svg><span>Upload</span></span>
         <h3>Or just drop the file in</h3>
-        <p>No pipeline to point at yet? Drop a CSV, TSV, Parquet or Feather file straight into a project from the browser, or a MultiQC report, and Depictio scans it and aggregates it into a Delta table for you. The collection is ready to build on without touching the CLI.</p>
+        <p>No pipeline to point at yet? Drop a CSV, TSV, Parquet or Feather file straight into a project from the browser, or a MultiQC report, and Depictio scans it and aggregates it into a Delta table for you. The collection is ready to build on without touching the CLI, and you can link two of them on a shared column from the same screen, so a filter on one reaches every component built on the other.</p>
         <a class="feature-link" href="usage/projects/guide/">Start a project &rarr;</a>
       </div>
     </article>
@@ -323,7 +323,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/></svg><span>Ingest</span></span>
         <h3>Read where your data lives</h3>
-        <p>Point the CLI at a finished run and it scans the output on your own machine, pushing only the aggregated results, never the raw files. Smaller collections can be added straight from the browser instead. Either way the ingestion report says what was found, what was missing, and the parameters the pipeline ran with.</p>
+        <p>Point <code>depictio-cli</code> at a finished run, on your laptop or on the cluster where it landed, and it scans the output in place, pushing only the aggregated results, never the raw files. Smaller collections can be added straight from the browser instead. Either way the ingestion report says what was found, what was missing, and the parameters the pipeline ran with.</p>
         <a class="feature-link" href="depictio-cli/usage/">Ingest with the CLI &rarr;</a>
       </div>
     </article>
@@ -331,7 +331,7 @@ hide:
       </div>
     </div>
 
-    <div class="feature-group">
+    <div class="feature-group feature-group--offset">
       <h3 class="feature-group-title"><span class="feature-group-num">02</span><span>Build the dashboard</span><a class="feature-group-link" href="usage/guides/dashboard_creation/">Build a dashboard &rarr;</a></h3>
       <div class="feature-group-rows">
 
@@ -345,7 +345,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M13,3V9H21V3M13,21H21V11H13M3,21H11V15H3M3,13H11V3H3V13Z"/></svg><span>Build</span></span>
         <h3>Drag, drop, resize</h3>
-        <p>Every component sits on the same grid: drag one anywhere, pull its corner to resize it, and the cards around it move out of the way. Figures, tables, metric cards, images, maps, text, filters and MultiQC panels all behave the same way, and the layout is saved as you go. Nothing here needs code.</p>
+        <p>Every component sits on the same grid: drag one anywhere, pull its corner to resize it, and the cards around it move out of the way. Figures, tables, metric cards, image galleries, maps, text, filters and MultiQC panels all behave the same way, and the layout is saved as you go. Nothing here needs code.</p>
         <a class="feature-link" href="usage/guides/dashboard_creation/#add-a-component-to-the-dashboard">Add a component &rarr;</a>
       </div>
     </article>
@@ -403,7 +403,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M14,17H17V19H14V17M14,5H17V7H14V5M14,11H17V13H14V11M4,3H12A2,2 0 0,1 14,5V19A2,2 0 0,1 12,21H4A2,2 0 0,1 2,19V5A2,2 0 0,1 4,3M5,7V9H11V7H5M5,11V13H11V11H5M5,15V17H11V15H5M20,3A2,2 0 0,1 22,5V19A2,2 0 0,1 20,21H19V3H20Z"/></svg><span>YAML</span></span>
         <h3>Or write the dashboard as code</h3>
-        <p>Export any dashboard to a YAML file, review it in a pull request, and import it back into another instance. Sections, filters and every component are plain fields, and <code>depictio-cli dashboard validate</code> tells you whether it will land before you push it.</p>
+        <p>Export any dashboard to a YAML file, review it in a pull request, and import it back into another instance. Sections, filters and every component are plain fields, so a change to a dashboard reviews like any other change.</p>
         <a class="feature-link" href="features/yaml-sync/">Dashboards as YAML &rarr;</a>
       </div>
     </article>
@@ -495,7 +495,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a floating map panel">
-          <img src="images/landing/map_light.webp" alt="The map docked at the foot of the filter panel, beside the dashboard it filters" loading="lazy">
+          <img src="images/landing/map_light.webp" alt="The sampling-sites map floating over the dashboard, its points coloured by habitat" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -510,7 +510,7 @@ hide:
       </div>
     </div>
 
-    <div class="feature-group">
+    <div class="feature-group feature-group--offset">
       <h3 class="feature-group-title"><span class="feature-group-num">04</span><span>Run it, extend it</span><a class="feature-group-link" href="usage/administration/">Administration &rarr;</a></h3>
       <div class="feature-group-rows">
 
@@ -541,7 +541,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/></svg><span>Operate</span></span>
         <h3>Run your own instance</h3>
-        <p>Depictio is meant to be self-hosted, and the admin panel is built for that: scheduled backups with a retention policy and a restore gated behind validation, tasks, ingestion runs, logs and service health in one view, users and groups, and branding down to the figure palette.</p>
+        <p>Depictio is meant to be self-hosted, and the admin panel is built for that: scheduled backups with a retention policy and a restore gated behind validation, tasks, ingestion runs, logs and service health in one view, users and groups, and branding that reaches the whole instance, its name, its logo, its palette, the login screen and the figures it renders.</p>
         <a class="feature-link" href="usage/administration/monitoring/">Monitoring and tasks &rarr;</a>
       </div>
     </article>
@@ -2273,7 +2273,10 @@ hide:
     text-decoration: underline;
   }
 
-  /* Staggered layout: the visual changes side on every other row */
+  /* Staggered layout: the visual changes side on every other row. Groups 02 and 04
+     open at an even position in the page-wide count, so they carry
+     .feature-group--offset and start the alternation one step in: without it the
+     zigzag restarts on the same side at every group heading. */
   @media (min-width: 900px) {
     .feature-flow {
       gap: 6.5rem;
@@ -2288,11 +2291,13 @@ hide:
       gap: 3.5rem;
     }
 
-    .feature-group-rows .feature-row:nth-child(even) .feature-row-visual {
+    .feature-group:not(.feature-group--offset) .feature-row:nth-child(even) .feature-row-visual,
+    .feature-group--offset .feature-row:nth-child(odd) .feature-row-visual {
       order: 2;
     }
 
-    .feature-group-rows .feature-row:nth-child(even) .feature-row-text {
+    .feature-group:not(.feature-group--offset) .feature-row:nth-child(even) .feature-row-text,
+    .feature-group--offset .feature-row:nth-child(odd) .feature-row-text {
       order: 1;
       justify-self: end;
     }
