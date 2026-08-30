@@ -27,21 +27,19 @@ A catalog entry is three files in a folder: `module.yaml` (which tool), `<output
 (which file, and what to render from it), and a small fixture that grounds the bindings.
 Your output file decides who writes them.
 
-<div class="grid cards" markdown>
+<div class="module-flow module-flow--parallel" markdown>
 
-- :material-table-check:{ .lg .middle } **Already a table** &rarr; Tool Studio
+<div class="module-flow__step module-flow__step--file" markdown>
+:material-table-check:{ .lg } **Already a table** <span class="module-flow__opt">Tool Studio</span>
 
-    ---
+A header row and one record per line. The Studio parses it, infers the columns, and everything downstream just works.
+</div>
 
-    A header row and one record per line. The Studio parses it, infers the columns and
-    everything downstream just works.
+<div class="module-flow__step module-flow__step--module" markdown>
+:material-cog-transfer:{ .lg } **Needs reshaping** <span class="module-flow__opt">hand-authored</span>
 
-- :material-cog-transfer:{ .lg .middle } **Needs reshaping** &rarr; [hand-authoring](contributing-a-tool.md)
-
-    ---
-
-    The entry needs a `recipe` to make the file tidy first. Half the committed catalog
-    outputs are in this case, and the Studio cannot write one.
+The entry needs a [`recipe`](contributing-a-tool.md) to tidy the file first. Half the committed catalog outputs are in this case, and the Studio cannot write one.
+</div>
 
 </div>
 

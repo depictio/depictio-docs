@@ -96,9 +96,27 @@ For the configuration reference of each component type, see the
 
 ## :material-hammer-wrench: Contribute a tool
 
-Adding a tool is a **single-folder pull request** under `depictio/catalog/<tool>/`
-— no Depictio internals to learn, and no Python unless an output needs reshaping.
-Three co-located files:
+Adding a tool is a **single-folder pull request** under `depictio/catalog/<tool>/`.
+One question decides who writes it: is the tool's output already a table with a
+header row?
+
+<div class="module-flow module-flow--parallel" markdown>
+
+<div class="module-flow__step module-flow__step--file" markdown>
+:material-table-check:{ .lg } **Already a table** <span class="module-flow__opt">no recipe</span>
+
+Use [**Tool Studio**](../developer/tool-studio.md). Drop the file in the browser, bind its columns in Depictio's own component builder, and it opens the pull request for you.
+</div>
+
+<div class="module-flow__step module-flow__step--module" markdown>
+:material-cog-transfer:{ .lg } **Needs reshaping** <span class="module-flow__opt">recipe</span>
+
+The entry needs a `recipe` to tidy the file first, which the Studio cannot write. Follow the [contributing guide](../developer/contributing-a-tool.md). Half the committed outputs are in this case.
+</div>
+
+</div>
+
+Either route produces the same three co-located files:
 
 <div class="module-flow" markdown>
 
@@ -121,10 +139,6 @@ A small sample of that file, right beside its YAML, so `depictio catalog validat
 </div>
 
 </div>
-
-[**Tool Studio**](../developer/tool-studio.md) authors an entry in the browser: drop one
-output file, bind its columns, and it opens the pull request for you. The guide below is
-the hand-authored path, needed when the output has to be reshaped first.
 
 <div class="catalog-cta-wrap" markdown>
 [Use the catalog in a dashboard :material-arrow-right:](../usage/guides/catalog-picker.md){ .catalog-cta }
