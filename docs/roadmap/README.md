@@ -178,7 +178,7 @@ Tool Studio both landed in v1.9.0; what is left is the path from a folder to a p
 
 ### Pipeline templates
 
-- [ ] **nf-core/variantbenchmarking template & modules**: germline small variants, somatic indels and structural variants as three per-variant-type projects, built from reusable catalog modules (hap.py, rtg-tools, som.py, truvari…) plus four benchmarking-specific visualization kinds ([#870](https://github.com/depictio/depictio/pull/870), closes [#865](https://github.com/depictio/depictio/issues/865))
+- [x] **nf-core/variantbenchmarking template & modules**: germline small variants, somatic indels and structural variants as three per-variant-type projects, built from reusable catalog modules (hap.py, rtg-tools, som.py, truvari…) plus four benchmarking-specific visualization kinds ([#870](https://github.com/depictio/depictio/pull/870), closes [#865](https://github.com/depictio/depictio/issues/865), [Docs](../pipeline-templates/nf-core/variantbenchmarking.md))
 
 ### Component export & embedding
 
