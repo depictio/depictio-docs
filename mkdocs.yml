@@ -231,6 +231,7 @@ nav:
           - Full Reference Configuration: usage/projects/reference.md
           - Recipes: usage/projects/recipes.md
           - Template System Reference: usage/projects/templates.md
+          - Remote data and manifests: usage/projects/remote-data.md
       - CLI:
           - depictio-cli/index.md
           - Usage: depictio-cli/usage.md
