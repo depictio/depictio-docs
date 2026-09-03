@@ -1373,6 +1373,22 @@ body.catalog-fs-lock .md-main {
   border-color: #1565c0;
 }
 
+.template-status-experimental {
+  background: #fff3e0;
+  color: #e65100;
+  border: 1px solid #ffcc80;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78em;
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .template-status-experimental {
+  background: #33210d;
+  color: #ffb74d;
+  border-color: #b45f06;
+}
+
 
 /* ── Individual template page banner (tinted card) ── */
 .template-banner {
@@ -1430,8 +1446,9 @@ body.catalog-fs-lock .md-main {
 .template-links a:hover { text-decoration: underline; }
 .template-links .mdi { font-size: 1.15em; }
 
-/* Reviewed pill — own column, vertically centered (via the grid's align-items) */
-.template-status-reviewed.template-banner-badge {
+/* Status pill: own column, vertically centered (via the grid's align-items) */
+.template-status-reviewed.template-banner-badge,
+.template-status-experimental.template-banner-badge {
   position: relative;
   justify-self: end;
   white-space: nowrap;
