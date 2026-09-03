@@ -29,7 +29,7 @@ Ingestion runs, newest first: **status**, a `CLI` or `UI` source badge, instance
 Expand a run for its **provenance** field grid: run id, host, CLI version, the resolved project id, the invoking command line, the CLI and project config paths, and the data root. Long paths are shortened to `head/…/tail`, with the full value in a tooltip and click-to-copy. Below it are two tables:
 
 - **Steps**: every phase the run went through (provisioning, template resolve, server and S3 checks, config validation, project sync, scan, process, joins, dashboard import), each with `success` / `failed` / `skipped` and a detail line such as *3 data collection(s) processed*. The summary line tallies ok / failed / skipped and the wall-clock duration.
-- **Data collections**: one row per data collection: tag, type, format, scan mode (`recursive` / `single`), the regex or filename it matched on, the local directories scanned, and the file count when known. These local scan paths are not shown anywhere else in the UI.
+- **Data collections**: one row per data collection: tag, type, format, scan mode (`recursive` / `single` / `url` / `s3_prefix` / `manifest`), what it matched on (the regex or filename for the local modes; the URL, the prefix plus its glob, or the manifest URL for the remote ones), the local directories scanned, and the file count when known. These local scan paths are not shown anywhere else in the UI.
 
 ![Log & Task: Ingestion pane](../../images/react/admin_monitoring_ingestion_light.png#only-light)
 ![Log & Task: Ingestion pane](../../images/react/admin_monitoring_ingestion_dark.png#only-dark)

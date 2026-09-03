@@ -312,7 +312,10 @@ links:
 
 ### File Discovery Patterns
 
-Advanced projects use two scanning modes:
+Advanced projects use five scanning modes. Two walk a local directory tree,
+`single` and `recursive`. Three fetch data from where it already is, `url`,
+`s3_prefix` and `manifest`, and are covered on
+[Remote data and manifests](remote-data.md).
 
 #### Single File Mode
 
@@ -336,6 +339,23 @@ scan:
     regex_config:
       pattern: "star_salmon/.*/quant.sf"
 ```
+
+#### Remote Modes
+
+A collection can also point at one file on the web or in a bucket (`url`), at
+every object under an S3 prefix (`s3_prefix`), or at the entries of a Data
+Manifest (`manifest`). The server fetches the files, so these modes also work
+from the web UI with no CLI installed. On the CLI, `--bind TAG=LOCATION` picks
+the mode from the shape of the location, so a template written for a local tree
+can be run against a bucket:
+
+```bash
+depictio-cli run --template my-lab/rnaseq-qc/1 \
+  --bind samples=s3://my-bucket/run42/*.samples.csv
+```
+
+See [Remote data and manifests](remote-data.md) for the modes, the manifest
+contract, and how to refresh or share such a project.
 
 ### CLI Workflow
 
@@ -488,6 +508,11 @@ That single command:
 3. Creates the project in MongoDB
 4. Discovers and processes all data collections (running recipes automatically)
 5. Imports the bundled dashboard
+
+A manifest-driven template takes `--manifest <url or path>` in place of
+`--data-root`, and any template can be pointed at other locations, collection
+by collection, with `--bind TAG=LOCATION`. See
+[Remote data and manifests](remote-data.md).
 
 ### When to use templates
 

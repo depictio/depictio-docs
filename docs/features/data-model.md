@@ -73,6 +73,34 @@ collections the location and the schema of each aggregation live in a separate
 API joins them in as it serves the project, which is why `delta_location` and
 `last_aggregation` show up in API responses and nowhere in your YAML.
 
+### Remote files { #remote-files }
+
+Three scan modes register files that were never on a local disk: `url` names one
+file, `s3_prefix` lists a bucket prefix, and `manifest` consumes an explicit list of
+files called a [Data Manifest](../usage/projects/remote-data.md#the-data-manifest-contract).
+The **File** record is the same object, with three differences:
+
+| Field | Local scan | Remote scan |
+| --- | --- | --- |
+| `file_location` | A path on the machine that ran the scan | The absolute URL. Existence is checked when the file is fetched, never at registration |
+| `filesize` | Read from the filesystem | `-1` when the size could not be determined, for instance a URL served without a content length |
+| `manifest_id` | Unset | The entity id: the manifest `id` column, or the part of the object key an `s3_prefix` scan's `id_regex` captured |
+
+`manifest_id` is what makes remote collections filter each other without
+configuration. It is injected at read time as a `depictio_manifest_id` column, so
+every collection built from the same manifest, or from prefixes sharing a naming
+pattern, carries identical canonical values in a column of the same name. A
+[link](#joining-and-linking) with the `direct` resolver then works with nothing to
+map: the manifest `id` is the canonical identifier the other resolvers were designed
+around.
+
+The manifest's optional `run` column plays the role a run directory plays locally. It
+is stored as the file's run and injected as `depictio_run_id`, with `remote` as the
+value when the manifest has no run column, so every per-run feature keeps working.
+
+Materialisation is unchanged: a remote table still becomes a Delta Lake table on the
+instance's own S3, fetched once at ingestion rather than read through at render time.
+
 ---
 
 ## Data collection types
