@@ -190,6 +190,63 @@ All user input is validated:
 
 ---
 
+## Remote Data Sources { #remote-data-sources }
+
+The `url`, `s3_prefix` and `manifest` scan modes make the server fetch
+user-supplied URLs, which is a textbook server-side request forgery surface.
+Every such fetch, whether creating a data collection from a URL, ingesting a
+manifest, or a refresh task on the Celery worker, goes through one gateway
+module; nothing in server context reads a user-supplied URL directly. See
+[Remote data and manifests](../usage/projects/remote-data.md) for the feature
+itself.
+
+### What the gateway enforces
+
+| Check | Behaviour |
+|-------|-----------|
+| **Scheme allowlist** | `https://` and `s3://`. Plain `http://` only with `DEPICTIO_REMOTE_ALLOW_HTTP=true` |
+| **Address check** | The host is resolved and private, loopback, link-local and reserved ranges are rejected, including the cloud metadata endpoint |
+| **Redirects** | Every `Location` is re-validated against the same policy before it is followed; hops are capped by `DEPICTIO_REMOTE_MAX_REDIRECTS` |
+| **Bounded download** | Streamed, with a size cap (`DEPICTIO_REMOTE_MAX_DOWNLOAD_BYTES`) and a per-operation timeout (`DEPICTIO_REMOTE_TIMEOUT_S`); a download that exceeds the cap is aborted and the partial file removed |
+| **Host lists** | `DEPICTIO_REMOTE_URL_DENYLIST` always rejects. `DEPICTIO_REMOTE_URL_ALLOWLIST` is exclusive while set, and a listed host bypasses the private-range check |
+| **Sanitised errors** | Transport and HTTP errors are logged with their cause and surfaced to the client without internal details |
+
+The policy is read from the environment on every call, so the API and the
+worker always agree. The CLI, which fetches the user's own loopback and intranet
+hosts, reads directly but keeps the redirect and size caps.
+
+!!! warning "Residual risk: DNS rebinding"
+    The address is checked when the host is resolved, and a hostile resolver
+    could answer differently between that check and the connection. The
+    gateway does not pin the resolved address. Hardened deployments should run
+    **allowlist-only**: set `DEPICTIO_REMOTE_URL_ALLOWLIST` to the hosts you
+    trust, which turns the address check into a host check.
+
+### Per-project storage credentials
+
+A project owner can attach S3-compatible credentials so remote and manifest
+collections can read a private bucket.
+
+- Credentials live in their own collection, never on the project document, so
+  they cannot leak through project responses or exports. Template bundles never
+  include them.
+- The secret is **encrypted at rest** with a symmetric key stored next to the
+  JWT key pair, in `DEPICTIO_AUTH_KEYS_DIR`. The API encrypts on write and the
+  Celery worker decrypts inside refresh tasks, so backend and worker must mount
+  the same keys volume; a worker with a keys directory of its own would mint a
+  second key and find every stored secret unreadable.
+- The secret is **write-only** in the API: responses only carry `has_secret`,
+  and an update that omits the secret keeps the stored one.
+- The endpoint URL passes the same host gating as remote data URLs. The
+  instance's own object storage is always allowed; a private-network endpoint
+  needs to be allowlisted.
+- These are read credentials only. Delta tables are still written with the
+  instance's own storage configuration, and refresh workers re-read the
+  credentials from the database rather than receiving them through the task
+  broker.
+
+---
+
 ## Content Security Policy { #content-security-policy }
 
 Deployed instances send a Content-Security-Policy header. The development server sends
@@ -282,6 +339,7 @@ Since **v1.5.2** the CSRF `state` is stored in MongoDB (`oauth_states`), used on
 | Database Credentials | Use strong passwords, rotate regularly |
 | API Keys | Use environment variables, not config files |
 | MinIO Credentials | Separate credentials per environment; root password is a `SecretStr` with a ≥16-character validator and no default — the server refuses to start if the value is absent or matches a known-default string |
+| Project storage secrets | Encrypted at rest with `secrets_key.bin` in `DEPICTIO_AUTH_KEYS_DIR`; back the keys volume up with the JWT key pair and mount it on the worker too, see [Per-project storage credentials](#per-project-storage-credentials) |
 
 ### Environment Configuration
 

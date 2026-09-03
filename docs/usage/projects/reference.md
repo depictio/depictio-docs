@@ -157,6 +157,12 @@ workflows:
               # Options:
               #   "single" - Single file per project/run
               #   "recursive" - Pattern-based file discovery
+              #   "url" - One remote file at an s3:// or https:// URL
+              #   "s3_prefix" - Every object under an s3:// prefix matching a glob
+              #   "manifest" - The files a Data Manifest lists for this collection
+              # mode and scan_parameters must agree: a parameter block that
+              # belongs to another mode is rejected with a message naming both.
+              # The three remote modes are detailed under "Remote scan modes" below.
 
             # Required: Mode-specific scan parameters
             scan_parameters:
@@ -172,6 +178,23 @@ workflows:
               # For mode: "single" - specify exact file (alternative to regex_config)
               # filename: "metadata/sample_info.csv"  # Required for single mode: File path
               # Can be absolute or relative path
+
+              # For mode: "url" - one remote file, fetched by the server
+              # url: "https://data.example.org/run42/metadata.tsv"  # Required: absolute s3:// or https:// URL
+
+              # For mode: "s3_prefix" - list a bucket prefix (the remote counterpart of recursive)
+              # prefix: "s3://my-bucket/run42/"          # Required: s3:// prefix, bucket included
+              # pattern: "*.samples.csv"                 # Optional: glob on the key relative to the prefix (default "*")
+              # id_regex: "^([^/]+?)\\.samples\\.csv$"   # Optional: one capture group; the capture becomes depictio_manifest_id
+              # max_files: 10000                         # Optional: listing ceiling (default 10000, max 100000)
+
+              # For mode: "manifest" - consume the entries of a Data Manifest
+              # manifest_url: "https://data.example.org/run42/manifest.json"  # Required: manifest URL (a local path in CLI context)
+              # manifest_type: "samples"                 # Required: manifest `type` this collection consumes (its tag, by convention)
+              # id_field: "id"                           # Optional: manifest column holding the entity id
+              # url_field: "url"                         # Optional: manifest column holding the file URL
+              # type_field: "type"                       # Optional: manifest column holding the type
+              # run_field: "run"                         # Optional: manifest column holding the run grouping (null to ignore)
 
           # Required: Type-specific configuration
           dc_specific_properties:
@@ -350,8 +373,82 @@ workflows:
               #                   underscore-separated token of the leaf name)
 ```
 
+## Remote scan modes { #remote-scan-modes }
+
+Three scan modes fetch data from where it already is instead of walking a local
+directory. The server performs the fetch, through a gateway that validates every
+URL (see [Security](../../features/security.md#remote-data-sources)), and the
+files are materialised to Delta Lake exactly like scanned local files.
+[Remote data and manifests](remote-data.md) explains when to use which.
+
+`mode` and `scan_parameters` are cross-checked: declaring `mode: url` with a
+`filename` block, for instance, is rejected with a message naming the mode the
+parameters belong to and the parameters the declared mode expects.
+
+### `url`: one remote file
+
+| Parameter | Required | Default | Description |
+|-----------|----------|---------|-------------|
+| `url` | yes | | Absolute `s3://` or `https://` URL of the file. `http://` is accepted only when the instance sets `DEPICTIO_REMOTE_ALLOW_HTTP`. Validation here is syntactic; reachability and address checks happen at fetch time. |
+
+```yaml
+scan:
+  mode: url
+  scan_parameters:
+    url: "https://data.example.org/run42/metadata.tsv"
+```
+
+### `s3_prefix`: every object under a prefix
+
+The remote counterpart of `recursive`: list the objects under an `s3://` prefix
+and keep the keys matching a glob. It is S3-only by construction, since plain
+HTTPS exposes no listing operation.
+
+| Parameter | Required | Default | Description |
+|-----------|----------|---------|-------------|
+| `prefix` | yes | | `s3://` prefix, bucket included, e.g. `s3://my-bucket/run42/` |
+| `pattern` | no | `"*"` | Glob applied to the key *relative to* the prefix, so `*.csv` rather than the full path |
+| `id_regex` | no | `null` | Regex with exactly one capture group, matched against the object key. The capture is stored as the file's entity id and read back as the `depictio_manifest_id` column, which gives a prefix scan the same cross-DC join key as a manifest |
+| `max_files` | no | `10000` | Ceiling on the number of listed objects (at most `100000`), a backstop against pointing a collection at a bucket root |
+
+```yaml
+scan:
+  mode: s3_prefix
+  scan_parameters:
+    prefix: "s3://my-bucket/run42/"
+    pattern: "*.samples.csv"
+    id_regex: "^([^/]+?)\\.samples\\.csv$"
+```
+
+### `manifest`: the entries of a Data Manifest
+
+The collection consumes every manifest entry whose `type` equals
+`manifest_type`. The manifest contract (`id`, `type`, `url`, optional `run`) is
+described on [Remote data and manifests](remote-data.md#the-data-manifest-contract).
+
+| Parameter | Required | Default | Description |
+|-----------|----------|---------|-------------|
+| `manifest_url` | yes | | Remote URL of the manifest (JSON or CSV). In CLI context a local path is accepted too |
+| `manifest_type` | yes | | Which manifest `type` this collection consumes. By convention, the collection's own tag |
+| `id_field` | no | `"id"` | Manifest column holding the entity id |
+| `url_field` | no | `"url"` | Manifest column holding the file URL |
+| `type_field` | no | `"type"` | Manifest column holding the type |
+| `run_field` | no | `"run"` | Manifest column holding the run grouping; `null` to ignore |
+
+The `*_field` overrides remap a manifest with non-canonical column names onto
+the contract without rewriting it.
+
+```yaml
+scan:
+  mode: manifest
+  scan_parameters:
+    manifest_url: "{MANIFEST_URL}"
+    manifest_type: "samples"
+```
+
 ## See Also
 
 - **[YAML Examples](yaml-examples.md)** - Complete configuration examples and patterns
 - **[Project Guide](guide.md)** - Comprehensive project management guide
+- **[Remote data and manifests](remote-data.md)** - Choosing between a URL, a prefix and a manifest
 - **[CLI Reference](../../depictio-cli/usage.md)** - Command-line interface documentation

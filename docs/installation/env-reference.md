@@ -35,6 +35,7 @@ DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [React Viewer Frontend](#react-viewer-frontend)
 - [MongoDB Database](#mongodb-database)
 - [MinIO/S3 Storage](#minios3-storage)
+- [Remote Data Sources](#remote-data-sources)
 - [Authentication](#authentication)
 - [Bootstrap](#bootstrap)
 - [Redis Cache](#redis-cache)
@@ -182,6 +183,35 @@ against an existing bucket needs no extra permission.
 
 ---
 
+## Remote Data Sources { #remote-data-sources }
+
+**Config Class:** `RemoteConfig`
+**Environment Prefix:** `DEPICTIO_REMOTE_`
+
+Policy for the gateway that fetches user-supplied URLs: the `url` and
+`manifest` scan modes, manifest downloads, and the endpoint gating of
+per-project storage credentials. The section is read from the environment on
+every fetch, so the API and the Celery worker apply the same policy, and a
+malformed value fails at the first fetch instead of silently falling back to a
+default. See [Remote data and manifests](../usage/projects/remote-data.md) and
+[Security](../features/security.md#remote-data-sources).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_REMOTE_ALLOW_HTTP` | `false` | Accept plain `http://` URLs in addition to `https://` and `s3://`. Off by default: the gateway and the models reject `http://` locations. Turn on for local or airgapped deployments that serve data without TLS |
+| `DEPICTIO_REMOTE_URL_ALLOWLIST` | _(empty)_ | Comma-separated host names the gateway may fetch from. **Exclusive while set**: any host not listed is rejected, and a listed host skips the private/loopback address rejection, which is how internal deployments opt an intranet host in. Empty accepts every public host |
+| `DEPICTIO_REMOTE_URL_DENYLIST` | _(empty)_ | Comma-separated host names the gateway always rejects. Checked before the allowlist, so a host present in both lists is denied |
+| `DEPICTIO_REMOTE_MAX_DOWNLOAD_BYTES` | `524288000` (500 MiB) | Size cap in bytes for a single remote download, data file or manifest. Downloads stream and abort, removing the partial file, once the cap is exceeded |
+| `DEPICTIO_REMOTE_TIMEOUT_S` | `30.0` | Timeout in seconds applied to each connect, read and write operation of a remote fetch, not a total download time |
+| `DEPICTIO_REMOTE_MAX_REDIRECTS` | `3` | Maximum redirect hops followed for a remote URL. Every `Location` is re-validated against this policy before it is followed |
+
+!!! warning "A listed host bypasses the private-address check"
+    Setting `DEPICTIO_REMOTE_URL_ALLOWLIST` both restricts fetches to the listed
+    hosts and exempts those hosts from the private-range rejection. List only
+    hosts you control.
+
+---
+
 ## Authentication
 
 **Config Class:** `AuthConfig`
@@ -191,7 +221,7 @@ Authentication and authorization settings including JWT configuration, unauthent
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_AUTH_KEYS_DIR` | `<repo>/keys` | Directory for JWT public/private key files |
+| `DEPICTIO_AUTH_KEYS_DIR` | `<repo>/keys` | Directory for JWT public/private key files. Also holds `secrets_key.bin`, the key that encrypts per-project storage credentials at rest; the backend and the Celery worker must mount the same directory, or secrets written by one are unreadable by the other |
 | `DEPICTIO_AUTH_KEYS_ALGORITHM` | `RS256` | JWT signing algorithm (RS256, RS512, ES256, SHA256) |
 | `DEPICTIO_AUTH_CLI_CONFIG_DIR` | `<repo>/.depictio` | Directory for CLI configuration files (admin token, etc.) |
 | `DEPICTIO_AUTH_INTERNAL_API_KEY_ENV` | _(auto-generated)_ | Internal API key for service-to-service communication |
