@@ -282,6 +282,7 @@ nav:
           - rnaseq: pipeline-templates/nf-core/rnaseq.md
           - taxprofiler: pipeline-templates/nf-core/taxprofiler.md
           - chipseq: pipeline-templates/nf-core/chipseq.md
+          - atacseq: pipeline-templates/nf-core/atacseq.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md
