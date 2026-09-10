@@ -14,6 +14,10 @@ It runs entirely in the page, which is what makes it worth using: nothing to ins
 server to reach, and your file is parsed locally and only leaves the browser if you choose
 to open the pull request.
 
+<div class="catalog-cta-wrap" markdown>
+[Open Tool Studio :material-arrow-right:](https://depictio.github.io/depictio-tool-studio/){ .catalog-cta .catalog-cta--studio target=_blank }
+</div>
+
 <figure markdown="span">
   [![The Tool Studio start screen, showing the four steps and when the app applies](../images/tool-studio/00-start.webp)](../images/tool-studio/00-start.webp){target=_blank}
   <figcaption>The start screen states what an entry is before any form field, and where the app stops.</figcaption>

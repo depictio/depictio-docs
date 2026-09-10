@@ -100,27 +100,24 @@ The recipe Python code stays generic — path resolution happens via variable su
 
 ### Choosing a template without naming one <small>(v1.10.0+)</small> { #pipeline-id }
 
-`--template` names a Depictio template. `--pipeline-id` names the *pipeline*, as
-`<name>/<version>`, and lets the CLI find the template itself:
+You do not type this flag. `--pipeline-id nf-core/ampliseq/2.16.0` names the
+*pipeline* rather than a Depictio template, and the CLI resolves the bundled
+template from it. It exists so an automated trigger can forward what its engine
+reported on every run: it is ignored whenever `--template` or
+`--project-config-path` is given, so it never collides with your own choice. This
+is what lets the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) work
+with no template configured anywhere.
 
-```bash
-depictio-cli run --data-root ./results --pipeline-id nf-core/ampliseq/2.16.0
-```
+An unmatched pipeline id is an error, not a fallback. Only the version segment is
+flexible: `latest`, or no version at all, takes the newest template shipped for
+that pipeline.
 
-The value is engine-neutral, because Depictio also recognises Snakemake runs. A
-run whose version sits between two shipped templates takes the highest one at or
-below it, and a run older than every shipped template takes the lowest.
-
-Failing that, the run directory answers on its own: nf-core writes
-`pipeline_info/software_versions.yml`, and reading it gives the pipeline, its
-version, the engine version and the tools that executed. That provenance is
-recorded on the workflow whether or not it was used to pick a template.
-
-!!! info "An explicit choice always wins"
-    `--pipeline-id` is ignored when `--template` or `--project-config-path` is
-    given, so an automated trigger can forward it unconditionally. This is what
-    lets the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) work with
-    no template configured anywhere.
+When nothing is passed at all, the run directory answers on its own: nf-core
+writes `pipeline_info/software_versions.yml`, and reading it gives the pipeline,
+its version, the engine version and the tools that executed. That path does
+tolerate a version gap, taking the newest template that is not newer than the
+run, because a newer template describes outputs the run never wrote. The
+provenance is recorded on the workflow either way.
 
 ---
 
