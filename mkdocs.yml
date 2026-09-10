@@ -287,6 +287,7 @@ nav:
           - taxprofiler: pipeline-templates/nf-core/taxprofiler.md
           - chipseq: pipeline-templates/nf-core/chipseq.md
           - atacseq: pipeline-templates/nf-core/atacseq.md
+          - cutandrun: pipeline-templates/nf-core/cutandrun.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md
