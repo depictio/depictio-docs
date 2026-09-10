@@ -78,6 +78,20 @@ depictio-cli run \
     </div>
   </a>
 
+  <a class="template-card" href="nf-core/funcscan/">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/funcscan/master/docs/images/nf-core-funcscan_logo_dark.png" alt="nf-core/funcscan">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/funcscan/master/docs/images/nf-core-funcscan_logo_light.png" alt="nf-core/funcscan">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Functional screening of contigs: AMR genes, antimicrobial peptides, biosynthetic gene clusters and CAZymes.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v4.0.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 ---
