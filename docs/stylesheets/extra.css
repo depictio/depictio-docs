@@ -1950,19 +1950,8 @@ body.catalog-fs-lock .md-main {
 }
 
 .tpl-catalog-table .tpl-table-name a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+    font-family: var(--md-code-font-family, monospace);
     font-weight: 600;
-}
-
-.tpl-catalog-table .tpl-table-name code {
-    white-space: nowrap;
-}
-
-.tpl-catalog-table .tpl-table-logo img {
-    max-height: 1.3rem;
-    width: auto;
 }
 
 .tpl-catalog-table .tpl-table-desc {
@@ -1978,4 +1967,99 @@ body.catalog-fs-lock .md-main {
     .tpl-catalog-table .tpl-table-desc {
         display: none;
     }
+}
+
+/* Authorship block at the foot of a template page: who wrote it, who checked
+   it, and who keeps it working. */
+.tpl-credits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 0.8rem;
+    margin: 1rem 0 1.2rem;
+}
+
+.tpl-credit {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 12px;
+    background: var(--md-code-bg-color);
+}
+
+.tpl-credit-role {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--md-default-fg-color--light);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.tpl-credit-role .mdi {
+    font-size: 0.85rem;
+}
+
+.tpl-credit-note {
+    color: var(--md-default-fg-color--light);
+    font-size: 0.68rem;
+    line-height: 1.4;
+}
+
+.md-typeset .tpl-person {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: auto;
+    padding: 0.25rem 0.6rem 0.25rem 0.25rem;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 999px;
+    background: var(--md-default-bg-color);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-decoration: none;
+    width: fit-content;
+    transition: border-color 125ms;
+}
+
+.md-typeset .tpl-person:hover {
+    border-color: var(--md-accent-fg-color, #526cfe);
+}
+
+.md-typeset .tpl-person img {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+}
+
+/* Sortable column headers in the template table. */
+.md-typeset .tpl-sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+}
+
+.md-typeset .tpl-sort:hover,
+.md-typeset .tpl-sort.is-active {
+    color: var(--md-accent-fg-color, #526cfe);
+}
+
+.md-typeset .tpl-sort .mdi {
+    font-size: 0.85rem;
+    opacity: 0.65;
+}
+
+.md-typeset .tpl-sort.is-active .mdi {
+    opacity: 1;
 }

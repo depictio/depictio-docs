@@ -127,7 +127,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *Cutadapt and FastQC, straight from the report.*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png)](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png){target="_blank" rel="noopener"}
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png#only-light)](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png){target="_blank" rel="noopener"}
+
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png#only-dark)](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png){target="_blank" rel="noopener"}
 
     Thirteen MultiQC panels in two sections, then the sample metadata itself.
 
@@ -145,7 +147,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *Within-sample richness, evenness and phylogenetic spread: rarefaction plus per-group boxplots.*
 
-    [![Alpha diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png)](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png){target="_blank" rel="noopener"}
+    [![Alpha diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png#only-light)](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png){target="_blank" rel="noopener"}
+
+    [![Alpha diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png#only-dark)](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png){target="_blank" rel="noopener"}
 
     **Total Samples**, then the distribution of **Shannon**, **Faith PD** and
     **Evenness**, before the rarefaction curves.
@@ -166,7 +170,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *Taxonomic composition: sunburst, Sankey and stacked taxonomy.*
 
-    [![Community and diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png)](../../images/pipeline-templates/nf-core/ampliseq/community_light.png){target="_blank" rel="noopener"}
+    [![Community and diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png#only-light)](../../images/pipeline-templates/nf-core/ampliseq/community_light.png){target="_blank" rel="noopener"}
+
+    [![Community and diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_dark.png#only-dark)](../../images/pipeline-templates/nf-core/ampliseq/community_dark.png){target="_blank" rel="noopener"}
 
     The widest tab: composition, taxonomic structure, set overlap, and the SINTAX
     classifier beside the main taxonomy.
@@ -191,7 +197,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *Sample-relationship structure: PCoA on Bray-Curtis, plus a clustered taxonomy heatmap.*
 
-    [![Ordination and clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png)](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png){target="_blank" rel="noopener"}
+    [![Ordination and clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png#only-light)](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png){target="_blank" rel="noopener"}
+
+    [![Ordination and clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_dark.png#only-dark)](../../images/pipeline-templates/nf-core/ampliseq/ordination_dark.png){target="_blank" rel="noopener"}
 
     **Samples projected**, the group count, and the distribution of each PCoA axis.
 
@@ -210,7 +218,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *ANCOM-BC volcano and DA barplot, per contrast.*
 
-    [![Differential abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png)](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png){target="_blank" rel="noopener"}
+    [![Differential abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png#only-light)](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png){target="_blank" rel="noopener"}
+
+    [![Differential abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_dark.png#only-dark)](../../images/pipeline-templates/nf-core/ampliseq/differential_dark.png){target="_blank" rel="noopener"}
 
     **Taxa tested**, **Significant Taxa (q<0.05)**, **FDR calls** and the
     log-fold-change distribution, above the volcano and MA plots.
@@ -230,7 +240,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *The QIIME2 tree, annotated with ASV taxonomy.*
 
-    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png)](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png){target="_blank" rel="noopener"}
+    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png#only-light)](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png){target="_blank" rel="noopener"}
+
+    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png#only-dark)](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png){target="_blank" rel="noopener"}
 
     **Total ASVs**, genus-level classification rate, mean classifier confidence
     and the count of unique genera, then the tree itself.
@@ -344,3 +356,35 @@ Point `--data-root` to the directory containing your ampliseq outputs. This can 
 - [nf-co.re/ampliseq/2.16.0/results](https://nf-co.re/ampliseq/2.16.0/results) — AWS test results
 - [Template System Reference](../../usage/projects/templates.md) — YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md) — how to read, test, and write recipes
+
+---
+
+## :material-account-group-outline: Authorship
+
+<div class="tpl-credits">
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-code-braces"></i> Developers</span>
+    <span class="tpl-credit-note">Wrote the template, its recipes and its dashboards.</span>
+    <a class="tpl-person" href="https://github.com/weber8thomas" target="_blank" rel="noopener">
+      <img src="https://github.com/weber8thomas.png?size=80" alt="" loading="lazy"> weber8thomas
+    </a>
+  </div>
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
+    <span class="tpl-credit-note">Ran it on real data and signed off on the status above.</span>
+    <a class="tpl-person" href="https://github.com/depictio" target="_blank" rel="noopener">
+      <img src="https://github.com/depictio.png?size=80" alt="" loading="lazy"> Depictio team
+    </a>
+  </div>
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-wrench-outline"></i> Maintainers</span>
+    <span class="tpl-credit-note">Keep it working as nf-core/ampliseq releases.</span>
+    <a class="tpl-person" href="https://github.com/weber8thomas" target="_blank" rel="noopener">
+      <img src="https://github.com/weber8thomas.png?size=80" alt="" loading="lazy"> weber8thomas
+    </a>
+  </div>
+</div>
+
+Reviewing a template on your own data, or taking over a role here, is a
+contribution in itself: the [contributing guide](../../developer/contributing-templates.md)
+says what each one involves.
