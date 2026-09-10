@@ -14,6 +14,7 @@ Templates for [nf-core](https://nf-co.re) pipelines. Each template configures a 
 | [differentialabundance](differentialabundance.md) | DESeq2 differential expression | 2.0.0 |
 | [funcscan](funcscan.md) | Functional screening of assembled contigs | 4.0.0 |
 | [airrflow](airrflow.md) | B and T cell receptor repertoire (AIRR) | 5.1.0 |
+| [rnafusion](rnafusion.md) | Gene-fusion detection from RNA-seq | 4.1.3 |
 
 !!! tip "You do not have to name the template <small>(v1.10.0+)</small>"
     A pipeline can trigger the ingestion itself when it completes, and the
