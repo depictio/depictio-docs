@@ -11,6 +11,7 @@ Templates for [nf-core](https://nf-co.re) pipelines. Each template configures a 
 | [ampliseq](ampliseq.md) | 16S / ITS / CO1 amplicon sequencing | 2.14.0, 2.16.0, 2.18.0 |
 | [viralrecon](viralrecon.md) | Viral assembly and variant calling | 3.0.0 |
 | [variantbenchmarking](variantbenchmarking.md) | Variant caller benchmarking against truth sets | 1.4.0 |
+| [differentialabundance](differentialabundance.md) | DESeq2 differential expression | 2.0.0 |
 
 !!! tip "You do not have to name the template <small>(v1.10.0+)</small>"
     A pipeline can trigger the ingestion itself when it completes, and the

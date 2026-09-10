@@ -83,6 +83,20 @@ depictio-cli run \
     </div>
   </a>
 
+  <a class="template-card" href="nf-core/differentialabundance/" data-tpl-name="nf-core/differentialabundance" data-tpl-status="experimental" data-tpl-version="2.0.0" data-tpl-keywords="differential expression deseq2 rnaseq contrast volcano ma plot gene annotation variance stabilised">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/differentialabundance/master/docs/images/nf-core-differentialabundance_logo_dark.png" alt="nf-core/differentialabundance">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/differentialabundance/master/docs/images/nf-core-differentialabundance_logo_light.png" alt="nf-core/differentialabundance">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">DESeq2 differential expression: per-contrast statistics, gene annotation and the variance-stabilised sample space.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.0.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 <div class="tpl-catalog-table" data-tpl-table hidden></div>
