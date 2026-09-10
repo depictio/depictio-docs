@@ -6,6 +6,10 @@
 .gtd-badge{display:inline-block;padding:0 .5em;border-radius:10px;font-size:.78em;font-weight:600;line-height:1.5;white-space:nowrap;}
 .gtd-scan{background:#eef1fb;color:#3949ab;}
 .gtd-transformed{background:#e6f7f5;color:#2a8c82;}
+.gtd-direct{background:#eaf2ff;color:#2563c9;}
+.gtd-derived{background:#f3e8fd;color:#8e44ad;}
+.gtd-recipe{background:#fbe9f1;color:#b4337a;}
+.gtd-file{background:#eef0f2;color:#5a6573;}
 .gtd-opt{background:#fff6e6;color:#b9770e;}
 .gtd-req{background:#e9f7ef;color:#1e8e5a;}
 .gtd-plus-chip{background:#e9f7ef;color:#1e8e5a;}
@@ -21,6 +25,8 @@
    only the other columns' long paths may wrap. */
 .md-typeset table td:first-child{white-space:nowrap;}
 .md-typeset table td:not(:first-child) code{overflow-wrap:anywhere;}
+/* Reads-column paths: smaller monospace + wrap so long scan targets keep the row tidy. */
+.md-typeset table code.gtd-path{font-size:.62rem;overflow-wrap:anywhere;}
 .gtd-mtx{margin:.8rem 0;}
 .gtd-mtx table{border-collapse:separate;border-spacing:0;font-size:.7rem;}
 .gtd-mtx th,.gtd-mtx td{border:1px solid var(--md-default-fg-color--lightest,#e6e6e6);padding:2px 5px;text-align:center;}
@@ -59,19 +65,21 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 
 ### Data collections
 
-9 data collections — <span class="gtd-badge gtd-req">1 required</span> <span class="gtd-badge gtd-opt">8 optional</span>.
+9 data collections — <span class="gtd-badge gtd-req">1 required</span> <span class="gtd-badge gtd-opt">8 optional</span> · <span class="gtd-badge gtd-direct">9 direct</span> <span class="gtd-badge gtd-derived">0 derived</span>.
 
-| Tag | Type | Source | Recipe / scan target | Status |
-|---|---|---|---|:--:|
-| `germline_vcfeval_summary` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `rtgtools/vcfeval_summary.py` | <span class="gtd-badge gtd-req">required</span> |
-| `germline_happy_summary` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `happy/summary.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `germline_happy_roc` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `happy/roc.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `somatic_vcfeval_summary` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `rtgtools/vcfeval_summary.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `somatic_sompy_summary` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `sompy/summary.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `somatic_sompy_regions` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `sompy/regions.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `sv_truvari_summary` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `truvari/summary.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `sv_svbenchmark_summary` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `svanalyzer/svbenchmark.py` | <span class="gtd-badge gtd-opt">optional</span> |
-| `cnv_wittyer_summary` | Table | <span class="gtd-badge gtd-transformed">transformed</span> | `wittyer/summary.py` | <span class="gtd-badge gtd-opt">optional</span> |
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+
+| Tag | Origin | Type | Reads | Status |
+|---|:--:|---|---|:--:|
+| `germline_vcfeval_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`rtgtools/vcfeval_summary.py`</code> | <span class="gtd-badge gtd-req">required</span> |
+| `germline_happy_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`happy/summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `germline_happy_roc` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`happy/roc.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `somatic_vcfeval_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`rtgtools/vcfeval_summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `somatic_sompy_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`sompy/summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `somatic_sompy_regions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`sompy/regions.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `sv_truvari_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`truvari/summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `sv_svbenchmark_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`svanalyzer/svbenchmark.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `cnv_wittyer_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`wittyer/summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
 
 ### Cross-DC links
 

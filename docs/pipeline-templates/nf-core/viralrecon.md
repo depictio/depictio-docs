@@ -110,95 +110,118 @@ say what they *produce* (e.g. `variant_feature_matrix_canonical` →
 
 ---
 
-## Dashboard tabs
+## :material-view-dashboard-outline: Dashboard tabs
 
-The viralrecon template ships a five-tab dashboard (MultiQC parent +
-four child tabs). Each tab targets a different analytical question;
-filters propagate across tabs via cross-DC links on the
-`summary_metrics.sample` column.
+Five tabs: the MultiQC parent, then four children. Each tab below carries the
+**same icon and colour the dashboard gives it**, so the page and the app read
+alike. Filters propagate across tabs through cross-DC links on
+`summary_metrics.sample`.
 
-=== "MultiQC"
+=== ":material-chart-box-outline:{ .mc-orange } MultiQC"
 
-    Pipeline-level quality control powered by MultiQC.
+    *Sequencing, alignment and variant-calling QC, straight from the report.*
 
     [![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png)](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png){target="_blank" rel="noopener"}
 
-    **Filters:** Sample ID, Lineage.
+    Four cards open the run: **Samples**, **Reads mapped (%)**, **Genome at 10x**
+    and **Lineages**. Eighteen MultiQC panels follow, in three sections.
 
-    **Components:**
+    ??? abstract ":material-tune-variant: Filters and components"
 
-    - General stats table
-    - Raw read counts and trimming statistics (FastQC, Cutadapt)
-    - Alignment rate and duplication rate
-    - samtools / picard alignment metrics
-    - Per-sample variant counts
+        **Filters** · `Sample` and `Lineage`, plus four thresholds on
+        `summary_metrics`: genome covered at 10x, median depth, reads mapped and
+        variants called. A selector picks which MultiQC report to read.
 
-=== "Coverage & Depth"
+        | Section | What it holds |
+        |---|---|
+        | Run at a glance | 4 cards |
+        | QC overview | 6 MultiQC panels |
+        | Read & alignment details | 6 MultiQC panels |
+        | Variant & assembly details | 6 MultiQC panels |
 
-    Per-sample and per-amplicon coverage view.
+=== ":material-chart-areaspline:{ .mc-teal } Coverage & Depth"
 
-    [![Coverage & Depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png)](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png){target="_blank" rel="noopener"}
+    *Amplicon and genome coverage, from mosdepth.*
 
-    **Filters:** Sample ID.
+    [![Coverage and depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png)](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png){target="_blank" rel="noopener"}
 
-    **Components:**
+    Three coverage tracks sit under four cards: **Amplicons Tracked**,
+    **Amplicon Coverage**, **Genome Coverage** and **Amplicons at 20x**.
 
-    - 4 summary cards: *Total Samples*, *Amplicons Tracked*, *Amplicon Coverage*, *Genome Coverage*
-    - *Genome Coverage per Sample* (line chart)
-    - *Amplicon Coverage Heatmap*
-    - *Amplicon Coverage Data* table
-    - *Genome Coverage Data* table
+    ??? abstract ":material-tune-variant: Filters and components"
 
-=== "Lineage & Clustering"
+        **Filters** · genome depth and amplicon depth as ranges, plus an amplicon
+        picker on `mosdepth_amplicon_coverage`.
 
-    Pangolin lineage and Nextclade clade assignment, plus a Sankey
-    funnel from QC status → lineage → clade.
+        | Section | What it holds |
+        |---|---|
+        | Coverage at a glance | 4 cards |
+        | Coverage tracks | 3 advanced visualizations |
+        | Coverage tables | *Amplicon coverage table* |
 
-    [![Lineage & Clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png)](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png){target="_blank" rel="noopener"}
+=== ":material-virus:{ .mc-red } Lineage & Clustering"
 
-    **Filters:** Sample ID, Lineage, Clade, QC Status.
+    *Pangolin and Nextclade typing, a classification funnel, and a variant-profile PCA.*
 
-    **Components:**
+    [![Lineage and clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png)](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png){target="_blank" rel="noopener"}
 
-    - 4 summary cards: *Total Samples*, *Unique Lineages*, *Unique Clades*, *Avg Genome Coverage (10x)*
-    - 6 figures: *Pangolin Lineage Distribution*, *Nextclade QC Status Overview*, *Nextclade Clade Distribution*, *Coverage vs Total Variants by Lineage*, *Genome Coverage per Sample (>= 10x Depth)*, *Nextclade — Substitutions vs Deletions by Clade*
-    - Sankey funnel: qc_status → lineage → clade (`classification_sankey`)
-    - Variant-profile PCA embedding, coloured by lineage (`variant_pca_matrix`)
-    - 3 tables: *Pangolin Lineage Assignments*, *Nextclade Clade Assignments*, *Summary Metrics*
+    Cards count **Unique Lineages**, **Unique Clades**, **Consensus coverage** and
+    **Pangolin QC verdicts**; the funnel and the PCA sit below the two
+    distributions.
 
-=== "Variants"
+    ??? abstract ":material-tune-variant: Filters and components"
 
-    Variant calls and functional effects, with manhattan-style genome
-    landscape and oncoplot of high-impact mutations.
+        **Filters** · `Lineage`, `Clade`, and the two QC verdicts, Pangolin and
+        Nextclade.
 
-    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png)](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png){target="_blank" rel="noopener"}
+        | Section | What it holds |
+        |---|---|
+        | Typing at a glance | 4 cards |
+        | Lineage distribution | *Pangolin lineage distribution*, *Nextclade clade distribution* |
+        | Classification flow | 2 advanced visualizations |
+        | Typing tables | *Pangolin lineage assignments*, *Nextclade clade assignments* |
 
-    **Filters:** Sample ID, Gene, Variant Effect, Functional Class, Allele Frequency (range), Read Depth (range).
+=== ":material-stethoscope:{ .mc-indigo } Sample QC"
 
-    **Components:**
-
-    - 4 summary cards: *Total Variants*, *Unique Genes*, *Mean Allele Freq*, *Unique AA Changes*
-    - Manhattan plot: chr × pos × score (bound directly to `variants_long`)
-    - Lollipop: per-gene variants (bound directly to `variants_long`)
-    - Oncoplot: sample × gene × mutation_type (`variant_oncoplot`)
-    - 5 figures: *Allele Frequency vs Genome Position*, *Variant Count by Gene and Functional Class*, *Variant Effect Distribution*, *Variant Functional Class Distribution*, *Variant Count per Sample*
-    - 1 table: *Variants Long Table*
-
-=== "Sample QC"
-
-    Per-sample QC scorecard combining alignment, coverage, variant counts
-    and lineage / clade assignment in one place.
+    *Per-sample coverage, variant yield, substitution patterns and genome completeness.*
 
     [![Sample QC](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png)](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png){target="_blank" rel="noopener"}
 
-    **Filters:** Sample ID, Lineage, QC Status.
+    The scorecard tab: **Avg % Genome ≥ 10x**, **Median Variants / Sample**,
+    **Reads mapped (%)** and **Missing bases**, then two diagnostic scatters.
 
-    **Components:**
+    ??? abstract ":material-tune-variant: Filters and components"
 
-    - Summary cards: total samples, samples passing QC, mean coverage,
-      mean variants per sample
-    - Amplicon coverage matrix heatmap (`amplicon_coverage_matrix`)
-    - Summary metrics table
+        **Filters** · SNPs called, indels called and missing bases, all as ranges.
+
+        | Section | What it holds |
+        |---|---|
+        | QC at a glance | 4 cards |
+        | Diagnostics | *Median coverage vs total variants*, *Nextclade substitutions vs deletions* |
+        | Per-sample coverage | *Genome coverage per sample (≥10x)* |
+        | Sample metadata | 4 cards + *Summary metrics* table |
+
+=== ":material-dna:{ .mc-orange } Variants"
+
+    *Per-call allele frequency, per-gene and per-sample effect breakdowns, and a sample × gene oncoplot.*
+
+    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png)](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png){target="_blank" rel="noopener"}
+
+    **Total Variant Calls**, **Distinct Positions**, **Samples w/ variants** and
+    **Unique AA Changes** head the tab; the oncoplot closes it.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Gene`, `Variant Effect`, `Functional class`, allele frequency
+        and read depth as ranges, and a mutation-type picker scoping the oncoplot.
+
+        | Section | What it holds |
+        |---|---|
+        | Variant burden | 4 cards + 2 advanced visualizations |
+        | Allele frequency | *Allele frequency distribution*, *Read support per call* |
+        | Effect breakdown | *Variant counts by gene & functional class*, *Variants per sample* |
+        | Co-occurrence | 2 cards + 2 advanced visualizations (oncoplot) |
+        | Variant table | *Variants table* |
 
 ---
 

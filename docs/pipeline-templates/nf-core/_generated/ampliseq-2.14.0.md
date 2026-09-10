@@ -57,7 +57,7 @@
 
 ### Template variables
 
-`DATA_ROOT` (via `--data-root`) is the only required input. The rest mirror the pipeline's own nf-core parameters and are **auto-derived from the run's `params.json`** — pass `--var NAME=value` only to override what the run recorded:
+Variables you provide when running the template — `DATA_ROOT` via `--data-root`, the rest via `--var NAME=value`:
 
 | Variable | Required | Description |
 |---|:--:|---|
@@ -73,14 +73,14 @@
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
-| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">multiqc/multiqc_data/multiqc.parquet</code> | <span class="gtd-badge gtd-req">required</span> |
-| `samplesheet` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{SAMPLESHEET_FILE}</code> | <span class="gtd-badge gtd-req">required</span> |
-| `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{METADATA_FILE}</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `alpha_diversity` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/alpha_diversity.py</code> | <span class="gtd-badge gtd-req">required</span> |
-| `alpha_rarefaction` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/alpha_rarefaction.py</code> | <span class="gtd-badge gtd-req">required</span> |
-| `taxonomy_composition` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/taxonomy_composition.py</code> | <span class="gtd-badge gtd-req">required</span> |
-| `taxonomy_rel_abundance` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">nf-core/ampliseq/taxonomy_rel_abundance.py</code> | <span class="gtd-badge gtd-req">required</span> |
-| `ancombc_results` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">qiime2/ancombc.py</code> | <span class="gtd-badge gtd-req">required</span> |
+| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`multiqc/multiqc_data/multiqc.parquet`</code> | <span class="gtd-badge gtd-req">required</span> |
+| `samplesheet` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`{SAMPLESHEET_FILE}`</code> | <span class="gtd-badge gtd-req">required</span> |
+| `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`{METADATA_FILE}`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `alpha_diversity` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/ampliseq/alpha_diversity.py`</code> | <span class="gtd-badge gtd-req">required</span> |
+| `alpha_rarefaction` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`qiime2/alpha_rarefaction.py`</code> | <span class="gtd-badge gtd-req">required</span> |
+| `taxonomy_composition` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`qiime2/taxonomy_composition.py`</code> | <span class="gtd-badge gtd-req">required</span> |
+| `taxonomy_rel_abundance` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/ampliseq/taxonomy_rel_abundance.py`</code> | <span class="gtd-badge gtd-req">required</span> |
+| `ancombc_results` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`qiime2/ancombc.py`</code> | <span class="gtd-badge gtd-req">required</span> |
 
 ### Conditional routes
 
@@ -122,4 +122,4 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`nf-core/ampliseq/taxonomy_rel_abundance.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/2.14.0/recipes/taxonomy_rel_abundance.py) | Transform QIIME2 relative abundance table to long-format per-sample taxonomy table. | `sample`, `taxonomy`, `rel_abundance`, `habitat`, `Kingdom`, `Phylum` |
 | [`qiime2/alpha_rarefaction.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/alpha_rarefaction.py) | Transform QIIME2 alpha rarefaction wide CSV to long-format rarefaction curves. | `sample`, `depth`, `iter`, `faith_pd` |
 | [`qiime2/ancombc.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/ancombc.py) | Merge ANCOM-BC differential abundance results (5 files) into one long-format table. | `id`, `contrast`, `lfc`, `p_val`, `q_val`, `w`, `se`, `Kingdom`, `Phylum`, `neg_log10_qval`, `significant` |
-| [`qiime2/taxonomy_composition.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/taxonomy_composition.py) | Transform QIIME2 barplot CSV (wide) to long-format taxonomy composition table. | `sample`, `taxonomy`, `count` |
+| [`qiime2/taxonomy_composition.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/taxonomy_composition.py) | Transform QIIME2 barplot CSV (wide) to long-format taxonomy composition table. | `sample`, `taxonomy`, `count`, `Kingdom`, `Phylum` |
