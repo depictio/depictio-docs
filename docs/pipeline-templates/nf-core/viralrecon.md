@@ -134,7 +134,9 @@ alike. Filters propagate across tabs through cross-DC links on
 
     *Sequencing, alignment and variant-calling QC, straight from the report.*
 
-    [![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png)](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png){target="_blank" rel="noopener"}
+    [![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png#only-light)](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png){target="_blank" rel="noopener"}
+
+    [![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png#only-dark)](../../images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png){target="_blank" rel="noopener"}
 
     Four cards open the run: **Samples**, **Reads mapped (%)**, **Genome at 10x**
     and **Lineages**. Eighteen MultiQC panels follow, in three sections.
@@ -156,7 +158,9 @@ alike. Filters propagate across tabs through cross-DC links on
 
     *Amplicon and genome coverage, from mosdepth.*
 
-    [![Coverage and depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png)](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png){target="_blank" rel="noopener"}
+    [![Coverage and depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png#only-light)](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png){target="_blank" rel="noopener"}
+
+    [![Coverage and depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png#only-dark)](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png){target="_blank" rel="noopener"}
 
     Three coverage tracks sit under four cards: **Amplicons Tracked**,
     **Amplicon Coverage**, **Genome Coverage** and **Amplicons at 20x**.
@@ -176,7 +180,9 @@ alike. Filters propagate across tabs through cross-DC links on
 
     *Pangolin and Nextclade typing, a classification funnel, and a variant-profile PCA.*
 
-    [![Lineage and clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png)](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png){target="_blank" rel="noopener"}
+    [![Lineage and clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png#only-light)](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png){target="_blank" rel="noopener"}
+
+    [![Lineage and clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png#only-dark)](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png){target="_blank" rel="noopener"}
 
     Cards count **Unique Lineages**, **Unique Clades**, **Consensus coverage** and
     **Pangolin QC verdicts**; the funnel and the PCA sit below the two
@@ -198,7 +204,9 @@ alike. Filters propagate across tabs through cross-DC links on
 
     *Per-sample coverage, variant yield, substitution patterns and genome completeness.*
 
-    [![Sample QC](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png)](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png){target="_blank" rel="noopener"}
+    [![Sample QC](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png#only-light)](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png){target="_blank" rel="noopener"}
+
+    [![Sample QC](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png#only-dark)](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png){target="_blank" rel="noopener"}
 
     The scorecard tab: **Avg % Genome ≥ 10x**, **Median Variants / Sample**,
     **Reads mapped (%)** and **Missing bases**, then two diagnostic scatters.
@@ -218,7 +226,9 @@ alike. Filters propagate across tabs through cross-DC links on
 
     *Per-call allele frequency, per-gene and per-sample effect breakdowns, and a sample × gene oncoplot.*
 
-    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png)](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png){target="_blank" rel="noopener"}
+    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png#only-light)](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png){target="_blank" rel="noopener"}
+
+    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_dark.png#only-dark)](../../images/pipeline-templates/nf-core/viralrecon/variants_dark.png){target="_blank" rel="noopener"}
 
     **Total Variant Calls**, **Distinct Positions**, **Samples w/ variants** and
     **Unique AA Changes** head the tab; the oncoplot closes it.
@@ -335,3 +345,35 @@ depictio run \
 - [nf-co.re/viralrecon/3.0.0/results](https://nf-co.re/viralrecon/3.0.0/results) — AWS test results
 - [Template System Reference](../../usage/projects/templates.md) — YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md) — how to read, test, and write recipes
+
+---
+
+## :material-account-group-outline: Authorship
+
+<div class="tpl-credits">
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-code-braces"></i> Developers</span>
+    <span class="tpl-credit-note">Wrote the template, its recipes and its dashboards.</span>
+    <a class="tpl-person" href="https://github.com/weber8thomas" target="_blank" rel="noopener">
+      <img src="https://github.com/weber8thomas.png?size=80" alt="" loading="lazy"> weber8thomas
+    </a>
+  </div>
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
+    <span class="tpl-credit-note">Ran it on real data and signed off on the status above.</span>
+    <a class="tpl-person" href="https://github.com/depictio" target="_blank" rel="noopener">
+      <img src="https://github.com/depictio.png?size=80" alt="" loading="lazy"> Depictio team
+    </a>
+  </div>
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-wrench-outline"></i> Maintainers</span>
+    <span class="tpl-credit-note">Keep it working as nf-core/viralrecon releases.</span>
+    <a class="tpl-person" href="https://github.com/weber8thomas" target="_blank" rel="noopener">
+      <img src="https://github.com/weber8thomas.png?size=80" alt="" loading="lazy"> weber8thomas
+    </a>
+  </div>
+</div>
+
+Reviewing a template on your own data, or taking over a role here, is a
+contribution in itself: the [contributing guide](../../developer/contributing-templates.md)
+says what each one involves.

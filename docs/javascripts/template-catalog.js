@@ -11,7 +11,6 @@ const TPL_STATUS_ICON = {
 };
 
 function tplCardFields(card) {
-  const logos = card.querySelector('.template-card-logo');
   return {
     href: card.getAttribute('href'),
     name: card.dataset.tplName || '',
@@ -19,8 +18,21 @@ function tplCardFields(card) {
     version: card.dataset.tplVersion || '',
     keywords: card.dataset.tplKeywords || '',
     description: card.querySelector('.template-card-desc')?.textContent.trim() || '',
-    logo: logos ? logos.innerHTML : '',
   };
+}
+
+/* Statuses sort by trust rather than alphabetically, which is the order the
+   status-levels section explains them in. */
+const TPL_STATUS_RANK = { certified: 0, reviewed: 1, experimental: 2 };
+
+function tplCompareVersions(a, b) {
+  const parse = (v) => v.split('.').map((part) => parseInt(part, 10) || 0);
+  const [x, y] = [parse(a), parse(b)];
+  for (let i = 0; i < Math.max(x.length, y.length); i += 1) {
+    const diff = (x[i] || 0) - (y[i] || 0);
+    if (diff) return diff;
+  }
+  return 0;
 }
 
 function tplBuildTable(container, cards) {
@@ -29,9 +41,7 @@ function tplBuildTable(container, cards) {
       const f = tplCardFields(card);
       const icon = TPL_STATUS_ICON[f.status] || 'mdi-help-circle-outline';
       return `<tr data-tpl-row="${f.name}">
-        <td class="tpl-table-name">
-          <a href="${f.href}"><span class="tpl-table-logo">${f.logo}</span><code>${f.name}</code></a>
-        </td>
+        <td class="tpl-table-name"><a href="${f.href}">${f.name}</a></td>
         <td class="tpl-table-desc">${f.description}</td>
         <td class="tpl-table-version"><span class="template-version">v${f.version}</span></td>
         <td class="tpl-table-status">
@@ -41,9 +51,50 @@ function tplBuildTable(container, cards) {
     })
     .join('');
   container.innerHTML = `<table>
-    <thead><tr><th>Template</th><th>What it covers</th><th>Version</th><th>Status</th></tr></thead>
+    <thead><tr>
+      <th><button type="button" class="tpl-sort" data-tpl-sort="name">Template <i class="mdi mdi-unfold-more-horizontal"></i></button></th>
+      <th>What it covers</th>
+      <th><button type="button" class="tpl-sort" data-tpl-sort="version">Version <i class="mdi mdi-unfold-more-horizontal"></i></button></th>
+      <th><button type="button" class="tpl-sort" data-tpl-sort="status">Status <i class="mdi mdi-unfold-more-horizontal"></i></button></th>
+    </tr></thead>
     <tbody>${rows}</tbody>
   </table>`;
+}
+
+function tplWireSort(table, cards) {
+  const body = table.querySelector('tbody');
+  const fields = new Map(cards.map((card) => [card.dataset.tplName, tplCardFields(card)]));
+  let key = null;
+  let ascending = true;
+
+  const compare = (a, b) => {
+    const [x, y] = [fields.get(a.dataset.tplRow), fields.get(b.dataset.tplRow)];
+    if (!x || !y) return 0;
+    if (key === 'version') return tplCompareVersions(x.version, y.version);
+    if (key === 'status') return (TPL_STATUS_RANK[x.status] ?? 9) - (TPL_STATUS_RANK[y.status] ?? 9);
+    return x.name.localeCompare(y.name);
+  };
+
+  table.querySelectorAll('[data-tpl-sort]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const next = button.dataset.tplSort;
+      ascending = next === key ? !ascending : true;
+      key = next;
+      table.querySelectorAll('[data-tpl-sort]').forEach((other) => {
+        const active = other === button;
+        other.classList.toggle('is-active', active);
+        const icon = other.querySelector('.mdi');
+        if (icon) {
+          icon.className = active
+            ? `mdi ${ascending ? 'mdi-arrow-up' : 'mdi-arrow-down'}`
+            : 'mdi mdi-unfold-more-horizontal';
+        }
+      });
+      const sorted = Array.from(body.children).sort(compare);
+      if (!ascending) sorted.reverse();
+      sorted.forEach((row) => body.appendChild(row));
+    });
+  });
 }
 
 function initTemplateCatalog() {
@@ -59,6 +110,7 @@ function initTemplateCatalog() {
   if (!cards.length || !table || !grid) return;
 
   tplBuildTable(table, cards);
+  tplWireSort(table, cards);
   const rows = new Map(
     Array.from(table.querySelectorAll('[data-tpl-row]')).map((row) => [row.dataset.tplRow, row]),
   );
