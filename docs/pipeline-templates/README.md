@@ -176,6 +176,20 @@ depictio-cli run \
     </div>
   </a>
 
+  <a class="template-card" href="nf-core/cutandrun/">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/cutandrun/master/docs/images/nf-core-cutandrun_logo_dark.png" alt="nf-core/cutandrun">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/cutandrun/master/docs/images/nf-core-cutandrun_logo_light.png" alt="nf-core/cutandrun">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">CUT&amp;RUN / CUT&amp;Tag chromatin profiling: SEACR and MACS2 side by side, their agreement and the consensus set per target.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.1</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 ---
