@@ -278,6 +278,7 @@ nav:
           - differentialabundance: pipeline-templates/nf-core/differentialabundance.md
           - funcscan: pipeline-templates/nf-core/funcscan.md
           - airrflow: pipeline-templates/nf-core/airrflow.md
+          - rnafusion: pipeline-templates/nf-core/rnafusion.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md
