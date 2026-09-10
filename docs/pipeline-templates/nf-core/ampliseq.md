@@ -127,9 +127,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *Cutadapt and FastQC, straight from the report.*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png#only-light)](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png){target="_blank" rel="noopener"}
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png#only-dark)](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png){target="_blank" rel="noopener"}
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     Thirteen MultiQC panels in two sections, then the sample metadata itself.
 
@@ -147,9 +147,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *Within-sample richness, evenness and phylogenetic spread: rarefaction plus per-group boxplots.*
 
-    [![Alpha diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png#only-light)](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png){target="_blank" rel="noopener"}
+    [![Alpha diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Alpha diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png#only-dark)](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png){target="_blank" rel="noopener"}
+    [![Alpha diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     **Total Samples**, then the distribution of **Shannon**, **Faith PD** and
     **Evenness**, before the rarefaction curves.
@@ -170,9 +170,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *Taxonomic composition: sunburst, Sankey and stacked taxonomy.*
 
-    [![Community and diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png#only-light)](../../images/pipeline-templates/nf-core/ampliseq/community_light.png){target="_blank" rel="noopener"}
+    [![Community and diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Community and diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_dark.png#only-dark)](../../images/pipeline-templates/nf-core/ampliseq/community_dark.png){target="_blank" rel="noopener"}
+    [![Community and diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     The widest tab: composition, taxonomic structure, set overlap, and the SINTAX
     classifier beside the main taxonomy.
@@ -197,9 +197,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *Sample-relationship structure: PCoA on Bray-Curtis, plus a clustered taxonomy heatmap.*
 
-    [![Ordination and clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png#only-light)](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png){target="_blank" rel="noopener"}
+    [![Ordination and clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Ordination and clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_dark.png#only-dark)](../../images/pipeline-templates/nf-core/ampliseq/ordination_dark.png){target="_blank" rel="noopener"}
+    [![Ordination and clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     **Samples projected**, the group count, and the distribution of each PCoA axis.
 
@@ -218,9 +218,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *ANCOM-BC volcano and DA barplot, per contrast.*
 
-    [![Differential abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png#only-light)](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png){target="_blank" rel="noopener"}
+    [![Differential abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Differential abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_dark.png#only-dark)](../../images/pipeline-templates/nf-core/ampliseq/differential_dark.png){target="_blank" rel="noopener"}
+    [![Differential abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     **Taxa tested**, **Significant Taxa (q<0.05)**, **FDR calls** and the
     log-fold-change distribution, above the volcano and MA plots.
@@ -240,9 +240,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *The QIIME2 tree, annotated with ASV taxonomy.*
 
-    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png#only-light)](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png){target="_blank" rel="noopener"}
+    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png#only-dark)](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png){target="_blank" rel="noopener"}
+    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     **Total ASVs**, genus-level classification rate, mean classifier confidence
     and the count of unique genera, then the tree itself.
