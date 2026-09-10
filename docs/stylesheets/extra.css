@@ -1964,7 +1964,8 @@ body.catalog-fs-lock .md-main {
 }
 
 @media screen and (max-width: 44.9375em) {
-    .tpl-catalog-table .tpl-table-desc {
+    .tpl-catalog-table .tpl-table-desc,
+    .tpl-catalog-table th:nth-child(2) {
         display: none;
     }
 }
@@ -2062,4 +2063,50 @@ body.catalog-fs-lock .md-main {
 
 .md-typeset .tpl-sort.is-active .mdi {
     opacity: 1;
+}
+
+/* A dashboard tab captured whole runs to several thousand pixels. Show the top
+   of it at a readable size, and let the click that is already there open the
+   full capture. */
+.md-typeset a.tpl-shot {
+    display: block;
+    position: relative;
+    max-height: 460px;
+    overflow: hidden;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 10px;
+}
+
+.md-typeset a.tpl-shot img {
+    display: block;
+    width: 100%;
+    margin: 0;
+}
+
+.md-typeset a.tpl-shot::after {
+    content: "Open full size";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 2.4rem 0 0.55rem;
+    background: linear-gradient(to bottom, transparent, var(--md-default-bg-color) 78%);
+    color: var(--md-default-fg-color--light);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.md-typeset a.tpl-shot:hover::after {
+    color: var(--md-accent-fg-color, #526cfe);
+}
+
+/* The wrapper, not just the image, has to go: `a.tpl-shot img` overrides
+   Material's own #only-light / #only-dark rule, and a hidden image would still
+   leave its framed box and "Open full size" label behind. */
+[data-md-color-scheme="default"] .md-typeset a.tpl-shot:has(img[src$="#only-dark"]),
+[data-md-color-scheme="slate"] .md-typeset a.tpl-shot:has(img[src$="#only-light"]) {
+    display: none;
 }

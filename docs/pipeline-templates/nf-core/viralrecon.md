@@ -134,9 +134,9 @@ alike. Filters propagate across tabs through cross-DC links on
 
     *Sequencing, alignment and variant-calling QC, straight from the report.*
 
-    [![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png#only-light)](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png){target="_blank" rel="noopener"}
+    [![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png#only-dark)](../../images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png){target="_blank" rel="noopener"}
+    [![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     Four cards open the run: **Samples**, **Reads mapped (%)**, **Genome at 10x**
     and **Lineages**. Eighteen MultiQC panels follow, in three sections.
@@ -158,9 +158,9 @@ alike. Filters propagate across tabs through cross-DC links on
 
     *Amplicon and genome coverage, from mosdepth.*
 
-    [![Coverage and depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png#only-light)](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png){target="_blank" rel="noopener"}
+    [![Coverage and depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Coverage and depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png#only-dark)](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png){target="_blank" rel="noopener"}
+    [![Coverage and depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     Three coverage tracks sit under four cards: **Amplicons Tracked**,
     **Amplicon Coverage**, **Genome Coverage** and **Amplicons at 20x**.
@@ -180,9 +180,9 @@ alike. Filters propagate across tabs through cross-DC links on
 
     *Pangolin and Nextclade typing, a classification funnel, and a variant-profile PCA.*
 
-    [![Lineage and clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png#only-light)](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png){target="_blank" rel="noopener"}
+    [![Lineage and clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Lineage and clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png#only-dark)](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png){target="_blank" rel="noopener"}
+    [![Lineage and clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     Cards count **Unique Lineages**, **Unique Clades**, **Consensus coverage** and
     **Pangolin QC verdicts**; the funnel and the PCA sit below the two
@@ -204,9 +204,9 @@ alike. Filters propagate across tabs through cross-DC links on
 
     *Per-sample coverage, variant yield, substitution patterns and genome completeness.*
 
-    [![Sample QC](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png#only-light)](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png){target="_blank" rel="noopener"}
+    [![Sample QC](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Sample QC](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png#only-dark)](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png){target="_blank" rel="noopener"}
+    [![Sample QC](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     The scorecard tab: **Avg % Genome ≥ 10x**, **Median Variants / Sample**,
     **Reads mapped (%)** and **Missing bases**, then two diagnostic scatters.
@@ -226,9 +226,9 @@ alike. Filters propagate across tabs through cross-DC links on
 
     *Per-call allele frequency, per-gene and per-sample effect breakdowns, and a sample × gene oncoplot.*
 
-    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png#only-light)](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png){target="_blank" rel="noopener"}
+    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_dark.png#only-dark)](../../images/pipeline-templates/nf-core/viralrecon/variants_dark.png){target="_blank" rel="noopener"}
+    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/variants_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     **Total Variant Calls**, **Distinct Positions**, **Samples w/ variants** and
     **Unique AA Changes** head the tab; the oncoplot closes it.
