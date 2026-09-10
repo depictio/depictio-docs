@@ -134,6 +134,20 @@ depictio-cli run \
     </div>
   </a>
 
+  <a class="template-card" href="nf-core/taxprofiler/">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/taxprofiler/master/docs/images/nf-core-taxprofiler_logo_dark.png" alt="nf-core/taxprofiler">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/taxprofiler/master/docs/images/nf-core-taxprofiler_logo_light.png" alt="nf-core/taxprofiler">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Metagenomic taxonomic profiling across many classifiers, with concordance and confidence views.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.0.1</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 ---
