@@ -1625,3 +1625,357 @@ body.catalog-fs-lock .md-main {
 .md-typeset .mc-lime { color: #82c91e; }
 .md-typeset .mc-yellow { color: #fab005; }
 .md-typeset .mc-orange { color: #fd7e14; }
+
+/* Template version picker: sits under the template banner and chooses which
+   generated reference block is shown. See javascripts/template-version.js. */
+.tpl-version-pick {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0 0 1.4rem;
+    padding: 0.35rem 0.5rem 0.35rem 0.75rem;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 999px;
+    background: var(--md-code-bg-color);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    font-size: 0.7rem;
+    line-height: 1.4;
+}
+
+.tpl-version-pick .tpl-version-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--md-accent-fg-color--transparent, rgba(34, 139, 230, 0.12));
+    color: var(--md-accent-fg-color, #228be6);
+    font-size: 0.9rem;
+}
+
+.tpl-version-pick .tpl-version-label {
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--md-default-fg-color--light);
+    text-transform: uppercase;
+    font-size: 0.6rem;
+}
+
+.tpl-version-select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 0.3rem 1.6rem 0.3rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    background-color: var(--md-default-bg-color);
+    background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23888"><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.35rem center;
+    background-size: 1.05rem;
+    color: var(--md-default-fg-color);
+    font-family: inherit;
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition: border-color 125ms, box-shadow 125ms;
+}
+
+.tpl-version-select:hover {
+    border-color: var(--md-accent-fg-color, #228be6);
+}
+
+.tpl-version-select:focus-visible {
+    outline: none;
+    border-color: var(--md-accent-fg-color, #228be6);
+    box-shadow: 0 0 0 3px var(--md-accent-fg-color--transparent, rgba(34, 139, 230, 0.2));
+}
+
+.tpl-version-pick .tpl-version-badge {
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    background: rgba(64, 192, 87, 0.16);
+    color: #2f9e44;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.tpl-version-pick .tpl-version-badge[hidden] {
+    display: none;
+}
+
+[data-md-color-scheme="slate"] .tpl-version-pick .tpl-version-badge {
+    background: rgba(64, 192, 87, 0.22);
+    color: #69db7c;
+}
+
+@media screen and (max-width: 44.9375em) {
+    .tpl-version-pick {
+        width: 100%;
+        border-radius: 12px;
+        flex-wrap: wrap;
+    }
+}
+
+/* Icons repeated from a heading into its table-of-contents entry. The toc
+   extension strips markup from titles, so javascripts/doc-sections.js clones
+   the rendered icon back in. */
+.md-nav--secondary .md-nav__link .toc-icon {
+    display: inline-block;
+    width: 0.85em;
+    height: 0.85em;
+    margin-right: 0.4em;
+    vertical-align: -0.06em;
+    opacity: 0.85;
+}
+
+.md-nav--secondary .md-nav__link .toc-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentcolor;
+}
+
+/* Collapsible page sections on template pages. See doc-sections.js. */
+.md-typeset .doc-section-head {
+    cursor: pointer;
+}
+
+.md-typeset .doc-section-head:hover .doc-section-toggle {
+    background: var(--md-default-fg-color--lightest);
+    color: var(--md-accent-fg-color, #526cfe);
+}
+
+.md-typeset .doc-section-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-left: 0.3rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--md-default-fg-color--light);
+    cursor: pointer;
+    vertical-align: middle;
+    transition: transform 200ms, background-color 125ms;
+}
+
+.md-typeset .doc-section-toggle:hover {
+    background: var(--md-default-fg-color--lightest);
+    color: var(--md-accent-fg-color, #228be6);
+}
+
+.md-typeset .doc-section-toggle svg {
+    width: 1rem;
+    height: 1rem;
+    fill: currentcolor;
+}
+
+.md-typeset .doc-section--collapsed .doc-section-toggle {
+    transform: rotate(-90deg);
+}
+
+.md-typeset .doc-section-body[hidden] {
+    display: none;
+}
+
+/* Material gives every table-of-contents entry a display value, which beats the
+   user-agent rule for [hidden]. The version picker relies on it. */
+.md-nav__item[hidden] {
+    display: none !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Template catalogue: search, status filter and the grid / table view switch.
+   See javascripts/template-catalog.js.
+   --------------------------------------------------------------------------- */
+.tpl-catalog-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 1.2rem;
+}
+
+.tpl-catalog-search {
+    position: relative;
+    flex: 1 1 14rem;
+    min-width: 12rem;
+}
+
+.tpl-catalog-search .mdi {
+    position: absolute;
+    top: 50%;
+    left: 0.65rem;
+    transform: translateY(-50%);
+    color: var(--md-default-fg-color--light);
+    font-size: 0.95rem;
+    pointer-events: none;
+}
+
+.md-typeset .tpl-catalog-search input {
+    width: 100%;
+    padding: 0.45rem 0.7rem 0.45rem 2rem;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 999px;
+    background: var(--md-default-bg-color);
+    color: var(--md-default-fg-color);
+    font-family: inherit;
+    font-size: 0.7rem;
+}
+
+.md-typeset .tpl-catalog-search input:focus-visible {
+    outline: none;
+    border-color: var(--md-accent-fg-color, #228be6);
+    box-shadow: 0 0 0 3px var(--md-accent-fg-color--transparent, rgba(34, 139, 230, 0.2));
+}
+
+.tpl-catalog-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.md-typeset .tpl-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.28rem 0.7rem;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--md-default-fg-color--light);
+    font-family: inherit;
+    font-size: 0.65rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 125ms, border-color 125ms, color 125ms;
+}
+
+.md-typeset .tpl-chip:hover {
+    border-color: var(--md-accent-fg-color, #228be6);
+    color: var(--md-accent-fg-color, #228be6);
+}
+
+.md-typeset .tpl-chip.is-active {
+    border-color: transparent;
+    background: var(--md-accent-fg-color, #526cfe);
+    color: #fff;
+}
+
+.tpl-catalog-views {
+    display: inline-flex;
+    margin-left: auto;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.md-typeset .tpl-viewbtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 1.8rem;
+    border: 0;
+    background: transparent;
+    color: var(--md-default-fg-color--light);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 125ms, color 125ms;
+}
+
+.md-typeset .tpl-viewbtn:hover {
+    color: var(--md-accent-fg-color, #228be6);
+}
+
+.md-typeset .tpl-viewbtn.is-active {
+    background: var(--md-accent-fg-color, #526cfe);
+    color: #fff;
+}
+
+.tpl-catalog-empty {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 1.4rem 0;
+    color: var(--md-default-fg-color--light);
+    font-size: 0.75rem;
+}
+
+.tpl-catalog-empty[hidden],
+.tpl-catalog-table[hidden],
+.template-cards[hidden],
+.template-card[hidden] {
+    display: none !important;
+}
+
+.tpl-catalog-table {
+    overflow-x: auto;
+}
+
+.tpl-catalog-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.72rem;
+}
+
+.tpl-catalog-table th,
+.tpl-catalog-table td {
+    padding: 0.55rem 0.7rem;
+    border-bottom: 1px solid var(--md-default-fg-color--lightest);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.tpl-catalog-table th {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--md-default-fg-color--light);
+}
+
+.tpl-catalog-table tbody tr:hover {
+    background: var(--md-code-bg-color);
+}
+
+.tpl-catalog-table .tpl-table-name {
+    white-space: nowrap;
+}
+
+.tpl-catalog-table .tpl-table-name a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.tpl-catalog-table .tpl-table-name code {
+    white-space: nowrap;
+}
+
+.tpl-catalog-table .tpl-table-logo img {
+    max-height: 1.3rem;
+    width: auto;
+}
+
+.tpl-catalog-table .tpl-table-desc {
+    color: var(--md-default-fg-color--light);
+}
+
+.tpl-catalog-table .tpl-table-status {
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+
+@media screen and (max-width: 44.9375em) {
+    .tpl-catalog-table .tpl-table-desc {
+        display: none;
+    }
+}

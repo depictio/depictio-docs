@@ -55,7 +55,7 @@
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
 </style>
 
-### Template variables
+### :material-code-braces: Template variables
 
 Variables you provide when running the template — `DATA_ROOT` via `--data-root`, the rest via `--var NAME=value`:
 
@@ -65,30 +65,30 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 
 **Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `IS_NANOPORE`
 
-### Data collections
+### :material-database-outline: Data collections
 
 14 data collections — <span class="gtd-badge gtd-req">2 required</span> <span class="gtd-badge gtd-opt">12 optional</span> · <span class="gtd-badge gtd-direct">8 direct</span> <span class="gtd-badge gtd-derived">6 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
-| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`multiqc/multiqc_data/multiqc.parquet`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `summary_metrics` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`multiqc/summary_metrics.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `variants_long` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`ivar/variants_long.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `pangolin_lineages` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`pangolin/pangolin_lineages.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `nextclade_results` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nextclade/nextclade_results.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `mosdepth_amplicon_coverage` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`variants/bowtie2/mosdepth/amplicon/all_samples.mosdepth.coverage.tsv`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `mosdepth_genome_coverage` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`variants/bowtie2/mosdepth/genome/all_samples.mosdepth.coverage.tsv`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `mosdepth_amplicon_heatmap` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`variants/bowtie2/mosdepth/amplicon/all_samples.mosdepth.heatmap.tsv`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `oncoplot_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/viralrecon/oncoplot_canonical.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `complex_heatmap_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`mosdepth/complex_heatmap_canonical.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `coverage_track_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`mosdepth/coverage_track_canonical.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `sankey_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/viralrecon/sankey_canonical.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `upset_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/viralrecon/upset_canonical.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `variant_feature_matrix_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/viralrecon/variant_feature_matrix_canonical.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">multiqc/multiqc_data/multiqc.parquet</code> | <span class="gtd-badge gtd-req">required</span> |
+| `summary_metrics` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/multiqc/summary_metrics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">multiqc/summary_metrics.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `variants_long` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ivar/variants_long.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ivar/variants_long.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `pangolin_lineages` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/pangolin/pangolin_lineages.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">pangolin/pangolin_lineages.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `nextclade_results` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/nextclade/nextclade_results.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nextclade/nextclade_results.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `mosdepth_amplicon_coverage` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">variants/bowtie2/mosdepth/amplicon/all_samples.mosdepth.coverage.tsv</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `mosdepth_genome_coverage` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">variants/bowtie2/mosdepth/genome/all_samples.mosdepth.coverage.tsv</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `mosdepth_amplicon_heatmap` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">variants/bowtie2/mosdepth/amplicon/all_samples.mosdepth.heatmap.tsv</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `oncoplot_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/recipes/oncoplot_canonical.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/viralrecon/oncoplot_canonical.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `complex_heatmap_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/mosdepth/complex_heatmap_canonical.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">mosdepth/complex_heatmap_canonical.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `coverage_track_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/mosdepth/coverage_track_canonical.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">mosdepth/coverage_track_canonical.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `sankey_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/recipes/sankey_canonical.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/viralrecon/sankey_canonical.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `upset_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/recipes/upset_canonical.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/viralrecon/upset_canonical.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `variant_feature_matrix_canonical` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/recipes/variant_feature_matrix_canonical.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/viralrecon/variant_feature_matrix_canonical.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 
-### Conditional routes
+### :material-directions-fork: Conditional routes
 
 Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (4 collections are unaffected by any variable — present on every run.)
 
@@ -110,7 +110,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><th class="dc"><code>variant_feature_matrix_canonical</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td></tr>
 </tbody></table></div>
 
-### Cross-DC links
+### :material-vector-link: Cross-DC links
 
 12 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
@@ -132,7 +132,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>summary_metrics</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>variant_feature_matrix_canonical</code></td><td>Filter the variant feature matrix by selected samples</td></tr>
 </tbody></table></div>
 
-### Recipes
+### :material-chef-hat: Recipes
 
 Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `EXPECTED_SCHEMA` columns.
 
