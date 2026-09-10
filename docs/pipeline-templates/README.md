@@ -148,6 +148,20 @@ depictio-cli run \
     </div>
   </a>
 
+  <a class="template-card" href="nf-core/chipseq/">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/chipseq/master/docs/images/nf-core-chipseq_logo_dark.png" alt="nf-core/chipseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/chipseq/master/docs/images/nf-core-chipseq_logo_light.png" alt="nf-core/chipseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Transcription-factor and histone ChIP-seq: MACS2 peaks, consensus sets per antibody and DESeq2 differential binding.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.2.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 ---

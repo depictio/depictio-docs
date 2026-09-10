@@ -281,6 +281,7 @@ nav:
           - rnafusion: pipeline-templates/nf-core/rnafusion.md
           - rnaseq: pipeline-templates/nf-core/rnaseq.md
           - taxprofiler: pipeline-templates/nf-core/taxprofiler.md
+          - chipseq: pipeline-templates/nf-core/chipseq.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md
