@@ -2065,16 +2065,26 @@ body.catalog-fs-lock .md-main {
     opacity: 1;
 }
 
-/* A dashboard tab captured whole runs to several thousand pixels. Show the top
-   of it at a readable size, and let the click that is already there open the
-   full capture. */
+/* A dashboard tab captured whole runs to several thousand pixels. Frame it in a
+   scroller sized off the viewport so the whole capture can be read in place,
+   with a corner link to the raw file. See javascripts/doc-sections.js. */
+.md-typeset .tpl-shot-frame {
+    position: relative;
+    margin: 0.6rem 0 1rem;
+    /* A page carries a dozen multi-megapixel captures. Skip the rendering work
+       for the ones nowhere near the viewport. */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 70vh;
+}
+
 .md-typeset a.tpl-shot {
     display: block;
-    position: relative;
-    max-height: 460px;
-    overflow: hidden;
+    max-height: 70vh;
+    overflow: auto;
     border: 1px solid var(--md-default-fg-color--lightest);
     border-radius: 10px;
+    background: var(--md-default-bg-color);
+    scrollbar-width: thin;
 }
 
 .md-typeset a.tpl-shot img {
@@ -2083,30 +2093,35 @@ body.catalog-fs-lock .md-main {
     margin: 0;
 }
 
-.md-typeset a.tpl-shot::after {
-    content: "Open full size";
+.md-typeset .tpl-shot-open {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 2.4rem 0 0.55rem;
-    background: linear-gradient(to bottom, transparent, var(--md-default-bg-color) 78%);
+    top: 0.5rem;
+    right: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: var(--md-default-bg-color);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
     color: var(--md-default-fg-color--light);
     font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.06em;
-    text-align: center;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 125ms, color 125ms;
 }
 
-.md-typeset a.tpl-shot:hover::after {
+.md-typeset .tpl-shot-open:hover {
+    opacity: 1;
     color: var(--md-accent-fg-color, #526cfe);
 }
 
-/* The wrapper, not just the image, has to go: `a.tpl-shot img` overrides
-   Material's own #only-light / #only-dark rule, and a hidden image would still
-   leave its framed box and "Open full size" label behind. */
 [data-md-color-scheme="default"] .md-typeset a.tpl-shot:has(img[src$="#only-dark"]),
-[data-md-color-scheme="slate"] .md-typeset a.tpl-shot:has(img[src$="#only-light"]) {
+[data-md-color-scheme="slate"] .md-typeset a.tpl-shot:has(img[src$="#only-light"]),
+[data-md-color-scheme="default"] .md-typeset .tpl-shot-frame:has(img[src$="#only-dark"]),
+[data-md-color-scheme="slate"] .md-typeset .tpl-shot-frame:has(img[src$="#only-light"]) {
     display: none;
 }
