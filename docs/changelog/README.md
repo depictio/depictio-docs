@@ -8,12 +8,92 @@ hide:
 
 # Changelog
 
-!!! success "React viewer is the sole frontend as of v1.0.0"
-    The Dash frontend was removed in **v0.13.12**. As of **v1.0.0** the React
-    viewer serves canonical URLs (`/dashboards`, `/dashboard/{id}`,
-    `/dashboard-edit/{id}`, `/projects`); the `*-beta` suffix paths redirect
-    to canonical. The 0.13.x patch series prepared the data-fetch and
-    bundled-seed paths for this cutover.
+## **[v1.10.0](https://github.com/depictio/depictio/releases/tag/v1.10.0)** (September 10, 2026)
+
+!!! success "Minor: the pipeline ingests its own results"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.10.0
+ghcr.io/depictio/depictio-viewer:1.10.0
+ghcr.io/depictio/depictio-worker:1.10.0
+ghcr.io/depictio/depictio-cli:1.10.0
+```
+
+### **✨ New Features**
+
+* **A Nextflow pipeline ingests its own results**: a `workflow.onComplete` snippet runs `depictio-cli run` on the output directory when the pipeline finishes. `depictio-cli config nextflow --install` turns it on for every pipeline on a machine, once, and nothing about Depictio has to go in the pipeline. A run that failed is never ingested, and a failure on Depictio's side never changes the pipeline's own exit status. See [Nextflow trigger](../depictio-cli/nextflow-trigger.md) ([#1037](https://github.com/depictio/depictio/pull/1037)).
+* **A run directory says which pipeline produced it**: engine-agnostic connectors read what the run itself wrote (`pipeline_info/` for nf-core, the equivalent for Snakemake), so `--pipeline-id nf-core/ampliseq/2.16.0` resolves a bundled template with nothing named by hand, and the engine version and the tools that executed are stamped on the workflow. See [Templates](../usage/projects/templates.md#pipeline-id) ([#1036](https://github.com/depictio/depictio/pull/1036)).
+* **`--attach-run`**: register a data root as an additional run of an existing project instead of creating another project, so a pipeline executed per sample batch or per sequencing run lands in one place. See [CLI Usage](../depictio-cli/usage.md#run-command) ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190), [5c2c72b8](https://github.com/depictio/depictio/commit/5c2c72b8)).
+* **CLI credentials from the environment**: `DEPICTIO_CLI_TOKEN`, `DEPICTIO_CLI_API_BASE_URL` and `DEPICTIO_CLI_CONFIG_PATH` override the loaded configuration, so a `CLI.yaml` can be committed with no secret in it and the token injected at runtime. See [CLI Usage](../depictio-cli/usage.md#environment-variables) ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **nf-core/variantbenchmarking 1.4.0**: germline small variants, somatic indels and structural variants as three per-variant-type projects, built from reusable catalog modules (hap.py, rtg-tools, som.py, truvari, SVanalyzer, wit.ty.er), with four benchmarking visualization kinds on top: precision/recall scatter with F1 contours, ROC and PR curves, a confusion matrix, and a 95% CI forest plot ([#870](https://github.com/depictio/depictio/pull/870), [6e581d89](https://github.com/depictio/depictio/commit/6e581d89), [55d189eb](https://github.com/depictio/depictio/commit/55d189eb), [613b4e52](https://github.com/depictio/depictio/commit/613b4e52)).
+
+### **🚀 Improvements**
+
+* **The CLI ships as a container image**: `ghcr.io/depictio/depictio-cli`, built by the same workflow and tagged the same way as the other images, for a head node or a CI runner that cannot install a Python environment. The build asserts the MultiQC extra and the bundled templates are actually in it, rather than tagging an image that would ingest nothing. See [CLI Installation](../installation/cli.md) ([#1037](https://github.com/depictio/depictio/pull/1037)).
+* **`--dashboard` works without a template**: it used to be ignored unless a template was in play, so a custom pipeline could finish a green run with a project and no dashboard. The import is now a step whenever a dashboard is given, and the summary prints one link per import ([#1037](https://github.com/depictio/depictio/pull/1037)).
+* **ampliseq 2.18.0**: 2.18.0 defaults to the `sbdi-gtdb` database, whose taxonomic levels start one rank deeper than the 7-rank databases earlier releases used. Since QIIME2's collapsed outputs are addressed by depth, the template now pins the depth and the recipes read Kingdom and Phylum off the tail of whatever lineage arrives, so both dialects land on the same columns ([#1027](https://github.com/depictio/depictio/pull/1027), [77b6df93](https://github.com/depictio/depictio/commit/77b6df93), [bcb39932](https://github.com/depictio/depictio/commit/bcb39932)).
+* **A connection failure names the file it read**: `Server accessibility check failed` is now followed by the URL it tried and the CLI config path it came from, which is the difference between a server being down and the trigger having picked up a different config file than the one you edited ([#1037](https://github.com/depictio/depictio/pull/1037)).
+
+### **🐛 Bug Fixes**
+
+* **A second automated trigger no longer exits 1 with an empty message**: syncing a project that already existed raised `typer.Exit(0)`, which `run.py` caught as an exception. The sync now returns a verdict (`created` / `updated` / `exists`) and the caller decides, naming the two ways forward ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **A multi-location rescan stops deleting runs it has not walked yet**: the "runs that disappeared from disk" reconciliation sat inside the per-location loop while its input accumulated across locations, so with more than one location the first pass deleted every later location's runs. It now runs once, after every location has been walked ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **`/projects/create` failures are no longer reported as success**: the endpoint answers HTTP 200 with a failure body for a name clash or public mode, and the CLI read only the transport status ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **The demo wipe hook stops racing the Helm upgrade**: it deleted PVCs without waiting and scaled down only the backend, so the celery worker's `pvc-protection` finalizer held the claims and Helm patched objects that were still terminating ([#1021](https://github.com/depictio/depictio/pull/1021), [61d30b3f](https://github.com/depictio/depictio/commit/61d30b3f), [04b7de45](https://github.com/depictio/depictio/commit/04b7de45)).
+* **The e2e suite stops revoking the token it is using**: the seeded session carried no expiry, so the SPA refreshed on every page load and each refresh invalidated the access token the spec was still sending ([#1024](https://github.com/depictio/depictio/pull/1024), [42028c66](https://github.com/depictio/depictio/commit/42028c66)).
+
+---
+
+## **[v1.9.2](https://github.com/depictio/depictio/releases/tag/v1.9.2)** (September 1, 2026)
+
+!!! success "Patch: MultiQC reports and ampliseq tiles on full-size runs"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.9.2
+ghcr.io/depictio/depictio-viewer:1.9.2
+ghcr.io/depictio/depictio-worker:1.9.2
+```
+
+### **🐛 Bug Fixes**
+
+* **One bad plot anchor no longer erases a whole MultiQC section**: extraction walked the report per section and let a single unparseable anchor take its neighbours with it ([#1015](https://github.com/depictio/depictio/pull/1015), [d39746dd](https://github.com/depictio/depictio/commit/d39746dd), [84711ba3](https://github.com/depictio/depictio/commit/84711ba3)).
+* **The ampliseq phylogeny and taxonomy tiles work on a full-size run**: the seeded demo bundle is small enough to hide the file-layout assumptions a real run breaks ([#1014](https://github.com/depictio/depictio/pull/1014), [e228f18b](https://github.com/depictio/depictio/commit/e228f18b), [00b5c1c4](https://github.com/depictio/depictio/commit/00b5c1c4)).
+* **The catalog-preview bundle ships in the API image**: it was built but not copied, so the preview served nothing ([#1019](https://github.com/depictio/depictio/pull/1019), [f238e5a7](https://github.com/depictio/depictio/commit/f238e5a7)).
+* **Backup-restore e2e runs serialized**: two specs restoring concurrently made each other's assertions non-deterministic ([#1015](https://github.com/depictio/depictio/pull/1015), [bb3a66f4](https://github.com/depictio/depictio/commit/bb3a66f4)).
+
+---
+
+## **[v1.9.1](https://github.com/depictio/depictio/releases/tag/v1.9.1)** (August 30, 2026)
+
+!!! success "Patch: seeded dashboards reworked, and grouping in advanced viz"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.9.1
+ghcr.io/depictio/depictio-viewer:1.9.1
+ghcr.io/depictio/depictio-worker:1.9.1
+```
+
+### **✨ New Features**
+
+* **Analysis grouping reaches advanced visualizations**: a split is expressed as a list of filter constraints appended to the dashboard's own, so each panel goes through the ordinary fetch path and cross-DC link resolution still applies. A column with more values than the grid can hold becomes splittable by being narrowed first, and a value keeps its tint however far you narrow. See [Interactive Selection Filtering](../features/interactive-selection-filtering.md#analysis-panel) ([#1013](https://github.com/depictio/depictio/pull/1013), [c617b62e](https://github.com/depictio/depictio/commit/c617b62e)).
+* **Sign in and land back on the shared link** you were sent, instead of on the dashboard list ([#1012](https://github.com/depictio/depictio/pull/1012), [2310bdf1](https://github.com/depictio/depictio/commit/2310bdf1)).
+
+### **🚀 Improvements**
+
+* **Every seeded dashboard reworked into a readable funnel**: the bundled iris, penguins and pipeline demos now lead with the question each tab answers rather than with whatever the data made easy to plot ([#1011](https://github.com/depictio/depictio/pull/1011), [e4dbdaa0](https://github.com/depictio/depictio/commit/e4dbdaa0), [ed011dc2](https://github.com/depictio/depictio/commit/ed011dc2)).
+
+### **🐛 Bug Fixes**
+
+* **Seeded text tiles size to their prose** instead of clipping it, and the docked map fit is sent to the subplot Plotly actually drew ([#1012](https://github.com/depictio/depictio/pull/1012), [ed011dc2](https://github.com/depictio/depictio/commit/ed011dc2)).
+* **Tool Studio's footer takes the full width of the bar**, with the deploy commit in parentheses on the version line ([#1010](https://github.com/depictio/depictio/pull/1010), [23c8babb](https://github.com/depictio/depictio/commit/23c8babb), [35d32849](https://github.com/depictio/depictio/commit/35d32849)).
+
+---
 
 ## **[v1.9.0](https://github.com/depictio/depictio/releases/tag/v1.9.0)** (August 28, 2026)
 

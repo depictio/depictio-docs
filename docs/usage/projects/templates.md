@@ -98,6 +98,30 @@ The recipe Python code stays generic — path resolution happens via variable su
 | `--skip-dashboard-import` | `flag` | no | Skip automatic dashboard import |
 | `--project-name` | `string` | no | Custom project name |
 
+### Choosing a template without naming one <small>(v1.10.0+)</small> { #pipeline-id }
+
+`--template` names a Depictio template. `--pipeline-id` names the *pipeline*, as
+`<name>/<version>`, and lets the CLI find the template itself:
+
+```bash
+depictio-cli run --data-root ./results --pipeline-id nf-core/ampliseq/2.16.0
+```
+
+The value is engine-neutral, because Depictio also recognises Snakemake runs. A
+run whose version sits between two shipped templates takes the highest one at or
+below it, and a run older than every shipped template takes the lowest.
+
+Failing that, the run directory answers on its own: nf-core writes
+`pipeline_info/software_versions.yml`, and reading it gives the pipeline, its
+version, the engine version and the tools that executed. That provenance is
+recorded on the workflow whether or not it was used to pick a template.
+
+!!! info "An explicit choice always wins"
+    `--pipeline-id` is ignored when `--template` or `--project-config-path` is
+    given, so an automated trigger can forward it unconditionally. This is what
+    lets the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) work with
+    no template configured anywhere.
+
 ---
 
 ## Resolution Workflow
