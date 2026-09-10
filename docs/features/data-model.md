@@ -42,6 +42,13 @@ The word **workflow** is used in the sense [nf-core](https://nf-co.re/) and
 [WorkflowHub](https://workflowhub.eu/) use it: the pipeline definition, not a particular
 execution of it. Executions are **runs**, and they are the subject of the next section.
 
+!!! info "The workflow records what produced it <small>(v1.10.0+)</small>"
+    When the ingestion has a run directory to read, the engine, the pipeline
+    version, the engine version and the tools that executed are stamped on the
+    workflow, read from what the pipeline itself wrote (`pipeline_info/` for
+    nf-core). It happens whether or not that reading was also used to
+    [pick a template](../usage/projects/templates.md#pipeline-id).
+
 ---
 
 ## How files become dashboard data

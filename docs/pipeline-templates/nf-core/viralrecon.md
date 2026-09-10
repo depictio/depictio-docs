@@ -63,6 +63,12 @@ working. Only `summary_metrics` is dropped (no nanopore equivalent yet).
     auto-derived value is logged at resolution time. See the full list and routes in the
     [Reference](#reference).
 
+!!! tip "Or let the pipeline do it <small>(v1.10.0+)</small>"
+    Run `depictio-cli config nextflow --install` once on the machine that runs
+    `nextflow`, and a plain `nextflow run nf-core/viralrecon --outdir results`
+    ingests itself when it finishes, resolving this template from its own
+    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+
 !!! tip "Aggregated data collections"
     The viralrecon DCs use `metatype: "Aggregated"`. They are built
     by recipes that fan multiple per-sample files into a single delta

@@ -51,6 +51,25 @@ pip install -e .
 
 This will install the CLI in development mode, allowing you to modify the code if needed.
 
+### Run it from a container <small>(v1.10.0+)</small> { #container-image }
+
+The CLI is also published to GHCR, built alongside the other Depictio images and
+tagged with the same versions. This is the answer for an HPC head node or a CI
+runner where you cannot install a Python environment:
+
+```bash
+docker run --rm \
+  -v /path/to/results:/path/to/results \
+  -v "$HOME/.depictio:$HOME/.depictio:ro" \
+  --network host \
+  ghcr.io/depictio/depictio-cli:1.10.0 \
+  run --data-root /path/to/results --pipeline-id nf-core/ampliseq/2.16.0
+```
+
+Bind each host path onto the same path inside the container: the paths you pass
+are recorded in the project as given. The image carries the MultiQC extra and the
+bundled templates, both of which the build asserts are present.
+
 ## Verifying the Installation
 
 After installation, verify that the CLI is working correctly:

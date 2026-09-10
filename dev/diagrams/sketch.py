@@ -8,8 +8,10 @@ the PNG pass uses the font this repo already bundles instead of whatever Virgil
 happens to be installed on the machine.
 
 The look is Excalidraw's: every stroke is drawn twice along a jittered bezier,
-and the text uses Virgil (Excalidraw's font). Jitter comes from a fixed seed, so
-re-running a diagram produces a byte-identical file instead of a spurious diff.
+and the text uses Virgil (Excalidraw's font). Text in `backticks` is drawn in
+monospace instead, because handwriting mangles code. Jitter comes from a fixed
+seed, so re-running a diagram produces a byte-identical file instead of a
+spurious diff.
 
 Diagrams are generated rather than drawn so they can be corrected in a diff when
 the thing they describe changes; a hand-made PNG goes stale silently.
@@ -21,6 +23,7 @@ import asyncio
 import functools
 import math
 import random
+import re
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -32,6 +35,31 @@ VIRGIL_TTF = REPO_ROOT / "docs" / "fonts" / "Virgil.ttf"
 # Virgil first, so the bundled @font-face wins over any system copy and the PNG
 # render is reproducible on a machine that has never opened Excalidraw.
 FONT = "Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive"
+MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace"
+
+# Handwriting is unreadable for code: `--flag` becomes an em dash, `!x` reads as
+# `lx`, `[main]` as `LmainJ`. Anything inside backticks is drawn in monospace.
+_CODE = re.compile(r"`([^`]+)`")
+
+
+def _spans(content: str, size: float) -> str:
+    """Render ``content``, with backticked runs in monospace.
+
+    Both fonts sit in one ``<text>`` element on one baseline, so centring stays
+    the renderer's job and no width has to be measured here. Monospace carries
+    more ink per character than Virgil, hence the slightly smaller size.
+    """
+    out = []
+    for i, part in enumerate(_CODE.split(content)):
+        if not part:
+            continue
+        if i % 2:
+            out.append(
+                f'<tspan font-family="{MONO}" font-size="{size * 0.88:.1f}">{escape(part)}</tspan>'
+            )
+        else:
+            out.append(escape(part))
+    return "".join(out)
 
 # MultiQC's mark, copied from depictio's bundled
 # `api/static_assets/images/logos/multiqc_icon_color.svg` (viewBox 0 0 251 251).
@@ -45,6 +73,38 @@ MULTIQC_PATHS = (
     "M250.579 204.85C211.129 202.23 179.519 170.543 177.039 131.055H130.969C133.529 "
     "196.011 185.649 248.227 250.579 250.927V204.85Z",
 )
+
+# Brand and product marks, traced verbatim from their own asset rather than
+# redrawn: a hand-wobbled approximation of a logo is a different logo. Each
+# entry is (viewBox size, paths) on a square canvas.
+#
+# `nextflow` and `python` come from Simple Icons, `flag` from Material Design
+# Icons, all three as shipped inside mkdocs-material's `.icons/`. They are
+# copied in rather than read from the virtualenv so a figure regenerates the
+# same way whatever is installed.
+BRAND_MARKS: dict[str, tuple[float, tuple[str, ...]]] = {
+    "nextflow": (24, ('M.005 4.424V0c6.228.259 11.227 5.268 11.477 11.506H7.058C6.828 7.715 3.786 4.673.005 4.424m7.082 8.089h4.424C11.251 18.741 6.242 23.741.005 23.99v-4.423c3.79-.231 6.832-3.273 7.082-7.054m9.826-1.036h-4.424C12.749 5.249 17.758.25 23.995 0v4.424c-3.79.23-6.832 3.263-7.082 7.053m7.082 8.099V24c-6.228-.259-11.227-5.268-11.477-11.506h4.424c.23 3.791 3.272 6.833 7.053 7.082',)),
+    "python": (24, ('m14.25.18.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z',)),
+    "flag": (24, ('M14.4 6H20v10h-7l-.4-2H7v7H5V4h9zm-.4 8h2v-2h2v-2h-2V8h-2v2l-1-2V6h-2v2H9V6H7v2h2v2H7v2h2v-2h2v2h2v-2l1 2zm-3-4V8h2v2zm3 0h2v2h-2z',)),
+}
+
+# Depictio's own pinwheel, read from the asset this site already ships so the
+# figure cannot drift from the favicon. Seven shapes, each with its own colour,
+# so this one ignores the caller's colour.
+DEPICTIO_MARK_SVG = REPO_ROOT / "docs" / "images" / "logo" / "animated_favicon.svg"
+
+
+@functools.cache
+def _depictio_mark() -> tuple[float, float, tuple[tuple[str, str], ...]]:
+    """``(width, height, ((fill, d), ...))`` for the Depictio mark."""
+    svg = DEPICTIO_MARK_SVG.read_text()
+    vb = [float(v) for v in re.search(r'viewBox="([^"]+)"', svg).group(1).split()]
+    shapes = tuple(
+        (re.search(r"fill:(#[0-9a-fA-F]{6})", tag).group(1), re.search(r'\bd="([^"]+)"', tag).group(1))
+        for tag in re.findall(r"<path\b[^>]*>", svg)
+    )
+    return vb[2], vb[3], shapes
+
 
 
 @dataclass(frozen=True)
@@ -300,6 +360,12 @@ class Sketch:
         if name == "multiqc":
             self._multiqc_mark(cx, cy, s)
             return
+        if name == "depictio":
+            self._depictio_logo(cx, cy, s)
+            return
+        if name in BRAND_MARKS:
+            self._brand_mark(name, cx, cy, s, colour)
+            return
 
         line = functools.partial(self.line, colour=colour, width=1.5, amount=0.7, passes=1)
         poly = functools.partial(self.polyline, colour=colour)
@@ -388,6 +454,25 @@ class Sketch:
             + "</g>"
         )
 
+    def _brand_mark(self, name: str, cx: float, cy: float, size: float, colour: str) -> None:
+        """One filled mark from :data:`BRAND_MARKS`, in the colour asked for."""
+        box, paths = BRAND_MARKS[name]
+        k = size / box
+        self._parts.append(
+            f'<g transform="translate({cx - size / 2:.1f},{cy - size / 2:.1f}) scale({k:.5f})" '
+            f'fill="{colour}">' + "".join(f'<path d="{d}"/>' for d in paths) + "</g>"
+        )
+
+    def _depictio_logo(self, cx: float, cy: float, size: float) -> None:
+        """Depictio's pinwheel, in its own seven colours."""
+        w, h, shapes = _depictio_mark()
+        k = size / max(w, h)
+        self._parts.append(
+            f'<g transform="translate({cx - w * k / 2:.1f},{cy - h * k / 2:.1f}) scale({k:.5f})">'
+            + "".join(f'<path d="{d}" fill="{fill}"/>' for fill, d in shapes)
+            + "</g>"
+        )
+
     def cross(self, cx: float, cy: float, *, size: float = 11, colour: str | None = None) -> None:
         """The "this does not happen" mark."""
         colour = colour or self.theme.accent
@@ -409,7 +494,7 @@ class Sketch:
         self._parts.append(
             f'<text x="{x:.1f}" y="{y:.1f}" font-family="{FONT}" font-size="{size}" '
             f'fill="{colour}" text-anchor="{anchor}" font-weight="{weight}">'
-            f"{escape(content)}</text>"
+            f"{_spans(content, size)}</text>"
         )
 
     def box(
@@ -419,13 +504,14 @@ class Sketch:
         colour: str | None = None,
         dashed: bool = False,
         icon: str | None = None,
+        icon_colour: str | None = None,
     ) -> None:
         self.rect(box, colour=colour, dashed=dashed)
         if icon:
             # Pinned to the title line rather than the box centre, so a box with
             # three lines of body text and one with none put their icon in the
             # same place relative to the name it labels.
-            self.glyph(icon, box.x + 38, box.y + 21, size=28)
+            self.glyph(icon, box.x + 38, box.y + 21, size=28, colour=icon_colour)
         self.text(box.cx, box.y + 27, box.title, size=18, weight="bold")
         for i, line in enumerate(box.lines):
             self.text(box.cx, box.y + 51 + i * 21, line, size=14, colour=self.theme.dim)
