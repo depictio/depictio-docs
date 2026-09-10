@@ -16,6 +16,7 @@ Templates for [nf-core](https://nf-co.re) pipelines. Each template configures a 
 | [airrflow](airrflow.md) | B and T cell receptor repertoire (AIRR) | 5.1.0 |
 | [rnafusion](rnafusion.md) | Gene-fusion detection from RNA-seq | 4.1.3 |
 | [rnaseq](rnaseq.md) | Bulk RNA-seq quantification | 3.26.0 |
+| [taxprofiler](taxprofiler.md) | Metagenomic taxonomic profiling | 2.0.1 |
 
 !!! tip "You do not have to name the template <small>(v1.10.0+)</small>"
     A pipeline can trigger the ingestion itself when it completes, and the
