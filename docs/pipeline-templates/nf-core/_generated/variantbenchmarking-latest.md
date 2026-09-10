@@ -56,7 +56,7 @@
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
 </style>
 
-### Template variables
+### :material-code-braces: Template variables
 
 Variables you provide when running the template — `DATA_ROOT` via `--data-root`, the rest via `--var NAME=value`:
 
@@ -64,25 +64,25 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 |---|:--:|---|
 | `DATA_ROOT` | ✓ | Root directory containing variantbenchmarking output (small/, indel/, and optionally sv/, cnv/). |
 
-### Data collections
+### :material-database-outline: Data collections
 
 9 data collections — <span class="gtd-badge gtd-req">1 required</span> <span class="gtd-badge gtd-opt">8 optional</span> · <span class="gtd-badge gtd-direct">9 direct</span> <span class="gtd-badge gtd-derived">0 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
-| `germline_vcfeval_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`rtgtools/vcfeval_summary.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `germline_happy_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`happy/summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `germline_happy_roc` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`happy/roc.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `somatic_vcfeval_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`rtgtools/vcfeval_summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `somatic_sompy_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`sompy/summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `somatic_sompy_regions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`sompy/regions.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `sv_truvari_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`truvari/summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `sv_svbenchmark_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`svanalyzer/svbenchmark.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `cnv_wittyer_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`wittyer/summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `germline_vcfeval_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/rtgtools/vcfeval_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">rtgtools/vcfeval_summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `germline_happy_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/happy/summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">happy/summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `germline_happy_roc` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/happy/roc.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">happy/roc.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `somatic_vcfeval_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/rtgtools/vcfeval_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">rtgtools/vcfeval_summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `somatic_sompy_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/sompy/summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">sompy/summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `somatic_sompy_regions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/sompy/regions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">sompy/regions.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `sv_truvari_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/truvari/summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">truvari/summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `sv_svbenchmark_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/svanalyzer/svbenchmark.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">svanalyzer/svbenchmark.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `cnv_wittyer_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/wittyer/summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">wittyer/summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 
-### Cross-DC links
+### :material-vector-link: Cross-DC links
 
 2 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
@@ -94,7 +94,7 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 <tr><td><code>somatic_sompy_summary</code> <span class="col">·&nbsp;caller</span></td><td class="arr">→</td><td><code>somatic_vcfeval_summary</code></td><td>Cross-filter som.py and vcfeval somatic summaries by caller</td></tr>
 </tbody></table></div>
 
-### Recipes
+### :material-chef-hat: Recipes
 
 Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `EXPECTED_SCHEMA` columns.
 

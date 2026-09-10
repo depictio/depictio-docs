@@ -20,6 +20,15 @@ hide:
   <span class="template-status-reviewed template-banner-badge" data-tooltip="Reviewed — tested, CI passes, and reviewed by the Depictio team or community."><i class="mdi mdi-check-circle-outline"></i> Reviewed</span>
 </div>
 
+<div class="tpl-version-pick" data-latest="3.0.0">
+  <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
+  <span class="tpl-version-label">Template version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+    <option value="3.0.0" selected>3.0.0</option>
+  </select>
+  <span class="tpl-version-badge">latest</span>
+</div>
+
 The viralrecon template covers the main outputs of a standard nf-core/viralrecon run:
 
 - :material-chart-bar: **MultiQC quality control** — FastQC, Cutadapt, samtools/picard alignment metrics
@@ -37,7 +46,7 @@ The viralrecon template covers the main outputs of a standard nf-core/viralrecon
 
 ---
 
-## Quick start
+## :material-rocket-launch-outline: Quick start
 
 `--data-root` is the only thing you have to pass. The template's routing variables
 (`PLATFORM`, `PROTOCOL`, `VARIANT_CALLER`, and the `SKIP_*` flags) mirror nf-core's own
@@ -77,7 +86,7 @@ working. Only `summary_metrics` is dropped (no nanopore equivalent yet).
 
 ---
 
-## Reference
+## :material-book-open-variant: Reference
 
 Recipe DCs fan per-sample files into one delta table via `glob_pattern`. The
 `PLATFORM=nanopore` route repoints the coverage/lineage DCs at the
@@ -106,7 +115,11 @@ say what they *produce* (e.g. `variant_feature_matrix_canonical` →
     visualizations are dropped, and the rest are re-packed with no empty rows. One
     template therefore covers both the Illumina and nanopore/ARTIC routes without edits.
 
---8<-- "pipeline-templates/nf-core/_generated/viralrecon-3.0.0.md"
+<div class="tpl-version-block" data-version="3.0.0" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/viralrecon-latest.md"
+
+</div>
 
 ---
 
@@ -117,7 +130,7 @@ Five tabs: the MultiQC parent, then four children. Each tab below carries the
 alike. Filters propagate across tabs through cross-DC links on
 `summary_metrics.sample`.
 
-=== ":material-chart-box-outline:{ .mc-orange } MultiQC"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
     *Sequencing, alignment and variant-calling QC, straight from the report.*
 
@@ -225,7 +238,7 @@ alike. Filters propagate across tabs through cross-DC links on
 
 ---
 
-## Running the pipeline
+## :material-play-circle-outline: Running the pipeline
 
 Depictio reads the **output** of nf-core/viralrecon — it does not run the pipeline. Run the pipeline first, using the iVar variant caller the template targets:
 
@@ -253,7 +266,7 @@ See [nf-co.re/viralrecon/usage](https://nf-co.re/viralrecon/3.0.0/docs/usage) fo
 
 ---
 
-## Required data structure
+## :material-folder-open-outline: Required data structure
 
 Point `--data-root` to the directory containing your viralrecon outputs. This can be a single run's `results/` folder or a parent directory containing multiple runs — Depictio scans recursively. Not all files are required; the template adapts to what's present and to the sequencing platform / caller / skip flags it reads from the run's `params.json` (override any with `--var`).
 
@@ -279,7 +292,7 @@ ARTIC `*.pass.vcf.gz` variant calls).
 
 ---
 
-## Test data
+## :material-flask-outline: Test data
 
 A small test fixture is available for local development without re-running
 the full pipeline. The repository ships
@@ -316,7 +329,7 @@ depictio run \
 
 ---
 
-## Additional resources
+## :material-link-variant: Additional resources
 
 - [nf-co.re/viralrecon](https://nf-co.re/viralrecon) — official pipeline documentation
 - [nf-co.re/viralrecon/3.0.0/results](https://nf-co.re/viralrecon/3.0.0/results) — AWS test results

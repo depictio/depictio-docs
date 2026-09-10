@@ -20,6 +20,17 @@ hide:
   <span class="template-status-reviewed template-banner-badge" data-tooltip="Reviewed — tested, CI passes, and reviewed by the Depictio team or community."><i class="mdi mdi-check-circle-outline"></i> Reviewed</span>
 </div>
 
+<div class="tpl-version-pick" data-latest="2.18.0">
+  <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
+  <span class="tpl-version-label">Template version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+    <option value="2.18.0" selected>2.18.0</option>
+    <option value="2.16.0">2.16.0</option>
+    <option value="2.14.0">2.14.0</option>
+  </select>
+  <span class="tpl-version-badge">latest</span>
+</div>
+
 The ampliseq template covers the main outputs of a standard nf-core/ampliseq run:
 
 - :material-chart-bar: **MultiQC quality control** — FastQC read quality, Cutadapt trimming statistics
@@ -30,7 +41,7 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 
 ---
 
-## Quick start
+## :material-rocket-launch-outline: Quick start
 
 === "Base (no metadata)"
 
@@ -82,17 +93,23 @@ Running without `METADATA_FILE` prunes the metadata-dependent collections
     there are no empty rows. One template therefore covers 16S/ITS, single- vs.
     multi-region (SIDLE), and `skip_qiime` runs without edits.
 
-=== ":material-tag-check-outline: 2.18.0 (latest)"
+<div class="tpl-version-block" data-version="2.18.0" markdown>
 
-    --8<-- "pipeline-templates/nf-core/_generated/ampliseq-latest.md"
+--8<-- "pipeline-templates/nf-core/_generated/ampliseq-latest.md"
 
-=== ":material-tag-outline: 2.16.0"
+</div>
 
-    --8<-- "pipeline-templates/nf-core/_generated/ampliseq-2.16.0.md"
+<div class="tpl-version-block" data-version="2.16.0" markdown>
 
-=== ":material-tag-outline: 2.14.0"
+--8<-- "pipeline-templates/nf-core/_generated/ampliseq-2.16.0.md"
 
-    --8<-- "pipeline-templates/nf-core/_generated/ampliseq-2.14.0.md"
+</div>
+
+<div class="tpl-version-block" data-version="2.14.0" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/ampliseq-2.14.0.md"
+
+</div>
 
 ---
 
@@ -106,7 +123,7 @@ alike. Filters propagate across tabs through cross-DC links on the metadata
 Where a tab names *your grouping column*, that is whichever metadata column the
 run was resolved against; the dashboard substitutes its real name everywhere.
 
-=== ":material-chart-box-outline:{ .mc-orange } MultiQC"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
     *Cutadapt and FastQC, straight from the report.*
 
@@ -262,7 +279,7 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
 ---
 
-## Running the pipeline
+## :material-play-circle-outline: Running the pipeline
 
 Depictio reads the **output** of nf-core/ampliseq — it does not run the pipeline. Run the pipeline first:
 
@@ -288,7 +305,7 @@ See [nf-co.re/ampliseq/usage](https://nf-co.re/ampliseq/2.16.0/docs/usage) for f
 
 ---
 
-## Required data structure
+## :material-folder-open-outline: Required data structure
 
 Point `--data-root` to the directory containing your ampliseq outputs. This can be a single run's `results/` folder or a parent directory containing multiple runs — Depictio scans recursively. Not all files are required; the template adapts based on what's present and which `--var` flags you provide.
 
@@ -321,7 +338,7 @@ Point `--data-root` to the directory containing your ampliseq outputs. This can 
 
 ---
 
-## Additional resources
+## :material-link-variant: Additional resources
 
 - [nf-co.re/ampliseq](https://nf-co.re/ampliseq) — official pipeline documentation
 - [nf-co.re/ampliseq/2.16.0/results](https://nf-co.re/ampliseq/2.16.0/results) — AWS test results
