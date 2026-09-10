@@ -281,6 +281,7 @@ nav:
           - variantbenchmarking: pipeline-templates/nf-core/variantbenchmarking.md
           - differentialabundance: pipeline-templates/nf-core/differentialabundance.md
           - funcscan: pipeline-templates/nf-core/funcscan.md
+          - airrflow: pipeline-templates/nf-core/airrflow.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md
