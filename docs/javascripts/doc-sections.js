@@ -121,8 +121,33 @@ document.addEventListener(
   true,
 );
 
+/* A captured tab runs to several thousand pixels. Framing it in a scroller that
+   is sized off the viewport lets the whole capture be read in place, at whatever
+   height the browser actually has, with a corner link to the raw file. */
+function frameScreenshots() {
+  document.querySelectorAll('a.tpl-shot').forEach((link) => {
+    if (link.dataset.framed === 'on') return;
+    link.dataset.framed = 'on';
+
+    const frame = document.createElement('div');
+    frame.className = 'tpl-shot-frame';
+    link.parentNode.insertBefore(frame, link);
+    frame.appendChild(link);
+
+    // The frame scrolls, so the corner link has to sit outside it to stay put.
+    const open = document.createElement('a');
+    open.className = 'tpl-shot-open';
+    open.href = link.href;
+    open.target = '_blank';
+    open.rel = 'noopener';
+    open.innerHTML = '<i class="mdi mdi-arrow-expand-all"></i> Full size';
+    frame.appendChild(open);
+  });
+}
+
 function initDocSections() {
   makeSectionsCollapsible();
+  frameScreenshots();
   injectTocIcons();
   revealHashTarget();
 }
