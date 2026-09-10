@@ -108,7 +108,8 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path:
         - docs
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.inlinehilite
   - pymdownx.superfences:
       custom_fences:
