@@ -50,6 +50,20 @@ depictio-cli run \
     </div>
   </a>
 
+  <a class="template-card" href="nf-core/variantbenchmarking/">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/variantbenchmarking/master/docs/images/nf-core-variantbenchmarking_logo_dark.png" alt="nf-core/variantbenchmarking">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/variantbenchmarking/master/docs/images/nf-core-variantbenchmarking_logo_light.png" alt="nf-core/variantbenchmarking">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Benchmark variant callers against truth sets: precision, recall and F1 for germline small variants, somatic indels and structural variants.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.4.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 ---

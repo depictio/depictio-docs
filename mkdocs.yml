@@ -273,6 +273,7 @@ nav:
           - pipeline-templates/nf-core/index.md
           - ampliseq: pipeline-templates/nf-core/ampliseq.md
           - viralrecon: pipeline-templates/nf-core/viralrecon.md
+          - variantbenchmarking: pipeline-templates/nf-core/variantbenchmarking.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md
