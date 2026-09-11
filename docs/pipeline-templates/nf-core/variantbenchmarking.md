@@ -31,7 +31,7 @@ The variantbenchmarking template turns a benchmarking run into a precision/recal
 
 ---
 
-## Choosing a template
+## :material-arrow-decision-outline: Choosing a template
 
 nf-core/variantbenchmarking benchmarks one variant type per run: its own documentation
 states that "only one type of variant analysis is possible for each run". Depictio
@@ -74,7 +74,7 @@ out.
 
 ---
 
-## Quick start
+## :material-rocket-launch-outline: Quick start
 
 `DATA_ROOT` is the only template variable, so `--data-root` is the only thing you ever
 have to pass. None of the four templates needs a `--var` flag.
@@ -124,44 +124,71 @@ have to pass. None of the four templates needs a `--var` flag.
 
 ---
 
-## Reference
+## :material-book-open-variant: Reference
 
-The four templates are independent projects. Each section below lists what that template
-binds, so compare the *Data collections* tables when deciding which one fits your run.
+The four templates are independent projects. Pick one and the reference below switches
+to it, so the *Data collections* tables can be read one at a time rather than four deep.
 
 Note the tag naming: the umbrella template prefixes its collections with `germline_` and
 `somatic_` to keep both variant types apart inside one project, while each category
 template uses the short unprefixed tag.
 
+<div class="tpl-version-pick">
+  <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
+  <span class="tpl-version-label">Template</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Template">
+    <option value="small" selected>1.4.0/categories/small</option>
+    <option value="indel">1.4.0/categories/indel</option>
+    <option value="structural">1.4.0/categories/structural</option>
+    <option value="all">1.4.0 (all variant types)</option>
+  </select>
+</div>
+
+<div class="tpl-version-block" data-version="small" markdown>
+
 ### Germline small variants
 
 --8<-- "pipeline-templates/nf-core/_generated/variantbenchmarking-1.4.0-categories-small.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="indel" markdown>
 
 ### Somatic indels
 
 --8<-- "pipeline-templates/nf-core/_generated/variantbenchmarking-1.4.0-categories-indel.md"
 
+</div>
+
+<div class="tpl-version-block" data-version="structural" markdown>
+
 ### Structural variants
 
 --8<-- "pipeline-templates/nf-core/_generated/variantbenchmarking-1.4.0-categories-structural.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="all" markdown>
 
 ### All variant types in one project
 
 --8<-- "pipeline-templates/nf-core/_generated/variantbenchmarking-latest.md"
 
+</div>
+
 ---
 
-## Dashboard tabs
+## :material-view-dashboard-outline: Dashboard tabs
 
 Every dashboard follows the same funnel: a *Benchmark at a glance* card row, then
 precision vs recall, then the error profile, then the stratifications, with the raw
 tables collapsed at the bottom. Filters sit in a left-hand panel and compose forward.
 
-=== "Germline · Benchmark"
+=== ":material-bullseye-arrow:{ .mc-indigo } Germline · Benchmark"
 
     hap.py and rtg-tools accuracy for germline SNPs and INDELs.
 
-    [![Germline benchmark dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_benchmark_light.png)](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_benchmark_light.png){target="_blank" rel="noopener"}
+    [![Germline benchmark dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_benchmark_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_benchmark_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     **Filters:** Callsets, Score ranges, hap.py scope.
 
@@ -177,11 +204,11 @@ tables collapsed at the bottom. Filters sit in a left-hand panel and compose for
       sweep with AUC
     - Reference tables, collapsed and pinned to the bottom
 
-=== "Germline · MultiQC"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } Germline · MultiQC"
 
     The run's own benchmark report.
 
-    [![Germline MultiQC dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_multiqc_light.png)](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_multiqc_light.png){target="_blank" rel="noopener"}
+    [![Germline MultiQC dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     **Filters:** Report samples.
 
@@ -192,11 +219,11 @@ tables collapsed at the bottom. Filters sit in a left-hand panel and compose for
     - Variant statistics, collapsed: bcftools substitution types and indel-length
       distribution
 
-=== "Somatic · Benchmark"
+=== ":material-bullseye-arrow:{ .mc-pink } Somatic · Benchmark"
 
     som.py accuracy per caller, with allele-fraction strata and confidence intervals.
 
-    [![Somatic benchmark dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_benchmark_light.png)](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_benchmark_light.png){target="_blank" rel="noopener"}
+    [![Somatic benchmark dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_benchmark_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_benchmark_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     **Filters:** Callers, Score ranges, Allele fraction.
 
@@ -213,11 +240,11 @@ tables collapsed at the bottom. Filters sit in a left-hand panel and compose for
     Selecting a caller filters the AF strata and the rtg-tools cross-check, through
     cross-DC links on the `caller` column.
 
-=== "Somatic · MultiQC"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } Somatic · MultiQC"
 
     The run's own benchmark report.
 
-    [![Somatic MultiQC dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_multiqc_light.png)](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_multiqc_light.png){target="_blank" rel="noopener"}
+    [![Somatic MultiQC dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     **Filters:** Report samples.
 
@@ -227,11 +254,11 @@ tables collapsed at the bottom. Filters sit in a left-hand panel and compose for
     - som.py panels: Combined, Indel, SNV
     - Variant statistics, collapsed: bcftools substitution types and variant depths
 
-=== "Structural · MultiQC"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } Structural · MultiQC"
 
     Truvari and SURVIVOR results, read from the MultiQC report.
 
-    [![Structural MultiQC dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/structural_multiqc_light.png)](../../images/pipeline-templates/nf-core/variantbenchmarking/structural_multiqc_light.png){target="_blank" rel="noopener"}
+    [![Structural MultiQC dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/structural_multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/structural_multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     **Filters:** Report samples.
 
@@ -250,43 +277,43 @@ tables collapsed at the bottom. Filters sit in a left-hand panel and compose for
 
 ---
 
-## Benchmarking visualizations
+## :material-chart-timeline-variant: Benchmarking visualizations
 
 The template introduced four visualization kinds built for benchmarking. Each is bound
 through a catalog module, so any project reading a comparable table can reuse them.
 
-=== "PR benchmark"
+=== ":material-chart-scatter-plot:{ .mc-indigo } PR benchmark"
 
-    [![PR benchmark](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_pr_benchmark_light.png)](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_pr_benchmark_light.png){target="_blank" rel="noopener"}
+    [![PR benchmark](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_pr_benchmark_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_pr_benchmark_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     One point per caller at (recall, precision), over dotted equal-F1 contours and the
     recall = precision diagonal, so a caller's balance is readable at a glance.
 
-=== "ROC / PR curve"
+=== ":material-chart-line:{ .mc-teal } ROC / PR curve"
 
-    [![ROC and PR curve](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_roc_pr_curve_light.png)](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_roc_pr_curve_light.png){target="_blank" rel="noopener"}
+    [![ROC and PR curve](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_roc_pr_curve_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_roc_pr_curve_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     Threshold-sweep curves per caller with a per-curve AUC. An in-panel tab bar switches
     between **PR curve**, **ROC** and **vs threshold**.
 
-=== "Confusion matrix"
+=== ":material-grid:{ .mc-grape } Confusion matrix"
 
-    [![Confusion matrix](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_confusion_matrix_light.png)](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_confusion_matrix_light.png){target="_blank" rel="noopener"}
+    [![Confusion matrix](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_confusion_matrix_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_confusion_matrix_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     TP, FP and FN per caller. Shading is the per-caller normalised fraction while the
     label keeps the raw count, and the label colour follows cell luminance so it stays
     legible at both ends of the scale.
 
-=== "Metric CI bars"
+=== ":material-chart-bell-curve:{ .mc-cyan } Metric CI bars"
 
-    [![Metric confidence intervals](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_metric_ci_forest_light.png)](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_metric_ci_forest_light.png){target="_blank" rel="noopener"}
+    [![Metric confidence intervals](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_metric_ci_forest_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_metric_ci_forest_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     A forest plot: point estimate plus 95 % confidence interval per caller, on an x-axis
     that auto-zooms to the spread so overlapping intervals stay distinguishable.
 
 ---
 
-## Running the pipeline
+## :material-play-circle-outline: Running the pipeline
 
 Depictio reads the **output** of nf-core/variantbenchmarking, it does not run the
 pipeline. Run the pipeline first, once per variant type:
@@ -320,7 +347,7 @@ for full pipeline documentation.
 
 ---
 
-## Required data structure
+## :material-folder-open-outline: Required data structure
 
 Point `--data-root` at the directory holding the pipeline output. Only the first table of
 whichever template you choose is required; the rest is optional and the dashboard adapts
@@ -354,7 +381,7 @@ reads no MultiQC report at all, and expects a single root containing both `small
 
 ---
 
-## Test data
+## :material-flask-outline: Test data
 
 The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/variantbenchmarking/1.4.0/download_test_data.sh),
@@ -377,9 +404,39 @@ It fetches the `small/` and `indel/` summary tables plus the hap.py per-sample f
 
 ---
 
-## Additional resources
+## :material-link-variant: Additional resources
 
 - [nf-co.re/variantbenchmarking](https://nf-co.re/variantbenchmarking): official pipeline documentation
 - [nf-co.re/variantbenchmarking/1.4.0/results](https://nf-co.re/variantbenchmarking/1.4.0/results): AWS test results
 - [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes
+
+---
+
+## :material-account-group-outline: Authorship
+
+<div class="tpl-credits">
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-code-braces"></i> Developers</span>
+    <span class="tpl-credit-note">Wrote the four templates, their recipes and their dashboards.</span>
+    <a class="tpl-person" href="https://github.com/weber8thomas" target="_blank" rel="noopener">
+      <img src="https://github.com/weber8thomas.png?size=80" alt="" loading="lazy"> weber8thomas
+    </a>
+  </div>
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
+    <span class="tpl-credit-note">Nobody has run them on their own data and signed them off yet, which is what keeps the status Experimental.</span>
+    <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
+  </div>
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-wrench-outline"></i> Maintainers</span>
+    <span class="tpl-credit-note">Keep them working as nf-core/variantbenchmarking releases.</span>
+    <a class="tpl-person" href="https://github.com/weber8thomas" target="_blank" rel="noopener">
+      <img src="https://github.com/weber8thomas.png?size=80" alt="" loading="lazy"> weber8thomas
+    </a>
+  </div>
+</div>
+
+Reviewing a template on your own data, or taking over a role here, is a
+contribution in itself: the [contributing guide](../../developer/contributing-templates.md)
+says what each one involves.
