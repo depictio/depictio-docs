@@ -2125,3 +2125,27 @@ body.catalog-fs-lock .md-main {
 [data-md-color-scheme="slate"] .md-typeset .tpl-shot-frame:has(img[src$="#only-light"]) {
     display: none;
 }
+
+/* Required / optional pills. The generated template reference already draws
+   these, from a <style> block it emits itself; lifting the three rules here
+   lets a hand-written page say "required" the same way, Contributing a
+   Template's section table being the first. */
+.md-typeset .gtd-badge {
+    display: inline-block;
+    padding: 0 0.5em;
+    border-radius: 10px;
+    font-size: 0.78em;
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+.md-typeset .gtd-req {
+    background: #e9f7ef;
+    color: #1e8e5a;
+}
+
+.md-typeset .gtd-opt {
+    background: #fff6e6;
+    color: #b9770e;
+}
