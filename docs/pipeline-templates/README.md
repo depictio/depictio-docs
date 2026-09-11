@@ -181,6 +181,20 @@ depictio-cli run \
     </div>
   </a>
 
+  <a class="template-card" href="nf-core/atacseq/" data-tpl-name="nf-core/atacseq" data-tpl-status="experimental" data-tpl-version="1.2.2" data-tpl-keywords="atacseq chromatin accessibility ataqv macs2 peaks nucleosome tss enrichment differential accessibility">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/atacseq/master/docs/images/nf-core-atacseq_logo_dark.png" alt="nf-core/atacseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/atacseq/master/docs/images/nf-core-atacseq_logo_light.png" alt="nf-core/atacseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Chromatin accessibility: ataqv library quality, MACS2 peaks, the consensus set and DESeq2 differential accessibility.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.2.2</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 <div class="tpl-catalog-table" data-tpl-table hidden></div>

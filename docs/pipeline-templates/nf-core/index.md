@@ -18,6 +18,7 @@ Templates for [nf-core](https://nf-co.re) pipelines. Each template configures a 
 | [rnaseq](rnaseq.md) | Bulk RNA-seq quantification | 3.26.0 |
 | [taxprofiler](taxprofiler.md) | Metagenomic taxonomic profiling | 2.0.1 |
 | [chipseq](chipseq.md) | Transcription-factor / histone ChIP-seq | 1.2.0 |
+| [atacseq](atacseq.md) | Chromatin accessibility (ATAC-seq) | 1.2.2 |
 
 !!! tip "You do not have to name the template <small>(v1.10.0+)</small>"
     A pipeline can trigger the ingestion itself when it completes, and the
