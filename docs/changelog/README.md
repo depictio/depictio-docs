@@ -15,6 +15,34 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.9.1](https://github.com/depictio/depictio/releases/tag/v1.9.1)** (August 30, 2026)
+
+!!! success "Patch: seeded dashboards reworked, and grouping in advanced viz"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.9.1
+ghcr.io/depictio/depictio-viewer:1.9.1
+ghcr.io/depictio/depictio-worker:1.9.1
+```
+
+### **✨ New Features**
+
+* **Analysis grouping reaches advanced visualizations**: a split is expressed as a list of filter constraints appended to the dashboard's own, so each panel goes through the ordinary fetch path and cross-DC link resolution still applies. A column with more values than the grid can hold becomes splittable by being narrowed first, and a value keeps its tint however far you narrow. See [Interactive Selection Filtering](../features/interactive-selection-filtering.md#analysis-panel) ([#1013](https://github.com/depictio/depictio/pull/1013), [c617b62e](https://github.com/depictio/depictio/commit/c617b62e)).
+* **Sign in and land back on the shared link** you were sent, instead of on the dashboard list ([#1012](https://github.com/depictio/depictio/pull/1012), [2310bdf1](https://github.com/depictio/depictio/commit/2310bdf1)).
+
+### **🚀 Improvements**
+
+* **Every seeded dashboard reworked into a readable funnel**: the bundled iris, penguins and pipeline demos now lead with the question each tab answers rather than with whatever the data made easy to plot ([#1011](https://github.com/depictio/depictio/pull/1011), [e4dbdaa0](https://github.com/depictio/depictio/commit/e4dbdaa0), [ed011dc2](https://github.com/depictio/depictio/commit/ed011dc2)).
+
+### **🐛 Bug Fixes**
+
+* **Seeded text tiles size to their prose** instead of clipping it, and the docked map fit is sent to the subplot Plotly actually drew ([#1012](https://github.com/depictio/depictio/pull/1012), [ed011dc2](https://github.com/depictio/depictio/commit/ed011dc2)).
+* **Tool Studio's footer takes the full width of the bar**, with the deploy commit in parentheses on the version line ([#1010](https://github.com/depictio/depictio/pull/1010), [23c8babb](https://github.com/depictio/depictio/commit/23c8babb), [35d32849](https://github.com/depictio/depictio/commit/35d32849)).
+
+---
+
 ## **[v1.9.0](https://github.com/depictio/depictio/releases/tag/v1.9.0)** (August 28, 2026)
 
 !!! success "Minor: backups you can drive from the UI, and a catalog you can pick from and contribute to"
