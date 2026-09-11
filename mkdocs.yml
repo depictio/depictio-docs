@@ -280,6 +280,7 @@ nav:
           - viralrecon: pipeline-templates/nf-core/viralrecon.md
           - variantbenchmarking: pipeline-templates/nf-core/variantbenchmarking.md
           - differentialabundance: pipeline-templates/nf-core/differentialabundance.md
+          - funcscan: pipeline-templates/nf-core/funcscan.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md
