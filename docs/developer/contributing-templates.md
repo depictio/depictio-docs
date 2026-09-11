@@ -165,6 +165,70 @@ In the PR, include: the pipeline name + docs link, the version tested, the
 reference dataset used (e.g. an nf-core AWS results URL), and a screenshot of at
 least one dashboard.
 
+## Step 6 — Document the template
+
+Every template gets one page, `docs/pipeline-templates/nf-core/<pipeline>.md` in
+[depictio-docs](https://github.com/depictio/depictio-docs), registered in three
+places: the nav in `mkdocs.yml`, a row in `pipeline-templates/nf-core/index.md`,
+and a card in `pipeline-templates/README.md` carrying `data-tpl-name`,
+`data-tpl-status`, `data-tpl-version` and `data-tpl-keywords`, which is what the
+catalogue search, the status chips and the table view read.
+
+Copy the skeleton from [ampliseq](../pipeline-templates/nf-core/ampliseq.md).
+**Required** means every page has it; the two optional sections answer a question
+most templates do not raise.
+
+| Section | Presence | What goes in it |
+|---|---|---|
+| Front matter | <span class="gtd-badge gtd-req">required</span> | `title:` the domain name a reader would search for, and `hide: [navigation]` |
+| `.template-banner` | <span class="gtd-badge gtd-req">required</span> | logo pair, title, subtitle, nf-co.re and GitHub links, status badge |
+| Intro | <span class="gtd-badge gtd-req">required</span> | one sentence, then 4 to 6 `:material-*:` bullets, one per analysis area |
+| Scope admonition | <span class="gtd-badge gtd-opt">optional</span> | `!!! info` or `!!! warning`, when the template covers one route of the pipeline only |
+| `## Quick start` | <span class="gtd-badge gtd-req">required</span> | the `depictio run` that needs nothing but `--data-root`, and the Nextflow trigger beside it |
+| `## Choosing a template` | <span class="gtd-badge gtd-opt">optional</span> | a table of `--template` ids, when the template ships under several |
+| `## Reference` | <span class="gtd-badge gtd-req">required</span> | the picker, then one version block per version around its generated partial |
+| `## Dashboard tabs` | <span class="gtd-badge gtd-req">required</span> | one content tab per dashboard tab, in dashboard order: summary line, screenshot, two or three sentences, `??? abstract` with the filters and sections |
+| `## Running the pipeline` | <span class="gtd-badge gtd-req">required</span> | the `nextflow run` that produces the inputs, the `depictio run` that reads them, the pipeline usage link |
+| `## Required data structure` | <span class="gtd-badge gtd-req">required</span> | a `text` tree of `<DATA_ROOT>/`, with the mandatory files called out |
+| `## Test data` | <span class="gtd-badge gtd-opt">if shipped</span> | `download_test_data.sh` or the megatest prefix, and the run that follows |
+| `## Additional resources` | <span class="gtd-badge gtd-req">required</span> | four links: nf-co.re, the AWS results, Template System Reference, Recipes |
+| `## Authorship` | <span class="gtd-badge gtd-req">required</span> | developers, reviewers and maintainers, as `.tpl-credits` cards |
+
+Four rules are easy to get wrong:
+
+**Tab names, icons and colours are read, never chosen.** A tab is titled with its
+`title` in `dashboards/base.yaml`, or `main_tab_name` for the first one, and
+`tab_icon: mdi:chart-scatter-plot` with `tab_icon_color: indigo` becomes
+`:material-chart-scatter-plot:{ .mc-indigo }`. A tab whose icon is the MultiQC
+logo carries the logo image instead. Check the icon exists in the bundled Material
+set before using it: `mdi:target-arrow` does not, `bullseye-arrow` is the same glyph.
+
+**The reference is one block per version**, driven by the picker rather than by a
+tab strip, with the include flush left inside it:
+
+```markdown
+<div class="tpl-version-block" data-version="2.18.0" markdown>
+
+;--8<-- "pipeline-templates/nf-core/_generated/ampliseq-latest.md"
+
+</div>
+```
+
+Generate those partials with
+`python -m depictio.dev_scripts.gen_template_docs --docs-root <depictio-docs>`.
+It rewrites every template, so stage only your own.
+
+**Screenshots** live at
+`docs/images/pipeline-templates/nf-core/<pipeline>/<tab_slug>_light.png`, named
+after the tab they show, and are linked with
+`{ .tpl-shot target="_blank" rel="noopener" }` so a full-height capture lands in
+the scrollable frame instead of being cropped. Add the `_dark.png` twin, with
+`#only-light` and `#only-dark`, when you have one.
+
+**Keep it near 300 lines**, and no em dashes in new prose. The template's own
+`docs/dashboards.md` is source material to condense, not to port: implementation
+notes and megatest bookkeeping stay in the depictio repo.
+
 ## Badge promotion
 
 Submitted templates start **Experimental** and are promoted as they're reviewed
