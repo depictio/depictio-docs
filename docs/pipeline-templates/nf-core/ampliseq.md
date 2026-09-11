@@ -20,6 +20,17 @@ hide:
   <span class="template-status-reviewed template-banner-badge" data-tooltip="Reviewed — tested, CI passes, and reviewed by the Depictio team or community."><i class="mdi mdi-check-circle-outline"></i> Reviewed</span>
 </div>
 
+<div class="tpl-version-pick" data-latest="2.18.0">
+  <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
+  <span class="tpl-version-label">Template version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+    <option value="2.18.0" selected>2.18.0</option>
+    <option value="2.16.0">2.16.0</option>
+    <option value="2.14.0">2.14.0</option>
+  </select>
+  <span class="tpl-version-badge">latest</span>
+</div>
+
 The ampliseq template covers the main outputs of a standard nf-core/ampliseq run:
 
 - :material-chart-bar: **MultiQC quality control** — FastQC read quality, Cutadapt trimming statistics
@@ -30,13 +41,13 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 
 ---
 
-## Quick start
+## :material-rocket-launch-outline: Quick start
 
 === "Base (no metadata)"
 
     ```bash
     depictio run \
-      --template nf-core/ampliseq/2.16.0 \
+      --template nf-core/ampliseq/latest \
       --data-root /path/to/ampliseq_results \
       --var SAMPLESHEET_FILE=samplesheet.csv
     ```
@@ -47,7 +58,7 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 
     ```bash
     depictio run \
-      --template nf-core/ampliseq/2.16.0 \
+      --template nf-core/ampliseq/latest \
       --data-root /path/to/ampliseq_results \
       --var SAMPLESHEET_FILE=samplesheet.csv \
       --var METADATA_FILE=Metadata.tsv \
@@ -56,9 +67,20 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 
     Full dashboard: diversity, facetted charts, map, heatmap annotations, ANCOM-BC.
 
+=== "From the pipeline itself (v1.10.0+)"
+
+    ```bash
+    depictio-cli config nextflow --install     # once per machine
+    nextflow run nf-core/ampliseq -profile docker --outdir results
+    ```
+
+    No `depictio run`, and no template named: the pipeline ingests its own
+    output directory when it finishes and resolves this template from its own
+    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+
 ---
 
-## Reference
+## :material-book-open-variant: Reference
 
 Running without `METADATA_FILE` prunes the metadata-dependent collections
 (see the *Conditional routes* table); the `--skip_qiime` / `--skip_taxonomy`
@@ -71,126 +93,205 @@ Running without `METADATA_FILE` prunes the metadata-dependent collections
     there are no empty rows. One template therefore covers 16S/ITS, single- vs.
     multi-region (SIDLE), and `skip_qiime` runs without edits.
 
+<div class="tpl-version-block" data-version="2.18.0" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/ampliseq-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="2.16.0" markdown>
+
 --8<-- "pipeline-templates/nf-core/_generated/ampliseq-2.16.0.md"
 
----
+</div>
 
-## Dashboard tabs
+<div class="tpl-version-block" data-version="2.14.0" markdown>
 
-The ampliseq dashboard ships as a six-tab funnel (MultiQC parent + five
-child tabs). Filters propagate across tabs via cross-DC links on the
-metadata `sample` column — see [Cross-DC links](#cross-dc-links) in the
-Reference section.
+--8<-- "pipeline-templates/nf-core/_generated/ampliseq-2.14.0.md"
 
-=== "MultiQC"
-
-    Quality control overview powered by MultiQC.
-
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png)](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png){target="_blank" rel="noopener"}
-
-    **Filters:** Sample ID, Habitat Type, Sampling Period (DatePicker).
-
-    **Components:**
-
-    - General stats table
-    - Cutadapt: filtered reads, trimmed sequence lengths
-    - FastQC: sequence counts, quality histograms, GC content, adapter
-      content, status checks, Per-sequence quality / GC / N content,
-      sequence duplication levels, length distribution
-
-=== "Alpha Diversity"
-
-    Within-sample diversity metrics, rarefaction, and per-habitat
-    comparisons. Extended mode only.
-
-    [![Alpha Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png)](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png){target="_blank" rel="noopener"}
-
-    **Filters:** Sample ID, Habitat.
-
-    **Components:**
-
-    - 4 metric cards: *Total Samples*, *Shannon (distribution)*,
-      *Faith PD (distribution)*, *Evenness (distribution)*
-    - Rarefaction curves (multi-metric) — advanced viz, filterable by
-      habitat / sample via the in-tab DCLink. Since **v1.8.3** the curves
-      are drawn from `alpha_rarefaction_summary`, collapsed once at ingest
-      into the median over iterations plus its interquartile spread, with
-      the run's sample metadata joined on, so **Group by** offers every
-      categorical column the metadata carries rather than the one the YAML
-      happened to pick.
-    - Alpha diversity by habitat (per metric) — facetted boxplot
-    - Per-sample alpha diversity data table
-
-=== "Community & Diversity"
-
-    Taxonomy composition + sampling-location map (extended mode).
-
-    [![Community & Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png)](../../images/pipeline-templates/nf-core/ampliseq/community_light.png){target="_blank" rel="noopener"}
-
-    **Components (base):**
-
-    - Metric cards: total samples, total taxa, kingdoms, unique phyla
-    - Sunburst: Kingdom → Phylum hierarchy
-    - Mean relative abundance by Phylum (± std)
-    - Stacked bar: taxonomic composition per sample
-    - ComplexHeatmap: z-score normalized, clustered, with Kingdom row
-      annotations
-    - Data table: taxonomy relative abundance
-    - Filters: Kingdom, Phylum, relative abundance range
-
-    **Additional components (extended):**
-
-    - Facetted bar charts by GROUP_COL
-    - Sampling locations scatter map
-    - Heatmap with habitat + city column annotations
-    - Filters: sampling period (DatePicker), GROUP_COL, sample ID
-
-=== "Differential Abundance"
-
-    ANCOM-BC differential abundance results. Extended mode only.
-
-    [![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png)](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png){target="_blank" rel="noopener"}
-
-    **Components:**
-
-    - Metric cards: total taxa, significant taxa (q<0.05), unique phyla,
-      max log-fold change
-    - Volcano plot: LFC vs -log10(q-value), facetted by contrast
-    - DA barplot: per-contrast log-fold change
-    - Top differential taxa bar chart
-    - Results data table
-    - Filters: contrast, Phylum, Kingdom, W statistic range, LFC range
-
-=== "Ordination & Clustering"
-
-    Beta-diversity / PCoA embedding + ComplexHeatmap on the canonical
-    feature matrix. Surfaces clusters and outliers across samples.
-
-    [![Ordination & Clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png)](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png){target="_blank" rel="noopener"}
-
-    **Components:**
-
-    - Embedding (PCoA): 2D sample projection, colour-coded by habitat
-    - ComplexHeatmap: clustered z-score heatmap on the canonical feature
-      matrix
-    - Bray-Curtis sample-distance heatmap
-
-=== "Phylogeny"
-
-    Rooted phylogenetic tree of ASVs with tip metadata overlay.
-
-    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png)](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png){target="_blank" rel="noopener"}
-
-    **Components:**
-
-    - Phylogenetic tree viewer (Newick) with metadata-annotated tips
-
-    Zoom, pan, clade collapsing and filter-to-subtree are covered in
-    [Reading and navigating the tree](../../features/components.md#phylogeny-interaction).
+</div>
 
 ---
 
-## Running the pipeline
+## :material-view-dashboard-outline: Dashboard tabs
+
+Seven tabs: the MultiQC parent, then six children. Each tab below carries the
+**same icon and colour the dashboard gives it**, so the page and the app read
+alike. Filters propagate across tabs through cross-DC links on the metadata
+`sample` column, see [Cross-DC links](#cross-dc-links).
+
+Where a tab names *your grouping column*, that is whichever metadata column the
+run was resolved against; the dashboard substitutes its real name everywhere.
+
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
+
+    *Cutadapt and FastQC, straight from the report.*
+
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    Thirteen MultiQC panels in two sections, then the sample metadata itself.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Sample ID`, and your grouping column.
+
+        | Section | What it holds |
+        |---|---|
+        | QC overview | 4 MultiQC panels |
+        | QC details | 9 MultiQC panels |
+        | Sample metadata | 4 cards + *Sample Metadata* table |
+
+=== ":material-chart-bell-curve:{ .mc-orange } Alpha Diversity"
+
+    *Within-sample richness, evenness and phylogenetic spread: rarefaction plus per-group boxplots.*
+
+    [![Alpha diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Alpha diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    **Total Samples**, then the distribution of **Shannon**, **Faith PD** and
+    **Evenness**, before the rarefaction curves.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Sample ID` and your grouping column, both on
+        `alpha_diversity_multi_canonical`.
+
+        | Section | What it holds |
+        |---|---|
+        | Diversity at a glance | 4 cards |
+        | Rarefaction | 1 advanced visualization |
+        | Per-group comparison | *Alpha diversity by group (per metric)* |
+        | Per-sample table | *Per-sample alpha diversity (one row per sample)* |
+
+=== ":material-bacteria-outline:{ .mc-teal } Community & Diversity"
+
+    *Taxonomic composition: sunburst, Sankey and stacked taxonomy.*
+
+    [![Community and diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Community and diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    The widest tab: composition, taxonomic structure, set overlap, and the SINTAX
+    classifier beside the main taxonomy.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Sample ID` and your grouping column on `metadata`;
+        `Kingdom`, `Phylum` and a relative-abundance range on
+        `taxonomy_rel_abundance`; a second `Kingdom` / `Phylum` pair scoping the
+        SINTAX panels.
+
+        | Section | What it holds |
+        |---|---|
+        | Overview | 4 cards |
+        | Composition | 1 bar + 1 advanced visualization |
+        | Taxonomic structure | 2 advanced visualizations |
+        | Set overlap | 1 advanced visualization |
+        | SINTAX classifier | 1 bar + *Taxonomy Relative Abundance (sintax)* |
+        | Tables | *Taxonomy Relative Abundance* |
+
+=== ":material-chart-scatter-plot-hexbin:{ .mc-pink } Ordination & Clustering"
+
+    *Sample-relationship structure: PCoA on Bray-Curtis, plus a clustered taxonomy heatmap.*
+
+    [![Ordination and clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Ordination and clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    **Samples projected**, the group count, and the distribution of each PCoA axis.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Sample ID` and your grouping column on `metadata`, plus
+        `Phylum` on `complex_heatmap_canonical`.
+
+        | Section | What it holds |
+        |---|---|
+        | Ordination summary | 4 cards |
+        | Sample relationships | 2 advanced visualizations |
+        | Clustered abundance | 1 advanced visualization |
+
+=== ":material-chart-scatter-plot:{ .mc-red } Differential Abundance"
+
+    *ANCOM-BC volcano and DA barplot, per contrast.*
+
+    [![Differential abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Differential abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    **Taxa tested**, **Significant Taxa (q<0.05)**, **FDR calls** and the
+    log-fold-change distribution, above the volcano and MA plots.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Contrast`, `Phylum` and `Kingdom`, plus ranges on the W
+        statistic and the log-fold change, all on `ancombc_results`.
+
+        | Section | What it holds |
+        |---|---|
+        | Summary | 4 cards |
+        | Volcano & MA | 2 advanced visualizations |
+        | Results table | *ANCOM-BC differential abundance results* |
+
+=== ":material-family-tree:{ .mc-lime } Phylogeny"
+
+    *The QIIME2 tree, annotated with ASV taxonomy.*
+
+    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    **Total ASVs**, genus-level classification rate, mean classifier confidence
+    and the count of unique genera, then the tree itself.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Kingdom` and `Phylum` on
+        `phylogenetic_tree_metadata_canonical`.
+
+        | Section | What it holds |
+        |---|---|
+        | Tree at a glance | 4 cards |
+        | Tree | 1 advanced visualization |
+        | Tip taxonomy | *ASV taxonomy table* |
+
+=== ":material-graph-outline:{ .mc-indigo } Reconstructed Community (SIDLE)"
+
+    *Cross-region reconstructed community, and per-feature reconstruction confidence.*
+
+    !!! info "Multi-region runs only"
+        This tab is bound to `sidle_reconstructed`, which a single-region run never
+        writes. On such a run the self-adapting layout drops the tab entirely, which
+        is why it does not appear in the screenshots above.
+
+    **Reconstructed features**, **Samples**, **Phyla detected** and the mean number
+    of regions per feature.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Phylum` on `sidle_reconstructed`.
+
+        | Section | What it holds |
+        |---|---|
+        | Reconstruction at a glance | 4 cards |
+        | Composition | 2 bars |
+        | Reconstruction QC | 1 bar + 1 scatter |
+        | Tables | *Reconstructed features (per-sample counts)*, *Reconstruction confidence* |
+
+!!! tip "The reference dataset adds two more"
+    The Ammer catchment reference dashboard, seeded with the bundled demo data,
+    carries two further tabs on top of these seven:
+    :material-map-marker-outline:{ .mc-blue } **Sampling Campaign** (where and when
+    the catchment was sampled) and :material-waves:{ .mc-cyan } **Environment (CTD)**
+    (sonde readings per sample, and the diversity they go with). Both are bound to
+    metadata columns that only that dataset ships.
+
+---
+
+## :material-play-circle-outline: Running the pipeline
 
 Depictio reads the **output** of nf-core/ampliseq — it does not run the pipeline. Run the pipeline first:
 
@@ -206,7 +307,7 @@ nextflow run nf-core/ampliseq \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/ampliseq/2.16.0 \
+depictio run --template nf-core/ampliseq/latest \
   --data-root results/ \
   --var SAMPLESHEET_FILE=samplesheet.csv \
   --var METADATA_FILE=Metadata.tsv
@@ -216,7 +317,7 @@ See [nf-co.re/ampliseq/usage](https://nf-co.re/ampliseq/2.16.0/docs/usage) for f
 
 ---
 
-## Required data structure
+## :material-folder-open-outline: Required data structure
 
 Point `--data-root` to the directory containing your ampliseq outputs. This can be a single run's `results/` folder or a parent directory containing multiple runs — Depictio scans recursively. Not all files are required; the template adapts based on what's present and which `--var` flags you provide.
 
@@ -249,9 +350,41 @@ Point `--data-root` to the directory containing your ampliseq outputs. This can 
 
 ---
 
-## Additional resources
+## :material-link-variant: Additional resources
 
 - [nf-co.re/ampliseq](https://nf-co.re/ampliseq) — official pipeline documentation
 - [nf-co.re/ampliseq/2.16.0/results](https://nf-co.re/ampliseq/2.16.0/results) — AWS test results
 - [Template System Reference](../../usage/projects/templates.md) — YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md) — how to read, test, and write recipes
+
+---
+
+## :material-account-group-outline: Authorship
+
+<div class="tpl-credits">
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-code-braces"></i> Developers</span>
+    <span class="tpl-credit-note">Wrote the template, its recipes and its dashboards.</span>
+    <a class="tpl-person" href="https://github.com/weber8thomas" target="_blank" rel="noopener">
+      <img src="https://github.com/weber8thomas.png?size=80" alt="" loading="lazy"> weber8thomas
+    </a>
+  </div>
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
+    <span class="tpl-credit-note">Ran it on real data and signed off on the status above.</span>
+    <a class="tpl-person" href="https://github.com/depictio" target="_blank" rel="noopener">
+      <img src="https://github.com/depictio.png?size=80" alt="" loading="lazy"> Depictio team
+    </a>
+  </div>
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-wrench-outline"></i> Maintainers</span>
+    <span class="tpl-credit-note">Keep it working as nf-core/ampliseq releases.</span>
+    <a class="tpl-person" href="https://github.com/weber8thomas" target="_blank" rel="noopener">
+      <img src="https://github.com/weber8thomas.png?size=80" alt="" loading="lazy"> weber8thomas
+    </a>
+  </div>
+</div>
+
+Reviewing a template on your own data, or taking over a role here, is a
+contribution in itself: the [contributing guide](../../developer/contributing-templates.md)
+says what each one involves.

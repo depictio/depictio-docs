@@ -20,6 +20,15 @@ hide:
   <span class="template-status-reviewed template-banner-badge" data-tooltip="Reviewed — tested, CI passes, and reviewed by the Depictio team or community."><i class="mdi mdi-check-circle-outline"></i> Reviewed</span>
 </div>
 
+<div class="tpl-version-pick" data-latest="3.0.0">
+  <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
+  <span class="tpl-version-label">Template version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+    <option value="3.0.0" selected>3.0.0</option>
+  </select>
+  <span class="tpl-version-badge">latest</span>
+</div>
+
 The viralrecon template covers the main outputs of a standard nf-core/viralrecon run:
 
 - :material-chart-bar: **MultiQC quality control** — FastQC, Cutadapt, samtools/picard alignment metrics
@@ -37,7 +46,7 @@ The viralrecon template covers the main outputs of a standard nf-core/viralrecon
 
 ---
 
-## Quick start
+## :material-rocket-launch-outline: Quick start
 
 `--data-root` is the only thing you have to pass. The template's routing variables
 (`PLATFORM`, `PROTOCOL`, `VARIANT_CALLER`, and the `SKIP_*` flags) mirror nf-core's own
@@ -63,6 +72,12 @@ working. Only `summary_metrics` is dropped (no nanopore equivalent yet).
     auto-derived value is logged at resolution time. See the full list and routes in the
     [Reference](#reference).
 
+!!! tip "Or let the pipeline do it <small>(v1.10.0+)</small>"
+    Run `depictio-cli config nextflow --install` once on the machine that runs
+    `nextflow`, and a plain `nextflow run nf-core/viralrecon --outdir results`
+    ingests itself when it finishes, resolving this template from its own
+    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+
 !!! tip "Aggregated data collections"
     The viralrecon DCs use `metatype: "Aggregated"`. They are built
     by recipes that fan multiple per-sample files into a single delta
@@ -71,7 +86,7 @@ working. Only `summary_metrics` is dropped (no nanopore equivalent yet).
 
 ---
 
-## Reference
+## :material-book-open-variant: Reference
 
 Recipe DCs fan per-sample files into one delta table via `glob_pattern`. The
 `PLATFORM=nanopore` route repoints the coverage/lineage DCs at the
@@ -100,103 +115,140 @@ say what they *produce* (e.g. `variant_feature_matrix_canonical` →
     visualizations are dropped, and the rest are re-packed with no empty rows. One
     template therefore covers both the Illumina and nanopore/ARTIC routes without edits.
 
---8<-- "pipeline-templates/nf-core/_generated/viralrecon-3.0.0.md"
+<div class="tpl-version-block" data-version="3.0.0" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/viralrecon-latest.md"
+
+</div>
 
 ---
 
-## Dashboard tabs
+## :material-view-dashboard-outline: Dashboard tabs
 
-The viralrecon template ships a five-tab dashboard (MultiQC parent +
-four child tabs). Each tab targets a different analytical question;
-filters propagate across tabs via cross-DC links on the
-`summary_metrics.sample` column.
+Five tabs: the MultiQC parent, then four children. Each tab below carries the
+**same icon and colour the dashboard gives it**, so the page and the app read
+alike. Filters propagate across tabs through cross-DC links on
+`summary_metrics.sample`.
 
-=== "MultiQC"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    Pipeline-level quality control powered by MultiQC.
+    *Sequencing, alignment and variant-calling QC, straight from the report.*
 
-    [![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png)](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png){target="_blank" rel="noopener"}
+    [![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    **Filters:** Sample ID, Lineage.
+    [![MultiQC overview](../../images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    **Components:**
+    Four cards open the run: **Samples**, **Reads mapped (%)**, **Genome at 10x**
+    and **Lineages**. Eighteen MultiQC panels follow, in three sections.
 
-    - General stats table
-    - Raw read counts and trimming statistics (FastQC, Cutadapt)
-    - Alignment rate and duplication rate
-    - samtools / picard alignment metrics
-    - Per-sample variant counts
+    ??? abstract ":material-tune-variant: Filters and components"
 
-=== "Coverage & Depth"
+        **Filters** · `Sample` and `Lineage`, plus four thresholds on
+        `summary_metrics`: genome covered at 10x, median depth, reads mapped and
+        variants called. A selector picks which MultiQC report to read.
 
-    Per-sample and per-amplicon coverage view.
+        | Section | What it holds |
+        |---|---|
+        | Run at a glance | 4 cards |
+        | QC overview | 6 MultiQC panels |
+        | Read & alignment details | 6 MultiQC panels |
+        | Variant & assembly details | 6 MultiQC panels |
 
-    [![Coverage & Depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png)](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png){target="_blank" rel="noopener"}
+=== ":material-chart-areaspline:{ .mc-teal } Coverage & Depth"
 
-    **Filters:** Sample ID.
+    *Amplicon and genome coverage, from mosdepth.*
 
-    **Components:**
+    [![Coverage and depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    - 4 summary cards: *Total Samples*, *Amplicons Tracked*, *Amplicon Coverage*, *Genome Coverage*
-    - *Genome Coverage per Sample* (line chart)
-    - *Amplicon Coverage Heatmap*
-    - *Amplicon Coverage Data* table
-    - *Genome Coverage Data* table
+    [![Coverage and depth](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
-=== "Lineage & Clustering"
+    Three coverage tracks sit under four cards: **Amplicons Tracked**,
+    **Amplicon Coverage**, **Genome Coverage** and **Amplicons at 20x**.
 
-    Pangolin lineage and Nextclade clade assignment, plus a Sankey
-    funnel from QC status → lineage → clade.
+    ??? abstract ":material-tune-variant: Filters and components"
 
-    [![Lineage & Clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png)](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png){target="_blank" rel="noopener"}
+        **Filters** · genome depth and amplicon depth as ranges, plus an amplicon
+        picker on `mosdepth_amplicon_coverage`.
 
-    **Filters:** Sample ID, Lineage, Clade, QC Status.
+        | Section | What it holds |
+        |---|---|
+        | Coverage at a glance | 4 cards |
+        | Coverage tracks | 3 advanced visualizations |
+        | Coverage tables | *Amplicon coverage table* |
 
-    **Components:**
+=== ":material-virus:{ .mc-red } Lineage & Clustering"
 
-    - 4 summary cards: *Total Samples*, *Unique Lineages*, *Unique Clades*, *Avg Genome Coverage (10x)*
-    - 6 figures: *Pangolin Lineage Distribution*, *Nextclade QC Status Overview*, *Nextclade Clade Distribution*, *Coverage vs Total Variants by Lineage*, *Genome Coverage per Sample (>= 10x Depth)*, *Nextclade — Substitutions vs Deletions by Clade*
-    - Sankey funnel: qc_status → lineage → clade (`classification_sankey`)
-    - Variant-profile PCA embedding, coloured by lineage (`variant_pca_matrix`)
-    - 3 tables: *Pangolin Lineage Assignments*, *Nextclade Clade Assignments*, *Summary Metrics*
+    *Pangolin and Nextclade typing, a classification funnel, and a variant-profile PCA.*
 
-=== "Variants"
+    [![Lineage and clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Variant calls and functional effects, with manhattan-style genome
-    landscape and oncoplot of high-impact mutations.
+    [![Lineage and clustering](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png)](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png){target="_blank" rel="noopener"}
+    Cards count **Unique Lineages**, **Unique Clades**, **Consensus coverage** and
+    **Pangolin QC verdicts**; the funnel and the PCA sit below the two
+    distributions.
 
-    **Filters:** Sample ID, Gene, Variant Effect, Functional Class, Allele Frequency (range), Read Depth (range).
+    ??? abstract ":material-tune-variant: Filters and components"
 
-    **Components:**
+        **Filters** · `Lineage`, `Clade`, and the two QC verdicts, Pangolin and
+        Nextclade.
 
-    - 4 summary cards: *Total Variants*, *Unique Genes*, *Mean Allele Freq*, *Unique AA Changes*
-    - Manhattan plot: chr × pos × score (bound directly to `variants_long`)
-    - Lollipop: per-gene variants (bound directly to `variants_long`)
-    - Oncoplot: sample × gene × mutation_type (`variant_oncoplot`)
-    - 5 figures: *Allele Frequency vs Genome Position*, *Variant Count by Gene and Functional Class*, *Variant Effect Distribution*, *Variant Functional Class Distribution*, *Variant Count per Sample*
-    - 1 table: *Variants Long Table*
+        | Section | What it holds |
+        |---|---|
+        | Typing at a glance | 4 cards |
+        | Lineage distribution | *Pangolin lineage distribution*, *Nextclade clade distribution* |
+        | Classification flow | 2 advanced visualizations |
+        | Typing tables | *Pangolin lineage assignments*, *Nextclade clade assignments* |
 
-=== "Sample QC"
+=== ":material-stethoscope:{ .mc-indigo } Sample QC"
 
-    Per-sample QC scorecard combining alignment, coverage, variant counts
-    and lineage / clade assignment in one place.
+    *Per-sample coverage, variant yield, substitution patterns and genome completeness.*
 
-    [![Sample QC](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png)](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png){target="_blank" rel="noopener"}
+    [![Sample QC](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    **Filters:** Sample ID, Lineage, QC Status.
+    [![Sample QC](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    **Components:**
+    The scorecard tab: **Avg % Genome ≥ 10x**, **Median Variants / Sample**,
+    **Reads mapped (%)** and **Missing bases**, then two diagnostic scatters.
 
-    - Summary cards: total samples, samples passing QC, mean coverage,
-      mean variants per sample
-    - Amplicon coverage matrix heatmap (`amplicon_coverage_matrix`)
-    - Summary metrics table
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · SNPs called, indels called and missing bases, all as ranges.
+
+        | Section | What it holds |
+        |---|---|
+        | QC at a glance | 4 cards |
+        | Diagnostics | *Median coverage vs total variants*, *Nextclade substitutions vs deletions* |
+        | Per-sample coverage | *Genome coverage per sample (≥10x)* |
+        | Sample metadata | 4 cards + *Summary metrics* table |
+
+=== ":material-dna:{ .mc-orange } Variants"
+
+    *Per-call allele frequency, per-gene and per-sample effect breakdowns, and a sample × gene oncoplot.*
+
+    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Variants](../../images/pipeline-templates/nf-core/viralrecon/variants_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/variants_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    **Total Variant Calls**, **Distinct Positions**, **Samples w/ variants** and
+    **Unique AA Changes** head the tab; the oncoplot closes it.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Gene`, `Variant Effect`, `Functional class`, allele frequency
+        and read depth as ranges, and a mutation-type picker scoping the oncoplot.
+
+        | Section | What it holds |
+        |---|---|
+        | Variant burden | 4 cards + 2 advanced visualizations |
+        | Allele frequency | *Allele frequency distribution*, *Read support per call* |
+        | Effect breakdown | *Variant counts by gene & functional class*, *Variants per sample* |
+        | Co-occurrence | 2 cards + 2 advanced visualizations (oncoplot) |
+        | Variant table | *Variants table* |
 
 ---
 
-## Running the pipeline
+## :material-play-circle-outline: Running the pipeline
 
 Depictio reads the **output** of nf-core/viralrecon — it does not run the pipeline. Run the pipeline first, using the iVar variant caller the template targets:
 
@@ -224,7 +276,7 @@ See [nf-co.re/viralrecon/usage](https://nf-co.re/viralrecon/3.0.0/docs/usage) fo
 
 ---
 
-## Required data structure
+## :material-folder-open-outline: Required data structure
 
 Point `--data-root` to the directory containing your viralrecon outputs. This can be a single run's `results/` folder or a parent directory containing multiple runs — Depictio scans recursively. Not all files are required; the template adapts to what's present and to the sequencing platform / caller / skip flags it reads from the run's `params.json` (override any with `--var`).
 
@@ -250,7 +302,7 @@ ARTIC `*.pass.vcf.gz` variant calls).
 
 ---
 
-## Test data
+## :material-flask-outline: Test data
 
 A small test fixture is available for local development without re-running
 the full pipeline. The repository ships
@@ -287,9 +339,41 @@ depictio run \
 
 ---
 
-## Additional resources
+## :material-link-variant: Additional resources
 
 - [nf-co.re/viralrecon](https://nf-co.re/viralrecon) — official pipeline documentation
 - [nf-co.re/viralrecon/3.0.0/results](https://nf-co.re/viralrecon/3.0.0/results) — AWS test results
 - [Template System Reference](../../usage/projects/templates.md) — YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md) — how to read, test, and write recipes
+
+---
+
+## :material-account-group-outline: Authorship
+
+<div class="tpl-credits">
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-code-braces"></i> Developers</span>
+    <span class="tpl-credit-note">Wrote the template, its recipes and its dashboards.</span>
+    <a class="tpl-person" href="https://github.com/weber8thomas" target="_blank" rel="noopener">
+      <img src="https://github.com/weber8thomas.png?size=80" alt="" loading="lazy"> weber8thomas
+    </a>
+  </div>
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
+    <span class="tpl-credit-note">Ran it on real data and signed off on the status above.</span>
+    <a class="tpl-person" href="https://github.com/depictio" target="_blank" rel="noopener">
+      <img src="https://github.com/depictio.png?size=80" alt="" loading="lazy"> Depictio team
+    </a>
+  </div>
+  <div class="tpl-credit">
+    <span class="tpl-credit-role"><i class="mdi mdi-wrench-outline"></i> Maintainers</span>
+    <span class="tpl-credit-note">Keep it working as nf-core/viralrecon releases.</span>
+    <a class="tpl-person" href="https://github.com/weber8thomas" target="_blank" rel="noopener">
+      <img src="https://github.com/weber8thomas.png?size=80" alt="" loading="lazy"> weber8thomas
+    </a>
+  </div>
+</div>
+
+Reviewing a template on your own data, or taking over a role here, is a
+contribution in itself: the [contributing guide](../../developer/contributing-templates.md)
+says what each one involves.

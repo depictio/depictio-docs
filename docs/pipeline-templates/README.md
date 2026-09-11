@@ -18,11 +18,30 @@ depictio-cli run \
 
 ---
 
-## Available templates
+## :material-view-grid-outline: Available templates
 
-<div class="template-cards">
+<div class="tpl-catalog" data-tpl-catalog>
 
-  <a class="template-card" href="nf-core/ampliseq/">
+<div class="tpl-catalog-bar">
+  <div class="tpl-catalog-search">
+    <i class="mdi mdi-magnify"></i>
+    <input type="search" placeholder="Search pipelines, assays, keywords" aria-label="Search templates" data-tpl-search>
+  </div>
+  <div class="tpl-catalog-chips" role="group" aria-label="Filter by status">
+    <button type="button" class="tpl-chip is-active" data-tpl-status="all">All</button>
+    <button type="button" class="tpl-chip" data-tpl-status="certified"><i class="mdi mdi-shield-check"></i> Certified</button>
+    <button type="button" class="tpl-chip" data-tpl-status="reviewed"><i class="mdi mdi-check-circle-outline"></i> Reviewed</button>
+    <button type="button" class="tpl-chip" data-tpl-status="experimental"><i class="mdi mdi-flask-outline"></i> Experimental</button>
+  </div>
+  <div class="tpl-catalog-views" role="group" aria-label="View">
+    <button type="button" class="tpl-viewbtn is-active" data-tpl-view="grid" title="Grid view" aria-label="Grid view"><i class="mdi mdi-view-grid-outline"></i></button>
+    <button type="button" class="tpl-viewbtn" data-tpl-view="table" title="Table view" aria-label="Table view"><i class="mdi mdi-table"></i></button>
+  </div>
+</div>
+
+<div class="template-cards" data-tpl-grid>
+
+  <a class="template-card" href="nf-core/ampliseq/" data-tpl-name="nf-core/ampliseq" data-tpl-status="reviewed" data-tpl-version="2.18.0" data-tpl-keywords="16S ITS CO1 18S amplicon metabarcoding microbiome dada2 qiime2 taxonomy diversity illumina pacbio iontorrent">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_dark.png" alt="nf-core/ampliseq">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq">
@@ -30,13 +49,13 @@ depictio-cli run \
     <div class="template-card-body">
       <p class="template-card-desc">16S · ITS · CO1 · 18S amplicon sequencing across Illumina, PacBio, and IonTorrent.</p>
       <div class="template-card-meta">
-        <span class="template-version">v2.16.0</span>
+        <span class="template-version">v2.18.0</span>
         <span class="template-status-reviewed"><i class="mdi mdi-check-circle-outline" style="vertical-align:-1px;"></i> Reviewed</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/viralrecon/">
+  <a class="template-card" href="nf-core/viralrecon/" data-tpl-name="nf-core/viralrecon" data-tpl-status="reviewed" data-tpl-version="3.0.0" data-tpl-keywords="viral virus sars-cov-2 covid assembly variant calling consensus lineage pangolin nextclade coverage">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_dark.png" alt="nf-core/viralrecon">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png" alt="nf-core/viralrecon">
@@ -50,7 +69,7 @@ depictio-cli run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/variantbenchmarking/">
+  <a class="template-card" href="nf-core/variantbenchmarking/" data-tpl-name="nf-core/variantbenchmarking" data-tpl-status="experimental" data-tpl-version="1.4.0" data-tpl-keywords="benchmark variant caller truth set precision recall f1 germline somatic indel structural variant sv giab">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/variantbenchmarking/master/docs/images/nf-core-variantbenchmarking_logo_dark.png" alt="nf-core/variantbenchmarking">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/variantbenchmarking/master/docs/images/nf-core-variantbenchmarking_logo_light.png" alt="nf-core/variantbenchmarking">
@@ -66,9 +85,15 @@ depictio-cli run \
 
 </div>
 
+<div class="tpl-catalog-table" data-tpl-table hidden></div>
+
+<p class="tpl-catalog-empty" data-tpl-empty hidden><i class="mdi mdi-magnify-close"></i> No template matches that search.</p>
+
+</div>
+
 ---
 
-## Status levels
+## :material-shield-check-outline: Status levels
 
 <div class="status-cards">
 
@@ -100,7 +125,7 @@ depictio-cli run \
 
 ---
 
-## How templates work
+## :material-cog-outline: How templates work
 
 A template bundles:
 
@@ -114,7 +139,7 @@ See [Template System Reference](../usage/projects/templates.md) for the YAML for
 
 ---
 
-## Contributing a template
+## :material-source-pull: Contributing a template
 
 Want to add a template for another pipeline? The contributing guide covers the directory layout, recipe requirements, and review process.
 

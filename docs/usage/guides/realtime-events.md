@@ -203,6 +203,10 @@ Once enabled, any of these will move a live dashboard:
   `/deltatables/upsert` API endpoint (with a valid token) triggers the same path. This is the
   intended integration point for a live experimental feed, and how SVLT feeds the dashboard
   above.
+- **A pipeline that ingests itself** <small>(v1.10.0+)</small>: a Nextflow
+  `workflow.onComplete` handler runs the CLI on the output directory when the run
+  finishes, so the dashboard moves with no one at a keyboard. See
+  [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
 ### Try it locally
 

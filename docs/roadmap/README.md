@@ -104,14 +104,20 @@ Three sections, one question each:
   key: "completed"
   sub_title: "v1.9.0 ✅"
 
+- title: "Pipeline-triggered ingestion"
+  content: "A Nextflow pipeline ingests its own results when it finishes, and a run directory says which pipeline produced it"
+  icon: ":fontawesome-solid-bolt:"
+  key: "completed"
+  sub_title: "v1.10.0 ✅"
+
 - title: "Project authoring & embedding"
-  content: "Project builder, nf-core/variantbenchmarking template, a component embedded in an external site"
+  content: "Project builder, a component embedded in an external site"
   icon: ":fontawesome-solid-cubes:"
   key: "inprogress"
   sub_title: "In progress 🚧"
 
-- title: "Versioning & automation"
-  content: "Dataset and dashboard versioning, time travel, ingestion watcher, remote triggering"
+- title: "Versioning & the ingestion watcher"
+  content: "Dataset and dashboard versioning, time travel, a watcher that re-ingests on its own"
   icon: ":fontawesome-solid-clock-rotate-left:"
   key: "inprogress"
   sub_title: "In progress 🚧"
@@ -133,6 +139,9 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
+| Ingestion triggered by the pipeline itself, when it completes | v1.10.0 | [Nextflow trigger](../depictio-cli/nextflow-trigger.md) |
+| A run directory identifies its own pipeline, so a template needs no flag | v1.10.0 | [Templates](../usage/projects/templates.md#pipeline-id) |
+| nf-core/variantbenchmarking template and benchmarking viz kinds | v1.10.0 | [variantbenchmarking](../pipeline-templates/nf-core/variantbenchmarking.md) |
 | Backups created, scheduled and restored from the admin panel | v1.9.0 | [Backup & Restore](../usage/administration/backup.md#from-the-admin-panel) |
 | Pick a component from the catalog, with `use:` provenance on it | v1.9.0 | [Picking from the catalog](../usage/guides/catalog-picker.md) |
 | Tool Studio: contribute a catalog tool from the browser | v1.9.0 | [Tool Studio](../developer/tool-studio.md) |
@@ -176,22 +185,21 @@ Tool Studio both landed in v1.9.0; what is left is the path from a folder to a p
 - [ ] **nf-core template harmonization**: the bundled templates reference the same catalog entries a dashboard does, rather than carrying bespoke inline tiles ([#873](https://github.com/depictio/depictio/pull/873))
 - [ ] **Project builder**: `depictio project-builder <folder>` turns a folder into a `project.yaml`, with live glob/regex matching and schema-consistency checks ([#901](https://github.com/depictio/depictio/pull/901))
 
-### Pipeline templates
-
-- [x] **nf-core/variantbenchmarking template & modules**: germline small variants, somatic indels and structural variants as three per-variant-type projects, built from reusable catalog modules (hap.py, rtg-tools, som.py, truvari…) plus four benchmarking-specific visualization kinds ([#870](https://github.com/depictio/depictio/pull/870), closes [#865](https://github.com/depictio/depictio/issues/865), [Docs](../pipeline-templates/nf-core/variantbenchmarking.md))
-
 ### Component export & embedding
 
 - [ ] **Embed a component in an external site**: serve one dashboard component either as a Plotly spec for your own `plotly.js`, or as a single self-contained offline page. Off by default ([#917](https://github.com/depictio/depictio/pull/917))
 
 ### Versioning, time travel & automated ingestion
 
-Ingestion stops being a command someone has to remember, and nothing overwrites history.
+Ingestion stops being a command someone has to remember, and nothing overwrites
+history. The first half arrived in v1.10.0: a Nextflow pipeline now
+[triggers its own ingestion](../depictio-cli/nextflow-trigger.md) when it
+completes. What is left is noticing files nobody announced, and keeping every
+version of what was written.
 
 - [ ] **Ingestion watcher**: `depictio watch` notices new files and re-ingests them, with native events plus polling as a backstop for network filesystems, and a *Run now* trigger from the UI ([#915](https://github.com/depictio/depictio/pull/915))
 - [ ] **Delta dataset versioning & time travel**: every write becomes an inspectable Delta version carrying Depictio's own provenance; browse and read the table as it was ([#915](https://github.com/depictio/depictio/pull/915))
 - [ ] **Dashboard version history**: every save is recorded, with a timeline, read-only preview of any past version, and a restore that cannot lose the present ([#919](https://github.com/depictio/depictio/pull/919), closes [#95](https://github.com/depictio/depictio/issues/95))
-- [ ] **Remote triggering from Nextflow**: a `nextflow.config` snippet ingests into Depictio when the pipeline completes ([#813](https://github.com/depictio/depictio/pull/813))
 
 ---
 
@@ -205,7 +213,7 @@ something up.
 | ---- | ---------------------- | ---- |
 | :material-cloud-off-outline: **Serverless Depictio** | Explore a dashboard with no server to deploy or maintain: S3 files and prerenders read client-side, with WASM and DuckDB | [#934](https://github.com/depictio/depictio/issues/934) |
 | :material-filter-multiple-outline: **Journeys** | Named paths through tabs. The two halves of this idea already shipped: filters promoted to dashboard scope in [v1.6.0](../features/dashboards.md#persistent-sections), and [funnel filtering](../features/dashboards.md#funnel-filtering) in v1.7.0 | [#756](https://github.com/depictio/depictio/pull/756) · [#690](https://github.com/depictio/depictio/issues/690) · [#691](https://github.com/depictio/depictio/issues/691) |
-| :material-magic-staff: **Auto-compose from a run** | Point Depictio at a pipeline output directory and get a dashboard, no template chosen by hand (nf-core + Snakemake) | [#811](https://github.com/depictio/depictio/pull/811) · [#734](https://github.com/depictio/depictio/issues/734) · [#843](https://github.com/depictio/depictio/issues/843) |
+| :material-magic-staff: **Auto-compose from a run** | Point Depictio at a pipeline output directory and get a dashboard, no template chosen by hand (nf-core + Snakemake). Half of it shipped: [reading a run directory](../usage/projects/templates.md#pipeline-id) to identify its pipeline and pick a bundled template landed in v1.10.0. What is left is composing a dashboard when no template matches | [#811](https://github.com/depictio/depictio/pull/811) · [#734](https://github.com/depictio/depictio/issues/734) · [#843](https://github.com/depictio/depictio/issues/843) |
 | :material-file-document-edit-outline: **Project → template via the UI** | Turn a working project and its dashboards into a reusable template without touching YAML | [#861](https://github.com/depictio/depictio/issues/861) |
 | :material-flask-outline: **Citable science** | DOI-backed snapshots per dashboard version, sample-to-viz provenance via [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/), static export to [Quarto](https://quarto.org/). Nothing is open for it yet; [#931](https://github.com/depictio/depictio/issues/931) is the nearest neighbour, surfacing pipeline and filtering provenance in a dashboard | [#931](https://github.com/depictio/depictio/issues/931) |
 | :material-robot-outline: **AI-assisted analysis** | Describe the analysis and get a proposed layout; anomaly detection, narration, and an MCP server for AI agents | [#844](https://github.com/depictio/depictio/issues/844) · [#79](https://github.com/depictio/depictio/issues/79) |

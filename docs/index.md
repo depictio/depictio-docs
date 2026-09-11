@@ -323,7 +323,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/></svg><span>Ingest</span></span>
         <h3>Read where your data lives</h3>
-        <p>Point <code>depictio-cli</code> at a finished run, on your laptop or on the cluster where it landed, and it scans the output in place, pushing only the aggregated results, never the raw files. Smaller collections can be added straight from the browser instead. Either way the ingestion report says what was found, what was missing, and the parameters the pipeline ran with.</p>
+        <p>Point <code>depictio-cli</code> at a finished run, on your laptop or on the cluster where it landed, and it scans the output in place, pushing only the aggregated results, never the raw files. Or skip the command entirely: a Nextflow pipeline can <a href="depictio-cli/nextflow-trigger/">run that ingestion itself</a> when it completes. Smaller collections can be added straight from the browser instead. Either way the ingestion report says what was found, what was missing, and the parameters the pipeline ran with.</p>
         <a class="feature-link" href="depictio-cli/usage/">Ingest with the CLI &rarr;</a>
       </div>
     </article>
@@ -557,7 +557,7 @@ hide:
         <span class="feature-kicker"><img class="feature-kicker-logo" src="images/logo/tools_catalog_icon.webp" alt="" aria-hidden="true"><span>Tools catalog</span></span>
         <h3>Add your tool without writing YAML</h3>
         <p>And the shelf is yours to stock. Drop one output file, bind its columns in Depictio's own component builder, and Tool Studio writes the catalog entry and opens the pull request for you, so the next person picks what you designed.</p>
-        <a class="feature-link" href="developer/tool-studio/">Open Tool Studio &rarr;</a>
+        <a class="feature-link" href="https://depictio.github.io/depictio-tool-studio/" target="_blank" rel="noopener">Open Tool Studio &rarr;</a>
       </div>
     </article>
 
@@ -602,7 +602,7 @@ hide:
         <span class="catalog-landing-link">See the picker &rarr;</span>
       </a>
 
-      <a href="developer/tool-studio/" class="catalog-landing-card">
+      <a href="https://depictio.github.io/depictio-tool-studio/" class="catalog-landing-card" target="_blank" rel="noopener">
         <div class="catalog-landing-icon" style="background: var(--depictio-pink);">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path d="M21.71,20.29L20.29,21.71A1,1 0 0,1 18.88,21.71L7,9.85A3.81,3.81 0 0,1 6,10A4,4 0 0,1 2,6C2,5.6 2.07,5.21 2.21,4.84L4.93,7.56L5.5,7C5.75,6.75 6.16,6.75 6.41,7L7,7.56L9.71,4.84C9.35,4.7 8.96,4.63 8.56,4.63A4,4 0 0,1 12.56,0.63C12.96,0.63 13.35,0.7 13.72,0.84L11,3.56L13.72,6.28L16.44,3.56C16.58,3.93 16.65,4.32 16.65,4.72A4,4 0 0,1 12.65,8.72L21.71,18.88A1,1 0 0,1 21.71,20.29M2.29,18.88L11.06,10.11L12.88,11.93L4.12,20.71A1,1 0 0,1 2.71,20.71L2.29,20.29A1,1 0 0,1 2.29,18.88Z"/>

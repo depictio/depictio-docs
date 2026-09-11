@@ -98,6 +98,27 @@ The recipe Python code stays generic — path resolution happens via variable su
 | `--skip-dashboard-import` | `flag` | no | Skip automatic dashboard import |
 | `--project-name` | `string` | no | Custom project name |
 
+### Choosing a template without naming one <small>(v1.10.0+)</small> { #pipeline-id }
+
+You do not type this flag. `--pipeline-id nf-core/ampliseq/2.16.0` names the
+*pipeline* rather than a Depictio template, and the CLI resolves the bundled
+template from it. It exists so an automated trigger can forward what its engine
+reported on every run: it is ignored whenever `--template` or
+`--project-config-path` is given, so it never collides with your own choice. This
+is what lets the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) work
+with no template configured anywhere.
+
+An unmatched pipeline id is an error, not a fallback. Only the version segment is
+flexible: `latest`, or no version at all, takes the newest template shipped for
+that pipeline.
+
+When nothing is passed at all, the run directory answers on its own: nf-core
+writes `pipeline_info/software_versions.yml`, and reading it gives the pipeline,
+its version, the engine version and the tools that executed. That path does
+tolerate a version gap, taking the newest template that is not newer than the
+run, because a newer template describes outputs the run never wrote. The
+provenance is recorded on the workflow either way.
+
 ---
 
 ## Resolution Workflow

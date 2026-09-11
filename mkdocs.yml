@@ -77,6 +77,9 @@ extra_css:
 extra_javascript:
   - javascripts/triangular-animation.js
   - javascripts/catalog-fullscreen.js
+  - javascripts/template-version.js
+  - javascripts/doc-sections.js
+  - javascripts/template-catalog.js
 
 # Markdown Extensions
 markdown_extensions:
@@ -108,7 +111,8 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path:
         - docs
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.inlinehilite
   - pymdownx.superfences:
       custom_fences:
@@ -234,6 +238,7 @@ nav:
       - CLI:
           - depictio-cli/index.md
           - Usage: depictio-cli/usage.md
+          - Nextflow trigger: depictio-cli/nextflow-trigger.md
           - Minimal YAML config: depictio-cli/minimal_config.md
       - Administration:
           - usage/administration/index.md
