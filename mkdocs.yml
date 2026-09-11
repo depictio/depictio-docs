@@ -283,6 +283,7 @@ nav:
           - funcscan: pipeline-templates/nf-core/funcscan.md
           - airrflow: pipeline-templates/nf-core/airrflow.md
           - rnafusion: pipeline-templates/nf-core/rnafusion.md
+          - rnaseq: pipeline-templates/nf-core/rnaseq.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md
