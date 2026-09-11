@@ -137,6 +137,26 @@ At the bottom of the sidebar, you will find:
 - You can access workflows and data collections recursively within each project
 - Each entity allows you to view configuration details and preview data
 
+### <span style="color: #45B8AC;">:material-link-variant:</span> Creating a project from a manifest { #creating-a-project-from-a-manifest }
+
+**Create project** offers three tabs: **Create New**, **Import** and **From
+Manifest**. The third builds a project from a
+[Data Manifest](../projects/remote-data.md#the-data-manifest-contract) hosted at
+a URL, with no CLI involved, in three steps:
+
+1. **Source**: paste the **Manifest URL**, pick a **Template** among the
+   manifest-capable ones, and optionally give the project a name and values for
+   the template's extra variables.
+2. **Preview**: a dry run of the plan. It shows how many manifest entries each
+   data collection will receive, which manifest types no collection consumes,
+   which optional collections were dropped because the manifest has no rows of
+   their type, and which dashboards will be imported. Nothing is created yet.
+3. **Create**: the data is fetched by the server and ingested, the template's
+   dashboards are imported, and you land on the first of them.
+
+The same flow is available to scripts as `POST /projects/from_manifest`; see
+[Remote data and manifests](../projects/remote-data.md#creating-a-project-from-a-manifest).
+
 ## <span style="color: #8BC34A;">:material-account:</span> User Information (/profile)
 
 You can access your user profile by clicking on the avatar icon in the bottom left corner of the sidebar.
@@ -203,6 +223,29 @@ dashboard's settings drawer <small>(v1.6.0+)</small>.
         <img src="../../../images/react/page_project_detail.png" width="600">
     </a>
 </div>
+
+Three controls on this page deal with data that is not on the server's own
+disk; the mechanisms are described on
+[Remote data and manifests](../projects/remote-data.md).
+
+- **Remote URL** in **Create Data Collection**: the *Table* tab offers
+  **Upload a file** or **Remote URL**. With the latter, paste an `https://` or
+  `s3://` file URL; the server fetches it, so the file never travels through
+  the browser, and a private bucket is read with the project's storage
+  credentials.
+- **Storage** panel, below the links section: project owners attach
+  S3-compatible credentials (endpoint URL, bucket, region, access key ID,
+  secret access key) so remote and manifest collections can read a private
+  bucket, then **Test connection**. A badge reads *Secret set* or *No secret*;
+  the secret itself is never displayed again, and leaving it empty on an edit
+  keeps the stored one. **Remove** deletes the configuration. Other members see
+  the panel but cannot edit it.
+- **Export as template** in the header: packages the project and its dashboards
+  into a template bundle (zip) after asking for a template ID, a version, an
+  optional description and an optional data root. The button is enabled for
+  users who can edit the project and shown disabled otherwise, with an
+  *Owner permission required* hint. See
+  [Export a project as a template](../projects/templates.md#export-a-project-as-a-template).
 
 ### <span style="color: #45B8AC;">:material-monitor-eye:</span> Dashboard viewer (/dashboard/{id})
 

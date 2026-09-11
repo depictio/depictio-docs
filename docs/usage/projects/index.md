@@ -15,3 +15,4 @@ Everything you need to configure and manage Depictio projects.
 | [Full Reference](reference.md) | Complete YAML field reference |
 | [Recipes](recipes.md) | Data transformation recipes for bioinformatics pipelines |
 | [Templates](templates.md) | One-command project setup for nf-core pipelines |
+| [Remote data and manifests](remote-data.md) | Bind a data collection to a URL, an S3 prefix or a Data Manifest; refresh and share |

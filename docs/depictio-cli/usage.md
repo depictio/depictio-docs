@@ -15,6 +15,8 @@
   - [📋 Config Commands](#config-commands)
   - [📊 Data Commands](#data-commands)
   - [📈 Dashboard Commands](#dashboard-commands)
+  - [🗒️ Manifest Commands](#manifest-commands)
+  - [📦 Template Commands](#template-commands)
   - [💾 Backup Commands](#backup-commands)
   - [🔄 Migrate Commands](#migrate-commands)
 - [🛠️ Common Use Cases](#common-use-cases)
@@ -43,6 +45,8 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `dashboard validate`                   | Validate dashboard YAML file locally    | All users      |
 | `dashboard import`                     | Import dashboard YAML to server         | All users      |
 | `dashboard export`                     | Export dashboard to YAML file           | All users      |
+| `manifest from-table`                  | Pivot a sample table into a Data Manifest | All users    |
+| `template export`                      | Export a project as a template bundle   | All users      |
 | `backup create`                        | Create system backup                    | **Admin only** |
 | `backup list`                          | List available backups                  | **Admin only** |
 | `backup validate`                      | Validate backup against models          | **Admin only** |
@@ -125,8 +129,10 @@ depictio-cli run --project-config-path ./config.yaml
 
     | Parameter | Type | Default | Description |
     |-----------|------|---------|-------------|
-    | `--template` | `string` | `null` | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`: or just `nf-core/ampliseq`: to resolve the newest shipped version (v1.5.2+) |
-    | `--data-root` | `path` | `null` | Root directory substituted for `{DATA_ROOT}` in template. Required when `--template` is set. |
+    | `--template` | `string` | `null` | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`: or just `nf-core/ampliseq`: to resolve the newest shipped version (v1.5.2+). Also accepts a path to a template directory or YAML file, which is how an [exported bundle](#template-export) is run. |
+    | `--data-root` | `path` | `null` | Root directory substituted for `{DATA_ROOT}` in template. Required when `--template` is set, unless `--manifest` or `--bind` is given instead. |
+    | `--manifest` | `url` or `path` | `null` | Data Manifest (`https://` URL or local file) listing `{id, type, url[, run]}` entries. Sets the `MANIFEST_URL` template variable; mutually exclusive with `--data-root`. |
+    | `--bind` | `TAG=LOCATION` | `[]` | Point one data collection at where its data is. Repeatable. The scan mode is inferred from the location: a local directory or glob scans locally, a local file is a single file, `https://` is a remote file, an `s3://` prefix or glob is listed remotely. Works with `--template` and with `--project-config-path`, which is patched in memory only. See [Remote data and manifests](../usage/projects/remote-data.md#bind-a-data-collection-to-a-location). |
     | `--project-name` | `string` | `null` | Custom project name (auto-generated from template if omitted) |
     | `--dashboard-name` | `string` | `null` | Override the template's main dashboard title at import (the template file is left untouched). |
     | `--dashboard` | `path` | `null` | Override default dashboard(s) to import. Repeatable. |
@@ -218,6 +224,26 @@ depictio-cli run --project-config-path ./config.yaml
 depictio-cli run \
   --template nf-core/ampliseq/latest \
   --data-root /data/my_ampliseq_run
+```
+
+=== "Manifest (remote data)"
+
+```bash
+# A manifest-driven template, no local data root
+depictio-cli run \
+  --template generic/manifest-tables/1 \
+  --manifest https://data.example.org/run42/manifest.json
+```
+
+=== "Bind (any location)"
+
+```bash
+# Point each data collection at its own location;
+# the scan mode follows the shape of the location
+depictio-cli run \
+  --template ./my-lab/rnaseq-qc/1 \
+  --bind samples=s3://my-bucket/run42/*.samples.csv \
+  --bind metadata=./metadata.tsv
 ```
 
 === "Development"
@@ -668,6 +694,91 @@ depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admi
 ---
 
 For more information about dashboard YAML format and workflows, see [Dashboard YAML Management](../features/yaml-sync.md).
+
+---
+
+### 🗒️ Manifest Commands
+
+<!-- prettier-ignore -->
+!!! info "Command Group: `depictio-cli manifest`"
+    Author Data Manifests, the explicit file lists behind `manifest`-mode data collections. See [Remote data and manifests](../usage/projects/remote-data.md#the-data-manifest-contract) for the contract.
+
+#### `manifest from-table`
+
+Pivot a wide sample table into a manifest. An nf-core samplesheet puts one
+*column* per file role; a manifest puts one *row* per file with the role in
+`type`, so each file column of the table becomes one manifest type, and one
+data collection.
+
+```bash
+depictio-cli manifest from-table <table> [OPTIONS]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `table` | `path` | **required** | Wide table to pivot (CSV or TSV; the delimiter follows the extension, then the header) |
+| `--out` / `-o` | `path` | `manifest.json` | Output manifest, `.json` or `.csv` |
+| `--id-col` | `string` | auto | Entity id column. Auto-detected from conventional names (`sample`, `id`, `name`, ...), else the first column |
+| `--file-cols` | `string` | auto | Columns holding file locations. Repeatable. Auto-detected as the columns whose populated values all look like files |
+| `--run-col` | `string` | `null` | Column to use as the manifest `run` grouping |
+| `--base-url` | `string` | `null` | Prefix joined to relative paths, e.g. `s3://my-bucket/run42`. Required when the table holds local paths: a manifest entry must be a remote URL |
+
+```bash
+depictio-cli manifest from-table samplesheet.csv \
+  --id-col sample \
+  --base-url s3://my-bucket/run42 \
+  -o manifest.json
+```
+
+The command prints the detected id and file columns, the number of entries
+written, and the manifest types produced. A blank cell is an absent file, not
+an error. Local paths with no `--base-url` stop the command; if the files
+already sit under one S3 prefix, `depictio-cli run --bind TAG=s3://bucket/prefix/*.csv`
+needs no manifest at all.
+
+---
+
+### 📦 Template Commands
+
+<!-- prettier-ignore -->
+!!! info "Command Group: `depictio-cli template`"
+    Template authoring. The inverse of `depictio-cli run --template`: freeze an existing project and its dashboards into a reusable bundle. See [Export a project as a template](../usage/projects/templates.md#export-a-project-as-a-template).
+
+#### `template export`
+
+Export a project and its dashboards as a template bundle. The server builds
+the bundle (runtime fields stripped, data bindings re-parameterised, dashboards
+exported by tag, round-trip checked); the CLI unpacks the returned archive into
+a `<template-id>/` directory.
+
+```bash
+depictio-cli template export <project_id> --template-id <id> --config <cli-config> [OPTIONS]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `project_id` | `string` | **required** | Project ID to export |
+| `--template-id` / `-t` | `string` | **required** | Template id, e.g. `my-lab/rnaseq-qc/1`; becomes the bundle's directory layout |
+| `--config` / `-c` | `string` | **required** | Path to the CLI config file |
+| `--output-dir` / `-o` | `path` | `.` | Directory to unpack into; the bundle lands in `<output-dir>/<template-id>/` |
+| `--version` | `string` | `1.0.0` | Template version |
+| `--description` | `string` | `null` | Template description |
+| `--data-root` | `string` | `null` | Local path prefix to re-parameterise as `{DATA_ROOT}`. Defaults to the data root recorded when the project itself came from a template; leave empty for manifest-driven projects |
+| `--api` | `string` | from config | API base URL |
+
+```bash
+depictio-cli template export 6824cb3b89d2b72169309737 \
+  --template-id my-lab/rnaseq-qc/1 \
+  --config ~/.depictio/admin_config.yaml \
+  -o depictio/projects
+```
+
+The result is `depictio/projects/my-lab/rnaseq-qc/1/` holding `template.yaml`
+and `dashboards/*.yaml`. Dropped into `depictio/projects/` (or any template
+search path) it is auto-discovered; anyone can also run it in place with
+`depictio-cli run --template ./my-lab/rnaseq-qc/1 --bind ...`. Archive members
+that would land outside the target directory are refused before anything is
+written.
 
 ---
 

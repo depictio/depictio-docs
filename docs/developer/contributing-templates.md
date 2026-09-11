@@ -147,6 +147,101 @@ The fastest path is to build interactively and export:
 2. Build the dashboard in the Depictio UI.
 3. **Dashboard settings → Export YAML**, and save it as `dashboards/main.yaml`.
 
+### Shortcut: export the whole bundle
+
+If the project already exists on an instance, built by hand or from an earlier
+run, `depictio-cli template export` writes the entire bundle in one go:
+
+```bash
+depictio-cli template export <project_id> \
+  --template-id <pipeline>/<version> \
+  --config ~/.depictio/admin_config.yaml \
+  --data-root /path/to/run \
+  -o depictio/projects
+```
+
+It strips runtime state, rewrites the data root as `{DATA_ROOT}` (and any
+stored manifest URL as `{MANIFEST_URL}`), exports every dashboard as tag-based
+YAML, synthesises the `template:` block, and refuses to emit a bundle that
+would not re-instantiate. What comes out is a valid starting point; you still
+edit the description, declare extra variables and conditionals, and add
+recipes by hand. See
+[Export a project as a template](../usage/projects/templates.md#export-a-project-as-a-template).
+
+## Manifest-driven templates { #manifest-driven-templates }
+
+A template does not have to expect a local directory tree. Declare a
+`MANIFEST_URL` variable and give each data collection a `manifest` scan whose
+`manifest_type` names the manifest `type` it consumes, by convention its own
+tag:
+
+```yaml
+template:
+  template_id: "<org>/<name>/<version>"
+  description: "Short description for the template index"
+  version: "1.0.0"
+  variables:
+    - name: "MANIFEST_URL"
+      description: "URL of the Data Manifest (JSON or CSV) listing {id, type, url[, run]} entries"
+      required: true
+  dashboards:
+    - "dashboards/main.yaml"
+
+name: "My Manifest Analysis"
+project_type: "basic"
+workflows:
+  - name: "manifest"
+    engine: { name: "python" }
+    data_location:
+      structure: "flat"
+      locations: ["{MANIFEST_URL}"]
+    data_collections:
+      - data_collection_tag: "samples"
+        config:
+          type: "Table"
+          metatype: "Metadata"
+          scan:
+            mode: manifest
+            scan_parameters:
+              manifest_url: "{MANIFEST_URL}"
+              manifest_type: "samples"
+          dc_specific_properties:
+            format: "CSV"
+      - data_collection_tag: "measurements"
+        optional: true
+        config:
+          type: "Table"
+          scan:
+            mode: manifest
+            scan_parameters:
+              manifest_url: "{MANIFEST_URL}"
+              manifest_type: "measurements"
+          dc_specific_properties:
+            format: "CSV"
+```
+
+Such a template is instantiated with `--manifest <url or path>` on the CLI, or
+from the **From Manifest** tab of the web UI (`POST /projects/from_manifest`).
+The tab only lists templates in which at least one data collection uses a
+`manifest` scan. Two things follow from the
+[manifest contract](../usage/projects/remote-data.md#the-data-manifest-contract):
+
+- Mark `optional: true` the collections the manifest may not cover. When the
+  manifest has no rows of that `type`, the collection and the links referencing
+  it are pruned and the ingestion report records why. A *required* collection
+  with no rows fails the run instead, naming the missing type.
+- Every collection built from the manifest carries the `depictio_manifest_id`
+  column, so links between them can use the `direct` resolver on that column
+  with no mapping.
+
+There is no `{DATA_ROOT}` to validate against, so `expected_files` does not
+apply; the preview step of the UI, or `dry_run: true` on the endpoint, plays
+that role by reporting the coverage of the manifest against the template.
+
+Do not over-think where the data must live: whoever instantiates the template
+can override any collection's location with `--bind TAG=LOCATION`, whatever
+scan mode the template declares.
+
 ## Step 5 — Test end-to-end & open a PR
 
 ```bash
@@ -158,7 +253,7 @@ Check before submitting:
 - [ ] `template_id` follows `<org>/<pipeline>/<version>`.
 - [ ] Every recipe has a docstring and a typed `EXPECTED_SCHEMA`; `depictio-cli dev recipe run` passes for each.
 - [ ] Dashboard YAML is committed.
-- [ ] No hardcoded absolute paths — only `{DATA_ROOT}` / template variables.
+- [ ] No hardcoded absolute paths or URLs: only `{DATA_ROOT}`, `{MANIFEST_URL}` and other template variables.
 - [ ] A full `depictio-cli run --template …` completes without error and dashboards render with the template badge.
 
 In the PR, include: the pipeline name + docs link, the version tested, the

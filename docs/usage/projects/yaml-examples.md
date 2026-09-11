@@ -345,6 +345,9 @@ data_collections:
                                   # Options:
                                   # - "single": Single file per project/run
                                   # - "recursive": Pattern-based file discovery
+                                  # - "url": One remote file (s3:// or https://)
+                                  # - "s3_prefix": Objects under an s3:// prefix matching a glob
+                                  # - "manifest": Files listed in a Data Manifest
 
         scan_parameters:        # Required: Mode-specific parameters
           # For mode: "single"
@@ -358,6 +361,23 @@ data_collections:
             wildcards: [...]   # Optional: Named capture groups for metadata extraction
           max_depth: int | null # Optional: Maximum directory depth to search
           ignore: [string] | null  # Optional: Patterns to exclude from search
+
+          # For mode: "url"
+          url: string           # Required: Absolute s3:// or https:// URL
+
+          # For mode: "s3_prefix"
+          prefix: string        # Required: s3:// prefix, bucket included
+          pattern: string       # Optional: Glob on the key relative to the prefix (default "*")
+          id_regex: string | null  # Optional: One capture group; the capture becomes depictio_manifest_id
+          max_files: int        # Optional: Listing ceiling (default 10000)
+
+          # For mode: "manifest"
+          manifest_url: string  # Required: Manifest URL (a local path in CLI context)
+          manifest_type: string # Required: Manifest `type` this collection consumes
+          id_field: string      # Optional: Column overrides for non-canonical manifests
+          url_field: string     # (defaults: "id", "url", "type", "run")
+          type_field: string
+          run_field: string | null
 
       dc_specific_properties:   # Required: Type-specific configuration
         # See "Table Configuration" section for details
@@ -650,6 +670,90 @@ scan:
 # run_001/star_salmon/sample_A/quant.sf
 # run_001/star_salmon/sample_B/quant.sf
 # run_002/star_salmon/sample_C/quant.sf
+```
+
+#### Remote Modes
+
+Three modes fetch data from where it already is; the server performs the
+fetch and the result is materialised like any scanned file. The full parameter
+tables are in the [reference](reference.md#remote-scan-modes), and
+[Remote data and manifests](remote-data.md) explains when to use which.
+
+An S3 prefix, with the glob applied to the key relative to the prefix and the
+`*` captured as the cross-DC join key:
+
+```yaml
+workflows:
+  - name: "run42"
+    engine:
+      name: "python"
+    data_location:
+      structure: "flat"
+      locations:
+        - "s3://my-bucket/run42/"
+    data_collections:
+      - data_collection_tag: "samples"
+        config:
+          type: "Table"
+          metatype: "Aggregate"
+          scan:
+            mode: s3_prefix
+            scan_parameters:
+              prefix: "s3://my-bucket/run42/"
+              pattern: "*.samples.csv"
+              id_regex: "^([^/]+?)\\.samples\\.csv$"
+          dc_specific_properties:
+            format: "CSV"
+
+# Lists s3://my-bucket/run42/ and keeps keys ending in .samples.csv:
+# sample_A.samples.csv  -> depictio_manifest_id = sample_A
+# sample_B.samples.csv  -> depictio_manifest_id = sample_B
+```
+
+For a single remote file, `mode: url` with `url: "https://host/path/file.csv"`
+(or an `s3://bucket/key`) replaces the block above.
+
+A manifest-driven project, where each collection consumes the manifest entries
+of one `type` and the manifest `id` becomes the join key between them:
+
+```yaml
+workflows:
+  - name: "manifest"
+    engine:
+      name: "python"
+    data_location:
+      structure: "flat"
+      locations:
+        - "https://data.example.org/run42/manifest.json"
+    data_collections:
+      - data_collection_tag: "samples"
+        config:
+          type: "Table"
+          metatype: "Metadata"
+          scan:
+            mode: manifest
+            scan_parameters:
+              manifest_url: "https://data.example.org/run42/manifest.json"
+              manifest_type: "samples"
+          dc_specific_properties:
+            format: "CSV"
+      - data_collection_tag: "measurements"
+        optional: true      # dropped when the manifest has no "measurements" rows
+        config:
+          type: "Table"
+          metatype: "Aggregate"
+          scan:
+            mode: manifest
+            scan_parameters:
+              manifest_url: "https://data.example.org/run42/manifest.json"
+              manifest_type: "measurements"
+          dc_specific_properties:
+            format: "CSV"
+
+# manifest.json (or .csv) lists one row per file:
+#   id,type,url,run
+#   S1,samples,https://data.example.org/run42/S1.samples.csv,run42
+#   S1,measurements,https://data.example.org/run42/S1.measurements.csv,run42
 ```
 
 ### Cross-DC Links (Interactive Filtering)
@@ -1368,6 +1472,7 @@ For full template reference, see [Templates](templates.md). For recipe documenta
 - **[Configuration Reference](reference.md)** - Complete YAML reference documentation
 - **[CLI Reference](../../depictio-cli/usage.md)** - Complete CLI command documentation
 - **[Templates](templates.md)** - Pre-packaged project configurations
+- **[Remote data and manifests](remote-data.md)** - URL, S3 prefix and manifest scan modes
 - **[Recipes](recipes.md)** - Data transformation recipes
 - **[Dashboard Creation](../guides/dashboard_creation.md)** - Building interactive dashboards
 - **[API Documentation](../../api/reference.md)** - Programmatic project management
