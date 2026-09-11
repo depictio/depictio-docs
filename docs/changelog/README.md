@@ -15,6 +15,27 @@ hide:
     to canonical. The 0.13.x patch series prepared the data-fetch and
     bundled-seed paths for this cutover.
 
+## **[v1.9.2](https://github.com/depictio/depictio/releases/tag/v1.9.2)** (September 1, 2026)
+
+!!! success "Patch: MultiQC reports and ampliseq tiles on full-size runs"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.9.2
+ghcr.io/depictio/depictio-viewer:1.9.2
+ghcr.io/depictio/depictio-worker:1.9.2
+```
+
+### **🐛 Bug Fixes**
+
+* **One bad plot anchor no longer erases a whole MultiQC section**: extraction walked the report per section and let a single unparseable anchor take its neighbours with it ([#1015](https://github.com/depictio/depictio/pull/1015), [d39746dd](https://github.com/depictio/depictio/commit/d39746dd), [84711ba3](https://github.com/depictio/depictio/commit/84711ba3)).
+* **The ampliseq phylogeny and taxonomy tiles work on a full-size run**: the seeded demo bundle is small enough to hide the file-layout assumptions a real run breaks ([#1014](https://github.com/depictio/depictio/pull/1014), [e228f18b](https://github.com/depictio/depictio/commit/e228f18b), [00b5c1c4](https://github.com/depictio/depictio/commit/00b5c1c4)).
+* **The catalog-preview bundle ships in the API image**: it was built but not copied, so the preview served nothing ([#1019](https://github.com/depictio/depictio/pull/1019), [f238e5a7](https://github.com/depictio/depictio/commit/f238e5a7)).
+* **Backup-restore e2e runs serialized**: two specs restoring concurrently made each other's assertions non-deterministic ([#1015](https://github.com/depictio/depictio/pull/1015), [bb3a66f4](https://github.com/depictio/depictio/commit/bb3a66f4)).
+
+---
+
 ## **[v1.9.1](https://github.com/depictio/depictio/releases/tag/v1.9.1)** (August 30, 2026)
 
 !!! success "Patch: seeded dashboards reworked, and grouping in advanced viz"
