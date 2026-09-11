@@ -49,55 +49,6 @@ ghcr.io/depictio/depictio-cli:1.10.0
 
 ---
 
-## **[v1.9.2](https://github.com/depictio/depictio/releases/tag/v1.9.2)** (September 1, 2026)
-
-!!! success "Patch: MultiQC reports and ampliseq tiles on full-size runs"
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio-api:1.9.2
-ghcr.io/depictio/depictio-viewer:1.9.2
-ghcr.io/depictio/depictio-worker:1.9.2
-```
-
-### **🐛 Bug Fixes**
-
-* **One bad plot anchor no longer erases a whole MultiQC section**: extraction walked the report per section and let a single unparseable anchor take its neighbours with it ([#1015](https://github.com/depictio/depictio/pull/1015), [d39746dd](https://github.com/depictio/depictio/commit/d39746dd), [84711ba3](https://github.com/depictio/depictio/commit/84711ba3)).
-* **The ampliseq phylogeny and taxonomy tiles work on a full-size run**: the seeded demo bundle is small enough to hide the file-layout assumptions a real run breaks ([#1014](https://github.com/depictio/depictio/pull/1014), [e228f18b](https://github.com/depictio/depictio/commit/e228f18b), [00b5c1c4](https://github.com/depictio/depictio/commit/00b5c1c4)).
-* **The catalog-preview bundle ships in the API image**: it was built but not copied, so the preview served nothing ([#1019](https://github.com/depictio/depictio/pull/1019), [f238e5a7](https://github.com/depictio/depictio/commit/f238e5a7)).
-* **Backup-restore e2e runs serialized**: two specs restoring concurrently made each other's assertions non-deterministic ([#1015](https://github.com/depictio/depictio/pull/1015), [bb3a66f4](https://github.com/depictio/depictio/commit/bb3a66f4)).
-
----
-
-## **[v1.9.1](https://github.com/depictio/depictio/releases/tag/v1.9.1)** (August 30, 2026)
-
-!!! success "Patch: seeded dashboards reworked, and grouping in advanced viz"
-
-### Docker Images
-
-```bash
-ghcr.io/depictio/depictio-api:1.9.1
-ghcr.io/depictio/depictio-viewer:1.9.1
-ghcr.io/depictio/depictio-worker:1.9.1
-```
-
-### **✨ New Features**
-
-* **Analysis grouping reaches advanced visualizations**: a split is expressed as a list of filter constraints appended to the dashboard's own, so each panel goes through the ordinary fetch path and cross-DC link resolution still applies. A column with more values than the grid can hold becomes splittable by being narrowed first, and a value keeps its tint however far you narrow. See [Interactive Selection Filtering](../features/interactive-selection-filtering.md#analysis-panel) ([#1013](https://github.com/depictio/depictio/pull/1013), [c617b62e](https://github.com/depictio/depictio/commit/c617b62e)).
-* **Sign in and land back on the shared link** you were sent, instead of on the dashboard list ([#1012](https://github.com/depictio/depictio/pull/1012), [2310bdf1](https://github.com/depictio/depictio/commit/2310bdf1)).
-
-### **🚀 Improvements**
-
-* **Every seeded dashboard reworked into a readable funnel**: the bundled iris, penguins and pipeline demos now lead with the question each tab answers rather than with whatever the data made easy to plot ([#1011](https://github.com/depictio/depictio/pull/1011), [e4dbdaa0](https://github.com/depictio/depictio/commit/e4dbdaa0), [ed011dc2](https://github.com/depictio/depictio/commit/ed011dc2)).
-
-### **🐛 Bug Fixes**
-
-* **Seeded text tiles size to their prose** instead of clipping it, and the docked map fit is sent to the subplot Plotly actually drew ([#1012](https://github.com/depictio/depictio/pull/1012), [ed011dc2](https://github.com/depictio/depictio/commit/ed011dc2)).
-* **Tool Studio's footer takes the full width of the bar**, with the deploy commit in parentheses on the version line ([#1010](https://github.com/depictio/depictio/pull/1010), [23c8babb](https://github.com/depictio/depictio/commit/23c8babb), [35d32849](https://github.com/depictio/depictio/commit/35d32849)).
-
----
-
 ## **[v1.9.0](https://github.com/depictio/depictio/releases/tag/v1.9.0)** (August 28, 2026)
 
 !!! success "Minor: backups you can drive from the UI, and a catalog you can pick from and contribute to"
