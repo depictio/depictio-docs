@@ -125,6 +125,20 @@ depictio-cli run \
     </div>
   </a>
 
+  <a class="template-card" href="nf-core/rnafusion/" data-tpl-name="nf-core/rnafusion" data-tpl-status="experimental" data-tpl-version="4.1.3" data-tpl-keywords="fusion gene fusion rnaseq arriba starfusion fusioncatcher fusioninspector sashimi splicing cancer">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/rnafusion/master/docs/images/nf-core-rnafusion_logo_dark.png" alt="nf-core/rnafusion">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/rnafusion/master/docs/images/nf-core-rnafusion_logo_light.png" alt="nf-core/rnafusion">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Gene-fusion detection: caller consensus, per-caller evidence, in-silico validation and splice-junction analysis.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v4.1.3</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 <div class="tpl-catalog-table" data-tpl-table hidden></div>
