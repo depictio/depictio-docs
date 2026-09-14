@@ -1,0 +1,361 @@
+/* Ask-the-docs widget.
+ *
+ * No literal colour values: everything resolves through Material's own custom
+ * properties, so the widget follows the palette in both schemes and follows any
+ * future change to it.
+ *
+ * One trap worth knowing: this site's palette is `primary: white` (default) and
+ * `primary: black` (slate), so --md-primary-fg-color is white in light mode and
+ * black in dark. Using it as a button background gives an invisible FAB. The
+ * accent below is --md-accent-fg-color, which is visible in both. */
+
+/* Declared on the scheme carrier as well as :root. Material puts
+   data-md-color-scheme on <body>, so an alias resolved only at :root would be
+   substituted against the light palette once and then inherit that value down —
+   giving a white panel on a dark page. */
+:root,
+[data-md-color-scheme] {
+  /* The seven blades of the Depictio mark, read straight off
+     docs/images/logo/animated_favicon.svg. Defined here rather than in
+     extra.css only to keep this feature's diff self-contained; they belong in
+     extra.css once something else needs them. */
+  --depictio-yellow: #f1c547;
+  --depictio-orange: #ee9644;
+  --depictio-magenta: #c064d3;
+  --depictio-violet: #7d5dec;
+  --depictio-blue: #6279f0;
+  --depictio-cyan: #58b3cb;
+  --depictio-green: #a1d44d;
+
+  --ask-bg: var(--md-default-bg-color);
+  --ask-fg: var(--md-typeset-color);
+  --ask-muted: var(--md-default-fg-color--light);
+  --ask-line: var(--md-default-fg-color--lightest);
+  --ask-surface: var(--md-code-bg-color);
+
+  --ask-accent: var(--depictio-violet);
+  --ask-accent-fg: #fff;
+  --ask-glow: 125 93 236; /* --depictio-violet, for translucent shadows */
+  --ask-radius: 14px;
+}
+
+/* extra.css already reaches z-index 1002. */
+.askai-fab {
+  position: fixed;
+  z-index: 1050;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem 0.55rem 0.7rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--ask-accent);
+  color: var(--ask-accent-fg);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  cursor: pointer;
+  /* Tinted rather than neutral: a grey drop shadow under a saturated pill
+     reads as dirt. */
+  box-shadow: 0 2px 6px -1px rgb(var(--ask-glow) / 0.35),
+    0 8px 24px -8px rgb(var(--ask-glow) / 0.55);
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.askai-fab__icon {
+  display: inline-flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  /* A white disc so the multicoloured mark reads as itself, the way it does in
+     the header, rather than fighting the fill behind it. */
+  background: #fff;
+}
+
+.askai-fab__icon img {
+  width: 1.02rem;
+  height: 1.02rem;
+  display: block;
+  /* Optically centred, not box-centred. The mark has an empty wedge, so its
+     bounding box is symmetric while its ink is not: the alpha-weighted centroid
+     of a 400px render sits +5.6% / +2.8% off centre. Box-centring it therefore
+     looks low and left inside a circle. */
+  --ask-spin: 0deg;
+  transform: translate(-5.6%, -2.8%) rotate(var(--ask-spin));
+}
+
+.askai-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px -1px rgb(var(--ask-glow) / 0.4),
+    0 14px 30px -10px rgb(var(--ask-glow) / 0.65);
+}
+
+.askai-fab:focus-visible {
+  outline: 2px solid var(--ask-fg);
+  outline-offset: 3px;
+}
+
+/* It is a pinwheel, so it spins when the panel opens. Only the angle changes —
+   the optical-centring translate above is preserved. */
+.askai-fab__icon img {
+  transition: transform 300ms ease;
+}
+
+.askai-fab[aria-expanded='true'] .askai-fab__icon img {
+  --ask-spin: 180deg;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .askai-fab__icon img {
+    transition: none;
+  }
+
+  .askai-fab[aria-expanded='true'] .askai-fab__icon img {
+    --ask-spin: 0deg;
+  }
+}
+
+.askai-fab[hidden] {
+  display: none;
+}
+
+.askai-panel {
+  position: fixed;
+  z-index: 1051;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: calc(clamp(1rem, 3vw, 2rem) + 3.4rem);
+  width: min(380px, calc(100vw - 2rem));
+  max-height: min(70vh, 580px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--ask-line);
+  border-radius: var(--ask-radius);
+  background: var(--ask-bg);
+  color: var(--ask-fg);
+  box-shadow: var(--md-shadow-z3);
+  font-size: 0.72rem;
+}
+
+/* A hairline in the same accent along the top edge, so the panel is visibly
+   the same object as the button that opened it. */
+.askai-panel::before {
+  content: '';
+  display: block;
+  height: 3px;
+  flex: none;
+  background: var(--ask-accent);
+}
+
+/* Required: the rule above sets display:flex, which otherwise defeats [hidden]. */
+.askai-panel[hidden] {
+  display: none;
+}
+
+.askai-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid var(--ask-line);
+}
+
+.askai-panel__head h3 {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.askai-panel__close {
+  border: none;
+  background: none;
+  color: var(--ask-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+  padding: 0.2rem;
+}
+
+.askai-notice {
+  margin: 0;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--ask-line);
+  background: var(--ask-surface);
+  color: var(--ask-muted);
+  font-size: 0.66rem;
+}
+
+.askai-notice[hidden] {
+  display: none;
+}
+
+.askai-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.askai-msg {
+  max-width: 92%;
+  margin: 0;
+  padding: 0.5rem 0.7rem;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.askai-msg--bot {
+  align-self: flex-start;
+  background: var(--ask-surface);
+}
+
+.askai-msg--user {
+  align-self: flex-end;
+  background: var(--ask-accent);
+  color: var(--ask-accent-fg);
+}
+
+.askai-msg--err {
+  align-self: flex-start;
+  background: var(--ask-surface);
+  color: var(--md-typeset-del-color);
+}
+
+.askai-msg--typing {
+  align-self: flex-start;
+  color: var(--ask-muted);
+  font-style: italic;
+}
+
+.askai-msg code {
+  background: var(--md-code-bg-color);
+  color: var(--md-code-fg-color);
+  border-radius: 3px;
+  padding: 0 0.2em;
+  font-size: 0.9em;
+}
+
+.askai-code {
+  margin: 0.4rem 0 0;
+  padding: 0.5rem 0.6rem;
+  /* In slate the code background is close to the bubble it sits in, so the
+     block needs an edge to read as a block. */
+  border: 1px solid var(--ask-line);
+  border-radius: 8px;
+  background: var(--md-code-bg-color);
+  color: var(--md-code-fg-color);
+  overflow-x: auto;
+  font-size: 0.9em;
+  white-space: pre;
+}
+
+.askai-sources {
+  align-self: flex-start;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.askai-source {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--ask-line);
+  border-radius: 999px;
+  color: var(--md-typeset-a-color);
+  text-decoration: none;
+  font-size: 0.66rem;
+}
+
+.askai-source:hover {
+  border-color: var(--md-typeset-a-color);
+}
+
+.askai-form {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  border-top: 1px solid var(--ask-line);
+}
+
+.askai-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--ask-line);
+  border-radius: 8px;
+  background: var(--ask-bg);
+  color: var(--ask-fg);
+  font-size: 0.72rem;
+  font-family: inherit;
+}
+
+.askai-input:focus {
+  outline: none;
+  border-color: var(--ask-accent);
+}
+
+.askai-send {
+  flex: none;
+  width: 2rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--ask-accent);
+  color: var(--ask-accent-fg);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.askai-send:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.askai-quota {
+  margin: 0;
+  padding: 0 0.9rem 0.6rem;
+  color: var(--ask-muted);
+  font-size: 0.62rem;
+}
+
+/* Bottom sheet on phones. dvh rather than vh, so the on-screen keyboard does
+   not crop the input out of view on iOS. */
+@media screen and (max-width: 600px) {
+  .askai-fab__label {
+    display: none;
+  }
+
+  .askai-fab {
+    padding: 0.8rem;
+  }
+
+  .askai-panel {
+    inset: auto 0 0 0;
+    width: 100%;
+    max-height: 80dvh;
+    border-radius: var(--ask-radius) var(--ask-radius) 0 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .askai-fab {
+    transition: none;
+  }
+
+  .askai-fab:hover {
+    transform: none;
+  }
+}

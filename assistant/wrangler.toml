@@ -1,0 +1,59 @@
+name = "depictio-docs-ai"
+main = "src/worker.js"
+compatibility_date = "2026-07-01"
+workers_dev = true
+
+[observability]
+enabled = true
+
+# Tunables live here rather than in the source so changing one is a redeploy,
+# not a code change. Secrets never appear in this file — see README.md.
+[vars]
+DOCS_ORIGIN = "https://depictio.github.io"
+DOCS_BASE = "https://depictio.github.io/depictio-docs/stable/"
+# Shown in the widget's notice when a reader is on an older mike version.
+INDEX_VERSION = "stable"
+
+# OpenRouter model slug. Deliberately empty: pick it against OpenRouter's
+# current catalogue when the key is added, since slugs get deprecated. With no
+# value set, /ask returns a 502 rather than guessing.
+MODEL = ""
+EMBED_MODEL = "@cf/baai/bge-m3"
+
+TOP_K = "8"
+# Cosine similarity floor. Below this, the question is answered as "not
+# documented" without calling the model at all. START HERE WHEN TUNING — the
+# per-match scores in /report are logged precisely so this can be set from real
+# traffic instead of guessed.
+MIN_SCORE = "0.45"
+# Excerpts allowed from a single page, so one long reference page cannot fill
+# the whole context window.
+MAX_PER_PAGE = "3"
+
+DAILY_LIMIT = "20"
+GLOBAL_LIMIT = "400"
+MAX_TOKENS = "1200"
+MAX_INPUT = "400"
+MAX_SEC_LEN = "3000"
+
+[ai]
+binding = "AI"
+
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "depictio-docs"
+
+# `wrangler kv namespace create QUOTA` prints the id.
+[[kv_namespaces]]
+binding = "QUOTA"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# Per-IP burst control. Cheaper than KV — no write, no eventual consistency.
+# `period` accepts only 10 or 60.
+[[ratelimits]]
+name = "BURST"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 5
+  period = 60

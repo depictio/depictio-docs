@@ -1,0 +1,68 @@
+# What goes into the assistant's retrieval index.
+#
+# The index reflects one version of the docs — whatever `stable` points at. See
+# assistant/README.md for why indexing every mike version is not worth it.
+
+docs_dir: docs
+site_dir: site
+
+# Prefixes dropped wholesale.
+skip_prefixes:
+  # Announcements, not reference. Blog URLs are slugified by the blog plugin
+  # rather than derived from the path, so their anchors would need a second
+  # source of truth — and half of these are drafts with placeholder videos.
+  - blog/
+  - images/
+  # Snippet includes, pulled into the pages that use them.
+  - pipeline-templates/nf-core/_generated/
+
+skip_exact:
+  # Hand-written HTML landing page: one heading, on an empty <h1>. Nothing to
+  # cite. Replaced by the seed chunks below.
+  - index.md
+
+  # claude-mem activity logs that happen to live under docs/.
+  - changelog/CLAUDE.md
+  - developer/CLAUDE.md
+  - features/CLAUDE.md
+  - roadmap/CLAUDE.md
+  - usage/CLAUDE.md
+
+  # Rendered in the browser: a swagger-ui tag, the catalog gallery iframe, a
+  # colour-swatch grid, a logo demo. Their markdown is a few hundred characters
+  # of scaffolding, so indexing them only adds noise.
+  - api/reference.md
+  - api/fastapi_docs.md
+  - catalog/index.md
+  - more/palette.md
+  - animated-logo.md
+
+  # Dead pages. All still built and search-indexed today; see the audit in
+  # depictio-docs#141. Retrieving them would surface "under construction" as an
+  # answer.
+  - api/overview.md
+  - api/endpoints.md
+  - api/api_docs_integration.md
+  - developer/developer.md
+  - documentation/README.md
+  - documentation_outline.md
+  - FAQ/faq.md
+  - installation/install.md
+  - more/stories.md
+  - usage/administration.md
+  - usage/special-modes/index.md
+
+# Per-file overrides, for pages whose own structure fights the default rule.
+overrides:
+  changelog/README.md:
+    # 75 h2s: 60 releases plus 15 "Beta Releases" groups holding ~272 h3s that
+    # are almost all "Bug Fixes" / "Improvements". Those embed nearly
+    # identically and would crowd real answers out of the top-k, so the page is
+    # cut at release level and the beta groups are dropped.
+    max_depth: 2
+    drop_headings:
+      - "Beta Releases"
+  depictio-cli/usage.md:
+    # A link list. Retrieves against everything, answers nothing.
+    drop_headings:
+      - "Table of Contents"
