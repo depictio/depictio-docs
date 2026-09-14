@@ -141,7 +141,7 @@ reference; this table only says *when* something arrived.
 | ---------- | ----- | ---- |
 | Ingestion triggered by the pipeline itself, when it completes | v1.10.0 | [Nextflow trigger](../depictio-cli/nextflow-trigger.md) |
 | A run directory identifies its own pipeline, so a template needs no flag | v1.10.0 | [Templates](../usage/projects/templates.md#pipeline-id) |
-| nf-core/variantbenchmarking template and benchmarking viz kinds | v1.10.0 | [variantbenchmarking](../pipeline-templates/nf-core/variantbenchmarking.md) |
+| nf-core/variantbenchmarking template and benchmarking viz kinds | v1.10.0 | [Pipeline templates](../pipeline-templates/README.md) |
 | Backups created, scheduled and restored from the admin panel | v1.9.0 | [Backup & Restore](../usage/administration/backup.md#from-the-admin-panel) |
 | Pick a component from the catalog, with `use:` provenance on it | v1.9.0 | [Picking from the catalog](../usage/guides/catalog-picker.md) |
 | Tool Studio: contribute a catalog tool from the browser | v1.9.0 | [Tool Studio](../developer/tool-studio.md) |

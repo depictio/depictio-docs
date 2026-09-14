@@ -67,8 +67,8 @@ depictio-cli config check
 
 !!! warning "Let `--install` write the include for you"
     It copies the handler to `~/.depictio/nextflow.config` and adds an
-    `includeConfig` for it to `~/.nextflow/config`, which Nextflow reads before
-    every run. `--uninstall` removes the block, and anything else in that file is
+    `includeConfig` for it to `$NXF_HOME/config` (`~/.nextflow/config` unless you
+    set `NXF_HOME`), which Nextflow reads before every run. `--uninstall` removes the block, and anything else in that file is
     left alone.
 
     Writing that include by hand against a path inside your Python environment is
@@ -148,8 +148,8 @@ meant:
 
 | You want | Set | What happens |
 | --- | --- | --- |
-| A project per execution | nothing, this is the default | Each run creates its own project, named by `params.depictio_project` or derived from the template |
-| One project, many runs | `params.depictio_attach = true` | This run is registered as an additional run of the existing project. Nothing already ingested is lost |
+| A project per execution | a distinct `params.depictio_project` per run | Each run creates its own project. A bundled template names its project, so without this every run targets the same one |
+| One project, many runs | `params.depictio_attach = true` | This run is registered as an additional run of the existing project, which the first run must have created. Nothing already ingested is lost |
 | To re-ingest over the top | `params.depictio_update = true` | The project's configuration is refreshed and the same data root is ingested again, rebuilding its tables |
 
 !!! warning "`depictio_update` re-imports the dashboards"

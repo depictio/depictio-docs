@@ -116,8 +116,9 @@ When nothing is passed at all, the run directory answers on its own: nf-core
 writes `pipeline_info/software_versions.yml`, and reading it gives the pipeline,
 its version, the engine version and the tools that executed. That path does
 tolerate a version gap, taking the newest template that is not newer than the
-run, because a newer template describes outputs the run never wrote. The
-provenance is recorded on the workflow either way.
+run, because a newer template describes outputs the run never wrote. A run older
+than every shipped template takes the lowest one, and a version that cannot be
+parsed takes the newest. The provenance is recorded on the workflow either way.
 
 ---
 
@@ -160,11 +161,12 @@ gated out even with a seed sitting beside it.
     to a `source: native` collection of the same tag is that collection's own
     input, and is scanned normally.
 
-!!! warning "Templates ship with the repository, not the wheel"
-    The bundled projects live under `depictio/projects/`, which is not part of the
-    published `depictio-cli` package. Re-ingesting a bundled project from its own
-    directory works from a repository checkout or a container image that carries
-    them.
+!!! note "Templates ship in the CLI package, seeds do not <small>(v1.10.0+)</small>"
+    The `depictio-cli` package carries the template definitions, their dashboards
+    and recipes, and the Nextflow snippet, so `--template` and `--pipeline-id`
+    resolve from a plain `pip install`. The reference datasets and recipe seeds under
+    `depictio/projects/` stay out: re-ingesting a bundled project from its own
+    directory still needs a repository checkout or the container image.
 
 ---
 

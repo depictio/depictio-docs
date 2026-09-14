@@ -63,11 +63,14 @@ docker run --rm \
   -v "$HOME/.depictio:$HOME/.depictio:ro" \
   --network host \
   ghcr.io/depictio/depictio-cli:1.10.0 \
-  run --data-root /path/to/results --pipeline-id nf-core/ampliseq/2.16.0
+  run --CLI-config-path "$HOME/.depictio/CLI.yaml" \
+  --data-root /path/to/results --pipeline-id nf-core/ampliseq/2.16.0
 ```
 
 Bind each host path onto the same path inside the container: the paths you pass
-are recorded in the project as given. The image carries the MultiQC extra and the
+are recorded in the project as given. The image runs as its own user, so its home
+is not yours: name the CLI config with `--CLI-config-path`, or pass
+`DEPICTIO_CLI_TOKEN` and `DEPICTIO_CLI_API_BASE_URL` with `-e` instead. The image carries the MultiQC extra and the
 bundled templates, both of which the build asserts are present.
 
 ## Verifying the Installation

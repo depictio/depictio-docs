@@ -133,7 +133,7 @@ depictio-cli run --project-config-path ./config.yaml
     | `--workflow-name` | `string` | `null` | Specific workflow to process |
     | `--data-collection-tag` | `string` | `null` | Data collection tag to process |
     | `--pipeline-id` | `string` | `null` | Which pipeline produced this data, as `<name>/<version>`. Resolves a bundled template when neither `--template` nor `--project-config-path` is given, and is ignored otherwise, so an explicit choice always wins. A [Nextflow trigger](nextflow-trigger.md) fills it from the pipeline's manifest. (v1.10.0+) |
-    | `--triggered-by` | `string` | `"manual"` | What invoked this ingestion, recorded on the project and shown in its [ingestion report](../usage/administration/monitoring.md#ingestion). (v1.10.0+) |
+    | `--triggered-by` | `string` | `"manual"` | What invoked this ingestion, recorded on the project and shown as a badge in its [ingestion report](../features/dashboards.md#triggered-by). (v1.10.0+) |
 
 ??? info "🍳 Template Options"
 
