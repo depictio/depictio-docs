@@ -733,6 +733,7 @@ Numeric matrix columns are inferred from the rest of the DC schema at compute ti
 | `matrix_wf_id` / `matrix_dc_id` | str | _required_ | Workflow + DC ids of the wide matrix DC |
 | `index_column` | str | `sample_id` | Row-label column |
 | `value_columns` | list[str] \| null | `null` | Subset of numeric columns; null = all numeric |
+| `value_columns_pattern` | str \| null | `null` | Regex naming the value columns, for a matrix whose column names depend on the run. Cannot be combined with `value_columns` (v1.11.0+) |
 | `row_annotation_cols` | list[str] | `[]` | Categorical columns rendered as a right-side annotation strip |
 | `col_annotations` | dict[str, dict[str, str]] \| null | `null` | Per-column categorical annotations rendered as a top strip. Shape: `{annotation_name: {column_label: category_value}}` (e.g. `{'habitat': {'SRR10070130': 'Riverwater', ...}}`). The renderer aligns the values to the matrix's column order. Use when per-sample metadata (treatment / habitat / batch) needs to live on the column axis without joining a second DC. |
 | `col_annotation_colors` | dict[str, dict[str, str]] \| null | `null` | Per-annotation palette overrides for the column-annotation track. Shape: `{annotation_name: {category_value: hex}}`. When unset the server picks colours from a Dark2 palette (chosen to contrast with the row-track's Set2 pastels). Use to pin domain palettes (e.g. `habitat → Set1`) across PCoA + UpSet + heatmap. |
@@ -790,6 +791,7 @@ No canonical role-based schema — the renderer enumerates binary columns at com
 |--------|------|---------|-------------|
 | `matrix_wf_id` / `matrix_dc_id` | str | _required_ | Workflow + DC ids of the membership DC |
 | `set_columns` | list[str] \| null | `null` | Explicit list of set columns; null = auto-detect binary |
+| `set_columns_pattern` | str \| null | `null` | Regex naming the set columns, for a table whose column names depend on the run. Cannot be combined with `set_columns` (v1.11.0+) |
 | `sort_by` | `cardinality` \| `degree` \| `degree-cardinality` \| `input` | `cardinality` | Intersection ordering |
 | `sort_order` | `descending` \| `ascending` | `descending` | Ordering direction |
 | `min_size` | int (≥0) | `1` | Hide intersections smaller than this |
