@@ -107,6 +107,30 @@ At the bottom of the sidebar, you will find:
     Both "public" and "private" dashboards are listed in the **Dashboards** section. Public dashboards are accessible to all users, while private dashboards are only visible to the user who created them.
     Only the user who created a private dashboard can edit, or delete it.
 
+#### <span style="color: #45B8AC;">:material-link-variant:</span> Share a filtered listing <small>(v1.10.1+)</small> { #share-a-filtered-listing }
+
+The filters of `/dashboards` and `/projects` live in the URL, so the address bar is
+always a link to what is on screen. The link button in the toolbar copies it.
+
+| Link | Shows |
+| --- | --- |
+| `/dashboards?template=nf-core/rnaseq` | Dashboards built from nf-core/rnaseq, any version |
+| `/dashboards?template=nf-core` | Dashboards built from any nf-core pipeline |
+| `/projects?template=nf-core/rnaseq,nf-core/viralrecon` | Projects from either pipeline |
+| `/dashboards?project=<id>&view=table` | One project's dashboards, as a table |
+
+The other parameters are `owner`, `workflow`, `visibility`, `q`, `pinned`, `group` and
+`sort` on `/dashboards`, and `type`, `visibility`, `q` and `pinned` on `/projects`.
+
+Whoever opens the link sees a **Shared view** banner saying how many rows the link
+hides, with **Show everything** to drop it and a jump to the same scope on the other
+listing. The link replaces their saved filters, keeps the view they chose unless it
+sets one, and grants no access: it only narrows what they could already open.
+
+!!! tip "Name a project by its id"
+    Commas separate values, so a project name that contains one cannot go in
+    `project`. The copy button always writes ids.
+
 ## <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects section (/projects)
 
 

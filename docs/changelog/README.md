@@ -8,6 +8,29 @@ hide:
 
 # Changelog
 
+## **[v1.10.1](https://github.com/depictio/depictio/releases/tag/v1.10.1)** (September 13, 2026)
+
+!!! success "Patch: share a filtered listing by link"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.10.1
+ghcr.io/depictio/depictio-viewer:1.10.1
+ghcr.io/depictio/depictio-worker:1.10.1
+ghcr.io/depictio/depictio-cli:1.10.1
+```
+
+### **✨ New Features**
+
+* **The dashboard and project listings keep their filters in the URL**, so the address bar is always a link to the view on screen, and a button in the toolbar copies it. A new **Template** filter matches a pipeline whatever its version, and `/dashboards` gains a **Workflow system** filter. Opening such a link raises a **Shared view** banner, with **Show everything** to drop the scope. See [Share a filtered listing](../usage/guides/web_ui.md#share-a-filtered-listing) ([#1069](https://github.com/depictio/depictio/pull/1069), [eab269cc](https://github.com/depictio/depictio/commit/eab269cc), [5b4beb06](https://github.com/depictio/depictio/commit/5b4beb06)).
+
+### **🚀 Improvements**
+
+* **MinIO is pulled from `quay.io/minio/minio`** by the compose files and the Helm chart, with the same release tag. Update any mirror or pull-through cache that names the Docker Hub image ([#1080](https://github.com/depictio/depictio/pull/1080), [4421c5d3](https://github.com/depictio/depictio/commit/4421c5d3)).
+
+---
+
 ## **[v1.10.0](https://github.com/depictio/depictio/releases/tag/v1.10.0)** (September 11, 2026)
 
 !!! success "Minor: the pipeline ingests its own results"
