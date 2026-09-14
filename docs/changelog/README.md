@@ -31,7 +31,7 @@ ghcr.io/depictio/depictio-cli:1.10.0
 
 ### **🧬 Pipeline Templates**
 
-* **nf-core/variantbenchmarking 1.4.0**: germline small variants, somatic indels and structural variants as three per-variant-type projects, with four benchmarking visualization kinds. See [Pipeline templates](../pipeline-templates/README.md) ([#870](https://github.com/depictio/depictio/pull/870), [6e581d89](https://github.com/depictio/depictio/commit/6e581d89)).
+* **nf-core/variantbenchmarking 1.4.0**: germline small variants, somatic indels and structural variants as three per-variant-type projects, with four benchmarking visualization kinds. See [variantbenchmarking](../pipeline-templates/nf-core/variantbenchmarking.md) ([#870](https://github.com/depictio/depictio/pull/870), [6e581d89](https://github.com/depictio/depictio/commit/6e581d89)).
 * **nf-core/ampliseq 2.18.0**: handles the `sbdi-gtdb` database that release defaults to, whose taxonomic ranks start deeper than the 7-rank databases. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md) ([#1027](https://github.com/depictio/depictio/pull/1027), [bcb39932](https://github.com/depictio/depictio/commit/bcb39932)).
 
 ### **🚀 Improvements**
