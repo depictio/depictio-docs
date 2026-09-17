@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.10.1",
-    "x-generated-at": "2026-09-14T00:33:45Z",
-    "x-depictio-version": "v1.10.1"
+    "version": "1.11.0",
+    "x-generated-at": "2026-09-14T19:46:42Z",
+    "x-depictio-version": "v1.11.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -6230,7 +6230,7 @@
           "Dashboards"
         ],
         "summary": "Bulk Compute Cards",
-        "description": "Compute card values with interactive filters applied.\n\nCalled by the React viewer whenever the filter state changes. Dedupes\nDelta-table loads: multiple cards referencing the same (wf_id, dc_id, filter\nfingerprint) share one load. Returns a map keyed by component index.\n\nRequest body:\n    {\n        \"filters\": [\n            {\"index\": \"...\", \"value\": ..., \"column_name\": \"...\",\n             \"interactive_component_type\": \"MultiSelect\"},\n            ...\n        ],\n        \"component_ids\": [\"...\", ...]   # optional; defaults to all cards\n    }\n\nResponse:\n    {\n        \"values\": {\"<component_index>\": <scalar or null>, ...},\n        \"secondary_values\": {\n            \"<component_index>\": {\"<aggregation>\": <scalar or null>, ...},\n            ...\n        },\n        \"aggregations\": {\"<component_index>\": [\"<aggregation>\", ...], ...},\n        \"filter_applied\": bool,\n        \"filter_count\": int\n    }\n\n    ``secondary_values`` and ``aggregations`` are only populated for cards\n    that declare ``aggregations`` in YAML (multi-metrics card).\n\nNotes:\n    - Uses load_deltatable_lite with the same metadata format as Dash so\n      the filter semantics match the Dash viewer exactly.\n    - The Dash callback render_card_value_background in\n      card_component/callbacks/core.py remains the source of truth for the\n      edit path; this endpoint mirrors its math.",
+        "description": "Compute card values with interactive filters applied.\n\nCalled by the React viewer whenever the filter state changes. Dedupes\nDelta-table loads: multiple cards referencing the same (wf_id, dc_id, filter\nfingerprint) share one load. Returns a map keyed by component index.\n\nRequest body:\n    {\n        \"filters\": [\n            {\"index\": \"...\", \"value\": ..., \"column_name\": \"...\",\n             \"interactive_component_type\": \"MultiSelect\"},\n            ...\n        ],\n        \"component_ids\": [\"...\", ...]   # optional; defaults to all cards\n    }\n\nResponse:\n    {\n        \"values\": {\"<component_index>\": <scalar or null>, ...},\n        \"secondary_values\": {\n            \"<component_index>\": {\"<aggregation>\": <scalar or null>, ...},\n            ...\n        },\n        \"aggregations\": {\"<component_index>\": [\"<aggregation>\", ...], ...},\n        \"group_status\": {\"<component_index>\": [<group status>, ...], ...},\n        \"filter_applied\": bool,\n        \"filter_count\": int\n    }\n\n    ``secondary_values`` and ``aggregations`` are only populated for cards\n    that declare ``aggregations`` in YAML (multi-metrics card).\n\nNotes:\n    - Uses load_deltatable_lite with the same metadata format as Dash so\n      the filter semantics match the Dash viewer exactly.\n    - The Dash callback render_card_value_background in\n      card_component/callbacks/core.py remains the source of truth for the\n      edit path; this endpoint mirrors its math.",
         "operationId": "bulk_compute_cards_depictio_api_v1_dashboards_bulk_compute_cards__dashboard_id__post",
         "security": [
           {
@@ -6289,7 +6289,7 @@
           "Dashboards"
         ],
         "summary": "Render Figure Endpoint",
-        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when the render is\nactually heavy — code mode, or a source frame at/above\n`offload_size_threshold_bytes` — or unconditionally if\n`offload_rendering` is forced on (see `should_offload_render`). Cheap\ninteractive figures build inline to skip the broker round-trip. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\", \"full_load\": bool,\n     \"groups\": [{name, column_name, values, color}], \"color_by_group\": bool,\n     \"color_by_column\": {\"column_name\": str, \"color_map\": {value: \"#rrggbb\"}},\n     \"grouping_display\": \"color\" | \"facet\",\n     \"include_other\": bool}\n\n``full_load`` (default False) bypasses the point-plot row cap so the client\ncan explicitly render every point on demand (slow on large datasets).\n\n``groups`` + ``color_by_group`` (optional) ask for the figure to be colored\nby the caller's selection groups (issue #89); ``color_by_column`` asks for\nthe dashboard-global color-by-a-real-column override instead (groups win\nwhen both are present). All sanitized here at the trust boundary, applied\nin ``build_figure_preview``.\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}",
+        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when the render is\nactually heavy — code mode, or a source frame at/above\n`offload_size_threshold_bytes` — or unconditionally if\n`offload_rendering` is forced on (see `should_offload_render`). Cheap\ninteractive figures build inline to skip the broker round-trip. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\", \"full_load\": bool,\n     \"groups\": [{name, column_name, values, color}], \"color_by_group\": bool,\n     \"color_by_column\": {\"column_name\": str, \"color_map\": {value: \"#rrggbb\"}},\n     \"grouping_display\": \"color\" | \"facet\",\n     \"include_other\": bool}\n\n``full_load`` (default False) bypasses the point-plot row cap so the client\ncan explicitly render every point on demand (slow on large datasets).\n\n``groups`` + ``color_by_group`` (optional) ask for the figure to be colored\nby the caller's selection groups (issue #89); ``color_by_column`` asks for\nthe dashboard-global color-by-a-real-column override instead (groups win\nwhen both are present). All sanitized here at the trust boundary, applied\nin ``build_figure_preview``.\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}\n\n``metadata.group_status`` (present whenever ``color_by_group`` was asked\nfor) is one entry per submitted group saying whether it reached this\nfigure's data collection — directly, through a declared project link, or\nnot at all, with the reason. See ``resolve_group_defs_for_dc``.",
         "operationId": "render_figure_endpoint_depictio_api_v1_dashboards_render_figure__dashboard_id___component_id__post",
         "security": [
           {
@@ -7393,7 +7393,7 @@
           "Dashboards"
         ],
         "summary": "Funnel Values Endpoint",
-        "description": "Compute funnel-filtering data for the React viewer (issue #939).\n\nFor each requested interactive component, answers: given every OTHER\nactive filter (the component's own selection excluded — a value you\nalready picked must never grey itself out), which of this component's\nvalues still lead to a non-empty result set? Cross-DC filters are\ntranslated through the project's DC links exactly like figure/table\nrenders do (``_resolve_link_filters_cached``), so the funnel works across\nlinked data collections.\n\nRequest body:\n    {\n        \"filters\": [...],                # current filter list (viewer shape)\n        \"target_indexes\": [\"...\", ...],  # interactive components to compute\n        \"include_stages\": bool           # also compute the funnel overview\n    }\n\nResponse:\n    {\n        \"targets\": {\"<index>\": {\"status\": \"ok\"|\"unrestricted\"|\"unsupported\"|\"error\",\n                                 \"column\": str, \"dc_id\": str,\n                                 \"values\": [...], \"truncated\": bool}},\n        \"stages\": [...] | None,          # cumulative per-DC row counts\n        \"initial_rows_by_dc\": {...} | None,\n        \"dc_labels\": {\"<dc_id>\": str},\n        \"filter_count\": int\n    }",
+        "description": "Compute funnel-filtering data for the React viewer (issue #939).\n\nFor each requested interactive component, answers: given every OTHER\nactive filter (the component's own selection excluded — a value you\nalready picked must never grey itself out), which of this component's\nvalues still lead to a non-empty result set? Cross-DC filters are\ntranslated through the project's DC links exactly like figure/table\nrenders do (``_resolve_link_filters_cached``), so the funnel works across\nlinked data collections.\n\nRequest body:\n    {\n        \"filters\": [...],                # current filter list (viewer shape)\n        \"target_indexes\": [\"...\", ...],  # interactive components to compute\n        \"include_stages\": bool,          # also compute the funnel overview\n        \"stage_column\": {\"dc_id\": str, \"column_name\": str}  # optional, column mode\n    }\n\nResponse:\n    {\n        \"targets\": {\"<index>\": {\"status\": \"ok\"|\"unrestricted\"|\"unsupported\"|\"error\",\n                                 \"column\": str, \"dc_id\": str,\n                                 \"values\": [...], \"truncated\": bool}},\n        \"stages\": [...] | None,          # cumulative per-DC row counts\n        \"initial_rows_by_dc\": {...} | None,\n        \"dc_labels\": {\"<dc_id>\": str},\n        \"filter_count\": int\n    }\n\nColumn mode: when the request sends ``stage_column``, the response also\ncarries ``stage_column_status`` (\"ok\"|\"unsupported\"), ``stage_column``\n(the column charted, or None), ``initial_values`` and ``stage_dcs`` (every\nDC the overview can chart). On \"ok\", stages cover that one DC and each\ncarries ``values: {\"count\", \"values\", \"truncated\"}``; on \"unsupported\",\nthe stages are the plain per-DC counts. Without ``stage_column`` the\nresponse is unchanged.",
         "operationId": "funnel_values_endpoint_depictio_api_v1_dashboards_funnel_values__dashboard_id__post",
         "security": [
           {
@@ -8205,7 +8205,7 @@
           "Advanced Viz"
         ],
         "summary": "Get Phylogeny Newick",
-        "description": "Return the raw Newick string for a phylogeny DC.\n\nResolves the file location in three ways: (1) prefer the file registered\nby the CLI scan in ``files_collection``; (2) for reference datasets\n(seeded via db_init, never CLI-scanned), traverse the project document\nto find the matching DC under ``workflows[].data_collections[]`` and\nread its ``config.scan.scan_parameters.filename``. DCs are stored\nembedded in the project — there is no top-level ``data_collections``\ndocument for them — so we can't ``find_one({\"_id\": dc_oid})`` directly.\n(3) as a last resort, each stored path rewritten onto the container's\n``/app`` bind mount, which is what makes a host-run CLI ingest readable\nfrom the backend container.\n\nReturns local file contents directly; stream S3-hosted trees via boto3.",
+        "description": "Return the raw Newick string for a phylogeny DC.\n\nFirst tries the copy the CLI uploads at ingest, at\n``s3://<bucket>/phylogeny/<dc_id>/tree.nwk``: it is readable by any backend,\nwhichever machine ran the CLI. Any miss there falls through to the stored\npaths below, which is what reference seeds and older ingests rely on.\n\nThose stored paths are tried in three ways: (1) prefer the file registered\nby the CLI scan in ``files_collection``; (2) for reference datasets\n(seeded via db_init, never CLI-scanned), traverse the project document\nto find the matching DC under ``workflows[].data_collections[]`` and\nread its ``config.scan.scan_parameters.filename``. DCs are stored\nembedded in the project — there is no top-level ``data_collections``\ndocument for them — so we can't ``find_one({\"_id\": dc_oid})`` directly.\n(3) as a last resort, each stored path rewritten onto the container's\n``/app`` bind mount, which is what makes a host-run CLI ingest readable\nfrom the backend container.\n\nReturns local file contents directly; stream S3-hosted trees via boto3.",
         "operationId": "get_phylogeny_newick_depictio_api_v1_advanced_viz_phylogeny__data_collection_id__newick_get",
         "security": [
           {
@@ -12451,7 +12451,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -12754,7 +12754,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -12817,7 +12817,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -13005,7 +13005,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -13531,7 +13531,7 @@
           "status": {
             "type": "string",
             "title": "Status",
-            "description": "running|success|partial|failed",
+            "description": "running|success|partial|failed|interrupted",
             "default": "success"
           },
           "steps": {
@@ -14535,6 +14535,12 @@
             "type": "string",
             "title": "Target Dc Id",
             "description": "Target data collection ID to resolve values for"
+          },
+          "reverse": {
+            "type": "boolean",
+            "title": "Reverse",
+            "description": "Walk the link against its declared direction. The link is looked up as target_dc_id -> source_dc_id, source_column is read on the link's target, and the resolved values name the link's source_column. Only links using the 'direct' resolver can be walked this way; any other answers 404.",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -14893,7 +14899,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -15101,7 +15107,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -15761,7 +15767,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -15867,7 +15873,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -16100,7 +16106,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6aa740e595dbb3125b196ff5"
+            "default": "6aa84f1ee24820aa6b0620b6"
           }
         },
         "type": "object",
@@ -16223,7 +16229,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -16342,7 +16348,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -16424,7 +16430,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -16510,7 +16516,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -16683,7 +16689,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -16858,7 +16864,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -16975,7 +16981,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
@@ -17073,7 +17079,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa740e595dbb3125b196ff4"
+            "default": "6aa84f1ee24820aa6b0620b5"
           },
           "description": {
             "anyOf": [
