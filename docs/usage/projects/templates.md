@@ -100,23 +100,21 @@ The recipe Python code stays generic — path resolution happens via variable su
 
 ### How the CLI picks a template when you name none <small>(v1.10.0+)</small> { #pipeline-id }
 
-This only concerns pipelines Depictio ships a template for. A pipeline of your own
-needs a project YAML, passed with `--project-config-path`, which skips everything
-below. From the Nextflow trigger, see
-[a pipeline with no bundled template](../../depictio-cli/nextflow-trigger.md#a-pipeline-with-no-bundled-template).
-
-`depictio-cli run --data-root <dir>` works without `--template`. The CLI takes the
-first answer it finds:
+`depictio-cli run --data-root <dir>` does not need `--template`. Leave it out and
+the CLI finds the template itself, from the first of these that answers:
 
 | Source | Set by | A version with no template |
 | --- | --- | --- |
-| `--template nf-core/ampliseq/2.16.0` | you | error |
 | `--pipeline-id nf-core/ampliseq/2.16.0` | the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md), from the pipeline's manifest | error |
 | `pipeline_info/` in the run directory | nf-core, at the end of every run | the closest older template |
 
+A `--template` you pass always wins, and so does a project YAML passed with
+`--project-config-path`. A pipeline of your own needs the latter, since there is no
+template to find; from the Nextflow trigger, see
+[a pipeline with no bundled template](../../depictio-cli/nextflow-trigger.md#a-pipeline-with-no-bundled-template).
+
 `--pipeline-id` names the pipeline that produced the data, not a Depictio template,
-and you do not normally type it. For both flags, `latest` or no version takes the
-newest template.
+and you do not normally type it. `latest`, or no version, takes the newest template.
 
 Reading `pipeline_info/` is more forgiving, because nobody chose the version: with
 templates for ampliseq 2.14.0, 2.16.0 and 2.18.0, a 2.17.0 run gets 2.16.0, never
