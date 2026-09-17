@@ -104,14 +104,20 @@ Three sections, one question each:
   key: "completed"
   sub_title: "v1.9.0 ✅"
 
+- title: "Pipeline-triggered ingestion"
+  content: "A Nextflow pipeline ingests its own results when it finishes"
+  icon: ":fontawesome-solid-bolt:"
+  key: "completed"
+  sub_title: "v1.10.0 ✅"
+
 - title: "Project authoring & embedding"
-  content: "Project builder, nf-core/variantbenchmarking template, a component embedded in an external site"
+  content: "Project builder, a component embedded in an external site"
   icon: ":fontawesome-solid-cubes:"
   key: "inprogress"
   sub_title: "In progress 🚧"
 
-- title: "Versioning & automation"
-  content: "Dataset and dashboard versioning, time travel, ingestion watcher, remote triggering"
+- title: "Versioning & the ingestion watcher"
+  content: "Dataset and dashboard versioning, time travel, a watcher that re-ingests on its own"
   icon: ":fontawesome-solid-clock-rotate-left:"
   key: "inprogress"
   sub_title: "In progress 🚧"
@@ -133,6 +139,8 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
+| Ingestion triggered by the pipeline itself, when it completes | v1.10.0 | [Nextflow trigger](../depictio-cli/nextflow-trigger.md) |
+| nf-core/variantbenchmarking template and benchmarking viz kinds | v1.10.0 | [Pipeline templates](../pipeline-templates/README.md) |
 | Backups created, scheduled and restored from the admin panel | v1.9.0 | [Backup & Restore](../usage/administration/backup.md#from-the-admin-panel) |
 | Pick a component from the catalog, with `use:` provenance on it | v1.9.0 | [Picking from the catalog](../usage/guides/catalog-picker.md) |
 | Tool Studio: contribute a catalog tool from the browser | v1.9.0 | [Tool Studio](../developer/tool-studio.md) |
@@ -176,22 +184,21 @@ Tool Studio both landed in v1.9.0; what is left is the path from a folder to a p
 - [ ] **nf-core template harmonization**: the bundled templates reference the same catalog entries a dashboard does, rather than carrying bespoke inline tiles ([#873](https://github.com/depictio/depictio/pull/873))
 - [ ] **Project builder**: `depictio project-builder <folder>` turns a folder into a `project.yaml`, with live glob/regex matching and schema-consistency checks ([#901](https://github.com/depictio/depictio/pull/901))
 
-### Pipeline templates
-
-- [ ] **nf-core/variantbenchmarking template & modules**: germline small variants, somatic indels and structural variants as three per-variant-type projects, built from reusable catalog modules (hap.py, rtg-tools, som.py, truvari…) plus four benchmarking-specific visualization kinds ([#870](https://github.com/depictio/depictio/pull/870), closes [#865](https://github.com/depictio/depictio/issues/865))
-
 ### Component export & embedding
 
 - [ ] **Embed a component in an external site**: serve one dashboard component either as a Plotly spec for your own `plotly.js`, or as a single self-contained offline page. Off by default ([#917](https://github.com/depictio/depictio/pull/917))
 
 ### Versioning, time travel & automated ingestion
 
-Ingestion stops being a command someone has to remember, and nothing overwrites history.
+Ingestion stops being a command someone has to remember, and nothing overwrites
+history. The first half arrived in v1.10.0: a Nextflow pipeline now
+[triggers its own ingestion](../depictio-cli/nextflow-trigger.md) when it
+completes. What is left is noticing files nobody announced, and keeping every
+version of what was written.
 
 - [ ] **Ingestion watcher**: `depictio watch` notices new files and re-ingests them, with native events plus polling as a backstop for network filesystems, and a *Run now* trigger from the UI ([#915](https://github.com/depictio/depictio/pull/915))
 - [ ] **Delta dataset versioning & time travel**: every write becomes an inspectable Delta version carrying Depictio's own provenance; browse and read the table as it was ([#915](https://github.com/depictio/depictio/pull/915))
 - [ ] **Dashboard version history**: every save is recorded, with a timeline, read-only preview of any past version, and a restore that cannot lose the present ([#919](https://github.com/depictio/depictio/pull/919), closes [#95](https://github.com/depictio/depictio/issues/95))
-- [ ] **Remote triggering from Nextflow**: a `nextflow.config` snippet ingests into Depictio when the pipeline completes ([#813](https://github.com/depictio/depictio/pull/813))
 
 ---
 

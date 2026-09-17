@@ -108,7 +108,8 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path:
         - docs
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.inlinehilite
   - pymdownx.superfences:
       custom_fences:
@@ -234,6 +235,7 @@ nav:
       - CLI:
           - depictio-cli/index.md
           - Usage: depictio-cli/usage.md
+          - Nextflow trigger: depictio-cli/nextflow-trigger.md
           - Minimal YAML config: depictio-cli/minimal_config.md
       - Administration:
           - usage/administration/index.md

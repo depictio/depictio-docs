@@ -91,12 +91,24 @@ The recipe Python code stays generic — path resolution happens via variable su
 
 | Flag | Type | Required | Description |
 |------|------|----------|-------------|
-| `--template` | `string` | yes | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+) |
+| `--template` | `string` | [one of](#pipeline-id) | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+) |
 | `--data-root` | `path` | yes | Root directory substituted for `{DATA_ROOT}` |
 | `--var` | `KEY=VALUE` | depends on template | Pass template-specific variables; repeatable |
 | `--dashboard` | `path` | no | Override default dashboard(s); repeatable |
 | `--skip-dashboard-import` | `flag` | no | Skip automatic dashboard import |
 | `--project-name` | `string` | no | Custom project name |
+
+### Which template a run uses { #pipeline-id }
+
+`depictio-cli run` needs one of:
+
+- `--template nf-core/ampliseq/2.16.0`, for a pipeline Depictio ships a template for;
+- `--project-config-path my_project.yaml`, for a pipeline of your own.
+
+Since **v1.10.0** the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md)
+passes a third for you, `--pipeline-id nf-core/ampliseq/2.16.0`, read from the
+`manifest` block of its `nextflow.config`. Its version must match a shipped
+template, or the run stops with an error.
 
 ---
 
@@ -138,12 +150,6 @@ gated out even with a seed sitting beside it.
     Only a `source: transformed` collection is redirected. A `{dc_tag}.tsv` next
     to a `source: native` collection of the same tag is that collection's own
     input, and is scanned normally.
-
-!!! warning "Templates ship with the repository, not the wheel"
-    The bundled projects live under `depictio/projects/`, which is not part of the
-    published `depictio-cli` package. Re-ingesting a bundled project from its own
-    directory works from a repository checkout or a container image that carries
-    them.
 
 ---
 

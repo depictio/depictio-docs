@@ -461,6 +461,15 @@ only keys the template explicitly excludes are omitted, and anything no group ru
 matches lands in **Other**. See
 [Run provenance](../usage/projects/templates.md#run-provenance).
 
+### :material-rocket-launch-outline: What triggered the run <small>(v1.10.0+)</small> { #triggered-by }
+
+A project records what invoked its latest ingestion, from `--triggered-by`.
+Anything other than a manual run shows a badge on the project's ingestion tab: a
+project the [Nextflow trigger](../depictio-cli/nextflow-trigger.md) ingests shows
+**Triggered by Nextflow**, with the Nextflow logo. For a project built from a
+template, its tooltip also gives the pipeline and engine versions, the number of
+tools that ran and the directory that was ingested.
+
 ### :material-heart-pulse: Health status & banner
 
 The report rolls up into a single project **health** value:

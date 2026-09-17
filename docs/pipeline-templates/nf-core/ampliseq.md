@@ -56,6 +56,17 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 
     Full dashboard: diversity, facetted charts, map, heatmap annotations, ANCOM-BC.
 
+=== "From the pipeline itself (v1.10.0+)"
+
+    ```bash
+    depictio-cli config nextflow --install     # once per machine
+    nextflow run nf-core/ampliseq -r 2.16.0 -profile docker --outdir results
+    ```
+
+    No ingestion command and no template named: the pipeline ingests its own
+    output directory when it finishes and picks this template from its own name
+    and version. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+
 ---
 
 ## Reference

@@ -8,12 +8,48 @@ hide:
 
 # Changelog
 
-!!! success "React viewer is the sole frontend as of v1.0.0"
-    The Dash frontend was removed in **v0.13.12**. As of **v1.0.0** the React
-    viewer serves canonical URLs (`/dashboards`, `/dashboard/{id}`,
-    `/dashboard-edit/{id}`, `/projects`); the `*-beta` suffix paths redirect
-    to canonical. The 0.13.x patch series prepared the data-fetch and
-    bundled-seed paths for this cutover.
+## **[v1.10.0](https://github.com/depictio/depictio/releases/tag/v1.10.0)** (September 11, 2026)
+
+!!! success "Minor: the pipeline ingests its own results"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.10.0
+ghcr.io/depictio/depictio-viewer:1.10.0
+ghcr.io/depictio/depictio-worker:1.10.0
+ghcr.io/depictio/depictio-cli:1.10.0
+```
+
+### **✨ New Features**
+
+* **A Nextflow pipeline ingests its own results**: a `workflow.onComplete` snippet runs `depictio-cli run` on the output directory when the pipeline finishes, turned on once per machine with `depictio-cli config nextflow --install`. See [Nextflow trigger](../depictio-cli/nextflow-trigger.md) ([#1037](https://github.com/depictio/depictio/pull/1037)).
+* **`--pipeline-id <name>/<version>`**: names the pipeline that produced a run, so an automated trigger gets the bundled template without naming one. For a template project, the engine and pipeline versions and the names of the tools that ran are stamped on the workflow. See [Templates](../usage/projects/templates.md#pipeline-id) ([#1035](https://github.com/depictio/depictio/pull/1035), [#1036](https://github.com/depictio/depictio/pull/1036), [#1037](https://github.com/depictio/depictio/pull/1037)).
+* **A project says what triggered it**: `--triggered-by` is stored on the project, and anything but a manual run shows a badge on its ingestion tab. On a template project, **Triggered by Nextflow** gives the pipeline and engine versions, the tool count and the ingested directory. See [Ingestion Report & Health](../features/dashboards.md#triggered-by) ([#1037](https://github.com/depictio/depictio/pull/1037), [32a72156](https://github.com/depictio/depictio/commit/32a72156), [c0444f6c](https://github.com/depictio/depictio/commit/c0444f6c)).
+* **`--attach-run`**: register a data root as another run of an existing project instead of creating one. See [CLI Usage](../depictio-cli/usage.md#run-command) ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **CLI credentials from the environment**: `DEPICTIO_CLI_TOKEN`, `DEPICTIO_CLI_API_BASE_URL` and `DEPICTIO_CLI_CONFIG_PATH` override the `CLI.yaml`, so the token can stay out of it. See [CLI Usage](../depictio-cli/usage.md#environment-variables) ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+
+### **🧬 Pipeline Templates**
+
+* **nf-core/variantbenchmarking 1.4.0**: germline small variants, somatic indels and structural variants as three per-variant-type projects, with four benchmarking visualization kinds. See [Pipeline templates](../pipeline-templates/README.md) ([#870](https://github.com/depictio/depictio/pull/870), [6e581d89](https://github.com/depictio/depictio/commit/6e581d89)).
+* **nf-core/ampliseq 2.18.0**: handles the `sbdi-gtdb` database that release defaults to, whose taxonomic ranks start deeper than the 7-rank databases. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md) ([#1027](https://github.com/depictio/depictio/pull/1027), [bcb39932](https://github.com/depictio/depictio/commit/bcb39932)).
+
+### **🚀 Improvements**
+
+* **Templates ship in the `depictio-cli` package**: a pip-installed CLI resolves `--template` and `--pipeline-id` without a checkout; only the reference datasets and seeds stay out ([#1037](https://github.com/depictio/depictio/pull/1037), [f578adc7](https://github.com/depictio/depictio/commit/f578adc7)).
+* **The CLI ships as a container image**: `ghcr.io/depictio/depictio-cli`, for a head node or CI runner that cannot install a Python environment. See [CLI Installation](../installation/cli.md#container-image) ([#1037](https://github.com/depictio/depictio/pull/1037)).
+* **`--dashboard` works without a template**, so a custom pipeline no longer finishes green with a project and nothing to look at ([#1037](https://github.com/depictio/depictio/pull/1037)).
+* **A connection failure in `run` and `config check` names the API URL and the config file it came from** ([#1037](https://github.com/depictio/depictio/pull/1037), [8c68c9c4](https://github.com/depictio/depictio/commit/8c68c9c4), [3d5a538c](https://github.com/depictio/depictio/commit/3d5a538c)).
+
+### **🐛 Bug Fixes**
+
+* **A second automated trigger no longer exits 1 with an empty message** when the project already exists ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **A multi-location rescan stops deleting runs it has not walked yet** ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **A failed project creation is no longer reported as success** ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **An expired token fails at step 1**: `run` used to print "Server accessibility check passed" right after rejecting the token, then fail later on a project error that did not mention authentication ([#1037](https://github.com/depictio/depictio/pull/1037), [058cc4b4](https://github.com/depictio/depictio/commit/058cc4b4)).
+* **After `-resume`, a template follows the latest attempt's parameters**, not the first attempt's ([#1037](https://github.com/depictio/depictio/pull/1037), [ced67d01](https://github.com/depictio/depictio/commit/ced67d01)).
+
+---
 
 ## **[v1.9.2](https://github.com/depictio/depictio/releases/tag/v1.9.2)** (September 1, 2026)
 

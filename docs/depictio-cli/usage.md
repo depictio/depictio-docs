@@ -38,6 +38,7 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `config check-server-accessibility`    | Test server connection                  | All users      |
 | `config validate-project-config`       | Validate project configuration          | All users      |
 | `config sync-project-config-to-server` | Sync project config to server           | All users      |
+| `config nextflow`                      | Print or install the Nextflow trigger   | All users      |
 | `data scan`                            | Scan project files                      | All users      |
 | `data process`                         | Process data collections                | All users      |
 | `dashboard validate`                   | Validate dashboard YAML file locally    | All users      |
@@ -82,6 +83,17 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 | `--verbose`       | `-v`  | `boolean` | `false`  | Enable verbose logging    |
 | `--verbose-level` | `-vl` | `string`  | `"INFO"` | Set verbose logging level |
 
+### Environment variables <small>(v1.10.0+)</small> { #environment-variables }
+
+The CLI always reads a `CLI.yaml`. These variables override parts of it, so the
+token can stay out of the file, for example on a CI runner.
+
+| Variable | Effect |
+| -------- | ------ |
+| `DEPICTIO_CLI_TOKEN` | Replaces the token from the file |
+| `DEPICTIO_CLI_API_BASE_URL` | Replaces `api_base_url` from the file |
+| `DEPICTIO_CLI_CONFIG_PATH` | The file to read when `--CLI-config-path` is not given |
+
 ## 🚀 Commands
 
 ### 🏃 Run Command
@@ -116,8 +128,11 @@ depictio-cli run --project-config-path ./config.yaml
     |-----------|------|---------|-------------|
     | `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
     | `--project-config-path` | `string` | `""` | Pipeline configuration file path (mutually exclusive with `--template`) |
+    | `--data-root` | `path` | `null` | The run directory to ingest. Required with `--template`, where it also replaces `{DATA_ROOT}`. |
     | `--workflow-name` | `string` | `null` | Specific workflow to process |
     | `--data-collection-tag` | `string` | `null` | Data collection tag to process |
+    | `--pipeline-id` | `string` | `null` | Which pipeline produced this data, as `<name>/<version>`. Resolves a bundled template when neither `--template` nor `--project-config-path` is given, and is ignored otherwise, so an explicit choice always wins. The version must match a shipped template. The [Nextflow trigger](nextflow-trigger.md) fills it from the pipeline's `manifest` block. (v1.10.0+) |
+    | `--triggered-by` | `string` | `"manual"` | What invoked this ingestion, recorded on the project and shown as a badge in its [ingestion report](../features/dashboards.md#triggered-by). (v1.10.0+) |
 
 ??? info "🍳 Template Options"
 
@@ -126,10 +141,9 @@ depictio-cli run --project-config-path ./config.yaml
     | Parameter | Type | Default | Description |
     |-----------|------|---------|-------------|
     | `--template` | `string` | `null` | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`: or just `nf-core/ampliseq`: to resolve the newest shipped version (v1.5.2+) |
-    | `--data-root` | `path` | `null` | Root directory substituted for `{DATA_ROOT}` in template. Required when `--template` is set. |
     | `--project-name` | `string` | `null` | Custom project name (auto-generated from template if omitted) |
     | `--dashboard-name` | `string` | `null` | Override the template's main dashboard title at import (the template file is left untouched). |
-    | `--dashboard` | `path` | `null` | Override default dashboard(s) to import. Repeatable. |
+    | `--dashboard` | `path` | `null` | Dashboard YAML to import. Repeatable. Since **v1.10.0** it also works without a template, so a project built from a plain project YAML can import a dashboard in the same run. |
     | `--skip-dashboard-import` | `flag` | `false` | Skip the automatic dashboard import step (Step 8) |
     | `--provenance-file` | `path` | `null` | Extra recap file (JSON, YAML or two-column key/value TSV) listed in the project's [run provenance](../usage/projects/templates.md#run-provenance) under *User provided*. Repeatable. (v1.8.3+) |
 
@@ -180,6 +194,19 @@ depictio-cli run --project-config-path ./config.yaml
     | `--rescan-folders` | `boolean` | `false` | Reprocess all runs for data collection |
     | `--sync-files` | `boolean` | `false` | Update files for data collection |
     | `--overwrite` | `boolean` | `false` | Overwrite workflow if it already exists |
+
+??? info "🔁 Repeated runs (v1.10.0+)"
+
+    If the project already exists, `run` changes nothing and exits with code 2.
+    To add this directory as another run, pass `--attach-run`. To re-ingest the
+    same directory, pass `--update-config --overwrite`.
+
+    | Parameter | Type | Default | Description |
+    |-----------|------|---------|-------------|
+    | `--attach-run` | `boolean` | `false` | Add `--data-root` as **another run** of the existing project. Earlier runs stay, the tables are rebuilt from every run, and the dashboards are not re-imported, so your edits survive. |
+
+    A data collection with `scan.mode: single` (a samplesheet, a metadata table,
+    a tree) keeps reading the run that created the project.
 
 ??? info "🖥️ Output & Control"
 
@@ -454,6 +481,37 @@ depictio-cli config sync-project-config-to-server [OPTIONS]
 
 ```bash
 depictio-cli config sync-project-config-to-server --project-config-path ./config.yaml --update
+```
+
+---
+
+#### `config nextflow` <small>(v1.10.0+)</small> { #config-nextflow }
+
+Print or install the `workflow.onComplete` snippet that lets a Nextflow pipeline
+ingest its own results when it finishes. Full guide:
+[Nextflow trigger](nextflow-trigger.md).
+
+```bash
+depictio-cli config nextflow [OPTIONS]
+```
+
+| Parameter     | Type   | Default | Description                                                                                  |
+| ------------- | ------ | ------- | -------------------------------------------------------------------------------------------- |
+| `--print`     | `flag` | `false` | Write the snippet's contents to stdout instead of its path                                    |
+| `--install`   | `flag` | `false` | Enable the trigger for every pipeline on this machine, once                                   |
+| `--uninstall` | `flag` | `false` | Undo `--install`, leaving any other Nextflow settings alone                                   |
+
+With no flag it prints the path of the bundled snippet, which is what makes the
+`$(...)` form below work.
+
+```bash
+# one pipeline, one run
+nextflow run nf-core/ampliseq -profile docker --outdir results \
+  -c $(depictio-cli config nextflow)
+
+# every pipeline on this machine, once
+depictio-cli config nextflow --install
+nextflow run nf-core/ampliseq -profile docker --outdir results
 ```
 
 ### 📊 Data Commands
@@ -871,6 +929,19 @@ depictio-cli migrate \
 ```
 
 ## 🛠️ Common Use Cases
+
+### <span style="color: #0dc09d;">:simple-nextflow:</span> Let the pipeline run the CLI for you <small>(v1.10.0+)</small> { #nextflow-trigger }
+
+Everything below is a command someone has to remember. A Nextflow pipeline can
+run `depictio-cli run` itself when it completes, on the output directory it just wrote:
+
+```bash
+depictio-cli config nextflow --install     # once per machine
+nextflow run nf-core/ampliseq -profile docker --outdir results
+```
+
+See [Nextflow trigger](nextflow-trigger.md) for the setup, custom pipelines,
+repeated runs and running the CLI from a container.
 
 ### 🚀 Quick Start
 
