@@ -162,9 +162,11 @@ inputs, two replicates per condition.
         | Reference tables | *Peak QC summary* |
 
     !!! warning "The General statistics tile has no data on a 2.1.0 report"
-        The reports published by the 2.1.0 runs carry no `general_stats_table`, so
-        the tile of `Run summary` reports a render error, as the screenshot above
-        shows. Binding it is a template issue, not a broken run.
+        The reports published by the 2.1.0 runs carry no `general_stats_table`:
+        MultiQC assembles that table from the modules that ran, and this
+        pipeline's `multiqc_config` leaves it out. The tile of `Run summary`
+        therefore fails at render time, which is why the section is collapsed in
+        the screenshot above. Binding it is a template issue, not a broken run.
 
 === ":material-waves:{ .mc-cyan } Signal"
 
