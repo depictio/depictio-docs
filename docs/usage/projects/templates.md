@@ -98,27 +98,33 @@ The recipe Python code stays generic — path resolution happens via variable su
 | `--skip-dashboard-import` | `flag` | no | Skip automatic dashboard import |
 | `--project-name` | `string` | no | Custom project name |
 
-### Choosing a template without naming one <small>(v1.10.0+)</small> { #pipeline-id }
+### How the CLI picks a template when you name none <small>(v1.10.0+)</small> { #pipeline-id }
 
-You do not type this flag. `--pipeline-id nf-core/ampliseq/2.16.0` names the
-*pipeline* rather than a Depictio template, and the CLI resolves the bundled
-template from it. It exists so an automated trigger can forward what its engine
-reported on every run: it is ignored whenever `--template` or
-`--project-config-path` is given, so it never collides with your own choice. This
-is what lets the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) work
-with no template configured anywhere.
+This only concerns pipelines Depictio ships a template for. A pipeline of your own
+needs a project YAML, passed with `--project-config-path`, which skips everything
+below. From the Nextflow trigger, see
+[a pipeline with no bundled template](../../depictio-cli/nextflow-trigger.md#a-pipeline-with-no-bundled-template).
 
-An unmatched pipeline id is an error, not a fallback. Only the version segment is
-flexible: `latest`, or no version at all, takes the newest template shipped for
-that pipeline.
+`depictio-cli run --data-root <dir>` works without `--template`. The CLI takes the
+first answer it finds:
 
-When nothing is passed at all, the run directory answers on its own: nf-core
-writes `pipeline_info/software_versions.yml`, and reading it gives the pipeline,
-its version, the engine version and the tools that executed. That path does
-tolerate a version gap, taking the newest template that is not newer than the
-run, because a newer template describes outputs the run never wrote. A run older
-than every shipped template takes the lowest one, and a version that cannot be
-parsed takes the newest. The provenance is recorded on the workflow either way.
+| Source | Set by | A version with no template |
+| --- | --- | --- |
+| `--template nf-core/ampliseq/2.16.0` | you | error |
+| `--pipeline-id nf-core/ampliseq/2.16.0` | the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md), from the pipeline's manifest | error |
+| `pipeline_info/` in the run directory | nf-core, at the end of every run | the closest older template |
+
+`--pipeline-id` names the pipeline that produced the data, not a Depictio template,
+and you do not normally type it. For both flags, `latest` or no version takes the
+newest template.
+
+Reading `pipeline_info/` is more forgiving, because nobody chose the version: with
+templates for ampliseq 2.14.0, 2.16.0 and 2.18.0, a 2.17.0 run gets 2.16.0, never
+2.18.0, whose data collections point at files that run never wrote. A run older than
+every template gets the oldest.
+
+Whichever source wins, what `pipeline_info/` holds (the pipeline, its version, the
+engine version and the tools that ran) is recorded on the workflow.
 
 ---
 

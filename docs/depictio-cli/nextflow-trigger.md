@@ -231,6 +231,7 @@ service account, set `params.depictio_user` and see
     | No `[depictio]` lines at all | The snippet was never included, or `params.depictio_enabled` is `false` |
     | `Pipeline did not complete successfully, skipping ingestion` | Working as designed. Fix the pipeline first |
     | `No data root to ingest` | Neither `params.depictio_data_root` nor `params.outdir` is set |
+    | `No bundled depictio template matches pipeline` | The pipeline declares a manifest, Depictio ships no template for its name and version, and no project YAML is set. For your own pipeline, set `params.depictio_project_config` as in [a pipeline with no bundled template](#a-pipeline-with-no-bundled-template). For an nf-core release with no template, pin `params.depictio_template` to a shipped version |
     | `Could not start the Depictio CLI` | `depictio-cli` is not on the **head job's** PATH. Installing it in the pipeline's containers does not help. Point `params.depictio_cli_executable` at an absolute path, or at a container |
     | `Ingestion trigger failed, pipeline result unchanged` | Anything else, with the exception on that line. Your pipeline's result is never affected |
     | `depictio-cli exited with code N` | The ingestion itself failed. The CLI's own output is in the lines above |
