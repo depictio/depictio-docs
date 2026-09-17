@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.9.2",
-    "x-generated-at": "2026-09-01T21:27:59Z",
-    "x-depictio-version": "v1.9.2"
+    "version": "1.10.1",
+    "x-generated-at": "2026-09-14T00:33:45Z",
+    "x-depictio-version": "v1.10.1"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -4282,7 +4282,7 @@
           "Utils"
         ],
         "summary": "Status",
-        "description": "Check if the server is online.\nThis endpoint is public and does not require authentication.",
+        "description": "Check if the server is online.\nThis endpoint is public and does not require authentication.\n\nAlso reports where the viewer lives. Clients that ingest data have no other\nway to build a link to what they just created: the CLI knows `api_base_url`\nand nothing else, and the two are routinely different hosts and ports. This\nis the deployment's public front door, the address people type into a\nbrowser, so publishing it here adds no exposure that browsing to it does not.",
         "operationId": "status_depictio_api_v1_utils_status_get",
         "responses": {
           "200": {
@@ -12451,7 +12451,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -12754,7 +12754,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -12817,7 +12817,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -13005,7 +13005,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -13574,6 +13574,62 @@
         "type": "object",
         "title": "IngestionFinishRequest"
       },
+      "IngestionPipeline": {
+        "properties": {
+          "engine": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Engine"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "engine_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Engine Version"
+          },
+          "tool_count": {
+            "type": "integer",
+            "title": "Tool Count",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "title": "IngestionPipeline",
+        "description": "What produced the data, as the run-info readers recorded it.\n\nRead back from the workflow config rather than recomputed: these values\ndescribe the run that was ingested, and the directory it came from may be\nlong gone by the time anyone opens the report."
+      },
       "IngestionReport": {
         "properties": {
           "project": {
@@ -13593,6 +13649,21 @@
             "type": "string",
             "title": "Manifest Source",
             "default": "live_project"
+          },
+          "triggered_by": {
+            "type": "string",
+            "title": "Triggered By",
+            "default": "manual"
+          },
+          "pipeline": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IngestionPipeline"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "variables": {
             "items": {
@@ -14822,7 +14893,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -15030,7 +15101,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -15169,6 +15240,11 @@
                 "type": "null"
               }
             ]
+          },
+          "triggered_by": {
+            "type": "string",
+            "title": "Triggered By",
+            "default": "manual"
           }
         },
         "additionalProperties": false,
@@ -15685,7 +15761,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -15791,7 +15867,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -16024,7 +16100,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6a97435af5bc80272981a2c2"
+            "default": "6aa740e595dbb3125b196ff5"
           }
         },
         "type": "object",
@@ -16147,7 +16223,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -16266,7 +16342,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -16348,7 +16424,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -16434,7 +16510,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -16607,7 +16683,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -16782,7 +16858,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -16840,6 +16916,53 @@
               }
             ],
             "title": "Workflow Parameters"
+          },
+          "engine_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Engine Name"
+          },
+          "pipeline_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pipeline Version"
+          },
+          "nextflow_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nextflow Version"
+          },
+          "tools_executed": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tools Executed"
           }
         },
         "additionalProperties": false,
@@ -16852,7 +16975,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
@@ -16950,7 +17073,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6a97435af5bc80272981a2c1"
+            "default": "6aa740e595dbb3125b196ff4"
           },
           "description": {
             "anyOf": [
