@@ -77,6 +77,9 @@ extra_css:
 extra_javascript:
   - javascripts/triangular-animation.js
   - javascripts/catalog-fullscreen.js
+  - javascripts/template-version.js
+  - javascripts/doc-sections.js
+  - javascripts/template-catalog.js
 
 # Markdown Extensions
 markdown_extensions:
@@ -275,6 +278,16 @@ nav:
           - pipeline-templates/nf-core/index.md
           - ampliseq: pipeline-templates/nf-core/ampliseq.md
           - viralrecon: pipeline-templates/nf-core/viralrecon.md
+          - variantbenchmarking: pipeline-templates/nf-core/variantbenchmarking.md
+          - differentialabundance: pipeline-templates/nf-core/differentialabundance.md
+          - funcscan: pipeline-templates/nf-core/funcscan.md
+          - airrflow: pipeline-templates/nf-core/airrflow.md
+          - rnafusion: pipeline-templates/nf-core/rnafusion.md
+          - rnaseq: pipeline-templates/nf-core/rnaseq.md
+          - taxprofiler: pipeline-templates/nf-core/taxprofiler.md
+          - chipseq: pipeline-templates/nf-core/chipseq.md
+          - atacseq: pipeline-templates/nf-core/atacseq.md
+          - cutandrun: pipeline-templates/nf-core/cutandrun.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md
