@@ -37,83 +37,72 @@ the viewer's [CLI agents page](../usage/get_started.md#create-a-cli-configuratio
 tells you to use, and the one the handler falls back to, so there is nothing to
 point at.
 
-**3. Turn the trigger on, and check it took.**
+**3. Turn the trigger on, then check the CLI reaches your server.**
 
 ```bash
 depictio-cli config nextflow --install
 depictio-cli config check
 ```
 
-??? info "What `depictio.config` does"
-
-    It is a plain Nextflow config file that adds one `workflow.onComplete`
-    handler, and nothing else. It is **additive**: your pipeline's own
-    `onComplete` still runs, and no other setting is touched.
-
-    The handler fires only when the run succeeded, and everything it does from
-    there is best effort. A missing CLI, an unreachable server or a failed
-    ingestion logs a `[depictio]` warning and leaves your pipeline's exit status
-    alone.
-
-    Set `params.depictio_enabled = false` to turn it off for a run without
-    removing the include. The file is
-    [`depictio/cli/configs/nextflow/depictio.config`](https://github.com/depictio/depictio/blob/main/depictio/cli/configs/nextflow/depictio.config),
-    and it is commented top to bottom.
+`--install` copies the handler to `~/.depictio/nextflow.config` and adds one
+`includeConfig` line for it to `~/.nextflow/config` (`$NXF_HOME/config` if you
+set `NXF_HOME`), which Nextflow reads before every run. Your pipeline's own
+`onComplete` still runs. `--uninstall` removes the line, and
+`--depictio_enabled false` skips Depictio for one run. Run `--install` again
+after upgrading `depictio-cli`, so the copy follows the new version.
 
 !!! tip "One run instead of the whole machine"
     Skip step 3 and add `-c $(depictio-cli config nextflow)` to your
     `nextflow run` command. That subshell prints the path of the snippet bundled
     with the CLI, so there is still no file to download and none to keep in sync.
 
-!!! warning "Let `--install` write the include for you"
-    It copies the handler to `~/.depictio/nextflow.config` and adds an
-    `includeConfig` for it to `$NXF_HOME/config` (`~/.nextflow/config` unless you
-    set `NXF_HOME`), which Nextflow reads before every run. `--uninstall` removes the block, and anything else in that file is
-    left alone.
-
-    Writing that include by hand against a path inside your Python environment is
-    the one thing to avoid: the day that environment is recreated, **every**
-    pipeline on the machine fails to parse its configuration.
-
 ## Run your pipeline
 
 Nothing changes in the command:
 
 ```bash
-nextflow run nf-core/ampliseq -profile docker --outdir results
+nextflow run nf-core/ampliseq -r 2.16.0 -profile docker --outdir results
 ```
 
 When the last task finishes, the handler ingests your `--outdir`, here
 `results`, and the log ends with a `[depictio]` block:
 
 ```text
+[depictio] ==============================================================
 [depictio] 📊 Depictio ingestion
+[depictio] ==============================================================
 [depictio] 📂 Data root  : /work/results
 [depictio] 🔧 Executable : depictio-cli
 [depictio] 💻 Command    :
-[depictio] depictio-cli run \
-[depictio]   --CLI-config-path /home/alice/.depictio/CLI.yaml \
-[depictio]   --data-root /work/results \
-[depictio]   --triggered-by nextflow \
-[depictio]   --pipeline-id nf-core/ampliseq/2.16.0
-[depictio] ----------------------------------------------------------
+[depictio]     depictio-cli run \
+[depictio]         --CLI-config-path /home/alice/.depictio/CLI.yaml \
+[depictio]         --data-root /work/results \
+[depictio]         --triggered-by nextflow \
+[depictio]         --pipeline-id nf-core/ampliseq/2.16.0
+[depictio] --------------------------------------------------------------
 [depictio] • ✅ Resolved pipeline 'nf-core/ampliseq/2.16.0' to a bundled template.
+[depictio] …
 [depictio] • 📘 Project: https://depictio.example.org/projects/6a9ab9a6a1d2ead141378e27
-[depictio] • 📘 Dashboard 'Ampliseq': https://depictio.example.org/dashboard/6a9acdf3835e12072990459a
+[depictio] • 📘 Dashboard 'nf-core/ampliseq': https://depictio.example.org/dashboard/6a9acdf3835e12072990459a
 [depictio] ✅ Ingestion finished for /work/results
 ```
 
 You configured no template because the pipeline already knows what it is. The
-handler forwards its manifest name and version as `--pipeline-id`, and the CLI
-resolves the matching [bundled template](../pipeline-templates/nf-core/index.md)
-from that. To pin one instead, set `params.depictio_template`.
+handler forwards the name and version from the pipeline's `manifest` block as
+`--pipeline-id`, and the CLI resolves the matching
+[bundled template](../pipeline-templates/nf-core/index.md) from that. To pin one
+instead, set `params.depictio_template`.
 
 When `params.outdir` is not the directory to ingest, point
 `params.depictio_data_root` at the right one and the handler passes that as
 [`--data-root`](usage.md) instead.
 
+Set these per run on the command line, as `--depictio_template <id>`, or in the
+pipeline's own `nextflow.config`. Keep them out of `~/.nextflow/config`, where
+they would apply to every pipeline on the machine.
+
 <figure markdown="span">
-  [![The project's ingestion tab, with a Triggered by Nextflow badge next to the run](../images/guides/nextflow-trigger/ingestion_badge.jpg)](../images/guides/nextflow-trigger/ingestion_badge.jpg){target=_blank}
+  [![The project's ingestion tab, with a Triggered by Nextflow badge in the report header](../images/guides/nextflow-trigger/ingestion_badge.jpg)](../images/guides/nextflow-trigger/ingestion_badge.jpg){target=_blank}
   <figcaption>A project created this way carries a <strong>Triggered by Nextflow</strong> badge, so it is distinguishable from one someone ingested by hand.</figcaption>
 </figure>
 
@@ -142,15 +131,16 @@ It needs no container and no bioinformatics tool.
 
 ## Running it again
 
-A second execution finds its project already on the server. The CLI refuses to
-touch it and exits 2, which is safe but stops every re-run. Say which one you
-meant:
+A bundled template gives every run the same project name, so your next ampliseq
+run, even on new samples, is not ingested: the project already exists, the log
+shows `depictio-cli exited with code 2`, and the pipeline still succeeds. Say
+which one you meant:
 
-| You want | Set | What happens |
+| You want | Add to `nextflow run` | What happens |
 | --- | --- | --- |
-| A project per execution | a distinct `params.depictio_project` per run | Each run creates its own project. A bundled template names its project, so without this every run targets the same one |
-| One project, many runs | `params.depictio_attach = true` | This run is registered as an additional run of the existing project, which the first run must have created. Nothing already ingested is lost |
-| To re-ingest over the top | `params.depictio_update = true` | The project's configuration is refreshed and the same data root is ingested again, rebuilding its tables |
+| A project per run | `--depictio_project study-B` | This run creates its own project, under that name |
+| One project, many runs | `--depictio_attach true` | This run is added to the existing project as another run. Nothing already ingested is lost |
+| To re-ingest the same output | `--depictio_update true` | The project's configuration is refreshed and the same data root is ingested again |
 
 !!! warning "`depictio_update` re-imports the dashboards"
     That discards edits made in the UI, unattended. For another run of the same
@@ -161,40 +151,41 @@ meant:
 Two things that machine usually cannot offer: a writable home directory to hold
 a secret, and a Python environment.
 
-**Keep the token out of the file.** Commit a `CLI.yaml` with no secret in it and
-inject the credentials from the environment:
+**Keep the token out of the file.** The CLI always reads a `CLI.yaml`, but the
+token and the server URL can come from the environment and override it:
 
 ```bash
+export DEPICTIO_CLI_CONFIG_PATH=/path/to/CLI.yaml
 export DEPICTIO_CLI_TOKEN=<long-lived CLI token>
 export DEPICTIO_CLI_API_BASE_URL=https://depictio.example.org
 ```
 
-**Reach the CLI through a container.** `depictio_cli_executable` accepts a list,
-so it can be a whole `docker run` invocation:
+**Reach the CLI through a container.** Where Docker is available,
+`depictio_cli_executable` accepts a list, so it can be a whole `docker run`
+invocation. This one belongs in `~/.nextflow/config`, next to the include, since
+it describes the machine:
 
 ```groovy
-def home = System.getProperty('user.home')
-
 params.depictio_cli_executable = [
     'docker', 'run', '--rm',
     '-v', '{DATA_ROOT}:{DATA_ROOT}',
-    '-v', "${home}/.depictio:${home}/.depictio:ro",
+    '-v', "${System.getProperty('user.home')}/.depictio:${System.getProperty('user.home')}/.depictio:ro",
+    '-e', 'DEPICTIO_CLI_TOKEN',
+    '-e', 'DEPICTIO_CLI_API_BASE_URL',
     '--network', 'host',
     'ghcr.io/depictio/depictio-cli:1.10.0',
 ]
 ```
 
-`{DATA_ROOT}` is substituted when the pipeline completes, and it is the only way
-to mount the directory being ingested: the list itself is built when the config
-is *parsed*, and `params.outdir` is not set yet at that point, so a
-`"${params.outdir}"` written in there expands to the string `null` and docker
-mounts a directory called `null`.
+Use `{DATA_ROOT}` for the directory being ingested: the handler fills it in when
+the pipeline completes, while a `${params.outdir}` in the list is still `null`
+when the file is read.
 
-Both binds map a host path onto the **same path inside the container**. That is
-not cosmetic: the handler builds absolute host paths and passes them through
-verbatim, so a bind that lands them anywhere else makes the CLI fail on a path it
-cannot see. The image sets `depictio-cli` as its entrypoint, so the list stops at
-the image name.
+Each bind maps a host path onto the **same path inside the container**, because
+the handler passes absolute host paths through as they are. If
+`DEPICTIO_CLI_CONFIG_PATH` points outside `~/.depictio`, mount that directory the
+same way. The container runs as UID 1000, so the mounted `CLI.yaml` must be
+readable by that user.
 
 For results that should belong to whoever launched the run rather than to a
 service account, set `params.depictio_user` and see
@@ -218,8 +209,10 @@ service account, set `params.depictio_user` and see
     | `depictio_user` | none | `--user` |
     | `depictio_cli_executable` | `depictio-cli` | the executable, or a list for a container invocation. `{DATA_ROOT}` in a list element is substituted when the pipeline completes |
 
-    Put your settings in the same file that carries the `includeConfig`. A
-    `--depictio_*` value on the `nextflow run` command line always wins.
+    Only `depictio_cli_config` and `depictio_cli_executable` describe the
+    machine and belong in `~/.nextflow/config`. Set the others on the
+    `nextflow run` command line or in the pipeline's own `nextflow.config`. A
+    `--depictio_*` value on the command line always wins.
 
 ??? question "Nothing happened"
 
@@ -234,6 +227,7 @@ service account, set `params.depictio_user` and see
     | `No bundled depictio template matches pipeline` | The pipeline declares a manifest, Depictio ships no template for its name and version, and no project YAML is set. For your own pipeline, set `params.depictio_project_config` as in [a pipeline with no bundled template](#a-pipeline-with-no-bundled-template). For an nf-core release with no template, pin `params.depictio_template` to a shipped version |
     | `Could not start the Depictio CLI` | `depictio-cli` is not on the **head job's** PATH. Installing it in the pipeline's containers does not help. Point `params.depictio_cli_executable` at an absolute path, or at a container |
     | `Ingestion trigger failed, pipeline result unchanged` | Anything else, with the exception on that line. Your pipeline's result is never affected |
+    | `already exists on this server`, then `exited with code 2` | An earlier run created this project. See [Running it again](#running-it-again) |
     | `depictio-cli exited with code N` | The ingestion itself failed. The CLI's own output is in the lines above |
 
 ## Next steps

@@ -205,8 +205,9 @@ Once enabled, any of these will move a live dashboard:
   above.
 - **A pipeline that ingests itself** <small>(v1.10.0+)</small>: a Nextflow
   `workflow.onComplete` handler runs the CLI on the output directory when the run
-  finishes, so the dashboard moves with no one at a keyboard. See
-  [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+  finishes. With `--depictio_attach true`, each new run of the pipeline moves the
+  dashboard with no one at a keyboard. See
+  [Nextflow trigger](../../depictio-cli/nextflow-trigger.md#running-it-again).
 
 ### Try it locally
 

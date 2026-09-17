@@ -24,7 +24,7 @@ Celery task history (figures, screenshots, MultiQC, advanced viz, Delta tables) 
 
 ## Ingestion
 
-Ingestion runs, newest first: **status**, a source badge, instance label or hostname, project, and user. Uploads made through the web UI are recorded alongside CLI runs; recording is best-effort and never blocks an upload.
+Ingestion runs, newest first: **status**, a `CLI` or `UI` source badge (a run from the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) shows `CLI`), instance label or hostname, project, and user. Uploads made through the web UI are recorded alongside CLI runs; recording is best-effort and never blocks an upload.
 
 Expand a run for its **provenance** field grid: run id, host, CLI version, the resolved project id, the invoking command line, the CLI and project config paths, and the data root. Long paths are shortened to `head/…/tail`, with the full value in a tooltip and click-to-copy. Below it are two tables:
 
