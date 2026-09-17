@@ -107,6 +107,19 @@ At the bottom of the sidebar, you will find:
     Both "public" and "private" dashboards are listed in the **Dashboards** section. Public dashboards are accessible to all users, while private dashboards are only visible to the user who created them.
     Only the user who created a private dashboard can edit, or delete it.
 
+#### <span style="color: #45B8AC;">:material-link-variant:</span> Share a filtered listing <small>(v1.10.1+)</small> { #share-a-filtered-listing }
+
+The filters of `/dashboards` and `/projects` are kept in the URL. Set them, then
+press the link button in the toolbar to copy a link to that view:
+
+| Link | Shows |
+| --- | --- |
+| `/dashboards?template=nf-core/rnaseq` | Dashboards built from nf-core/rnaseq, any version |
+| `/projects?template=nf-core/rnaseq,nf-core/viralrecon` | Projects built from either pipeline |
+
+Whoever opens it sees a **Shared view** banner, with **Show everything** to clear the
+filters. The link grants no access: it only narrows what they could already open.
+
 ## <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects section (/projects)
 
 
