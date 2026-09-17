@@ -1389,6 +1389,22 @@ body.catalog-fs-lock .md-main {
   border-color: #b45f06;
 }
 
+.template-status-draft {
+  background: #eceff1;
+  color: #455a64;
+  border: 1px solid #b0bec5;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78em;
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .template-status-draft {
+  background: #1f2a30;
+  color: #b0bec5;
+  border-color: #455a64;
+}
+
 
 /* ── Individual template page banner (tinted card) ── */
 .template-banner {
@@ -1448,7 +1464,8 @@ body.catalog-fs-lock .md-main {
 
 /* Status pill: own column, vertically centered (via the grid's align-items) */
 .template-status-reviewed.template-banner-badge,
-.template-status-experimental.template-banner-badge {
+.template-status-experimental.template-banner-badge,
+.template-status-draft.template-banner-badge {
   position: relative;
   justify-self: end;
   white-space: nowrap;
@@ -1503,17 +1520,24 @@ body.catalog-fs-lock .md-main {
 
 /* ── Status level cards ─────────────────────────────────────────────── */
 
+/* A staircase, lowest trust on the left: the cards stretch to a shared
+   bottom edge and each margin lifts the next card's top one step higher. */
 .status-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin: 16px 0 24px;
 }
+
+.status-cards .status-card:nth-child(1) { margin-top: 60px; }
+.status-cards .status-card:nth-child(2) { margin-top: 40px; }
+.status-cards .status-card:nth-child(3) { margin-top: 20px; }
 
 @media (max-width: 44.9375em) {
   .status-cards {
     grid-template-columns: 1fr;
   }
+  .status-cards .status-card:nth-child(n) { margin-top: 0; }
 }
 
 .status-card {
@@ -1556,6 +1580,9 @@ body.catalog-fs-lock .md-main {
 
 .status-experimental { border-top: 3px solid #FF9800; }
 .status-experimental .status-icon { color: #FF9800; }
+
+.status-draft { border-top: 3px solid #90A4AE; }
+.status-draft .status-icon { color: #90A4AE; }
 
 
 /* nf-core logo beside the "nf-core" group label in the left nav sidebar.

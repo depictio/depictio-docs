@@ -231,11 +231,13 @@ notes and megatest bookkeeping stay in the depictio repo.
 
 ## Badge promotion
 
-Submitted templates start **Experimental** and are promoted as they're reviewed
-and tested:
+A template starts **Draft** while it still needs a review to be usable, or
+**Experimental** when it works but is shared as-is. Both are promoted as they're
+reviewed and tested:
 
 | Badge | Criteria |
 |-------|----------|
+| <span style="white-space: nowrap">:material-pencil-outline:{ style="color: #90A4AE" } **Draft**</span> | Generated and not yet reviewed. Expect it to need fixes before it is usable. |
 | <span style="white-space: nowrap">:material-flask-outline:{ style="color: #FF9800" } **Experimental**</span> | Shared as-is. PR submitted; feedback and PRs welcome. |
 | <span style="white-space: nowrap">:material-check-circle-outline:{ style="color: #2196F3" } **Reviewed**</span> | Tested, CI passes, reviewed by the Depictio team or community. |
 | <span style="white-space: nowrap">:material-shield-check:{ style="color: #4CAF50" } **Certified**</span> | Validated by the pipeline lead developer. Highest trust level. |

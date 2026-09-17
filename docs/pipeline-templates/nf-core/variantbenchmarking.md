@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/variantbenchmarking" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
+  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
 </div>
 
 The variantbenchmarking template turns a benchmarking run into a precision/recall funnel:
@@ -425,7 +425,7 @@ It fetches the `small/` and `indel/` summary tables plus the hap.py per-sample f
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run them on their own data and signed them off yet, which is what keeps the status Experimental.</span>
+    <span class="tpl-credit-note">Nobody has run them on their own data and signed them off yet, which is what keeps the status Draft.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

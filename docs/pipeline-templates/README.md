@@ -32,6 +32,7 @@ depictio-cli run \
     <button type="button" class="tpl-chip" data-tpl-status="certified"><i class="mdi mdi-shield-check"></i> Certified</button>
     <button type="button" class="tpl-chip" data-tpl-status="reviewed"><i class="mdi mdi-check-circle-outline"></i> Reviewed</button>
     <button type="button" class="tpl-chip" data-tpl-status="experimental"><i class="mdi mdi-flask-outline"></i> Experimental</button>
+    <button type="button" class="tpl-chip" data-tpl-status="draft"><i class="mdi mdi-pencil-outline"></i> Draft</button>
   </div>
   <div class="tpl-catalog-views" role="group" aria-label="View">
     <button type="button" class="tpl-viewbtn is-active" data-tpl-view="grid" title="Grid view" aria-label="Grid view"><i class="mdi mdi-view-grid-outline"></i></button>
@@ -69,7 +70,7 @@ depictio-cli run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/variantbenchmarking/" data-tpl-name="nf-core/variantbenchmarking" data-tpl-status="experimental" data-tpl-version="1.4.0" data-tpl-keywords="benchmark variant caller truth set precision recall f1 germline somatic indel structural variant sv giab">
+  <a class="template-card" href="nf-core/variantbenchmarking/" data-tpl-name="nf-core/variantbenchmarking" data-tpl-status="draft" data-tpl-version="1.4.0" data-tpl-keywords="benchmark variant caller truth set precision recall f1 germline somatic indel structural variant sv giab">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/variantbenchmarking/master/docs/images/nf-core-variantbenchmarking_logo_dark.png" alt="nf-core/variantbenchmarking">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/variantbenchmarking/master/docs/images/nf-core-variantbenchmarking_logo_light.png" alt="nf-core/variantbenchmarking">
@@ -78,12 +79,12 @@ depictio-cli run \
       <p class="template-card-desc">Benchmark variant callers against truth sets: precision, recall and F1 for germline small variants, somatic indels and structural variants.</p>
       <div class="template-card-meta">
         <span class="template-version">v1.4.0</span>
-        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/differentialabundance/" data-tpl-name="nf-core/differentialabundance" data-tpl-status="experimental" data-tpl-version="2.0.0" data-tpl-keywords="differential expression deseq2 rnaseq contrast volcano ma plot gene annotation variance stabilised">
+  <a class="template-card" href="nf-core/differentialabundance/" data-tpl-name="nf-core/differentialabundance" data-tpl-status="draft" data-tpl-version="2.0.0" data-tpl-keywords="differential expression deseq2 rnaseq contrast volcano ma plot gene annotation variance stabilised">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/differentialabundance/master/docs/images/nf-core-differentialabundance_logo_dark.png" alt="nf-core/differentialabundance">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/differentialabundance/master/docs/images/nf-core-differentialabundance_logo_light.png" alt="nf-core/differentialabundance">
@@ -92,12 +93,12 @@ depictio-cli run \
       <p class="template-card-desc">DESeq2 differential expression: per-contrast statistics, gene annotation and the variance-stabilised sample space.</p>
       <div class="template-card-meta">
         <span class="template-version">v2.0.0</span>
-        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/funcscan/" data-tpl-name="nf-core/funcscan" data-tpl-status="experimental" data-tpl-version="4.0.0" data-tpl-keywords="amr antimicrobial resistance peptides amp bgc biosynthetic gene cluster cazyme screening contigs assembly hamronization">
+  <a class="template-card" href="nf-core/funcscan/" data-tpl-name="nf-core/funcscan" data-tpl-status="draft" data-tpl-version="4.0.0" data-tpl-keywords="amr antimicrobial resistance peptides amp bgc biosynthetic gene cluster cazyme screening contigs assembly hamronization">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/funcscan/master/docs/images/nf-core-funcscan_logo_dark.png" alt="nf-core/funcscan">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/funcscan/master/docs/images/nf-core-funcscan_logo_light.png" alt="nf-core/funcscan">
@@ -106,12 +107,12 @@ depictio-cli run \
       <p class="template-card-desc">Functional screening of contigs: AMR genes, antimicrobial peptides, biosynthetic gene clusters and CAZymes.</p>
       <div class="template-card-meta">
         <span class="template-version">v4.0.0</span>
-        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/airrflow/" data-tpl-name="nf-core/airrflow" data-tpl-status="experimental" data-tpl-version="5.1.0" data-tpl-keywords="airr bcr tcr repertoire immune receptor clonal lineage immcantation presto changeo vdj">
+  <a class="template-card" href="nf-core/airrflow/" data-tpl-name="nf-core/airrflow" data-tpl-status="draft" data-tpl-version="5.1.0" data-tpl-keywords="airr bcr tcr repertoire immune receptor clonal lineage immcantation presto changeo vdj">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/airrflow/master/docs/images/nf-core-airrflow_logo_dark.png" alt="nf-core/airrflow">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/airrflow/master/docs/images/nf-core-airrflow_logo_light.png" alt="nf-core/airrflow">
@@ -120,12 +121,12 @@ depictio-cli run \
       <p class="template-card-desc">B and T cell repertoire analysis: sequence processing, repertoire composition and clonal analysis.</p>
       <div class="template-card-meta">
         <span class="template-version">v5.1.0</span>
-        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/rnafusion/" data-tpl-name="nf-core/rnafusion" data-tpl-status="experimental" data-tpl-version="4.1.3" data-tpl-keywords="fusion gene fusion rnaseq arriba starfusion fusioncatcher fusioninspector sashimi splicing cancer">
+  <a class="template-card" href="nf-core/rnafusion/" data-tpl-name="nf-core/rnafusion" data-tpl-status="draft" data-tpl-version="4.1.3" data-tpl-keywords="fusion gene fusion rnaseq arriba starfusion fusioncatcher fusioninspector sashimi splicing cancer">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/rnafusion/master/docs/images/nf-core-rnafusion_logo_dark.png" alt="nf-core/rnafusion">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/rnafusion/master/docs/images/nf-core-rnafusion_logo_light.png" alt="nf-core/rnafusion">
@@ -134,12 +135,12 @@ depictio-cli run \
       <p class="template-card-desc">Gene-fusion detection: caller consensus, per-caller evidence, in-silico validation and splice-junction analysis.</p>
       <div class="template-card-meta">
         <span class="template-version">v4.1.3</span>
-        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/rnaseq/" data-tpl-name="nf-core/rnaseq" data-tpl-status="experimental" data-tpl-version="3.26.0" data-tpl-keywords="rnaseq bulk expression salmon star quantification tpm counts transcriptome gene">
+  <a class="template-card" href="nf-core/rnaseq/" data-tpl-name="nf-core/rnaseq" data-tpl-status="draft" data-tpl-version="3.26.0" data-tpl-keywords="rnaseq bulk expression salmon star quantification tpm counts transcriptome gene">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/rnaseq/master/docs/images/nf-core-rnaseq_logo_dark.png" alt="nf-core/rnaseq">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/rnaseq/master/docs/images/nf-core-rnaseq_logo_light.png" alt="nf-core/rnaseq">
@@ -148,12 +149,12 @@ depictio-cli run \
       <p class="template-card-desc">Bulk RNA-seq quantification: MultiQC funnel, Salmon expression overview and a per-gene explorer.</p>
       <div class="template-card-meta">
         <span class="template-version">v3.26.0</span>
-        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/taxprofiler/" data-tpl-name="nf-core/taxprofiler" data-tpl-status="experimental" data-tpl-version="2.0.1" data-tpl-keywords="metagenomics taxonomy taxonomic profiling kraken2 bracken metaphlan centrifuge diamond krona taxpasta shotgun">
+  <a class="template-card" href="nf-core/taxprofiler/" data-tpl-name="nf-core/taxprofiler" data-tpl-status="draft" data-tpl-version="2.0.1" data-tpl-keywords="metagenomics taxonomy taxonomic profiling kraken2 bracken metaphlan centrifuge diamond krona taxpasta shotgun">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/taxprofiler/master/docs/images/nf-core-taxprofiler_logo_dark.png" alt="nf-core/taxprofiler">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/taxprofiler/master/docs/images/nf-core-taxprofiler_logo_light.png" alt="nf-core/taxprofiler">
@@ -162,12 +163,12 @@ depictio-cli run \
       <p class="template-card-desc">Metagenomic taxonomic profiling across many classifiers, with concordance and confidence views.</p>
       <div class="template-card-meta">
         <span class="template-version">v2.0.1</span>
-        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/chipseq/" data-tpl-name="nf-core/chipseq" data-tpl-status="experimental" data-tpl-version="1.2.0" data-tpl-keywords="chipseq chip chromatin immunoprecipitation peaks macs2 transcription factor histone narrowpeak consensus differential binding deeptools">
+  <a class="template-card" href="nf-core/chipseq/" data-tpl-name="nf-core/chipseq" data-tpl-status="draft" data-tpl-version="1.2.0" data-tpl-keywords="chipseq chip chromatin immunoprecipitation peaks macs2 transcription factor histone narrowpeak consensus differential binding deeptools">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/chipseq/master/docs/images/nf-core-chipseq_logo_dark.png" alt="nf-core/chipseq">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/chipseq/master/docs/images/nf-core-chipseq_logo_light.png" alt="nf-core/chipseq">
@@ -176,12 +177,12 @@ depictio-cli run \
       <p class="template-card-desc">Transcription-factor and histone ChIP-seq: MACS2 peaks, consensus sets per antibody and DESeq2 differential binding.</p>
       <div class="template-card-meta">
         <span class="template-version">v1.2.0</span>
-        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/atacseq/" data-tpl-name="nf-core/atacseq" data-tpl-status="experimental" data-tpl-version="1.2.2" data-tpl-keywords="atacseq chromatin accessibility ataqv macs2 peaks nucleosome tss enrichment differential accessibility">
+  <a class="template-card" href="nf-core/atacseq/" data-tpl-name="nf-core/atacseq" data-tpl-status="draft" data-tpl-version="1.2.2" data-tpl-keywords="atacseq chromatin accessibility ataqv macs2 peaks nucleosome tss enrichment differential accessibility">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/atacseq/master/docs/images/nf-core-atacseq_logo_dark.png" alt="nf-core/atacseq">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/atacseq/master/docs/images/nf-core-atacseq_logo_light.png" alt="nf-core/atacseq">
@@ -190,12 +191,12 @@ depictio-cli run \
       <p class="template-card-desc">Chromatin accessibility: ataqv library quality, MACS2 peaks, the consensus set and DESeq2 differential accessibility.</p>
       <div class="template-card-meta">
         <span class="template-version">v1.2.2</span>
-        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/cutandrun/" data-tpl-name="nf-core/cutandrun" data-tpl-status="experimental" data-tpl-version="3.1" data-tpl-keywords="cutandrun cut&run cut&tag chromatin profiling seacr macs2 peaks consensus target histone">
+  <a class="template-card" href="nf-core/cutandrun/" data-tpl-name="nf-core/cutandrun" data-tpl-status="draft" data-tpl-version="3.1" data-tpl-keywords="cutandrun cut&run cut&tag chromatin profiling seacr macs2 peaks consensus target histone">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/cutandrun/master/docs/images/nf-core-cutandrun_logo_dark.png" alt="nf-core/cutandrun">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/cutandrun/master/docs/images/nf-core-cutandrun_logo_light.png" alt="nf-core/cutandrun">
@@ -204,7 +205,7 @@ depictio-cli run \
       <p class="template-card-desc">CUT&amp;RUN / CUT&amp;Tag chromatin profiling: SEACR and MACS2 side by side, their agreement and the consensus set per target.</p>
       <div class="template-card-meta">
         <span class="template-version">v3.1</span>
-        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
   </a>
@@ -223,20 +224,12 @@ depictio-cli run \
 
 <div class="status-cards">
 
-  <div class="status-card status-certified">
+  <div class="status-card status-draft">
     <div class="status-card-header">
-      <i class="mdi mdi-shield-check status-icon"></i>
-      <span class="status-title">Certified</span>
+      <i class="mdi mdi-pencil-outline status-icon"></i>
+      <span class="status-title">Draft</span>
     </div>
-    <p class="status-desc">Validated by the <strong>pipeline lead developer</strong>. Highest trust level.</p>
-  </div>
-
-  <div class="status-card status-reviewed">
-    <div class="status-card-header">
-      <i class="mdi mdi-check-circle-outline status-icon"></i>
-      <span class="status-title">Reviewed</span>
-    </div>
-    <p class="status-desc">Tested, CI passes, reviewed by the Depictio team or community.</p>
+    <p class="status-desc">Generated and not yet reviewed. Expect it to need fixes before it is usable.</p>
   </div>
 
   <div class="status-card status-experimental">
@@ -247,6 +240,22 @@ depictio-cli run \
     <p class="status-desc">Shared as-is. Feedback and PRs welcome.</p>
   </div>
 
+  <div class="status-card status-reviewed">
+    <div class="status-card-header">
+      <i class="mdi mdi-check-circle-outline status-icon"></i>
+      <span class="status-title">Reviewed</span>
+    </div>
+    <p class="status-desc">Tested, CI passes, reviewed by the Depictio team or community.</p>
+  </div>
+
+  <div class="status-card status-certified">
+    <div class="status-card-header">
+      <i class="mdi mdi-shield-check status-icon"></i>
+      <span class="status-title">Certified</span>
+    </div>
+    <p class="status-desc">Validated by the <strong>pipeline lead developer</strong>. Highest trust level.</p>
+  </div>
+
 </div>
 
 ---
@@ -255,13 +264,11 @@ depictio-cli run \
 
 A template bundles:
 
-- :material-cog: **Project configuration** — workflows, data collections, and cross-DC links with `{VAR_NAME}` placeholders
-- :material-chef-hat: **Recipes** — Python transforms that convert raw pipeline outputs into dashboard-ready tables
-- :material-view-dashboard: **Dashboard YAML** — imported automatically on first run, with template variable substitution
-- :material-link: **Cross-DC links** — enable interactive filtering across data collections
-- :material-seed: **Recipe seeds** — each recipe's output committed as a `.tsv`, so the bundled project can be explored, and re-ingested, without the pipeline run behind it <small>(read by the CLI since v1.6.0)</small>
-
-See [Template System Reference](../usage/projects/templates.md) for the YAML format and resolution mechanics, [Recipe seeds](../usage/projects/templates.md#recipe-seeds) for how the seeds are picked up, and [Recipes](../usage/projects/recipes.md) for how data transformations work.
+- :material-cog: **[Project configuration](../usage/projects/templates.md#template-yaml-structure)**: workflows, data collections and cross-DC links, with [`{VAR_NAME}` placeholders](../usage/projects/templates.md#template-variables)
+- :material-chef-hat: **[Recipes](../usage/projects/recipes.md)**: Python transforms that turn raw pipeline outputs into dashboard-ready tables
+- :material-view-dashboard: **[Dashboard YAML](../features/yaml-sync.md)**: imported on the first run, with the template variables substituted
+- :material-link: **[Cross-DC links](../usage/projects/templates.md#cross-dc-links)**: interactive filtering across data collections
+- :material-seed: **[Recipe seeds](../usage/projects/templates.md#recipe-seeds)**: each recipe's output committed as a `.tsv`, so the bundled project can be explored, and re-ingested, without the pipeline run behind it <small>(v1.6.0+)</small>
 
 ---
 

@@ -8,6 +8,7 @@ const TPL_STATUS_ICON = {
   certified: 'mdi-shield-check',
   reviewed: 'mdi-check-circle-outline',
   experimental: 'mdi-flask-outline',
+  draft: 'mdi-pencil-outline',
 };
 
 function tplCardFields(card) {
@@ -23,7 +24,7 @@ function tplCardFields(card) {
 
 /* Statuses sort by trust rather than alphabetically, which is the order the
    status-levels section explains them in. */
-const TPL_STATUS_RANK = { certified: 0, reviewed: 1, experimental: 2 };
+const TPL_STATUS_RANK = { certified: 0, reviewed: 1, experimental: 2, draft: 3 };
 
 function tplCompareVersions(a, b) {
   const parse = (v) => v.split('.').map((part) => parseInt(part, 10) || 0);
