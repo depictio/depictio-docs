@@ -117,7 +117,7 @@ everything else you have already picked, which of these values still lead somewh
 
 For each control, the answer is computed against every **other** active filter, with that
 control's own selection excluded, since otherwise a control would grey out everything it
-did not itself select. Values that can still narrow the data carry a teal marker; values
+did not itself select. Values that can still narrow the data carry a marker in the analysis grouping colour; values
 that would return nothing are dimmed, disabled and sorted last, and each control carries
 an `n/N available` badge that turns orange when nothing remains.
 
@@ -147,6 +147,14 @@ starting at the unfiltered row count and narrowing as each is applied. Every del
 data collection gets its own bar in each band, side by side, so a filter that guts one
 collection while leaving another untouched is visible at a glance. Bars can be labelled
 with rows, percent of start, or percent of the previous stage.
+
+Since **v1.11.0** a switch at the top of the overview picks what it counts: **Rows by
+data collection**, as above, or **Values of a column**. The second follows one column,
+picked with **Data collection** and **Column**, and charts how many of its distinct
+values survive each stage. A matrix under the chart shows which stage removed each value,
+searchable and capped at 200 rows. A stage that comes from a saved
+[selection group](interactive-selection-filtering.md#selection-groups) takes that
+group's colour.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-overview-modal.png" target="_blank">
