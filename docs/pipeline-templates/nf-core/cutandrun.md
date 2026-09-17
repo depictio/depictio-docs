@@ -111,12 +111,13 @@ no `params.json` at 3.1, so `DATA_ROOT` is the only variable.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Four tabs, read as a funnel: are the libraries clean and is each target enriched
-over its control, what did each caller call, how much of that the two share, and
-how much of it both replicates support. Each tab below carries the **same icon
-and colour the dashboard gives it**. `Sample filters` is persistent and pinned
-to the top of every tab, `Reference tables` to the bottom. The IgG controls are
-samples throughout; only the peak collections omit them.
+Five tabs, read as a funnel: are the libraries clean and is each target enriched
+over its control, what the tool tables say about that signal, what did each
+caller call, how much of that the two share, and how much of it both replicates
+support. Each tab below carries the **same icon and colour the dashboard gives
+it**. `Sample filters` is persistent and pinned to the top of every tab,
+`Reference tables` to the bottom. The IgG controls are samples throughout; only
+the peak collections omit them.
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
@@ -124,15 +125,12 @@ samples throughout; only the peak collections omit them.
 
     [![MultiQC dashboard](../../images/pipeline-templates/nf-core/cutandrun/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Four cards on the run's peak yield, then FastQC and Trim Galore, then
-    bowtie2 against the target genome and against the spike-in: a library whose
-    spike-in alignment collapses is not comparable to the others even when its
-    target alignment looks fine. The deepTools fingerprint is the tab's point,
-    and three tiles below it read the tables behind those pictures. One binds
-    the new `scatter_xy` advanced-viz kind, coverage concentration against
-    divergence from a uniform library, which pulls the targets away from the
-    flat controls. The fragment-length ladder closes the tab: a flat curve
-    there means the digestion did not work.
+    The general statistics table, then FastQC and Trim Galore, then bowtie2
+    against the target genome and against the spike-in: a library whose spike-in
+    alignment collapses is not comparable to the others even when its target
+    alignment looks fine. The deepTools panels close the tab, fingerprint first,
+    which is what says whether a target rises above its IgG control at all. The
+    tables behind those pictures are on the Signal tab.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -142,12 +140,37 @@ samples throughout; only the peak collections omit them.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards |
+        | Sample sheet | 1 card, *Sample hub* |
+        | Run at a glance | *General statistics* |
         | Read quality | 4 MultiQC panels (FastQC, cutadapt) |
         | Alignment and spike-in | 4 MultiQC panels (bowtie2, samtools) |
-        | Enrichment over the control | 4 deepTools MultiQC panels + 3 advanced visualizations |
-        | Fragment lengths | 4 cards + *Fragment length distribution*, *Cumulative fragment length* |
-        | Reference tables | *Sample hub*, *SEACR QC summary* |
+        | Enrichment over the control | 4 deepTools MultiQC panels |
+        | Reference tables | *SEACR QC summary* |
+
+=== ":material-waves:{ .mc-violet } Signal"
+
+    *The nucleosomal ladder, and the deepTools tables behind the MultiQC pictures.*
+
+    [![Signal dashboard](../../images/pipeline-templates/nf-core/cutandrun/signal_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/signal_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    None of this reaches a MultiQC panel: the fragment histogram and the three
+    deepTools tables are files of their own. For H3K4me3 the ladder should show a
+    clear mononucleosome peak, and a flat distribution means the digestion did not
+    work. Below it, the fingerprint scatter puts every library on one plane,
+    coverage concentration against divergence from a uniform library, so the
+    targets separate from the IgG controls; the PCA reads the `plotPCA` loadings
+    with the variance each component explains; and the correlation matrix is
+    clustered on both axes, where a block spanning two targets is a swap or a
+    contamination.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · the persistent `Sample filters` group only.
+
+        | Section | What it holds |
+        |---|---|
+        | Fragment length structure | 4 cards, *Fragment length distribution*, *Cumulative fragment length* |
+        | Coverage concentration and sample similarity | *Coverage concentration per library*, *Samples on the first two components*, *Sample correlation matrix* |
 
 === ":material-chart-scatter-plot:{ .mc-indigo } Peak calls"
 
