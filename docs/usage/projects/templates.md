@@ -110,11 +110,6 @@ passes a third for you, `--pipeline-id nf-core/ampliseq/2.16.0`, read from the
 `manifest` block of its `nextflow.config`. Its version must match a shipped
 template, or the run stops with an error.
 
-??? info "With none of them, the CLI guesses from `pipeline_info/`"
-    It reads the pipeline and version nf-core wrote there, and takes the closest
-    template that is not newer than the run: with templates for ampliseq 2.14.0,
-    2.16.0 and 2.18.0, a 2.17.0 run gets 2.16.0.
-
 ---
 
 ## Resolution Workflow

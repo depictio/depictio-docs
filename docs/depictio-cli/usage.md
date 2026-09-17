@@ -128,7 +128,7 @@ depictio-cli run --project-config-path ./config.yaml
     |-----------|------|---------|-------------|
     | `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
     | `--project-config-path` | `string` | `""` | Pipeline configuration file path (mutually exclusive with `--template`) |
-    | `--data-root` | `path` | `null` | The run directory to ingest. Required with `--template`, where it also replaces `{DATA_ROOT}`. Since **v1.10.0** the CLI also reads which pipeline wrote it, and can [pick a template from that alone](../usage/projects/templates.md#pipeline-id) when neither `--template` nor `--project-config-path` is given. |
+    | `--data-root` | `path` | `null` | The run directory to ingest. Required with `--template`, where it also replaces `{DATA_ROOT}`. |
     | `--workflow-name` | `string` | `null` | Specific workflow to process |
     | `--data-collection-tag` | `string` | `null` | Data collection tag to process |
     | `--pipeline-id` | `string` | `null` | Which pipeline produced this data, as `<name>/<version>`. Resolves a bundled template when neither `--template` nor `--project-config-path` is given, and is ignored otherwise, so an explicit choice always wins. The version must match a shipped template. The [Nextflow trigger](nextflow-trigger.md) fills it from the pipeline's `manifest` block. (v1.10.0+) |
