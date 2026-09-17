@@ -2269,6 +2269,8 @@
       
         
       
+        
+      
     
     
     
@@ -2345,6 +2347,34 @@
     
   
     Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../depictio-cli/nextflow-trigger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nextflow trigger
   
 
     
@@ -5521,7 +5551,9 @@
 </tbody>
 </table>
 <h3 id="creating-a-basic-project">Creating a Basic Project<a class="headerlink" href="#creating-a-basic-project" title="Permanent link">¶</a></h3>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><label for="__tabbed_1_1">Web Interface</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Web Interface</label><label for="__tabbed_1_2">CLI Method</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <ol>
 <li><strong>Navigate to Projects</strong> - Click "Projects" in the main navigation</li>
 <li><strong>Create Project</strong> - Click the "Create Project" button</li>
@@ -5537,7 +5569,7 @@
 <li><strong><span style="color: #F68B33;">Start Visualizing</span></strong> - Create <span style="color: #F68B33;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z"></path></svg></span> dashboards</span> with your data</li>
 </ol>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio"><label for="__tabbed_1_2">CLI Method</label><div class="tabbed-content">
+<div class="tabbed-block">
 <ol>
 <li><strong>Create Configuration File</strong> - Write a YAML file defining your project</li>
 </ol>
@@ -5565,6 +5597,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Process the project</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>depictio-cli<span class="w"> </span>run<span class="w"> </span>--project-config-path<span class="w"> </span>basic_project.yaml
 </code></pre></div>
+</div>
 </div>
 </div>
 <h2 id="advanced-projects"><strong>Advanced</strong> Projects<a class="headerlink" href="#advanced-projects" title="Permanent link">¶</a></h2>
@@ -6148,7 +6181,9 @@ backing up immediately before a delete.</p>
 </ol>
 <h2 id="troubleshooting">🔍 Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
 <h3 id="common-issues">Common Issues<a class="headerlink" href="#common-issues" title="Permanent link">¶</a></h3>
-<div class="tabbed-set" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><label for="__tabbed_2_1">Configuration Errors</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Configuration Errors</label><label for="__tabbed_2_2">File Discovery Issues</label><label for="__tabbed_2_3">Permission Problems</label><label for="__tabbed_2_4">Performance Issues</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p><strong>Problem:</strong> YAML validation fails</p>
 <p><strong>Solutions:</strong>
 </p><div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Validate configuration</span>
@@ -6159,7 +6194,7 @@ backing up immediately before a delete.</p>
 <a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>yamllint<span class="w"> </span>config.yaml
 </code></pre></div><p></p>
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio"><label for="__tabbed_2_2">File Discovery Issues</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p><strong>Problem:</strong> Files not found during scanning</p>
 <p><strong>Solutions:</strong>
 - Verify file paths and permissions
@@ -6167,7 +6202,7 @@ backing up immediately before a delete.</p>
 - Check environment variable resolution
 - Use dry-run mode for testing</p>
 </div>
-<input id="__tabbed_2_3" name="__tabbed_2" type="radio"><label for="__tabbed_2_3">Permission Problems</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p><strong>Problem:</strong> Access denied to project resources</p>
 <p><strong>Solutions:</strong>
 - Verify user roles and permissions
@@ -6175,13 +6210,14 @@ backing up immediately before a delete.</p>
 - Confirm authentication status
 - Contact project owners for access</p>
 </div>
-<input id="__tabbed_2_4" name="__tabbed_2" type="radio"><label for="__tabbed_2_4">Performance Issues</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p><strong>Problem:</strong> Slow dashboard loading</p>
 <p><strong>Solutions:</strong>
 - Use column selection to reduce data size
 - Use links for runtime filtering instead of pre-computed joins
 - Consider data partitioning
 - Review query patterns</p>
+</div>
 </div>
 </div>
 <h3 id="debugging-commands">Debugging Commands<a class="headerlink" href="#debugging-commands" title="Permanent link">¶</a></h3>

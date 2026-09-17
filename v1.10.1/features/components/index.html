@@ -1588,6 +1588,8 @@
       
         
       
+        
+      
     
     
     
@@ -1661,6 +1663,34 @@
     
   
     Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../depictio-cli/nextflow-trigger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nextflow trigger
   
 
     
@@ -8339,7 +8369,9 @@ is the layout that shows the shape.</p>
 </tbody>
 </table>
 <p><strong>Examples</strong> — the first three are from <code>depictio/projects/init/iris/dashboards/overview.yaml</code>; the rest are illustrative.</p>
-<div class="tabbed-set" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><label for="__tabbed_1_1">box_plot</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><input id="__tabbed_1_5" name="__tabbed_1" type="radio"><input id="__tabbed_1_6" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">box_plot</label><label for="__tabbed_1_2">top_n</label><label for="__tabbed_1_3">coverage</label><label for="__tabbed_1_4">threshold</label><label for="__tabbed_1_5">composition</label><label for="__tabbed_1_6">trend</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sepal-length-summary</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">component_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">card</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">workflow_tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python/iris_workflow</span>
@@ -8352,7 +8384,7 @@ is the layout that shows the shape.</p>
 <a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">"Sepal</span><span class="nv"> </span><span class="s">Length"</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio"><label for="__tabbed_1_2">top_n</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">variety-breakdown</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">component_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">card</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">aggregation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nunique</span>
@@ -8363,7 +8395,7 @@ is the layout that shows the shape.</p>
 <a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="nt">column_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_1_3" name="__tabbed_1" type="radio"><label for="__tabbed_1_3">coverage</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sample-coverage</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">component_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">card</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">aggregation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">count</span>
@@ -8373,7 +8405,7 @@ is the layout that shows the shape.</p>
 <a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="nt">column_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_1_4" name="__tabbed_1" type="radio"><label for="__tabbed_1_4">threshold</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mean-coverage</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">component_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">card</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">aggregation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">average</span>
@@ -8386,7 +8418,7 @@ is the layout that shows the shape.</p>
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">"Mean</span><span class="nv"> </span><span class="s">Coverage"</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_1_5" name="__tabbed_1" type="radio"><label for="__tabbed_1_5">composition</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">variety-composition</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">component_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">card</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">aggregation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nunique</span>
@@ -8397,7 +8429,7 @@ is the layout that shows the shape.</p>
 <a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nt">column_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_1_6" name="__tabbed_1" type="radio"><label for="__tabbed_1_6">trend</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reads-over-time</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">component_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">card</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">aggregation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">average</span>
@@ -8406,6 +8438,7 @@ is the layout that shows the shape.</p>
 <a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="nt">column_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">read_count</span>
 <a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span><span class="nt">column_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int64</span>
 </code></pre></div>
+</div>
 </div>
 </div>
 <p>The seeded iris and penguins showcase dashboards exercise most of these at once:</p>
@@ -9070,21 +9103,24 @@ rendering.</p>
 <a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">  </span><span class="nt">floating_initial_state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docked</span><span class="w">  </span><span class="c1"># compact (default), expanded, docked, hidden</span>
 </code></pre></div>
 <p><code>floating_initial_state</code> sets the state the panel opens in. Once a viewer moves, resizes or folds it, their own choice is remembered for that dashboard family.</p>
-<div class="tabbed-set" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><label for="__tabbed_2_1">Floating</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Floating</label><label for="__tabbed_2_2">Docked</label><label for="__tabbed_2_3">Docked and folded</label><label for="__tabbed_2_4">Hidden</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>A draggable card over the dashboard: <code>compact</code> is the small footprint shown here, <code>expanded</code> the larger one. The basemap credit stays folded into the ⓘ in its corner.</p>
 <p><img alt="A map panel floating as a draggable card above the dashboard grid" src="https://depictio.github.io/depictio-docs/images/react/map_panel_floating.png"></p>
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio"><label for="__tabbed_2_2">Docked</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>A column pinned under the filter panel, resized by dragging its top edge. Three sites are selected here, so the panel header carries a <code>3 SELECTED</code> badge and its reset, the header control repeats the count, and the cards and the bar chart have all followed the selection.</p>
 <p><img alt="A map panel docked under the filter panel with three sites selected, and the cards and chart filtered to match" src="https://depictio.github.io/depictio-docs/images/react/map_panel_docked.png"></p>
 </div>
-<input id="__tabbed_2_3" name="__tabbed_2" type="radio"><label for="__tabbed_2_3">Docked and folded</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>Folding is something the viewer does, not a state you can author. The dock collapses to its title bar. The selection and its reset stay reachable, and the map gives its height back to the filter list.</p>
 <p><img alt="The docked map panel folded down to its title bar, with the selection badge still visible" src="https://depictio.github.io/depictio-docs/images/react/map_panel_dock_collapsed.png"></p>
 </div>
-<input id="__tabbed_2_4" name="__tabbed_2" type="radio"><label for="__tabbed_2_4">Hidden</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>Nothing but the header control, which keeps showing how many values the map is filtering on.</p>
 <p><img alt="The map panel hidden, leaving only a header control showing the active selection count" src="https://depictio.github.io/depictio-docs/images/react/map_panel_hidden_header.png"></p>
+</div>
 </div>
 </div>
 <div class="admonition warning">

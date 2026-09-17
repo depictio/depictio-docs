@@ -1590,6 +1590,8 @@
       
         
       
+        
+      
     
     
     
@@ -1663,6 +1665,34 @@
     
   
     Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../depictio-cli/nextflow-trigger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nextflow trigger
   
 
     
@@ -4437,7 +4467,9 @@
 </ul>
 <hr>
 <h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><label for="__tabbed_1_1">Base (no metadata)</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Base (no metadata)</label><label for="__tabbed_1_2">Extended (with metadata)</label><label for="__tabbed_1_3">From the pipeline itself (v1.10.0+)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>depictio<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/ampliseq/2.16.0<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>--data-root<span class="w"> </span>/path/to/ampliseq_results<span class="w"> </span><span class="se">\</span>
@@ -4445,7 +4477,7 @@
 </code></pre></div>
 <p>MultiQC + taxonomy dashboards. No diversity or differential abundance.</p>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio"><label for="__tabbed_1_2">Extended (with metadata)</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>depictio<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/ampliseq/2.16.0<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--data-root<span class="w"> </span>/path/to/ampliseq_results<span class="w"> </span><span class="se">\</span>
@@ -4454,6 +4486,15 @@
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">GROUP_COL</span><span class="o">=</span>habitat
 </code></pre></div>
 <p>Full dashboard: diversity, facetted charts, map, heatmap annotations, ANCOM-BC.</p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>nextflow<span class="w"> </span>--install<span class="w">     </span><span class="c1"># once per machine</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq<span class="w"> </span>-r<span class="w"> </span><span class="m">2</span>.16.0<span class="w"> </span>-profile<span class="w"> </span>docker<span class="w"> </span>--outdir<span class="w"> </span>results
+</code></pre></div>
+<p>No ingestion command and no template named: the pipeline ingests its own
+output directory when it finishes and picks this template from its own name
+and version. See <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger</a>.</p>
+</div>
 </div>
 </div>
 <hr>
@@ -4936,7 +4977,9 @@ multi-region (SIDLE), and <code>skip_qiime</code> runs without edits.</p>
 child tabs). Filters propagate across tabs via cross-DC links on the
 metadata <code>sample</code> column — see <a href="#cross-dc-links">Cross-DC links</a> in the
 Reference section.</p>
-<div class="tabbed-set" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><label for="__tabbed_2_1">MultiQC</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">MultiQC</label><label for="__tabbed_2_2">Alpha Diversity</label><label for="__tabbed_2_3">Community &amp; Diversity</label><label for="__tabbed_2_4">Differential Abundance</label><label for="__tabbed_2_5">Ordination &amp; Clustering</label><label for="__tabbed_2_6">Phylogeny</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>Quality control overview powered by MultiQC.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/multiqc_light.png"></a></p>
 <p><strong>Filters:</strong> Sample ID, Habitat Type, Sampling Period (DatePicker).</p>
@@ -4949,7 +4992,7 @@ Reference section.</p>
   sequence duplication levels, length distribution</li>
 </ul>
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio"><label for="__tabbed_2_2">Alpha Diversity</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>Within-sample diversity metrics, rarefaction, and per-habitat
 comparisons. Extended mode only.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png" rel="noopener" target="_blank"><img alt="Alpha Diversity dashboard" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png"></a></p>
@@ -4969,7 +5012,7 @@ comparisons. Extended mode only.</p>
 <li>Per-sample alpha diversity data table</li>
 </ul>
 </div>
-<input id="__tabbed_2_3" name="__tabbed_2" type="radio"><label for="__tabbed_2_3">Community &amp; Diversity</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>Taxonomy composition + sampling-location map (extended mode).</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/community_light.png" rel="noopener" target="_blank"><img alt="Community &amp; Diversity dashboard" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/community_light.png"></a></p>
 <p><strong>Components (base):</strong></p>
@@ -4991,7 +5034,7 @@ comparisons. Extended mode only.</p>
 <li>Filters: sampling period (DatePicker), GROUP_COL, sample ID</li>
 </ul>
 </div>
-<input id="__tabbed_2_4" name="__tabbed_2" type="radio"><label for="__tabbed_2_4">Differential Abundance</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>ANCOM-BC differential abundance results. Extended mode only.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/differential_light.png" rel="noopener" target="_blank"><img alt="Differential Abundance dashboard" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/differential_light.png"></a></p>
 <p><strong>Components:</strong></p>
@@ -5005,7 +5048,7 @@ comparisons. Extended mode only.</p>
 <li>Filters: contrast, Phylum, Kingdom, W statistic range, LFC range</li>
 </ul>
 </div>
-<input id="__tabbed_2_5" name="__tabbed_2" type="radio"><label for="__tabbed_2_5">Ordination &amp; Clustering</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>Beta-diversity / PCoA embedding + ComplexHeatmap on the canonical
 feature matrix. Surfaces clusters and outliers across samples.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/ordination_light.png" rel="noopener" target="_blank"><img alt="Ordination &amp; Clustering dashboard" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/ordination_light.png"></a></p>
@@ -5017,7 +5060,7 @@ feature matrix. Surfaces clusters and outliers across samples.</p>
 <li>Bray-Curtis sample-distance heatmap</li>
 </ul>
 </div>
-<input id="__tabbed_2_6" name="__tabbed_2" type="radio"><label for="__tabbed_2_6">Phylogeny</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>Rooted phylogenetic tree of ASVs with tip metadata overlay.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png" rel="noopener" target="_blank"><img alt="Phylogeny dashboard" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png"></a></p>
 <p><strong>Components:</strong></p>
@@ -5028,50 +5071,51 @@ feature matrix. Surfaces clusters and outliers across samples.</p>
 <a href="../../../features/components/#phylogeny-interaction">Reading and navigating the tree</a>.</p>
 </div>
 </div>
+</div>
 <hr>
 <h2 id="running-the-pipeline">Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/ampliseq — it does not run the pipeline. Run the pipeline first:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>--input<span class="w"> </span>samplesheet.csv<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>--FW_primer<span class="w"> </span>GTGYCAGCMGCCGCGGTAA<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>--RV_primer<span class="w"> </span>GGACTACNVGGGTWTCTAAT<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span>--metadata<span class="w"> </span>Metadata.tsv<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span>-profile<span class="w"> </span>docker
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>--input<span class="w"> </span>samplesheet.csv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>--FW_primer<span class="w"> </span>GTGYCAGCMGCCGCGGTAA<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>--RV_primer<span class="w"> </span>GGACTACNVGGGTWTCTAAT<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>--metadata<span class="w"> </span>Metadata.tsv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span>-profile<span class="w"> </span>docker
 </code></pre></div>
 <p>Then point Depictio at the results:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>depictio<span class="w"> </span>run<span class="w"> </span>--template<span class="w"> </span>nf-core/ampliseq/2.16.0<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>--data-root<span class="w"> </span>results/<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">SAMPLESHEET_FILE</span><span class="o">=</span>samplesheet.csv<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">METADATA_FILE</span><span class="o">=</span>Metadata.tsv
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>depictio<span class="w"> </span>run<span class="w"> </span>--template<span class="w"> </span>nf-core/ampliseq/2.16.0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--data-root<span class="w"> </span>results/<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">SAMPLESHEET_FILE</span><span class="o">=</span>samplesheet.csv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">METADATA_FILE</span><span class="o">=</span>Metadata.tsv
 </code></pre></div>
 <p>See <a href="https://nf-co.re/ampliseq/2.16.0/docs/usage">nf-co.re/ampliseq/usage</a> for full pipeline documentation.</p>
 <hr>
 <h2 id="required-data-structure">Required data structure<a class="headerlink" href="#required-data-structure" title="Permanent link">¶</a></h2>
 <p>Point <code>--data-root</code> to the directory containing your ampliseq outputs. This can be a single run's <code>results/</code> folder or a parent directory containing multiple runs — Depictio scans recursively. Not all files are required; the template adapts based on what's present and which <code>--var</code> flags you provide.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>&lt;DATA_ROOT&gt;/
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>├── samplesheet.csv                                # --var SAMPLESHEET_FILE
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>├── Metadata.tsv                                   # --var METADATA_FILE (optional)
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>└── &lt;run_id&gt;/                                      # One or more pipeline run output folders
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    ├── multiqc/
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    │   └── multiqc_data/
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    │       └── multiqc.parquet
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    └── qiime2/
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        ├── alpha-rarefaction/                      # ⚠ Requires --metadata
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        │   └── faith_pd.csv
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        ├── ancombc/differentials/                  # ⚠ Requires --metadata + --ancombc
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        │   └── Category-&lt;GROUP_COL&gt;-level-2/
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        │       ├── lfc_slice.csv
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        │       ├── p_val_slice.csv
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        │       ├── q_val_slice.csv
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>        │       ├── se_slice.csv
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        │       └── w_slice.csv
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        ├── barplot/
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>        │   └── level-2.csv
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>        ├── diversity/alpha_diversity/              # ⚠ Requires --metadata
-<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>        │   └── faith_pd_vector/
-<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>        │       └── metadata.tsv
-<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>        └── rel_abundance_tables/
-<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>            └── rel-table-2.tsv
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&lt;DATA_ROOT&gt;/
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>├── samplesheet.csv                                # --var SAMPLESHEET_FILE
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>├── Metadata.tsv                                   # --var METADATA_FILE (optional)
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>└── &lt;run_id&gt;/                                      # One or more pipeline run output folders
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    ├── multiqc/
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    │   └── multiqc_data/
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    │       └── multiqc.parquet
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    └── qiime2/
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>        ├── alpha-rarefaction/                      # ⚠ Requires --metadata
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        │   └── faith_pd.csv
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        ├── ancombc/differentials/                  # ⚠ Requires --metadata + --ancombc
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        │   └── Category-&lt;GROUP_COL&gt;-level-2/
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>        │       ├── lfc_slice.csv
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>        │       ├── p_val_slice.csv
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>        │       ├── q_val_slice.csv
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>        │       ├── se_slice.csv
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>        │       └── w_slice.csv
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>        ├── barplot/
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>        │   └── level-2.csv
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>        ├── diversity/alpha_diversity/              # ⚠ Requires --metadata
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>        │   └── faith_pd_vector/
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>        │       └── metadata.tsv
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>        └── rel_abundance_tables/
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>            └── rel-table-2.tsv
 </code></pre></div>
 <hr>
 <h2 id="additional-resources">Additional resources<a class="headerlink" href="#additional-resources" title="Permanent link">¶</a></h2>

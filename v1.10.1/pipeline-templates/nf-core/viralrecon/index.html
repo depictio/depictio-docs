@@ -1590,6 +1590,8 @@
       
         
       
+        
+      
     
     
     
@@ -1663,6 +1665,34 @@
     
   
     Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../depictio-cli/nextflow-trigger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nextflow trigger
   
 
     
@@ -4511,6 +4541,17 @@ auto-derived value is logged at resolution time. See the full list and routes in
 <a href="#reference">Reference</a>.</p>
 </div>
 <div class="admonition tip">
+<p class="admonition-title">Or let the pipeline do it <small>(v1.10.0+)</small></p>
+<p>Run <code>depictio-cli config nextflow --install</code> once on the machine that runs
+<code>nextflow</code>. This template reads a folder of <code>run_*</code> directories, so write the
+run into one and have the pipeline ingest their parent:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/viralrecon<span class="w"> </span>-r<span class="w"> </span><span class="m">3</span>.0.0<span class="w"> </span>-profile<span class="w"> </span>docker<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--outdir<span class="w"> </span>runs/run_1<span class="w"> </span>--depictio_data_root<span class="w"> </span>runs
+</code></pre></div>
+<p>The template is picked from the pipeline's own name and version. See
+<a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger</a>.</p>
+</div>
+<div class="admonition tip">
 <p class="admonition-title">Aggregated data collections</p>
 <p>The viralrecon DCs use <code>metatype: "Aggregated"</code>. They are built
 by recipes that fan multiple per-sample files into a single delta
@@ -4895,7 +4936,9 @@ template therefore covers both the Illumina and nanopore/ARTIC routes without ed
 four child tabs). Each tab targets a different analytical question;
 filters propagate across tabs via cross-DC links on the
 <code>summary_metrics.sample</code> column.</p>
-<div class="tabbed-set" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><label for="__tabbed_1_1">MultiQC</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><input id="__tabbed_1_5" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">MultiQC</label><label for="__tabbed_1_2">Coverage &amp; Depth</label><label for="__tabbed_1_3">Lineage &amp; Clustering</label><label for="__tabbed_1_4">Variants</label><label for="__tabbed_1_5">Sample QC</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>Pipeline-level quality control powered by MultiQC.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC overview" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_light.png"></a></p>
 <p><strong>Filters:</strong> Sample ID, Lineage.</p>
@@ -4908,7 +4951,7 @@ filters propagate across tabs via cross-DC links on the
 <li>Per-sample variant counts</li>
 </ul>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio"><label for="__tabbed_1_2">Coverage &amp; Depth</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>Per-sample and per-amplicon coverage view.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png" rel="noopener" target="_blank"><img alt="Coverage &amp; Depth" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png"></a></p>
 <p><strong>Filters:</strong> Sample ID.</p>
@@ -4921,7 +4964,7 @@ filters propagate across tabs via cross-DC links on the
 <li><em>Genome Coverage Data</em> table</li>
 </ul>
 </div>
-<input id="__tabbed_1_3" name="__tabbed_1" type="radio"><label for="__tabbed_1_3">Lineage &amp; Clustering</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>Pangolin lineage and Nextclade clade assignment, plus a Sankey
 funnel from QC status → lineage → clade.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png" rel="noopener" target="_blank"><img alt="Lineage &amp; Clustering" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png"></a></p>
@@ -4935,7 +4978,7 @@ funnel from QC status → lineage → clade.</p>
 <li>3 tables: <em>Pangolin Lineage Assignments</em>, <em>Nextclade Clade Assignments</em>, <em>Summary Metrics</em></li>
 </ul>
 </div>
-<input id="__tabbed_1_4" name="__tabbed_1" type="radio"><label for="__tabbed_1_4">Variants</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>Variant calls and functional effects, with manhattan-style genome
 landscape and oncoplot of high-impact mutations.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_light.png" rel="noopener" target="_blank"><img alt="Variants" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_light.png"></a></p>
@@ -4950,7 +4993,7 @@ landscape and oncoplot of high-impact mutations.</p>
 <li>1 table: <em>Variants Long Table</em></li>
 </ul>
 </div>
-<input id="__tabbed_1_5" name="__tabbed_1" type="radio"><label for="__tabbed_1_5">Sample QC</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>Per-sample QC scorecard combining alignment, coverage, variant counts
 and lineage / clade assignment in one place.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png" rel="noopener" target="_blank"><img alt="Sample QC" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png"></a></p>
@@ -4964,19 +5007,20 @@ and lineage / clade assignment in one place.</p>
 </ul>
 </div>
 </div>
+</div>
 <hr>
 <h2 id="running-the-pipeline">Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/viralrecon — it does not run the pipeline. Run the pipeline first, using the iVar variant caller the template targets:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/viralrecon<span class="w"> </span>-r<span class="w"> </span><span class="m">3</span>.0.0<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--input<span class="w"> </span>samplesheet.csv<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--platform<span class="w"> </span>illumina<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--protocol<span class="w"> </span>amplicon<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>--variant_caller<span class="w"> </span>ivar<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>-profile<span class="w"> </span>docker
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/viralrecon<span class="w"> </span>-r<span class="w"> </span><span class="m">3</span>.0.0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>--input<span class="w"> </span>samplesheet.csv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>--platform<span class="w"> </span>illumina<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>--protocol<span class="w"> </span>amplicon<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span>--variant_caller<span class="w"> </span>ivar<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span>-profile<span class="w"> </span>docker
 </code></pre></div>
 <p>Then point Depictio at the results:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>depictio<span class="w"> </span>run<span class="w"> </span>--template<span class="w"> </span>nf-core/viralrecon/3.0.0<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>--data-root<span class="w"> </span>results/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>depictio<span class="w"> </span>run<span class="w"> </span>--template<span class="w"> </span>nf-core/viralrecon/3.0.0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>--data-root<span class="w"> </span>results/
 </code></pre></div>
 <p>A nanopore/ARTIC run (<code>nextflow … --platform nanopore</code>) needs no extra flags —
 Depictio reads <code>platform: nanopore</code> from the run's <code>params.json</code> and switches to the
@@ -4988,19 +5032,19 @@ Depictio reads <code>platform: nanopore</code> from the run's <code>params.json<
 <p>The tree below shows the <strong>Illumina</strong> layout. On <code>PLATFORM=nanopore</code> the same
 collections are read from <code>artic_minion/</code> instead (coverage, lineage, and the
 ARTIC <code>*.pass.vcf.gz</code> variant calls).</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&lt;DATA_ROOT&gt;/
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>├── multiqc/
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>│   ├── multiqc_data/
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>│   │   └── multiqc.parquet
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>│   └── summary_variants_metrics_mqc.csv
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>└── variants/
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    └── ivar/                                   # Illumina layout (artic_minion/ on PLATFORM=nanopore)
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        ├── consensus/
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        │   └── bcftools/
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        │       ├── pangolin/*.pangolin.csv     # Pangolin lineage, one file per sample
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        │       └── nextclade/*.csv             # Nextclade clade, one file per sample
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>        ├── variants_long_table.csv             # Illumina variant calls (ARTIC *.pass.vcf.gz on nanopore)
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>        └── *.mosdepth.{coverage,heatmap}.tsv   # amplicon / genome coverage
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>&lt;DATA_ROOT&gt;/
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>├── multiqc/
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>│   ├── multiqc_data/
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>│   │   └── multiqc.parquet
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>│   └── summary_variants_metrics_mqc.csv
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>└── variants/
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    └── ivar/                                   # Illumina layout (artic_minion/ on PLATFORM=nanopore)
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>        ├── consensus/
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        │   └── bcftools/
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        │       ├── pangolin/*.pangolin.csv     # Pangolin lineage, one file per sample
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        │       └── nextclade/*.csv             # Nextclade clade, one file per sample
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        ├── variants_long_table.csv             # Illumina variant calls (ARTIC *.pass.vcf.gz on nanopore)
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        └── *.mosdepth.{coverage,heatmap}.tsv   # amplicon / genome coverage
 </code></pre></div>
 <hr>
 <h2 id="test-data">Test data<a class="headerlink" href="#test-data" title="Permanent link">¶</a></h2>
@@ -5008,25 +5052,25 @@ ARTIC <code>*.pass.vcf.gz</code> variant calls).</p>
 the full pipeline. The repository ships
 <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/3.0.0/download_test_data.sh"><code>download_test_data.sh</code></a>
 which fetches a real viralrecon run from nf-core's AWS megatest bucket:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>bash<span class="w"> </span>depictio/projects/nf-core/viralrecon/3.0.0/download_test_data.sh<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--target<span class="w"> </span>/tmp/viralrecon_test
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>bash<span class="w"> </span>depictio/projects/nf-core/viralrecon/3.0.0/download_test_data.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--target<span class="w"> </span>/tmp/viralrecon_test
 </code></pre></div>
 <p>This pulls a published run from
 <code>s3://nf-core-awsmegatests/viralrecon/results-395079f1d24dce731ac22e03d7a5e71f110103fc/</code>
 and validates that all expected file patterns are present.</p>
 <p>Once the download finishes, run depictio against it:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>depictio<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/viralrecon/3.0.0<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--data-root<span class="w"> </span>/tmp/viralrecon_test/run_1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>depictio<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/viralrecon/3.0.0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>--data-root<span class="w"> </span>/tmp/viralrecon_test/run_1
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Alternative: run nf-core/viralrecon locally</p>
 <p>The script can also re-run nf-core/viralrecon end-to-end if you'd
 rather regenerate the fixture from scratch:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/viralrecon<span class="w"> </span>-r<span class="w"> </span><span class="m">3</span>.0.0<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>-profile<span class="w"> </span>test_illumina,docker<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>--variant_caller<span class="w"> </span>ivar<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span>--outdir<span class="w"> </span>/tmp/viralrecon_test/run_1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/viralrecon<span class="w"> </span>-r<span class="w"> </span><span class="m">3</span>.0.0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>-profile<span class="w"> </span>test_illumina,docker<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>--variant_caller<span class="w"> </span>ivar<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span>--outdir<span class="w"> </span>/tmp/viralrecon_test/run_1
 </code></pre></div>
 </div>
 <hr>

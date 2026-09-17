@@ -3,17 +3,17 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="How Depictio's domain objects fit together: what a project document actually contains, how a data collection reaches the storage it is served from, and how joins differ from links.">
+        <meta name="description" content="Let a Nextflow pipeline ingest its own results into Depictio when it completes.">
       
       
       
-        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v1.10.1/features/data-model/">
+        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v1.10.1/depictio-cli/nextflow-trigger/">
       
       
-        <link rel="prev" href="../performance/">
+        <link rel="prev" href="../usage/">
       
       
-        <link rel="next" href="../security/">
+        <link rel="next" href="../minimal_config/">
       
       
         
@@ -24,7 +24,7 @@
     
     
       
-        <title>Data Model - Depictio Documentation</title>
+        <title>Nextflow trigger - Depictio Documentation</title>
       
     
     
@@ -115,7 +115,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#data-model" class="md-skip">
+        <a href="#nextflow-trigger-v1100" class="md-skip">
           Skip to content
         </a>
       
@@ -154,7 +154,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Data Model
+              Nextflow trigger
             
           </span>
         </div>
@@ -309,10 +309,12 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../../usage/" class="md-tabs__link">
           
   
@@ -354,13 +356,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../features/" class="md-tabs__link">
           
   
   
@@ -1006,6 +1006,8 @@
       
   
   
+    
+  
   
   
     
@@ -1031,18 +1033,19 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1066,13 +1069,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1142,10 +1145,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1175,7 +1181,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1371,10 +1377,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1404,7 +1413,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1575,6 +1584,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1596,20 +1607,21 @@
       
       
         
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
+          
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5">
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" checked="">
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../depictio-cli/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1629,13 +1641,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1655,7 +1667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../depictio-cli/usage/" class="md-nav__link">
+      <a href="../usage/" class="md-nav__link">
         
   
   
@@ -1680,10 +1692,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../depictio-cli/nextflow-trigger/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nextflow trigger
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1699,6 +1738,105 @@
   
 
       </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#set-it-up-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set it up once
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-your-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run your pipeline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-pipeline-with-no-bundled-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A pipeline with no bundled template
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-it-again" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running it again
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#on-a-cluster-or-in-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        On a cluster or in CI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1711,7 +1849,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../depictio-cli/minimal_config/" class="md-nav__link">
+      <a href="../minimal_config/" class="md-nav__link">
         
   
   
@@ -1767,10 +1905,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1800,7 +1941,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1958,10 +2099,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1970,7 +2114,7 @@
         <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_7">
         
           
-          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
             
   
   
@@ -2103,8 +2247,6 @@
       
   
   
-    
-  
   
   
     
@@ -2124,23 +2266,22 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked="">
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../features/" class="md-nav__link ">
               
   
   
@@ -2160,13 +2301,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2200,13 +2341,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -2215,7 +2353,7 @@
         <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_2">
         
           
-          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
             
   
   
@@ -2251,7 +2389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dashboards/" class="md-nav__link">
+      <a href="../../features/dashboards/" class="md-nav__link">
         
   
   
@@ -2281,7 +2419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/" class="md-nav__link">
+      <a href="../../features/components/" class="md-nav__link">
         
   
   
@@ -2311,7 +2449,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../interactive-selection-filtering/" class="md-nav__link">
+      <a href="../../features/interactive-selection-filtering/" class="md-nav__link">
         
   
   
@@ -2363,13 +2501,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -2378,7 +2513,7 @@
         <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_3">
         
           
-          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
             
   
   
@@ -2414,7 +2549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cross-dc-filtering/" class="md-nav__link">
+      <a href="../../features/cross-dc-filtering/" class="md-nav__link">
         
   
   
@@ -2444,7 +2579,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../filter-expressions/" class="md-nav__link">
+      <a href="../../features/filter-expressions/" class="md-nav__link">
         
   
   
@@ -2474,7 +2609,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../yaml-sync/" class="md-nav__link">
+      <a href="../../features/yaml-sync/" class="md-nav__link">
         
   
   
@@ -2509,10 +2644,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -2531,21 +2664,20 @@
     
       
       
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
         
           
-          
         
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" checked="">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_4">
         
           
-          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
             
   
   
@@ -2563,7 +2695,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2581,7 +2713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/" class="md-nav__link">
+      <a href="../../features/architecture/" class="md-nav__link">
         
   
   
@@ -2611,7 +2743,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../performance/" class="md-nav__link">
+      <a href="../../features/performance/" class="md-nav__link">
         
   
   
@@ -2638,39 +2770,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"></path></svg>
-  
-  <span class="md-ellipsis">
-    
-  
-    Data Model
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../features/data-model/" class="md-nav__link">
         
   
   
@@ -2688,111 +2791,6 @@
   
 
       </a>
-      
-        
-
-  
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#the-two-shapes-of-a-project" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The two shapes of a project
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-files-become-dashboard-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How files become dashboard data
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#data-collection-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Data collection types
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Data collection types">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#where-a-data-collection-came-from" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where a data collection came from
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#joining-and-linking" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Joining and linking
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#access-control" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Access control
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Related Documentation
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2805,7 +2803,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../security/" class="md-nav__link">
+      <a href="../../features/security/" class="md-nav__link">
         
   
   
@@ -2835,7 +2833,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../telemetry/" class="md-nav__link">
+      <a href="../../features/telemetry/" class="md-nav__link">
         
   
   
@@ -4259,10 +4257,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#the-two-shapes-of-a-project" class="md-nav__link">
+  <a href="#set-it-up-once" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The two shapes of a project
+        Set it up once
       
     </span>
   </a>
@@ -4270,10 +4268,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-files-become-dashboard-data" class="md-nav__link">
+  <a href="#run-your-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How files become dashboard data
+        Run your pipeline
       
     </span>
   </a>
@@ -4281,38 +4279,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#data-collection-types" class="md-nav__link">
+  <a href="#a-pipeline-with-no-bundled-template" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data collection types
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Data collection types">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#where-a-data-collection-came-from" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where a data collection came from
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#joining-and-linking" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Joining and linking
+        A pipeline with no bundled template
       
     </span>
   </a>
@@ -4320,10 +4290,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#access-control" class="md-nav__link">
+  <a href="#running-it-again" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Access control
+        Running it again
       
     </span>
   </a>
@@ -4331,10 +4301,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#related-documentation" class="md-nav__link">
+  <a href="#on-a-cluster-or-in-ci" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Related Documentation
+        On a cluster or in CI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next steps
       
     </span>
   </a>
@@ -4361,222 +4353,301 @@
   
 
 
-<h1 id="data-model"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"></path></svg></span> Data Model<a class="headerlink" href="#data-model" title="Permanent link">¶</a></h1>
-<p>A <strong>project</strong> is the unit everything else hangs off. It names one or more
-<strong>workflows</strong>, each workflow declares the <strong>data collections</strong> it produces, and every
-data collection becomes one thing a dashboard can read.</p>
-<p>Two details are worth having in mind before reading further, because neither is visible
-from the object names alone:</p>
-<ol>
-<li><strong>Almost none of that hierarchy is stored as separate documents.</strong> Workflows and data
-   collections are fields inside the project document, not rows in their own collections.
-   One read gets you the whole configuration.</li>
-<li><strong>The configuration contains no storage paths.</strong> Nothing in a project says where its
-   data ended up; that is recorded separately, at ingestion, and added back when the API
-   serves the project. Which is what lets the same YAML file be ingested on a laptop and
-   on a cluster without editing a line of it.</li>
-</ol>
-<hr>
-<h2 id="the-two-shapes-of-a-project">The two shapes of a project<a class="headerlink" href="#the-two-shapes-of-a-project" title="Permanent link">¶</a></h2>
-<p><a href="https://depictio.github.io/depictio-docs/images/data-model/project-shape_light.png" target="_blank"><img alt="The two shapes of a project" src="https://depictio.github.io/depictio-docs/images/data-model/project-shape_light.png#only-light"></a></p>
-<p><a href="https://depictio.github.io/depictio-docs/images/data-model/project-shape_dark.png" target="_blank"><img alt="The two shapes of a project" src="https://depictio.github.io/depictio-docs/images/data-model/project-shape_dark.png#only-dark"></a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Structure</th>
-<th>Typical use</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong><code>advanced</code></strong></td>
-<td>Project <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> Workflow <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> DataCollection</td>
-<td>Pipeline output. Defined in a YAML file and ingested by the CLI.</td>
-</tr>
-<tr>
-<td><strong><code>basic</code></strong></td>
-<td>Project <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> DataCollection</td>
-<td>A few files you want on a dashboard. Created in the web UI, or with the CLI.</td>
-</tr>
-</tbody>
-</table>
-<p>Nothing else changes between the two. The same data collection types, joins, links,
-permissions and dashboards apply either way. The workflow layer only exists to answer
-"which pipeline produced this, and in which of its runs".</p>
-<p>The word <strong>workflow</strong> is used in the sense <a href="https://nf-co.re/">nf-core</a> and
-<a href="https://workflowhub.eu/">WorkflowHub</a> use it: the pipeline definition, not a particular
-execution of it. Executions are <strong>runs</strong>, and they are the subject of the next section.</p>
-<div class="admonition info">
-<p class="admonition-title">The workflow records what produced it <small>(v1.10.0+)</small></p>
-<p>For a project built from a template, the engine, the pipeline version, the
-engine version and the names of the tools that ran are stamped on the
-workflow, read from what the pipeline wrote in its run directory
-(<code>pipeline_info/</code> for nf-core).</p>
+<h1 id="nextflow-trigger-v1100"><span style="color: #0dc09d;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.005 4.424V0c6.228.259 11.227 5.268 11.477 11.506H7.058C6.828 7.715 3.786 4.673.005 4.424m7.082 8.089h4.424C11.251 18.741 6.242 23.741.005 23.99v-4.423c3.79-.231 6.832-3.273 7.082-7.054m9.826-1.036h-4.424C12.749 5.249 17.758.25 23.995 0v4.424c-3.79.23-6.832 3.263-7.082 7.053m7.082 8.099V24c-6.228-.259-11.227-5.268-11.477-11.506h4.424c.23 3.791 3.272 6.833 7.053 7.082"></path></svg></span></span> Nextflow trigger <small>(v1.10.0+)</small><a class="headerlink" href="#nextflow-trigger-v1100" title="Permanent link">¶</a></h1>
+<p>A Nextflow pipeline can push its own results into Depictio the moment it
+finishes. You set it up once per machine, and from then on every pipeline you run
+lands in Depictio without a single line about Depictio in the pipeline itself.</p>
+<p>Two guarantees, so you can put it on a machine and forget it. A pipeline that
+failed is never ingested, because a partial output directory would make a
+half-filled project. And if anything on Depictio's side goes wrong, the handler
+logs a warning and leaves your pipeline's own exit status alone.</p>
+<figure>
+  <a href="https://depictio.github.io/depictio-docs/images/guides/nextflow-trigger/trigger-flow_light.png" target="_blank"><img alt="A pipeline finishes, an onComplete handler runs depictio-cli on the output directory, and Depictio ends up with a project and a dashboard" src="https://depictio.github.io/depictio-docs/images/guides/nextflow-trigger/trigger-flow_light.png#only-light"></a>
+  <a href="https://depictio.github.io/depictio-docs/images/guides/nextflow-trigger/trigger-flow_dark.png" target="_blank"><img alt="A pipeline finishes, an onComplete handler runs depictio-cli on the output directory, and Depictio ends up with a project and a dashboard" src="https://depictio.github.io/depictio-docs/images/guides/nextflow-trigger/trigger-flow_dark.png#only-dark"></a>
+<br>
+<figcaption>The mechanism is a <code>workflow.onComplete</code> handler, shipped as a config snippet inside the CLI.</figcaption>
+</figure>
+<h2 id="set-it-up-once">Set it up once<a class="headerlink" href="#set-it-up-once" title="Permanent link">¶</a></h2>
+<p>The handler runs on the machine that runs <code>nextflow</code>, never on a compute node.
+On a cluster that means the submit node, or the job that launches Nextflow. All
+three steps happen there.</p>
+<p><strong>1. Install the CLI.</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>depictio-cli
+</code></pre></div>
+<p><strong>2. Save your credentials to <code>~/.depictio/CLI.yaml</code>.</strong> That is already the path
+the viewer's <a href="../../usage/get_started/#create-a-cli-configuration">CLI agents page</a>
+tells you to use, and the one the handler falls back to, so there is nothing to
+point at.</p>
+<p><strong>3. Turn the trigger on, then check the CLI reaches your server.</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>nextflow<span class="w"> </span>--install
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>depictio-cli<span class="w"> </span>config<span class="w"> </span>check
+</code></pre></div>
+<p><code>--install</code> copies the handler to <code>~/.depictio/nextflow.config</code> and adds one
+<code>includeConfig</code> line for it to <code>~/.nextflow/config</code> (<code>$NXF_HOME/config</code> if you
+set <code>NXF_HOME</code>), which Nextflow reads before every run. Your pipeline's own
+<code>onComplete</code> still runs. <code>--uninstall</code> removes the line, and
+<code>--depictio_enabled false</code> skips Depictio for one run. Run <code>--install</code> again
+after upgrading <code>depictio-cli</code>, so the copy follows the new version.</p>
+<div class="admonition tip">
+<p class="admonition-title">One run instead of the whole machine</p>
+<p>Skip step 3 and add <code>-c $(depictio-cli config nextflow)</code> to your
+<code>nextflow run</code> command. That subshell prints the path of the snippet bundled
+with the CLI, so there is still no file to download and none to keep in sync.</p>
 </div>
-<hr>
-<h2 id="how-files-become-dashboard-data">How files become dashboard data<a class="headerlink" href="#how-files-become-dashboard-data" title="Permanent link">¶</a></h2>
-<p><a href="https://depictio.github.io/depictio-docs/images/data-model/files-to-data_light.png" target="_blank"><img alt="How files become dashboard data" src="https://depictio.github.io/depictio-docs/images/data-model/files-to-data_light.png#only-light"></a></p>
-<p><a href="https://depictio.github.io/depictio-docs/images/data-model/files-to-data_dark.png" target="_blank"><img alt="How files become dashboard data" src="https://depictio.github.io/depictio-docs/images/data-model/files-to-data_dark.png#only-dark"></a></p>
-<p>A <strong>run</strong> is one execution of a workflow: an output folder, produced by processing one or
-many samples. Re-running a pipeline adds a run rather than replacing one, so a project
-accumulates runs over time.</p>
-<p>Each run's output folder is scanned, and every matching file becomes a <strong>File</strong> record
-holding its path, size and checksum. A <strong>data collection</strong> then gathers every file of the
-same type, across every run, into the one thing a dashboard reads. The checksum is what
-keeps re-ingestion incremental: an unchanged file is recognised and skipped rather than
-processed again.</p>
-<p>What that "one thing" is depends on the type, and it is not always a table. Tabular data
-gets a <a href="https://delta.io/">Delta Lake</a> table on S3, because Delta is what turns a
-re-ingestion into an append with history rather than an overwrite. A MultiQC report gets
-its parsed data copied as Parquet, a GeoJSON file is copied unchanged, and a phylogeny is
-not copied at all: the tree is read from wherever the scan found it. The
-<a href="#data-collection-types">types table</a> below has the full mapping.</p>
-<p>None of those destinations appear in the project you configured. For table-like
-collections the location and the schema of each aggregation live in a separate
-<code>deltatables</code> document; for the rest they are recorded on the file entries. Either way the
-API joins them in as it serves the project, which is why <code>delta_location</code> and
-<code>last_aggregation</code> show up in API responses and nowhere in your YAML.</p>
-<hr>
-<h2 id="data-collection-types">Data collection types<a class="headerlink" href="#data-collection-types" title="Permanent link">¶</a></h2>
+<h2 id="run-your-pipeline">Run your pipeline<a class="headerlink" href="#run-your-pipeline" title="Permanent link">¶</a></h2>
+<p>Nothing changes in the command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq<span class="w"> </span>-r<span class="w"> </span><span class="m">2</span>.16.0<span class="w"> </span>-profile<span class="w"> </span>docker<span class="w"> </span>--outdir<span class="w"> </span>results
+</code></pre></div>
+<p>When the last task finishes, the handler ingests your <code>--outdir</code>, here
+<code>results</code>, and the log ends with a <code>[depictio]</code> block:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>[depictio] ==============================================================
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>[depictio] 📊 Depictio ingestion
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>[depictio] ==============================================================
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>[depictio] 📂 Data root  : /work/results
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>[depictio] 🔧 Executable : depictio-cli
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>[depictio] 💻 Command    :
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>[depictio]     depictio-cli run \
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>[depictio]         --CLI-config-path /home/alice/.depictio/CLI.yaml \
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>[depictio]         --data-root /work/results \
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>[depictio]         --triggered-by nextflow \
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>[depictio]         --pipeline-id nf-core/ampliseq/2.16.0
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>[depictio] --------------------------------------------------------------
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>[depictio] • ✅ Resolved pipeline 'nf-core/ampliseq/2.16.0' to a bundled template.
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>[depictio] …
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>[depictio] • 📘 Project: https://depictio.example.org/projects/6a9ab9a6a1d2ead141378e27
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>[depictio] • 📘 Dashboard 'nf-core/ampliseq': https://depictio.example.org/dashboard/6a9acdf3835e12072990459a
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>[depictio] ✅ Ingestion finished for /work/results
+</code></pre></div>
+<p>You configured no template because the pipeline already knows what it is. The
+handler forwards the name and version from the pipeline's <code>manifest</code> block as
+<code>--pipeline-id</code>, and the CLI resolves the matching
+<a href="../../pipeline-templates/nf-core/">bundled template</a> from that. To pin one
+instead, set <code>params.depictio_template</code>.</p>
+<p>When <code>params.outdir</code> is not the directory to ingest, point
+<code>params.depictio_data_root</code> at the right one and the handler passes that as
+<a href="../usage/"><code>--data-root</code></a> instead.</p>
+<p>Set these per run on the command line, as <code>--depictio_template &lt;id&gt;</code>, or in the
+pipeline's own <code>nextflow.config</code>. Keep them out of <code>~/.nextflow/config</code>, where
+they would apply to every pipeline on the machine.</p>
+<figure>
+  <a href="https://depictio.github.io/depictio-docs/images/guides/nextflow-trigger/ingestion_badge.jpg" target="_blank"><img alt="The project's ingestion tab, with a Triggered by Nextflow badge in the report header" src="https://depictio.github.io/depictio-docs/images/guides/nextflow-trigger/ingestion_badge.jpg"></a>
+<br>
+<figcaption>A project created this way carries a <strong>Triggered by Nextflow</strong> badge, so it is distinguishable from one someone ingested by hand.</figcaption>
+</figure>
+<h2 id="a-pipeline-with-no-bundled-template">A pipeline with no bundled template<a class="headerlink" href="#a-pipeline-with-no-bundled-template" title="Permanent link">¶</a></h2>
+<p>Depictio ships templates for a handful of nf-core pipelines. For anything else,
+point the trigger at YAML of your own:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">params</span><span class="o">.</span><span class="na">depictio_project_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"${projectDir}/depictio_project.yaml"</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">params</span><span class="o">.</span><span class="na">depictio_dashboard</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">"${projectDir}/depictio_dashboard.yaml"</span>
+</code></pre></div>
+<p>The <a href="../../usage/projects/guide/">project YAML</a> says what to ingest, the
+<a href="../../features/yaml-sync/">dashboard YAML</a> says what to show. Their tags have to
+line up, or the import fails and names the component that broke.</p>
+<p>A complete runnable example, pipeline included, is in
+<a href="https://github.com/depictio/depictio/tree/main/depictio/cli/configs/nextflow/example"><code>depictio/cli/configs/nextflow/example/</code></a>.
+It needs no container and no bioinformatics tool.</p>
+<figure>
+  <a href="https://depictio.github.io/depictio-docs/images/guides/nextflow-trigger/dashboard_cards.jpg" target="_blank"><img alt="The dashboard imported by the example pipeline, eight cards each in a different secondary layout" src="https://depictio.github.io/depictio-docs/images/guides/nextflow-trigger/dashboard_cards.jpg"></a>
+<br>
+<figcaption>The dashboard the example pipeline imports, built from its own YAML rather than from a template.</figcaption>
+</figure>
+<h2 id="running-it-again">Running it again<a class="headerlink" href="#running-it-again" title="Permanent link">¶</a></h2>
+<p>A bundled template gives every run the same project name, so your next ampliseq
+run, even on new samples, is not ingested: the project already exists, the log
+shows <code>depictio-cli exited with code 2</code>, and the pipeline still succeeds. Say
+which one you meant:</p>
 <table>
 <thead>
 <tr>
-<th></th>
-<th>Type</th>
-<th>Content</th>
-<th>Materialised as</th>
+<th>You want</th>
+<th>Add to <code>nextflow run</code></th>
+<th>What happens</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span></td>
-<td><code>table</code></td>
-<td>Tabular data: CSV, TSV, Parquet, Excel</td>
-<td>A Delta Lake table on S3</td>
+<td>A project per run</td>
+<td><code>--depictio_project study-B</code></td>
+<td>This run creates its own project, under that name</td>
 </tr>
 <tr>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-11-4 2.03 2.71L16 11l4 5H8M2 6v14a2 2 0 0 0 2 2h14v-2H4V6"></path></svg></span></td>
-<td><code>image</code></td>
-<td>Image files</td>
-<td>A Delta Lake table whose <code>image_column</code> holds the S3 paths</td>
+<td>One project, many runs</td>
+<td><code>--depictio_attach true</code></td>
+<td>This run is added to the existing project as another run. Nothing already ingested is lost</td>
 </tr>
 <tr>
-<td><img alt="MultiQC" src="../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../images/logos/multiqc_dark.svg#only-dark" width="18"></td>
-<td><code>multiqc</code></td>
-<td>MultiQC report data</td>
-<td>The report's parsed data, as Parquet on S3</td>
-</tr>
-<tr>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 11.5A2.5 2.5 0 0 1 9.5 9 2.5 2.5 0 0 1 12 6.5 2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"></path></svg></span></td>
-<td><code>geojson</code></td>
-<td>GeoJSON boundaries for choropleth maps</td>
-<td>The file, copied to S3 unchanged</td>
-</tr>
-<tr>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 11 5.79V7H7a2 2 0 0 0-2 2v.71A2.5 2.5 0 0 0 3.5 12 2.5 2.5 0 0 0 5 14.29V15H4a2 2 0 0 0-2 2v1.21A2.5 2.5 0 0 0 .5 20.5 2.5 2.5 0 0 0 3 23a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 4 18.21V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 9 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2H7v-.71A2.5 2.5 0 0 0 8.5 12 2.5 2.5 0 0 0 7 9.71V9h10v.71A2.5 2.5 0 0 0 15.5 12a2.5 2.5 0 0 0 1.5 2.29V15h-1a2 2 0 0 0-2 2v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 15 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 21 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2h-1v-.71A2.5 2.5 0 0 0 20.5 12 2.5 2.5 0 0 0 19 9.71V9a2 2 0 0 0-2-2h-4V5.79a2.5 2.5 0 0 0 1.5-2.29A2.5 2.5 0 0 0 12 1m0 1.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M6 11a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m12 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M3 19.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1"></path></svg></span></td>
-<td><code>phylogeny</code></td>
-<td>Newick or Nexus trees</td>
-<td>Nothing. The file is read where it was found</td>
+<td>To re-ingest the same output</td>
+<td><code>--depictio_update true</code></td>
+<td>The project's configuration is refreshed and the same data root is ingested again</td>
 </tr>
 </tbody>
 </table>
-<p>A <code>table</code> collection that declares latitude and longitude columns becomes map-capable
-without changing its type. See <a href="../components/#map-components">Components</a>.</p>
-<p>A <code>phylogeny</code> collection points at a <code>table</code> collection for its tip annotations rather
-than carrying them itself. See
-<a href="../../usage/projects/guide/#example-phylogeny-dcs-and-their-metadata-table">Phylogeny DCs and their metadata table</a>.</p>
-<h3 id="where-a-data-collection-came-from">Where a data collection came from<a class="headerlink" href="#where-a-data-collection-came-from" title="Permanent link">¶</a></h3>
-<table>
-<thead>
-<tr>
-<th>Source</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>native</code></td>
-<td>Scanned directly from workflow output files. Requires a <code>scan</code> configuration.</td>
-</tr>
-<tr>
-<td><code>joined</code></td>
-<td>Produced by a <a href="#joining-and-linking">join</a> merging two other collections.</td>
-</tr>
-<tr>
-<td><code>transformed</code></td>
-<td>Produced by a <a href="../../usage/projects/recipes/">Python recipe</a>.</td>
-</tr>
-<tr>
-<td><code>aggregated</code></td>
-<td>Reserved.</td>
-</tr>
-</tbody>
-</table>
-<p>Only <code>native</code> collections need a scan. Derived ones are written by whatever process
-creates them.</p>
-<hr>
-<h2 id="joining-and-linking">Joining and linking<a class="headerlink" href="#joining-and-linking" title="Permanent link">¶</a></h2>
-<p><a href="https://depictio.github.io/depictio-docs/images/data-model/join-vs-link_light.png" target="_blank"><img alt="Joining and linking" src="https://depictio.github.io/depictio-docs/images/data-model/join-vs-link_light.png#only-light"></a></p>
-<p><a href="https://depictio.github.io/depictio-docs/images/data-model/join-vs-link_dark.png" target="_blank"><img alt="Joining and linking" src="https://depictio.github.io/depictio-docs/images/data-model/join-vs-link_dark.png#only-dark"></a></p>
-<p>Two mechanisms that sound alike and behave nothing alike. The difference that matters most
-is <em>when</em> and <em>to what</em> each one applies:</p>
-<ul>
-<li>A <strong>JoinDefinition</strong> (<code>Project.joins</code>) runs in the CLI, at ingestion. It reads two Delta
-  tables, merges them on shared columns (<code>left_dc</code>, <code>right_dc</code>, <code>on_columns</code>, <code>how</code>, plus a
-  granularity policy) and writes the result to S3 as a new data collection with
-  <code>source: joined</code>. Because it merges rows, it only works between <code>table</code> collections.</li>
-<li>A <strong>DCLink</strong> (<code>Project.links</code>) merges nothing and writes nothing. It runs in the
-  dashboard, at render time, propagating <em>filters</em> from one data collection to another and
-  resolving identifiers between them by one of several strategies (<code>direct</code>,
-  <code>sample_mapping</code>, <code>pattern</code>, <code>regex</code>, <code>wildcard</code>). Since it only has to translate
-  identifiers, it works across types: a selection on a metadata table can narrow a MultiQC
-  report and an image gallery at the same time.</li>
-</ul>
-<p>Use a join when you want one table. Use a link when you want to keep several things
-separate and filter them together. <a href="../cross-dc-filtering/">Cross-DC Filtering</a> covers the
-resolver strategies in depth.</p>
-<div class="admonition note">
-<p class="admonition-title">Legacy join configuration</p>
-<p>A <code>join</code> block on an individual data collection's config still deserialises, but it is
-superseded by project-level <code>joins</code> and is no longer read.</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>depictio_update</code> re-imports the dashboards</p>
+<p>That discards edits made in the UI, unattended. For another run of the same
+pipeline, <code>depictio_attach</code> is the one you want.</p>
 </div>
-<hr>
-<h2 id="access-control">Access control<a class="headerlink" href="#access-control" title="Permanent link">¶</a></h2>
-<p>Permissions are not a separate document. A <code>Permission</code> object is <strong>embedded</strong> into every
-Project, Dashboard, WorkflowRun and File, holding three disjoint sets of users:</p>
+<h2 id="on-a-cluster-or-in-ci">On a cluster or in CI<a class="headerlink" href="#on-a-cluster-or-in-ci" title="Permanent link">¶</a></h2>
+<p>Two things that machine usually cannot offer: a writable home directory to hold
+a secret, and a Python environment.</p>
+<p><strong>Keep the token out of the file.</strong> The CLI always reads a <code>CLI.yaml</code>, but the
+token and the server URL can come from the environment and override it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DEPICTIO_CLI_CONFIG_PATH</span><span class="o">=</span>/path/to/CLI.yaml
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DEPICTIO_CLI_TOKEN</span><span class="o">=</span>&lt;long-lived<span class="w"> </span>CLI<span class="w"> </span>token&gt;
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DEPICTIO_CLI_API_BASE_URL</span><span class="o">=</span>https://depictio.example.org
+</code></pre></div>
+<p><strong>Reach the CLI through a container.</strong> Where Docker is available,
+<code>depictio_cli_executable</code> accepts a list, so it can be a whole <code>docker run</code>
+invocation. This one belongs in <code>~/.nextflow/config</code>, next to the include, since
+it describes the machine:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">params</span><span class="o">.</span><span class="na">depictio_cli_executable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="s1">'docker'</span><span class="o">,</span><span class="w"> </span><span class="s1">'run'</span><span class="o">,</span><span class="w"> </span><span class="s1">'--rm'</span><span class="o">,</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="s1">'-v'</span><span class="o">,</span><span class="w"> </span><span class="s1">'{DATA_ROOT}:{DATA_ROOT}'</span><span class="o">,</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="s1">'-v'</span><span class="o">,</span><span class="w"> </span><span class="s2">"${System.getProperty('user.home')}/.depictio:${System.getProperty('user.home')}/.depictio:ro"</span><span class="o">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="s1">'-e'</span><span class="o">,</span><span class="w"> </span><span class="s1">'DEPICTIO_CLI_TOKEN'</span><span class="o">,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="s1">'-e'</span><span class="o">,</span><span class="w"> </span><span class="s1">'DEPICTIO_CLI_API_BASE_URL'</span><span class="o">,</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="s1">'--network'</span><span class="o">,</span><span class="w"> </span><span class="s1">'host'</span><span class="o">,</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="s1">'ghcr.io/depictio/depictio-cli:1.10.0'</span><span class="o">,</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="o">]</span>
+</code></pre></div>
+<p>Use <code>{DATA_ROOT}</code> for the directory being ingested: the handler fills it in when
+the pipeline completes, while a <code>${params.outdir}</code> in the list is still <code>null</code>
+when the file is read.</p>
+<p>Each bind maps a host path onto the <strong>same path inside the container</strong>, because
+the handler passes absolute host paths through as they are. If
+<code>DEPICTIO_CLI_CONFIG_PATH</code> points outside <code>~/.depictio</code>, mount that directory the
+same way. The container runs as UID 1000, so the mounted <code>CLI.yaml</code> must be
+readable by that user.</p>
+<p>For results that should belong to whoever launched the run rather than to a
+service account, set <code>params.depictio_user</code> and see
+<a href="../../usage/guides/authentication-modes/#pipeline-provisioning-and-magic-links-v113">Pipeline provisioning</a>.</p>
+<h2 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">¶</a></h2>
+<details class="info">
+<summary>Every parameter the handler reads</summary>
 <table>
 <thead>
 <tr>
-<th>Tier</th>
-<th>Can do</th>
+<th>Parameter</th>
+<th>Default</th>
+<th>CLI option it drives</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>owners</strong></td>
-<td>Full control: edit, share, delete</td>
+<td><code>depictio_enabled</code></td>
+<td><code>true</code></td>
+<td>none, set it to <code>false</code> to disable the trigger</td>
 </tr>
 <tr>
-<td><strong>editors</strong></td>
-<td>Modify dashboard content, run data updates</td>
+<td><code>depictio_data_root</code></td>
+<td><code>params.outdir</code></td>
+<td><code>--data-root</code></td>
 </tr>
 <tr>
-<td><strong>viewers</strong></td>
-<td>Read-only access to dashboards and data</td>
+<td><code>depictio_cli_config</code></td>
+<td><code>$DEPICTIO_CLI_CONFIG_PATH</code>, else <code>~/.depictio/CLI.yaml</code></td>
+<td><code>--CLI-config-path</code></td>
+</tr>
+<tr>
+<td><code>depictio_template</code></td>
+<td>none</td>
+<td><code>--template</code></td>
+</tr>
+<tr>
+<td><code>depictio_project_config</code></td>
+<td>none</td>
+<td><code>--project-config-path</code>, which wins over the template</td>
+</tr>
+<tr>
+<td><code>depictio_project</code></td>
+<td>none</td>
+<td><code>--project-name</code></td>
+</tr>
+<tr>
+<td><code>depictio_dashboard</code></td>
+<td>none</td>
+<td><code>--dashboard</code>, one path or a list</td>
+</tr>
+<tr>
+<td><code>depictio_attach</code></td>
+<td><code>false</code></td>
+<td><code>--attach-run</code></td>
+</tr>
+<tr>
+<td><code>depictio_update</code></td>
+<td><code>false</code></td>
+<td><code>--update-config --overwrite</code>, ignored with <code>--attach-run</code></td>
+</tr>
+<tr>
+<td><code>depictio_user</code></td>
+<td>none</td>
+<td><code>--user</code></td>
+</tr>
+<tr>
+<td><code>depictio_cli_executable</code></td>
+<td><code>depictio-cli</code></td>
+<td>the executable, or a list for a container invocation. <code>{DATA_ROOT}</code> in a list element is substituted when the pipeline completes</td>
 </tr>
 </tbody>
 </table>
-<p>A project also carries an <code>is_public</code> flag, which is what opens it to readers with no
-account. See <a href="../../usage/guides/authentication-modes/">Authentication Modes</a> for how that
-interacts with anonymous and unauthenticated deployments.</p>
-<hr>
-<h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">¶</a></h2>
+<p>Only <code>depictio_cli_config</code> and <code>depictio_cli_executable</code> describe the
+machine and belong in <code>~/.nextflow/config</code>. Set the others on the
+<code>nextflow run</code> command line or in the pipeline's own <code>nextflow.config</code>. A
+<code>--depictio_*</code> value on the command line always wins.</p>
+</details>
+<details class="question">
+<summary>Nothing happened</summary>
+<p>Every line the handler writes is prefixed with <code>[depictio]</code>, on the console
+and in <code>.nextflow.log</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No <code>[depictio]</code> lines at all</td>
+<td>The snippet was never included, or <code>params.depictio_enabled</code> is <code>false</code></td>
+</tr>
+<tr>
+<td><code>Pipeline did not complete successfully, skipping ingestion</code></td>
+<td>Working as designed. Fix the pipeline first</td>
+</tr>
+<tr>
+<td><code>No data root to ingest</code></td>
+<td>Neither <code>params.depictio_data_root</code> nor <code>params.outdir</code> is set</td>
+</tr>
+<tr>
+<td><code>No bundled depictio template matches pipeline</code></td>
+<td>The pipeline declares a manifest, Depictio ships no template for its name and version, and no project YAML is set. For your own pipeline, set <code>params.depictio_project_config</code> as in <a href="#a-pipeline-with-no-bundled-template">a pipeline with no bundled template</a>. For an nf-core release with no template, pin <code>params.depictio_template</code> to a shipped version</td>
+</tr>
+<tr>
+<td><code>Could not start the Depictio CLI</code></td>
+<td><code>depictio-cli</code> is not on the <strong>head job's</strong> PATH. Installing it in the pipeline's containers does not help. Point <code>params.depictio_cli_executable</code> at an absolute path, or at a container</td>
+</tr>
+<tr>
+<td><code>Ingestion trigger failed, pipeline result unchanged</code></td>
+<td>Anything else, with the exception on that line. Your pipeline's result is never affected</td>
+</tr>
+<tr>
+<td><code>already exists on this server</code>, then <code>exited with code 2</code></td>
+<td>An earlier run created this project. See <a href="#running-it-again">Running it again</a></td>
+</tr>
+<tr>
+<td><code>depictio-cli exited with code N</code></td>
+<td>The ingestion itself failed. The CLI's own output is in the lines above</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2v6h2v3H5c-1.11 0-2 .89-2 2v3H1v6h6v-6H5v-3h6v3H9v6h6v-6h-2v-3h6v3h-2v6h6v-6h-2v-3c0-1.11-.89-2-2-2h-6V8h2V2z"></path></svg></span> <a href="../architecture/">Architecture</a> - Microservices stack and data flow</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 12v7.88c.04.3-.06.62-.29.83a.996.996 0 0 1-1.41 0l-2.01-2.01a.99.99 0 0 1-.29-.83V12h-.03L4.21 4.62a1 1 0 0 1 .17-1.4c.19-.14.4-.22.62-.22h14c.22 0 .43.08.62.22a1 1 0 0 1 .17 1.4L14.03 12z"></path></svg></span> <a href="../cross-dc-filtering/">Cross-DC Filtering</a> - DCLink resolver strategies in depth</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18a6 6 0 0 1-6-6c0-1 .25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12a8 8 0 0 0 8 8v3l4-4-4-4m0-11V1L8 5l4 4V6a6 6 0 0 1 6 6c0 1-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12a8 8 0 0 0-8-8"></path></svg></span> <a href="../yaml-sync/">YAML Dashboard Sync</a> - Declarative dashboard export and import</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 3a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2H3v2h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h2v-2H8v-5a2 2 0 0 0-2-2 2 2 0 0 0 2-2V5h2V3m6 0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3z"></path></svg></span> <a href="../../developer/contributing/">Contributing</a> - How to extend the platform</li>
+<li><a href="../usage/">CLI Usage</a> for <code>depictio-cli run</code> and every other command</li>
+<li><a href="../../usage/projects/templates/">Template System Reference</a> for how a pipeline id resolves to a template</li>
+<li><a href="../../pipeline-templates/nf-core/">nf-core templates</a> for what ships today</li>
+<li><a href="https://github.com/depictio/depictio/tree/main/depictio/cli/configs/nextflow"><code>depictio/cli/configs/nextflow/</code></a> for the snippet itself, an annotated reference config, and the example pipeline</li>
 </ul>
 
 
@@ -4650,7 +4721,7 @@ interacts with anonymous and unauthenticated deployments.</p>
         <ul class="depictio-footer__links">
           <li><a href="../../usage/get_started/">Getting Started</a></li>
           <li><a href="../../installation/docker/">Installation</a></li>
-          <li><a href="../">Features</a></li>
+          <li><a href="../../features/">Features</a></li>
           <li><a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">Live Demo</a></li>
         </ul>
       </div>

@@ -1597,6 +1597,8 @@
       
         
       
+        
+      
     
     
     
@@ -1673,6 +1675,34 @@
     
   
     Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../depictio-cli/nextflow-trigger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nextflow trigger
   
 
     
@@ -4337,7 +4367,7 @@
 <p><img alt="Log &amp; Task: expanded task detail" src="https://depictio.github.io/depictio-docs/images/react/admin_monitoring_task_detail_light.png#only-light">
 <img alt="Log &amp; Task: expanded task detail" src="https://depictio.github.io/depictio-docs/images/react/admin_monitoring_task_detail_dark.png#only-dark"></p>
 <h2 id="ingestion">Ingestion<a class="headerlink" href="#ingestion" title="Permanent link">¶</a></h2>
-<p>Ingestion runs, newest first: <strong>status</strong>, a <code>CLI</code> or <code>UI</code> source badge, instance label or hostname, project, and user. Uploads made through the web UI are recorded alongside CLI runs; recording is best-effort and never blocks an upload.</p>
+<p>Ingestion runs, newest first: <strong>status</strong>, a <code>CLI</code> or <code>UI</code> source badge (a run from the <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger</a> shows <code>CLI</code>), instance label or hostname, project, and user. Uploads made through the web UI are recorded alongside CLI runs; recording is best-effort and never blocks an upload.</p>
 <p>Expand a run for its <strong>provenance</strong> field grid: run id, host, CLI version, the resolved project id, the invoking command line, the CLI and project config paths, and the data root. Long paths are shortened to <code>head/…/tail</code>, with the full value in a tooltip and click-to-copy. Below it are two tables:</p>
 <ul>
 <li><strong>Steps</strong>: every phase the run went through (provisioning, template resolve, server and S3 checks, config validation, project sync, scan, process, joins, dashboard import), each with <code>success</code> / <code>failed</code> / <code>skipped</code> and a detail line such as <em>3 data collection(s) processed</em>. The summary line tallies ok / failed / skipped and the wall-clock duration.</li>

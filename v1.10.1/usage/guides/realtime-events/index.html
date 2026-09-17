@@ -1796,6 +1796,8 @@
       
         
       
+        
+      
     
     
     
@@ -1872,6 +1874,34 @@
     
   
     Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../depictio-cli/nextflow-trigger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nextflow trigger
   
 
     
@@ -4642,6 +4672,11 @@ The <code>Year … Min</code> buttons do not change the selection itself.</p>
   <code>/deltatables/upsert</code> API endpoint (with a valid token) triggers the same path. This is the
   intended integration point for a live experimental feed, and how SVLT feeds the dashboard
   above.</li>
+<li><strong>A pipeline that ingests itself</strong> <small>(v1.10.0+)</small>: a Nextflow
+  <code>workflow.onComplete</code> handler runs the CLI on the output directory when the run
+  finishes. With <code>--depictio_attach true</code>, each new run of the pipeline moves the
+  dashboard with no one at a keyboard. See
+  <a href="../../../depictio-cli/nextflow-trigger/#running-it-again">Nextflow trigger</a>.</li>
 </ul>
 <h3 id="try-it-locally">Try it locally<a class="headerlink" href="#try-it-locally" title="Permanent link">¶</a></h3>
 <p>The bundled <code>adapt_feedb_ms</code> demo project ships with the <code>realtime</code> block already set and a

@@ -1676,6 +1676,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="CLI Flags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which template a run uses
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1845,6 +1862,8 @@
       
         
       
+        
+      
     
     
     
@@ -1921,6 +1940,34 @@
     
   
     Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../depictio-cli/nextflow-trigger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nextflow trigger
   
 
     
@@ -4412,6 +4459,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="CLI Flags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which template a run uses
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4647,7 +4711,7 @@
 <tr>
 <td><code>--template</code></td>
 <td><code>string</code></td>
-<td>yes</td>
+<td><a href="#pipeline-id">one of</a></td>
 <td>Template ID. Pin a version (<code>nf-core/ampliseq/2.16.0</code>), or use <code>nf-core/ampliseq/latest</code>, or just <code>nf-core/ampliseq</code>, to resolve the newest shipped version (v1.5.2+)</td>
 </tr>
 <tr>
@@ -4682,6 +4746,16 @@
 </tr>
 </tbody>
 </table>
+<h3 id="pipeline-id">Which template a run uses<a class="headerlink" href="#pipeline-id" title="Permanent link">¶</a></h3>
+<p><code>depictio-cli run</code> needs one of:</p>
+<ul>
+<li><code>--template nf-core/ampliseq/2.16.0</code>, for a pipeline Depictio ships a template for;</li>
+<li><code>--project-config-path my_project.yaml</code>, for a pipeline of your own.</li>
+</ul>
+<p>Since <strong>v1.10.0</strong> the <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger</a>
+passes a third for you, <code>--pipeline-id nf-core/ampliseq/2.16.0</code>, read from the
+<code>manifest</code> block of its <code>nextflow.config</code>. Its version must match a shipped
+template, or the run stops with an error.</p>
 <hr>
 <h2 id="resolution-workflow">Resolution Workflow<a class="headerlink" href="#resolution-workflow" title="Permanent link">¶</a></h2>
 <p>When <code>--template</code> is set, <code>depictio run</code> inserts <strong>Step 0: Template resolution</strong> before the standard pipeline:</p>
@@ -4759,13 +4833,6 @@ gated out even with a seed sitting beside it.</p>
 <p>Only a <code>source: transformed</code> collection is redirected. A <code>{dc_tag}.tsv</code> next
 to a <code>source: native</code> collection of the same tag is that collection's own
 input, and is scanned normally.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Templates ship with the repository, not the wheel</p>
-<p>The bundled projects live under <code>depictio/projects/</code>, which is not part of the
-published <code>depictio-cli</code> package. Re-ingesting a bundled project from its own
-directory works from a repository checkout or a container image that carries
-them.</p>
 </div>
 <hr>
 <h2 id="template-origin">Template Origin<a class="headerlink" href="#template-origin" title="Permanent link">¶</a></h2>
