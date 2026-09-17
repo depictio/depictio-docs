@@ -91,38 +91,24 @@ The recipe Python code stays generic — path resolution happens via variable su
 
 | Flag | Type | Required | Description |
 |------|------|----------|-------------|
-| `--template` | `string` | yes | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+) |
+| `--template` | `string` | [one of](#pipeline-id) | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+) |
 | `--data-root` | `path` | yes | Root directory substituted for `{DATA_ROOT}` |
 | `--var` | `KEY=VALUE` | depends on template | Pass template-specific variables; repeatable |
 | `--dashboard` | `path` | no | Override default dashboard(s); repeatable |
 | `--skip-dashboard-import` | `flag` | no | Skip automatic dashboard import |
 | `--project-name` | `string` | no | Custom project name |
 
-### How the CLI picks a template when you name none <small>(v1.10.0+)</small> { #pipeline-id }
+### Which template a run uses { #pipeline-id }
 
-`depictio-cli run --data-root <dir>` does not need `--template`. Leave it out and
-the CLI finds the template itself, from the first of these that answers:
+`depictio-cli run` needs one of:
 
-| Source | Set by | A version with no template |
-| --- | --- | --- |
-| `--pipeline-id nf-core/ampliseq/2.16.0` | the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md), from the pipeline's manifest | error |
-| `pipeline_info/` in the run directory | nf-core, at the end of every run | the closest older template |
+- `--template nf-core/ampliseq/2.16.0`, for a pipeline Depictio ships a template for;
+- `--project-config-path my_project.yaml`, for a pipeline of your own.
 
-A `--template` you pass always wins, and so does a project YAML passed with
-`--project-config-path`. A pipeline of your own needs the latter, since there is no
-template to find; from the Nextflow trigger, see
-[a pipeline with no bundled template](../../depictio-cli/nextflow-trigger.md#a-pipeline-with-no-bundled-template).
-
-`--pipeline-id` names the pipeline that produced the data, not a Depictio template,
-and you do not normally type it. `latest`, or no version, takes the newest template.
-
-Reading `pipeline_info/` is more forgiving, because nobody chose the version: with
-templates for ampliseq 2.14.0, 2.16.0 and 2.18.0, a 2.17.0 run gets 2.16.0, never
-2.18.0, whose data collections point at files that run never wrote. A run older than
-every template gets the oldest.
-
-Whichever source wins, what `pipeline_info/` holds (the pipeline, its version, the
-engine version and the tools that ran) is recorded on the workflow.
+Since **v1.10.0** the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md)
+passes a third for you, `--pipeline-id nf-core/ampliseq/2.16.0`, read from the
+`manifest` block of its `nextflow.config`. Its version must match a shipped
+template, or the run stops with an error.
 
 ---
 
@@ -164,13 +150,6 @@ gated out even with a seed sitting beside it.
     Only a `source: transformed` collection is redirected. A `{dc_tag}.tsv` next
     to a `source: native` collection of the same tag is that collection's own
     input, and is scanned normally.
-
-!!! note "Templates ship in the CLI package, seeds do not <small>(v1.10.0+)</small>"
-    The `depictio-cli` package carries the template definitions, their dashboards
-    and recipes, and the Nextflow snippet, so `--template` and `--pipeline-id`
-    resolve from a plain `pip install`. The reference datasets and recipe seeds under
-    `depictio/projects/` stay out: re-ingesting a bundled project from its own
-    directory still needs a repository checkout or the container image.
 
 ---
 

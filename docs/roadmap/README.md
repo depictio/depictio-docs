@@ -105,7 +105,7 @@ Three sections, one question each:
   sub_title: "v1.9.0 ✅"
 
 - title: "Pipeline-triggered ingestion"
-  content: "A Nextflow pipeline ingests its own results when it finishes, and a run directory says which pipeline produced it"
+  content: "A Nextflow pipeline ingests its own results when it finishes"
   icon: ":fontawesome-solid-bolt:"
   key: "completed"
   sub_title: "v1.10.0 ✅"
@@ -213,7 +213,7 @@ something up.
 | ---- | ---------------------- | ---- |
 | :material-cloud-off-outline: **Serverless Depictio** | Explore a dashboard with no server to deploy or maintain: S3 files and prerenders read client-side, with WASM and DuckDB | [#934](https://github.com/depictio/depictio/issues/934) |
 | :material-filter-multiple-outline: **Journeys** | Named paths through tabs. The two halves of this idea already shipped: filters promoted to dashboard scope in [v1.6.0](../features/dashboards.md#persistent-sections), and [funnel filtering](../features/dashboards.md#funnel-filtering) in v1.7.0 | [#756](https://github.com/depictio/depictio/pull/756) · [#690](https://github.com/depictio/depictio/issues/690) · [#691](https://github.com/depictio/depictio/issues/691) |
-| :material-magic-staff: **Auto-compose from a run** | Point Depictio at a pipeline output directory and get a dashboard, no template chosen by hand (nf-core + Snakemake). Half of it shipped: [reading a run directory](../usage/projects/templates.md#pipeline-id) to identify its pipeline and pick a bundled template landed in v1.10.0. What is left is composing a dashboard when no template matches | [#811](https://github.com/depictio/depictio/pull/811) · [#734](https://github.com/depictio/depictio/issues/734) · [#843](https://github.com/depictio/depictio/issues/843) |
+| :material-magic-staff: **Auto-compose from a run** | Point Depictio at a pipeline output directory and get a dashboard, no template chosen by hand (nf-core + Snakemake) | [#811](https://github.com/depictio/depictio/pull/811) · [#734](https://github.com/depictio/depictio/issues/734) · [#843](https://github.com/depictio/depictio/issues/843) |
 | :material-file-document-edit-outline: **Project → template via the UI** | Turn a working project and its dashboards into a reusable template without touching YAML | [#861](https://github.com/depictio/depictio/issues/861) |
 | :material-flask-outline: **Citable science** | DOI-backed snapshots per dashboard version, sample-to-viz provenance via [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/), static export to [Quarto](https://quarto.org/). Nothing is open for it yet; [#931](https://github.com/depictio/depictio/issues/931) is the nearest neighbour, surfacing pipeline and filtering provenance in a dashboard | [#931](https://github.com/depictio/depictio/issues/931) |
 | :material-robot-outline: **AI-assisted analysis** | Describe the analysis and get a proposed layout; anomaly detection, narration, and an MCP server for AI agents | [#844](https://github.com/depictio/depictio/issues/844) · [#79](https://github.com/depictio/depictio/issues/79) |

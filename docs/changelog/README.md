@@ -24,10 +24,10 @@ ghcr.io/depictio/depictio-cli:1.10.0
 ### **✨ New Features**
 
 * **A Nextflow pipeline ingests its own results**: a `workflow.onComplete` snippet runs `depictio-cli run` on the output directory when the pipeline finishes, turned on once per machine with `depictio-cli config nextflow --install`. See [Nextflow trigger](../depictio-cli/nextflow-trigger.md) ([#1037](https://github.com/depictio/depictio/pull/1037)).
-* **A run directory says which pipeline produced it**: the CLI reads what the run wrote, so a bundled template resolves with no flag, and `--pipeline-id <name>/<version>` names it for an automated trigger. The engine and tool versions are stamped on the workflow. See [Templates](../usage/projects/templates.md#pipeline-id) ([#1036](https://github.com/depictio/depictio/pull/1036)).
-* **A project says what triggered it**: `--triggered-by` is stored on the project, and anything but a manual run shows a badge on its ingestion tab. **Triggered by Nextflow** gives the pipeline and engine versions, the tool count and the ingested directory. See [Ingestion Report & Health](../features/dashboards.md#triggered-by) ([#1037](https://github.com/depictio/depictio/pull/1037), [32a72156](https://github.com/depictio/depictio/commit/32a72156), [c0444f6c](https://github.com/depictio/depictio/commit/c0444f6c)).
+* **`--pipeline-id <name>/<version>`**: names the pipeline that produced a run, so an automated trigger gets the bundled template without naming one. For a template project, the engine and pipeline versions and the names of the tools that ran are stamped on the workflow. See [Templates](../usage/projects/templates.md#pipeline-id) ([#1035](https://github.com/depictio/depictio/pull/1035), [#1036](https://github.com/depictio/depictio/pull/1036), [#1037](https://github.com/depictio/depictio/pull/1037)).
+* **A project says what triggered it**: `--triggered-by` is stored on the project, and anything but a manual run shows a badge on its ingestion tab. On a template project, **Triggered by Nextflow** gives the pipeline and engine versions, the tool count and the ingested directory. See [Ingestion Report & Health](../features/dashboards.md#triggered-by) ([#1037](https://github.com/depictio/depictio/pull/1037), [32a72156](https://github.com/depictio/depictio/commit/32a72156), [c0444f6c](https://github.com/depictio/depictio/commit/c0444f6c)).
 * **`--attach-run`**: register a data root as another run of an existing project instead of creating one. See [CLI Usage](../depictio-cli/usage.md#run-command) ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
-* **CLI credentials from the environment**: `DEPICTIO_CLI_TOKEN`, `DEPICTIO_CLI_API_BASE_URL` and `DEPICTIO_CLI_CONFIG_PATH`, so a committed `CLI.yaml` carries no secret. See [CLI Usage](../depictio-cli/usage.md#environment-variables) ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **CLI credentials from the environment**: `DEPICTIO_CLI_TOKEN`, `DEPICTIO_CLI_API_BASE_URL` and `DEPICTIO_CLI_CONFIG_PATH` override the `CLI.yaml`, so the token can stay out of it. See [CLI Usage](../depictio-cli/usage.md#environment-variables) ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
 
 ### **🧬 Pipeline Templates**
 
@@ -45,9 +45,9 @@ ghcr.io/depictio/depictio-cli:1.10.0
 
 * **A second automated trigger no longer exits 1 with an empty message** when the project already exists ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
 * **A multi-location rescan stops deleting runs it has not walked yet** ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
-* **`/projects/create` failures are no longer reported as success**: the endpoint answers HTTP 200 with a failure body ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
-* **A resumed run's newest `params.json` decides template pruning**, not the first attempt's ([#1037](https://github.com/depictio/depictio/pull/1037), [ced67d01](https://github.com/depictio/depictio/commit/ced67d01)).
-* **The demo wipe hook stops racing the Helm upgrade** ([#1021](https://github.com/depictio/depictio/pull/1021), [61d30b3f](https://github.com/depictio/depictio/commit/61d30b3f)).
+* **A failed project creation is no longer reported as success** ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **An expired token fails at step 1**: `run` used to print "Server accessibility check passed" right after rejecting the token, then fail later on a project error that did not mention authentication ([#1037](https://github.com/depictio/depictio/pull/1037), [058cc4b4](https://github.com/depictio/depictio/commit/058cc4b4)).
+* **After `-resume`, a template follows the latest attempt's parameters**, not the first attempt's ([#1037](https://github.com/depictio/depictio/pull/1037), [ced67d01](https://github.com/depictio/depictio/commit/ced67d01)).
 
 ---
 

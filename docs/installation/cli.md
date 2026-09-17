@@ -54,8 +54,8 @@ This will install the CLI in development mode, allowing you to modify the code i
 ### Run it from a container <small>(v1.10.0+)</small> { #container-image }
 
 The CLI is also published to GHCR, built alongside the other Depictio images and
-tagged with the same versions. This is the answer for an HPC head node or a CI
-runner where you cannot install a Python environment:
+tagged with the same versions. Use it on a CI runner or a head node that has
+Docker but where you cannot install a Python environment:
 
 ```bash
 docker run --rm \
@@ -64,14 +64,15 @@ docker run --rm \
   --network host \
   ghcr.io/depictio/depictio-cli:1.10.0 \
   run --CLI-config-path "$HOME/.depictio/CLI.yaml" \
-  --data-root /path/to/results --pipeline-id nf-core/ampliseq/2.16.0
+  --data-root /path/to/results --template nf-core/ampliseq/2.16.0
 ```
 
-Bind each host path onto the same path inside the container: the paths you pass
-are recorded in the project as given. The image runs as its own user, so its home
-is not yours: name the CLI config with `--CLI-config-path`, or pass
-`DEPICTIO_CLI_TOKEN` and `DEPICTIO_CLI_API_BASE_URL` with `-e` instead. The image carries the MultiQC extra and the
-bundled templates, both of which the build asserts are present.
+Mount each host path at the same path inside the container, because the paths you
+pass are recorded in the project as given. The container has its own home, so
+name your config with `--CLI-config-path`, and it runs as UID 1000, so that file
+must be readable by that user. `-e DEPICTIO_CLI_TOKEN` overrides the token in the
+file; it does not replace the file. The image carries the MultiQC extra and the
+bundled templates.
 
 ## Verifying the Installation
 

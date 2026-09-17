@@ -85,15 +85,14 @@ See the [installation guide](../installation/cli.md) for instructions on how to 
 
 ### Environment variables <small>(v1.10.0+)</small> { #environment-variables }
 
-These let a `CLI.yaml` be committed with no secret in it and the credentials
-injected at runtime, which is what makes an automated trigger practical on a CI
-runner or a cluster head job that has no writable home directory.
+The CLI always reads a `CLI.yaml`. These variables override parts of it, so the
+token can stay out of the file, for example on a CI runner.
 
 | Variable | Effect |
 | -------- | ------ |
-| `DEPICTIO_CLI_TOKEN` | Injected as `user.token.access_token`, overriding the file |
-| `DEPICTIO_CLI_API_BASE_URL` | Overrides `api_base_url` from the file |
-| `DEPICTIO_CLI_CONFIG_PATH` | Selects which CLI config file to load. It applies only when the caller left the path at its default, so an explicit `--CLI-config-path` is never clobbered |
+| `DEPICTIO_CLI_TOKEN` | Replaces the token from the file |
+| `DEPICTIO_CLI_API_BASE_URL` | Replaces `api_base_url` from the file |
+| `DEPICTIO_CLI_CONFIG_PATH` | The file to read when `--CLI-config-path` is not given |
 
 ## 🚀 Commands
 
@@ -129,10 +128,10 @@ depictio-cli run --project-config-path ./config.yaml
     |-----------|------|---------|-------------|
     | `--CLI-config-path` | `string` | `~/.depictio/CLI.yaml` | CLI configuration file path |
     | `--project-config-path` | `string` | `""` | Pipeline configuration file path (mutually exclusive with `--template`) |
-    | `--data-root` | `path` | `null` | The run directory to ingest. Required with `--template`, where it also replaces `{DATA_ROOT}`. Since **v1.10.0** the CLI reads the run's [provenance](../usage/projects/templates.md#run-provenance) from it whenever it is given, and can [resolve a template from it alone](../usage/projects/templates.md#pipeline-id) when neither `--template` nor `--project-config-path` is. |
+    | `--data-root` | `path` | `null` | The run directory to ingest. Required with `--template`, where it also replaces `{DATA_ROOT}`. |
     | `--workflow-name` | `string` | `null` | Specific workflow to process |
     | `--data-collection-tag` | `string` | `null` | Data collection tag to process |
-    | `--pipeline-id` | `string` | `null` | Which pipeline produced this data, as `<name>/<version>`. Resolves a bundled template when neither `--template` nor `--project-config-path` is given, and is ignored otherwise, so an explicit choice always wins. A [Nextflow trigger](nextflow-trigger.md) fills it from the pipeline's manifest. (v1.10.0+) |
+    | `--pipeline-id` | `string` | `null` | Which pipeline produced this data, as `<name>/<version>`. Resolves a bundled template when neither `--template` nor `--project-config-path` is given, and is ignored otherwise, so an explicit choice always wins. The version must match a shipped template. The [Nextflow trigger](nextflow-trigger.md) fills it from the pipeline's `manifest` block. (v1.10.0+) |
     | `--triggered-by` | `string` | `"manual"` | What invoked this ingestion, recorded on the project and shown as a badge in its [ingestion report](../features/dashboards.md#triggered-by). (v1.10.0+) |
 
 ??? info "🍳 Template Options"
@@ -147,9 +146,6 @@ depictio-cli run --project-config-path ./config.yaml
     | `--dashboard` | `path` | `null` | Dashboard YAML to import. Repeatable. Since **v1.10.0** it also works without a template, so a project built from a plain project YAML can import a dashboard in the same run. |
     | `--skip-dashboard-import` | `flag` | `false` | Skip the automatic dashboard import step (Step 8) |
     | `--provenance-file` | `path` | `null` | Extra recap file (JSON, YAML or two-column key/value TSV) listed in the project's [run provenance](../usage/projects/templates.md#run-provenance) under *User provided*. Repeatable. (v1.8.3+) |
-
-    A template is resolved against `--data-root`, which is required here: every
-    `{DATA_ROOT}` in the template file is replaced with it.
 
     Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/projects/templates.md#recipe-seeds) committed beside the data: a `source: transformed` data collection with a `{DATA_ROOT}/{dc_tag}.tsv` next to it is scanned from that file instead of re-running its recipe against raw pipeline inputs the bundled projects do not ship. Collections without a seed still run their recipes, and no flags change.
 
@@ -201,18 +197,16 @@ depictio-cli run --project-config-path ./config.yaml
 
 ??? info "🔁 Repeated runs (v1.10.0+)"
 
-    A second run against an existing project stops at step 4 and exits 2 rather
-    than touching it. These say which of the two things you meant.
+    If the project already exists, `run` changes nothing and exits with code 2.
+    To add this directory as another run, pass `--attach-run`. To re-ingest the
+    same directory, pass `--update-config --overwrite`.
 
     | Parameter | Type | Default | Description |
     |-----------|------|---------|-------------|
-    | `--attach-run` | `boolean` | `false` | Register `--data-root` as an **additional run** of an existing project instead of creating one. Implies `--update-config`, rebuilds the delta tables from every run, and skips the dashboard import so your edits survive. |
+    | `--attach-run` | `boolean` | `false` | Add `--data-root` as **another run** of the existing project. Earlier runs stay, the tables are rebuilt from every run, and the dashboards are not re-imported, so your edits survive. |
 
-    Re-ingesting the *same* data root instead is `--update-config --overwrite`.
-    Data collections declared with `scan.mode: single` (a samplesheet, a metadata
-    table, a tree) keep pointing at the run that created the project, which is
-    the right behaviour for a file that covers the whole project. The attach
-    summary says so rather than failing.
+    A data collection with `scan.mode: single` (a samplesheet, a metadata table,
+    a tree) keeps reading the run that created the project.
 
 ??? info "🖥️ Output & Control"
 
@@ -939,7 +933,7 @@ depictio-cli migrate \
 ### <span style="color: #0dc09d;">:simple-nextflow:</span> Let the pipeline run the CLI for you <small>(v1.10.0+)</small> { #nextflow-trigger }
 
 Everything below is a command someone has to remember. A Nextflow pipeline can
-run step 1 to 8 itself when it completes, on the output directory it just wrote:
+run `depictio-cli run` itself when it completes, on the output directory it just wrote:
 
 ```bash
 depictio-cli config nextflow --install     # once per machine

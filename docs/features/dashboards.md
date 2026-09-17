@@ -463,11 +463,12 @@ matches lands in **Other**. See
 
 ### :material-rocket-launch-outline: What triggered the run <small>(v1.10.0+)</small> { #triggered-by }
 
-A project the CLI creates records what invoked it, from `--triggered-by`. Anything
-other than a manual run shows a badge on the project's ingestion tab. **Triggered by
-Nextflow** carries the Nextflow logo, and its tooltip gives the pipeline and engine
-versions, the number of tools that ran and the directory that was ingested. See
-[Nextflow trigger](../depictio-cli/nextflow-trigger.md).
+A project records what invoked its latest ingestion, from `--triggered-by`.
+Anything other than a manual run shows a badge on the project's ingestion tab: a
+project the [Nextflow trigger](../depictio-cli/nextflow-trigger.md) ingests shows
+**Triggered by Nextflow**, with the Nextflow logo. For a project built from a
+template, its tooltip also gives the pipeline and engine versions, the number of
+tools that ran and the directory that was ingested.
 
 ### :material-heart-pulse: Health status & banner
 
