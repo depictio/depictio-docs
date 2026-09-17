@@ -11,7 +11,7 @@ hide:
   </a>
   <div class="template-banner-body">
     <h1 class="template-title">Chromatin Accessibility</h1>
-    <p class="template-subtitle">An ATAC-seq run followed from reads to accessible regions: ataqv library quality, MACS2 broad peaks, the consensus peak set across libraries, and DESeq2 differential accessibility on top of it.</p>
+    <p class="template-subtitle">An ATAC-seq run followed from reads to accessible regions: ataqv library quality, MACS2 broad peaks, the consensus peak set across libraries, and the DESeq2 sample QC on top of it.</p>
     <p class="template-links">
       <a href="https://nf-co.re/atacseq" target="_blank"><i class="mdi mdi-open-in-new"></i> nf-co.re</a>
       <a href="https://github.com/nf-core/atacseq" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
@@ -20,38 +20,59 @@ hide:
   <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="1.2.2">
+<div class="tpl-version-pick" data-latest="2.1.2">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Template version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
-    <option value="1.2.2" selected>1.2.2</option>
+    <option value="2.1.2" selected>2.1.2</option>
   </select>
   <span class="tpl-version-badge">latest</span>
 </div>
 
-The atacseq template covers the merged-library, broad-peak route of a standard nf-core/atacseq run:
+The atacseq template covers the merged-library, broad-peak route of a standard
+nf-core/atacseq run, one tab per step:
 
-- :material-chart-box-outline: **MultiQC**: FastQC, Trim Galore, Picard, samtools, preseq and deepTools, from the MultiQC report
+- :material-chart-box-outline: **MultiQC**: FastQC and trimming, the merged libraries before and after filtering, and the pipeline's own FRiP and peak-count content
 - :material-waves: **ATAC signal**: the ataqv metrics, the TSS enrichment curve, the fragment ladder and the per-chromosome read matrix
 - :material-chart-scatter-plot: **Peaks**: MACS2 broad calls per library, their significance along the genome, and the HOMER annotation
-- :material-set-merge: **Consensus**: the merged peak set, which libraries agree on an interval, and how strong the signal is there
-- :material-scale-balance: **Differential accessibility**: DESeq2 over the consensus interval counts, one panel set per contrast
+- :material-set-merge: **Consensus**: the merged peak set, which libraries agree on an interval, and how the samples group on the counts over it
 
-!!! warning "MultiQC has to be reprocessed before ingest"
-    The reference run published MultiQC 1.9, which writes no parquet, and
-    Depictio reads only `multiqc.parquet` (MultiQC 1.31 and later). Regenerating
-    the report is mandatory: without it the MultiQC tab is empty. It buys more
-    than the file format here, because MultiQC 1.35 gained an `ataqv` module that
-    1.9 knew nothing about, so four ATAC-specific panels appear outright.
+A `Sample sheet` section is pinned to the top of every tab and `Reference tables`
+to the bottom, so the design rows and the per-library peak QC follow you from tab
+to tab.
 
-!!! info "Scope, and why 1.2.2 rather than a 2.x release"
-    The run was called with `--narrow_peak false`, so the calls are
-    `*_peaks.broadPeak` (BED6+3, no summit column) read by `macs2/broad_peaks`;
-    the narrowPeak route is read by `macs2/peaks`. Only the merged-library level
-    is bound, not the merged-replicate copy of the same tree. Every release from
-    2.x on publishes an empty or truncated megatest prefix, so 1.2.2 from 2022 is
-    the newest complete run in the bucket. It is DSL1: no `params.json`, so
-    nothing is auto-detected, and the software versions are a tab-separated CSV.
+!!! warning "One MultiQC parquet per run, in one of two places"
+    The tiles are bound to the report the pipeline writes itself with MultiQC
+    1.31 or later swapped in, which is what the Nextflow trigger ingests:
+    `multiqc/broad_peak/multiqc_data/multiqc.parquet`. The release pins MultiQC
+    1.13, which writes no parquet; for such a run the reprocess step writes
+    `multiqc/multiqc_data/multiqc.parquet` instead and the collection binds that
+    too:
+
+    ```bash
+    python -m depictio.dev_scripts.multiqc_reprocess --src <outdir> --dest <outdir>
+    ```
+
+    The CLI ingests every parquet it finds under the data root as its own report,
+    so a tree must hold exactly one of the two: never reprocess a run that already
+    published a parquet. The tiles read the merged-library module ids
+    (`samtools-1`, `picard`, `picard-1`, `mlib_deeptools`), which a reprocessed
+    report merges under one id per tool, leaving those tiles empty.
+
+!!! info "The broad-peak, merged-library route"
+    The pipeline default calls broad peaks, so the calls are
+    `macs2/broad_peak/*_peaks.broadPeak` (BED6+3, no summit column) and a
+    `--narrow_peak` run is not bound here. 2.x publishes the whole peak tree twice,
+    per merged library and per merged replicate; only the merged-library level is
+    read, because the recipes match on file name and both levels would land in the
+    same table. No glob names the aligner, so bwa, bowtie2, chromap and STAR runs
+    bind identically.
+
+!!! note "No DESeq2 differential accessibility"
+    nf-core/atacseq 2.0 removed the differential accessibility analysis, so this
+    template has no Differential accessibility tab. What the pipeline still runs
+    is a DESeq2 sample QC on the consensus counts, published as MultiQC custom
+    content, and it closes the Consensus tab.
 
 ---
 
@@ -60,17 +81,15 @@ The atacseq template covers the merged-library, broad-peak route of a standard n
 === "Point at a finished run"
 
     ```bash
-    # 1. Regenerate the MultiQC report Depictio reads (the run wrote 1.9)
-    python -m depictio.dev_scripts.multiqc_reprocess \
-      --src /path/to/atacseq_results --dest /path/to/atacseq_results
-
-    # 2. Ingest
-    depictio run --template nf-core/atacseq/latest \
+    depictio run \
+      --template nf-core/atacseq/latest \
       --data-root /path/to/atacseq_results
     ```
 
-    `--data-root` is the only thing you have to pass: the design sheet is one of
-    the run's own outputs (`pipeline_info/design_reads.csv`).
+    `--data-root` is the only thing you have to pass. The hub of the dashboard is
+    the samplesheet the run validated, `pipeline_info/samplesheet.valid.csv`,
+    which a template-local recipe turns into one row per merged library with its
+    group, replicate, read type, role and control.
 
 === "From the pipeline itself (v1.10.0+)"
 
@@ -87,12 +106,10 @@ The atacseq template covers the merged-library, broad-peak route of a standard n
 
 ## :material-book-open-variant: Reference
 
-The template reads the ataqv JSON reports, the MACS2 broad calls and their HOMER
-annotation, the consensus boolean matrix and fold-enrichment table, the DESeq2
-result tables and the regenerated MultiQC parquet. Both the MultiQC `ataqv` module
-and the dedicated `ataqv` tool are bound, because they answer different questions:
-the module plots four distributions, the tool carries the per-library metric table
-the cards read and the TSS coverage curve.
+The template reads the validated samplesheet, the ataqv JSON reports, the MACS2
+broad calls and their HOMER annotation, the consensus boolean and fold-enrichment
+matrices, and the MultiQC parquet. 49 of its 91 components carry a `use:` catalog
+reference, so a tile says where its panel comes from.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -100,7 +117,7 @@ the cards read and the TSS coverage curve.
     visualizations are dropped entirely, and the remaining components are
     re-packed so there are no empty rows.
 
-<div class="tpl-version-block" data-version="1.2.2" markdown>
+<div class="tpl-version-block" data-version="2.1.2" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/atacseq-latest.md"
 
@@ -110,13 +127,13 @@ the cards read and the TSS coverage curve.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Five tabs, read as a funnel: are the libraries clean, is the ATAC signal where it
-should be, what did MACS2 call, which calls do the libraries agree on, and which
-of the agreed intervals change between protocols. Each tab below carries the
-**same icon and colour the dashboard gives it**, so the page and the app read
-alike. `Sample filters` is pinned to the top of every tab, `QC thresholds` and
-`Reference tables` to the bottom. Each sample has two spellings, bare and
-`.mLb.clN`, and the hub carries both, so one pick in the filter reaches them all.
+Four tabs, read as a funnel: are the libraries clean, is the ATAC signal where it
+should be, what did MACS2 call, and which calls do the libraries agree on. Each
+tab below carries the **same icon and colour the dashboard gives it**. Each
+library has two spellings, bare and `.mLb.clN`, and the hub carries both, so one
+pick in the filter reaches every panel. The screenshots come from a `test_full`
+run: six GM12878 libraries across three transposition protocols, two replicates
+each.
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
@@ -124,26 +141,27 @@ alike. `Sample filters` is pinned to the top of every tab, `QC thresholds` and
 
     [![MultiQC dashboard](../../images/pipeline-templates/nf-core/atacseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Three of the four cards read ataqv rather than MultiQC, because those are the
-    numbers an ATAC library is accepted or rejected on. The samtools panels carry
-    every library twice, `mLb.mkD` before filtering and `mLb.clN` after, so the
-    gap between the series is what ATAC filtering removed. Two tiles read deepTools
-    tables the report has no panel for: a `scatter_xy` of coverage concentration
-    against divergence from a uniform library, and a metagene `profile`.
+    FastQC names a library after its technical replicate and read, so a sample
+    appears in `Read quality` once per library and read. `Alignment and
+    duplication` reads the merged libraries before filtering (`samtools-1`), where
+    unmapped and mitochondrial reads are still there, with the insert size from
+    Picard on the filtered library. `Signal and peak yield` closes with the
+    deepTools fingerprint and the pipeline's own FRiP, peak count and peak
+    annotation content.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `ATAC sample` and `Transposition protocol` on
+        **Filters** · `ATAC sample`, `Sample group` and `Library role` on
         `sample_design`, pinned to the top of every tab, plus `TSS enrichment`
         and `FRiP score` floors in a collapsed *QC thresholds* group.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards |
+        | Sample sheet | *Sample design* |
         | Read quality | 3 MultiQC panels |
-        | Alignment and library complexity | 5 MultiQC panels, *Library complexity with its confidence ribbon* |
-        | Accessibility signal | 4 MultiQC panels, *Coverage concentration per library*, *Metagene signal profile* |
-        | Reference tables | *Sample design*, *Peak QC summary* |
+        | Alignment and duplication | 4 MultiQC panels |
+        | Signal and peak yield | 4 MultiQC panels |
+        | Reference tables | *Peak QC summary* |
 
 === ":material-waves:{ .mc-cyan } ATAC signal"
 
@@ -151,12 +169,12 @@ alike. `Sample filters` is pinned to the top of every tab, `QC thresholds` and
 
     [![ATAC signal dashboard](../../images/pipeline-templates/nf-core/atacseq/atac_signal_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/atac_signal_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The TSS coverage curve is the canonical ATAC read: a sharp central spike is a
-    well transposed library, a flat line is not. The scatter beside it puts each
-    library on TSS enrichment against reads in peaks and is the tab's selection
-    source, so lassoing there narrows the ataqv table. The fragment-length figure
-    obeys the fragment-window filters while MultiQC's rendering of the same signal
-    beside it is the unfiltered reference. Read the `chrM` row of the read
+    The first card row is the quartet a library is accepted or rejected on: TSS
+    enrichment, reads inside peaks, mitochondrial fraction and duplicate fraction.
+    The TSS coverage curve below is the canonical ATAC read, a sharp central spike
+    against a flat line, and the scatter beside it puts each library on TSS
+    enrichment against reads in peaks. It is the tab's selection source, so
+    lassoing there narrows the ataqv table. Read the `chrM` row of the read
     distribution matrix first: a high share there is the classic ATAC failure.
 
     ??? abstract ":material-tune-variant: Filters and components"
@@ -167,11 +185,18 @@ alike. `Sample filters` is pinned to the top of every tab, `QC thresholds` and
 
         | Section | What it holds |
         |---|---|
-        | Library quality at a glance | 4 cards |
-        | Signal at transcription start sites | *Coverage around transcription start sites*, *Signal against specificity* |
-        | Fragment length ladder | *Fragment length distribution*, the MultiQC ataqv panel, *Reads per fragment class* |
-        | Read distribution | *Read distribution matrix*, MultiQC mapping quality |
+        | Library quality at a glance | 7 cards |
+        | Depth and coverage concentration | *Library complexity with its confidence ribbon*, *Coverage concentration per library* |
+        | Signal at transcription start sites | *Coverage around transcription start sites*, *Signal against specificity*, *Metagene signal profile* |
+        | Fragment length ladder | *Fragment length distribution*, *Reads per fragment class* |
+        | Read distribution | *Read distribution matrix* |
         | ATAC quality tables | *ATAC quality metrics* |
+
+    !!! tip "Two panels depend on how the run was made"
+        preseq is off by default in 2.x, so the complexity ribbon stays empty
+        unless the run passed `--skip_preseq false`. ataqv only writes
+        per-reference counts for paired-end libraries, so single-end ones are
+        absent from the read distribution matrix.
 
 === ":material-chart-scatter-plot:{ .mc-indigo } Peaks"
 
@@ -180,11 +205,12 @@ alike. `Sample filters` is pinned to the top of every tab, `QC thresholds` and
     [![Peaks dashboard](../../images/pipeline-templates/nf-core/atacseq/peaks_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/peaks_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     The manhattan panel places every call at its midpoint over `-log10(q)`, next
-    to a scatter of enrichment against significance and a width histogram. *Where
-    the peaks land* reads the HOMER annotation twice over: the histogram pools
-    libraries and splits them by feature class, while the TSS distance `profile`
-    below it does the opposite, one curve per library as a share of that library's
-    peaks, which is what lets libraries of different depth be compared.
+    to a scatter of enrichment against significance, which carries the selection
+    on `peak_id`, and a width histogram on a log axis. *Where the peaks land*
+    reads the HOMER annotation twice over: the histogram pools libraries and
+    splits them by feature class, while the TSS distance `profile` below it does
+    the opposite, one curve per library as a share of that library's peaks, which
+    is what lets libraries of different depth be compared.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -200,15 +226,17 @@ alike. `Sample filters` is pinned to the top of every tab, `QC thresholds` and
 
 === ":material-set-merge:{ .mc-teal } Consensus"
 
-    *The merged peak set: which libraries agree on an interval, and how strong the signal is there.*
+    *The merged peak set: which libraries agree on an interval, and how the samples group on it.*
 
     [![Consensus dashboard](../../images/pipeline-templates/nf-core/atacseq/consensus_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/consensus_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The UpSet panel runs over the six library columns of the consensus boolean
-    matrix; with three protocols in two replicates each, the protocol-specific
+    The UpSet panel runs over the library columns of the consensus boolean matrix;
+    with three protocols in two replicates each, the protocol-specific
     intersections are the ones to read. The signal heatmap is a top-N view on
-    purpose: the merged set holds 104657 intervals and the panel clusters the 250
-    most accessible, so a selection elsewhere narrows it only when it lands there.
+    purpose: the `test_full` merged set holds 104,659 intervals and the panel
+    clusters the 250 most accessible, so a selection elsewhere narrows it only
+    when it lands there. `Sample similarity` closes the tab with the pipeline's
+    DESeq2 QC, where replicates of a group should sit together.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -220,49 +248,27 @@ alike. `Sample filters` is pinned to the top of every tab, `QC thresholds` and
         | Consensus at a glance | 4 cards |
         | Replicate agreement | *Consensus peak overlap* |
         | Signal at the strongest intervals | *Consensus signal heatmap* |
+        | Sample similarity | *Sample PCA on the consensus counts*, *Sample distances on the consensus counts* |
         | Consensus tables | *Consensus intervals*, *Consensus fold enrichment* |
-
-=== ":material-scale-balance:{ .mc-grape } Differential accessibility"
-
-    *DESeq2 over the consensus counts: FAST against OMNI, FAST against STD, OMNI against STD.*
-
-    [![Differential accessibility dashboard](../../images/pipeline-templates/nf-core/atacseq/differential_accessibility_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/differential_accessibility_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    Volcano and MA are the catalog's own `deseq2` panels, with the QQ plot and the
-    DA barplot beside a bar of significant intervals per contrast. The `Contrast`
-    filter is a single-choice `Select` on purpose: DESeq2 names the consensus
-    intervals `Interval_1 ... Interval_N` and the numbering restarts per contrast,
-    so an interval id identifies a row only together with the selected contrast.
-
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · `Contrast` as a single choice and `Direction`, plus log2
-        fold-change and significance ranges, all on `deseq2_results`.
-
-        | Section | What it holds |
-        |---|---|
-        | Differential accessibility at a glance | 4 cards |
-        | Volcano and MA | *Volcano*, *MA plot* |
-        | Calibration and direction | *QQ plot*, *Strongest differential intervals*, *Significant intervals per contrast* |
-        | Differential tables | *DESeq2 differential accessibility* |
 
 ---
 
 ## :material-play-circle-outline: Running the pipeline
 
 Depictio reads the **output** of nf-core/atacseq, it does not run the pipeline.
-Run the pipeline first, then regenerate MultiQC and ingest:
+Run the pipeline first, then ingest, regenerating the MultiQC report only if the
+run kept the release's MultiQC 1.13:
 
 ```bash
-nextflow run nf-core/atacseq -r 1.2.2 -profile docker \
-  --input design.csv --genome GRCh37 --narrow_peak false
+nextflow run nf-core/atacseq -r 2.1.2 -profile docker \
+  --input samplesheet.csv --genome GRCh37
 
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
 
 depictio run --template nf-core/atacseq/latest --data-root results/
 ```
 
-See [nf-co.re/atacseq/usage](https://nf-co.re/atacseq/1.2.2/docs/usage) for full
+See [nf-co.re/atacseq/usage](https://nf-co.re/atacseq/2.1.2/docs/usage) for full
 pipeline documentation.
 
 ---
@@ -270,61 +276,54 @@ pipeline documentation.
 ## :material-folder-open-outline: Required data structure
 
 Point `--data-root` at the directory holding the pipeline output. Depictio scans
-recursively and every recipe matches on file name, so no glob spells out the
-`bwa/mergedLibrary/macs/broadPeak/` prefix and a run aligned with a different
-aligner binds identically. Keep `bwa/mergedReplicate/` out for that same reason.
+recursively and every recipe matches on file name, so a run aligned with another
+aligner binds identically. Keep the `merged_replicate/` tree out for that same
+reason.
 
 ```text
 <DATA_ROOT>/
 ├── pipeline_info/
-│   ├── design_reads.csv                         # the design sheet, the dashboard hub
-│   └── software_versions.csv                    # DSL1: tab-separated, not YAML
-├── multiqc/multiqc_data/multiqc.parquet         # written by multiqc_reprocess
-├── fastqc/zips/, trim_galore/                   # raw and trimmed reads
-└── bwa/mergedLibrary/
-    ├── picard_metrics/, samtools_stats/         # *.mLb.mkD.* and *.mLb.clN.*
-    ├── preseq/, deepTools/                      # complexity, fingerprint, profile
-    ├── ataqv/broadPeak/*.ataqv.json             # the ATAC quality reports
-    └── macs/broadPeak/
-        ├── *_peaks.broadPeak                    # BED6+3, no summit column
-        ├── *_peaks.annotatePeaks.txt            # HOMER annotation
-        ├── qc/*_mqc.tsv                         # FRiP, peak counts
+│   ├── samplesheet.valid.csv                     # the hub: one row per merged library
+│   └── software_versions.yml
+├── multiqc/broad_peak/multiqc_data/
+│   └── multiqc.parquet                           # or multiqc/multiqc_data/ after a reprocess
+├── fastqc/zips/, trimgalore/                     # raw and trimmed reads
+└── bwa/merged_library/
+    ├── samtools_stats/                           # *.mLb.mkD.* and *.mLb.clN.*
+    ├── picard_metrics/                           # MarkDuplicates, CollectMultipleMetrics
+    ├── deeptools/{plotfingerprint,plotprofile}/
+    ├── ataqv/broad_peak/*.ataqv.json             # the ATAC quality reports
+    └── macs2/broad_peak/
+        ├── *.mLb.clN_peaks.broadPeak             # BED6+3, no summit column
+        ├── *.mLb.clN_peaks.annotatePeaks.txt     # HOMER annotation
+        ├── qc/*_mqc.tsv                          # FRiP, peak counts
         └── consensus/
             ├── consensus_peaks.mLb.clN.boolean.txt
-            └── deseq2/<contrast>/*.deseq2.results.txt
+            └── deseq2/*_mqc.tsv                  # the sample QC, as MultiQC content
 ```
 
 ---
 
-## :material-flask-outline: Test data
+## :material-flask-outline: Validation runs
 
-The repository ships
-[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/1.2.2/download_test_data.sh),
-which fetches the megatest subset the template needs, 147 files and 215 MB:
+No AWS megatest is usable for 2.1.2: the 2.1.1 and 2.1.2 prefixes in the bucket
+each hold a single 12 GB object, so nothing can be mirrored from them. The
+template was validated on EMBL HPC runs of the release instead: the `test`
+profile under each of the four aligners, `test_controls` for a run with input
+controls, and the megatest profile `test_full`, which is where the screenshots
+above come from. `megatest.yaml` describes that run file by file, so a usable S3
+run can be pinned later without rewriting it.
 
-```bash
-bash depictio/projects/nf-core/atacseq/1.2.2/download_test_data.sh /tmp/atacseq_test
-python -m depictio.dev_scripts.multiqc_reprocess --src /tmp/atacseq_test --dest /tmp/atacseq_test
-depictio run --template nf-core/atacseq/latest --data-root /tmp/atacseq_test
-```
-
-The run is
-`s3://nf-core-awsmegatests/atacseq/results-f327c86324427c64716be09c98634ae0bc8165f6/`,
-the 1.2.2 release tag: six GM12878 ATAC libraries across three transposition
-protocols (FAST, OMNI and STD), two biological replicates each. No samplesheet is
-fetched alongside it: the design sheet is one of the run's own outputs.
-
-!!! warning "Keep the first `REPROCESSED.json`"
-    The reprocess is reproducible for the parquet but not for its provenance
-    record: a second pass finds the parquet it wrote itself and records 1.35 as
-    the source. Delete `multiqc/multiqc_data/` before re-running.
+Do not pass `--project-name` when ingesting: the dashboard is attached to the
+project by name, so renaming it breaks a later `depictio dashboard import`.
+Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 
 ---
 
 ## :material-link-variant: Additional resources
 
 - [nf-co.re/atacseq](https://nf-co.re/atacseq): official pipeline documentation
-- [nf-co.re/atacseq/1.2.2/results](https://nf-co.re/atacseq/1.2.2/results): AWS test results
+- [nf-co.re/atacseq/2.1.2/results](https://nf-co.re/atacseq/2.1.2/results): AWS test results
 - [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes
 

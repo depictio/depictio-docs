@@ -168,29 +168,29 @@ depictio-cli run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/chipseq/" data-tpl-name="nf-core/chipseq" data-tpl-status="draft" data-tpl-version="1.2.0" data-tpl-keywords="chipseq chip chromatin immunoprecipitation peaks macs2 transcription factor histone narrowpeak consensus differential binding deeptools">
+  <a class="template-card" href="nf-core/chipseq/" data-tpl-name="nf-core/chipseq" data-tpl-status="draft" data-tpl-version="2.1.0" data-tpl-keywords="chipseq chip chromatin immunoprecipitation peaks macs3 transcription factor histone narrowpeak broadpeak consensus homer deeptools">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/chipseq/master/docs/images/nf-core-chipseq_logo_dark.png" alt="nf-core/chipseq">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/chipseq/master/docs/images/nf-core-chipseq_logo_light.png" alt="nf-core/chipseq">
     </div>
     <div class="template-card-body">
-      <p class="template-card-desc">Transcription-factor and histone ChIP-seq: MACS2 peaks, consensus sets per antibody and DESeq2 differential binding.</p>
+      <p class="template-card-desc">Transcription-factor and histone ChIP-seq: MACS3 peaks, HOMER annotation and one consensus set per antibody.</p>
       <div class="template-card-meta">
-        <span class="template-version">v1.2.0</span>
+        <span class="template-version">v2.1.0</span>
         <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/atacseq/" data-tpl-name="nf-core/atacseq" data-tpl-status="draft" data-tpl-version="1.2.2" data-tpl-keywords="atacseq chromatin accessibility ataqv macs2 peaks nucleosome tss enrichment differential accessibility">
+  <a class="template-card" href="nf-core/atacseq/" data-tpl-name="nf-core/atacseq" data-tpl-status="draft" data-tpl-version="2.1.2" data-tpl-keywords="atacseq chromatin accessibility ataqv macs2 peaks nucleosome tss enrichment consensus homer">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/atacseq/master/docs/images/nf-core-atacseq_logo_dark.png" alt="nf-core/atacseq">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/atacseq/master/docs/images/nf-core-atacseq_logo_light.png" alt="nf-core/atacseq">
     </div>
     <div class="template-card-body">
-      <p class="template-card-desc">Chromatin accessibility: ataqv library quality, MACS2 peaks, the consensus set and DESeq2 differential accessibility.</p>
+      <p class="template-card-desc">Chromatin accessibility: ataqv library quality, MACS2 broad peaks and the consensus set across libraries.</p>
       <div class="template-card-meta">
-        <span class="template-version">v1.2.2</span>
+        <span class="template-version">v2.1.2</span>
         <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
