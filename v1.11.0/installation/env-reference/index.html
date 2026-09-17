@@ -1329,6 +1329,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feedback
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#serviceconfig" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5059,6 +5070,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feedback
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#serviceconfig" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5149,6 +5171,7 @@
 <ul>
 <li><a href="#global-settings">Global Settings</a></li>
 <li><a href="#branding">Branding</a></li>
+<li><a href="#feedback">Feedback</a></li>
 <li><a href="#serviceconfig">ServiceConfig</a></li>
 </ul>
 <hr>
@@ -6378,6 +6401,11 @@ longer exists on `DashboardYAMLConfig`.)
 <td><code>true</code></td>
 <td>Push live task and ingestion status over the events WebSocket. Only active when <code>DEPICTIO_EVENTS_ENABLED</code> is also true</td>
 </tr>
+<tr>
+<td><code>DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS</code></td>
+<td><code>24</code></td>
+<td>Hours without a write after which a <code>running</code> ingestion is swept to <code>abandoned</code>. <code>0</code> disables the sweep. The bundled compose files and Helm chart do not forward it, so set it on the backend yourself (v1.11.0+)</td>
+</tr>
 </tbody>
 </table>
 <hr>
@@ -6614,6 +6642,41 @@ memory to MiB before they can reach the payload; neither is ever sent raw.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">DEPICTIO_BRANDING_THEME</span><span class="o">={</span><span class="s2">"surfaces_light"</span>:<span class="o">{</span><span class="s2">"app_bg"</span>:<span class="s2">"#f8faf9"</span>,<span class="s2">"nav_bg"</span>:<span class="s2">"#ffffff"</span>,<span class="s2">"heading"</span>:<span class="s2">"#00514b"</span><span class="o">}}</span>
 </code></pre></div>
 </div>
+<hr>
+<h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2>
+<p><strong>Config Class:</strong> <code>FeedbackConfig</code>
+<strong>Environment Prefix:</strong> <code>DEPICTIO_FEEDBACK_</code></p>
+<p>An opt-in link on every dashboard that carries the reader's context to wherever you point it: an issue form, a helpdesk, a <code>mailto:</code>. It renders only when enabled <strong>and</strong> a URL is set (v1.11.0+).</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEPICTIO_FEEDBACK_ENABLED</code></td>
+<td><code>false</code></td>
+<td>Show the link: an icon at the end of the dashboard header, and a <strong>Feedback</strong> section in the settings drawer</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_FEEDBACK_URL</code></td>
+<td>-</td>
+<td>Link target. <code>{dashboard}</code>, <code>{dashboard_id}</code>, <code>{tab}</code> (the tab label the reader sees) and <code>{url}</code> are filled in and URL-encoded in the browser; no other placeholder is</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_FEEDBACK_LABEL</code></td>
+<td><code>Feedback</code></td>
+<td>Icon tooltip and settings label</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">DEPICTIO_FEEDBACK_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">DEPICTIO_FEEDBACK_URL</span><span class="o">=</span><span class="s1">'https://github.com/&lt;org&gt;/&lt;repo&gt;/issues/new?template=dashboard_feedback.yml&amp;dashboard={dashboard}&amp;tab={tab}&amp;page={url}'</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">DEPICTIO_FEEDBACK_LABEL</span><span class="o">=</span><span class="s1">'Send feedback'</span>
+</code></pre></div>
 <hr>
 <h2 id="serviceconfig">ServiceConfig<a class="headerlink" href="#serviceconfig" title="Permanent link">¶</a></h2>
 <p><strong>Config Class:</strong> <code>ServiceConfig</code>

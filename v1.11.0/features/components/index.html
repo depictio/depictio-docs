@@ -8021,6 +8021,12 @@ Text and MultiQC, which have no row filtering. See
 <td>Subset of numeric columns; null = all numeric</td>
 </tr>
 <tr>
+<td><code>value_columns_pattern</code></td>
+<td>str | null</td>
+<td><code>null</code></td>
+<td>Regex naming the value columns, for a matrix whose column names depend on the run. Cannot be combined with <code>value_columns</code> (v1.11.0+)</td>
+</tr>
+<tr>
 <td><code>row_annotation_cols</code></td>
 <td>list[str]</td>
 <td><code>[]</code></td>
@@ -8156,6 +8162,12 @@ Text and MultiQC, which have no row filtering. See
 <td>list[str] | null</td>
 <td><code>null</code></td>
 <td>Explicit list of set columns; null = auto-detect binary</td>
+</tr>
+<tr>
+<td><code>set_columns_pattern</code></td>
+<td>str | null</td>
+<td><code>null</code></td>
+<td>Regex naming the set columns, for a table whose column names depend on the run. Cannot be combined with <code>set_columns</code> (v1.11.0+)</td>
 </tr>
 <tr>
 <td><code>sort_by</code></td>

@@ -5287,7 +5287,7 @@ would leave anything on screen. <strong>Funnel filtering</strong> answers the ot
 everything else you have already picked, which of these values still lead somewhere?</p>
 <p>For each control, the answer is computed against every <strong>other</strong> active filter, with that
 control's own selection excluded, since otherwise a control would grey out everything it
-did not itself select. Values that can still narrow the data carry a teal marker; values
+did not itself select. Values that can still narrow the data carry a marker in the analysis grouping colour; values
 that would return nothing are dimmed, disabled and sorted last, and each control carries
 an <code>n/N available</code> badge that turns orange when nothing remains.</p>
 <div style="border: 1px solid grey; width: 294px; padding: 1px;">
@@ -5313,6 +5313,13 @@ starting at the unfiltered row count and narrowing as each is applied. Every del
 data collection gets its own bar in each band, side by side, so a filter that guts one
 collection while leaving another untouched is visible at a glance. Bars can be labelled
 with rows, percent of start, or percent of the previous stage.</p>
+<p>Since <strong>v1.11.0</strong> a switch at the top of the overview picks what it counts: <strong>Rows by
+data collection</strong>, as above, or <strong>Values of a column</strong>. The second follows one column,
+picked with <strong>Data collection</strong> and <strong>Column</strong>, and charts how many of its distinct
+values survive each stage. A matrix under the chart shows which stage removed each value,
+searchable and capped at 200 rows. A stage that comes from a saved
+<a href="../interactive-selection-filtering/#selection-groups">selection group</a> takes that
+group's colour.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="https://depictio.github.io/depictio-docs/images/guides/funnel-filtering/funnel-overview-modal.png" target="_blank">
         <img src="https://depictio.github.io/depictio-docs/images/guides/funnel-filtering/funnel-overview-modal.png" width="600">

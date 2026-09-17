@@ -5221,6 +5221,11 @@ Each recoloured figure carries a <code>by &lt;column&gt;</code> badge.</p>
 <p><strong>Split</strong> draws one panel per category instead of overlaying them, capped at 12. Where the
 number of categories cannot be known ahead of time, both client and server fall back to an
 overlay rather than faceting an unbounded column.</p>
+<p>Since <strong>v1.11.0</strong> every advanced visualization kind has a fixed answer to a group: it
+splits into panels, colours a single panel, or stays whole. A figure the groups cannot
+reach says so with a <strong>not grouped</strong> badge whose tooltip gives the reason, and groups
+reach figures on other tabs by following the dashboard's links in reverse. A lasso drawn
+on a Manhattan plot now holds in Split.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="https://depictio.github.io/depictio-docs/images/guides/selection-groups/split_by_species.jpg" target="_blank">
         <img src="https://depictio.github.io/depictio-docs/images/guides/selection-groups/split_by_species.jpg" width="600">

@@ -4654,7 +4654,7 @@
 
 
 <h1 id="monitoring-log-task"><span class="twemoji" style="color: #009688"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> Monitoring: Log &amp; Task<a class="headerlink" href="#monitoring-log-task" title="Permanent link">¶</a></h1>
-<p>Admin-only panel (<strong>Administration → Log &amp; Task</strong>, <code>/admin</code>) exposing a durable MongoDB ledger of background activity: Celery tasks, ingestion runs, application logs, and worker health.</p>
+<p>Admin-only panel (<strong>Administration → Log &amp; Task</strong>, <code>/admin</code>) exposing a durable MongoDB ledger of background activity: Celery tasks, ingestion runs, application logs, and worker health. Since <strong>v1.11.0</strong> each pane has its own address, <code>/admin/tasks</code>, <code>/admin/ingestion</code>, <code>/admin/logs</code> and <code>/admin/health</code>, and the Ingestion pane keeps its filters in the query string, so a filtered view can be bookmarked or sent. <code>/admin/monitoring</code> redirects to <code>/admin/tasks</code>.</p>
 <div class="admonition info">
 <p class="admonition-title">Availability</p>
 <p>Admin-only. Shown in single- and multi-user mode, hidden in public/demo; non-admins get <em>Forbidden</em>.</p>
@@ -4668,6 +4668,7 @@
 <img alt="Log &amp; Task: expanded task detail" src="https://depictio.github.io/depictio-docs/images/react/admin_monitoring_task_detail_dark.png#only-dark"></p>
 <h2 id="ingestion">Ingestion<a class="headerlink" href="#ingestion" title="Permanent link">¶</a></h2>
 <p>Ingestion runs, newest first: <strong>status</strong>, a <code>CLI</code> or <code>UI</code> source badge (a run from the <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger</a> shows <code>CLI</code>), instance label or hostname, project, and user. Uploads made through the web UI are recorded alongside CLI runs; recording is best-effort and never blocks an upload.</p>
+<p>A run is <code>running</code> until it ends as <code>success</code>, <code>partial</code> or <code>failed</code>. Since <strong>v1.11.0</strong> the CLI closes its record on every way out, so Ctrl-C or SIGTERM leaves <code>interrupted</code> rather than a run that spins forever. For the ends nobody can report, such as SIGKILL or a lost node, the server sweeps a <code>running</code> record with no write for <code>DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS</code> (24 by default) to <code>abandoned</code>. Filter by <strong>Status</strong>, <strong>Instance</strong> and <strong>Project</strong>; the instance is the CLI's <code>instance_label</code>, or its hostname when none is set.</p>
 <p>Expand a run for its <strong>provenance</strong> field grid: run id, host, CLI version, the resolved project id, the invoking command line, the CLI and project config paths, and the data root. Long paths are shortened to <code>head/…/tail</code>, with the full value in a tooltip and click-to-copy. Below it are two tables:</p>
 <ul>
 <li><strong>Steps</strong>: every phase the run went through (provisioning, template resolve, server and S3 checks, config validation, project sync, scan, process, joins, dashboard import), each with <code>success</code> / <code>failed</code> / <code>skipped</code> and a detail line such as <em>3 data collection(s) processed</em>. The summary line tallies ok / failed / skipped and the wall-clock duration.</li>
@@ -4723,6 +4724,11 @@
 <td><code>DEPICTIO_MONITORING_LIVE_UPDATES</code></td>
 <td><code>true</code></td>
 <td>Enables live WebSocket push.</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS</code></td>
+<td><code>24</code></td>
+<td>Hours without a write before a <code>running</code> ingestion is swept to <code>abandoned</code>; <code>0</code> disables the sweep. Not forwarded by the bundled compose files or Helm chart. (v1.11.0+)</td>
 </tr>
 </tbody>
 </table>
