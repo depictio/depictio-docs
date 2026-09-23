@@ -6,8 +6,7 @@
    moment plays the fan, leaving puts it back.
 
    The home page hero gets the same treatment, one size up: its wordmark keeps
-   the lettering and the mark is replaced by a rose running the endless
-   clockwise sweep, so the logo turns instead of sitting still.
+   the lettering and the mark is replaced by a live rose.
 
    navigation.instant replaces the header logo ([data-md-component=logo]) on
    every page swap, so the swap runs on each document$ emission rather than
@@ -15,8 +14,9 @@
    that extra.css targets in step with the current page. */
 (function () {
   const FAN_DELAY_MS = 400;
-  /** The hero's resting animation: an endless clockwise wave around the mark. */
-  const IDLE_MODE = 'sweep';
+  /** The hero's animation: the radii keep changing like a chart taking in new
+   *  data, then settle back on the logo shape. */
+  const IDLE_MODE = 'live';
 
   // The body element survives instant navigation, so the class is recomputed
   // on every page view instead of only being added.

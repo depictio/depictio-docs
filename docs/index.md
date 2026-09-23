@@ -1257,33 +1257,35 @@ hide:
     display: none;
   }
 
-  /* The hero reads as one statement, so it gets more room than the 800px the
-     rest of the page uses and its two lines stay two lines. */
-  .hero-section .container {
-    max-width: 1100px;
-  }
-
+  /* The hero statement: one large, tight headline over a quieter line. It
+     stays inside the page's own 800px column, so it reads centred; rather
+     than forcing single lines, `text-wrap: balance` spreads the words evenly
+     across however many lines the viewport gives, which is what keeps a
+     wrapped headline looking deliberate. */
   .hero-description {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    white-space: nowrap;
+    font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0 auto 2rem;
+    max-width: 54ch;
   }
 
   .hero-subtext {
-    font-size: 1rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: 0;
     color: var(--md-default-fg-color--light);
     display: block;
-    margin-top: 0.5rem;
-    white-space: nowrap;
+    /* `pretty` rather than `balance`: this line is short enough to sit on one
+       line, and balancing would split it in two to even out the ragged edge. */
+    text-wrap: pretty;
+    margin: 1rem auto 0;
+    max-width: 78ch;
   }
 
-  /* Below the width the sentences need, they wrap again rather than overflow. */
-  @media (max-width: 68em) {
-    .hero-description,
-    .hero-subtext {
-      white-space: normal;
-    }
-  }
 
   /* Dashboard Components Section */
   .components-section {
