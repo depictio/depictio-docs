@@ -24,8 +24,10 @@ hide:
 <!-- Hero Section -->
 <section class="hero-section">
   <div class="container text-center">
-    <img src="./images/logo/logo_hd.svg" alt="Depictio logo" width="350" class="logo-dark">
-    <img src="./images/logo/logo_hd_white.svg" alt="Depictio logo" width="350" class="logo-light">
+    <div class="hero-logo">
+      <img src="./images/logo/logo_hd.svg" alt="Depictio logo" width="460" class="logo-dark">
+      <img src="./images/logo/logo_hd_white.svg" alt="Depictio logo" width="460" class="logo-light">
+    </div>
 
     <p class="hero-description">
       A modern open-source platform that transforms bioinformatics workflow outputs into interactive dashboards.<br>
@@ -1255,9 +1257,16 @@ hide:
     display: none;
   }
 
+  /* The hero reads as one statement, so it gets more room than the 800px the
+     rest of the page uses and its two lines stay two lines. */
+  .hero-section .container {
+    max-width: 1100px;
+  }
+
   .hero-description {
     font-size: 1.2rem;
     margin-bottom: 2rem;
+    white-space: nowrap;
   }
 
   .hero-subtext {
@@ -1265,6 +1274,15 @@ hide:
     color: var(--md-default-fg-color--light);
     display: block;
     margin-top: 0.5rem;
+    white-space: nowrap;
+  }
+
+  /* Below the width the sentences need, they wrap again rather than overflow. */
+  @media (max-width: 68em) {
+    .hero-description,
+    .hero-subtext {
+      white-space: normal;
+    }
   }
 
   /* Dashboard Components Section */

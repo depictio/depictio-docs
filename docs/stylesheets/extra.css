@@ -94,6 +94,26 @@ body.page-changelog .md-sidebar--secondary .md-nav__list .md-nav__list {
     padding: 0 0.35rem;
 }
 
+/* Hero logo: the wordmark image keeps the lettering, and depictio-logo.js
+   replaces its mark with the live <depictio-rose>, clipping the raster's own
+   mark away once the swap is in place (.rose-ready). Without the script the
+   untouched image shows, so the hero never ends up missing its mark. */
+.hero-logo {
+    position: relative;
+    display: inline-block;
+    line-height: 0;
+    max-width: 100%;
+}
+
+.hero-logo.rose-ready img {
+    clip-path: inset(0 0 0 25%);
+}
+
+.hero-logo depictio-rose {
+    position: absolute;
+    pointer-events: none;
+}
+
 /* Theme-aware logo switching */
 /* Light theme - show dark logo */
 [data-md-color-scheme="default"] .logo-dark {
