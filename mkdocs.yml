@@ -75,7 +75,9 @@ extra_css:
 
 # Extra JavaScript
 extra_javascript:
-  - javascripts/triangular-animation.js
+  - javascripts/depictio-rose.js
+  - javascripts/depictio-logo.js
+  - javascripts/depictio-theme-sync.js
   - javascripts/catalog-fullscreen.js
   - javascripts/template-version.js
   - javascripts/doc-sections.js

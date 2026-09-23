@@ -13,7 +13,7 @@ This section provides supplementary information and resources related to the Dep
 - [FAQ](../FAQ/README.md) - Common questions about installing, using and extending Depictio
 - [Funding](funding.md) - Information about how the Depictio project is funded
 - [Color Palette](palette.md) - Official color palette and design guidelines
-- [Animated Logo](../animated-logo.md) - The animated triangular logo and how it is built
+- [Animated Logo](../animated-logo.md) - The Depictio rose, the logo animated as a polar-area chart
 
 ## Community
 
