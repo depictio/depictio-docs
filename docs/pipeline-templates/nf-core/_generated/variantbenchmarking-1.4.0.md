@@ -65,13 +65,13 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 
 ### :material-database-outline: Data collections
 
-9 data collections — <span class="gtd-badge gtd-req">1 required</span> <span class="gtd-badge gtd-opt">8 optional</span> · <span class="gtd-badge gtd-direct">9 direct</span> <span class="gtd-badge gtd-derived">0 derived</span>.
+9 data collections — <span class="gtd-badge gtd-req">0 required</span> <span class="gtd-badge gtd-opt">9 optional</span> · <span class="gtd-badge gtd-direct">9 direct</span> <span class="gtd-badge gtd-derived">0 derived</span>.
 
 **Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
-| `germline_vcfeval_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/rtgtools/vcfeval_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">rtgtools/vcfeval_summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `germline_vcfeval_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/rtgtools/vcfeval_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">rtgtools/vcfeval_summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `germline_happy_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/happy/summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">happy/summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `germline_happy_roc` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/happy/roc.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">happy/roc.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `somatic_vcfeval_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/rtgtools/vcfeval_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">rtgtools/vcfeval_summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
@@ -83,7 +83,7 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 
 ### :material-vector-link: Cross-DC links
 
-2 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+4 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -91,6 +91,8 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 <tbody>
 <tr><td><code>somatic_sompy_summary</code> <span class="col">·&nbsp;caller</span></td><td class="arr">→</td><td><code>somatic_sompy_regions</code></td><td>Filter the AF-stratified regions by the selected caller</td></tr>
 <tr><td><code>somatic_sompy_summary</code> <span class="col">·&nbsp;caller</span></td><td class="arr">→</td><td><code>somatic_vcfeval_summary</code></td><td>Cross-filter som.py and vcfeval somatic summaries by caller</td></tr>
+<tr><td><code>sv_truvari_summary</code> <span class="col">·&nbsp;label</span></td><td class="arr">→</td><td><code>sv_svbenchmark_summary</code></td><td>Filter the SVanalyzer summary by the callsets picked on the Structural tab</td></tr>
+<tr><td><code>sv_truvari_summary</code> <span class="col">·&nbsp;label</span></td><td class="arr">→</td><td><code>cnv_wittyer_summary</code></td><td>Filter the Wittyer summary by the callsets picked on the Structural tab</td></tr>
 </tbody></table></div>
 
 ### :material-chef-hat: Recipes
@@ -101,9 +103,9 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 |---|---|---|
 | [`happy/roc.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/happy/roc.py) | Extract a germline precision/recall ROC curve from hap.py per-quality ROC output. | `quality`, `recall`, `precision`, `f1` |
 | [`happy/summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/happy/summary.py) | Pool hap.py per-sample summaries into a germline SNP/INDEL performance table. | `variant_type`, `filter`, `truth_tp`, `truth_fn`, `query_fp`, `recall`, `precision`, `f1` |
-| [`rtgtools/vcfeval_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/rtgtools/vcfeval_summary.py) | Normalize an rtg-tools vcfeval aggregated summary into a tidy benchmark table. | `label`, `caller`, `tp_base`, `tp_comp`, `fp`, `fn`, `precision`, `recall`, `f1` |
-| [`sompy/regions.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/sompy/regions.py) | Reshape the som.py region-stratified benchmark into a caller × AF-bin metrics table. | `caller`, `af_bin`, `recall`, `precision`, `f1` |
-| [`sompy/summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/sompy/summary.py) | Normalize the som.py somatic benchmark summary into a tidy per-caller table. | `caller`, `variant_type`, `tp`, `fp`, `fn`, `recall`, `precision`, `f1`, `recall_lower`, `recall_upper`, `precision_lower`, `precision_upper` |
+| [`rtgtools/vcfeval_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/rtgtools/vcfeval_summary.py) | Normalize an rtg-tools vcfeval aggregated summary into a tidy benchmark table. | `label`, `caller`, `truth_set`, `tp_base`, `tp_comp`, `fp`, `fn`, `precision`, `recall`, `f1` |
+| [`sompy/regions.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/sompy/regions.py) | Reshape the som.py region-stratified benchmark into a caller × AF-bin metrics table. | `caller`, `label`, `truth_set`, `af_bin`, `recall`, `precision`, `f1` |
+| [`sompy/summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/sompy/summary.py) | Normalize the som.py somatic benchmark summary into a tidy per-caller table. | `caller`, `label`, `truth_set`, `variant_type`, `tp`, `fp`, `fn`, `recall`, `precision`, `f1`, `recall_lower`, `recall_upper`, `precision_lower`, `precision_upper` |
 | [`svanalyzer/svbenchmark.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/svanalyzer/svbenchmark.py) | Normalize an SVanalyzer (svbenchmark) structural-variant summary into a tidy table. | `label`, `precision`, `recall`, `f1` |
 | [`truvari/summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/truvari/summary.py) | Normalize a Truvari structural-variant benchmark summary into a tidy table. | `label`, `precision`, `recall`, `f1` |
 | [`wittyer/summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/wittyer/summary.py) | Normalize a Wittyer CNV/SV benchmark summary into a tidy, optionally stratified table. | `label`, `precision`, `recall`, `f1` |

@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/cutandrun" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="3.1">
@@ -32,10 +32,11 @@ hide:
 The cutandrun template covers the peak-calling chain of a standard run:
 
 - :material-chart-box-outline: **MultiQC**: FastQC and Trim Galore, bowtie2 against the target genome and the spike-in, and the deepTools fingerprint that separates a target from its IgG control
-- :material-chart-scatter-plot: **Peak calls**: SEACR regions and MACS2 peaks over the same fragments, each with its own signal track along the genome
+- :material-waves: **Signal**: the nucleosomal ladder and its fragment classes, the spike-in factors, duplication, and the deepTools tables behind the MultiQC pictures
+- :material-chart-scatter-plot: **Peaks**: SEACR regions, the fragment pile-up around their summits, the share of coverage they hold, and MACS2 alongside
 - :material-scale-balance: **Caller agreement**: how much of each caller's calls the other reproduced, sample by sample
-- :material-set-merge: **Consensus and reproducibility**: the merged peak set of each target, and which replicates support every interval
-- :material-table: **Reference tables**: the sample hub and the per-sample SEACR summary, pinned to the bottom of every tab
+- :material-dna: **Locus**: one region with the SEACR, fragment, MACS2 and consensus tracks stacked on one genome axis
+- :material-set-merge: **Consensus**: the merged peak set of each target, and which replicates support every interval
 
 !!! warning "Reprocess MultiQC first, or the QC tab is empty"
     cutandrun 3.1 published a MultiQC 1.14 report, which writes no parquet at
@@ -71,13 +72,22 @@ The cutandrun template covers the peak-calling chain of a standard run:
     ```
 
     `--data-root` is the only thing you have to pass: the sample hub is built
-    from the run's own `pipeline_info/samplesheet.valid.csv`.
+    from the run's own `pipeline_info/samplesheet.valid.csv`. `GENOME` sets the
+    genome axis of the Locus tab and defaults to `hg38`; pass the UCSC assembly
+    the run was aligned to otherwise:
+
+    ```bash
+    depictio run \
+      --template nf-core/cutandrun/latest \
+      --data-root /path/to/cutandrun_results \
+      --var GENOME=mm10
+    ```
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
     depictio-cli config nextflow --install     # once per machine
-    nextflow run nf-core/cutandrun -profile docker --outdir results
+    nextflow run nf-core/cutandrun -r 3.1 -profile docker --outdir results
     ```
 
     No `depictio run`, and no template named: the pipeline ingests its own
@@ -88,12 +98,15 @@ The cutandrun template covers the peak-calling chain of a standard run:
 
 ## :material-book-open-variant: Reference
 
-The template reads the validated samplesheet, the SEACR stringent calls, the
-MACS2 narrow peaks, the per-target consensus peak counts, the fragment-length
-histograms and the three deepTools QC tables, on top of the reprocessed MultiQC
-parquet. Every collection and recipe matches on file **name**, so the numbered
-stage directories cutandrun publishes are never spelled out. The pipeline ships
-no `params.json` at 3.1, so `DATA_ROOT` is the only variable.
+The template reads the validated samplesheet, the bowtie2 logs, the samtools
+flagstat of the marked-duplicate BAMs, the SEACR stringent calls, the MACS2
+narrow peaks, the per-target consensus peak counts, the fragment-length
+histograms, the fragment BEDs and the three deepTools QC tables, on top of the
+reprocessed MultiQC parquet. Every collection and recipe matches on file
+**name**, so the numbered stage directories cutandrun publishes are never
+spelled out. The pipeline ships no `params.json` at 3.1, so no variable is set
+from the run's parameters: `DATA_ROOT` is required and `GENOME` (default
+`hg38`) is the only optional one.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -111,13 +124,22 @@ no `params.json` at 3.1, so `DATA_ROOT` is the only variable.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Five tabs, read as a funnel: are the libraries clean and is each target enriched
-over its control, what the tool tables say about that signal, what did each
-caller call, how much of that the two share, and how much of it both replicates
-support. Each tab below carries the **same icon and colour the dashboard gives
-it**. `Sample filters` is persistent and pinned to the top of every tab,
-`Reference tables` to the bottom. The IgG controls are samples throughout; only
-the peak collections omit them.
+Six tabs, read as a funnel: are the libraries clean and is each target enriched
+over its control, what the material itself carries before any peak is called,
+what SEACR called and how much of the coverage those calls hold, how much of
+that MACS2 shares, what one region looks like with every track stacked, and how
+much of it the replicates reproduce. Each tab below carries the **same icon and
+colour the dashboard gives it**. `Sample filters` (sample, target, replicate,
+role) is persistent and pinned to the top of every tab, with the *Cohort at a
+glance* cards and the collapsed *Sample sheet*; *QC thresholds* and `Reference
+tables` are pinned to the bottom. Every tab also carries a tab-local filter
+group on its own columns. The IgG controls are samples throughout; only the
+peak collections omit them.
+
+Scatter plots, genome tracks and tables are selection sources: a lasso on a
+scatter, a brush on a track or a picked table row sends its `sample` or
+`peak_id` values across the project links, so the other panels of the tab
+narrow to the same libraries or intervals.
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
@@ -128,76 +150,95 @@ the peak collections omit them.
     The general statistics table, then FastQC and Trim Galore, then bowtie2
     against the target genome and against the spike-in: a library whose spike-in
     alignment collapses is not comparable to the others even when its target
-    alignment looks fine. The deepTools panels close the tab, fingerprint first,
-    which is what says whether a target rises above its IgG control at all. The
-    tables behind those pictures are on the Signal tab.
+    alignment looks fine. The deepTools fingerprint closes the tab, which is what
+    says whether a target rises above its IgG control at all. The tab holds
+    MultiQC panels only; the tables behind those pictures are on the Signal tab.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample`, `Target` and `Role` on `samples`, plus `Regions
+        **Filters** · the persistent `Sample filters` group (`Sample`, `Target`,
+        `Replicate`, `Role`), plus `Target alignment rate` and `Spike-in scale
+        factor` ranges in a tab-local *Alignment scope* group, and `Regions
         called` and `Coverage per base` ranges on `seacr_peak_summary` in a
         collapsed *QC thresholds* group pinned to the bottom.
 
         | Section | What it holds |
         |---|---|
-        | Sample sheet | 1 card, *Sample hub* |
+        | Cohort at a glance | 4 cards (pinned) |
+        | Sample sheet | *Sample sheet* (pinned, collapsed) |
         | Run at a glance | *General statistics* |
         | Read quality | 4 MultiQC panels (FastQC, cutadapt) |
         | Alignment and spike-in | 4 MultiQC panels (bowtie2, samtools) |
-        | Enrichment over the control | 4 deepTools MultiQC panels |
-        | Reference tables | *SEACR QC summary* |
+        | Enrichment over the control | *Fingerprint plot* |
+        | Reference tables | *SEACR QC summary* (pinned, collapsed) |
 
 === ":material-waves:{ .mc-violet } Signal"
 
-    *The nucleosomal ladder, and the deepTools tables behind the MultiQC pictures.*
+    *Did the digestion work, and what was the coverage divided by, before any peak is called?*
 
     [![Signal dashboard](../../images/pipeline-templates/nf-core/cutandrun/signal_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/signal_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    None of this reaches a MultiQC panel: the fragment histogram and the three
-    deepTools tables are files of their own. For H3K4me3 the ladder should show a
-    clear mononucleosome peak, and a flat distribution means the digestion did not
-    work. Below it, the fingerprint scatter puts every library on one plane,
-    coverage concentration against divergence from a uniform library, so the
-    targets separate from the IgG controls; the PCA reads the `plotPCA` loadings
-    with the variance each component explains; and the correlation matrix is
-    clustered on both axes, where a block spanning two targets is a swap or a
-    contamination.
+    Everything the pipeline published as a table beside the report. MNase cuts
+    around nucleosomes, so a working experiment shows a sharp sub-nucleosomal
+    peak next to a mononucleosomal shoulder, and a flat distribution means the
+    digestion did not work; the nucleosome classes bin the same histogram at the
+    conventional boundaries. The spike-in factors are recomputed from the two
+    bowtie2 logs, since the run publishes no scale-factor table, and Picard's
+    duplicate flags show which libraries saturated. The deepTools tables close
+    the tab: the fingerprint scatter, the `plotPCA` loadings and the clustered
+    correlation matrix, where a block spanning two targets is a swap or a
+    contamination. The depth, duplication, fingerprint and PCA scatters are all
+    lasso sources on `sample`.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · the persistent `Sample filters` group only.
+        **Filters** · `Nucleosome class`, a `Fragment length` range and a
+        `Coverage concentration` range in a tab-local *Signal scope* group.
 
         | Section | What it holds |
         |---|---|
-        | Fragment length structure | 4 cards, *Fragment length distribution*, *Cumulative fragment length* |
+        | Signal at a glance | 4 cards |
+        | Fragment length structure | *Fragment length distribution*, *Cumulative fragment length* |
+        | Nucleosome classes | 3 cards, *Fragment classes per sample* |
+        | Spike-in normalisation | *Spike-in scale factor per sample*, *Target depth against spike-in depth* |
+        | Library duplication | *Duplicate reads per library*, *Duplication against depth* |
         | Coverage concentration and sample similarity | *Coverage concentration per library*, *Samples on the first two components*, *Sample correlation matrix* |
+        | Signal tables | *Fragment classes*, *Spike-in factors* (collapsed) |
 
-=== ":material-chart-scatter-plot:{ .mc-indigo } Peak calls"
+=== ":material-chart-scatter-plot:{ .mc-indigo } Peaks"
 
-    *What each caller called on every sample, where the signal sits and how wide the calls are.*
+    *What SEACR called on every sample, what the fragments look like under it, and how much of the library the calls hold.*
 
-    [![Peak calls dashboard](../../images/pipeline-templates/nf-core/cutandrun/peak_calls_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/peak_calls_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Peaks dashboard](../../images/pipeline-templates/nf-core/cutandrun/peaks_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/peaks_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     SEACR calls regions from fragment coverage rather than from a background
-    model, so a SEACR row carries a total signal, a maximum signal and the
-    sub-interval where that maximum was reached, and no p-value and no fold
-    enrichment at all. `macs2/peaks` cannot read that and MultiQC has no SEACR
-    module in any version, which is why SEACR needed its own catalog tool. The
-    two signal panels here therefore do not share a y axis: SEACR plots
-    `log10(total signal)`, MACS2 plots `-log10(q)`. Lassoing the
-    total-against-maximum scatter narrows both peak tables on `peak_id`.
+    model, so a SEACR row carries a total and a maximum signal and no p-value at
+    all; MultiQC has no SEACR module, which is why SEACR needed its own catalog
+    tool. The pile-up heatmap rebuilds the fragments from the fragment BEDs, one
+    row per region 3 kb either side of its summit: a sharp mark collapses onto
+    the summit while a broad one stays spread. *Signal budget* is the fraction
+    of reads in peaks, counted in base pairs of fragment coverage because SEACR
+    reports no read count. MACS2 follows with the fold enrichment and q-value
+    SEACR does not give; its significance track is a brush source on `peak_id`
+    that narrows the peak tables.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Region width` and `Coverage per base` ranges on
-        `seacr_peaks`, in a *Peak scope* group.
+        **Filters** · `Region width` and `Coverage per base` ranges and a
+        `Contig` selector on `seacr_peaks`, in a tab-local *Peak scope* group.
 
         | Section | What it holds |
         |---|---|
-        | SEACR peak yield | 4 cards |
-        | Signal along the genome | *SEACR signal along the genome*, *Total against maximum coverage*, *SEACR region width* |
-        | MACS2 alongside | 4 cards + *MACS2 significance along the genome* |
-        | Peak tables | *SEACR regions*, *MACS2 peaks* |
+        | SEACR peak yield | 4 cards, *SEACR region width* |
+        | Fragment pile-up around the peaks | *Fragment pile-up around the SEACR summits*, *Mean pile-up per sample* |
+        | Signal budget | 2 cards, *Fragment coverage inside and outside peaks* |
+        | MACS2 alongside | 4 cards, *MACS2 significance along the genome* |
+        | Peak tables | *SEACR regions*, *MACS2 peaks*, *Signal budget* (collapsed) |
+
+    !!! tip "The pile-up needs the fragment BEDs"
+        Both fragment collections are optional. A run or a mirror without the
+        `*.frags.cut.bed` files ingests everything else, and the pile-up section
+        here and the fragment track of the Locus tab drop out.
 
 === ":material-scale-balance:{ .mc-red } Caller agreement"
 
@@ -210,50 +251,83 @@ the peak collections omit them.
     two collections is what the catalog policy keeps out of the catalog. A peak
     counts as shared when it overlaps at least one call of the other caller on
     the same sample and chromosome, and a sample a caller never called keeps a
-    row with `n_peaks = 0` rather than disappearing. In the dot plot, colour is
-    the peaks a caller made and size is how much of them the other reproduced.
+    row with `n_peaks = 0` rather than disappearing. The scatter puts MACS2 and
+    SEACR on the two axes, one point per sample sized by the share they agree
+    on, and is a lasso source on `sample`; the bars count the calls the other
+    caller never made.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `Caller` and a `Share reproduced` range, both on
-        `caller_agreement`.
+        `caller_agreement`, in a tab-local *Caller scope* group.
 
         | Section | What it holds |
         |---|---|
         | Agreement at a glance | 4 cards |
-        | Caller against caller | *Yield and agreement per sample and caller*, *MACS2 against SEACR, per sample* |
-        | Where they diverge | *Calls the other caller did not make*, *Share of calls the other caller reproduced* |
-        | Comparison table | *Caller comparison* |
+        | Caller against caller | *MACS2 against SEACR, per sample*, *Calls the other caller did not make* |
+        | Comparison table | *Caller comparison* (collapsed) |
 
-=== ":material-set-merge:{ .mc-grape } Consensus and reproducibility"
+=== ":material-dna:{ .mc-teal } Locus"
 
-    *The merged peak set of each target, and which replicates support every interval.*
+    *One region, every track: do the callers and the replicates agree where it matters?*
 
-    [![Consensus and reproducibility dashboard](../../images/pipeline-templates/nf-core/cutandrun/consensus_and_reproducibility_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/consensus_and_reproducibility_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Locus dashboard](../../images/pipeline-templates/nf-core/cutandrun/locus_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/locus_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Four cards on the merged intervals, then the UpSet panel over the four
-    replicate columns of the consensus table, which shows the split between
-    reproducible and single-replicate calls directly. Below it, the reproducible
-    share per target and interval width by replicate support. Read the support
-    donut first: the cards average over whatever `Replicate support` leaves in
-    view, and it defaults to every value.
+    Four tracks on one genome axis, set by the `GENOME` variable: the SEACR
+    regions, the fragment pile-up, the MACS2 calls and the consensus intervals
+    over a gene lane. The SEACR track is the navigator: the tab opens on a fixed
+    default locus, and typing a locus in its header or brushing its axis moves
+    the other three tracks and recounts the cards above. Brushing intervals on
+    any track selects their `peak_id` values for the rest of the tab.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Replicate support` and an `Interval width` range on
-        `seacr_consensus_peaks`, in a *Consensus scope* group.
+        **Filters** · `SEACR coverage per base` and `MACS2 -log10 q-value`
+        ranges and a `Replicate support` selector, in a tab-local *Locus scope*
+        group.
+
+        | Section | What it holds |
+        |---|---|
+        | Region at a glance | 4 cards, recounted on the region in view |
+        | One region, four tracks | *SEACR regions*, *Fragment pile-up*, *MACS2 calls on the region*, *Consensus intervals and genes* |
+
+    !!! tip "Pass the assembly for a run not on hg38"
+        The navigator fetches only the chromosome of its region from the
+        assembly it is given, which defaults to `hg38`. For a run aligned to
+        another build, pass `--var GENOME=<assembly>` at ingest, or the tracks
+        land on the wrong coordinates.
+
+=== ":material-set-merge:{ .mc-grape } Consensus"
+
+    *The merged peak set of each target, and which replicates support every interval.*
+
+    [![Consensus dashboard](../../images/pipeline-templates/nf-core/cutandrun/consensus_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/consensus_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    Four cards on the merged intervals, then the UpSet panel over the replicate
+    columns of the consensus table: bars spanning several replicates are the
+    reproducible core of a target, single-replicate bars what one replicate saw
+    alone. Below it, the reproducible share per target and interval width by
+    replicate support. The cards average over whatever `Replicate support` leaves
+    in view, and it defaults to every value; picking a row of the consensus table
+    selects its `peak_id` across the tab.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Replicate support` and `Interval width` and `Member peaks`
+        ranges on `seacr_consensus_peaks`, in a tab-local *Consensus scope*
+        group.
 
         | Section | What it holds |
         |---|---|
         | Consensus at a glance | 4 cards |
         | Replicate agreement | *Consensus interval overlap* (UpSet) |
         | How reproducible | *Reproducible share per target*, *Interval width by replicate support* |
-        | Consensus table | *Consensus intervals* |
+        | Consensus table | *Consensus intervals* (collapsed) |
 
 !!! tip "A broad mark reproduces poorly, and the dashboard says so"
-    On the reference run, 63 % of the consensus intervals are called by a single
-    replicate, because H3K27me3 is a broad mark whose replicates overlap badly.
-    That is a property of the data, not of the template.
+    Replicates of a broad histone mark overlap badly, so a large share of its
+    consensus intervals are called by a single replicate. That is a property of
+    the data, not of the template.
 
 ---
 
@@ -262,11 +336,11 @@ the peak collections omit them.
 Depictio reads the **output** of nf-core/cutandrun. Run the pipeline first:
 
 ```bash
-nextflow run nf-core/cutandrun \
+nextflow run nf-core/cutandrun -r 3.1 \
   --input samplesheet.csv \
   --genome GRCh38 \
   --peakcaller seacr,macs2 \
-  -profile docker
+  --outdir results -profile docker
 ```
 
 Then regenerate the MultiQC report Depictio reads, and point Depictio at the
@@ -305,7 +379,9 @@ reference run's layout, not a requirement.
 │   │   ├── seacr/*.seacr.peaks.stringent.bed          # required, the default caller
 │   │   └── macs2/*.macs2_peaks.narrowPeak             # optional, plus *.macs2_peaks.xls
 │   ├── 05_consensus_peaks/*.consensus.peak_counts.bed
-│   └── 06_fragments_from_bams/*.frags.len.txt
+│   └── 06_fragments_from_bams/
+│       ├── *.frags.len.txt
+│       └── *.frags.cut.bed                            # optional, the pile-up and fragment track
 ├── 04_reporting/deeptools_qc/
 │   ├── *.plotFingerprint.qcmetrics.txt
 │   └── all_target_bams.plot{PCA.tab,Correlation.mat.tab}
@@ -315,11 +391,11 @@ reference run's layout, not a requirement.
 
 ---
 
-## :material-flask-outline: Test data
+## :material-flask-outline: Validation runs
 
 The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/cutandrun/3.1/download_test_data.sh),
-which fetches the megatest subset the template needs, 103 files and about 90 MB:
+which fetches the megatest subset the template needs, fragment BEDs included:
 
 ```bash
 bash depictio/projects/nf-core/cutandrun/3.1/download_test_data.sh /tmp/cutandrun_test
@@ -328,7 +404,7 @@ bash depictio/projects/nf-core/cutandrun/3.1/download_test_data.sh /tmp/cutandru
 The run is
 `s3://nf-core-awsmegatests/cutandrun/results-42502fb44975e930eec865353c5481f472bcf766/`
 (GSE145187): H3K4me3 and H3K27me3 in two replicates each, against two IgG
-controls. Two steps follow the fetch, both in `post_fetch_help` in
+controls; the screenshots above come from it. Two steps follow the fetch, both in `post_fetch_help` in
 `megatest.yaml` next to the script:
 
 ```bash
@@ -367,7 +443,7 @@ depictio run --template nf-core/cutandrun/latest --data-root /tmp/cutandrun_test
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it a Draft.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it Experimental.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">
