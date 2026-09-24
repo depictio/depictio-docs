@@ -70,7 +70,7 @@ depictio-cli run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/variantbenchmarking/" data-tpl-name="nf-core/variantbenchmarking" data-tpl-status="draft" data-tpl-version="1.4.0" data-tpl-keywords="benchmark variant caller truth set precision recall f1 germline somatic indel structural variant sv giab">
+  <a class="template-card" href="nf-core/variantbenchmarking/" data-tpl-name="nf-core/variantbenchmarking" data-tpl-status="experimental" data-tpl-version="1.4.0" data-tpl-keywords="benchmark variant caller truth set precision recall f1 germline somatic indel structural variant sv giab">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/variantbenchmarking/master/docs/images/nf-core-variantbenchmarking_logo_dark.png" alt="nf-core/variantbenchmarking">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/variantbenchmarking/master/docs/images/nf-core-variantbenchmarking_logo_light.png" alt="nf-core/variantbenchmarking">
@@ -79,12 +79,12 @@ depictio-cli run \
       <p class="template-card-desc">Benchmark variant callers against truth sets: precision, recall and F1 for germline small variants, somatic indels and structural variants.</p>
       <div class="template-card-meta">
         <span class="template-version">v1.4.0</span>
-        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/differentialabundance/" data-tpl-name="nf-core/differentialabundance" data-tpl-status="draft" data-tpl-version="2.0.0" data-tpl-keywords="differential expression deseq2 rnaseq contrast volcano ma plot gene annotation variance stabilised">
+  <a class="template-card" href="nf-core/differentialabundance/" data-tpl-name="nf-core/differentialabundance" data-tpl-status="experimental" data-tpl-version="2.0.0" data-tpl-keywords="differential expression deseq2 rnaseq contrast volcano ma plot gene annotation variance stabilised">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/differentialabundance/master/docs/images/nf-core-differentialabundance_logo_dark.png" alt="nf-core/differentialabundance">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/differentialabundance/master/docs/images/nf-core-differentialabundance_logo_light.png" alt="nf-core/differentialabundance">
@@ -93,12 +93,12 @@ depictio-cli run \
       <p class="template-card-desc">DESeq2 differential expression: per-contrast statistics, gene annotation and the variance-stabilised sample space.</p>
       <div class="template-card-meta">
         <span class="template-version">v2.0.0</span>
-        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/funcscan/" data-tpl-name="nf-core/funcscan" data-tpl-status="draft" data-tpl-version="4.0.0" data-tpl-keywords="amr antimicrobial resistance peptides amp bgc biosynthetic gene cluster cazyme screening contigs assembly hamronization">
+  <a class="template-card" href="nf-core/funcscan/" data-tpl-name="nf-core/funcscan" data-tpl-status="experimental" data-tpl-version="4.0.0" data-tpl-keywords="amr antimicrobial resistance peptides amp bgc biosynthetic gene cluster cazyme screening contigs assembly hamronization">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/funcscan/master/docs/images/nf-core-funcscan_logo_dark.png" alt="nf-core/funcscan">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/funcscan/master/docs/images/nf-core-funcscan_logo_light.png" alt="nf-core/funcscan">
@@ -107,12 +107,12 @@ depictio-cli run \
       <p class="template-card-desc">Functional screening of contigs: AMR genes, antimicrobial peptides, biosynthetic gene clusters and CAZymes.</p>
       <div class="template-card-meta">
         <span class="template-version">v4.0.0</span>
-        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/airrflow/" data-tpl-name="nf-core/airrflow" data-tpl-status="draft" data-tpl-version="5.1.0" data-tpl-keywords="airr bcr tcr repertoire immune receptor clonal lineage immcantation presto changeo vdj">
+  <a class="template-card" href="nf-core/airrflow/" data-tpl-name="nf-core/airrflow" data-tpl-status="experimental" data-tpl-version="5.1.0" data-tpl-keywords="airr bcr tcr repertoire immune receptor clonal lineage immcantation presto changeo vdj">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/airrflow/master/docs/images/nf-core-airrflow_logo_dark.png" alt="nf-core/airrflow">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/airrflow/master/docs/images/nf-core-airrflow_logo_light.png" alt="nf-core/airrflow">
@@ -121,12 +121,12 @@ depictio-cli run \
       <p class="template-card-desc">B and T cell repertoire analysis: sequence processing, repertoire composition and clonal analysis.</p>
       <div class="template-card-meta">
         <span class="template-version">v5.1.0</span>
-        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/rnafusion/" data-tpl-name="nf-core/rnafusion" data-tpl-status="draft" data-tpl-version="4.1.3" data-tpl-keywords="fusion gene fusion rnaseq arriba starfusion fusioncatcher fusioninspector sashimi splicing cancer">
+  <a class="template-card" href="nf-core/rnafusion/" data-tpl-name="nf-core/rnafusion" data-tpl-status="experimental" data-tpl-version="4.1.3" data-tpl-keywords="fusion gene fusion rnaseq arriba starfusion fusioncatcher fusioninspector sashimi splicing cancer">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/rnafusion/master/docs/images/nf-core-rnafusion_logo_dark.png" alt="nf-core/rnafusion">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/rnafusion/master/docs/images/nf-core-rnafusion_logo_light.png" alt="nf-core/rnafusion">
@@ -135,12 +135,12 @@ depictio-cli run \
       <p class="template-card-desc">Gene-fusion detection: caller consensus, per-caller evidence, in-silico validation and splice-junction analysis.</p>
       <div class="template-card-meta">
         <span class="template-version">v4.1.3</span>
-        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/rnaseq/" data-tpl-name="nf-core/rnaseq" data-tpl-status="draft" data-tpl-version="3.26.0" data-tpl-keywords="rnaseq bulk expression salmon star quantification tpm counts transcriptome gene">
+  <a class="template-card" href="nf-core/rnaseq/" data-tpl-name="nf-core/rnaseq" data-tpl-status="experimental" data-tpl-version="3.26.0" data-tpl-keywords="rnaseq bulk expression salmon star quantification tpm counts transcriptome gene">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/rnaseq/master/docs/images/nf-core-rnaseq_logo_dark.png" alt="nf-core/rnaseq">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/rnaseq/master/docs/images/nf-core-rnaseq_logo_light.png" alt="nf-core/rnaseq">
@@ -149,12 +149,12 @@ depictio-cli run \
       <p class="template-card-desc">Bulk RNA-seq quantification: MultiQC funnel, Salmon expression overview and a per-gene explorer.</p>
       <div class="template-card-meta">
         <span class="template-version">v3.26.0</span>
-        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/taxprofiler/" data-tpl-name="nf-core/taxprofiler" data-tpl-status="draft" data-tpl-version="2.0.1" data-tpl-keywords="metagenomics taxonomy taxonomic profiling kraken2 bracken metaphlan centrifuge diamond krona taxpasta shotgun">
+  <a class="template-card" href="nf-core/taxprofiler/" data-tpl-name="nf-core/taxprofiler" data-tpl-status="experimental" data-tpl-version="2.0.1" data-tpl-keywords="metagenomics taxonomy taxonomic profiling kraken2 bracken metaphlan centrifuge diamond krona taxpasta shotgun">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/taxprofiler/master/docs/images/nf-core-taxprofiler_logo_dark.png" alt="nf-core/taxprofiler">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/taxprofiler/master/docs/images/nf-core-taxprofiler_logo_light.png" alt="nf-core/taxprofiler">
@@ -163,7 +163,7 @@ depictio-cli run \
       <p class="template-card-desc">Metagenomic taxonomic profiling across many classifiers, with concordance and confidence views.</p>
       <div class="template-card-meta">
         <span class="template-version">v2.0.1</span>
-        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
   </a>
@@ -196,7 +196,7 @@ depictio-cli run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/cutandrun/" data-tpl-name="nf-core/cutandrun" data-tpl-status="draft" data-tpl-version="3.1" data-tpl-keywords="cutandrun cut&run cut&tag chromatin profiling seacr macs2 peaks consensus target histone">
+  <a class="template-card" href="nf-core/cutandrun/" data-tpl-name="nf-core/cutandrun" data-tpl-status="experimental" data-tpl-version="3.1" data-tpl-keywords="cutandrun cut&run cut&tag chromatin profiling seacr macs2 peaks consensus target histone">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/cutandrun/master/docs/images/nf-core-cutandrun_logo_dark.png" alt="nf-core/cutandrun">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/cutandrun/master/docs/images/nf-core-cutandrun_logo_light.png" alt="nf-core/cutandrun">
@@ -205,7 +205,189 @@ depictio-cli run \
       <p class="template-card-desc">CUT&amp;RUN / CUT&amp;Tag chromatin profiling: SEACR and MACS2 side by side, their agreement and the consensus set per target.</p>
       <div class="template-card-meta">
         <span class="template-version">v3.1</span>
-        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/eager/" data-tpl-name="nf-core/eager" data-tpl-status="experimental" data-tpl-version="2.4.5" data-tpl-keywords="eager ancient dna adna damage deamination mapdamage damageprofiler contamination endogenous authentication">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/eager/dev/docs/images/nf-core-eager_logo_dark.png" alt="nf-core/eager">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/eager/dev/docs/images/nf-core-eager_logo_light.png" alt="nf-core/eager">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Ancient DNA: read preprocessing, mapping, damage patterns and contamination estimates to judge authenticity per library and sample.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.4.5</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/hic/" data-tpl-name="nf-core/hic" data-tpl-status="experimental" data-tpl-version="2.0.0" data-tpl-keywords="hic hi-c chromatin conformation contact map pairs compartments tad cooler">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/hic/master/docs/images/nf-core-hic_logo_dark.png" alt="nf-core/hic">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/hic/master/docs/images/nf-core-hic_logo_light.png" alt="nf-core/hic">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Hi-C: valid pair statistics, contact maps and compartment and TAD calls, from library QC to 3D genome structure.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.0.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/mag/" data-tpl-name="nf-core/mag" data-tpl-status="experimental" data-tpl-version="5.5.0" data-tpl-keywords="mag metagenome assembly binning bins checkm busco gtdb taxonomy quast">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/mag/master/docs/images/nf-core-mag_logo_dark.png" alt="nf-core/mag">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/mag/master/docs/images/nf-core-mag_logo_light.png" alt="nf-core/mag">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Metagenome-assembled genomes: assembly, binning, completeness and contamination, and taxonomy of the recovered bins.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v5.5.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/methylseq/" data-tpl-name="nf-core/methylseq" data-tpl-status="experimental" data-tpl-version="2.3.0" data-tpl-keywords="methylseq methylation bisulfite bismark cpg mbias em-seq epigenetics">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/methylseq/master/docs/images/nf-core-methylseq_logo_dark.png" alt="nf-core/methylseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/methylseq/master/docs/images/nf-core-methylseq_logo_light.png" alt="nf-core/methylseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">DNA methylation: bisulfite conversion QC, M-bias, CpG coverage and methylation levels compared across samples and groups.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.3.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/nanoseq/" data-tpl-name="nf-core/nanoseq" data-tpl-status="experimental" data-tpl-version="3.0.0" data-tpl-keywords="nanoseq nanopore ont long read pycoqc nanoplot alignment quantification">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/nanoseq/master/docs/images/nf-core-nanoseq_logo_dark.png" alt="nf-core/nanoseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/nanoseq/master/docs/images/nf-core-nanoseq_logo_light.png" alt="nf-core/nanoseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Oxford Nanopore long reads: read length and quality, alignment, and transcript quantification per sample.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.0.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/sarek/" data-tpl-name="nf-core/sarek" data-tpl-status="experimental" data-tpl-version="3.10.0" data-tpl-keywords="sarek variant calling germline somatic snv indel vcf vep snpeff wgs wes">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/sarek/master/docs/images/nf-core-sarek_logo_dark.png" alt="nf-core/sarek">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/sarek/master/docs/images/nf-core-sarek_logo_light.png" alt="nf-core/sarek">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Germline and somatic variant calling: alignment QC, variant counts per caller, annotated variants and their genome positions.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.10.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/scrnaseq/" data-tpl-name="nf-core/scrnaseq" data-tpl-status="experimental" data-tpl-version="4.2.0" data-tpl-keywords="scrnaseq single cell rna scrna cellranger starsolo alevin knee umap barcode">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/scrnaseq/master/docs/images/nf-core-scrnaseq_logo_dark.png" alt="nf-core/scrnaseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/scrnaseq/master/docs/images/nf-core-scrnaseq_logo_light.png" alt="nf-core/scrnaseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Single-cell RNA-seq: barcode ranks, cells called, genes per cell and embeddings of the filtered cells per sample.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v4.2.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/riboseq/" data-tpl-name="nf-core/riboseq" data-tpl-status="experimental" data-tpl-version="2.0.0" data-tpl-keywords="riboseq ribosome profiling ribo-seq periodicity p-site orf translation efficiency">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/riboseq/master/docs/images/nf-core-riboseq_logo_dark.png" alt="nf-core/riboseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/riboseq/master/docs/images/nf-core-riboseq_logo_light.png" alt="nf-core/riboseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Ribosome profiling: footprint lengths, P-site periodicity, ORF calls and translational efficiency against matched RNA-seq.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.0.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/smrnaseq/" data-tpl-name="nf-core/smrnaseq" data-tpl-status="experimental" data-tpl-version="2.4.1" data-tpl-keywords="smrnaseq small rna mirna microrna mirtrace mirdeep quantification">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/smrnaseq/master/docs/images/nf-core-smrnaseq_logo_dark.png" alt="nf-core/smrnaseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/smrnaseq/master/docs/images/nf-core-smrnaseq_logo_light.png" alt="nf-core/smrnaseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Small RNA-seq: adapter trimming, read length profiles, miRNA quantification and the contaminant fractions per sample.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.4.1</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/genomeassembler/" data-tpl-name="nf-core/genomeassembler" data-tpl-status="experimental" data-tpl-version="2.0.0" data-tpl-keywords="genomeassembler genome assembly de novo contig n50 busco quast merqury hifi ont">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/genomeassembler/master/docs/images/nf-core-genomeassembler_logo_dark.png" alt="nf-core/genomeassembler">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/genomeassembler/master/docs/images/nf-core-genomeassembler_logo_light.png" alt="nf-core/genomeassembler">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">De novo genome assembly: contiguity, completeness and assembly QC across assemblers and polishing steps.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.0.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/mhcquant/" data-tpl-name="nf-core/mhcquant" data-tpl-status="experimental" data-tpl-version="3.2.0" data-tpl-keywords="mhcquant immunopeptidomics mhc hla peptides mass spectrometry binding prediction">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/mhcquant/master/docs/images/nf-core-mhcquant_logo_dark.png" alt="nf-core/mhcquant">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/mhcquant/master/docs/images/nf-core-mhcquant_logo_light.png" alt="nf-core/mhcquant">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Immunopeptidomics: identified MHC peptides, length and anchor-motif signatures, replicate reproducibility and source proteins across runs.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.2.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/demultiplex/" data-tpl-name="nf-core/demultiplex" data-tpl-status="experimental" data-tpl-version="1.8.0" data-tpl-keywords="demultiplex demultiplexing bcl bclconvert bases2fastq index barcode lane undetermined">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/demultiplex/master/docs/images/nf-core-demultiplex_logo_dark.png" alt="nf-core/demultiplex">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/demultiplex/master/docs/images/nf-core-demultiplex_logo_light.png" alt="nf-core/demultiplex">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Run demultiplexing: reads per lane and sample, index balance, undetermined barcodes and per-sample quality.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.8.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/rnasplice/" data-tpl-name="nf-core/rnasplice" data-tpl-status="experimental" data-tpl-version="1.0.4" data-tpl-keywords="rnasplice splicing alternative splicing rmats suppa dexseq transcript usage">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/rnasplice/master/docs/images/nf-core-rnasplice_logo_dark.png" alt="nf-core/rnasplice">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/rnasplice/master/docs/images/nf-core-rnasplice_logo_light.png" alt="nf-core/rnasplice">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Alternative splicing: differential splicing events and transcript usage between conditions, with the supporting expression.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.0.4</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
   </a>

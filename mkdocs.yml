@@ -288,6 +288,19 @@ nav:
           - chipseq: pipeline-templates/nf-core/chipseq.md
           - atacseq: pipeline-templates/nf-core/atacseq.md
           - cutandrun: pipeline-templates/nf-core/cutandrun.md
+          - eager: pipeline-templates/nf-core/eager.md
+          - hic: pipeline-templates/nf-core/hic.md
+          - mag: pipeline-templates/nf-core/mag.md
+          - methylseq: pipeline-templates/nf-core/methylseq.md
+          - nanoseq: pipeline-templates/nf-core/nanoseq.md
+          - sarek: pipeline-templates/nf-core/sarek.md
+          - scrnaseq: pipeline-templates/nf-core/scrnaseq.md
+          - riboseq: pipeline-templates/nf-core/riboseq.md
+          - smrnaseq: pipeline-templates/nf-core/smrnaseq.md
+          - genomeassembler: pipeline-templates/nf-core/genomeassembler.md
+          - mhcquant: pipeline-templates/nf-core/mhcquant.md
+          - demultiplex: pipeline-templates/nf-core/demultiplex.md
+          - rnasplice: pipeline-templates/nf-core/rnasplice.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md
