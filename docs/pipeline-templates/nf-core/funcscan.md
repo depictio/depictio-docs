@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/funcscan" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="4.0.0">
@@ -29,27 +29,30 @@ hide:
   <span class="tpl-version-badge">latest</span>
 </div>
 
-The funcscan template covers the four aggregated screening reports of a standard nf-core/funcscan run:
+The funcscan template covers the four aggregated screening reports of a standard nf-core/funcscan run, plus the annotated contigs they share and the run's own record of what it ran:
 
 - :material-bullseye-arrow: **Screening overview**: per-sample counts for all four screens, and the sample selection every other tab follows
-- :material-bacteria-outline: **Resistome**: five ARG tools harmonised by hAMRonization, the gene-by-sample matrix and a contig-level gene track
-- :material-atom: **AMPs**: AMPcombi candidates in their physicochemical property space, and the sequence clusters they fall into
-- :material-graph-outline: **BGCs**: comBGC regions from antiSMASH, DeepBGC and GECCO, split by predicted product class
+- :material-file-document-outline: **Annotation**: the contigs the four screens touch, how long they are and how densely they are annotated
+- :material-bacteria-outline: **Resistome**: five ARG tools harmonised by hAMRonization, the drug-class matrix and a contig-level gene track
+- :material-atom: **AMPs**: AMPcombi candidates in their physicochemical property space, with a linked candidate record, and the sequence clusters they fall into
+- :material-graph-outline: **BGCs**: comBGC regions from antiSMASH, DeepBGC and GECCO, split by product class and mapped along their contigs
 - :material-leaf: **CAZymes**: run_dbCAN family calls and the substrates their gene clusters target
-- :material-table: **Reference tables**: the five raw reports, pinned to the bottom of every tab
+- :material-file-document-outline: **Run report**: the tools and versions each screen ran, read from the MultiQC report
 
 !!! info "Four screens, any subset"
     funcscan runs up to four independent screens over the same assemblies and
-    nothing joins them, which is why the dashboard has one cross-screen tab and
-    one tab per screen. Every screen is optional: an arm that did not run leaves
-    no report, so its collections prune themselves. `--var SKIP_ARG=true` (or
-    `SKIP_AMP`, `SKIP_BGC`, `SKIP_CAZYME`) prunes an arm explicitly.
+    nothing joins them, which is why the dashboard has one cross-screen tab, one
+    locus tab and one tab per screen. Every screen is optional: an arm that did
+    not run leaves no report, so its collections prune themselves. `--var
+    SKIP_ARG=true` (or `SKIP_AMP`, `SKIP_BGC`, `SKIP_CAZYME`) prunes an arm
+    explicitly.
 
-!!! note "No MultiQC tab"
+!!! note "No MultiQC panels, only versions"
     funcscan feeds MultiQC nothing but software versions: the parquet holds one
     run-metadata row, with no general-statistics table and no module sections.
-    The versions reach the UI through the template's provenance block instead,
-    and **Screening overview** carries the run-level read.
+    The template turns that row into a table of tools per screen, which the
+    **Run report** tab reads, and the same versions reach the dashboard Settings
+    drawer through the template's provenance block.
 
 ---
 
@@ -71,7 +74,7 @@ The funcscan template covers the four aggregated screening reports of a standard
 
     ```bash
     depictio-cli config nextflow --install     # once per machine
-    nextflow run nf-core/funcscan -profile docker --outdir results
+    nextflow run nf-core/funcscan -r 4.0.0 -profile docker --outdir results
     ```
 
     No `depictio run`, and no template named: the pipeline ingests its own
@@ -86,7 +89,9 @@ The template reads one aggregated report per arm: hAMRonization for the
 resistome, AMPcombi for the peptides, comBGC for the gene clusters and run_dbCAN
 for the CAZymes. From whichever of them the run produced it derives a per-sample
 hub collection, joined to every screening collection on `sample`, so one sample
-selection reaches all five tabs.
+selection reaches every tab. A second hub, the per-contig annotation layer,
+is rebuilt from the four screens and carries a contig selection into each of
+them.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -104,34 +109,64 @@ selection reaches all five tabs.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Five tabs: the cross-screen overview, then one per screen. Each tab below
-carries the **same icon and colour the dashboard gives it**, so the page and the
-app read alike. `Sample scope` is pinned to the top of every tab, and the
-collapsed `Reference tables` section to the bottom.
+Seven tabs: the cross-screen overview, the contig layer the screens share, one
+tab per screen, and the run report. Each tab below carries the **same icon and
+colour the dashboard gives it**, so the page and the app read alike. `Sample
+scope` is pinned to the top of every tab, together with the *Run at a glance*
+cards and the collapsed *Sample sheet* section.
 
 === ":material-bullseye-arrow:{ .mc-indigo } Screening overview"
 
-    *What the four screens found, sample by sample.*
+    *What the four screens found, sample by sample, and which samples to follow.*
 
     [![Screening overview dashboard](../../images/pipeline-templates/nf-core/funcscan/screening_overview_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/screening_overview_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Eight cards over two rows read the whole run at once: ARG hits, AMP
-    candidates, BGC regions, CAZymes, screens completed, high-confidence AMPs,
-    CAZy families and BGC classes. The bar below is grouped and log-scaled, so an
-    empty resistome next to a large CAZyme repertoire stands out. The scatter and
-    the hub table both select on `sample`, which narrows every other tab.
+    Four cards read the whole run at once, each with the samples that carry
+    most of it: ARG hits, AMP candidates, BGC regions and CAZyme genes. The bar
+    below is grouped and log-scaled, so an empty resistome next to a large
+    CAZyme repertoire stands out. The scatter and the hub table are
+    cross-selecting on `sample`: lasso points or tick rows, and the project
+    links carry that selection into the Resistome, AMPs, BGCs and CAZymes tabs.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample`, plus ranges on screens completed and ARG hits,
-        all on `screening_summary`, persistent and pinned to the top of every tab.
+        **Filters** · `Sample` on `screening_summary`, persistent and pinned to
+        the top of every tab, plus ARG, AMP, BGC and CAZyme per-sample ranges in
+        a *Sample thresholds* group.
 
         | Section | What it holds |
         |---|---|
-        | Screening at a glance | 8 cards |
+        | Run at a glance | 4 cards, pinned to every tab |
         | Screen composition | *Findings per sample and screen* |
         | Sample comparison | *Resistome load against CAZyme capacity*, *Per-sample screening summary* |
-        | Reference tables | *Samplesheet*, *ARG hits*, *AMP candidates*, *BGC regions*, *CAZyme annotations* |
+        | Sample sheet | *Samplesheet*, collapsed and pinned to every tab |
+
+=== ":material-file-document-outline:{ .mc-yellow } Annotation"
+
+    *Which contigs carry the findings, and are they long or just dense?*
+
+    [![Annotation dashboard](../../images/pipeline-templates/nf-core/funcscan/annotation_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/annotation_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    Every screen names the contig its feature sits on, so this tab rebuilds the
+    locus layer from the screens: one row per contig, with what each screen put
+    there. Contig length is read from the contig name when the assembler wrote
+    it there (SPAdes or MEGAHIT headers); other names keep the contig in the
+    table but off the length axis. The scatter puts features against contig
+    length on a log axis, so short, dense loci stand out from merely long
+    contigs. Scatter and table cross-select on `contig`, and the project links
+    carry the contig into the ARG hits, AMP candidates, BGC region map and
+    CAZyme annotations.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Leading screen` and a `Screens on the contig` range in a
+        *Locus scope* group, plus `Contig length (bp)` and `Features per kb`
+        ranges in *Locus thresholds*, all on `contig_annotation`.
+
+        | Section | What it holds |
+        |---|---|
+        | Annotation at a glance | 4 cards |
+        | Loci | *Features against contig length*, *Feature density*, *Annotated contigs* |
 
 === ":material-bacteria-outline:{ .mc-red } Resistome"
 
@@ -142,20 +177,23 @@ collapsed `Reference tables` section to the bottom.
     ABRicate, AMRFinderPlus, DeepARG, fARGene and RGI all report differently, and
     hAMRonization normalises them into one table of hits. The hierarchy starts at
     the tool, not the drug class: the five tools share no class vocabulary, so a
-    class-first sunburst collapses into one wedge. The UpSet and the dot plot
-    then show which tools called each gene. The contig track at the bottom binds
-    the `gene_arrow_track` advanced visualization kind, one lane per contig and
-    one arrow per hit, so genes packed head to tail read as a resistance island.
+    class-first sunburst collapses into one wedge. Beside it, the drug-class by
+    sample matrix narrows to the samples picked on the overview. The UpSet and
+    the dot plot then show which tools called each gene. In *Gene detail* the
+    hit-quality scatter and the hits table cross-select on the gene symbol, and
+    the contig track binds the `gene_arrow_track` advanced visualization kind,
+    one lane per contig and one arrow per hit, so genes packed head to tail
+    read as a resistance island.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `ARG tool` and `Drug class` on `hamronization_report`, plus
-        identity and tools-agreeing ranges in a collapsed *Hit quality* group.
+        identity and tools-agreeing ranges in a *Hit quality* group.
 
         | Section | What it holds |
         |---|---|
         | Resistome at a glance | 4 cards |
-        | Resistance hierarchy | *Resistome hierarchy*, *Gene by sample hit matrix* |
+        | Resistance hierarchy | *Resistome hierarchy*, *Drug class by sample hit matrix* |
         | Tool concordance | *ARG tool concordance*, *Gene support per sample* |
         | Gene detail | *Hit quality per tool*, *ARG hits*, *Resistance genes along their contig* |
 
@@ -165,22 +203,27 @@ collapsed `Reference tables` section to the bottom.
 
     [![AMPs dashboard](../../images/pipeline-templates/nf-core/funcscan/amps_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/amps_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    AMPcombi keeps the candidates ampir, Macrel and HMMER report, with each
-    tool's probability alongside the peptide's physicochemistry. The property
-    plane is hydrophobicity against isoelectric point rather than one tool's
-    probability against another's: Macrel scores 0 for all but 21 of the
-    reference run's 8442 candidates. The PCA embeds the same descriptors, and the
-    cluster panel is the MMseqs2 clustering over the whole run.
+    AMPcombi merges the ampir, Macrel and AMPlify predictions, keeps the
+    peptides above its probability cut-off and annotates each with its
+    physicochemistry, so the tab reads the best probability across tools and
+    how many predictors agree rather than one tool's score. The property plane
+    is hydrophobicity against isoelectric point: cationic, hydrophobic peptides
+    sit in the upper right. The scatter and the candidates table cross-select
+    on the CDS, and the linked *Candidate record* beside the scatter folds to a
+    slim rail until a point or a row is picked, then shows that peptide's
+    origin, per-tool probabilities and physicochemistry. The PCA embeds the same
+    descriptors, and the cluster panel is the MMseqs2 clustering over the whole
+    run.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `Charge class` on `ampcombi_summary`, plus best-probability
-        and length ranges in a collapsed *Peptide properties* group.
+        and length ranges in a *Peptide properties* group.
 
         | Section | What it holds |
         |---|---|
         | AMPs at a glance | 4 cards |
-        | Property space | *Charge against hydrophobicity*, *Physicochemistry PCA*, *AMP candidates* |
+        | Property space | *Charge against hydrophobicity*, *Candidate record*, *Physicochemistry PCA*, *AMP candidates* |
         | Clusters | *Cluster sizes*, *Peptide clusters* |
 
 === ":material-graph-outline:{ .mc-cyan } BGCs"
@@ -191,19 +234,26 @@ collapsed `Reference tables` section to the bottom.
 
     Metagenome assemblies are fragmented, so a cluster is often cut by a contig
     edge; that is why the cards read region length and CDS count next to the
-    region count. The sunburst goes caller to product class. The concordance
-    UpSet scores agreement on the contig, not on region coordinates: the callers
-    disagree on boundaries by design, so a coordinate join finds no overlap.
+    product classes, and why the completeness split reads low by construction.
+    The sunburst goes caller to product class. *Region maps* shows the same
+    regions as coordinates: brush the genome axis or pick a row and the arrow
+    lanes and the coordinate table narrow to that contig (arrows run left to
+    right, because comBGC reports no strand). The concordance UpSet scores
+    agreement on the contig, not on region coordinates: the callers disagree on
+    boundaries by design, so a coordinate join finds no overlap.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `Prediction tool` and `Product class` on `combgc_summary`,
-        plus length and CDS-count ranges in a collapsed *Region size* group.
+        plus length and CDS-count ranges in a *Region size* group, and a
+        `Product class on the map` selector and a `Region length on the map (kb)`
+        range on `combgc_region_track` for the region maps.
 
         | Section | What it holds |
         |---|---|
         | BGCs at a glance | 4 cards |
-        | Product classes | *Regions per sample*, *Caller to product class*, *BGC regions* |
+        | Product classes | *Regions per sample*, *Caller to product class* |
+        | Region maps | *Cluster footprints on the genome axis*, *Clusters along their contig*, *BGC region coordinates* |
         | Caller concordance | *Caller concordance* |
 
 === ":material-leaf:{ .mc-green } CAZymes"
@@ -221,7 +271,7 @@ collapsed `Reference tables` section to the bottom.
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `CAZy class` and `Substrate` on `dbcan_overview`, plus a
-        tools-agreeing range in a collapsed *Call confidence* group.
+        tools-agreeing range in a *Call confidence* group.
 
         | Section | What it holds |
         |---|---|
@@ -229,6 +279,27 @@ collapsed `Reference tables` section to the bottom.
         | Family hierarchy | *CAZyme hierarchy*, *Class split per sample* |
         | Substrates | *Substrates predicted*, *CGC substrate predictions* |
         | Tool concordance | *Annotation concordance*, *CAZyme annotations* |
+
+=== ":material-file-document-outline: Run report"
+
+    *Which screen ran what, and with which versions?*
+
+    [![Run report dashboard](../../images/pipeline-templates/nf-core/funcscan/run_report_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/run_report_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    One row per Nextflow process and tool, read from the versions table in the
+    MultiQC report and assigned to a screen by the process name; processes that
+    belong to no screen are labelled as workflow plumbing rather than dropped.
+    A screen that reports no tool here did not run, so this is the first place
+    to look when a screen tab is empty.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Screen` and `Tool` on `software_versions`, in a *Version
+        scope* group.
+
+        | Section | What it holds |
+        |---|---|
+        | Tools and versions | *Tools per screen*, *Software versions* |
 
 !!! tip "Vocabularies that do not line up"
     The five ARG tools, the three BGC callers and the three CAZyme annotators
@@ -243,11 +314,11 @@ Depictio reads the **output** of nf-core/funcscan, it does not run the pipeline.
 Run the pipeline first:
 
 ```bash
-nextflow run nf-core/funcscan \
+nextflow run nf-core/funcscan -r 4.0.0 \
   --input samplesheet.csv \
   --run_arg_screening --run_amp_screening \
   --run_bgc_screening --run_cazyme_screening \
-  -profile docker
+  --outdir results -profile docker
 ```
 
 Then point Depictio at the results:
@@ -272,7 +343,7 @@ recursively and matches on file name; only the aggregated reports below matter.
 ├── pipeline_info/
 │   ├── params.json                                # carries the four run_*_screening flags
 │   └── software_versions.yml
-├── multiqc/multiqc_data/multiqc.parquet           # versions only, no QC tab
+├── multiqc/multiqc_data/multiqc.parquet           # versions only, read by the Run report tab
 ├── reports/
 │   ├── hamronization_summarize/
 │   │   └── hamronization_combined_report.tsv      # ARG: one row per hit, five tools
@@ -291,12 +362,12 @@ recursively and matches on file name; only the aggregated reports below matter.
 
 !!! warning "Use the run-level comBGC summary"
     The per-sample `reports/combgc/<sample>/combgc_summary.tsv` files carry the
-    antiSMASH branch alone (137 of the reference run's 155 regions), which is why
-    the template reads `combgc_complete_summary.tsv`.
+    antiSMASH branch alone, which is why the template reads
+    `combgc_complete_summary.tsv`.
 
 ---
 
-## :material-flask-outline: Test data
+## :material-flask-outline: Validation runs
 
 The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/funcscan/4.0.0/download_test_data.sh),
@@ -343,7 +414,7 @@ depictio run \
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it a Draft.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it Experimental.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

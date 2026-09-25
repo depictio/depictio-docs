@@ -63,10 +63,11 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 |---|:--:|---|
 | `DATA_ROOT` | ✓ | Root directory containing differentialabundance output (tables/, other/, pipeline_info/). |
 | `SAMPLESHEET_FILE` | — | Path to the pipeline's --input observation sheet. Auto-detected from {DATA_ROOT}/input/ (CSV or TSV) when omitted; download_test_data.sh puts the megatest's sheet there. |
+| `NO_GSEA` | — | Set (--var NO_GSEA=true) for a run that did not run GSEA (no --gsea_run, or no gene-set file). Prunes the two enrichment collections, so the Enrichment tab drops out instead of scanning for tables that were never written. |
 
 ### :material-database-outline: Data collections
 
-8 data collections — <span class="gtd-badge gtd-req">6 required</span> <span class="gtd-badge gtd-opt">2 optional</span> · <span class="gtd-badge gtd-direct">6 direct</span> <span class="gtd-badge gtd-derived">2 derived</span>.
+11 data collections — <span class="gtd-badge gtd-req">7 required</span> <span class="gtd-badge gtd-opt">4 optional</span> · <span class="gtd-badge gtd-direct">8 direct</span> <span class="gtd-badge gtd-derived">3 derived</span>.
 
 **Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
@@ -80,10 +81,27 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 | `deseq2_vst_pca` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/vst_pca.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deseq2/vst_pca.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `deseq2_vst_heatmap` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/vst_top_variable.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deseq2/vst_top_variable.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `deseq2_sample_distance` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/vst_sample_distance.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deseq2/vst_sample_distance.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `deseq2_vst_distribution` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/vst_distribution.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deseq2/vst_distribution.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `gsea_report_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*\.gsea_report_for_.*\.tsv$</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `gsea_report` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/gsea/report.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">gsea/report.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+
+### :material-directions-fork: Conditional routes
+
+Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (9 collections are unaffected by any variable — present on every run.)
+
+<p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
+
+<div class="gtd-mtx">
+<table>
+<thead><tr><th class="dc">Data collection</th><th><code>NO_GSEA</code></th></tr></thead>
+<tbody>
+<tr><th class="dc"><code>gsea_report_raw</code></th><td class="minus" title="removed when NO_GSEA is set">−</td></tr>
+<tr><th class="dc"><code>gsea_report</code></th><td class="minus" title="removed when NO_GSEA is set">−</td></tr>
+</tbody></table></div>
 
 ### :material-vector-link: Cross-DC links
 
-5 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+11 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -94,6 +112,12 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 <tr><td><code>deseq2_vst_pca</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>deseq2_sample_distance</code></td><td>Carry a cluster lassoed on the PCA over to the sample-distance matrix</td></tr>
 <tr><td><code>deseq2_results</code> <span class="col">·&nbsp;gene_id</span></td><td class="arr">→</td><td><code>deseq2_results_annotated</code></td><td>Carry a gene selected on the differential scatter over to the annotated table</td></tr>
 <tr><td><code>deseq2_results_annotated</code> <span class="col">·&nbsp;gene_id</span></td><td class="arr">→</td><td><code>deseq2_results</code></td><td>Carry a gene selected in the annotated table back to the differential panels</td></tr>
+<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>deseq2_vst_heatmap</code></td><td>Narrow the variance-stabilised heatmap to the samples picked on the hub sheet</td></tr>
+<tr><td><code>deseq2_vst_pca</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>deseq2_vst_heatmap</code></td><td>Carry a cluster lassoed on the PCA over to the variance-stabilised heatmap</td></tr>
+<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>deseq2_vst_distribution</code></td><td>Filter the per-sample distributions by the samples picked on the hub sheet</td></tr>
+<tr><td><code>deseq2_vst_pca</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>deseq2_vst_distribution</code></td><td>Carry a cluster lassoed on the PCA over to the per-sample distributions</td></tr>
+<tr><td><code>deseq2_results</code> <span class="col">·&nbsp;contrast</span></td><td class="arr">→</td><td><code>deseq2_results_annotated</code></td><td>Narrow the annotated statistics to the contrasts picked in the left panel</td></tr>
+<tr><td><code>deseq2_results</code> <span class="col">·&nbsp;contrast</span></td><td class="arr">→</td><td><code>gsea_report</code></td><td>Filter the enrichment panels to the contrast picked on the differential tab</td></tr>
 </tbody></table></div>
 
 ### :material-chef-hat: Recipes
@@ -104,7 +128,9 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 |---|---|---|
 | [`deseq2/results_annotated.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/results_annotated.py) | Annotated DESeq2 results: statistics joined to the gene annotation. | `contrast`, `gene_id`, `gene_name`, `chromosome`, `start`, `end`, `gene_biotype`, `base_mean`, `log2fc`, `lfc_se`, `pvalue`, `padj`, `neg_log10_padj`, `significant`, `direction` |
 | [`deseq2/results_long.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/results_long.py) | Long DESeq2 results table, one row per (contrast, feature). | `contrast`, `gene_id`, `base_mean`, `log2fc`, `lfc_se`, `pvalue`, `padj`, `log2_base_mean`, `neg_log10_padj`, `significant`, `direction` |
+| [`deseq2/vst_distribution.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/vst_distribution.py) | Per-sample expression distributions from the variance-stabilised matrix. | `sample_id`, `bin_centre`, `density`, `group`, `q1`, `median`, `q3`, `p05`, `p95`, `floor_share` |
 | [`deseq2/vst_pca.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/vst_pca.py) | Sample PCA on the DESeq2 variance-stabilised matrix (embedding schema). | `sample_id`, `dim_1`, `dim_2`, `group` |
 | [`deseq2/vst_sample_distance.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/vst_sample_distance.py) | Sample-to-sample distance matrix on the DESeq2 variance-stabilised data. | `sample` |
 | [`deseq2/vst_top_variable.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/vst_top_variable.py) | Top variable genes of the DESeq2 variance-stabilised matrix, for ComplexHeatmap. | `gene_id` |
-| [`nf-core/differentialabundance/samples.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/differentialabundance/recipes/samples.py) | Sample hub for nf-core/differentialabundance: the sample sheet plus DESeq2 size factors. | `sample_id`, `group`, `size_factor` |
+| [`gsea/report.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/gsea/report.py) | Enriched gene sets, from the GSEA report tables a pre-ranked run publishes. | `contrast`, `phenotype`, `term`, `size`, `es`, `nes`, `abs_nes`, `nom_pvalue`, `fdr_qvalue`, `fwer_pvalue`, `neg_log10_fdr`, `rank_at_max`, `leading_edge_percent`, `leading_edge` |
+| [`nf-core/differentialabundance/samples.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/differentialabundance/recipes/samples.py) | Sample hub for nf-core/differentialabundance: the sample sheet plus DESeq2 size factors. | `sample_id`, `group`, `size_factor`, `factor_2`, `factor_2_name`, `factor_3`, `factor_3_name`, `factor_4`, `factor_4_name` |

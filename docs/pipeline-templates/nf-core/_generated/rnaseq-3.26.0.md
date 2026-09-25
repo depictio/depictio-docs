@@ -69,22 +69,28 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 
 ### :material-database-outline: Data collections
 
-6 data collections — <span class="gtd-badge gtd-req">6 required</span> <span class="gtd-badge gtd-opt">0 optional</span> · <span class="gtd-badge gtd-direct">6 direct</span> <span class="gtd-badge gtd-derived">0 derived</span>.
+12 data collections — <span class="gtd-badge gtd-req">7 required</span> <span class="gtd-badge gtd-opt">5 optional</span> · <span class="gtd-badge gtd-direct">11 direct</span> <span class="gtd-badge gtd-derived">1 derived</span>.
 
 **Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
-| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">multiqc/star_salmon/multiqc_report_data/multiqc\.parquet</code> | <span class="gtd-badge gtd-req">required</span> |
+| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc(?:_report)?_data/multiqc\.parquet$</code> | <span class="gtd-badge gtd-req">required</span> |
 | `samplesheet` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnaseq/recipes/samplesheet.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnaseq/samplesheet.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `sample_overview` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/salmon/sample_pca.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">salmon/sample_pca.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `expression_heatmap` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/salmon/top_variable_genes.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">salmon/top_variable_genes.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `gene_expression` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/salmon/gene_expression_long.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">salmon/gene_expression_long.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `deseq2_qc_pca` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/qc_pca.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deseq2/qc_pca.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `deseq2_qc_dists` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/qc_sample_dists.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deseq2/qc_sample_dists.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `rseqc_read_distribution_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*\.read_distribution\.txt$</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `rseqc_read_distribution` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/rseqc/read_distribution.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">rseqc/read_distribution.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `general_stats` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnaseq/recipes/general_stats.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnaseq/general_stats.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `gene_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnaseq/recipes/gene_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnaseq/gene_summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `gene_counts` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{DATA_ROOT}/star_salmon/salmon.merged.gene_counts.tsv</code> | <span class="gtd-badge gtd-req">required</span> |
 
 ### :material-directions-fork: Conditional routes
 
-Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (1 collections are unaffected by any variable — present on every run.)
+Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (3 collections are unaffected by any variable — present on every run.)
 
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 
@@ -96,12 +102,16 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><th class="dc"><code>sample_overview</code></th><td></td><td class="minus" title="removed when SKIP_QUANTIFICATION_MERGE is set">−</td><td class="swap" title="re-sourced when PSEUDOALIGNER_ONLY is set">⇄</td></tr>
 <tr><th class="dc"><code>expression_heatmap</code></th><td></td><td class="minus" title="removed when SKIP_QUANTIFICATION_MERGE is set">−</td><td class="swap" title="re-sourced when PSEUDOALIGNER_ONLY is set">⇄</td></tr>
 <tr><th class="dc"><code>gene_expression</code></th><td></td><td class="minus" title="removed when SKIP_QUANTIFICATION_MERGE is set">−</td><td class="swap" title="re-sourced when PSEUDOALIGNER_ONLY is set">⇄</td></tr>
+<tr><th class="dc"><code>deseq2_qc_pca</code></th><td></td><td></td><td class="swap" title="re-sourced when PSEUDOALIGNER_ONLY is set">⇄</td></tr>
+<tr><th class="dc"><code>deseq2_qc_dists</code></th><td></td><td></td><td class="swap" title="re-sourced when PSEUDOALIGNER_ONLY is set">⇄</td></tr>
+<tr><th class="dc"><code>general_stats</code></th><td class="minus" title="removed when SKIP_MULTIQC is set">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>gene_summary</code></th><td></td><td class="minus" title="removed when SKIP_QUANTIFICATION_MERGE is set">−</td><td class="swap" title="re-sourced when PSEUDOALIGNER_ONLY is set">⇄</td></tr>
 <tr><th class="dc"><code>gene_counts</code></th><td></td><td class="minus" title="removed when SKIP_QUANTIFICATION_MERGE is set">−</td><td class="swap" title="re-sourced when PSEUDOALIGNER_ONLY is set">⇄</td></tr>
 </tbody></table></div>
 
 ### :material-vector-link: Cross-DC links
 
-8 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+24 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -112,9 +122,25 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>gene_expression</code></td><td>Filter the gene explorer by samplesheet selection</td></tr>
 <tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>expression_heatmap</code></td><td>Narrow the expression heatmap to the selected samples (column subset on a wide matrix)</td></tr>
 <tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>gene_counts</code></td><td>Narrow the merged count matrix to the selected samples (column subset on a wide matrix)</td></tr>
-<tr><td><code>sample_overview</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>gene_expression</code></td><td>Filter the gene explorer by the samples picked in the PCA or the sample table</td></tr>
+<tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>deseq2_qc_pca</code></td><td>Filter the DESeq2 QC PCA by samplesheet selection</td></tr>
+<tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>deseq2_qc_dists</code></td><td>Narrow the DESeq2 QC distance matrix to the selected samples, rows and columns</td></tr>
+<tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>rseqc_read_distribution</code></td><td>Filter the read distribution composition by samplesheet selection</td></tr>
+<tr><td><code>sample_overview</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>gene_expression</code></td><td>Filter the gene explorer by the samples picked in the library summary table</td></tr>
 <tr><td><code>sample_overview</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>expression_heatmap</code></td><td>Narrow the expression heatmap to the samples picked in the PCA (column subset)</td></tr>
-<tr><td><code>sample_overview</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter the MultiQC panels by the samples picked in the PCA</td></tr>
+<tr><td><code>sample_overview</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>deseq2_qc_pca</code></td><td>Filter the DESeq2 QC PCA by the samples picked in the library summary table</td></tr>
+<tr><td><code>sample_overview</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>deseq2_qc_dists</code></td><td>Narrow the DESeq2 QC distance matrix to the samples picked in the library summary table</td></tr>
+<tr><td><code>sample_overview</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>rseqc_read_distribution</code></td><td>Filter the read distribution composition by the samples picked in the library summary table</td></tr>
+<tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>general_stats</code></td><td>Filter the per-library QC profile by samplesheet selection</td></tr>
+<tr><td><code>sample_overview</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>general_stats</code></td><td>Filter the per-library QC profile by the samples picked in the library summary table</td></tr>
+<tr><td><code>gene_summary</code> <span class="col">·&nbsp;gene_id</span></td><td class="arr">→</td><td><code>gene_expression</code></td><td>Filter the gene explorer to the genes picked on the mean-variance plane</td></tr>
+<tr><td><code>sample_overview</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter the MultiQC panels by the samples picked in the library summary table</td></tr>
+<tr><td><code>deseq2_qc_pca</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>sample_overview</code></td><td>Narrow the library summary to the samples picked on the DESeq2 QC PCA</td></tr>
+<tr><td><code>deseq2_qc_pca</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>gene_expression</code></td><td>Narrow the gene explorer to the samples picked on the DESeq2 QC PCA</td></tr>
+<tr><td><code>deseq2_qc_pca</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>expression_heatmap</code></td><td>Narrow the top variable gene heatmap (column subset) to the samples picked on the DESeq2 QC PCA</td></tr>
+<tr><td><code>deseq2_qc_pca</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>deseq2_qc_dists</code></td><td>Narrow the DESeq2 QC distance matrix to the samples picked on the DESeq2 QC PCA</td></tr>
+<tr><td><code>deseq2_qc_pca</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>rseqc_read_distribution</code></td><td>Narrow the read distribution composition to the samples picked on the DESeq2 QC PCA</td></tr>
+<tr><td><code>deseq2_qc_pca</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>general_stats</code></td><td>Narrow the per-library QC profile to the samples picked on the DESeq2 QC PCA</td></tr>
+<tr><td><code>deseq2_qc_pca</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter the MultiQC panels by the samples picked on the DESeq2 QC PCA</td></tr>
 </tbody></table></div>
 
 ### :material-chef-hat: Recipes
@@ -123,7 +149,12 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 
 | Recipe | Transforms | Output |
 |---|---|---|
+| [`deseq2/qc_pca.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/qc_pca.py) | The DESeq2 QC PCA the pipeline already computed, read rather than recomputed. | `sample_id`, `dim_1`, `dim_2`, `dim_1_percent`, `dim_2_percent`, `pca_set` |
+| [`deseq2/qc_sample_dists.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/qc_sample_dists.py) | The DESeq2 QC sample-distance matrix the pipeline already computed. | `sample` |
+| [`nf-core/rnaseq/gene_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnaseq/recipes/gene_summary.py) | nf-core/rnaseq genes as one row each: how much, how variable, where highest. | `gene_id`, `gene_name`, `mean_log2_tpm`, `sd_log2_tpm`, `max_tpm`, `top_sample`, `top_condition`, `log2fc_top_vs_rest`, `libraries_detected` |
+| [`nf-core/rnaseq/general_stats.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnaseq/recipes/general_stats.py) | nf-core/rnaseq MultiQC general statistics as one row per library. | `sample`, `condition`, `total_reads_m`, `pct_trimmed`, `pct_gc`, `pct_uniquely_mapped`, `pct_salmon_mapped`, `pct_duplication`, `dupradar_intercept`, `pct_exonic`, `bias_5_3`, `error_rate`, `insert_size` |
 | [`nf-core/rnaseq/samplesheet.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnaseq/recipes/samplesheet.py) | nf-core/rnaseq samplesheet with the condition and replicate it encodes. | `sample`, `condition`, `replicate`, `read_type` |
+| [`rseqc/read_distribution.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/rseqc/read_distribution.py) | Where a library's reads land on the annotation, from RSeQC read_distribution. | `sample_id`, `rank`, `taxon`, `region_class`, `tag_count`, `abundance` |
 | [`salmon/gene_expression_long.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/salmon/gene_expression_long.py) | Merged Salmon TPMs as one long row per gene and sample, for a gene explorer. | `gene_id`, `gene_name`, `sample`, `tpm`, `log2_tpm`, `group` |
 | [`salmon/sample_pca.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/salmon/sample_pca.py) | Sample PCA of a merged Salmon TPM matrix, plus the per-sample library summary. | `sample_id`, `dim_1`, `dim_2`, `group`, `genes_detected`, `genes_expressed`, `median_tpm` |
 | [`salmon/top_variable_genes.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/salmon/top_variable_genes.py) | Top variable genes of a merged Salmon TPM matrix, for ComplexHeatmap. | `gene_name` |

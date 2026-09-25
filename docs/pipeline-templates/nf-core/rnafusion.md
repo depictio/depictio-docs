@@ -32,20 +32,22 @@ hide:
 The rnafusion template follows the pipeline's own funnel, from read quality
 through to the protein a fusion would produce:
 
-- :material-chart-box-outline: **Read and alignment QC**: FastQC either side of trimming, fastp, STAR and Picard, out of the MultiQC report
-- :material-set-merge: **Caller consensus**: fusion-report's ranked calls, the UpSet of caller agreement and the Fusion Indication Index
-- :material-chart-scatter-plot: **Per-caller evidence**: Arriba, STAR-Fusion and FusionCatcher read support, each on its own terms
-- :material-dna: **In-silico validation**: FusionInspector re-quantification, fusion allelic ratios and the Pfam domains each partner brings
-- :material-chart-timeline-variant: **Splice junctions**: CTAT-splicing support along the genome, and as arcs over the busiest loci
-- :material-table: **Reference tables**: consensus, per-caller evidence, validation and junctions, pinned to the bottom of every tab
+- :material-chart-box-outline: **MultiQC**: FastQC either side of trimming, fastp, STAR and Picard, out of the MultiQC report
+- :material-set-merge: **Fusion calls**: fusion-report's ranked calls, the UpSet of caller agreement, and the contigs the two partners came from
+- :material-chart-scatter-plot: **Evidence**: Arriba, STAR-Fusion and FusionCatcher read support, side by side and each on its own terms
+- :material-dna: **FusionInspector and splicing**: re-quantified calls with a linked record, the Pfam domains each partner brings, and the CTAT-splicing junction landscape
 
-!!! info "The fusion is the unit of analysis, not the sample"
+`Run at a glance` and `Sample sheet` are pinned to the top of every tab and the
+fusion-report consensus to the bottom, so the run size, the samples and the
+calls every tab is filtered by follow you from tab to tab.
+
+!!! info "One row is one fusion in one sample"
     rnafusion writes one file per tool per sample and none of those files carries
-    a sample column, so the recipe harness cannot recover one. Every fusion
-    collection is keyed on the fusion name instead, a fusion picked anywhere fans
-    out across all six of them, and the samplesheet only reaches the MultiQC
-    panels. On a cohort run the caller tables pool the samples: the counts are
-    correct, but they are cohort-wide.
+    a sample column. Every recipe the template binds reads the sample off the file
+    name instead, so every fusion and splicing table carries `sample` and the
+    samplesheet links to all of them: on a cohort run, the sample filter narrows
+    every tab. The fusion name stays the key a fusion selection fans out on,
+    across the consensus, the three callers and the FusionInspector tables.
 
 !!! note "Route flags are not auto-detected"
     rnafusion's `--tools` selection is not read back from `params.json`, so a run
@@ -74,7 +76,7 @@ through to the protein a fusion would produce:
 
     ```bash
     depictio-cli config nextflow --install     # once per machine
-    nextflow run nf-core/rnafusion -profile docker --outdir results
+    nextflow run nf-core/rnafusion -r 4.1.3 -profile docker --outdir results
     ```
 
     No `depictio run`, and no template named: the pipeline ingests its own
@@ -111,7 +113,8 @@ Four tabs, read as a funnel: can the reads support a call at all, what was
 called, how strong is each caller's evidence, and does the call survive
 re-alignment. Each tab below carries the **same icon and colour the dashboard
 gives it**. Two filter groups are persistent and pinned to the top of every tab,
-`Sample filters` and `Fusion scope`; `Reference tables` is pinned to the bottom.
+`Sample scope` and `Fusion scope`, and a third, `Reference scope`, follows you
+from tab to tab without being pinned.
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
@@ -120,53 +123,60 @@ gives it**. Two filter groups are persistent and pinned to the top of every tab,
     [![MultiQC dashboard](../../images/pipeline-templates/nf-core/rnafusion/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     A fusion call rests on reads that crossed a breakpoint, so a library that
-    never aligned well cannot support one. STAR's alignment scores and Picard's
-    transcript region assignment sit next to the MultiQC general statistics
-    table, then the raw and post-trim FastQC panels either side of fastp.
-    rnafusion runs FastQC twice, so the second pass is anchored as `fastqc-1` and
-    carries a `_trimmed` suffix the samplesheet does not know: picking a sample
-    in the persistent filter empties the trimmed panels.
+    never aligned well cannot support one. The MultiQC general statistics table
+    opens the tab, then the raw and post-trim FastQC panels either side of
+    fastp, STAR's alignment scores and Picard's transcript region assignment.
+    Insert size, gene body coverage and the STAR gene counts are folded in a
+    collapsed `Library metrics` section. rnafusion runs FastQC twice, so the
+    second pass is anchored as `fastqc-1` and carries a `_trimmed` suffix the
+    samplesheet does not know: picking a sample in the persistent filter empties
+    the trimmed panels.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample` on `samplesheet` plus `Fusion`, `Caller agreement`
-        and a `Fusion Indication Index` range on `fusion_consensus`, all
-        persistent and pinned to the top of every tab, plus `Strandedness` in a
-        collapsed *Read QC scope* group.
+        **Filters** · `Sample` and `Strandedness` on `samplesheet` in *Sample
+        scope*, plus `Fusion`, `Caller agreement` and a `Fusion Indication Index`
+        range on `fusion_consensus` in *Fusion scope*, both persistent and pinned
+        to the top of every tab. *Reference scope* adds `5' partner gene` and
+        `Knowledge bases hit` on `fusion_consensus`, persistent but not pinned.
 
         | Section | What it holds |
         |---|---|
-        | Sample sheet | *Run samplesheet*, pinned to the top |
-        | Alignment at a glance | *General statistics*, *STAR alignment scores*, *Where the bases landed* |
+        | Run at a glance | 4 cards (fusions called, samples, callers reporting, distinct 5' partners), pinned to the top of every tab |
+        | Sample sheet | *Sample sheet*, pinned to the top of every tab |
+        | General statistics | *General statistics* |
         | Read quality | *Raw read quality*, *Reads kept by fastp*, *Trimmed read quality* |
-        | Library metrics | Insert size, gene body coverage, STAR gene-count assignment |
-        | Reference tables | Consensus, per-caller evidence, validation and junction tables |
+        | Alignment | *STAR alignment scores*, *Where the bases landed* |
+        | Library metrics | *Insert size distribution*, *Coverage along the gene body*, *STAR gene-count assignment* |
+        | Reference tables | *fusion-report consensus*, pinned to the bottom of every tab |
 
 === ":material-set-merge:{ .mc-indigo } Fusion calls"
 
-    *What the run called, and how much agreement is behind each call.*
+    *What the run called, how much agreement is behind each call, and where the two halves came from.*
 
     [![Fusion calls dashboard](../../images/pipeline-templates/nf-core/rnafusion/fusion_calls_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/fusion_calls_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Four cards open the tab: fusions called split by caller agreement, the median
-    Fusion Indication Index, mean callers per fusion, and mean knowledge-base
-    hits. The UpSet below reads the three caller flag columns as sets, so each
-    bar is the fusions found by exactly that combination of callers and unanimous
-    calls separate from single-caller ones at a glance. The lollipop plots each
-    fusion at its rank with the index as the stem height. The consensus table is
-    the hub: a row picked here drives every other tab.
+    Four cards open the tab: the Fusion Indication Index, caller agreement,
+    knowledge-base support and known fusions. The UpSet below reads every caller
+    flag the run wrote as a set, so each bar is the fusions found by exactly that
+    combination of callers and unanimous calls separate from single-caller ones
+    at a glance. The lollipop plots each fusion at its fusion-report rank, sized
+    by the index. `Partner chromosomes` then reads the Arriba breakpoints as a
+    flow from the 5' partner's contig to the 3' partner's, and as chords on a
+    chromosome ring coloured by structural class: a band that stays on one
+    contig is a local rearrangement, one that crosses is a translocation.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Rank` and `Knowledge bases` ranges on `fusion_consensus`,
-        in a collapsed *Consensus scope* group, on top of the persistent fusion
-        filter.
+        **Filters** · `Rank` and `Knowledge bases` ranges on `fusion_consensus`
+        and `Partner contigs` on the Arriba calls, in a *Consensus scope* group,
+        on top of the persistent filters.
 
         | Section | What it holds |
         |---|---|
         | Calls at a glance | 4 cards |
         | Caller concordance | *Caller concordance* (UpSet), *Ranked fusions* (lollipop) |
-        | Ranked calls | *fusion-report consensus* |
+        | Partner chromosomes | *Partner contigs, 5' to 3'* (Sankey), *Breakpoint partners on the genome* (chords) |
 
 === ":material-chart-scatter-plot:{ .mc-teal } Evidence"
 
@@ -176,25 +186,29 @@ gives it**. Two filter groups are persistent and pinned to the top of every tab,
 
     The shared dot plot is one dot per fusion and caller, coloured by log10 read
     support and sized by that caller's share of the total, so an empty column
-    means the caller never reported the fusion. The scatter beside it faces the
-    two split-read callers: a fusion off the diagonal is one they disagree about.
+    means the caller never reported the fusion. The scatter below faces the
+    two split-read callers, with FusionCatcher as the marker size: a fusion off
+    the diagonal is one they weigh differently, and a lasso on it filters the
+    dashboard by fusion.
 
-    Below that, each caller gets its own dot plot rather than a shared one,
-    because the callers report genuinely different evidence quantities and
-    collapsing them would mean inventing a common scale: Arriba clusters by
-    confidence class, STAR-Fusion by splice type, FusionCatcher by predicted
-    effect.
+    The collapsed `Per caller detail` section gives each caller its own view
+    rather than a shared one, because the callers report genuinely different
+    evidence quantities and collapsing them would mean inventing a common
+    scale: Arriba by event type, breakpoint site and confidence class,
+    STAR-Fusion by splice type, FusionCatcher by predicted effect. The caller
+    tables at the foot of the tab are row-selectable on the fusion.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Caller`, plus `Supporting reads` and `Caller share`
-        ranges, all on `caller_evidence`, in a collapsed *Evidence scope* group.
+        **Filters** · `Caller` and `Arriba confidence`, plus `Supporting reads`
+        and `Caller share` ranges on `caller_evidence`, in an *Evidence scope*
+        group.
 
         | Section | What it holds |
         |---|---|
         | Support across callers | 4 cards, *Read support per fusion and caller*, *Arriba against STAR-Fusion* |
-        | Per caller detail | One dot plot each for Arriba, STAR-Fusion and FusionCatcher |
-        | Caller tables | *Arriba calls*, *STAR-Fusion calls*, *FusionCatcher calls* |
+        | Per caller detail | *Arriba event types*, *Arriba breakpoint sites*, *Arriba confidence and support*, *STAR-Fusion splice type and abundance*, *FusionCatcher predicted effect and support* |
+        | Caller tables | *Per-caller evidence*, *Arriba calls*, *STAR-Fusion calls*, *FusionCatcher calls* |
 
 === ":material-dna:{ .mc-grape } FusionInspector and splicing"
 
@@ -205,32 +219,38 @@ gives it**. Two filter groups are persistent and pinned to the top of every tab,
     FusionInspector re-quantifies the calls against a fusion contig reference.
     The allelic-ratio scatter plots the 5' side against the 3' side on log axes:
     a call supported on one side only falls off the diagonal, the classic
-    signature of a mapping artefact rather than a real fusion transcript.
+    signature of a mapping artefact rather than a real fusion transcript. Beside
+    it, a linked *Validated call record* folds to a slim rail until a point on
+    the scatter or a row of the validated table is picked, then shows that
+    call's breakpoints, read support, allelic ratios and predicted protein.
 
-    The `fusion_structure` view draws a fusion as its two partners end to end
-    with the breakpoint marked, one bar per Pfam domain along the partner that
-    contributes it; a `PARTIAL` suffix means the breakpoint cuts through it. The
-    `sashimi` view draws the CTAT-splicing junctions from donor to acceptor, each
-    arc thickened by its read support.
+    The fusion protein structure draws each fusion as its two partners end to
+    end with the breakpoint marked, one bar per Pfam domain along the partner
+    that contributes it; a `PARTIAL` suffix means the breakpoint cuts through
+    it. The collapsed `Splice junctions` section closes the tab with the
+    CTAT-splicing landscape: support along the genome, arcs over the busiest
+    loci, and a junction table whose row selection narrows both.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `Predicted protein` and a `Fragments per million` range on
-        `fusioninspector_fusions` in a collapsed *Validation scope* group;
-        `Chromosome` and `Unique read support` on `splice_junctions` in a
-        collapsed *Splicing scope* group.
+        `fusioninspector_fusions` in a *Validation scope* group; `Chromosome`
+        and a `Unique read support` range on `splice_junctions` in a *Splicing
+        scope* group.
 
         | Section | What it holds |
         |---|---|
-        | Validated calls | 4 cards, *Validated abundance by predicted protein*, *Fusion allelic ratio, both sides* |
+        | Validated calls | 4 cards, *Validated abundance by predicted protein*, *Fusion allelic ratio, both sides* with the linked *Validated call record* |
         | Fusion protein domains | *Fusion protein structure*, *Domain positions per fusion*, *Pfam domains* |
-        | Splice junctions | 4 cards, *Junction support along the genome*, *Junction arcs*, per-gene support bar |
+        | Validated rows | *FusionInspector validation* |
+        | Splice junctions | 4 cards, *Junction support along the genome*, *Junction arcs over the busiest loci*, *Splice junctions* |
 
-!!! tip "Splice junctions are deliberately unlinked"
-    CTAT-splicing scores the introns of a single gene, so a fusion name has
-    nothing to match against. `splice_junctions` is left out of the fusion links
-    on purpose: the junction cards keep their values when a fusion is picked, and
-    only the *Splicing scope* group narrows them.
+!!! tip "Splice junctions follow the sample, not the fusion"
+    CTAT-splicing scores every junction in the genes the callers touched, so the
+    landscape is keyed on the junction and a fusion name has nothing to match
+    against. `splice_junctions` is left out of the fusion links on purpose: the
+    junction tiles keep their values when a fusion is picked, while the sample
+    filter and the *Splicing scope* group narrow them.
 
 ---
 
@@ -240,7 +260,7 @@ Depictio reads the **output** of nf-core/rnafusion, it does not run the
 pipeline. Build the references once, then run the pipeline:
 
 ```bash
-nextflow run nf-core/rnafusion \
+nextflow run nf-core/rnafusion -r 4.1.3 \
   --input samplesheet.csv \
   --genomes_base /path/to/references \
   --tools arriba,starfusion,fusioncatcher,ctatsplicing \
@@ -295,7 +315,7 @@ does not publish: put it under `input/`, or pass `--var SAMPLESHEET_FILE=...`.
 
 ---
 
-## :material-flask-outline: Test data
+## :material-flask-outline: Validation runs
 
 The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnafusion/4.1.3/download_test_data.sh),
