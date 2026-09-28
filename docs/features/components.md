@@ -1544,7 +1544,7 @@ and the rest of the dashboard filters on that track's sample.
     </a>
 </div>
 
-*The genome browser in a Depictio dashboard: header and tabs, the filter panel on the left, the browser as a tile of the grid next to a scatter, with tables below.*
+*The genome browser in a Depictio dashboard tab: header and tabs, the filter panel on the left, and the browser as one tile of the grid among cards, a scatter and two tables, all driven by the same filters.*
 
 <div style="border: 1px solid grey; padding: 1px;">
     <a href="../../images/guides/genome-browser/strandseq_overview.png" target="_blank">
@@ -1771,7 +1771,10 @@ dialogs open inside the fullscreen view.
 ### Pipeline templates { #genome-browser-templates }
 
 The nf-core **cutandrun 3.1**, **chipseq 1.2.0** and **rnaseq 3.26.0** templates ship a
-**Genome tracks** tab (bigWig signal, peak calls, alignments). Pass
+**Genome tracks** tab (bigWig signal, peak calls, alignments) where the browser sits among
+cards and a Manhattan of the peaks with a peak table (cutandrun, chipseq) or two sample
+scatters (rnaseq); a peak picked in the table or on the Manhattan opens its sample's tracks
+on that peak (`locus_from`). Pass
 `--var TRACKS_URI=s3://…/results/` to read the tracks in place from the run's results;
 without it, the files found in the results folder are uploaded.
 
@@ -1790,6 +1793,22 @@ without it, the files found in the results folder are uploaded.
 </div>
 
 *nf-core/cutandrun megatest: H3K4me3 at the ACTB promoter.*
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/nfcore_cutandrun_peak_context.png" target="_blank">
+        <img src="../../images/guides/genome-browser/nfcore_cutandrun_peak_context.png" width="100%">
+    </a>
+</div>
+
+*A region picked in the peak table: the cards, the Manhattan and the samples table narrow to it, and the browser opens its sample on the region.*
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/nfcore_cutandrun_peak.png" target="_blank">
+        <img src="../../images/guides/genome-browser/nfcore_cutandrun_peak.png" width="100%">
+    </a>
+</div>
+
+*Close-up: `locus_from` moved the view onto the region (± 2 kb); only its sample's tracks stay open.*
 
 The **Genome Tracks Showcase** reference project holds the Strand-seq and SARS-CoV-2 examples above.
 

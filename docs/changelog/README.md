@@ -29,7 +29,7 @@ ghcr.io/depictio/depictio-cli:1.12.0
 
 ### **🧬 Pipeline Templates**
 
-* **nf-core/cutandrun 3.1, chipseq 1.2.0 and rnaseq 3.26.0 gain a Genome tracks tab**: bigWig signal, peak calls and alignments. `--var TRACKS_URI=s3://…/results/` reads them in place from the run's results. See [Pipeline templates](../features/components.md#genome-browser-templates) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **nf-core/cutandrun 3.1, chipseq 1.2.0 and rnaseq 3.26.0 gain a Genome tracks tab**: bigWig signal, peak calls and alignments, next to cards, a peak Manhattan and a peak table (sample scatters for rnaseq). A peak picked there opens its sample's tracks on it. `--var TRACKS_URI=s3://…/results/` reads them in place from the run's results. See [Pipeline templates](../features/components.md#genome-browser-templates) ([#1123](https://github.com/depictio/depictio/pull/1123)).
 * **A Genome Tracks Showcase reference project**: Strand-seq single-cell SV calls (hg38) and SARS-CoV-2 amplicons on a custom assembly, read from the nf-core megatest bucket ([#1123](https://github.com/depictio/depictio/pull/1123)).
 
 ### **🚀 Improvements**
