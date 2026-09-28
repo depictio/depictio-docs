@@ -16,7 +16,7 @@ Use it to review a template on your own results, or to try Depictio on a laptop.
 For a team, a demo or production, use [Docker Compose](docker.md) or
 [Kubernetes](kubernetes.md).
 
-![The same server, run in containers or as local processes](../images/installation/local/schema_same_code.png)
+![The same server, run in containers or as local processes](../images/installation/local/schema_same_code_docs.png)
 
 ---
 
