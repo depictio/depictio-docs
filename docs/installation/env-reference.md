@@ -48,7 +48,7 @@ DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [Monitoring](#monitoring)
 - [Telemetry](#telemetry)
 - [MultiQC Prerender](#multiqc-prerender)
-<!-- - [JBrowse Integration](#jbrowse-integration) -->
+- [Genome Browser](#genome-browser)
 - [S3 File Cache](#s3-file-cache)
 <!-- - [Application Profiling](#application-profiling) -->
 <!-- - [Dashboard YAML Sync](#dashboard-yaml-sync) -->
@@ -451,18 +451,31 @@ Logging verbosity and output configuration.
 
 ---
 
-<!-- ## JBrowse Integration (Coming Soon - see Roadmap)
+## Genome Browser
 
 **Config Class:** `JBrowseConfig`
 **Environment Prefix:** `DEPICTIO_JBROWSE_`
 
-JBrowse genome browser integration settings.
+The [genome browser component](../features/components.md#genome-browser-components) and its
+`genomic_tracks` data collections. Track files reach the browser through the API's range
+proxy with signed, expiring URLs; remote sources must be allow-listed.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_JBROWSE_ENABLED` | `false` | - |
+| `DEPICTIO_JBROWSE_ENABLED` | `true` | Enable the genome browser component |
+| `DEPICTIO_JBROWSE_REMOTE_HTTPS_HOSTS` | `nf-core-awsmegatests.s3-eu-west-1.amazonaws.com` | Comma-separated `https://` hosts tracks may be read from |
+| `DEPICTIO_JBROWSE_REMOTE_S3_BUCKETS` | `nf-core-awsmegatests` | Comma-separated `s3://` buckets tracks may be read from |
+| `DEPICTIO_JBROWSE_REMOTE_S3_ENDPOINT_URL` | AWS | Endpoint for remote `s3://` tracks |
+| `DEPICTIO_JBROWSE_REMOTE_S3_REGION` | `eu-west-1` | Region for remote `s3://` tracks |
+| `DEPICTIO_JBROWSE_REMOTE_S3_ACCESS_KEY` | - | Credentials for private remote buckets (anonymous when unset) |
+| `DEPICTIO_JBROWSE_REMOTE_S3_SECRET_KEY` | - | Secret key for private remote buckets. Helm: `secrets.jbrowseRemoteS3SecretKey` |
+| `DEPICTIO_JBROWSE_PRESET_ACCESS` | `proxy` | Built-in assemblies' UCSC files: `proxy` (through the API) or `direct` (the browser fetches UCSC) |
+| `DEPICTIO_JBROWSE_REMOTE_TIMEOUT_S` | `30` | Remote read timeout (seconds) |
+| `DEPICTIO_JBROWSE_MAX_RANGE_MB` | `64` | Largest byte range served per request |
+| `DEPICTIO_JBROWSE_MAX_FULL_READ_MB` | `256` | Largest file read whole (unindexed BED, chrom.sizes, …) |
+| `DEPICTIO_JBROWSE_URL_TTL_S` | `21600` | Lifetime of a signed track URL (seconds) |
 
---- -->
+---
 
 ## S3 File Cache
 

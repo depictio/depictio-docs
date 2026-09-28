@@ -140,7 +140,7 @@ workflows:
             #   "Image" - Image files with metadata
             #   "geojson" - GeoJSON boundary files for choropleth maps
             #   "phylogeny" - Newick / Nexus trees for the phylogenetic viz
-            #   "jbrowse2" - Genome browser tracks
+            #   "genomic_tracks" - Genome browser track manifest (bigWig, BED, VCF, BAM, …)
 
           # Required: Data aggregation strategy
           metatype:

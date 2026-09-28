@@ -66,6 +66,12 @@ Depictio provides a variety of component types for building interactive dashboar
 
     Geospatial map visualization with markers
 
+-   :material-dna:{ .lg .middle } **[Genome Browser](#genome-browser-components)**
+
+    ---
+
+    JBrowse 2 genome tracks (bigWig, BED, VCF, BAM, …) that cross-filter with the dashboard
+
 -   :material-chart-multiline:{ .lg .middle } **[Advanced Visualizations](#advanced-visualizations)**
 
     ---
@@ -1523,6 +1529,254 @@ Ticking rows selects them on the map. Lasso, click and row-ticking all build the
 
 ---
 
+## :material-dna: Genome Browser Components <small>(v1.12.0+)</small> { #genome-browser-components }
+
+A genome browser component embeds a [JBrowse 2](https://jbrowse.org/jb2/) linear
+genome view in the dashboard. It draws the tracks of a
+[`genomic_tracks` data collection](#genomic-tracks-dc) (bigWig, BED, VCF, BAM, …)
+and cross-filters **both ways**, like the image gallery: filter a sample, select table
+rows or lasso scatter points and the browser shows the matching tracks; click a feature
+and the rest of the dashboard filters on that track's sample.
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/strandseq_overview.png" target="_blank">
+        <img src="../../images/guides/genome-browser/strandseq_overview.png" width="100%">
+    </a>
+</div>
+
+*Strand-seq single-cell SV calls: cells scatter and table, the SV tracks of the selected cells.*
+
+Nothing else runs next to Depictio: the browser is loaded on demand by the viewer
+and the track bytes come through the API, so it behaves the same with
+`depictio local up`, Docker Compose and Kubernetes.
+
+### Features
+
+| Feature | Description |
+|---------|-------------|
+| :material-filter: **Filters → tracks** | Dashboard filters, extended over [DC links](cross-dc-filtering.md), pick the tracks shown; the locus is kept |
+| :material-cursor-default-click: **Click → filter** | Clicking a feature (or changing the open tracks) filters the dashboard on the track's sample |
+| :material-crosshairs-gps: **Follow rows** | `locus_from` jumps to the coordinates of the filtered rows of another DC (a picked variant, gene, peak) |
+| :material-dna: **Assemblies** | 11 built-in genomes with a gene track, or your own (2bit or FASTA) |
+| :material-eye-off: **Compact chrome** | Toggles for the JBrowse header, the overview bar and the status line; fullscreen keeps menus working |
+| :material-code-json: **Custom config** | Named presets and raw JBrowse config merged per format, per track or view-wide |
+| :material-cloud-lock: **Remote data** | Tracks uploaded to Depictio's S3 or read in place from `s3://` / `https://`, through signed, range-proxied URLs |
+
+### Data Collection Setup { #genomic-tracks-dc }
+
+A `genomic_tracks` DC is a table of track files, one row per track (the *manifest*). It is
+ingested like a Table DC (so it can also back a table or a filter), and the files it names
+are either **uploaded** by `depictio-cli run` (relative paths found under the data
+location) or **read in place** (`remote_base_uri`, or rows that are already `s3://` /
+`https://` URLs).
+
+```tsv
+track_id	sample	format	uri	name	category	order
+S01.vcf	SAMPLE_01	vcf	variants/ivar/SAMPLE_01.vcf.gz	SAMPLE_01 variants	Variants	1
+S01.bam	SAMPLE_01	bam	variants/bowtie2/SAMPLE_01.ivar_trim.sorted.bam	SAMPLE_01 reads	Alignments	2
+```
+
+```yaml
+data_collections:
+  - data_collection_tag: "tracks"
+    config:
+      type: "genomic_tracks"
+      metatype: "Metadata"
+      scan:
+        mode: single
+        scan_parameters:
+          filename: tracks.tsv
+      dc_specific_properties:
+        format: "TSV"
+        polars_kwargs:
+          separator: "\t"
+        uri_column: "uri"              # relative path | s3://… | https://…
+        track_id_column: "track_id"
+        sample_column: "sample"        # tracks are filtered / emitted on it
+        format_column: "format"        # else inferred from the extension
+        name_column: "name"
+        category_column: "category"
+        order_column: "order"          # the order the browser opens with
+        assembly: "hg38"
+        # Read relative rows in place instead of uploading them
+        remote_base_uri: "s3://nf-core-awsmegatests/viralrecon/results-…/platform_illumina/"
+        display_defaults:              # JBrowse track config per format
+          bam:
+            displays:
+              - type: "LinearAlignmentsDisplay"
+                height: 160
+```
+
+| Field | Default | Description |
+|-------|---------|-------------|
+| `uri_column` | `uri` | Track file: relative path, `s3://…` or `https://…` |
+| `track_id_column` | — | Stable track id (else a hash of the uri) |
+| `sample_column` | — | Column the tracks are filtered and emitted on |
+| `format_column` / `default_format` | `format` / — | Track format, else inferred from the extension |
+| `index_column` | `index_uri` | Index file; `.tbi` / `.csi` / `.bai` / `.crai` inferred otherwise |
+| `name_column` · `color_column` · `category_column` | — | Label, colour and track-selector folder |
+| `order_column` | — | Row order the browser opens with |
+| `assembly` | `hg38` | A built-in assembly or a custom one (below) |
+| `remote_base_uri` | — | `s3://` or `https://` folder the relative rows are read under |
+| `direct_access` | `false` | The browser fetches `https://` tracks itself (the host must send CORS headers) |
+| `display_defaults` | `{}` | JBrowse track config merged into every track of a format |
+| `presets` | `{}` | Named config fragments a component can pick |
+
+**Formats:** `bigwig`, `bedgraph`, `bed` / `bed.gz`, `bigbed`, `narrowpeak`, `broadpeak`,
+`vcf`, `bam`, `cram`, `gff3`, `gtf`, `hic`, `fasta`. Tabix formats need a `.tbi` / `.csi`,
+BAM / CRAM a `.bai` / `.crai`; small plain BED files are read whole.
+
+**Assemblies:** `hg38`, `hg19`, `hs1` (T2T-CHM13), `mm10`, `mm39`, `wuhCor1` (SARS-CoV-2),
+`sacCer3`, `dm6`, `ce11`, `danRer11`, `TAIR10`, each with a gene track; `GRCh38`, `GRCh37`,
+`T2T-CHM13v2.0`, `GRCm39` and similar aliases resolve to them. A custom assembly:
+
+```yaml
+assembly:
+  name: "MN908947.3"
+  display_name: "SARS-CoV-2 Wuhan-Hu-1"
+  aliases: ["wuhCor1", "NC_045512.2"]
+  twobit_uri: "https://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/bigZips/wuhCor1.2bit"
+  # or fasta_uri + fai_uri (+ gzi_uri for a bgzipped FASTA)
+  chrom_sizes_uri: "https://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/bigZips/wuhCor1.chrom.sizes"
+  refname_aliases_uri: "https://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/bigZips/wuhCor1.chromAlias.txt"
+```
+
+!!! warning "Remote sources are allow-listed"
+    Remote `https://` hosts and `s3://` buckets are refused unless listed in
+    `DEPICTIO_JBROWSE_REMOTE_HTTPS_HOSTS` / `DEPICTIO_JBROWSE_REMOTE_S3_BUCKETS`
+    (default: the public nf-core megatest bucket). See
+    [Genome Browser settings](../installation/env-reference.md#genome-browser).
+
+### Dashboard YAML Configuration
+
+```yaml
+components:
+  - tag: variants-browser
+    component_type: jbrowse
+    workflow_tag: python/genome_tracks_demo
+    data_collection_tag: tracks
+    title: "Variants and reads"
+    location: "MN908947.3:21,500-25,400"  # else the assembly default
+    track_mode: filtered        # or all: every track, filters ignored
+    max_tracks: 12              # cap under a filter
+    initial_tracks: 4           # shown when nothing is filtered
+    selection_enabled: true     # emit a filter back to the dashboard
+    selection_column: sample    # default: the DC's sample_column
+    selection_mode: feature_click   # or visible_tracks
+    show_header: true
+    show_overview: true
+    locus_from:                 # jump to the filtered rows of another DC
+      data_collection_tag: variants
+      chrom_column: CHROM
+      start_column: POS
+      end_column: END
+      padding: 150
+    preset: compact_amplicons   # built-in or the DC's own
+    config_overrides:
+      extra_tracks: [ ... ]     # full JBrowse track configs
+```
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `location` | assembly default | Initial locus or gene name |
+| `track_mode` | `filtered` | `filtered` follows the dashboard filters; `all` loads every track |
+| `max_tracks` · `initial_tracks` | `20` · `5` | Tracks shown under a filter, and with none |
+| `default_tracks` | `[]` | Track ids shown whatever the filters |
+| `show_annotation` | `true` | The assembly's gene track |
+| `selection_enabled` · `selection_column` · `selection_mode` | `false` · sample column · `feature_click` | Browser → dashboard filtering |
+| `show_header` · `show_overview` · `track_labels` | `true` · `true` · `offset` | Default chrome; viewers can flip the toggles |
+| `locus_from` | — | Navigate to the coordinates of another DC's filtered rows |
+| `preset` · `config_overrides` | — | Custom JBrowse configuration (below) |
+
+### Custom JBrowse Configuration
+
+Configuration is merged in this order, the last one winning:
+
+1. the format's base config (adapter, display);
+2. the component's `preset`: built-in `sv-calls`, `signal`, `compact`, `peaks`, or one of the DC's `presets`;
+3. the DC's `display_defaults`;
+4. the component's `config_overrides`: `formats` (per format), `tracks` (per track id), `extra_tracks`, `assembly`, `view` and `configuration`.
+
+Display lists are merged by display `type`, so an override changes a height without restating the display.
+
+### Cross-filtering
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/strandseq_filter.png" target="_blank">
+        <img src="../../images/guides/genome-browser/strandseq_filter.png" width="100%">
+    </a>
+</div>
+
+*Lasso cells in the scatter: the browser shows their SV tracks.*
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/strandseq_click.png" target="_blank">
+        <img src="../../images/guides/genome-browser/strandseq_click.png" width="100%">
+    </a>
+</div>
+
+*Click an SV call: its cell is picked across the dashboard.*
+
+Link the tracks DC to the rest of the project in both directions (`samples → tracks` to
+drive the browser, `tracks → samples` to let a click filter back); the component drops its
+own selection before it fetches, so selecting does not hide the other tracks.
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/sarscov2_variant.png" target="_blank">
+        <img src="../../images/guides/genome-browser/sarscov2_variant.png" width="100%">
+    </a>
+</div>
+
+*SARS-CoV-2 (custom assembly, tracks read in place): `locus_from` jumps to the picked variant.*
+
+### Header, Overview and Fullscreen
+
+The component header carries toggles for the JBrowse **navigation header**, the
+**overview / ruler** bar, the **status line** and **click-to-filter**. Their defaults come
+from the YAML and each viewer's choice is remembered in the browser. JBrowse menus and
+dialogs open inside the fullscreen view.
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/strandseq_compact.png" target="_blank">
+        <img src="../../images/guides/genome-browser/strandseq_compact.png" width="100%">
+    </a>
+</div>
+
+*Header and overview hidden, compact preset.*
+
+### Pipeline templates { #genome-browser-templates }
+
+The nf-core **cutandrun 3.1**, **chipseq 1.2.0** and **rnaseq 3.26.0** templates ship a
+**Genome tracks** tab (bigWig signal, peak calls, alignments). Pass
+`--var TRACKS_URI=s3://…/results/` to read the tracks in place from the run's results;
+without it, the files found in the results folder are uploaded.
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/nfcore_cutandrun.png" target="_blank">
+        <img src="../../images/guides/genome-browser/nfcore_cutandrun.png" width="100%">
+    </a>
+</div>
+
+*nf-core/cutandrun megatest: H3K4me3 at the ACTB promoter.*
+
+The **Genome Tracks Showcase** reference project holds the Strand-seq and SARS-CoV-2 examples above.
+
+### Builder
+
+The component builder has a **Genome browser** type: assembly, locus, tracks, display
+toggles, cross-filtering, follow-rows, preset and a JSON editor for the overrides, with a
+live summary of the tracks the current filters would show.
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/builder_jbrowse.png" target="_blank">
+        <img src="../../images/guides/genome-browser/builder_jbrowse.png" width="100%">
+    </a>
+</div>
+
+*Genome browser in the component builder.*
+
+---
+
 ## :material-link-variant: Cross-DC Filtering
 
 Interactive components can filter across **linked Data Collections** using the Links system. See [Cross-DC Filtering](cross-dc-filtering.md) for details.
@@ -1543,7 +1797,7 @@ Interactive components can filter across **linked Data Collections** using the L
 The component builder guides you through creation:
 
 1. :material-database: **Select Data Collection** - Choose your data source
-2. :material-shape: **Choose Component Type** - Figure, Table, Card, Interactive, Text, MultiQC, or Map
+2. :material-shape: **Choose Component Type** - Figure, Table, Card, Interactive, Text, MultiQC, Map, or Genome browser
 3. :material-cog: **Configure Settings** - Type-specific options
 4. :material-eye: **Preview** - See the component before adding
 5. :material-plus-circle: **Add to Dashboard** - Place on the canvas

@@ -195,7 +195,7 @@ All user input is validated:
 Deployed instances send a Content-Security-Policy header. The development server sends
 none, so a policy violation only ever shows up on a deployment.
 
-Most of the policy is `'self'`. Three allowances are not obvious, and are the ones to carry
+Most of the policy is `'self'`. A few allowances are not obvious, and are the ones to carry
 across if you replace the policy at a reverse proxy or ingress:
 
 | Directive | Allowance | Needed for |
@@ -203,6 +203,8 @@ across if you replace the policy at a reverse proxy or ingress:
 | `script-src` | `'unsafe-eval' 'wasm-unsafe-eval'` | Plotly's WebGL renderer and the in-browser Python runtime |
 | `connect-src` | `ws: wss:` | The real-time events WebSocket |
 | `connect-src` | the basemap origins below | Map tiles |
+| `connect-src` | `data:` `https://hgdownload.soe.ucsc.edu` | The genome browser: its BGZF decoder loads wasm from a `data:` URL, and UCSC serves the built-in assemblies' files when they are read directly |
+| `worker-src` | `'self' blob:` | The genome browser's BGZF decoder runs in Blob-URL workers |
 
 ### Basemap origins { #basemap-origins }
 
@@ -251,9 +253,23 @@ Configure logging via environment variables:
 
 ## Security Best Practices
 
-### JBrowse Iframe Sandbox
+### Genome Track Proxy <small>(v1.12.0+)</small> { #genome-track-proxy }
 
-The JBrowse iframe uses a restricted `sandbox` attribute that omits `allow-same-origin`. Previously, combining `allow-same-origin` with `allow-scripts` would have allowed iframe content to access the parent page's `localStorage` and read authentication tokens; removing `allow-same-origin` closes this vector.
+The [genome browser](components.md#genome-browser-components) is embedded in the viewer (the
+former JBrowse iframe is gone) and never receives a storage URL or credential:
+
+- **Signed URLs.** Track, index and assembly files are served by
+  `/depictio/api/v1/jbrowse/…` under an HMAC signature bound to the file, the user and an
+  expiry (`DEPICTIO_JBROWSE_URL_TTL_S`, 6 h). A bearer token is also accepted, and read
+  access to the project is checked on every request.
+- **Ids, not URLs.** The browser asks for a track id; the API looks the file up in the
+  data collection's manifest, so a client cannot make the API fetch an arbitrary URL.
+- **Allow-listed remote reads.** Remote `https://` hosts and `s3://` buckets must be listed
+  (`DEPICTIO_JBROWSE_REMOTE_HTTPS_HOSTS` / `_S3_BUCKETS`); `http://` is refused, redirects
+  are not followed, one byte range is served per request and sizes are capped.
+- **Bucket confinement.** In Depictio's own bucket only the collection's
+  `genomic_tracks/<dc_id>/` prefix is readable; a collection pointing elsewhere in it is
+  refused.
 
 ### OAuth Callback Security
 

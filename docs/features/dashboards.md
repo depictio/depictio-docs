@@ -217,7 +217,7 @@ A map can also leave the grid entirely and become a dashboard-wide panel that fo
 viewer across every tab. See [Components](components.md#dashboard-wide-map-panel).
 
 !!! note "Future Components"
-    Additional component types may be added in future releases based on user needs and feedback (Network Graphs, JBrowse2).
+    Additional component types may be added in future releases based on user needs and feedback (Network Graphs). The genome browser shipped in v1.12.0: see [Genome Browser](components.md#genome-browser-components).
 
 ### :material-view-sequential: Sections <small>(v1.4.0+)</small> { #sections }
 

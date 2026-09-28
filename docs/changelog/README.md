@@ -8,6 +8,37 @@ hide:
 
 # Changelog
 
+## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (unreleased)
+
+!!! success "Minor: a genome browser on the dashboard"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.12.0
+ghcr.io/depictio/depictio-viewer:1.12.0
+ghcr.io/depictio/depictio-worker:1.12.0
+ghcr.io/depictio/depictio-cli:1.12.0
+```
+
+### **✨ New Features**
+
+* **A genome browser component**: an embedded JBrowse 2 linear genome view, loaded on demand, with no extra service to deploy. Filters, row selections and lassos pick the tracks it shows, and a clicked feature filters the dashboard on its sample. `locus_from` jumps to the coordinates of another collection's filtered rows. See [Genome Browser](../features/components.md#genome-browser-components) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **`genomic_tracks` data collections**: a manifest of bigWig, BED, narrowPeak, VCF, BAM, CRAM, GFF3/GTF or `.hic` files, uploaded by `depictio-cli run` or read in place from `s3://` or `https://` with `remote_base_uri`. There are 11 built-in assemblies (hg38, hg19, T2T, mm10, mm39, SARS-CoV-2, yeast, fly, worm, zebrafish, Arabidopsis), and custom ones can be added. See [Data Collection Setup](../features/components.md#genomic-tracks-dc) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **Genome browser configuration**: named presets, and raw JBrowse config merged per format, per track or view-wide. Toggles hide the JBrowse header, the overview bar and the status line, and each viewer's choice is remembered. The builder has a **Genome browser** type ([#1123](https://github.com/depictio/depictio/pull/1123)).
+
+### **🧬 Pipeline Templates**
+
+* **nf-core/cutandrun 3.1, chipseq 1.2.0 and rnaseq 3.26.0 gain a Genome tracks tab**: bigWig signal, peak calls and alignments. `--var TRACKS_URI=s3://…/results/` reads them in place from the run's results. See [Pipeline templates](../features/components.md#genome-browser-templates) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **A Genome Tracks Showcase reference project**: Strand-seq single-cell SV calls (hg38) and SARS-CoV-2 amplicons on a custom assembly, read from the nf-core megatest bucket ([#1123](https://github.com/depictio/depictio/pull/1123)).
+
+### **🚀 Improvements**
+
+* **Track files go through a signed range proxy**: URLs are signed and expire. Remote hosts and buckets must be allow-listed (`DEPICTIO_JBROWSE_REMOTE_HTTPS_HOSTS` / `_S3_BUCKETS`), redirects are refused, and Depictio's own bucket is readable only under a collection's prefix. See [Genome Browser settings](../installation/env-reference.md#genome-browser) and [Genome Track Proxy](../features/security.md#genome-track-proxy) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **The unused JBrowse iframe, its session watcher and their settings are removed**. `DEPICTIO_JBROWSE_*` now reaches the compose files and the Helm chart ([#1123](https://github.com/depictio/depictio/pull/1123)).
+
+---
+
 ## **[v1.11.0](https://github.com/depictio/depictio/releases/tag/v1.11.0)** (September 14, 2026)
 
 !!! success "Minor: a feedback link on dashboards, and a funnel that follows one column"
