@@ -474,6 +474,9 @@ proxy with signed, expiring URLs; remote sources must be allow-listed.
 | `DEPICTIO_JBROWSE_MAX_RANGE_MB` | `64` | Largest byte range served per request |
 | `DEPICTIO_JBROWSE_MAX_FULL_READ_MB` | `256` | Largest file read whole (unindexed BED, chrom.sizes, …) |
 | `DEPICTIO_JBROWSE_URL_TTL_S` | `21600` | Lifetime of a signed track URL (seconds) |
+| `DEPICTIO_JBROWSE_UCSC_TRACKS_ENABLED` | `true` | Resolve components' `ucsc_tracks` through the UCSC REST API |
+| `DEPICTIO_JBROWSE_UCSC_API_URL` | `https://api.genome.ucsc.edu` | UCSC REST API the track catalogue is read from |
+| `DEPICTIO_JBROWSE_UCSC_CATALOG_TTL_S` | `86400` | How long a genome's UCSC track catalogue is cached (seconds) |
 
 ---
 

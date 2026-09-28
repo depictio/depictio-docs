@@ -1673,6 +1673,9 @@ components:
     selection_mode: feature_click   # or visible_tracks
     show_header: true
     show_overview: true
+    ucsc_tracks: [artic, nextstrainClade]   # UCSC tracks opened by default
+    force_load: false           # start with force load on
+    fetch_size_limit_mb: 5      # per-track download limit before "Force load"
     locus_from:                 # jump to the filtered rows of another DC
       data_collection_tag: variants
       chrom_column: CHROM
@@ -1691,6 +1694,8 @@ components:
 | `max_tracks` · `initial_tracks` | `20` · `5` | Tracks shown under a filter, and with none |
 | `default_tracks` | `[]` | Track ids shown whatever the filters |
 | `show_annotation` | `true` | The assembly's gene track |
+| `ucsc_tracks` | `[]` | UCSC Genome Browser tracks opened by default, by UCSC track name ([below](#genome-browser-loading)) |
+| `force_load` · `fetch_size_limit_mb` | `false` · JBrowse default | Force load by default, and the per-track download limit (MB) |
 | `selection_enabled` · `selection_column` · `selection_mode` | `false` · sample column · `feature_click` | Browser → dashboard filtering |
 | `show_header` · `show_overview` · `track_labels` | `true` · `true` · `offset` | Default chrome; viewers can flip the toggles |
 | `locus_from` | — | Navigate to the coordinates of another DC's filtered rows |
@@ -1752,6 +1757,62 @@ own selection before it fetches, so selecting does not hide the other tracks.
 </div>
 
 *SARS-CoV-2 (custom assembly, tracks read in place): `locus_from` jumps to the picked variant.*
+
+### Loading Tracks { #genome-browser-loading }
+
+**One by one.** The **Tracks** menu of the tile's action bar lists every track the view
+carries: search, one checkbox per track grouped by the manifest's category column, then the
+UCSC and reference tracks, with *Show all* (capped at 60), *Hide all* and *Back to filters*.
+The view carries every track matching the filters, up to 500 (the whole manifest with
+`track_mode: all`); only `max_tracks` of them open. Manual choices hold until the filters
+change.
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/track_menu.png" target="_blank">
+        <img src="../../images/guides/genome-browser/track_menu.png" width="100%">
+    </a>
+</div>
+
+*Tracks menu: every track matching the filters is offered, only `max_tracks` open.*
+
+**Force load.** JBrowse stops at a per-track download limit (1 MB by default) and shows a
+*Force load* button in the track instead of the features. `fetch_size_limit_mb` sets that
+limit on every track of the component. The **Force load** toggle of the action bar lifts it
+for every open track at once, and for tracks opened or zoomed out later; `force_load: true`
+makes it the default, and each viewer's choice is remembered.
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/force_load_before.png" target="_blank">
+        <img src="../../images/guides/genome-browser/force_load_before.png" width="100%">
+    </a>
+</div>
+
+*The whole SARS-CoV-2 genome in view: the BAMs exceed the limit.*
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/force_load_after.png" target="_blank">
+        <img src="../../images/guides/genome-browser/force_load_after.png" width="100%">
+    </a>
+</div>
+
+*The same view with the Force load toggle on.*
+
+**UCSC tracks.** `ucsc_tracks` names UCSC Genome Browser tracks (`clinvarMain`,
+`encodeCcreCombined`, `jaspar2022`, `artic`, ...) opened under the gene track. Names are
+resolved through the UCSC REST API for the assembly's UCSC genome (the preset's database, the
+GenArk accession for TAIR10, or an alias of a custom assembly, e.g. `MN908947.3` ->
+`wuhCor1`). Tracks backed by a bigWig, bigBed-family or tabix-indexed VCF file are supported;
+database-backed UCSC tracks have no file and are reported as missing in the status bar. The
+builder has a searchable picker over the assembly's UCSC catalogue. See
+[Genome Browser settings](../installation/env-reference.md#genome-browser).
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/ucsc_tracks.png" target="_blank">
+        <img src="../../images/guides/genome-browser/ucsc_tracks.png" width="100%">
+    </a>
+</div>
+
+*ARTIC primers and Nextstrain clades from UCSC, above the collection's tracks.*
 
 ### Header, Overview and Fullscreen
 

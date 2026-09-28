@@ -267,6 +267,9 @@ former JBrowse iframe is gone) and never receives a storage URL or credential:
 - **Allow-listed remote reads.** Remote `https://` hosts and `s3://` buckets must be listed
   (`DEPICTIO_JBROWSE_REMOTE_HTTPS_HOSTS` / `_S3_BUCKETS`); `http://` is refused, redirects
   are not followed, one byte range is served per request and sizes are capped.
+- **UCSC tracks.** `/depictio/api/v1/jbrowse/ucsc/{genome}/{track}/{data|index}` is public
+  (reference data) but only reads files listed in UCSC's own catalogue for that genome, on
+  UCSC's download server or an allow-listed host.
 - **Bucket confinement.** In Depictio's own bucket only the collection's
   `genomic_tracks/<dc_id>/` prefix is readable; a collection pointing elsewhere in it is
   refused.
