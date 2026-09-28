@@ -1539,12 +1539,20 @@ rows or lasso scatter points and the browser shows the matching tracks; click a 
 and the rest of the dashboard filters on that track's sample.
 
 <div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/strandseq_context.png" target="_blank">
+        <img src="../../images/guides/genome-browser/strandseq_context.png" width="100%">
+    </a>
+</div>
+
+*The genome browser in a Depictio dashboard: header and tabs, the filter panel on the left, the browser as a tile of the grid next to a scatter, with tables below.*
+
+<div style="border: 1px solid grey; padding: 1px;">
     <a href="../../images/guides/genome-browser/strandseq_overview.png" target="_blank">
         <img src="../../images/guides/genome-browser/strandseq_overview.png" width="100%">
     </a>
 </div>
 
-*Strand-seq single-cell SV calls: cells scatter and table, the SV tracks of the selected cells.*
+*Close-up of the same tiles: the cell-quality scatter and one SV track per cell.*
 
 Nothing else runs next to Depictio: the browser is loaded on demand by the viewer
 and the track bytes come through the API, so it behaves the same with
@@ -1702,12 +1710,20 @@ Display lists are merged by display `type`, so an override changes a height with
 ### Cross-filtering
 
 <div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/strandseq_filter_context.png" target="_blank">
+        <img src="../../images/guides/genome-browser/strandseq_filter_context.png" width="100%">
+    </a>
+</div>
+
+*Sample = HG002x01 in the filter panel: the whole dashboard narrows, the browser included.*
+
+<div style="border: 1px solid grey; padding: 1px;">
     <a href="../../images/guides/genome-browser/strandseq_filter.png" target="_blank">
         <img src="../../images/guides/genome-browser/strandseq_filter.png" width="100%">
     </a>
 </div>
 
-*Lasso cells in the scatter: the browser shows their SV tracks.*
+*Close-up: the filter and the SV tracks of that sample's cells.*
 
 <div style="border: 1px solid grey; padding: 1px;">
     <a href="../../images/guides/genome-browser/strandseq_click.png" target="_blank">
@@ -1720,6 +1736,14 @@ Display lists are merged by display `type`, so an override changes a height with
 Link the tracks DC to the rest of the project in both directions (`samples → tracks` to
 drive the browser, `tracks → samples` to let a click filter back); the component drops its
 own selection before it fetches, so selecting does not hide the other tracks.
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/sarscov2_context.png" target="_blank">
+        <img src="../../images/guides/genome-browser/sarscov2_context.png" width="100%">
+    </a>
+</div>
+
+*SARS-CoV-2 tab: a variant selected in the table filters the dashboard.*
 
 <div style="border: 1px solid grey; padding: 1px;">
     <a href="../../images/guides/genome-browser/sarscov2_variant.png" target="_blank">
@@ -1750,6 +1774,14 @@ The nf-core **cutandrun 3.1**, **chipseq 1.2.0** and **rnaseq 3.26.0** templates
 **Genome tracks** tab (bigWig signal, peak calls, alignments). Pass
 `--var TRACKS_URI=s3://…/results/` to read the tracks in place from the run's results;
 without it, the files found in the results folder are uploaded.
+
+<div style="border: 1px solid grey; padding: 1px;">
+    <a href="../../images/guides/genome-browser/nfcore_cutandrun_context.png" target="_blank">
+        <img src="../../images/guides/genome-browser/nfcore_cutandrun_context.png" width="100%">
+    </a>
+</div>
+
+*The Genome tracks tab of the nf-core/cutandrun template, with Target = h3k4me3 in the filter panel.*
 
 <div style="border: 1px solid grey; padding: 1px;">
     <a href="../../images/guides/genome-browser/nfcore_cutandrun.png" target="_blank">
