@@ -8,6 +8,33 @@ hide:
 
 # Changelog
 
+## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (upcoming)
+
+!!! success "Minor: the full server on your machine, without Docker"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.12.0
+ghcr.io/depictio/depictio-viewer:1.12.0
+ghcr.io/depictio/depictio-worker:1.12.0
+ghcr.io/depictio/depictio-cli:1.12.0
+```
+
+### **✨ New Features**
+
+* **`depictio local up` runs the whole server without Docker**: the same API, worker and viewer, with MongoDB, Redis and SeaweedFS fetched once from conda-forge and run as plain processes. With `--template` and `--data-root` it ingests your results in the same command and opens their dashboard. Linux and macOS, x86_64 and arm64; Windows is refused with a pointer to WSL2. See [Local Server](../installation/local.md) ([#1110](https://github.com/depictio/depictio/pull/1110)).
+
+### **🚀 Improvements**
+
+* **Dashboard thumbnails can be turned off and moved**: `DEPICTIO_PERFORMANCE_SCREENSHOTS_ENABLED` and `DEPICTIO_PERFORMANCE_SCREENSHOTS_DIR`. Defaults are unchanged. See [Performance & Timeouts](../installation/env-reference.md#performance-timeouts) ([#1110](https://github.com/depictio/depictio/pull/1110)).
+
+### **🐛 Bug Fixes**
+
+* **A MultiQC report no longer stays on *preparing* after its worker dies**: the build lock of a task killed mid-run (out of memory, segfault) is released at once instead of blocking rebuilds for up to 10 minutes ([#1110](https://github.com/depictio/depictio/pull/1110)).
+
+---
+
 ## **[v1.11.0](https://github.com/depictio/depictio/releases/tag/v1.11.0)** (September 14, 2026)
 
 !!! success "Minor: a feedback link on dashboards, and a funnel that follows one column"
