@@ -8,6 +8,25 @@ hide:
 
 # Changelog
 
+## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (upcoming)
+
+!!! success "Minor: recipes name their output schema"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.12.0
+ghcr.io/depictio/depictio-viewer:1.12.0
+ghcr.io/depictio/depictio-worker:1.12.0
+ghcr.io/depictio/depictio-cli:1.12.0
+```
+
+### **🚀 Improvements**
+
+* **Recipes declare `OUTPUT_SCHEMA` and `OPTIONAL_OUTPUT_SCHEMA`**, replacing `EXPECTED_SCHEMA` and `OPTIONAL_SCHEMA`. A custom recipe still using the old names fails to load with a message naming the rename to make. See [Recipes](../usage/projects/recipes.md) ([#863](https://github.com/depictio/depictio/issues/863)).
+
+---
+
 ## **[v1.11.0](https://github.com/depictio/depictio/releases/tag/v1.11.0)** (September 14, 2026)
 
 !!! success "Minor: a feedback link on dashboards, and a funnel that follows one column"

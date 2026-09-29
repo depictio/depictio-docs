@@ -149,17 +149,17 @@ SOURCES: list[RecipeSource] = [
     RecipeSource(ref="variants_raw", glob_pattern="variants/*/variants_long_table.csv", format="CSV"),
 ]
 
-EXPECTED_SCHEMA: dict[str, type[pl.DataType]] = {
+OUTPUT_SCHEMA: dict[str, type[pl.DataType]] = {
     "sample": pl.Utf8, "CHROM": pl.Utf8, "POS": pl.Int64,
     "AF": pl.Float64, "GENE": pl.Utf8, "EFFECT": pl.Utf8,
 }
 
 def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
     df = sources["variants_raw"]
-    return df.select(EXPECTED_SCHEMA.keys())   # exactly the EXPECTED_SCHEMA columns
+    return df.select(OUTPUT_SCHEMA.keys())   # exactly the OUTPUT_SCHEMA columns
 ```
 
-`EXPECTED_SCHEMA` is what the catalog grounds every render binding against. This
+`OUTPUT_SCHEMA` is what the catalog grounds every render binding against. This
 is the same recipe contract used by [templates](contributing-templates.md). To
 see a recipe's output columns while writing `roles`:
 `depictio-cli dev catalog columns ivar/variants_long.py`.

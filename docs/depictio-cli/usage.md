@@ -307,7 +307,7 @@ Available recipes (5):
 
 #### `recipe info <name>`
 
-Show recipe details: description, sources, and expected output schema.
+Show recipe details: description, sources, and output schema.
 
 ```bash
 depictio-cli recipe info <recipe_name>
@@ -330,11 +330,12 @@ Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD tabl
 Sources (1):
   faith_pd: qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv (TSV)
 
-Expected output schema (3 columns):
-  sample: Utf8
-  habitat: Utf8
+Output schema (2 columns):
+  sample: String
   faith_pd: Float64
 ```
+
+A non-empty `OPTIONAL_OUTPUT_SCHEMA` adds an `Optional output schema (N columns)` table.
 
 ---
 

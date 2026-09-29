@@ -108,7 +108,7 @@ depictio-cli run --template <pipeline>/<version> --data-root /path/to/run --dry-
 
 ## Step 3 — Write recipes (only for outputs that need reshaping)
 
-Same recipe contract as the catalog: `SOURCES`, `EXPECTED_SCHEMA`, `transform`.
+Same recipe contract as the catalog: `SOURCES`, `OUTPUT_SCHEMA`, `transform`.
 
 ```python
 """Short description of what this recipe produces."""
@@ -120,14 +120,14 @@ SOURCES: list[RecipeSource] = [
     RecipeSource(ref="my_file", path="relative/path/from/DATA_ROOT/to/file.csv", format="CSV"),
 ]
 
-EXPECTED_SCHEMA: dict[str, type[pl.DataType]] = {
+OUTPUT_SCHEMA: dict[str, type[pl.DataType]] = {
     "sample": pl.Utf8,
     "value":  pl.Float64,
 }
 
 def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
     df = sources["my_file"]
-    return df.select("sample", "value")        # exactly the EXPECTED_SCHEMA columns
+    return df.select("sample", "value")        # exactly the OUTPUT_SCHEMA columns
 ```
 
 Test it against real data before moving on (all four checkpoints — load →
@@ -156,7 +156,7 @@ depictio-cli run --template <pipeline>/<version> --data-root /path/to/run
 Check before submitting:
 
 - [ ] `template_id` follows `<org>/<pipeline>/<version>`.
-- [ ] Every recipe has a docstring and a typed `EXPECTED_SCHEMA`; `depictio-cli dev recipe run` passes for each.
+- [ ] Every recipe has a docstring and a typed `OUTPUT_SCHEMA`; `depictio-cli dev recipe run` passes for each.
 - [ ] Dashboard YAML is committed.
 - [ ] No hardcoded absolute paths — only `{DATA_ROOT}` / template variables.
 - [ ] A full `depictio-cli run --template …` completes without error and dashboards render with the template badge.

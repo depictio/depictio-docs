@@ -55,10 +55,12 @@ Recipes are the data transformation layer of the Depictio CLI. They convert raw 
 
 A recipe is a plain Python module that describes how to transform one or more raw files into a single tidy DataFrame. Each recipe lives in `depictio/projects/<pipeline>/recipes/` and declares:
 
-- **`SOURCES`** — input files to read (paths relative to `--data-dir`, or references to other data collections via `dc_ref`)
-- **`EXPECTED_SCHEMA`** — required output columns and their Polars data types
-- **`OPTIONAL_SCHEMA`** *(optional)* — columns that may or may not be present (e.g. user-defined metadata columns)
-- **`transform(sources)`** — a pure function that takes loaded DataFrames and returns the output DataFrame
+- **`SOURCES`**: input files to read (paths relative to `--data-dir`, or references to other data collections via `dc_ref`)
+- **`OUTPUT_SCHEMA`**: required output columns and their Polars data types
+- **`OPTIONAL_OUTPUT_SCHEMA`** *(optional)*: columns that may or may not be present (e.g. user-defined metadata columns)
+- **`transform(sources)`**: a pure function that takes loaded DataFrames and returns the output DataFrame
+
+![A recipe declares its inputs (SOURCES) and its output (OUTPUT_SCHEMA, OPTIONAL_OUTPUT_SCHEMA)](../../images/recipes/output_schema_contract.png)
 
 Recipes are used in two ways:
 
@@ -73,10 +75,10 @@ Every recipe execution — whether via `depictio recipe run` or `depictio run` �
 
 | # | Checkpoint | What it checks |
 |---|-----------|----------------|
-| 1 | **Load** | Import the recipe module; verify `SOURCES`, `EXPECTED_SCHEMA`, and a callable `transform()` exist |
+| 1 | **Load** | Import the recipe module; verify `SOURCES`, `OUTPUT_SCHEMA`, and a callable `transform()` exist |
 | 2 | **Resolve** | Find each file under `--data-dir`; skip optional sources gracefully; fail fast if required files are missing |
 | 3 | **Transform** | Call `transform(sources)`, verify it returns a non-empty `pl.DataFrame` |
-| 4 | **Schema** | Assert every column in `EXPECTED_SCHEMA` is present with the correct dtype; validate `OPTIONAL_SCHEMA` columns if present |
+| 4 | **Schema** | Assert every column in `OUTPUT_SCHEMA` is present with the correct dtype; validate `OPTIONAL_OUTPUT_SCHEMA` columns if present |
 
 If any checkpoint fails, execution stops with a clear error message pointing to the exact problem.
 
@@ -108,7 +110,7 @@ Available recipes (6):
 
 ### `depictio recipe info <name>`
 
-Show recipe details: docstring, sources, and expected output schema. Pass `--version` to inspect a version-specific override.
+Show recipe details: docstring, sources, and output schema. Pass `--version` to inspect a version-specific override.
 
 ```bash
 depictio recipe info nf-core/ampliseq/alpha_diversity.py
@@ -123,12 +125,12 @@ Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD tabl
 Sources (1):
   faith_pd: qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv (TSV)
 
-Expected output schema (2 columns):
-  sample: Utf8
+Output schema (2 columns):
+  sample: String
   faith_pd: Float64
-
-Optional schema: {} (metadata columns passed through dynamically)
 ```
+
+When the recipe declares a non-empty `OPTIONAL_OUTPUT_SCHEMA`, an `Optional output schema (N columns)` table follows.
 
 ---
 
@@ -184,7 +186,7 @@ SOURCES: list[RecipeSource] = [
     ),
 ]
 
-EXPECTED_SCHEMA = {
+OUTPUT_SCHEMA = {
     "sample": pl.Utf8,
     "taxonomy": pl.Utf8,
     "rel_abundance": pl.Float64,
@@ -192,7 +194,7 @@ EXPECTED_SCHEMA = {
     "Phylum": pl.Utf8,
 }
 # Metadata columns are user-defined; validated dynamically
-OPTIONAL_SCHEMA: dict[str, type[pl.DataType]] = {}
+OPTIONAL_OUTPUT_SCHEMA: dict[str, type[pl.DataType]] = {}
 
 
 def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
@@ -241,7 +243,7 @@ SOURCES = [
     RecipeSource(ref="se", path="qiime2/ancombc/differentials/Category-habitat-level-2/se_slice.csv", format="CSV"),
 ]
 
-EXPECTED_SCHEMA = {
+OUTPUT_SCHEMA = {
     "id": pl.Utf8, "contrast": pl.Utf8,
     "lfc": pl.Float64, "p_val": pl.Float64, "q_val": pl.Float64,
     "w": pl.Float64, "se": pl.Float64,
@@ -297,7 +299,7 @@ Exactly one of `path`, `dc_ref`, or `glob_pattern` must be set per source.
     A recipe can have **several inputs but always exactly one output**, so only the input side needs a model.
     Inputs are polymorphic — a file path, a glob, or another data collection (`dc_ref`) — and that
     variability is what `RecipeSource` disambiguates. The output is always a single `pl.DataFrame`:
-    its **shape** is declared by `EXPECTED_SCHEMA` / `OPTIONAL_SCHEMA`, and its **destination** is the
+    its **shape** is declared by `OUTPUT_SCHEMA` / `OPTIONAL_OUTPUT_SCHEMA`, and its **destination** is the
     data collection that references the recipe (`source: "transformed"`). Persisting it to Delta Lake is
     the CLI runner's job, not the recipe's — recipes stay pure `sources → DataFrame` functions.
 
@@ -394,7 +396,7 @@ depictio/projects/
                                                 pruned when no metadata is given)
 ```
 
-To add a recipe for a new pipeline, create `depictio/projects/{org}/{pipeline}/recipes/{name}.py` following the contract: define `SOURCES`, `EXPECTED_SCHEMA`, and `transform()`.
+To add a recipe for a new pipeline, create `depictio/projects/{org}/{pipeline}/recipes/{name}.py` following the contract: define `SOURCES`, `OUTPUT_SCHEMA`, and `transform()`.
 
 ---
 
