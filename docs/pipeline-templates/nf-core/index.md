@@ -40,6 +40,11 @@ Templates for [nf-core](https://nf-co.re) pipelines. Each template configures a 
 | [isoseq](isoseq.md) | PacBio Iso-Seq full-length isoforms | 3.0.1 |
 | [pairgenomealign](pairgenomealign.md) | Pairwise genome alignment | 3.0.4 |
 | [crisprseq](crisprseq.md) | CRISPR gene editing outcomes | 2.3.0 |
+| [mcmicro](mcmicro.md) | Multiplexed whole-slide tissue imaging | 2.0.0 |
+| [cellpainting](cellpainting.md) | Cell Painting image-based profiling | 1.0.0dev |
+| [molkart](molkart.md) | Molecular Cartography spatial transcriptomics | 1.2.0 |
+| [sopa](sopa.md) | Spatial omics segmentation (SpatialData) | 1.0.1 |
+| [spatialvi](spatialvi.md) | 10x Visium spatial transcriptomics | 1.0.0dev |
 
 !!! tip "You do not have to name the template <small>(v1.10.0+)</small>"
     A pipeline can trigger the ingestion itself when it completes, and the
