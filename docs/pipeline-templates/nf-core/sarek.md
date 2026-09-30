@@ -38,7 +38,7 @@ call and gene by gene rather than only by how many calls each made:
 - :material-dna: **Variant yield**: each caller's own statistics side by side, its mutation spectra, what its filters removed
 - :material-set-merge: **Caller concordance**: which callsets agree, allele fraction against depth, and where the calls fall
 - :material-chart-donut: **Consequences**: SnpEff's composition, recomputed per call with a variant record beside the scatter
-- :material-dna: **Genes**: the per-gene burden across callsets and the coding variants along the protein
+- :material-dna: **Genes**: the per-gene burden across callsets, and the coding variants of the picked gene on its predicted structure, its written sequence and a lollipop
 
 A `Run at a glance` strip (SNPs called, indels per callset, samples by status,
 median Ts/Tv), the collapsed `Sample sheet` and the `Sample filters` (sample,
@@ -273,28 +273,46 @@ and colour the dashboard gives it**.
     [![Genes dashboard](../../images/pipeline-templates/nf-core/sarek/genes_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/genes_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     The per-gene burden SnpEff writes, as a clustered gene by callset heatmap of
-    coding-variant counts, then a protein lollipop of the coding variants at
-    their amino-acid position. A row picked in the per-gene table drives the
-    lollipop. A high burden on long, repetitive genes is a mappability signal
-    before it is a biological one.
+    coding-variant counts. A high burden on long, repetitive genes is a
+    mappability signal before it is a biological one.
+
+    *Along the protein* then reads one gene at a time. A scatter of the genes
+    with coding variants (distinct variants against the share of calls two or
+    more callers made, coloured by worst impact) takes half the section; a
+    click on a point loads that gene's predicted structure on the other half,
+    coloured by pLDDT with a sphere on every variant and its sequence written
+    under it, and narrows the lollipop below to the same gene. A click on a
+    residue, a letter or a stem marks that position in all three, drawn red on
+    the structure. Genes low on the scatter carry variants only one caller
+    sees, often a mapping artefact.
+
+    !!! note "The structure needs the resolver"
+        The structure is fetched by gene symbol through the
+        [structure resolver](../../features/components.md#structure-resolver),
+        which is off by default. Without it the scatter, the lollipop and the
+        tables work and the 3D tile stays empty.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Biotype` and `Caller` on the per-gene table, in the
-        tab-local *Gene scope*, and `Impact class` on the lollipop in *Protein
-        scope*.
+        **Filters** · `Biotype` and `Caller` on the per-gene table and the
+        lollipop, in the tab-local *Gene scope*, and `Impact class` on the
+        lollipop in *Protein scope*.
 
         | Section | What it holds |
         |---|---|
         | Genes at a glance | 4 cards |
         | Burden across callsets | *Variant burden, gene against callset* |
-        | Along the protein | *Coding variants along the protein*, *Coding variants with a protein position* |
+        | Along the protein | *Genes with coding variants*, *Coding variants on the predicted structure*, *Coding variants along the protein* |
+        | Coding variant table | *Coding variants with a protein position*, collapsed |
         | Gene table | *Per-gene variant burden*, collapsed |
 
 Tables and point views select on their entity column: the sample sheet on
 `sample_id`, the per-caller tables on `caller`, the call tables and the rainfall
-plot on the variant, and the per-gene table on the gene. A pick narrows every
-tile on the tab that reads the same collection or one linked from it.
+plot on the variant, and the per-gene table and the gene scatter on the gene.
+A pick narrows every tile on the tab that reads the same collection or one
+linked from it. On the Genes tab the structure, its written sequence and the
+lollipop also share a residue selection: a pick in one marks the same position
+in the others.
 
 ---
 
