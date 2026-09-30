@@ -308,6 +308,11 @@ nav:
           - isoseq: pipeline-templates/nf-core/isoseq.md
           - pairgenomealign: pipeline-templates/nf-core/pairgenomealign.md
           - crisprseq: pipeline-templates/nf-core/crisprseq.md
+          - mcmicro: pipeline-templates/nf-core/mcmicro.md
+          - cellpainting: pipeline-templates/nf-core/cellpainting.md
+          - molkart: pipeline-templates/nf-core/molkart.md
+          - sopa: pipeline-templates/nf-core/sopa.md
+          - spatialvi: pipeline-templates/nf-core/spatialvi.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md

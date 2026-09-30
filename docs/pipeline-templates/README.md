@@ -490,6 +490,76 @@ depictio-cli run \
     </div>
   </a>
 
+  <a class="template-card" href="nf-core/mcmicro/" data-tpl-name="nf-core/mcmicro" data-tpl-status="experimental" data-tpl-version="2.0.0" data-tpl-keywords="mcmicro multiplexed imaging immunofluorescence cycif codex mihc ashlar mesmer cellpose mcquant segmentation markers whole-slide ome-tiff bioimage">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/mcmicro/master/docs/images/nf-core-mcmicro_logo_dark.png" alt="nf-core/mcmicro">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/mcmicro/master/docs/images/nf-core-mcmicro_logo_light.png" alt="nf-core/mcmicro">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Multiplexed tissue imaging: the registered whole-slide image with its segmentation mask and cells, marker intensities across cells and samples, and two segmentation modules compared.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.0.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/cellpainting/" data-tpl-name="nf-core/cellpainting" data-tpl-status="experimental" data-tpl-version="1.0.0dev" data-tpl-keywords="cellpainting cell painting cellprofiler cytotable morphological profiling plate map perturbation jump high-content screening image-based">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/cellpainting/master/docs/images/nf-core-cellpainting_logo_dark.png" alt="nf-core/cellpainting">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/cellpainting/master/docs/images/nf-core-cellpainting_logo_light.png" alt="nf-core/cellpainting">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Cell Painting: cells per well and site, image focus and illumination, the segmentation images, per-well morphological profiles and two perturbation groups compared.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.0.0dev</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/molkart/" data-tpl-name="nf-core/molkart" data-tpl-status="draft" data-tpl-version="1.2.0" data-tpl-keywords="molkart molecular cartography spatial transcriptomics spots mindagap spot2cell segmentation mesmer cellpose stardist bioimage">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/molkart/master/docs/images/nf-core-molkart_logo_dark.png" alt="nf-core/molkart">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/molkart/master/docs/images/nf-core-molkart_logo_light.png" alt="nf-core/molkart">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Molecular Cartography: spot assignment per segmentation method, the tissue image with its labels and cells, per-gene counts and two segmentations compared.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.2.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/sopa/" data-tpl-name="nf-core/sopa" data-tpl-status="draft" data-tpl-version="1.0.1" data-tpl-keywords="sopa spatial omics spatialdata xenium merscope cosmx visium hd segmentation proseg baysor cellpose clusters bioimage">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/sopa/master/docs/images/nf-core-sopa_logo_dark.png" alt="nf-core/sopa">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/sopa/master/docs/images/nf-core-sopa_logo_light.png" alt="nf-core/sopa">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Spatial omics segmentation: the morphology image of each SpatialData store with its cells, cell yield, cluster composition, chosen genes per cluster and segmentation QC.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.0.1</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/spatialvi/" data-tpl-name="nf-core/spatialvi" data-tpl-status="draft" data-tpl-version="1.0.0dev" data-tpl-keywords="spatialvi spatialtranscriptomics visium space ranger spatial transcriptomics spots leiden squidpy moran spatially variable genes harmony integration bioimage">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/spatialvi/dev/docs/images/nf-core-spatialvi_logo_dark.png" alt="nf-core/spatialvi">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/spatialvi/dev/docs/images/nf-core-spatialvi_logo_light.png" alt="nf-core/spatialvi">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Visium spatial transcriptomics: Space Ranger QC, the tissue image with its spots by cluster, spatially variable genes and the integrated clusters.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.0.0dev</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 <div class="tpl-catalog-table" data-tpl-table hidden></div>
