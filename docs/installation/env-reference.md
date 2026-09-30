@@ -40,6 +40,7 @@ DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [Redis Cache](#redis-cache)
 - [Celery Task Queue](#celery-task-queue)
 - [Real-time Events](#real-time-events)
+- [MCP Server](#mcp-server)
 - [Performance & Timeouts](#performance-timeouts)
 - [Backup & Restore](#backup-restore)
 <!-- - [Internal Analytics](#internal-analytics) -->
@@ -330,6 +331,25 @@ connected viewers, so a reachable Redis instance is required when enabled. See
     `DEPICTIO_ENABLE_DEV_ENDPOINTS` (default `false`, prefix `DEPICTIO_`) gates the
     admin-only `/events/test-trigger/{dc_id}` route used to broadcast a test event by hand. It is
     **not** required for normal event-driven refresh — data ingestion drives that on its own.
+
+---
+
+## MCP Server
+
+**Config Class:** `MCPConfig`
+**Environment Prefix:** `DEPICTIO_MCP_`
+
+Model Context Protocol server for AI agents. Disabled by default: when off, `/depictio/api/v1/mcp`
+is not mounted. See [MCP Server (AI agents)](../usage/guides/mcp.md) for the setup.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_MCP_ENABLED` | `false` | Mount the MCP server at `/depictio/api/v1/mcp` |
+| `DEPICTIO_MCP_MAX_OUTPUT_CHARS` | `12000` | Cap on the JSON size of one tool result (larger results are truncated) |
+| `DEPICTIO_MCP_RATE_PER_MIN` | `60` | Tool calls allowed per token (or user) per minute |
+| `DEPICTIO_MCP_QUERY_TIMEOUT_S` | `20` | Wall-clock seconds a data query may run |
+| `DEPICTIO_MCP_ENABLE_INGEST` | `false` | Expose the ingestion tools (they also need the `ingest` scope) |
+| `DEPICTIO_MCP_ENABLE_LLM_TOOLS` | `false` | Expose tools that call the configured LLM (dashboard generation, suggestions) |
 
 ---
 

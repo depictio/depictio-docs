@@ -228,6 +228,7 @@ nav:
           - Picking from the catalog: usage/guides/catalog-picker.md
           - Using the dashboard: usage/guides/dashboard_usage.md
           - Real-time events: usage/guides/realtime-events.md
+          - MCP server (AI agents): usage/guides/mcp.md
       - Projects:
           - usage/projects/index.md
           - Guide: usage/projects/guide.md

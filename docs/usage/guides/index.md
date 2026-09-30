@@ -14,4 +14,5 @@ Hands-on guides for common tasks in the Depictio web interface.
 | [Dashboard Creation](dashboard_creation.md) | Create and configure interactive dashboards |
 | [Picking from the catalog](catalog-picker.md) | Add a pre-configured visualization Depictio recognised in your data |
 | [Using the Dashboard](dashboard_usage.md) | Explore data through filters and selections |
+| [MCP Server (AI agents)](mcp.md) | Let Claude Code or another MCP client read dashboards and propose annotations |
 | [Authentication Modes](authentication-modes.md) | Configure authentication for your deployment |
