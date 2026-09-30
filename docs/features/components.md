@@ -70,7 +70,7 @@ Depictio provides a variety of component types for building interactive dashboar
 
     ---
 
-    Domain-specific scientific viz (volcano, MA, manhattan, ComplexHeatmap, UpSet, sankey, …) backed by canonical column schemas
+    Domain-specific scientific viz (volcano, MA, manhattan, ComplexHeatmap, UpSet, sankey, 3D protein structures, …) backed by canonical column schemas
 
 </div>
 
@@ -269,6 +269,9 @@ Every advanced viz consumes a **tabular DC** (CSV / TSV / Parquet → polars) wi
 | :material-set-center: [UpSet](#upset) | Set-intersection visualisation, alternative to Venn. | Any binary membership matrix (sample × set) |
 | :material-chart-sankey: [Sankey](#sankey) | Categorical flow across N ordered levels. | Any tidy table with ≥2 ordered categorical columns |
 | :material-grid-large: [Oncoplot](#oncoplot) | Sample × gene mutation matrix. | **maftools / vcf2maf** Mutation Annotation Format table — `Tumor_Sample_Barcode`, `Hugo_Symbol`, `Variant_Classification` (file format, **not** Minor Allele Frequency) |
+| :material-cube-outline: [3D structure](#3d-structure) | A protein structure in 3D, coloured by confidence, chain, secondary structure or a per-residue column, with variants and the picked site marked on it. | A **PDB / mmCIF** file per protein (AlphaFold, ColabFold, ESMFold, RoseTTAFold output) as an `indexed_file` collection, plus an optional residue or variant table (`entity`, `position`, ...); or a UniProt accession, gene or sequence column resolved on demand |
+| :material-format-align-justify: [Sequence alignment](#sequence-alignment) | A multiple sequence alignment with consensus and conservation; a column brush selects residues on the linked tiles. | **a3m / Stockholm / aligned FASTA** reshaped to one row per sequence (`msa_id`, `seq_id`, `aligned_sequence`) |
+| :material-ruler: [Sequence track](#sequence-track) | One protein's sequence as a residue ruler with score and class lanes, domain spans and variant ticks. | A per-residue table (`entity`, `position`, `residue`, plus pLDDT, conservation or secondary structure), optional **InterProScan / hmmsearch** domain spans and a variant table |
 
 !!! info "Reading the schema tables"
     Each viz subsection lists its **required** column roles (must be bound for the viz to render) and **optional** roles (extra colour / size / label dimensions). Types use polars dtype families — `Float` accepts `Float32` / `Float64`, `Int` accepts `Int8`–`Int64` and unsigned widths, `String` accepts `String` / `Utf8`, `Numeric` is `Int` ∪ `Float`. The dashboard builder validates the binding via `validate_binding()` and surfaces dtype mismatches in-place.
@@ -449,6 +452,8 @@ Needle / variant track along a gene — each gene body as a horizontal line, eac
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `max_subplot_genes` | int (≥1) | `6` | If the gene universe exceeds this, switch to a single-gene picker |
+| `selection_enabled` | bool | `false` | A click on a stem emits a [residue selection](#residue-selection) (the feature on `feature_id_col` and the position; shift-click extends the range) that the protein tiles and tables with the same columns follow, plus a point selection on `selection_column` |
+| `selection_column` | str \| null | `null` | Column of the point selection; null uses `label_col` |
 
 **Filtering / row tagging**
 
@@ -869,6 +874,206 @@ Cells are **coloured categorically by `mutation_type`** (NA cells stay blank). S
 
 [![Oncoplot example](../images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark)](../images/guides/advanced-visualizations/oncoplot_dark.webp){target=_blank}
 
+### 3D structure { #3d-structure }
+
+A protein structure drawn in 3D with [3Dmol.js](https://3dmol.csb.pitt.edu/), coloured and
+annotated from a Depictio table. The structure comes from one of two places:
+
+- **`structure_source: file`** (default): an `indexed_file` collection of `pdb` or `mmcif`
+  objects (`.pdb`, `.cif`, `.mmcif`, gzip allowed), one object per protein, the protein's name
+  being the object's sample id. The browser fetches the object through a presigned URL; the
+  server makes no outbound call.
+- **`structure_source: resolve`**: a UniProt accession, a gene symbol or a sequence column of the
+  bound table, turned into a model by the [structure resolver](#structure-resolver) (AlphaFold DB
+  first, ESMFold as a fallback). Off by default.
+
+The tile's bound collection is the residue or variant table that colours and marks the model; it
+can be left out when only the structure is shown. The protein shown is the one the dashboard's
+filters name on `entity_col` when they hold exactly one value, else the reader's pick in the tile,
+else the first one. A scatter or table that selects one value on a column of the same name
+therefore moves the viewer to that protein.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `position` | ✓ | Numeric | Residue number in the structure numbering (1-based) |
+| `entity` | | String | Which structure a row belongs to; the filtered entity is the one shown |
+| `chain` | | String | Chain id, for multi-chain structures |
+| `value` | | Numeric | Per-residue score, used by `color_mode: value` |
+| `category` | | String | Per-residue class (domain, consequence), used by `color_mode: category` |
+| `ref_aa` / `alt_aa` | | String | Reference and alternate amino acid; rows with an alternate residue are marked |
+| `label` | | String | Residue or variant label, for example a protein change |
+| `uniprot` / `gene` / `sequence` | | String | What the resolver looks up (resolve mode) |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `structure_source` | `file` \| `resolve` | `file` | Where the structure comes from |
+| `structure_dc_tag` | str \| null | `null` | The `pdb` / `mmcif` indexed_file collection (file mode; resolved to ids at import) |
+| `entity_col` | str \| null | `entity` | Column naming the protein a row belongs to |
+| `uniprot_col` / `gene_col` / `sequence_col` | str \| null | `null` | Resolve mode: one of them is required; the resolver tries accession, then gene, then sequence |
+| `taxon` | int | `9606` | NCBI taxon used to look a gene symbol up |
+| `color_mode` | `plddt` \| `chain` \| `spectrum` \| `value` \| `category` \| `uniform` \| `secondary_structure` \| `residue_type` \| `hydrophobicity` | `plddt` | `plddt` reads the model's B-factor column in the AlphaFold confidence bands; `value` and `category` read the bound table; `secondary_structure`, `residue_type` and `hydrophobicity` (Kyte-Doolittle) read the structure itself |
+| `colour_scale` | str \| null | `null` | Continuous scale of `color_mode: value` (Viridis when null) |
+| `representation` | `cartoon` \| `trace` \| `stick` \| `sphere` \| `surface` | `cartoon` | One representation |
+| `representations` | list \| null | `null` | Several representations drawn together (for example cartoon and surface); replaces `representation` when set |
+| `highlight_site` | bool | `true` | Draw the picked residue or range as red ball and stick, and mark it in the written sequence |
+| `spin` | bool | `false` | Start with the structure spinning |
+| `show_variants` | bool | `true` | A sphere on the alpha carbon of every row with an alternate residue or a category |
+| `show_labels` | bool | `false` | Label the marked residues |
+| `layout` | `structure` \| `structure_text` \| `structure_sequence` \| `structure_msa` | `structure` | What the tile holds besides the structure (below) |
+| `msa_dc_tag` | str \| null | `null` | The alignment collection of `layout: structure_msa` (required by it) |
+| `selection_enabled` | bool | `true` | A click on a residue emits a [residue selection](#residue-selection) |
+| `follow_selection` | bool | `true` | Zoom onto and mark the residues of a selection or hover made in another tile |
+
+**Layouts**
+
+- `structure`: the structure alone.
+- `structure_text`: the structure over its sequence written as plain text, wrapped in blocks of
+  ten with the number of the first residue at each line start, in the structure's own numbering.
+  A click on a letter picks that residue exactly as a click in 3D does, shift-click extends the
+  pick to a range, and hovering a letter marks the residue in 3D. The picked residues are shown
+  red and underlined, and the positions that carry a variant in the bound table are written in
+  red. The text scrolls inside the lower part of the tile, so the structure keeps most of the
+  height.
+- `structure_sequence`: the structure beside or over a [sequence track](#sequence-track) of its
+  own primary chain, with letters and pLDDT read from the model.
+- `structure_msa`: the structure beside the alignment of `msa_dc_tag` whose `msa_id` equals the
+  protein shown.
+
+The second panel goes beside the structure in a wide tile and under it in a tall one, with a
+draggable divider. Hover and selection are shared inside the tile as they are between tiles.
+
+**Tile controls**
+
+The tile's header holds the representation (several can be combined), the colour mode, and a
+**Spin** toggle next to the screenshot and reset-view buttons; with `advanced_viz_controls:
+header` they fold into the header so the tile works at half a section's width. The legend is small
+and drawn over the structure. A model fetched by the resolver carries a credit line
+(`Model: AlphaFold DB, CC-BY 4.0` or `Model: ESMFold`). Variants whose reference residue does not
+match the structure at that position are listed as a numbering mismatch instead of being drawn at
+the wrong place.
+
+### Sequence alignment { #sequence-alignment }
+
+A multiple sequence alignment drawn on a canvas, one row per aligned sequence and one column per
+alignment position, with a consensus row and per-column conservation bars. It shows one alignment
+at a time: the one whose `msa_id` another tile or a sidebar control names. The bound collection
+holds one row per aligned sequence, every row of one alignment the same length (gaps as `-`;
+A3M insertions are dropped by the recipe). The catalog recipes read A3M, Stockholm, aligned FASTA
+and the integer-coded alignments nf-core/proteinfold writes, and cap an alignment at 500 rows in
+rank order.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `msa_id` | ✓ | String | Which alignment a row belongs to (protein or family) |
+| `seq_id` | ✓ | String | Name of each aligned sequence |
+| `sequence` | ✓ | String | Aligned sequence, canonical column `aligned_sequence` |
+| `rank` | | Numeric | Row order; rank 0 is the query or reference row |
+| `identity` | | Numeric | Identity to the reference row, 0 to 1 |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `color_scheme` | `clustal` \| `zappo` \| `hydrophobicity` \| `identity` \| `none` | `clustal` | Residue colouring |
+| `max_rows` | int (1 to 1000) | `200` | How many sequences the tile draws |
+| `sort_by` | `rank` \| `identity` \| `input` | `rank` | Row order |
+| `show_consensus` | bool | `true` | Consensus row |
+| `show_conservation` | bool | `true` | Per-column conservation bars |
+| `entity_col_for_selection` | str | `entity` | Column **name** a column brush filters on |
+| `position_col_for_selection` | str | `position` | Position column **name** a column brush filters on, in the reference row's numbering |
+| `chains_col` / `chain_col_for_selection` | str \| null | `chains` / `chain` | Chain layout of a multi-chain reference row (for example `A:1-664,B:665-1004`); a brush is then translated to one chain's own numbering and names that chain |
+| `selection_enabled` | bool | `true` | A row click selects the sequence; a column brush emits a residue selection |
+| `follow_selection` | bool | `true` | Scroll to and shade the columns of a selection or hover made elsewhere |
+
+A column brush skips the reference row's gap columns, which carry no residue number, so the
+structure and the sequence track of the same protein land on the right residues.
+
+### Sequence track { #sequence-track }
+
+One protein's linear sequence on a canvas: a ruler, the one-letter sequence (drawn as blocks when
+too dense to read), a numeric lane, a category lane, domain spans and variant ticks. The numeric
+lane uses the AlphaFold confidence bands when `value_label` contains "pLDDT", else a colour
+scale. The category lane draws helix and strand glyphs when every value reads as a DSSP or S4PRED
+class, else coloured blocks. The domain and variant companions are fetched with the tile's filters
+plus the protein shown, so they must carry the same entity column name.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `position` | ✓ | Numeric | Residue number (1-based) |
+| `entity` | | String | Which protein a row belongs to; the filtered one is drawn |
+| `residue` | | String | One-letter amino acid |
+| `value` | | Numeric | Per-residue score drawn as a lane (pLDDT, conservation) |
+| `category` | | String | Per-residue class drawn as a coloured lane |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `value_label` | str \| null | `null` | Title of the numeric lane |
+| `domains_dc_tag` | str \| null | `null` | Domain spans table, with `domain_start_col` (`start`), `domain_end_col` (`end`) and `domain_label_col` (`label`) |
+| `variants_dc_tag` | str \| null | `null` | Variant table, with `variant_position_col` (`position`), `variant_label_col` (`label`) and `variant_category_col` (`category`) |
+| `selection_enabled` | bool | `true` | A brush or click emits a residue selection |
+| `follow_selection` | bool | `true` | Mark the residues of a selection or hover made elsewhere |
+
+### Residue cross-selection { #residue-selection }
+
+The 3D structure, the alignment, the sequence track and the [lollipop](#lollipop) (with
+`selection_enabled: true`) share a residue-level link. Two channels carry it:
+
+- **A pick is a filter.** A click in 3D or on a letter of the written sequence, a brush on the
+  sequence track, a column brush on the alignment or a click on a lollipop stem emits a
+  `residue_selection`: a filter on the entity column holding the protein and a range filter on the
+  position column holding the residues (plus the chain on a complex). These are ordinary column
+  filters, so every tile and table whose collection carries the **same column names** narrows to
+  that protein and range; name the entity and position columns alike across the residue, variant,
+  domain and alignment collections of one tab. The last gesture wins: a new pick replaces the
+  previous one, whichever tile made it. The emitting tile keeps drawing the whole protein and
+  marks its pick; the others zoom onto it or shade it. Cards, and figures that do not encode the
+  position column, ignore the range, as they ignore a genome region; a card opts in with
+  `follow_region_filter: true`. A record card linked to a protein tile shows the rows in the
+  range. The tile's **Clear** button removes the whole selection.
+- **A hover is not a filter.** Hovering a residue publishes it to the other protein tiles of the
+  dashboard without refetching anything: the 3D view marks it, the alignment draws a crosshair,
+  the sequence track and a residue-axis profile draw a line, a lollipop rings the stem.
+
+A template tab typically puts a selector (a scatter of one point per structure, or a table) on
+one half of a section and the 3D tile on the other half, with the sequence track and the
+alignment full width below and the tables collapsed underneath.
+
+### Structure resolver { #structure-resolver }
+
+In `structure_source: resolve` mode the 3D tile asks the server for a model of the protein shown:
+`POST /depictio/api/v1/advanced_viz/structure/resolve` with the protein's accession, gene symbol
+(plus taxon) or sequence. First hit wins:
+
+1. a model already resolved, cached in the deployment's bucket;
+2. a UniProt accession: the AlphaFold DB prediction;
+3. a gene symbol and taxon: a UniProt search of reviewed entries for the accession, then AlphaFold
+   DB;
+4. a sequence: an ESMFold prediction, for sequences up to the configured length (400 residues by
+   default).
+
+!!! warning "Off by default: what leaves the server"
+    The resolver is disabled until an operator sets `DEPICTIO_STRUCTURE_RESOLVER_ENABLED=true`
+    (see [Structure resolver](../installation/env-reference.md#structure-resolver)); until then
+    the route answers 403 and the tile shows its empty state. When enabled, exactly the
+    accession, the gene symbol and taxon, or the protein sequence is sent to EBI (AlphaFold DB),
+    UniProt or Meta's ESM Atlas. For unpublished sequences that is a disclosure. Nothing else
+    from the collection leaves the server, only the configured hosts are contacted (redirects
+    included), and on a public instance only signed-in users can trigger a lookup.
+
+Resolved models are stored under a bucket prefix and reused; misses and upstream failures are not
+cached, so the next request asks again. AlphaFold DB models are CC-BY 4.0, and the tile credits
+the source of the model it shows.
+
 ---
 
 ## :material-card-text: Card Components <small>(v0.0.1+)</small> { #card-components }
@@ -1160,6 +1365,7 @@ Interactive components let users filter data across the dashboard. These compone
 |-----------|------------|----------|
 | :material-ray-start-end: **RangeSlider** | Numeric range | Coverage: 0-100x |
 | :material-format-list-checks: **MultiSelect** | Multiple choices | Sample types |
+| :material-form-dropdown: **Select** | One choice | One unit at a time (one structure, one guide) |
 | :material-calendar: **DatePicker** | Date range | Run dates |
 | :material-toggle-switch: **SegmentedControl** | Single choice | Condition A/B |
 | :material-form-textbox: **TextInput** | Free text | Sample ID search |
@@ -1185,6 +1391,43 @@ Filter by selecting multiple values:
 | Options | Available values (auto-populated) |
 | Default | Initially selected values |
 | Placeholder | Hint text when empty |
+
+### Select
+
+Filter on one value of a categorical column:
+
+| Option | Description |
+|--------|-------------|
+| Column | Categorical column to filter |
+| Options | Available values (auto-populated) |
+| Default | Initially selected value |
+| Always hold a value | `always_selected` in YAML, see below |
+
+#### Always hold a value (`always_selected`) { #always-selected }
+
+Some tabs show one unit at a time (one structure, one family, one guide): with nothing picked,
+their tiles would stack every unit into one unreadable view, and a YAML `default_value` would name
+a value that only exists in one run. With `always_selected: true` the default is taken from the
+data instead:
+
+- whenever the filter is empty (first load, **Reset all**, the reader clearing it) it takes the
+  first enabled option of its own list;
+- a new pick replaces the current one, and the value cannot be cleared;
+- when the value leaves the option list (a filter upstream narrowed it away, another run was
+  loaded) it moves to the first enabled option.
+
+```yaml
+- component_type: interactive
+  tag: unit-picker
+  workflow_tag: my_workflow
+  data_collection_tag: units
+  interactive_component_type: Select
+  always_selected: true
+  column_name: unit_id
+```
+
+The option is valid on a `Select` only (a `MultiSelect` holds any number of values), and is also
+available in the builder as **Always hold a value**.
 
 ### DatePicker
 

@@ -301,6 +301,13 @@ nav:
           - mhcquant: pipeline-templates/nf-core/mhcquant.md
           - demultiplex: pipeline-templates/nf-core/demultiplex.md
           - rnasplice: pipeline-templates/nf-core/rnasplice.md
+          - proteinfold: pipeline-templates/nf-core/proteinfold.md
+          - proteinannotator: pipeline-templates/nf-core/proteinannotator.md
+          - proteinfamilies: pipeline-templates/nf-core/proteinfamilies.md
+          - oncoanalyser: pipeline-templates/nf-core/oncoanalyser.md
+          - isoseq: pipeline-templates/nf-core/isoseq.md
+          - pairgenomealign: pipeline-templates/nf-core/pairgenomealign.md
+          - crisprseq: pipeline-templates/nf-core/crisprseq.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md
