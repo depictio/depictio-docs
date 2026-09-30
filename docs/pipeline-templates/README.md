@@ -392,6 +392,104 @@ depictio-cli run \
     </div>
   </a>
 
+  <a class="template-card" href="nf-core/proteinfold/" data-tpl-name="nf-core/proteinfold" data-tpl-status="draft" data-tpl-version="2.1.0" data-tpl-keywords="proteinfold protein structure prediction alphafold2 colabfold esmfold rosettafold plddt pae msa 3d">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/proteinfold/master/docs/images/nf-core-proteinfold_logo_dark.png" alt="nf-core/proteinfold">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/proteinfold/master/docs/images/nf-core-proteinfold_logo_light.png" alt="nf-core/proteinfold">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Protein structure prediction: model confidence per engine, each top-ranked structure in 3D beside its sequence and alignment, predicted aligned error and the engines compared on one target.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.1.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/proteinannotator/" data-tpl-name="nf-core/proteinannotator" data-tpl-status="draft" data-tpl-version="1.1.0" data-tpl-keywords="proteinannotator protein annotation domains interproscan pfam hmmsearch s4pred secondary structure esmfold 3d">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/proteinannotator/master/docs/images/nf-core-proteinannotator_logo_dark.png" alt="nf-core/proteinannotator">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/proteinannotator/master/docs/images/nf-core-proteinannotator_logo_light.png" alt="nf-core/proteinannotator">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Protein annotation: how much of each protein the databases describe, which databases agree, and domains on the sequence and the predicted structure.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.1.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/proteinfamilies/" data-tpl-name="nf-core/proteinfamilies" data-tpl-status="draft" data-tpl-version="2.5.0" data-tpl-keywords="proteinfamilies protein families clustering mmseqs hmm alignment famsa conservation phylogeny 3d">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/proteinfamilies/master/docs/images/nf-core-proteinfamilies_logo_dark.png" alt="nf-core/proteinfamilies">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/proteinfamilies/master/docs/images/nf-core-proteinfamilies_logo_light.png" alt="nf-core/proteinfamilies">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Protein families: family size and conservation, one family at a time on its alignment, tree and predicted structure, and the members each family recruited.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.5.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/oncoanalyser/" data-tpl-name="nf-core/oncoanalyser" data-tpl-status="draft" data-tpl-version="3.0.0" data-tpl-keywords="oncoanalyser cancer tumor wgts wgs purple linx sage cuppa chord lilac hla drivers copy number structural variants fusions hmf 3d">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/oncoanalyser/master/docs/images/nf-core-oncoanalyser_logo_dark.png" alt="nf-core/oncoanalyser">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/oncoanalyser/master/docs/images/nf-core-oncoanalyser_logo_light.png" alt="nf-core/oncoanalyser">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Cancer genomics: purity and ploidy, copy number, drivers, small and structural variants, protein changes on the structure, and the immune context.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.0.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/isoseq/" data-tpl-name="nf-core/isoseq" data-tpl-status="draft" data-tpl-version="3.0.1" data-tpl-keywords="isoseq pacbio long read full-length isoforms ccs lima refine tama transcript structural categories">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/isoseq/master/docs/images/nf-core-isoseq_logo_dark.png" alt="nf-core/isoseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/isoseq/master/docs/images/nf-core-isoseq_logo_light.png" alt="nf-core/isoseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">PacBio Iso-Seq: CCS and primer QC, the full-length read funnel, isoforms by structural category against the annotation, and isoform structures per gene.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.0.1</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/pairgenomealign/" data-tpl-name="nf-core/pairgenomealign" data-tpl-status="experimental" data-tpl-version="3.0.4" data-tpl-keywords="pairgenomealign pairwise genome alignment last assembly contiguity identity synteny dotplot comparative genomics">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/pairgenomealign/master/docs/images/nf-core-pairgenomealign_logo_dark.png" alt="nf-core/pairgenomealign">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/pairgenomealign/master/docs/images/nf-core-pairgenomealign_logo_light.png" alt="nf-core/pairgenomealign">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Pairwise genome alignment: query assembly contiguity and gaps, aligned fraction and identity against the target, and the alignment parameters fitted per pair.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.0.4</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/crisprseq/" data-tpl-name="nf-core/crisprseq" data-tpl-status="experimental" data-tpl-version="2.3.0" data-tpl-keywords="crisprseq crispr gene editing targeted amplicon indel cigar knockout guide protospacer substitutions frameshift">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/crisprseq/master/docs/images/nf-core-crisprseq_logo_dark.png" alt="nf-core/crisprseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/crisprseq/master/docs/images/nf-core-crisprseq_logo_light.png" alt="nf-core/crisprseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">CRISPR editing: read accounting, repair outcomes per library and per guide, indel sizes, cut-site and substitution profiles per guide.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.3.0</span>
+        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 <div class="tpl-catalog-table" data-tpl-table hidden></div>
