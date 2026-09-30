@@ -335,13 +335,13 @@ Output schema (2 columns):
   faith_pd: Float64
 ```
 
-A non-empty `OPTIONAL_OUTPUT_SCHEMA` adds an `Optional output schema (N columns)` table.
+Each source that declares an `input_schema` gets an `Input schema: <source> (N columns)` table before the output schema. A non-empty `OPTIONAL_OUTPUT_SCHEMA` adds an `Optional output schema (N columns)` table.
 
 ---
 
 #### `recipe run <name>`
 
-Execute a recipe against a local data directory with all 4 validation checkpoints.
+Execute a recipe against a local data directory with all 5 validation checkpoints.
 
 ```bash
 depictio-cli recipe run <recipe_name> [OPTIONS]

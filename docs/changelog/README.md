@@ -10,7 +10,7 @@ hide:
 
 ## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (upcoming)
 
-!!! success "Minor: recipes name their output schema"
+!!! success "Minor: recipes declare their input and output schemas"
 
 ### Docker Images
 
@@ -24,6 +24,7 @@ ghcr.io/depictio/depictio-cli:1.12.0
 ### **🚀 Improvements**
 
 * **Recipes declare `OUTPUT_SCHEMA` and `OPTIONAL_OUTPUT_SCHEMA`**, replacing `EXPECTED_SCHEMA` and `OPTIONAL_SCHEMA`. A custom recipe still using the old names fails to load with a message naming the rename to make. See [Recipes](../usage/projects/recipes.md) ([#863](https://github.com/depictio/depictio/issues/863)).
+* **Recipe sources declare an `input_schema`**: the columns each pipeline file must contain, checked before `transform()` runs. A file missing a column now fails naming the source and the column, instead of a Polars error inside the transform. The bundled recipes declare theirs. See [Recipes](../usage/projects/recipes.md#the-5-checkpoint-validation-pipeline).
 
 ---
 

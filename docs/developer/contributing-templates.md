@@ -130,8 +130,8 @@ def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
     return df.select("sample", "value")        # exactly the OUTPUT_SCHEMA columns
 ```
 
-Test it against real data before moving on (all four checkpoints — load →
-resolve → transform → schema — must pass green):
+Test it against real data before moving on (all five checkpoints, load →
+resolve → input schema → transform → output schema, must pass green):
 
 ```bash
 depictio-cli dev recipe info <pipeline>/my_recipe.py
