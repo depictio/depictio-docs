@@ -260,6 +260,7 @@ Selection data is stored with a `source` field:
 
 - `scatter_selection` - From scatter plot lasso/box/click
 - `table_selection` - From table row selection
+- `residue_selection` - From a residue pick on a protein tile (3D structure, sequence track, alignment column brush, lollipop stem): a protein on the entity column plus a position range, see [Residue cross-selection](components.md#residue-selection)
 - `null` - From interactive components (dropdowns, sliders)
 
 All sources combine to filter dashboard components.

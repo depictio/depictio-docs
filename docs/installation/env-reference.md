@@ -55,6 +55,7 @@ DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [Global Settings](#global-settings)
 - [Branding](#branding)
 - [Feedback](#feedback)
+- [Structure Resolver](#structure-resolver)
 - [ServiceConfig](#serviceconfig)
 
 ---
@@ -681,6 +682,42 @@ An opt-in link on every dashboard that carries the reader's context to wherever 
 DEPICTIO_FEEDBACK_ENABLED=true
 DEPICTIO_FEEDBACK_URL='https://github.com/<org>/<repo>/issues/new?template=dashboard_feedback.yml&dashboard={dashboard}&tab={tab}&page={url}'
 DEPICTIO_FEEDBACK_LABEL='Send feedback'
+```
+
+---
+
+## Structure Resolver
+
+**Config Class:** `StructureResolverSettings`
+**Environment Prefix:** `DEPICTIO_STRUCTURE_RESOLVER_`
+
+Lets the [3D structure](../features/components.md#3d-structure) tile fetch a predicted model of a
+protein from its UniProt accession, gene symbol or sequence: AlphaFold DB first, ESMFold for short
+sequences, results cached in the bucket. **Off by default**, because when it is on, exactly that
+accession, gene symbol and taxon, or sequence leaves the server for EBI (AlphaFold DB), UniProt or
+Meta's ESM Atlas. Until it is enabled the route answers 403 and resolve-mode tiles stay empty;
+tiles that read their structures from an `indexed_file` collection need no resolver. See
+[Structure resolver](../features/components.md#structure-resolver).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` | `false` | Allow the resolver to call AlphaFold DB, UniProt and ESMFold |
+| `DEPICTIO_STRUCTURE_RESOLVER_AFDB_BASE_URL` | `https://alphafold.ebi.ac.uk` | AlphaFold DB base URL |
+| `DEPICTIO_STRUCTURE_RESOLVER_UNIPROT_BASE_URL` | `https://rest.uniprot.org` | UniProt REST base URL |
+| `DEPICTIO_STRUCTURE_RESOLVER_ESMFOLD_URL` | `https://api.esmatlas.com/foldSequence/v1/pdb/` | ESMFold endpoint |
+| `DEPICTIO_STRUCTURE_RESOLVER_TIMEOUT_S` | `60.0` | Timeout of each upstream request |
+| `DEPICTIO_STRUCTURE_RESOLVER_TOTAL_TIMEOUT_S` | `120.0` | Wall-time budget of one resolve request across all upstream calls and retries |
+| `DEPICTIO_STRUCTURE_RESOLVER_MAX_BYTES` | `20971520` | Largest structure file accepted (20 MiB) |
+| `DEPICTIO_STRUCTURE_RESOLVER_ESMFOLD_MAX_LENGTH` | `400` | Longest sequence sent to ESMFold |
+| `DEPICTIO_STRUCTURE_RESOLVER_CACHE_PREFIX` | `structures/resolved` | Bucket prefix of resolved structures |
+
+Only the hosts of the three URLs are contacted, redirects included. Outside single-user mode the
+route refuses anonymous visitors, so on a public instance only signed-in users trigger lookups.
+Docker Compose and Helm forward `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` only; add the other
+variables to the backend service's `environment:` (or the Helm configmap) to change them.
+
+```bash
+DEPICTIO_STRUCTURE_RESOLVER_ENABLED=true
 ```
 
 ---
