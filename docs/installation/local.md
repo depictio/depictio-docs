@@ -90,6 +90,7 @@ uv run --extra local depictio local up \
 | `depictio local status` | Show which processes are running, the URL and the log directory |
 | `depictio local down` | Stop every process; the data is kept for the next `up` |
 | `depictio local wipe` | Stop and delete all data. The downloaded binaries are kept. `--yes` skips the prompt |
+| `depictio local export-compose` | Copy the data into a directory that Docker Compose runs, see [Move to Docker Compose](#move-to-docker-compose) |
 
 ### `up` options
 
@@ -136,6 +137,36 @@ Everything lives under `~/.depictio/local`, or `DEPICTIO_LOCAL_HOME` if set:
 | `logs/` | One log per service: `api.log`, `worker.log`, `mongo.log`, `redis.log`, `s3.log` |
 | `cli/` | CLI configuration for this instance, to run `depictio-cli` against it |
 | `secrets.json` | Generated S3 and admin passwords |
+
+---
+
+## :material-docker: Move to Docker Compose
+
+A local server can be handed over to [Docker Compose](docker.md) with its
+projects, dashboards and table data, for instance once a review turns into a
+shared instance.
+
+```bash
+uv run --extra local depictio local down
+uv run --extra local depictio local export-compose --out depictio-docker
+cd depictio-docker
+docker compose up -d
+```
+
+The dashboards are then on `http://localhost:5080`. `export-compose` copies the
+MongoDB and SeaweedFS data and the signing keys into the directory, so the local
+server stays usable and the two never share files. It also writes:
+
+| File | Content |
+|------|---------|
+| `.env` | The local server's S3 and admin credentials |
+| `docker-compose.override.yaml` | The same MongoDB and SeaweedFS versions as the local server, on the copied data |
+| `docker-compose.yaml` | Copied from a clone of the repository; otherwise the command prints the `curl` to fetch it |
+
+The token in `~/.depictio/local/cli` stays valid against the Docker stack, since
+it was signed with the copied keys. The raw pipeline files are not copied, only
+the tables built from them: to ingest again, use the Docker setup's own CLI
+configuration, with the pipeline directories reachable from the containers.
 
 ---
 
