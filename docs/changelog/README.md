@@ -23,7 +23,7 @@ ghcr.io/depictio/depictio-cli:1.12.0
 
 ### **✨ New Features**
 
-* **`depictio local up` runs the whole server without Docker**: the same API, worker and viewer, with MongoDB, Redis and SeaweedFS fetched once from conda-forge and run as plain processes. With `--template` and `--data-root` it ingests your results in the same command and opens their dashboard. Linux and macOS, x86_64 and arm64; Windows is refused with a pointer to WSL2. See [Local Server](../installation/local.md) ([#1110](https://github.com/depictio/depictio/pull/1110)).
+* **`depictio local up` runs the whole server without Docker**: the same API, worker and viewer, with MongoDB, Redis and SeaweedFS fetched once from conda-forge and run as plain processes. With `--template` and `--data-root` it ingests your results in the same command and opens their dashboard. `depictio local export-compose` later hands the server and its data over to Docker Compose. Linux (x86_64 and arm64) and Apple silicon Macs; Windows is refused with a pointer to WSL2. See [Local Server](../installation/local.md) ([#1110](https://github.com/depictio/depictio/pull/1110)).
 
 ### **🚀 Improvements**
 
