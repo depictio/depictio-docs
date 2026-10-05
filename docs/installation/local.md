@@ -231,7 +231,7 @@ server is stopped. The directory holds:
 
 | File | Content |
 |------|---------|
-| `docker-compose.yaml` | The compose file that matches the installed code: the clone's own file when `depictio` runs from a clone, otherwise the file of the release tag `v<version>`, downloaded from GitHub. A development or beta build outside a clone matches no published file, and the command stops with a message |
+| `docker-compose.yaml` | The compose file that matches the installed code: the clone's own file when `depictio` runs from a clone, otherwise the file of the release tag `v<version>` (betas included), downloaded from GitHub. A development build outside a clone matches no published file, and the command stops with a message |
 | `docker-compose.override.yaml` | The `mongo` and `chrislusf/seaweedfs` images at the versions the local server ran, on the copied data. On Linux they run as your user, who owns the copied files |
 | `.env` | Single-user mode, the local server's S3 and admin credentials and, for a release, `DEPICTIO_VERSION`. Owner-only |
 | `data/` | The copied MongoDB and SeaweedFS data, and the key files |
