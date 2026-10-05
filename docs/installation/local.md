@@ -104,7 +104,9 @@ depictio local up \
 `up` starts the services unless they are already running, then runs
 `depictio run` against them with a CLI configuration it generates, and prints
 the summary. With `--template`, no example project is seeded unless
-`--examples` asks for one. Template variables go through `--var`, as with
+`--examples` asks for one. Examples are seeded on the first run of a local home
+only: a home started without them stays without them, and `up` says so when
+`--examples` names one. Template variables go through `--var`, as with
 [`depictio-cli run`](../depictio-cli/usage.md#run-command). nf-core results do
 not contain the samplesheet: when the template cannot find it under `input/`,
 pass it explicitly.
@@ -222,8 +224,9 @@ files: `depictio local up` restarts the local server on its own data. The
 command ends by printing the one to run next, `cd <dir> && docker compose up -d`,
 and the dashboards URL, `http://localhost:5080`.
 
-The directory must be new or empty. Everything that can refuse the export (no
-local data, a non-empty directory, no compose file to use) is checked before the
+The directory must be new or empty, and is made owner-only (`0700`), since it
+holds the token-signing key. Everything that can refuse the export (no local
+data, a non-empty directory, no compose file to use) is checked before the
 server is stopped. The directory holds:
 
 | File | Content |
@@ -287,8 +290,9 @@ development stack, run side by side.
 #### On an HPC login node or behind a proxy
 
 An HTTP proxy set in the environment does not break startup: the readiness
-checks on `127.0.0.1` bypass `http_proxy` and the other proxy variables, and
-SeaweedFS runs without them. The downloads do go through the proxy: MongoDB,
+checks on `127.0.0.1` bypass `http_proxy` and the other proxy variables,
+SeaweedFS runs without them, and the API, the worker and the ingestion get
+`127.0.0.1` and `localhost` added to `no_proxy`. The downloads do go through the proxy: MongoDB,
 Redis and SeaweedFS from conda-forge on the first run, and the compose file of
 `export-compose`. When one fails, a one-line error says so: check the network or
 the proxy settings, then run the command again. Over SSH, open the server
