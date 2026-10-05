@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.11.0",
-    "x-generated-at": "2026-09-14T19:46:42Z",
-    "x-depictio-version": "v1.11.0"
+    "version": "1.12.0-b1",
+    "x-generated-at": "2026-10-05T17:44:35Z",
+    "x-depictio-version": "v1.12.0-b1"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -44,7 +44,7 @@
           "Projects"
         ],
         "summary": "Get Project From Id",
-        "description": "Get a project by ID, optionally with delta_locations joined via MongoDB aggregation.\n\nThis endpoint retrieves a project from the database using its ID. By default, it joins\ndelta_table_location data from the DeltaTableAggregated collection at query time.\nSet skip_enrichment=true for simple queries without delta_location joins (faster, safer).\n\nArgs:\n    project_id (PyObjectId, optional): The project ID to retrieve.\n    skip_enrichment (bool, optional): Skip delta_location aggregation pipeline (default: False).\n                                      Use True for project updates to get complete workflow objects.\n    current_user (User, optional): The authenticated user. Defaults to Depends(get_user_or_anonymous).\n\nReturns:\n    dict: Project document. If skip_enrichment=False (default), includes:\n          - delta_location: S3/MinIO path to delta table (per data collection)\n          - last_aggregation: Most recent aggregation metadata with column specs\n          If skip_enrichment=True, returns basic project structure without enrichment.",
+        "description": "Get a project by ID, optionally with delta_locations joined via MongoDB aggregation.\n\nThis endpoint retrieves a project from the database using its ID. By default, it joins\ndelta_table_location data from the DeltaTableAggregated collection at query time.\nSet skip_enrichment=true for simple queries without delta_location joins (faster, safer).\n\nArgs:\n    project_id (PyObjectId, optional): The project ID to retrieve.\n    skip_enrichment (bool, optional): Skip delta_location aggregation pipeline (default: False).\n                                      Use True for project updates to get complete workflow objects.\n    current_user (User, optional): The authenticated user. Defaults to Depends(get_user_or_anonymous).\n\nReturns:\n    dict: Project document. If skip_enrichment=False (default), includes:\n          - delta_location: S3 path to delta table (per data collection)\n          - last_aggregation: Most recent aggregation metadata with column specs\n          If skip_enrichment=True, returns basic project structure without enrichment.",
         "operationId": "get_project_from_id_depictio_api_v1_projects_get_from_id_get",
         "security": [
           {
@@ -3511,7 +3511,7 @@
           "Files"
         ],
         "summary": "Serve Image",
-        "description": "Serve images from S3/MinIO via streaming.\n\nNOTE: Currently PUBLIC to allow HTML <img> tags to load images. Access is\nbucket-locked to the configured MinIO/S3 bucket and the key is\ntraversal-hardened, so this endpoint can only stream objects from\nDepictio's own bucket.\nTODO: Presigned, time-limited URLs remain future work for per-object\naccess control.",
+        "description": "Serve images from S3 via streaming.\n\nNOTE: Currently PUBLIC to allow HTML <img> tags to load images. Access is\nbucket-locked to the configured S3 bucket and the key is\ntraversal-hardened, so this endpoint can only stream objects from\nDepictio's own bucket.\nTODO: Presigned, time-limited URLs remain future work for per-object\naccess control.",
         "operationId": "serve_image_depictio_api_v1_files_serve_image_get",
         "parameters": [
           {
@@ -5147,7 +5147,7 @@
           "Migrate"
         ],
         "summary": "Export Project",
-        "description": "Export a project bundle from this instance.\n\nScoped to one project: cascades through workflows → data_collections →\nfiles / deltatables / runs → dashboards.  Optionally copies S3 data to\na target MinIO (modes all / files).\n\nAccess rules:\n- Admins can export any project, in every mode.\n- In public/demo mode the anonymous and temporary visitors are non-admin,\n  so they're allowed to export too — but only projects they can actually\n  read (public projects or ones shared with them), never arbitrary private\n  projects. Uses ``get_user_or_anonymous`` so tokenless public-mode\n  visitors resolve to the anonymous user instead of 401-ing.\n- On standard (non-public) instances export stays admin-only.\n\nNon-admin callers may not supply ``target_s3_config``: that triggers the\nserver-to-server S3 copy path (an exfiltration vector gated by\n``_validate_target_s3_endpoint``), which has no place in the UI export flow\nthat bundles S3 objects straight into the ZIP.",
+        "description": "Export a project bundle from this instance.\n\nScoped to one project: cascades through workflows → data_collections →\nfiles / deltatables / runs → dashboards.  Optionally copies S3 data to\na target S3 store (modes all / files).\n\nAccess rules:\n- Admins can export any project, in every mode.\n- In public/demo mode the anonymous and temporary visitors are non-admin,\n  so they're allowed to export too — but only projects they can actually\n  read (public projects or ones shared with them), never arbitrary private\n  projects. Uses ``get_user_or_anonymous`` so tokenless public-mode\n  visitors resolve to the anonymous user instead of 401-ing.\n- On standard (non-public) instances export stays admin-only.\n\nNon-admin callers may not supply ``target_s3_config``: that triggers the\nserver-to-server S3 copy path (an exfiltration vector gated by\n``_validate_target_s3_endpoint``), which has no place in the UI export flow\nthat bundles S3 objects straight into the ZIP.",
         "operationId": "export_project_depictio_api_v1_migrate_export_project_post",
         "requestBody": {
           "content": {
@@ -12451,7 +12451,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -12754,7 +12754,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -12817,7 +12817,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -13005,7 +13005,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -14886,6 +14886,18 @@
             "type": "array",
             "title": "Canonical Samples",
             "description": "List of normalized canonical sample IDs (without suffixes or annotations). Used for joining with external metadata tables."
+          },
+          "has_general_stats": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Has General Stats",
+            "description": "Whether the parquet carries general-statistics rows. MultiQC assembles that table from every module that ran, so it appears in neither `modules` nor `plots` and can only be read from the parquet's anchors. None on reports ingested before this was recorded, which callers treat as unknown rather than absent."
           }
         },
         "additionalProperties": false,
@@ -14899,7 +14911,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -15107,7 +15119,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -15480,7 +15492,7 @@
           "service_name": {
             "type": "string",
             "title": "Service Name",
-            "default": "minio"
+            "default": "s3"
           },
           "service_port": {
             "type": "integer",
@@ -15525,14 +15537,14 @@
           "root_user": {
             "type": "string",
             "title": "Root User",
-            "description": "MinIO/S3 root access key (not a secret on its own).",
+            "description": "S3 access key (not a secret on its own).",
             "default": "minio"
           },
           "root_password": {
             "type": "string",
             "format": "password",
             "title": "Root Password",
-            "description": "MinIO/S3 root secret key. REQUIRED in server context — set via DEPICTIO_MINIO_ROOT_PASSWORD. The server refuses to start when this is unset, shorter than 8 characters, or matches a well-known default.",
+            "description": "S3 secret key. REQUIRED in server context — set via DEPICTIO_S3_ROOT_PASSWORD (legacy DEPICTIO_MINIO_ROOT_PASSWORD is still accepted). The server refuses to start when this is unset, shorter than 8 characters, or matches a well-known default.",
             "default": "",
             "writeOnly": true
           },
@@ -15545,14 +15557,14 @@
           "verify_tls": {
             "type": "boolean",
             "title": "Verify Tls",
-            "description": "Verify TLS certificates when talking to S3/MinIO. Only set to false for local development against self-signed dev MinIO instances.",
+            "description": "Verify TLS certificates when talking to S3. Only set to false for local development against self-signed dev S3 instances.",
             "default": true
           }
         },
         "additionalProperties": false,
         "type": "object",
         "title": "S3DepictioCLIConfig",
-        "description": "S3/MinIO object storage configuration."
+        "description": "S3-compatible object storage configuration.\n\nThe bundled store is SeaweedFS (``weed mini``, compose service ``s3``);\nany S3 endpoint (AWS, NetApp, MinIO, …) works via ``DEPICTIO_S3_PUBLIC_URL``\n+ ``DEPICTIO_S3_EXTERNAL_SERVICE``. Every field also accepts the legacy\n``DEPICTIO_MINIO_<FIELD>`` name as a fallback (see ``settings_customise_sources``)."
       },
       "Scan": {
         "properties": {
@@ -15767,7 +15779,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -15873,7 +15885,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -16106,7 +16118,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6aa84f1ee24820aa6b0620b6"
+            "default": "6ac3e1fd3fb01be09316d47c"
           }
         },
         "type": "object",
@@ -16229,7 +16241,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -16348,7 +16360,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -16430,7 +16442,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -16516,7 +16528,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -16689,7 +16701,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -16864,7 +16876,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -16981,7 +16993,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
@@ -17079,7 +17091,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac3e1fd3fb01be09316d47b"
           },
           "description": {
             "anyOf": [
