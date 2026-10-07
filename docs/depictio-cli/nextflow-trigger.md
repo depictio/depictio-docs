@@ -41,8 +41,9 @@ the viewer's [CLI agents page](../usage/get_started.md#create-a-cli-configuratio
 tells you to use, and the one the CLI reads by default, so there is nothing to
 point at.
 
-The handler passes `--server` only when `params.depictio_cli_config` or
-`$DEPICTIO_CLI_CONFIG_PATH` is set. Otherwise the CLI follows
+Since v1.13.1, the handler passes `--server` only when `params.depictio_cli_config` or
+`$DEPICTIO_CLI_CONFIG_PATH` is set (the v1.12.0 handler always passes it,
+with `~/.depictio/CLI.yaml` as the default). Otherwise the CLI follows
 [its own order](usage.md#choosing-a-server): `~/.depictio/CLI.yaml`, else the
 server that [`depictio local up`](../installation/local.md) runs on the same
 machine. So to ingest into that local server, skip this step. To reach it even
@@ -161,7 +162,7 @@ which one you meant:
     discarding those edits. To start the dashboards over from the template, run
     `depictio ingest <results dir> --reset-dashboards` by hand.
 
-    A refresh keeps the runs of this output directory and of the directories
+    Since v1.13.1, a refresh keeps the runs of this output directory and of the directories
     added with `depictio_attach`. The runs of any other directory are removed.
     If an attached directory cannot be reached from the machine where the
     pipeline completes, the refresh stops and changes nothing, and the log

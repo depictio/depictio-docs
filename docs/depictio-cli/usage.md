@@ -182,7 +182,7 @@ Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/
     |-----------|------|---------|-------------|
     | `--project` | `string` | the template's | Project name. Replaces the name the template gives, or the `name` in the `--project-config-path` file. `--attach-run` and `--update-config` find the project by it. Formerly `--project-name` |
     | `--attach-run` | `flag` | `false` | Add the results directory to an existing project as **another run**, see [Refreshing a project](#refreshing-a-project) (v1.10.0+) |
-    | `--drop-missing-runs` | `flag` | `false` | On a refresh, remove the runs of a location added with `--attach-run` that is not on this machine. Without it, such a refresh stops before changing anything. Cannot be combined with `--attach-run` |
+    | `--drop-missing-runs` | `flag` | `false` | On a refresh, remove the runs of a location added with `--attach-run` that is not on this machine. Without it, such a refresh stops before changing anything. Cannot be combined with `--attach-run` (v1.13.1+) |
     | `--provenance-file` | `path` | | Extra recap file (JSON, YAML or two-column key/value TSV) listed in the project's [run provenance](../usage/projects/templates.md#run-provenance) under *User provided*. Repeatable (v1.8.3+) |
 
 ??? info "📈 Dashboards"
@@ -265,22 +265,22 @@ A project not on the server yet is created by `--update-config`, so a script can
 
 **Dashboards.** Dashboards are matched by their origin, the template file or the `--dashboard` file they came from, not by their title. Renaming a dashboard in the viewer no longer makes the next refresh import a second copy, and the new title is kept. The summary at the end of the run lists each dashboard as `created`, `kept` or `replaced`, with its link.
 
-A `--dashboard` file inside the template or the project file's folder is matched by its path there. One from anywhere else is matched by its absolute path, so moving that file makes the next refresh create a new dashboard.
+A `--dashboard` file inside the template or the project file's folder is matched by its path there. One from anywhere else is matched by its absolute path (v1.13.1+, by its file name before), so moving that file makes the next refresh create a new dashboard.
 
-**Tabs.** A multi-tab dashboard that a refresh keeps gains the template tabs it lacks, after its existing tabs. The summary says how many, as in `kept (2 tabs added)`. A tab deleted in the viewer comes back on the next refresh.
+**Tabs** <small>(v1.13.1+)</small>. A multi-tab dashboard that a refresh keeps gains the template tabs it lacks, after its existing tabs. The summary says how many, as in `kept (2 tabs added)`. A tab deleted in the viewer comes back on the next refresh.
 
 !!! note "What a refresh does not keep yet"
     A kept dashboard keeps its layout, components and title, but a refresh still resets the subtitle, the icons and the tab order edited in the viewer.
 
-**Run locations.** `--attach-run` records its directory on the server. A refresh keeps the runs of the results directory you give, or of the locations the project file lists, plus the runs of those recorded directories. The runs of any other location are removed, with a warning for each location.
+**Run locations** <small>(v1.13.1+)</small>. `--attach-run` records its directory on the server. A refresh keeps the runs of the results directory you give, or of the locations the project file lists, plus the runs of those recorded directories. The runs of any other location are removed, with a warning for each location.
 
 So a results directory that moved replaces the old one, and a location removed from the project file is removed from the project.
 
-Attaching a directory that is already one of the project's locations records it, so a later refresh keeps it. A project ingested before attached runs were recorded has no record: a refresh removes its extra locations, unless you attach them again first.
+Attaching a directory that is already one of the project's locations records it, so a later refresh keeps it. A project ingested before attached runs were recorded has no record: a refresh removes its extra locations, unless you attach them again first. In v1.12.0, a refresh kept every location the project had.
 
-**Missing locations.** If a location added with `--attach-run` is not on the machine that runs the refresh, the refresh stops with exit code 1 before it changes anything. Pass `--drop-missing-runs` to remove those runs from the project on purpose.
+**Missing locations** <small>(v1.13.1+)</small>. If a location added with `--attach-run` is not on the machine that runs the refresh, the refresh stops with exit code 1 before it changes anything. Pass `--drop-missing-runs` to remove those runs from the project on purpose.
 
-**Flat workflows.** A workflow whose `data_location.structure` is `flat` names each run after its directory. Two of its locations whose directories have the same name would be one run, so they are refused: rename one of the directories, or ingest it into another project.
+**Flat workflows** <small>(v1.13.1+)</small>. A workflow whose `data_location.structure` is `flat` names each run after its directory. Two of its locations whose directories have the same name would be one run, so they are refused: rename one of the directories, or ingest it into another project.
 
 **Single-file collections.** A data collection with `scan.mode: single` (a samplesheet, a metadata table, a tree) keeps reading the run that created the project.
 
