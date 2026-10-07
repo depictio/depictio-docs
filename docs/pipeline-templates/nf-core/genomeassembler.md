@@ -57,7 +57,7 @@ everywhere through the samplesheet links.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/genomeassembler/latest \
       --data-root /path/to/genomeassembler_results \
       --var METADATA_FILE=/path/to/samplesheet.csv \
@@ -78,7 +78,7 @@ everywhere through the samplesheet links.
     nextflow run nf-core/genomeassembler -r 2.0.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -199,7 +199,9 @@ under Validation runs.
     to the jellyfish k-mer spectrum it fits. This is the yardstick for the other
     tabs: an assembly much larger or smaller than the estimated genome size, or
     far off the expected heterozygosity, deserves a second look. Both
-    collections are per read set, not per assembly.
+    collections are per read set, not per assembly: they link to each other but
+    not to the samplesheet, so the pinned sample filters do not reach this tab
+    and the `Read set` picker does the narrowing.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -256,7 +258,7 @@ Then copy the samplesheet under `input/` and point Depictio at the results:
 
 ```bash
 mkdir -p results/input && cp samplesheet.csv results/input/
-depictio run --template nf-core/genomeassembler/latest --data-root results/
+depictio ingest --template nf-core/genomeassembler/latest --data-root results/
 ```
 
 See [nf-co.re/genomeassembler/usage](https://nf-co.re/genomeassembler/2.0.0/docs/usage) for full pipeline documentation.
@@ -306,7 +308,7 @@ samplesheet under `input/`:
 
 ```bash
 bash depictio/projects/nf-core/genomeassembler/2.0.0/download_test_data.sh /tmp/genomeassembler_test
-depictio run --template nf-core/genomeassembler/latest --data-root /tmp/genomeassembler_test
+depictio ingest --template nf-core/genomeassembler/latest --data-root /tmp/genomeassembler_test
 ```
 
 Do not pass `--project-name` when ingesting: the dashboard is attached to the

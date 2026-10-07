@@ -70,7 +70,7 @@ melted Bambu counts and the MultiQC panels alike.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/nanoseq/latest \
       --data-root /path/to/nanoseq_results
     ```
@@ -81,7 +81,7 @@ melted Bambu counts and the MultiQC panels alike.
     factor the run compares:
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/nanoseq/latest \
       --data-root /path/to/nanoseq_results \
       --var METADATA_FILE=/path/to/sample_metadata.tsv \
@@ -101,7 +101,7 @@ melted Bambu counts and the MultiQC panels alike.
     nextflow run nf-core/nanoseq -r 3.0.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. The MultiQC reprocess above still applies to a 3.0.0 run. See
     [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
@@ -314,7 +314,7 @@ results:
 
 ```bash
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio run --template nf-core/nanoseq/latest --data-root results/
+depictio ingest --template nf-core/nanoseq/latest --data-root results/
 ```
 
 DESeq2 and DEXSeq need at least two conditions in the samplesheet; a run with
@@ -367,7 +367,7 @@ bash depictio/projects/nf-core/nanoseq/3.0.0/download_test_data.sh /tmp/nanoseq_
 python -m depictio.dev_scripts.multiqc_reprocess --src /tmp/nanoseq_test --dest /tmp/nanoseq_test
 mkdir -p /tmp/nanoseq_test/input
 cp depictio/projects/nf-core/nanoseq/3.0.0/input/sample_metadata.tsv /tmp/nanoseq_test/input/
-depictio run --template nf-core/nanoseq/latest --data-root /tmp/nanoseq_test \
+depictio ingest --template nf-core/nanoseq/latest --data-root /tmp/nanoseq_test \
   --var METADATA_FILE=/tmp/nanoseq_test/input/sample_metadata.tsv
 ```
 

@@ -59,7 +59,7 @@ nf-core/rnaseq run:
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/rnaseq/latest \
       --data-root /path/to/rnaseq_results/aligner_star_salmon
     ```
@@ -75,7 +75,7 @@ nf-core/rnaseq run:
     nextflow run nf-core/rnaseq -r 3.26.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -236,6 +236,13 @@ a collapsed `Reference tables` section is pinned to the bottom.
         | Gene rows | *Gene expression*, collapsed |
         | Matrix rows | *Top variable gene matrix*, collapsed |
 
+Tables and point views select on their entity column: the samplesheet on
+`sample`; the DESeq2 QC PCA and the library summary on `sample_id`; the
+mean-variance plane on `gene_id`; the expression-by-condition figure and the
+gene expression table on `gene_name`. A pick narrows every tile on the tab that
+reads the same collection or one linked from it, and each record card follows
+the tile beside it.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -254,7 +261,7 @@ nextflow run nf-core/rnaseq -r 3.26.0 \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/rnaseq/latest \
+depictio ingest --template nf-core/rnaseq/latest \
   --data-root results/
 ```
 
@@ -323,7 +330,7 @@ the script gives the `curl` that puts it under `input/`.
 Then run Depictio against it:
 
 ```bash
-depictio run \
+depictio ingest \
   --template nf-core/rnaseq/latest \
   --data-root /tmp/rnaseq_test
 ```

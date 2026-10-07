@@ -70,7 +70,7 @@ the per-assembly statistics table to the bottom.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/mag/latest \
       --data-root /path/to/mag_results
     ```
@@ -86,7 +86,7 @@ the per-assembly statistics table to the bottom.
     nextflow run nf-core/mag -r 5.5.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. The samplesheet copy and the MultiQC parquet above still apply.
     See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
@@ -160,8 +160,8 @@ project links to the tiles it reaches.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · a `Minimum contig length range` that keeps every curve
-        intact inside the window, a `Contig N50` range, and `Nx curves` to pick
+        **Filters** · a `Minimum contig length range (bp)` that keeps every
+        curve intact inside the window, a `Contig N50 (bp)` range, and `Nx curves` to pick
         assemblies.
 
         | Section | What it holds |
@@ -184,7 +184,7 @@ project links to the tiles it reaches.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Reads from`, and `Contig length` and `Depth` ranges.
+        **Filters** · `Reads from`, and `Contig length (bp)` and `Depth` ranges.
 
         | Section | What it holds |
         |---|---|
@@ -281,6 +281,15 @@ project links to the tiles it reaches.
         | Locus map | *Gene layout along the bin's contigs*, *Feature length by class*, *Annotated features* |
         | Bin detail | *Bin summary*, with the linked *Bin record* |
 
+Tables and point views select on their entity column: the pinned sample sheet
+on `sample_id`; the assembly table, the length ladder profile and its table on
+`assembly_id`, and the assembly scatter on `assembler`; the contig scatter on
+`read_sample`; every per-bin scatter and table of the Bins, Taxonomy, Annotation
+and Bin detail tabs on `bin_id`, except the MIMAG plane, which selects on
+`binner`; the locus table on `feature_id`. A pick narrows the other tiles of its
+collection and follows the project links to the collections they reach. The Nx
+curve does not select: its collection has no outgoing link and no sibling tile.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -301,7 +310,7 @@ the run wrote no parquet, and point Depictio at them:
 ```bash
 mkdir -p results/input && cp samplesheet.full.v4.csv results/input/
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio run --template nf-core/mag/latest --data-root results/
+depictio ingest --template nf-core/mag/latest --data-root results/
 ```
 
 See [nf-co.re/mag/usage](https://nf-co.re/mag/5.5.0/docs/usage) for full pipeline documentation.
@@ -349,7 +358,7 @@ the Prokka GFFs is fetched, so the locus map covers those bins only.
 DEST=/tmp/mag_test
 bash depictio/projects/nf-core/mag/5.5.0/download_test_data.sh "$DEST"
 python -m depictio.dev_scripts.multiqc_reprocess --src "$DEST" --dest "$DEST"
-depictio run --template nf-core/mag/latest --data-root "$DEST"
+depictio ingest --template nf-core/mag/latest --data-root "$DEST"
 ```
 
 Do not pass `--project-name` when ingesting: the dashboard is attached to the

@@ -56,7 +56,7 @@ to the bottom, so the sample list and its floors follow you from tab to tab.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/viralrecon/latest \
       --data-root /path/to/runs
     ```
@@ -74,7 +74,7 @@ to the bottom, so the sample list and its floors follow you from tab to tab.
       --outdir runs/run_1 --depictio_data_root runs
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output, and the template is picked from the pipeline's own name and version.
     Write the run into a `run_*` directory and point `--depictio_data_root` at
     its parent. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
@@ -297,6 +297,13 @@ every per-sample collection on every tab.
         `summary_metrics` goes with them. The coverage and typing tabs keep
         working off the `artic_minion/` layout.
 
+Every per-sample table (sample sheet, amplicon coverage, Pangolin, Nextclade,
+variant calls) selects rows on `sample`, and the coverage and Nextclade
+scatters, the variant-profile PCA, the allele-frequency track and the read
+support scatter select points on it. `summary_metrics` links `sample` to every
+per-sample collection, so a pick narrows the rest of the tab. The coverage
+tracks, heatmaps, oncoplot, UpSet and bar charts do not emit a selection.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -318,7 +325,7 @@ nextflow run nf-core/viralrecon -r 3.0.0 \
 Then point Depictio at the parent of the run directories:
 
 ```bash
-depictio run --template nf-core/viralrecon/latest \
+depictio ingest --template nf-core/viralrecon/latest \
   --data-root runs/
 ```
 
@@ -378,7 +385,7 @@ bash depictio/projects/nf-core/viralrecon/3.0.0/download_test_data.sh /tmp/viral
 The run lands in `/tmp/viralrecon_test/run_1`, so ingest its parent:
 
 ```bash
-depictio run \
+depictio ingest \
   --template nf-core/viralrecon/latest \
   --data-root /tmp/viralrecon_test
 ```

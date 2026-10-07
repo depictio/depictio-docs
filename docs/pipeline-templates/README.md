@@ -8,10 +8,10 @@ icon: material/layers-outline
   <h1 class="catalog-hero__title" id="depictio-templates">Depictio Templates</h1>
 </div>
 
-Templates are pre-packaged project configurations that set up a complete bioinformatics analysis project — dashboards included — with a single command.
+Templates are pre-packaged project configurations that set up a complete bioinformatics analysis project, dashboards included, with a single command.
 
 ```bash
-depictio-cli run \
+depictio-cli ingest \
   --template nf-core/ampliseq/latest \
   --data-root /data/my_ampliseq_run
 ```

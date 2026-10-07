@@ -63,7 +63,7 @@ calls every tab is filtered by follow you from tab to tab.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/rnafusion/latest \
       --data-root /path/to/rnafusion_results
     ```
@@ -79,7 +79,7 @@ calls every tab is filtered by follow you from tab to tab.
     nextflow run nf-core/rnafusion -r 4.1.3 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -252,6 +252,14 @@ from tab to tab without being pinned.
     junction tiles keep their values when a fusion is picked, while the sample
     filter and the *Splicing scope* group narrow them.
 
+Fusions select on `fusion`: the *Arriba against STAR-Fusion* scatter, the
+allelic-ratio scatter, the caller tables, the evidence and FusionInspector
+tables, the Pfam domain table and the pinned consensus table. The pinned sample
+sheet selects on `sample`, and the junction Manhattan and junction table select
+on `gene`, which stays inside the splicing section. A pick narrows every tile
+that reads the same collection or one linked from it. The partner chords, the
+Sankey, the UpSet, the lollipops and the dot plots do not select.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -271,7 +279,7 @@ nextflow run nf-core/rnafusion -r 4.1.3 \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/rnafusion/latest \
+depictio ingest --template nf-core/rnafusion/latest \
   --data-root results/
 ```
 
@@ -331,7 +339,7 @@ DEST=/tmp/rnafusion_test
 bash depictio/projects/nf-core/rnafusion/4.1.3/download_test_data.sh "$DEST"
 mkdir -p "$DEST/input" && curl -fsSL -o "$DEST/input/samplesheet.csv" \
   https://raw.githubusercontent.com/nf-core/test-datasets/rnafusion/testdata/human/samplesheet_valid.csv
-depictio run --template nf-core/rnafusion/latest --data-root "$DEST"
+depictio ingest --template nf-core/rnafusion/latest --data-root "$DEST"
 ```
 
 !!! warning "One synthetic sample"

@@ -71,7 +71,7 @@ endogenous-DNA floor narrows the library hub and, through it, every tab.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/eager/latest \
       --data-root /path/to/eager_results
     ```
@@ -81,7 +81,7 @@ endogenous-DNA floor narrows the library hub and, through it, every tab.
     (default `70`) sets the short-fragment cut-off the Authentication tab counts:
 
     ```bash
-    depictio run --template nf-core/eager/latest \
+    depictio ingest --template nf-core/eager/latest \
       --data-root /path/to/eager_results \
       --var SHORT_FRAGMENT_BP=50
     ```
@@ -93,7 +93,7 @@ endogenous-DNA floor narrows the library hub and, through it, every tab.
     nextflow run nf-core/eager -r 2.4.5 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. The samplesheet copy and the MultiQC regeneration above still
     apply. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
@@ -284,6 +284,17 @@ follows the project links to the tiles it reaches.
         | Variant calls | 4 cards: SNPs, indels, Ts to Tv, multiallelic sites |
         | Coverage tables | per-contig, genome fraction, windowed depth and bcftools tables (collapsed) |
 
+Tables and point views select on their entity column: the pinned sample sheet
+on `sample_id`; the lane table and the lane yield scatter on `lane_id`; every
+per-library table and scatter of the mapping, authentication and coverage tabs,
+the Qualimap reference table and the fragment length and genome fraction
+profiles on `sample`. A pick narrows the other tiles of its collection and
+follows the project links to the collections they reach. The complexity curve
+and depth histogram profiles, the coverage track, and the raw MaltExtract,
+Kraken, contamination and Sex.DetERRmine tables do not select, and the
+endogenous-against-clonality scatter narrows no other tile, since its collection
+has no outgoing link.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -304,7 +315,7 @@ Depictio at them:
 ```bash
 mkdir -p results/input && cp libraries.tsv results/input/
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio run --template nf-core/eager/latest --data-root results/
+depictio ingest --template nf-core/eager/latest --data-root results/
 ```
 
 See [nf-co.re/eager/usage](https://nf-co.re/eager/2.4.5/docs/usage) for full pipeline documentation.
@@ -362,7 +373,7 @@ DEST=/tmp/eager_test
 bash depictio/projects/nf-core/eager/2.4.5/download_test_data.sh "$DEST"
 mkdir -p "$DEST/input" && cp depictio/projects/nf-core/eager/2.4.5/input/*.tsv "$DEST/input/"
 python -m depictio.dev_scripts.multiqc_reprocess --src "$DEST" --dest "$DEST"
-depictio run --template nf-core/eager/latest --data-root "$DEST"
+depictio ingest --template nf-core/eager/latest --data-root "$DEST"
 ```
 
 Do not pass `--project-name` when ingesting: the dashboard is attached to the

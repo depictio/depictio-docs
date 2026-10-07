@@ -66,7 +66,7 @@ scopes every tab.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/rnasplice/latest \
       --data-root /path/to/rnasplice_results
     ```
@@ -77,7 +77,7 @@ scopes every tab.
     the pseudo-alignment route:
 
     ```bash
-    depictio run --template nf-core/rnasplice/latest \
+    depictio ingest --template nf-core/rnasplice/latest \
       --data-root /path/to/rnasplice_results \
       --var METADATA_FILE=/path/to/design.tsv \
       --var GENOME=hg38 \
@@ -91,7 +91,7 @@ scopes every tab.
     nextflow run nf-core/rnasplice -r 1.0.4 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -279,6 +279,13 @@ under Validation runs below.
         | Event detail | *rMATS events*, *Event record* |
         | Event rows | *SUPPA2 local events* (collapsed) |
 
+Tables and point views select on their entity column: the sample and contrast
+tables on `sample` and `contrast`; the sample PCA and its table on `sample_id`;
+the cross-tool, DEXSeq exon, edgeR and transcript-usage tables on `gene_id`; the
+rMATS and SUPPA2 event tables on `event_id`. A pick narrows every tile on the
+tab that reads the same collection or one linked from it, and each record card
+follows the tile beside it.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -300,7 +307,7 @@ Then rebuild the MultiQC parquet and point Depictio at the results:
 
 ```bash
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/multiqc/multiqc_data
-depictio run --template nf-core/rnasplice/latest --data-root results/ --var GENOME=hg38
+depictio ingest --template nf-core/rnasplice/latest --data-root results/ --var GENOME=hg38
 ```
 
 See [nf-co.re/rnasplice/usage](https://nf-co.re/rnasplice/1.0.4/docs/usage) for full pipeline documentation.
@@ -356,7 +363,7 @@ vendored design table:
 
 ```bash
 python -m depictio.dev_scripts.multiqc_reprocess --src <outdir> --dest <outdir>/multiqc/multiqc_data
-depictio run --template nf-core/rnasplice/latest --data-root <outdir> \
+depictio ingest --template nf-core/rnasplice/latest --data-root <outdir> \
   --var METADATA_FILE=depictio/projects/nf-core/rnasplice/1.0.4/input/metadata.tsv \
   --var GENOME=hg19
 ```

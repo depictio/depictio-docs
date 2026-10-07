@@ -66,7 +66,7 @@ every tab, the `Lane table` to the bottom, and the `Library filters` group
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/demultiplex/latest \
       --data-root /path/to/demultiplex_results
     ```
@@ -76,7 +76,7 @@ every tab, the `Lane table` to the bottom, and the `Library filters` group
     written in the sample sheet:
 
     ```bash
-    depictio run --template nf-core/demultiplex/latest \
+    depictio ingest --template nf-core/demultiplex/latest \
       --data-root /path/to/demultiplex_results \
       --var METADATA_FILE=/path/to/library_metadata.tsv \
       --var GROUP_COL=organism
@@ -89,7 +89,7 @@ every tab, the `Lane table` to the bottom, and the `Library filters` group
     nextflow run nf-core/demultiplex -r 1.8.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -252,6 +252,14 @@ below.
         | Library QC distributions | *Duplication against base quality*, *Library card*, *Design groups compared metric by metric* |
         | fastp table | *fastp read QC* (collapsed) |
 
+Tables and point views select on their entity column: the lane table and the
+lane health and phasing scatters on `lane_label`; the sample sheet, the per-lane
+library table, the index purity and library QC scatters and the fastp table on
+`sample`; the unknown barcode table on `barcode`. A pick narrows the other tiles
+of its collection and follows the project links to the collections they reach.
+The per-cycle quality profile and the CheckQC verdict table do not select: their
+collections have no outgoing link.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -270,7 +278,7 @@ Then point Depictio at the results, adding `--var IS_BCLCONVERT=true` for a
 `--demultiplexer bclconvert` run:
 
 ```bash
-depictio run --template nf-core/demultiplex/latest --data-root results/
+depictio ingest --template nf-core/demultiplex/latest --data-root results/
 ```
 
 See [nf-co.re/demultiplex/usage](https://nf-co.re/demultiplex/1.8.0/docs/usage) for full pipeline documentation.
@@ -320,7 +328,7 @@ reports only. `megatest.yaml` lists the tables-only subset the template needs:
 
 ```bash
 bash depictio/projects/nf-core/demultiplex/1.8.0/download_test_data.sh /tmp/demultiplex_test
-depictio run --template nf-core/demultiplex/latest --data-root /tmp/demultiplex_test \
+depictio ingest --template nf-core/demultiplex/latest --data-root /tmp/demultiplex_test \
   --var METADATA_FILE=depictio/projects/nf-core/demultiplex/1.8.0/input/library_metadata.tsv
 ```
 

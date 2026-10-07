@@ -71,7 +71,7 @@ a collapsed sample sheet are pinned to the top of every tab, and a collapsed
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/methylseq/latest \
       --data-root /path/to/methylseq_results \
       --var METADATA_FILE=/path/to/design.tsv \
@@ -96,7 +96,7 @@ a collapsed sample sheet are pinned to the top of every tab, and a collapsed
     nextflow run nf-core/methylseq -r 2.3.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. Without a `METADATA_FILE` the Group comparison is pruned, and the
     MultiQC tab stays empty until the report is regenerated as above. See
@@ -286,6 +286,15 @@ point becomes a filter that follows the project links to the tiles it reaches.
         design table, or without a factor of exactly two levels, the tab is
         pruned.
 
+Tables and point views select on their entity column: the pinned sample sheet
+on `sample_id`; the Bismark, Qualimap and M-bias tables and the per-library
+profiles on `sample`; the group comparison table and the two window tracks on
+`window_id`; the Manhattan panel on `chromosome`. A pick narrows the other tiles
+of its collection and follows the project links to the collections they reach.
+The methylation-by-context table, the binned methylation track and the depth
+histogram narrow nothing, and neither does the cohort PCA: their collections
+have no outgoing link and no sibling tile.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -306,7 +315,7 @@ MultiQC report and point Depictio at them:
 ```bash
 mkdir -p results/input && cp samplesheet_full.csv design.tsv results/input/
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio run --template nf-core/methylseq/latest --data-root results/ \
+depictio ingest --template nf-core/methylseq/latest --data-root results/ \
   --var METADATA_FILE=results/input/design.tsv
 ```
 
@@ -356,7 +365,7 @@ DEST=/tmp/methylseq_test
 bash depictio/projects/nf-core/methylseq/2.3.0/download_test_data.sh "$DEST"
 mkdir -p "$DEST/input" && cp depictio/projects/nf-core/methylseq/2.3.0/input/sample_metadata.tsv "$DEST/input/"
 python -m depictio.dev_scripts.multiqc_reprocess --src "$DEST" --dest "$DEST"
-depictio run --template nf-core/methylseq/latest --data-root "$DEST" \
+depictio ingest --template nf-core/methylseq/latest --data-root "$DEST" \
   --var METADATA_FILE="$DEST/input/sample_metadata.tsv"
 ```
 

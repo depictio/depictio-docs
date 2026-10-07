@@ -66,7 +66,7 @@ The cutandrun template covers the peak-calling chain of a standard run:
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/cutandrun/latest \
       --data-root /path/to/cutandrun_results
     ```
@@ -77,7 +77,7 @@ The cutandrun template covers the peak-calling chain of a standard run:
     the run was aligned to otherwise:
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/cutandrun/latest \
       --data-root /path/to/cutandrun_results \
       --var GENOME=mm10
@@ -90,7 +90,7 @@ The cutandrun template covers the peak-calling chain of a standard run:
     nextflow run nf-core/cutandrun -r 3.1 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -329,6 +329,14 @@ narrow to the same libraries or intervals.
     consensus intervals are called by a single replicate. That is a property of
     the data, not of the template.
 
+Tables and point views select on their entity column: the pinned sample sheet
+on `sample_id`; the per-sample tables (peak summary, fragment classes, spike-in
+factors, FRiP, caller agreement) and the spike-in and duplication scatters on
+`sample`; the peak tables, the Manhattan panel and every Locus track on `peak_id`. A
+pick narrows the other tiles of its collection and follows the project links to
+the collections they reach. The deepTools PCA emits a selection, but its
+collection has no outgoing link, so it narrows no other tile.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -348,7 +356,7 @@ results:
 
 ```bash
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio run --template nf-core/cutandrun/latest --data-root results/
+depictio ingest --template nf-core/cutandrun/latest --data-root results/
 ```
 
 See [nf-co.re/cutandrun/usage](https://nf-co.re/cutandrun/3.1/docs/usage) for
@@ -417,7 +425,7 @@ python -m depictio.dev_scripts.multiqc_reprocess \
   --src /tmp/cutandrun_test --dest /tmp/cutandrun_test
 
 # Then ingest it.
-depictio run --template nf-core/cutandrun/latest --data-root /tmp/cutandrun_test
+depictio ingest --template nf-core/cutandrun/latest --data-root /tmp/cutandrun_test
 ```
 
 ---

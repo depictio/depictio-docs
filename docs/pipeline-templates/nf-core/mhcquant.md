@@ -63,7 +63,7 @@ of every tab, `Reference tables` to the bottom, and the `Sample filters` group
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/mhcquant/latest \
       --data-root /path/to/mhcquant_results \
       --var METADATA_FILE=/path/to/samplesheet.tsv \
@@ -83,7 +83,7 @@ of every tab, `Reference tables` to the bottom, and the `Sample filters` group
     nextflow run nf-core/mhcquant -r 3.2.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -276,6 +276,16 @@ Validation runs below.
         | Precursors | *Precursor m/z over the gradient, by charge* |
         | Fragment tables | *Matched fragment ions per peptide* (collapsed) |
 
+Tables and scatters select on their entity column: the sample sheet on
+`sample_id`, which the links carry to every collection and to the MultiQC
+panels, and the pinned per-sample summary on `sample`; the Comet table on raw
+files (`run_id`) and the replicate membership table on peptides; the peptide
+table and the three physico-chemical scatters on `sequence`, which also reaches
+the condition-sharing collection; the source-protein scatter and table on
+`protein`; the fragment-ion table on `peptide`. A pick narrows every tile that
+reads the same collection or one linked from it. The length table and the
+replicate-pair scatter select nothing.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -295,7 +305,7 @@ nextflow run nf-core/mhcquant -r 3.2.0 \
 Then point Depictio at the results, with the samplesheet you started from:
 
 ```bash
-depictio run --template nf-core/mhcquant/latest --data-root results/ \
+depictio ingest --template nf-core/mhcquant/latest --data-root results/ \
   --var METADATA_FILE=samplesheet.tsv --var GROUP_COL=Condition
 ```
 
@@ -341,7 +351,7 @@ the download script also places the vendored samplesheet under `input/`:
 
 ```bash
 bash depictio/projects/nf-core/mhcquant/3.2.0/download_test_data.sh /tmp/mhcquant_test
-depictio run --template nf-core/mhcquant/latest --data-root /tmp/mhcquant_test \
+depictio ingest --template nf-core/mhcquant/latest --data-root /tmp/mhcquant_test \
   --var GROUP_COL=Condition
 ```
 

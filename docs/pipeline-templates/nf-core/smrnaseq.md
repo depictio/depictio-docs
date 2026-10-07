@@ -56,7 +56,7 @@ apply everywhere.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/smrnaseq/latest \
       --data-root /path/to/smrnaseq_results \
       --var METADATA_FILE=/path/to/design.tsv \
@@ -79,7 +79,7 @@ apply everywhere.
     nextflow run nf-core/smrnaseq -r 2.4.1 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -273,6 +273,14 @@ gives it**. Screenshots come from the run described under Validation runs.
         `--var SKIP_MIRDEEP=true` and the four miRDeep2 collections are pruned,
         which drops this tab.
 
+Tables and point views select on their entity column: the sample summary, the
+read-length and complexity profiles, the depth-and-share plane and the
+group-comparison PCA on `sample`, and the design table on its id column; the
+mean-variance plane, the miRNA summary and the isomiR table on `mirna`; the
+novel-precursor plane and table on `precursor_id`. A pick narrows every tile on
+the tab that reads the same collection or one linked from it, and each record
+card follows the tile beside it.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -291,7 +299,7 @@ nextflow run nf-core/smrnaseq -r 2.4.1 \
 Then point Depictio at the results, with a design table if you have one:
 
 ```bash
-depictio run --template nf-core/smrnaseq/latest --data-root results/ \
+depictio ingest --template nf-core/smrnaseq/latest --data-root results/ \
   --var METADATA_FILE=design.tsv --var GENOME=hg38
 ```
 
@@ -337,7 +345,7 @@ table is not part of the published run: it is vendored with the template under
 bash depictio/projects/nf-core/smrnaseq/2.4.1/download_test_data.sh /tmp/smrnaseq_test
 mkdir -p /tmp/smrnaseq_test/input
 cp depictio/projects/nf-core/smrnaseq/2.4.1/input/sample_metadata.tsv /tmp/smrnaseq_test/input/
-depictio run --template nf-core/smrnaseq/latest --data-root /tmp/smrnaseq_test \
+depictio ingest --template nf-core/smrnaseq/latest --data-root /tmp/smrnaseq_test \
   --var METADATA_FILE=/tmp/smrnaseq_test/input/sample_metadata.tsv --var GENOME=hg19
 ```
 

@@ -55,7 +55,7 @@ nf-core/differentialabundance run:
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/differentialabundance/latest \
       --data-root /path/to/differentialabundance_results
     ```
@@ -82,7 +82,7 @@ nf-core/differentialabundance run:
     nextflow run nf-core/differentialabundance -r 2.0.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -247,6 +247,14 @@ top of every tab, `Reference tables` to the bottom.
     which is what an honest null result looks like rather than a broken
     dashboard.
 
+Tables and point views select on their entity column: the pinned sample sheet
+and the PCA on `sample_id`, which narrows the PCA, the distance matrix and the
+VST panels; the results tables, the contrast-against-contrast scatter and the
+Manhattan panel on `gene_id`; the GSEA table on `term`. A pick narrows the other
+tiles of its collection and follows the project links to the collections they
+reach. The VST distribution profile does not select: its collection has no
+outgoing link.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -270,7 +278,7 @@ Depictio for that run.
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/differentialabundance/latest \
+depictio ingest --template nf-core/differentialabundance/latest \
   --data-root results/
 ```
 
@@ -331,7 +339,7 @@ same pipeline; the fetch command is in the `megatest.yaml` header.
 Then run Depictio against it:
 
 ```bash
-depictio run \
+depictio ingest \
   --template nf-core/differentialabundance/latest \
   --data-root /tmp/differentialabundance_test
 ```

@@ -64,7 +64,7 @@ tab, and `Reference tables`, holding the database sheet, to the bottom.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/taxprofiler/latest \
       --data-root /path/to/taxprofiler_results
     ```
@@ -80,7 +80,7 @@ tab, and `Reference tables`, holding the database sheet, to the bottom.
     nextflow run nf-core/taxprofiler -r 2.0.1 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -274,6 +274,14 @@ to the bottom of every tab.
     the database as a suffix, which no samplesheet value reduces to. The
     cross-classifier views of the same data, on the later tabs, do filter.
 
+Tables and point views select on their entity column: the samplesheet and the
+sylph containment table on `sample`; the Nonpareil scatter and table on
+`library`; the richness scatter, the per-run table and the Bray-Curtis
+ordination on `profiler_db`; the cross-profiler tables on the taxon `name`, the
+Melon table on `species` and the sylph clade table on `clade_name`; the ANI
+scatter on `genome`. A pick narrows every tile on the tab that reads the same
+collection or one linked from it.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -294,7 +302,7 @@ nextflow run nf-core/taxprofiler -r 2.0.1 \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/taxprofiler/latest \
+depictio ingest --template nf-core/taxprofiler/latest \
   --data-root results/
 ```
 
@@ -357,7 +365,7 @@ the test-datasets URLs in `params.json` into `input/` after the S3 fetch.
 Then run Depictio against it:
 
 ```bash
-depictio run \
+depictio ingest \
   --template nf-core/taxprofiler/latest \
   --data-root /tmp/taxprofiler_test
 ```

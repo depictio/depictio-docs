@@ -54,7 +54,7 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/airrflow/latest \
       --data-root /path/to/airrflow_results
     ```
@@ -68,7 +68,7 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
     condition in another free column names it, and can relabel it:
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/airrflow/latest \
       --data-root /path/to/airrflow_results \
       --var GROUP_COL=intervention \
@@ -90,7 +90,7 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
     nextflow run nf-core/airrflow -r 5.1.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -275,6 +275,14 @@ bottom, so the cohort a tile is computed from is always in view.
     `clonal_diversity.tsv`, so its diversity cards are null while its clone counts
     stand.
 
+Tables and scatters select on their entity column: the pinned sample sheet
+and repertoire summary, the sequence counts and clonal overlap tables, the
+clones-against-depth figure and the richness-against-evenness scatter on
+`sample_id`, and the clonal threshold table on `subject_id`. A pick becomes a
+dashboard filter that the project links carry to every collection they reach.
+The diversity profile does not select, and the clone abundance profile only
+narrows itself: neither collection links anywhere else.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -296,7 +304,7 @@ nextflow run nf-core/airrflow -r 5.1.0 \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/airrflow/latest \
+depictio ingest --template nf-core/airrflow/latest \
   --data-root results/
 ```
 
@@ -368,7 +376,7 @@ once the download finishes.
 Then run Depictio against it:
 
 ```bash
-depictio run \
+depictio ingest \
   --template nf-core/airrflow/latest \
   --data-root /tmp/airrflow_test
 ```

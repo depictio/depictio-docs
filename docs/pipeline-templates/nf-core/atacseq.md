@@ -81,7 +81,7 @@ to tab.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/atacseq/latest \
       --data-root /path/to/atacseq_results
     ```
@@ -98,7 +98,7 @@ to tab.
     nextflow run nf-core/atacseq -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -265,7 +265,7 @@ nextflow run nf-core/atacseq -r 2.1.2 -profile docker \
 
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
 
-depictio run --template nf-core/atacseq/latest --data-root results/
+depictio ingest --template nf-core/atacseq/latest --data-root results/
 ```
 
 See [nf-co.re/atacseq/usage](https://nf-co.re/atacseq/2.1.2/docs/usage) for full

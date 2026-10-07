@@ -67,7 +67,7 @@ matrix, every track and both distance curves through the project links.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/hic/latest \
       --data-root /path/to/hic_results \
       --var GENOME=mm10
@@ -86,7 +86,7 @@ matrix, every track and both distance curves through the project links.
     nextflow run nf-core/hic -r 2.0.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. The MultiQC tab stays empty until the report is regenerated as
     above. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
@@ -211,8 +211,8 @@ point becomes a filter that follows the project links to the tiles it reaches.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Domain window`, `Insulation window` and `Compartment
-        resolution` choose which calls the tracks draw. There is no chromosome
+        **Filters** · `Domain window (bp)`, `Insulation window (bp)` and
+        `Compartment resolution (bp)` choose which calls the tracks draw. There is no chromosome
         filter: the locus field is the section's chromosome.
 
         | Section | What it holds |
@@ -235,8 +235,8 @@ point becomes a filter that follows the project links to the tiles it reaches.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Domain window`, `Insulation window`, `Compartment
-        resolution` and `Compartment`; no chromosome filter.
+        **Filters** · `Domain window (bp)`, `Insulation window (bp)`,
+        `Compartment resolution (bp)` and `Compartment`; no chromosome filter.
 
         | Section | What it holds |
         |---|---|
@@ -244,6 +244,14 @@ point becomes a filter that follows the project links to the tiles it reaches.
         | Compartments at a glance | 4 cards: A and B bins, E1 spread, eigenvalues 1 and 2 |
         | Domain and compartment distributions | *Domain size by insulation window*, *A and B bins per chromosome* |
         | Domain, insulation and compartment tables | 4 tables (collapsed) |
+
+Tables and point views select on their entity column: the pinned sample sheet
+on `sample_id`; the pair statistics, pair flow, P(s) and eigenvalue tables on
+`sample`; the P(s) curve on `chrom`, which narrows the P(s) table and card to
+the chromosome picked. A pick narrows the other tiles of its collection and
+follows the project links to the collections they reach. The domain, insulation
+and compartment tables do not select: their rows are bins and domains with no
+identifier column.
 
 ---
 
@@ -264,7 +272,7 @@ UCSC name of the same assembly:
 
 ```bash
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio run --template nf-core/hic/latest --data-root results/ --var GENOME=mm10
+depictio ingest --template nf-core/hic/latest --data-root results/ --var GENOME=mm10
 ```
 
 See [nf-co.re/hic/usage](https://nf-co.re/hic/2.0.0/docs/usage) for full pipeline documentation.
@@ -310,7 +318,7 @@ sample column and the links are ready for a cohort.
 DEST=/tmp/hic_test
 bash depictio/projects/nf-core/hic/2.0.0/download_test_data.sh "$DEST"
 python -m depictio.dev_scripts.multiqc_reprocess --src "$DEST" --dest "$DEST"
-depictio run --template nf-core/hic/latest --data-root "$DEST" --var GENOME=mm10
+depictio ingest --template nf-core/hic/latest --data-root "$DEST" --var GENOME=mm10
 ```
 
 Do not pass `--project-name` when ingesting: the dashboard is attached to the

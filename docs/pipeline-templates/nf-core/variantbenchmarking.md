@@ -83,7 +83,7 @@ have to pass. None of the four templates needs a `--var` flag.
 === "Germline small variants"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/variantbenchmarking/1.4.0/categories/small \
       --data-root /path/to/germline_results
     ```
@@ -93,7 +93,7 @@ have to pass. None of the four templates needs a `--var` flag.
 === "Somatic indels"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/variantbenchmarking/1.4.0/categories/indel \
       --data-root /path/to/somatic_results
     ```
@@ -104,7 +104,7 @@ have to pass. None of the four templates needs a `--var` flag.
 === "Structural variants"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/variantbenchmarking/1.4.0/categories/structural \
       --data-root /path/to/sv_results
     ```
@@ -115,7 +115,7 @@ have to pass. None of the four templates needs a `--var` flag.
 === "All variant types"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/variantbenchmarking/1.4.0 \
       --data-root /path/to/megatest_results
     ```
@@ -475,7 +475,7 @@ Then point Depictio at the results, choosing the template id for the variant typ
 run produced:
 
 ```bash
-depictio run --template nf-core/variantbenchmarking/1.4.0/categories/small \
+depictio ingest --template nf-core/variantbenchmarking/1.4.0/categories/small \
   --data-root results/
 ```
 

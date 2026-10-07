@@ -56,7 +56,7 @@ table, the design group) apply everywhere.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/riboseq/latest \
       --data-root /path/to/riboseq_results \
       --var METADATA_FILE=/path/to/design.tsv
@@ -77,7 +77,7 @@ table, the design group) apply everywhere.
     nextflow run nf-core/riboseq -r 2.0.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -271,6 +271,13 @@ run described under Validation runs.
         | ORF detail | *ORFs pooled over libraries*, *ORF record* |
         | ORF rows | *Ribo-TISH calls per library*, *RiboCode calls per library* (collapsed) |
 
+Tables and point views select on their entity column: the sample sheet, the
+phasing scatter and the Ribo-seq QC tables on `sample`, and the design table on
+its id column; the library PCA and its table on `sample_id`; the regulation and
+efficiency planes and their gene tables on `gene_id`; the pooled ORF table on
+`orf_id`. A pick narrows every tile on the tab that reads the same collection or
+one linked from it, and each record card follows the tile beside it.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -291,7 +298,7 @@ Then copy the sample sheet under `input/` and point Depictio at the results:
 
 ```bash
 mkdir -p results/input && cp samplesheet.csv results/input/
-depictio run --template nf-core/riboseq/latest --data-root results/ \
+depictio ingest --template nf-core/riboseq/latest --data-root results/ \
   --var METADATA_FILE=design.tsv
 ```
 
@@ -345,7 +352,7 @@ of the published run: they are vendored with the template under `input/`.
 bash depictio/projects/nf-core/riboseq/2.0.0/download_test_data.sh /tmp/riboseq_test
 mkdir -p /tmp/riboseq_test/input
 cp depictio/projects/nf-core/riboseq/2.0.0/input/*.*sv /tmp/riboseq_test/input/
-depictio run --template nf-core/riboseq/latest --data-root /tmp/riboseq_test \
+depictio ingest --template nf-core/riboseq/latest --data-root /tmp/riboseq_test \
   --var METADATA_FILE=/tmp/riboseq_test/input/metadata.tsv
 ```
 

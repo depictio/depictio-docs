@@ -61,7 +61,7 @@ The funcscan template covers the four aggregated screening reports of a standard
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/funcscan/latest \
       --data-root /path/to/funcscan_results
     ```
@@ -77,7 +77,7 @@ The funcscan template covers the four aggregated screening reports of a standard
     nextflow run nf-core/funcscan -r 4.0.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -306,6 +306,15 @@ cards and the collapsed *Sample sheet* section.
     each report in their own terms, so every concordance panel is scored on a
     shared key (the contig for ARGs and BGCs, the gene for CAZymes).
 
+Every hub selects on its own key: the screening hub on `sample`, the contig
+tiles on `contig`, the resistance hits on `gene_symbol`, the AMP plane and
+candidate table on `cds_id`, the peptide cluster table on `cluster_id`, the BGC
+tiles on `contig`, the CAZyme gene table on `family`, the substrate table on
+`cgc_id` and the versions table on `tool`. A pick narrows the other tiles of its
+collection and follows the project links to the collections they reach. The
+pinned sample sheet and the AMP embedding do not select: their collections have
+no outgoing link.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -324,7 +333,7 @@ nextflow run nf-core/funcscan -r 4.0.0 \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/funcscan/latest \
+depictio ingest --template nf-core/funcscan/latest \
   --data-root results/
 ```
 
@@ -386,7 +395,7 @@ publishes no `input/` directory, so `post_fetch_help` in `megatest.yaml` gives
 the `curl` command that puts the samplesheet under `input/`. Then run Depictio:
 
 ```bash
-depictio run \
+depictio ingest \
   --template nf-core/funcscan/latest \
   --data-root /tmp/funcscan_test
 ```

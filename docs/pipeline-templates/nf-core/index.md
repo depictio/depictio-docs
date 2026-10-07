@@ -4,7 +4,7 @@ title: nf-core
 
 # nf-core Templates
 
-Templates for [nf-core](https://nf-co.re) pipelines. Each template configures a complete Depictio project — data collections, recipes, dashboards, and cross-DC links — from a single `depictio-cli run` command.
+Templates for [nf-core](https://nf-co.re) pipelines. Each template configures a complete Depictio project (data collections, recipes, dashboards and cross-DC links) from a single `depictio-cli ingest` command.
 
 | Template | Pipeline | Versions |
 |----------|----------|---------- |

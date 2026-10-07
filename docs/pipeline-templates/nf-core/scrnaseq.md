@@ -65,7 +65,7 @@ cluster, marker, per-cell expression and cell-cycle tables alike.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/scrnaseq/latest \
       --data-root /path/to/scrnaseq_results
     ```
@@ -76,7 +76,7 @@ cluster, marker, per-cell expression and cell-cycle tables alike.
     the lineage markers of your tissue on the per-cell marker tiles, name them:
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/scrnaseq/latest \
       --data-root /path/to/scrnaseq_results \
       --var MARKER_PANEL=GENE1,GENE2,GENE3
@@ -93,7 +93,7 @@ cluster, marker, per-cell expression and cell-cycle tables alike.
     nextflow run nf-core/scrnaseq -r 4.2.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -373,7 +373,7 @@ Then copy the samplesheet next to the results and point Depictio at them:
 
 ```bash
 mkdir -p results/input && cp samplesheet.csv results/input/
-depictio run --template nf-core/scrnaseq/latest --data-root results/
+depictio ingest --template nf-core/scrnaseq/latest --data-root results/
 ```
 
 To fill the Aligner concordance tab, run the pipeline once more per extra
@@ -421,7 +421,7 @@ the run names in `params.json` is fetched into `input/` separately:
 
 ```bash
 bash depictio/projects/nf-core/scrnaseq/4.2.0/download_test_data.sh /tmp/scrnaseq_test
-depictio run --template nf-core/scrnaseq/latest --data-root /tmp/scrnaseq_test
+depictio ingest --template nf-core/scrnaseq/latest --data-root /tmp/scrnaseq_test
 ```
 
 Do not pass `--project-name` when ingesting: the dashboard is attached to the

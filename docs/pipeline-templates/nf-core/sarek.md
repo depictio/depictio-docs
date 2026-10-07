@@ -63,7 +63,7 @@ thresholds` group (a Ts/Tv floor) pinned to the bottom.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/sarek/latest \
       --data-root /path/to/sarek_results
     ```
@@ -75,7 +75,7 @@ thresholds` group (a Ts/Tv floor) pinned to the bottom.
     draw the right axis and gene lane:
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/sarek/latest \
       --data-root /path/to/sarek_results \
       --var GENOME=hg19
@@ -92,7 +92,7 @@ thresholds` group (a Ts/Tv floor) pinned to the bottom.
     nextflow run nf-core/sarek -r 3.10.0 -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -316,7 +316,7 @@ Then point Depictio at the results. sarek 3.10.0 ships a MultiQC parquet, so no
 reprocess step is needed:
 
 ```bash
-depictio run --template nf-core/sarek/latest --data-root results/
+depictio ingest --template nf-core/sarek/latest --data-root results/
 ```
 
 See [nf-co.re/sarek/usage](https://nf-co.re/sarek/3.10.0/docs/usage) for full pipeline documentation.
@@ -364,7 +364,7 @@ per-caller VCFs and their SnpEff twins:
 
 ```bash
 bash depictio/projects/nf-core/sarek/3.10.0/download_test_data.sh /tmp/sarek_test
-depictio run --template nf-core/sarek/latest --data-root /tmp/sarek_test
+depictio ingest --template nf-core/sarek/latest --data-root /tmp/sarek_test
 ```
 
 Do not pass `--project-name` when ingesting: the dashboard is attached to the

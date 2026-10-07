@@ -8,13 +8,40 @@ hide:
 
 # Changelog
 
-## **Unreleased**
+## **[v1.13.0](https://github.com/depictio/depictio/releases/tag/v1.13.0)** (October 7, 2026)
+
+!!! success "Minor: thirteen new nf-core templates, ten new visualization kinds, and comments on dashboards"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.13.0
+ghcr.io/depictio/depictio-viewer:1.13.0
+ghcr.io/depictio/depictio-worker:1.13.0
+ghcr.io/depictio/depictio-cli:1.13.0
+```
+
+### **✨ New Features**
+
+* **Ten new advanced visualization kinds**: [Contact map](../features/components.md#contact-map), [Knee plot](../features/components.md#knee-plot), [Damage profile](../features/components.md#damage-profile), [Genome view](../features/components.md#genome-view) (GenomeSpy tracks with a region brush that filters by chromosome and position), [Group compare](../features/components.md#group-compare) (two groups tested feature by feature on demand), [Transcript structure](../features/components.md#transcript-structure), [Copy-number profile](../features/components.md#cnv-profile), [Genome chord](../features/components.md#genome-chord), [Parallel coordinates](../features/components.md#parallel-coordinates) and the [Record card](../features/components.md#record-card), which shows one picked row as a collapsible panel beside the tile that selects it ([#1102](https://github.com/depictio/depictio/pull/1102)).
+* **Comments and annotations on dashboard tiles**: threads that capture the active filters and selection, marks drawn on figures, advanced visualizations, MultiQC plots, tables and maps, stale-data signals and agent proposals held for review. A mark drawn on a multi-view tile stays on the view it was drawn on ([#1109](https://github.com/depictio/depictio/pull/1109), [#1113](https://github.com/depictio/depictio/pull/1113)).
+
+### **🚀 Improvements**
+
+* **Recipes take template parameters** through a `params` channel, so a recipe reads the grouping column of the run instead of a hardcoded one. See [Recipes](../usage/projects/recipes.md#params) ([#1102](https://github.com/depictio/depictio/pull/1102)).
+* **Region links and region-scoped filters** carry a genomic window from one collection to another. See [Region links](../features/cross-dc-filtering.md#region-links) ([#1102](https://github.com/depictio/depictio/pull/1102)).
+* **MA, QQ, enrichment and ROC are now views of the tile that draws them** (volcano, dot plot, PR benchmark); stored dashboards are rewritten on load and keep rendering ([#1102](https://github.com/depictio/depictio/pull/1102)).
+* **56 new catalog tools**, and every tool now declares its description, homepage and bio.tools link; `catalog validate` rejects a module without a description or homepage ([#1102](https://github.com/depictio/depictio/pull/1102)).
+* **Only the reference projects seed at boot**: iris, penguins, the advanced visualization showcase, nf-core/ampliseq 2.18.0 and nf-core/viralrecon 3.0.0. The nf-core/ampliseq 2.14.0 and 2.16.0 seeds are gone; ingest those versions with their template instead ([#1102](https://github.com/depictio/depictio/pull/1102)).
 
 ### **🧬 Pipeline Templates**
 
 * **Thirteen new nf-core templates**. Experimental, validated on real data: [nf-core/mag 5.5.0](../pipeline-templates/nf-core/mag.md), [nf-core/nanoseq 3.0.0](../pipeline-templates/nf-core/nanoseq.md), [nf-core/riboseq 2.0.0](../pipeline-templates/nf-core/riboseq.md) and [nf-core/rnasplice 1.0.4](../pipeline-templates/nf-core/rnasplice.md). Draft, validated on a single small or partial run, or with a known issue: [nf-core/demultiplex 1.8.0](../pipeline-templates/nf-core/demultiplex.md), [nf-core/eager 2.4.5](../pipeline-templates/nf-core/eager.md), [nf-core/genomeassembler 2.0.0](../pipeline-templates/nf-core/genomeassembler.md), [nf-core/hic 2.0.0](../pipeline-templates/nf-core/hic.md), [nf-core/methylseq 2.3.0](../pipeline-templates/nf-core/methylseq.md), [nf-core/mhcquant 3.2.0](../pipeline-templates/nf-core/mhcquant.md), [nf-core/sarek 3.10.0](../pipeline-templates/nf-core/sarek.md), [nf-core/scrnaseq 4.2.0](../pipeline-templates/nf-core/scrnaseq.md) and [nf-core/smrnaseq 2.4.1](../pipeline-templates/nf-core/smrnaseq.md) ([#1102](https://github.com/depictio/depictio/pull/1102)).
 * **Linked record cards and cross-selection in the nf-core templates**: a record card sits beside the table or plot that selects its row, and scatter plots and tables filter each other where they share a key ([#1102](https://github.com/depictio/depictio/pull/1102)).
 * **nf-core/airrflow 5.1.0, nf-core/cutandrun 3.1, nf-core/differentialabundance 2.0.0, nf-core/funcscan 4.0.0, nf-core/rnaseq 3.26.0, nf-core/taxprofiler 2.0.1 and nf-core/variantbenchmarking 1.4.0 move from Draft to Experimental**, with reworked tabs ([#1102](https://github.com/depictio/depictio/pull/1102)).
+* **nf-core/atacseq 1.2.2, nf-core/chipseq 1.2.0 and nf-core/rnafusion 4.1.3 are reworked the same way** and stay Draft ([#1102](https://github.com/depictio/depictio/pull/1102)).
+* **nf-core/ampliseq 2.18.0 and nf-core/viralrecon 3.0.0 follow the same layout**: every tab opens on a glance strip and carries the pinned sample filters, tables and plots cross-select, and record cards sit beside the tiles that pick their row. The ampliseq tree metadata reads your `GROUP_COL` instead of a fixed column ([#1102](https://github.com/depictio/depictio/pull/1102)).
+* **Catalog outputs that changed shape**: the arriba, FusionCatcher, FusionInspector, fusion-report, STAR-Fusion, CTAT-Splicing and dbCAN outputs gain a `sample` column read from the file path; the truvari, som.py, Wittyer, SVanalyzer and rtg-tools outputs gain optional `caller` and `truth_set` columns; the MACS2 peak cards threshold at a -log10 q-value of 1.3 (q 0.05); bcftools stats reads the sample and caller from the report's `ID` line ([#1102](https://github.com/depictio/depictio/pull/1102)).
 
 ---
 

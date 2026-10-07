@@ -53,7 +53,7 @@ you from tab to tab.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/ampliseq/latest \
       --data-root /path/to/ampliseq_results
     ```
@@ -67,7 +67,7 @@ you from tab to tab.
 === "Choose the grouping column"
 
     ```bash
-    depictio run \
+    depictio ingest \
       --template nf-core/ampliseq/latest \
       --data-root /path/to/ampliseq_results \
       --var METADATA_FILE=/path/to/Metadata.tsv \
@@ -341,6 +341,15 @@ run was resolved against; the dashboard substitutes its real name everywhere.
     (sonde readings per sample, and the diversity they go with). Both are bound to
     metadata columns that only that dataset ships.
 
+Tables select rows and the SIDLE k-mer scatter selects points: the pinned
+sample sheet on the metadata id column, the alpha-diversity table on
+`sample_id`, the two relative-abundance tables on `taxonomy`, the ANCOM-BC table
+on `id` (which also drives the *Taxon record*), the tip taxonomy table on
+`taxon`, and both SIDLE tables and the scatter on `feature_id`. A pick narrows the
+other tiles of the same collection and, through the project links, the
+collections downstream of it. The bar and box figures do not select, and the
+ordination embedding narrows nothing, since its collection has no outgoing link.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -359,7 +368,7 @@ nextflow run nf-core/ampliseq -r 2.18.0 \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/ampliseq/latest \
+depictio ingest --template nf-core/ampliseq/latest \
   --data-root results/ \
   --var GROUP_COL=habitat
 ```
@@ -413,7 +422,7 @@ the template needs:
 
 ```bash
 python scripts/nfcore_megatest.py fetch --pipeline ampliseq --version 2.18.0 --dest /tmp/ampliseq_test
-depictio run --template nf-core/ampliseq/2.18.0 --data-root /tmp/ampliseq_test --var GROUP_COL=habitat
+depictio ingest --template nf-core/ampliseq/2.18.0 --data-root /tmp/ampliseq_test --var GROUP_COL=habitat
 ```
 
 Do not pass `--project-name` when ingesting: the dashboard is attached to the
