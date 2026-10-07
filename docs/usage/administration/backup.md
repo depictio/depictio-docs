@@ -111,9 +111,11 @@ outside the collections a restore overwrites.
 
 ## What is covered
 
-Eleven collections: `users`, `groups`, `projects`, `dashboards`,
+Twelve collections: `users`, `groups`, `projects`, `dashboards`,
 `data_collections`, `workflows`, `files`, `deltatables`, `runs`,
-`instance_settings` and `branding_assets`.
+`instance_settings`, `branding_assets` and `comment_threads` (the
+[comments and annotations](../../features/comments-annotations.md) of every
+dashboard).
 
 Deliberately excluded:
 
