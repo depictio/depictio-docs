@@ -8,8 +8,8 @@ description: "Run the full Depictio server on your own machine without Docker, t
 
 `depictio local up` starts a complete Depictio server on your machine: the same
 API, worker and viewer as the Docker and Kubernetes deployments, with MongoDB,
-Redis and SeaweedFS (the S3 store) run as plain processes on `127.0.0.1`. It can
-ingest a pipeline template in the same command, so you go from a results
+Redis and SeaweedFS (the S3 store) run as plain processes on `127.0.0.1`. Then
+`depictio ingest` adds your pipeline results to it, so you go from a results
 directory to its dashboard without Docker, a cluster or a shared instance.
 
 Use it to review a template on your own results, or to try Depictio on a laptop.
@@ -23,42 +23,39 @@ For a team, a demo or production, use [Docker Compose](docker.md) or
 
 ## :material-rocket-launch: Quick Start
 
-**Prerequisites**: [uv](https://docs.astral.sh/uv/getting-started/installation/),
-and until the `depictio` package is published on PyPI, [git](https://git-scm.com/),
-[Node.js](https://nodejs.org/) and [pnpm](https://pnpm.io/installation) to build
-the viewer from a clone.
+**Prerequisites**: [uv](https://docs.astral.sh/uv/getting-started/installation/).
 
 ### Step 1: Install
 
-`depictio` is not on PyPI yet, so for now it is installed from a clone of the
-repository, with the viewer built first:
-
 ```bash
-git clone https://github.com/depictio/depictio.git
-cd depictio
-pnpm install --frozen-lockfile
-(cd depictio/viewer && pnpm run build)
-uv tool install -e ".[local]"
+uv tool install "depictio[local]"
 ```
 
 `uv tool install` puts the `depictio` command on your `PATH`, in an environment
 of its own that holds the server's Python dependencies (about 2 GB). No
 `--python` flag is needed: the dependencies install from prebuilt wheels on
-Python 3.11 to 3.14. The install is editable, so it runs the code and the viewer
-build of the clone. Without the viewer build the API starts, but dashboards do
-not render; `up` warns about it.
+Python 3.11 to 3.14. The package carries the viewer, already built.
 
-!!! info "Once `depictio` is published on PyPI"
-    The package carries the viewer, so one command replaces the clone and the
-    build:
+Prefer it to `uvx --from "depictio[local]" depictio local up`: `uvx` runs the
+command in a temporary environment and leaves no `depictio` command behind
+for `depictio local status` and `depictio local down`.
+
+??? info "From a clone of the repository"
+    To run the code of a clone, install it in editable mode:
 
     ```bash
-    uv tool install "depictio[local]"
+    git clone https://github.com/depictio/depictio.git
+    cd depictio
+    uv tool install -e ".[local]"
     ```
 
-    Prefer it to `uvx --from "depictio[local]" depictio local up`: `uvx` runs the
-    command in a temporary environment and leaves no `depictio` command behind
-    for `depictio local status` and `depictio local down`.
+    A clone has no viewer bundle, so `depictio local up` builds it, with
+    `pnpm install` then `pnpm run build`, when it is missing or older than its
+    sources. That takes about a minute and needs [Node.js](https://nodejs.org/)
+    20 or later with [pnpm](https://pnpm.io/installation); the output goes to
+    `~/.depictio/local/logs/viewer-build.log`. A build that fails does not stop
+    the start: the server runs with the previous bundle, or without dashboards
+    when there is none, and `up` says so.
 
 ### Step 2: Start the server
 
@@ -75,16 +72,23 @@ first run, `up` waits a few seconds for the examples to load ("Loading the
 examples") so their dashboards open with data, then ends with a summary:
 
 ```text
-Depictio is ready: http://127.0.0.1:8058/dashboards
-  Examples: iris, penguins
-  Data: /home/you/.depictio/local (logs in /home/you/.depictio/local/logs)
-  Add data: depictio local up --template <template> --data-root <dir>
-  CLI on this server: export DEPICTIO_CLI_CONFIG_PATH=/home/you/.depictio/local/cli/admin_config.yaml
-  Stop: depictio local down
+✓ Depictio is ready: http://127.0.0.1:8058/dashboards
+
+  Examples     iris, penguins
+  Data         /home/you/.depictio/local
+  Logs         /home/you/.depictio/local/logs
+
+  Next steps
+  Add data     depictio ingest <results dir>
+  Use the CLI  depictio <command>
+  Stop         depictio local down
 ```
 
-The `export` line points the [CLI](../depictio-cli/usage.md) at this server for
-the rest of the shell session.
+When no other server is configured (no `~/.depictio/CLI.yaml`, and no
+`DEPICTIO_CLI_*` variable set), every [CLI](../depictio-cli/usage.md) command
+reaches this server by default, as above. Otherwise the next steps add
+`--server local`, which names this server whatever else is configured. See
+[Which server a command uses](../depictio-cli/usage.md#choosing-a-server).
 
 Over SSH, or on Linux without a display, no browser is opened: `up` prints the
 tunnel to run from your own machine, `ssh -L <port>:127.0.0.1:<port> <host>`,
@@ -92,65 +96,72 @@ then the URL to open there.
 
 ### Step 3: Open the dashboard of your own results
 
-Pass a [template](../usage/projects/templates.md) and the pipeline output
-directory:
+With the server up, ingest the pipeline output directory:
 
 ```bash
-depictio local up \
-  --template nf-core/ampliseq/latest \
-  --data-root path/to/results
+depictio ingest path/to/results
 ```
 
-`up` starts the services unless they are already running, then runs
-`depictio run` against them with a CLI configuration it generates, and prints
-the summary. With `--template`, no example project is seeded unless
-`--examples` asks for one. Examples are seeded on the first run of a local home
-only: a home started without them stays without them, and `up` says so when
-`--examples` names one. Template variables go through `--var`, as with
-[`depictio-cli run`](../depictio-cli/usage.md#run-command). nf-core results do
-not contain the samplesheet: when the template cannot find it under `input/`,
-pass it explicitly.
+[`depictio ingest`](../depictio-cli/usage.md#ingest-command) detects the
+[template](../usage/projects/templates.md) from the results, from the pipeline
+name and version the run recorded, and ends with links to the project and its
+dashboards. Add `--server local` when another server is configured, as in the
+summary above. Pass `--template` to choose the template, and template variables
+with `--var`. nf-core results do not contain the samplesheet: when the template
+cannot find it under `input/`, pass it explicitly.
 
 ```bash
-depictio local up \
+depictio ingest path/to/results \
   --template nf-core/rnaseq/latest \
-  --data-root path/to/results \
   --var SAMPLESHEET_FILE=samplesheet.csv
 ```
 
 If the ingestion fails, the command exits with an error and the server keeps
-running.
+running. To ingest the same results again after a new run, add
+`--update-config`: it refreshes the project and keeps its dashboards as edited
+in the viewer (see
+[Refreshing a project](../depictio-cli/usage.md#refreshing-a-project)).
+
+!!! note "Since v1.12.0, `depictio local up` starts the server only"
+    In v1.12.0-b1, `up` also ingested data, with `--template`, `--data-root`,
+    `--project-name` and `--var`. Those options moved to `depictio ingest`:
+    given to `up`, they make it print the `depictio local up` and
+    `depictio ingest` commands to run instead, and exit with code 2.
 
 ---
 
 ## :material-console: Commands
 
+`depictio local` manages the server only. Data goes in with
+[`depictio ingest`](../depictio-cli/usage.md#ingest-command).
+
 | Command | Effect |
 |---------|--------|
-| `depictio local up` | Start the services, seed examples or ingest a template, print a summary, open the browser |
-| `depictio local status` | Show each process with its port, whether the API answers, and the log directory |
+| `depictio local up` | Start the services, seed the examples on a first run, print a summary, open the browser. From a clone, build the viewer first when it is missing or out of date |
+| `depictio local open` | Open the dashboards page of the running server in a browser, or print the SSH tunnel to use |
+| `depictio local status` | Show each process with its port, whether the API answers, and the log directory. Exits with code 1 unless every process runs and the API answers |
 | `depictio local down` | Stop every process; the data and the ports are kept for the next `up`. Says so when nothing is running |
 | `depictio local wipe` | Stop the server and delete all local data. The downloaded binaries are kept. `--yes` skips the prompt |
-| `depictio local export-compose` | Stop the server and copy its data into a directory that Docker Compose runs, see [Move to Docker Compose](#move-to-docker-compose) |
+| `depictio local export` | Stop the server and copy its data into a directory that Docker Compose runs, see [Move to Docker Compose](#move-to-docker-compose). Formerly `export-compose`, which still works |
 
 ### `up` options
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `--template` | | Template to ingest, e.g. `nf-core/rnaseq/latest`. Goes with `--data-root` |
-| `--data-root` | | Pipeline results directory to ingest |
-| `--project-name` | | Name of the ingested project |
-| `--var KEY=VALUE` | | Template variable, repeatable. Relative paths are resolved from the current directory |
-| `--examples` | `iris,penguins`, or `none` with `--template` | Example projects to seed: `iris`, `penguins`, `iris,penguins` or `none` |
+| `--examples` | `iris,penguins` | Example projects to seed on the first run of a local home: `iris`, `penguins`, `iris,penguins` or `none` |
 | `--port` | the previous run's, else `8058` or a free one | Port of the API and the viewer, kept for later runs. A busy `--port` fails |
 | `--open` / `--no-open` | `--open` | Open the dashboards page in a browser |
 | `--screenshots` / `--no-screenshots` | off | Dashboard thumbnails through Playwright. Installs Chromium (about 150 MB) if needed |
 
-Running `up` while the server is already up only ingests the new template.
-`--port`, `--examples` and `--screenshots` apply when the server starts: a
-warning names those it ignores, and running `depictio local down` first makes
-them apply. Ctrl-C during startup stops what that run started, and the command
-exits with code 130.
+Examples are seeded on the first run of a local home only: a home started
+without them stays without them, and `up` says so when `--examples` names one.
+Running `up` while the server is already up reuses it and prints the summary
+again. `--port`, `--examples` and `--screenshots` apply when the server starts:
+a warning names those it ignores, and running `depictio local down` first makes
+them apply. A second `up` on the same home while one is starting fails at once.
+Ctrl-C during startup stops what that run started, and the command exits with
+code 130. SIGTERM and SIGHUP, as when the terminal is closed, do the same, with
+code 128 plus the signal number.
 
 ---
 
@@ -170,7 +181,7 @@ every service is pointed at `127.0.0.1`.
 
 The conda-forge packages are pinned to the major series of the Compose images
 (the 8.0 series for MongoDB), so their minor versions can be newer than the
-images'. [`export-compose`](#move-to-docker-compose) runs the exact MongoDB and
+images'. [`depictio local export`](#move-to-docker-compose) runs the exact MongoDB and
 SeaweedFS versions of the local server, so the data never moves to an older one.
 
 The first `up` picks its ports on `127.0.0.1`: the defaults (API `8058`, MongoDB
@@ -187,11 +198,13 @@ Everything lives under `~/.depictio/local`, or `DEPICTIO_LOCAL_HOME` if set:
 |------|---------|
 | `env/` | MongoDB, Redis and SeaweedFS binaries |
 | `mongo/`, `redis/`, `s3/` | Service data, kept between runs |
-| `logs/` | One log per service: `api.log`, `worker.log`, `mongo.log`, `redis.log`, `s3.log` |
+| `logs/` | One log per service: `api.log`, `worker.log`, `mongo.log`, `redis.log`, `s3.log`, and `viewer-build.log` for a viewer built from a clone |
 | `keys/` | Token signing keys |
-| `cli/` | CLI configuration for this instance, with its admin token, to run `depictio-cli` against it |
+| `cli/` | CLI configuration for this instance, with its admin token, which `--server local` reads. `up` writes it again if it was deleted, with a new token, and revokes those of earlier rewrites |
+| `backups/` | Backups that [`depictio backup create`](../usage/administration/backup.md) makes on this server |
 | `secrets.json` | Generated S3 and admin passwords |
 | `ports.json` | Ports kept for the next `up` |
+| `.depictio-local-home` | Marks the folder as a local home: `wipe` deletes nothing in a folder without it, and `up` refuses a folder that holds other files |
 
 The local home, `keys/` and `cli/` are owner-only (`0700`), and `secrets.json` is
 created owner-only (`0600`).
@@ -213,11 +226,12 @@ projects, dashboards and table data, for instance once a review turns into a
 shared instance.
 
 ```bash
-depictio local export-compose --out depictio-docker
+depictio local export --out depictio-docker
 cd depictio-docker && docker compose up -d
 ```
 
-`export-compose` stops the local server if it is running, so the copy is
+`depictio local export` (formerly `export-compose`, which still works) stops the
+local server if it is running, so the copy is
 consistent, then copies the MongoDB and SeaweedFS data and the token signing
 keys into the directory (`depictio-docker` by default). The two never share
 files: `depictio local up` restarts the local server on its own data. The
@@ -239,9 +253,9 @@ server is stopped. The directory holds:
 Redis is not carried over, since it holds only cache and queues, and thumbnails
 are rendered again. The token in `~/.depictio/local/cli` stays valid against the
 Docker stack, since it was signed with the copied keys. The raw pipeline files
-are not copied, only the tables built from them: to ingest again, use the Docker
-setup's own CLI configuration, with the pipeline directories reachable from the
-containers.
+are not copied, only the tables built from them: to ingest again, name the Docker
+setup's own CLI configuration with `depictio ingest --server <file>`, with the
+pipeline directories reachable from the containers.
 
 ---
 
@@ -291,10 +305,11 @@ development stack, run side by side.
 
 An HTTP proxy set in the environment does not break startup: the readiness
 checks on `127.0.0.1` bypass `http_proxy` and the other proxy variables,
-SeaweedFS runs without them, and the API, the worker and the ingestion get
-`127.0.0.1` and `localhost` added to `no_proxy`. The downloads do go through the proxy: MongoDB,
-Redis and SeaweedFS from conda-forge on the first run, and the compose file of
-`export-compose`. When one fails, a one-line error says so: check the network or
+SeaweedFS runs without them, and the API, the worker and any CLI command that
+reaches the local server get `127.0.0.1` and `localhost` added to `no_proxy`.
+The downloads do go through the proxy: MongoDB, Redis and SeaweedFS from
+conda-forge on the first run, and the compose file of `depictio local export`.
+When one fails, a one-line error says so: check the network or
 the proxy settings, then run the command again. Over SSH, open the server
 through the `ssh -L` tunnel that `up` prints. The other users of a login node
 can reach the server too: see the shared machines warning under
@@ -306,9 +321,11 @@ can reach the server too: see the shared machines warning under
 they usually target another instance (`DEPICTIO_LOCAL_HOME` is read by
 `depictio local` itself). The exception is `DEPICTIO_TELEMETRY_*`:
 `DEPICTIO_TELEMETRY_ENABLED=false` (or `DO_NOT_TRACK=1`) turns
-[telemetry](../features/telemetry.md) off for the local server too. Likewise,
-`DEPICTIO_CLI_*` overrides, such as a token for another server, do not reach the
-ingestion.
+[telemetry](../features/telemetry.md) off for the local server too. The
+`AWS_*` variables are not passed on either, so the services never reach another
+S3 store. Likewise, `DEPICTIO_CLI_TOKEN` and `DEPICTIO_CLI_API_BASE_URL`, which
+usually hold the credentials of another server, never apply to
+`--server local`.
 
 #### The example dashboards show no data
 
@@ -319,9 +336,12 @@ again.
 
 #### Dashboards stay blank
 
-The viewer was not built before `up`, which only concerns an install from a
-clone. Build it (step 1), then run `depictio local down` and `depictio local up`
-again.
+The viewer bundle is missing, which only concerns an install from a clone,
+where `up` builds it. `up` warns when the build fails: read
+`~/.depictio/local/logs/viewer-build.log`, fix the cause (often pnpm or Node.js
+missing), then run `depictio local down` and `depictio local up` again, which
+builds it. A server that was already running when the sources changed only
+gets a warning: `depictio local down`, then `depictio local up`, rebuilds it.
 
 #### Start from scratch
 
@@ -332,5 +352,5 @@ are kept. The next `up` seeds it again.
 ## Next Steps
 
 - [Pipeline templates](../usage/projects/templates.md)
-- [CLI usage](../depictio-cli/usage.md), after the `export DEPICTIO_CLI_CONFIG_PATH=...` line that `up` prints
+- [CLI usage](../depictio-cli/usage.md), with `--server local`, or by default when no other server is configured
 - [Docker Compose](docker.md), to share an instance with a team

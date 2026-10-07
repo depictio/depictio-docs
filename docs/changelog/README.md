@@ -8,9 +8,9 @@ hide:
 
 # Changelog
 
-## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (upcoming)
+## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (October 7, 2026)
 
-!!! success "Minor: the full server on your machine, without Docker"
+!!! success "Minor: the full server on your machine, without Docker, and one `depictio` command"
 
 ### Docker Images
 
@@ -21,17 +21,44 @@ ghcr.io/depictio/depictio-worker:1.12.0
 ghcr.io/depictio/depictio-cli:1.12.0
 ```
 
+### **♻️ Migration**
+
+* **The CLI is the `depictio` package**: `pip install depictio`, with `[multiqc]` for MultiQC reports or `[local]` for the local server. `depictio-cli` stays an alias, as a package and as a command, so scripts and Nextflow hooks keep working. Do not run `pip uninstall depictio-cli` on its own: it removes files that `depictio` needs. See [CLI Installation](../installation/cli.md) ([#1146](https://github.com/depictio/depictio/pull/1146)).
+* **Commands and options renamed, the former names still accepted**: `run` is `ingest`, which takes the results directory as its argument instead of `--data-root`. `--project-name` is `--project`, and the six `--skip-*` flags are one `--skip STEP[,STEP]`. `--CLI-config-path`, and `-c`/`--config` with `--api`, are `--server`; `migrate --target-config` is `--to-server`. `images push` is `data push-images`, `local export-compose` is `local export`, and `-vl` is `-v` or `-vv`. A former name prints what it is called now. See [Quick Reference](../depictio-cli/usage.md#quick-reference) ([#1149](https://github.com/depictio/depictio/pull/1149)).
+* **`depictio local up` starts the server only**: the `--template`, `--data-root`, `--project-name` and `--var` options of v1.12.0-b1 exit with code 2 and print the `depictio ingest` command to run instead. See [Local Server](../installation/local.md) ([#1149](https://github.com/depictio/depictio/pull/1149)).
+* **A refresh keeps the dashboards**: `depictio ingest --update-config`, which the Nextflow hook passes with `depictio_update`, no longer re-imports them. Add `--reset-dashboards` to start them over from the template. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1149](https://github.com/depictio/depictio/pull/1149)).
+
 ### **✨ New Features**
 
-* **`depictio local up` runs the whole server without Docker**: the same API, worker and viewer, with MongoDB, Redis and SeaweedFS fetched once from conda-forge and run as plain processes. With `--template` and `--data-root` it ingests your results in the same command and opens their dashboard. `depictio local export-compose` later hands the server and its data over to Docker Compose. Linux (x86_64 and arm64) and Apple silicon Macs; Windows is refused with a pointer to WSL2. See [Local Server](../installation/local.md) ([#1110](https://github.com/depictio/depictio/pull/1110)).
+* **`depictio local up` runs the whole server without Docker**: the same API, worker and viewer, with MongoDB, Redis and SeaweedFS fetched once from conda-forge and run as plain processes. `depictio ingest` then adds your results. `depictio local open` reopens the viewer, `depictio local status` exits 1 when a service is unhealthy, and `depictio local export` hands the server and its data over to Docker Compose. From a clone of the repository, `up` builds the viewer itself. Linux (x86_64 and arm64) and Apple silicon Macs; Windows is refused with a pointer to WSL2. See [Local Server](../installation/local.md) ([#1110](https://github.com/depictio/depictio/pull/1110), [#1149](https://github.com/depictio/depictio/pull/1149)).
+* **`depictio ingest <results dir>`**: the template is detected from the directory when `--template` is left out, and the help shows the essential options first, the others in panels. `--dry-run` validates the project configuration and lists the steps that would run, without contacting the server. The images an image collection names in `local_images_path` are uploaded during processing. See [Ingest Command](../depictio-cli/usage.md#ingest-command) ([#1149](https://github.com/depictio/depictio/pull/1149)).
+* **One `--server` option names the server**: `local` for the server `depictio local up` runs, or a CLI configuration file, on `ingest`, `config`, `data`, `dashboard`, `backup` and `migrate`. Without it, a command uses `$DEPICTIO_CLI_CONFIG_PATH`, else `~/.depictio/CLI.yaml`, else the local server, and says so when a local server runs besides the one it reached. See [Which server a command uses](../depictio-cli/usage.md#choosing-a-server) ([#1149](https://github.com/depictio/depictio/pull/1149)).
 
 ### **🚀 Improvements**
 
 * **Dashboard thumbnails can be turned off and moved**: `DEPICTIO_PERFORMANCE_SCREENSHOTS_ENABLED` and `DEPICTIO_PERFORMANCE_SCREENSHOTS_DIR`. Defaults are unchanged. See [Performance & Timeouts](../installation/env-reference.md#performance-timeouts) ([#1110](https://github.com/depictio/depictio/pull/1110)).
+* **A refresh updates a project in place and keeps what you edited**: `--update-config` alone now rewrites the tables too, as `--overwrite` did, and keeps the runs added with `--attach-run`. The dashboards keep their layout and their titles, edits made in the viewer included, and the template's dashboards the project lacks are added. Dashboards are matched by origin, the template and the file they came from, so a dashboard renamed in the viewer or a newer template version refreshes the same dashboard instead of adding a second one. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1149](https://github.com/depictio/depictio/pull/1149)).
+* **Clearer CLI output**: `-v` shows INFO logs and `-vv` DEBUG logs, or `--log-level`, given before the command. Each failure is reported once, with its detail, and MultiQC's own lines stay hidden without `-v`. `depictio` alone prints a quick start, and `depictio --help` groups the commands by purpose. See [Global Options](../depictio-cli/usage.md#global-options) ([#1149](https://github.com/depictio/depictio/pull/1149)).
+* **A local server that a closed terminal or a stray setting cannot wedge**: `AWS_*` variables of your shell no longer reach the services, a second `up` on the same home fails at once, and SIGTERM or SIGHUP during startup stops what was started. `wipe` refuses a folder that is not a Depictio home, and a rebuilt CLI configuration revokes the tokens of earlier rebuilds. See [Local Server](../installation/local.md) ([#1149](https://github.com/depictio/depictio/pull/1149)).
 
 ### **🐛 Bug Fixes**
 
 * **A MultiQC report no longer stays on *preparing* after its worker dies**: the build lock of a task killed mid-run (out of memory, segfault) is released at once instead of blocking rebuilds for up to 10 minutes ([#1110](https://github.com/depictio/depictio/pull/1110)).
+* **An ingestion that failed a step exits 1**: a failed join or dashboard import fails its step, `--continue-on-error` included, and the summary names the failed steps ([#1149](https://github.com/depictio/depictio/pull/1149)).
+* **`-v` no longer logs secrets**: the environment, the CLI configuration and the request headers, with their tokens and passwords, are out of the logs ([#1149](https://github.com/depictio/depictio/pull/1149)).
+* **The CLI keeps the log level you asked for**: an API module the CLI imports no longer resets it mid-command ([#1149](https://github.com/depictio/depictio/pull/1149)).
+* **A project name already taken answers 409** instead of a 500, and a dashboard imported into a project that does not exist is a 404 instead of an orphan ([#1149](https://github.com/depictio/depictio/pull/1149)).
+* **Image dashboards import and find their images**: an exported image dashboard imports again, and images are uploaded under the key the dashboard reads instead of being reported missing ([#1149](https://github.com/depictio/depictio/pull/1149)).
+* **`--server local` always reaches the local server**: `DEPICTIO_CLI_TOKEN` and `DEPICTIO_CLI_API_BASE_URL` no longer redirect it, and calls to it bypass an HTTP(S) proxy set in the environment ([#1149](https://github.com/depictio/depictio/pull/1149)).
+
+---
+
+??? info "Beta releases leading up to v1.12.0"
+
+    **v1.12.0-b1**
+
+    * `depictio local up` in its first form, which also ingested results with `--template` and `--data-root`, and `depictio local export-compose` to hand the server over to Docker Compose ([#1110](https://github.com/depictio/depictio/pull/1110)).
+    * The dashboard thumbnail settings and the MultiQC build lock fix listed above. The stable `v1.12.0` adds the CLI rework ([#1146](https://github.com/depictio/depictio/pull/1146), [#1149](https://github.com/depictio/depictio/pull/1149)) on top of `v1.12.0-b1`.
 
 ---
 

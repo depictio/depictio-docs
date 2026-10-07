@@ -52,7 +52,7 @@ def trigger_flow(theme: Theme) -> Sketch:
         height,
         "blue",
         "`workflow.onComplete`",
-        ("reads `params.outdir`", "and passes it as `--data-root`"),
+        ("reads `params.outdir`", "and passes it as `<dir>`"),
     )
     cli = Box(
         656,
@@ -60,7 +60,7 @@ def trigger_flow(theme: Theme) -> Sketch:
         250,
         height,
         "violet",
-        "`depictio-cli run`",
+        "`depictio ingest <dir>`",
         ("resolves the template", "from the pipeline's name"),
     )
     server = Box(946, top, 308, height, "orange", "Depictio", ("a project, and a dashboard",))

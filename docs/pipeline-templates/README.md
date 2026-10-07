@@ -11,9 +11,8 @@ icon: material/layers-outline
 Templates are pre-packaged project configurations that set up a complete bioinformatics analysis project — dashboards included — with a single command.
 
 ```bash
-depictio-cli run \
-  --template nf-core/ampliseq/latest \
-  --data-root /data/my_ampliseq_run
+depictio ingest /data/my_ampliseq_run \
+  --template nf-core/ampliseq/latest
 ```
 
 ---

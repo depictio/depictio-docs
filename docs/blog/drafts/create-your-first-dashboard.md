@@ -90,8 +90,8 @@ Chinstrap,Dream,46.5,17.9,192,3500,female,2007
 ### Using the CLI
 
 ```bash
-# Install depictio-cli
-pip install depictio-cli
+# Install the Depictio CLI
+pip install depictio
 
 # Login and create project
 depictio auth login
