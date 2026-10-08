@@ -16,7 +16,12 @@ curl -LO https://raw.githubusercontent.com/depictio/depictio/stable/docker-compo
 docker compose up -d
 ```
 
-All services start automatically: MongoDB, Redis, MinIO, backend, viewer, and Celery worker.
+All services start automatically: MongoDB, Redis, the S3 store (SeaweedFS), backend, viewer, and Celery worker.
+
+!!! warning "Upgrading an install from before v1.12.0?"
+    The bundled S3 store is SeaweedFS instead of MinIO since v1.12.0, and it starts
+    empty: copy your data over first. See
+    [Upgrading to v1.12.0: MinIO to SeaweedFS](seaweedfs-migration.md#docker-compose).
 
 ### Step 3 — Open
 
@@ -24,7 +29,10 @@ All services start automatically: MongoDB, Redis, MinIO, backend, viewer, and Ce
 |---------|-----|-------------|
 | Depictio | <http://localhost:5080> | _(single-user mode, no login)_ |
 | API docs | <http://localhost:8058/docs> | — |
-| MinIO console | <http://localhost:9001> | `minio` / `minio123` |
+
+The S3 store is reachable only inside the Compose network, under the `s3` host name
+(`minio` still works as an alias), with the credentials `minio` / `minio123` unless you
+set your own.
 
 !!! success "That's it!"
     Depictio starts in **single-user mode** by default — no login, no configuration needed.
@@ -57,8 +65,8 @@ DEPICTIO_AUTH_SINGLE_USER_MODE=false
 DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
 DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=changeme
 
-# MinIO password must be ≥ 8 chars and not a known default
-DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
+# S3 password must be ≥ 8 chars and not a known default
+DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
 ```
 
 Users can then register accounts and log in via the Depictio UI.
@@ -67,11 +75,11 @@ Users can then register accounts and log in via the Depictio UI.
     The admin account is created only when no non-anonymous admin exists in MongoDB. Changing the bootstrap vars after first boot has no effect.
 
 !!! warning "Expose to the network?"
-    If making Depictio accessible beyond `localhost`, disable single-user mode and change the MinIO credentials.
+    If making Depictio accessible beyond `localhost`, disable single-user mode and change the S3 credentials.
 
 ### Custom Credentials (.env file)
 
-To change MinIO credentials or pin a specific version, copy the example file:
+To change the S3 credentials or pin a specific version, copy the example file:
 
 ```bash
 cp .env.example .env
@@ -87,9 +95,10 @@ DEPICTIO_VERSION=latest
 DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
 DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=change-me-strong-password-here
 
-# MinIO credentials — REQUIRED, ≥16 chars (enforced at startup from v1.0.0-b1)
-DEPICTIO_MINIO_ROOT_USER=myadmin
-DEPICTIO_MINIO_ROOT_PASSWORD=change-me-strong-password-here
+# S3 credentials — REQUIRED in multi-user mode, ≥ 8 chars (enforced at startup from v1.0.0-b1)
+# Named DEPICTIO_MINIO_* before v1.12.0; the old names still work
+DEPICTIO_S3_ROOT_USER=myadmin
+DEPICTIO_S3_ROOT_PASSWORD=change-me-strong-password-here
 ```
 
 !!! info "Bootstrap is idempotent"
@@ -100,9 +109,9 @@ DEPICTIO_MINIO_ROOT_PASSWORD=change-me-strong-password-here
     - **Configuration Guide**: [Configuration](configuration.md) — common use cases
     - **Full Reference**: [Environment Reference](env-reference.md) — all variables
 
-### External S3 / Bring Your Own MinIO
+### External S3 { #external-s3 }
 
-If you already have a MinIO server or S3-compatible storage, use the dedicated no-minio compose file:
+If you already have S3-compatible storage (AWS, NetApp, Ceph, your own MinIO, …), use the compose file without the bundled store:
 
 ```bash
 docker compose -f docker-compose/docker-compose.no-minio.yaml up -d
@@ -111,45 +120,42 @@ docker compose -f docker-compose/docker-compose.no-minio.yaml up -d
 Configure your `.env` to point to your existing instance:
 
 ```bash
-DEPICTIO_MINIO_ROOT_USER=your-access-key
-DEPICTIO_MINIO_ROOT_PASSWORD=your-secret-key
-DEPICTIO_MINIO_PUBLIC_URL=https://your-minio-host.example.com
-DEPICTIO_MINIO_EXTERNAL_SERVICE=true
+DEPICTIO_S3_ROOT_USER=your-access-key
+DEPICTIO_S3_ROOT_PASSWORD=your-secret-key
+DEPICTIO_S3_PUBLIC_URL=https://your-s3-host.example.com
+DEPICTIO_S3_EXTERNAL_SERVICE=true
 # Optional overrides
-DEPICTIO_MINIO_EXTERNAL_HOST=your-minio-host.example.com
-DEPICTIO_MINIO_EXTERNAL_PORT=9000
-DEPICTIO_MINIO_EXTERNAL_PROTOCOL=https
+DEPICTIO_S3_EXTERNAL_HOST=your-s3-host.example.com
+DEPICTIO_S3_EXTERNAL_PORT=9000
+DEPICTIO_S3_EXTERNAL_PROTOCOL=https
 ```
 
 !!! note "Network Configuration"
-    Set `DEPICTIO_MINIO_EXTERNAL_SERVICE=true` when MinIO is outside the Docker Compose network.
+    Set `DEPICTIO_S3_EXTERNAL_SERVICE=true` when the store is outside the Docker Compose network.
 
 !!! note "The bucket does not have to exist"
-    From **v1.6.0** the server creates `DEPICTIO_MINIO_BUCKET` at startup when it is
+    From **v1.6.0** the server creates `DEPICTIO_S3_BUCKET` at startup when it is
     missing, then verifies it; an existing bucket is left untouched. See
-    [Required S3 permissions](env-reference.md#minios3-storage).
+    [Required S3 permissions](env-reference.md#required-s3-permissions).
 
 !!! info "S3-Compatible Storage"
-    Depictio uses the MinIO client library (S3 API compatible). AWS S3, DigitalOcean Spaces, Backblaze B2, and others may work but have not been officially tested.
+    Depictio talks to the store through the S3 API (boto3, s3fs, delta-rs), with no MinIO-specific client. AWS S3, DigitalOcean Spaces, Backblaze B2, and others may work but have not been officially tested.
 
 ### Port Configuration
 
-Override default ports in `.env`:
-
-```bash
-MINIO_PORT=9000
-MINIO_CONSOLE_PORT=9001
-```
-
-All default ports:
+Default ports:
 
 | Service | Default port |
 |---------|-------------|
 | Frontend (React viewer) | 5080 |
-| Backend API | 8058 |
-| MongoDB | 27018 |
-| MinIO API | 9000 |
-| MinIO UI | 9001 |
+| Backend API | 8058, on `127.0.0.1` |
+| MongoDB | 27018, inside the Compose network |
+| S3 API (SeaweedFS) | 9000, inside the Compose network |
+
+The development stack (`docker-compose.dev.yaml`) also publishes the S3 API and the
+SeaweedFS admin UI on `127.0.0.1`. Move them in `.env` with `S3_PORT` (default `9000`)
+and `S3_CONSOLE_PORT` (default `9001`), named `MINIO_PORT` and `MINIO_CONSOLE_PORT`
+before v1.12.0, which still work.
 
 ### Development Mode
 
@@ -212,7 +218,7 @@ Common causes: port conflict, volume permission error, MongoDB connection failur
 
 ### Data persistence
 
-MongoDB data is stored in `./depictioDB` (bind-mount). MinIO data is stored in a named Docker volume (`minio_data`). Both persist across `docker compose down` restarts.
+MongoDB, Redis and the S3 store keep their data in named Docker volumes (`mongo_data`, `redis_data` and `seaweedfs_data`). They persist across `docker compose down`, and `docker compose down -v` deletes them. Before v1.12.0 the store was MinIO, in a `minio_data` volume that SeaweedFS does not read: see [Upgrading to v1.12.0](seaweedfs-migration.md).
 
 ---
 
