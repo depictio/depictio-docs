@@ -663,6 +663,8 @@
       
         
       
+        
+      
     
     
     
@@ -917,7 +919,7 @@
   <span class="md-ellipsis">
     
   
-    CLI
+    Upgrade guides
   
 
     
@@ -930,6 +932,102 @@
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Upgrade guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/upgrade/v1.12.0-seaweedfs/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21 9-4-4v3h-7v2h7v3M7 11l-4 4 4 4v-3h7v-2H7z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    v1.12.0: MinIO → SeaweedFS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4">
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -4961,7 +5059,7 @@ focused on the work. Report unacceptable behaviour privately to the maintainers
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>depictio
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>https://github.com/depictio/depictio.git
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># 2. Run the full stack with hot-reload (MongoDB, Redis, MinIO, API, viewer)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># 2. Run the full stack with hot-reload (MongoDB, Redis, SeaweedFS, API, viewer)</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.dev.yaml<span class="w"> </span>up<span class="w"> </span>--build<span class="w"> </span>-d
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1"># 3. Install local Python tooling for tests &amp; pre-commit</span>
@@ -4977,8 +5075,11 @@ needs <a href="https://pnpm.io/"><code>pnpm</code></a> 10+.</p>
 </blockquote>
 <h2 id="development-environment">Development Environment<a class="headerlink" href="#development-environment" title="Permanent link">¶</a></h2>
 <h3 id="recommended-docker-dev-hot-reload">Recommended — Docker dev (hot-reload)<a class="headerlink" href="#recommended-docker-dev-hot-reload" title="Permanent link">¶</a></h3>
-<p><code>docker-compose.dev.yaml</code> mounts your local source and reloads on change. All
-critical defaults are baked into the compose file, so no <code>.env</code> is required.</p>
+<p><code>docker-compose.dev.yaml</code> mounts your local source and reloads on change. Its
+settings come from <code>docker-compose/.env</code>, which the repository ships populated for
+local development. Since v1.12.0 it requires <code>DEPICTIO_S3_ROOT_USER</code> and
+<code>DEPICTIO_S3_ROOT_PASSWORD</code> under these names: a <code>docker-compose/.env</code> that still
+says <code>DEPICTIO_MINIO_ROOT_*</code> stops the stack with an error naming the variable.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.dev.yaml<span class="w"> </span>up<span class="w"> </span>--build<span class="w"> </span>-d
 </code></pre></div>
 <table>
@@ -5002,7 +5103,7 @@ critical defaults are baked into the compose file, so no <code>.env</code> is re
 <td><code>http://localhost:8058/docs</code></td>
 </tr>
 <tr>
-<td>MinIO Console</td>
+<td>SeaweedFS admin UI (S3 root credentials)</td>
 <td><code>http://localhost:9001</code></td>
 </tr>
 </tbody>
@@ -5036,9 +5137,9 @@ local dev):</p>
 </tbody>
 </table>
 <h3 id="quickstart-pre-built-images">Quickstart — pre-built images<a class="headerlink" href="#quickstart-pre-built-images" title="Permanent link">¶</a></h3>
-<p>To run released images from GHCR without building (MinIO bundled by default):</p>
+<p>To run released images from GHCR without building (SeaweedFS bundled as the S3 store):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># Bring your own S3 / external MinIO:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># Bring your own S3:</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose/docker-compose.no-minio.yaml<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
 <h3 id="local-python-tests-pre-commit-cli">Local Python (tests, pre-commit, CLI)<a class="headerlink" href="#local-python-tests-pre-commit-cli" title="Permanent link">¶</a></h3>
@@ -5051,11 +5152,14 @@ even when running the app in Docker.</p>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>uv<span class="w"> </span>run<span class="w"> </span>playwright<span class="w"> </span>install<span class="w"> </span>chromium<span class="w">   </span><span class="c1"># E2E browser</span>
 <a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>uv<span class="w"> </span>run<span class="w"> </span>pre-commit<span class="w"> </span>install<span class="w">            </span><span class="c1"># git hooks</span>
 </code></pre></div>
-<p>The CLI is a standalone package with its own <code>pyproject.toml</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>depictio/cli<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>uv<span class="w"> </span>sync<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>uv<span class="w"> </span>run<span class="w"> </span>depictio<span class="w"> </span>--help
+<p>Since v1.12.0 the CLI is part of the root <code>depictio</code> package, so the environment
+above already has it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>uv<span class="w"> </span>run<span class="w"> </span>depictio<span class="w"> </span>--help
 </code></pre></div>
+<p><code>depictio/cli/pyproject.toml</code> only builds the <code>depictio-cli</code> alias for PyPI; do not
+install it to work on the CLI.</p>
 <blockquote>
-<p>Prefer a different tool? <code>pixi install</code> (bundles MongoDB/Redis/MinIO) or
+<p>Prefer a different tool? <code>pixi install</code> (bundles MongoDB/Redis/SeaweedFS) or
 <code>pip install -e ".[dev]"</code> both work as alternatives to <code>uv</code>.</p>
 </blockquote>
 <h3 id="react-viewer-dev-server">React viewer dev server<a class="headerlink" href="#react-viewer-dev-server" title="Permanent link">¶</a></h3>

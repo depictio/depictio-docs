@@ -665,6 +665,8 @@
       
         
       
+        
+      
     
     
     
@@ -926,7 +928,7 @@
   <span class="md-ellipsis">
     
   
-    CLI
+    Upgrade guides
   
 
     
@@ -939,6 +941,105 @@
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Upgrade guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrade/v1.12.0-seaweedfs/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21 9-4-4v3h-7v2h7v3M7 11l-4 4 4 4v-3h7v-2H7z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    v1.12.0: MinIO → SeaweedFS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4">
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1102,10 +1203,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#external-minio-service" class="md-nav__link">
+  <a href="#external-s3-service" class="md-nav__link">
     <span class="md-ellipsis">
       
-        External MinIO Service
+        External S3 Service
       
     </span>
   </a>
@@ -5046,10 +5147,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#external-minio-service" class="md-nav__link">
+  <a href="#external-s3-service" class="md-nav__link">
     <span class="md-ellipsis">
       
-        External MinIO Service
+        External S3 Service
       
     </span>
   </a>
@@ -5526,7 +5627,7 @@
 <tbody>
 <tr>
 <td><code>.env.example</code></td>
-<td><strong>Quick start</strong> - Minimal configuration (just MinIO credentials)</td>
+<td><strong>Quick start</strong> - Minimal configuration (S3 and admin credentials)</td>
 </tr>
 <tr>
 <td><code>.env.complete.example</code></td>
@@ -5539,12 +5640,12 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
 </code></pre></div>
 <p><strong>Minimal <code>.env</code> file:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">DEPICTIO_MINIO_ROOT_USER</span><span class="o">=</span>minio
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nv">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="o">=</span>change-me-strong-password-here
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">DEPICTIO_S3_ROOT_USER</span><span class="o">=</span>depictio
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nv">DEPICTIO_S3_ROOT_PASSWORD</span><span class="o">=</span>change-me-strong-password-here
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Password strength</p>
-<p><code>DEPICTIO_MINIO_ROOT_PASSWORD</code> must be <strong>≥ 8 characters</strong>. The server enforces this at startup and will refuse to start with a short or well-known default value.</p>
+<p><code>DEPICTIO_S3_ROOT_PASSWORD</code> (<code>DEPICTIO_MINIO_ROOT_PASSWORD</code> before v1.12.0, still read) must be <strong>≥ 8 characters</strong>. The server enforces this at startup and will refuse to start with a short or well-known default value.</p>
 </div>
 <h2 id="advanced-configuration">Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Permanent link">¶</a></h2>
 <p>For full control, use the complete configuration file:</p>
@@ -5553,28 +5654,33 @@
 </code></pre></div>
 <p>All other settings use sensible defaults. The sections below cover common customization scenarios.</p>
 <h2 id="storage-configuration">Storage Configuration<a class="headerlink" href="#storage-configuration" title="Permanent link">¶</a></h2>
-<p>Depictio can use MinIO for object storage. You can either use an external MinIO service or the built-in one.</p>
-<h3 id="external-minio-service">External MinIO Service<a class="headerlink" href="#external-minio-service" title="Permanent link">¶</a></h3>
-<p>If you have an external MinIO service, configure it as follows:</p>
+<p>Depictio stores its data in S3-compatible object storage: either the store bundled
+with Docker Compose and the Helm chart, SeaweedFS since v1.12.0 (MinIO before), or an
+external S3 service. The settings are <code>DEPICTIO_S3_*</code>; the <code>DEPICTIO_MINIO_*</code> names of
+earlier releases still work. An install that ran the bundled MinIO has to copy its data
+to SeaweedFS when it upgrades: see
+<a href="../upgrade/v1.12.0-seaweedfs/">Upgrading to v1.12.0: MinIO → SeaweedFS</a>.</p>
+<h3 id="external-s3-service">External S3 Service<a class="headerlink" href="#external-s3-service" title="Permanent link">¶</a></h3>
+<p>If you have an external S3 service (AWS, NetApp, Ceph, your own MinIO, …), configure it as follows:</p>
 <p>For Docker Compose, add the following to your <code>.env</code> file:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># External MinIO service configuration</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">DEPICTIO_MINIO_PUBLIC_URL</span><span class="o">=</span>http://minio.example.com
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">DEPICTIO_MINIO_ROOT_USER</span><span class="o">=</span>minioadmin
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nv">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="o">=</span>minioadmin123
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nv">DEPICTIO_MINIO_BUCKET</span><span class="o">=</span>your-bucket-name
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_SERVICE</span><span class="o">=</span><span class="nb">true</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># External S3 service configuration</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">DEPICTIO_S3_PUBLIC_URL</span><span class="o">=</span>https://s3.example.com
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">DEPICTIO_S3_ROOT_USER</span><span class="o">=</span>your-access-key
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nv">DEPICTIO_S3_ROOT_PASSWORD</span><span class="o">=</span>your-secret-key
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nv">DEPICTIO_S3_BUCKET</span><span class="o">=</span>your-bucket-name
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nv">DEPICTIO_S3_EXTERNAL_SERVICE</span><span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
 <p>For Kubernetes, you can set these values in your custom <code>values.yaml</code> file:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">minio</span><span class="p">:</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># Set to true if using built-in MinIO</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">s3</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># true runs the bundled store</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">env</span><span class="p">:</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_PUBLIC_URL</span><span class="p">:</span><span class="w"> </span><span class="s">"http://minio.example.com"</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_ROOT_USER</span><span class="p">:</span><span class="w"> </span><span class="s">"minioadmin"</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="s">"minioadmin123"</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_BUCKET</span><span class="p">:</span><span class="w"> </span><span class="s">"your-bucket-name"</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_EXTERNAL_SERVICE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">DEPICTIO_S3_PUBLIC_URL</span><span class="p">:</span><span class="w"> </span><span class="s">"https://s3.example.com"</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nt">DEPICTIO_S3_ROOT_USER</span><span class="p">:</span><span class="w"> </span><span class="s">"your-access-key"</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nt">DEPICTIO_S3_ROOT_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="s">"your-secret-key"</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nt">DEPICTIO_S3_BUCKET</span><span class="p">:</span><span class="w"> </span><span class="s">"your-bucket-name"</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="nt">DEPICTIO_S3_EXTERNAL_SERVICE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
-<p>Setting those values will disable the built-in MinIO service and use the external one instead.</p>
+<p>Setting those values disables the bundled store and uses the external one instead.</p>
 <h2 id="bootstrap-authentication">Bootstrap Authentication<a class="headerlink" href="#bootstrap-authentication" title="Permanent link">¶</a></h2>
 <p>On first boot, Depictio seeds an initial admin account using two <strong>required</strong> environment variables. The seeding is idempotent — if the admin account already exists the step is a no-op, so the variables can be kept set across container restarts without side-effects.</p>
 <div class="admonition warning">
@@ -6037,7 +6143,7 @@ keep their demo set after upgrading.</p>
 <h2 id="security-considerations">Security Considerations<a class="headerlink" href="#security-considerations" title="Permanent link">¶</a></h2>
 <ul>
 <li><strong>Never commit sensitive credentials</strong> to version control</li>
-<li><strong>Use strong passwords</strong> for MinIO and other services</li>
+<li><strong>Use strong passwords</strong> for the S3 store and other services</li>
 <li><strong>Enable HTTPS</strong> in production environments</li>
 <li><strong>Regularly rotate API keys</strong> and OAuth credentials</li>
 <li><strong>Set appropriate backup retention policies</strong></li>

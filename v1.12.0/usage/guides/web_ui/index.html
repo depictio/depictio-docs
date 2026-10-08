@@ -663,6 +663,8 @@
       
         
       
+        
+      
     
     
     
@@ -917,7 +919,7 @@
   <span class="md-ellipsis">
     
   
-    CLI
+    Upgrade guides
   
 
     
@@ -930,6 +932,102 @@
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Upgrade guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../installation/upgrade/v1.12.0-seaweedfs/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21 9-4-4v3h-7v2h7v3M7 11l-4 4 4 4v-3h7v-2H7z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    v1.12.0: MinIO → SeaweedFS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4">
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -5193,7 +5291,8 @@
     </a>
 </div>
 
-<p>Each dashboard is shown as a card. Cards display the dashboard's screenshot thumbnail
+<p>The listing opens on the <strong>Table</strong> view <small>(v1.12.0+)</small>, one row per dashboard. In the
+<strong>Thumbnails</strong> view each dashboard is shown as a card. Cards display the dashboard's screenshot thumbnail
 once one has been captured, and fall back to the dashboard's logo (when set) before the
 generic placeholder.</p>
 <p>The table view has a <strong>Last viewed</strong> column <small>(v1.11.0+)</small>, sorted newest
@@ -5204,17 +5303,22 @@ first, with dashboards you never opened last. It is kept per browser.</p>
 versions is gone, and a browser that had it opens on Thumbnails.</p>
 <p>In Thumbnails, the <strong>Card display</strong> menu beside the switcher sets:</p>
 <ul>
-<li><strong>Cards per row</strong>: Auto, or 2 to 6. Auto never makes more columns than a section has
-  cards, so two dashboards show large rather than at quarter width.</li>
+<li><strong>Cards per row</strong>: 5 by default since v1.12.0, or 2 to 6, or Auto. Auto never makes
+  more columns than a section has cards, so a section with a single dashboard draws
+  it across the whole width.</li>
 <li><strong>Badges</strong>: which of Project, Template, Owner, Visibility, Last modified and Tabs a
   card shows. Hovering a badge gives its long form.</li>
 </ul>
-<p><strong>Reset to defaults</strong> restores both. They are layout preferences, kept in the browser
-and left out of shared links. Resting the pointer on a thumbnail opens a larger,
+<p><strong>Reset to defaults</strong> restores both, so five cards per row. They are layout preferences,
+kept in the browser and left out of shared links. A browser that opened the listing
+before v1.12.0 stored Auto, the former default, and keeps it until you pick another
+value or reset. Resting the pointer on a thumbnail opens a larger,
 sharper preview.</p>
 <p>Someone who never picked a view gets the one the deployment sets with
-<a href="../../../installation/env-reference/#react-viewer-frontend"><code>DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW</code></a>.
-A view picked in the browser, or named by a shared link, wins over it.</p>
+<a href="../../../installation/env-reference/#react-viewer-frontend"><code>DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW</code></a>:
+<strong>Table</strong> since v1.12.0, Thumbnails before. Set it to <code>thumbnails</code> to open the grid
+again. A view picked in the browser, or named by a shared link such as
+<code>/dashboards?view=thumbnails</code>, wins over it.</p>
 <h3 id="sidebar-navigation"><span style="color: #7A5DC7;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg></span></span> Sidebar Navigation<a class="headerlink" href="#sidebar-navigation" title="Permanent link">¶</a></h3>
 <p>The left sidebar provides easy access to various sections of the application. This includes:</p>
 <ul>

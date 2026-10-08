@@ -665,6 +665,8 @@
       
         
       
+        
+      
     
     
     
@@ -926,7 +928,7 @@
   <span class="md-ellipsis">
     
   
-    CLI
+    Upgrade guides
   
 
     
@@ -939,6 +941,105 @@
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Upgrade guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrade/v1.12.0-seaweedfs/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21 9-4-4v3h-7v2h7v3M7 11l-4 4 4 4v-3h7v-2H7z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    v1.12.0: MinIO → SeaweedFS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4">
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1159,15 +1260,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#minios3-storage" class="md-nav__link">
+  <a href="#s3-storage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        MinIO/S3 Storage
+        S3 Storage
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="MinIO/S3 Storage">
+    <nav class="md-nav" aria-label="S3 Storage">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4900,15 +5001,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#minios3-storage" class="md-nav__link">
+  <a href="#s3-storage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        MinIO/S3 Storage
+        S3 Storage
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="MinIO/S3 Storage">
+    <nav class="md-nav" aria-label="S3 Storage">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -5173,7 +5274,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Minimal required configuration</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">DEPICTIO_BOOTSTRAP_ADMIN_EMAIL</span><span class="o">=</span>admin@example.com
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nv">DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD</span><span class="o">=</span>changeme
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="o">=</span><span class="k">$(</span>openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">12</span><span class="k">)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">DEPICTIO_S3_ROOT_PASSWORD</span><span class="o">=</span><span class="k">$(</span>openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">12</span><span class="k">)</span>
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Complete Environment File</p>
@@ -5185,7 +5286,7 @@
 <li><a href="#fastapi-backend">FastAPI Backend</a></li>
 <li><a href="#react-viewer-frontend">React Viewer Frontend</a></li>
 <li><a href="#mongodb-database">MongoDB Database</a></li>
-<li><a href="#minios3-storage">MinIO/S3 Storage</a></li>
+<li><a href="#s3-storage">S3 Storage</a></li>
 <li><a href="#authentication">Authentication</a></li>
 <li><a href="#bootstrap">Bootstrap</a></li>
 <li><a href="#redis-cache">Redis Cache</a></li>
@@ -5371,8 +5472,8 @@
 </tr>
 <tr>
 <td><code>DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW</code></td>
-<td><code>thumbnails</code></td>
-<td>View <code>/dashboards</code> opens in for someone who never picked one: <code>thumbnails</code> or <code>table</code>. A view chosen in the browser, or named by a shared link, wins (v1.11.2+)</td>
+<td><code>table</code></td>
+<td>View <code>/dashboards</code> opens in for someone who never picked one: <code>thumbnails</code> or <code>table</code>. A view chosen in the browser, or named by a shared link, wins (v1.11.2+; the default was <code>thumbnails</code> until v1.12.0)</td>
 </tr>
 </tbody>
 </table>
@@ -5458,10 +5559,23 @@
 </tbody>
 </table>
 <hr>
-<h2 id="minios3-storage">MinIO/S3 Storage<a class="headerlink" href="#minios3-storage" title="Permanent link">¶</a></h2>
+<p><a id="minios3-storage"></a></p>
+<h2 id="s3-storage">S3 Storage<a class="headerlink" href="#s3-storage" title="Permanent link">¶</a></h2>
 <p><strong>Config Class:</strong> <code>S3DepictioCLIConfig</code>
-<strong>Environment Prefix:</strong> <code>DEPICTIO_MINIO_</code></p>
-<p>S3 configuration inheriting service URL management.</p>
+<strong>Environment Prefix:</strong> <code>DEPICTIO_S3_</code> (legacy <code>DEPICTIO_MINIO_</code>)</p>
+<p>S3-compatible object storage: the bundled SeaweedFS store (Compose service <code>s3</code>),
+or any external S3 endpoint (AWS, NetApp, Ceph, MinIO, …) set with
+<code>DEPICTIO_S3_PUBLIC_URL</code> and <code>DEPICTIO_S3_EXTERNAL_SERVICE=true</code>.</p>
+<div class="admonition info">
+<p class="admonition-title"><code>DEPICTIO_MINIO_*</code> became <code>DEPICTIO_S3_*</code> in v1.12.0</p>
+<p>The bundled store is SeaweedFS instead of MinIO since <strong>v1.12.0</strong>, and these
+settings were renamed with it. The former <code>DEPICTIO_MINIO_&lt;FIELD&gt;</code> names still
+work: each is read when its <code>DEPICTIO_S3_&lt;FIELD&gt;</code> counterpart is unset, the new
+name wins when both are set, and the server logs a deprecation warning naming
+the old variables it found. An install that used the bundled MinIO has to copy
+its data to the new store: see
+<a href="../upgrade/v1.12.0-seaweedfs/">Upgrading to v1.12.0: MinIO → SeaweedFS</a>.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -5472,59 +5586,59 @@
 </thead>
 <tbody>
 <tr>
-<td><code>DEPICTIO_MINIO_SERVICE_NAME</code></td>
-<td><code>minio</code></td>
-<td>-</td>
+<td><code>DEPICTIO_S3_SERVICE_NAME</code></td>
+<td><code>s3</code></td>
+<td>Host name of the store inside the Compose network (<code>minio</code> before v1.12.0, still an alias of the <code>s3</code> service)</td>
 </tr>
 <tr>
-<td><code>DEPICTIO_MINIO_SERVICE_PORT</code></td>
+<td><code>DEPICTIO_S3_SERVICE_PORT</code></td>
 <td><code>9000</code></td>
 <td>-</td>
 </tr>
 <tr>
-<td><code>DEPICTIO_MINIO_EXTERNAL_HOST</code></td>
+<td><code>DEPICTIO_S3_EXTERNAL_HOST</code></td>
 <td><code>localhost</code></td>
 <td>-</td>
 </tr>
 <tr>
-<td><code>DEPICTIO_MINIO_EXTERNAL_PORT</code></td>
+<td><code>DEPICTIO_S3_EXTERNAL_PORT</code></td>
 <td><code>9000</code></td>
 <td>-</td>
 </tr>
 <tr>
-<td><code>DEPICTIO_MINIO_EXTERNAL_PROTOCOL</code></td>
+<td><code>DEPICTIO_S3_EXTERNAL_PROTOCOL</code></td>
 <td><code>http</code></td>
 <td>-</td>
 </tr>
 <tr>
-<td><code>DEPICTIO_MINIO_PUBLIC_URL</code></td>
+<td><code>DEPICTIO_S3_PUBLIC_URL</code></td>
 <td>-</td>
-<td>-</td>
+<td>Full endpoint URL of an external S3</td>
 </tr>
 <tr>
-<td><code>DEPICTIO_MINIO_EXTERNAL_SERVICE</code></td>
+<td><code>DEPICTIO_S3_EXTERNAL_SERVICE</code></td>
 <td><code>false</code></td>
-<td>-</td>
+<td><code>true</code> when the store is outside the Docker Compose network</td>
 </tr>
 <tr>
-<td><code>DEPICTIO_MINIO_ROOT_USER</code></td>
+<td><code>DEPICTIO_S3_ROOT_USER</code></td>
 <td><code>minio</code></td>
-<td>-</td>
+<td>S3 access key</td>
 </tr>
 <tr>
-<td><code>DEPICTIO_MINIO_ROOT_PASSWORD</code></td>
+<td><code>DEPICTIO_S3_ROOT_PASSWORD</code></td>
 <td><em>(required, ≥8 chars)</em></td>
-<td>MinIO root secret key. REQUIRED in server context — must not match a known-default value.</td>
+<td>S3 secret key. REQUIRED in server context — must not match a known-default value.</td>
 </tr>
 <tr>
-<td><code>DEPICTIO_MINIO_BUCKET</code></td>
+<td><code>DEPICTIO_S3_BUCKET</code></td>
 <td><code>depictio-bucket</code></td>
 <td>-</td>
 </tr>
 <tr>
-<td><code>DEPICTIO_MINIO_VERIFY_TLS</code></td>
+<td><code>DEPICTIO_S3_VERIFY_TLS</code></td>
 <td><code>true</code></td>
-<td>Verify TLS certificates when connecting to S3/MinIO. Set to <code>false</code> only for local dev with self-signed certificates.</td>
+<td>Verify TLS certificates when connecting to S3. Set to <code>false</code> only for local dev with self-signed certificates.</td>
 </tr>
 </tbody>
 </table>
@@ -5532,7 +5646,7 @@
 <p>At startup the server checks that the configured bucket is usable. Since
 <strong>v1.5.2</strong> those checks are scoped to that single bucket: <code>HeadBucket</code>, then a
 put/delete round trip on a test object.</p>
-<p>A credential that can only reach <code>DEPICTIO_MINIO_BUCKET</code> is therefore enough,
+<p>A credential that can only reach <code>DEPICTIO_S3_BUCKET</code> is therefore enough,
 which is useful on managed S3 where keys are issued per bucket rather than per
 account.</p>
 <p>Since <strong>v1.6.0</strong> the server creates the bucket before running those checks, so
@@ -6257,7 +6371,7 @@ for what each cap does to the rendered result.</p>
 <tr>
 <td><code>DEPICTIO_BACKUP_MIGRATION_ALLOWED_S3_ENDPOINTS</code></td>
 <td><em>(empty)</em></td>
-<td>Comma-separated allowlist of external S3/MinIO endpoints permitted for project migration. Empty = only the deployment's own MinIO is allowed (SSRF guard).</td>
+<td>Comma-separated allowlist of external S3 endpoints permitted for project migration. Empty = only the deployment's own S3 store is allowed (SSRF guard).</td>
 </tr>
 </tbody>
 </table>

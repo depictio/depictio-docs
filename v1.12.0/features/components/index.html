@@ -663,6 +663,8 @@
       
         
       
+        
+      
     
     
     
@@ -917,7 +919,7 @@
   <span class="md-ellipsis">
     
   
-    CLI
+    Upgrade guides
   
 
     
@@ -930,6 +932,102 @@
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Upgrade guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/upgrade/v1.12.0-seaweedfs/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21 9-4-4v3h-7v2h7v3M7 11l-4 4 4 4v-3h7v-2H7z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    v1.12.0: MinIO → SeaweedFS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4">
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -7535,6 +7633,12 @@ Text and MultiQC, which have no row filtering. See
 <td><code>null</code></td>
 <td>Per-sample categorical annotation strips drawn above or below the stacked bars. Each entry is a dict with: <code>column</code> (str, required), <code>label</code> (str, optional — defaults to column name), <code>position</code> (<code>top</code> | <code>bottom</code>, default <code>bottom</code>), <code>palette</code> (<code>{value: hex}</code>, optional). Reusable across any per-sample categorical metadata (habitat, batch, treatment, timepoint) — renderer pulls the columns automatically, no recipe change needed.</td>
 </tr>
+<tr>
+<td><code>taxon_palette</code></td>
+<td>dict[str, str] | null</td>
+<td><code>null</code></td>
+<td><code>{taxon: hex}</code> colours pinned for the bars. Unlisted taxa keep the default cycle, which repeats past twelve taxa (v1.12.0+)</td>
+</tr>
 </tbody>
 </table>
 <details class="example">
@@ -7550,6 +7654,16 @@ Text and MultiQC, which have no row filtering. See
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">      </span><span class="nt">Soil</span><span class="p">:</span><span class="w"> </span><span class="s">"#FF7F00"</span>
 </code></pre></div>
 </details>
+<p><small>(v1.12.0+)</small> Each strip is a row of cells under or over the bars, one per
+sample. Hovering a cell shows the sample and its category, and the legend lists each
+category under the strip's label. A strip reads its column from the data collection the
+figure draws. The bundled QIIME2 recipe behind the nf-core/ampliseq stacked taxonomy
+joins every categorical column of the sample metadata with at most 25 categories (text,
+categorical or boolean), so a strip can follow <code>locality</code>, <code>batch</code> or any other grouping,
+not only <code>habitat</code>. Samples are ordered by <code>habitat</code> when that column exists, otherwise
+by the first column joined. Collections ingested before v1.12.0 carry only <code>habitat</code>:
+re-ingest them to colour by another column. A taxon with no name at the shown rank is
+labelled <code>Unclassified</code>.</p>
 <p><strong>Filtering / row tagging</strong></p>
 <p>Renderer <strong>filters by rank</strong> (dropdown sourced from the unique <code>rank</code> values). Within the active rank, taxa are sorted by <code>sort_by</code>; everything past <code>top_n</code> is collapsed into an <code>Other</code> slice.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/stacked_taxonomy_light.webp" target="_blank"><img alt="Stacked taxonomy example" src="https://depictio.github.io/depictio-docs/images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light"></a></p>

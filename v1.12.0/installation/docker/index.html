@@ -665,6 +665,8 @@
       
         
       
+        
+      
     
     
     
@@ -946,10 +948,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#external-s3-bring-your-own-minio" class="md-nav__link">
+  <a href="#external-s3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        External S3 / Bring Your Own MinIO
+        External S3
       
     </span>
   </a>
@@ -1182,7 +1184,7 @@
   <span class="md-ellipsis">
     
   
-    CLI
+    Upgrade guides
   
 
     
@@ -1195,6 +1197,105 @@
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Upgrade guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrade/v1.12.0-seaweedfs/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21 9-4-4v3h-7v2h7v3M7 11l-4 4 4 4v-3h7v-2H7z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    v1.12.0: MinIO → SeaweedFS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4">
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -4802,10 +4903,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#external-s3-bring-your-own-minio" class="md-nav__link">
+  <a href="#external-s3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        External S3 / Bring Your Own MinIO
+        External S3
       
     </span>
   </a>
@@ -4951,7 +5052,13 @@
 <h3 id="step-2-start">Step 2 — Start<a class="headerlink" href="#step-2-start" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
-<p>All services start automatically: MongoDB, Redis, MinIO, backend, viewer, and Celery worker.</p>
+<p>All services start automatically: MongoDB, Redis, the S3 store (SeaweedFS), backend, viewer, and Celery worker.</p>
+<div class="admonition warning">
+<p class="admonition-title">Upgrading an install from before v1.12.0?</p>
+<p>The bundled S3 store is SeaweedFS instead of MinIO since v1.12.0, and it starts
+empty: copy your data over first. See
+<a href="../upgrade/v1.12.0-seaweedfs/#docker-compose">Upgrading to v1.12.0: MinIO → SeaweedFS</a>.</p>
+</div>
 <h3 id="step-3-open">Step 3 — Open<a class="headerlink" href="#step-3-open" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -4972,13 +5079,11 @@
 <td><a href="http://localhost:8058/docs">http://localhost:8058/docs</a></td>
 <td>—</td>
 </tr>
-<tr>
-<td>MinIO console</td>
-<td><a href="http://localhost:9001">http://localhost:9001</a></td>
-<td><code>minio</code> / <code>minio123</code></td>
-</tr>
 </tbody>
 </table>
+<p>The S3 store is reachable only inside the Compose network, under the <code>s3</code> host name
+(<code>minio</code> still works as an alias), with the credentials <code>minio</code> / <code>minio123</code> unless you
+set your own.</p>
 <div class="admonition success">
 <p class="admonition-title">That's it!</p>
 <p>Depictio starts in <strong>single-user mode</strong> by default — no login, no configuration needed.</p>
@@ -5029,8 +5134,8 @@
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nv">DEPICTIO_BOOTSTRAP_ADMIN_EMAIL</span><span class="o">=</span>admin@example.com
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nv">DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD</span><span class="o">=</span>changeme
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># MinIO password must be ≥ 8 chars and not a known default</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nv">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="o">=</span><span class="k">$(</span>openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">12</span><span class="k">)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># S3 password must be ≥ 8 chars and not a known default</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nv">DEPICTIO_S3_ROOT_PASSWORD</span><span class="o">=</span><span class="k">$(</span>openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">12</span><span class="k">)</span>
 </code></pre></div>
 <p>Users can then register accounts and log in via the Depictio UI.</p>
 <div class="admonition info">
@@ -5039,10 +5144,10 @@
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Expose to the network?</p>
-<p>If making Depictio accessible beyond <code>localhost</code>, disable single-user mode and change the MinIO credentials.</p>
+<p>If making Depictio accessible beyond <code>localhost</code>, disable single-user mode and change the S3 credentials.</p>
 </div>
 <h3 id="custom-credentials-env-file">Custom Credentials (.env file)<a class="headerlink" href="#custom-credentials-env-file" title="Permanent link">¶</a></h3>
-<p>To change MinIO credentials or pin a specific version, copy the example file:</p>
+<p>To change the S3 credentials or pin a specific version, copy the example file:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
 </code></pre></div>
 <p>Edit <code>.env</code>:</p>
@@ -5053,9 +5158,10 @@
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nv">DEPICTIO_BOOTSTRAP_ADMIN_EMAIL</span><span class="o">=</span>admin@example.com
 <a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nv">DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD</span><span class="o">=</span>change-me-strong-password-here
 <a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># MinIO credentials — REQUIRED, ≥16 chars (enforced at startup from v1.0.0-b1)</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="nv">DEPICTIO_MINIO_ROOT_USER</span><span class="o">=</span>myadmin
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="nv">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="o">=</span>change-me-strong-password-here
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># S3 credentials — REQUIRED in multi-user mode, ≥ 8 chars (enforced at startup from v1.0.0-b1)</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1"># Named DEPICTIO_MINIO_* before v1.12.0; the old names still work</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="nv">DEPICTIO_S3_ROOT_USER</span><span class="o">=</span>myadmin
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="nv">DEPICTIO_S3_ROOT_PASSWORD</span><span class="o">=</span>change-me-strong-password-here
 </code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">Bootstrap is idempotent</p>
@@ -5069,40 +5175,36 @@
 <li><strong>Full Reference</strong>: <a href="../env-reference/">Environment Reference</a> — all variables</li>
 </ul>
 </div>
-<h3 id="external-s3-bring-your-own-minio">External S3 / Bring Your Own MinIO<a class="headerlink" href="#external-s3-bring-your-own-minio" title="Permanent link">¶</a></h3>
-<p>If you already have a MinIO server or S3-compatible storage, use the dedicated no-minio compose file:</p>
+<h3 id="external-s3">External S3<a class="headerlink" href="#external-s3" title="Permanent link">¶</a></h3>
+<p>If you already have S3-compatible storage (AWS, NetApp, Ceph, your own MinIO, …), use the compose file without the bundled store:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose/docker-compose.no-minio.yaml<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
 <p>Configure your <code>.env</code> to point to your existing instance:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">DEPICTIO_MINIO_ROOT_USER</span><span class="o">=</span>your-access-key
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="o">=</span>your-secret-key
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nv">DEPICTIO_MINIO_PUBLIC_URL</span><span class="o">=</span>https://your-minio-host.example.com
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_SERVICE</span><span class="o">=</span><span class="nb">true</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">DEPICTIO_S3_ROOT_USER</span><span class="o">=</span>your-access-key
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">DEPICTIO_S3_ROOT_PASSWORD</span><span class="o">=</span>your-secret-key
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nv">DEPICTIO_S3_PUBLIC_URL</span><span class="o">=</span>https://your-s3-host.example.com
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nv">DEPICTIO_S3_EXTERNAL_SERVICE</span><span class="o">=</span><span class="nb">true</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># Optional overrides</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_HOST</span><span class="o">=</span>your-minio-host.example.com
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_PORT</span><span class="o">=</span><span class="m">9000</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="nv">DEPICTIO_MINIO_EXTERNAL_PROTOCOL</span><span class="o">=</span>https
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nv">DEPICTIO_S3_EXTERNAL_HOST</span><span class="o">=</span>your-s3-host.example.com
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nv">DEPICTIO_S3_EXTERNAL_PORT</span><span class="o">=</span><span class="m">9000</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="nv">DEPICTIO_S3_EXTERNAL_PROTOCOL</span><span class="o">=</span>https
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Network Configuration</p>
-<p>Set <code>DEPICTIO_MINIO_EXTERNAL_SERVICE=true</code> when MinIO is outside the Docker Compose network.</p>
+<p>Set <code>DEPICTIO_S3_EXTERNAL_SERVICE=true</code> when the store is outside the Docker Compose network.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">The bucket does not have to exist</p>
-<p>From <strong>v1.6.0</strong> the server creates <code>DEPICTIO_MINIO_BUCKET</code> at startup when it is
+<p>From <strong>v1.6.0</strong> the server creates <code>DEPICTIO_S3_BUCKET</code> at startup when it is
 missing, then verifies it; an existing bucket is left untouched. See
-<a href="../env-reference/#minios3-storage">Required S3 permissions</a>.</p>
+<a href="../env-reference/#required-s3-permissions">Required S3 permissions</a>.</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title">S3-Compatible Storage</p>
-<p>Depictio uses the MinIO client library (S3 API compatible). AWS S3, DigitalOcean Spaces, Backblaze B2, and others may work but have not been officially tested.</p>
+<p>Depictio talks to the store through the S3 API (boto3, s3fs, delta-rs), with no MinIO-specific client. AWS S3, DigitalOcean Spaces, Backblaze B2, and others may work but have not been officially tested.</p>
 </div>
 <h3 id="port-configuration">Port Configuration<a class="headerlink" href="#port-configuration" title="Permanent link">¶</a></h3>
-<p>Override default ports in <code>.env</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">MINIO_PORT</span><span class="o">=</span><span class="m">9000</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nv">MINIO_CONSOLE_PORT</span><span class="o">=</span><span class="m">9001</span>
-</code></pre></div>
-<p>All default ports:</p>
+<p>Default ports:</p>
 <table>
 <thead>
 <tr>
@@ -5117,31 +5219,31 @@ missing, then verifies it; an existing bucket is left untouched. See
 </tr>
 <tr>
 <td>Backend API</td>
-<td>8058</td>
+<td>8058, on <code>127.0.0.1</code></td>
 </tr>
 <tr>
 <td>MongoDB</td>
-<td>27018</td>
+<td>27018, inside the Compose network</td>
 </tr>
 <tr>
-<td>MinIO API</td>
-<td>9000</td>
-</tr>
-<tr>
-<td>MinIO UI</td>
-<td>9001</td>
+<td>S3 API (SeaweedFS)</td>
+<td>9000, inside the Compose network</td>
 </tr>
 </tbody>
 </table>
+<p>The development stack (<code>docker-compose.dev.yaml</code>) also publishes the S3 API and the
+SeaweedFS admin UI on <code>127.0.0.1</code>. Move them in <code>.env</code> with <code>S3_PORT</code> (default <code>9000</code>)
+and <code>S3_CONSOLE_PORT</code> (default <code>9001</code>), named <code>MINIO_PORT</code> and <code>MINIO_CONSOLE_PORT</code>
+before v1.12.0, which still work.</p>
 <h3 id="development-mode">Development Mode<a class="headerlink" href="#development-mode" title="Permanent link">¶</a></h3>
 <p>Enable debug logging and hot-reload:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">DEPICTIO_DEV_MODE</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">DEPICTIO_DEV_MODE</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
 <p>Or set <code>DEPICTIO_DEV_MODE=true</code> in your <code>.env</code> file.</p>
 <h3 id="background-callbacks-celery">Background Callbacks (Celery)<a class="headerlink" href="#background-callbacks-celery" title="Permanent link">¶</a></h3>
 <p>Depictio uses Celery for asynchronous processing. The <code>depictio-celery-worker</code> container always starts automatically — it is <strong>required</strong> for the dashboard editor (design mode).</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Configure view-mode behaviour in .env</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nv">DEPICTIO_CELERY_ENABLED</span><span class="o">=</span><span class="nb">true</span><span class="w">   </span><span class="c1"># false = synchronous view mode (simpler for debugging)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Configure view-mode behaviour in .env</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nv">DEPICTIO_CELERY_ENABLED</span><span class="o">=</span><span class="nb">true</span><span class="w">   </span><span class="c1"># false = synchronous view mode (simpler for debugging)</span>
 </code></pre></div>
 <table>
 <thead>
@@ -5212,7 +5314,7 @@ missing, then verifies it; an existing bucket is left untouched. See
 <hr>
 <h2 id="troubleshooting"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 12h-4v-2h4m0 6h-4v-2h4m6-6h-2.81a6 6 0 0 0-1.82-1.96L17 4.41 15.59 3l-2.17 2.17a6 6 0 0 0-2.83 0L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20z"></path></svg></span> Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
 <h3 id="a-container-fails-to-start">A container fails to start<a class="headerlink" href="#a-container-fails-to-start" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>&lt;service_name&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>&lt;service_name&gt;
 </code></pre></div>
 <p>Common causes: port conflict, volume permission error, MongoDB connection failure.</p>
 <h3 id="cannot-connect-to-services">Cannot connect to services<a class="headerlink" href="#cannot-connect-to-services" title="Permanent link">¶</a></h3>
@@ -5222,7 +5324,7 @@ missing, then verifies it; an existing bucket is left untouched. See
 <li>Check for firewall rules blocking the connection</li>
 </ol>
 <h3 id="data-persistence">Data persistence<a class="headerlink" href="#data-persistence" title="Permanent link">¶</a></h3>
-<p>MongoDB data is stored in <code>./depictioDB</code> (bind-mount). MinIO data is stored in a named Docker volume (<code>minio_data</code>). Both persist across <code>docker compose down</code> restarts.</p>
+<p>MongoDB, Redis and the S3 store keep their data in named Docker volumes (<code>mongo_data</code>, <code>redis_data</code> and <code>seaweedfs_data</code>). They persist across <code>docker compose down</code>, and <code>docker compose down -v</code> deletes them. Before v1.12.0 the store was MinIO, in a <code>minio_data</code> volume that SeaweedFS does not read: see <a href="../upgrade/v1.12.0-seaweedfs/">Upgrading to v1.12.0</a>.</p>
 <hr>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <ul>

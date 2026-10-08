@@ -665,6 +665,8 @@
       
         
       
+        
+      
     
     
     
@@ -987,10 +989,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#minio-credentials" class="md-nav__link">
+  <a href="#s3-credentials" class="md-nav__link">
     <span class="md-ellipsis">
       
-        MinIO credentials
+        S3 credentials
       
     </span>
   </a>
@@ -998,10 +1000,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#external-s3-bring-your-own-minio" class="md-nav__link">
+  <a href="#external-s3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        External S3 / Bring Your Own MinIO
+        External S3
       
     </span>
   </a>
@@ -1226,7 +1228,7 @@
   <span class="md-ellipsis">
     
   
-    CLI
+    Upgrade guides
   
 
     
@@ -1239,6 +1241,105 @@
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Upgrade guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrade/v1.12.0-seaweedfs/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21 9-4-4v3h-7v2h7v3M7 11l-4 4 4 4v-3h7v-2H7z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    v1.12.0: MinIO → SeaweedFS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4">
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -4857,10 +4958,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#minio-credentials" class="md-nav__link">
+  <a href="#s3-credentials" class="md-nav__link">
     <span class="md-ellipsis">
       
-        MinIO credentials
+        S3 credentials
       
     </span>
   </a>
@@ -4868,10 +4969,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#external-s3-bring-your-own-minio" class="md-nav__link">
+  <a href="#external-s3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        External S3 / Bring Your Own MinIO
+        External S3
       
     </span>
   </a>
@@ -5046,7 +5147,13 @@
 <h3 id="step-2-wait-for-pods">Step 2 — Wait for pods<a class="headerlink" href="#step-2-wait-for-pods" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>depictio<span class="w"> </span>--watch
 </code></pre></div>
-<p>All pods should reach <code>Running</code> status: backend, viewer, mongo, minio, redis, celery-worker.</p>
+<p>All pods should reach <code>Running</code> status: backend, viewer, mongo, minio, redis, celery-worker. The <code>minio</code> pod runs the S3 store, SeaweedFS since v1.12.0; it keeps its name so that an upgrade reuses the same volume.</p>
+<div class="admonition warning">
+<p class="admonition-title">Upgrading a release from before v1.12.0?</p>
+<p>The bundled store starts empty after the upgrade: export the bucket <strong>before</strong>
+running <code>helm upgrade</code>. See
+<a href="../upgrade/v1.12.0-seaweedfs/#helm">Upgrading to v1.12.0: MinIO → SeaweedFS</a>.</p>
+</div>
 <h3 id="step-3-access-depictio">Step 3 — Access Depictio<a class="headerlink" href="#step-3-access-depictio" title="Permanent link">¶</a></h3>
 <p>By default services are <code>ClusterIP</code>. Use port-forwarding to access locally:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>depictio<span class="w"> </span>service/depictio-viewer<span class="w"> </span><span class="m">5080</span>:5080
@@ -5069,11 +5176,13 @@
 <td>8058</td>
 </tr>
 <tr>
-<td>MinIO Console</td>
-<td>9001</td>
+<td>S3 API (SeaweedFS)</td>
+<td>9000</td>
 </tr>
 </tbody>
 </table>
+<p>The SeaweedFS admin UI is off by default. <code>s3.adminUI.enabled: true</code> serves it on
+<code>s3.service.adminPort</code> (<code>23646</code>), behind the S3 root credentials.</p>
 <hr>
 <h2 id="advanced-configuration"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2m-2 12c-.25 0-.46-.18-.5-.42l-.37-2.65c-.63-.25-1.17-.59-1.69-.99l-2.49 1.01c-.22.08-.49 0-.61-.22l-2-3.46a.493.493 0 0 1 .12-.64l2.11-1.66L4.5 12l.07-1-2.11-1.63a.493.493 0 0 1-.12-.64l2-3.46c.12-.22.39-.31.61-.22l2.49 1c.52-.39 1.06-.73 1.69-.98l.37-2.65c.04-.24.25-.42.5-.42h4c.25 0 .46.18.5.42l.37 2.65c.63.25 1.17.59 1.69.98l2.49-1c.22-.09.49 0 .61.22l2 3.46c.13.22.07.49-.12.64L19.43 11l.07 1-.07 1 2.11 1.63c.19.15.25.42.12.64l-2 3.46c-.12.22-.39.31-.61.22l-2.49-1c-.52.39-1.06.73-1.69.98l-.37 2.65c-.04.24-.25.42-.5.42zm1.25-18-.37 2.61c-1.2.25-2.26.89-3.03 1.78L5.44 7.35l-.75 1.3L6.8 10.2a5.55 5.55 0 0 0 0 3.6l-2.12 1.56.75 1.3 2.43-1.04c.77.88 1.82 1.52 3.01 1.76l.37 2.62h1.52l.37-2.61c1.19-.25 2.24-.89 3.01-1.77l2.43 1.04.75-1.3-2.12-1.55c.4-1.17.4-2.44 0-3.61l2.11-1.55-.75-1.3-2.41 1.04a5.42 5.42 0 0 0-3.03-1.77L12.75 4z"></path></svg></span> Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Permanent link">¶</a></h2>
 <h3 id="custom-values-file">Custom values file<a class="headerlink" href="#custom-values-file" title="Permanent link">¶</a></h3>
@@ -5100,7 +5209,7 @@ environment-specific files.</p>
 <tbody>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-demo-base.yaml"><code>values-embl-demo-base.yaml</code></a></td>
-<td>Shared settings (storage, resources, auth, MinIO)</td>
+<td>Shared settings (storage, resources, auth, S3)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-demo.yaml"><code>values-embl-demo.yaml</code></a></td>
@@ -5125,7 +5234,7 @@ environment-specific files.</p>
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Secrets file</p>
-<p><code>values-embl-secrets.yaml</code> is gitignored — it holds MinIO passwords and OAuth
+<p><code>values-embl-secrets.yaml</code> is gitignored — it holds the S3 passwords and OAuth
 secrets that must be created locally. See <code>values-embl-auth.yaml</code> for the
 expected key names.</p>
 </div>
@@ -5136,44 +5245,50 @@ expected key names.</p>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nt">DEPICTIO_AUTH_SINGLE_USER_MODE</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span><span class="w">   </span><span class="c1"># default — no login required</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="c1"># DEPICTIO_AUTH_PUBLIC_MODE: "true"        # public read-only with sign-in</span>
 </code></pre></div>
-<h3 id="minio-credentials">MinIO credentials<a class="headerlink" href="#minio-credentials" title="Permanent link">¶</a></h3>
+<h3 id="s3-credentials">S3 credentials<a class="headerlink" href="#s3-credentials" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># my-values.yaml</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">secrets</span><span class="p">:</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">minioRootUser</span><span class="p">:</span><span class="w"> </span><span class="s">"myadmin"</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">minioRootPassword</span><span class="p">:</span><span class="w"> </span><span class="s">"mysecurepassword"</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">s3RootUser</span><span class="p">:</span><span class="w"> </span><span class="s">"myadmin"</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">s3RootPassword</span><span class="p">:</span><span class="w"> </span><span class="s">"mysecurepassword"</span>
 </code></pre></div>
+<p>These keys were <code>secrets.minioRootUser</code> and <code>secrets.minioRootPassword</code> before
+v1.12.0. The old keys, and a <code>minio:</code> values block, still work and print a
+deprecation warning in the upgrade notes. See
+<a href="../upgrade/v1.12.0-seaweedfs/#renamed-settings">Renamed settings</a>.</p>
 <div class="admonition warning">
-<p class="admonition-title">Upgrading from pre-v1.0.0-b1 — rotate MinIO credentials</p>
-<p>From <strong>v1.0.0-b1</strong> onwards MinIO root credentials are stored exclusively
+<p class="admonition-title">Upgrading from pre-v1.0.0-b1 — rotate the S3 credentials</p>
+<p>From <strong>v1.0.0-b1</strong> onwards the S3 root credentials are stored exclusively
 in a Kubernetes <code>Secret</code>. Earlier releases stored them in the <code>ConfigMap</code>,
 which was readable via <code>kubectl describe</code> and stored in etcd as plain text.</p>
-<p>If you are upgrading from an older release, <strong>rotate your MinIO root
+<p>If you are upgrading from an older release, <strong>rotate your S3 root
 credentials</strong> after the upgrade:</p>
 <ol>
-<li>Update <code>secrets.minioRootUser</code> and <code>secrets.minioRootPassword</code> in your
+<li>Update <code>secrets.s3RootUser</code> and <code>secrets.s3RootPassword</code> in your
    values file (or a sealed secret / external-secrets source).</li>
 <li>Run <code>helm upgrade</code> to apply the new Secret.</li>
-<li>Restart the MinIO pod so it picks up the new credentials:
+<li>Restart the store's pod so it picks up the new credentials:
    <code>kubectl rollout restart deployment/depictio-minio -n depictio</code></li>
 </ol>
 </div>
-<h3 id="external-s3-bring-your-own-minio">External S3 / Bring Your Own MinIO<a class="headerlink" href="#external-s3-bring-your-own-minio" title="Permanent link">¶</a></h3>
+<h3 id="external-s3">External S3<a class="headerlink" href="#external-s3" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># my-values.yaml</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nt">minio</span><span class="p">:</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">   </span><span class="c1"># disable bundled MinIO</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nt">s3</span><span class="p">:</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">   </span><span class="c1"># no bundled store (minio.enabled before v1.12.0)</span>
 <a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
 <a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nt">backend</span><span class="p">:</span>
 <a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="nt">env</span><span class="p">:</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_PUBLIC_URL</span><span class="p">:</span><span class="w"> </span><span class="s">"https://your-minio-host.example.com"</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_EXTERNAL_SERVICE</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_ROOT_USER</span><span class="p">:</span><span class="w"> </span><span class="s">"your-access-key"</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="nt">DEPICTIO_MINIO_ROOT_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="s">"your-secret-key"</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="nt">DEPICTIO_S3_PUBLIC_URL</span><span class="p">:</span><span class="w"> </span><span class="s">"https://your-s3-host.example.com"</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="nt">DEPICTIO_S3_EXTERNAL_SERVICE</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="nt">DEPICTIO_S3_ROOT_USER</span><span class="p">:</span><span class="w"> </span><span class="s">"your-access-key"</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="nt">DEPICTIO_S3_ROOT_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="s">"your-secret-key"</span>
 </code></pre></div>
+<p>An external S3 is not affected by the move from MinIO to SeaweedFS, and the
+<code>DEPICTIO_MINIO_*</code> names of earlier values files still work.</p>
 <div class="admonition note">
 <p class="admonition-title">The bucket does not have to exist</p>
-<p>From <strong>v1.6.0</strong> the backend creates <code>DEPICTIO_MINIO_BUCKET</code> at startup when it is
+<p>From <strong>v1.6.0</strong> the backend creates <code>DEPICTIO_S3_BUCKET</code> at startup when it is
 missing, then verifies it; an existing bucket is left untouched. See
-<a href="../env-reference/#minios3-storage">Required S3 permissions</a>.</p>
+<a href="../env-reference/#required-s3-permissions">Required S3 permissions</a>.</p>
 </div>
 <h3 id="ingress">Ingress<a class="headerlink" href="#ingress" title="Permanent link">¶</a></h3>
 <p>Depictio's Helm chart supports three ingress topologies. Pick based on
@@ -5190,7 +5305,7 @@ how your cluster's auth and TLS termination work.</p>
 <tr>
 <td><strong>Single ingress</strong> (default)</td>
 <td><code>ingress.enabled: true</code> only</td>
-<td>Viewer, backend API, and MinIO console all share one ingress + annotation set. Right for small/dev clusters or when one OIDC layer covers everything.</td>
+<td>Viewer, backend API, and S3 store all share one ingress + annotation set. Right for small/dev clusters or when one OIDC layer covers everything.</td>
 </tr>
 <tr>
 <td><strong>Viewer + dedicated backend</strong></td>
@@ -5198,9 +5313,9 @@ how your cluster's auth and TLS termination work.</p>
 <td>Apply different auth annotations (or no auth) on the API. Useful when the API needs a different OIDC scope, or when programmatic clients hit <code>/depictio/api/*</code> with mTLS or API tokens.</td>
 </tr>
 <tr>
-<td><strong>Viewer + dedicated MinIO</strong></td>
-<td><code>minio.ingress.separateRoute: true</code></td>
-<td>Same idea for MinIO — typically when MinIO is exposed for direct S3 access from CI runners and shouldn't sit behind the user-facing OIDC.</td>
+<td><strong>Viewer + dedicated S3</strong></td>
+<td><code>s3.ingress.separateRoute: true</code></td>
+<td>Same idea for the S3 store — typically when it is exposed for direct S3 access from CI runners and shouldn't sit behind the user-facing OIDC.</td>
 </tr>
 </tbody>
 </table>
@@ -5226,7 +5341,7 @@ how your cluster's auth and TLS termination work.</p>
 <a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">      </span><span class="nt">nginx.ingress.kubernetes.io/auth-method</span><span class="p">:</span><span class="w"> </span><span class="s">"BASIC"</span><span class="w">   </span><span class="c1"># different auth</span>
 <a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">      </span><span class="nt">nginx.ingress.kubernetes.io/proxy-body-size</span><span class="p">:</span><span class="w"> </span><span class="s">"200m"</span>
 <a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>
-<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="nt">minio</span><span class="p">:</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="nt">s3</span><span class="p">:</span>
 <a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">  </span><span class="nt">ingress</span><span class="p">:</span>
 <a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">    </span><span class="nt">separateRoute</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">    </span><span class="nt">inheritDefaultAnnotations</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
@@ -5237,7 +5352,7 @@ merged into the per-route ingress. Set <code>false</code> when the per-route ing
 needs a fundamentally different auth chain.</p>
 <div class="admonition warning">
 <p class="admonition-title">Network restrictions on dedicated routes</p>
-<p>A dedicated MinIO or backend ingress with <code>annotations: {}</code> is
+<p>A dedicated S3 or backend ingress with <code>annotations: {}</code> is
 <strong>unauthenticated at the ingress layer</strong>. Restrict access via Kubernetes
 NetworkPolicies, ingress controller IP whitelisting, or a dedicated
 private DNS — don't rely on obscurity.</p>
@@ -5245,9 +5360,9 @@ private DNS — don't rely on obscurity.</p>
 <h4 id="gateway-api-instead-of-ingress-v114">Gateway API instead of Ingress (v1.1.4+)<a class="headerlink" href="#gateway-api-instead-of-ingress-v114" title="Permanent link">¶</a></h4>
 <p>On clusters that have moved to the <a href="https://gateway-api.sigs.k8s.io/">Gateway API</a>,
 <code>gateway.enabled: true</code> emits <code>HTTPRoute</code> resources instead of Ingress objects:
-one for the viewer, one for the API, one for MinIO. <code>parentRefs</code> is the only
+one for the viewer, one for the API, one for the S3 store. <code>parentRefs</code> is the only
 required key; per-route filters live under <code>backend.httpRoute</code> and
-<code>minio.httpRoute</code>, and <code>gateway.filters</code> applies to the viewer route alone.</p>
+<code>s3.httpRoute</code>, and <code>gateway.filters</code> applies to the viewer route alone.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># my-values.yaml</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nt">ingress</span><span class="p">:</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>

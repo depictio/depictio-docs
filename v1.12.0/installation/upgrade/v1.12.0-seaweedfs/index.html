@@ -3,35 +3,35 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Install Depictio as a Python package with uv or pip, and run the whole server as local processes, without containers.">
+        <meta name="description" content="From v1.12.0 the bundled S3 store is SeaweedFS and starts empty. Who must copy their bucket over, the renamed settings, and the copy itself with Docker Compose or Helm.">
       
       
       
-        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v1.12.0/installation/local/">
+        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v1.12.0/installation/upgrade/v1.12.0-seaweedfs/">
       
       
-        <link rel="prev" href="../kubernetes/">
+        <link rel="prev" href="../../local/">
       
       
-        <link rel="next" href="../upgrade/v1.12.0-seaweedfs/">
+        <link rel="next" href="../../cli/">
       
       
         
       
       
-      <link rel="icon" href="../../images/logo/logo_icon.png">
+      <link rel="icon" href="../../../images/logo/logo_icon.png">
       <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.7">
     
     
       
-        <title>Python Package Installation - Depictio Documentation</title>
+        <title>v1.12.0: MinIO → SeaweedFS - Depictio Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -56,15 +56,15 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
-      <link rel="stylesheet" href="../../stylesheets/timeline.css">
+      <link rel="stylesheet" href="../../../stylesheets/timeline.css">
     
-      <link rel="stylesheet" href="../../stylesheets/blog.css">
+      <link rel="stylesheet" href="../../../stylesheets/blog.css">
     
-      <link rel="stylesheet" href="../../stylesheets/neoteroi-mkdocs-v1.1.3.css">
+      <link rel="stylesheet" href="../../../stylesheets/neoteroi-mkdocs-v1.1.3.css">
     
-      <link rel="stylesheet" href="../../stylesheets/asciinema.css">
+      <link rel="stylesheet" href="../../../stylesheets/asciinema.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
     
@@ -72,7 +72,7 @@
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@3.17.0/dist/bundle/asciinema-player.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -88,9 +88,9 @@
 
     
     
-  <link rel="preload" href="../../fonts/Virgil.ttf" as="font" type="font/ttf" crossorigin="">
+  <link rel="preload" href="../../../fonts/Virgil.ttf" as="font" type="font/ttf" crossorigin="">
 
-  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -119,7 +119,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#python-package-installation-v1120" class="md-skip">
+        <a href="#upgrading-to-v1120-minio-seaweedfs" class="md-skip">
           Skip to content
         </a>
       
@@ -139,9 +139,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
+    <a href="../../.." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../images/logo/animated_favicon.svg" alt="logo">
+  <img src="../../../images/logo/animated_favicon.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -158,7 +158,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Python Package Installation
+              v1.12.0: MinIO → SeaweedFS
             
           </span>
         </div>
@@ -270,7 +270,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -295,7 +295,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -319,7 +319,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../usage/" class="md-tabs__link">
+        <a href="../../../usage/" class="md-tabs__link">
           
   
   
@@ -341,7 +341,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../tutorials/" class="md-tabs__link">
+      <a href="../../../tutorials/" class="md-tabs__link">
         
   
   
@@ -364,7 +364,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../features/" class="md-tabs__link">
+        <a href="../../../features/" class="md-tabs__link">
           
   
   
@@ -388,7 +388,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../api/" class="md-tabs__link">
+        <a href="../../../api/" class="md-tabs__link">
           
   
   
@@ -412,7 +412,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../pipeline-templates/" class="md-tabs__link">
+        <a href="../../../pipeline-templates/" class="md-tabs__link">
           
   
   
@@ -434,7 +434,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../catalog/" class="md-tabs__link">
+      <a href="../../../catalog/" class="md-tabs__link">
         
   
   
@@ -457,7 +457,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../developer/" class="md-tabs__link">
+        <a href="../../../developer/" class="md-tabs__link">
           
   
   
@@ -479,7 +479,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../roadmap/" class="md-tabs__link">
+      <a href="../../../roadmap/" class="md-tabs__link">
         
   
   
@@ -500,7 +500,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../changelog/" class="md-tabs__link">
+      <a href="../../../changelog/" class="md-tabs__link">
         
   
   
@@ -523,7 +523,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../blog/" class="md-tabs__link">
+        <a href="../../../blog/" class="md-tabs__link">
           
   
   
@@ -547,7 +547,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../more/" class="md-tabs__link">
+        <a href="../../../more/" class="md-tabs__link">
           
   
   
@@ -591,9 +591,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
+    <a href="../../.." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../images/logo/animated_favicon.svg" alt="logo">
+  <img src="../../../images/logo/animated_favicon.svg" alt="logo">
 
     </a>
     Depictio Documentation
@@ -620,7 +620,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -687,7 +687,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   
@@ -730,8 +730,6 @@
                 
   
   
-    
-  
   
   
     
@@ -755,11 +753,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked="">
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2">
         
           
           <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
@@ -780,7 +780,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -798,7 +798,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../docker/" class="md-nav__link">
+      <a href="../../docker/" class="md-nav__link">
         
   
   
@@ -828,7 +828,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kubernetes/" class="md-nav__link">
+      <a href="../../kubernetes/" class="md-nav__link">
         
   
   
@@ -855,6 +855,105 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../local/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.25.18.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Python package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrade guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Upgrade guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
     
   
   
@@ -871,12 +970,12 @@
           
   
   
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.25.18.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21 9-4-4v3h-7v2h7v3M7 11l-4 4 4 4v-3h7v-2H7z"></path></svg>
   
   <span class="md-ellipsis">
     
   
-    Python package
+    v1.12.0: MinIO → SeaweedFS
   
 
     
@@ -891,12 +990,12 @@
         
   
   
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.25.18.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21 9-4-4v3h-7v2h7v3M7 11l-4 4 4 4v-3h7v-2H7z"></path></svg>
   
   <span class="md-ellipsis">
     
   
-    Python package
+    v1.12.0: MinIO → SeaweedFS
   
 
     
@@ -924,138 +1023,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#renamed-settings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Start
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Quick Start">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#step-1-install" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1: Install
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-start-the-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 2: Start the server
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-add-your-results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Add your results
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#manage-the-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Manage the server
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Manage the server">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#up-options" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        up options
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#upgrade" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Upgrade
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-it-differs-from-docker-compose" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How it differs from Docker Compose
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="How it differs from Docker Compose">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#ports" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ports
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#files" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Files
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#move-to-docker-compose" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Move to Docker Compose
+        Renamed settings
       
     </span>
   </a>
@@ -1063,10 +1034,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#platforms" class="md-nav__link">
+  <a href="#docker-compose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Platforms
+        Docker Compose
       
     </span>
   </a>
@@ -1074,104 +1045,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#helm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Troubleshooting
+        Helm
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#a-service-exited-during-startup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        A service exited during startup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#a-port-is-already-in-use" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        A port is already in use
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#on-an-hpc-login-node-or-behind-a-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        On an HPC login node or behind a proxy
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#depictio_-settings-are-ignored" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        DEPICTIO_* settings are ignored
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#the-example-dashboards-show-no-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The example dashboards show no data
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dashboards-stay-blank" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Dashboards stay blank
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#start-from-scratch" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Start from scratch
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
+  <a href="#what-else-changes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Next Steps
+        What else changes
       
     </span>
   </a>
@@ -1182,105 +1070,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-      
-    
-    
-    
-      
-      
-        
-          
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3">
-        
-          
-          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Upgrade guides
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Upgrade guides
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix="">
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../upgrade/v1.12.0-seaweedfs/" class="md-nav__link">
-        
-  
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21 9-4-4v3h-7v2h7v3M7 11l-4 4 4 4v-3h7v-2H7z"></path></svg>
-  
-  <span class="md-ellipsis">
-    
-  
-    v1.12.0: MinIO → SeaweedFS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -1362,7 +1151,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
+      <a href="../../cli/" class="md-nav__link">
         
   
   
@@ -1398,7 +1187,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../configuration/" class="md-nav__link">
+      <a href="../../configuration/" class="md-nav__link">
         
   
   
@@ -1428,7 +1217,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../env-reference/" class="md-nav__link">
+      <a href="../../env-reference/" class="md-nav__link">
         
   
   
@@ -1502,7 +1291,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../usage/" class="md-nav__link ">
+            <a href="../../../usage/" class="md-nav__link ">
               
   
   
@@ -1548,7 +1337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/get_started/" class="md-nav__link">
+      <a href="../../../usage/get_started/" class="md-nav__link">
         
   
   
@@ -1611,7 +1400,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../usage/guides/" class="md-nav__link ">
+            <a href="../../../usage/guides/" class="md-nav__link ">
               
   
   
@@ -1657,7 +1446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/guides/web_ui/" class="md-nav__link">
+      <a href="../../../usage/guides/web_ui/" class="md-nav__link">
         
   
   
@@ -1685,7 +1474,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/guides/dashboard_creation/" class="md-nav__link">
+      <a href="../../../usage/guides/dashboard_creation/" class="md-nav__link">
         
   
   
@@ -1713,7 +1502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/guides/catalog-picker/" class="md-nav__link">
+      <a href="../../../usage/guides/catalog-picker/" class="md-nav__link">
         
   
   
@@ -1741,7 +1530,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/guides/dashboard_usage/" class="md-nav__link">
+      <a href="../../../usage/guides/dashboard_usage/" class="md-nav__link">
         
   
   
@@ -1769,7 +1558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/guides/realtime-events/" class="md-nav__link">
+      <a href="../../../usage/guides/realtime-events/" class="md-nav__link">
         
   
   
@@ -1840,7 +1629,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../usage/projects/" class="md-nav__link ">
+            <a href="../../../usage/projects/" class="md-nav__link ">
               
   
   
@@ -1886,7 +1675,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/projects/guide/" class="md-nav__link">
+      <a href="../../../usage/projects/guide/" class="md-nav__link">
         
   
   
@@ -1914,7 +1703,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/projects/yaml-examples/" class="md-nav__link">
+      <a href="../../../usage/projects/yaml-examples/" class="md-nav__link">
         
   
   
@@ -1942,7 +1731,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/projects/reference/" class="md-nav__link">
+      <a href="../../../usage/projects/reference/" class="md-nav__link">
         
   
   
@@ -1970,7 +1759,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/projects/recipes/" class="md-nav__link">
+      <a href="../../../usage/projects/recipes/" class="md-nav__link">
         
   
   
@@ -1998,7 +1787,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/projects/templates/" class="md-nav__link">
+      <a href="../../../usage/projects/templates/" class="md-nav__link">
         
   
   
@@ -2065,7 +1854,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../depictio-cli/" class="md-nav__link ">
+            <a href="../../../depictio-cli/" class="md-nav__link ">
               
   
   
@@ -2111,7 +1900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../depictio-cli/usage/" class="md-nav__link">
+      <a href="../../../depictio-cli/usage/" class="md-nav__link">
         
   
   
@@ -2139,7 +1928,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../depictio-cli/nextflow-trigger/" class="md-nav__link">
+      <a href="../../../depictio-cli/nextflow-trigger/" class="md-nav__link">
         
   
   
@@ -2167,7 +1956,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../depictio-cli/minimal_config/" class="md-nav__link">
+      <a href="../../../depictio-cli/minimal_config/" class="md-nav__link">
         
   
   
@@ -2236,7 +2025,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../usage/administration/" class="md-nav__link ">
+            <a href="../../../usage/administration/" class="md-nav__link ">
               
   
   
@@ -2282,7 +2071,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/administration/migrate/" class="md-nav__link">
+      <a href="../../../usage/administration/migrate/" class="md-nav__link">
         
   
   
@@ -2310,7 +2099,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/administration/backup/" class="md-nav__link">
+      <a href="../../../usage/administration/backup/" class="md-nav__link">
         
   
   
@@ -2338,7 +2127,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/administration/monitoring/" class="md-nav__link">
+      <a href="../../../usage/administration/monitoring/" class="md-nav__link">
         
   
   
@@ -2366,7 +2155,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/administration/branding/" class="md-nav__link">
+      <a href="../../../usage/administration/branding/" class="md-nav__link">
         
   
   
@@ -2462,7 +2251,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/guides/authentication-modes/" class="md-nav__link">
+      <a href="../../../usage/guides/authentication-modes/" class="md-nav__link">
         
   
   
@@ -2490,7 +2279,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/guides/unauthenticated_mode/" class="md-nav__link">
+      <a href="../../../usage/guides/unauthenticated_mode/" class="md-nav__link">
         
   
   
@@ -2533,7 +2322,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorials/" class="md-nav__link">
+      <a href="../../../tutorials/" class="md-nav__link">
         
   
   
@@ -2593,7 +2382,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../features/" class="md-nav__link ">
+            <a href="../../../features/" class="md-nav__link ">
               
   
   
@@ -2701,7 +2490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/dashboards/" class="md-nav__link">
+      <a href="../../../features/dashboards/" class="md-nav__link">
         
   
   
@@ -2731,7 +2520,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/components/" class="md-nav__link">
+      <a href="../../../features/components/" class="md-nav__link">
         
   
   
@@ -2761,7 +2550,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/interactive-selection-filtering/" class="md-nav__link">
+      <a href="../../../features/interactive-selection-filtering/" class="md-nav__link">
         
   
   
@@ -2861,7 +2650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/cross-dc-filtering/" class="md-nav__link">
+      <a href="../../../features/cross-dc-filtering/" class="md-nav__link">
         
   
   
@@ -2891,7 +2680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/filter-expressions/" class="md-nav__link">
+      <a href="../../../features/filter-expressions/" class="md-nav__link">
         
   
   
@@ -2921,7 +2710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/yaml-sync/" class="md-nav__link">
+      <a href="../../../features/yaml-sync/" class="md-nav__link">
         
   
   
@@ -3025,7 +2814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/architecture/" class="md-nav__link">
+      <a href="../../../features/architecture/" class="md-nav__link">
         
   
   
@@ -3055,7 +2844,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/performance/" class="md-nav__link">
+      <a href="../../../features/performance/" class="md-nav__link">
         
   
   
@@ -3085,7 +2874,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/data-model/" class="md-nav__link">
+      <a href="../../../features/data-model/" class="md-nav__link">
         
   
   
@@ -3115,7 +2904,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/security/" class="md-nav__link">
+      <a href="../../../features/security/" class="md-nav__link">
         
   
   
@@ -3145,7 +2934,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/telemetry/" class="md-nav__link">
+      <a href="../../../features/telemetry/" class="md-nav__link">
         
   
   
@@ -3219,7 +3008,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../api/" class="md-nav__link ">
+            <a href="../../../api/" class="md-nav__link ">
               
   
   
@@ -3265,7 +3054,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/reference/" class="md-nav__link">
+      <a href="../../../api/reference/" class="md-nav__link">
         
   
   
@@ -3293,7 +3082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/fastapi_docs/" class="md-nav__link">
+      <a href="../../../api/fastapi_docs/" class="md-nav__link">
         
   
   
@@ -3355,7 +3144,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../pipeline-templates/" class="md-nav__link ">
+            <a href="../../../pipeline-templates/" class="md-nav__link ">
               
   
   
@@ -3450,7 +3239,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../pipeline-templates/nf-core/" class="md-nav__link ">
+            <a href="../../../pipeline-templates/nf-core/" class="md-nav__link ">
               
   
   
@@ -3494,7 +3283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline-templates/nf-core/ampliseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/ampliseq/" class="md-nav__link">
         
   
   
@@ -3522,7 +3311,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline-templates/nf-core/viralrecon/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/viralrecon/" class="md-nav__link">
         
   
   
@@ -3550,7 +3339,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline-templates/nf-core/variantbenchmarking/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/variantbenchmarking/" class="md-nav__link">
         
   
   
@@ -3578,7 +3367,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline-templates/nf-core/differentialabundance/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/differentialabundance/" class="md-nav__link">
         
   
   
@@ -3606,7 +3395,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline-templates/nf-core/funcscan/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/funcscan/" class="md-nav__link">
         
   
   
@@ -3634,7 +3423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline-templates/nf-core/airrflow/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/airrflow/" class="md-nav__link">
         
   
   
@@ -3662,7 +3451,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline-templates/nf-core/rnafusion/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/rnafusion/" class="md-nav__link">
         
   
   
@@ -3690,7 +3479,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline-templates/nf-core/rnaseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/rnaseq/" class="md-nav__link">
         
   
   
@@ -3718,7 +3507,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline-templates/nf-core/taxprofiler/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/taxprofiler/" class="md-nav__link">
         
   
   
@@ -3746,7 +3535,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline-templates/nf-core/chipseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/chipseq/" class="md-nav__link">
         
   
   
@@ -3774,7 +3563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline-templates/nf-core/atacseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/atacseq/" class="md-nav__link">
         
   
   
@@ -3802,7 +3591,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline-templates/nf-core/cutandrun/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/cutandrun/" class="md-nav__link">
         
   
   
@@ -3845,7 +3634,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../catalog/" class="md-nav__link">
+      <a href="../../../catalog/" class="md-nav__link">
         
   
   
@@ -3907,7 +3696,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../developer/" class="md-nav__link ">
+            <a href="../../../developer/" class="md-nav__link ">
               
   
   
@@ -3953,7 +3742,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/contributing/" class="md-nav__link">
+      <a href="../../../developer/contributing/" class="md-nav__link">
         
   
   
@@ -3981,7 +3770,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/contributing-a-tool/" class="md-nav__link">
+      <a href="../../../developer/contributing-a-tool/" class="md-nav__link">
         
   
   
@@ -4011,7 +3800,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/tool-studio/" class="md-nav__link">
+      <a href="../../../developer/tool-studio/" class="md-nav__link">
         
   
   
@@ -4039,7 +3828,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/contributing-templates/" class="md-nav__link">
+      <a href="../../../developer/contributing-templates/" class="md-nav__link">
         
   
   
@@ -4076,7 +3865,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../roadmap/" class="md-nav__link">
+      <a href="../../../roadmap/" class="md-nav__link">
         
   
   
@@ -4105,7 +3894,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelog/" class="md-nav__link">
+      <a href="../../../changelog/" class="md-nav__link">
         
   
   
@@ -4163,7 +3952,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../blog/" class="md-nav__link ">
+            <a href="../../../blog/" class="md-nav__link ">
               
   
   
@@ -4271,7 +4060,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/archive/2026/" class="md-nav__link">
+      <a href="../../../blog/archive/2026/" class="md-nav__link">
         
   
   
@@ -4301,7 +4090,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/archive/2025/" class="md-nav__link">
+      <a href="../../../blog/archive/2025/" class="md-nav__link">
         
   
   
@@ -4405,7 +4194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/category/announcements/" class="md-nav__link">
+      <a href="../../../blog/category/announcements/" class="md-nav__link">
         
   
   
@@ -4435,7 +4224,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/category/demo/" class="md-nav__link">
+      <a href="../../../blog/category/demo/" class="md-nav__link">
         
   
   
@@ -4465,7 +4254,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/category/features/" class="md-nav__link">
+      <a href="../../../blog/category/features/" class="md-nav__link">
         
   
   
@@ -4495,7 +4284,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/category/launch/" class="md-nav__link">
+      <a href="../../../blog/category/launch/" class="md-nav__link">
         
   
   
@@ -4525,7 +4314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/category/tutorials/" class="md-nav__link">
+      <a href="../../../blog/category/tutorials/" class="md-nav__link">
         
   
   
@@ -4601,7 +4390,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../more/" class="md-nav__link ">
+            <a href="../../../more/" class="md-nav__link ">
               
   
   
@@ -4674,7 +4463,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../FAQ/" class="md-nav__link ">
+            <a href="../../../FAQ/" class="md-nav__link ">
               
   
   
@@ -4720,7 +4509,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../FAQ/general/" class="md-nav__link">
+      <a href="../../../FAQ/general/" class="md-nav__link">
         
   
   
@@ -4756,7 +4545,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../more/funding/" class="md-nav__link">
+      <a href="../../../more/funding/" class="md-nav__link">
         
   
   
@@ -4784,7 +4573,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../more/palette/" class="md-nav__link">
+      <a href="../../../more/palette/" class="md-nav__link">
         
   
   
@@ -4812,7 +4601,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../animated-logo/" class="md-nav__link">
+      <a href="../../../animated-logo/" class="md-nav__link">
         
   
   
@@ -4869,138 +4658,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#renamed-settings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Start
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Quick Start">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#step-1-install" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1: Install
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-start-the-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 2: Start the server
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-add-your-results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Add your results
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#manage-the-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Manage the server
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Manage the server">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#up-options" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        up options
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#upgrade" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Upgrade
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-it-differs-from-docker-compose" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How it differs from Docker Compose
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="How it differs from Docker Compose">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#ports" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ports
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#files" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Files
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#move-to-docker-compose" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Move to Docker Compose
+        Renamed settings
       
     </span>
   </a>
@@ -5008,10 +4669,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#platforms" class="md-nav__link">
+  <a href="#docker-compose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Platforms
+        Docker Compose
       
     </span>
   </a>
@@ -5019,104 +4680,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#helm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Troubleshooting
+        Helm
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#a-service-exited-during-startup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        A service exited during startup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#a-port-is-already-in-use" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        A port is already in use
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#on-an-hpc-login-node-or-behind-a-proxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        On an HPC login node or behind a proxy
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#depictio_-settings-are-ignored" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        DEPICTIO_* settings are ignored
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#the-example-dashboards-show-no-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The example dashboards show no data
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dashboards-stay-blank" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Dashboards stay blank
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#start-from-scratch" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Start from scratch
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
+  <a href="#what-else-changes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Next Steps
+        What else changes
       
     </span>
   </a>
@@ -5143,479 +4721,242 @@
   
 
 
-<h1 id="python-package-installation-v1120">Python Package Installation <small>(v1.12.0+)</small><a class="headerlink" href="#python-package-installation-v1120" title="Permanent link">¶</a></h1>
-<p>Install <code>depictio[local]</code> with <code>uv</code> or <code>pip</code>, then run every service as a local process on your machine: no containers.</p>
-<p><code>depictio local up</code> starts the same API, worker and viewer as the
-<a href="../docker/">Docker Compose</a> and <a href="../kubernetes/">Kubernetes</a> deployments, with
-MongoDB, Redis and SeaweedFS (the S3 store) run as plain processes on
-<code>127.0.0.1</code>. <code>depictio ingest</code> then adds your pipeline results, so you go from a
-results directory to its dashboard without Docker, a cluster or a shared
-instance.</p>
-<p>Use it to review a template on your own results, or to try Depictio on a laptop.
-For a team, a demo or production, use Docker Compose or Kubernetes: a local
-server can later be <a href="#move-to-docker-compose">moved to Docker Compose</a> with its
-data.</p>
-<p><img alt="The same server, run in containers or as local processes" src="../../images/installation/local/schema_same_code_docs.png"></p>
-<hr>
-<h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
-<p><strong>Prerequisites</strong>: Linux, or macOS on Apple silicon (see <a href="#platforms">Platforms</a>),
-with <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a>, or pip and
-Python 3.11 to 3.14.</p>
-<h3 id="step-1-install">Step 1: Install<a class="headerlink" href="#step-1-install" title="Permanent link">¶</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">uv</label><label for="__tabbed_1_2">pip</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span><span class="s2">"depictio[local]"</span>
-</code></pre></div>
-<p><code>uv tool install</code> puts the <code>depictio</code> command on your <code>PATH</code>, in an
-environment of its own. Prefer it to <code>uvx --from "depictio[local]" depictio local up</code>,
-which runs in a temporary environment and leaves no <code>depictio</code> command
-behind for <code>depictio local status</code> and <code>depictio local down</code>.</p>
-<p>If you installed the former <code>depictio-cli</code> package with <code>uv tool install</code>,
-add <code>--force</code>: it replaces the <code>depictio</code> and <code>depictio-cli</code> commands that
-package installed.</p>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>~/.venvs/depictio
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">source</span><span class="w"> </span>~/.venvs/depictio/bin/activate
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"depictio[local]"</span>
-</code></pre></div>
-<p>The <code>depictio</code> command is on your <code>PATH</code> while the environment is active.</p>
-</div>
-</div>
-</div>
-<p>The <code>[local]</code> extra adds the server's Python dependencies, about 1.6 GB
-installed, from prebuilt wheels on Python 3.11 to 3.14. The package carries the
-viewer, already built.</p>
-<details class="info">
-<summary>From a clone of the repository</summary>
-<p>To run the code of a clone, install it in editable mode:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/depictio/depictio.git
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>depictio
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">".[local]"</span>
-</code></pre></div>
-<p>A clone has no viewer bundle, so <code>depictio local up</code> builds it, with
-<code>pnpm install</code> then <code>pnpm run build</code>, when it is missing or older than its
-sources. That needs <a href="https://nodejs.org/">Node.js</a> 20 or later with
-<a href="https://pnpm.io/installation">pnpm</a> (<code>corepack enable pnpm</code>); the output
-goes to <code>~/.depictio/local/logs/viewer-build.log</code>. A build that fails does
-not stop the start: the server runs with the previous bundle, or without
-dashboards when there is none, and <code>up</code> says so.</p>
-</details>
-<h3 id="step-2-start-the-server">Step 2: Start the server<a class="headerlink" href="#step-2-start-the-server" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>up
-</code></pre></div>
-<p><img alt="Terminal output of a first depictio local up: it installs MongoDB, Redis and SeaweedFS from conda-forge, starts the services, then prints &quot;Depictio is ready&quot; with the dashboards URL, the data and log folders, and the next steps" src="../../images/installation/local/terminal_local_up.svg"></p>
-<p>The first run downloads MongoDB, Redis and SeaweedFS from conda-forge into
-<code>~/.depictio/local/env</code> (about 170 MB, once), seeds the Iris and Penguins
-example projects, and waits for them to load so that their dashboards open with
-data. It then opens the dashboards page in your browser,
-<code>http://127.0.0.1:8058/dashboards</code> unless that port was taken (see
-<a href="#ports">Ports</a>). Later runs reuse the binaries and the data, and start in
-seconds.</p>
-<p>Over SSH, or on Linux without a display, no browser opens: <code>up</code> prints the
-tunnel to run from your own machine, <code>ssh -L &lt;port&gt;:127.0.0.1:&lt;port&gt; &lt;host&gt;</code>,
-then the URL to open there.</p>
-<p>The next steps above need no <code>--server</code>: when no other server is configured (no
-<code>~/.depictio/CLI.yaml</code>, and no <code>DEPICTIO_CLI_*</code> variable set), every
-<a href="../../depictio-cli/usage/">CLI</a> command reaches this server. Otherwise the
-summary adds <code>--server local</code>, which names this server whatever else is
-configured. See
-<a href="../../depictio-cli/usage/#choosing-a-server">Which server a command uses</a>.</p>
-<h3 id="step-3-add-your-results">Step 3: Add your results<a class="headerlink" href="#step-3-add-your-results" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>path/to/results
-</code></pre></div>
-<p><a href="../../depictio-cli/usage/#ingest-command"><code>depictio ingest</code></a> detects the
-<a href="../../usage/projects/templates/">template</a> from the pipeline name and version
-the run recorded, and ends with links to the project and its dashboards. Pass
-<code>--template</code> to choose the template, and template variables with <code>--var</code>.
-nf-core results do not contain the samplesheet: when the template cannot find it
-under <code>input/</code>, pass it explicitly.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>path/to/results<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/rnaseq/latest<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">SAMPLESHEET_FILE</span><span class="o">=</span>samplesheet.csv
-</code></pre></div>
-<p>If the ingestion fails, the command exits with an error and the server keeps
-running. To ingest the same results again after a new run, add
-<code>--update-config</code>: it refreshes the project and keeps its dashboards as edited
-in the viewer (see
-<a href="../../depictio-cli/usage/#refreshing-a-project">Refreshing a project</a>).</p>
-<div class="admonition note">
-<p class="admonition-title">Coming from v1.12.0-b1</p>
-<p><code>depictio local up</code> no longer ingests data. Given <code>--template</code>,
-<code>--data-root</code>, <code>--project-name</code> or <code>--var</code>, it prints the
-<code>depictio local up</code> and <code>depictio ingest</code> commands to run instead, and
-exits with code 2.</p>
-</div>
-<hr>
-<h2 id="manage-the-server"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19V7H4v12zm0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-7 14v-2h5v2zm-3.42-4L5.57 9H8.4l3.3 3.3c.39.39.39 1.03 0 1.42L8.42 17H5.59z"></path></svg></span> Manage the server<a class="headerlink" href="#manage-the-server" title="Permanent link">¶</a></h2>
-<p><code>depictio local</code> manages the server only: data goes in with
-<a href="../../depictio-cli/usage/#ingest-command"><code>depictio ingest</code></a>.</p>
+<h1 id="upgrading-to-v1120-minio-seaweedfs">Upgrading to v1.12.0: MinIO → SeaweedFS<a class="headerlink" href="#upgrading-to-v1120-minio-seaweedfs" title="Permanent link">¶</a></h1>
+<p>From v1.12.0 the S3 store bundled with Depictio is
+<a href="https://github.com/seaweedfs/seaweedfs">SeaweedFS</a> (<code>weed mini</code>, Apache-2.0)
+instead of MinIO, whose community edition no longer receives releases.
+SeaweedFS cannot read MinIO's files, so <strong>the bundled store starts empty</strong> on a
+new volume: dashboards miss their tables and images until you copy the bucket
+over. MongoDB is untouched and object keys are the same on both sides, so that
+copy is the whole migration.</p>
 <table>
 <thead>
 <tr>
-<th>Command</th>
-<th>Effect</th>
+<th>Your install</th>
+<th>What to do</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>depictio local up</code></td>
-<td>Start the services, print the summary and open the browser. A first run also downloads the binaries and seeds the examples</td>
+<td>Docker Compose with the bundled store</td>
+<td><a href="#docker-compose">Copy the bucket after the upgrade</a></td>
 </tr>
 <tr>
-<td><code>depictio local open</code></td>
-<td>Open the dashboards page of the running server in a browser, or print the SSH tunnel to use</td>
+<td>Helm chart with the bundled store</td>
+<td><a href="#helm">Export the bucket <strong>before</strong> <code>helm upgrade</code></a></td>
 </tr>
 <tr>
-<td><code>depictio local status</code></td>
-<td>Show each process with its port, and whether the API answers. Exits with code 1 unless every process runs and the API answers</td>
+<td>External S3 (<code>DEPICTIO_S3_EXTERNAL_SERVICE=true</code>, <code>docker-compose.no-minio.yaml</code>, Helm <code>s3.enabled: false</code>)</td>
+<td>Nothing</td>
 </tr>
 <tr>
-<td><code>depictio local down</code></td>
-<td>Stop every process. The data and the ports are kept for the next <code>up</code></td>
-</tr>
-<tr>
-<td><code>depictio local wipe</code></td>
-<td>Stop the server and delete all its data. The downloaded binaries are kept. <code>--yes</code> skips the prompt</td>
-</tr>
-<tr>
-<td><code>depictio local export</code></td>
-<td>Stop the server and copy its data into a directory that Docker Compose runs, see <a href="#move-to-docker-compose">Move to Docker Compose</a>. Formerly <code>export-compose</code>, which still works</td>
+<td>Fresh install, or the <a href="../../local/">Python package</a> (always used SeaweedFS)</td>
+<td>Nothing</td>
 </tr>
 </tbody>
 </table>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">status</label><label for="__tabbed_2_2">down</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>status
+<h2 id="renamed-settings">Renamed settings<a class="headerlink" href="#renamed-settings" title="Permanent link">¶</a></h2>
+<p>Settings are named after S3 rather than MinIO. <strong>The old names keep working</strong>:
+an old name is read when its new counterpart is unset, the new name wins when
+both are set, and the server logs a deprecation warning listing the old names
+it found.</p>
+<table>
+<thead>
+<tr>
+<th>Before v1.12.0</th>
+<th>From v1.12.0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEPICTIO_MINIO_*</code>: <code>ROOT_USER</code>, <code>ROOT_PASSWORD</code>, <code>BUCKET</code>, <code>PUBLIC_URL</code>, <code>EXTERNAL_SERVICE</code>, <code>VERIFY_TLS</code>, <code>EXTERNAL_HOST</code> / <code>_PORT</code> / <code>_PROTOCOL</code>, <code>SERVICE_NAME</code> / <code>_SERVICE_PORT</code></td>
+<td><code>DEPICTIO_S3_*</code>, same suffixes</td>
+</tr>
+<tr>
+<td>Compose service <code>minio</code></td>
+<td><code>s3</code>, with <code>minio</code> as a network alias: <code>http://minio:9000</code> in CLI configurations still resolves</td>
+</tr>
+<tr>
+<td>Compose <code>MINIO_PORT</code> / <code>MINIO_CONSOLE_PORT</code></td>
+<td><code>S3_PORT</code> / <code>S3_CONSOLE_PORT</code></td>
+</tr>
+<tr>
+<td>Helm <code>minio.*</code>, <code>persistence.minio</code>, <code>secrets.minioRootUser</code> / <code>minioRootPassword</code>, <code>global.urlPattern.templates.minio</code></td>
+<td><code>s3.*</code>, <code>persistence.s3</code>, <code>secrets.s3RootUser</code> / <code>s3RootPassword</code>, <code>global.urlPattern.templates.s3</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Helm</strong> still merges the legacy keys and renders the same manifests, with a
+  deprecation warning in the install and upgrade notes. Its ConfigMaps export
+  both prefixes, so a backend image older than v1.12.0 keeps working. The legacy
+  copies will be dropped in a later release.</li>
+<li><strong>Exception, the development stack</strong>: <code>docker-compose.dev.yaml</code> requires
+  <code>DEPICTIO_S3_ROOT_USER</code> and <code>DEPICTIO_S3_ROOT_PASSWORD</code> under their new names
+  in <code>docker-compose/.env</code>.</li>
+</ul>
+<p>All storage settings: <a href="../../env-reference/#s3-storage">Environment Reference</a>.</p>
+<details class="note">
+<summary>Names that stay <code>minio</code> on purpose</summary>
+<p>They are part of live state, and renaming them would break an upgrade:</p>
+<ul>
+<li>Helm: the <code>&lt;release&gt;-minio</code> Deployment and Service and their <code>app: minio</code>
+  selector (a Deployment selector cannot change); the <code>&lt;release&gt;-minio-pvc</code>
+  PVC (a new name would mean an empty volume); the <code>&lt;release&gt;-minio-ingress</code>
+  and <code>-minio-httproute</code> routes and the <code>&lt;release&gt;-minio.&lt;domain&gt;</code> host, which
+  DNS, TLS certificates and presigned URLs point at; the Secret keys
+  <code>MINIO_ROOT_USER</code> / <code>MINIO_ROOT_PASSWORD</code>, which keep the generated
+  password stable across upgrades.</li>
+<li>Compose: the backup-only <code>minio-backup</code> service and the files
+  <code>docker-compose.backup-minio.yaml</code>, <code>docker-compose.no-minio.yaml</code> and
+  <code>docker-compose.minio-legacy.yaml</code>.</li>
+</ul>
+</details>
+<h2 id="docker-compose">Docker Compose<a class="headerlink" href="#docker-compose" title="Permanent link">¶</a></h2>
+<p>The old MinIO is started again as a side-car on its untouched <code>minio_data</code>
+volume, and <code>scripts/migrate_minio_to_seaweedfs.py</code> copies the bucket through
+the S3 API. Run these steps from a clone of the
+<a href="https://github.com/depictio/depictio/tree/v1.12.0">repository at <code>v1.12.0</code></a>,
+which holds both files; <code>uv run</code> provides the script's only dependency,
+<code>boto3</code>.</p>
+<ol>
+<li>
+<p><strong>Upgrade.</strong> <code>--remove-orphans</code> stops the old <code>minio</code> container, which the
+   v1.12.0 file no longer declares; its volume stays.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--remove-orphans
 </code></pre></div>
-<p><img alt="Terminal output of depictio local status: mongo, redis, s3, api and worker each marked running with their port, the API reachable, then the dashboards URL and the log folder" src="../../images/installation/local/terminal_local_status.svg"></p>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>down
+</li>
+<li>
+<p><strong>Start the old MinIO</strong> on <code>127.0.0.1:9100</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>-f<span class="w"> </span>docker-compose/docker-compose.minio-legacy.yaml<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>minio-legacy
 </code></pre></div>
-<p><img alt="Terminal output of depictio local down: it stops the worker, the API, S3, Redis and MongoDB in turn, then prints &quot;Depictio local server stopped&quot;" src="../../images/installation/local/terminal_local_down.svg"></p>
-</div>
-</div>
-</div>
-<h3 id="up-options"><code>up</code> options<a class="headerlink" href="#up-options" title="Permanent link">¶</a></h3>
+<p>For the development stack, whose data is a bind mount, run
+<code>MINIO_LEGACY_DATA=./data/minio_data docker compose -f docker-compose.dev.yaml …</code>
+instead.</p>
+</li>
+<li>
+<p><strong>Publish the new store on <code>127.0.0.1:9000</code>.</strong> The development stack already
+   does. The root <code>docker-compose.yaml</code> does not: add a temporary override.</p>
+<div class="highlight"><span class="filename">s3-port.yaml</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">services</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">s3</span><span class="p">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"127.0.0.1:9000:9000"</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.yaml<span class="w"> </span>-f<span class="w"> </span>s3-port.yaml<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>s3
+</code></pre></div>
+</li>
+<li>
+<p><strong>Copy.</strong> Credentials and bucket are read from <code>.env</code> (<code>docker-compose/.env</code>
+   for the development stack). Dry run first, then copy and compare both
+   listings:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">set</span><span class="w"> </span>-a<span class="p">;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>.env<span class="p">;</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span>+a
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>uv<span class="w"> </span>run<span class="w"> </span>scripts/migrate_minio_to_seaweedfs.py<span class="w"> </span>--target-endpoint<span class="w"> </span>http://127.0.0.1:9000<span class="w"> </span>--dry-run
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>uv<span class="w"> </span>run<span class="w"> </span>scripts/migrate_minio_to_seaweedfs.py<span class="w"> </span>--target-endpoint<span class="w"> </span>http://127.0.0.1:9000<span class="w"> </span>--verify
+</code></pre></div>
+<p>An interrupted copy resumes with <code>--skip-existing</code>.</p>
+</li>
+<li>
+<p><strong>Check a dashboard</strong>, then clean up: drop the override
+   (<code>docker compose up -d</code>), remove the side-car and, once satisfied, the old
+   volume.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>-f<span class="w"> </span>docker-compose/docker-compose.minio-legacy.yaml<span class="w"> </span>rm<span class="w"> </span>-sf<span class="w"> </span>minio-legacy
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>docker<span class="w"> </span>volume<span class="w"> </span>rm<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>docker<span class="w"> </span>compose<span class="w"> </span>config<span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.name<span class="k">)</span><span class="s2">_minio_data"</span>
+</code></pre></div>
+<p>For the development stack: <code>rm -rf ./data/minio_data</code>.</p>
+</li>
+</ol>
+<p><strong>Rolling back:</strong> go back to the previous release's compose files; <code>minio_data</code>
+is untouched until step 5.</p>
+<h2 id="helm">Helm<a class="headerlink" href="#helm" title="Permanent link">¶</a></h2>
+<p>The chart keeps the <code>&lt;release&gt;-minio</code> names, so the upgrade reuses the same PVC.
+That PVC is <code>ReadWriteOnce</code>: the old MinIO pod and the new SeaweedFS pod cannot
+mount it at the same time, so the copy goes through a local directory, and the
+export must happen <strong>before</strong> the upgrade.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">SECRET</span><span class="o">=</span>&lt;release&gt;-depictio-secrets
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">KEY</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span><span class="nv">$SECRET</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.MINIO_ROOT_USER}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="k">)</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nv">PASS</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span><span class="nv">$SECRET</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.MINIO_ROOT_PASSWORD}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="k">)</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># 1. Before upgrading, while MinIO still runs: export the bucket</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>kubectl<span class="w"> </span>port-forward<span class="w"> </span>svc/&lt;release&gt;-minio<span class="w"> </span><span class="m">9100</span>:9000<span class="w"> </span><span class="p">&amp;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>uv<span class="w"> </span>run<span class="w"> </span>scripts/migrate_minio_to_seaweedfs.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span>--source-access-key<span class="w"> </span><span class="s2">"</span><span class="nv">$KEY</span><span class="s2">"</span><span class="w"> </span>--source-secret-key<span class="w"> </span><span class="s2">"</span><span class="nv">$PASS</span><span class="s2">"</span><span class="w"> </span>--export-dir<span class="w"> </span>./s3-export
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="nb">kill</span><span class="w"> </span>%1
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="c1"># 2. Upgrade: SeaweedFS starts on the same PVC and ignores MinIO's files</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>helm<span class="w"> </span>upgrade<span class="w"> </span>&lt;release&gt;<span class="w"> </span>./helm-charts/depictio<span class="w"> </span>-f<span class="w"> </span>values.yaml
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="c1"># 3. Import into the new store</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>kubectl<span class="w"> </span>port-forward<span class="w"> </span>svc/&lt;release&gt;-minio<span class="w"> </span><span class="m">9000</span>:9000<span class="w"> </span><span class="p">&amp;</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>uv<span class="w"> </span>run<span class="w"> </span>scripts/migrate_minio_to_seaweedfs.py<span class="w"> </span>--target-endpoint<span class="w"> </span>http://127.0.0.1:9000<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">  </span>--target-access-key<span class="w"> </span><span class="s2">"</span><span class="nv">$KEY</span><span class="s2">"</span><span class="w"> </span>--target-secret-key<span class="w"> </span><span class="s2">"</span><span class="nv">$PASS</span><span class="s2">"</span><span class="w"> </span>--import-dir<span class="w"> </span>./s3-export<span class="w"> </span>--verify
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="nb">kill</span><span class="w"> </span>%1
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="c1"># 4. Once checked, reclaim the space of MinIO's old files on the PVC</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>deploy/&lt;release&gt;-minio<span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'rm -rf /data/.minio.sys /data/depictio-bucket'</span>
+</code></pre></div>
+<p>Keep <code>./s3-export</code> until the new store is checked: it is a full copy taken
+before the upgrade. With a second bucket on an external S3, you can export there
+(<code>--target-endpoint https://…</code>) instead of to a local directory.</p>
+<details class="info">
+<summary>Copy script options</summary>
 <table>
 <thead>
 <tr>
 <th>Option</th>
 <th>Default</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>--examples</code></td>
-<td><code>iris,penguins</code></td>
-<td>Example projects to seed on the first run of a local home: <code>iris</code>, <code>penguins</code>, <code>iris,penguins</code> or <code>none</code></td>
+<td><code>--source-endpoint</code></td>
+<td><code>http://127.0.0.1:9100</code></td>
 </tr>
 <tr>
-<td><code>--port</code></td>
-<td>the previous run's, else <code>8058</code> or a free one</td>
-<td>Port of the API and the viewer, kept for later runs. A busy <code>--port</code> fails</td>
+<td><code>--target-endpoint</code></td>
+<td>the S3 URL resolved from the Depictio settings, else <code>http://127.0.0.1:9000</code></td>
 </tr>
 <tr>
-<td><code>--open</code> / <code>--no-open</code></td>
-<td><code>--open</code></td>
-<td>Open the dashboards page in a browser</td>
+<td><code>--source-access-key</code>, <code>--source-secret-key</code>, <code>--target-access-key</code>, <code>--target-secret-key</code></td>
+<td><code>DEPICTIO_S3_ROOT_USER</code> / <code>DEPICTIO_S3_ROOT_PASSWORD</code>, else the <code>DEPICTIO_MINIO_ROOT_*</code> names</td>
 </tr>
 <tr>
-<td><code>--screenshots</code> / <code>--no-screenshots</code></td>
-<td>off</td>
-<td>Dashboard thumbnails through Playwright. Installs Chromium (about 150 MB) if needed</td>
+<td><code>--bucket</code> (<code>--target-bucket</code> for another name on the target)</td>
+<td><code>DEPICTIO_S3_BUCKET</code>, else <code>depictio-bucket</code></td>
+</tr>
+<tr>
+<td><code>--prefix</code></td>
+<td>copy only the keys under this prefix</td>
+</tr>
+<tr>
+<td><code>--workers</code></td>
+<td>8 parallel copies</td>
+</tr>
+<tr>
+<td><code>--dry-run</code> / <code>--verify</code> / <code>--skip-existing</code></td>
+<td>list only / compare listings after the copy / skip keys already on the target with the same size</td>
+</tr>
+<tr>
+<td><code>--export-dir</code> / <code>--import-dir</code></td>
+<td>download the bucket into a directory / upload a directory into it, instead of copying directly</td>
 </tr>
 </tbody>
 </table>
+<p>Each endpoint and key can also come from a <code>MIGRATE_SOURCE_*</code> /
+<code>MIGRATE_TARGET_*</code> variable (<code>MIGRATE_SOURCE_ENDPOINT</code>, …).</p>
+</details>
+<h2 id="what-else-changes">What else changes<a class="headerlink" href="#what-else-changes" title="Permanent link">¶</a></h2>
 <ul>
-<li>Examples are seeded on the first run of a local home only: <code>up</code> warns when
-  <code>--examples</code> names one the home was created without.</li>
-<li><code>up</code> on a server that is already running reuses it and prints the summary
-  again. <code>--port</code> and <code>--screenshots</code> then apply only after
-  <code>depictio local down</code>, and a warning says so.</li>
-<li>A second <code>up</code> on the same home while one is starting fails at once.</li>
-<li>Ctrl-C during startup stops what that run started, and exits with code 130.
-  SIGTERM and SIGHUP, as when the terminal is closed, do the same, with code 128
-  plus the signal number.</li>
-</ul>
-<h3 id="upgrade">Upgrade<a class="headerlink" href="#upgrade" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>down
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>uv<span class="w"> </span>tool<span class="w"> </span>upgrade<span class="w"> </span>depictio<span class="w">            </span><span class="c1"># with pip: pip install --upgrade "depictio[local]"</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>up
-</code></pre></div>
-<p>Stop the server first, so that it starts again on the new version. The data
-under <code>~/.depictio/local</code> is kept. <code>up</code> downloads the binaries again only when
-the new version pins other MongoDB, Redis or SeaweedFS series.</p>
-<hr>
-<h2 id="how-it-differs-from-docker-compose"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2m-2 12c-.25 0-.46-.18-.5-.42l-.37-2.65c-.63-.25-1.17-.59-1.69-.99l-2.49 1.01c-.22.08-.49 0-.61-.22l-2-3.46a.493.493 0 0 1 .12-.64l2.11-1.66L4.5 12l.07-1-2.11-1.63a.493.493 0 0 1-.12-.64l2-3.46c.12-.22.39-.31.61-.22l2.49 1c.52-.39 1.06-.73 1.69-.98l.37-2.65c.04-.24.25-.42.5-.42h4c.25 0 .46.18.5.42l.37 2.65c.63.25 1.17.59 1.69.98l2.49-1c.22-.09.49 0 .61.22l2 3.46c.13.22.07.49-.12.64L19.43 11l.07 1-.07 1 2.11 1.63c.19.15.25.42.12.64l-2 3.46c-.12.22-.39.31-.61.22l-2.49-1c-.52.39-1.06.73-1.69.98l-.37 2.65c-.04.24-.25.42-.5.42zm1.25-18-.37 2.61c-1.2.25-2.26.89-3.03 1.78L5.44 7.35l-.75 1.3L6.8 10.2a5.55 5.55 0 0 0 0 3.6l-2.12 1.56.75 1.3 2.43-1.04c.77.88 1.82 1.52 3.01 1.76l.37 2.62h1.52l.37-2.61c1.19-.25 2.24-.89 3.01-1.77l2.43 1.04.75-1.3-2.12-1.55c.4-1.17.4-2.44 0-3.61l2.11-1.55-.75-1.3-2.41 1.04a5.42 5.42 0 0 0-3.03-1.77L12.75 4z"></path></svg></span> How it differs from Docker Compose<a class="headerlink" href="#how-it-differs-from-docker-compose" title="Permanent link">¶</a></h2>
-<p>Only configuration differs, and only through the usual <code>DEPICTIO_*</code> variables:
-every service is pointed at <code>127.0.0.1</code>.</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Docker Compose</th>
-<th>Python package</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>MongoDB, Redis, S3</td>
-<td>containers</td>
-<td><code>mongod</code> 8.0.x, <code>redis-server</code> 8.x and <code>weed mini</code> (SeaweedFS) 4.x from conda-forge, fetched by <a href="https://github.com/conda/rattler">py-rattler</a></td>
-</tr>
-<tr>
-<td>API</td>
-<td>4 gunicorn workers</td>
-<td>1 uvicorn worker</td>
-</tr>
-<tr>
-<td>Celery worker</td>
-<td>4 processes</td>
-<td>2 slots: <code>prefork</code> on Linux, <code>threads</code> on macOS</td>
-</tr>
-<tr>
-<td>Viewer</td>
-<td>its own container, on <code>http://localhost:5080</code></td>
-<td>served by the API, on its port: <code>http://127.0.0.1:8058/dashboards</code></td>
-</tr>
-<tr>
-<td>Authentication</td>
-<td>single-user, multi-user or public</td>
-<td>single-user</td>
-</tr>
-<tr>
-<td>Dashboard thumbnails</td>
-<td>on</td>
-<td>off unless <code>--screenshots</code></td>
-</tr>
-</tbody>
-</table>
-<p>The conda-forge packages follow the major series of the Compose images (the 8.0
-series for MongoDB), so their minor versions can be newer than the images'.
-<a href="#move-to-docker-compose"><code>depictio local export</code></a> runs the exact MongoDB and
-SeaweedFS versions of the local server, so the data never moves to an older one.</p>
-<h3 id="ports">Ports<a class="headerlink" href="#ports" title="Permanent link">¶</a></h3>
-<p>The first <code>up</code> picks its ports on <code>127.0.0.1</code>: the defaults (API <code>8058</code>, MongoDB
-<code>27018</code>, Redis <code>6379</code>, S3 <code>9000</code>) when they are free, any free port otherwise,
-so a local server runs next to a Docker stack or another local server. The
-ports are saved in <code>ports.json</code> and reused, so the dashboards URL stays the
-same. A saved port that another program has taken since moves to a free one,
-with a warning for the API port; a <code>--port</code> that is busy fails instead. The CLI
-configuration follows the ports in use. SeaweedFS also opens internal ports
-(master <code>9333</code>, volume <code>9340</code>, filer <code>8888</code>, admin <code>23646</code>, and their gRPC
-ports), picked the same way at each start.</p>
-<h3 id="files">Files<a class="headerlink" href="#files" title="Permanent link">¶</a></h3>
-<p>Everything lives under <code>~/.depictio/local</code>, or the folder <code>DEPICTIO_LOCAL_HOME</code>
-names:</p>
-<table>
-<thead>
-<tr>
-<th>Path</th>
-<th>Content</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>env/</code></td>
-<td>MongoDB, Redis and SeaweedFS binaries</td>
-</tr>
-<tr>
-<td><code>mongo/</code>, <code>redis/</code>, <code>s3/</code></td>
-<td>Service data, kept between runs</td>
-</tr>
-<tr>
-<td><code>logs/</code></td>
-<td>One log per process: <code>api.log</code>, <code>worker.log</code>, <code>mongo.log</code>, <code>redis.log</code>, <code>s3.log</code>, and <code>viewer-build.log</code> for a viewer built from a clone</td>
-</tr>
-<tr>
-<td><code>keys/</code></td>
-<td>Token signing keys</td>
-</tr>
-<tr>
-<td><code>cli/</code></td>
-<td>The CLI configuration that <code>--server local</code> reads, with its admin token. <code>up</code> writes it again if it was deleted, with a new token, and revokes those of earlier rewrites</td>
-</tr>
-<tr>
-<td><code>backups/</code></td>
-<td>Backups that <a href="../../usage/administration/backup/"><code>depictio backup create</code></a> makes on this server</td>
-</tr>
-<tr>
-<td><code>cache/</code>, <code>multiqc_prerender/</code>, <code>screenshots/</code></td>
-<td>Caches, and dashboard thumbnails</td>
-</tr>
-<tr>
-<td><code>secrets.json</code></td>
-<td>Generated S3 and admin passwords</td>
-</tr>
-<tr>
-<td><code>ports.json</code></td>
-<td>Ports kept for the next <code>up</code></td>
-</tr>
-<tr>
-<td><code>state.json</code></td>
-<td>Process IDs of the running server, deleted by <code>down</code></td>
-</tr>
-<tr>
-<td><code>.depictio-local-home</code></td>
-<td>Marks the folder as a local home: <code>wipe</code> deletes nothing in a folder without it, and <code>up</code> refuses a folder that holds other files</td>
-</tr>
-</tbody>
-</table>
-<p>The local home, <code>keys/</code> and <code>cli/</code> are owner-only (<code>0700</code>); <code>secrets.json</code> and
-the CLI configuration file are owner-only too (<code>0600</code>).</p>
-<div class="admonition warning">
-<p class="admonition-title">Shared machines</p>
-<p>The local server runs in single-user mode: no login, and whoever reaches its
-port acts as its admin. It listens on <code>127.0.0.1</code> only, but on a shared
-machine, such as an HPC login node, every other user of that machine can
-reach it, and the data it serves. The owner-only files do not change that.
-On such a machine, load only data that every user of it may see, or use
-<a href="../docker/">Docker Compose</a> in multi-user mode.</p>
-</div>
-<hr>
-<h2 id="move-to-docker-compose"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.81 10.25c-.06-.04-.56-.43-1.64-.43-.28 0-.56.03-.84.08-.21-1.4-1.38-2.11-1.43-2.14l-.29-.17-.18.27c-.24.36-.43.77-.51 1.19-.2.8-.08 1.56.33 2.21-.49.28-1.29.35-1.46.35H2.62c-.34 0-.62.28-.62.63 0 1.15.18 2.3.58 3.38.45 1.19 1.13 2.07 2 2.61.98.6 2.59.94 4.42.94.79 0 1.61-.07 2.42-.22 1.12-.2 2.2-.59 3.19-1.16A8.3 8.3 0 0 0 16.78 16c1.05-1.17 1.67-2.5 2.12-3.65h.19c1.14 0 1.85-.46 2.24-.85.26-.24.45-.53.59-.87l.08-.24zm-17.96.99h1.76c.08 0 .16-.07.16-.16V9.5c0-.08-.07-.16-.16-.16H3.85c-.09 0-.16.07-.16.16v1.58c.01.09.07.16.16.16m2.43 0h1.76c.08 0 .16-.07.16-.16V9.5c0-.08-.07-.16-.16-.16H6.28c-.09 0-.16.07-.16.16v1.58c.01.09.07.16.16.16m2.47 0h1.75c.1 0 .17-.07.17-.16V9.5c0-.08-.06-.16-.17-.16H8.75c-.08 0-.15.07-.15.16v1.58c0 .09.06.16.15.16m2.44 0h1.77c.08 0 .15-.07.15-.16V9.5c0-.08-.06-.16-.15-.16h-1.77c-.08 0-.15.07-.15.16v1.58c0 .09.07.16.15.16M6.28 9h1.76c.08 0 .16-.09.16-.18V7.25c0-.09-.07-.16-.16-.16H6.28c-.09 0-.16.06-.16.16v1.57c.01.09.07.18.16.18m2.47 0h1.75c.1 0 .17-.09.17-.18V7.25c0-.09-.06-.16-.17-.16H8.75c-.08 0-.15.06-.15.16v1.57c0 .09.06.18.15.18m2.44 0h1.77c.08 0 .15-.09.15-.18V7.25c0-.09-.07-.16-.15-.16h-1.77c-.08 0-.15.06-.15.16v1.57c0 .09.07.18.15.18m0-2.28h1.77c.08 0 .15-.07.15-.16V5c0-.1-.07-.17-.15-.17h-1.77c-.08 0-.15.06-.15.17v1.56c0 .08.07.16.15.16m2.46 4.52h1.76c.09 0 .16-.07.16-.16V9.5c0-.08-.07-.16-.16-.16h-1.76c-.08 0-.15.07-.15.16v1.58c0 .09.07.16.15.16"></path></svg></span> Move to Docker Compose<a class="headerlink" href="#move-to-docker-compose" title="Permanent link">¶</a></h2>
-<p>A local server can be handed over to <a href="../docker/">Docker Compose</a> with its
-projects, dashboards and table data, for instance once a review turns into a
-shared instance.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span><span class="nb">export</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">cd</span><span class="w"> </span>depictio-docker<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
-</code></pre></div>
-<p><img alt="Terminal output of depictio local export: it downloads the docker-compose.yaml of v1.12.0, stops the local server, copies the mongo and s3 data, then prints the command that starts the Docker stack and the URL to open, http://localhost:5080" src="../../images/installation/local/terminal_local_export.svg"></p>
-<p><code>export</code> stops the local server if it is running, so that the copy is
-consistent, then copies the MongoDB and SeaweedFS data and the token signing
-keys into the directory, <code>depictio-docker</code> by default (<code>--out</code>). Everything
-that can refuse the export (no local data, a directory that is not empty, no
-compose file to use) is checked before the server is stopped. The two never
-share files: <code>depictio local up</code> restarts the local server on its own data.</p>
-<p>The directory is made owner-only (<code>0700</code>), since it holds the token signing
-key. It holds:</p>
-<table>
-<thead>
-<tr>
-<th>File</th>
-<th>Content</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>docker-compose.yaml</code></td>
-<td>The compose file that matches the installed code: the clone's own file when <code>depictio</code> runs from a clone, otherwise the file of the release tag <code>v&lt;version&gt;</code> (betas included), downloaded from GitHub. A development build outside a clone matches no published file, and the command stops with a message</td>
-</tr>
-<tr>
-<td><code>docker-compose.override.yaml</code></td>
-<td>The <code>mongo</code> and <code>chrislusf/seaweedfs</code> images at the versions the local server ran, on the copied data. On Linux they run as your user, who owns the copied files</td>
-</tr>
-<tr>
-<td><code>.env</code></td>
-<td>Single-user mode, the local server's S3 and admin credentials and, for a release, <code>DEPICTIO_VERSION</code>. Owner-only</td>
-</tr>
-<tr>
-<td><code>data/</code></td>
-<td>The copied MongoDB and SeaweedFS data, and the key files</td>
-</tr>
-</tbody>
-</table>
-<p>Redis is not carried over, since it holds only cache and queues, and thumbnails
-are rendered again. The token in <code>~/.depictio/local/cli</code> stays valid against the
-Docker stack, since it was signed with the copied keys. The raw pipeline files
-are not copied, only the tables built from them: to ingest again, point
-<code>depictio ingest --server &lt;file&gt;</code> at the CLI configuration of the Docker stack.</p>
-<hr>
-<h2 id="platforms"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16H3V4h18m0-2H3c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h7v2H8v2h8v-2h-2v-2h7a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2"></path></svg></span> Platforms<a class="headerlink" href="#platforms" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th>Platform</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Linux x86_64</td>
-<td>Supported, tested in CI</td>
-</tr>
-<tr>
-<td>Linux arm64</td>
-<td>Supported, tested in CI</td>
-</tr>
-<tr>
-<td>macOS arm64 (Apple silicon)</td>
-<td>Supported, tested in CI</td>
-</tr>
-<tr>
-<td>macOS x86_64 (Intel)</td>
-<td>Not supported: <code>cryptography</code>, a server dependency, ships macOS wheels for arm64 only. Use <a href="../docker/">Docker Compose</a></td>
-</tr>
-<tr>
-<td>Windows</td>
-<td>Not supported, <code>up</code> refuses to start: conda-forge has no <code>redis-server</code> for Windows, and the services are managed as POSIX process groups. Use <a href="https://learn.microsoft.com/windows/wsl/">WSL2</a> or <a href="../docker/">Docker Compose</a></td>
-</tr>
-</tbody>
-</table>
-<p>Python 3.11 to 3.14 is supported: the dependencies install from prebuilt wheels
-on each. CI runs the stack on Python 3.12.</p>
-<p>On macOS the Celery worker runs in threads: a forked worker process that opens a
-Delta table crashes there, because the libraries it loads are not safe to use
-after <code>fork()</code>. Celery time limits and <code>max-tasks-per-child</code> do not apply to a
-threads pool.</p>
-<p>MongoDB 5 and later needs AVX on x86_64 and ARMv8.2-A on arm64, which rules out
-some older machines such as the Raspberry Pi 4. <code>up</code> reports it when <code>mongod</code>
-stops on an illegal instruction.</p>
-<hr>
-<h2 id="troubleshooting"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 18h2v-2h-2zm1-16A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-14a4 4 0 0 0-4 4h2a2 2 0 0 1 2-2 2 2 0 0 1 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5a4 4 0 0 0-4-4"></path></svg></span> Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
-<h4 id="a-service-exited-during-startup">A service exited during startup<a class="headerlink" href="#a-service-exited-during-startup" title="Permanent link">¶</a></h4>
-<p><code>up</code> stops the services it started and names the log to read, under
-<code>~/.depictio/local/logs</code>.</p>
-<h4 id="a-port-is-already-in-use">A port is already in use<a class="headerlink" href="#a-port-is-already-in-use" title="Permanent link">¶</a></h4>
-<p>Every port moves to a free one by itself (see <a href="#ports">Ports</a>): only an explicit
-<code>--port</code> that is busy stops <code>up</code>. So two local servers, each with its own
-<code>DEPICTIO_LOCAL_HOME</code>, or a local server and a Docker stack, run side by side.</p>
-<h4 id="on-an-hpc-login-node-or-behind-a-proxy">On an HPC login node or behind a proxy<a class="headerlink" href="#on-an-hpc-login-node-or-behind-a-proxy" title="Permanent link">¶</a></h4>
-<p>An HTTP proxy set in the environment does not break startup: the readiness
-checks on <code>127.0.0.1</code> bypass it, SeaweedFS runs without the proxy variables, and
-the API, the worker and any CLI command that reaches the local server get
-<code>127.0.0.1</code> and <code>localhost</code> added to <code>no_proxy</code>. The downloads do need the
-network: MongoDB, Redis and SeaweedFS from conda-forge on the first run, and the
-compose file of <code>depictio local export</code>. When one fails, a one-line error says
-so: check the network or the proxy settings, then run the command again. Over
-SSH, open the server through the <code>ssh -L</code> tunnel that <code>up</code> prints, and mind the
-<a href="#files">shared machines</a> warning.</p>
-<h4 id="depictio_-settings-are-ignored"><code>DEPICTIO_*</code> settings are ignored<a class="headerlink" href="#depictio_-settings-are-ignored" title="Permanent link">¶</a></h4>
-<p><code>up</code> does not pass the <code>DEPICTIO_*</code> variables of your shell to the server, since
-they usually target another instance (<code>DEPICTIO_LOCAL_HOME</code> is read by
-<code>depictio local</code> itself). The exception is <code>DEPICTIO_TELEMETRY_*</code>:
-<code>DEPICTIO_TELEMETRY_ENABLED=false</code> (or <code>DO_NOT_TRACK=1</code>) turns
-<a href="../../features/telemetry/">telemetry</a> off for the local server too. The <code>AWS_*</code>
-variables are not passed on either, so the services never reach another S3
-store. Likewise, <code>DEPICTIO_CLI_TOKEN</code> and <code>DEPICTIO_CLI_API_BASE_URL</code>, which
-usually hold the credentials of another server, never apply to
-<code>--server local</code>.</p>
-<h4 id="the-example-dashboards-show-no-data">The example dashboards show no data<a class="headerlink" href="#the-example-dashboards-show-no-data" title="Permanent link">¶</a></h4>
-<p>The examples load in the background on the first run. If the server was stopped
-before they finished, they stay incomplete, and <code>up</code> then warns that they did
-not finish loading. <code>depictio local wipe</code>, then <code>depictio local up</code>, loads them
-again.</p>
-<h4 id="dashboards-stay-blank">Dashboards stay blank<a class="headerlink" href="#dashboards-stay-blank" title="Permanent link">¶</a></h4>
-<p>The viewer bundle is missing, which only concerns an install from a clone,
-where <code>up</code> builds it. <code>up</code> warns when the build fails: read
-<code>~/.depictio/local/logs/viewer-build.log</code>, fix the cause (often pnpm or Node.js
-missing), then run <code>depictio local down</code> and <code>depictio local up</code> again, which
-builds it. A server that was already running when the sources changed only
-gets a warning: <code>depictio local down</code>, then <code>depictio local up</code>, rebuilds it.</p>
-<h4 id="start-from-scratch">Start from scratch<a class="headerlink" href="#start-from-scratch" title="Permanent link">¶</a></h4>
-<p><code>depictio local wipe --yes</code> deletes every project, dashboard and file of the
-local server, with its passwords, keys and saved ports. The downloaded binaries
-are kept. The next <code>up</code> seeds the examples again.</p>
-<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
-<ul>
-<li><a href="../../usage/projects/templates/">Pipeline templates</a></li>
-<li><a href="../../depictio-cli/usage/">CLI usage</a>, with <code>--server local</code>, or by default when no other server is configured</li>
-<li><a href="../docker/">Docker Compose</a>, to share an instance with a team</li>
+<li>The S3 API stays on port 9000; the health check is <code>GET :9000/healthz</code>
+  instead of <code>/minio/health/live</code>. WebDAV is off.</li>
+<li>The SeaweedFS admin UI is off in the root compose file and in Helm
+  (<code>s3.adminUI.enabled</code>); the development stack serves it on <code>127.0.0.1:9001</code>,
+  the former MinIO console port, behind the root keys.</li>
+<li>Root credentials are applied again from the environment at every start, so
+  changing <code>DEPICTIO_S3_ROOT_*</code> and restarting rotates them, as with MinIO.</li>
+<li>For very large object counts, pass <code>-volume.index=leveldb</code> through Helm
+  <code>s3.extraArgs</code> to keep the volume index out of memory.</li>
 </ul>
 
 
@@ -5659,7 +5000,7 @@ are kept. The next <code>up</code> seeds the examples again.</p>
 
       <!-- Logo Column -->
       <div class="depictio-footer__section depictio-footer__brand">
-        <img src="../../images/logo/logo_icon.png" alt="Depictio" class="depictio-footer__logo">
+        <img src="../../../images/logo/logo_icon.png" alt="Depictio" class="depictio-footer__logo">
         <span class="depictio-footer__title">Depictio</span>
         <p class="depictio-footer__tagline">Interactive dashboards for bioinformatics</p>
       </div>
@@ -5687,9 +5028,9 @@ are kept. The next <code>up</code> seeds the examples again.</p>
       <div class="depictio-footer__section">
         <h4 class="depictio-footer__heading">Resources</h4>
         <ul class="depictio-footer__links">
-          <li><a href="../../usage/get_started/">Getting Started</a></li>
-          <li><a href="../docker/">Installation</a></li>
-          <li><a href="../../features/">Features</a></li>
+          <li><a href="../../../usage/get_started/">Getting Started</a></li>
+          <li><a href="../../docker/">Installation</a></li>
+          <li><a href="../../../features/">Features</a></li>
           <li><a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">Live Demo</a></li>
         </ul>
       </div>
@@ -5699,7 +5040,7 @@ are kept. The next <code>up</code> seeds the examples again.</p>
         <h4 class="depictio-footer__heading">About</h4>
         <ul class="depictio-footer__links">
           <li><a href="https://github.com/depictio/depictio/blob/main/LICENSE" target="_blank" rel="noopener">License (MIT)</a></li>
-          <li><a href="../../developer/contributing/">Contributing</a></li>
+          <li><a href="../../../developer/contributing/">Contributing</a></li>
           <li><a href="https://github.com/depictio/depictio/releases" target="_blank" rel="noopener">Releases</a></li>
         </ul>
       </div>
@@ -5711,10 +5052,10 @@ are kept. The next <code>up</code> seeds the examples again.</p>
       <div class="depictio-footer__funding-label">Supported by</div>
       <div class="depictio-footer__funding-logos">
         <a href="https://www.embl.org/" target="_blank" rel="noopener" title="EMBL - European Molecular Biology Laboratory">
-          <img src="../../assets/EMBL_logo_colour_DIGITAL.png" alt="EMBL Logo" class="depictio-footer__funding-logo">
+          <img src="../../../assets/EMBL_logo_colour_DIGITAL.png" alt="EMBL Logo" class="depictio-footer__funding-logo">
         </a>
         <a href="https://www.embl.org/about/info/arise/" target="_blank" rel="noopener" title="ARISE Programme">
-          <img src="../../assets/AriseLogo300dpi.png" alt="ARISE Logo" class="depictio-footer__funding-logo">
+          <img src="../../../assets/AriseLogo300dpi.png" alt="ARISE Logo" class="depictio-footer__funding-logo">
         </a>
       </div>
     </div>
@@ -5763,22 +5104,22 @@ are kept. The next <code>up</code> seeds the examples again.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.sections", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.expand", "navigation.top", "header.autohide", "toc.follow", "search.highlight", "search.share", "search.suggest", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.sections", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.expand", "navigation.top", "header.autohide", "toc.follow", "search.highlight", "search.share", "search.suggest", "announce.dismiss"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="../../javascripts/triangular-animation.js"></script>
+        <script src="../../../javascripts/triangular-animation.js"></script>
       
-        <script src="../../javascripts/catalog-fullscreen.js"></script>
+        <script src="../../../javascripts/catalog-fullscreen.js"></script>
       
-        <script src="../../javascripts/template-version.js"></script>
+        <script src="../../../javascripts/template-version.js"></script>
       
-        <script src="../../javascripts/doc-sections.js"></script>
+        <script src="../../../javascripts/doc-sections.js"></script>
       
-        <script src="../../javascripts/template-catalog.js"></script>
+        <script src="../../../javascripts/template-catalog.js"></script>
       
-        <script src="../../javascripts/asciinema.js"></script>
+        <script src="../../../javascripts/asciinema.js"></script>
       
     
   

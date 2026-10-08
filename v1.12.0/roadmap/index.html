@@ -665,6 +665,8 @@
       
         
       
+        
+      
     
     
     
@@ -919,7 +921,7 @@
   <span class="md-ellipsis">
     
   
-    CLI
+    Upgrade guides
   
 
     
@@ -932,6 +934,102 @@
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Upgrade guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/upgrade/v1.12.0-seaweedfs/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21 9-4-4v3h-7v2h7v3M7 11l-4 4 4 4v-3h7v-2H7z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    v1.12.0: MinIO → SeaweedFS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4">
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -4858,6 +4956,26 @@ reference; this table only says <em>when</em> something arrived.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>The full server installed as a Python package, no containers: <code>depictio local up</code></td>
+<td>v1.12.0</td>
+<td><a href="../installation/local/">Python package</a></td>
+</tr>
+<tr>
+<td>One <code>depictio</code> package, <code>depictio ingest &lt;results dir&gt;</code>, refreshes that keep edited dashboards</td>
+<td>v1.12.0</td>
+<td><a href="../depictio-cli/usage/#ingest-command">Ingest Command</a> · <a href="../depictio-cli/usage/#refreshing-a-project">Refreshing a project</a></td>
+</tr>
+<tr>
+<td>Recipes declare the schema of their inputs and their output, checked around the transform</td>
+<td>v1.12.0</td>
+<td><a href="../usage/projects/recipes/#the-5-checkpoint-validation-pipeline">Recipes</a></td>
+</tr>
+<tr>
+<td>SeaweedFS as the bundled S3 store, replacing MinIO</td>
+<td>v1.12.0</td>
+<td><a href="../installation/upgrade/v1.12.0-seaweedfs/">Upgrading to v1.12.0</a></td>
+</tr>
 <tr>
 <td>An opt-in feedback link that carries the dashboard and tab</td>
 <td>v1.11.0</td>
