@@ -8,30 +8,49 @@ hide:
 
 # Changelog
 
-## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (upcoming)
+## **[v1.11.2](https://github.com/depictio/depictio/releases/tag/v1.11.2)** (September 24, 2026)
 
-!!! success "Minor: the full server on your machine, without Docker"
+!!! success "Patch: a builder preview that stays in view, and a tidier dashboards listing"
 
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio-api:1.12.0
-ghcr.io/depictio/depictio-viewer:1.12.0
-ghcr.io/depictio/depictio-worker:1.12.0
-ghcr.io/depictio/depictio-cli:1.12.0
+ghcr.io/depictio/depictio-api:1.11.2
+ghcr.io/depictio/depictio-viewer:1.11.2
+ghcr.io/depictio/depictio-worker:1.11.2
+ghcr.io/depictio/depictio-cli:1.11.2
 ```
-
-### **✨ New Features**
-
-* **`depictio local up` runs the whole server without Docker**: the same API, worker and viewer, with MongoDB, Redis and SeaweedFS fetched once from conda-forge and run as plain processes. With `--template` and `--data-root` it ingests your results in the same command and opens their dashboard. `depictio local export-compose` later hands the server and its data over to Docker Compose. Linux (x86_64 and arm64) and Apple silicon Macs; Windows is refused with a pointer to WSL2. See [Local Server](../installation/local.md) ([#1110](https://github.com/depictio/depictio/pull/1110)).
 
 ### **🚀 Improvements**
 
-* **Dashboard thumbnails can be turned off and moved**: `DEPICTIO_PERFORMANCE_SCREENSHOTS_ENABLED` and `DEPICTIO_PERFORMANCE_SCREENSHOTS_DIR`. Defaults are unchanged. See [Performance & Timeouts](../installation/env-reference.md#performance-timeouts) ([#1110](https://github.com/depictio/depictio/pull/1110)).
+* **The builder's preview stays in view** while the controls scroll, and every figure parameter has a description ([#1105](https://github.com/depictio/depictio/pull/1105)).
+* **The dashboards listing has a Card display menu** and loses the Tiles view. `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` sets the view it opens in ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **Sharper thumbnails**, sized by `DEPICTIO_PERFORMANCE_SCREENSHOT_*` ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **The tab sidebar opens by default, the loader shows the animated rose**, and an embedded dashboard can follow its host's colour scheme ([#1108](https://github.com/depictio/depictio/pull/1108)).
+
+---
+
+## **[v1.11.1](https://github.com/depictio/depictio/releases/tag/v1.11.1)** (September 17, 2026)
+
+!!! success "Patch: an opt-in Nextflow trigger, and General Stats only where the report has it"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.11.1
+ghcr.io/depictio/depictio-viewer:1.11.1
+ghcr.io/depictio/depictio-worker:1.11.1
+ghcr.io/depictio/depictio-cli:1.11.1
+```
+
+### **🚀 Improvements**
+
+* **The Nextflow trigger can be installed opt-in** with `depictio-cli config nextflow --install --default-disabled`. See [`config nextflow`](../depictio-cli/usage.md#config-nextflow) ([#1103](https://github.com/depictio/depictio/pull/1103)).
 
 ### **🐛 Bug Fixes**
 
-* **A MultiQC report no longer stays on *preparing* after its worker dies**: the build lock of a task killed mid-run (out of memory, segfault) is released at once instead of blocking rebuilds for up to 10 minutes ([#1110](https://github.com/depictio/depictio/pull/1110)).
+* **General Stats is only offered when a MultiQC report has the table**, so nf-core/chipseq 2.1.0 dashboards no longer show a failed tile ([#1104](https://github.com/depictio/depictio/pull/1104)).
+* **Table renders in the catalog gallery show their rows again** ([#1101](https://github.com/depictio/depictio/pull/1101)).
 
 ---
 
