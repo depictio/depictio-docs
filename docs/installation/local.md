@@ -1,21 +1,24 @@
 ---
-title: "Local Server (no Docker)"
-icon: material/laptop
-description: "Run the full Depictio server on your own machine without Docker, then open the dashboard of your own pipeline results."
+title: "Python Package Installation"
+icon: simple/python
+description: "Install Depictio as a Python package with uv or pip, and run the whole server as local processes, without containers."
 ---
 
-# Local Server (no Docker) <small>(v1.12.0+)</small>
+# Python Package Installation <small>(v1.12.0+)</small>
 
-`depictio local up` starts a complete Depictio server on your machine: the same
-API, worker and viewer as the Docker and Kubernetes deployments, with MongoDB,
-Redis and SeaweedFS (the S3 store) run as plain processes on `127.0.0.1`. Then
-`depictio ingest` adds your pipeline results to it, so you go from a results
-directory to its dashboard without Docker, a cluster or a shared instance.
+Install `depictio[local]` with `uv` or `pip`, then run every service as a local process on your machine: no containers.
+
+`depictio local up` starts the same API, worker and viewer as the
+[Docker Compose](docker.md) and [Kubernetes](kubernetes.md) deployments, with
+MongoDB, Redis and SeaweedFS (the S3 store) run as plain processes on
+`127.0.0.1`. `depictio ingest` then adds your pipeline results, so you go from a
+results directory to its dashboard without Docker, a cluster or a shared
+instance.
 
 Use it to review a template on your own results, or to try Depictio on a laptop.
-For a team, a demo or production, use [Docker Compose](docker.md) or
-[Kubernetes](kubernetes.md). A local server can later be
-[moved to Docker Compose](#move-to-docker-compose) with its data.
+For a team, a demo or production, use Docker Compose or Kubernetes: a local
+server can later be [moved to Docker Compose](#move-to-docker-compose) with its
+data.
 
 ![The same server, run in containers or as local processes](../images/installation/local/schema_same_code_docs.png)
 
@@ -23,22 +26,40 @@ For a team, a demo or production, use [Docker Compose](docker.md) or
 
 ## :material-rocket-launch: Quick Start
 
-**Prerequisites**: [uv](https://docs.astral.sh/uv/getting-started/installation/).
+**Prerequisites**: Linux, or macOS on Apple silicon (see [Platforms](#platforms)),
+with [uv](https://docs.astral.sh/uv/getting-started/installation/), or pip and
+Python 3.11 to 3.14.
 
 ### Step 1: Install
 
-```bash
-uv tool install "depictio[local]"
-```
+=== "uv"
 
-`uv tool install` puts the `depictio` command on your `PATH`, in an environment
-of its own that holds the server's Python dependencies (about 2 GB). No
-`--python` flag is needed: the dependencies install from prebuilt wheels on
-Python 3.11 to 3.14. The package carries the viewer, already built.
+    ```bash
+    uv tool install "depictio[local]"
+    ```
 
-Prefer it to `uvx --from "depictio[local]" depictio local up`: `uvx` runs the
-command in a temporary environment and leaves no `depictio` command behind
-for `depictio local status` and `depictio local down`.
+    `uv tool install` puts the `depictio` command on your `PATH`, in an
+    environment of its own. Prefer it to `uvx --from "depictio[local]" depictio local up`,
+    which runs in a temporary environment and leaves no `depictio` command
+    behind for `depictio local status` and `depictio local down`.
+
+    If you installed the former `depictio-cli` package with `uv tool install`,
+    add `--force`: it replaces the `depictio` and `depictio-cli` commands that
+    package installed.
+
+=== "pip"
+
+    ```bash
+    python3 -m venv ~/.venvs/depictio
+    source ~/.venvs/depictio/bin/activate
+    pip install "depictio[local]"
+    ```
+
+    The `depictio` command is on your `PATH` while the environment is active.
+
+The `[local]` extra adds the server's Python dependencies, about 1.6 GB
+installed, from prebuilt wheels on Python 3.11 to 3.14. The package carries the
+viewer, already built.
 
 ??? info "From a clone of the repository"
     To run the code of a clone, install it in editable mode:
@@ -51,11 +72,11 @@ for `depictio local status` and `depictio local down`.
 
     A clone has no viewer bundle, so `depictio local up` builds it, with
     `pnpm install` then `pnpm run build`, when it is missing or older than its
-    sources. That takes about a minute and needs [Node.js](https://nodejs.org/)
-    20 or later with [pnpm](https://pnpm.io/installation); the output goes to
-    `~/.depictio/local/logs/viewer-build.log`. A build that fails does not stop
-    the start: the server runs with the previous bundle, or without dashboards
-    when there is none, and `up` says so.
+    sources. That needs [Node.js](https://nodejs.org/) 20 or later with
+    [pnpm](https://pnpm.io/installation) (`corepack enable pnpm`); the output
+    goes to `~/.depictio/local/logs/viewer-build.log`. A build that fails does
+    not stop the start: the server runs with the previous bundle, or without
+    dashboards when there is none, and `up` says so.
 
 ### Step 2: Start the server
 
@@ -63,52 +84,39 @@ for `depictio local status` and `depictio local down`.
 depictio local up
 ```
 
+![Terminal output of a first depictio local up: it installs MongoDB, Redis and SeaweedFS from conda-forge, starts the services, then prints "Depictio is ready" with the dashboards URL, the data and log folders, and the next steps](../images/installation/local/terminal_local_up.svg)
+
 The first run downloads MongoDB, Redis and SeaweedFS from conda-forge into
-`~/.depictio/local/env` (about 710 MB, once). The Iris and Penguins example
-projects are seeded, and the browser opens on the dashboards page,
-`http://127.0.0.1:8058/dashboards` unless that port was already taken (see
-[How it differs from Docker](#how-it-differs-from-docker) for the ports). On a
-first run, `up` waits a few seconds for the examples to load ("Loading the
-examples") so their dashboards open with data, then ends with a summary:
+`~/.depictio/local/env` (about 170 MB, once), seeds the Iris and Penguins
+example projects, and waits for them to load so that their dashboards open with
+data. It then opens the dashboards page in your browser,
+`http://127.0.0.1:8058/dashboards` unless that port was taken (see
+[Ports](#ports)). Later runs reuse the binaries and the data, and start in
+seconds.
 
-```text
-✓ Depictio is ready: http://127.0.0.1:8058/dashboards
-
-  Examples     iris, penguins
-  Data         /home/you/.depictio/local
-  Logs         /home/you/.depictio/local/logs
-
-  Next steps
-  Add data     depictio ingest <results dir>
-  Use the CLI  depictio <command>
-  Stop         depictio local down
-```
-
-When no other server is configured (no `~/.depictio/CLI.yaml`, and no
-`DEPICTIO_CLI_*` variable set), every [CLI](../depictio-cli/usage.md) command
-reaches this server by default, as above. Otherwise the next steps add
-`--server local`, which names this server whatever else is configured. See
-[Which server a command uses](../depictio-cli/usage.md#choosing-a-server).
-
-Over SSH, or on Linux without a display, no browser is opened: `up` prints the
+Over SSH, or on Linux without a display, no browser opens: `up` prints the
 tunnel to run from your own machine, `ssh -L <port>:127.0.0.1:<port> <host>`,
 then the URL to open there.
 
-### Step 3: Open the dashboard of your own results
+The next steps above need no `--server`: when no other server is configured (no
+`~/.depictio/CLI.yaml`, and no `DEPICTIO_CLI_*` variable set), every
+[CLI](../depictio-cli/usage.md) command reaches this server. Otherwise the
+summary adds `--server local`, which names this server whatever else is
+configured. See
+[Which server a command uses](../depictio-cli/usage.md#choosing-a-server).
 
-With the server up, ingest the pipeline output directory:
+### Step 3: Add your results
 
 ```bash
 depictio ingest path/to/results
 ```
 
 [`depictio ingest`](../depictio-cli/usage.md#ingest-command) detects the
-[template](../usage/projects/templates.md) from the results, from the pipeline
-name and version the run recorded, and ends with links to the project and its
-dashboards. Add `--server local` when another server is configured, as in the
-summary above. Pass `--template` to choose the template, and template variables
-with `--var`. nf-core results do not contain the samplesheet: when the template
-cannot find it under `input/`, pass it explicitly.
+[template](../usage/projects/templates.md) from the pipeline name and version
+the run recorded, and ends with links to the project and its dashboards. Pass
+`--template` to choose the template, and template variables with `--var`.
+nf-core results do not contain the samplesheet: when the template cannot find it
+under `input/`, pass it explicitly.
 
 ```bash
 depictio ingest path/to/results \
@@ -122,27 +130,43 @@ running. To ingest the same results again after a new run, add
 in the viewer (see
 [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project)).
 
-!!! note "Since v1.12.0, `depictio local up` starts the server only"
-    In v1.12.0-b1, `up` also ingested data, with `--template`, `--data-root`,
-    `--project-name` and `--var`. Those options moved to `depictio ingest`:
-    given to `up`, they make it print the `depictio local up` and
-    `depictio ingest` commands to run instead, and exit with code 2.
+!!! note "Coming from v1.12.0-b1"
+    `depictio local up` no longer ingests data. Given `--template`,
+    `--data-root`, `--project-name` or `--var`, it prints the
+    `depictio local up` and `depictio ingest` commands to run instead, and
+    exits with code 2.
 
 ---
 
-## :material-console: Commands
+## :material-console: Manage the server
 
-`depictio local` manages the server only. Data goes in with
+`depictio local` manages the server only: data goes in with
 [`depictio ingest`](../depictio-cli/usage.md#ingest-command).
 
 | Command | Effect |
 |---------|--------|
-| `depictio local up` | Start the services, seed the examples on a first run, print a summary, open the browser. From a clone, build the viewer first when it is missing or out of date |
+| `depictio local up` | Start the services, print the summary and open the browser. A first run also downloads the binaries and seeds the examples |
 | `depictio local open` | Open the dashboards page of the running server in a browser, or print the SSH tunnel to use |
-| `depictio local status` | Show each process with its port, whether the API answers, and the log directory. Exits with code 1 unless every process runs and the API answers |
-| `depictio local down` | Stop every process; the data and the ports are kept for the next `up`. Says so when nothing is running |
-| `depictio local wipe` | Stop the server and delete all local data. The downloaded binaries are kept. `--yes` skips the prompt |
+| `depictio local status` | Show each process with its port, and whether the API answers. Exits with code 1 unless every process runs and the API answers |
+| `depictio local down` | Stop every process. The data and the ports are kept for the next `up` |
+| `depictio local wipe` | Stop the server and delete all its data. The downloaded binaries are kept. `--yes` skips the prompt |
 | `depictio local export` | Stop the server and copy its data into a directory that Docker Compose runs, see [Move to Docker Compose](#move-to-docker-compose). Formerly `export-compose`, which still works |
+
+=== "status"
+
+    ```bash
+    depictio local status
+    ```
+
+    ![Terminal output of depictio local status: mongo, redis, s3, api and worker each marked running with their port, the API reachable, then the dashboards URL and the log folder](../images/installation/local/terminal_local_status.svg)
+
+=== "down"
+
+    ```bash
+    depictio local down
+    ```
+
+    ![Terminal output of depictio local down: it stops the worker, the API, S3, Redis and MongoDB in turn, then prints "Depictio local server stopped"](../images/installation/local/terminal_local_down.svg)
 
 ### `up` options
 
@@ -153,61 +177,82 @@ in the viewer (see
 | `--open` / `--no-open` | `--open` | Open the dashboards page in a browser |
 | `--screenshots` / `--no-screenshots` | off | Dashboard thumbnails through Playwright. Installs Chromium (about 150 MB) if needed |
 
-Examples are seeded on the first run of a local home only: a home started
-without them stays without them, and `up` says so when `--examples` names one.
-Running `up` while the server is already up reuses it and prints the summary
-again. `--port`, `--examples` and `--screenshots` apply when the server starts:
-a warning names those it ignores, and running `depictio local down` first makes
-them apply. A second `up` on the same home while one is starting fails at once.
-Ctrl-C during startup stops what that run started, and the command exits with
-code 130. SIGTERM and SIGHUP, as when the terminal is closed, do the same, with
-code 128 plus the signal number.
+- Examples are seeded on the first run of a local home only: `up` warns when
+  `--examples` names one the home was created without.
+- `up` on a server that is already running reuses it and prints the summary
+  again. `--port` and `--screenshots` then apply only after
+  `depictio local down`, and a warning says so.
+- A second `up` on the same home while one is starting fails at once.
+- Ctrl-C during startup stops what that run started, and exits with code 130.
+  SIGTERM and SIGHUP, as when the terminal is closed, do the same, with code 128
+  plus the signal number.
+
+### Upgrade
+
+```bash
+depictio local down
+uv tool upgrade depictio            # with pip: pip install --upgrade "depictio[local]"
+depictio local up
+```
+
+Stop the server first, so that it starts again on the new version. The data
+under `~/.depictio/local` is kept. `up` downloads the binaries again only when
+the new version pins other MongoDB, Redis or SeaweedFS series.
 
 ---
 
-## :material-cog-outline: How it differs from Docker
+## :material-cog-outline: How it differs from Docker Compose
 
 Only configuration differs, and only through the usual `DEPICTIO_*` variables:
 every service is pointed at `127.0.0.1`.
 
-| | Docker Compose | Local server |
+| | Docker Compose | Python package |
 |---|---|---|
-| MongoDB, Redis, S3 | containers | `mongod` 8.0.x, `redis-server` 8.x and `weed mini` 4.x from conda-forge, fetched by [py-rattler](https://github.com/conda/rattler) |
-| API | 4 workers | 1 uvicorn worker |
-| Celery worker | container | 2 slots: `prefork` on Linux, `threads` on macOS |
-| Viewer | its own container | served by the API, on the same port |
+| MongoDB, Redis, S3 | containers | `mongod` 8.0.x, `redis-server` 8.x and `weed mini` (SeaweedFS) 4.x from conda-forge, fetched by [py-rattler](https://github.com/conda/rattler) |
+| API | 4 gunicorn workers | 1 uvicorn worker |
+| Celery worker | 4 processes | 2 slots: `prefork` on Linux, `threads` on macOS |
+| Viewer | its own container, on `http://localhost:5080` | served by the API, on its port: `http://127.0.0.1:8058/dashboards` |
 | Authentication | single-user, multi-user or public | single-user |
 | Dashboard thumbnails | on | off unless `--screenshots` |
 
-The conda-forge packages are pinned to the major series of the Compose images
-(the 8.0 series for MongoDB), so their minor versions can be newer than the
-images'. [`depictio local export`](#move-to-docker-compose) runs the exact MongoDB and
+The conda-forge packages follow the major series of the Compose images (the 8.0
+series for MongoDB), so their minor versions can be newer than the images'.
+[`depictio local export`](#move-to-docker-compose) runs the exact MongoDB and
 SeaweedFS versions of the local server, so the data never moves to an older one.
 
-The first `up` picks its ports on `127.0.0.1`: the defaults (API `8058`, MongoDB
-`27018`, Redis `6379`, S3 `9000`) when they are free, any free port otherwise, so
-a local server runs next to the Docker development stack. The ports are saved
-and reused by later runs, so the dashboards URL stays the same. A saved port
-that another program has taken since moves to a free one, with a warning; a
-`--port` that is busy fails instead. The CLI configuration follows the ports in
-use.
+### Ports
 
-Everything lives under `~/.depictio/local`, or `DEPICTIO_LOCAL_HOME` if set:
+The first `up` picks its ports on `127.0.0.1`: the defaults (API `8058`, MongoDB
+`27018`, Redis `6379`, S3 `9000`) when they are free, any free port otherwise,
+so a local server runs next to a Docker stack or another local server. The
+ports are saved in `ports.json` and reused, so the dashboards URL stays the
+same. A saved port that another program has taken since moves to a free one,
+with a warning for the API port; a `--port` that is busy fails instead. The CLI
+configuration follows the ports in use. SeaweedFS also opens internal ports
+(master `9333`, volume `9340`, filer `8888`, admin `23646`, and their gRPC
+ports), picked the same way at each start.
+
+### Files
+
+Everything lives under `~/.depictio/local`, or the folder `DEPICTIO_LOCAL_HOME`
+names:
 
 | Path | Content |
 |------|---------|
 | `env/` | MongoDB, Redis and SeaweedFS binaries |
 | `mongo/`, `redis/`, `s3/` | Service data, kept between runs |
-| `logs/` | One log per service: `api.log`, `worker.log`, `mongo.log`, `redis.log`, `s3.log`, and `viewer-build.log` for a viewer built from a clone |
+| `logs/` | One log per process: `api.log`, `worker.log`, `mongo.log`, `redis.log`, `s3.log`, and `viewer-build.log` for a viewer built from a clone |
 | `keys/` | Token signing keys |
-| `cli/` | CLI configuration for this instance, with its admin token, which `--server local` reads. `up` writes it again if it was deleted, with a new token, and revokes those of earlier rewrites |
+| `cli/` | The CLI configuration that `--server local` reads, with its admin token. `up` writes it again if it was deleted, with a new token, and revokes those of earlier rewrites |
 | `backups/` | Backups that [`depictio backup create`](../usage/administration/backup.md) makes on this server |
+| `cache/`, `multiqc_prerender/`, `screenshots/` | Caches, and dashboard thumbnails |
 | `secrets.json` | Generated S3 and admin passwords |
 | `ports.json` | Ports kept for the next `up` |
+| `state.json` | Process IDs of the running server, deleted by `down` |
 | `.depictio-local-home` | Marks the folder as a local home: `wipe` deletes nothing in a folder without it, and `up` refuses a folder that holds other files |
 
-The local home, `keys/` and `cli/` are owner-only (`0700`), and `secrets.json` is
-created owner-only (`0600`).
+The local home, `keys/` and `cli/` are owner-only (`0700`); `secrets.json` and
+the CLI configuration file are owner-only too (`0600`).
 
 !!! warning "Shared machines"
     The local server runs in single-user mode: no login, and whoever reaches its
@@ -226,22 +271,21 @@ projects, dashboards and table data, for instance once a review turns into a
 shared instance.
 
 ```bash
-depictio local export --out depictio-docker
+depictio local export
 cd depictio-docker && docker compose up -d
 ```
 
-`depictio local export` (formerly `export-compose`, which still works) stops the
-local server if it is running, so the copy is
-consistent, then copies the MongoDB and SeaweedFS data and the token signing
-keys into the directory (`depictio-docker` by default). The two never share
-files: `depictio local up` restarts the local server on its own data. The
-command ends by printing the one to run next, `cd <dir> && docker compose up -d`,
-and the dashboards URL, `http://localhost:5080`.
+![Terminal output of depictio local export: it downloads the docker-compose.yaml of v1.12.0, stops the local server, copies the mongo and s3 data, then prints the command that starts the Docker stack and the URL to open, http://localhost:5080](../images/installation/local/terminal_local_export.svg)
 
-The directory must be new or empty, and is made owner-only (`0700`), since it
-holds the token-signing key. Everything that can refuse the export (no local
-data, a non-empty directory, no compose file to use) is checked before the
-server is stopped. The directory holds:
+`export` stops the local server if it is running, so that the copy is
+consistent, then copies the MongoDB and SeaweedFS data and the token signing
+keys into the directory, `depictio-docker` by default (`--out`). Everything
+that can refuse the export (no local data, a directory that is not empty, no
+compose file to use) is checked before the server is stopped. The two never
+share files: `depictio local up` restarts the local server on its own data.
+
+The directory is made owner-only (`0700`), since it holds the token signing
+key. It holds:
 
 | File | Content |
 |------|---------|
@@ -253,9 +297,8 @@ server is stopped. The directory holds:
 Redis is not carried over, since it holds only cache and queues, and thumbnails
 are rendered again. The token in `~/.depictio/local/cli` stays valid against the
 Docker stack, since it was signed with the copied keys. The raw pipeline files
-are not copied, only the tables built from them: to ingest again, name the Docker
-setup's own CLI configuration with `depictio ingest --server <file>`, with the
-pipeline directories reachable from the containers.
+are not copied, only the tables built from them: to ingest again, point
+`depictio ingest --server <file>` at the CLI configuration of the Docker stack.
 
 ---
 
@@ -270,8 +313,7 @@ pipeline directories reachable from the containers.
 | Windows | Not supported, `up` refuses to start: conda-forge has no `redis-server` for Windows, and the services are managed as POSIX process groups. Use [WSL2](https://learn.microsoft.com/windows/wsl/) or [Docker Compose](docker.md) |
 
 Python 3.11 to 3.14 is supported: the dependencies install from prebuilt wheels
-on each. CI runs the stack on Python 3.12, and it has also been run on 3.13 and
-3.14.
+on each. CI runs the stack on Python 3.12.
 
 On macOS the Celery worker runs in threads: a forked worker process that opens a
 Delta table crashes there, because the libraries it loads are not safe to use
@@ -293,27 +335,21 @@ stops on an illegal instruction.
 
 #### A port is already in use
 
-The API, MongoDB, Redis and S3 ports move to free ones by themselves (see
-[How it differs from Docker](#how-it-differs-from-docker)); only an explicit
-`--port` that is busy stops `up`. SeaweedFS (`weed mini`) also opens internal
-ports (master, volume, filer, admin and their gRPC ports): `up` picks them the
-same way, at their defaults (9333, 9340, 8888, 23646, and the same + 10000 for
-gRPC) when they are free, so two local servers, or a local server and the Docker
-development stack, run side by side.
+Every port moves to a free one by itself (see [Ports](#ports)): only an explicit
+`--port` that is busy stops `up`. So two local servers, each with its own
+`DEPICTIO_LOCAL_HOME`, or a local server and a Docker stack, run side by side.
 
 #### On an HPC login node or behind a proxy
 
 An HTTP proxy set in the environment does not break startup: the readiness
-checks on `127.0.0.1` bypass `http_proxy` and the other proxy variables,
-SeaweedFS runs without them, and the API, the worker and any CLI command that
-reaches the local server get `127.0.0.1` and `localhost` added to `no_proxy`.
-The downloads do go through the proxy: MongoDB, Redis and SeaweedFS from
-conda-forge on the first run, and the compose file of `depictio local export`.
-When one fails, a one-line error says so: check the network or
-the proxy settings, then run the command again. Over SSH, open the server
-through the `ssh -L` tunnel that `up` prints. The other users of a login node
-can reach the server too: see the shared machines warning under
-[How it differs from Docker](#how-it-differs-from-docker).
+checks on `127.0.0.1` bypass it, SeaweedFS runs without the proxy variables, and
+the API, the worker and any CLI command that reaches the local server get
+`127.0.0.1` and `localhost` added to `no_proxy`. The downloads do need the
+network: MongoDB, Redis and SeaweedFS from conda-forge on the first run, and the
+compose file of `depictio local export`. When one fails, a one-line error says
+so: check the network or the proxy settings, then run the command again. Over
+SSH, open the server through the `ssh -L` tunnel that `up` prints, and mind the
+[shared machines](#files) warning.
 
 #### `DEPICTIO_*` settings are ignored
 
@@ -321,9 +357,9 @@ can reach the server too: see the shared machines warning under
 they usually target another instance (`DEPICTIO_LOCAL_HOME` is read by
 `depictio local` itself). The exception is `DEPICTIO_TELEMETRY_*`:
 `DEPICTIO_TELEMETRY_ENABLED=false` (or `DO_NOT_TRACK=1`) turns
-[telemetry](../features/telemetry.md) off for the local server too. The
-`AWS_*` variables are not passed on either, so the services never reach another
-S3 store. Likewise, `DEPICTIO_CLI_TOKEN` and `DEPICTIO_CLI_API_BASE_URL`, which
+[telemetry](../features/telemetry.md) off for the local server too. The `AWS_*`
+variables are not passed on either, so the services never reach another S3
+store. Likewise, `DEPICTIO_CLI_TOKEN` and `DEPICTIO_CLI_API_BASE_URL`, which
 usually hold the credentials of another server, never apply to
 `--server local`.
 
@@ -347,7 +383,7 @@ gets a warning: `depictio local down`, then `depictio local up`, rebuilds it.
 
 `depictio local wipe --yes` deletes every project, dashboard and file of the
 local server, with its passwords, keys and saved ports. The downloaded binaries
-are kept. The next `up` seeds it again.
+are kept. The next `up` seeds the examples again.
 
 ## Next Steps
 

@@ -15,7 +15,7 @@ its former name, still works as an alias.
 |------|-------------|
 | [Installation](../installation/cli.md) | Install the CLI and tell it which server to use |
 | [Usage](usage.md) | All CLI commands with options and examples |
-| [Local server](../installation/local.md) | Run a Depictio server on your machine with `depictio local up` |
+| [Python package installation](../installation/local.md) | Run a Depictio server on your machine, without containers, with `depictio local up` |
 | [Nextflow trigger](nextflow-trigger.md) | Let a pipeline ingest its own results when it completes |
 | [Minimal YAML Config](minimal_config.md) | Minimal project YAML to get started |
 | [Recipes](../usage/projects/recipes.md) | Data transformation recipes for bioinformatics pipelines |

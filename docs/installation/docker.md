@@ -1,3 +1,7 @@
+---
+icon: simple/docker
+---
+
 # Docker Compose Installation
 
 ## :material-rocket-launch: Quick Start
@@ -21,7 +25,7 @@ All services start automatically: MongoDB, Redis, the S3 store (SeaweedFS), back
 !!! warning "Upgrading an install from before v1.12.0?"
     The bundled S3 store is SeaweedFS instead of MinIO since v1.12.0, and it starts
     empty: copy your data over first. See
-    [Upgrading to v1.12.0: MinIO to SeaweedFS](seaweedfs-migration.md#docker-compose).
+    [Upgrading to v1.12.0: MinIO → SeaweedFS](upgrade/v1.12.0-seaweedfs.md#docker-compose).
 
 ### Step 3 — Open
 
@@ -218,7 +222,7 @@ Common causes: port conflict, volume permission error, MongoDB connection failur
 
 ### Data persistence
 
-MongoDB, Redis and the S3 store keep their data in named Docker volumes (`mongo_data`, `redis_data` and `seaweedfs_data`). They persist across `docker compose down`, and `docker compose down -v` deletes them. Before v1.12.0 the store was MinIO, in a `minio_data` volume that SeaweedFS does not read: see [Upgrading to v1.12.0](seaweedfs-migration.md).
+MongoDB, Redis and the S3 store keep their data in named Docker volumes (`mongo_data`, `redis_data` and `seaweedfs_data`). They persist across `docker compose down`, and `docker compose down -v` deletes them. Before v1.12.0 the store was MinIO, in a `minio_data` volume that SeaweedFS does not read: see [Upgrading to v1.12.0](upgrade/v1.12.0-seaweedfs.md).
 
 ---
 
