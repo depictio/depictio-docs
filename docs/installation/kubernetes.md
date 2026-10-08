@@ -1,3 +1,7 @@
+---
+icon: simple/kubernetes
+---
+
 # Kubernetes Installation
 
 Deploy Depictio on a Kubernetes cluster using the official Helm chart.
@@ -30,7 +34,7 @@ All pods should reach `Running` status: backend, viewer, mongo, minio, redis, ce
 !!! warning "Upgrading a release from before v1.12.0?"
     The bundled store starts empty after the upgrade: export the bucket **before**
     running `helm upgrade`. See
-    [Upgrading to v1.12.0: MinIO to SeaweedFS](seaweedfs-migration.md#helm).
+    [Upgrading to v1.12.0: MinIO → SeaweedFS](upgrade/v1.12.0-seaweedfs.md#helm).
 
 ### Step 3 — Access Depictio
 
@@ -122,7 +126,7 @@ secrets:
 These keys were `secrets.minioRootUser` and `secrets.minioRootPassword` before
 v1.12.0. The old keys, and a `minio:` values block, still work and print a
 deprecation warning in the upgrade notes. See
-[Renamed settings](seaweedfs-migration.md#renamed-settings).
+[Renamed settings](upgrade/v1.12.0-seaweedfs.md#renamed-settings).
 
 !!! warning "Upgrading from pre-v1.0.0-b1 — rotate the S3 credentials"
     From **v1.0.0-b1** onwards the S3 root credentials are stored exclusively

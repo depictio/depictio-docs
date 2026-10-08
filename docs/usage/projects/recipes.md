@@ -71,7 +71,7 @@ Recipes are used in two ways:
 
 ---
 
-## The 5-Checkpoint Validation Pipeline
+## The 5-Checkpoint Validation Pipeline <small>(v1.12.0+)</small> { #the-5-checkpoint-validation-pipeline }
 
 Every recipe execution, whether via `depictio dev recipe run` or `depictio ingest`, runs through five automatic checkpoints:
 
@@ -82,6 +82,8 @@ Every recipe execution, whether via `depictio dev recipe run` or `depictio inges
 | 3 | **Input schema** | Assert every column in each source's `input_schema` is present in the file that was read, with a compatible dtype |
 | 4 | **Transform** | Call `transform(sources)`, verify it returns a non-empty `pl.DataFrame` |
 | 5 | **Output schema** | Assert every column in `OUTPUT_SCHEMA` is present with the correct dtype; validate `OPTIONAL_OUTPUT_SCHEMA` columns if present |
+
+Before v1.12.0 a recipe ran four checkpoints: there was no input-schema check (3), and the output schema was named `EXPECTED_SCHEMA`.
 
 If any checkpoint fails, execution stops with a clear error message pointing to the exact problem.
 

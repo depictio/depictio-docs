@@ -58,7 +58,7 @@ with Docker Compose and the Helm chart, SeaweedFS since v1.12.0 (MinIO before), 
 external S3 service. The settings are `DEPICTIO_S3_*`; the `DEPICTIO_MINIO_*` names of
 earlier releases still work. An install that ran the bundled MinIO has to copy its data
 to SeaweedFS when it upgrades: see
-[Upgrading to v1.12.0: MinIO to SeaweedFS](seaweedfs-migration.md).
+[Upgrading to v1.12.0: MinIO → SeaweedFS](upgrade/v1.12.0-seaweedfs.md).
 
 ### External S3 Service
 
