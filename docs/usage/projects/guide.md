@@ -149,7 +149,7 @@ Basic projects provide an **easy onboarding experience** - upload your data and 
 
     ```bash
     # Process the project
-    depictio-cli run --project-config-path basic_project.yaml
+    depictio ingest --project-config-path basic_project.yaml
     ```
 
 ## **Advanced** Projects
@@ -343,7 +343,7 @@ Process advanced projects using the CLI:
 
 ```bash
 # Complete workflow execution
-depictio-cli run --project-config-path ./rnaseq_project.yaml
+depictio ingest --project-config-path ./rnaseq_project.yaml
 ```
 
 The CLI executes this pipeline:
@@ -354,6 +354,11 @@ The CLI executes this pipeline:
 4. **✅ Config Sync** - Register project with server
 5. **✅ File Scan** - Discover files matching patterns
 6. **✅ Data Process** - Convert files to Delta Lake format
+7. **✅ Joins** - Run the table joins the project configuration defines
+8. **✅ Dashboards** - Import the dashboards the project lacks, from the template or from `--dashboard`
+
+`--skip STEP` leaves steps out, for instance `--skip dashboards`. See
+[Skipping steps](../../depictio-cli/usage.md#skipping-steps).
 
 ## Managing Data Collections from the viewer (v0.12.0+)
 
@@ -476,9 +481,8 @@ Templates are pre-packaged project configurations that ship with Depictio. Each 
 ### One-command setup
 
 ```bash
-depictio run \
-  --template nf-core/ampliseq/2.16.0 \
-  --data-root /data/my_ampliseq_run
+depictio ingest /data/my_ampliseq_run \
+  --template nf-core/ampliseq/2.16.0
 ```
 
 That single command:
@@ -488,6 +492,8 @@ That single command:
 3. Creates the project in MongoDB
 4. Discovers and processes all data collections (running recipes automatically)
 5. Imports the bundled dashboard
+
+Without `--template`, the template is detected from the results directory when it can be. Running the same command again with `--update-config` refreshes the project and keeps its dashboards as edited in the viewer; see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project).
 
 ### When to use templates
 
@@ -507,11 +513,11 @@ Use a manual YAML config when:
 
 ```mermaid
 graph TD
-    A(["🚀 <b>depictio run --template X</b>"])
+    A(["🚀 <b>depictio ingest DIR --template X</b>"])
     A --> B["📦 Resolve template<br/><i>substitute {DATA_ROOT}</i>"]
-    B --> C["✅ Validate data dir<br/><i>Level 1 / Level 2 (--deep)</i>"]
+    B --> C["✅ Validate the project<br/><i>resolved configuration</i>"]
     C --> D["⚙️ Sync · Scan · Process<br/><i>standard pipeline + recipes</i>"]
-    D --> E["📊 Import bundled dashboards"]
+    D --> E["📊 Import the bundled dashboards it lacks"]
     E --> F(["✨ <b>Project ready</b><br/><i>badge: Template: nf-core/ampliseq/2.16.0</i>"])
 
     classDef default fill:#E0F2F1,stroke:#45B8AC,stroke-width:2px,color:#2E7D73
@@ -754,8 +760,7 @@ catalog:
     **Solutions:**
     ```bash
     # Validate configuration
-    depictio-cli config validate-project-config \
-      --project-config-path ./config.yaml --verbose
+    depictio -v config check --project-config-path ./config.yaml
 
     # Check YAML syntax
     yamllint config.yaml
@@ -795,17 +800,16 @@ catalog:
 ### Debugging Commands
 
 ```bash
-# Verbose execution with detailed logging
-depictio-cli run --project-config-path ./config.yaml \
-  --verbose --verbose-level DEBUG
+# Verbose execution with detailed logging (-v for INFO, -vv for DEBUG)
+depictio -vv ingest --project-config-path ./config.yaml
 
 # Dry run to preview operations
-depictio-cli run --project-config-path ./config.yaml --dry-run
+depictio ingest --project-config-path ./config.yaml --dry-run
 
 # Step-by-step execution for debugging
-depictio-cli config check-server-accessibility
-depictio-cli config validate-project-config --project-config-path ./config.yaml
-depictio-cli data scan --project-config-path ./config.yaml
+depictio config check
+depictio config check --project-config-path ./config.yaml
+depictio data scan --project-config-path ./config.yaml
 ```
 
 ## 📚 Additional Resources

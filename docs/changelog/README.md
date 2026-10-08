@@ -68,8 +68,8 @@ ghcr.io/depictio/depictio-cli:1.11.2
 ### **🚀 Improvements**
 
 * **The builder's preview stays in view** while the controls scroll, and every figure parameter has a description ([#1105](https://github.com/depictio/depictio/pull/1105)).
-* **The dashboards listing has a Card display menu** and loses the Tiles view. `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` sets the view it opens in ([#1108](https://github.com/depictio/depictio/pull/1108)).
-* **Sharper thumbnails**, sized by `DEPICTIO_PERFORMANCE_SCREENSHOT_*` ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **The dashboards listing has a Card display menu** and loses the Tiles view. `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` sets the view it opens in. See [Thumbnails or table](../usage/guides/web_ui.md#listing-views) ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **Sharper thumbnails**, sized by `DEPICTIO_PERFORMANCE_SCREENSHOT_*`. See [Performance & Timeouts](../installation/env-reference.md#performance-timeouts) ([#1108](https://github.com/depictio/depictio/pull/1108)).
 * **The tab sidebar opens by default, the loader shows the animated rose**, and an embedded dashboard can follow its host's colour scheme ([#1108](https://github.com/depictio/depictio/pull/1108)).
 
 ---

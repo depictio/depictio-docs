@@ -55,23 +55,22 @@ nf-core/differentialabundance run:
 === "Point at a finished run"
 
     ```bash
-    depictio run \
-      --template nf-core/differentialabundance/latest \
-      --data-root /path/to/differentialabundance_results
+    depictio ingest /path/to/differentialabundance_results \
+      --template nf-core/differentialabundance/latest
     ```
 
-    `--data-root` is the only thing you have to pass. The observation sheet is
+    The results directory is the only thing you have to pass. The observation sheet is
     auto-detected from `{DATA_ROOT}/input/`; pass
     `--var SAMPLESHEET_FILE=...` to point somewhere else.
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/differentialabundance -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -225,8 +224,8 @@ nextflow run nf-core/differentialabundance \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/differentialabundance/latest \
-  --data-root results/
+depictio ingest results/ \
+  --template nf-core/differentialabundance/latest
 ```
 
 See [nf-co.re/differentialabundance/usage](https://nf-co.re/differentialabundance/2.0.0/docs/usage)
@@ -236,7 +235,7 @@ for full pipeline documentation.
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name, so a run that nests its tables one level
 deeper (as the reference megatest does, having been launched with two parameter
 sets at once) binds identically.
@@ -282,9 +281,8 @@ under `input/`.
 Then run Depictio against it:
 
 ```bash
-depictio run \
-  --template nf-core/differentialabundance/latest \
-  --data-root /tmp/differentialabundance_test
+depictio ingest /tmp/differentialabundance_test \
+  --template nf-core/differentialabundance/latest
 ```
 
 ---

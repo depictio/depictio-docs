@@ -61,23 +61,22 @@ run, whichever classifiers it used:
 === "Point at a finished run"
 
     ```bash
-    depictio run \
-      --template nf-core/taxprofiler/latest \
-      --data-root /path/to/taxprofiler_results
+    depictio ingest /path/to/taxprofiler_results \
+      --template nf-core/taxprofiler/latest
     ```
 
-    `--data-root` is the only thing you have to pass. The samplesheet is
+    The results directory is the only thing you have to pass. The samplesheet is
     auto-detected from `{DATA_ROOT}/input/`; pass `--var SAMPLESHEET_FILE=...`
     to point elsewhere. The `run_*` flags come from `pipeline_info/params.json`.
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/taxprofiler -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -252,8 +251,8 @@ nextflow run nf-core/taxprofiler \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/taxprofiler/latest \
-  --data-root results/
+depictio ingest results/ \
+  --template nf-core/taxprofiler/latest
 ```
 
 See [nf-co.re/taxprofiler/usage](https://nf-co.re/taxprofiler/2.0.1/docs/usage)
@@ -263,7 +262,7 @@ for full pipeline documentation.
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively, so only the parts a run actually wrote have to be present.
 `--run_profile_standardisation` is the one real requirement: the five taxpasta
 collections are what every cross-profiler tile is built from.
@@ -315,9 +314,8 @@ the test-datasets URLs in `params.json` into `input/` after the S3 fetch.
 Then run Depictio against it:
 
 ```bash
-depictio run \
-  --template nf-core/taxprofiler/latest \
-  --data-root /tmp/taxprofiler_test
+depictio ingest /tmp/taxprofiler_test \
+  --template nf-core/taxprofiler/latest
 ```
 
 ---

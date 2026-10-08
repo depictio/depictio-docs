@@ -72,6 +72,16 @@ docker compose up -d
 
     [:octicons-arrow-right-24: Installation guide](kubernetes/)
 
+-   :material-laptop:{ .lg .middle } **Local, without Docker**
+
+    ---
+
+    `depictio local up` runs the same server as plain processes on your machine, and can ingest your pipeline results in the same command.
+
+    Ideal for reviewing a template on your own results.
+
+    [:octicons-arrow-right-24: Installation guide](local/)
+
 </div>
 
 ## CLI & Configuration
