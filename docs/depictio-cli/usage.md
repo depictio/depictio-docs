@@ -130,8 +130,8 @@ These variables override parts of a CLI configuration file, so the token can sta
 
 <span id="run-command"></span>
 
-<script src="https://asciinema.org/a/R5V6UXLetWzfp7AB39SxoGfhd.js" id="asciicast-R5V6UXLetWzfp7AB39SxoGfhd" async="true"></script>
-<p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>🖥️ An ingestion recorded with <code>depictio-cli run</code>, the former name of <code>depictio ingest</code></strong></p>
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest.cast" data-poster="npt:0:8"></div>
+<p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>🖥️ <code>depictio ingest</code> (v1.12.0) on nf-core/taxprofiler test results: a dry run, then the ingestion into a local server</strong></p>
 
 Ingest pipeline results into a Depictio server, from validation to dashboards. Formerly `run`, which still works and says it is now `ingest`.
 
