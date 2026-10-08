@@ -145,10 +145,20 @@ inputs, its output schema, and a `transform`:
 import polars as pl
 from depictio.models.models.transforms import RecipeSource
 
+# INPUT SCHEMA: the columns each source must contain, checked before transform().
 SOURCES: list[RecipeSource] = [
-    RecipeSource(ref="variants_raw", glob_pattern="variants/*/variants_long_table.csv", format="CSV"),
+    RecipeSource(
+        ref="variants_raw",
+        glob_pattern="variants/*/variants_long_table.csv",
+        format="CSV",
+        input_schema={
+            "sample": pl.Utf8, "CHROM": pl.Utf8, "POS": pl.Int64,
+            "AF": pl.Float64, "GENE": pl.Utf8, "EFFECT": pl.Utf8,
+        },
+    ),
 ]
 
+# OUTPUT SCHEMA: the columns transform() returns, checked after it.
 OUTPUT_SCHEMA: dict[str, type[pl.DataType]] = {
     "sample": pl.Utf8, "CHROM": pl.Utf8, "POS": pl.Int64,
     "AF": pl.Float64, "GENE": pl.Utf8, "EFFECT": pl.Utf8,
