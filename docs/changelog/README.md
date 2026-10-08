@@ -23,18 +23,10 @@ ghcr.io/depictio/depictio-cli:1.11.2
 
 ### **🚀 Improvements**
 
-* **The builder's preview stays in view while the controls scroll**, in every component builder. The figure builder now shows its preview on the right like the others, and the advanced visualization builder puts its column bindings beside the preview instead of above it ([#1105](https://github.com/depictio/depictio/pull/1105), [5e8e72dd](https://github.com/depictio/depictio/commit/5e8e72dd)).
-* **Every figure parameter has a description**: a parameter outside Depictio's curated set takes Plotly's own wording, instead of *Parameter: name* ([#1105](https://github.com/depictio/depictio/pull/1105), [862117e8](https://github.com/depictio/depictio/commit/862117e8)).
-* **The dashboards listing has a Card display menu** in the Thumbnails view, for the cards per row (auto, 2 to 6) and the badges to show. Badges fit on one row with short labels, and a section with two dashboards shows them large. The Tiles view is gone, since the table shows the same with sorting and bulk selection, and a saved Tiles choice opens Thumbnails. `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` (`thumbnails` or `table`) sets the view for someone who never picked one ([#1108](https://github.com/depictio/depictio/pull/1108), [6c722c22](https://github.com/depictio/depictio/commit/6c722c22)).
-* **Sharper thumbnails**: captures are taken at 1440×900 and twice the pixel density, and the hover preview uses an `@2x` file. `DEPICTIO_PERFORMANCE_SCREENSHOT_VIEWPORT_WIDTH`, `DEPICTIO_PERFORMANCE_SCREENSHOT_VIEWPORT_HEIGHT` and `DEPICTIO_PERFORMANCE_SCREENSHOT_SCALE` change them. Dashboards captured before are captured again once ([#1108](https://github.com/depictio/depictio/pull/1108), [6c722c22](https://github.com/depictio/depictio/commit/6c722c22)).
-* **The tab sidebar is open by default** and remembered per dashboard, across its tabs, so closing it on one dashboard no longer hides it everywhere. Everyone starts from the open sidebar once ([#1108](https://github.com/depictio/depictio/pull/1108), [6c722c22](https://github.com/depictio/depictio/commit/6c722c22)).
-* **The loader shows the animated Depictio rose**, and the wordmark plays it when the pointer rests on it. It stays still for anyone who asks for reduced motion ([#1108](https://github.com/depictio/depictio/pull/1108), [6c722c22](https://github.com/depictio/depictio/commit/6c722c22), [581cb69c](https://github.com/depictio/depictio/commit/581cb69c)).
-* **An embedded dashboard can follow its host page's colour scheme**, through `?theme=light|dark` or a `depictio:set-color-scheme` message, without changing the visitor's own preference ([#1108](https://github.com/depictio/depictio/pull/1108), [6c722c22](https://github.com/depictio/depictio/commit/6c722c22)).
-
-### **🐛 Bug Fixes**
-
-* **Sticky elements stick again**, such as the admin branding preview and the demo mode banner ([#1105](https://github.com/depictio/depictio/pull/1105), [5e8e72dd](https://github.com/depictio/depictio/commit/5e8e72dd)).
-* **The About page cards line up**, with the same size and button in both colour schemes, and the copyright year is current ([#1108](https://github.com/depictio/depictio/pull/1108), [6c722c22](https://github.com/depictio/depictio/commit/6c722c22)).
+* **The builder's preview stays in view** while the controls scroll, and every figure parameter has a description ([#1105](https://github.com/depictio/depictio/pull/1105)).
+* **The dashboards listing has a Card display menu** and loses the Tiles view. `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` sets the view it opens in ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **Sharper thumbnails**, sized by `DEPICTIO_PERFORMANCE_SCREENSHOT_*` ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **The tab sidebar opens by default, the loader shows the animated rose**, and an embedded dashboard can follow its host's colour scheme ([#1108](https://github.com/depictio/depictio/pull/1108)).
 
 ---
 
