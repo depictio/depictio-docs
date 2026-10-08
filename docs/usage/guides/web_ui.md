@@ -242,7 +242,7 @@ Design mode — add, configure, and arrange components.
 
 ### <span style="color: #45B8AC;">:material-key-chain:</span> CLI agents / tokens (/cli-agents)
 
-Generate and manage CLI configurations for the [depictio-cli](../../depictio-cli/usage.md).
+Generate and manage CLI configurations for the [`depictio` CLI](../../depictio-cli/usage.md). Saved as `~/.depictio/CLI.yaml`, a configuration is the server every CLI command uses by default.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/react/page_cli_agents.png" target="_blank">

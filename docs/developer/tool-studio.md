@@ -194,7 +194,7 @@ Two ways out:
 
 <!-- prettier-ignore -->
 !!! info "The client-side checks are feedback, not the gate"
-    `depictio-cli dev catalog validate`, run by the `catalog` CI check on your pull
+    `depictio dev catalog validate`, run by the `catalog` CI check on your pull
     request, is the authoritative one. The Export panel says so too.
 
 ---

@@ -61,23 +61,22 @@ through to the protein a fusion would produce:
 === "Point at a finished run"
 
     ```bash
-    depictio run \
-      --template nf-core/rnafusion/latest \
-      --data-root /path/to/rnafusion_results
+    depictio ingest /path/to/rnafusion_results \
+      --template nf-core/rnafusion/latest
     ```
 
-    `--data-root` is the only thing you have to pass. The samplesheet is looked
+    The results directory is the only thing you have to pass. The samplesheet is looked
     for at `{DATA_ROOT}/input/samplesheet.csv`; pass
     `--var SAMPLESHEET_FILE=...` to point somewhere else.
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/rnafusion -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -251,8 +250,8 @@ nextflow run nf-core/rnafusion \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/rnafusion/latest \
-  --data-root results/
+depictio ingest results/ \
+  --template nf-core/rnafusion/latest
 ```
 
 See [nf-co.re/rnafusion/usage](https://nf-co.re/rnafusion/4.1.3/docs/usage)
@@ -262,7 +261,7 @@ for full pipeline documentation.
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name. The samplesheet is the one file rnafusion
 does not publish: put it under `input/`, or pass `--var SAMPLESHEET_FILE=...`.
 
@@ -311,7 +310,7 @@ DEST=/tmp/rnafusion_test
 bash depictio/projects/nf-core/rnafusion/4.1.3/download_test_data.sh "$DEST"
 mkdir -p "$DEST/input" && curl -fsSL -o "$DEST/input/samplesheet.csv" \
   https://raw.githubusercontent.com/nf-core/test-datasets/rnafusion/testdata/human/samplesheet_valid.csv
-depictio run --template nf-core/rnafusion/latest --data-root "$DEST"
+depictio ingest "$DEST" --template nf-core/rnafusion/latest
 ```
 
 !!! warning "One synthetic sample"

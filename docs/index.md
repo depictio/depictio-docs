@@ -323,7 +323,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/></svg><span>Ingest</span></span>
         <h3>Read where your data lives</h3>
-        <p>Point <code>depictio-cli</code> at a finished run, on your laptop or on the cluster where it landed, and it scans the output in place, pushing only the aggregated results, never the raw files. Or let a Nextflow pipeline <a href="depictio-cli/nextflow-trigger/">run that ingestion itself</a> when it completes. Smaller collections can be added straight from the browser instead. Either way the ingestion report says what was found, what was missing, and the parameters the pipeline ran with.</p>
+        <p>Point <code>depictio ingest</code> at a finished run, on your laptop or on the cluster where it landed, and it scans the output in place, pushing only the aggregated results, never the raw files. Or let a Nextflow pipeline <a href="depictio-cli/nextflow-trigger/">run that ingestion itself</a> when it completes. Smaller collections can be added straight from the browser instead. Either way the ingestion report says what was found, what was missing, and the parameters the pipeline ran with.</p>
         <a class="feature-link" href="depictio-cli/usage/">Ingest with the CLI &rarr;</a>
       </div>
     </article>
@@ -383,7 +383,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <div class="feature-code" role="img" aria-label="A terminal exporting a dashboard to dashboard.yaml, the file itself, and the command that imports it back">
-          <div class="fc-line"><span class="fc-p">$ depictio-cli dashboard export \</span>
+          <div class="fc-line"><span class="fc-p">$ depictio dashboard export \</span>
 <span class="fc-arg">    &lt;id&gt; -o dashboard.yaml</span></div>
           <div class="fc-file">
             <div class="fc-name">dashboard.yaml</div>
@@ -396,7 +396,7 @@ hide:
     <span class="fc-g">data_collection_tag: ancombc</span>
     viz_kind: volcano</code></pre>
           </div>
-          <div class="fc-line"><span class="fc-p">$ depictio-cli dashboard import \</span>
+          <div class="fc-line"><span class="fc-p">$ depictio dashboard import \</span>
 <span class="fc-arg">    dashboard.yaml</span></div>
         </div>
       </div>

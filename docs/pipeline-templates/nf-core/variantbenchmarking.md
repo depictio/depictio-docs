@@ -41,7 +41,7 @@ root that already holds several.
 There is no variable and no selector for this choice. It is made entirely by the id you
 pass to `--template`. Pick the row matching the run you want to explore.
 
-| `--template` id | Produced by a run with | Benchmark tools | Expected under `--data-root` |
+| `--template` id | Produced by a run with | Benchmark tools | Expected under the results directory |
 | --- | --- | --- | --- |
 | `nf-core/variantbenchmarking/1.4.0/categories/small` | `--analysis germline --variant_type small` | hap.py, rtg-tools vcfeval | `small/` and `multiqc/multiqc_data/multiqc.parquet` |
 | `nf-core/variantbenchmarking/1.4.0/categories/indel` | `--analysis somatic --variant_type indel` | som.py, rtg-tools vcfeval | `indel/` and `multiqc/multiqc_data/multiqc.parquet` |
@@ -76,15 +76,14 @@ out.
 
 ## :material-rocket-launch-outline: Quick start
 
-`DATA_ROOT` is the only template variable, so `--data-root` is the only thing you ever
+`DATA_ROOT` is the only template variable, so the results directory is the only thing you ever
 have to pass. None of the four templates needs a `--var` flag.
 
 === "Germline small variants"
 
     ```bash
-    depictio run \
-      --template nf-core/variantbenchmarking/1.4.0/categories/small \
-      --data-root /path/to/germline_results
+    depictio ingest /path/to/germline_results \
+      --template nf-core/variantbenchmarking/1.4.0/categories/small
     ```
 
     Two tabs: hap.py and rtg-tools benchmark metrics, plus the run's MultiQC report.
@@ -92,9 +91,8 @@ have to pass. None of the four templates needs a `--var` flag.
 === "Somatic indels"
 
     ```bash
-    depictio run \
-      --template nf-core/variantbenchmarking/1.4.0/categories/indel \
-      --data-root /path/to/somatic_results
+    depictio ingest /path/to/somatic_results \
+      --template nf-core/variantbenchmarking/1.4.0/categories/indel
     ```
 
     Two tabs: som.py metrics with allele-fraction strata and confidence intervals, plus
@@ -103,9 +101,8 @@ have to pass. None of the four templates needs a `--var` flag.
 === "Structural variants"
 
     ```bash
-    depictio run \
-      --template nf-core/variantbenchmarking/1.4.0/categories/structural \
-      --data-root /path/to/sv_results
+    depictio ingest /path/to/sv_results \
+      --template nf-core/variantbenchmarking/1.4.0/categories/structural
     ```
 
     One MultiQC tab. The structural benchmark numbers are published only inside the
@@ -114,9 +111,8 @@ have to pass. None of the four templates needs a `--var` flag.
 === "All variant types"
 
     ```bash
-    depictio run \
-      --template nf-core/variantbenchmarking/1.4.0 \
-      --data-root /path/to/megatest_results
+    depictio ingest /path/to/megatest_results \
+      --template nf-core/variantbenchmarking/1.4.0
     ```
 
     One four-tab project over a data root holding both `small/` and `indel/`. Reads no
@@ -333,8 +329,8 @@ Then point Depictio at the results, choosing the template id for the variant typ
 run produced:
 
 ```bash
-depictio run --template nf-core/variantbenchmarking/1.4.0/categories/small \
-  --data-root results/
+depictio ingest results/ \
+  --template nf-core/variantbenchmarking/1.4.0/categories/small
 ```
 
 To benchmark somatic indels as well, run the pipeline again with
@@ -349,7 +345,7 @@ for full pipeline documentation.
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Only the first table of
+Point `depictio ingest` at the directory holding the pipeline output. Only the first table of
 whichever template you choose is required; the rest is optional and the dashboard adapts
 to what is present.
 

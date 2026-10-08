@@ -4,8 +4,7 @@
     **Always validate your YAML configuration before using:**
     ```bash
     # Validate configuration syntax and structure
-    depictio-cli config validate-project-config \
-      --project-config-path ./my_project.yaml --verbose
+    depictio -v config check --project-config-path ./my_project.yaml
     ```
 
     **For YAML syntax highlighting in VS Code:** Install the YAML extension and save files with `.yaml` or `.yml` extension.
@@ -701,10 +700,10 @@ For detailed documentation, see [Cross-DC Filtering](../../features/cross-dc-fil
 !!! info "Joins vs Links"
     **Joins** and **Links** serve different purposes:
 
-    - **Joins**: Combine Table DCs into a single pre-computed view during `depictio-cli run`. The joined dataset is pushed to the server as one unified Delta table. No dynamic joining happens on the server.
+    - **Joins**: Combine Table DCs into a single pre-computed view during `depictio ingest`. The joined dataset is pushed to the server as one unified Delta table. No dynamic joining happens on the server.
     - **Links**: Enable runtime cross-DC filtering in the dashboard UI. Data collections remain separate; filtering happens dynamically.
 
-Joins are processed client-side when running `depictio-cli` and create a merged view that gets uploaded to the server. They only work with **Table-type** data collections.
+Joins are processed client-side when running `depictio ingest` and create a merged view that gets uploaded to the server. They only work with **Table-type** data collections.
 
 ```yaml
 # Join configuration (in data collection)
@@ -735,7 +734,7 @@ data_collections:
       with_dc: ["sample_metadata"]
 ```
 
-When you run `depictio-cli run`, the CLI will:
+When you run `depictio ingest`, the CLI will:
 
 1. Load both data collections locally
 2. Perform the join operation on the client
@@ -1076,20 +1075,16 @@ workflows:
 
 ```bash
 # Validate configuration file syntax and structure
-depictio-cli config validate-project-config \
-  --project-config-path ./my_project.yaml \
-  --verbose
+depictio -v config check --project-config-path ./my_project.yaml
 
-# Check server connectivity and permissions
-depictio-cli config check-server-accessibility
+# Check server connectivity and S3 storage
+depictio config check
 
 # Dry-run mode: validate without processing data
-depictio-cli run --project-config-path ./my_project.yaml \
-  --dry-run --verbose
+depictio -v ingest --project-config-path ./my_project.yaml --dry-run
 
 # Test file discovery patterns
-depictio-cli data scan --project-config-path ./my_project.yaml \
-  --verbose --verbose-level DEBUG
+depictio -vv data scan --project-config-path ./my_project.yaml
 ```
 <!--
 ### Common Configuration Errors
@@ -1287,7 +1282,7 @@ template:
     - relative_path: "input/Metadata_full.tsv"
       description: "Sample metadata"
       format: "TSV"
-      columns: ["ID", "name", "habitat"]   # checked by --deep validation
+      columns: ["ID", "name", "habitat"]
   expected_directories:
     - relative_path: "qiime2"
       description: "QIIME2 output directory"
@@ -1335,27 +1330,19 @@ SOURCES = [
 ]
 ```
 
-The `dc_ref` source is resolved automatically during `depictio run` — no additional YAML is needed in the project config.
+The `dc_ref` source is resolved automatically during `depictio ingest`: no additional YAML is needed in the project config.
 
 **4. Running the template**
 
 ```bash
-# Minimal — template ID + data root
-depictio run \
-  --template nf-core/ampliseq/2.16.0 \
-  --data-root /data/my_ampliseq_run
-
-# With level-2 column validation
-depictio run \
-  --template nf-core/ampliseq/2.16.0 \
-  --data-root /data/my_ampliseq_run \
-  --deep
+# Minimal: the results directory and a template ID
+depictio ingest /data/my_ampliseq_run \
+  --template nf-core/ampliseq/2.16.0
 
 # Skip auto-import (import dashboards manually later)
-depictio run \
+depictio ingest /data/my_ampliseq_run \
   --template nf-core/ampliseq/2.16.0 \
-  --data-root /data/my_ampliseq_run \
-  --skip-dashboard-import
+  --skip dashboards
 ```
 
 For full template reference, see [Templates](templates.md). For recipe documentation, see [Recipes](recipes.md).

@@ -236,7 +236,7 @@ workflows:
               NumReads: "Estimated read count" # Example format: column_name: "Description"
 
         # Optional: Data joining configuration (client-side pre-computed)
-        # NOTE: Joins combine Table DCs during depictio-cli run
+        # NOTE: Joins combine Table DCs during depictio ingest
         # Use project-level "links" for runtime cross-DC filtering in UI
         join: # Optional: Join this collection with others
           on_columns:
