@@ -1,3 +1,7 @@
+---
+icon: simple/docker
+---
+
 # Docker Compose Installation
 
 ## :material-rocket-launch: Quick Start

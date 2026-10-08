@@ -50,35 +50,37 @@ docker compose up -d
 
 ## Server Deployment
 
+Three ways to run the same Depictio server, which differ in how its services run.
+
 <div class="grid cards" markdown>
 
--   :fontawesome-brands-docker:{ .lg .middle } **Docker Compose**
+-   :simple-kubernetes:{ .lg .middle } **Kubernetes** · Helm chart
 
     ---
 
-    The recommended way to run Depictio. MinIO is bundled — one command starts everything.
-
-    Ideal for development, testing, and small-scale deployments.
-
-    [:octicons-arrow-right-24: Installation guide](docker/)
-
--   :simple-kubernetes:{ .lg .middle } **Kubernetes**
-
-    ---
-
-    Deploy Depictio on a Kubernetes cluster using the official Helm chart.
+    Deploy Depictio on a Kubernetes cluster with the official Helm chart.
 
     Ideal for production environments and scalable deployments.
 
     [:octicons-arrow-right-24: Installation guide](kubernetes/)
 
--   :material-laptop:{ .lg .middle } **Local, without Docker**
+-   :simple-docker:{ .lg .middle } **Docker Compose** · containers
 
     ---
 
-    `depictio local up` runs the same server as plain processes on your machine, and can ingest your pipeline results in the same command.
+    The recommended way to run Depictio. One compose file starts every service in containers, object storage included.
 
-    Ideal for reviewing a template on your own results.
+    Ideal for development, testing, and small-scale deployments.
+
+    [:octicons-arrow-right-24: Installation guide](docker/)
+
+-   :simple-python:{ .lg .middle } **Python package** · pip / uv, no containers
+
+    ---
+
+    Install `depictio[local]` with uv or pip: `depictio local up` then runs every service as a local process on your machine.
+
+    Ideal for reviewing a template on your own results, on a laptop.
 
     [:octicons-arrow-right-24: Installation guide](local/)
 
