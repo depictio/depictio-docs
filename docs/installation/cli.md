@@ -20,7 +20,7 @@ Before installing the CLI, ensure you have:
 - Access to a running Depictio instance
 
 !!! tip "No instance to connect to?"
-    `depictio local up` starts one on your machine, without Docker, and the CLI uses it by default when no other server is configured. See [Local Server](local.md).
+    `depictio local up` starts one on your machine, without Docker, and the CLI uses it by default when no other server is configured. See [Python package installation](local.md).
 
 ## Installation Methods
 
