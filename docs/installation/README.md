@@ -55,7 +55,7 @@ docker compose up -d
 
     ---
 
-    The recommended way to run Depictio. An S3 store (SeaweedFS) is bundled — one command starts everything. Upgrading from before v1.12.0? Copy the data of the former MinIO store first: [Upgrading to v1.12.0](seaweedfs-migration.md).
+    The recommended way to run Depictio. An S3 store (SeaweedFS) is bundled — one command starts everything. Upgrading from before v1.12.0? Copy the data of the former MinIO store first: [Upgrading to v1.12.0](upgrade/v1.12.0-seaweedfs.md).
 
     Ideal for development, testing, and small-scale deployments.
 
