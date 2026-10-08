@@ -45,6 +45,9 @@ Each dashboard is shown as a card. Cards display the dashboard's screenshot thum
 once one has been captured, and fall back to the dashboard's logo (when set) before the
 generic placeholder.
 
+The table view has a **Last viewed** column <small>(v1.11.0+)</small>, sorted newest
+first, with dashboards you never opened last. It is kept per browser.
+
 ### <span style="color: #7A5DC7;">:material-menu:</span> Sidebar Navigation
 
 The left sidebar provides easy access to various sections of the application. This includes:

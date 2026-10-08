@@ -54,6 +54,7 @@ DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 <!-- - [Dashboard YAML Sync](#dashboard-yaml-sync) -->
 - [Global Settings](#global-settings)
 - [Branding](#branding)
+- [Feedback](#feedback)
 - [ServiceConfig](#serviceconfig)
 
 ---
@@ -565,6 +566,7 @@ Feeds the admin Log & Task panel. See [Monitoring](../usage/administration/monit
 | `DEPICTIO_MONITORING_APP_LOG_MIN_LEVEL` | `WARNING` | Minimum level captured into `app_logs`. One of `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL` |
 | `DEPICTIO_MONITORING_APP_LOG_CAPPED_MB` | `64` | Size cap in MB of the capped `app_logs` collection |
 | `DEPICTIO_MONITORING_LIVE_UPDATES` | `true` | Push live task and ingestion status over the events WebSocket. Only active when `DEPICTIO_EVENTS_ENABLED` is also true |
+| `DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS` | `24` | Hours without a write after which a `running` ingestion is swept to `abandoned`. `0` disables the sweep. The bundled compose files and Helm chart do not forward it, so set it on the backend yourself (v1.11.0+) |
 
 ---
 
@@ -659,6 +661,27 @@ Deployment-level defaults for the [brand theme](../usage/administration/branding
     ```bash
     DEPICTIO_BRANDING_THEME={"surfaces_light":{"app_bg":"#f8faf9","nav_bg":"#ffffff","heading":"#00514b"}}
     ```
+
+---
+
+## Feedback
+
+**Config Class:** `FeedbackConfig`
+**Environment Prefix:** `DEPICTIO_FEEDBACK_`
+
+An opt-in link on every dashboard that carries the reader's context to wherever you point it: an issue form, a helpdesk, a `mailto:`. It renders only when enabled **and** a URL is set (v1.11.0+).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_FEEDBACK_ENABLED` | `false` | Show the link: an icon at the end of the dashboard header, and a **Feedback** section in the settings drawer |
+| `DEPICTIO_FEEDBACK_URL` | - | Link target. `{dashboard}`, `{dashboard_id}`, `{tab}` (the tab label the reader sees) and `{url}` are filled in and URL-encoded in the browser; no other placeholder is |
+| `DEPICTIO_FEEDBACK_LABEL` | `Feedback` | Icon tooltip and settings label |
+
+```bash
+DEPICTIO_FEEDBACK_ENABLED=true
+DEPICTIO_FEEDBACK_URL='https://github.com/<org>/<repo>/issues/new?template=dashboard_feedback.yml&dashboard={dashboard}&tab={tab}&page={url}'
+DEPICTIO_FEEDBACK_LABEL='Send feedback'
+```
 
 ---
 

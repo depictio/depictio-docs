@@ -5,7 +5,7 @@ description: Admin-only panel for Celery tasks, ingestion runs, logs, and worker
 
 # :material-chart-timeline-variant:{ style="color: #009688" } Monitoring: Log & Task
 
-Admin-only panel (**Administration → Log & Task**, `/admin`) exposing a durable MongoDB ledger of background activity: Celery tasks, ingestion runs, application logs, and worker health.
+Admin-only panel (**Administration → Log & Task**, `/admin`) exposing a durable MongoDB ledger of background activity: Celery tasks, ingestion runs, application logs, and worker health. Since **v1.11.0** each pane has its own address, `/admin/tasks`, `/admin/ingestion`, `/admin/logs` and `/admin/health`, and the Ingestion pane keeps its filters in the query string, so a filtered view can be bookmarked or sent. `/admin/monitoring` redirects to `/admin/tasks`.
 
 !!! info "Availability"
     Admin-only. Shown in single- and multi-user mode, hidden in public/demo; non-admins get *Forbidden*.
@@ -25,6 +25,8 @@ Celery task history (figures, screenshots, MultiQC, advanced viz, Delta tables) 
 ## Ingestion
 
 Ingestion runs, newest first: **status**, a `CLI` or `UI` source badge (a run from the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) shows `CLI`), instance label or hostname, project, and user. Uploads made through the web UI are recorded alongside CLI runs; recording is best-effort and never blocks an upload.
+
+A run is `running` until it ends as `success`, `partial` or `failed`. Since **v1.11.0** the CLI closes its record on every way out, so Ctrl-C or SIGTERM leaves `interrupted` rather than a run that spins forever. For the ends nobody can report, such as SIGKILL or a lost node, the server sweeps a `running` record with no write for `DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS` (24 by default) to `abandoned`. Filter by **Status**, **Instance** and **Project**; the instance is the CLI's `instance_label`, or its hostname when none is set.
 
 Expand a run for its **provenance** field grid: run id, host, CLI version, the resolved project id, the invoking command line, the CLI and project config paths, and the data root. Long paths are shortened to `head/…/tail`, with the full value in a tooltip and click-to-copy. Below it are two tables:
 
@@ -63,6 +65,7 @@ Celery worker and broker health: status, worker count, active tasks, live-update
 | `DEPICTIO_MONITORING_APP_LOG_MIN_LEVEL` | `WARNING` | Default log capture floor. |
 | `DEPICTIO_MONITORING_APP_LOG_CAPPED_MB` | `64` | Log collection size cap. |
 | `DEPICTIO_MONITORING_LIVE_UPDATES` | `true` | Enables live WebSocket push. |
+| `DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS` | `24` | Hours without a write before a `running` ingestion is swept to `abandoned`; `0` disables the sweep. Not forwarded by the bundled compose files or Helm chart. (v1.11.0+) |
 
 !!! warning "Live push"
     Requires `DEPICTIO_EVENTS_ENABLED=true`. Without it the panel still works over polling.

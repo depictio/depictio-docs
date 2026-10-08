@@ -139,6 +139,8 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
+| An opt-in feedback link that carries the dashboard and tab | v1.11.0 | [Feedback](../installation/env-reference.md#feedback) |
+| The funnel overview follows the values of one column | v1.11.0 | [Funnel filtering](../features/dashboards.md#funnel-filtering) |
 | Ingestion triggered by the pipeline itself, when it completes | v1.10.0 | [Nextflow trigger](../depictio-cli/nextflow-trigger.md) |
 | A run directory identifies its own pipeline, so a template needs no flag | v1.10.0 | [Templates](../usage/projects/templates.md#pipeline-id) |
 | nf-core/variantbenchmarking template and benchmarking viz kinds | v1.10.0 | [variantbenchmarking](../pipeline-templates/nf-core/variantbenchmarking.md) |

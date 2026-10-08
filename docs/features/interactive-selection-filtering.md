@@ -195,6 +195,12 @@ Each recoloured figure carries a `by <column>` badge.
 number of categories cannot be known ahead of time, both client and server fall back to an
 overlay rather than faceting an unbounded column.
 
+Since **v1.11.0** every advanced visualization kind has a fixed answer to a group: it
+splits into panels, colours a single panel, or stays whole. A figure the groups cannot
+reach says so with a **not grouped** badge whose tooltip gives the reason, and groups
+reach figures on other tabs by following the dashboard's links in reverse. A lasso drawn
+on a Manhattan plot now holds in Split.
+
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../images/guides/selection-groups/split_by_species.jpg" target="_blank">
         <img src="../../images/guides/selection-groups/split_by_species.jpg" width="600">

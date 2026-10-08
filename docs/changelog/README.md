@@ -8,6 +8,44 @@ hide:
 
 # Changelog
 
+## **[v1.11.0](https://github.com/depictio/depictio/releases/tag/v1.11.0)** (September 14, 2026)
+
+!!! success "Minor: a feedback link on dashboards, and a funnel that follows one column"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.11.0
+ghcr.io/depictio/depictio-viewer:1.11.0
+ghcr.io/depictio/depictio-worker:1.11.0
+ghcr.io/depictio/depictio-cli:1.11.0
+```
+
+### **✨ New Features**
+
+* **An opt-in feedback link on every dashboard**, carrying the dashboard, the tab and the page URL to wherever you point it, such as an issue form. Off by default: set `DEPICTIO_FEEDBACK_ENABLED` and `DEPICTIO_FEEDBACK_URL`. See [Feedback](../installation/env-reference.md#feedback) ([#1066](https://github.com/depictio/depictio/pull/1066), [26a99608](https://github.com/depictio/depictio/commit/26a99608)).
+* **The funnel overview can follow one column**: **Values of a column** charts how many of its distinct values survive each filter stage, with a matrix showing which stage removed each one. See [Funnel filtering](../features/dashboards.md#funnel-filtering) ([#1095](https://github.com/depictio/depictio/pull/1095), [ed28aabb](https://github.com/depictio/depictio/commit/ed28aabb)).
+* **The dashboards table has a Last viewed column**, newest first, with dashboards you never opened last ([f3152736](https://github.com/depictio/depictio/commit/f3152736)).
+
+### **🚀 Improvements**
+
+* **Every advanced visualization kind has a fixed answer to analysis groups**: it splits, colours one panel or stays whole. A figure the groups cannot reach carries a **not grouped** badge, and groups reach other tabs through the dashboard's links. See [The Analysis panel](../features/interactive-selection-filtering.md#analysis-panel) ([#1093](https://github.com/depictio/depictio/pull/1093), [8fc2b824](https://github.com/depictio/depictio/commit/8fc2b824)).
+* **Ingestion runs always close**: Ctrl-C or SIGTERM records `interrupted`, a run nobody closed is swept to `abandoned`, the Ingestion pane filters by status, instance and project, and each admin pane has its own URL. See [Monitoring](../usage/administration/monitoring.md#ingestion) ([#1097](https://github.com/depictio/depictio/pull/1097), [38e3acfe](https://github.com/depictio/depictio/commit/38e3acfe), [c681b76b](https://github.com/depictio/depictio/commit/c681b76b)).
+* **UpSet and complex heatmap can pick their columns by pattern**: `set_columns_pattern` and `value_columns_pattern` take a regex, so a consensus figure fits whatever samples a run has. See [UpSet](../features/components.md#upset) ([#1094](https://github.com/depictio/depictio/pull/1094), [#1098](https://github.com/depictio/depictio/pull/1098), [86851685](https://github.com/depictio/depictio/commit/86851685), [f5298ec6](https://github.com/depictio/depictio/commit/f5298ec6)).
+
+### **🧬 Pipeline Templates**
+
+* **nf-core/variantbenchmarking recipes find their inputs by variant-type directory**, so the germline, somatic and structural routes each fill their own collections ([#1081](https://github.com/depictio/depictio/pull/1081), [803fc271](https://github.com/depictio/depictio/commit/803fc271), [c729932e](https://github.com/depictio/depictio/commit/c729932e)).
+* **nf-core/ampliseq 2.18.0 serves its phylogeny from S3** and grafts `test_pplace` placements with EPA-ng, and `PHYLUM_LEVEL` is inferred from the run. Trees ingested before this need a re-ingest ([#1096](https://github.com/depictio/depictio/pull/1096), [056fb864](https://github.com/depictio/depictio/commit/056fb864)).
+
+### **🐛 Bug Fixes**
+
+* **A lasso drawn on a Manhattan plot holds in Split** instead of vanishing on the next render ([#1093](https://github.com/depictio/depictio/pull/1093), [8fc2b824](https://github.com/depictio/depictio/commit/8fc2b824)).
+* **UpSet fits long set names and highlights the hovered intersection** ([#1098](https://github.com/depictio/depictio/pull/1098), [c580bc5f](https://github.com/depictio/depictio/commit/c580bc5f)).
+* **Adding a MultiQC component to an already prerendered report rebuilds it**, rather than ending with *MultiQC figures took too long to build* ([ecd5207d](https://github.com/depictio/depictio/commit/ecd5207d)).
+
+---
+
 ## **[v1.10.1](https://github.com/depictio/depictio/releases/tag/v1.10.1)** (September 13, 2026)
 
 !!! success "Patch: share a filtered listing by link"
