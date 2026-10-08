@@ -40,7 +40,13 @@ Depictio provides a variety of component types for building interactive dashboar
 
     ---
 
-    Section headers (H1, H2, H3)
+    Headings and prose, with block markdown and links to tabs since v1.14.0
+
+-   :material-star-four-points-outline:{ .lg .middle } **[Highlight](#highlight-components)**
+
+    ---
+
+    Another tab's figure, redrawn on this one (v1.14.0+)
 
 -   :material-tune:{ .lg .middle } **[Interactive](#interactive-components)**
 
@@ -155,6 +161,42 @@ fig
 | `max_points` | Point cap for scatter-family figures before downsampling (v1.3.0+) | Global default (10,000) |
 | `font_scale` | Font-size multiplier for the whole figure layout font: axis labels, ticks and legend. Set from the tile's edit menu, 0.7× to 2×, with a full lite-YAML round trip (v1.8.0+) | Unset (1×) |
 | Theme | Plotly template for this figure. `mantine_light` / `mantine_dark` mean *follow the UI colour scheme*. Unset falls back to the dashboard default, then to [instance branding](../usage/administration/branding.md) (v1.8.0+) | Unset |
+
+### Figure style <small>(v1.14.0+)</small> { #figure-style }
+
+`figure_style: minimal` gives a figure the landing-page look: the title in the card
+header beside an icon badge with the subtitle inline, a transparent plot with faint
+dashed grid lines and no axis lines, the legend in one line under the plot, large
+unoutlined markers, tight margins and the toolbar only on hover. Plots in this style are
+set in Inter unless the figure or the brand sets a font. Unset, a figure takes the
+`figure_style` of its [grid section](dashboards.md#landing-tabs), else `default`.
+
+| Option | Description |
+|--------|-------------|
+| `figure_style` | `default` or `minimal` |
+| `subtitle` | A few dimmed words after the title (`minimal`) |
+| `icon_name` / `icon_color` | Iconify id and colour of the header badge (`minimal`). The colour defaults to the brand's primary |
+| `hide_legend` | Draw the figure without its legend, for a small tile |
+| `caption` | A line or two under the plot saying how to read it, in any style |
+| `link` | `tab:<name>`: the tab this figure summarises, linked from the end of the header (`minimal`) or from the tile's actions |
+
+Advanced visualizations take the same keys, plus `controls_placement` (`auto`, `right`,
+`top` or `popover`): where the viz controls dock. Unset or `auto` docks them beside the
+plot on a full-width tile, above it on a narrower one, and behind the settings icon on a
+minimal card.
+
+```yaml
+- tag: pcoa-overview
+  component_type: figure
+  visu_type: scatter
+  figure_style: minimal
+  title: Communities by city
+  subtitle: PCoA, Bray-Curtis
+  icon_name: mdi:scatter-plot
+  caption: Each point is one sample; the closer two points, the more alike their plankton.
+  link: "tab:Ordination & Clustering"
+  # workflow_tag, data_collection_tag, dict_kwargs...
+```
 
 !!! tip "Clustered heatmaps moved"
     The ComplexHeatmap viz has been renamed and is now part of the Advanced Visualizations section below — see [Hierarchical Heatmap](#hierarchical-heatmap) for the full config, alongside the rest of the domain-specific viz family (volcano, MA, sankey, …).
@@ -626,6 +668,58 @@ The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `
 | `show_branch_lengths` | bool | `true` | Annotate branches with lengths. Drawn as a clipped trace capped at the longest branches, so a dense tree is not buried in text (v1.8.0+) |
 | `show_internal_labels` | bool | `false` | Annotate internal nodes with their labels |
 
+#### Summary by rank <small>(v1.14.0+)</small> { #phylogeny-summary }
+
+`collapse_rank` draws the same component as a summary for a landing tile: a cladogram
+with one tip per value of a tip-metadata column, such as `Phylum`, the top `top_n` by
+share. Each value sits at its core clade, the largest clade whose classified tips all
+carry it, and the legend counts what is not shown. Dashboard filters reach the summary as
+they reach the full tree. Unset, the full tree is drawn as before.
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `collapse_rank` | str \| null | `null` | Tip-metadata column to collapse to. Needs `metadata_dc_tag` (or `metadata_dc_id`) |
+| `top_n` | int (1–60) | `10` | How many values to draw, by share |
+| `size_by` | `tips` \| `abundance` | `tips` | What a dot measures: the share of the tree's tips, or the mean share of a sample's reads from the abundance table |
+| `show_shares` | bool \| null | `null` | Print each value's % beside it. Unset: shown only with `size_by: abundance` |
+| `abundance_dc_tag` | str \| null | `null` | Abundance table, one row per sample and taxon, with a column named like `collapse_rank`. Required by `size_by: abundance` |
+| `abundance_col` / `abundance_sample_col` | str | `rel_abundance` / `sample` | Its relative-abundance and sample columns |
+| `abundance_split_col` | str \| null | `null` | A column of the abundance table, such as a site, drawn as one column of dots per value beside the tips. Each column takes its colour from `category_palettes[abundance_split_col]` when set |
+| `show_split` | bool | `true` | Draw those columns; off keeps the setting for a viewer to switch back on |
+| `split_scale` | `shared` \| `row` | `shared` | One dot scale for every dot, or relative to each value's largest, to show where it is concentrated |
+| `show_tip_dots` | bool | `true` | Draw a dot sized by the share at each tip |
+
+```yaml
+- component_type: advanced_viz
+  viz_kind: phylogenetic
+  workflow_tag: ampliseq
+  data_collection_tag: phylogenetic_tree_canonical
+  figure_style: minimal
+  title: Tree of life
+  subtitle: top phyla
+  config:
+    viz_kind: phylogenetic
+    tree_wf_id: 646b0f3c1e4a2d7f8e5b8ca3   # placeholders, rewritten from
+    tree_dc_id: 646b0f3c1e4a2d7f8e5b8cdb   # tree_dc_tag at import
+    tree_dc_tag: phylogenetic_tree_canonical
+    metadata_dc_tag: phylogenetic_tree_metadata_canonical
+    color_col: Kingdom
+    extra_color_cols: [Phylum, Class, Order]   # what Collapse to offers
+    collapse_rank: Phylum
+    top_n: 10
+    size_by: abundance
+    abundance_dc_tag: taxonomy_rel_abundance   # has a Phylum column
+    abundance_split_col: locality              # one column of dots per site
+```
+
+In the component builder the tree is set up in steps, each marked required or optional:
+**Tree** (required, and enough to draw it), **Tip metadata** (the table and the tip,
+colour and label bindings), **View** (**Full tree** or **Summary by rank**, with
+**Collapse to**, **Lineages shown**, **Size by** and **Show %**) and **Read shares** (the
+abundance table). The form and the preview write the same keys, so they cannot disagree.
+Rank pickers list ranks from root to leaf (Domain, Kingdom, Supergroup, Division,
+Subdivision, Phylum, Class, … Species), then any other column.
+
 #### Reading and navigating the tree <small>(v1.8.0+)</small> { #phylogeny-interaction }
 
 A fixed strip above the tree holds **undo** / **redo** over the view state, a **zoom and pan** toggle (off by default, so a click still selects; on, drag pans and the wheel zooms), **Reset view**, **focus mode**, which prunes to the tips in scope rather than ghosting the rest, and **Expand all**.
@@ -799,12 +893,20 @@ No canonical role-based schema — the renderer enumerates binary columns at com
 | `show_set_sizes` | bool | `true` | Show horizontal set-size bar chart |
 | `color_intersections_by` | `none` \| `set` \| `degree` | `none` | Intersection-bar colour mode |
 | `set_colors` | dict[str, str] \| null | `null` | Per-set colour overrides (set name → hex). Drives set-size bars + matrix dots + intersection bars (when `color_intersections_by="set"`). Pin domain palettes (e.g. `habitat → Set1`) so the same set lands on the same colour across tiles. |
+| `set_category_column` | str \| null | `null` | The column the sets are values of (`locality`). Set bars, matrix dots and, with `color_intersections_by: set`, single-set intersections take that column's [`category_colors`](dashboards.md#category-colors). Unset, the column is found by value: the one coloured column that pins every set drawn. `set_colors` still wins per set (v1.14.0+) |
+| `selection_enabled` | bool | `false` | Clicking an intersection, its bar or its matrix column, filters the dashboard to the rows it counts. Requires `selection_column` (v1.14.0+) |
+| `selection_column` | str \| null | `null` | The column whose values the selection emits. Pick an identifier the other tiles share (`Phylum`), not a set column, which the import rejects (v1.14.0+) |
 
 **Filtering / row tagging**
 
 Renderer **filters by intersection size and degree** — `min_size` drops intersections below the threshold, `max_degree` drops intersections involving more sets than the limit.
 
 Since **v1.8.3** dashboard filters reach the plot as well. The grouping values are matrix *columns*, so a filter on that column has no row to match; instead a filter whose values are set names is applied as a subset over the sets, whatever the filter's own column is called, with the sets auto-detected the same way the library detects them. A filter on any other column narrows rows as usual, provided the matrix carries that column: the ampliseq matrix now carries the source DC's per-taxon attributes, so a filter on a taxonomic rank has something to bite on.
+
+Since **v1.14.0** an UpSet can be a filter itself. With `selection_enabled`, a click on an
+intersection emits the values its rows hold in `selection_column`, as a lasso does on a
+scatter: the UpSet highlights that intersection and dims the rest, and a second click or
+the tile's **Reset selection** clears it.
 
 
 [![UpSet example](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light)](../images/guides/advanced-visualizations/upset_plot_light.webp){target=_blank}
@@ -1096,6 +1198,34 @@ See [Filter Expressions](filter-expressions.md) for the complete expression refe
 | Title Font Size | Title font size | `sm` |
 | Value Font Size | Hero value font size | `xl` |
 
+### Display options <small>(v1.14.0+)</small> { #card-display-options }
+
+| Option | Description |
+|--------|-------------|
+| `variant` | How the card is drawn. `default`; `headline`, a key figure with a large value and a faint resting icon; `compact`, title and value on one line; `minimal`, headline type with no frame; `accent`, headline type with a coloured rail on the left; `split`, the icon in a tinted block beside the figure. Unset takes the section's `card_variant`, else `default` |
+| `icon_style` | `watermark` (default), a large faint icon shown on hover, or `badge`, a small icon on a tint of `icon_color`, always shown beside the title |
+| `caption` | One line under the value, in place of the aggregation label, which moves to a tooltip on the header |
+| `decimals` | Decimal places of a fractional value, 0 to 6. Unset shows up to 4, trailing zeros dropped |
+| `link` | Where clicking the card goes: `tab:<name>` for a sibling tab, or a URL |
+
+The header's tooltip explains the value, for example *Median shannon*. In the builder
+these are the **Display** block: *Style*, *Caption*, *Decimals*, *Link to a tab* and
+*Description*.
+
+```yaml
+- tag: shannon-median
+  component_type: card
+  aggregation: median
+  column_name: shannon
+  title: Shannon diversity
+  variant: headline
+  icon_style: badge
+  caption: median per sample
+  decimals: 2
+  link: "tab:Alpha Diversity"
+  # workflow_tag, data_collection_tag, column_type...
+```
+
 ---
 
 ## :material-format-header-1: Text Components <small>(v0.2.0+)</small> { #text-components }
@@ -1111,7 +1241,9 @@ Text components are presentational tiles for section delimiters, narrative intro
 | `order` | int (1–6) | `1` | Heading level — renders as `<h1>` through `<h6>` (values outside 1–6 are clamped) |
 | `alignment` | `left` \| `center` \| `right` | `left` | Horizontal alignment for both title and body |
 | `vertical_alignment` <small>(v1.4.0+)</small> | `top` \| `center` \| `bottom` | `center` | Where the text block sits vertically within its tile |
-| `body` | str | `""` | Optional paragraph rendered below the title |
+| `body` | str | `""` | Optional paragraph rendered below the title. Block markdown since v1.14.0, see below |
+| `surface` <small>(v1.14.0+)</small> | `none` \| `card` \| `tinted` | `none` | `none`: bare prose. `card`: framed like a card, with a coloured rule on top when `accent` is set. `tinted`: on a tint of `accent`, grey without one |
+| `accent` <small>(v1.14.0+)</small> | str \| null | `null` | Mantine palette name, CSS colour, or `tab:<name>` to borrow a sibling tab's colour. On a framed tile, a leading `# 41%` heading in the body then reads as a headline figure |
 
 !!! note "`vertical_alignment` defaults to `center` as of v1.4.0"
     The grid sizes a tile in whole row units, so a text tile is almost never the height of
@@ -1119,15 +1251,55 @@ Text components are presentational tiles for section delimiters, narrative intro
     dead space beneath itself. Set `vertical_alignment: top` to restore the earlier
     rendering.
 
-### Inline markdown
+### Markdown
 
-The body and title support a **limited inline subset** — no markdown library is loaded; rendering is done client-side in `TextRenderer.tsx`:
+The title supports inline markdown: `**bold**`, `*italic*` and `` `code` ``. No markdown
+library is loaded and HTML is never rendered; the parsing is done client-side by the
+viewer.
 
-- `**bold**` → **bold**
-- `*italic*` → *italic*
-- `` `code` `` → `code`
+Since **v1.14.0** the body also supports block markdown and a few link schemes. A body
+with none of this syntax renders as before, as one paragraph that keeps its line breaks.
 
-Block-level constructs (lists, tables, blockquotes, fenced code, links, images) are **not** supported. For richer narrative content, use the dashboard's notes panel.
+| Syntax | Renders as |
+|--------|------------|
+| `#`, `##`, `###` | Headings, one step below the tile's own title |
+| `- item`, `1. item` | Bullet and numbered lists |
+| Pipe tables | Tables; a `:` in the separator row aligns the column |
+| `---` | A divider |
+| `[label](https://…)` | A web link, opened beside the dashboard; a path such as `/dashboards` opens in place |
+| `[label](tab:Tab name)` | A link to a sibling tab by its displayed name, case-insensitive, wearing that tab's icon and colour. An unknown name renders as plain text |
+| `[label](params:)`, `[label](params:primer)` | Opens the run parameters, searched for the text after `params:` |
+| `![](icon:mdi:dna)` | An inline Iconify icon |
+| `![Athens](color:#1a4f8f)` | A colour dot, the legend key of the category named beside it; a palette name such as `color:teal` works too |
+
+Some lists are drawn as layouts:
+
+| Pattern | Renders as |
+|---------|------------|
+| Every item `![](icon:…) **Label** value` | A fact list: one grey line of facts, or a two-column fact table on a framed tile |
+| A list inside `::: steps` … `:::` | A step flow, across the tile when it is wide, down it when narrow. Each item: an icon (else its number), a bold label, what was done. Trailing `· [label](tab:…)` links become icon buttons beside the step's name. Quarto's `::: {.steps}` works too |
+| Every item `**41%** claim — context [Tab](tab:…)` | Result rows, the figure in the linked tab's colour |
+| Every item `[Name](tab:Name)`, optionally `: what it answers` | Tab tiles: icon, name and the text after the link, else the tab's description. A numbered list numbers them as a reading order. Tabs the dashboard lacks are left out, so a template's landing page adapts to the run |
+| `**See also** · [A](tab:A) · [B](tab:B)` | A link row. Closing a framed tile, it sits on its bottom edge |
+
+```yaml
+- tag: reading-path
+  component_type: text
+  title: Five steps from reads to communities
+  surface: card
+  body: |
+    ::: steps
+    1. ![](icon:mdi:dna) **Amplicon** V4–V5 · 515F-Y / 926R
+    2. ![](icon:mdi:filter) **Denoise** DADA2 to ASVs · [Settings](params:dada2) · [QC](tab:Sequencing QC)
+    3. ![](icon:mdi:tag) **Classify** SILVA 138.2 + PR2 5.0.0
+    :::
+
+    **The run** · [All parameters](params:)
+```
+
+The editor's text builder sets **Frame** (`surface`) and **Accent**, resolves `tab:`
+links in its preview, and has a collapsible **Markdown help** with one copyable example
+per syntax above.
 
 ### Example (from `depictio/projects/init/iris/dashboards/overview.yaml`)
 
@@ -1147,6 +1319,39 @@ Block-level constructs (lists, tables, blockquotes, fenced code, links, images) 
 - :material-view-grid: Visual organization of content
 - :material-label: Labeling groups of related components
 - :material-text-long: Short narrative intros above an analytical section
+- :material-view-dashboard-outline: A [landing tab](dashboards.md#landing-tabs): a study recap, a reading path through the tabs, findings that link to the tab showing each one
+
+---
+
+## :material-star-four-points-outline: Highlight Components <small>(v1.14.0+)</small> { #highlight-components }
+
+A highlight draws a figure that lives on another tab of the dashboard, without copying
+it. The figure is rendered from its own definition, so an edit on its tab shows here
+too; the highlight only says how to draw it. It takes this tab's filters, as any figure
+here does, and its header links back to the tab it comes from.
+
+The source can be a figure, restyled here (`minimal` unless `figure_style` says
+otherwise), or an advanced visualization, drawn as it is on its tab.
+
+| Field | Description |
+|-------|-------------|
+| `source_tab` | The tab the figure lives on, by its displayed name. Survives an export to another instance |
+| `source_dashboard_id` | The tab's id, which the editor writes. Tried first; `source_tab` takes over when it is unknown |
+| `source_component` | The figure: its `index`, else its title, ignoring case and spacing. A figure made in the editor is best named by its title, since a re-import replaces its id |
+| `figure_style`, `subtitle`, `icon_name`, `icon_color`, `hide_legend`, `caption` | As on a [figure](#figure-style). Unset, each takes the source's value |
+
+```yaml
+- component_type: highlight
+  title: Faith PD per locality
+  subtitle: at the deepest rarefaction depth
+  source_tab: Alpha Diversity
+  source_component: trec-fig-alpha-plateau
+  icon_name: mdi:chart-scatter-plot
+  layout: {x: 0, y: 0, w: 6, h: 7}
+```
+
+A highlight binds to no data collection of its own, so it carries no `workflow_tag` or
+`data_collection_tag`.
 
 ---
 
@@ -1205,6 +1410,17 @@ Single-selection toggle:
 | Column | Column to filter |
 | Options | Available choices |
 | Default | Initially selected option |
+
+### In a filter bar <small>(v1.14.0+)</small>
+
+An interactive component placed in a grid section with `display: strip` or
+`filter_bar: true` is drawn in that section's [filter bar](dashboards.md#filter-bars)
+instead of the left panel. Two keys apply there only:
+
+| Option | Description |
+|--------|-------------|
+| `strip_label` | Short label shown in the bar instead of the title |
+| `strip_icon` | `false` hides the icon badge before the label. Unset: shown |
 
 ### Scoped Filters (filter_expr)
 

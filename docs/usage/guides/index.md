@@ -14,4 +14,6 @@ Hands-on guides for common tasks in the Depictio web interface.
 | [Dashboard Creation](dashboard_creation.md) | Create and configure interactive dashboards |
 | [Picking from the catalog](catalog-picker.md) | Add a pre-configured visualization Depictio recognised in your data |
 | [Using the Dashboard](dashboard_usage.md) | Explore data through filters and selections |
+| [The dashboard Guide](dashboard-guide.md) | The built-in page showing readers how to move around a dashboard |
+| [Spotlight search](spotlight-search.md) | Find any component on any tab with ⌘K / Ctrl+K |
 | [Authentication Modes](authentication-modes.md) | Configure authentication for your deployment |

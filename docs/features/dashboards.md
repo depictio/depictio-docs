@@ -209,6 +209,7 @@ Available component types include:
 | :material-card-text: **Cards**              | Summary statistics and KPIs                    |
 | :material-tune: **Interactive Filters**     | Dropdowns, sliders, and other controls         |
 | :material-format-header-1: **Text/Headers** | Section headers (H1, H2, H3)                   |
+| :material-star-four-points-outline: **Highlights** | Another tab's figure, redrawn here (v1.14.0+) |
 | :material-map-marker-multiple: **Maps**     | Geospatial scatter, density and choropleth maps |
 | :material-microscope: **MultiQC**           | Quality control report visualizations          |
 | :material-image: **Images**                 | Display grid of static images (PNG, JPEG, SVG) |
@@ -325,6 +326,100 @@ Persistent sections do nothing on a dashboard with a single tab. See
 [YAML Sync](yaml-sync.md#persistent-sections) for the `persistent` and `pin`
 keys.
 
+Since **v1.14.0** `exclude_tabs` lists the tabs, by displayed name, that a persistent
+section stays off. A landing tab that already sums up the sample sheet does not need it
+pinned under its own key figures.
+
+### :material-view-dashboard-outline: Landing tabs <small>(v1.14.0+)</small> { #landing-tabs }
+
+A landing tab opens a dashboard with prose and a few chosen figures rather than a grid of
+analyses: what the study is, its key numbers, what the data says and which tab shows it.
+Every piece below is an option on an existing component or section, set in YAML or in
+the editor, and off by default, so a dashboard that sets none of them looks as it did.
+
+[![The top of a landing tab: a title, a framed text tile, a fact table and a step flow](../images/guides/landing-tabs/overview-top.webp)](../images/guides/landing-tabs/overview-top.webp){target=_blank}
+
+The TREC AML2024 Overview. `show_tab_header: false` lets the first text tile be the page
+title. *About the study* and *The campaign* are framed text tiles, the campaign's colour
+dots are swatches, and the five steps are a `::: steps` block whose icons link to the
+tabs that show each step. See [Text Components](components.md#text-components).
+
+[![Key figures under a section filter bar, then a map and a PCoA in the minimal style](../images/guides/landing-tabs/key-figures.webp)](../images/guides/landing-tabs/key-figures.webp){target=_blank}
+
+*Key figures* is a plain section with a filter bar of its own: *City* and *Size* narrow
+its four cards and nothing else. The cards are headline cards with a caption and fixed
+decimals. *At a glance* draws a map and a PCoA in the minimal figure style, both coloured
+by the dashboard's `category_colors`.
+
+[![Result rows linking to their tabs, beside a phylogeny summary sized by reads per city](../images/guides/landing-tabs/findings-phylogeny.webp)](../images/guides/landing-tabs/findings-phylogeny.webp){target=_blank}
+
+*Findings*: result rows whose figure takes the linked tab's colour, beside a
+[phylogeny summary](components.md#phylogeny-summary) collapsed to phyla, sized by
+share of reads, with one column of dots per city.
+
+[![A stacked bar and a strip plot in the minimal style with captions, then tab tiles](../images/guides/landing-tabs/minimal-figures.webp)](../images/guides/landing-tabs/minimal-figures.webp){target=_blank}
+
+Minimal figures with a `caption` under the plot and a `link` back to their tab, then
+*How to read this dashboard*: a list of `tab:` links drawn as tab tiles, in the
+sidebar's groups.
+
+| Building block | Where it is documented |
+| -------------- | ---------------------- |
+| Block markdown, `tab:` links, swatches, steps, framed tiles | [Text Components](components.md#text-components) |
+| `icon_style`, `caption`, `decimals`, `variant`, `link` on cards | [Card Components](components.md#card-display-options) |
+| `figure_style: minimal`, `caption`, `link` on figures | [Figure Components](components.md#figure-style) |
+| Another tab's figure, redrawn here | [Highlight](components.md#highlight-components) |
+| Phylogeny summary by rank | [Phylogenetic](components.md#phylogeny-summary) |
+| An UpSet that filters the tab | [UpSet](components.md#upset) |
+| Plain sections, filter bars, colours, tab defaults | Below, and [YAML Sync](yaml-sync.md#landing-tab-keys) |
+
+#### Plain sections
+
+`appearance: plain` draws a grid section as a heading and its description over the tiles:
+no frame, no chevron, never folded. It suits tiles that are already cards. A grid section
+can also set the style its members take unless they set their own: `card_variant` for
+its cards and `figure_style` for its figures.
+
+#### Filter bars { #filter-bars }
+
+The interactive components that name a bar section leave the left filter panel and are
+drawn as one compact row of controls. There are two kinds of bar:
+
+| Key on the grid section | What its filters narrow |
+| ----------------------- | ----------------------- |
+| `display: strip` | The whole tab, like the filter panel. The section is the bar; any other members render as tiles under it |
+| `filter_bar: true` | Only the tiles of that section, drawn under its heading. The rest of the tab, the panel and the other tabs ignore it |
+
+A categorical control is chosen by how many values the column has:
+
+- **up to 3**: a segmented control, with as many segments pressed at once as the filter
+  allows;
+- **4 to 10**: a dropdown listing the values as chips in their colour;
+- **more than 10**: a dropdown with a plain list and a search field.
+
+A range filter becomes a thin inline slider. A value carries a colour dot when its
+column is coloured: by `category_colors`, else by the colorway for a column of ten
+values or fewer.
+
+`visible_filters` caps how many controls a bar shows before a **More filters** toggle,
+which carries a count of the active filters folded behind it. Unset, it is 2 on a
+section's own bar and every filter on a `display: strip` bar. A section narrowed by its
+own bar shows **Filtered** beside its heading, and the bar has a reset for its own
+controls.
+
+On each filter, `strip_label` sets a shorter label for the bar (*Habitat* for *Sampling
+habitat*), and `strip_icon: false` drops the icon badge before it.
+
+#### Category colours { #category-colors }
+
+`category_colors`, at dashboard level, gives one colour per value of a column, so a city
+is the same colour on every tile: the filter bar's chips, a figure's points and bars, an
+UpSet's sets and code figures. Child tabs inherit the main tab's map, and a child's own
+map overrides it value by value. Values left out fall back to the brand colorway, then
+to grey. In code mode the map is available as `depictio_category_colors`, and a code
+figure that names no colours of its own is recoloured from it when its traces are one
+column's values.
+
 ---
 
 ## :material-tab-plus: Dashboard Tabs
@@ -364,6 +459,27 @@ a tab opened on a bare title while every other tab got its glyph.
     `tab_order`, so a reader never saw the order the dashboard laid out. Since
     **v1.8.3** both honour `tab_order`.
 
+### :material-folder-multiple-outline: Tab groups <small>(v1.14.0+)</small> { #tab-groups }
+
+A child tab takes an optional `tab_group`, such as *Samples & data* or *Analysis*. The
+sidebar lists ungrouped tabs first, then each group under a small uppercase heading, in
+the order of its first tab; moving a tab up or down stays within its group. The main tab
+is never grouped. In the editor, the sidebar's **Add** button offers **Add tab** or
+**Add group**, and a group can be renamed, given a description, moved or ungrouped.
+
+### :material-tune-vertical: Tab defaults <small>(v1.14.0+)</small> { #tab-defaults }
+
+Three keys set what a tab opens with before a viewer has chosen otherwise. A viewer's own
+choice, kept in their browser, still wins.
+
+| Key | Values | Default | Effect |
+| --- | ------ | ------- | ------ |
+| `filter_panel_default` | `open` \| `collapsed` | `open` | Whether the left filter panel starts open |
+| `content_width_default` | `full` \| `wide` \| `comfortable` \| `compact` | `full` | Page width on a large screen: 1600, 1240 or 1080 px, centred |
+| `show_tab_header` | bool | `true` | Show the tab's name and description above the canvas. Off for a tab whose first text tile is its title |
+
+In the editor they sit under **Settings → Tab defaults**.
+
 ### :material-creation: Creating a Tab
 
 1. :material-plus-circle: Click **"+ New Tab"** in the navbar
@@ -372,6 +488,14 @@ a tab opened on a bare title while every other tab got its glyph.
 4. :material-emoticon-outline: Select an **icon** from the dropdown
 5. :material-palette-outline: Choose an **icon color**
 6. :material-check: Click **Create**
+
+### :material-content-copy: Copy to tab <small>(v1.14.0+)</small> { #copy-to-tab }
+
+In the editor, a component's ⋮ menu offers **Copy to tab…**, which adds a copy to a
+sibling tab. The copy keeps its section when the target tab has one of that name, and a
+notification links to where it landed. Filters and floating maps are not offered: a
+filter acts on its own tab, and a filter meant for every tab belongs in a
+[section shown on every tab](#persistent-sections).
 
 <!-- ### :material-tools: Tab Operations
 

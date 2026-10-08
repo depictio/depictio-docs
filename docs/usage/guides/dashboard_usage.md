@@ -95,6 +95,8 @@ In viewer mode this section holds one control, **Font size**. In edit mode it ho
 
 **Font size.** **A-** and **A+** step the content through 85%, 100%, 115% and 130%. Figures, tables and cards scale; the header, sidebar and panels keep their size. The preference is stored per browser, like the dark-mode toggle, so it follows the reader rather than the dashboard.
 
+**Page width** <small>(v1.14.0+)</small>. **Full**, **Wide** (1600px), **Comfortable** (1240px) or **Compact** (1080px): how wide the dashboard runs on a large screen, centred. Each tab remembers its own, per browser.
+
 !!! tip "Scaling one figure rather than all of them"
     A single tile takes a `font_scale` of its own from its edit menu, between 0.7× and 2×, applied to the whole Plotly layout font. See [Components](../../features/components.md#figure-components).
 
@@ -130,6 +132,23 @@ component explicit  >  dashboard default  >  instance branding  >  Mantine defau
 
 See [Branding](../administration/branding.md) for the model behind all of this, and for the `brand_theme:` YAML equivalent.
 
+### Settings for everyone <small>(v1.14.0+)</small> { #settings-for-everyone }
+
+Settings is now a page with a rail of sections. **Your view** holds the reader's own
+preferences, kept in their browser: font size, page width and light or dark. In edit
+mode the sections subtitled *for everyone* are saved with the dashboard. Those that
+concern this release:
+
+| Section | What it holds |
+|---------|---------------|
+| **Tab defaults** | What this tab opens with: **Page width**, **Filter panel** open or collapsed, and **Show the tab's name**. A reader's own choice still wins. See [Tab defaults](../../features/dashboards.md#tab-defaults) |
+| **Filtering** | **Funnel filtering by default** |
+| **Guide** | **Show the Guide** and an **Introduction** shown at the top of it, for every tab. See [The dashboard Guide](dashboard-guide.md) |
+
+A child tab without a brand of its own now draws in its main tab's brand, figures
+included. Its Branding section offers **Inherit main tab**, and **Customise** starts from
+the main tab's brand.
+
 ## Component-wise options
 
 In edit mode, hovering a component reveals three icons in its top-right corner, and resize handles on its edges and corners.
@@ -142,7 +161,9 @@ In edit mode, hovering a component reveals three icons in its top-right corner, 
 
 - <span style="color: #888888;"><i class="mdi mdi-dots-grid"></i> **Drag handle**</span>: grab it to move the component in the grid.
 - <span style="color: #15aabf;"><i class="mdi mdi-information-outline"></i> **Info**</span>: the component's metadata: type, data source, configuration.
-- <span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> **Menu**</span>: **Edit** reopens the builder on this component, **Duplicate** copies it, **Move to section** hands it to another section, **Delete** removes it.
+- <span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> **Menu**</span>: **Edit** reopens the builder on this component, **Duplicate** copies it, **Move to section** hands it to another section, **Copy to tab…** <small>(v1.14.0+)</small> adds a copy to a sibling tab (see [Copy to tab](../../features/dashboards.md#copy-to-tab)), **Delete** removes it.
+
+To find a component on any tab, press **⌘K** / **Ctrl+K** <small>(v1.14.0+)</small>. See [Spotlight search](spotlight-search.md).
 
 ---
 

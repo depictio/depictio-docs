@@ -227,6 +227,8 @@ nav:
           - Dashboard creation: usage/guides/dashboard_creation.md
           - Picking from the catalog: usage/guides/catalog-picker.md
           - Using the dashboard: usage/guides/dashboard_usage.md
+          - The dashboard Guide: usage/guides/dashboard-guide.md
+          - Spotlight search: usage/guides/spotlight-search.md
           - Real-time events: usage/guides/realtime-events.md
       - Projects:
           - usage/projects/index.md
