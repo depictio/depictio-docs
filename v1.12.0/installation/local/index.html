@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Run the full Depictio server on your own machine without Docker, then open the dashboard of your own pipeline results.">
+        <meta name="description" content="Install Depictio as a Python package with uv or pip, and run the whole server as local processes, without containers.">
       
       
       
@@ -24,7 +24,7 @@
     
     
       
-        <title>Local Server (no Docker) - Depictio Documentation</title>
+        <title>Python Package Installation - Depictio Documentation</title>
       
     
     
@@ -64,9 +64,13 @@
     
       <link rel="stylesheet" href="../../stylesheets/neoteroi-mkdocs-v1.1.3.css">
     
+      <link rel="stylesheet" href="../../stylesheets/asciinema.css">
+    
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
     
       <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@3.17.0/dist/bundle/asciinema-player.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -115,7 +119,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#local-server-no-docker-v1120" class="md-skip">
+        <a href="#python-package-installation-v1120" class="md-skip">
           Skip to content
         </a>
       
@@ -154,7 +158,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Local Server (no Docker)
+              Python Package Installation
             
           </span>
         </div>
@@ -796,6 +800,8 @@
         
   
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.983 11.078h2.119a.186.186 0 0 0 .186-.185V9.006a.186.186 0 0 0-.186-.186h-2.119a.185.185 0 0 0-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 0 0 .186-.186V3.574a.186.186 0 0 0-.186-.185h-2.118a.185.185 0 0 0-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 0 0 .186-.186V6.29a.186.186 0 0 0-.186-.185h-2.118a.185.185 0 0 0-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 0 0 .184-.186V6.29a.185.185 0 0 0-.185-.185H8.1a.185.185 0 0 0-.185.185v1.887c0 .102.083.185.185.186m-2.964 0h2.119a.186.186 0 0 0 .185-.186V6.29a.185.185 0 0 0-.185-.185H5.136a.186.186 0 0 0-.186.185v1.887c0 .102.084.185.186.186m5.893 2.715h2.118a.186.186 0 0 0 .186-.185V9.006a.186.186 0 0 0-.186-.186h-2.118a.185.185 0 0 0-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 0 0 .184-.185V9.006a.185.185 0 0 0-.184-.186h-2.12a.185.185 0 0 0-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 0 0 .185-.185V9.006a.185.185 0 0 0-.184-.186h-2.12a.186.186 0 0 0-.186.186v1.887c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 0 0 .184-.185V9.006a.185.185 0 0 0-.184-.186h-2.12a.185.185 0 0 0-.184.185v1.888c0 .102.082.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51q-.508.001-1.01.087c-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.75.75 0 0 0-.75.748 11.4 11.4 0 0 0 .692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137a15.7 15.7 0 0 0 2.93-.266 12.3 12.3 0 0 0 3.823-1.389 10.5 10.5 0 0 0 2.61-2.136c1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288Z"></path></svg>
+  
   <span class="md-ellipsis">
     
   
@@ -823,6 +829,8 @@
       <a href="../kubernetes/" class="md-nav__link">
         
   
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10.204 14.35.007.01-.999 2.413a5.17 5.17 0 0 1-2.075-2.597l2.578-.437.004.005a.44.44 0 0 1 .484.606zm-.833-2.129a.44.44 0 0 0 .173-.756l.002-.011L7.585 9.7a5.14 5.14 0 0 0-.73 3.255l2.514-.725zm1.145-1.98a.44.44 0 0 0 .699-.337l.01-.005.15-2.62a5.14 5.14 0 0 0-3.01 1.442l2.147 1.523zm.76 2.75.723.349.722-.347.18-.78-.5-.623h-.804l-.5.623.179.779zm1.5-3.095a.44.44 0 0 0 .7.336l.008.003 2.134-1.513a5.2 5.2 0 0 0-2.992-1.442l.148 2.615zm10.876 5.97-5.773 7.181a1.6 1.6 0 0 1-1.248.594l-9.261.003a1.6 1.6 0 0 1-1.247-.596l-5.776-7.18a1.58 1.58 0 0 1-.307-1.34L2.1 5.573c.108-.47.425-.864.863-1.073L11.305.513a1.6 1.6 0 0 1 1.385 0l8.345 3.985c.438.209.755.604.863 1.073l2.062 8.955c.108.47-.005.963-.308 1.34m-3.289-2.057c-.042-.01-.103-.026-.145-.034-.174-.033-.315-.025-.479-.038-.35-.037-.638-.067-.895-.148-.105-.04-.18-.165-.216-.216l-.201-.059a6.5 6.5 0 0 0-.105-2.332 6.5 6.5 0 0 0-.936-2.163c.052-.047.15-.133.177-.159.008-.09.001-.183.094-.282.197-.185.444-.338.743-.522.142-.084.273-.137.415-.242.032-.024.076-.062.11-.089.24-.191.295-.52.123-.736s-.506-.236-.745-.045c-.034.027-.08.062-.111.088-.134.116-.217.23-.33.35-.246.25-.45.458-.673.609-.097.056-.239.037-.303.033l-.19.135a6.55 6.55 0 0 0-4.146-2.003l-.012-.223c-.065-.062-.143-.115-.163-.25-.022-.268.015-.557.057-.905.023-.163.061-.298.068-.475.001-.04-.001-.099-.001-.142 0-.306-.224-.555-.5-.555-.275 0-.499.249-.499.555l.001.014c0 .041-.002.092 0 .128.006.177.044.312.067.475.042.348.078.637.056.906a.55.55 0 0 1-.162.258l-.012.211a6.42 6.42 0 0 0-4.166 2.003l-.18-.128c-.09.012-.18.04-.297-.029-.223-.15-.427-.358-.673-.608-.113-.12-.195-.234-.329-.349l-.111-.088a.6.6 0 0 0-.348-.132.48.48 0 0 0-.398.176c-.172.216-.117.546.123.737l.007.005.104.083c.142.105.272.159.414.242.299.185.546.338.743.522.076.082.09.226.1.288l.16.143a6.46 6.46 0 0 0-1.02 4.506l-.208.06c-.055.072-.133.184-.215.217-.257.081-.546.11-.895.147-.164.014-.305.006-.48.039-.037.007-.09.02-.133.03l-.004.002-.007.002c-.295.071-.484.342-.423.608.061.267.349.429.645.365l.007-.001.01-.003.129-.029c.17-.046.294-.113.448-.172.33-.118.604-.217.87-.256.112-.009.23.069.288.101l.217-.037a6.5 6.5 0 0 0 2.88 3.596l-.09.218c.033.084.069.199.044.282-.097.252-.263.517-.452.813-.091.136-.185.242-.268.399-.02.037-.045.095-.064.134-.128.275-.034.591.213.71.248.12.556-.007.69-.282v-.002c.02-.039.046-.09.062-.127.07-.162.094-.301.144-.458.132-.332.205-.68.387-.897.05-.06.13-.082.215-.105l.113-.205a6.45 6.45 0 0 0 4.609.012l.106.192c.086.028.18.042.256.155.136.232.229.507.342.84.05.156.074.295.145.457.016.037.043.09.062.129.133.276.442.402.69.282.247-.118.341-.435.213-.71-.02-.039-.045-.096-.065-.134-.083-.156-.177-.261-.268-.398-.19-.296-.346-.541-.443-.793-.04-.13.007-.21.038-.294-.018-.022-.059-.144-.083-.202a6.5 6.5 0 0 0 2.88-3.622c.064.01.176.03.213.038.075-.05.144-.114.28-.104.266.039.54.138.87.256.154.06.277.128.448.173.036.01.088.019.13.028l.009.003.007.001c.297.064.584-.098.645-.365.06-.266-.128-.537-.423-.608M16.4 9.701l-1.95 1.746v.005a.44.44 0 0 0 .173.757l.003.01 2.526.728a5.2 5.2 0 0 0-.108-1.674A5.2 5.2 0 0 0 16.4 9.7zm-4.013 5.325a.44.44 0 0 0-.404-.232.44.44 0 0 0-.372.233h-.002l-1.268 2.292a5.16 5.16 0 0 0 3.326.003l-1.27-2.296zm1.888-1.293a.44.44 0 0 0-.27.036.44.44 0 0 0-.214.572l-.003.004 1.01 2.438a5.15 5.15 0 0 0 2.081-2.615l-2.6-.44z"></path></svg>
   
   <span class="md-ellipsis">
     
@@ -861,12 +869,12 @@
           
   
   
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 6h16v10H4m16 2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4c-1.11 0-2 .89-2 2v10a2 2 0 0 0 2 2H0v2h24v-2z"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.25.18.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"></path></svg>
   
   <span class="md-ellipsis">
     
   
-    Local (no Docker)
+    Python package
   
 
     
@@ -881,12 +889,12 @@
         
   
   
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 6h16v10H4m16 2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4c-1.11 0-2 .89-2 2v10a2 2 0 0 0 2 2H0v2h24v-2z"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.25.18.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"></path></svg>
   
   <span class="md-ellipsis">
     
   
-    Local (no Docker)
+    Python package
   
 
     
@@ -948,10 +956,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-3-open-the-dashboard-of-your-own-results" class="md-nav__link">
+  <a href="#step-3-add-your-results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Open the dashboard of your own results
+        Step 3: Add your results
       
     </span>
   </a>
@@ -964,15 +972,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
+  <a href="#manage-the-server" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Commands
+        Manage the server
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Commands">
+    <nav class="md-nav" aria-label="Manage the server">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -986,19 +994,58 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#upgrade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrade
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-it-differs-from-docker" class="md-nav__link">
+  <a href="#how-it-differs-from-docker-compose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How it differs from Docker
+        How it differs from Docker Compose
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="How it differs from Docker Compose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ports
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4755,10 +4802,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-3-open-the-dashboard-of-your-own-results" class="md-nav__link">
+  <a href="#step-3-add-your-results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Open the dashboard of your own results
+        Step 3: Add your results
       
     </span>
   </a>
@@ -4771,15 +4818,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
+  <a href="#manage-the-server" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Commands
+        Manage the server
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Commands">
+    <nav class="md-nav" aria-label="Manage the server">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4793,19 +4840,58 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#upgrade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrade
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-it-differs-from-docker" class="md-nav__link">
+  <a href="#how-it-differs-from-docker-compose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How it differs from Docker
+        How it differs from Docker Compose
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="How it differs from Docker Compose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ports
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4956,95 +5042,114 @@
   
 
 
-<h1 id="local-server-no-docker-v1120">Local Server (no Docker) <small>(v1.12.0+)</small><a class="headerlink" href="#local-server-no-docker-v1120" title="Permanent link">¶</a></h1>
-<p><code>depictio local up</code> starts a complete Depictio server on your machine: the same
-API, worker and viewer as the Docker and Kubernetes deployments, with MongoDB,
-Redis and SeaweedFS (the S3 store) run as plain processes on <code>127.0.0.1</code>. It can
-ingest a pipeline template in the same command, so you go from a results
-directory to its dashboard without Docker, a cluster or a shared instance.</p>
+<h1 id="python-package-installation-v1120">Python Package Installation <small>(v1.12.0+)</small><a class="headerlink" href="#python-package-installation-v1120" title="Permanent link">¶</a></h1>
+<p>Install <code>depictio[local]</code> with <code>uv</code> or <code>pip</code>, then run every service as a local process on your machine: no containers.</p>
+<p><code>depictio local up</code> starts the same API, worker and viewer as the
+<a href="../docker/">Docker Compose</a> and <a href="../kubernetes/">Kubernetes</a> deployments, with
+MongoDB, Redis and SeaweedFS (the S3 store) run as plain processes on
+<code>127.0.0.1</code>. <code>depictio ingest</code> then adds your pipeline results, so you go from a
+results directory to its dashboard without Docker, a cluster or a shared
+instance.</p>
 <p>Use it to review a template on your own results, or to try Depictio on a laptop.
-For a team, a demo or production, use <a href="../docker/">Docker Compose</a> or
-<a href="../kubernetes/">Kubernetes</a>. A local server can later be
-<a href="#move-to-docker-compose">moved to Docker Compose</a> with its data.</p>
+For a team, a demo or production, use Docker Compose or Kubernetes: a local
+server can later be <a href="#move-to-docker-compose">moved to Docker Compose</a> with its
+data.</p>
 <p><img alt="The same server, run in containers or as local processes" src="../../images/installation/local/schema_same_code_docs.png"></p>
 <hr>
 <h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
-<p><strong>Prerequisites</strong>: <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a>,
-and until the <code>depictio</code> package is published on PyPI, <a href="https://git-scm.com/">git</a>,
-<a href="https://nodejs.org/">Node.js</a> and <a href="https://pnpm.io/installation">pnpm</a> to build
-the viewer from a clone.</p>
+<p><strong>Prerequisites</strong>: Linux, or macOS on Apple silicon (see <a href="#platforms">Platforms</a>),
+with <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a>, or pip and
+Python 3.11 to 3.14.</p>
 <h3 id="step-1-install">Step 1: Install<a class="headerlink" href="#step-1-install" title="Permanent link">¶</a></h3>
-<p><code>depictio</code> is not on PyPI yet, so for now it is installed from a clone of the
-repository, with the viewer built first:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/depictio/depictio.git
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>depictio
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pnpm<span class="w"> </span>install<span class="w"> </span>--frozen-lockfile
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="o">(</span><span class="nb">cd</span><span class="w"> </span>depictio/viewer<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pnpm<span class="w"> </span>run<span class="w"> </span>build<span class="o">)</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">".[local]"</span>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">uv</label><label for="__tabbed_1_2">pip</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span><span class="s2">"depictio[local]"</span>
 </code></pre></div>
-<p><code>uv tool install</code> puts the <code>depictio</code> command on your <code>PATH</code>, in an environment
-of its own that holds the server's Python dependencies (about 2 GB). No
-<code>--python</code> flag is needed: the dependencies install from prebuilt wheels on
-Python 3.11 to 3.14. The install is editable, so it runs the code and the viewer
-build of the clone. Without the viewer build the API starts, but dashboards do
-not render; <code>up</code> warns about it.</p>
-<div class="admonition info">
-<p class="admonition-title">Once <code>depictio</code> is published on PyPI</p>
-<p>The package carries the viewer, so one command replaces the clone and the
-build:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span><span class="s2">"depictio[local]"</span>
-</code></pre></div>
-<p>Prefer it to <code>uvx --from "depictio[local]" depictio local up</code>: <code>uvx</code> runs the
-command in a temporary environment and leaves no <code>depictio</code> command behind
-for <code>depictio local status</code> and <code>depictio local down</code>.</p>
+<p><code>uv tool install</code> puts the <code>depictio</code> command on your <code>PATH</code>, in an
+environment of its own. Prefer it to <code>uvx --from "depictio[local]" depictio local up</code>,
+which runs in a temporary environment and leaves no <code>depictio</code> command
+behind for <code>depictio local status</code> and <code>depictio local down</code>.</p>
+<p>If you installed the former <code>depictio-cli</code> package with <code>uv tool install</code>,
+add <code>--force</code>: it replaces the <code>depictio</code> and <code>depictio-cli</code> commands that
+package installed.</p>
 </div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>~/.venvs/depictio
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">source</span><span class="w"> </span>~/.venvs/depictio/bin/activate
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"depictio[local]"</span>
+</code></pre></div>
+<p>The <code>depictio</code> command is on your <code>PATH</code> while the environment is active.</p>
+</div>
+</div>
+</div>
+<p>The <code>[local]</code> extra adds the server's Python dependencies, about 1.6 GB
+installed, from prebuilt wheels on Python 3.11 to 3.14. The package carries the
+viewer, already built.</p>
+<details class="info">
+<summary>From a clone of the repository</summary>
+<p>To run the code of a clone, install it in editable mode:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/depictio/depictio.git
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>depictio
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">".[local]"</span>
+</code></pre></div>
+<p>A clone has no viewer bundle, so <code>depictio local up</code> builds it, with
+<code>pnpm install</code> then <code>pnpm run build</code>, when it is missing or older than its
+sources. That needs <a href="https://nodejs.org/">Node.js</a> 20 or later with
+<a href="https://pnpm.io/installation">pnpm</a> (<code>corepack enable pnpm</code>); the output
+goes to <code>~/.depictio/local/logs/viewer-build.log</code>. A build that fails does
+not stop the start: the server runs with the previous bundle, or without
+dashboards when there is none, and <code>up</code> says so.</p>
+</details>
 <h3 id="step-2-start-the-server">Step 2: Start the server<a class="headerlink" href="#step-2-start-the-server" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>up
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>up
 </code></pre></div>
+<p><img alt="Terminal output of a first depictio local up: it installs MongoDB, Redis and SeaweedFS from conda-forge, starts the services, then prints &quot;Depictio is ready&quot; with the dashboards URL, the data and log folders, and the next steps" src="../../images/installation/local/terminal_local_up.svg"></p>
 <p>The first run downloads MongoDB, Redis and SeaweedFS from conda-forge into
-<code>~/.depictio/local/env</code> (about 710 MB, once). The Iris and Penguins example
-projects are seeded, and the browser opens on the dashboards page,
-<code>http://127.0.0.1:8058/dashboards</code> unless that port was already taken (see
-<a href="#how-it-differs-from-docker">How it differs from Docker</a> for the ports). On a
-first run, <code>up</code> waits a few seconds for the examples to load ("Loading the
-examples") so their dashboards open with data, then ends with a summary:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Depictio is ready: http://127.0.0.1:8058/dashboards
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  Examples: iris, penguins
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  Data: /home/you/.depictio/local (logs in /home/you/.depictio/local/logs)
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>  Add data: depictio local up --template &lt;template&gt; --data-root &lt;dir&gt;
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>  CLI on this server: export DEPICTIO_CLI_CONFIG_PATH=/home/you/.depictio/local/cli/admin_config.yaml
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>  Stop: depictio local down
-</code></pre></div>
-<p>The <code>export</code> line points the <a href="../../depictio-cli/usage/">CLI</a> at this server for
-the rest of the shell session.</p>
-<p>Over SSH, or on Linux without a display, no browser is opened: <code>up</code> prints the
+<code>~/.depictio/local/env</code> (about 170 MB, once), seeds the Iris and Penguins
+example projects, and waits for them to load so that their dashboards open with
+data. It then opens the dashboards page in your browser,
+<code>http://127.0.0.1:8058/dashboards</code> unless that port was taken (see
+<a href="#ports">Ports</a>). Later runs reuse the binaries and the data, and start in
+seconds.</p>
+<p>Over SSH, or on Linux without a display, no browser opens: <code>up</code> prints the
 tunnel to run from your own machine, <code>ssh -L &lt;port&gt;:127.0.0.1:&lt;port&gt; &lt;host&gt;</code>,
 then the URL to open there.</p>
-<h3 id="step-3-open-the-dashboard-of-your-own-results">Step 3: Open the dashboard of your own results<a class="headerlink" href="#step-3-open-the-dashboard-of-your-own-results" title="Permanent link">¶</a></h3>
-<p>Pass a <a href="../../usage/projects/templates/">template</a> and the pipeline output
-directory:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>up<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/ampliseq/latest<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>--data-root<span class="w"> </span>path/to/results
+<p>The next steps above need no <code>--server</code>: when no other server is configured (no
+<code>~/.depictio/CLI.yaml</code>, and no <code>DEPICTIO_CLI_*</code> variable set), every
+<a href="../../depictio-cli/usage/">CLI</a> command reaches this server. Otherwise the
+summary adds <code>--server local</code>, which names this server whatever else is
+configured. See
+<a href="../../depictio-cli/usage/#choosing-a-server">Which server a command uses</a>.</p>
+<h3 id="step-3-add-your-results">Step 3: Add your results<a class="headerlink" href="#step-3-add-your-results" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>path/to/results
 </code></pre></div>
-<p><code>up</code> starts the services unless they are already running, then runs
-<code>depictio run</code> against them with a CLI configuration it generates, and prints
-the summary. With <code>--template</code>, no example project is seeded unless
-<code>--examples</code> asks for one. Examples are seeded on the first run of a local home
-only: a home started without them stays without them, and <code>up</code> says so when
-<code>--examples</code> names one. Template variables go through <code>--var</code>, as with
-<a href="../../depictio-cli/usage/#run-command"><code>depictio-cli run</code></a>. nf-core results do
-not contain the samplesheet: when the template cannot find it under <code>input/</code>,
-pass it explicitly.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>up<span class="w"> </span><span class="se">\</span>
+<p><a href="../../depictio-cli/usage/#ingest-command"><code>depictio ingest</code></a> detects the
+<a href="../../usage/projects/templates/">template</a> from the pipeline name and version
+the run recorded, and ends with links to the project and its dashboards. Pass
+<code>--template</code> to choose the template, and template variables with <code>--var</code>.
+nf-core results do not contain the samplesheet: when the template cannot find it
+under <code>input/</code>, pass it explicitly.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>path/to/results<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/rnaseq/latest<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--data-root<span class="w"> </span>path/to/results<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">SAMPLESHEET_FILE</span><span class="o">=</span>samplesheet.csv
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">SAMPLESHEET_FILE</span><span class="o">=</span>samplesheet.csv
 </code></pre></div>
 <p>If the ingestion fails, the command exits with an error and the server keeps
-running.</p>
+running. To ingest the same results again after a new run, add
+<code>--update-config</code>: it refreshes the project and keeps its dashboards as edited
+in the viewer (see
+<a href="../../depictio-cli/usage/#refreshing-a-project">Refreshing a project</a>).</p>
+<div class="admonition note">
+<p class="admonition-title">Coming from v1.12.0-b1</p>
+<p><code>depictio local up</code> no longer ingests data. Given <code>--template</code>,
+<code>--data-root</code>, <code>--project-name</code> or <code>--var</code>, it prints the
+<code>depictio local up</code> and <code>depictio ingest</code> commands to run instead, and
+exits with code 2.</p>
+</div>
 <hr>
-<h2 id="commands"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19V7H4v12zm0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-7 14v-2h5v2zm-3.42-4L5.57 9H8.4l3.3 3.3c.39.39.39 1.03 0 1.42L8.42 17H5.59z"></path></svg></span> Commands<a class="headerlink" href="#commands" title="Permanent link">¶</a></h2>
+<h2 id="manage-the-server"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19V7H4v12zm0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-7 14v-2h5v2zm-3.42-4L5.57 9H8.4l3.3 3.3c.39.39.39 1.03 0 1.42L8.42 17H5.59z"></path></svg></span> Manage the server<a class="headerlink" href="#manage-the-server" title="Permanent link">¶</a></h2>
+<p><code>depictio local</code> manages the server only: data goes in with
+<a href="../../depictio-cli/usage/#ingest-command"><code>depictio ingest</code></a>.</p>
 <table>
 <thead>
 <tr>
@@ -5055,26 +5160,44 @@ running.</p>
 <tbody>
 <tr>
 <td><code>depictio local up</code></td>
-<td>Start the services, seed examples or ingest a template, print a summary, open the browser</td>
+<td>Start the services, print the summary and open the browser. A first run also downloads the binaries and seeds the examples</td>
+</tr>
+<tr>
+<td><code>depictio local open</code></td>
+<td>Open the dashboards page of the running server in a browser, or print the SSH tunnel to use</td>
 </tr>
 <tr>
 <td><code>depictio local status</code></td>
-<td>Show each process with its port, whether the API answers, and the log directory</td>
+<td>Show each process with its port, and whether the API answers. Exits with code 1 unless every process runs and the API answers</td>
 </tr>
 <tr>
 <td><code>depictio local down</code></td>
-<td>Stop every process; the data and the ports are kept for the next <code>up</code>. Says so when nothing is running</td>
+<td>Stop every process. The data and the ports are kept for the next <code>up</code></td>
 </tr>
 <tr>
 <td><code>depictio local wipe</code></td>
-<td>Stop the server and delete all local data. The downloaded binaries are kept. <code>--yes</code> skips the prompt</td>
+<td>Stop the server and delete all its data. The downloaded binaries are kept. <code>--yes</code> skips the prompt</td>
 </tr>
 <tr>
-<td><code>depictio local export-compose</code></td>
-<td>Stop the server and copy its data into a directory that Docker Compose runs, see <a href="#move-to-docker-compose">Move to Docker Compose</a></td>
+<td><code>depictio local export</code></td>
+<td>Stop the server and copy its data into a directory that Docker Compose runs, see <a href="#move-to-docker-compose">Move to Docker Compose</a>. Formerly <code>export-compose</code>, which still works</td>
 </tr>
 </tbody>
 </table>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">status</label><label for="__tabbed_2_2">down</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>status
+</code></pre></div>
+<p><img alt="Terminal output of depictio local status: mongo, redis, s3, api and worker each marked running with their port, the API reachable, then the dashboards URL and the log folder" src="../../images/installation/local/terminal_local_status.svg"></p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>down
+</code></pre></div>
+<p><img alt="Terminal output of depictio local down: it stops the worker, the API, S3, Redis and MongoDB in turn, then prints &quot;Depictio local server stopped&quot;" src="../../images/installation/local/terminal_local_down.svg"></p>
+</div>
+</div>
+</div>
 <h3 id="up-options"><code>up</code> options<a class="headerlink" href="#up-options" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -5086,29 +5209,9 @@ running.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>--template</code></td>
-<td></td>
-<td>Template to ingest, e.g. <code>nf-core/rnaseq/latest</code>. Goes with <code>--data-root</code></td>
-</tr>
-<tr>
-<td><code>--data-root</code></td>
-<td></td>
-<td>Pipeline results directory to ingest</td>
-</tr>
-<tr>
-<td><code>--project-name</code></td>
-<td></td>
-<td>Name of the ingested project</td>
-</tr>
-<tr>
-<td><code>--var KEY=VALUE</code></td>
-<td></td>
-<td>Template variable, repeatable. Relative paths are resolved from the current directory</td>
-</tr>
-<tr>
 <td><code>--examples</code></td>
-<td><code>iris,penguins</code>, or <code>none</code> with <code>--template</code></td>
-<td>Example projects to seed: <code>iris</code>, <code>penguins</code>, <code>iris,penguins</code> or <code>none</code></td>
+<td><code>iris,penguins</code></td>
+<td>Example projects to seed on the first run of a local home: <code>iris</code>, <code>penguins</code>, <code>iris,penguins</code> or <code>none</code></td>
 </tr>
 <tr>
 <td><code>--port</code></td>
@@ -5127,13 +5230,27 @@ running.</p>
 </tr>
 </tbody>
 </table>
-<p>Running <code>up</code> while the server is already up only ingests the new template.
-<code>--port</code>, <code>--examples</code> and <code>--screenshots</code> apply when the server starts: a
-warning names those it ignores, and running <code>depictio local down</code> first makes
-them apply. Ctrl-C during startup stops what that run started, and the command
-exits with code 130.</p>
+<ul>
+<li>Examples are seeded on the first run of a local home only: <code>up</code> warns when
+  <code>--examples</code> names one the home was created without.</li>
+<li><code>up</code> on a server that is already running reuses it and prints the summary
+  again. <code>--port</code> and <code>--screenshots</code> then apply only after
+  <code>depictio local down</code>, and a warning says so.</li>
+<li>A second <code>up</code> on the same home while one is starting fails at once.</li>
+<li>Ctrl-C during startup stops what that run started, and exits with code 130.
+  SIGTERM and SIGHUP, as when the terminal is closed, do the same, with code 128
+  plus the signal number.</li>
+</ul>
+<h3 id="upgrade">Upgrade<a class="headerlink" href="#upgrade" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>down
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>uv<span class="w"> </span>tool<span class="w"> </span>upgrade<span class="w"> </span>depictio<span class="w">            </span><span class="c1"># with pip: pip install --upgrade "depictio[local]"</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>up
+</code></pre></div>
+<p>Stop the server first, so that it starts again on the new version. The data
+under <code>~/.depictio/local</code> is kept. <code>up</code> downloads the binaries again only when
+the new version pins other MongoDB, Redis or SeaweedFS series.</p>
 <hr>
-<h2 id="how-it-differs-from-docker"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2m-2 12c-.25 0-.46-.18-.5-.42l-.37-2.65c-.63-.25-1.17-.59-1.69-.99l-2.49 1.01c-.22.08-.49 0-.61-.22l-2-3.46a.493.493 0 0 1 .12-.64l2.11-1.66L4.5 12l.07-1-2.11-1.63a.493.493 0 0 1-.12-.64l2-3.46c.12-.22.39-.31.61-.22l2.49 1c.52-.39 1.06-.73 1.69-.98l.37-2.65c.04-.24.25-.42.5-.42h4c.25 0 .46.18.5.42l.37 2.65c.63.25 1.17.59 1.69.98l2.49-1c.22-.09.49 0 .61.22l2 3.46c.13.22.07.49-.12.64L19.43 11l.07 1-.07 1 2.11 1.63c.19.15.25.42.12.64l-2 3.46c-.12.22-.39.31-.61.22l-2.49-1c-.52.39-1.06.73-1.69.98l-.37 2.65c-.04.24-.25.42-.5.42zm1.25-18-.37 2.61c-1.2.25-2.26.89-3.03 1.78L5.44 7.35l-.75 1.3L6.8 10.2a5.55 5.55 0 0 0 0 3.6l-2.12 1.56.75 1.3 2.43-1.04c.77.88 1.82 1.52 3.01 1.76l.37 2.62h1.52l.37-2.61c1.19-.25 2.24-.89 3.01-1.77l2.43 1.04.75-1.3-2.12-1.55c.4-1.17.4-2.44 0-3.61l2.11-1.55-.75-1.3-2.41 1.04a5.42 5.42 0 0 0-3.03-1.77L12.75 4z"></path></svg></span> How it differs from Docker<a class="headerlink" href="#how-it-differs-from-docker" title="Permanent link">¶</a></h2>
+<h2 id="how-it-differs-from-docker-compose"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2m-2 12c-.25 0-.46-.18-.5-.42l-.37-2.65c-.63-.25-1.17-.59-1.69-.99l-2.49 1.01c-.22.08-.49 0-.61-.22l-2-3.46a.493.493 0 0 1 .12-.64l2.11-1.66L4.5 12l.07-1-2.11-1.63a.493.493 0 0 1-.12-.64l2-3.46c.12-.22.39-.31.61-.22l2.49 1c.52-.39 1.06-.73 1.69-.98l.37-2.65c.04-.24.25-.42.5-.42h4c.25 0 .46.18.5.42l.37 2.65c.63.25 1.17.59 1.69.98l2.49-1c.22-.09.49 0 .61.22l2 3.46c.13.22.07.49-.12.64L19.43 11l.07 1-.07 1 2.11 1.63c.19.15.25.42.12.64l-2 3.46c-.12.22-.39.31-.61.22l-2.49-1c-.52.39-1.06.73-1.69.98l-.37 2.65c-.04.24-.25.42-.5.42zm1.25-18-.37 2.61c-1.2.25-2.26.89-3.03 1.78L5.44 7.35l-.75 1.3L6.8 10.2a5.55 5.55 0 0 0 0 3.6l-2.12 1.56.75 1.3 2.43-1.04c.77.88 1.82 1.52 3.01 1.76l.37 2.62h1.52l.37-2.61c1.19-.25 2.24-.89 3.01-1.77l2.43 1.04.75-1.3-2.12-1.55c.4-1.17.4-2.44 0-3.61l2.11-1.55-.75-1.3-2.41 1.04a5.42 5.42 0 0 0-3.03-1.77L12.75 4z"></path></svg></span> How it differs from Docker Compose<a class="headerlink" href="#how-it-differs-from-docker-compose" title="Permanent link">¶</a></h2>
 <p>Only configuration differs, and only through the usual <code>DEPICTIO_*</code> variables:
 every service is pointed at <code>127.0.0.1</code>.</p>
 <table>
@@ -5141,29 +5258,29 @@ every service is pointed at <code>127.0.0.1</code>.</p>
 <tr>
 <th></th>
 <th>Docker Compose</th>
-<th>Local server</th>
+<th>Python package</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>MongoDB, Redis, S3</td>
 <td>containers</td>
-<td><code>mongod</code> 8.0.x, <code>redis-server</code> 8.x and <code>weed mini</code> 4.x from conda-forge, fetched by <a href="https://github.com/conda/rattler">py-rattler</a></td>
+<td><code>mongod</code> 8.0.x, <code>redis-server</code> 8.x and <code>weed mini</code> (SeaweedFS) 4.x from conda-forge, fetched by <a href="https://github.com/conda/rattler">py-rattler</a></td>
 </tr>
 <tr>
 <td>API</td>
-<td>4 workers</td>
+<td>4 gunicorn workers</td>
 <td>1 uvicorn worker</td>
 </tr>
 <tr>
 <td>Celery worker</td>
-<td>container</td>
+<td>4 processes</td>
 <td>2 slots: <code>prefork</code> on Linux, <code>threads</code> on macOS</td>
 </tr>
 <tr>
 <td>Viewer</td>
-<td>its own container</td>
-<td>served by the API, on the same port</td>
+<td>its own container, on <code>http://localhost:5080</code></td>
+<td>served by the API, on its port: <code>http://127.0.0.1:8058/dashboards</code></td>
 </tr>
 <tr>
 <td>Authentication</td>
@@ -5177,18 +5294,23 @@ every service is pointed at <code>127.0.0.1</code>.</p>
 </tr>
 </tbody>
 </table>
-<p>The conda-forge packages are pinned to the major series of the Compose images
-(the 8.0 series for MongoDB), so their minor versions can be newer than the
-images'. <a href="#move-to-docker-compose"><code>export-compose</code></a> runs the exact MongoDB and
+<p>The conda-forge packages follow the major series of the Compose images (the 8.0
+series for MongoDB), so their minor versions can be newer than the images'.
+<a href="#move-to-docker-compose"><code>depictio local export</code></a> runs the exact MongoDB and
 SeaweedFS versions of the local server, so the data never moves to an older one.</p>
+<h3 id="ports">Ports<a class="headerlink" href="#ports" title="Permanent link">¶</a></h3>
 <p>The first <code>up</code> picks its ports on <code>127.0.0.1</code>: the defaults (API <code>8058</code>, MongoDB
-<code>27018</code>, Redis <code>6379</code>, S3 <code>9000</code>) when they are free, any free port otherwise, so
-a local server runs next to the Docker development stack. The ports are saved
-and reused by later runs, so the dashboards URL stays the same. A saved port
-that another program has taken since moves to a free one, with a warning; a
-<code>--port</code> that is busy fails instead. The CLI configuration follows the ports in
-use.</p>
-<p>Everything lives under <code>~/.depictio/local</code>, or <code>DEPICTIO_LOCAL_HOME</code> if set:</p>
+<code>27018</code>, Redis <code>6379</code>, S3 <code>9000</code>) when they are free, any free port otherwise,
+so a local server runs next to a Docker stack or another local server. The
+ports are saved in <code>ports.json</code> and reused, so the dashboards URL stays the
+same. A saved port that another program has taken since moves to a free one,
+with a warning for the API port; a <code>--port</code> that is busy fails instead. The CLI
+configuration follows the ports in use. SeaweedFS also opens internal ports
+(master <code>9333</code>, volume <code>9340</code>, filer <code>8888</code>, admin <code>23646</code>, and their gRPC
+ports), picked the same way at each start.</p>
+<h3 id="files">Files<a class="headerlink" href="#files" title="Permanent link">¶</a></h3>
+<p>Everything lives under <code>~/.depictio/local</code>, or the folder <code>DEPICTIO_LOCAL_HOME</code>
+names:</p>
 <table>
 <thead>
 <tr>
@@ -5207,7 +5329,7 @@ use.</p>
 </tr>
 <tr>
 <td><code>logs/</code></td>
-<td>One log per service: <code>api.log</code>, <code>worker.log</code>, <code>mongo.log</code>, <code>redis.log</code>, <code>s3.log</code></td>
+<td>One log per process: <code>api.log</code>, <code>worker.log</code>, <code>mongo.log</code>, <code>redis.log</code>, <code>s3.log</code>, and <code>viewer-build.log</code> for a viewer built from a clone</td>
 </tr>
 <tr>
 <td><code>keys/</code></td>
@@ -5215,7 +5337,15 @@ use.</p>
 </tr>
 <tr>
 <td><code>cli/</code></td>
-<td>CLI configuration for this instance, with its admin token, to run <code>depictio-cli</code> against it</td>
+<td>The CLI configuration that <code>--server local</code> reads, with its admin token. <code>up</code> writes it again if it was deleted, with a new token, and revokes those of earlier rewrites</td>
+</tr>
+<tr>
+<td><code>backups/</code></td>
+<td>Backups that <a href="../../usage/administration/backup/"><code>depictio backup create</code></a> makes on this server</td>
+</tr>
+<tr>
+<td><code>cache/</code>, <code>multiqc_prerender/</code>, <code>screenshots/</code></td>
+<td>Caches, and dashboard thumbnails</td>
 </tr>
 <tr>
 <td><code>secrets.json</code></td>
@@ -5225,10 +5355,18 @@ use.</p>
 <td><code>ports.json</code></td>
 <td>Ports kept for the next <code>up</code></td>
 </tr>
+<tr>
+<td><code>state.json</code></td>
+<td>Process IDs of the running server, deleted by <code>down</code></td>
+</tr>
+<tr>
+<td><code>.depictio-local-home</code></td>
+<td>Marks the folder as a local home: <code>wipe</code> deletes nothing in a folder without it, and <code>up</code> refuses a folder that holds other files</td>
+</tr>
 </tbody>
 </table>
-<p>The local home, <code>keys/</code> and <code>cli/</code> are owner-only (<code>0700</code>), and <code>secrets.json</code> is
-created owner-only (<code>0600</code>).</p>
+<p>The local home, <code>keys/</code> and <code>cli/</code> are owner-only (<code>0700</code>); <code>secrets.json</code> and
+the CLI configuration file are owner-only too (<code>0600</code>).</p>
 <div class="admonition warning">
 <p class="admonition-title">Shared machines</p>
 <p>The local server runs in single-user mode: no login, and whoever reaches its
@@ -5243,19 +5381,18 @@ On such a machine, load only data that every user of it may see, or use
 <p>A local server can be handed over to <a href="../docker/">Docker Compose</a> with its
 projects, dashboards and table data, for instance once a review turns into a
 shared instance.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>export-compose<span class="w"> </span>--out<span class="w"> </span>depictio-docker
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">cd</span><span class="w"> </span>depictio-docker<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span><span class="nb">export</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">cd</span><span class="w"> </span>depictio-docker<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
-<p><code>export-compose</code> stops the local server if it is running, so the copy is
+<p><img alt="Terminal output of depictio local export: it downloads the docker-compose.yaml of v1.12.0, stops the local server, copies the mongo and s3 data, then prints the command that starts the Docker stack and the URL to open, http://localhost:5080" src="../../images/installation/local/terminal_local_export.svg"></p>
+<p><code>export</code> stops the local server if it is running, so that the copy is
 consistent, then copies the MongoDB and SeaweedFS data and the token signing
-keys into the directory (<code>depictio-docker</code> by default). The two never share
-files: <code>depictio local up</code> restarts the local server on its own data. The
-command ends by printing the one to run next, <code>cd &lt;dir&gt; &amp;&amp; docker compose up -d</code>,
-and the dashboards URL, <code>http://localhost:5080</code>.</p>
-<p>The directory must be new or empty, and is made owner-only (<code>0700</code>), since it
-holds the token-signing key. Everything that can refuse the export (no local
-data, a non-empty directory, no compose file to use) is checked before the
-server is stopped. The directory holds:</p>
+keys into the directory, <code>depictio-docker</code> by default (<code>--out</code>). Everything
+that can refuse the export (no local data, a directory that is not empty, no
+compose file to use) is checked before the server is stopped. The two never
+share files: <code>depictio local up</code> restarts the local server on its own data.</p>
+<p>The directory is made owner-only (<code>0700</code>), since it holds the token signing
+key. It holds:</p>
 <table>
 <thead>
 <tr>
@@ -5285,9 +5422,8 @@ server is stopped. The directory holds:</p>
 <p>Redis is not carried over, since it holds only cache and queues, and thumbnails
 are rendered again. The token in <code>~/.depictio/local/cli</code> stays valid against the
 Docker stack, since it was signed with the copied keys. The raw pipeline files
-are not copied, only the tables built from them: to ingest again, use the Docker
-setup's own CLI configuration, with the pipeline directories reachable from the
-containers.</p>
+are not copied, only the tables built from them: to ingest again, point
+<code>depictio ingest --server &lt;file&gt;</code> at the CLI configuration of the Docker stack.</p>
 <hr>
 <h2 id="platforms"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16H3V4h18m0-2H3c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h7v2H8v2h8v-2h-2v-2h7a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2"></path></svg></span> Platforms<a class="headerlink" href="#platforms" title="Permanent link">¶</a></h2>
 <table>
@@ -5321,8 +5457,7 @@ containers.</p>
 </tbody>
 </table>
 <p>Python 3.11 to 3.14 is supported: the dependencies install from prebuilt wheels
-on each. CI runs the stack on Python 3.12, and it has also been run on 3.13 and
-3.14.</p>
+on each. CI runs the stack on Python 3.12.</p>
 <p>On macOS the Celery worker runs in threads: a forked worker process that opens a
 Delta table crashes there, because the libraries it loads are not safe to use
 after <code>fork()</code>. Celery time limits and <code>max-tasks-per-child</code> do not apply to a
@@ -5336,49 +5471,49 @@ stops on an illegal instruction.</p>
 <p><code>up</code> stops the services it started and names the log to read, under
 <code>~/.depictio/local/logs</code>.</p>
 <h4 id="a-port-is-already-in-use">A port is already in use<a class="headerlink" href="#a-port-is-already-in-use" title="Permanent link">¶</a></h4>
-<p>The API, MongoDB, Redis and S3 ports move to free ones by themselves (see
-<a href="#how-it-differs-from-docker">How it differs from Docker</a>); only an explicit
-<code>--port</code> that is busy stops <code>up</code>. SeaweedFS (<code>weed mini</code>) also opens internal
-ports (master, volume, filer, admin and their gRPC ports): <code>up</code> picks them the
-same way, at their defaults (9333, 9340, 8888, 23646, and the same + 10000 for
-gRPC) when they are free, so two local servers, or a local server and the Docker
-development stack, run side by side.</p>
+<p>Every port moves to a free one by itself (see <a href="#ports">Ports</a>): only an explicit
+<code>--port</code> that is busy stops <code>up</code>. So two local servers, each with its own
+<code>DEPICTIO_LOCAL_HOME</code>, or a local server and a Docker stack, run side by side.</p>
 <h4 id="on-an-hpc-login-node-or-behind-a-proxy">On an HPC login node or behind a proxy<a class="headerlink" href="#on-an-hpc-login-node-or-behind-a-proxy" title="Permanent link">¶</a></h4>
 <p>An HTTP proxy set in the environment does not break startup: the readiness
-checks on <code>127.0.0.1</code> bypass <code>http_proxy</code> and the other proxy variables,
-SeaweedFS runs without them, and the API, the worker and the ingestion get
-<code>127.0.0.1</code> and <code>localhost</code> added to <code>no_proxy</code>. The downloads do go through the proxy: MongoDB,
-Redis and SeaweedFS from conda-forge on the first run, and the compose file of
-<code>export-compose</code>. When one fails, a one-line error says so: check the network or
-the proxy settings, then run the command again. Over SSH, open the server
-through the <code>ssh -L</code> tunnel that <code>up</code> prints. The other users of a login node
-can reach the server too: see the shared machines warning under
-<a href="#how-it-differs-from-docker">How it differs from Docker</a>.</p>
+checks on <code>127.0.0.1</code> bypass it, SeaweedFS runs without the proxy variables, and
+the API, the worker and any CLI command that reaches the local server get
+<code>127.0.0.1</code> and <code>localhost</code> added to <code>no_proxy</code>. The downloads do need the
+network: MongoDB, Redis and SeaweedFS from conda-forge on the first run, and the
+compose file of <code>depictio local export</code>. When one fails, a one-line error says
+so: check the network or the proxy settings, then run the command again. Over
+SSH, open the server through the <code>ssh -L</code> tunnel that <code>up</code> prints, and mind the
+<a href="#files">shared machines</a> warning.</p>
 <h4 id="depictio_-settings-are-ignored"><code>DEPICTIO_*</code> settings are ignored<a class="headerlink" href="#depictio_-settings-are-ignored" title="Permanent link">¶</a></h4>
 <p><code>up</code> does not pass the <code>DEPICTIO_*</code> variables of your shell to the server, since
 they usually target another instance (<code>DEPICTIO_LOCAL_HOME</code> is read by
 <code>depictio local</code> itself). The exception is <code>DEPICTIO_TELEMETRY_*</code>:
 <code>DEPICTIO_TELEMETRY_ENABLED=false</code> (or <code>DO_NOT_TRACK=1</code>) turns
-<a href="../../features/telemetry/">telemetry</a> off for the local server too. Likewise,
-<code>DEPICTIO_CLI_*</code> overrides, such as a token for another server, do not reach the
-ingestion.</p>
+<a href="../../features/telemetry/">telemetry</a> off for the local server too. The <code>AWS_*</code>
+variables are not passed on either, so the services never reach another S3
+store. Likewise, <code>DEPICTIO_CLI_TOKEN</code> and <code>DEPICTIO_CLI_API_BASE_URL</code>, which
+usually hold the credentials of another server, never apply to
+<code>--server local</code>.</p>
 <h4 id="the-example-dashboards-show-no-data">The example dashboards show no data<a class="headerlink" href="#the-example-dashboards-show-no-data" title="Permanent link">¶</a></h4>
 <p>The examples load in the background on the first run. If the server was stopped
 before they finished, they stay incomplete, and <code>up</code> then warns that they did
 not finish loading. <code>depictio local wipe</code>, then <code>depictio local up</code>, loads them
 again.</p>
 <h4 id="dashboards-stay-blank">Dashboards stay blank<a class="headerlink" href="#dashboards-stay-blank" title="Permanent link">¶</a></h4>
-<p>The viewer was not built before <code>up</code>, which only concerns an install from a
-clone. Build it (step 1), then run <code>depictio local down</code> and <code>depictio local up</code>
-again.</p>
+<p>The viewer bundle is missing, which only concerns an install from a clone,
+where <code>up</code> builds it. <code>up</code> warns when the build fails: read
+<code>~/.depictio/local/logs/viewer-build.log</code>, fix the cause (often pnpm or Node.js
+missing), then run <code>depictio local down</code> and <code>depictio local up</code> again, which
+builds it. A server that was already running when the sources changed only
+gets a warning: <code>depictio local down</code>, then <code>depictio local up</code>, rebuilds it.</p>
 <h4 id="start-from-scratch">Start from scratch<a class="headerlink" href="#start-from-scratch" title="Permanent link">¶</a></h4>
 <p><code>depictio local wipe --yes</code> deletes every project, dashboard and file of the
 local server, with its passwords, keys and saved ports. The downloaded binaries
-are kept. The next <code>up</code> seeds it again.</p>
+are kept. The next <code>up</code> seeds the examples again.</p>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="../../usage/projects/templates/">Pipeline templates</a></li>
-<li><a href="../../depictio-cli/usage/">CLI usage</a>, after the <code>export DEPICTIO_CLI_CONFIG_PATH=...</code> line that <code>up</code> prints</li>
+<li><a href="../../depictio-cli/usage/">CLI usage</a>, with <code>--server local</code>, or by default when no other server is configured</li>
 <li><a href="../docker/">Docker Compose</a>, to share an instance with a team</li>
 </ul>
 
@@ -5541,6 +5676,8 @@ are kept. The next <code>up</code> seeds it again.</p>
         <script src="../../javascripts/doc-sections.js"></script>
       
         <script src="../../javascripts/template-catalog.js"></script>
+      
+        <script src="../../javascripts/asciinema.js"></script>
       
     
   
