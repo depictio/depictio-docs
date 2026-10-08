@@ -140,7 +140,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 
 ### :material-chef-hat: Recipes
 
-Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `EXPECTED_SCHEMA` columns.
+Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `OUTPUT_SCHEMA` columns.
 
 | Recipe | Transforms | Output |
 |---|---|---|
