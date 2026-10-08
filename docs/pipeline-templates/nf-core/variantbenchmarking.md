@@ -22,12 +22,11 @@ hide:
 
 The variantbenchmarking template turns a benchmarking run into a precision/recall funnel:
 
-- :material-target: **Accuracy per callset**: precision, recall and F1 from rtg-tools vcfeval, hap.py and som.py
-- :material-chart-scatter-plot: **Precision vs recall**: every caller on one plot, with equal-F1 contours
-- :material-grid: **Error profile**: TP / FP / FN confusion matrix, plus ranked false-positive and false-negative bars
-- :material-chart-bell-curve: **Confidence intervals**: binomial 95 % CI forest plots on the somatic metrics
-- :material-chart-line: **Threshold sweeps**: hap.py quality-score ROC and PR curves with per-curve AUC
-- :material-poll: **MultiQC**: the benchmark report for the run, per variant type
+- :material-compass-outline: **Overview**: four key figures, live findings and four figures for the route the run took, each linked to its tab
+- :material-dna: **Germline**: rtg-tools vcfeval and hap.py, on the precision-recall plane, by variant type and over the quality-threshold sweep
+- :material-target: **Somatic**: som.py with binomial 95% intervals and allele-fraction strata, cross-checked by rtg-tools vcfeval
+- :material-chart-scatter-plot: **Structural & CNV**: Truvari, SVanalyzer and Wittyer, per event and per base
+- :material-poll: **MultiQC**: the run's own report, in the per-variant-type templates
 
 ---
 
@@ -35,8 +34,8 @@ The variantbenchmarking template turns a benchmarking run into a precision/recal
 
 nf-core/variantbenchmarking benchmarks one variant type per run: its own documentation
 states that "only one type of variant analysis is possible for each run". Depictio
-therefore ships **one template per variant type**, plus an umbrella template for a data
-root that already holds several.
+therefore ships **one template per variant type**, plus an umbrella template that reads
+any of them, one route or several under one root.
 
 There is no variable and no selector for this choice. It is made entirely by the id you
 pass to `--template`. Pick the row matching the run you want to explore.
@@ -46,11 +45,11 @@ pass to `--template`. Pick the row matching the run you want to explore.
 | `nf-core/variantbenchmarking/1.4.0/categories/small` | `--analysis germline --variant_type small` | hap.py, rtg-tools vcfeval | `small/` and `multiqc/multiqc_data/multiqc.parquet` |
 | `nf-core/variantbenchmarking/1.4.0/categories/indel` | `--analysis somatic --variant_type indel` | som.py, rtg-tools vcfeval | `indel/` and `multiqc/multiqc_data/multiqc.parquet` |
 | `nf-core/variantbenchmarking/1.4.0/categories/structural` | `--variant_type structural` | truvari, SURVIVOR, through MultiQC only | `multiqc/multiqc_data/multiqc.parquet` |
-| `nf-core/variantbenchmarking/1.4.0` | several runs, collected under one root | all of the above | `small/` **and** `indel/`; `sv/` and `cnv/` optional |
+| `nf-core/variantbenchmarking/1.4.0` | any of the above, or several runs collected under one root | rtg-tools vcfeval, hap.py, som.py, Truvari, SVanalyzer, Wittyer | any of `small/`, `indel/`, `sv/`, `cnv/`; all optional |
 
 Each category is a self-contained project with its own dashboard, so three pipeline runs
-give you three projects. The umbrella template covers the case where one data root
-already holds both `small/` and `indel/`, which is how nf-core's own megatest is laid
+give you three projects. The umbrella template shows the tab of each route it finds, so
+it also reads a data root holding several, which is how nf-core's own megatest is laid
 out.
 
 !!! warning "Category ids must pin the version"
@@ -115,8 +114,8 @@ have to pass. None of the four templates needs a `--var` flag.
       --template nf-core/variantbenchmarking/1.4.0
     ```
 
-    One four-tab project over a data root holding both `small/` and `indel/`. Reads no
-    MultiQC report.
+    An Overview, then a tab for each variant type the data root holds: Germline,
+    Somatic, Structural & CNV. Reads no MultiQC report.
 
 ---
 
@@ -176,127 +175,185 @@ template uses the short unprefixed tag.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Every dashboard follows the same funnel: a *Benchmark at a glance* card row, then
-precision vs recall, then the error profile, then the stratifications, with the raw
-tables collapsed at the bottom. Filters sit in a left-hand panel and compose forward.
+The umbrella template, `nf-core/variantbenchmarking/1.4.0`, builds one dashboard: the
+**Overview**, then one child tab per variant type, in two groups. A run benchmarks one
+variant type, so it shows the Overview and the tab of its route; a data root holding
+several routes shows the tab of each. Each tab below carries the **same icon and colour
+the dashboard gives it**.
 
-=== ":material-bullseye-arrow:{ .mc-indigo } Germline · Benchmark"
+| Group | Tabs |
+|---|---|
+| Small variants | Germline, Somatic |
+| Structural | Structural & CNV |
 
-    hap.py and rtg-tools accuracy for germline SNPs and INDELs.
+The pipeline writes no MultiQC report into the tables this template reads, and it has no
+sample sheet: there is no MultiQC tab, no *Data & QC* group, no persistent sample filters
+and no *Sample sheet* section. Each child tab opens with a short intro and a strip of four
+cards, then at most three open sections; tables and the cross-check follow, collapsed.
+Each caller keeps one colour on every tab, and the precision-recall scatters draw no point
+labels.
 
-    [![Germline benchmark dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_benchmark_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_benchmark_light.png){ .tpl-shot target="_blank" rel="noopener" }
+=== ":material-compass-outline: Overview"
 
-    **Filters:** Callsets, Score ranges, hap.py scope.
+    *Which callset recovers its truth set best, on precision, recall and F1.*
 
-    **Components:**
+    <!-- screenshot pending v2 -->
 
-    - 4 metric cards: *callsets* (donut, broken down by caller), *F1* (median, with
-      box-plot spread), *precision* (average, gauge), *recall* (median, against a 0.9
-      threshold)
-    - Precision vs recall scatter with equal-F1 contours
-    - Confusion matrix: TP / FP / FN per callset
-    - Ranked false-positive and false-negative bars
-    - hap.py stratification: F1 by variant type and filter, plus the quality-score PR
-      sweep with AUC
-    - Reference tables, collapsed and pinned to the bottom
+    A short hero links the run parameters. *The run* lists the analysis and variant type,
+    the truth set, the benchmarking methods, the genome and the callsets, and *Pipeline*
+    shows the steps of the route the run took: the steps of the other routes are dropped
+    at import. *Key figures*, the findings and the four figures below them come from that
+    route as well.
 
-=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } Germline · MultiQC"
+    ??? abstract ":material-tune-variant: Filters and components"
 
-    The run's own benchmark report.
+        **Filters** · the left panel starts collapsed. *Key figures* and *Findings* each
+        have a filter bar (caller and callset) that narrows its own section only.
 
-    [![Germline MultiQC dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+        | Section | What it holds |
+        |---|---|
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards for the run's route: true positives, F1, recall, precision |
+        | Findings | Three live result rows for the route, then 4 figures from its tab |
+        | How to read this dashboard | The tabs by group, each with its question |
 
-    **Filters:** Report samples.
+=== ":material-dna:{ .mc-indigo } Germline"
 
-    **Components:**
+    **Small variants** · *How well does each germline callset recover the truth set?*
 
-    - General statistics table
-    - hap.py panels: SNP, INDEL
-    - Variant statistics, collapsed: bcftools substitution types and indel-length
-      distribution
+    [![Germline dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_benchmark_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_benchmark_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-=== ":material-bullseye-arrow:{ .mc-pink } Somatic · Benchmark"
+    <!-- screenshot pending v2: this capture shows the categories/small Benchmark tab -->
 
-    som.py accuracy per caller, with allele-fraction strata and confidence intervals.
+    F1 with its spread, recall against a 0.9 floor, the callers with most false
+    positives and the true positives by caller, all from rtg-tools vcfeval. Then the
+    precision-recall scatter beside the errors per callset, and hap.py's F1 by variant
+    type (all calls against PASS calls) beside the quality-threshold sweep.
 
-    [![Somatic benchmark dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_benchmark_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_benchmark_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    ??? abstract ":material-tune-variant: Filters and components"
 
-    **Filters:** Callers, Score ranges, Allele fraction.
+        **Filters** · `Caller` and `Callset` on `germline_vcfeval_summary`, `hap.py
+        variant type` and `hap.py calls` (ALL or PASS) on `germline_happy_summary`.
 
-    **Components:**
+        | Section | What it holds |
+        |---|---|
+        | Germline at a glance | 4 cards |
+        | Precision and recall | 2 advanced visualizations |
+        | hap.py by variant type | 1 bar + 1 advanced visualization |
+        | Germline tables (collapsed) | *rtg-tools vcfeval summary*, *hap.py pooled summary*, *hap.py threshold sweep* |
 
-    - 4 metric cards: *callers* (donut), *F1* (median, box-plot spread), *recall*
-      (average, gauge), *precision* (median, warning under 0.5)
-    - Precision vs recall scatter with equal-F1 contours
-    - Confusion matrix, plus false positives on a log axis and false negatives
-    - Allele-fraction strata: F1 and recall per AF bin, per caller
-    - Confidence intervals: binomial 95 % CI forest plots for precision and recall
-    - rtg-tools cross-check and reference tables, both collapsed
+=== ":material-target:{ .mc-pink } Somatic"
 
-    Selecting a caller filters the AF strata and the rtg-tools cross-check, through
-    cross-DC links on the `caller` column.
+    **Small variants** · *How well does each somatic caller recover the truth set?*
 
-=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } Somatic · MultiQC"
+    [![Somatic dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_benchmark_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_benchmark_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The run's own benchmark report.
+    <!-- screenshot pending v2: this capture shows the categories/indel Benchmark tab -->
 
-    [![Somatic MultiQC dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    F1 with its spread, precision against a 0.5 floor, the callers with most false
+    positives and the true positives by caller, all from som.py. Then the
+    precision-recall scatter beside the errors per caller, precision and recall with
+    their binomial 95% intervals, and F1 and recall per allele-fraction bin. The
+    collapsed rtg-tools cross-check scores the same callers on haplotypes.
 
-    **Filters:** Report samples.
+    ??? abstract ":material-tune-variant: Filters and components"
 
-    **Components:**
+        **Filters** · `Caller` on `somatic_sompy_summary` and `Allele-fraction bin` on
+        `somatic_sompy_regions`. The caller reaches the strata and the cross-check
+        through cross-DC links on the `caller` column.
 
-    - General statistics table
-    - som.py panels: Combined, Indel, SNV
-    - Variant statistics, collapsed: bcftools substitution types and variant depths
+        | Section | What it holds |
+        |---|---|
+        | Somatic at a glance | 4 cards |
+        | Precision and recall | 2 advanced visualizations |
+        | Confidence intervals | 2 advanced visualizations |
+        | Allele-fraction strata | 2 bars |
+        | rtg-tools cross-check (collapsed) | 1 advanced visualization + *rtg-tools vcfeval summary* |
+        | Somatic tables (collapsed) | *som.py summary*, *som.py allele-fraction strata* |
 
-=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } Structural · MultiQC"
+=== ":material-chart-scatter-plot:{ .mc-orange } Structural & CNV"
 
-    Truvari and SURVIVOR results, read from the MultiQC report.
+    **Structural** · *How well do the structural callsets match the truth set?*
 
-    [![Structural MultiQC dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/structural_multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/structural_multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    <!-- screenshot pending v2 -->
 
-    **Filters:** Report samples.
+    The true positives by caller, F1 with its spread, recall against a 0.8 floor and the
+    spread of precision, all from Truvari. Then the Truvari precision-recall scatter
+    beside its errors per callset, and the SVanalyzer F1 per callset beside the Wittyer
+    F1 per event and per base. A callset that finds events but misplaces their
+    breakpoints scores well per event and poorly per base. A copy-number run keeps only
+    the Wittyer tiles.
 
-    **Components:**
+    ??? abstract ":material-tune-variant: Filters and components"
 
-    - Benchmark at a glance: general statistics, carrying Truvari precision, recall, F1
-      and genotype concordance
-    - Truvari benchmark: precision vs recall, and classifications
-    - SV callset, collapsed: SURVIVOR and the variant-calling summary
+        **Filters** · `Callset` and `Caller` on `sv_truvari_summary`, `Wittyer level` on
+        `cnv_wittyer_summary`. The callset reaches SVanalyzer and Wittyer through the
+        links.
 
-    !!! note "No benchmark tables for structural variants"
-        The public nf-core megatest publishes no summary CSV for the structural
-        category, so this project reads the MultiQC report only. Metric cards and native
-        benchmark panels would need a general-statistics recipe for Truvari, which the
-        template does not ship yet.
+        | Section | What it holds |
+        |---|---|
+        | Structural at a glance | 4 cards |
+        | Precision and recall | 2 advanced visualizations |
+        | SVanalyzer and Wittyer | 2 bars |
+        | Structural tables (collapsed) | *Truvari summary*, *SVanalyzer svbenchmark summary*, *Wittyer summary* |
+
+### Per-variant-type templates
+
+The three `categories/` templates keep their own layout, one project per variant type:
+a *Benchmark* tab over the benchmark tables, and the run's MultiQC report. The structural
+category reads the MultiQC report only, since the public nf-core megatest publishes no
+structural summary table.
+
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } categories/small"
+
+    [![Germline category MultiQC tab](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    The MultiQC tab: general statistics, the hap.py SNP and INDEL panels, and the
+    bcftools substitution types and indel lengths, collapsed.
+
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } categories/indel"
+
+    [![Somatic category MultiQC tab](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    The MultiQC tab: general statistics, the som.py Combined, Indel and SNV panels, and
+    the bcftools substitution types and variant depths, collapsed.
+
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } categories/structural"
+
+    [![Structural category MultiQC tab](../../images/pipeline-templates/nf-core/variantbenchmarking/structural_multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/structural_multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    The only tab: general statistics with the Truvari precision, recall, F1 and genotype
+    concordance, the Truvari precision-recall view and classifications, and the SURVIVOR
+    summary, collapsed.
 
 ---
 
 ## :material-chart-timeline-variant: Benchmarking visualizations
 
-The template introduced four visualization kinds built for benchmarking. Each is bound
-through a catalog module, so any project reading a comparable table can reuse them.
+The template introduced four visualization kinds built for benchmarking, used across
+the Germline, Somatic and Structural & CNV tabs. Each is bound through a catalog module,
+so any project reading a comparable table can reuse them.
 
 === ":material-chart-scatter-plot:{ .mc-indigo } PR benchmark"
 
     [![PR benchmark](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_pr_benchmark_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_pr_benchmark_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    One point per caller at (recall, precision), over dotted equal-F1 contours and the
-    recall = precision diagonal, so a caller's balance is readable at a glance.
+    One point per callset at (recall, precision), coloured by its caller, over dotted
+    equal-F1 contours and the recall = precision diagonal, so a callset's balance is
+    readable at a glance.
 
 === ":material-chart-line:{ .mc-teal } ROC / PR curve"
 
     [![ROC and PR curve](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_roc_pr_curve_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_roc_pr_curve_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Threshold-sweep curves per caller with a per-curve AUC. An in-panel tab bar switches
-    between **PR curve**, **ROC** and **vs threshold**.
+    Threshold-sweep curves with a per-curve AUC. Its View switch draws the **PR curve**,
+    the **ROC**, or precision and recall **vs threshold**.
 
 === ":material-grid:{ .mc-grape } Confusion matrix"
 
     [![Confusion matrix](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_confusion_matrix_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/advviz_confusion_matrix_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    TP, FP and FN per caller. Shading is the per-caller normalised fraction while the
+    TP, FP and FN per callset. Shading is the per-callset normalised fraction while the
     label keeps the raw count, and the label colour follows cell luminance so it stays
     legible at both ends of the scale.
 
@@ -345,15 +402,15 @@ for full pipeline documentation.
 
 ## :material-folder-open-outline: Required data structure
 
-Point `depictio ingest` at the directory holding the pipeline output. Only the first table of
-whichever template you choose is required; the rest is optional and the dashboard adapts
-to what is present.
+Point `depictio ingest` at the directory holding the pipeline output. A category template
+requires its first table and its MultiQC report; on the umbrella template every table is
+optional. The dashboard adapts to what is present.
 
 ```text
 <DATA_ROOT>/
 ├── small/                                                  # --variant_type small
 │   ├── summary/tables/rtgtools/
-│   │   └── rtgtools.summary.csv                            # required by small + umbrella
+│   │   └── rtgtools.summary.csv                            # required by small
 │   └── <sample>/benchmarks/happy/
 │       ├── *.summary.csv                                   # optional
 │       └── *.roc.Locations.SNP.PASS.csv.gz                 # optional
@@ -372,8 +429,7 @@ to what is present.
 ```
 
 Each category template requires the MultiQC report of its own run. The umbrella template
-reads no MultiQC report at all, and expects a single root containing both `small/` and
-`indel/`.
+reads no MultiQC report, and shows the tab of each route it finds under the root.
 
 ---
 
