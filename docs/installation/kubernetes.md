@@ -25,7 +25,12 @@ helm install depictio helm-charts/depictio \
 kubectl get pods -n depictio --watch
 ```
 
-All pods should reach `Running` status: backend, viewer, mongo, minio, redis, celery-worker.
+All pods should reach `Running` status: backend, viewer, mongo, minio, redis, celery-worker. The `minio` pod runs the S3 store, SeaweedFS since v1.12.0; it keeps its name so that an upgrade reuses the same volume.
+
+!!! warning "Upgrading a release from before v1.12.0?"
+    The bundled store starts empty after the upgrade: export the bucket **before**
+    running `helm upgrade`. See
+    [Upgrading to v1.12.0: MinIO to SeaweedFS](seaweedfs-migration.md#helm).
 
 ### Step 3 — Access Depictio
 
@@ -41,7 +46,10 @@ Then open <http://localhost:5080>.
 |---------|------|
 | Frontend (React viewer) | 5080 |
 | Backend API | 8058 |
-| MinIO Console | 9001 |
+| S3 API (SeaweedFS) | 9000 |
+
+The SeaweedFS admin UI is off by default. `s3.adminUI.enabled: true` serves it on
+`s3.service.adminPort` (`23646`), behind the S3 root credentials.
 
 ---
 
@@ -72,7 +80,7 @@ environment-specific files.
 
 | File | Purpose |
 |------|---------|
-| [`values-embl-demo-base.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-demo-base.yaml) | Shared settings (storage, resources, auth, MinIO) |
+| [`values-embl-demo-base.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-demo-base.yaml) | Shared settings (storage, resources, auth, S3) |
 | [`values-embl-demo.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-demo.yaml) | Demo overlay (ingress, image tags, replicas) |
 | [`values-embl-demo-dev.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-demo-dev.yaml) | Dev overlay (debug flags, reduced resources) |
 | [`values-embl-auth.yaml`](https://github.com/depictio/depictio/blob/main/helm-charts/depictio/values-embl-auth.yaml) | Multi-user auth + Google OAuth |
@@ -88,7 +96,7 @@ helm install depictio helm-charts/depictio \
 ```
 
 !!! note "Secrets file"
-    `values-embl-secrets.yaml` is gitignored — it holds MinIO passwords and OAuth
+    `values-embl-secrets.yaml` is gitignored — it holds the S3 passwords and OAuth
     secrets that must be created locally. See `values-embl-auth.yaml` for the
     expected key names.
 
@@ -102,48 +110,56 @@ backend:
     # DEPICTIO_AUTH_PUBLIC_MODE: "true"        # public read-only with sign-in
 ```
 
-### MinIO credentials
+### S3 credentials
 
 ```yaml
 # my-values.yaml
 secrets:
-  minioRootUser: "myadmin"
-  minioRootPassword: "mysecurepassword"
+  s3RootUser: "myadmin"
+  s3RootPassword: "mysecurepassword"
 ```
 
-!!! warning "Upgrading from pre-v1.0.0-b1 — rotate MinIO credentials"
-    From **v1.0.0-b1** onwards MinIO root credentials are stored exclusively
+These keys were `secrets.minioRootUser` and `secrets.minioRootPassword` before
+v1.12.0. The old keys, and a `minio:` values block, still work and print a
+deprecation warning in the upgrade notes. See
+[Renamed settings](seaweedfs-migration.md#renamed-settings).
+
+!!! warning "Upgrading from pre-v1.0.0-b1 — rotate the S3 credentials"
+    From **v1.0.0-b1** onwards the S3 root credentials are stored exclusively
     in a Kubernetes `Secret`. Earlier releases stored them in the `ConfigMap`,
     which was readable via `kubectl describe` and stored in etcd as plain text.
 
-    If you are upgrading from an older release, **rotate your MinIO root
+    If you are upgrading from an older release, **rotate your S3 root
     credentials** after the upgrade:
 
-    1. Update `secrets.minioRootUser` and `secrets.minioRootPassword` in your
+    1. Update `secrets.s3RootUser` and `secrets.s3RootPassword` in your
        values file (or a sealed secret / external-secrets source).
     2. Run `helm upgrade` to apply the new Secret.
-    3. Restart the MinIO pod so it picks up the new credentials:
+    3. Restart the store's pod so it picks up the new credentials:
        `kubectl rollout restart deployment/depictio-minio -n depictio`
 
-### External S3 / Bring Your Own MinIO
+### External S3 { #external-s3 }
 
 ```yaml
 # my-values.yaml
-minio:
-  enabled: false   # disable bundled MinIO
+s3:
+  enabled: false   # no bundled store (minio.enabled before v1.12.0)
 
 backend:
   env:
-    DEPICTIO_MINIO_PUBLIC_URL: "https://your-minio-host.example.com"
-    DEPICTIO_MINIO_EXTERNAL_SERVICE: "true"
-    DEPICTIO_MINIO_ROOT_USER: "your-access-key"
-    DEPICTIO_MINIO_ROOT_PASSWORD: "your-secret-key"
+    DEPICTIO_S3_PUBLIC_URL: "https://your-s3-host.example.com"
+    DEPICTIO_S3_EXTERNAL_SERVICE: "true"
+    DEPICTIO_S3_ROOT_USER: "your-access-key"
+    DEPICTIO_S3_ROOT_PASSWORD: "your-secret-key"
 ```
 
+An external S3 is not affected by the move from MinIO to SeaweedFS, and the
+`DEPICTIO_MINIO_*` names of earlier values files still work.
+
 !!! note "The bucket does not have to exist"
-    From **v1.6.0** the backend creates `DEPICTIO_MINIO_BUCKET` at startup when it is
+    From **v1.6.0** the backend creates `DEPICTIO_S3_BUCKET` at startup when it is
     missing, then verifies it; an existing bucket is left untouched. See
-    [Required S3 permissions](env-reference.md#minios3-storage).
+    [Required S3 permissions](env-reference.md#required-s3-permissions).
 
 ### Ingress
 
@@ -152,9 +168,9 @@ how your cluster's auth and TLS termination work.
 
 | Topology | Toggle | When to use |
 |---|---|---|
-| **Single ingress** (default) | `ingress.enabled: true` only | Viewer, backend API, and MinIO console all share one ingress + annotation set. Right for small/dev clusters or when one OIDC layer covers everything. |
+| **Single ingress** (default) | `ingress.enabled: true` only | Viewer, backend API, and S3 store all share one ingress + annotation set. Right for small/dev clusters or when one OIDC layer covers everything. |
 | **Viewer + dedicated backend** | `backend.ingress.separateRoute: true` | Apply different auth annotations (or no auth) on the API. Useful when the API needs a different OIDC scope, or when programmatic clients hit `/depictio/api/*` with mTLS or API tokens. |
-| **Viewer + dedicated MinIO** | `minio.ingress.separateRoute: true` | Same idea for MinIO — typically when MinIO is exposed for direct S3 access from CI runners and shouldn't sit behind the user-facing OIDC. |
+| **Viewer + dedicated S3** | `s3.ingress.separateRoute: true` | Same idea for the S3 store — typically when it is exposed for direct S3 access from CI runners and shouldn't sit behind the user-facing OIDC. |
 
 You can combine the toggles to get all three ingresses separate.
 
@@ -182,7 +198,7 @@ backend:
       nginx.ingress.kubernetes.io/auth-method: "BASIC"   # different auth
       nginx.ingress.kubernetes.io/proxy-body-size: "200m"
 
-minio:
+s3:
   ingress:
     separateRoute: true
     inheritDefaultAnnotations: false
@@ -194,7 +210,7 @@ merged into the per-route ingress. Set `false` when the per-route ingress
 needs a fundamentally different auth chain.
 
 !!! warning "Network restrictions on dedicated routes"
-    A dedicated MinIO or backend ingress with `annotations: {}` is
+    A dedicated S3 or backend ingress with `annotations: {}` is
     **unauthenticated at the ingress layer**. Restrict access via Kubernetes
     NetworkPolicies, ingress controller IP whitelisting, or a dedicated
     private DNS — don't rely on obscurity.
@@ -203,9 +219,9 @@ needs a fundamentally different auth chain.
 
 On clusters that have moved to the [Gateway API](https://gateway-api.sigs.k8s.io/),
 `gateway.enabled: true` emits `HTTPRoute` resources instead of Ingress objects:
-one for the viewer, one for the API, one for MinIO. `parentRefs` is the only
+one for the viewer, one for the API, one for the S3 store. `parentRefs` is the only
 required key; per-route filters live under `backend.httpRoute` and
-`minio.httpRoute`, and `gateway.filters` applies to the viewer route alone.
+`s3.httpRoute`, and `gateway.filters` applies to the viewer route alone.
 
 ```yaml
 # my-values.yaml
