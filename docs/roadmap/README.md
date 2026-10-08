@@ -139,6 +139,9 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
+| Comments and annotations on dashboard components, with agent proposals held for review | v1.13.0 | [Comments and Annotations](../features/comments-annotations.md) |
+| Thirteen more nf-core templates, ten advanced visualization kinds including a GenomeSpy genome view | v1.13.0 | [Pipeline Templates](../pipeline-templates/README.md) · [Components](../features/components.md#genome-view) |
+| Genome regions carried between collections, record cards that follow a selection | v1.13.0 | [Cross-DC Filtering](../features/cross-dc-filtering.md#region-links) · [Interactive Selection Filtering](../features/interactive-selection-filtering.md#record-cards) |
 | An opt-in feedback link that carries the dashboard and tab | v1.11.0 | [Feedback](../installation/env-reference.md#feedback) |
 | The funnel overview follows the values of one column | v1.11.0 | [Funnel filtering](../features/dashboards.md#funnel-filtering) |
 | Ingestion triggered by the pipeline itself, when it completes | v1.10.0 | [Nextflow trigger](../depictio-cli/nextflow-trigger.md) |
