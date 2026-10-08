@@ -475,8 +475,10 @@ DEPICTIO_VERSION=1.5.2
 
 Production deployments that ship their own catalogue can opt out of the
 bundled reference projects (Iris, Penguins, Advanced Visualisations,
-nf-core/ampliseq, nf-core/viralrecon) that Depictio otherwise seeds at
-API startup:
+nf-core/ampliseq 2.18.0, nf-core/viralrecon 3.0.0) that Depictio otherwise seeds at
+API startup. These five are the only projects seeded at boot. Every other
+[pipeline template](../pipeline-templates/README.md), older nf-core/ampliseq
+versions included, is set up by ingesting a run with `depictio ingest`:
 
 ```bash
 # Skip seeding the demo projects + dashboards on boot.

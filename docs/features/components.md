@@ -236,6 +236,8 @@ Every kind accepts one layout setting on top of its own:
 |--------|------|---------|-------------|
 | `controls_placement` | `popover` \| `rail` \| `header` | `popover` | Where the tile's primary controls live: axes, colour by, the view switch, a gene or sample picker. `popover` keeps them behind the settings icon, `rail` puts them in a strip beside the plot, `header` lifts them into the tile header. Cosmetic options stay in the settings popover whichever placement is chosen. |
 
+A dashboard sets the placement for every tile that leaves `controls_placement` unset with its own `advanced_viz_controls` key. See [Tile height and control placement](yaml-sync.md#tile-height).
+
 #### Switchable views { #advanced-viz-views }
 
 Some kinds draw the same rows in more than one way. They carry a `view` field, the view the tile opens on, and a `views` list, the views offered in a switch in the tile header. Leaving `views` unset offers every view the bound columns allow: a view whose columns are not bound is not offered.
@@ -267,6 +269,24 @@ The four fingerprints added in v0.13.10 cover the metagenomics / ampliseq family
 Fingerprint matching is additive: a single DC can match several fingerprints (e.g. a long taxonomy table with per-iteration depth columns would match both `taxonomy_levels_long` and `rarefaction_iter_long`). Unmatched DCs behave as before — all viz types remain available for manual binding.
 
 Source of truth: `depictio/models/components/advanced_viz/producer_fingerprints.py`.
+
+#### The kind picker <small>(v1.13.0+)</small> { #kind-picker }
+
+The builder's kind picker splits the kinds into three groups: the kind the tile already
+uses, pinned at the top whatever its fit, then **Recommended**, the kinds that fit the bound
+collection well, then the other kinds, folded. Each kind carries a badge saying what the
+suggestion rests on:
+
+| Badge | Meaning |
+|-------|---------|
+| **Named match** | The collection has columns named for the kind's roles (`log2FoldChange`, `padj`, …) |
+| **Shape match** | The columns have the right types and shape, such as a coordinate pair for a scatter, without matching names |
+| **Fits your selection** | The kind fits the tab, not just the collection: a [Record card](#record-card) is suggested when another tile on the tab emits a selection on one of the collection's columns |
+| **Weak** | Pickable, but some required role has no good column |
+
+Hovering a kind lists the reasons and any role the collection cannot fill. The retired kinds
+(`ma`, `qq`, `enrichment`, `roc_pr_curve`) are not offered; see
+[Switchable views](#advanced-viz-views).
 
 ### Catalog
 
@@ -1635,6 +1655,13 @@ is the layout that shows the shape.
 | `composition` <small>(v1.4.0+)</small> | One 100%-wide bar split into top-N segments plus a muted *Other*, captioned with Pielou evenness | `breakdown_col`, `top_n_count` (1–5) |
 | `donut` <small>(v1.4.0+)</small> | Same breakdown drawn as a ring | `breakdown_col`, `top_n_count` (1–5) |
 
+What each group's bar measures follows the card's own `aggregation` <small>(v1.13.0+)</small>.
+A `count` or `sum` card splits its total, so each group shows its share of it. A card whose
+hero is a `max`, `min`, `average`, `median`, `range`, `variance` or `std_dev` ranks the groups
+by that same aggregation in the column's unit, the highest first (the lowest first under
+`min`), with no percentages: a group's maximum is not a share of anything. Before v1.13.0
+those cards counted rows per group.
+
 **Progress toward a maximum**
 
 | `secondary_layout` | Renders | Companion fields required |
@@ -1653,7 +1680,7 @@ is the layout that shows the shape.
 | `coverage_max` | float \| null | `null` | Denominator for `coverage` and `gauge`. Falls back to `vertical` if missing. |
 | `threshold_value` | float \| null | `null` | QC cut-off for `threshold`. Without it the strip is not drawn. |
 | `threshold_direction` | `min` \| `max` | `min` | Which side passes. `min` is at-least (coverage, %Q30), `max` is at-most (duplication, contamination). Explicit, because inferring it would silently invert a QC verdict. |
-| `threshold_warn` | float \| null | `null` | Softer cut-off between pass and fail. Ignored unless it lies on the failing side of `threshold_value`. |
+| `threshold_warn` | float \| null | `null` | Softer cut-off between pass and fail. It must lie on the failing side of `threshold_value` (below it under `min`, above it under `max`) and needs `threshold_value`. Since v1.13.0 a warn value on the passing side fails validation; earlier versions dropped it without a word. |
 | `trend_col` | str \| null | `null` | Ordered column the `trend` sparkline is bucketed along — a date, a timestamp, or any sortable number. The card's own column is what is aggregated inside each bucket. |
 | `attrition_cols` | list[str] | `[]` | Ordered stage columns for `attrition`, following the card's own column as the first stage. The order is the pipeline's order and is the content of the chart, so stages are never sorted by value. |
 
@@ -1828,6 +1855,7 @@ Interactive components let users filter data across the dashboard. These compone
 | Component | Input Type | Best For |
 |-----------|------------|----------|
 | :material-ray-start-end: **RangeSlider** | Numeric range | Coverage: 0-100x |
+| :material-ray-vertex: **Slider** | Numeric threshold | Minimum depth: 10x |
 | :material-format-list-checks: **MultiSelect** | Multiple choices | Sample types |
 | :material-calendar: **DatePicker** | Date range | Run dates |
 | :material-toggle-switch: **SegmentedControl** | Single choice | Condition A/B |
@@ -1842,7 +1870,15 @@ Filter data by numeric range:
 | Column | Numeric column to filter |
 | Min/Max | Range bounds |
 | Step | Increment value |
-| Default | Initial range values |
+| Default | Initial range values (`default_range` in YAML) |
+| Histogram <small>(v1.13.0+)</small> | `show_histogram: true` draws the column's distribution above the track |
+
+### Slider
+
+Filter by a single numeric value. Since v1.13.0 a slider is a threshold: it keeps the rows
+at or above its value. `slider_mode` changes the comparison (`gt`, `lte`, `lt`, `eq`, `ne`);
+`eq` restores the exact-match filter earlier versions applied. See
+[Initial values and slider options](yaml-sync.md#interactive-defaults).
 
 ### MultiSelect
 
