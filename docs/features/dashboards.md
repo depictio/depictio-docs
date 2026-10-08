@@ -419,7 +419,7 @@ project came from, and since **v1.6.0** a badge in the report header says which 
 you are reading:
 
 - :material-file-document-check: **Template manifest** — the project was created from a
-  [pipeline template](../pipeline-templates/README.md) by `depictio-cli run --template`,
+  [pipeline template](../pipeline-templates/README.md) by `depictio ingest`,
   which froze the list of data collections the template *expected*. The report compares
   that list against what was actually found and aggregated during the scan.
 - :material-database-eye: **Live project** — there is no such list, so the report is read
@@ -429,7 +429,7 @@ you are reading:
 
 !!! note "Templates seeded at first boot read as *Live project*"
     The nf-core projects a fresh deployment seeds for you carry no manifest. Only a
-    project you create yourself with `depictio-cli run --template` does.
+    project you create yourself from a template with `depictio ingest` does.
 
 ### :material-magnify: What the report shows
 

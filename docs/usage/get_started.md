@@ -81,13 +81,13 @@ If you want to explore Depictio with existing demo data, you can use the provide
 </div>
 <script src="https://player.vimeo.com/api/player.js"></script>
 
-#### Using depictio-cli
+#### Using the CLI
 
 <span style="color: #6495ED;">:octicons-terminal-24:</span> Use the command-line interface to programmatically manage your Depictio projects and data.
 
-##### <span style="color: #8BC34A;">:material-download:</span> Install the depictio-cli tool
+##### <span style="color: #8BC34A;">:material-download:</span> Install the CLI
 
-Depictio provides a command-line interface (CLI) tool (`depictio-cli`) for managing data ingestion and other tasks. You can install the CLI tool by following the instructions in the [depictio-cli documentation](../installation/cli.md).
+Depictio provides a command-line interface (CLI), the `depictio` command, for managing data ingestion and other tasks. You can install it by following the [CLI installation guide](../installation/cli.md).
 
 ##### <span style="color: #F9CB40;">:material-cog:</span> Create a CLI configuration
 
@@ -156,17 +156,18 @@ user:
 
 ##### <span style="color: #7A5DC7;">:material-play:</span> Use the CLI tool
 
-You can now use the CLI tool to interact with your Depictio instance. For example, you can list available workflows, upload data collections, and manage your projects. Refer to the [depictio-cli documentation](../depictio-cli/usage.md) for detailed usage instructions.
+You can now use the CLI tool to interact with your Depictio instance. For example, you can list available workflows, upload data collections, and manage your projects. Refer to the [CLI usage documentation](../depictio-cli/usage.md) for detailed usage instructions.
+
+Saved as `~/.depictio/CLI.yaml`, the configuration is the one every command uses by default, so none of them needs `--server`. See [Which server a command uses](../depictio-cli/usage.md#choosing-a-server) for the other ways to name a server.
 
 In that get started guide, you can use the **palmer penguins dataset** to test the CLI tool. This dataset mimics the [palmer penguins dataset](https://allisonhorst.github.io/palmerpenguins/), which is a popular dataset for testing data visualization tools.
 
 ```bash
-depictio-cli run \
-    --CLI-config-path ~/.depictio/CLI.yaml \
+depictio ingest \
     --project-config-path ../api/v1/configs/penguins_dataset/penguins_project.yaml
 ```
 
-This command will run the CLI tool with the specified configuration file and project configuration file. This will create a new project in Depictio with the palmer penguins dataset, including 2 data collections: `physical_features` and `demographic_data`.
+This command will run the CLI tool with the default configuration file and the specified project configuration file. This will create a new project in Depictio with the palmer penguins dataset, including 2 data collections: `physical_features` and `demographic_data`.
 
 Once the data ingested into the system, you can go to the web interface and see the project created in the **Project Management** section.
 

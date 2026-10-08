@@ -65,7 +65,7 @@ Depictio relies on [Polars](https://pola.rs/) and [Delta lake](https://delta.io/
 
 ### Can I integrate Depictio with my existing workflows?
 
-Yes, Depictio is designed to integrate with existing bioinformatics workflows. The [depictio-CLI](../depictio-cli/usage.md) tool can be used to push data from your workflows to Depictio for visualization.
+Yes, Depictio is designed to integrate with existing bioinformatics workflows. The [Depictio CLI](../depictio-cli/usage.md), `depictio ingest`, can be used to push data from your workflows to Depictio for visualization, and a Nextflow pipeline can run it itself when it completes ([Nextflow trigger](../depictio-cli/nextflow-trigger.md)).
 
 ### Is there an API for Depictio?
 
