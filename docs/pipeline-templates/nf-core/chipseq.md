@@ -79,12 +79,11 @@ from tab to tab.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
-      --template nf-core/chipseq/latest \
-      --data-root /path/to/chipseq_results
+    depictio ingest /path/to/chipseq_results \
+      --template nf-core/chipseq/latest
     ```
 
-    `--data-root` is the only thing you have to pass. The hub of the dashboard is
+    The results directory is the only thing you have to pass. The hub of the dashboard is
     the samplesheet the run validated, `pipeline_info/samplesheet.valid.csv`,
     which a template-local recipe collapses into one row per ChIP sample with its
     input control and its antibody.
@@ -92,11 +91,11 @@ from tab to tab.
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/chipseq -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -277,7 +276,7 @@ run kept the release's MultiQC 1.23:
 
 ```bash
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio run --template nf-core/chipseq/latest --data-root results/
+depictio ingest results/ --template nf-core/chipseq/latest
 ```
 
 See [nf-co.re/chipseq/usage](https://nf-co.re/chipseq/2.1.0/docs/usage) for full pipeline documentation.
@@ -286,7 +285,7 @@ See [nf-co.re/chipseq/usage](https://nf-co.re/chipseq/2.1.0/docs/usage) for full
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name, so the aligner directory and the peak-type
 directory can differ from the tree below.
 
@@ -330,9 +329,10 @@ without rewriting it:
 bash depictio/projects/nf-core/chipseq/2.1.0/download_test_data.sh /tmp/chipseq_test
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
-Re-ingesting accumulates dashboards, so delete the project before repeating a run.
+To ingest a run again, add `--update-config`: the project is refreshed in place,
+and its dashboards are kept as they are rather than imported a second time.
 
 ---
 

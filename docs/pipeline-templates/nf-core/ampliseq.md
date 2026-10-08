@@ -46,9 +46,8 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 === "Base (no metadata)"
 
     ```bash
-    depictio run \
+    depictio ingest /path/to/ampliseq_results \
       --template nf-core/ampliseq/latest \
-      --data-root /path/to/ampliseq_results \
       --var SAMPLESHEET_FILE=samplesheet.csv
     ```
 
@@ -57,9 +56,8 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 === "Extended (with metadata)"
 
     ```bash
-    depictio run \
+    depictio ingest /path/to/ampliseq_results \
       --template nf-core/ampliseq/latest \
-      --data-root /path/to/ampliseq_results \
       --var SAMPLESHEET_FILE=samplesheet.csv \
       --var METADATA_FILE=Metadata.tsv \
       --var GROUP_COL=habitat
@@ -70,7 +68,7 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/ampliseq -r 2.16.0 -profile docker --outdir results
     ```
 
@@ -307,8 +305,8 @@ nextflow run nf-core/ampliseq \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/ampliseq/latest \
-  --data-root results/ \
+depictio ingest results/ \
+  --template nf-core/ampliseq/latest \
   --var SAMPLESHEET_FILE=samplesheet.csv \
   --var METADATA_FILE=Metadata.tsv
 ```
@@ -319,7 +317,7 @@ See [nf-co.re/ampliseq/usage](https://nf-co.re/ampliseq/2.16.0/docs/usage) for f
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` to the directory containing your ampliseq outputs. This can be a single run's `results/` folder or a parent directory containing multiple runs — Depictio scans recursively. Not all files are required; the template adapts based on what's present and which `--var` flags you provide.
+Point `depictio ingest` at the directory containing your ampliseq outputs. This can be a single run's `results/` folder or a parent directory containing multiple runs: Depictio scans recursively. Not all files are required; the template adapts based on what's present and which `--var` flags you provide.
 
 ```text
 <DATA_ROOT>/

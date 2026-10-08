@@ -58,23 +58,22 @@ The funcscan template covers the four aggregated screening reports of a standard
 === "Point at a finished run"
 
     ```bash
-    depictio run \
-      --template nf-core/funcscan/latest \
-      --data-root /path/to/funcscan_results
+    depictio ingest /path/to/funcscan_results \
+      --template nf-core/funcscan/latest
     ```
 
-    `--data-root` is the only thing you have to pass: which screens ran is read
+    The results directory is the only thing you have to pass: which screens ran is read
     from the reports. The samplesheet is auto-detected from `{DATA_ROOT}/input/`;
     pass `--var SAMPLESHEET_FILE=...` to point elsewhere.
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/funcscan -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -253,8 +252,8 @@ nextflow run nf-core/funcscan \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/funcscan/latest \
-  --data-root results/
+depictio ingest results/ \
+  --template nf-core/funcscan/latest
 ```
 
 See [nf-co.re/funcscan/usage](https://nf-co.re/funcscan/4.0.0/docs/usage) for full pipeline documentation.
@@ -263,7 +262,7 @@ See [nf-co.re/funcscan/usage](https://nf-co.re/funcscan/4.0.0/docs/usage) for fu
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name; only the aggregated reports below matter.
 
 ```text
@@ -315,9 +314,8 @@ publishes no `input/` directory, so `post_fetch_help` in `megatest.yaml` gives
 the `curl` command that puts the samplesheet under `input/`. Then run Depictio:
 
 ```bash
-depictio run \
-  --template nf-core/funcscan/latest \
-  --data-root /tmp/funcscan_test
+depictio ingest /tmp/funcscan_test \
+  --template nf-core/funcscan/latest
 ```
 
 ---
