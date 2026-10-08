@@ -348,6 +348,8 @@ Performance and timeout settings that can be tuned per environment.
 | `DEPICTIO_PERFORMANCE_BROWSER_NAVIGATION_TIMEOUT` | `60000` | - |
 | `DEPICTIO_PERFORMANCE_BROWSER_PAGE_LOAD_TIMEOUT` | `90000` | - |
 | `DEPICTIO_PERFORMANCE_BROWSER_ELEMENT_TIMEOUT` | `30000` | - |
+| `DEPICTIO_PERFORMANCE_SCREENSHOTS_ENABLED` | `true` | Generate dashboard thumbnails with Playwright. `depictio local up` sets it to `false` unless `--screenshots` is passed |
+| `DEPICTIO_PERFORMANCE_SCREENSHOTS_DIR` | package's `api/static/screenshots` | Where thumbnails are written and served from. At startup, thumbnails of dashboards absent from the database are deleted from it |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_NAVIGATION_TIMEOUT` | `45000` | - |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_CONTENT_WAIT` | `15000` | - |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_STABILIZATION_WAIT` | `5000` | - |
