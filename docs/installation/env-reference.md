@@ -105,6 +105,7 @@ Base class for service configurations with internal/external URL handling.
 | `DEPICTIO_VIEWER_DEBUG` | `true` | Debug mode with hot reload |
 | `DEPICTIO_VIEWER_AUTO_GENERATE_FIGURES` | `false` | Automatic figure generation in UI mode |
 | `DEPICTIO_VIEWER_INSPECTOR_ENABLED` | `false` | Docked component inspector, replacing the per-component popovers for advanced-visualisation controls, notes and metadata. Experimental (v1.4.0+) |
+| `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` | `thumbnails` | View `/dashboards` opens in for someone who never picked one: `thumbnails` or `table`. A view chosen in the browser, or named by a shared link, wins (v1.11.2+) |
 
 ---
 
@@ -352,6 +353,9 @@ Performance and timeout settings that can be tuned per environment.
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_STABILIZATION_WAIT` | `5000` | - |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_CAPTURE_TIMEOUT` | `90000` | - |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_API_TIMEOUT` | `300` | - |
+| `DEPICTIO_PERFORMANCE_SCREENSHOT_VIEWPORT_WIDTH` | `1440` | Width of the page a dashboard thumbnail is captured from, in CSS pixels (v1.11.2+) |
+| `DEPICTIO_PERFORMANCE_SCREENSHOT_VIEWPORT_HEIGHT` | `900` | Height of that page, in CSS pixels (v1.11.2+) |
+| `DEPICTIO_PERFORMANCE_SCREENSHOT_SCALE` | `2.0` | Pixel density of the capture, from `1.0` to `3.0`. Each capture also writes an `@2x` file for the hover preview (v1.11.2+) |
 | `DEPICTIO_PERFORMANCE_SERVICE_READINESS_RETRIES` | `5` | - |
 | `DEPICTIO_PERFORMANCE_SERVICE_READINESS_DELAY` | `3` | - |
 | `DEPICTIO_PERFORMANCE_SERVICE_READINESS_TIMEOUT` | `10` | - |

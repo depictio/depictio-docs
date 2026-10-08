@@ -48,6 +48,27 @@ generic placeholder.
 The table view has a **Last viewed** column <small>(v1.11.0+)</small>, sorted newest
 first, with dashboards you never opened last. It is kept per browser.
 
+#### <span style="color: #45B8AC;">:material-view-grid-outline:</span> Thumbnails or table <small>(v1.11.2+)</small> { #listing-views }
+
+The view switcher in the toolbar picks between **Thumbnails**, the card grid, and
+**Table**, with sortable columns and bulk selection. The Tiles view of earlier
+versions is gone, and a browser that had it opens on Thumbnails.
+
+In Thumbnails, the **Card display** menu beside the switcher sets:
+
+- **Cards per row**: Auto, or 2 to 6. Auto never makes more columns than a section has
+  cards, so two dashboards show large rather than at quarter width.
+- **Badges**: which of Project, Template, Owner, Visibility, Last modified and Tabs a
+  card shows. Hovering a badge gives its long form.
+
+**Reset to defaults** restores both. They are layout preferences, kept in the browser
+and left out of shared links. Resting the pointer on a thumbnail opens a larger,
+sharper preview.
+
+Someone who never picked a view gets the one the deployment sets with
+[`DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW`](../../installation/env-reference.md#react-viewer-frontend).
+A view picked in the browser, or named by a shared link, wins over it.
+
 ### <span style="color: #7A5DC7;">:material-menu:</span> Sidebar Navigation
 
 The left sidebar provides easy access to various sections of the application. This includes:
