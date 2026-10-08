@@ -1,3 +1,7 @@
+---
+icon: simple/kubernetes
+---
+
 # Kubernetes Installation
 
 Deploy Depictio on a Kubernetes cluster using the official Helm chart.
