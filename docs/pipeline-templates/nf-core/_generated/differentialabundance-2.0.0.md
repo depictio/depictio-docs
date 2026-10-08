@@ -98,7 +98,7 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 
 ### :material-chef-hat: Recipes
 
-Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `EXPECTED_SCHEMA` columns.
+Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `OUTPUT_SCHEMA` columns.
 
 | Recipe | Transforms | Output |
 |---|---|---|
