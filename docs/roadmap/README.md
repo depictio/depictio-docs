@@ -139,7 +139,7 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
-| The full server on your own machine, without Docker: `depictio local up` | v1.12.0 | [Local Server](../installation/local.md) |
+| The full server installed as a Python package, no containers: `depictio local up` | v1.12.0 | [Python package](../installation/local.md) |
 | One `depictio` package, `depictio ingest <results dir>`, refreshes that keep edited dashboards | v1.12.0 | [Ingest Command](../depictio-cli/usage.md#ingest-command) · [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) |
 | Recipes declare the schema of their inputs and their output, checked around the transform | v1.12.0 | [Recipes](../usage/projects/recipes.md#the-5-checkpoint-validation-pipeline) |
 | SeaweedFS as the bundled S3 store, replacing MinIO | v1.12.0 | [Upgrading to v1.12.0](../installation/upgrade/v1.12.0-seaweedfs.md) |
