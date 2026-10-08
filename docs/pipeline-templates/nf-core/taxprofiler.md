@@ -32,11 +32,10 @@ hide:
 The taxprofiler template covers the standardised outputs of an nf-core/taxprofiler
 run, whichever classifiers it used:
 
-- :material-chart-box-outline: **MultiQC**: FastQC and fastp, host removal, nanopore read stats and coverage redundancy, straight from the pipeline's MultiQC report
-- :material-bacteria-outline: **Composition**: stacked taxonomy per classifier and rank, beside sylph containment and melon genome copies
-- :material-graph-outline: **Concordance**: a Bray-Curtis ordination over every profiling run, the classifier overlap as an UpSet, and a taxon-by-run heatmap
-- :material-target: **Confidence**: containment identity against abundance, and profile shape as diversity against top-taxon share
-- :material-table: **Reference tables**: the long profiles frame, the per-run statistics, the samplesheet and the database sheet, pinned to the bottom of every tab
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: FastQC and fastp, host removal, nanopore read stats and coverage redundancy from the MultiQC report, and the sequencing depth Nonpareil models
+- :material-bacteria-outline: **Communities**: the composition per profiling run beside sylph containment and melon genome copies, and the diversity of each profile
+- :material-graph-outline: **Classifiers**: a Bray-Curtis ordination over every profiling run, the classifier overlap as an UpSet, the taxonomic flow, and sylph containment identity
 
 !!! info "Whatever profilers your run used"
     taxprofiler runs an arbitrary subset of its profilers, chosen by the database
@@ -108,129 +107,209 @@ joining them back from the kraken2, krakenuniq and centrifuge reports.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Four tabs, read as a funnel: are the reads worth classifying, what does each
-classifier say the community is, where do the classifiers disagree, and how much
-should a given call be trusted. Each tab below carries the **same icon and colour
-the dashboard gives it**, so the page and the app read alike. The `Samples`
-filter group is persistent and pinned to the top of every tab, and
-`Reference tables` is pinned to the bottom of every tab.
+One dashboard: the **Overview**, then six child tabs in three groups, read as a
+funnel from the reads to the taxa the classifiers agree on. Each tab below carries
+the **same icon and colour the dashboard gives it**, so the page and the app read
+alike.
+
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Sequencing depth |
+| Communities | Profiles, Diversity |
+| Classifiers | Concordance, Confidence |
+
+A profiling run is a sample, a classifier and a database, so most tiles show one
+value per run, and the classifier and the sequencing platform take the place of a
+design column. Each child tab opens with a short intro and a strip of four cards,
+then at most three open sections; tables and details follow, collapsed. The
+persistent *Sample filters* (platform, sample, sequencing run) sit in the left panel
+and narrow every tab. The *Sample sheet* and *Database sheet* sections are pinned,
+collapsed, to the bottom of every child tab.
+
+=== ":material-compass-outline: Overview"
+
+    *Many classifiers, one community, from reads to the taxa they agree on.*
+
+    <!-- screenshot pending v2 -->
+
+    A short hero links the run parameters. *About this dashboard* says how to move
+    through the tabs, *The run* lists the samples, classifiers, databases and read
+    QC tools, and *Pipeline* walks the six steps from cleaning the reads to
+    confirming the calls, each linked to its parameters and its tab. The key
+    figures read the taxpasta collections every run writes, so no classifier subset
+    leaves a gap.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · the left panel starts collapsed. *Key figures* has its own
+        filter bar (the classifier and the sample), and so does *Findings* (the
+        platform and the sample): each narrows its own section only.
+
+        | Section | What it holds |
+        |---|---|
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: profiling runs, reads assigned, Shannon diversity, classifiers per taxon |
+        | Findings | Live result rows, then 4 figures: the composition per profiling run, richness against diversity, the PCoA of the profiles and sylph identity against abundance |
+        | How to read this dashboard | The tabs by group, each with its question |
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Are the reads worth classifying, and what did preprocessing take out?*
+    **Data & QC** · *Were the reads clean, and how much host was removed?*
 
     [![MultiQC dashboard](../../images/pipeline-templates/nf-core/taxprofiler/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Four run-level cards, then the panels MultiQC already built: FastQC before
-    and after trimming, fastp's filtered reads, the bowtie2 and samtools views of
-    host removal, nanoq's nanopore summary and nonpareil's redundancy curves.
-    Nonpareil answers what no classifier can, how much of the community the
-    sequencing depth reached, which is the ceiling on everything downstream. The
-    collapsed *Profiler panels* section holds each classifier's own top-taxa
-    panel; MultiQC ships no bracken or centrifuge module, so nf-core/taxprofiler
-    runs the kraken module three times behind `path_filters`, one anchor each.
+    MultiQC panels only: general statistics, fastp filtered reads, FastQC quality
+    before trimming, then the host alignment and the share mapped to the host. The
+    read counts and lengths, nanoq's long-read summary and Nonpareil's redundancy
+    are collapsed, and so is each classifier's own top-taxa panel. MultiQC has no
+    Bracken or Centrifuge module, so nf-core/taxprofiler runs the kraken module
+    three times behind `path_filters`.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample` and `Platform` on `samplesheet`, persistent and
-        pinned to the top of every tab, plus `Taxa observed` and
-        `Shannon diversity` ranges in a collapsed *Read stats* group.
+        **Filters** · `Sample`, read from the MultiQC report.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards |
-        | Read quality | 4 MultiQC panels (fastqc, fastp) |
-        | Host removal and long reads | 4 MultiQC panels (bowtie2, samtools, nanoq, nonpareil) |
-        | Profiler panels | 6 MultiQC top-taxa panels |
-        | Reference tables | *Cross-profiler abundances*, *Per-run profile statistics*, *Samplesheet*, *Database sheet* |
+        | QC overview | 5 MultiQC panels |
+        | QC details (collapsed) | 4 MultiQC panels |
+        | Profiler panels (collapsed) | 6 MultiQC panels |
+
+=== ":material-waves:{ .mc-cyan } Sequencing depth"
+
+    **Data & QC** · *Did the sequencing reach enough of each metagenome?*
+
+    <!-- screenshot pending v2 -->
+
+    Nonpareil turns read redundancy into the share of the metagenome each library
+    covers. The cards give the median coverage against Nonpareil's 0.95 target,
+    the diversity, the effort sequenced and how much deeper the median library
+    would have to go. Then the coverage curve of each library, rebuilt from the
+    fitted model, and coverage against diversity. Nonpareil runs on the short reads
+    only.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Metagenome coverage` and `Nonpareil diversity` ranges on
+        `nonpareil_summary`, plus the sample filters.
+
+        | Section | What it holds |
+        |---|---|
+        | Depth at a glance | 4 cards |
+        | Coverage curves | 1 advanced visualization |
+        | Coverage against diversity | *Coverage against diversity* |
+        | Tables (collapsed) | *Nonpareil per library* |
 
 === ":material-bacteria-outline:{ .mc-grape } Profiles"
 
-    *What each classifier says the community is made of.*
+    **Communities** · *What does each classifier say the community is made of?*
 
     [![Profiles dashboard](../../images/pipeline-templates/nf-core/taxprofiler/profiles_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/profiles_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    One stacked taxonomy panel over the whole hub, switchable by rank and
-    narrowed by the *Profile scope* filter, so the same tile shows one classifier
-    at a time or all of them. The gauge beside it reports the share held by the
-    single most dominant taxon: past half, the profile is either a very simple
-    community or a classifier collapsed onto one reference. *Containment
-    composition* shows the same samples as sylph reconstructs them, which
-    disagrees in a way that says something about the reference database rather
-    than about the sample. *Genome copies* carries melon, whose sample id lives
-    only in its output path, so its rows are pooled across the long-read samples.
+    taxpasta standardises every classifier's profile into one table. The
+    composition draws one bar per profiling run, so a bar never mixes two naming
+    vocabularies: species by default, the eight largest taxa and Other, the rank in
+    the tile's settings. Then the Krona rings, one wedge per classifier, and the
+    community as sylph rebuilds it from genome containment. melon's genome copies,
+    pooled over the long-read samples, and the profile tables are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Classifier`, `Database` and `Rank` on
-        `taxpasta_profiles`, plus a relative-abundance range, in a
-        *Profile scope* group.
+        **Filters** · `Classifier`, `Database` and a relative-abundance range on
+        `taxpasta_profiles`, `Domain` on `taxpasta_lineage`, and `Melon phylum`,
+        the only filter that reaches melon's pooled table.
 
         | Section | What it holds |
         |---|---|
-        | Composition | *Community composition* + 4 cards |
-        | Containment composition | *sylph composition*, *sylph clade abundances* |
-        | Genome copies | *Melon genome-copy hierarchy*, *Estimated copies per species*, *Melon lineages* |
+        | Profiles at a glance | 4 cards |
+        | Composition | 1 advanced visualization |
+        | Lineage rings | 1 advanced visualization |
+        | Containment composition | 1 advanced visualization |
+        | Genome copies (collapsed) | 1 advanced visualization, *Estimated copies per species*, *Melon lineages* |
+        | Profile tables (collapsed) | *Cross-classifier abundances*, *Cross-classifier lineages*, *sylph clade abundances* |
+
+=== ":material-chart-bell-curve:{ .mc-lime } Diversity"
+
+    **Communities** · *How diverse is each profile, by each classifier?*
+
+    <!-- screenshot pending v2 -->
+
+    Diversity is computed per profiling run, so one sample has one value per
+    classifier, and the spread between them is classifier disagreement. Richness
+    against Shannon diversity comes first, then each run's diversity and top-taxon
+    share, and the rank-abundance accumulation: a curve that reaches one after a
+    handful of taxa is a profile carried by a few organisms.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Classifier`, plus `Taxa observed` and `Evenness` ranges, on
+        `taxpasta_sample_summary`.
+
+        | Section | What it holds |
+        |---|---|
+        | Diversity at a glance | 4 cards |
+        | Richness and diversity | *Richness against diversity* |
+        | Diversity by run | 1 advanced visualization |
+        | Profile concentration | *Rank-abundance accumulation* |
+        | Tables (collapsed) | *Per-run profile statistics* |
 
 === ":material-graph-outline:{ .mc-indigo } Concordance"
 
-    *Where the classifiers agree, and where each one is on its own.*
+    **Classifiers** · *Where do the classifiers agree, and where does each stand alone?*
 
     [![Concordance dashboard](../../images/pipeline-templates/nf-core/taxprofiler/concordance_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/concordance_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The Bray-Curtis PCoA puts one point per sample, profiler and database, so the
-    spread reads as classifier disagreement rather than as biological distance,
-    and the clusters usually form by profiler family. Selecting a point carries
-    its `profiler_db` to the pinned per-run table, and picking a row highlights
-    its point. The UpSet plot shows the intersections a pairwise view cannot: how
-    many taxa were found by exactly one set of classifiers. A long tail of taxa
-    found by a single classifier is the normal shape, and its length is the
-    interesting number.
+    The Bray-Curtis PCoA puts one point per profiling run, so runs of one sample
+    land together when their classifiers agree; a lasso narrows the flow below to
+    the runs it picks. The UpSet counts the taxa each set of classifiers found, and
+    the taxonomic flow follows the reads from the root down to the phylum,
+    unclassified reads included. The taxon by run heatmap is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Classifier` and `Platform` on `taxpasta_embedding`, plus a
-        `Classifiers per taxon` range on `taxpasta_presence`, in an
-        *Ordination scope* group.
+        **Filters** · `Classifier` and `Platform` on `taxpasta_embedding`, a
+        `Classifiers per taxon` range on `taxpasta_presence`, and `Domain` and
+        `Flow classifier` on `taxpasta_lineage`.
 
         | Section | What it holds |
         |---|---|
-        | Ordination | *Bray-Curtis ordination*, *Ordination with selection* |
-        | Shared taxa | *Classifier detection overlap* + 4 cards |
-        | Taxon by run matrix | *Taxon by run heatmap* |
+        | Concordance at a glance | 4 cards |
+        | Ordination | 1 advanced visualization |
+        | Shared taxa | 1 advanced visualization |
+        | Taxonomic flow | 1 advanced visualization |
+        | Taxon by run matrix (collapsed) | 1 advanced visualization |
 
-=== ":material-target:{ .mc-cyan } Confidence"
+=== ":material-target:{ .mc-teal } Confidence"
 
-    *How much to trust a call, from containment identity and profile shape.*
+    **Classifiers** · *How close are the reads to the genomes sylph matched?*
 
     [![Confidence dashboard](../../images/pipeline-templates/nf-core/taxprofiler/confidence_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/confidence_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    sylph reports the adjusted ANI of every containment match beside its
-    abundance, so the two can be read together: a high-abundance, low-ANI genome
-    is a confident-looking call that is really a divergent relative of the
-    reference. The dot plot and the scatter show those axes at different
-    resolutions, and the containment table has row selection on the sample.
-    *Profile shape* treats a profile as a distribution rather than a list:
-    Shannon diversity against top-taxon share per run, and a rank-abundance
-    curve that reaches one after a handful of taxa when few organisms carry it.
+    sylph reports the adjusted ANI of every genome it detects beside its abundance,
+    so a high-abundance, low-identity genome reads as the divergent relative it is.
+    The cards give the median ANI against 95%, the species boundary, the genomes
+    detected, the effective coverage and the detections. Then the ANI by genome and
+    sample, and identity against abundance beside a record card for the genome you
+    pick.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `Adjusted ANI` and `Taxonomic abundance` ranges on
-        `sylph_ani`, plus a `Top-taxon share` range on
-        `taxpasta_sample_summary`, in a *Confidence ranges* group.
+        `sylph_ani`.
 
         | Section | What it holds |
         |---|---|
-        | Containment identity | *ANI by genome and sample*, *ANI against abundance*, *sylph containment table* + 4 cards |
-        | Profile shape | *Diversity by run*, *Rank-abundance accumulation* |
+        | Confidence at a glance | 4 cards |
+        | Identity by genome | 1 advanced visualization |
+        | Identity against abundance | *ANI against abundance* + a genome record card |
+        | Tables (collapsed) | *sylph containment table* |
 
 !!! tip "Which panels the sample filter reaches"
-    The persistent `Samples` filter narrows every taxpasta and sylph tile, plus
-    the fastp and post-trimming FastQC panels. It does not reach the
-    per-classifier top-taxa panels: MultiQC keys those on a sample id carrying
-    the database as a suffix, which no samplesheet value reduces to. The
-    cross-classifier view of the same data, two tabs along, does filter.
+    The persistent *Sample filters* narrow every taxpasta and sylph tile, the
+    Nonpareil tiles and the MultiQC panels keyed on the sample id. They do not
+    reach the per-classifier top-taxa panels: MultiQC keys those on a sample id
+    carrying the database as a suffix, which no samplesheet value reduces to. The
+    cross-classifier view of the same data, on the Profiles tab, does filter.
 
 ---
 

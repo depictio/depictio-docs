@@ -31,11 +31,10 @@ hide:
 
 The cutandrun template covers the peak-calling chain of a standard run:
 
-- :material-chart-box-outline: **MultiQC**: FastQC and Trim Galore, bowtie2 against the target genome and the spike-in, and the deepTools fingerprint that separates a target from its IgG control
-- :material-chart-scatter-plot: **Peak calls**: SEACR regions and MACS2 peaks over the same fragments, each with its own signal track along the genome
-- :material-scale-balance: **Caller agreement**: how much of each caller's calls the other reproduced, sample by sample
-- :material-set-merge: **Consensus and reproducibility**: the merged peak set of each target, and which replicates support every interval
-- :material-table: **Reference tables**: the sample hub and the per-sample SEACR summary, pinned to the bottom of every tab
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: the MultiQC report (FastQC, Trim Galore, Bowtie 2 against the target and the spike-in, the deepTools fingerprint), then depth, spike-in scaling, duplication and enrichment per library
+- :material-waves: **Chromatin signal**: the nucleosomal fragment ladder, then the SEACR regions, their pile-up and the signal they hold
+- :material-scale-balance: **Agreement**: how much SEACR and MACS2 agree, the consensus set each target's replicates reproduce, and both on one genomic region
 
 !!! warning "Reprocess MultiQC first, or the QC tab is empty"
     cutandrun 3.1 published a MultiQC 1.14 report, which writes no parquet at
@@ -56,7 +55,7 @@ The cutandrun template covers the peak-calling chain of a standard run:
     seacr,macs2`). SEACR is cutandrun's default and the path the template is
     built on; the MACS2 collections are optional, so a SEACR-only run still
     ingests and the layout drops what is missing. Read **Caller agreement** with
-    care then: with one caller the comparison reads as complete agreement.
+    care then: with one caller the comparison reads as complete disagreement.
 
 ---
 
@@ -110,107 +109,170 @@ no `params.json` at 3.1, so `DATA_ROOT` is the only variable.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Five tabs, read as a funnel: are the libraries clean and is each target enriched
-over its control, what the tool tables say about that signal, what did each
-caller call, how much of that the two share, and how much of it both replicates
-support. Each tab below carries the **same icon and colour the dashboard gives
-it**. `Sample filters` is persistent and pinned to the top of every tab,
-`Reference tables` to the bottom. The IgG controls are samples throughout; only
-the peak collections omit them.
+One dashboard: the **Overview**, then seven child tabs in three groups, read as a
+funnel from the libraries to the peaks a target's replicates reproduce. Each tab
+below carries the **same icon and colour the dashboard gives it**, so the page and
+the app read alike.
+
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Libraries |
+| Chromatin signal | Fragments, Peaks |
+| Agreement | Caller agreement, Consensus, Locus |
+
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The persistent *Sample
+filters* (target, sample, replicate, role) sit in the left panel and narrow every
+tab through the project links. The *Sample sheet* is pinned, collapsed, to the
+bottom of every child tab. The template has no grouping variable: `target`, the
+samplesheet group, is what every grouped tile reads. The IgG controls are samples
+throughout; only the peak collections omit them.
+
+=== ":material-compass-outline: Overview"
+
+    *Chromatin profiling, from fragments to the peaks replicates reproduce.*
+
+    <!-- screenshot pending v2 -->
+
+    A short hero links the run parameters, which for cutandrun 3.1 are the software
+    versions: the run ships no `params.json`. *About this dashboard* says how the
+    two filter levels work, *The run* lists the samples, targets, IgG controls and
+    peak callers read from the data, and *Pipeline* walks the six steps from
+    trimming to the consensus merge, each linked to its tool versions and its tab.
+    The findings are live values: they follow the filters, and a route that lacks
+    their data drops them. The Locus tab has no figure here, since it is a browser
+    rather than a summary.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · the left panel starts collapsed. *Key figures* and
+        *Findings* each have their own filter bar (target and sample): each
+        narrows its own section only.
+
+        | Section | What it holds |
+        |---|---|
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: samples, fragment length, peaks, FRiP |
+        | Findings | Live result rows, then 4 figures: the fragment-length distribution, the pile-up at the SEACR summits, MACS2 against SEACR per sample and the reproducible share per target |
+        | How to read this dashboard | The tabs by group, each with its question |
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Are the libraries clean, and does each target rise above its IgG control?*
+    **Data & QC** · *Did reads trim, align and rise above the IgG control?*
 
     [![MultiQC dashboard](../../images/pipeline-templates/nf-core/cutandrun/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The general statistics table, then FastQC and Trim Galore, then bowtie2
-    against the target genome and against the spike-in: a library whose spike-in
-    alignment collapses is not comparable to the others even when its target
-    alignment looks fine. The deepTools panels close the tab, fingerprint first,
-    which is what says whether a target rises above its IgG control at all. The
-    tables behind those pictures are on the Signal tab.
+    MultiQC panels only, from the reprocessed report. Open: general statistics,
+    FastQC sequence counts and the reads kept after trimming, Bowtie 2 against
+    samtools percent mapped (spike-in libraries carry a `.spikein` suffix), then
+    the deepTools fingerprint. Base quality, GC content, insert sizes and reads
+    per contig are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample`, `Target` and `Role` on `samples`, plus `Regions
-        called` and `Coverage per base` ranges on `seacr_peak_summary` in a
-        collapsed *QC thresholds* group pinned to the bottom.
+        **Filters** · `Target alignment rate` and `Spike-in scale factor` ranges
+        on `bowtie2_spikein_factors`, carried into the report by a reverse link.
 
         | Section | What it holds |
         |---|---|
-        | Sample sheet | 1 card, *Sample hub* |
-        | Run at a glance | *General statistics* |
-        | Read quality | 4 MultiQC panels (FastQC, cutadapt) |
-        | Alignment and spike-in | 4 MultiQC panels (bowtie2, samtools) |
-        | Enrichment over the control | 4 deepTools MultiQC panels |
-        | Reference tables | *SEACR QC summary* |
+        | QC overview | 3 MultiQC panels |
+        | Alignment and spike-in | 2 MultiQC panels |
+        | Enrichment over the control | 1 MultiQC panel (fingerprint) |
+        | QC details (collapsed) | 4 MultiQC panels |
 
-=== ":material-waves:{ .mc-violet } Signal"
+=== ":material-flask-outline:{ .mc-cyan } Libraries"
 
-    *The nucleosomal ladder, and the deepTools tables behind the MultiQC pictures.*
+    **Data & QC** · *How deep and duplicated is each library, and is it enriched?*
 
-    [![Signal dashboard](../../images/pipeline-templates/nf-core/cutandrun/signal_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/signal_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    <!-- screenshot pending v2 -->
 
-    None of this reaches a MultiQC panel: the fragment histogram and the three
-    deepTools tables are files of their own. For H3K4me3 the ladder should show a
-    clear mononucleosome peak, and a flat distribution means the digestion did not
-    work. Below it, the fingerprint scatter puts every library on one plane,
-    coverage concentration against divergence from a uniform library, so the
-    targets separate from the IgG controls; the PCA reads the `plotPCA` loadings
-    with the variance each component explains; and the correlation matrix is
-    clustered on both axes, where a block spanning two targets is a swap or a
-    contamination.
+    The tables the pipeline publishes beside the report. Read pairs, the spike-in
+    scale factor, duplicate reads and the distance from a uniform library. Then the
+    scale factor and the duplicate share per library, the fingerprint metrics,
+    where targets sit apart from the IgG controls, and the PCA beside the clustered
+    correlation matrix of the genome-wide bin counts.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · the persistent `Sample filters` group only.
+        **Filters** · a `Spike-in scale factor` range on `bowtie2_spikein_factors`
+        and a `Coverage concentration` range on `deeptools_fingerprint_metrics`.
 
         | Section | What it holds |
         |---|---|
-        | Fragment length structure | 4 cards, *Fragment length distribution*, *Cumulative fragment length* |
-        | Coverage concentration and sample similarity | *Coverage concentration per library*, *Samples on the first two components*, *Sample correlation matrix* |
+        | Libraries at a glance | 4 cards |
+        | Spike-in and duplication | 2 bars |
+        | Enrichment over the control | 1 advanced visualization |
+        | Sample similarity | 2 advanced visualizations |
+        | Depth detail (collapsed) | 2 scatters |
+        | Library tables (collapsed) | *Spike-in factors* |
 
-=== ":material-chart-scatter-plot:{ .mc-indigo } Peak calls"
+=== ":material-waves:{ .mc-violet } Fragments"
 
-    *What each caller called on every sample, where the signal sits and how wide the calls are.*
+    **Chromatin signal** · *Did the digestion work, and how nucleosomal are the fragments?*
 
-    [![Peak calls dashboard](../../images/pipeline-templates/nf-core/cutandrun/peak_calls_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/peak_calls_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    <!-- screenshot pending v2 -->
 
-    SEACR calls regions from fragment coverage rather than from a background
-    model, so a SEACR row carries a total signal, a maximum signal and the
-    sub-interval where that maximum was reached, and no p-value and no fold
-    enrichment at all. `macs2/peaks` cannot read that and MultiQC has no SEACR
-    module in any version, which is why SEACR needed its own catalog tool. The
-    two signal panels here therefore do not share a y axis: SEACR plots
-    `log10(total signal)`, MACS2 plots `-log10(q)`. Lassoing the
-    total-against-maximum scatter narrows both peak tables on `peak_id`.
+    [![Fragments dashboard](../../images/pipeline-templates/nf-core/cutandrun/signal_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/signal_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    The nucleosomal ladder. The median fragment length, the fragments counted, the
+    fragments by nucleosome class and the mononucleosome to sub-nucleosome ratio
+    per target. Then the fragment-length distribution, one curve per sample with
+    the sub-nucleosomal and mononucleosomal windows shaded, beside its cumulative
+    twin, and each library split into its four nucleosome classes.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Region width` and `Coverage per base` ranges on
-        `seacr_peaks`, in a *Peak scope* group.
+        **Filters** · `Nucleosome class` on `seacr_fragment_classes` and a
+        `Fragment length` range on `seacr_fragment_lengths`.
 
         | Section | What it holds |
         |---|---|
-        | SEACR peak yield | 4 cards |
-        | Signal along the genome | *SEACR signal along the genome*, *Total against maximum coverage*, *SEACR region width* |
-        | MACS2 alongside | 4 cards + *MACS2 significance along the genome* |
-        | Peak tables | *SEACR regions*, *MACS2 peaks* |
+        | Fragments at a glance | 4 cards |
+        | Fragment length | 2 line charts |
+        | Nucleosome classes | 1 bar |
+        | Fragment tables (collapsed) | *Nucleosome classes* |
+
+=== ":material-chart-bell-curve:{ .mc-indigo } Peaks"
+
+    **Chromatin signal** · *What did each sample call, and how much signal do peaks hold?*
+
+    <!-- screenshot pending v2 -->
+
+    [![Peaks dashboard](../../images/pipeline-templates/nf-core/cutandrun/peak_calls_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/peak_calls_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    SEACR regions, their width, their coverage per base and the lowest FRiP in
+    view. Then the region width beside the mean pile-up on the summits, the
+    summit-centred pile-up of each sample's strongest regions, and the fragment
+    coverage inside and outside peaks. FRiP is built in base pairs of coverage,
+    because SEACR reports no read count. The pile-up tiles need the fragment BEDs
+    and drop when a run did not publish them.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Region width`, `Coverage per base` and `Contig` on
+        `seacr_peaks`, then `Regions called` and `Median coverage per base` on
+        `seacr_peak_summary`.
+
+        | Section | What it holds |
+        |---|---|
+        | Peaks at a glance | 4 cards |
+        | Peak shape | 1 histogram + 1 line chart |
+        | Pile-up per region | 1 advanced visualization |
+        | Signal in peaks | 1 bar |
+        | Peak tables (collapsed) | *SEACR regions*, *MACS2 peaks*, *SEACR summary per sample*, *Signal budget* |
 
 === ":material-scale-balance:{ .mc-red } Caller agreement"
 
-    *Two callers, one set of fragments: how much of each one's calls the other reproduced.*
+    **Agreement** · *Do SEACR and MACS2 call the same peaks on each sample?*
 
     [![Caller agreement dashboard](../../images/pipeline-templates/nf-core/cutandrun/caller_agreement_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/caller_agreement_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The two callers meet only here. `caller_agreement` is a join on `sample`
-    that lives in the template's own `recipes/`, because a composition across
-    two collections is what the catalog policy keeps out of the catalog. A peak
-    counts as shared when it overlaps at least one call of the other caller on
-    the same sample and chromosome, and a sample a caller never called keeps a
-    row with `n_peaks = 0` rather than disappearing. In the dot plot, colour is
-    the peaks a caller made and size is how much of them the other reproduced.
+    Peaks called by caller, the peak width by caller, the share of one caller's
+    peaks the other reproduces and the calls only one caller made. Then MACS2
+    against SEACR, one selectable point per sample, beside the calls the other
+    caller did not make, and the MACS2 significance along the genome. A sample
+    with no MACS2 peaks keeps its row, so it reads as disagreement rather than as
+    missing data.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -220,39 +282,61 @@ the peak collections omit them.
         | Section | What it holds |
         |---|---|
         | Agreement at a glance | 4 cards |
-        | Caller against caller | *Yield and agreement per sample and caller*, *MACS2 against SEACR, per sample* |
-        | Where they diverge | *Calls the other caller did not make*, *Share of calls the other caller reproduced* |
-        | Comparison table | *Caller comparison* |
+        | Caller against caller | 1 scatter + 1 bar |
+        | MACS2 along the genome | 1 advanced visualization |
+        | Comparison table (collapsed) | *Caller comparison* |
 
-=== ":material-set-merge:{ .mc-grape } Consensus and reproducibility"
+=== ":material-set-merge:{ .mc-grape } Consensus"
 
-    *The merged peak set of each target, and which replicates support every interval.*
+    **Agreement** · *Which peaks do a target's replicates reproduce?*
 
-    [![Consensus and reproducibility dashboard](../../images/pipeline-templates/nf-core/cutandrun/consensus_and_reproducibility_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/consensus_and_reproducibility_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Consensus dashboard](../../images/pipeline-templates/nf-core/cutandrun/consensus_and_reproducibility_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/consensus_and_reproducibility_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Four cards on the merged intervals, then the UpSet panel over the four
-    replicate columns of the consensus table, which shows the split between
-    reproducible and single-replicate calls directly. Below it, the reproducible
-    share per target and interval width by replicate support. Read the support
-    donut first: the cards average over whatever `Replicate support` leaves in
-    view, and it defaults to every value.
+    Consensus intervals by replicate support, the reproducible ones (two
+    replicates or more) by target, the interval width and the coverage per
+    interval. Then the UpSet of the replicates calling each interval, the
+    reproducible share per target and the interval width by support. The
+    `Replicate support` filter keeps every value until you narrow it, so the cards
+    include single-replicate intervals.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Replicate support` and an `Interval width` range on
-        `seacr_consensus_peaks`, in a *Consensus scope* group.
+        **Filters** · `Replicate support`, and `Interval width` and `Member
+        peaks` ranges, all on `seacr_consensus_peaks`.
 
         | Section | What it holds |
         |---|---|
         | Consensus at a glance | 4 cards |
-        | Replicate agreement | *Consensus interval overlap* (UpSet) |
-        | How reproducible | *Reproducible share per target*, *Interval width by replicate support* |
-        | Consensus table | *Consensus intervals* |
+        | Replicate agreement | 1 advanced visualization (UpSet) |
+        | How reproducible | 1 bar + 1 histogram |
+        | Consensus table (collapsed) | *Consensus intervals* |
+
+=== ":material-dna:{ .mc-teal } Locus"
+
+    **Agreement** · *Do the callers and the replicates agree on one region?*
+
+    <!-- screenshot pending v2 -->
+
+    One region on one genome axis. The cards count what the region in view holds
+    and follow it as the tracks do. The SEACR navigator opens on a default region:
+    type a locus in its header or brush its axis, and the fragment pile-up, the
+    MACS2 calls and the consensus intervals over the gene lane follow.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `SEACR coverage per base` on `seacr_peaks`, `MACS2 -log10
+        q-value` on `macs2_peaks` and `Replicate support` on
+        `seacr_consensus_peaks`.
+
+        | Section | What it holds |
+        |---|---|
+        | Region at a glance | 4 cards |
+        | One region, four tracks | 4 advanced visualizations |
 
 !!! tip "A broad mark reproduces poorly, and the dashboard says so"
-    On the reference run, 63 % of the consensus intervals are called by a single
-    replicate, because H3K27me3 is a broad mark whose replicates overlap badly.
-    That is a property of the data, not of the template.
+    The replicates of a broad histone mark overlap badly, so a large part of its
+    consensus intervals rests on a single replicate. That is a property of the
+    data, not of the template.
 
 ---
 

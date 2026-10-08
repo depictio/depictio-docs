@@ -37,10 +37,12 @@ nf-core/ampliseq/
 ├── recipes/                     # shared across all versions
 │   ├── alpha_diversity.py
 │   └── …
-└── 2.16.0/
+└── 2.18.0/
     ├── template.yaml            # the template definition
     ├── dashboards/
-    │   └── full_analysis.yaml
+    │   └── base.yaml
+    ├── docs/
+    │   └── dashboards.md        # what each tab shows, per route
     └── recipes/                 # version-specific overrides (optional)
 ```
 
@@ -140,12 +142,26 @@ depictio dev recipe run  <pipeline>/my_recipe.py --data-dir /path/to/run --head 
 
 ## Step 4 — Build the dashboards
 
-The fastest path is to build interactively and export:
+nf-core templates share one layout, so read the
+[Template authoring rules](#template-authoring-rules) before you start, and copy
+the structure of the reference template, `nf-core/ampliseq/2.18.0/dashboards/base.yaml`.
 
 1. Ingest the run without importing dashboards:
    `depictio ingest <path> --template <id> --skip dashboards`
-2. Build the dashboard in the Depictio UI.
-3. **Dashboard settings → Export YAML**, and save it as `dashboards/main.yaml`.
+2. Build the tabs in the Depictio UI, or write them in YAML from the reference.
+   **Dashboard settings → Export YAML** turns a UI draft into YAML.
+3. Save the result as `dashboards/base.yaml`, then replace every value that
+   belongs to one run (a group column, a sample id column) with a template
+   variable such as `{GROUP_COL}`.
+4. Check it:
+
+    ```bash
+    depictio dashboard validate dashboards/base.yaml --offline
+    pytest depictio/tests/models/test_template_conventions.py \
+      depictio/tests/models/test_shipped_dashboard_yamls.py -k <pipeline>
+    ```
+
+5. Import it on a running server and open every tab.
 
 ## Step 5 — Test end-to-end & open a PR
 
@@ -157,7 +173,7 @@ Check before submitting:
 
 - [ ] `template_id` follows `<org>/<pipeline>/<version>`.
 - [ ] Every recipe has a docstring and a typed `OUTPUT_SCHEMA`; `depictio dev recipe run` passes for each.
-- [ ] Dashboard YAML is committed.
+- [ ] Dashboard YAML is committed, follows the [Template authoring rules](#template-authoring-rules), and the template's `docs/dashboards.md` describes every tab.
 - [ ] No hardcoded absolute paths — only `{DATA_ROOT}` / template variables.
 - [ ] A full `depictio ingest <path> --template …` completes without error and dashboards render with the template badge.
 
@@ -228,6 +244,159 @@ the scrollable frame instead of being cropped. Add the `_dark.png` twin, with
 **Keep it near 300 lines**, and no em dashes in new prose. The template's own
 `docs/dashboards.md` is source material to condense, not to port: implementation
 notes and megatest bookkeeping stay in the depictio repo.
+
+## Template authoring rules { #template-authoring-rules }
+
+Every nf-core template follows the same layout rules, so the dashboards of two
+pipelines read alike. This section summarises them.
+[RULES.md](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/RULES.md)
+in the depictio repo is the full and authoritative list. nf-core/ampliseq
+(`ampliseq/2.18.0/dashboards/base.yaml`) is the reference implementation: when a
+rule leaves room for doubt, do what it does.
+
+### The family of tabs
+
+- The main tab is the **Overview** (`main_tab_name: Overview`). The family keeps
+  `title: nf-core/<pipeline>`.
+- Child tabs carry a `tab_group`. The first group is always `Data & QC`, then one
+  or two analysis groups named for the pipeline, at most two words and five tabs each.
+- The MultiQC report is a child tab named exactly `MultiQC`, in `Data & QC`. It holds
+  MultiQC panels only. A pipeline without a MultiQC report has no such tab.
+- `tab_order` runs without gaps inside a group, and the groups go from broad to narrow.
+- Every child tab has a `subtitle` of at most 12 words: the question it answers.
+
+### The Overview
+
+At most 24 grid rows at compact width, in this order:
+
+| Block | What it holds |
+|---|---|
+| Hero | One text: the pipeline title (its wordmark as `logo:` when Depictio ships one), one sentence on the run, a `[Run parameters](params:)` link |
+| About | Two card texts side by side: *About this dashboard*, and *The run* with run facts from `{{param:…}}` and live values |
+| Pipeline | A card text with a `::: steps` flow of 4 to 6 steps, each linking its parameters and its tab |
+| Key figures | A filter bar (the group, then the sample) and 4 `headline` cards, each with a `caption`, a `link: tab:<Tab>` and a `description` |
+| Findings | A filter bar, a findings text with [live values](../features/yaml-sync.md#text-live-values), then 4 figures, one per analysis tab, in two rows that fill the width |
+| How to read | One text: a heading per tab group, then one `[Tab](tab:Tab)` line per tab with its question |
+
+```yaml
+main_dashboard:
+  title: nf-core/<pipeline>
+  main_tab_name: Overview
+  tab_icon: mdi:compass-outline
+  filter_panel_default: collapsed
+  content_width_default: compact
+  show_tab_header: false
+  category_colors:
+    "{GROUP_COL}": auto
+  filter_sections:
+    - {name: Sample filters, persistent: true, pin: top, icon: mdi:filter-variant, color: teal}
+  grid_sections:
+    - {name: Key figures, appearance: plain, card_variant: headline, filter_bar: true, visible_filters: 2}
+    - {name: Findings, appearance: plain, figure_style: minimal, filter_bar: true, visible_filters: 2}
+    - {name: How to read this dashboard, appearance: plain}
+    - {name: Sample sheet, persistent: true, pin: bottom, collapsed: true, exclude_tabs: [Overview]}
+  components:
+    - component_type: text
+      section: Findings
+      surface: card
+      values:
+        top: {dc: <tag>, column: <category>, aggregation: top, weight: <abundance>}
+        top_share: {dc: <tag>, column: <category>, aggregation: top_share, weight: <abundance>, format: percent}
+      body: |
+        - **{{top_share}}** of reads are {{top}} – the dominant <category> [<Tab>](tab:<Tab>)
+    - component_type: highlight
+      section: Findings
+      source_tab: <Tab>
+      source_component: <index of a figure on that tab>
+      caption: One sentence on what the figure shows.
+```
+
+- The filter bar of a section narrows that section only, and its description says
+  so. The persistent `Sample filters` in the left panel narrow every tab.
+- A highlight redraws a figure or an advanced visualization of another tab under
+  the Overview's filters. It cannot show a MultiQC panel, a card or a table.
+- Each figure says something the Key figures do not: prefer a tab's result (the
+  volcano, the ordination) over a box of a number a card already shows.
+
+### Child tabs
+
+- One intro text at the top, full width: at most 3 sentences on the method, with a
+  link to its tool, and on how to read the tab.
+- Then a strip of 4 cards (or 2 wide ones), never 3. The MultiQC tab has none.
+- Then at most 3 open sections, then collapsed ones: tables, record cards, per-sample
+  details, route alternates. At most 20 rows are open by default.
+- Each section says what it shows in its `description` (one sentence, at most 90
+  characters). The intro is the only text tile of a child tab.
+- A dense advanced visualization opens on its readable form (the tree on its
+  summary), with the full view a switch away.
+
+### Card styles
+
+- Key figures use the `headline` variant, with a `composition`, `box_plot`,
+  `coverage` or `threshold` secondary.
+- A child tab's strip uses the `default` variant. Each card has its own icon, its own
+  `icon_color` (a Mantine palette name) and a secondary chosen for what it says, with
+  a `caption` naming that secondary.
+- The icon is the watermark on the right: never `icon_style: badge`, and no
+  `title_color`, `title_font_size` or `value_font_size`.
+- A secondary with one value, a fraction printed as "of 1" or a ranking of long ids
+  reads as a defect. RULES.md lists the fix for each.
+
+### Filters
+
+- Child tabs filter from the left panel only: the pinned, persistent `Sample filters`,
+  plus at least one filter section on the tab's own data.
+- Filter bars (`filter_bar: true`) appear on the Overview only, with at most 2
+  visible controls. The group filter comes first.
+- Every filter has an icon and a colour, `display: {icon_name: mdi:…, custom_color:
+  <palette name>}`, and a column keeps its colour on every tab.
+
+### Colours
+
+- [`category_colors`](../features/yaml-sync.md#category-colors) is declared once, on
+  the Overview, and the child tabs inherit it.
+- The group column takes `"{GROUP_COL}": auto`. A column with more than 8 values
+  takes `"*": "auto:<abundance column>"`, with `Other` and `Unclassified` pinned grey.
+- No per-figure colour map for a column `category_colors` covers, and no hardcoded
+  colours elsewhere. Code figures read `depictio_category_colors` and
+  `depictio_group_kwargs`.
+
+### Viz controls
+
+- Leave the placement unset: the controls [dock by tile width](../features/dashboards.md#viz-controls).
+  Never set `controls_placement` or `advanced_viz_controls`.
+- Advanced visualization tiles are `w: 8` (controls on the right) or `w: 3` to `w: 7`
+  (controls on top). A sample correlation heatmap takes `w: 8`.
+- Axes carry words, not column names: `effect_label`, `significance_label`,
+  `axis_prefix`, `labels:`.
+
+### Heights
+
+- The stored `h` is a floor: the viewer fits text, cards, tables and advanced
+  visualizations to their content. Never write `fit: fixed`.
+- Card 2, table 6, figure 4, advanced visualization 5 or 6, MultiQC panel 4,
+  highlight 4. A text takes the height the lint estimates.
+- Tables are full width, except beside their record card (`w: 5` + `w: 3`).
+
+### Routes and pruning
+
+- `template.yaml` prunes data collections per route: no metadata, another
+  classifier, a skipped step. Route alternates (the same card from two
+  classifiers) share one grid slot.
+- At import, a highlight whose source is gone is removed, and so is each `values`
+  list item whose data collection is missing. Give highlight sources a short,
+  meaningful `index`.
+- Text that cannot be pruned (hero, steps, how to read) names no `{VARIABLE}`.
+
+### Prose
+
+- No em dashes. Result rows separate the claim from its context with " – ".
+- Lists, headings and `:::` blocks use `body: |`. Prose-only bodies use `body: >`.
+  At most 3 sentences per paragraph.
+- No megatest sample names, genes or loci: the `forbidden_terms` of `megatest.yaml`
+  are checked in every title, description, body and caption.
+- When a default changes, update the title, the section description, the caption
+  and the template's `docs/dashboards.md` with it.
 
 ## Badge promotion
 

@@ -32,18 +32,17 @@ hide:
 The rnaseq template covers the default STAR + Salmon route of a standard
 nf-core/rnaseq run:
 
-- :material-chart-box-outline: **MultiQC funnel**: FastQC before and after trimming, STAR, samtools, Picard, then RSeQC and Qualimap
-- :material-chart-scatter-plot: **Sample space**: a PCA of the merged Salmon TPMs, beside the pipeline's own DESeq2 sample distances
-- :material-grid: **Expression heatmap**: the 500 most variable genes, clustered, with the condition annotation on top
-- :material-dna: **Gene explorer**: pick genes and compare them across conditions, one row per gene and library
-- :material-table: **Reference tables**: the samplesheet and the raw merged count matrix, pinned to the bottom of every tab
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: the MultiQC report, a per-library QC profile with the RSeQC read distribution, and the pipeline's own DESeq2 QC PCA beside the sample distances
+- :material-dna: **Expression**: the 500 most variable genes, clustered, the most variable ones per condition, and a mean-variance plane with a record card per gene
 
 !!! info "The STAR + Salmon route"
     This template binds the pipeline default: STAR for alignment, Salmon for
     quantification, with the merged matrices read from `star_salmon/`. A
     `--skip_alignment` run writes the same file names under `salmon/`; pass
     `--var PSEUDOALIGNER_ONLY=true` and the expression collections are repointed
-    there. Nothing else about the dashboard changes.
+    there. The STAR, samtools, Picard, Qualimap and RSeQC tiles then have nothing
+    to show, and the RSeQC figure drops.
 
 !!! note "The condition comes from the sample name"
     The nf-core/rnaseq samplesheet is `sample,fastq_1,fastq_2,strandedness` and
@@ -121,114 +120,167 @@ found first.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Four tabs, read as a funnel: are the libraries usable, how do they relate to
-each other, which genes drive that, and what does any one gene do. Each tab
-below carries the **same icon and colour the dashboard gives it**, so the page
-and the app read alike. The `Sample scope` filter group is persistent and pinned
-to the top of every tab, and `Reference tables` is pinned to the bottom of every
-tab.
+One dashboard: the **Overview**, then five child tabs in two groups, read as a
+funnel from the run to the genes that vary between conditions. Each tab below
+carries the **same icon and colour the dashboard gives it**, so the page and the
+app read alike.
 
-=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Library QC, Sample Space |
+| Expression | Variable Genes, Gene Explorer |
 
-    *The pipeline in the order it ran, from raw reads to quantified libraries.*
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The persistent *Sample
+filters* (condition, sample, replicate) sit in the left panel and narrow every tab
+through the samplesheet links. The *Sample sheet* is pinned, collapsed, to the
+bottom of every child tab. nf-core/rnaseq runs no differential test: the gene
+numbers are rankings, by spread across the libraries or by the lead of one
+condition, and every tile that shows one says so.
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/rnaseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+=== ":material-compass-outline: Overview"
 
-    Four design cards open the tab, then FastQC on the raw reads beside Trim
-    Galore's filtered counts and FastQC again after trimming. `Quantification and
-    strandedness` is where the two most common failures show: a library whose
-    inferred strandedness disagrees with the sheet was quantified against the
-    wrong library type, and everything downstream of it is suspect. The collapsed
-    `Transcript QC` section adds coverage and duplication, including dupRadar,
-    which nf-core/rnaseq feeds to MultiQC as custom content rather than as a
-    module of its own.
+    *Bulk RNA-seq, from reads to the genes that vary between conditions.*
+
+    <!-- screenshot pending v2 -->
+
+    A short hero links the run parameters. *About this dashboard* says how to move
+    through the tabs, *The run* lists the samples, genome, aligner and trimmer, and
+    *Pipeline* walks the six steps from trimming to annotation, each linked to its
+    parameters and its tab. The findings are live values: they follow the filters,
+    and a route that lacks their data drops them.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample`, `Condition` and a `Replicate` range on
-        `samplesheet`, persistent and pinned to the top of every tab.
+        **Filters** · the left panel starts collapsed. *Key figures* and
+        *Findings* each have their own filter bar (condition and sample id): each
+        narrows its own section only.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards |
-        | Read quality | 5 MultiQC panels |
-        | Alignment | 3 MultiQC panels |
-        | Quantification and strandedness | 4 MultiQC panels |
-        | Transcript QC | 5 MultiQC panels |
-        | Reference tables | *Samplesheet*, *Merged gene counts* |
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: samples, genes expressed, genes two-fold in one condition, uniquely mapped share |
+        | Findings | Live result rows, then 4 figures: the most variable genes per condition, the clustered sample distances, the mean-variance plane and the RSeQC read distribution |
+        | How to read this dashboard | The tabs by group, each with its question |
 
-=== ":material-chart-scatter-plot:{ .mc-cyan } Expression overview"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Where the libraries sit relative to each other, computed from the merged TPMs.*
+    **Data & QC** · *Did trimming, alignment and quantification work for every library?*
 
-    [![Expression overview dashboard](../../images/pipeline-templates/nf-core/rnaseq/expression_overview_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/expression_overview_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/rnaseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The signature panel is a PCA of the log2(TPM + 1) matrix over its most
-    variable genes, one point per library, coloured by condition, with lasso
-    selection on `sample_id`. Replicates of one condition should sit together and
-    away from the others; a library that lands with the wrong group is the one to
-    take back to the MultiQC tab. The pipeline's own DESeq2 sample-similarity heatmap
-    beside it gives the same structure computed a different way, and the library
-    summary table selects on the same column, so points and rows drive each
-    other.
+    MultiQC panels only. Open: general statistics, the raw read counts beside the
+    reads Trim Galore kept, STAR's summary beside samtools percent mapped, then the
+    strandedness inference beside the biotype composition. A library whose inferred
+    strandedness disagrees with the sheet was quantified against the wrong library
+    type. Read quality, alignment details and transcript QC are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Condition`, plus `Genes expressed` and `Median TPM` ranges
-        on `sample_overview`, in a collapsed *Library scope* group.
+        **Filters** · `Sample ID`, read from the MultiQC report.
+
+        | Section | What it holds |
+        |---|---|
+        | QC overview | 5 MultiQC panels |
+        | Quantification and strandedness | 2 MultiQC panels |
+        | Read quality (collapsed) | 3 MultiQC panels |
+        | Alignment details (collapsed) | 3 MultiQC panels |
+        | Transcript QC (collapsed) | 3 MultiQC panels |
+
+=== ":material-shield-check-outline:{ .mc-blue } Library QC"
+
+    **Data & QC** · *Which library stands apart on mapping, duplication or read placement?*
+
+    <!-- screenshot pending v2 -->
+
+    Reads received by STAR, the uniquely mapped share on a gauge, the duplication
+    share and the exonic share. Then eleven MultiQC general statistics as parallel
+    coordinates, one line per library coloured by condition, and the RSeQC read
+    distribution per library. A library that bends away from its replicates on
+    several axes is the odd one out.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Uniquely mapped (%)` and `Duplication (%)` ranges on
+        `general_stats`.
+
+        | Section | What it holds |
+        |---|---|
+        | QC at a glance | 4 cards |
+        | Library QC profile | 1 advanced visualization |
+        | Read distribution | 1 advanced visualization |
+
+=== ":material-chart-scatter-plot:{ .mc-cyan } Sample Space"
+
+    **Data & QC** · *Do the replicates of each condition sit together?*
+
+    [![Sample Space dashboard](../../images/pipeline-templates/nf-core/rnaseq/expression_overview_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/expression_overview_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    Libraries by condition, genes expressed, genes detected and the median TPM,
+    from the merged Salmon TPM matrix. Then the pipeline's own DESeq2 QC PCA beside
+    the sample distances it clusters on. Replicates of one condition should sit
+    together in both. The collapsed library summary has a record card for the row
+    you pick.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Genes expressed` and `Median TPM` ranges on
+        `sample_overview`.
 
         | Section | What it holds |
         |---|---|
         | Libraries at a glance | 4 cards |
-        | Sample relationships | *Sample PCA on Salmon TPMs*, *Sample correlation heatmap*, *Library summary* |
-        | Library composition | *Biotype composition*, *Genes expressed per library* |
+        | Sample relationships | 2 advanced visualizations |
+        | Library summary (collapsed) | *Library summary* + a library record card |
 
-=== ":material-grid:{ .mc-grape } Expression heatmap"
+=== ":material-chart-box-outline:{ .mc-grape } Variable Genes"
 
-    *The 500 most variable genes, clustered, with the condition annotation on top.*
+    **Expression** · *Which genes vary most between the libraries and conditions?*
 
-    [![Expression heatmap dashboard](../../images/pipeline-templates/nf-core/rnaseq/expression_heatmap_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/expression_heatmap_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Variable Genes dashboard](../../images/pipeline-templates/nf-core/rnaseq/expression_heatmap_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/expression_heatmap_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    One panel, doing one thing. Rows are z-normalised on the log2(TPM + 1) scale,
-    which is what makes the heatmap about pattern rather than magnitude: without
-    it the plot is a ranking of highly expressed genes, with it the replicates of
-    one condition form a visible block. The collapsed `Matrix rows` section holds
-    the same matrix as an ordinary table, one gene per row.
-
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · `Sample` and `Condition` on `samplesheet`, in a collapsed
-        *Heatmap scope* group. The matrix is wide, so the sample ids are column
-        names rather than row values and these filters narrow it by column.
-
-        | Section | What it holds |
-        |---|---|
-        | Top variable genes | *Top 500 variable genes* |
-        | Matrix rows | *Top variable gene matrix* |
-
-=== ":material-dna:{ .mc-green } Gene explorer"
-
-    *One gene at a time, compared across conditions.*
-
-    [![Gene explorer dashboard](../../images/pipeline-templates/nf-core/rnaseq/gene_explorer_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/gene_explorer_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    Start from the `Gene` filter. With no gene picked the panels describe every
-    gene-sample row in the run, which is a distribution of the whole
-    transcriptome rather than a comparison. Once genes are picked, the figure
-    draws one box per gene and condition from the twelve highest-expressed genes
-    left after filtering, and selecting boxes filters on `gene_name`, the same
-    column the table below selects on.
+    The genes in view, their median log2(TPM + 1), the genes two-fold higher in
+    one condition and the highest TPM. Then the 500 most variable genes as a
+    clustered heatmap with the design on top, and the most variable genes in view
+    as one box per condition. Variance ranks these genes, not significance.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Gene`, `Condition` and a `log2(TPM + 1)` range on
-        `gene_expression`.
+        **Filters** · a `Top variable gene` picker on `expression_heatmap` and a
+        `log2(TPM + 1)` range on `gene_expression`.
 
         | Section | What it holds |
         |---|---|
-        | Picked genes | 4 cards |
+        | Genes at a glance | 4 cards |
+        | Top variable genes | 1 advanced visualization |
         | Expression by condition | *Expression by condition* |
-        | Gene rows | *Gene expression* |
+        | Matrix rows (collapsed) | *Top variable gene matrix* |
+
+=== ":material-dna:{ .mc-green } Gene Explorer"
+
+    **Expression** · *Where does a gene sit, and which condition does it peak in?*
+
+    <!-- screenshot pending v2 -->
+
+    [![Gene Explorer dashboard](../../images/pipeline-templates/nf-core/rnaseq/gene_explorer_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/gene_explorer_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    The expressed genes by the condition they peak in, their mean level, their
+    spread and the lead of the top condition. Then the mean-variance plane, one
+    point per expressed gene coloured by the condition it peaks in, beside the
+    record card of the gene you click; its id links to Ensembl. The gene rows and
+    the merged count matrix are collapsed below.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · a `Gene` picker and a `Mean log2(TPM + 1)` range on
+        `gene_summary`.
+
+        | Section | What it holds |
+        |---|---|
+        | Expression at a glance | 4 cards |
+        | Mean-variance plane | 1 advanced visualization + a gene record card |
+        | Gene rows (collapsed) | *Gene expression* |
+        | Count matrix (collapsed) | *Merged gene counts* |
 
 ---
 
@@ -280,7 +332,7 @@ and matches on file name, except for the MultiQC report, whose path is pinned.
 │           └── multiqc.parquet                 # pinned literal path
 ├── star_salmon/
 │   ├── salmon.merged.gene_tpm.tsv              # every expression panel
-│   ├── salmon.merged.gene_counts.tsv           # pinned reference table
+│   ├── salmon.merged.gene_counts.tsv           # Gene Explorer count matrix
 │   ├── deseq2_qc/                              # PCA values, sample distances, size factors
 │   └── featurecounts/                          # biotype tables MultiQC renders
 ├── salmon/                                     # read instead with PSEUDOALIGNER_ONLY=true
