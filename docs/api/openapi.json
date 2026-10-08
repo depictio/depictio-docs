@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.11.0",
-    "x-generated-at": "2026-09-14T19:46:42Z",
-    "x-depictio-version": "v1.11.0"
+    "version": "1.11.2",
+    "x-generated-at": "2026-10-08T13:11:11Z",
+    "x-depictio-version": "v1.11.2"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -12451,7 +12451,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -12754,7 +12754,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -12817,7 +12817,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -13005,7 +13005,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -14886,6 +14886,18 @@
             "type": "array",
             "title": "Canonical Samples",
             "description": "List of normalized canonical sample IDs (without suffixes or annotations). Used for joining with external metadata tables."
+          },
+          "has_general_stats": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Has General Stats",
+            "description": "Whether the parquet carries general-statistics rows. MultiQC assembles that table from every module that ran, so it appears in neither `modules` nor `plots` and can only be read from the parquet's anchors. None on reports ingested before this was recorded, which callers treat as unknown rather than absent."
           }
         },
         "additionalProperties": false,
@@ -14899,7 +14911,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -15107,7 +15119,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -15767,7 +15779,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -15873,7 +15885,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -16106,7 +16118,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6aa84f1ee24820aa6b0620b6"
+            "default": "6ac7966ae38f7a158987a90a"
           }
         },
         "type": "object",
@@ -16229,7 +16241,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -16348,7 +16360,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -16430,7 +16442,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -16516,7 +16528,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -16689,7 +16701,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -16864,7 +16876,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -16981,7 +16993,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
@@ -17079,7 +17091,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aa84f1ee24820aa6b0620b5"
+            "default": "6ac7966ae38f7a158987a909"
           },
           "description": {
             "anyOf": [
