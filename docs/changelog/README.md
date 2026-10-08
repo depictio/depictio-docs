@@ -8,6 +8,30 @@ hide:
 
 # Changelog
 
+## **[v1.11.1](https://github.com/depictio/depictio/releases/tag/v1.11.1)** (September 17, 2026)
+
+!!! success "Patch: an opt-in Nextflow trigger, and General Stats only where the report has it"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.11.1
+ghcr.io/depictio/depictio-viewer:1.11.1
+ghcr.io/depictio/depictio-worker:1.11.1
+ghcr.io/depictio/depictio-cli:1.11.1
+```
+
+### **🚀 Improvements**
+
+* **The Nextflow trigger can be installed opt-in**: `depictio-cli config nextflow --install --default-disabled` keeps every run silent unless it passes `--depictio_enabled true`. `--default-enabled` stays the default, so existing installs do not change. See [`config nextflow`](../depictio-cli/usage.md#config-nextflow) ([#1103](https://github.com/depictio/depictio/pull/1103), [76814585](https://github.com/depictio/depictio/commit/76814585)).
+
+### **🐛 Bug Fixes**
+
+* **MultiQC General Stats is only offered when the report has the table**: ingestion records whether each report carries it, and the builder, the catalog and dashboard import read that flag. A report that leaves the table out, such as nf-core/chipseq 2.1.0's, no longer gets a General Stats tile that ends with *General Stats failed*. A report ingested before v1.11.1 has no flag and keeps the tile until it is re-ingested ([#1104](https://github.com/depictio/depictio/pull/1104), [d08f8696](https://github.com/depictio/depictio/commit/d08f8696)).
+* **Table renders show their rows in the catalog gallery** instead of an empty strip above the pagination bar, a regression from v1.11.0 ([#1101](https://github.com/depictio/depictio/pull/1101), [e34b81b3](https://github.com/depictio/depictio/commit/e34b81b3)).
+
+---
+
 ## **[v1.11.0](https://github.com/depictio/depictio/releases/tag/v1.11.0)** (September 14, 2026)
 
 !!! success "Minor: a feedback link on dashboards, and a funnel that follows one column"
