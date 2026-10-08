@@ -19,7 +19,7 @@ A template is a `template.yaml` file that ships inside Depictio under `depictio/
 
 Every template declares its own variables. Variable names are **template-specific** — each pipeline decides what it needs.
 
-`DATA_ROOT` is the only universal variable (always required, set via `--data-root`). All others are passed via `--var KEY=VALUE`.
+`DATA_ROOT` is the only universal variable: it is always required, and it is the results directory given to `depictio ingest` (formerly `--data-root`). All others are passed via `--var KEY=VALUE`.
 
 **Auto-detected variables:** When a metadata file is provided, the system reads its headers and auto-populates:
 
@@ -92,29 +92,39 @@ The recipe Python code stays generic — path resolution happens via variable su
 | Flag | Type | Required | Description |
 |------|------|----------|-------------|
 | `--template` | `string` | [one of](#pipeline-id) | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+) |
-| `--data-root` | `path` | yes | Root directory substituted for `{DATA_ROOT}` |
+| `DATA_DIR` (argument) | `path` | yes | The results directory, substituted for `{DATA_ROOT}`. Formerly `--data-root` |
 | `--var` | `KEY=VALUE` | depends on template | Pass template-specific variables; repeatable |
 | `--dashboard` | `path` | no | Override default dashboard(s); repeatable |
-| `--skip-dashboard-import` | `flag` | no | Skip automatic dashboard import |
-| `--project-name` | `string` | no | Custom project name |
+| `--skip dashboards` | `flag` | no | Skip automatic dashboard import. Formerly `--skip-dashboard-import` |
+| `--project` | `string` | no | Custom project name. Formerly `--project-name` |
+
+```bash
+depictio ingest /path/to/results --template nf-core/ampliseq/latest
+```
 
 ### Which template a run uses { #pipeline-id }
 
-`depictio-cli run` needs one of:
+`depictio ingest` takes the project from the first of these that applies:
 
-- `--template nf-core/ampliseq/2.16.0`, for a pipeline Depictio ships a template for;
-- `--project-config-path my_project.yaml`, for a pipeline of your own.
+- `--template nf-core/ampliseq/2.16.0`, for a pipeline Depictio ships a template for,
+  or `--project-config-path my_project.yaml`, for a pipeline of your own;
+- `--pipeline-id nf-core/ampliseq/2.16.0`, which the
+  [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) passes for you since
+  **v1.10.0**, read from the `manifest` block of its `nextflow.config`. Its version
+  must match a shipped template, or the run stops with an error;
+- the results directory itself: the run information an nf-core pipeline writes
+  under `pipeline_info/` names the pipeline and its version, and the matching
+  template is used. When no shipped version matches, the closest version that is
+  not newer is used, with a warning.
 
-Since **v1.10.0** the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md)
-passes a third for you, `--pipeline-id nf-core/ampliseq/2.16.0`, read from the
-`manifest` block of its `nextflow.config`. Its version must match a shipped
-template, or the run stops with an error.
+When none applies, the command stops and asks for `--template` or
+`--project-config-path`.
 
 ---
 
 ## Resolution Workflow
 
-When `--template` is set, `depictio run` inserts **Step 0: Template resolution** before the standard pipeline:
+When a template is used, `depictio ingest` inserts **Step 0: Template resolution** before the standard pipeline:
 
 | Step | Name | Description |
 |------|------|-------------|
@@ -126,7 +136,7 @@ When `--template` is set, `depictio run` inserts **Step 0: Template resolution**
 | 5 | Data process | Execute recipes, write to Delta Lake |
 | 6 | Join computation | Compute cross-DC joins |
 | 7 | Finalize | Mark project as ready |
-| **8** | Dashboard import | Import bundled dashboard YAML (with variable substitution) |
+| **8** | Dashboard import | Import the bundled dashboard YAML the project lacks (with variable substitution). On a refresh, the dashboards it has are kept as edited in the viewer, unless `--reset-dashboards` |
 
 Dashboard YAML files also undergo variable substitution (e.g. `{GROUP_COL}` in filter columns, chart titles).
 
@@ -248,7 +258,7 @@ A template with no `provenance:` block gets a default spec: the latest
 and lists its entries under a **User provided** group. The flag is repeatable.
 
 ```bash
-depictio-cli run --provenance-file run_summary.yaml --provenance-file thresholds.tsv
+depictio ingest /path/to/results --provenance-file run_summary.yaml --provenance-file thresholds.tsv
 ```
 
 ### Where it surfaces
@@ -287,7 +297,7 @@ Tags are resolved to MongoDB ObjectIds after the project is synced to the server
 
 ## Additional Resources
 
-- **[Template Catalog](../../pipeline-templates/README.md)** — browse and use available templates
-- **[Recipes](recipes.md)** — how to write and test data transformation recipes
-- **[Contributing Templates](../../developer/contributing-templates.md)** — add a new template
-- **[CLI Usage](../../depictio-cli/usage.md)** — full `depictio run` reference
+- **[Template Catalog](../../pipeline-templates/README.md)**: browse and use available templates
+- **[Recipes](recipes.md)**: how to write and test data transformation recipes
+- **[Contributing Templates](../../developer/contributing-templates.md)**: add a new template
+- **[CLI Usage](../../depictio-cli/usage.md#ingest-command)**: full `depictio ingest` reference

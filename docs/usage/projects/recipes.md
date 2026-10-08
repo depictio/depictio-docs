@@ -66,14 +66,14 @@ A `# INPUT SCHEMA:` comment line sits above `SOURCES` and a `# OUTPUT SCHEMA:` l
 
 Recipes are used in two ways:
 
-1. **Standalone testing** — `depictio recipe run` executes a recipe locally against a data directory, so you can validate your data before registering a project.
-2. **Project integration** — a `data_collection` with `source: "transformed"` tells the CLI to run the recipe during `depictio run`, storing the result as a Delta Lake table.
+1. **Standalone testing**: `depictio dev recipe run` executes a recipe locally against a data directory, so you can validate your data before registering a project.
+2. **Project integration**: a `data_collection` with `source: "transformed"` tells the CLI to run the recipe during `depictio ingest`, storing the result as a Delta Lake table.
 
 ---
 
 ## The 5-Checkpoint Validation Pipeline
 
-Every recipe execution — whether via `depictio recipe run` or `depictio run` — runs through five automatic checkpoints:
+Every recipe execution, whether via `depictio dev recipe run` or `depictio ingest`, runs through five automatic checkpoints:
 
 | # | Checkpoint | What it checks |
 |---|-----------|----------------|
@@ -97,12 +97,15 @@ RecipeError: Recipe arriba/fusions.py: source 'fusions' lacks input column(s) ['
 
 ## CLI Commands
 
-### `depictio recipe list`
+The recipe commands sit in the `depictio dev` group, the maintainer tools that
+`depictio --help` does not list.
+
+### `depictio dev recipe list`
 
 List all bundled recipes.
 
 ```bash
-depictio recipe list
+depictio dev recipe list
 ```
 
 **Output:**
@@ -119,12 +122,12 @@ Available recipes (6):
 
 ---
 
-### `depictio recipe info <name>`
+### `depictio dev recipe info <name>`
 
 Show recipe details: docstring, sources, input schema and output schema. Pass `--version` to inspect a version-specific override.
 
 ```bash
-depictio recipe info nf-core/ampliseq/alpha_diversity.py
+depictio dev recipe info nf-core/ampliseq/alpha_diversity.py
 ```
 
 **Output:**
@@ -149,12 +152,12 @@ When the recipe declares a non-empty `OPTIONAL_OUTPUT_SCHEMA`, an `Optional outp
 
 ---
 
-### `depictio recipe run <name>`
+### `depictio dev recipe run <name>`
 
 Execute a recipe against local data with all 5 validation checkpoints.
 
 ```bash
-depictio recipe run nf-core/ampliseq/alpha_diversity.py \
+depictio dev recipe run nf-core/ampliseq/alpha_diversity.py \
   --data-dir /data/ampliseq_results
 ```
 
@@ -169,7 +172,7 @@ depictio recipe run nf-core/ampliseq/alpha_diversity.py \
 
 <!-- prettier-ignore -->
 !!! note "dc_ref sources"
-    Recipes that reference another data collection via `dc_ref` (e.g. `taxonomy_rel_abundance.py`) cannot be fully executed standalone. The CLI will report which sources are skipped and exit with code 0. These sources are resolved automatically during `depictio run` when all data collections are available.
+    Recipes that reference another data collection via `dc_ref` (e.g. `taxonomy_rel_abundance.py`) cannot be fully executed standalone. The CLI will report which sources are skipped and exit with code 0. These sources are resolved automatically during `depictio ingest` when all data collections are available.
 
 ---
 
@@ -327,7 +330,7 @@ Exactly one of `path`, `dc_ref`, or `glob_pattern` must be set per source.
 
 Use `glob_pattern` instead of `path` to fan multiple per-sample files
 into one DataFrame. The glob is expanded by the recipe runner relative
-to the project's `data_dir` (typically `--data-root`):
+to the project's `data_dir` (typically the results directory given to `depictio ingest`):
 
 ```python
 SOURCES: list[RecipeSource] = [
@@ -380,11 +383,11 @@ Use `source_overrides` to parameterize recipe source paths via template variable
           # ... one override per source ref
 ```
 
-The recipe is executed during `depictio data process` (Step 5 of `depictio run`). All 4 checkpoints run automatically. If the recipe fails, the data collection is skipped and an error is logged.
+The recipe is executed during `depictio data process` (the process step of `depictio ingest`). All 4 checkpoints run automatically. If the recipe fails, the data collection is skipped and an error is logged.
 
 <!-- prettier-ignore -->
 !!! tip "Using templates"
-    For nf-core/ampliseq, all six recipes are pre-configured in the bundled template. Use `depictio run --template nf-core/ampliseq/2.16.0 --data-root /your/data --var SAMPLESHEET_FILE=samplesheet.csv` to set up the complete project without writing any YAML. See [Templates](templates.md).
+    For nf-core/ampliseq, all six recipes are pre-configured in the bundled template. Use `depictio ingest /your/data --template nf-core/ampliseq/2.16.0 --var SAMPLESHEET_FILE=samplesheet.csv` to set up the complete project without writing any YAML. See [Templates](templates.md).
 
 ---
 
@@ -435,10 +438,10 @@ To test a version-specific recipe standalone:
 
 ```bash
 # Uses shared recipe
-depictio recipe run nf-core/ampliseq/taxonomy_rel_abundance.py --data-dir /data/run
+depictio dev recipe run nf-core/ampliseq/taxonomy_rel_abundance.py --data-dir /data/run
 
 # Uses the v2.14.0 override if it exists, falls back to shared otherwise
-depictio recipe run nf-core/ampliseq/taxonomy_rel_abundance.py \
+depictio dev recipe run nf-core/ampliseq/taxonomy_rel_abundance.py \
   --data-dir /data/run \
   --version 2.14.0
 ```

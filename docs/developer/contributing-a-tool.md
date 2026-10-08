@@ -17,7 +17,7 @@ renders — so users get visualizations automatically, with no manual wiring.
 Adding a tool is a **single-folder pull request** under
 `depictio/catalog/<tool>/` — no Depictio internals to learn, and no Python
 unless an output needs reshaping. Everything is validated in CI by
-`depictio-cli dev catalog validate`.
+`depictio dev catalog validate`.
 
 ## Two ways in <small>(v1.9.0+)</small> { #two-ways-in }
 
@@ -172,7 +172,7 @@ def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
 `OUTPUT_SCHEMA` is what the catalog grounds every render binding against. This
 is the same recipe contract used by [templates](contributing-templates.md). To
 see a recipe's output columns while writing `roles`:
-`depictio-cli dev catalog columns ivar/variants_long.py`.
+`depictio dev catalog columns ivar/variants_long.py`.
 
 ## Step 4 — Fixture
 
@@ -185,15 +185,15 @@ each render.
 
 ```bash
 # Validate just your tool (load → find → recipe → render bindings)
-depictio-cli dev catalog validate --path depictio/catalog/<tool>
+depictio dev catalog validate --path depictio/catalog/<tool>
 
 # Live-preview an output rendered on its fixture
-depictio-cli catalog preview <tool>_<output>
+depictio catalog preview <tool>_<output>
 
 # Helpful while authoring
-depictio-cli catalog list                 # every tool + output + render targets
-depictio-cli catalog info <tool>          # one tool in detail
-depictio-cli dev catalog match /path/run  # which outputs are recognised in a run
+depictio catalog list                 # every tool + output + render targets
+depictio catalog info <tool>          # one tool in detail
+depictio dev catalog match /path/run  # which outputs are recognised in a run
 ```
 
 Tip — add this header to each catalog YAML for live validation and autocomplete
@@ -209,7 +209,7 @@ Before submitting, check:
 - [ ] Each `<output>.yaml` has a unique `id`, a `find`, and at least one `renders_as`.
 - [ ] On outputs that bind columns, set `recipe` **or** `columns` (declare one) — never both.
 - [ ] A fixture is committed for every output that binds columns, covering all bound columns.
-- [ ] `depictio-cli dev catalog validate --path depictio/catalog/<tool>` passes green.
+- [ ] `depictio dev catalog validate --path depictio/catalog/<tool>` passes green.
 
 In the PR, link the tool's nf-core module / homepage and note the pipeline whose
 output you tested against.
