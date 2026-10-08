@@ -5329,6 +5329,11 @@
 <td><code>false</code></td>
 <td>Docked component inspector, replacing the per-component popovers for advanced-visualisation controls, notes and metadata. Experimental (v1.4.0+)</td>
 </tr>
+<tr>
+<td><code>DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW</code></td>
+<td><code>thumbnails</code></td>
+<td>View <code>/dashboards</code> opens in for someone who never picked one: <code>thumbnails</code> or <code>table</code>. A view chosen in the browser, or named by a shared link, wins (v1.11.2+)</td>
+</tr>
 </tbody>
 </table>
 <hr>
@@ -6007,6 +6012,21 @@ admin-only <code>/events/test-trigger/{dc_id}</code> route used to broadcast a t
 <td><code>DEPICTIO_PERFORMANCE_SCREENSHOT_API_TIMEOUT</code></td>
 <td><code>300</code></td>
 <td>-</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_SCREENSHOT_VIEWPORT_WIDTH</code></td>
+<td><code>1440</code></td>
+<td>Width of the page a dashboard thumbnail is captured from, in CSS pixels (v1.11.2+)</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_SCREENSHOT_VIEWPORT_HEIGHT</code></td>
+<td><code>900</code></td>
+<td>Height of that page, in CSS pixels (v1.11.2+)</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_SCREENSHOT_SCALE</code></td>
+<td><code>2.0</code></td>
+<td>Pixel density of the capture, from <code>1.0</code> to <code>3.0</code>. Each capture also writes an <code>@2x</code> file for the hover preview (v1.11.2+)</td>
 </tr>
 <tr>
 <td><code>DEPICTIO_PERFORMANCE_SERVICE_READINESS_RETRIES</code></td>
