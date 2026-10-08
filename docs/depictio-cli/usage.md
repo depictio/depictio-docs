@@ -350,7 +350,7 @@ depictio local up
 depictio ingest results/ --server local
 ```
 
-See [Local Server](../installation/local.md) for every command and option.
+See [Python package installation](../installation/local.md) for every command and option.
 
 ### 📋 Config Commands
 
