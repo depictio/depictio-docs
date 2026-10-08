@@ -515,6 +515,7 @@ Per-sample stacked relative-abundance bar with a rank dropdown.
 | `sort_by` | `abundance` \| `alphabetical` | `abundance` | Stack-ordering rule |
 | `normalise_to_one` | bool | `true` | Force each sample's bars to sum to 1 (true % composition) |
 | `annotation_strips` | list[dict] \| null | `null` | Per-sample categorical annotation strips drawn above or below the stacked bars. Each entry is a dict with: `column` (str, required), `label` (str, optional — defaults to column name), `position` (`top` \| `bottom`, default `bottom`), `palette` (`{value: hex}`, optional). Reusable across any per-sample categorical metadata (habitat, batch, treatment, timepoint) — renderer pulls the columns automatically, no recipe change needed. |
+| `taxon_palette` | dict[str, str] \| null | `null` | `{taxon: hex}` colours pinned for the bars. Unlisted taxa keep the default cycle, which repeats past twelve taxa (v1.12.0+) |
 
 ??? example "Annotation strips YAML"
     ```yaml
@@ -528,6 +529,17 @@ Per-sample stacked relative-abundance bar with a rank dropdown.
           Sediment: "#E41A1C"
           Soil: "#FF7F00"
     ```
+
+<small>(v1.12.0+)</small> Each strip is a row of cells under or over the bars, one per
+sample. Hovering a cell shows the sample and its category, and the legend lists each
+category under the strip's label. A strip reads its column from the data collection the
+figure draws. The bundled QIIME2 recipe behind the nf-core/ampliseq stacked taxonomy
+joins every categorical column of the sample metadata with at most 25 categories (text,
+categorical or boolean), so a strip can follow `locality`, `batch` or any other grouping,
+not only `habitat`. Samples are ordered by `habitat` when that column exists, otherwise
+by the first column joined. Collections ingested before v1.12.0 carry only `habitat`:
+re-ingest them to colour by another column. A taxon with no name at the shown rank is
+labelled `Unclassified`.
 
 **Filtering / row tagging**
 

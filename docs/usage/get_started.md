@@ -130,7 +130,7 @@ s3:
   public_url: null
   root_password: minio123
   root_user: minio
-  service_name: minio
+  service_name: s3
   service_port: 9000
 user:
   description: null
