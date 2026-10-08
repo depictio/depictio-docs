@@ -35,8 +35,11 @@ and rings on box-plot outliers.
     Threads and annotations are kept in their own MongoDB collection, not in the dashboard
     document. Saving the dashboard or editing its layout never drops them, and after a
     YAML re-import they re-attach to their components (see
-    [below](#when-the-data-or-the-component-changes)). Annotations are drawn by the viewer on top of the figure at render time:
-    nothing is recomputed on the server, and the component's own definition is unchanged.
+    [below](#when-the-data-or-the-component-changes)). They are not part of a dashboard's
+    YAML export, but [backups](../usage/administration/backup.md) include them. Deleting a
+    dashboard, a tab or a project deletes its threads. Annotations are drawn by the viewer
+    on top of the figure at render time: nothing is recomputed on the server, and the
+    component's own definition is unchanged.
 
 Comments and annotations live in the dashboard **viewer** (`/dashboard/{id}`), not in the
 editor.
@@ -367,18 +370,6 @@ duplicating them; a re-proposed rejection goes back to review. One agent run can
 !!! warning "Comments are data, not instructions"
     The text of a comment is never treated as an instruction for an agent reading the
     dashboard.
-
----
-
-## :material-database-cog-outline: Storage, deletion and backup
-
-- Deleting a dashboard (or one of its tabs) deletes its threads. Deleting a project deletes
-  all of the project's threads.
-- [Backups](../usage/administration/backup.md) include threads, including those whose
-  dashboard is gone, and the CLI's `backup validate` checks them against the current models.
-  Threads anchored on the dashboards of temporary users are left out, like those
-  dashboards.
-- Threads are not part of a dashboard's YAML export.
 
 ---
 
