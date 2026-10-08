@@ -8,6 +8,28 @@ hide:
 
 # Changelog
 
+## **[v1.11.2](https://github.com/depictio/depictio/releases/tag/v1.11.2)** (September 24, 2026)
+
+!!! success "Patch: a builder preview that stays in view, and a tidier dashboards listing"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.11.2
+ghcr.io/depictio/depictio-viewer:1.11.2
+ghcr.io/depictio/depictio-worker:1.11.2
+ghcr.io/depictio/depictio-cli:1.11.2
+```
+
+### **🚀 Improvements**
+
+* **The builder's preview stays in view** while the controls scroll, and every figure parameter has a description ([#1105](https://github.com/depictio/depictio/pull/1105)).
+* **The dashboards listing has a Card display menu** and loses the Tiles view. `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` sets the view it opens in ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **Sharper thumbnails**, sized by `DEPICTIO_PERFORMANCE_SCREENSHOT_*` ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **The tab sidebar opens by default, the loader shows the animated rose**, and an embedded dashboard can follow its host's colour scheme ([#1108](https://github.com/depictio/depictio/pull/1108)).
+
+---
+
 ## **[v1.11.1](https://github.com/depictio/depictio/releases/tag/v1.11.1)** (September 17, 2026)
 
 !!! success "Patch: an opt-in Nextflow trigger, and General Stats only where the report has it"
