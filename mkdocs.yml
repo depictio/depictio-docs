@@ -82,7 +82,6 @@ extra_javascript:
   - javascripts/template-version.js
   - javascripts/doc-sections.js
   - javascripts/template-catalog.js
-  - https://cdn.jsdelivr.net/npm/asciinema-player@3.17.0/dist/bundle/asciinema-player.min.js
   - javascripts/asciinema.js
 
 # Markdown Extensions

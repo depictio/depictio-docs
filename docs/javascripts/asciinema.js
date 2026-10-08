@@ -1,5 +1,6 @@
-/* Terminal recordings, played by asciinema-player (loaded from jsDelivr in
-   mkdocs.yml) from .cast files kept in this repository under assets/casts/.
+/* Terminal recordings, played by asciinema-player from .cast files kept in this
+   repository under assets/casts/. The player's stylesheet is in mkdocs.yml; its
+   script (about 185 KB) is fetched from jsDelivr only on a page that has a cast.
 
    A page embeds one with
 
@@ -23,14 +24,40 @@ const SITE_ROOT = (() => {
   return new URL(`${base}/`, window.location.href);
 })();
 
-let castPlayers = [];
+const PLAYER_JS =
+  'https://cdn.jsdelivr.net/npm/asciinema-player@3.17.0/dist/bundle/asciinema-player.min.js';
 
-function mountCasts() {
+let castPlayers = [];
+let playerLoading = null;
+
+function loadPlayer() {
+  if (typeof AsciinemaPlayer !== 'undefined') return Promise.resolve();
+  if (!playerLoading) {
+    playerLoading = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = PLAYER_JS;
+      script.onload = resolve;
+      script.onerror = () => {
+        playerLoading = null;
+        reject(new Error(`Could not load ${PLAYER_JS}`));
+      };
+      document.head.appendChild(script);
+    });
+  }
+  return playerLoading;
+}
+
+async function mountCasts() {
   castPlayers.forEach((player) => player.dispose());
   castPlayers = [];
-  if (typeof AsciinemaPlayer === 'undefined') return;
 
-  document.querySelectorAll('.asciinema-cast[data-cast]').forEach((el) => {
+  const casts = document.querySelectorAll('.asciinema-cast[data-cast]');
+  if (casts.length === 0) return;
+  await loadPlayer();
+
+  casts.forEach((el) => {
+    // The reader may have left the page while the player script was loading.
+    if (!el.isConnected) return;
     const { cast, poster, theme, idleTimeLimit } = el.dataset;
     el.replaceChildren();
     castPlayers.push(
