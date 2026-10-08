@@ -8,6 +8,39 @@ hide:
 
 # Changelog
 
+## **[v1.13.0](https://github.com/depictio/depictio/releases/tag/v1.13.0)** (October 7, 2026)
+
+!!! success "Minor: thirteen new nf-core templates, ten visualization kinds, and comments on dashboards"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.13.0
+ghcr.io/depictio/depictio-viewer:1.13.0
+ghcr.io/depictio/depictio-worker:1.13.0
+ghcr.io/depictio/depictio-cli:1.13.0
+```
+
+### **♻️ Migration**
+
+* **The nf-core/ampliseq 2.14.0 and 2.16.0 seeds are gone**: ingest those versions with their template ([#1102](https://github.com/depictio/depictio/pull/1102)).
+
+### **✨ New Features**
+
+* **Comments and annotations on dashboard tiles**: threads that keep the active filters, and marks drawn on the tile ([#1109](https://github.com/depictio/depictio/pull/1109), [#1113](https://github.com/depictio/depictio/pull/1113)).
+* **Ten new advanced visualization kinds**, among them the genome view, the contact map, the knee plot and the record card ([#1102](https://github.com/depictio/depictio/pull/1102)).
+
+### **🚀 Improvements**
+
+* **Recipes take template parameters**, and region links carry a genomic window from one collection to another ([#1102](https://github.com/depictio/depictio/pull/1102)).
+
+### **🧬 Pipeline Templates**
+
+* **Thirteen new nf-core templates**, among them nf-core/mag 5.5.0, nf-core/sarek 3.10.0 and nf-core/scrnaseq 4.2.0 ([#1102](https://github.com/depictio/depictio/pull/1102)).
+* **Seven templates move from Draft to Experimental**, and the reworked templates cross-select their tables and plots ([#1102](https://github.com/depictio/depictio/pull/1102)).
+
+---
+
 ## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (October 7, 2026)
 
 !!! success "Minor: the server without Docker, one `depictio` command, and SeaweedFS as the bundled store"
