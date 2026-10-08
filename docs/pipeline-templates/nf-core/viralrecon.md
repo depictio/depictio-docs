@@ -48,15 +48,14 @@ The viralrecon template covers the main outputs of a standard nf-core/viralrecon
 
 ## :material-rocket-launch-outline: Quick start
 
-`--data-root` is the only thing you have to pass. The template's routing variables
+The results directory is the only thing you have to pass. The template's routing variables
 (`PLATFORM`, `PROTOCOL`, `VARIANT_CALLER`, and the `SKIP_*` flags) mirror nf-core's own
 parameters and are **auto-derived from the run's `params.json`** — so the *same command*
 works for an Illumina or a nanopore run:
 
 ```bash
-depictio run \
-  --template nf-core/viralrecon/3.0.0 \
-  --data-root /path/to/viralrecon_results
+depictio ingest /path/to/viralrecon_results \
+  --template nf-core/viralrecon/3.0.0
 ```
 
 A nanopore run (whose `params.json` records `platform: nanopore`) is detected
@@ -73,7 +72,7 @@ working. Only `summary_metrics` is dropped (no nanopore equivalent yet).
     [Reference](#reference).
 
 !!! tip "Or let the pipeline do it <small>(v1.10.0+)</small>"
-    Run `depictio-cli config nextflow --install` once on the machine that runs
+    Run `depictio config nextflow --install` once on the machine that runs
     `nextflow`. This template reads a folder of `run_*` directories, so write the
     run into one and have the pipeline ingest their parent:
 
@@ -271,8 +270,8 @@ nextflow run nf-core/viralrecon -r 3.0.0 \
 Then point Depictio at the results:
 
 ```bash
-depictio run --template nf-core/viralrecon/3.0.0 \
-  --data-root results/
+depictio ingest results/ \
+  --template nf-core/viralrecon/3.0.0
 ```
 
 A nanopore/ARTIC run (`nextflow … --platform nanopore`) needs no extra flags —
@@ -285,7 +284,7 @@ See [nf-co.re/viralrecon/usage](https://nf-co.re/viralrecon/3.0.0/docs/usage) fo
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` to the directory containing your viralrecon outputs. This can be a single run's `results/` folder or a parent directory containing multiple runs — Depictio scans recursively. Not all files are required; the template adapts to what's present and to the sequencing platform / caller / skip flags it reads from the run's `params.json` (override any with `--var`).
+Point `depictio ingest` at the directory containing your viralrecon outputs. This can be a single run's `results/` folder or a parent directory containing multiple runs: Depictio scans recursively. Not all files are required; the template adapts to what's present and to the sequencing platform / caller / skip flags it reads from the run's `params.json` (override any with `--var`).
 
 The tree below shows the **Illumina** layout. On `PLATFORM=nanopore` the same
 collections are read from `artic_minion/` instead (coverage, lineage, and the
@@ -328,9 +327,8 @@ and validates that all expected file patterns are present.
 Once the download finishes, run depictio against it:
 
 ```bash
-depictio run \
-  --template nf-core/viralrecon/3.0.0 \
-  --data-root /tmp/viralrecon_test/run_1
+depictio ingest /tmp/viralrecon_test/run_1 \
+  --template nf-core/viralrecon/3.0.0
 ```
 
 !!! note "Alternative: run nf-core/viralrecon locally"

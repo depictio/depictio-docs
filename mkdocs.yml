@@ -213,6 +213,7 @@ nav:
       - Server:
           - Docker Compose: installation/docker.md
           - Kubernetes: installation/kubernetes.md
+          - Local (no Docker): installation/local.md
       - CLI:
           - installation/cli.md
       - Configuration: installation/configuration.md
