@@ -8,6 +8,96 @@ hide:
 
 # Changelog
 
+## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (October 7, 2026)
+
+!!! success "Minor: the server without Docker, one `depictio` command, and SeaweedFS as the bundled store"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.12.0
+ghcr.io/depictio/depictio-viewer:1.12.0
+ghcr.io/depictio/depictio-worker:1.12.0
+ghcr.io/depictio/depictio-cli:1.12.0
+```
+
+### **♻️ Migration**
+
+* **The bundled S3 store is SeaweedFS instead of MinIO, and it starts empty**: copy your data over with the [migration guide](https://github.com/depictio/depictio/blob/v1.12.0/docs/migrate-minio-to-seaweedfs.md). The `DEPICTIO_MINIO_*` variables become `DEPICTIO_S3_*`, and the old names still work ([#1061](https://github.com/depictio/depictio/pull/1061)).
+* **The CLI is the `depictio` package**, with `depictio-cli` kept as an alias. `run` is now `ingest` and `--server` names the server, and the old names still work ([#1146](https://github.com/depictio/depictio/pull/1146), [#1149](https://github.com/depictio/depictio/pull/1149)).
+* **Custom recipes rename `EXPECTED_SCHEMA` to `OUTPUT_SCHEMA`** and `OPTIONAL_SCHEMA` to `OPTIONAL_OUTPUT_SCHEMA`. A recipe with the old names no longer loads ([#1128](https://github.com/depictio/depictio/pull/1128)).
+
+### **✨ New Features**
+
+* **`depictio local up` runs the full server without Docker** ([#1110](https://github.com/depictio/depictio/pull/1110)).
+* **`depictio ingest <results dir>` detects the template**, and a refresh keeps the dashboards ([#1149](https://github.com/depictio/depictio/pull/1149)).
+* **Recipe sources declare an `input_schema`**, checked before the transform runs ([#1132](https://github.com/depictio/depictio/pull/1132)).
+
+### **🚀 Improvements**
+
+* **The dashboards listing opens on the table**, and the thumbnail grid shows five cards per row ([#1139](https://github.com/depictio/depictio/pull/1139)).
+
+### **🐛 Bug Fixes**
+
+* **Stacked taxonomy strips colour by any metadata column**, with hover and a legend ([#1140](https://github.com/depictio/depictio/pull/1140)).
+* **A MultiQC report no longer stays on *preparing* after its worker dies** ([#1110](https://github.com/depictio/depictio/pull/1110)).
+
+---
+
+??? info "Beta releases leading up to v1.12.0"
+
+    **v1.12.0-b1**
+
+    * SeaweedFS, a first `depictio local up` that also ingested results, and the listing, taxonomy and MultiQC changes above ([#1061](https://github.com/depictio/depictio/pull/1061), [#1110](https://github.com/depictio/depictio/pull/1110)). The stable `v1.12.0` adds the CLI rework and the recipe schemas.
+
+---
+
+## **[v1.11.2](https://github.com/depictio/depictio/releases/tag/v1.11.2)** (September 24, 2026)
+
+!!! success "Patch: a builder preview that stays in view, and a tidier dashboards listing"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.11.2
+ghcr.io/depictio/depictio-viewer:1.11.2
+ghcr.io/depictio/depictio-worker:1.11.2
+ghcr.io/depictio/depictio-cli:1.11.2
+```
+
+### **🚀 Improvements**
+
+* **The builder's preview stays in view** while the controls scroll, and every figure parameter has a description ([#1105](https://github.com/depictio/depictio/pull/1105)).
+* **The dashboards listing has a Card display menu** and loses the Tiles view. `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` sets the view it opens in ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **Sharper thumbnails**, sized by `DEPICTIO_PERFORMANCE_SCREENSHOT_*` ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **The tab sidebar opens by default, the loader shows the animated rose**, and an embedded dashboard can follow its host's colour scheme ([#1108](https://github.com/depictio/depictio/pull/1108)).
+
+---
+
+## **[v1.11.1](https://github.com/depictio/depictio/releases/tag/v1.11.1)** (September 17, 2026)
+
+!!! success "Patch: an opt-in Nextflow trigger, and General Stats only where the report has it"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.11.1
+ghcr.io/depictio/depictio-viewer:1.11.1
+ghcr.io/depictio/depictio-worker:1.11.1
+ghcr.io/depictio/depictio-cli:1.11.1
+```
+
+### **🚀 Improvements**
+
+* **The Nextflow trigger can be installed opt-in** with `depictio-cli config nextflow --install --default-disabled`. See [`config nextflow`](../depictio-cli/usage.md#config-nextflow) ([#1103](https://github.com/depictio/depictio/pull/1103)).
+
+### **🐛 Bug Fixes**
+
+* **General Stats is only offered when a MultiQC report has the table**, so nf-core/chipseq 2.1.0 dashboards no longer show a failed tile ([#1104](https://github.com/depictio/depictio/pull/1104)).
+* **Table renders in the catalog gallery show their rows again** ([#1101](https://github.com/depictio/depictio/pull/1101)).
+
+---
+
 ## **[v1.11.0](https://github.com/depictio/depictio/releases/tag/v1.11.0)** (September 14, 2026)
 
 !!! success "Minor: a feedback link on dashboards, and a funnel that follows one column"
