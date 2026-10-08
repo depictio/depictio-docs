@@ -4960,11 +4960,12 @@
 </blockquote>
 <p>A recipe is a plain Python module that describes how to transform one or more raw files into a single tidy DataFrame. Each recipe lives in <code>depictio/projects/&lt;pipeline&gt;/recipes/</code> and declares:</p>
 <ul>
-<li><strong><code>SOURCES</code></strong> — input files to read (paths relative to <code>--data-dir</code>, or references to other data collections via <code>dc_ref</code>)</li>
-<li><strong><code>EXPECTED_SCHEMA</code></strong> — required output columns and their Polars data types</li>
-<li><strong><code>OPTIONAL_SCHEMA</code></strong> <em>(optional)</em> — columns that may or may not be present (e.g. user-defined metadata columns)</li>
-<li><strong><code>transform(sources)</code></strong> — a pure function that takes loaded DataFrames and returns the output DataFrame</li>
+<li><strong><code>SOURCES</code></strong>: input files to read (paths relative to <code>--data-dir</code>, or references to other data collections via <code>dc_ref</code>)</li>
+<li><strong><code>OUTPUT_SCHEMA</code></strong>: required output columns and their Polars data types</li>
+<li><strong><code>OPTIONAL_OUTPUT_SCHEMA</code></strong> <em>(optional)</em>: columns that may or may not be present (e.g. user-defined metadata columns)</li>
+<li><strong><code>transform(sources)</code></strong>: a pure function that takes loaded DataFrames and returns the output DataFrame</li>
 </ul>
+<p><img alt="A recipe declares its inputs (SOURCES) and its output (OUTPUT_SCHEMA, OPTIONAL_OUTPUT_SCHEMA)" src="../../../images/recipes/output_schema_contract.png"></p>
 <p>Recipes are used in two ways:</p>
 <ol>
 <li><strong>Standalone testing</strong>: <code>depictio dev recipe run</code> executes a recipe locally against a data directory, so you can validate your data before registering a project.</li>
@@ -4985,7 +4986,7 @@
 <tr>
 <td>1</td>
 <td><strong>Load</strong></td>
-<td>Import the recipe module; verify <code>SOURCES</code>, <code>EXPECTED_SCHEMA</code>, and a callable <code>transform()</code> exist</td>
+<td>Import the recipe module; verify <code>SOURCES</code>, <code>OUTPUT_SCHEMA</code>, and a callable <code>transform()</code> exist</td>
 </tr>
 <tr>
 <td>2</td>
@@ -5000,7 +5001,7 @@
 <tr>
 <td>4</td>
 <td><strong>Schema</strong></td>
-<td>Assert every column in <code>EXPECTED_SCHEMA</code> is present with the correct dtype; validate <code>OPTIONAL_SCHEMA</code> columns if present</td>
+<td>Assert every column in <code>OUTPUT_SCHEMA</code> is present with the correct dtype; validate <code>OPTIONAL_OUTPUT_SCHEMA</code> columns if present</td>
 </tr>
 </tbody>
 </table>
@@ -5024,7 +5025,7 @@
 </code></pre></div>
 <hr>
 <h3 id="depictio-dev-recipe-info-name"><code>depictio dev recipe info &lt;name&gt;</code><a class="headerlink" href="#depictio-dev-recipe-info-name" title="Permanent link">¶</a></h3>
-<p>Show recipe details: docstring, sources, and expected output schema. Pass <code>--version</code> to inspect a version-specific override.</p>
+<p>Show recipe details: docstring, sources, and output schema. Pass <code>--version</code> to inspect a version-specific override.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>info<span class="w"> </span>nf-core/ampliseq/alpha_diversity.py
 </code></pre></div>
 <p><strong>Output:</strong></p>
@@ -5034,12 +5035,11 @@
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Sources (1):
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>  faith_pd: qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv (TSV)
 <a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Expected output schema (2 columns):
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  sample: Utf8
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Output schema (2 columns):
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  sample: String
 <a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>  faith_pd: Float64
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>Optional schema: {} (metadata columns passed through dynamically)
 </code></pre></div>
+<p>When the recipe declares a non-empty <code>OPTIONAL_OUTPUT_SCHEMA</code>, an <code>Optional output schema (N columns)</code> table follows.</p>
 <hr>
 <h3 id="depictio-dev-recipe-run-name"><code>depictio dev recipe run &lt;name&gt;</code><a class="headerlink" href="#depictio-dev-recipe-run-name" title="Permanent link">¶</a></h3>
 <p>Execute a recipe against local data with all 4 validation checkpoints.</p>
@@ -5112,7 +5112,7 @@
 <a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    <span class="p">),</span>
 <a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="p">]</span>
 <a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>
-<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="n">EXPECTED_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="n">OUTPUT_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
 <a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="s2">"sample"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
 <a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>    <span class="s2">"taxonomy"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
 <a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>    <span class="s2">"rel_abundance"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span>
@@ -5120,7 +5120,7 @@
 <a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>    <span class="s2">"Phylum"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
 <a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="p">}</span>
 <a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="c1"># Metadata columns are user-defined; validated dynamically</span>
-<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="n">OPTIONAL_SCHEMA</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">pl</span><span class="o">.</span><span class="n">DataType</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="n">OPTIONAL_OUTPUT_SCHEMA</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">pl</span><span class="o">.</span><span class="n">DataType</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
 <a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>
 <a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>
 <a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">sources</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
@@ -5164,7 +5164,7 @@
 <a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>    <span class="n">RecipeSource</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="s2">"se"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/ancombc/differentials/Category-habitat-level-2/se_slice.csv"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">),</span>
 <a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="p">]</span>
 <a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
-<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="n">EXPECTED_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="n">OUTPUT_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
 <a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    <span class="s2">"id"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"contrast"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
 <a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>    <span class="s2">"lfc"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"p_val"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"q_val"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span>
 <a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>    <span class="s2">"w"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"se"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span>
@@ -5261,7 +5261,7 @@
 <p>A recipe can have <strong>several inputs but always exactly one output</strong>, so only the input side needs a model.
 Inputs are polymorphic — a file path, a glob, or another data collection (<code>dc_ref</code>) — and that
 variability is what <code>RecipeSource</code> disambiguates. The output is always a single <code>pl.DataFrame</code>:
-its <strong>shape</strong> is declared by <code>EXPECTED_SCHEMA</code> / <code>OPTIONAL_SCHEMA</code>, and its <strong>destination</strong> is the
+its <strong>shape</strong> is declared by <code>OUTPUT_SCHEMA</code> / <code>OPTIONAL_OUTPUT_SCHEMA</code>, and its <strong>destination</strong> is the
 data collection that references the recipe (<code>source: "transformed"</code>). Persisting it to Delta Lake is
 the CLI runner's job, not the recipe's — recipes stay pure <code>sources → DataFrame</code> functions.</p>
 </div>
@@ -5340,7 +5340,7 @@ exclusive with <code>path</code> and <code>dc_ref</code>.</p>
 <a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>                                                dependent tabs/components are
 <a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>                                                pruned when no metadata is given)
 </code></pre></div>
-<p>To add a recipe for a new pipeline, create <code>depictio/projects/{org}/{pipeline}/recipes/{name}.py</code> following the contract: define <code>SOURCES</code>, <code>EXPECTED_SCHEMA</code>, and <code>transform()</code>.</p>
+<p>To add a recipe for a new pipeline, create <code>depictio/projects/{org}/{pipeline}/recipes/{name}.py</code> following the contract: define <code>SOURCES</code>, <code>OUTPUT_SCHEMA</code>, and <code>transform()</code>.</p>
 <hr>
 <h2 id="version-specific-recipes">Version-Specific Recipes<a class="headerlink" href="#version-specific-recipes" title="Permanent link">¶</a></h2>
 <p>When a pipeline output format changes between versions (column renames, file moves, schema changes), you can add a version-specific override without touching the shared recipe.</p>
