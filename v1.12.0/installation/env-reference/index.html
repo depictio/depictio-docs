@@ -733,6 +733,8 @@
       
         
       
+        
+      
     
     
     
@@ -826,6 +828,36 @@
     
   
     Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 6h16v10H4m16 2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4c-1.11 0-2 .89-2 2v10a2 2 0 0 0 2 2H0v2h24v-2z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Local (no Docker)
   
 
     
@@ -5987,6 +6019,16 @@ admin-only <code>/events/test-trigger/{dc_id}</code> route used to broadcast a t
 <td><code>DEPICTIO_PERFORMANCE_BROWSER_ELEMENT_TIMEOUT</code></td>
 <td><code>30000</code></td>
 <td>-</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_SCREENSHOTS_ENABLED</code></td>
+<td><code>true</code></td>
+<td>Generate dashboard thumbnails with Playwright. <code>depictio local up</code> sets it to <code>false</code> unless <code>--screenshots</code> is passed</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PERFORMANCE_SCREENSHOTS_DIR</code></td>
+<td>package's <code>api/static/screenshots</code></td>
+<td>Where thumbnails are written and served from. At startup, thumbnails of dashboards absent from the database are deleted from it</td>
 </tr>
 <tr>
 <td><code>DEPICTIO_PERFORMANCE_SCREENSHOT_NAVIGATION_TIMEOUT</code></td>
