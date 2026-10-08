@@ -8,6 +8,64 @@ hide:
 
 # Changelog
 
+## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (October 7, 2026)
+
+!!! success "Minor: the full server without Docker, one `depictio` command, and SeaweedFS as the bundled S3 store"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.12.0
+ghcr.io/depictio/depictio-viewer:1.12.0
+ghcr.io/depictio/depictio-worker:1.12.0
+ghcr.io/depictio/depictio-cli:1.12.0
+```
+
+### **♻️ Migration**
+
+* **The bundled S3 store is SeaweedFS instead of MinIO, and starts empty**: a Docker Compose or Helm install that ran the bundled store must copy its bucket over (on Helm, **before** `helm upgrade`). An external S3 or a fresh install is not affected. See [Upgrading to v1.12.0](../installation/upgrade/v1.12.0-seaweedfs.md) ([#1061](https://github.com/depictio/depictio/pull/1061), [dfbea424](https://github.com/depictio/depictio/commit/dfbea424)).
+* **`DEPICTIO_MINIO_*` settings are `DEPICTIO_S3_*`**, the Compose service `s3` and the Helm key `s3:`; the former names still work, with a deprecation warning. See [Renamed settings](../installation/upgrade/v1.12.0-seaweedfs.md#renamed-settings) ([b729d9bf](https://github.com/depictio/depictio/commit/b729d9bf), [0d20aab9](https://github.com/depictio/depictio/commit/0d20aab9)).
+* **The CLI is the `depictio` package** (`pip install depictio`, extras `[multiqc]` and `[local]`); `depictio-cli` stays an alias, but do not `pip uninstall depictio-cli` on its own. See [CLI Installation](../installation/cli.md#install-via-pip) ([#1146](https://github.com/depictio/depictio/pull/1146), [b59d127e](https://github.com/depictio/depictio/commit/b59d127e)).
+* **CLI commands renamed, former names still accepted**: `run` is `ingest <results dir>` (no `--data-root`), `--project-name` is `--project`, the `--skip-*` flags are one `--skip`, `--CLI-config-path` is `--server`, `images push` is `data push-images`. See [Quick Reference](../depictio-cli/usage.md#quick-reference) ([#1149](https://github.com/depictio/depictio/pull/1149), [2383d4ac](https://github.com/depictio/depictio/commit/2383d4ac)).
+* **A refresh keeps the dashboards and updates the project in place**: `ingest --update-config` (what the Nextflow hook runs) no longer replaces dashboards edited in the viewer, rewrites the tables as `--overwrite` did, and keeps attached runs; `--reset-dashboards` starts over from the template. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1149](https://github.com/depictio/depictio/pull/1149), [0aabde32](https://github.com/depictio/depictio/commit/0aabde32), [f2ab8c1e](https://github.com/depictio/depictio/commit/f2ab8c1e)).
+* **Custom recipes rename `EXPECTED_SCHEMA` to `OUTPUT_SCHEMA`** (and `OPTIONAL_SCHEMA` to `OPTIONAL_OUTPUT_SCHEMA`), with no fallback. See [Recipes](../usage/projects/recipes.md#what-is-a-recipe) ([#1128](https://github.com/depictio/depictio/pull/1128), [6d6e95eb](https://github.com/depictio/depictio/commit/6d6e95eb)).
+* **The dashboards listing opens on the table, thumbnails five per row**; `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW=thumbnails` restores the grid. See [Thumbnails or table](../usage/guides/web_ui.md#listing-views) ([#1139](https://github.com/depictio/depictio/pull/1139), [ed31df41](https://github.com/depictio/depictio/commit/ed31df41)).
+
+### **✨ New Features**
+
+* **`depictio local up` runs the whole server without Docker**: API, worker and viewer as plain processes, with MongoDB, Redis and SeaweedFS fetched from conda-forge; `uv` is the only prerequisite, on Linux and Apple silicon. `local export` hands it over to Docker Compose. See [Python package](../installation/local.md) ([#1110](https://github.com/depictio/depictio/pull/1110), [6c7021d0](https://github.com/depictio/depictio/commit/6c7021d0)).
+* **`depictio ingest <results dir>`** detects the template when `--template` is left out, and `--dry-run` lists the steps without contacting the server. See [Ingest Command](../depictio-cli/usage.md#ingest-command) ([#1149](https://github.com/depictio/depictio/pull/1149), [0aabde32](https://github.com/depictio/depictio/commit/0aabde32)).
+* **One `--server` option** names the target, `local` or a CLI configuration file, on every command that talks to a server. See [Which server a command uses](../depictio-cli/usage.md#choosing-a-server) ([#1149](https://github.com/depictio/depictio/pull/1149), [337a4f79](https://github.com/depictio/depictio/commit/337a4f79)).
+* **Recipe sources declare an `input_schema`**, checked before `transform()`: a missing column fails naming the source and the column. Every bundled recipe declares one. See [The 5-Checkpoint Validation Pipeline](../usage/projects/recipes.md#the-5-checkpoint-validation-pipeline) ([#1132](https://github.com/depictio/depictio/pull/1132), [9aef81a6](https://github.com/depictio/depictio/commit/9aef81a6)).
+
+### **🚀 Improvements**
+
+* **Clearer CLI output**: `-v` / `-vv` for INFO / DEBUG, each failure reported once, and `depictio --help` grouped by purpose. See [Global Options](../depictio-cli/usage.md#global-options) ([#1149](https://github.com/depictio/depictio/pull/1149), [987bc950](https://github.com/depictio/depictio/commit/987bc950)).
+* **Dashboard thumbnails can be turned off or moved** with `DEPICTIO_PERFORMANCE_SCREENSHOTS_ENABLED` / `_DIR`. See [Performance & Timeouts](../installation/env-reference.md#performance-timeouts) ([#1110](https://github.com/depictio/depictio/pull/1110), [6c7021d0](https://github.com/depictio/depictio/commit/6c7021d0)).
+* **Stacked taxonomy**: `taxon_palette` pins a colour per taxon, and the nf-core/ampliseq strips can use any categorical metadata column (re-ingest to get them). See [Stacked taxonomy](../features/components.md#stacked-taxonomy) ([#1140](https://github.com/depictio/depictio/pull/1140), [f80b7313](https://github.com/depictio/depictio/commit/f80b7313), [ca0172cd](https://github.com/depictio/depictio/commit/ca0172cd)).
+
+### **🐛 Bug Fixes**
+
+* **Stacked taxonomy strips colour each sample by its category**, with hover and a legend ([#1140](https://github.com/depictio/depictio/pull/1140), [895b20d5](https://github.com/depictio/depictio/commit/895b20d5)).
+* **A MultiQC report no longer stays on *preparing* after its worker dies**, and the first figures after a start no longer fail with a 500 ([#1110](https://github.com/depictio/depictio/pull/1110), [fd83f4fb](https://github.com/depictio/depictio/commit/fd83f4fb), [5ad046dd](https://github.com/depictio/depictio/commit/5ad046dd)).
+* **Visitors see a data collection's files** in the ingestion report, without the owners' emails ([#1144](https://github.com/depictio/depictio/pull/1144), [a62742ca](https://github.com/depictio/depictio/commit/a62742ca)).
+* **A failed ingestion step exits 1**, `--continue-on-error` included. See [Exit codes](../depictio-cli/usage.md#exit-codes) ([#1149](https://github.com/depictio/depictio/pull/1149), [24a2933e](https://github.com/depictio/depictio/commit/24a2933e)).
+* **`-v` no longer logs tokens and passwords** ([#1149](https://github.com/depictio/depictio/pull/1149), [a86df6f3](https://github.com/depictio/depictio/commit/a86df6f3)).
+* **Image dashboards import again and find their images**; a taken project name answers 409 instead of 500 ([#1149](https://github.com/depictio/depictio/pull/1149), [e1c2c1e0](https://github.com/depictio/depictio/commit/e1c2c1e0), [b74f95fc](https://github.com/depictio/depictio/commit/b74f95fc)).
+
+---
+
+??? info "Beta releases leading up to v1.12.0"
+
+    **v1.12.0-b1**
+
+    * SeaweedFS as the bundled store and the `DEPICTIO_S3_*` names ([#1061](https://github.com/depictio/depictio/pull/1061)).
+    * `depictio local up` in its first form, which also ingested results (`--template`, `--data-root`), and `local export-compose`; the first `depictio` release on PyPI ([#1110](https://github.com/depictio/depictio/pull/1110)).
+    * The listing opening on the table, and the stacked taxonomy strips ([#1139](https://github.com/depictio/depictio/pull/1139), [#1140](https://github.com/depictio/depictio/pull/1140)).
+    * The stable release adds the `depictio` package and the CLI rework ([#1146](https://github.com/depictio/depictio/pull/1146), [#1149](https://github.com/depictio/depictio/pull/1149)), the recipe schemas ([#1128](https://github.com/depictio/depictio/pull/1128), [#1132](https://github.com/depictio/depictio/pull/1132)) and the files listing fix ([#1144](https://github.com/depictio/depictio/pull/1144)); `local up` now only starts the server (its b1 ingest options exit 2 and print the `depictio ingest` command), and `local export-compose` is `local export`.
+
+---
+
 ## **[v1.11.2](https://github.com/depictio/depictio/releases/tag/v1.11.2)** (September 24, 2026)
 
 !!! success "Patch: a builder preview that stays in view, and a tidier dashboards listing"

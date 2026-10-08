@@ -24,7 +24,6 @@ docker compose up -d
     |-|---------|-----|-------|
     | :material-view-dashboard: | **Depictio** | [localhost:5080](http://localhost:5080) | Single-user mode — no login required |
     | :material-api: | **API docs** | [localhost:8058/docs](http://localhost:8058/docs) | Interactive OpenAPI interface |
-    | :simple-minio: | **MinIO console** | [localhost:9001](http://localhost:9001) | `minio` / `minio123` |
 
 <div class="grid cards" markdown>
 
@@ -32,7 +31,7 @@ docker compose up -d
 
     ---
 
-    Copy `.env.example` to `.env` to change the MinIO password or switch to multi-user mode.
+    Copy `.env.example` to `.env` to change the S3 password or switch to multi-user mode.
 
     [:octicons-arrow-right-24: Advanced configuration](docker/#advanced-configuration)
 
@@ -68,7 +67,7 @@ Three ways to run the same Depictio server, which differ in how its services run
 
     ---
 
-    The recommended way to run Depictio. One compose file starts every service in containers, object storage included.
+    The recommended way to run Depictio. One compose file starts every service in containers, object storage included. Upgrading from before v1.12.0? Copy the former MinIO store's data first: [Upgrading to v1.12.0](upgrade/v1.12.0-seaweedfs.md).
 
     Ideal for development, testing, and small-scale deployments.
 
@@ -102,7 +101,7 @@ Three ways to run the same Depictio server, which differ in how its services run
 
     ---
 
-    Configure authentication, S3/MinIO, backups, and advanced features via environment variables.
+    Configure authentication, S3 storage, backups, and advanced features via environment variables.
 
     [:octicons-arrow-right-24: Configuration guide](configuration/)
 

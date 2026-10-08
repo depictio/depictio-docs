@@ -217,6 +217,8 @@ nav:
           - Docker Compose: installation/docker.md
           - Kubernetes: installation/kubernetes.md
           - Python package: installation/local.md
+      - Upgrade guides:
+          - "v1.12.0: MinIO → SeaweedFS": installation/upgrade/v1.12.0-seaweedfs.md
       - CLI:
           - installation/cli.md
       - Configuration: installation/configuration.md

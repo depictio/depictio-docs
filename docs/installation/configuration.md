@@ -18,7 +18,7 @@ The repository includes two environment file templates:
 
 | File | Purpose |
 |------|---------|
-| `.env.example` | **Quick start** - Minimal configuration (just MinIO credentials) |
+| `.env.example` | **Quick start** - Minimal configuration (S3 and admin credentials) |
 | `.env.complete.example` | **Complete reference** - All 160+ variables with defaults and comments |
 
 ## Quick Start Configuration
@@ -32,13 +32,13 @@ cp .env.example .env
 **Minimal `.env` file:**
 
 ```bash
-DEPICTIO_MINIO_ROOT_USER=minio
-DEPICTIO_MINIO_ROOT_PASSWORD=change-me-strong-password-here
+DEPICTIO_S3_ROOT_USER=depictio
+DEPICTIO_S3_ROOT_PASSWORD=change-me-strong-password-here
 ```
 
 !!! warning "Password strength"
 
-    `DEPICTIO_MINIO_ROOT_PASSWORD` must be **≥ 8 characters**. The server enforces this at startup and will refuse to start with a short or well-known default value.
+    `DEPICTIO_S3_ROOT_PASSWORD` (`DEPICTIO_MINIO_ROOT_PASSWORD` before v1.12.0, still read) must be **≥ 8 characters**. The server enforces this at startup and will refuse to start with a short or well-known default value.
 
 ## Advanced Configuration
 
@@ -53,37 +53,42 @@ All other settings use sensible defaults. The sections below cover common custom
 
 ## Storage Configuration
 
-Depictio can use MinIO for object storage. You can either use an external MinIO service or the built-in one.
+Depictio stores its data in S3-compatible object storage: either the store bundled
+with Docker Compose and the Helm chart, SeaweedFS since v1.12.0 (MinIO before), or an
+external S3 service. The settings are `DEPICTIO_S3_*`; the `DEPICTIO_MINIO_*` names of
+earlier releases still work. An install that ran the bundled MinIO has to copy its data
+to SeaweedFS when it upgrades: see
+[Upgrading to v1.12.0: MinIO → SeaweedFS](upgrade/v1.12.0-seaweedfs.md).
 
-### External MinIO Service
+### External S3 Service
 
-If you have an external MinIO service, configure it as follows:
+If you have an external S3 service (AWS, NetApp, Ceph, your own MinIO, …), configure it as follows:
 
 For Docker Compose, add the following to your `.env` file:
 
 ```bash
-# External MinIO service configuration
-DEPICTIO_MINIO_PUBLIC_URL=http://minio.example.com
-DEPICTIO_MINIO_ROOT_USER=minioadmin
-DEPICTIO_MINIO_ROOT_PASSWORD=minioadmin123
-DEPICTIO_MINIO_BUCKET=your-bucket-name
-DEPICTIO_MINIO_EXTERNAL_SERVICE=true
+# External S3 service configuration
+DEPICTIO_S3_PUBLIC_URL=https://s3.example.com
+DEPICTIO_S3_ROOT_USER=your-access-key
+DEPICTIO_S3_ROOT_PASSWORD=your-secret-key
+DEPICTIO_S3_BUCKET=your-bucket-name
+DEPICTIO_S3_EXTERNAL_SERVICE=true
 ```
 
 For Kubernetes, you can set these values in your custom `values.yaml` file:
 
 ```yaml
-minio:
-  enabled: false  # Set to true if using built-in MinIO
+s3:
+  enabled: false  # true runs the bundled store
   env:
-    DEPICTIO_MINIO_PUBLIC_URL: "http://minio.example.com"
-    DEPICTIO_MINIO_ROOT_USER: "minioadmin"
-    DEPICTIO_MINIO_ROOT_PASSWORD: "minioadmin123"
-    DEPICTIO_MINIO_BUCKET: "your-bucket-name"
-    DEPICTIO_MINIO_EXTERNAL_SERVICE: true
+    DEPICTIO_S3_PUBLIC_URL: "https://s3.example.com"
+    DEPICTIO_S3_ROOT_USER: "your-access-key"
+    DEPICTIO_S3_ROOT_PASSWORD: "your-secret-key"
+    DEPICTIO_S3_BUCKET: "your-bucket-name"
+    DEPICTIO_S3_EXTERNAL_SERVICE: true
 ```
 
-Setting those values will disable the built-in MinIO service and use the external one instead.
+Setting those values disables the bundled store and uses the external one instead.
 
 ## Bootstrap Authentication
 
@@ -593,7 +598,7 @@ helm upgrade depictio ./helm-charts/depictio \
 ## Security Considerations
 
 - **Never commit sensitive credentials** to version control
-- **Use strong passwords** for MinIO and other services
+- **Use strong passwords** for the S3 store and other services
 - **Enable HTTPS** in production environments
 - **Regularly rotate API keys** and OAuth credentials
 - **Set appropriate backup retention policies**
