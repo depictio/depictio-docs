@@ -178,7 +178,7 @@ Depictio consists of several integrated components:
 | **React viewer → FastAPI** | API calls for data retrieval, authentication, and CRUD operations |
 | **FastAPI → React viewer** | WebSocket push for real-time dashboard refresh (optional, v1.1.4+) |
 | **FastAPI → MongoDB** | Document storage for metadata, users, projects, and configurations |
-| **FastAPI → MinIO** | Object storage for Delta tables, files, and dashboard screenshots |
+| **FastAPI → S3** | Object storage for Delta tables, files, and dashboard screenshots |
 | **FastAPI → Redis** | Caching, session storage, and task result backend |
 | **FastAPI → Celery** | Dispatch of long-running work: ingestion, screenshots, pre-rendering |
 | **Celery → Redis** | Task queue and results backend for background job processing |
@@ -186,7 +186,7 @@ Depictio consists of several integrated components:
 - **Frontend** (React + Vite + Mantine) - Interactive dashboard interface
 - **Backend API** (FastAPI) - Data processing and business logic
 - **Database** (MongoDB) - Metadata and configuration storage
-- **Storage** (MinIO/S3) - Data files and Delta Lake tables
+- **Storage** (S3: SeaweedFS when bundled, or your own) - Data files and Delta Lake tables
 - **Cache** (Redis) - Caching layer and task queue backend
 - **Workers** (Celery) - Distributed task queue for background processing
 

@@ -26,7 +26,7 @@ depictio migrate                       API: /migrate/import-project
     │       ├─ migrate_metadata.json        ├─ Upsert: files / deltatables / runs
     │       └─ s3_metadata.json             └─ Upsert: dashboards
     │
-    └─ S3 copy: source MinIO → target MinIO (direct, not via ZIP)
+    └─ S3 copy: source S3 → target S3 (direct, not via ZIP)
 
 
 UI path (S3 bundled inside ZIP)
@@ -35,7 +35,7 @@ Browser                                Target instance
     │                                       │
     ├─ POST /migrate/export-project         ├─ POST /migrate/import-project-zip
     │     → ZIP (S3 data included)          │     extracts bundle.json
-    │       ├─ bundle.json                  │     restores s3_data/* → MinIO
+    │       ├─ bundle.json                  │     restores s3_data/* → S3
     │       ├─ migrate_metadata.json        └─ Upsert: same order as CLI path
     │       ├─ s3_metadata.json
     │       └─ s3_data/<original S3 paths>

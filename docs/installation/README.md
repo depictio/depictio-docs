@@ -24,7 +24,6 @@ docker compose up -d
     |-|---------|-----|-------|
     | :material-view-dashboard: | **Depictio** | [localhost:5080](http://localhost:5080) | Single-user mode — no login required |
     | :material-api: | **API docs** | [localhost:8058/docs](http://localhost:8058/docs) | Interactive OpenAPI interface |
-    | :simple-minio: | **MinIO console** | [localhost:9001](http://localhost:9001) | `minio` / `minio123` |
 
 <div class="grid cards" markdown>
 
@@ -32,7 +31,7 @@ docker compose up -d
 
     ---
 
-    Copy `.env.example` to `.env` to change the MinIO password or switch to multi-user mode.
+    Copy `.env.example` to `.env` to change the S3 password or switch to multi-user mode.
 
     [:octicons-arrow-right-24: Advanced configuration](docker/#advanced-configuration)
 
@@ -56,7 +55,7 @@ docker compose up -d
 
     ---
 
-    The recommended way to run Depictio. MinIO is bundled — one command starts everything.
+    The recommended way to run Depictio. An S3 store (SeaweedFS) is bundled — one command starts everything. Upgrading from before v1.12.0? Copy the data of the former MinIO store first: [Upgrading to v1.12.0](seaweedfs-migration.md).
 
     Ideal for development, testing, and small-scale deployments.
 
@@ -76,7 +75,7 @@ docker compose up -d
 
     ---
 
-    `depictio local up` runs the same server as plain processes on your machine, and can ingest your pipeline results in the same command.
+    `depictio local up` runs the same server as plain processes on your machine, and `depictio ingest` adds your pipeline results to it.
 
     Ideal for reviewing a template on your own results.
 
@@ -100,7 +99,7 @@ docker compose up -d
 
     ---
 
-    Configure authentication, S3/MinIO, backups, and advanced features via environment variables.
+    Configure authentication, S3 storage, backups, and advanced features via environment variables.
 
     [:octicons-arrow-right-24: Configuration guide](configuration/)
 
