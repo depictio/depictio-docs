@@ -1636,10 +1636,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-4-checkpoint-validation-pipeline" class="md-nav__link">
+  <a href="#the-5-checkpoint-validation-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The 4-Checkpoint Validation Pipeline
+        The 5-Checkpoint Validation Pipeline (v1.12.0+)
       
     </span>
   </a>
@@ -4714,10 +4714,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-4-checkpoint-validation-pipeline" class="md-nav__link">
+  <a href="#the-5-checkpoint-validation-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The 4-Checkpoint Validation Pipeline
+        The 5-Checkpoint Validation Pipeline (v1.12.0+)
       
     </span>
   </a>
@@ -4960,20 +4960,21 @@
 </blockquote>
 <p>A recipe is a plain Python module that describes how to transform one or more raw files into a single tidy DataFrame. Each recipe lives in <code>depictio/projects/&lt;pipeline&gt;/recipes/</code> and declares:</p>
 <ul>
-<li><strong><code>SOURCES</code></strong>: input files to read (paths relative to <code>--data-dir</code>, or references to other data collections via <code>dc_ref</code>)</li>
+<li><strong><code>SOURCES</code></strong>: input files to read (paths relative to <code>--data-dir</code>, or references to other data collections via <code>dc_ref</code>), each with the <code>input_schema</code> it reads: the columns the file must contain</li>
 <li><strong><code>OUTPUT_SCHEMA</code></strong>: required output columns and their Polars data types</li>
 <li><strong><code>OPTIONAL_OUTPUT_SCHEMA</code></strong> <em>(optional)</em>: columns that may or may not be present (e.g. user-defined metadata columns)</li>
 <li><strong><code>transform(sources)</code></strong>: a pure function that takes loaded DataFrames and returns the output DataFrame</li>
 </ul>
 <p><img alt="A recipe declares its inputs (SOURCES) and its output (OUTPUT_SCHEMA, OPTIONAL_OUTPUT_SCHEMA)" src="../../../images/recipes/output_schema_contract.png"></p>
+<p>A <code># INPUT SCHEMA:</code> comment line sits above <code>SOURCES</code> and a <code># OUTPUT SCHEMA:</code> line above <code>OUTPUT_SCHEMA</code>, so a recipe reads as a contract from the top of the file.</p>
 <p>Recipes are used in two ways:</p>
 <ol>
 <li><strong>Standalone testing</strong>: <code>depictio dev recipe run</code> executes a recipe locally against a data directory, so you can validate your data before registering a project.</li>
 <li><strong>Project integration</strong>: a <code>data_collection</code> with <code>source: "transformed"</code> tells the CLI to run the recipe during <code>depictio ingest</code>, storing the result as a Delta Lake table.</li>
 </ol>
 <hr>
-<h2 id="the-4-checkpoint-validation-pipeline">The 4-Checkpoint Validation Pipeline<a class="headerlink" href="#the-4-checkpoint-validation-pipeline" title="Permanent link">¶</a></h2>
-<p>Every recipe execution, whether via <code>depictio dev recipe run</code> or <code>depictio ingest</code>, runs through four automatic checkpoints:</p>
+<h2 id="the-5-checkpoint-validation-pipeline">The 5-Checkpoint Validation Pipeline <small>(v1.12.0+)</small><a class="headerlink" href="#the-5-checkpoint-validation-pipeline" title="Permanent link">¶</a></h2>
+<p>Every recipe execution, whether via <code>depictio dev recipe run</code> or <code>depictio ingest</code>, runs through five automatic checkpoints:</p>
 <table>
 <thead>
 <tr>
@@ -4995,56 +4996,70 @@
 </tr>
 <tr>
 <td>3</td>
+<td><strong>Input schema</strong></td>
+<td>Assert every column in each source's <code>input_schema</code> is present in the file that was read, with a compatible dtype</td>
+</tr>
+<tr>
+<td>4</td>
 <td><strong>Transform</strong></td>
 <td>Call <code>transform(sources)</code>, verify it returns a non-empty <code>pl.DataFrame</code></td>
 </tr>
 <tr>
-<td>4</td>
-<td><strong>Schema</strong></td>
+<td>5</td>
+<td><strong>Output schema</strong></td>
 <td>Assert every column in <code>OUTPUT_SCHEMA</code> is present with the correct dtype; validate <code>OPTIONAL_OUTPUT_SCHEMA</code> columns if present</td>
 </tr>
 </tbody>
 </table>
+<p>Before v1.12.0 a recipe ran four checkpoints: there was no input-schema check (3), and the output schema was named <code>EXPECTED_SCHEMA</code>.</p>
 <p>If any checkpoint fails, execution stops with a clear error message pointing to the exact problem.</p>
+<p><img alt="Checkpoints 3 and 5 around transform(): a file missing a declared column stops before the transform runs" src="../../../images/recipes/input_schema_checkpoints.png"></p>
+<p>The input check is deliberately loose on types: readers infer them from the data, so a text or all-null column passes wherever the recipe casts the value itself, and one numeric type stands for another. A missing column always fails, naming the source and the column:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>RecipeError: Recipe arriba/fusions.py: source 'fusions' lacks input column(s) ['#gene1']. Got columns: ['gene1', ...]
+</code></pre></div>
 <hr>
 <h2 id="cli-commands">CLI Commands<a class="headerlink" href="#cli-commands" title="Permanent link">¶</a></h2>
 <p>The recipe commands sit in the <code>depictio dev</code> group, the maintainer tools that
 <code>depictio --help</code> does not list.</p>
 <h3 id="depictio-dev-recipe-list"><code>depictio dev recipe list</code><a class="headerlink" href="#depictio-dev-recipe-list" title="Permanent link">¶</a></h3>
 <p>List all bundled recipes.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>list
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>list
 </code></pre></div>
 <p><strong>Output:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Available recipes (6):
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  nf-core/ampliseq/alpha_diversity.py
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  nf-core/ampliseq/alpha_rarefaction.py
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  nf-core/ampliseq/ancombc.py
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  nf-core/ampliseq/taxonomy_composition.py
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  nf-core/ampliseq/taxonomy_heatmap.py
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  nf-core/ampliseq/taxonomy_rel_abundance.py
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Available recipes (6):
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  nf-core/ampliseq/alpha_diversity.py
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  nf-core/ampliseq/alpha_rarefaction.py
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  nf-core/ampliseq/ancombc.py
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>  nf-core/ampliseq/taxonomy_composition.py
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  nf-core/ampliseq/taxonomy_heatmap.py
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>  nf-core/ampliseq/taxonomy_rel_abundance.py
 </code></pre></div>
 <hr>
 <h3 id="depictio-dev-recipe-info-name"><code>depictio dev recipe info &lt;name&gt;</code><a class="headerlink" href="#depictio-dev-recipe-info-name" title="Permanent link">¶</a></h3>
-<p>Show recipe details: docstring, sources, and output schema. Pass <code>--version</code> to inspect a version-specific override.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>info<span class="w"> </span>nf-core/ampliseq/alpha_diversity.py
+<p>Show recipe details: docstring, sources, input schema and output schema. Pass <code>--version</code> to inspect a version-specific override.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>info<span class="w"> </span>nf-core/ampliseq/alpha_diversity.py
 </code></pre></div>
 <p><strong>Output:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Recipe: nf-core/ampliseq/alpha_diversity.py
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD table.
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Sources (1):
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>  faith_pd: qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv (TSV)
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Output schema (2 columns):
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  sample: String
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>  faith_pd: Float64
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Recipe: nf-core/ampliseq/alpha_diversity.py
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD table.
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Sources (1):
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  faith_pd: qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv (TSV)
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>Input schema: faith_pd (2 columns):
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  id: String
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  faith_pd: String
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>Output schema (2 columns):
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>  sample: String
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>  faith_pd: Float64
 </code></pre></div>
 <p>When the recipe declares a non-empty <code>OPTIONAL_OUTPUT_SCHEMA</code>, an <code>Optional output schema (N columns)</code> table follows.</p>
 <hr>
 <h3 id="depictio-dev-recipe-run-name"><code>depictio dev recipe run &lt;name&gt;</code><a class="headerlink" href="#depictio-dev-recipe-run-name" title="Permanent link">¶</a></h3>
-<p>Execute a recipe against local data with all 4 validation checkpoints.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq/alpha_diversity.py<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--data-dir<span class="w"> </span>/data/ampliseq_results
+<p>Execute a recipe against local data with all 5 validation checkpoints.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq/alpha_diversity.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--data-dir<span class="w"> </span>/data/ampliseq_results
 </code></pre></div>
 <p><strong>Options:</strong></p>
 <table>
@@ -5093,104 +5108,108 @@
 <p>The two examples below show the patterns specific to Depictio — referencing another data collection, and parameterising source paths from the template. The file parsing itself is just standard Polars; study these as a basis for writing your own recipes.</p>
 <h3 id="example-1-cross-dc-join-with-optional-metadata-taxonomy_rel_abundancepy">Example 1 — Cross-DC join with optional metadata (<code>taxonomy_rel_abundance.py</code>)<a class="headerlink" href="#example-1-cross-dc-join-with-optional-metadata-taxonomy_rel_abundancepy" title="Permanent link">¶</a></h3>
 <p><strong>Pattern:</strong> Reference another data collection via <code>dc_ref</code>, join generically on a shared key. The metadata source is <strong>optional</strong> — when absent, the recipe produces core columns only.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="sd">"""Transform QIIME2 relative abundance table to long-format per-sample taxonomy table."""</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">depictio.models.models.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecipeSource</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">SOURCES</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">RecipeSource</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="n">RecipeSource</span><span class="p">(</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="n">ref</span><span class="o">=</span><span class="s2">"rel_table"</span><span class="p">,</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>        <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/rel_abundance_tables/rel-table-2.tsv"</span><span class="p">,</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        <span class="nb">format</span><span class="o">=</span><span class="s2">"TSV"</span><span class="p">,</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="n">read_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"skip_rows"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="p">),</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="n">RecipeSource</span><span class="p">(</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>        <span class="n">ref</span><span class="o">=</span><span class="s2">"metadata"</span><span class="p">,</span>
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>        <span class="n">dc_ref</span><span class="o">=</span><span class="s2">"metadata"</span><span class="p">,</span>    <span class="c1"># references another DC by tag</span>
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>        <span class="n">optional</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>         <span class="c1"># absent when no metadata provided</span>
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    <span class="p">),</span>
-<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="p">]</span>
-<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>
-<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="n">OUTPUT_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="s2">"sample"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
-<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>    <span class="s2">"taxonomy"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
-<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>    <span class="s2">"rel_abundance"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span>
-<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>    <span class="s2">"Kingdom"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
-<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>    <span class="s2">"Phylum"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
-<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="p">}</span>
-<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="c1"># Metadata columns are user-defined; validated dynamically</span>
-<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="n">OPTIONAL_OUTPUT_SCHEMA</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">pl</span><span class="o">.</span><span class="n">DataType</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
-<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>
-<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>
-<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">sources</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">sources</span><span class="p">[</span><span class="s2">"rel_table"</span><span class="p">]</span>
-<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s2">"#OTU ID"</span><span class="p">:</span> <span class="s2">"taxonomy"</span><span class="p">})</span>
-<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a>    <span class="n">sample_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="s2">"taxonomy"</span><span class="p">]</span>
-<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">sample_cols</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">))</span>
-<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">unpivot</span><span class="p">(</span>
-<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a>        <span class="n">on</span><span class="o">=</span><span class="n">sample_cols</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s2">"taxonomy"</span><span class="p">,</span> <span class="n">variable_name</span><span class="o">=</span><span class="s2">"sample"</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s2">"rel_abundance"</span>
-<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a>    <span class="p">)</span>
-<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"rel_abundance"</span><span class="p">)</span><span class="o">.</span><span class="n">is_not_null</span><span class="p">()</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"rel_abundance"</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
-<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
-<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"taxonomy"</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"Kingdom"</span><span class="p">),</span>
-<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"taxonomy"</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fill_null</span><span class="p">(</span><span class="s2">"Unclassified"</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"Phylum"</span><span class="p">),</span>
-<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a>    <span class="p">)</span>
-<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a>
-<a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a>    <span class="c1"># Join ALL metadata columns generically when metadata is available</span>
-<a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a>    <span class="n">metadata</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"metadata"</span><span class="p">)</span>
-<a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a>    <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a>        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s2">"ID"</span><span class="p">:</span> <span class="s2">"sample"</span><span class="p">})</span>
-<a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a>        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">"sample"</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
-<a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a>
-<a id="__codelineno-5-51" name="__codelineno-5-51" href="#__codelineno-5-51"></a>    <span class="n">core</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"sample"</span><span class="p">,</span> <span class="s2">"taxonomy"</span><span class="p">,</span> <span class="s2">"rel_abundance"</span><span class="p">,</span> <span class="s2">"Kingdom"</span><span class="p">,</span> <span class="s2">"Phylum"</span><span class="p">]</span>
-<a id="__codelineno-5-52" name="__codelineno-5-52" href="#__codelineno-5-52"></a>    <span class="n">extra</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">core</span><span class="p">]</span>
-<a id="__codelineno-5-53" name="__codelineno-5-53" href="#__codelineno-5-53"></a>    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">core</span> <span class="o">+</span> <span class="n">extra</span><span class="p">)</span>
-</code></pre></div>
-<hr>
-<h3 id="example-2-multi-file-merge-with-source-overrides-ancombcpy">Example 2 — Multi-file merge with source overrides (<code>ancombc.py</code>)<a class="headerlink" href="#example-2-multi-file-merge-with-source-overrides-ancombcpy" title="Permanent link">¶</a></h3>
-<p><strong>Pattern:</strong> Merge multiple slices of the same analysis into one long-format table. The recipe declares default source paths, but the <strong>template overrides them</strong> via <code>source_overrides</code> to parameterize the directory name with <code>{GROUP_COL}</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="sd">"""Merge ANCOM-BC differential abundance results (5 files) into one long-format table."""</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="sd">"""Transform QIIME2 relative abundance table to long-format per-sample taxonomy table."""</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">depictio.models.models.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecipeSource</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1"># Default paths — overridden by template.yaml source_overrides with {GROUP_COL}</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">SOURCES</span> <span class="o">=</span> <span class="p">[</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="n">RecipeSource</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="s2">"lfc"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/ancombc/differentials/Category-habitat-level-2/lfc_slice.csv"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">),</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    <span class="n">RecipeSource</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="s2">"p_val"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/ancombc/differentials/Category-habitat-level-2/p_val_slice.csv"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">),</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>    <span class="n">RecipeSource</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="s2">"q_val"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/ancombc/differentials/Category-habitat-level-2/q_val_slice.csv"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">),</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>    <span class="n">RecipeSource</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="s2">"w"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/ancombc/differentials/Category-habitat-level-2/w_slice.csv"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">),</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>    <span class="n">RecipeSource</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="s2">"se"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/ancombc/differentials/Category-habitat-level-2/se_slice.csv"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">),</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="p">]</span>
-<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
-<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="n">OUTPUT_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    <span class="s2">"id"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"contrast"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
-<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>    <span class="s2">"lfc"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"p_val"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"q_val"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span>
-<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>    <span class="s2">"w"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"se"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span>
-<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>    <span class="s2">"Kingdom"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"Phylum"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
-<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>    <span class="s2">"neg_log10_qval"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"significant"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Boolean</span><span class="p">,</span>
-<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="p">}</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1"># INPUT SCHEMA: the columns each source must contain, checked before transform().</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">SOURCES</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">RecipeSource</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="n">RecipeSource</span><span class="p">(</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        <span class="n">ref</span><span class="o">=</span><span class="s2">"rel_table"</span><span class="p">,</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>        <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/rel_abundance_tables/rel-table-2.tsv"</span><span class="p">,</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>        <span class="nb">format</span><span class="o">=</span><span class="s2">"TSV"</span><span class="p">,</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>        <span class="n">input_schema</span><span class="o">=</span><span class="p">{</span><span class="s2">"#OTU ID"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">},</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>        <span class="n">read_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"skip_rows"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>    <span class="p">),</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>    <span class="c1"># No input_schema: the sample id column is found by name or position.</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    <span class="n">RecipeSource</span><span class="p">(</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>        <span class="n">ref</span><span class="o">=</span><span class="s2">"metadata"</span><span class="p">,</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>        <span class="n">dc_ref</span><span class="o">=</span><span class="s2">"metadata"</span><span class="p">,</span>    <span class="c1"># references another DC by tag</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>        <span class="n">optional</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>         <span class="c1"># absent when no metadata provided</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>    <span class="p">),</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="p">]</span>
 <a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>
-<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>
-<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">sources</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>    <span class="n">contrast_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">[</span><span class="s2">"lfc"</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"(Intercept)"</span><span class="p">)]</span>
-<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>    <span class="n">melted</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>        <span class="n">name</span><span class="p">:</span> <span class="n">sources</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span> <span class="o">*</span><span class="n">contrast_cols</span><span class="p">)</span>
-<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>            <span class="o">.</span><span class="n">unpivot</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="n">contrast_cols</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s2">"id"</span><span class="p">,</span> <span class="n">variable_name</span><span class="o">=</span><span class="s2">"contrast"</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
-<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"lfc"</span><span class="p">,</span> <span class="s2">"p_val"</span><span class="p">,</span> <span class="s2">"q_val"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">,</span> <span class="s2">"se"</span><span class="p">]</span>
-<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>    <span class="p">}</span>
-<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">melted</span><span class="p">[</span><span class="s2">"lfc"</span><span class="p">]</span>
-<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a>    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"p_val"</span><span class="p">,</span> <span class="s2">"q_val"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">,</span> <span class="s2">"se"</span><span class="p">]:</span>
-<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">melted</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"contrast"</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="c1"># OUTPUT SCHEMA: the columns transform() returns, checked after it.</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="n">OUTPUT_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>    <span class="s2">"sample"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>    <span class="s2">"taxonomy"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>    <span class="s2">"rel_abundance"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>    <span class="s2">"Kingdom"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>    <span class="s2">"Phylum"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="p">}</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="c1"># Metadata columns are user-defined; validated dynamically</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="n">OPTIONAL_OUTPUT_SCHEMA</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">pl</span><span class="o">.</span><span class="n">DataType</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a>
 <a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a>
-<a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a>    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
-<a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"id"</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"Kingdom"</span><span class="p">),</span>
-<a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"id"</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fill_null</span><span class="p">(</span><span class="s2">"Unclassified"</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"Phylum"</span><span class="p">),</span>
-<a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a>        <span class="p">(</span><span class="o">-</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"q_val"</span><span class="p">)</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"neg_log10_qval"</span><span class="p">),</span>
-<a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a>        <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"q_val"</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"significant"</span><span class="p">),</span>
-<a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a>    <span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"contrast"</span><span class="p">,</span> <span class="s2">"lfc"</span><span class="p">,</span> <span class="s2">"p_val"</span><span class="p">,</span> <span class="s2">"q_val"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">,</span> <span class="s2">"se"</span><span class="p">,</span>
-<a id="__codelineno-6-41" name="__codelineno-6-41" href="#__codelineno-6-41"></a>             <span class="s2">"Kingdom"</span><span class="p">,</span> <span class="s2">"Phylum"</span><span class="p">,</span> <span class="s2">"neg_log10_qval"</span><span class="p">,</span> <span class="s2">"significant"</span><span class="p">)</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a><span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">sources</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">sources</span><span class="p">[</span><span class="s2">"rel_table"</span><span class="p">]</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s2">"#OTU ID"</span><span class="p">:</span> <span class="s2">"taxonomy"</span><span class="p">})</span>
+<a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a>    <span class="n">sample_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="s2">"taxonomy"</span><span class="p">]</span>
+<a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">sample_cols</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">))</span>
+<a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">unpivot</span><span class="p">(</span>
+<a id="__codelineno-6-41" name="__codelineno-6-41" href="#__codelineno-6-41"></a>        <span class="n">on</span><span class="o">=</span><span class="n">sample_cols</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s2">"taxonomy"</span><span class="p">,</span> <span class="n">variable_name</span><span class="o">=</span><span class="s2">"sample"</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s2">"rel_abundance"</span>
+<a id="__codelineno-6-42" name="__codelineno-6-42" href="#__codelineno-6-42"></a>    <span class="p">)</span>
+<a id="__codelineno-6-43" name="__codelineno-6-43" href="#__codelineno-6-43"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"rel_abundance"</span><span class="p">)</span><span class="o">.</span><span class="n">is_not_null</span><span class="p">()</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"rel_abundance"</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
+<a id="__codelineno-6-44" name="__codelineno-6-44" href="#__codelineno-6-44"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
+<a id="__codelineno-6-45" name="__codelineno-6-45" href="#__codelineno-6-45"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"taxonomy"</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"Kingdom"</span><span class="p">),</span>
+<a id="__codelineno-6-46" name="__codelineno-6-46" href="#__codelineno-6-46"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"taxonomy"</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fill_null</span><span class="p">(</span><span class="s2">"Unclassified"</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"Phylum"</span><span class="p">),</span>
+<a id="__codelineno-6-47" name="__codelineno-6-47" href="#__codelineno-6-47"></a>    <span class="p">)</span>
+<a id="__codelineno-6-48" name="__codelineno-6-48" href="#__codelineno-6-48"></a>
+<a id="__codelineno-6-49" name="__codelineno-6-49" href="#__codelineno-6-49"></a>    <span class="c1"># Join ALL metadata columns generically when metadata is available</span>
+<a id="__codelineno-6-50" name="__codelineno-6-50" href="#__codelineno-6-50"></a>    <span class="n">metadata</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"metadata"</span><span class="p">)</span>
+<a id="__codelineno-6-51" name="__codelineno-6-51" href="#__codelineno-6-51"></a>    <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-6-52" name="__codelineno-6-52" href="#__codelineno-6-52"></a>        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s2">"ID"</span><span class="p">:</span> <span class="s2">"sample"</span><span class="p">})</span>
+<a id="__codelineno-6-53" name="__codelineno-6-53" href="#__codelineno-6-53"></a>        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">"sample"</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
+<a id="__codelineno-6-54" name="__codelineno-6-54" href="#__codelineno-6-54"></a>
+<a id="__codelineno-6-55" name="__codelineno-6-55" href="#__codelineno-6-55"></a>    <span class="n">core</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"sample"</span><span class="p">,</span> <span class="s2">"taxonomy"</span><span class="p">,</span> <span class="s2">"rel_abundance"</span><span class="p">,</span> <span class="s2">"Kingdom"</span><span class="p">,</span> <span class="s2">"Phylum"</span><span class="p">]</span>
+<a id="__codelineno-6-56" name="__codelineno-6-56" href="#__codelineno-6-56"></a>    <span class="n">extra</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">core</span><span class="p">]</span>
+<a id="__codelineno-6-57" name="__codelineno-6-57" href="#__codelineno-6-57"></a>    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">core</span> <span class="o">+</span> <span class="n">extra</span><span class="p">)</span>
+</code></pre></div>
+<hr>
+<h3 id="example-2-multi-file-merge-with-source-overrides-ancombcpy">Example 2 — Multi-file merge with source overrides (<code>ancombc.py</code>)<a class="headerlink" href="#example-2-multi-file-merge-with-source-overrides-ancombcpy" title="Permanent link">¶</a></h3>
+<p><strong>Pattern:</strong> Merge multiple slices of the same analysis into one long-format table. The recipe declares default source paths, but the <strong>template overrides them</strong> via <code>source_overrides</code> to parameterize the directory name with <code>{GROUP_COL}</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="sd">"""Merge ANCOM-BC differential abundance results (5 files) into one long-format table."""</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">depictio.models.models.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecipeSource</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1"># Default paths — overridden by template.yaml source_overrides with {GROUP_COL}</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">SOURCES</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    <span class="n">RecipeSource</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="s2">"lfc"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/ancombc/differentials/Category-habitat-level-2/lfc_slice.csv"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">),</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="n">RecipeSource</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="s2">"p_val"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/ancombc/differentials/Category-habitat-level-2/p_val_slice.csv"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">),</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    <span class="n">RecipeSource</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="s2">"q_val"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/ancombc/differentials/Category-habitat-level-2/q_val_slice.csv"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">),</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    <span class="n">RecipeSource</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="s2">"w"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/ancombc/differentials/Category-habitat-level-2/w_slice.csv"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">),</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>    <span class="n">RecipeSource</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="s2">"se"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"qiime2/ancombc/differentials/Category-habitat-level-2/se_slice.csv"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">),</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="p">]</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="n">OUTPUT_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>    <span class="s2">"id"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"contrast"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>    <span class="s2">"lfc"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"p_val"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"q_val"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>    <span class="s2">"w"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"se"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>    <span class="s2">"Kingdom"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"Phylum"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>    <span class="s2">"neg_log10_qval"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"significant"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Boolean</span><span class="p">,</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="p">}</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">sources</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>    <span class="n">contrast_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">[</span><span class="s2">"lfc"</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"(Intercept)"</span><span class="p">)]</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>    <span class="n">melted</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>        <span class="n">name</span><span class="p">:</span> <span class="n">sources</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span> <span class="o">*</span><span class="n">contrast_cols</span><span class="p">)</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>            <span class="o">.</span><span class="n">unpivot</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="n">contrast_cols</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s2">"id"</span><span class="p">,</span> <span class="n">variable_name</span><span class="o">=</span><span class="s2">"contrast"</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"lfc"</span><span class="p">,</span> <span class="s2">"p_val"</span><span class="p">,</span> <span class="s2">"q_val"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">,</span> <span class="s2">"se"</span><span class="p">]</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>    <span class="p">}</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">melted</span><span class="p">[</span><span class="s2">"lfc"</span><span class="p">]</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"p_val"</span><span class="p">,</span> <span class="s2">"q_val"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">,</span> <span class="s2">"se"</span><span class="p">]:</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">melted</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"contrast"</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"id"</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"Kingdom"</span><span class="p">),</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"id"</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fill_null</span><span class="p">(</span><span class="s2">"Unclassified"</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"Phylum"</span><span class="p">),</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>        <span class="p">(</span><span class="o">-</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"q_val"</span><span class="p">)</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"neg_log10_qval"</span><span class="p">),</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a>        <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"q_val"</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"significant"</span><span class="p">),</span>
+<a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a>    <span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"contrast"</span><span class="p">,</span> <span class="s2">"lfc"</span><span class="p">,</span> <span class="s2">"p_val"</span><span class="p">,</span> <span class="s2">"q_val"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">,</span> <span class="s2">"se"</span><span class="p">,</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a>             <span class="s2">"Kingdom"</span><span class="p">,</span> <span class="s2">"Phylum"</span><span class="p">,</span> <span class="s2">"neg_log10_qval"</span><span class="p">,</span> <span class="s2">"significant"</span><span class="p">)</span>
 </code></pre></div>
 <!-- prettier-ignore -->
 <div class="admonition note">
@@ -5235,6 +5254,12 @@
 <td><code>CSV</code>, <code>TSV</code>, or <code>Parquet</code> (case-insensitive)</td>
 </tr>
 <tr>
+<td><code>input_schema</code></td>
+<td><code>dict</code></td>
+<td>no</td>
+<td>Columns <code>transform()</code> reads from this source, as column name to Polars dtype (e.g. <code>{"#gene1": pl.Utf8}</code>). Checked after the source is read. Leave it out, with a <code># No input_schema:</code> comment giving the reason, when no column name is fixed (one column per sample, columns read by position or found by alias)</td>
+</tr>
+<tr>
 <td><code>read_kwargs</code></td>
 <td><code>dict</code></td>
 <td>no</td>
@@ -5269,13 +5294,13 @@ the CLI runner's job, not the recipe's — recipes stay pure <code>sources → D
 <p>Use <code>glob_pattern</code> instead of <code>path</code> to fan multiple per-sample files
 into one DataFrame. The glob is expanded by the recipe runner relative
 to the project's <code>data_dir</code> (typically the results directory given to <code>depictio ingest</code>):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">SOURCES</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">RecipeSource</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="n">RecipeSource</span><span class="p">(</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>        <span class="n">ref</span><span class="o">=</span><span class="s2">"pangolin_raw"</span><span class="p">,</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>        <span class="n">glob_pattern</span><span class="o">=</span><span class="s2">"variants/ivar/consensus/bcftools/pangolin/*.pangolin.csv"</span><span class="p">,</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">,</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="p">),</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">SOURCES</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">RecipeSource</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="n">RecipeSource</span><span class="p">(</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>        <span class="n">ref</span><span class="o">=</span><span class="s2">"pangolin_raw"</span><span class="p">,</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>        <span class="n">glob_pattern</span><span class="o">=</span><span class="s2">"variants/ivar/consensus/bcftools/pangolin/*.pangolin.csv"</span><span class="p">,</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>        <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">,</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="p">),</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">]</span>
 </code></pre></div>
 <p>Matched files are read individually and concatenated with
 <code>pl.concat([...], how="diagonal_relaxed")</code>. <code>glob_pattern</code> is mutually
@@ -5283,31 +5308,31 @@ exclusive with <code>path</code> and <code>dc_ref</code>.</p>
 <hr>
 <h2 id="declaring-a-recipe-in-projectyaml">Declaring a Recipe in <code>project.yaml</code><a class="headerlink" href="#declaring-a-recipe-in-projectyaml" title="Permanent link">¶</a></h2>
 <p>To use a recipe in a project, set <code>source: "transformed"</code> on the data collection and specify the recipe name under <code>transform.recipe</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">data_collections</span><span class="p">:</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"alpha_diversity"</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Per-sample</span><span class="nv"> </span><span class="s">alpha</span><span class="nv"> </span><span class="s">diversity"</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="nt">config</span><span class="p">:</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"Table"</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">      </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">"transformed"</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">      </span><span class="nt">transform</span><span class="p">:</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">        </span><span class="nt">recipe</span><span class="p">:</span><span class="w"> </span><span class="s">"nf-core/ampliseq/alpha_diversity.py"</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">      </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">        </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"TSV"</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">        </span><span class="nt">columns_description</span><span class="p">:</span>
-<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">          </span><span class="s">"sample"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"Sample</span><span class="nv"> </span><span class="s">identifier"</span>
-<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">          </span><span class="s">"faith_pd"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"Faith's</span><span class="nv"> </span><span class="s">Phylogenetic</span><span class="nv"> </span><span class="s">Diversity"</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">data_collections</span><span class="p">:</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"alpha_diversity"</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Per-sample</span><span class="nv"> </span><span class="s">alpha</span><span class="nv"> </span><span class="s">diversity"</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"Table"</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">      </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">"transformed"</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">      </span><span class="nt">transform</span><span class="p">:</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">        </span><span class="nt">recipe</span><span class="p">:</span><span class="w"> </span><span class="s">"nf-core/ampliseq/alpha_diversity.py"</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">      </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">        </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"TSV"</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">        </span><span class="nt">columns_description</span><span class="p">:</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">          </span><span class="s">"sample"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"Sample</span><span class="nv"> </span><span class="s">identifier"</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">          </span><span class="s">"faith_pd"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"Faith's</span><span class="nv"> </span><span class="s">Phylogenetic</span><span class="nv"> </span><span class="s">Diversity"</span>
 </code></pre></div>
 <p>Use <code>source_overrides</code> to parameterize recipe source paths via template variables:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"ancombc_results"</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="nt">config</span><span class="p">:</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"Table"</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">      </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">"transformed"</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">      </span><span class="nt">transform</span><span class="p">:</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">        </span><span class="nt">recipe</span><span class="p">:</span><span class="w"> </span><span class="s">"nf-core/ampliseq/ancombc.py"</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">        </span><span class="nt">source_overrides</span><span class="p">:</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">          </span><span class="nt">lfc</span><span class="p">:</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">            </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"qiime2/ancombc/differentials/Category-{GROUP_COL}-level-2/lfc_slice.csv"</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">          </span><span class="c1"># ... one override per source ref</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"ancombc_results"</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"Table"</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">      </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">"transformed"</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">      </span><span class="nt">transform</span><span class="p">:</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">        </span><span class="nt">recipe</span><span class="p">:</span><span class="w"> </span><span class="s">"nf-core/ampliseq/ancombc.py"</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">        </span><span class="nt">source_overrides</span><span class="p">:</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">          </span><span class="nt">lfc</span><span class="p">:</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">            </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"qiime2/ancombc/differentials/Category-{GROUP_COL}-level-2/lfc_slice.csv"</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">          </span><span class="c1"># ... one override per source ref</span>
 </code></pre></div>
 <p>The recipe is executed during <code>depictio data process</code> (the process step of <code>depictio ingest</code>). All 4 checkpoints run automatically. If the recipe fails, the data collection is skipped and an error is logged.</p>
 <!-- prettier-ignore -->
@@ -5318,29 +5343,29 @@ exclusive with <code>path</code> and <code>dc_ref</code>.</p>
 <hr>
 <h2 id="recipe-file-locations">Recipe File Locations<a class="headerlink" href="#recipe-file-locations" title="Permanent link">¶</a></h2>
 <p>Recipes live inside the <code>depictio/projects/</code> directory, co-located with the templates that use them:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>depictio/projects/
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>└── nf-core/
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    └── ampliseq/
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>        ├── recipes/                          ← shared recipes (all pipeline versions)
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>        │   ├── alpha_diversity.py
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>        │   ├── alpha_rarefaction.py
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>        │   ├── ancombc.py
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>        │   ├── taxonomy_composition.py
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>        │   ├── taxonomy_heatmap.py
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>        │   └── taxonomy_rel_abundance.py
-<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>        ├── 2.14.0/
-<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>        │   ├── template.yaml
-<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>        │   └── recipes/                      ← version-specific overrides
-<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>        │       └── taxonomy_rel_abundance.py
-<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>        └── 2.16.0/
-<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>            ├── template.yaml                 ← no overrides, inherits shared
-<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>            └── dashboards/
-<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>                └── base.yaml                 ← single dashboard; adapts via
-<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>                                                template conditionals (metadata-
-<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>                                                dependent tabs/components are
-<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>                                                pruned when no metadata is given)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>depictio/projects/
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>└── nf-core/
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    └── ampliseq/
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>        ├── recipes/                          ← shared recipes (all pipeline versions)
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>        │   ├── alpha_diversity.py
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>        │   ├── alpha_rarefaction.py
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>        │   ├── ancombc.py
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>        │   ├── taxonomy_composition.py
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>        │   ├── taxonomy_heatmap.py
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>        │   └── taxonomy_rel_abundance.py
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>        ├── 2.14.0/
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>        │   ├── template.yaml
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>        │   └── recipes/                      ← version-specific overrides
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>        │       └── taxonomy_rel_abundance.py
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>        └── 2.16.0/
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>            ├── template.yaml                 ← no overrides, inherits shared
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>            └── dashboards/
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>                └── base.yaml                 ← single dashboard; adapts via
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>                                                template conditionals (metadata-
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>                                                dependent tabs/components are
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>                                                pruned when no metadata is given)
 </code></pre></div>
-<p>To add a recipe for a new pipeline, create <code>depictio/projects/{org}/{pipeline}/recipes/{name}.py</code> following the contract: define <code>SOURCES</code>, <code>OUTPUT_SCHEMA</code>, and <code>transform()</code>.</p>
+<p>To add a recipe for a new pipeline, create <code>depictio/projects/{org}/{pipeline}/recipes/{name}.py</code> following the contract: define <code>SOURCES</code> (with their <code>input_schema</code>), <code>OUTPUT_SCHEMA</code>, and <code>transform()</code>.</p>
 <hr>
 <h2 id="version-specific-recipes">Version-Specific Recipes<a class="headerlink" href="#version-specific-recipes" title="Permanent link">¶</a></h2>
 <p>When a pipeline output format changes between versions (column renames, file moves, schema changes), you can add a version-specific override without touching the shared recipe.</p>
@@ -5351,13 +5376,13 @@ exclusive with <code>path</code> and <code>dc_ref</code>.</p>
 </ol>
 <p>Most recipes are shared across all versions. Only the ones that actually differ need an override.</p>
 <p>To test a version-specific recipe standalone:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Uses shared recipe</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq/taxonomy_rel_abundance.py<span class="w"> </span>--data-dir<span class="w"> </span>/data/run
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Uses the v2.14.0 override if it exists, falls back to shared otherwise</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq/taxonomy_rel_abundance.py<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span>--data-dir<span class="w"> </span>/data/run<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span>--version<span class="w"> </span><span class="m">2</span>.14.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Uses shared recipe</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq/taxonomy_rel_abundance.py<span class="w"> </span>--data-dir<span class="w"> </span>/data/run
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Uses the v2.14.0 override if it exists, falls back to shared otherwise</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq/taxonomy_rel_abundance.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">  </span>--data-dir<span class="w"> </span>/data/run<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">  </span>--version<span class="w"> </span><span class="m">2</span>.14.0
 </code></pre></div>
 <hr>
 <h2 id="additional-resources">Additional Resources<a class="headerlink" href="#additional-resources" title="Permanent link">¶</a></h2>

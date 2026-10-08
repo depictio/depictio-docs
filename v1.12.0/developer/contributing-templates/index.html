@@ -4838,8 +4838,8 @@ data collections resolve — without ingesting anything:</p>
 <a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">sources</span><span class="p">[</span><span class="s2">"my_file"</span><span class="p">]</span>
 <a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"sample"</span><span class="p">,</span> <span class="s2">"value"</span><span class="p">)</span>        <span class="c1"># exactly the OUTPUT_SCHEMA columns</span>
 </code></pre></div>
-<p>Test it against real data before moving on (all four checkpoints — load →
-resolve → transform → schema — must pass green):</p>
+<p>Test it against real data before moving on (all five checkpoints, load →
+resolve → input schema → transform → output schema, must pass green):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>info<span class="w"> </span>&lt;pipeline&gt;/my_recipe.py
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w">  </span>&lt;pipeline&gt;/my_recipe.py<span class="w"> </span>--data-dir<span class="w"> </span>/path/to/run<span class="w"> </span>--head<span class="w"> </span><span class="m">10</span>
 </code></pre></div>

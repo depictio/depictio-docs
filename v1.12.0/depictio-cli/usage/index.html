@@ -7478,7 +7478,7 @@ ingest its own results when it finishes. Full guide:
 <a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a>  sample: String
 <a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a>  faith_pd: Float64
 </code></pre></div>
-<p>A non-empty <code>OPTIONAL_OUTPUT_SCHEMA</code> adds an <code>Optional output schema (N columns)</code> table.</p>
+<p>Each source that declares an <code>input_schema</code> gets an <code>Input schema: &lt;source&gt; (N columns)</code> table before the output schema. A non-empty <code>OPTIONAL_OUTPUT_SCHEMA</code> adds an <code>Optional output schema (N columns)</code> table.</p>
 <hr>
 <h4 id="dev-recipe-run-name"><code>dev recipe run &lt;name&gt;</code><a class="headerlink" href="#dev-recipe-run-name" title="Permanent link">¶</a></h4>
 <p>Execute a recipe against a local data directory, with its validation checkpoints.</p>
