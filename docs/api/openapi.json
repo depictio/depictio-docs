@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.11.2",
-    "x-generated-at": "2026-10-08T13:11:11Z",
-    "x-depictio-version": "v1.11.2"
+    "version": "1.12.0",
+    "x-generated-at": "2026-10-07T20:27:26Z",
+    "x-depictio-version": "v1.12.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -44,7 +44,7 @@
           "Projects"
         ],
         "summary": "Get Project From Id",
-        "description": "Get a project by ID, optionally with delta_locations joined via MongoDB aggregation.\n\nThis endpoint retrieves a project from the database using its ID. By default, it joins\ndelta_table_location data from the DeltaTableAggregated collection at query time.\nSet skip_enrichment=true for simple queries without delta_location joins (faster, safer).\n\nArgs:\n    project_id (PyObjectId, optional): The project ID to retrieve.\n    skip_enrichment (bool, optional): Skip delta_location aggregation pipeline (default: False).\n                                      Use True for project updates to get complete workflow objects.\n    current_user (User, optional): The authenticated user. Defaults to Depends(get_user_or_anonymous).\n\nReturns:\n    dict: Project document. If skip_enrichment=False (default), includes:\n          - delta_location: S3/MinIO path to delta table (per data collection)\n          - last_aggregation: Most recent aggregation metadata with column specs\n          If skip_enrichment=True, returns basic project structure without enrichment.",
+        "description": "Get a project by ID, optionally with delta_locations joined via MongoDB aggregation.\n\nThis endpoint retrieves a project from the database using its ID. By default, it joins\ndelta_table_location data from the DeltaTableAggregated collection at query time.\nSet skip_enrichment=true for simple queries without delta_location joins (faster, safer).\n\nArgs:\n    project_id (PyObjectId, optional): The project ID to retrieve.\n    skip_enrichment (bool, optional): Skip delta_location aggregation pipeline (default: False).\n                                      Use True for project updates to get complete workflow objects.\n    current_user (User, optional): The authenticated user. Defaults to Depends(get_user_or_anonymous).\n\nReturns:\n    dict: Project document. If skip_enrichment=False (default), includes:\n          - delta_location: S3 path to delta table (per data collection)\n          - last_aggregation: Most recent aggregation metadata with column specs\n          If skip_enrichment=True, returns basic project structure without enrichment.",
         "operationId": "get_project_from_id_depictio_api_v1_projects_get_from_id_get",
         "security": [
           {
@@ -3511,7 +3511,7 @@
           "Files"
         ],
         "summary": "Serve Image",
-        "description": "Serve images from S3/MinIO via streaming.\n\nNOTE: Currently PUBLIC to allow HTML <img> tags to load images. Access is\nbucket-locked to the configured MinIO/S3 bucket and the key is\ntraversal-hardened, so this endpoint can only stream objects from\nDepictio's own bucket.\nTODO: Presigned, time-limited URLs remain future work for per-object\naccess control.",
+        "description": "Serve images from S3 via streaming.\n\nNOTE: Currently PUBLIC to allow HTML <img> tags to load images. Access is\nbucket-locked to the configured S3 bucket and the key is\ntraversal-hardened, so this endpoint can only stream objects from\nDepictio's own bucket.\nTODO: Presigned, time-limited URLs remain future work for per-object\naccess control.",
         "operationId": "serve_image_depictio_api_v1_files_serve_image_get",
         "parameters": [
           {
@@ -5147,7 +5147,7 @@
           "Migrate"
         ],
         "summary": "Export Project",
-        "description": "Export a project bundle from this instance.\n\nScoped to one project: cascades through workflows → data_collections →\nfiles / deltatables / runs → dashboards.  Optionally copies S3 data to\na target MinIO (modes all / files).\n\nAccess rules:\n- Admins can export any project, in every mode.\n- In public/demo mode the anonymous and temporary visitors are non-admin,\n  so they're allowed to export too — but only projects they can actually\n  read (public projects or ones shared with them), never arbitrary private\n  projects. Uses ``get_user_or_anonymous`` so tokenless public-mode\n  visitors resolve to the anonymous user instead of 401-ing.\n- On standard (non-public) instances export stays admin-only.\n\nNon-admin callers may not supply ``target_s3_config``: that triggers the\nserver-to-server S3 copy path (an exfiltration vector gated by\n``_validate_target_s3_endpoint``), which has no place in the UI export flow\nthat bundles S3 objects straight into the ZIP.",
+        "description": "Export a project bundle from this instance.\n\nScoped to one project: cascades through workflows → data_collections →\nfiles / deltatables / runs → dashboards.  Optionally copies S3 data to\na target S3 store (modes all / files).\n\nAccess rules:\n- Admins can export any project, in every mode.\n- In public/demo mode the anonymous and temporary visitors are non-admin,\n  so they're allowed to export too — but only projects they can actually\n  read (public projects or ones shared with them), never arbitrary private\n  projects. Uses ``get_user_or_anonymous`` so tokenless public-mode\n  visitors resolve to the anonymous user instead of 401-ing.\n- On standard (non-public) instances export stays admin-only.\n\nNon-admin callers may not supply ``target_s3_config``: that triggers the\nserver-to-server S3 copy path (an exfiltration vector gated by\n``_validate_target_s3_endpoint``), which has no place in the UI export flow\nthat bundles S3 objects straight into the ZIP.",
         "operationId": "export_project_depictio_api_v1_migrate_export_project_post",
         "requestBody": {
           "content": {
@@ -6949,7 +6949,7 @@
           "Dashboards"
         ],
         "summary": "Import Dashboard From Yaml",
-        "description": "Import a dashboard from YAML content.\n\nSupports both single dashboard and multi-tab dashboard formats:\n- Single: Standard YAML with title, components, etc.\n- Multi-tab: YAML with main_dashboard and tabs keys\n\nA new dashboard_id will be generated, and the current user will be set as owner.\n\nIf `overwrite=True` and a dashboard with the same title exists in the project,\nthe existing dashboard will be updated instead of creating a new one.\n\nProject identification:\n- If `project_id` is provided, uses that project directly\n- If `project_id` is not provided, extracts `project_tag` from YAML and\n  looks up the project by name\n\nArgs:\n    yaml_content: The YAML content defining the dashboard(s)\n    project_id: Optional project ID (if not provided, uses project_tag from YAML)\n    overwrite: If True, update existing dashboard with same title (default: False)\n    current_user: The authenticated user (will be set as owner)\n\nReturns:\n    Created/updated dashboard information including dashboard_id",
+        "description": "Import a dashboard from YAML content.\n\nSupports both single dashboard and multi-tab dashboard formats:\n- Single: Standard YAML with title, components, etc.\n- Multi-tab: YAML with main_dashboard and tabs keys\n\nA new dashboard_id will be generated, and the current user will be set as owner.\n\nIf `overwrite=True`, the dashboard imported earlier from the same `source_key`\nis updated instead of creating a new one, whatever its title is now; without\none, a dashboard with the same title in the project is. Either kind of match\nis a 409 without `overwrite`.\n\n`existing` says what becomes of a dashboard so matched, over `overwrite`:\n- `replace`: as `overwrite=True`;\n- `keep`: it is left as it is, its layout and components as edited in the\n  viewer, and the response says `\"status\": \"kept\"` with its id. `main_title`\n  still renames a kept main dashboard, which changes nothing else. A kept\n  multi-tab main keeps its tabs as they are: a tab the YAML adds is not\n  imported. A dashboard with no match is created as usual.\nEvery response says what happened in `status`: `created`, `replaced` or `kept`.\n\nTitles: a dashboard takes the title in the YAML, unless\n- `keep_titles=True` and the import replaces an existing dashboard: that\n  dashboard keeps its current title, so a refresh does not undo a rename made\n  in the viewer. Applies to the main dashboard and to every tab;\n- `main_title` is given: the main dashboard (the multi-tab `main_dashboard`,\n  or a single dashboard that is not a child tab) is titled that, over the YAML\n  and over `keep_titles`. The tabs are not affected. A 400 on a child tab.\n\nA single-format child tab names its parent by title (`parent_dashboard_tag`).\n`parent_source_key`, the `source_key` the parent was imported under, finds\nthe parent first, so a parent renamed in the viewer keeps its tabs. Without a\nmatch by key or by title, a refreshed child tab stays under its current parent.\n\nProject identification:\n- If `project_id` is provided, uses that project directly (404 if it does not exist)\n- If `project_id` is not provided, extracts `project_tag` from YAML and\n  looks up the project by name\n\nArgs:\n    yaml_content: The YAML content defining the dashboard(s)\n    project_id: Optional project ID (if not provided, uses project_tag from YAML)\n    overwrite: If True, update the dashboard this one replaces (default: False)\n    source_key: Optional stable origin of the YAML (e.g.\n        \"nf-core/rnaseq:dashboards/base.yaml\"), stored on the dashboard so a\n        later import of the same source finds it after a rename\n    keep_titles: If True, a dashboard this import replaces keeps its current\n        title (default: False, the YAML's title)\n    main_title: Optional title for the main dashboard, over the YAML's and\n        over keep_titles\n    parent_source_key: Optional source_key of a child tab's parent dashboard\n    existing: Optional \"keep\" or \"replace\", for a dashboard the project\n        already has; without it, `overwrite` decides\n    current_user: The authenticated user (will be set as owner)\n\nReturns:\n    Created/updated dashboard information including dashboard_id",
         "operationId": "import_dashboard_from_yaml_depictio_api_v1_dashboards_import_yaml_post",
         "security": [
           {
@@ -6982,6 +6982,84 @@
               "type": "boolean",
               "default": false,
               "title": "Overwrite"
+            }
+          },
+          {
+            "name": "source_key",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source Key"
+            }
+          },
+          {
+            "name": "keep_titles",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Keep Titles"
+            }
+          },
+          {
+            "name": "main_title",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Main Title"
+            }
+          },
+          {
+            "name": "parent_source_key",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Parent Source Key"
+            }
+          },
+          {
+            "name": "existing",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "keep",
+                    "replace"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Existing"
             }
           }
         ],
@@ -12066,7 +12144,7 @@
               }
             ],
             "title": "Local Images Path",
-            "description": "Local path to images for CLI push mode"
+            "description": "Local directory of the images, which `depictio ingest` uploads to s3_base_folder. A relative path is read from the current directory"
           },
           "supported_formats": {
             "items": {
@@ -12451,7 +12529,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -12735,6 +12813,17 @@
               }
             ],
             "title": "Project Realtime"
+          },
+          "source_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Key"
           }
         },
         "additionalProperties": false,
@@ -12754,7 +12843,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -12817,7 +12906,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -13005,7 +13094,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -14911,7 +15000,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -15119,7 +15208,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -15492,7 +15581,7 @@
           "service_name": {
             "type": "string",
             "title": "Service Name",
-            "default": "minio"
+            "default": "s3"
           },
           "service_port": {
             "type": "integer",
@@ -15537,14 +15626,14 @@
           "root_user": {
             "type": "string",
             "title": "Root User",
-            "description": "MinIO/S3 root access key (not a secret on its own).",
+            "description": "S3 access key (not a secret on its own).",
             "default": "minio"
           },
           "root_password": {
             "type": "string",
             "format": "password",
             "title": "Root Password",
-            "description": "MinIO/S3 root secret key. REQUIRED in server context — set via DEPICTIO_MINIO_ROOT_PASSWORD. The server refuses to start when this is unset, shorter than 8 characters, or matches a well-known default.",
+            "description": "S3 secret key. REQUIRED in server context — set via DEPICTIO_S3_ROOT_PASSWORD (legacy DEPICTIO_MINIO_ROOT_PASSWORD is still accepted). The server refuses to start when this is unset, shorter than 8 characters, or matches a well-known default.",
             "default": "",
             "writeOnly": true
           },
@@ -15557,14 +15646,14 @@
           "verify_tls": {
             "type": "boolean",
             "title": "Verify Tls",
-            "description": "Verify TLS certificates when talking to S3/MinIO. Only set to false for local development against self-signed dev MinIO instances.",
+            "description": "Verify TLS certificates when talking to S3. Only set to false for local development against self-signed dev S3 instances.",
             "default": true
           }
         },
         "additionalProperties": false,
         "type": "object",
         "title": "S3DepictioCLIConfig",
-        "description": "S3/MinIO object storage configuration."
+        "description": "S3-compatible object storage configuration.\n\nThe bundled store is SeaweedFS (``weed mini``, compose service ``s3``);\nany S3 endpoint (AWS, NetApp, MinIO, …) works via ``DEPICTIO_S3_PUBLIC_URL``\n+ ``DEPICTIO_S3_EXTERNAL_SERVICE``. Every field also accepts the legacy\n``DEPICTIO_MINIO_<FIELD>`` name as a fallback (see ``settings_customise_sources``)."
       },
       "Scan": {
         "properties": {
@@ -15779,7 +15868,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -15885,7 +15974,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -16118,7 +16207,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6ac7966ae38f7a158987a90a"
+            "default": "6ac6ab29a6ca0dd48fd39427"
           }
         },
         "type": "object",
@@ -16241,7 +16330,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -16360,7 +16449,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -16442,7 +16531,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -16528,7 +16617,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -16701,7 +16790,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -16876,7 +16965,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -16993,7 +17082,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
@@ -17091,7 +17180,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac7966ae38f7a158987a909"
+            "default": "6ac6ab29a6ca0dd48fd39426"
           },
           "description": {
             "anyOf": [
