@@ -152,7 +152,7 @@ or any external S3 endpoint (AWS, NetApp, Ceph, MinIO, …) set with
     name wins when both are set, and the server logs a deprecation warning naming
     the old variables it found. An install that used the bundled MinIO has to copy
     its data to the new store: see
-    [Upgrading to v1.12.0: MinIO to SeaweedFS](seaweedfs-migration.md).
+    [Upgrading to v1.12.0: MinIO → SeaweedFS](upgrade/v1.12.0-seaweedfs.md).
 
 | Variable | Default | Description |
 |----------|---------|-------------|

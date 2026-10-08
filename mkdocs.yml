@@ -69,9 +69,11 @@ extra_css:
   - stylesheets/timeline.css
   - stylesheets/blog.css
   - stylesheets/neoteroi-mkdocs-v1.1.3.css
+  - stylesheets/asciinema.css
   # - stylesheets/css-v1.0.4.css
   - https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
   - https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css
+  - https://cdn.jsdelivr.net/npm/asciinema-player@3.17.0/dist/bundle/asciinema-player.css
 
 # Extra JavaScript
 extra_javascript:
@@ -80,6 +82,7 @@ extra_javascript:
   - javascripts/template-version.js
   - javascripts/doc-sections.js
   - javascripts/template-catalog.js
+  - javascripts/asciinema.js
 
 # Markdown Extensions
 markdown_extensions:
@@ -213,12 +216,13 @@ nav:
       - Server:
           - Docker Compose: installation/docker.md
           - Kubernetes: installation/kubernetes.md
-          - Local (no Docker): installation/local.md
+          - Python package: installation/local.md
+      - Upgrade guides:
+          - "v1.12.0: MinIO → SeaweedFS": installation/upgrade/v1.12.0-seaweedfs.md
       - CLI:
           - installation/cli.md
       - Configuration: installation/configuration.md
       - Environment Reference: installation/env-reference.md
-      - Upgrading to v1.12.0 (SeaweedFS): installation/seaweedfs-migration.md
 
   - Usage:
       - Overview: usage/README.md
