@@ -63,9 +63,8 @@ of every tab, `Reference tables` to the bottom, and the `Sample filters` group
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
+    depictio ingest /path/to/mhcquant_results \
       --template nf-core/mhcquant/latest \
-      --data-root /path/to/mhcquant_results \
       --var METADATA_FILE=/path/to/samplesheet.tsv \
       --var GROUP_COL=Condition
     ```
@@ -79,7 +78,7 @@ of every tab, `Reference tables` to the bottom, and the `Sample filters` group
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/mhcquant -r 3.2.0 -profile docker --outdir results
     ```
 
@@ -305,7 +304,7 @@ nextflow run nf-core/mhcquant -r 3.2.0 \
 Then point Depictio at the results, with the samplesheet you started from:
 
 ```bash
-depictio ingest --template nf-core/mhcquant/latest --data-root results/ \
+depictio ingest results/ --template nf-core/mhcquant/latest \
   --var METADATA_FILE=samplesheet.tsv --var GROUP_COL=Condition
 ```
 
@@ -315,7 +314,7 @@ See [nf-co.re/mhcquant/usage](https://nf-co.re/mhcquant/3.2.0/docs/usage) for fu
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name.
 
 ```text
@@ -351,11 +350,11 @@ the download script also places the vendored samplesheet under `input/`:
 
 ```bash
 bash depictio/projects/nf-core/mhcquant/3.2.0/download_test_data.sh /tmp/mhcquant_test
-depictio ingest --template nf-core/mhcquant/latest --data-root /tmp/mhcquant_test \
+depictio ingest /tmp/mhcquant_test --template nf-core/mhcquant/latest \
   --var GROUP_COL=Condition
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

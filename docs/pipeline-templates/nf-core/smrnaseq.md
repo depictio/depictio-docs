@@ -56,9 +56,8 @@ apply everywhere.
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
+    depictio ingest /path/to/smrnaseq_results \
       --template nf-core/smrnaseq/latest \
-      --data-root /path/to/smrnaseq_results \
       --var METADATA_FILE=/path/to/design.tsv \
       --var GENOME=hg38
     ```
@@ -75,7 +74,7 @@ apply everywhere.
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/smrnaseq -r 2.4.1 -profile docker --outdir results
     ```
 
@@ -299,7 +298,7 @@ nextflow run nf-core/smrnaseq -r 2.4.1 \
 Then point Depictio at the results, with a design table if you have one:
 
 ```bash
-depictio ingest --template nf-core/smrnaseq/latest --data-root results/ \
+depictio ingest results/ --template nf-core/smrnaseq/latest \
   --var METADATA_FILE=design.tsv --var GENOME=hg38
 ```
 
@@ -309,7 +308,7 @@ See [nf-co.re/smrnaseq/usage](https://nf-co.re/smrnaseq/2.4.1/docs/usage) for fu
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name.
 
 ```text
@@ -345,11 +344,11 @@ table is not part of the published run: it is vendored with the template under
 bash depictio/projects/nf-core/smrnaseq/2.4.1/download_test_data.sh /tmp/smrnaseq_test
 mkdir -p /tmp/smrnaseq_test/input
 cp depictio/projects/nf-core/smrnaseq/2.4.1/input/sample_metadata.tsv /tmp/smrnaseq_test/input/
-depictio ingest --template nf-core/smrnaseq/latest --data-root /tmp/smrnaseq_test \
+depictio ingest /tmp/smrnaseq_test --template nf-core/smrnaseq/latest \
   --var METADATA_FILE=/tmp/smrnaseq_test/input/sample_metadata.tsv --var GENOME=hg19
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

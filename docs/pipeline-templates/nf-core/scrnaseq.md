@@ -65,20 +65,18 @@ cluster, marker, per-cell expression and cell-cycle tables alike.
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
-      --template nf-core/scrnaseq/latest \
-      --data-root /path/to/scrnaseq_results
+    depictio ingest /path/to/scrnaseq_results \
+      --template nf-core/scrnaseq/latest
     ```
 
-    `--data-root` is the results root. The sample hub reads the samplesheet the
+    Pass the results root. The sample hub reads the samplesheet the
     run was launched with, which the pipeline does not publish: copy it anywhere
     under the results root first (for example `input/samplesheet.csv`). To keep
     the lineage markers of your tissue on the per-cell marker tiles, name them:
 
     ```bash
-    depictio ingest \
+    depictio ingest /path/to/scrnaseq_results \
       --template nf-core/scrnaseq/latest \
-      --data-root /path/to/scrnaseq_results \
       --var MARKER_PANEL=GENE1,GENE2,GENE3
     ```
 
@@ -89,7 +87,7 @@ cluster, marker, per-cell expression and cell-cycle tables alike.
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/scrnaseq -r 4.2.0 -profile docker --outdir results
     ```
 
@@ -373,7 +371,7 @@ Then copy the samplesheet next to the results and point Depictio at them:
 
 ```bash
 mkdir -p results/input && cp samplesheet.csv results/input/
-depictio ingest --template nf-core/scrnaseq/latest --data-root results/
+depictio ingest results/ --template nf-core/scrnaseq/latest
 ```
 
 To fill the Aligner concordance tab, run the pipeline once more per extra
@@ -385,7 +383,7 @@ pipeline documentation.
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the results root. Every scan is anchored on the tool
+Point `depictio ingest` at the results root. Every scan is anchored on the tool
 directory name (`cellranger/`, `simpleaf/`, `kallisto/`), so a single-route
 output directory and a root holding several routes scan the same way.
 
@@ -421,10 +419,10 @@ the run names in `params.json` is fetched into `input/` separately:
 
 ```bash
 bash depictio/projects/nf-core/scrnaseq/4.2.0/download_test_data.sh /tmp/scrnaseq_test
-depictio ingest --template nf-core/scrnaseq/latest --data-root /tmp/scrnaseq_test
+depictio ingest /tmp/scrnaseq_test --template nf-core/scrnaseq/latest
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

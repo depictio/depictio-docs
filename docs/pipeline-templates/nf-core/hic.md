@@ -67,13 +67,12 @@ matrix, every track and both distance curves through the project links.
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
+    depictio ingest /path/to/hic_results \
       --template nf-core/hic/latest \
-      --data-root /path/to/hic_results \
       --var GENOME=mm10
     ```
 
-    `--data-root` is the only required value. `GENOME` (default `hg38`) is the
+    The results directory is the only required value. `GENOME` (default `hg38`) is the
     UCSC name of the assembly the run was mapped to, which lays out the Contact
     maps axis: pass the UCSC spelling (`mm10`, `hg19`), not an iGenomes key such
     as `GRCm38`. The sample hub is the samplesheet the run validated,
@@ -82,7 +81,7 @@ matrix, every track and both distance curves through the project links.
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/hic -r 2.0.0 -profile docker --outdir results
     ```
 
@@ -272,7 +271,7 @@ UCSC name of the same assembly:
 
 ```bash
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio ingest --template nf-core/hic/latest --data-root results/ --var GENOME=mm10
+depictio ingest results/ --template nf-core/hic/latest --var GENOME=mm10
 ```
 
 See [nf-co.re/hic/usage](https://nf-co.re/hic/2.0.0/docs/usage) for full pipeline documentation.
@@ -281,7 +280,7 @@ See [nf-co.re/hic/usage](https://nf-co.re/hic/2.0.0/docs/usage) for full pipelin
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name, so a run with a different `--outdir`
 layout lands in the same collections.
 
@@ -318,10 +317,10 @@ sample column and the links are ready for a cohort.
 DEST=/tmp/hic_test
 bash depictio/projects/nf-core/hic/2.0.0/download_test_data.sh "$DEST"
 python -m depictio.dev_scripts.multiqc_reprocess --src "$DEST" --dest "$DEST"
-depictio ingest --template nf-core/hic/latest --data-root "$DEST" --var GENOME=mm10
+depictio ingest "$DEST" --template nf-core/hic/latest --var GENOME=mm10
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

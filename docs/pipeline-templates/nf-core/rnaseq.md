@@ -59,19 +59,18 @@ nf-core/rnaseq run:
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
-      --template nf-core/rnaseq/latest \
-      --data-root /path/to/rnaseq_results/aligner_star_salmon
+    depictio ingest /path/to/rnaseq_results/aligner_star_salmon \
+      --template nf-core/rnaseq/latest
     ```
 
-    `--data-root` is the only thing you have to pass. The samplesheet is
+    The results directory is the only thing you have to pass. The samplesheet is
     auto-detected from `{DATA_ROOT}/input/`; pass `--var SAMPLESHEET_FILE=...`
     to point somewhere else.
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/rnaseq -r 3.26.0 -profile docker --outdir results
     ```
 
@@ -79,11 +78,11 @@ nf-core/rnaseq run:
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
-!!! warning "`--data-root` is one aligner route, not the run root"
+!!! warning "Ingest one aligner route, not the run root"
     A run that publishes more than one aligner (the nf-core megatest publishes
     `aligner_star_salmon/` and `aligner_star_rsem/` side by side) writes a
     complete output tree per route, each with its own `multiqc/`, `star_salmon/`
-    and `salmon/`. Point `--data-root` at **one** of those directories: at the
+    and `salmon/`. Point `depictio ingest` at **one** of those directories: at the
     prefix root every scan becomes ambiguous between the routes, and the MultiQC
     scan attaches whichever report the walk reached first. A normal
     single-aligner run has no such split, so its `results/` is already right.
@@ -261,8 +260,8 @@ nextflow run nf-core/rnaseq -r 3.26.0 \
 Then point Depictio at the results:
 
 ```bash
-depictio ingest --template nf-core/rnaseq/latest \
-  --data-root results/
+depictio ingest results/ \
+  --template nf-core/rnaseq/latest
 ```
 
 Non-default routes need their flag by hand, since the CLI does not yet read
@@ -277,7 +276,7 @@ pipeline documentation.
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at one aligner route directory. Depictio scans recursively
+Point `depictio ingest` at one aligner route directory. Depictio scans recursively
 and matches on file name, except for the MultiQC report, whose scan pattern is
 path-qualified.
 
@@ -323,16 +322,15 @@ The run is
 eight libraries from four ENCODE cell lines, two replicates each, human GRCh37,
 Trim Galore then STAR + Salmon. The manifest fetches only the
 `aligner_star_salmon/` route and mirrors it below the destination, so the
-directory the script writes is already the right `--data-root`. The samplesheet
+directory the script writes is already the right one to ingest. The samplesheet
 is not part of the published run; `post_fetch_help` in `megatest.yaml` next to
 the script gives the `curl` that puts it under `input/`.
 
 Then run Depictio against it:
 
 ```bash
-depictio ingest \
-  --template nf-core/rnaseq/latest \
-  --data-root /tmp/rnaseq_test
+depictio ingest /tmp/rnaseq_test \
+  --template nf-core/rnaseq/latest
 ```
 
 ---

@@ -54,12 +54,11 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
-      --template nf-core/airrflow/latest \
-      --data-root /path/to/airrflow_results
+    depictio ingest /path/to/airrflow_results \
+      --template nf-core/airrflow/latest
     ```
 
-    `--data-root` is the only thing you have to pass. The samplesheet is picked
+    The results directory is the only thing you have to pass. The samplesheet is picked
     up from `{DATA_ROOT}/pipeline_info/samplesheet.valid.tsv`; pass
     `--var SAMPLESHEET_FILE=...` to point somewhere else.
 
@@ -68,9 +67,8 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
     condition in another free column names it, and can relabel it:
 
     ```bash
-    depictio ingest \
+    depictio ingest /path/to/airrflow_results \
       --template nf-core/airrflow/latest \
-      --data-root /path/to/airrflow_results \
       --var GROUP_COL=intervention \
       --var GROUP_COL_DISPLAY=Intervention
     ```
@@ -86,7 +84,7 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/airrflow -r 5.1.0 -profile docker --outdir results
     ```
 
@@ -304,8 +302,8 @@ nextflow run nf-core/airrflow -r 5.1.0 \
 Then point Depictio at the results:
 
 ```bash
-depictio ingest --template nf-core/airrflow/latest \
-  --data-root results/
+depictio ingest results/ \
+  --template nf-core/airrflow/latest
 ```
 
 See [nf-co.re/airrflow/usage](https://nf-co.re/airrflow/5.1.0/docs/usage)
@@ -315,7 +313,7 @@ for full pipeline documentation.
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name, so the layout below only has to be present
 somewhere under the root. Nothing outside the run is needed.
 
@@ -376,9 +374,8 @@ once the download finishes.
 Then run Depictio against it:
 
 ```bash
-depictio ingest \
-  --template nf-core/airrflow/latest \
-  --data-root /tmp/airrflow_test
+depictio ingest /tmp/airrflow_test \
+  --template nf-core/airrflow/latest
 ```
 
 ---

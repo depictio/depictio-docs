@@ -71,9 +71,8 @@ a collapsed sample sheet are pinned to the top of every tab, and a collapsed
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
+    depictio ingest /path/to/methylseq_results \
       --template nf-core/methylseq/latest \
-      --data-root /path/to/methylseq_results \
       --var METADATA_FILE=/path/to/design.tsv \
       --var GENOME=hg38
     ```
@@ -92,7 +91,7 @@ a collapsed sample sheet are pinned to the top of every tab, and a collapsed
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/methylseq -r 2.3.0 -profile docker --outdir results
     ```
 
@@ -315,7 +314,7 @@ MultiQC report and point Depictio at them:
 ```bash
 mkdir -p results/input && cp samplesheet_full.csv design.tsv results/input/
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio ingest --template nf-core/methylseq/latest --data-root results/ \
+depictio ingest results/ --template nf-core/methylseq/latest \
   --var METADATA_FILE=results/input/design.tsv
 ```
 
@@ -325,7 +324,7 @@ See [nf-co.re/methylseq/usage](https://nf-co.re/methylseq/2.3.0/docs/usage) for 
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name, never on the `bismark/` prefix.
 
 ```text
@@ -365,11 +364,11 @@ DEST=/tmp/methylseq_test
 bash depictio/projects/nf-core/methylseq/2.3.0/download_test_data.sh "$DEST"
 mkdir -p "$DEST/input" && cp depictio/projects/nf-core/methylseq/2.3.0/input/sample_metadata.tsv "$DEST/input/"
 python -m depictio.dev_scripts.multiqc_reprocess --src "$DEST" --dest "$DEST"
-depictio ingest --template nf-core/methylseq/latest --data-root "$DEST" \
+depictio ingest "$DEST" --template nf-core/methylseq/latest \
   --var METADATA_FILE="$DEST/input/sample_metadata.tsv"
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

@@ -57,7 +57,7 @@
 
 ### :material-code-braces: Template variables
 
-Variables you provide when running the template — `DATA_ROOT` via `--data-root`, the rest via `--var NAME=value`:
+Variables you provide when running the template: `DATA_ROOT` is the results directory given to `depictio ingest`, the others are set with `--var NAME=value`:
 
 | Variable | Required | Description |
 |---|:--:|---|

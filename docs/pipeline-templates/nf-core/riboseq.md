@@ -56,9 +56,8 @@ table, the design group) apply everywhere.
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
+    depictio ingest /path/to/riboseq_results \
       --template nf-core/riboseq/latest \
-      --data-root /path/to/riboseq_results \
       --var METADATA_FILE=/path/to/design.tsv
     ```
 
@@ -73,7 +72,7 @@ table, the design group) apply everywhere.
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/riboseq -r 2.0.0 -profile docker --outdir results
     ```
 
@@ -298,7 +297,7 @@ Then copy the sample sheet under `input/` and point Depictio at the results:
 
 ```bash
 mkdir -p results/input && cp samplesheet.csv results/input/
-depictio ingest --template nf-core/riboseq/latest --data-root results/ \
+depictio ingest results/ --template nf-core/riboseq/latest \
   --var METADATA_FILE=design.tsv
 ```
 
@@ -308,7 +307,7 @@ See [nf-co.re/riboseq/usage](https://nf-co.re/riboseq/2.0.0/docs/usage) for full
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name, so the aligner directory can differ from
 the tree below.
 
@@ -352,11 +351,11 @@ of the published run: they are vendored with the template under `input/`.
 bash depictio/projects/nf-core/riboseq/2.0.0/download_test_data.sh /tmp/riboseq_test
 mkdir -p /tmp/riboseq_test/input
 cp depictio/projects/nf-core/riboseq/2.0.0/input/*.*sv /tmp/riboseq_test/input/
-depictio ingest --template nf-core/riboseq/latest --data-root /tmp/riboseq_test \
+depictio ingest /tmp/riboseq_test --template nf-core/riboseq/latest \
   --var METADATA_FILE=/tmp/riboseq_test/input/metadata.tsv
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

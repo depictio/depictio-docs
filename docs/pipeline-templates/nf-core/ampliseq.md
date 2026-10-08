@@ -53,12 +53,11 @@ you from tab to tab.
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
-      --template nf-core/ampliseq/latest \
-      --data-root /path/to/ampliseq_results
+    depictio ingest /path/to/ampliseq_results \
+      --template nf-core/ampliseq/latest
     ```
 
-    `--data-root` is the only thing you have to pass. The samplesheet is picked up
+    The results directory is the only thing you have to pass. The samplesheet is picked up
     from `input/`, and `pipeline_info/params.json` fills in the metadata file the
     run was given (`--metadata`) and the route flags: multi-region, `--skip_qiime`,
     `--skip_taxonomy`, `--skip_alpha_rarefaction`, `--skip_ancom`, and the depth of
@@ -67,9 +66,8 @@ you from tab to tab.
 === "Choose the grouping column"
 
     ```bash
-    depictio ingest \
+    depictio ingest /path/to/ampliseq_results \
       --template nf-core/ampliseq/latest \
-      --data-root /path/to/ampliseq_results \
       --var METADATA_FILE=/path/to/Metadata.tsv \
       --var GROUP_COL=habitat
     ```
@@ -84,7 +82,7 @@ you from tab to tab.
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/ampliseq -r 2.18.0 -profile docker --outdir results
     ```
 
@@ -368,8 +366,8 @@ nextflow run nf-core/ampliseq -r 2.18.0 \
 Then point Depictio at the results:
 
 ```bash
-depictio ingest --template nf-core/ampliseq/latest \
-  --data-root results/ \
+depictio ingest results/ \
+  --template nf-core/ampliseq/latest \
   --var GROUP_COL=habitat
 ```
 
@@ -379,7 +377,7 @@ See [nf-co.re/ampliseq/usage](https://nf-co.re/ampliseq/2.18.0/docs/usage) for f
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the output directory of one run. Not every file is
+Point `depictio ingest` at the output directory of one run. Not every file is
 required: the template adapts to what is present and to the route flags read
 from `params.json`.
 
@@ -422,10 +420,10 @@ the template needs:
 
 ```bash
 python scripts/nfcore_megatest.py fetch --pipeline ampliseq --version 2.18.0 --dest /tmp/ampliseq_test
-depictio ingest --template nf-core/ampliseq/2.18.0 --data-root /tmp/ampliseq_test --var GROUP_COL=habitat
+depictio ingest /tmp/ampliseq_test --template nf-core/ampliseq/2.18.0 --var GROUP_COL=habitat
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

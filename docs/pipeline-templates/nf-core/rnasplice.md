@@ -66,19 +66,18 @@ scopes every tab.
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
-      --template nf-core/rnasplice/latest \
-      --data-root /path/to/rnasplice_results
+    depictio ingest /path/to/rnasplice_results \
+      --template nf-core/rnasplice/latest
     ```
 
-    `--data-root` is the only thing you have to pass: the validated sample sheet
+    The results directory is the only thing you have to pass: the validated sample sheet
     always carries `condition`, which `GROUP_COL` defaults to. Add a design table
     with more factors, name the assembly the event loci link to in UCSC, or read
     the pseudo-alignment route:
 
     ```bash
-    depictio ingest --template nf-core/rnasplice/latest \
-      --data-root /path/to/rnasplice_results \
+    depictio ingest /path/to/rnasplice_results \
+      --template nf-core/rnasplice/latest \
       --var METADATA_FILE=/path/to/design.tsv \
       --var GENOME=hg38 \
       --var QUANT_ROUTE=star_salmon
@@ -87,7 +86,7 @@ scopes every tab.
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/rnasplice -r 1.0.4 -profile docker --outdir results
     ```
 
@@ -307,7 +306,7 @@ Then rebuild the MultiQC parquet and point Depictio at the results:
 
 ```bash
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/multiqc/multiqc_data
-depictio ingest --template nf-core/rnasplice/latest --data-root results/ --var GENOME=hg38
+depictio ingest results/ --template nf-core/rnasplice/latest --var GENOME=hg38
 ```
 
 See [nf-co.re/rnasplice/usage](https://nf-co.re/rnasplice/1.0.4/docs/usage) for full pipeline documentation.
@@ -316,7 +315,7 @@ See [nf-co.re/rnasplice/usage](https://nf-co.re/rnasplice/1.0.4/docs/usage) for 
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name. `<route>` is `star_salmon` or `salmon`, the
 value of `QUANT_ROUTE`.
 
@@ -363,12 +362,12 @@ vendored design table:
 
 ```bash
 python -m depictio.dev_scripts.multiqc_reprocess --src <outdir> --dest <outdir>/multiqc/multiqc_data
-depictio ingest --template nf-core/rnasplice/latest --data-root <outdir> \
+depictio ingest <outdir> --template nf-core/rnasplice/latest \
   --var METADATA_FILE=depictio/projects/nf-core/rnasplice/1.0.4/input/metadata.tsv \
   --var GENOME=hg19
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

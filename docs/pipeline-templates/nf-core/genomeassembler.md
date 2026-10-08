@@ -57,9 +57,8 @@ everywhere through the samplesheet links.
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
+    depictio ingest /path/to/genomeassembler_results \
       --template nf-core/genomeassembler/latest \
-      --data-root /path/to/genomeassembler_results \
       --var METADATA_FILE=/path/to/samplesheet.csv \
       --var GROUP_COL=strategy
     ```
@@ -74,7 +73,7 @@ everywhere through the samplesheet links.
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/genomeassembler -r 2.0.0 -profile docker --outdir results
     ```
 
@@ -258,7 +257,7 @@ Then copy the samplesheet under `input/` and point Depictio at the results:
 
 ```bash
 mkdir -p results/input && cp samplesheet.csv results/input/
-depictio ingest --template nf-core/genomeassembler/latest --data-root results/
+depictio ingest results/ --template nf-core/genomeassembler/latest
 ```
 
 See [nf-co.re/genomeassembler/usage](https://nf-co.re/genomeassembler/2.0.0/docs/usage) for full pipeline documentation.
@@ -267,7 +266,7 @@ See [nf-co.re/genomeassembler/usage](https://nf-co.re/genomeassembler/2.0.0/docs
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name. The pipeline writes one directory per
 sample, plus one per read `group` that holds the reads-only outputs.
 
@@ -308,10 +307,10 @@ samplesheet under `input/`:
 
 ```bash
 bash depictio/projects/nf-core/genomeassembler/2.0.0/download_test_data.sh /tmp/genomeassembler_test
-depictio ingest --template nf-core/genomeassembler/latest --data-root /tmp/genomeassembler_test
+depictio ingest /tmp/genomeassembler_test --template nf-core/genomeassembler/latest
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

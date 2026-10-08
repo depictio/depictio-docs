@@ -66,18 +66,17 @@ every tab, the `Lane table` to the bottom, and the `Library filters` group
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
-      --template nf-core/demultiplex/latest \
-      --data-root /path/to/demultiplex_results
+    depictio ingest /path/to/demultiplex_results \
+      --template nf-core/demultiplex/latest
     ```
 
-    `--data-root` is the only thing you have to pass. To group libraries by a
+    The results directory is the only thing you have to pass. To group libraries by a
     design factor, add a metadata TSV whose first column is the library name as
     written in the sample sheet:
 
     ```bash
-    depictio ingest --template nf-core/demultiplex/latest \
-      --data-root /path/to/demultiplex_results \
+    depictio ingest /path/to/demultiplex_results \
+      --template nf-core/demultiplex/latest \
       --var METADATA_FILE=/path/to/library_metadata.tsv \
       --var GROUP_COL=organism
     ```
@@ -85,7 +84,7 @@ every tab, the `Lane table` to the bottom, and the `Library filters` group
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/demultiplex -r 1.8.0 -profile docker --outdir results
     ```
 
@@ -278,7 +277,7 @@ Then point Depictio at the results, adding `--var IS_BCLCONVERT=true` for a
 `--demultiplexer bclconvert` run:
 
 ```bash
-depictio ingest --template nf-core/demultiplex/latest --data-root results/
+depictio ingest results/ --template nf-core/demultiplex/latest
 ```
 
 See [nf-co.re/demultiplex/usage](https://nf-co.re/demultiplex/1.8.0/docs/usage) for full pipeline documentation.
@@ -287,7 +286,7 @@ See [nf-co.re/demultiplex/usage](https://nf-co.re/demultiplex/1.8.0/docs/usage) 
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory of one pipeline run. Depictio scans
+Point `depictio ingest` at the directory of one pipeline run. Depictio scans
 recursively and matches on file name, so the flowcell and lane folder names can
 differ from the tree below.
 
@@ -328,11 +327,11 @@ reports only. `megatest.yaml` lists the tables-only subset the template needs:
 
 ```bash
 bash depictio/projects/nf-core/demultiplex/1.8.0/download_test_data.sh /tmp/demultiplex_test
-depictio ingest --template nf-core/demultiplex/latest --data-root /tmp/demultiplex_test \
+depictio ingest /tmp/demultiplex_test --template nf-core/demultiplex/latest \
   --var METADATA_FILE=depictio/projects/nf-core/demultiplex/1.8.0/input/library_metadata.tsv
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

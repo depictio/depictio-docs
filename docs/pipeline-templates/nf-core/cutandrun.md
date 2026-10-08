@@ -66,27 +66,25 @@ The cutandrun template covers the peak-calling chain of a standard run:
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
-      --template nf-core/cutandrun/latest \
-      --data-root /path/to/cutandrun_results
+    depictio ingest /path/to/cutandrun_results \
+      --template nf-core/cutandrun/latest
     ```
 
-    `--data-root` is the only thing you have to pass: the sample hub is built
+    The results directory is the only thing you have to pass: the sample hub is built
     from the run's own `pipeline_info/samplesheet.valid.csv`. `GENOME` sets the
     genome axis of the Locus tab and defaults to `hg38`; pass the UCSC assembly
     the run was aligned to otherwise:
 
     ```bash
-    depictio ingest \
+    depictio ingest /path/to/cutandrun_results \
       --template nf-core/cutandrun/latest \
-      --data-root /path/to/cutandrun_results \
       --var GENOME=mm10
     ```
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/cutandrun -r 3.1 -profile docker --outdir results
     ```
 
@@ -356,7 +354,7 @@ results:
 
 ```bash
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio ingest --template nf-core/cutandrun/latest --data-root results/
+depictio ingest results/ --template nf-core/cutandrun/latest
 ```
 
 See [nf-co.re/cutandrun/usage](https://nf-co.re/cutandrun/3.1/docs/usage) for
@@ -366,7 +364,7 @@ full pipeline documentation.
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name, so the stage numbering below is the
 reference run's layout, not a requirement.
 
@@ -425,7 +423,7 @@ python -m depictio.dev_scripts.multiqc_reprocess \
   --src /tmp/cutandrun_test --dest /tmp/cutandrun_test
 
 # Then ingest it.
-depictio ingest --template nf-core/cutandrun/latest --data-root /tmp/cutandrun_test
+depictio ingest /tmp/cutandrun_test --template nf-core/cutandrun/latest
 ```
 
 ---

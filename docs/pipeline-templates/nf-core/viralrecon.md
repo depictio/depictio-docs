@@ -56,12 +56,11 @@ to the bottom, so the sample list and its floors follow you from tab to tab.
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
-      --template nf-core/viralrecon/latest \
-      --data-root /path/to/runs
+    depictio ingest /path/to/runs \
+      --template nf-core/viralrecon/latest
     ```
 
-    `--data-root` is the only thing you have to pass. The template reads a
+    The results directory is the only thing you have to pass. The template reads a
     `sequencing-runs` layout, so point it at the **parent** of one or more
     `run_*` directories, each holding one viralrecon `--outdir`. Every run found
     there is aggregated into the same collections.
@@ -69,7 +68,7 @@ to the bottom, so the sample list and its floors follow you from tab to tab.
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/viralrecon -r 3.0.0 -profile docker \
       --outdir runs/run_1 --depictio_data_root runs
     ```
@@ -325,8 +324,8 @@ nextflow run nf-core/viralrecon -r 3.0.0 \
 Then point Depictio at the parent of the run directories:
 
 ```bash
-depictio ingest --template nf-core/viralrecon/latest \
-  --data-root runs/
+depictio ingest runs/ \
+  --template nf-core/viralrecon/latest
 ```
 
 A later run written to `runs/run_2` is aggregated into the same collections on
@@ -340,7 +339,7 @@ See [nf-co.re/viralrecon/usage](https://nf-co.re/viralrecon/3.0.0/docs/usage) fo
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the `run_*` directories. Depictio
+Point `depictio ingest` at the directory holding the `run_*` directories. Depictio
 scans each run recursively and matches on file name. Not all files are
 required: optional collections that a run did not write (no Pangolin output
 with `--skip_pangolin`, for example) are skipped, and the dashboard hides the
@@ -385,12 +384,11 @@ bash depictio/projects/nf-core/viralrecon/3.0.0/download_test_data.sh /tmp/viral
 The run lands in `/tmp/viralrecon_test/run_1`, so ingest its parent:
 
 ```bash
-depictio ingest \
-  --template nf-core/viralrecon/latest \
-  --data-root /tmp/viralrecon_test
+depictio ingest /tmp/viralrecon_test \
+  --template nf-core/viralrecon/latest
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

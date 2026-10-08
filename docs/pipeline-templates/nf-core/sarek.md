@@ -63,21 +63,19 @@ thresholds` group (a Ts/Tv floor) pinned to the bottom.
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
-      --template nf-core/sarek/latest \
-      --data-root /path/to/sarek_results
+    depictio ingest /path/to/sarek_results \
+      --template nf-core/sarek/latest
     ```
 
-    `--data-root` is the only thing you have to pass. The sample hub is built
+    The results directory is the only thing you have to pass. The sample hub is built
     from the CSV manifests sarek writes under `csv/` (patient, sex, status and
     the callers run per sample), so the launch samplesheet is not needed. If the
     run was aligned to another assembly than hg38, name it so the locus tracks
     draw the right axis and gene lane:
 
     ```bash
-    depictio ingest \
+    depictio ingest /path/to/sarek_results \
       --template nf-core/sarek/latest \
-      --data-root /path/to/sarek_results \
       --var GENOME=hg19
     ```
 
@@ -88,7 +86,7 @@ thresholds` group (a Ts/Tv floor) pinned to the bottom.
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/sarek -r 3.10.0 -profile docker --outdir results
     ```
 
@@ -316,7 +314,7 @@ Then point Depictio at the results. sarek 3.10.0 ships a MultiQC parquet, so no
 reprocess step is needed:
 
 ```bash
-depictio ingest --template nf-core/sarek/latest --data-root results/
+depictio ingest results/ --template nf-core/sarek/latest
 ```
 
 See [nf-co.re/sarek/usage](https://nf-co.re/sarek/3.10.0/docs/usage) for full pipeline documentation.
@@ -325,7 +323,7 @@ See [nf-co.re/sarek/usage](https://nf-co.re/sarek/3.10.0/docs/usage) for full pi
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name; the caller and sample directories under
 `reports/`, `variant_calling/` and `annotation/` are read off the path.
 
@@ -364,10 +362,10 @@ per-caller VCFs and their SnpEff twins:
 
 ```bash
 bash depictio/projects/nf-core/sarek/3.10.0/download_test_data.sh /tmp/sarek_test
-depictio ingest --template nf-core/sarek/latest --data-root /tmp/sarek_test
+depictio ingest /tmp/sarek_test --template nf-core/sarek/latest
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

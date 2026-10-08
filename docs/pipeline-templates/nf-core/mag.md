@@ -70,19 +70,18 @@ the per-assembly statistics table to the bottom.
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
-      --template nf-core/mag/latest \
-      --data-root /path/to/mag_results
+    depictio ingest /path/to/mag_results \
+      --template nf-core/mag/latest
     ```
 
-    `--data-root` is the only variable. The sample hub reads the samplesheet at
+    The results directory is the only variable. The sample hub reads the samplesheet at
     `input/samplesheet.full.v4.csv` under the data root; mag does not publish its
     `--input`, so copy the sheet the run was launched with to that path.
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/mag -r 5.5.0 -profile docker --outdir results
     ```
 
@@ -310,7 +309,7 @@ the run wrote no parquet, and point Depictio at them:
 ```bash
 mkdir -p results/input && cp samplesheet.full.v4.csv results/input/
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio ingest --template nf-core/mag/latest --data-root results/
+depictio ingest results/ --template nf-core/mag/latest
 ```
 
 See [nf-co.re/mag/usage](https://nf-co.re/mag/5.5.0/docs/usage) for full pipeline documentation.
@@ -319,7 +318,7 @@ See [nf-co.re/mag/usage](https://nf-co.re/mag/5.5.0/docs/usage) for full pipelin
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name. Every tool collection is optional, so a
 run that skipped a step ingests and the tabs it would feed are dropped.
 
@@ -358,10 +357,10 @@ the Prokka GFFs is fetched, so the locus map covers those bins only.
 DEST=/tmp/mag_test
 bash depictio/projects/nf-core/mag/5.5.0/download_test_data.sh "$DEST"
 python -m depictio.dev_scripts.multiqc_reprocess --src "$DEST" --dest "$DEST"
-depictio ingest --template nf-core/mag/latest --data-root "$DEST"
+depictio ingest "$DEST" --template nf-core/mag/latest
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

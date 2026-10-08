@@ -8,40 +8,93 @@ hide:
 
 # Changelog
 
-## **[v1.13.0](https://github.com/depictio/depictio/releases/tag/v1.13.0)** (October 7, 2026)
+## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (October 7, 2026)
 
-!!! success "Minor: thirteen new nf-core templates, ten new visualization kinds, and comments on dashboards"
+!!! success "Minor: the server without Docker, one `depictio` command, and SeaweedFS as the bundled store"
 
 ### Docker Images
 
 ```bash
-ghcr.io/depictio/depictio-api:1.13.0
-ghcr.io/depictio/depictio-viewer:1.13.0
-ghcr.io/depictio/depictio-worker:1.13.0
-ghcr.io/depictio/depictio-cli:1.13.0
+ghcr.io/depictio/depictio-api:1.12.0
+ghcr.io/depictio/depictio-viewer:1.12.0
+ghcr.io/depictio/depictio-worker:1.12.0
+ghcr.io/depictio/depictio-cli:1.12.0
 ```
+
+### **♻️ Migration**
+
+* **The bundled S3 store is SeaweedFS instead of MinIO, and it starts empty**: copy your data over with the [migration guide](https://github.com/depictio/depictio/blob/v1.12.0/docs/migrate-minio-to-seaweedfs.md). The `DEPICTIO_MINIO_*` variables become `DEPICTIO_S3_*`, and the old names still work ([#1061](https://github.com/depictio/depictio/pull/1061)).
+* **The CLI is the `depictio` package**, with `depictio-cli` kept as an alias. `run` is now `ingest` and `--server` names the server, and the old names still work ([#1146](https://github.com/depictio/depictio/pull/1146), [#1149](https://github.com/depictio/depictio/pull/1149)).
+* **Custom recipes rename `EXPECTED_SCHEMA` to `OUTPUT_SCHEMA`** and `OPTIONAL_SCHEMA` to `OPTIONAL_OUTPUT_SCHEMA`. A recipe with the old names no longer loads ([#1128](https://github.com/depictio/depictio/pull/1128)).
 
 ### **✨ New Features**
 
-* **Ten new advanced visualization kinds**: [Contact map](../features/components.md#contact-map), [Knee plot](../features/components.md#knee-plot), [Damage profile](../features/components.md#damage-profile), [Genome view](../features/components.md#genome-view) (GenomeSpy tracks with a region brush that filters by chromosome and position), [Group compare](../features/components.md#group-compare) (two groups tested feature by feature on demand), [Transcript structure](../features/components.md#transcript-structure), [Copy-number profile](../features/components.md#cnv-profile), [Genome chord](../features/components.md#genome-chord), [Parallel coordinates](../features/components.md#parallel-coordinates) and the [Record card](../features/components.md#record-card), which shows one picked row as a collapsible panel beside the tile that selects it ([#1102](https://github.com/depictio/depictio/pull/1102)).
-* **Comments and annotations on dashboard tiles**: threads that capture the active filters and selection, marks drawn on figures, advanced visualizations, MultiQC plots, tables and maps, stale-data signals and agent proposals held for review. A mark drawn on a multi-view tile stays on the view it was drawn on ([#1109](https://github.com/depictio/depictio/pull/1109), [#1113](https://github.com/depictio/depictio/pull/1113)).
+* **`depictio local up` runs the full server without Docker** ([#1110](https://github.com/depictio/depictio/pull/1110)).
+* **`depictio ingest <results dir>` detects the template**, and a refresh keeps the dashboards ([#1149](https://github.com/depictio/depictio/pull/1149)).
+* **Recipe sources declare an `input_schema`**, checked before the transform runs ([#1132](https://github.com/depictio/depictio/pull/1132)).
 
 ### **🚀 Improvements**
 
-* **Recipes take template parameters** through a `params` channel, so a recipe reads the grouping column of the run instead of a hardcoded one. See [Recipes](../usage/projects/recipes.md#params) ([#1102](https://github.com/depictio/depictio/pull/1102)).
-* **Region links and region-scoped filters** carry a genomic window from one collection to another. See [Region links](../features/cross-dc-filtering.md#region-links) ([#1102](https://github.com/depictio/depictio/pull/1102)).
-* **MA, QQ, enrichment and ROC are now views of the tile that draws them** (volcano, dot plot, PR benchmark); stored dashboards are rewritten on load and keep rendering ([#1102](https://github.com/depictio/depictio/pull/1102)).
-* **56 new catalog tools**, and every tool now declares its description, homepage and bio.tools link; `catalog validate` rejects a module without a description or homepage ([#1102](https://github.com/depictio/depictio/pull/1102)).
-* **Only the reference projects seed at boot**: iris, penguins, the advanced visualization showcase, nf-core/ampliseq 2.18.0 and nf-core/viralrecon 3.0.0. The nf-core/ampliseq 2.14.0 and 2.16.0 seeds are gone; ingest those versions with their template instead ([#1102](https://github.com/depictio/depictio/pull/1102)).
+* **The dashboards listing opens on the table**, and the thumbnail grid shows five cards per row ([#1139](https://github.com/depictio/depictio/pull/1139)).
 
-### **🧬 Pipeline Templates**
+### **🐛 Bug Fixes**
 
-* **Thirteen new nf-core templates**. Experimental, validated on real data: [nf-core/mag 5.5.0](../pipeline-templates/nf-core/mag.md), [nf-core/nanoseq 3.0.0](../pipeline-templates/nf-core/nanoseq.md), [nf-core/riboseq 2.0.0](../pipeline-templates/nf-core/riboseq.md) and [nf-core/rnasplice 1.0.4](../pipeline-templates/nf-core/rnasplice.md). Draft, validated on a single small or partial run, or with a known issue: [nf-core/demultiplex 1.8.0](../pipeline-templates/nf-core/demultiplex.md), [nf-core/eager 2.4.5](../pipeline-templates/nf-core/eager.md), [nf-core/genomeassembler 2.0.0](../pipeline-templates/nf-core/genomeassembler.md), [nf-core/hic 2.0.0](../pipeline-templates/nf-core/hic.md), [nf-core/methylseq 2.3.0](../pipeline-templates/nf-core/methylseq.md), [nf-core/mhcquant 3.2.0](../pipeline-templates/nf-core/mhcquant.md), [nf-core/sarek 3.10.0](../pipeline-templates/nf-core/sarek.md), [nf-core/scrnaseq 4.2.0](../pipeline-templates/nf-core/scrnaseq.md) and [nf-core/smrnaseq 2.4.1](../pipeline-templates/nf-core/smrnaseq.md) ([#1102](https://github.com/depictio/depictio/pull/1102)).
-* **Linked record cards and cross-selection in the nf-core templates**: a record card sits beside the table or plot that selects its row, and scatter plots and tables filter each other where they share a key ([#1102](https://github.com/depictio/depictio/pull/1102)).
-* **nf-core/airrflow 5.1.0, nf-core/cutandrun 3.1, nf-core/differentialabundance 2.0.0, nf-core/funcscan 4.0.0, nf-core/rnaseq 3.26.0, nf-core/taxprofiler 2.0.1 and nf-core/variantbenchmarking 1.4.0 move from Draft to Experimental**, with reworked tabs ([#1102](https://github.com/depictio/depictio/pull/1102)).
-* **nf-core/atacseq 1.2.2, nf-core/chipseq 1.2.0 and nf-core/rnafusion 4.1.3 are reworked the same way** and stay Draft ([#1102](https://github.com/depictio/depictio/pull/1102)).
-* **nf-core/ampliseq 2.18.0 and nf-core/viralrecon 3.0.0 follow the same layout**: every tab opens on a glance strip and carries the pinned sample filters, tables and plots cross-select, and record cards sit beside the tiles that pick their row. The ampliseq tree metadata reads your `GROUP_COL` instead of a fixed column ([#1102](https://github.com/depictio/depictio/pull/1102)).
-* **Catalog outputs that changed shape**: the arriba, FusionCatcher, FusionInspector, fusion-report, STAR-Fusion, CTAT-Splicing and dbCAN outputs gain a `sample` column read from the file path; the truvari, som.py, Wittyer, SVanalyzer and rtg-tools outputs gain optional `caller` and `truth_set` columns; the MACS2 peak cards threshold at a -log10 q-value of 1.3 (q 0.05); bcftools stats reads the sample and caller from the report's `ID` line ([#1102](https://github.com/depictio/depictio/pull/1102)).
+* **Stacked taxonomy strips colour by any metadata column**, with hover and a legend ([#1140](https://github.com/depictio/depictio/pull/1140)).
+* **A MultiQC report no longer stays on *preparing* after its worker dies** ([#1110](https://github.com/depictio/depictio/pull/1110)).
+
+---
+
+??? info "Beta releases leading up to v1.12.0"
+
+    **v1.12.0-b1**
+
+    * SeaweedFS, a first `depictio local up` that also ingested results, and the listing, taxonomy and MultiQC changes above ([#1061](https://github.com/depictio/depictio/pull/1061), [#1110](https://github.com/depictio/depictio/pull/1110)). The stable `v1.12.0` adds the CLI rework and the recipe schemas.
+
+---
+
+## **[v1.11.2](https://github.com/depictio/depictio/releases/tag/v1.11.2)** (September 24, 2026)
+
+!!! success "Patch: a builder preview that stays in view, and a tidier dashboards listing"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.11.2
+ghcr.io/depictio/depictio-viewer:1.11.2
+ghcr.io/depictio/depictio-worker:1.11.2
+ghcr.io/depictio/depictio-cli:1.11.2
+```
+
+### **🚀 Improvements**
+
+* **The builder's preview stays in view** while the controls scroll, and every figure parameter has a description ([#1105](https://github.com/depictio/depictio/pull/1105)).
+* **The dashboards listing has a Card display menu** and loses the Tiles view. `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` sets the view it opens in. See [Thumbnails or table](../usage/guides/web_ui.md#listing-views) ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **Sharper thumbnails**, sized by `DEPICTIO_PERFORMANCE_SCREENSHOT_*`. See [Performance & Timeouts](../installation/env-reference.md#performance-timeouts) ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **The tab sidebar opens by default, the loader shows the animated rose**, and an embedded dashboard can follow its host's colour scheme ([#1108](https://github.com/depictio/depictio/pull/1108)).
+
+---
+
+## **[v1.11.1](https://github.com/depictio/depictio/releases/tag/v1.11.1)** (September 17, 2026)
+
+!!! success "Patch: an opt-in Nextflow trigger, and General Stats only where the report has it"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.11.1
+ghcr.io/depictio/depictio-viewer:1.11.1
+ghcr.io/depictio/depictio-worker:1.11.1
+ghcr.io/depictio/depictio-cli:1.11.1
+```
+
+### **🚀 Improvements**
+
+* **The Nextflow trigger can be installed opt-in** with `depictio-cli config nextflow --install --default-disabled`. See [`config nextflow`](../depictio-cli/usage.md#config-nextflow) ([#1103](https://github.com/depictio/depictio/pull/1103)).
+
+### **🐛 Bug Fixes**
+
+* **General Stats is only offered when a MultiQC report has the table**, so nf-core/chipseq 2.1.0 dashboards no longer show a failed tile ([#1104](https://github.com/depictio/depictio/pull/1104)).
+* **Table renders in the catalog gallery show their rows again** ([#1101](https://github.com/depictio/depictio/pull/1101)).
 
 ---
 

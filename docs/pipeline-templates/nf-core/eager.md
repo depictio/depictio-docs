@@ -71,25 +71,24 @@ endogenous-DNA floor narrows the library hub and, through it, every tab.
 === "Point at a finished run"
 
     ```bash
-    depictio ingest \
-      --template nf-core/eager/latest \
-      --data-root /path/to/eager_results
+    depictio ingest /path/to/eager_results \
+      --template nf-core/eager/latest
     ```
 
-    `--data-root` is the only thing you have to pass, once the `--input` TSV is
+    The results directory is the only thing you have to pass, once the `--input` TSV is
     copied under `input/` and the MultiQC report regenerated. `SHORT_FRAGMENT_BP`
     (default `70`) sets the short-fragment cut-off the Authentication tab counts:
 
     ```bash
-    depictio ingest --template nf-core/eager/latest \
-      --data-root /path/to/eager_results \
+    depictio ingest /path/to/eager_results \
+      --template nf-core/eager/latest \
       --var SHORT_FRAGMENT_BP=50
     ```
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/eager -r 2.4.5 -profile docker --outdir results
     ```
 
@@ -315,7 +314,7 @@ Depictio at them:
 ```bash
 mkdir -p results/input && cp libraries.tsv results/input/
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio ingest --template nf-core/eager/latest --data-root results/
+depictio ingest results/ --template nf-core/eager/latest
 ```
 
 See [nf-co.re/eager/usage](https://nf-co.re/eager/2.4.5/docs/usage) for full pipeline documentation.
@@ -324,7 +323,7 @@ See [nf-co.re/eager/usage](https://nf-co.re/eager/2.4.5/docs/usage) for full pip
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and matches on file name, so a run with `--dedupper dedup` or a
 different directory layout lands in the same collections.
 
@@ -373,10 +372,10 @@ DEST=/tmp/eager_test
 bash depictio/projects/nf-core/eager/2.4.5/download_test_data.sh "$DEST"
 mkdir -p "$DEST/input" && cp depictio/projects/nf-core/eager/2.4.5/input/*.tsv "$DEST/input/"
 python -m depictio.dev_scripts.multiqc_reprocess --src "$DEST" --dest "$DEST"
-depictio ingest --template nf-core/eager/latest --data-root "$DEST"
+depictio ingest "$DEST" --template nf-core/eager/latest
 ```
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

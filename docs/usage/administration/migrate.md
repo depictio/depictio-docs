@@ -18,7 +18,7 @@ The CLI and UI paths differ in how S3 data is transferred:
 CLI path (S3 copied directly)
 ──────────────────────────────────────────────────────────────────
 Source instance                        Target instance
-depictio-cli                           API: /migrate/import-project
+depictio migrate                       API: /migrate/import-project
     │                                       │
     ├─ POST /migrate/export-project         ├─ Upsert: projects
     │     → ZIP (no S3 data inside)         │     (workflows + data_collections
@@ -69,18 +69,31 @@ See [CLI Reference — migrate](../../depictio-cli/usage.md#migrate-commands) fo
 
 ```bash
 # Recommended: dry-run first
-depictio-cli migrate \
+depictio migrate \
   --project "My Project" \
-  --CLI-config-path ~/.depictio/CLI_local.yaml \
-  --target-config ~/.depictio/CLI_remote.yaml \
+  --server ~/.depictio/CLI_local.yaml \
+  --to-server ~/.depictio/CLI_remote.yaml \
   --dry-run
 
 # Full migration
-depictio-cli migrate \
+depictio migrate \
   --project "My Project" \
-  --CLI-config-path ~/.depictio/CLI_local.yaml \
-  --target-config ~/.depictio/CLI_remote.yaml
+  --server ~/.depictio/CLI_local.yaml \
+  --to-server ~/.depictio/CLI_remote.yaml
+
+# From the server `depictio local up` runs, to a shared instance
+depictio migrate \
+  --project "My Project" \
+  --server local \
+  --to-server ~/.depictio/CLI_remote.yaml
 ```
+
+`--server` names the source and `--to-server` the target, each as `local` or a
+CLI configuration file. Without `--server`, the source is the
+[default server](../../depictio-cli/usage.md#choosing-a-server); without
+`--to-server`, the target is `~/.depictio/CLI_remote.yaml`, with no fallback to
+the local server. `DEPICTIO_CLI_TOKEN` and `DEPICTIO_CLI_API_BASE_URL` apply to
+the source only. The former `--CLI-config-path` and `--target-config` still work.
 
 Each config file points to a different Depictio instance and carries its own API URL, token, and S3 credentials.
 

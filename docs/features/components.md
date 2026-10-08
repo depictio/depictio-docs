@@ -2019,25 +2019,30 @@ If your images are already uploaded to S3/MinIO, specify the location in your pr
 s3_base_folder: "s3://bucket-name/images/"
 ```
 
-**Option 2: Upload local images with depictio-cli (Recommended)**
+**Option 2: Upload local images with the CLI (Recommended)**
 
-Use the `depictio-cli run` command to automatically upload images from a local directory to S3:
+Use the `depictio ingest` command to upload images from a local directory to S3 as part of the ingestion:
 
 ```yaml
 # In project.yaml - dc_specific_properties
-local_images_path: ./images  # Local path relative to project directory
+s3_base_folder: "s3://bucket-name/project/images/"  # Where the images go
+local_images_path: ./images  # Local directory, relative to where you run the CLI
 ```
 
 ```bash
-# Run depictio-cli to sync project and upload images
-depictio-cli run --project-dir /path/to/project
+# Sync the project, process its data and upload the images
+depictio ingest --project-config-path /path/to/project.yaml
 ```
 
 The CLI will:
 
 1. Read the `local_images_path` from your project configuration
-2. Upload images to the configured S3 bucket
-3. Set the correct `s3_base_folder` automatically
+2. Upload the images to `s3_base_folder`, skipping those already there
+3. Check that every image the table references is in storage
+
+`s3_base_folder` is required with `local_images_path`, and must be in the bucket
+the server uses. To upload a directory by hand, use
+`depictio data push-images <directory> <s3_base_folder>` (formerly `images push`).
 
 !!! tip "Cross-DC Filtering"
     Image components support filtering via interactive components on the same Data Collection. Select samples using a MultiSelect filter, and the image gallery updates automatically.
