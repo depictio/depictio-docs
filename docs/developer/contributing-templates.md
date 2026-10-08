@@ -11,7 +11,7 @@ description: "How to add a pipeline template to Depictio — a single-folder bun
 
 A **template** turns a whole pipeline run into a ready-made Depictio project —
 data collections, recipes, and dashboards — that a user sets up with a single
-`depictio-cli run --template …` command. Where a [catalog tool](contributing-a-tool.md)
+`depictio ingest <results dir> --template …` command. Where a [catalog tool](contributing-a-tool.md)
 wires up *one* tool's outputs, a template assembles *many* into a complete,
 opinionated analysis for a specific pipeline.
 
@@ -103,12 +103,12 @@ workflows:
 data collections resolve — without ingesting anything:
 
 ```bash
-depictio-cli run --template <pipeline>/<version> --data-root /path/to/run --dry-run
+depictio ingest /path/to/run --template <pipeline>/<version> --dry-run
 ```
 
 ## Step 3 — Write recipes (only for outputs that need reshaping)
 
-Same recipe contract as the catalog: `SOURCES`, `EXPECTED_SCHEMA`, `transform`.
+Same recipe contract as the catalog: `SOURCES`, `OUTPUT_SCHEMA`, `transform`.
 
 ```python
 """Short description of what this recipe produces."""
@@ -120,22 +120,22 @@ SOURCES: list[RecipeSource] = [
     RecipeSource(ref="my_file", path="relative/path/from/DATA_ROOT/to/file.csv", format="CSV"),
 ]
 
-EXPECTED_SCHEMA: dict[str, type[pl.DataType]] = {
+OUTPUT_SCHEMA: dict[str, type[pl.DataType]] = {
     "sample": pl.Utf8,
     "value":  pl.Float64,
 }
 
 def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
     df = sources["my_file"]
-    return df.select("sample", "value")        # exactly the EXPECTED_SCHEMA columns
+    return df.select("sample", "value")        # exactly the OUTPUT_SCHEMA columns
 ```
 
-Test it against real data before moving on (all four checkpoints — load →
-resolve → transform → schema — must pass green):
+Test it against real data before moving on (all five checkpoints, load →
+resolve → input schema → transform → output schema, must pass green):
 
 ```bash
-depictio-cli dev recipe info <pipeline>/my_recipe.py
-depictio-cli dev recipe run  <pipeline>/my_recipe.py --data-dir /path/to/run --head 10
+depictio dev recipe info <pipeline>/my_recipe.py
+depictio dev recipe run  <pipeline>/my_recipe.py --data-dir /path/to/run --head 10
 ```
 
 ## Step 4 — Build the dashboards
@@ -143,23 +143,23 @@ depictio-cli dev recipe run  <pipeline>/my_recipe.py --data-dir /path/to/run --h
 The fastest path is to build interactively and export:
 
 1. Ingest the run without importing dashboards:
-   `depictio-cli run --template <id> --data-root <path> --skip-dashboard-import`
+   `depictio ingest <path> --template <id> --skip dashboards`
 2. Build the dashboard in the Depictio UI.
 3. **Dashboard settings → Export YAML**, and save it as `dashboards/main.yaml`.
 
 ## Step 5 — Test end-to-end & open a PR
 
 ```bash
-depictio-cli run --template <pipeline>/<version> --data-root /path/to/run
+depictio ingest /path/to/run --template <pipeline>/<version>
 ```
 
 Check before submitting:
 
 - [ ] `template_id` follows `<org>/<pipeline>/<version>`.
-- [ ] Every recipe has a docstring and a typed `EXPECTED_SCHEMA`; `depictio-cli dev recipe run` passes for each.
+- [ ] Every recipe has a docstring and a typed `OUTPUT_SCHEMA`; `depictio dev recipe run` passes for each.
 - [ ] Dashboard YAML is committed.
 - [ ] No hardcoded absolute paths — only `{DATA_ROOT}` / template variables.
-- [ ] A full `depictio-cli run --template …` completes without error and dashboards render with the template badge.
+- [ ] A full `depictio ingest <path> --template …` completes without error and dashboards render with the template badge.
 
 In the PR, include: the pipeline name + docs link, the version tested, the
 reference dataset used (e.g. an nf-core AWS results URL), and a screenshot of at
@@ -184,11 +184,11 @@ most templates do not raise.
 | `.template-banner` | <span class="gtd-badge gtd-req">required</span> | logo pair, title, subtitle, nf-co.re and GitHub links, status badge |
 | Intro | <span class="gtd-badge gtd-req">required</span> | one sentence, then 4 to 6 `:material-*:` bullets, one per analysis area |
 | Scope admonition | <span class="gtd-badge gtd-opt">optional</span> | `!!! info` or `!!! warning`, when the template covers one route of the pipeline only |
-| `## Quick start` | <span class="gtd-badge gtd-req">required</span> | the `depictio run` that needs nothing but `--data-root`, and the Nextflow trigger beside it |
+| `## Quick start` | <span class="gtd-badge gtd-req">required</span> | the `depictio ingest` that needs nothing but the results directory, and the Nextflow trigger beside it |
 | `## Choosing a template` | <span class="gtd-badge gtd-opt">optional</span> | a table of `--template` ids, when the template ships under several |
 | `## Reference` | <span class="gtd-badge gtd-req">required</span> | the picker, then one version block per version around its generated partial |
 | `## Dashboard tabs` | <span class="gtd-badge gtd-req">required</span> | one content tab per dashboard tab, in dashboard order: summary line, screenshot, two or three sentences, `??? abstract` with the filters and sections |
-| `## Running the pipeline` | <span class="gtd-badge gtd-req">required</span> | the `nextflow run` that produces the inputs, the `depictio run` that reads them, the pipeline usage link |
+| `## Running the pipeline` | <span class="gtd-badge gtd-req">required</span> | the `nextflow run` that produces the inputs, the `depictio ingest` that reads them, the pipeline usage link |
 | `## Required data structure` | <span class="gtd-badge gtd-req">required</span> | a `text` tree of `<DATA_ROOT>/`, with the mandatory files called out |
 | `## Test data` | <span class="gtd-badge gtd-opt">if shipped</span> | `download_test_data.sh` or the megatest prefix, and the run that follows |
 | `## Additional resources` | <span class="gtd-badge gtd-req">required</span> | four links: nf-co.re, the AWS results, Template System Reference, Recipes |

@@ -57,7 +57,7 @@
 
 ### :material-code-braces: Template variables
 
-Variables you provide when running the template — `DATA_ROOT` via `--data-root`, the rest via `--var NAME=value`:
+Variables you provide when running the template: `DATA_ROOT` is the results directory given to `depictio ingest`, the others are set with `--var NAME=value`:
 
 | Variable | Required | Description |
 |---|:--:|---|
@@ -78,10 +78,10 @@ Variables you provide when running the template — `DATA_ROOT` via `--data-root
 
 ### :material-chef-hat: Recipes
 
-Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `EXPECTED_SCHEMA` columns.
+Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `OUTPUT_SCHEMA` columns.
 
 | Recipe | Transforms | Output |
 |---|---|---|
 | [`happy/roc.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/happy/roc.py) | Extract a germline precision/recall ROC curve from hap.py per-quality ROC output. | `quality`, `recall`, `precision`, `f1` |
 | [`happy/summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/happy/summary.py) | Pool hap.py per-sample summaries into a germline SNP/INDEL performance table. | `variant_type`, `filter`, `truth_tp`, `truth_fn`, `query_fp`, `recall`, `precision`, `f1` |
-| [`rtgtools/vcfeval_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/rtgtools/vcfeval_summary.py) | Normalize an rtg-tools vcfeval aggregated summary into a tidy benchmark table. | `label`, `caller`, `tp_base`, `tp_comp`, `fp`, `fn`, `precision`, `recall`, `f1` |
+| [`rtgtools/vcfeval_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/rtgtools/vcfeval_summary.py) | Normalize an rtg-tools vcfeval aggregated summary into a tidy benchmark table. | `label`, `caller`, `truth_set`, `tp_base`, `tp_comp`, `fp`, `fn`, `precision`, `recall`, `f1` |

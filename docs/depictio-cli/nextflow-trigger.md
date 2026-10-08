@@ -29,19 +29,32 @@ three steps happen there.
 **1. Install the CLI.**
 
 ```bash
-pip install depictio-cli
+pip install "depictio[multiqc]"
 ```
+
+The `[multiqc]` extra reads the MultiQC reports that the nf-core templates
+ingest. The package installs the `depictio` command, and `depictio-cli`, its
+former name, which the handler runs.
 
 **2. Save your credentials to `~/.depictio/CLI.yaml`.** That is already the path
 the viewer's [CLI agents page](../usage/get_started.md#create-a-cli-configuration)
-tells you to use, and the one the handler falls back to, so there is nothing to
+tells you to use, and the one the CLI reads by default, so there is nothing to
 point at.
+
+Since v1.13.1, the handler passes `--server` only when `params.depictio_cli_config` or
+`$DEPICTIO_CLI_CONFIG_PATH` is set (the v1.12.0 handler always passes it,
+with `~/.depictio/CLI.yaml` as the default). Otherwise the CLI follows
+[its own order](usage.md#choosing-a-server): `~/.depictio/CLI.yaml`, else the
+server that [`depictio local up`](../installation/local.md) runs on the same
+machine. So to ingest into that local server, skip this step. To reach it even
+when `~/.depictio/CLI.yaml` exists, set `params.depictio_cli_config = 'local'`
+in `~/.nextflow/config`.
 
 **3. Turn the trigger on, then check the CLI reaches your server.**
 
 ```bash
-depictio-cli config nextflow --install
-depictio-cli config check
+depictio config nextflow --install
+depictio config check
 ```
 
 `--install` copies the handler to `~/.depictio/nextflow.config` and adds one
@@ -49,10 +62,12 @@ depictio-cli config check
 set `NXF_HOME`), which Nextflow reads before every run. Your pipeline's own
 `onComplete` still runs. `--uninstall` removes the line, and
 `--depictio_enabled false` skips Depictio for one run. Run `--install` again
-after upgrading `depictio-cli`, so the copy follows the new version.
+after upgrading `depictio`, so the copy follows the new version. A copy
+installed by an earlier release still calls `depictio-cli run` with the former
+options, which keep working.
 
 !!! tip "One run instead of the whole machine"
-    Skip step 3 and add `-c $(depictio-cli config nextflow)` to your
+    Skip step 3 and add `-c $(depictio config nextflow)` to your
     `nextflow run` command. That subshell prints the path of the snippet bundled
     with the CLI, so there is still no file to download and none to keep in sync.
 
@@ -74,17 +89,15 @@ When the last task finishes, the handler ingests your `--outdir`, here
 [depictio] 📂 Data root  : /work/results
 [depictio] 🔧 Executable : depictio-cli
 [depictio] 💻 Command    :
-[depictio]     depictio-cli run \
-[depictio]         --CLI-config-path /home/alice/.depictio/CLI.yaml \
-[depictio]         --data-root /work/results \
+[depictio]     depictio-cli ingest /work/results \
 [depictio]         --triggered-by nextflow \
 [depictio]         --pipeline-id nf-core/ampliseq/2.16.0
 [depictio] --------------------------------------------------------------
-[depictio] • ✅ Resolved pipeline 'nf-core/ampliseq/2.16.0' to a bundled template.
+[depictio] ✓ Resolved pipeline 'nf-core/ampliseq/2.16.0' to a bundled template.
 [depictio] …
-[depictio] • 📘 Project: https://depictio.example.org/projects/6a9ab9a6a1d2ead141378e27
-[depictio] • 📘 Dashboard 'nf-core/ampliseq': https://depictio.example.org/dashboard/6a9acdf3835e12072990459a
-[depictio] ✅ Ingestion finished for /work/results
+[depictio] • Project: https://depictio.example.org/projects/6a9ab9a6a1d2ead141378e27
+[depictio] • Dashboard 'nf-core/ampliseq' created: https://depictio.example.org/dashboard/6a9acdf3835e12072990459a
+[depictio] ✓ Ingestion finished for /work/results
 ```
 
 You configured no template because the pipeline already knows what it is. The
@@ -94,8 +107,8 @@ handler forwards the name and version from the pipeline's `manifest` block as
 instead, set `params.depictio_template`.
 
 When `params.outdir` is not the directory to ingest, point
-`params.depictio_data_root` at the right one and the handler passes that as
-[`--data-root`](usage.md) instead.
+`params.depictio_data_root` at the right one and the handler passes that to
+[`depictio ingest`](usage.md#ingest-command) instead.
 
 Set these per run on the command line, as `--depictio_template <id>`, or in the
 pipeline's own `nextflow.config`. Keep them out of `~/.nextflow/config`, where
@@ -139,12 +152,22 @@ which one you meant:
 | You want | Add to `nextflow run` | What happens |
 | --- | --- | --- |
 | A project per run | `--depictio_project study-B` | This run creates its own project, under that name |
-| One project, many runs | `--depictio_attach true` | This run is added to the existing project as another run. Nothing already ingested is lost |
-| To re-ingest the same output | `--depictio_update true` | The project's configuration is refreshed and the same data root is ingested again |
+| One project, many runs | `--depictio_attach true` | This run is added to the existing project as another run. Nothing already ingested is lost, and the dashboards are kept |
+| To refresh the project at every completion | `--depictio_update true` | The handler adds `--update-config`: the project is refreshed in place, and its dashboards are kept as edited in the viewer |
 
-!!! warning "`depictio_update` re-imports the dashboards"
-    That discards edits made in the UI, unattended. For another run of the same
-    pipeline, `depictio_attach` is the one you want.
+!!! tip "`depictio_update` keeps your dashboards <small>(v1.12.0+)</small>"
+    A refresh keeps the dashboards the project has, edits made in the viewer
+    included, and adds the template's dashboards it lacks, so it can run
+    unattended at every completion. Before v1.12.0 it re-imported them,
+    discarding those edits. To start the dashboards over from the template, run
+    `depictio ingest <results dir> --reset-dashboards` by hand.
+
+    Since v1.13.1, a refresh keeps the runs of this output directory and of the directories
+    added with `depictio_attach`. The runs of any other directory are removed.
+    If an attached directory cannot be reached from the machine where the
+    pipeline completes, the refresh stops and changes nothing, and the log
+    shows `depictio-cli exited with code 1`. See
+    [Refreshing a project](usage.md#refreshing-a-project) for the details.
 
 ## On a cluster or in CI
 
@@ -173,9 +196,17 @@ params.depictio_cli_executable = [
     '-e', 'DEPICTIO_CLI_TOKEN',
     '-e', 'DEPICTIO_CLI_API_BASE_URL',
     '--network', 'host',
-    'ghcr.io/depictio/depictio-cli:1.10.0',
+    'ghcr.io/depictio/depictio-cli:<version>',
 ]
 ```
+
+Replace `<version>` with your server's release, v1.12.0 or later: the handler
+that `--install` copies calls `ingest`, the command earlier images name `run`.
+
+The container has its own home, so it finds no `~/.depictio/CLI.yaml` of its
+own. Export `DEPICTIO_CLI_CONFIG_PATH`, as above, or set
+`params.depictio_cli_config`, so that the handler passes the file as
+`--server`.
 
 Use `{DATA_ROOT}` for the directory being ingested: the handler fills it in when
 the pipeline completes, while a `${params.outdir}` in the list is still `null`
@@ -198,16 +229,16 @@ service account, set `params.depictio_user` and see
     | Parameter | Default | CLI option it drives |
     | --- | --- | --- |
     | `depictio_enabled` | `true` | none, set it to `false` to disable the trigger |
-    | `depictio_data_root` | `params.outdir` | `--data-root` |
-    | `depictio_cli_config` | `$DEPICTIO_CLI_CONFIG_PATH`, else `~/.depictio/CLI.yaml` | `--CLI-config-path` |
+    | `depictio_data_root` | `params.outdir` | the results directory, `ingest`'s argument |
+    | `depictio_cli_config` | `$DEPICTIO_CLI_CONFIG_PATH` | `--server`; `local` for the server `depictio local up` runs. With neither set, no `--server` is passed and the CLI uses `~/.depictio/CLI.yaml`, else the local server |
     | `depictio_template` | none | `--template` |
     | `depictio_project_config` | none | `--project-config-path`, which wins over the template |
-    | `depictio_project` | none | `--project-name` |
+    | `depictio_project` | none | `--project` |
     | `depictio_dashboard` | none | `--dashboard`, one path or a list |
     | `depictio_attach` | `false` | `--attach-run` |
-    | `depictio_update` | `false` | `--update-config --overwrite`, ignored with `--attach-run` |
+    | `depictio_update` | `false` | `--update-config`, ignored with `--attach-run` |
     | `depictio_user` | none | `--user` |
-    | `depictio_cli_executable` | `depictio-cli` | the executable, or a list for a container invocation. `{DATA_ROOT}` in a list element is substituted when the pipeline completes |
+    | `depictio_cli_executable` | `depictio-cli` | the executable, or a list for a container invocation. `{DATA_ROOT}` in a list element is substituted when the pipeline completes. `depictio-cli` is the former name of `depictio`, which `pip install depictio` installs too |
 
     Only `depictio_cli_config` and `depictio_cli_executable` describe the
     machine and belong in `~/.nextflow/config`. Set the others on the
@@ -225,14 +256,14 @@ service account, set `params.depictio_user` and see
     | `Pipeline did not complete successfully, skipping ingestion` | Working as designed. Fix the pipeline first |
     | `No data root to ingest` | Neither `params.depictio_data_root` nor `params.outdir` is set |
     | `No bundled depictio template matches pipeline` | The pipeline declares a manifest, Depictio ships no template for its name and version, and no project YAML is set. For your own pipeline, set `params.depictio_project_config` as in [a pipeline with no bundled template](#a-pipeline-with-no-bundled-template). For an nf-core release with no template, pin `params.depictio_template` to a shipped version |
-    | `Could not start the Depictio CLI` | `depictio-cli` is not on the **head job's** PATH. Installing it in the pipeline's containers does not help. Point `params.depictio_cli_executable` at an absolute path, or at a container |
+    | `Could not start the Depictio CLI` | `depictio-cli`, which `pip install depictio` installs, is not on the **head job's** PATH. Installing it in the pipeline's containers does not help. Point `params.depictio_cli_executable` at an absolute path, or at a container |
     | `Ingestion trigger failed, pipeline result unchanged` | Anything else, with the exception on that line. Your pipeline's result is never affected |
     | `already exists on this server`, then `exited with code 2` | An earlier run created this project. See [Running it again](#running-it-again) |
     | `depictio-cli exited with code N` | The ingestion itself failed. The CLI's own output is in the lines above |
 
 ## Next steps
 
-- [CLI Usage](usage.md) for `depictio-cli run` and every other command
+- [CLI Usage](usage.md) for `depictio ingest` and every other command
 - [Template System Reference](../usage/projects/templates.md) for how a pipeline id resolves to a template
 - [nf-core templates](../pipeline-templates/nf-core/index.md) for what ships today
 - [`depictio/cli/configs/nextflow/`](https://github.com/depictio/depictio/tree/main/depictio/cli/configs/nextflow) for the snippet itself, an annotated reference config, and the example pipeline

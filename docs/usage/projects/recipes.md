@@ -55,41 +55,57 @@ Recipes are the data transformation layer of the Depictio CLI. They convert raw 
 
 A recipe is a plain Python module that describes how to transform one or more raw files into a single tidy DataFrame. Each recipe lives in `depictio/projects/<pipeline>/recipes/` and declares:
 
-- **`SOURCES`** — input files to read (paths relative to `--data-dir`, or references to other data collections via `dc_ref`)
-- **`EXPECTED_SCHEMA`** — required output columns and their Polars data types
-- **`OPTIONAL_SCHEMA`** *(optional)* — columns that may or may not be present (e.g. user-defined metadata columns)
-- **`transform(sources)`** — a pure function that takes loaded DataFrames and returns the output DataFrame
+- **`SOURCES`**: input files to read (paths relative to `--data-dir`, or references to other data collections via `dc_ref`), each with the `input_schema` it reads: the columns the file must contain
+- **`OUTPUT_SCHEMA`**: required output columns and their Polars data types
+- **`OPTIONAL_OUTPUT_SCHEMA`** *(optional)*: columns that may or may not be present (e.g. user-defined metadata columns)
+- **`transform(sources)`**: a pure function that takes loaded DataFrames and returns the output DataFrame
+
+![A recipe declares its inputs (SOURCES) and its output (OUTPUT_SCHEMA, OPTIONAL_OUTPUT_SCHEMA)](../../images/recipes/output_schema_contract.png)
+
+A `# INPUT SCHEMA:` comment line sits above `SOURCES` and a `# OUTPUT SCHEMA:` line above `OUTPUT_SCHEMA`, so a recipe reads as a contract from the top of the file.
 
 Recipes are used in two ways:
 
-1. **Standalone testing** — `depictio recipe run` executes a recipe locally against a data directory, so you can validate your data before registering a project.
-2. **Project integration** — a `data_collection` with `source: "transformed"` tells the CLI to run the recipe during `depictio run`, storing the result as a Delta Lake table.
+1. **Standalone testing**: `depictio dev recipe run` executes a recipe locally against a data directory, so you can validate your data before registering a project.
+2. **Project integration**: a `data_collection` with `source: "transformed"` tells the CLI to run the recipe during `depictio ingest`, storing the result as a Delta Lake table.
 
 ---
 
-## The 4-Checkpoint Validation Pipeline
+## The 5-Checkpoint Validation Pipeline
 
-Every recipe execution — whether via `depictio recipe run` or `depictio run` — runs through four automatic checkpoints:
+Every recipe execution, whether via `depictio dev recipe run` or `depictio ingest`, runs through five automatic checkpoints:
 
 | # | Checkpoint | What it checks |
 |---|-----------|----------------|
-| 1 | **Load** | Import the recipe module; verify `SOURCES`, `EXPECTED_SCHEMA`, and a callable `transform()` exist |
+| 1 | **Load** | Import the recipe module; verify `SOURCES`, `OUTPUT_SCHEMA`, and a callable `transform()` exist |
 | 2 | **Resolve** | Find each file under `--data-dir`; skip optional sources gracefully; fail fast if required files are missing |
-| 3 | **Transform** | Call `transform(sources)`, verify it returns a non-empty `pl.DataFrame` |
-| 4 | **Schema** | Assert every column in `EXPECTED_SCHEMA` is present with the correct dtype; validate `OPTIONAL_SCHEMA` columns if present |
+| 3 | **Input schema** | Assert every column in each source's `input_schema` is present in the file that was read, with a compatible dtype |
+| 4 | **Transform** | Call `transform(sources)`, verify it returns a non-empty `pl.DataFrame` |
+| 5 | **Output schema** | Assert every column in `OUTPUT_SCHEMA` is present with the correct dtype; validate `OPTIONAL_OUTPUT_SCHEMA` columns if present |
 
 If any checkpoint fails, execution stops with a clear error message pointing to the exact problem.
+
+![Checkpoints 3 and 5 around transform(): a file missing a declared column stops before the transform runs](../../images/recipes/input_schema_checkpoints.png)
+
+The input check is deliberately loose on types: readers infer them from the data, so a text or all-null column passes wherever the recipe casts the value itself, and one numeric type stands for another. A missing column always fails, naming the source and the column:
+
+```
+RecipeError: Recipe arriba/fusions.py: source 'fusions' lacks input column(s) ['#gene1']. Got columns: ['gene1', ...]
+```
 
 ---
 
 ## CLI Commands
 
-### `depictio recipe list`
+The recipe commands sit in the `depictio dev` group, the maintainer tools that
+`depictio --help` does not list.
+
+### `depictio dev recipe list`
 
 List all bundled recipes.
 
 ```bash
-depictio recipe list
+depictio dev recipe list
 ```
 
 **Output:**
@@ -106,12 +122,12 @@ Available recipes (6):
 
 ---
 
-### `depictio recipe info <name>`
+### `depictio dev recipe info <name>`
 
-Show recipe details: docstring, sources, and expected output schema. Pass `--version` to inspect a version-specific override.
+Show recipe details: docstring, sources, input schema and output schema. Pass `--version` to inspect a version-specific override.
 
 ```bash
-depictio recipe info nf-core/ampliseq/alpha_diversity.py
+depictio dev recipe info nf-core/ampliseq/alpha_diversity.py
 ```
 
 **Output:**
@@ -123,21 +139,25 @@ Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD tabl
 Sources (1):
   faith_pd: qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv (TSV)
 
-Expected output schema (2 columns):
-  sample: Utf8
-  faith_pd: Float64
+Input schema: faith_pd (2 columns):
+  id: String
+  faith_pd: String
 
-Optional schema: {} (metadata columns passed through dynamically)
+Output schema (2 columns):
+  sample: String
+  faith_pd: Float64
 ```
+
+When the recipe declares a non-empty `OPTIONAL_OUTPUT_SCHEMA`, an `Optional output schema (N columns)` table follows.
 
 ---
 
-### `depictio recipe run <name>`
+### `depictio dev recipe run <name>`
 
-Execute a recipe against local data with all 4 validation checkpoints.
+Execute a recipe against local data with all 5 validation checkpoints.
 
 ```bash
-depictio recipe run nf-core/ampliseq/alpha_diversity.py \
+depictio dev recipe run nf-core/ampliseq/alpha_diversity.py \
   --data-dir /data/ampliseq_results
 ```
 
@@ -152,7 +172,7 @@ depictio recipe run nf-core/ampliseq/alpha_diversity.py \
 
 <!-- prettier-ignore -->
 !!! note "dc_ref sources"
-    Recipes that reference another data collection via `dc_ref` (e.g. `taxonomy_rel_abundance.py`) cannot be fully executed standalone. The CLI will report which sources are skipped and exit with code 0. These sources are resolved automatically during `depictio run` when all data collections are available.
+    Recipes that reference another data collection via `dc_ref` (e.g. `taxonomy_rel_abundance.py`) cannot be fully executed standalone. The CLI will report which sources are skipped and exit with code 0. These sources are resolved automatically during `depictio ingest` when all data collections are available.
 
 ---
 
@@ -170,13 +190,16 @@ The two examples below show the patterns specific to Depictio — referencing an
 import polars as pl
 from depictio.models.models.transforms import RecipeSource
 
+# INPUT SCHEMA: the columns each source must contain, checked before transform().
 SOURCES: list[RecipeSource] = [
     RecipeSource(
         ref="rel_table",
         path="qiime2/rel_abundance_tables/rel-table-2.tsv",
         format="TSV",
+        input_schema={"#OTU ID": pl.Utf8},
         read_kwargs={"skip_rows": 1},
     ),
+    # No input_schema: the sample id column is found by name or position.
     RecipeSource(
         ref="metadata",
         dc_ref="metadata",    # references another DC by tag
@@ -184,7 +207,8 @@ SOURCES: list[RecipeSource] = [
     ),
 ]
 
-EXPECTED_SCHEMA = {
+# OUTPUT SCHEMA: the columns transform() returns, checked after it.
+OUTPUT_SCHEMA = {
     "sample": pl.Utf8,
     "taxonomy": pl.Utf8,
     "rel_abundance": pl.Float64,
@@ -192,7 +216,7 @@ EXPECTED_SCHEMA = {
     "Phylum": pl.Utf8,
 }
 # Metadata columns are user-defined; validated dynamically
-OPTIONAL_SCHEMA: dict[str, type[pl.DataType]] = {}
+OPTIONAL_OUTPUT_SCHEMA: dict[str, type[pl.DataType]] = {}
 
 
 def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
@@ -241,7 +265,7 @@ SOURCES = [
     RecipeSource(ref="se", path="qiime2/ancombc/differentials/Category-habitat-level-2/se_slice.csv", format="CSV"),
 ]
 
-EXPECTED_SCHEMA = {
+OUTPUT_SCHEMA = {
     "id": pl.Utf8, "contrast": pl.Utf8,
     "lfc": pl.Float64, "p_val": pl.Float64, "q_val": pl.Float64,
     "w": pl.Float64, "se": pl.Float64,
@@ -286,6 +310,7 @@ def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
 | `path` | `str` | if no `dc_ref` | File path relative to `--data-dir` |
 | `dc_ref` | `str` | if no `path` | Tag of another data collection to inject (resolved by the API) |
 | `format` | `str` | yes if `path` set | `CSV`, `TSV`, or `Parquet` (case-insensitive) |
+| `input_schema` | `dict` | no | Columns `transform()` reads from this source, as column name to Polars dtype (e.g. `{"#gene1": pl.Utf8}`). Checked after the source is read. Leave it out, with a `# No input_schema:` comment giving the reason, when no column name is fixed (one column per sample, columns read by position or found by alias) |
 | `read_kwargs` | `dict` | no | Extra kwargs forwarded to the Polars reader (e.g. `{"skip_rows": 1}`) |
 | `optional` | `bool` | no | If `true`, source is skipped when unavailable instead of failing |
 | `glob_pattern` | `str` | no | Glob pattern for matching multiple files (concatenated) |
@@ -297,7 +322,7 @@ Exactly one of `path`, `dc_ref`, or `glob_pattern` must be set per source.
     A recipe can have **several inputs but always exactly one output**, so only the input side needs a model.
     Inputs are polymorphic — a file path, a glob, or another data collection (`dc_ref`) — and that
     variability is what `RecipeSource` disambiguates. The output is always a single `pl.DataFrame`:
-    its **shape** is declared by `EXPECTED_SCHEMA` / `OPTIONAL_SCHEMA`, and its **destination** is the
+    its **shape** is declared by `OUTPUT_SCHEMA` / `OPTIONAL_OUTPUT_SCHEMA`, and its **destination** is the
     data collection that references the recipe (`source: "transformed"`). Persisting it to Delta Lake is
     the CLI runner's job, not the recipe's — recipes stay pure `sources → DataFrame` functions.
 
@@ -305,7 +330,7 @@ Exactly one of `path`, `dc_ref`, or `glob_pattern` must be set per source.
 
 Use `glob_pattern` instead of `path` to fan multiple per-sample files
 into one DataFrame. The glob is expanded by the recipe runner relative
-to the project's `data_dir` (typically `--data-root`):
+to the project's `data_dir` (typically the results directory given to `depictio ingest`):
 
 ```python
 SOURCES: list[RecipeSource] = [
@@ -320,6 +345,44 @@ SOURCES: list[RecipeSource] = [
 Matched files are read individually and concatenated with
 `pl.concat([...], how="diagonal_relaxed")`. `glob_pattern` is mutually
 exclusive with `path` and `dc_ref`.
+
+### `source_path` (a key the file content lacks) { #source-path }
+
+Some tools write one file per sample and leave the sample out of the file itself: the only
+place it appears is the file name or the directory. Concatenating those files with
+`glob_pattern` alone would pool every sample's rows into one table with nothing to tell
+them apart.
+
+Set `source_path` to a column name and the runner adds that column to every row, holding
+the path of the file the row was read from, relative to the data root with `/` separators
+(absolute when the file sits outside the data root). The recipe then derives the key from
+it:
+
+```python
+SOURCES: list[RecipeSource] = [
+    RecipeSource(
+        ref="calls",
+        glob_pattern="caller/*.calls.tsv",
+        format="TSV",
+        source_path="_source_path",
+    ),
+]
+
+
+def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
+    df = sources["calls"]
+    # caller/S1.calls.tsv -> S1
+    sample = (
+        pl.col("_source_path").str.split("/").list.last().str.strip_suffix(".calls.tsv")
+    )
+    return df.with_columns(sample.alias("sample")).drop("_source_path")
+```
+
+The column is added after the file is read and before the files are concatenated, so it
+works with `path` and `glob_pattern` alike. The runner refuses a `source_path` name the file
+already has as a column, rather than overwriting real data, so pick a name no tool writes
+(a leading underscore is the usual choice). It is the recipe's job to drop the column, or
+keep it, in what `transform()` returns.
 
 ---
 
@@ -358,11 +421,54 @@ Use `source_overrides` to parameterize recipe source paths via template variable
           # ... one override per source ref
 ```
 
-The recipe is executed during `depictio data process` (Step 5 of `depictio run`). All 4 checkpoints run automatically. If the recipe fails, the data collection is skipped and an error is logged.
+The recipe is executed during `depictio data process` (the process step of `depictio ingest`). All 4 checkpoints run automatically. If the recipe fails, the data collection is skipped and an error is logged.
 
 <!-- prettier-ignore -->
 !!! tip "Using templates"
-    For nf-core/ampliseq, all six recipes are pre-configured in the bundled template. Use `depictio run --template nf-core/ampliseq/2.16.0 --data-root /your/data --var SAMPLESHEET_FILE=samplesheet.csv` to set up the complete project without writing any YAML. See [Templates](templates.md).
+    For nf-core/ampliseq, all six recipes are pre-configured in the bundled template. Use `depictio ingest /your/data --template nf-core/ampliseq/2.16.0 --var SAMPLESHEET_FILE=samplesheet.csv` to set up the complete project without writing any YAML. See [Templates](templates.md).
+
+### Passing template parameters to a recipe (`params`) { #params }
+
+`source_overrides` changes *where* a recipe reads. `params` changes *what it does* with the
+data: a grouping column, an identifier column, a significance cutoff, anything the user
+chooses when instantiating the template and the recipe would otherwise have to hardcode.
+
+Declare them under `transform.params` as string values, usually template variables:
+
+```yaml
+  - data_collection_tag: "grouped_metadata"
+    config:
+      type: "Table"
+      source: "transformed"
+      transform:
+        recipe: "nf-core/<pipeline>/<recipe>.py"
+        params:
+          group_col: "{GROUP_COL}"
+          id_col: "{METADATA_ID_COL}"
+```
+
+A recipe opts in by giving `transform()` a `params` keyword, and should treat every key as
+optional:
+
+```python
+def transform(
+    sources: dict[str, pl.DataFrame], params: dict[str, str] | None = None
+) -> pl.DataFrame:
+    group_col = (params or {}).get("group_col")
+    if group_col is None:
+        ...  # fall back: detect a usable column, or skip the grouping
+```
+
+How the values reach the recipe:
+
+- The template variables are substituted first, like everywhere else in the template.
+- A value still holding an unresolved `{VAR}` placeholder (the user did not set that
+  variable) is dropped before the call, so the recipe sees the key as absent and takes its
+  own fallback rather than receiving the literal placeholder.
+- A recipe whose `transform()` has no `params` keyword is called exactly as before, so
+  existing recipes need no change.
+- A standalone run of the recipe test harness (`depictio dev recipe run`) passes no
+  parameters, which is the same as every key being absent.
 
 ---
 
@@ -394,7 +500,7 @@ depictio/projects/
                                                 pruned when no metadata is given)
 ```
 
-To add a recipe for a new pipeline, create `depictio/projects/{org}/{pipeline}/recipes/{name}.py` following the contract: define `SOURCES`, `EXPECTED_SCHEMA`, and `transform()`.
+To add a recipe for a new pipeline, create `depictio/projects/{org}/{pipeline}/recipes/{name}.py` following the contract: define `SOURCES` (with their `input_schema`), `OUTPUT_SCHEMA`, and `transform()`.
 
 ---
 
@@ -413,13 +519,32 @@ To test a version-specific recipe standalone:
 
 ```bash
 # Uses shared recipe
-depictio recipe run nf-core/ampliseq/taxonomy_rel_abundance.py --data-dir /data/run
+depictio dev recipe run nf-core/ampliseq/taxonomy_rel_abundance.py --data-dir /data/run
 
 # Uses the v2.14.0 override if it exists, falls back to shared otherwise
-depictio recipe run nf-core/ampliseq/taxonomy_rel_abundance.py \
+depictio dev recipe run nf-core/ampliseq/taxonomy_rel_abundance.py \
   --data-dir /data/run \
   --version 2.14.0
 ```
+
+---
+
+## Shared helpers (`depictio/recipes/lib/`) { #shared-helpers }
+
+The runner loads each recipe straight from its file, not as part of a Python package, so one
+recipe cannot import another. When several recipes need the same parsing step (recovering a
+sample id from a file name, reading a cutoff from `params`, a dimensionality reduction, an
+empty frame with the right schema), that code lives in `depictio/recipes/lib/`, an ordinary
+package every recipe can import:
+
+```python
+from depictio.recipes.lib.sample_ids import strip_stage_suffixes
+```
+
+Put a helper there when a second recipe needs it, and keep it free of anything specific to
+one pipeline's layout: the helper receives frames, column names and parameters, and the
+recipe keeps the paths and the output schema. Tests for a helper go under
+`depictio/tests/recipes/`, beside the recipe edge-case tests.
 
 ---
 
