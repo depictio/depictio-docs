@@ -32,19 +32,16 @@ hide:
 The mag template reads an nf-core/mag run as a funnel from assemblies to
 genomes, where the unit is the bin rather than the sample:
 
-- :material-chart-box-outline: **MultiQC**: fastp, NanoStat, Bowtie2, QUAST, CheckM2 and GTDB-Tk panels from the run's MultiQC report
-- :material-dna: **Assembly**: what each assembler made of the same samples, size against contiguity and the Nx curve
-- :material-chart-scatter-plot: **Contigs**: the length and coverage signal every binner is fed, and which sample each assembly recruits
-- :material-bacteria-outline: **Bins**: CheckM2 completeness against contamination, cut at the MIMAG thresholds
-- :material-family-tree: **Taxonomy**: the GTDB-Tk lineage of the bins that passed, and how each binner recovered the community
-- :material-file-document-outline: **Annotation**: Prokka gene density and the ribosomal and transfer RNAs of the MIMAG standard
-- :material-microscope: **Bin detail**: the four tools joined per bin, a bin record and the locus map of the bin you pick
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: fastp, Bowtie 2 and NanoStat read QC from the MultiQC report, the only home of the read QC, with the QUAST, CheckM2 and GTDB-Tk panels behind it
+- :material-dna: **Assemblies**: what each assembler made of the same samples, size against contiguity and the Nx curve, then the length and depth signal every binner is fed
+- :material-bacteria-outline: **Genomes**: CheckM2 completeness against contamination, the GTDB-Tk lineage, Prokka's genes and RNAs, and one bin read through all four tools with its locus map
 
-Every assembler is crossed with every binner over every sample, so the controls
+Every assembler is crossed with every binner over every sample, so the filters
 that matter are the assembler, the binner, the phylum and the quality thresholds.
-The `Sample scope` and `Binning scope` (assembler, binner) filters, a four-card
-bin strip and a collapsed sample sheet are pinned to the top of every tab, and
-the per-assembly statistics table to the bottom.
+The persistent `Sample filters` (assembler, binner, sample) sit in the left panel,
+and a pick there reaches every per-assembly and per-bin collection through the
+`bin_summary` links.
 
 !!! warning "A MultiQC parquet is required"
     Depictio reads only `multiqc.parquet` (MultiQC 1.31 and later). When the run
@@ -96,9 +93,10 @@ the per-assembly statistics table to the bottom.
 
 The template reads the samplesheet, the MultiQC report, the QUAST assembly and bin
 reports, the per-contig depth tables, CheckM2, GTDB-Tk and the Prokka summaries
-and GFFs. 61 of its 65 tiles carry a `use:` catalog reference (`quast/*`, `mag/*`,
+and GFFs. 62 of its 66 tiles carry a `use:` catalog reference (`quast/*`, `mag/*`,
 `checkm2/*`, `gtdbtk/*`, `prokka/*`, `multiqc/*`), so a tile says where its panel
-comes from. Every scatter keeps its analysis controls in the tile header.
+comes from. The controls of an advanced visualization dock to the right of a
+full-width tile and on top of a narrower one.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -116,178 +114,273 @@ comes from. Every scatter keeps its analysis controls in the tile header.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Seven tabs, read as a funnel: did the run pass QC, which assemblies are binnable,
-what signal the binners saw, which bins are genomes, what they are, what they
-carry, and one bin in detail. Each tab below carries the **same icon and colour
-the dashboard gives it**. A picked row or point becomes a filter that follows the
-project links to the tiles it reaches.
+One dashboard: the **Overview**, then seven child tabs in three groups, read as a
+funnel from the reads to one bin in full. Each tab below carries the **same icon
+and colour the dashboard gives it**, so the page and the app read alike.
+
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC |
+| Assemblies | Assembly, Contigs |
+| Genomes | Bins, Taxonomy, Annotation, Bin detail |
+
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The unit is the bin,
+not the sample, and the template has no group column: mag's own vocabularies
+(assembler, binner, MIMAG tier) take the place of a design column. The persistent
+*Sample filters* (assembler, binner, then sample) sit in the left panel and narrow
+every tab: the assembler and binner reach every per-assembly and per-bin
+collection through the `bin_summary` links, the sample every collection through
+the sample sheet. The *Sample sheet* is pinned, collapsed, to the bottom of every
+child tab.
+
+=== ":material-compass-outline: Overview"
+
+    *Metagenome assembly and binning, from reads to named, annotated genomes.*
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/mag/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/mag/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A short hero links the run parameters. *About this dashboard* says the unit is
+    the bin and how the two filter levels work, *The run* lists the samples,
+    assemblies and bins and the shortest contig the binners were given
+    (`min_contig_size`), and *Pipeline* walks the six steps from cleaning to
+    annotation, each linked to the parameters that drive it and its tab. The
+    findings are live values: they follow the filters, and a route that lacks
+    their data drops them.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · the left panel starts collapsed. *Key figures* has its own
+        filter bar (assembler, binner and sample), and so does *Findings*
+        (assembler and binner): each narrows its own section only.
+
+        | Section | What it holds |
+        |---|---|
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: bins by MIMAG tier, contig N50, bins named to species, CheckM2 completeness |
+        | Findings | Live result rows, then 4 figures: completeness against contamination, assembled length against contig N50, the GTDB lineage sunburst and transfer against ribosomal RNAs |
+        | How to read this dashboard | The tabs by group, each with its question |
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Check reads, host removal, assemblies and bins as the report shows them.*
+    **Data & QC** · *Did the reads survive trimming and host removal in every sample?*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/mag/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/mag/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Read QC lives here only: fastp writes JSON and NanoPlot free text, neither of
-    which a table collection reads, so there is no Reads tab. The report covers
-    short- and long-read QC, host and phiX removal, the QUAST assembly statistics,
-    CheckM2 bin quality and the GTDB-Tk taxonomy summary.
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/mag/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    MultiQC panels only, and the only home of the read QC: fastp writes JSON and
+    NanoPlot free text, neither of which a table collection reads. Open: general
+    statistics, fastp reads kept and base quality side by side, then Bowtie 2 host
+    and phiX removal and the NanoStat long-read yield at full width, one bar per
+    library. Long reads by quality and short-read insert sizes are collapsed, and
+    so are the QUAST, CheckM2 and GTDB-Tk panels the next tabs draw in full.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample`, `Assembler` and `Binner`, persistent and pinned
-        to the top of every tab, plus a tab-local `MIMAG tier` that narrows the
-        pinned bin strip.
+        **Filters** · `Sample`, read from the MultiQC report.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards: bins recovered by MIMAG tier, completeness, contamination, binned bases |
-        | Sample sheet | *Sample hub* |
-        | MultiQC report | *General statistics* and 8 module panels (fastp, NanoStat, Bowtie2, QUAST, CheckM2, GTDB-Tk) |
-        | Reference tables | *Assembly statistics* |
+        | QC overview | 5 MultiQC panels |
+        | QC details (collapsed) | 2 MultiQC panels |
+        | Assembly and bin panels (collapsed) | 3 MultiQC panels |
 
 === ":material-dna:{ .mc-blue } Assembly"
 
-    *Compare the assemblers on size and contiguity.*
+    **Assemblies** · *Which assemblies are long and contiguous enough to bin?*
 
-    [![Assembly dashboard](../../images/pipeline-templates/nf-core/mag/assembly_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/assembly_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Assembly dashboard](../../images/pipeline-templates/nf-core/mag/assembly_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/assembly_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Assembled length against contig N50 separates binnable assemblies, long and
-    in long pieces, from fragmented ones. `Contig length` shows how much of each
-    assembly survives each QUAST minimum contig length, and the Nx curve per
-    assembly, built with QUAST's 500 bp floor so it crosses 50 at the QUAST N50.
+    [![Assembly dashboard](../../images/pipeline-templates/nf-core/mag/assembly_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/assembly_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    QUAST measures every assembly mag built, one per assembler and sample or
+    co-assembly group. Assembled bases by assembler, the median contig N50, the
+    contigs of at least 1 kbp and the longest contig. Then assembled length
+    against contig N50, one point per assembly: up and to the right is a long
+    assembly in long pieces, which bins cleanly. The share of each assembly kept
+    per QUAST minimum contig length sits beside the Nx curve, built with QUAST's
+    500 bp floor so it crosses 50 at the QUAST N50; an assembly without a depth
+    table has no curve. The assembly statistics and the ladder rungs are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · a `Minimum contig length range (bp)` that keeps every
-        curve intact inside the window, a `Contig N50 (bp)` range, and `Nx curves` to pick
-        assemblies.
+        **Filters** · a `Contig N50 (bp)` range on `assembly_report`, a `Minimum
+        contig length (bp)` range on `length_ladder` that keeps each curve whole
+        inside the window, and `Nx curves` on `assembly_nx`, the assemblies the
+        Nx curve draws.
 
         | Section | What it holds |
         |---|---|
-        | Assemblies at a glance | 4 cards: assembled bases, contig N50, contigs, longest contig |
-        | Size against contiguity | *Assembled length against contig N50* |
-        | Contig length | *Fraction of each assembly retained per minimum contig length*, *Ladder rungs*, *Nx curve per assembly* |
+        | Assemblies at a glance | 4 cards |
+        | Size against contiguity | 1 advanced visualization |
+        | Contig length | 2 advanced visualizations: the share kept per minimum contig length and the Nx curve |
+        | Tables (collapsed) | *Assembly statistics*, *Ladder rungs* |
 
 === ":material-chart-scatter-plot:{ .mc-cyan } Contigs"
 
-    *See the coverage signal the binners receive.*
+    **Assemblies** · *How are the contigs covered by each sample's reads?*
 
-    [![Contigs dashboard](../../images/pipeline-templates/nf-core/mag/contigs_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/contigs_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Contigs dashboard](../../images/pipeline-templates/nf-core/mag/contigs_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/contigs_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Every contig of at least 1 kbp appears once per sample whose reads were mapped
-    back onto its assembly. Length against depth is the plot a binner sees before
-    it decides anything, drawn from a server-side hash sample. The recruitment
-    heatmap, one row per assembly and one column per read sample, shows which
-    sample's organisms each assembly holds.
+    [![Contigs dashboard](../../images/pipeline-templates/nf-core/mag/contigs_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/contigs_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Every contig of at least 1 kbp, once per sample whose reads were mapped back
+    onto its assembly. The median depth of a contig in a sample, the median mean
+    depth, the contig and sample pairs by assembler (contig names repeat across
+    assemblies, so the rows are counted) and the median contig length. Then length
+    against depth, the plot a binner reads, drawn from a server-side hash sample
+    and coloured by sample: the contigs of one organism sit in a band of constant
+    depth. The depth of each assembly in each sample's reads follows as boxes, then
+    the recruitment heatmap, one row per assembly and one column per sample.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Reads from`, and `Contig length (bp)` and `Depth` ranges.
+        **Filters** · `Reads from`, and `Contig length (bp)` and `Depth` ranges,
+        all on `contig_depths`. Pick one sample to read its bands alone.
 
         | Section | What it holds |
         |---|---|
-        | Coverage at a glance | 4 cards: contigs over 1 kbp, depth per sample, mean depth, longest contig |
-        | Length against coverage | *Contig length against depth* |
-        | Depth distribution | *Contig depth by assembly and sample* |
-        | Cross-sample recruitment | *Assembly by sample recruitment* (heatmap) |
+        | Coverage at a glance | 4 cards |
+        | Length against coverage | 1 advanced visualization |
+        | Depth by sample | *Contig depth by assembly and sample* |
+        | Cross-sample recruitment | 1 advanced visualization (heatmap) |
 
 === ":material-bacteria-outline:{ .mc-indigo } Bins"
 
-    *Judge which bins are genomes.*
+    **Genomes** · *How complete and how clean is each recovered bin?*
 
-    [![Bins dashboard](../../images/pipeline-templates/nf-core/mag/bins_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/bins_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Bins dashboard](../../images/pipeline-templates/nf-core/mag/bins_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/bins_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Completeness against contamination is cut into quadrants at the MIMAG
-    high-quality thresholds (90 % complete, under 5 % contaminated) and coloured
-    by binner, with contiguity against completeness beside it. The QUAST section
-    measures the same bins rather than predicting them, and is linked to CheckM2
-    by bin, so the tab's quality filters reach it too.
+    [![Bins dashboard](../../images/pipeline-templates/nf-core/mag/bins_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/bins_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    CheckM2 predicts completeness and contamination from marker genes, and QUAST
+    measures the contigs. The bins scored by CheckM2 band, the median completeness,
+    the median contamination against the 5% high-quality cut and the best quality
+    score by binner. Then completeness against contamination, cut into quadrants
+    at 90% complete and 5% contaminated and coloured by binner, CheckM2 contig N50
+    against completeness beside QUAST bin length against N50 (a complete bin with
+    a low N50 is a pile of fragments), and completeness per binner. The QUAST
+    collection is linked to CheckM2 by `bin_id`, so the quality filters reach it.
+    The QUAST per-bin table is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `Completeness (%)` and `Contamination (%)` ranges and a
-        `Quality band`.
+        `Quality band` picker on `checkm2_quality_report`.
 
         | Section | What it holds |
         |---|---|
-        | Bins at a glance | 4 cards: bins scored by band, bin contig N50, bin size, best bin score |
-        | Completeness against contamination | *Completeness against contamination*, *Contiguity against completeness*, *Completeness distribution per binner* |
-        | Bin assembly statistics | *Bin length against contig N50*, *Per-bin assembly statistics* |
+        | Bins at a glance | 4 cards |
+        | Completeness against contamination | 1 advanced visualization |
+        | Contiguity | 2 advanced visualizations: contiguity against completeness and bin length against contig N50 |
+        | Completeness by binner | *Completeness per binner* |
+        | Tables (collapsed) | *Per-bin assembly statistics* |
 
 === ":material-family-tree:{ .mc-green } Taxonomy"
 
-    *Read the GTDB-Tk lineage of the bins that were placed.*
+    **Genomes** · *Which organisms are the bins, and how confidently are they named?*
 
-    [![Taxonomy dashboard](../../images/pipeline-templates/nf-core/mag/taxonomy_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/taxonomy_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Taxonomy dashboard](../../images/pipeline-templates/nf-core/mag/taxonomy_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/taxonomy_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    A sunburst reads the lineage from domain outwards, and stacked bars show the
-    community each binning run recovered, with the rank picker in the tile header.
-    A Sankey traces assembler to binner to phylum, weighted by bins, and identity
-    against alignment fraction to the closest reference says how confidently each
-    bin was named.
+    [![Taxonomy dashboard](../../images/pipeline-templates/nf-core/mag/taxonomy_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/taxonomy_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    GTDB-Tk names only the bins that pass its own thresholds, so the poor bins of
+    the Bins tab are missing here. The bins named by binner, the distinct phyla by
+    assembler, the distinct species and the median identity to the closest
+    reference against the 95% species boundary. Then the lineage sunburst beside
+    identity against alignment fraction, the community each binning run recovered
+    (the eight largest phyla and Other, one bar per assembler, binner and sample,
+    the rank picked in the tile's settings) and the Sankey of assembler to binner
+    to phylum, weighted by bins. The taxonomy table is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Phylum` and `How it was placed`.
+        **Filters** · `Phylum` and `How it was placed` on `gtdbtk_summary`.
 
         | Section | What it holds |
         |---|---|
-        | Placements at a glance | 4 cards: bins placed, species named, identity to reference, alignment fraction |
-        | What was recovered | *The recovered lineage*, *The community each binning run recovered* |
-        | How each binner got there | *Assembler to binner to phylum*, *How confidently each bin was named*, *Bin taxonomy* |
+        | Placements at a glance | 4 cards |
+        | Lineage | 2 advanced visualizations: the sunburst and identity against alignment fraction |
+        | Community per binning run | 1 advanced visualization |
+        | Binning routes | 1 advanced visualization (Sankey) |
+        | Tables (collapsed) | *Bin taxonomy* |
 
-=== ":material-file-document-outline:{ .mc-orange } Annotation"
+=== ":material-file-document-outline:{ .mc-yellow } Annotation"
 
-    *Check the gene content and the RNA half of the MIMAG standard.*
+    **Genomes** · *Do the bins carry the genes and RNAs of a genome?*
 
-    [![Annotation dashboard](../../images/pipeline-templates/nf-core/mag/annotation_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/annotation_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Annotation dashboard](../../images/pipeline-templates/nf-core/mag/annotation_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/annotation_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Gene density against bin size is the sanity check on a bin's gene content,
+    [![Annotation dashboard](../../images/pipeline-templates/nf-core/mag/annotation_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/annotation_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Prokka's per-bin feature counts. Coding sequences by assembler, the median
+    genes per Mbp, the median transfer RNAs against the MIMAG floor of 18, and the
+    bins carrying the MIMAG RNAs by binner. Then gene density against bin size,
     with the roughly 900 coding sequences per megabase of a prokaryotic genome as
-    a reference. Transfer against ribosomal RNAs covers the criterion a
-    completeness estimate cannot see.
+    a line: a bin far from it holds a second organism or sequence that is not a
+    genome. Gene density per assembler follows, then transfer against ribosomal
+    RNAs, the half of the MIMAG standard a completeness estimate cannot see. The
+    annotation table is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Genes per Mbp`, `Transfer RNAs` and `Ribosomal RNAs` ranges.
+        **Filters** · `Genes per Mbp`, `Transfer RNAs` and `Ribosomal RNAs`
+        ranges on `prokka_summary`.
 
         | Section | What it holds |
         |---|---|
-        | Annotation at a glance | 4 cards: coding sequences, genes per Mbp, tRNAs, rRNAs |
-        | Gene density | *Gene density against bin size*, *Gene density per assembler* |
-        | The RNA half of MIMAG | *Transfer RNAs against ribosomal RNAs*, *Annotation summary* |
+        | Annotation at a glance | 4 cards |
+        | Gene density | 1 advanced visualization, *Gene density per assembler* |
+        | The RNA half of MIMAG | 1 advanced visualization |
+        | Tables (collapsed) | *Annotation summary* |
 
 === ":material-microscope:{ .mc-grape } Bin detail"
 
-    *Read one chosen bin, tool by tool.*
+    **Genomes** · *What do all four tools say about one bin?*
 
-    [![Bin detail dashboard](../../images/pipeline-templates/nf-core/mag/bin_detail_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/bin_detail_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Bin detail dashboard](../../images/pipeline-templates/nf-core/mag/bin_detail_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/bin_detail_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    The locus map draws the genes of the bin picked in the filter or the table
-    along its contigs. `Bin detail` holds the outer join of CheckM2, QUAST,
-    GTDB-Tk and Prokka, one row per bin, beside a linked `Bin record` card that
-    folds to a slim rail until a row is picked, then opens that bin on its
-    quality section.
+    [![Bin detail dashboard](../../images/pipeline-templates/nf-core/mag/bin_detail_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mag/bin_detail_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    One row per bin joining CheckM2, QUAST, GTDB-Tk and Prokka, with the MIMAG
+    tier all four decide together. The bins by MIMAG tier, the tools per bin, the
+    best quality score by assembler and the features Prokka gave a gene symbol.
+    Then the locus map of the bin picked on the left or in the bin table, its
+    genes along its contigs coloured by feature class, and the feature lengths by
+    class. The collapsed *Bin table* holds the four-way outer join
+    (`sources_present` counts the tools that reported on a bin) beside the record
+    card of the bin picked in it, which waits for a row. The collapsed *Features*
+    section lists every annotated feature.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `MIMAG tier`, `Bin` and `Feature class`.
+        **Filters** · `MIMAG tier` on `bin_summary`, then `Bin` and `Feature
+        class` on `prokka_gene_track`, which choose the bin and the classes the
+        map draws.
 
         | Section | What it holds |
         |---|---|
-        | Bin detail at a glance | 4 cards: high-quality drafts, tools per bin, best bin score, bins with their RNAs |
-        | Locus map | *Gene layout along the bin's contigs*, *Feature length by class*, *Annotated features* |
-        | Bin detail | *Bin summary*, with the linked *Bin record* |
+        | Bin detail at a glance | 4 cards |
+        | Locus map | 1 advanced visualization |
+        | Feature lengths | *Feature length by class* |
+        | Bin table (collapsed) | *Bin summary* and the linked *Bin record* card |
+        | Features (collapsed) | *Annotated features* |
 
-Tables and point views select on their entity column: the pinned sample sheet
-on `sample_id`; the assembly table, the length ladder profile and its table on
-`assembly_id`, and the assembly scatter on `assembler`; the contig scatter on
-`read_sample`; every per-bin scatter and table of the Bins, Taxonomy, Annotation
-and Bin detail tabs on `bin_id`, except the MIMAG plane, which selects on
-`binner`; the locus table on `feature_id`. A pick narrows the other tiles of its
-collection and follows the project links to the collections they reach. The Nx
-curve does not select: its collection has no outgoing link and no sibling tile.
+    !!! info "The locus map needs Prokka"
+        A run without Prokka has no locus map or features here, and no
+        Annotation tab. Prokka renames the contigs, so the map's coordinates
+        hold only inside the bin.
+
+A picked row or point narrows the other tiles of its collection and follows the
+project links to the collections they reach. The sample sheet selects on
+`sample_id`; the assembly table, the ladder rungs and the share-kept curves on
+`assembly_id`; the length against N50 scatter on `assembler`; the length against
+depth scatter on `read_sample`; the MIMAG plane on `binner`; every other per-bin
+scatter and table on `bin_id`; the features table on `feature_id`. The Nx curve
+does not select: its collection has no outgoing link.
 
 ---
 
