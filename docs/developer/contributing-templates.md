@@ -354,6 +354,10 @@ main_dashboard:
   visible controls. The group filter comes first.
 - Every filter has an icon and a colour, `display: {icon_name: mdi:…, custom_color:
   <palette name>}`, and a column keeps its colour on every tab.
+- A link whose target spells the sample with a stage suffix (a Picard
+  `WT_REP1.mLb.mkD.sorted` against the sheet's `WT_REP1`) takes `resolver: pattern` and
+  `pattern: "{sample}.mLb.mkD.sorted"`. A `direct` link there matches no row, and the
+  filter silently stops reaching the tile.
 
 ### Colours
 
@@ -364,6 +368,9 @@ main_dashboard:
 - No per-figure colour map for a column `category_colors` covers, and no hardcoded
   colours elsewhere. Code figures read `depictio_category_colors` and
   `depictio_group_kwargs`.
+- A sample-space embedding (a PCA, an MDS) colours its points by the group. When its
+  data collection has no group column, the recipe adds one; the tile never draws a
+  single colour.
 
 ### Viz controls
 
@@ -373,10 +380,11 @@ main_dashboard:
   (controls on top). A sample correlation heatmap takes `w: 8`.
 - Axes carry words, not column names: `effect_label`, `significance_label`,
   `axis_prefix`, `labels:`.
-- A locus navigator on a non-model reference opens with `default_region: first`, the
-  whole first contig of the data, never a contig name from one run. A file track reads
-  its files only below its window (1 Mb for VCF), so the default region stays inside
-  it, or `file_window_size` grows.
+- A locus navigator opens with `default_region: first`, the whole first contig the data
+  carries (in the assembly's order when the tile names one), never a contig or window
+  from one run: a curated window opens empty on a run aligned to part of the genome.
+  A file track reads its files only below its window (1 Mb for VCF), so the default
+  region stays inside it, or `file_window_size` grows.
 
 ### Heights
 
