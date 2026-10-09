@@ -47,7 +47,7 @@ Shorter clips, embedded alongside the documentation they belong to:
 | Watch | Where | What it covers |
 | --- | --- | --- |
 | :material-play-circle: [Project types](../usage/projects/guide.md) | Projects guide | Basic vs advanced projects, and which to reach for |
-| :material-play-circle: [Registering data with the CLI](../usage/get_started.md#video-tutorial) | Getting Started | Running `depictio-cli` against a YAML project configuration |
+| :material-play-circle: [Registering data with the CLI](../usage/get_started.md#video-tutorial) | Getting Started | Running the CLI against a YAML project configuration |
 | :material-play-circle: [Building a dashboard](../usage/guides/dashboard_creation.md) | Dashboard creation | Adding components, wiring interactivity, saving |
 | :material-play-circle: [Using a dashboard](../usage/guides/dashboard_usage.md) | Using the dashboard | Filters, selections and cross-collection filtering |
 
