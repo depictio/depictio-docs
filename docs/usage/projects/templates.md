@@ -123,6 +123,10 @@ variables are dropped before the call, so the recipe falls back to its own defau
 depictio ingest /path/to/results --template nf-core/ampliseq/latest
 ```
 
+Here an nf-core/rnaseq run is ingested with its template named, as the [Template Catalog](../../pipeline-templates/README.md) lists it, and its samplesheet passed as a variable:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-template.cast" data-poster="npt:0:42" data-idle-time-limit="2.5"></div>
+
 ### Which template a run uses { #pipeline-id }
 
 `depictio ingest` takes the project from the first of these that applies:

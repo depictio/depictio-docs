@@ -41,6 +41,10 @@ The `depictio dashboard` command group provides three commands for YAML manageme
 | `import`   | Import YAML to server                    | Yes (unless `--dry-run`) |
 | `export`   | Export dashboard to YAML                 | Yes                      |
 
+Here the Iris example dashboard is exported, edited, validated, then imported back over itself:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-dashboard-yaml.cast" data-poster="npt:0:39" data-idle-time-limit="2.5"></div>
+
 ### Validate
 
 Validate a dashboard YAML file. Runs in two passes:

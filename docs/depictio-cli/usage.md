@@ -130,9 +130,6 @@ These variables override parts of a CLI configuration file, so the token can sta
 
 <span id="run-command"></span>
 
-<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest.cast" data-poster="npt:0:8"></div>
-<p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>🖥️ <code>depictio ingest</code> (v1.12.0) on nf-core/taxprofiler test results: a dry run, then the ingestion into a local server</strong></p>
-
 Ingest pipeline results into a Depictio server, from validation to dashboards. Formerly `run`, which still works and says it is now `ingest`.
 
 ```bash
@@ -150,6 +147,10 @@ depictio ingest results/ --update-config
 ```
 
 The template is detected from the run's own provenance, such as the pipeline name and version a Nextflow run records. Pass `--template <id>` to choose one, or `--project-config-path <project.yaml>` for a pipeline Depictio ships no template for.
+
+Here the template is detected from nf-core/taxprofiler results, previewed with `--dry-run`, then ingested into the local server:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-detect.cast" data-poster="npt:0:51" data-idle-time-limit="2.5"></div>
 
 **Pipeline Steps:**
 
@@ -263,6 +264,10 @@ If the project already exists, `ingest` changes nothing, says how to go on, and 
 
 A project not on the server yet is created by `--update-config`, so a script can pass it every time.
 
+Here a third run is added to a project ingested from a project YAML: a dry run, then the refresh, which keeps its dashboard:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-refresh.cast" data-poster="npt:0:48" data-idle-time-limit="2.5"></div>
+
 **Dashboards.** Dashboards are matched by their origin, the template file or the `--dashboard` file they came from, not by their title. Renaming a dashboard in the viewer no longer makes the next refresh import a second copy, and the new title is kept. The summary at the end of the run lists each dashboard as `created`, `kept` or `replaced`, with its link.
 
 A `--dashboard` file inside the template or the project file's folder is matched by its path there. One from anywhere else is matched by its absolute path (v1.13.1+, by its file name before), so moving that file makes the next refresh create a new dashboard.
@@ -291,6 +296,10 @@ Attaching a directory that is already one of the project's locations records it,
 | `0` | Every step completed |
 | `1` | A step failed, including under `--continue-on-error`, the CLI configuration could not be used, or a refresh stopped on a missing run location |
 | `2` | Nothing to do as asked: no template detected and none given, the project already exists without `--update-config` or `--attach-run`, the project `--attach-run` names does not exist, or a usage error |
+
+Here the first step fails, as no server answers, and its message says how to start one:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-error.cast" data-poster="npt:0:13" data-idle-time-limit="2.5"></div>
 
 **Examples:**
 
@@ -737,6 +746,10 @@ For more information about dashboard YAML format and workflows, see [Dashboard Y
     Browse the bioinformatics tool→viz catalog by rendering its components on their bundled fixture data. Handy for previewing what a tool produces before wiring it into a dashboard. For the live, hosted version see the [Depictio Tools Catalog](../catalog/index.md).
 
 `depictio catalog list` lists every tool and output with its recipe and render targets, and `depictio catalog info <tool>` shows one tool in detail.
+
+Here a profiler is looked up in the list, then shown in detail:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-catalog.cast" data-poster="npt:0:25" data-idle-time-limit="2.5"></div>
 
 #### `catalog preview`
 

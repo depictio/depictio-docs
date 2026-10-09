@@ -102,6 +102,10 @@ RecipeError: Recipe arriba/fusions.py: source 'fusions' lacks input column(s) ['
 The recipe commands sit in the `depictio dev` group, the maintainer tools that
 `depictio --help` does not list.
 
+Here the recipes of sylph are found, inspected, then run on nf-core/taxprofiler results:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-recipe.cast" data-poster="npt:0:19" data-idle-time-limit="2.5"></div>
+
 ### `depictio dev recipe list`
 
 List all bundled recipes.
