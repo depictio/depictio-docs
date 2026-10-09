@@ -125,7 +125,7 @@ under `input/`, pass it explicitly.
 ```bash
 depictio ingest path/to/results \
   --template nf-core/rnaseq/latest \
-  --var SAMPLESHEET_FILE=samplesheet.csv
+  --var SAMPLESHEET_FILE=$PWD/samplesheet.csv
 ```
 
 If the ingestion fails, the command exits with an error and the server keeps

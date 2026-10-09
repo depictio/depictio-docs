@@ -681,14 +681,16 @@ depictio dashboard import dashboard.yaml --project 646b0f3c1e4a2d7f8e5b8c9a
 
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
 <pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Validating:</span> <span style="color: #c2185b;">dashboard.yaml</span>
+  Checks: schema + domain constraints
 <span style="color: #2e7d32;">✓ Validation passed</span>
   Title: Iris Dashboard Demo
   Components: 7
   Project: Iris_Dataset_Project (from YAML project_tag)
 
-<span style="color: #0097a7;">Loading CLI configuration...</span>
-<span style="color: #2e7d32;">✓ Configuration loaded</span>
-  API URL: localhost:8058
+• Server: <span>http://127.0.0.1:8058</span> (local server, as no ~/.depictio/CLI.yaml exists; configuration ~/.depictio/local/cli/admin_config.yaml)
+
+<span style="color: #0097a7;">Validating column names against server schema...</span>
+<span style="color: #2e7d32;">✓ Server schema OK</span>
 
 <span style="color: #0097a7;">Importing dashboard (project: Iris_Dataset_Project)...</span>
 <span style="color: #2e7d32;">✓ Dashboard imported successfully!</span>
@@ -696,7 +698,7 @@ depictio dashboard import dashboard.yaml --project 646b0f3c1e4a2d7f8e5b8c9a
   Title: Iris Dashboard Demo
   Project ID: 650a1b2c3d4e5f6a7b8c9d0e
 
-<span style="color: #0097a7;">View at:</span> localhost:8058/dashboard/6824cb3b89d2b72169309737
+<span style="color: #0097a7;">View at:</span> <span>http://127.0.0.1:8058/dashboard/6824cb3b89d2b72169309737</span>
 </pre>
 </div>
 
@@ -727,7 +729,7 @@ depictio dashboard export 6824cb3b89d2b72169309737 --server local -o iris_dashbo
 **Example Output:**
 
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
-<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Loading CLI configuration...</span>
+<pre style="margin: 0; color: var(--md-code-fg-color);">• Server: http://127.0.0.1:8058 (local server, as no ~/.depictio/CLI.yaml exists; configuration ~/.depictio/local/cli/admin_config.yaml)
 <span style="color: #0097a7;">Exporting dashboard 6824cb3b89d2b72169309737...</span>
 <span style="color: #2e7d32;">✓ Dashboard exported to:</span> <span style="color: #c2185b;">iris_dashboard.yaml</span>
 </pre>
@@ -944,12 +946,15 @@ depictio dev recipe list
 **Output:**
 
 ```
-Available recipes (5):
-  nf-core/ampliseq/alpha_diversity.py
-  nf-core/ampliseq/alpha_rarefaction.py
-  nf-core/ampliseq/ancombc.py
-  nf-core/ampliseq/taxonomy_composition.py
-  nf-core/ampliseq/taxonomy_rel_abundance.py
+                 Available recipes (327)
+╭────────────────────────────────────────────────────────╮
+│ Recipe                                                 │
+├────────────────────────────────────────────────────────┤
+│ adapterremoval/settings.py                             │
+│ ampcombi/clusters.py                                   │
+│ ampcombi/embedding.py                                  │
+│ ampcombi/summary.py                                    │
+…
 ```
 
 ---
@@ -977,12 +982,31 @@ depictio dev recipe info nf-core/ampliseq/alpha_diversity.py
 Recipe: nf-core/ampliseq/alpha_diversity.py
 Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD table.
 
-Sources (1):
-  faith_pd: qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv (TSV)
-
-Output schema (2 columns):
-  sample: String
-  faith_pd: Float64
+When ampliseq is run with --metadata, QIIME2 embeds metadata columns directly
+into the faith_pd_vector/metadata.tsv file (e.g. habitat). This recipe handles
+both cases: with and without embedded metadata columns.
+                                     Sources (1)
+╭──────────┬───────────────────────────────────────────────────────────────┬────────╮
+│ Source   │ Location                                                      │ Format │
+├──────────┼───────────────────────────────────────────────────────────────┼────────┤
+│ faith_pd │ qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv │ tsv    │
+╰──────────┴───────────────────────────────────────────────────────────────┴────────╯
+    Input schema:
+faith_pd (2 columns)
+╭──────────┬────────╮
+│ Column   │ Type   │
+├──────────┼────────┤
+│ id       │ String │
+│ faith_pd │ String │
+╰──────────┴────────╯
+   Output schema (2
+       columns)
+╭──────────┬─────────╮
+│ Column   │ Type    │
+├──────────┼─────────┤
+│ sample   │ String  │
+│ faith_pd │ Float64 │
+╰──────────┴─────────╯
 ```
 
 Each source that declares an `input_schema` gets an `Input schema: <source> (N columns)` table before the output schema. A non-empty `OPTIONAL_OUTPUT_SCHEMA` adds an `Optional output schema (N columns)` table.

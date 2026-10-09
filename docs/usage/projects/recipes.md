@@ -117,13 +117,15 @@ depictio dev recipe list
 **Output:**
 
 ```
-Available recipes (6):
-  nf-core/ampliseq/alpha_diversity.py
-  nf-core/ampliseq/alpha_rarefaction.py
-  nf-core/ampliseq/ancombc.py
-  nf-core/ampliseq/taxonomy_composition.py
-  nf-core/ampliseq/taxonomy_heatmap.py
-  nf-core/ampliseq/taxonomy_rel_abundance.py
+                 Available recipes (327)
+╭────────────────────────────────────────────────────────╮
+│ Recipe                                                 │
+├────────────────────────────────────────────────────────┤
+│ adapterremoval/settings.py                             │
+│ ampcombi/clusters.py                                   │
+│ ampcombi/embedding.py                                  │
+│ ampcombi/summary.py                                    │
+…
 ```
 
 ---
@@ -142,16 +144,31 @@ depictio dev recipe info nf-core/ampliseq/alpha_diversity.py
 Recipe: nf-core/ampliseq/alpha_diversity.py
 Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD table.
 
-Sources (1):
-  faith_pd: qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv (TSV)
-
-Input schema: faith_pd (2 columns):
-  id: String
-  faith_pd: String
-
-Output schema (2 columns):
-  sample: String
-  faith_pd: Float64
+When ampliseq is run with --metadata, QIIME2 embeds metadata columns directly
+into the faith_pd_vector/metadata.tsv file (e.g. habitat). This recipe handles
+both cases: with and without embedded metadata columns.
+                                     Sources (1)
+╭──────────┬───────────────────────────────────────────────────────────────┬────────╮
+│ Source   │ Location                                                      │ Format │
+├──────────┼───────────────────────────────────────────────────────────────┼────────┤
+│ faith_pd │ qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv │ tsv    │
+╰──────────┴───────────────────────────────────────────────────────────────┴────────╯
+    Input schema:
+faith_pd (2 columns)
+╭──────────┬────────╮
+│ Column   │ Type   │
+├──────────┼────────┤
+│ id       │ String │
+│ faith_pd │ String │
+╰──────────┴────────╯
+   Output schema (2
+       columns)
+╭──────────┬─────────╮
+│ Column   │ Type    │
+├──────────┼─────────┤
+│ sample   │ String  │
+│ faith_pd │ Float64 │
+╰──────────┴─────────╯
 ```
 
 When the recipe declares a non-empty `OPTIONAL_OUTPUT_SCHEMA`, an `Optional output schema (N columns)` table follows.
