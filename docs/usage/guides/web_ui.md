@@ -239,7 +239,7 @@ A single project's data, organised into tabs:
 
 You can reach this page directly by clicking the **project badge** shown on any
 dashboard card or in the dashboards table, or the **project name** in an open
-dashboard's settings drawer <small>(v1.6.0+)</small>.
+dashboard's Settings <small>(v1.6.0+)</small>.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/react/page_project_detail.png" target="_blank">

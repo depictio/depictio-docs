@@ -74,9 +74,19 @@ When a dashboard has a map authored as a dashboard-wide panel, it follows you ac
 
 ---
 
-## Dashboard settings drawer
+## Dashboard settings { #dashboard-settings-drawer }
 
-**Settings**, at the top right, opens a drawer describing the dashboard: its project, owner, visibility and last-modified date, then the dashboard and project IDs, each with a copy button. Since **v1.6.0** the project name is a link to that project's page, and **View ingestion report** below it opens the [ingestion report](../../features/dashboards.md#ingestion-report-health) for any project, not just one built from a template. The same body backs the inspector's **Info** tab. Since **v1.8.0** the drawer is no longer read-only: in edit mode it also carries the [Appearance](#appearance) controls.
+**Settings**, at the top right, opens **Dashboard settings**. Since **v1.14.0** it is a dialog with a rail of sections beside the one you are on, full screen on a phone, where the rail becomes a select. It opens on **Your view** (on **Tab defaults** in the editor), then on the section you visited last, and changes save as you make them. Its icons and switches wear the dashboard's own brand.
+
+| Section | Shown | What it holds |
+|---------|-------|---------------|
+| **About this dashboard** | Always | What the dashboard is, below |
+| **Your view** | Always | **Font size** and **Page width**, for you only, saved in this browser. See [Appearance](#appearance) |
+| **Tab defaults**, **Tiles**, **Filtering**, **Guide** | Edit mode | Saved with the dashboard. See [Settings for everyone](#settings-for-everyone) |
+| **Branding** | Edit mode | Logo, colours and figure palette. See [Appearance](#appearance) |
+| **Feedback** | When a [feedback link](../../installation/env-reference.md#feedback) is configured | Report a problem or suggest an improvement |
+
+**About this dashboard** gives its project, template, owner, visibility and last-modified date. Since **v1.6.0** the project name is a link to that project's page, and **View ingestion report** below it opens the [ingestion report](../../features/dashboards.md#ingestion-report-health) for any project, not just one built from a template. Since **v1.14.0** the dashboard and project IDs, each with a copy button, are folded under **Identifiers**. The same body backs the inspector's **Info** tab.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/dashboard_settings.png" target="_blank">
@@ -84,14 +94,14 @@ When a dashboard has a map authored as a dashboard-wide panel, it follows you ac
     </a>
 </div>
 
-Since **v1.8.3** a **Run parameters** row sits alongside it, showing the parameters the pipeline ran with. Only the keys the template highlights appear inline; the full grouped listing is one click away in the ingestion report. See [Run provenance](../projects/templates.md#run-provenance).
+Since **v1.8.3** a **Run parameters** row sits alongside it, showing the parameters the pipeline ran with. Only the keys the template highlights appear inline; **All N parameters →** opens the full grouped listing and **Ingestion report →** the report. Since **v1.14.0** a text tile can open the same listing with a [`params:` link](../../features/components.md#markdown). See [Run provenance](../projects/templates.md#run-provenance).
 
 !!! note "This replaced the Parameters panel (v1.0.0)"
     The Dash UI put a *Parameters* panel here, with switches for edit mode and interactivity and buttons to remove every component or reset every filter. Only one of those survived the React rewrite: **Reset all**, now at the top of the filter panel. Editing is the **Edit** button, and there is no global interactivity switch.
 
 ### Appearance <small>(v1.8.0+)</small> { #appearance }
 
-In viewer mode this section holds one control, **Font size**. In edit mode it holds everything about how this dashboard looks.
+Since **v1.14.0** the controls of this former section sit in **Your view** (**Font size** and **Page width**, in view and edit mode), **Tiles** and **Branding**, the last two in edit mode.
 
 **Font size.** **A-** and **A+** step the content through 85%, 100%, 115% and 130%. Figures, tables and cards scale; the header, sidebar and panels keep their size. The preference is stored per browser, like the dark-mode toggle, so it follows the reader rather than the dashboard.
 
@@ -100,7 +110,7 @@ In viewer mode this section holds one control, **Font size**. In edit mode it ho
 !!! tip "Scaling one figure rather than all of them"
     A single tile takes a `font_scale` of its own from its edit menu, between 0.7× and 2×, applied to the whole Plotly layout font. See [Components](../../features/components.md#figure-components).
 
-**Branding.** **Inherit instance** or **Customise**. Under *Customise*, anything left empty still follows the instance branding, so an override states only what differs.
+**Branding.** **Source**: **Inherit instance** (**Inherit main tab** on a child tab whose main tab is branded) or **Customise**. Under *Customise*, anything left empty still follows the instance branding, so an override states only what differs.
 
 | Group | What it holds |
 |-------|---------------|
@@ -134,20 +144,20 @@ See [Branding](../administration/branding.md) for the model behind all of this, 
 
 ### Settings for everyone <small>(v1.14.0+)</small> { #settings-for-everyone }
 
-Settings is now a page with a rail of sections. **Your view** holds the reader's own
-preferences, kept in their browser: font size, page width and light or dark. In edit
-mode the sections subtitled *for everyone* are saved with the dashboard. Those that
-concern this release:
+In edit mode, the sections after **Your view** are saved with the dashboard for every
+reader, and the **Guide** settings hold for every tab of it. Light or dark stays the sun / moon switch at
+the foot of the sidebar.
 
 | Section | What it holds |
 |---------|---------------|
 | **Tab defaults** | What this tab opens with: **Page width**, **Filter panel** open or collapsed, and **Show the tab's name**. A reader's own choice still wins. See [Tab defaults](../../features/dashboards.md#tab-defaults) |
+| **Tiles** | **Fit tiles to their content** (`autofit`) and **Advanced viz controls**: *Popover*, *Under title* or *Side rail* (`advanced_viz_controls`). See [Tile height and control placement](../../features/yaml-sync.md#tile-height) |
 | **Filtering** | **Funnel filtering by default** |
-| **Guide** | **Show the Guide** and an **Introduction** shown at the top of it, for every tab. See [The dashboard Guide](dashboard-guide.md) |
+| **Guide** | **Show the Guide** and an **Introduction** shown at the top of it. See [The dashboard Guide](dashboard-guide.md) |
 
-A child tab without a brand of its own now draws in its main tab's brand, figures
-included. Its Branding section offers **Inherit main tab**, and **Customise** starts from
-the main tab's brand.
+A child tab without a brand of its own now draws in its main tab's brand, figures and
+component builder previews included. Its Branding section offers **Inherit main tab**,
+and **Customise** starts from the main tab's brand.
 
 ## Component-wise options
 
@@ -161,9 +171,9 @@ In edit mode, hovering a component reveals three icons in its top-right corner, 
 
 - <span style="color: #888888;"><i class="mdi mdi-dots-grid"></i> **Drag handle**</span>: grab it to move the component in the grid.
 - <span style="color: #15aabf;"><i class="mdi mdi-information-outline"></i> **Info**</span>: the component's metadata: type, data source, configuration.
-- <span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> **Menu**</span>: **Edit** reopens the builder on this component, **Duplicate** copies it, **Move to section** hands it to another section, **Copy to tab…** <small>(v1.14.0+)</small> adds a copy to a sibling tab (see [Copy to tab](../../features/dashboards.md#copy-to-tab)), **Delete** removes it.
+- <span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> **Menu**</span>: **Edit** reopens the builder on this component, **Duplicate** copies it, **Move to section** hands it to another section, **Copy to tab…** <small>(v1.14.0+)</small> adds a copy to another tab (see [Copy to tab](../../features/dashboards.md#copy-to-tab)), **Highlight on…** <small>(v1.14.0+)</small> shows a figure or advanced visualization on another tab without copying it (see [Highlight Components](../../features/components.md#highlight-components)), **Delete** removes it. A figure's menu also carries its **Font size**, and a tile resized by hand that could fit its content offers **Reset to auto height**.
 
-To find a component on any tab, press **⌘K** / **Ctrl+K** <small>(v1.14.0+)</small>. See [Spotlight search](spotlight-search.md).
+To find a component on any tab, press **⌘K** / **Ctrl+K** or click the magnifier in the header <small>(v1.14.0+)</small>. See [Spotlight search](spotlight-search.md).
 
 ---
 

@@ -290,13 +290,13 @@ components:
 | `collapsed`   | bool   | `false`    | Start folded                                                        |
 | `persistent`  | bool   | `false`    | Render on every tab of the dashboard <small>(v1.6.0+)</small>       |
 | `pin`         | str    | `top`      | `top` or `bottom`: which edge a persistent section sits at. Ignored unless `persistent` <small>(v1.6.0+)</small> |
-| `exclude_tabs` | list[str] | `null`  | Tabs, by displayed name, a persistent section is not shown on <small>(v1.14.0+)</small> |
+| `exclude_tabs` | list[str] | `null`  | Tabs a persistent section is not shown on, by displayed name (the main tab by its `main_tab_name`, the owning tab included). Ignored unless `persistent` <small>(v1.14.0+)</small> |
 | `appearance`  | str    | `box`      | `box`, or `plain`: a heading over the tiles, no frame, never folded. Grid sections only <small>(v1.14.0+)</small> |
-| `card_variant` | str   | `null`     | Style of every card in the section that sets no `variant` of its own. Grid sections only <small>(v1.14.0+)</small> |
-| `figure_style` | str   | `null`     | Style of every figure in the section that sets no `figure_style` of its own. Grid sections only <small>(v1.14.0+)</small> |
-| `display`     | str    | `null`     | `strip` draws the section as a filter bar that filters the whole tab. Grid sections only <small>(v1.14.0+)</small> |
+| `card_variant` | str   | `null`     | `default`, `headline`, `compact`, `minimal`, `accent` or `split`: style of every card in the section that sets no `variant` of its own. Grid sections only <small>(v1.14.0+)</small> |
+| `figure_style` | str   | `null`     | `default` or `minimal`: style of every figure and advanced visualization in the section that sets no `figure_style` of its own. Grid sections only <small>(v1.14.0+)</small> |
+| `display`     | str    | `null`     | `grid` (same as unset): one tile per member; `strip`: the section is a filter bar that filters the whole tab. Grid sections only <small>(v1.14.0+)</small> |
 | `filter_bar`  | bool   | `null`     | A filter bar under the section's heading that narrows only its own tiles. Ignored with `display: strip` <small>(v1.14.0+)</small> |
-| `visible_filters` | int | `null`    | Controls a bar shows before **More filters**. Unset: 2 on a `filter_bar`, all on a `display: strip` bar <small>(v1.14.0+)</small> |
+| `visible_filters` | int (≥1) | `null` | Controls a bar shows before **More filters**. Unset: 2 on a `filter_bar`, all on a `display: strip` bar <small>(v1.14.0+)</small> |
 
 Both lists default to empty, so a dashboard that declares no sections renders exactly the
 flat grid it did before.
@@ -395,8 +395,8 @@ export while it holds its default.
 | `tab_group` | str | `null` | Sidebar group of a child tab. See [Tab groups](dashboards.md#tab-groups) |
 | `filter_panel_default` | `open` \| `collapsed` | `open` | Where the filter panel starts. See [Tab defaults](dashboards.md#tab-defaults) |
 | `content_width_default` | `full` \| `wide` \| `comfortable` \| `compact` | `full` | The page width the tab opens at |
-| `show_tab_header` | bool | `true` | Show the tab's name above the canvas |
-| `category_colors` | dict[str, dict[str, str]] | `null` | One colour per value of a column. Child tabs inherit the main tab's. See [Category colours](dashboards.md#category-colors) |
+| `show_tab_header` | bool | `true` | Show the tab's icon, name and (child tabs) description above the canvas |
+| `category_colors` | dict[str, dict[str, str]] | `null` | One colour per value of a column. Child tabs inherit the main tab's, and a child's own map overrides it per value. See [Category colours](dashboards.md#category-colors) |
 | `show_guide` | bool | `true` | Offer the [Guide](../usage/guides/dashboard-guide.md). Read from the main tab |
 | `guide_intro` | str | `""` | Markdown note shown at the top of the Guide. Read from the main tab |
 
@@ -430,7 +430,14 @@ components:
     # workflow_tag, data_collection_tag, ...
 ```
 
-A child tab's YAML adds `tab_group: Analysis` beside its `parent_dashboard_tag`.
+A child tab's YAML adds `tab_group: Analysis` beside its `parent_dashboard_tag`. An export
+writes a filter's `strip_label` and `strip_icon` under its `display:` block, like a card's
+display keys; the import reads them there or at the top level, as above.
+
+Since **v1.14.0** an export also keeps what a round trip used to drop: a component's
+`description`, a text tile's body, level and alignment, a figure's header and style keys,
+and an advanced visualization's `viz_kind` and `config`, the latter without the keys left
+at their default.
 
 ### Complete Example
 
@@ -896,7 +903,7 @@ source, so `workflow_tag` and `data_collection_tag` are unused.
 | `vertical_alignment` | `top` \| `center` \| `bottom` | `center` | Where the text block sits vertically in its tile    |
 | `body`               | str                           | `""`     | Optional paragraph below the heading. Block markdown since v1.14.0, see [Components](components.md#markdown) |
 | `surface` <small>(v1.14.0+)</small> | `none` \| `card` \| `tinted` | `none` | Bare prose, a framed card, or a tinted tile |
-| `accent` <small>(v1.14.0+)</small>  | str                    | `null`   | Palette name, CSS colour or `tab:<name>`: the colour of the frame's rule or the tint |
+| `accent` <small>(v1.14.0+)</small>  | str \| null           | `null`   | Palette name, CSS colour or `tab:<name>`: the tint of a `tinted` tile and the marks of a step flow; a `tab:` accent also rests the tab's icon in a `card`'s corner. Ignored without a frame |
 
 !!! note "`vertical_alignment` defaults to `center` <small>(v1.4.0+)</small>"
     Set `vertical_alignment: top` for the pre-v1.4.0 rendering. See

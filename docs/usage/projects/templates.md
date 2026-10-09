@@ -261,7 +261,7 @@ the flattened key) to a named group, in declaration order, first match winning.
 
 ### `highlight`
 
-Keys surfaced inline in the dashboard's settings drawer. The full listing always
+Keys surfaced inline in the dashboard's Settings. The full listing always
 stays in the ingestion report.
 
 <!-- prettier-ignore -->
@@ -287,7 +287,7 @@ depictio ingest /path/to/results --provenance-file run_summary.yaml --provenance
 - **Ingestion report**: a *Run provenance* card, one accordion per group, with
   per-row copy, full-text search across keys and values, and the source files
   listed. See [Ingestion Report & Health](../../features/dashboards.md#ingestion-report-health).
-- **Dashboard settings drawer**: a *Run parameters* row showing the highlighted
+- **Dashboard settings**: a *Run parameters* row showing the highlighted
   keys inline, linking to the full report. See
   [Using the dashboard](../guides/dashboard_usage.md#dashboard-settings-drawer).
 
