@@ -8,6 +8,26 @@ hide:
 
 # Changelog
 
+## **[v1.13.2](https://github.com/depictio/depictio/releases/tag/v1.13.2)** (October 8, 2026)
+
+!!! success "Patch: a scan that finds nothing says so, and a dry run that previews the scan"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.13.2
+ghcr.io/depictio/depictio-viewer:1.13.2
+ghcr.io/depictio/depictio-worker:1.13.2
+ghcr.io/depictio/depictio-cli:1.13.2
+```
+
+### **🐛 Bug Fixes**
+
+* **A scan that matches nothing warns** where it looked, what it looked for and what it found, instead of reporting success ([#1040](https://github.com/depictio/depictio/pull/1040)).
+* **`--dry-run` previews the scan**: it validates the project configuration, still offline, and lists how many files each data collection would match. See [Ingest Command](../depictio-cli/usage.md#ingest-command) ([#1040](https://github.com/depictio/depictio/pull/1040)).
+
+---
+
 ## **[v1.13.1](https://github.com/depictio/depictio/releases/tag/v1.13.1)** (October 8, 2026)
 
 !!! success "Patch: refreshes that keep attached runs and gain the template's new tabs"
