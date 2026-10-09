@@ -35,6 +35,7 @@ DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [React Viewer Frontend](#react-viewer-frontend)
 - [MongoDB Database](#mongodb-database)
 - [S3 Storage](#s3-storage)
+- [Remote Data Sources](#remote-data-sources)
 - [Authentication](#authentication)
 - [Bootstrap](#bootstrap)
 - [Redis Cache](#redis-cache)
@@ -197,6 +198,60 @@ against an existing bucket needs no extra permission.
 
 ---
 
+## Remote Data Sources { #remote-data-sources }
+
+**Config Class:** `RemoteConfig`
+**Environment Prefix:** `DEPICTIO_REMOTE_`
+
+Policy for reading user-supplied locations: the gateway that fetches `https://`
+URLs (the `url` and `manifest` scan modes, manifest downloads, the endpoint
+gating of per-project storage credentials), and which `s3://` buckets the
+server may read without the project's storage settings. The section is read
+from the environment on every read, so the API and the Celery worker apply the
+same policy, and a malformed value fails at the first read instead of silently
+falling back to a default. See
+[Remote data and manifests](../usage/projects/remote-data.md#reading-s3-buckets)
+and [Security](../features/security.md#remote-data-sources).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_REMOTE_ALLOW_HTTP` | `false` | Accept plain `http://` URLs in addition to `https://` and `s3://`. Off by default: the gateway and the models reject `http://` locations. Turn on for local or airgapped deployments that serve data without TLS |
+| `DEPICTIO_REMOTE_URL_ALLOWLIST` | _(empty)_ | Comma-separated host names the gateway may fetch from. **Exclusive while set**: any host not listed is rejected, and a listed host skips the private/loopback address rejection, which is how internal deployments opt an intranet host in. Empty accepts every public host |
+| `DEPICTIO_REMOTE_URL_DENYLIST` | _(empty)_ | Comma-separated host names the gateway always rejects. Checked before the allowlist, so a host present in both lists is denied |
+| `DEPICTIO_REMOTE_PUBLIC_S3_BUCKETS` | _(empty)_ | Comma-separated S3 locations read without credentials, each `bucket` or `bucket/prefix`, on Amazon S3. Unsigned access is opt-in: any other `s3://` location needs the project's storage settings, or an entry in the next list |
+| `DEPICTIO_REMOTE_CREDENTIALED_S3_BUCKETS` | _(empty)_ | Comma-separated S3 locations, same syntax, that the API and the worker read with their own ambient credentials (the AWS default chain: environment, IAM role, web identity). Every user of the instance can read what is listed here. Not used by the CLI |
+| `DEPICTIO_REMOTE_MAX_DOWNLOAD_BYTES` | `524288000` (500 MiB) | Size cap in bytes for a single remote download, data file or manifest. Downloads stream and abort, removing the partial file, once the cap is exceeded |
+| `DEPICTIO_REMOTE_TIMEOUT_S` | `30.0` | Timeout in seconds applied to each connect, read and write operation of a remote fetch, not a total download time |
+| `DEPICTIO_REMOTE_MAX_REDIRECTS` | `3` | Maximum redirect hops followed for a remote URL. Every `Location` is re-validated against this policy before it is followed |
+
+!!! warning "A listed host bypasses the private-address check"
+    Setting `DEPICTIO_REMOTE_URL_ALLOWLIST` both restricts fetches to the listed
+    hosts and exempts those hosts from the private-range rejection. List only
+    hosts you control.
+
+The backend and the Celery worker must agree on these variables:
+
+| Deployment | Where to set them |
+|------------|-------------------|
+| Kubernetes | `backend.env` in the Helm values, rendered for both the backend and the Celery worker |
+| Docker Compose | `.env`, passed to both the backend and the worker |
+| Python package | The shell that runs `depictio local up`, which passes `DEPICTIO_REMOTE_*` on to the server |
+
+### Local data folders { #local-data-folders }
+
+**Config Class:** `LocalDataConfig`
+**Environment Prefix:** `DEPICTIO_LOCAL_DATA_`
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_LOCAL_DATA_ROOTS` | _(empty)_ | Comma-separated absolute folders (or `~/...`) the web UI may read run folders from. Empty turns local folders off. Honoured only with `DEPICTIO_AUTH_SINGLE_USER_MODE`; hidden folders and the folders Depictio keeps for itself are never read |
+
+`depictio local up` sets it to your home folder plus each
+[`--data-root-allow`](local.md#up-options) folder; there is no need to set it
+by hand. See [From a run folder](../usage/projects/remote-data.md#from-a-run-folder).
+
+---
+
 ## Authentication
 
 **Config Class:** `AuthConfig`
@@ -206,7 +261,7 @@ Authentication and authorization settings including JWT configuration, unauthent
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_AUTH_KEYS_DIR` | `<repo>/keys` | Directory for JWT public/private key files |
+| `DEPICTIO_AUTH_KEYS_DIR` | `<repo>/keys` | Directory for JWT public/private key files. Also holds `secrets_key.bin`, the key that encrypts per-project storage credentials at rest; the backend and the Celery worker must mount the same directory, or secrets written by one are unreadable by the other |
 | `DEPICTIO_AUTH_KEYS_ALGORITHM` | `RS256` | JWT signing algorithm (RS256, RS512, ES256, SHA256) |
 | `DEPICTIO_AUTH_CLI_CONFIG_DIR` | `<repo>/.depictio` | Directory for CLI configuration files (admin token, etc.) |
 | `DEPICTIO_AUTH_INTERNAL_API_KEY_ENV` | _(auto-generated)_ | Internal API key for service-to-service communication |

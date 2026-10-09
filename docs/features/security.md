@@ -190,6 +190,116 @@ All user input is validated:
 
 ---
 
+## Remote Data Sources { #remote-data-sources }
+
+The `url`, `s3_prefix` and `manifest` scan modes, and creating a project from
+a run folder, make the server read locations a user supplies, which is a
+textbook server-side request forgery surface. Every `https://` fetch, whether
+creating a data collection from a URL, ingesting a manifest, or a refresh task
+on the Celery worker, goes through one gateway module; every `s3://` read is
+decided by one [access module](#s3-locations); a folder on the server's disk is
+read only on a [`depictio local`](#folders-on-the-servers-disk) server. Nothing
+in server context reads a user-supplied location directly. See
+[Remote data and manifests](../usage/projects/remote-data.md) for the feature
+itself.
+
+### What the gateway enforces
+
+| Check | Behaviour |
+|-------|-----------|
+| **Scheme allowlist** | `https://` and `s3://`. Plain `http://` only with `DEPICTIO_REMOTE_ALLOW_HTTP=true` |
+| **Address check** | The host is resolved and private, loopback, link-local and reserved ranges are rejected, including the cloud metadata endpoint |
+| **Redirects** | Every `Location` is re-validated against the same policy before it is followed; hops are capped by `DEPICTIO_REMOTE_MAX_REDIRECTS` |
+| **Bounded download** | Streamed, with a size cap (`DEPICTIO_REMOTE_MAX_DOWNLOAD_BYTES`) and a per-operation timeout (`DEPICTIO_REMOTE_TIMEOUT_S`); a download that exceeds the cap is aborted and the partial file removed |
+| **Host lists** | `DEPICTIO_REMOTE_URL_DENYLIST` always rejects. `DEPICTIO_REMOTE_URL_ALLOWLIST` is exclusive while set, and a listed host bypasses the private-range check |
+| **Sanitised errors** | Transport and HTTP errors are logged with their cause and surfaced to the client without internal details |
+
+The policy is read from the environment on every call, so the API and the
+worker always agree. The CLI, which fetches the user's own loopback and intranet
+hosts, reads directly but keeps the redirect and size caps.
+
+!!! warning "Residual risk: DNS rebinding"
+    The address is checked when the host is resolved, and a hostile resolver
+    could answer differently between that check and the connection. The
+    gateway does not pin the resolved address. Hardened deployments should run
+    **allowlist-only**: set `DEPICTIO_REMOTE_URL_ALLOWLIST` to the hosts you
+    trust, which turns the address check into a host check.
+
+### S3 locations { #s3-locations }
+
+Which bucket the server reads, and with which credentials, is decided from the
+configuration before any request goes out, so a bucket name typed by a user
+never becomes an existence or region oracle.
+
+- The bucket that holds the instance's own data is refused as a source: it
+  holds every project's data.
+- The instance's own S3 keys are never used for a user-supplied location.
+- A bucket is read without credentials only when listed in
+  `DEPICTIO_REMOTE_PUBLIC_S3_BUCKETS`, and with the server's ambient
+  credentials only when listed in `DEPICTIO_REMOTE_CREDENTIALED_S3_BUCKETS`.
+  Anyone on the instance can read what the second list names. Both are empty
+  by default.
+- Any other bucket needs the project's storage settings, and is read with them
+  alone. Settings typed in while creating a project from a run folder are the
+  only credentials that request uses.
+- Errors name the bucket and the prefix, never an endpoint of the instance, a
+  key or a request id.
+
+The full order is under
+[Reading S3 buckets](../usage/projects/remote-data.md#reading-s3-buckets). The
+CLI reads from the user's own machine and skips the instance-bucket refusal and
+the credentialed list.
+
+### Folders on the server's disk { #folders-on-the-servers-disk }
+
+A server never reads a local path stored on a project on a user's behalf: data
+ingested from a local folder is refreshed by the CLI that ingested it. The one
+exception is a `depictio local` server, which is the user's own computer:
+
+- Local folders are off unless `DEPICTIO_LOCAL_DATA_ROOTS` is set, and only in
+  single-user mode (`DEPICTIO_AUTH_SINGLE_USER_MODE`). `depictio local up` sets
+  both, with the home folder and the folders given with `--data-root-allow`. A
+  server with roots but not in single-user mode logs a warning and keeps them
+  off.
+- Every local read (listing, inspecting, creating, refreshing) needs a request
+  addressed to a loopback host (`localhost` or a loopback address), which also
+  defends against DNS rebinding, from an administrator.
+- Paths are resolved to their real path and confined to the roots. Hidden
+  folders and the folders Depictio keeps for itself (`~/.depictio`, the local
+  home, the keys and CLI configuration folders, the backups) are refused even
+  below a root.
+- A run folder over 100,000 files is refused, and everything a project made
+  from a run folder reads must be inside it: a template variable or data
+  collection pointing elsewhere is refused.
+
+### Per-project storage credentials
+
+A project owner can attach S3-compatible credentials so remote and manifest
+collections can read a private bucket.
+
+- Credentials live in their own collection, never on the project document, so
+  they cannot leak through project responses or exports. Template bundles never
+  include them.
+- The secret is **encrypted at rest** with a symmetric key stored next to the
+  JWT key pair, in `DEPICTIO_AUTH_KEYS_DIR`. The API encrypts on write and the
+  Celery worker decrypts inside refresh tasks, so backend and worker must mount
+  the same keys volume; a worker with a keys directory of its own would mint a
+  second key and find every stored secret unreadable.
+- The secret is **write-only** in the API: responses only carry `has_secret`.
+  An update that omits the secret keeps the stored one only while the access
+  key, the endpoint and the bucket are unchanged, so a stored secret is never
+  sent to another endpoint.
+- Only project owners and administrators read or change the settings.
+- The endpoint URL passes the same host gating as remote data URLs. The
+  instance's own object storage is always allowed; a private-network endpoint
+  needs to be allowlisted.
+- These are read credentials only. Delta tables are still written with the
+  instance's own storage configuration, and refresh workers re-read the
+  credentials from the database rather than receiving them through the task
+  broker.
+
+---
+
 ## Content Security Policy { #content-security-policy }
 
 Deployed instances send a Content-Security-Policy header. The development server sends
@@ -282,6 +392,7 @@ Since **v1.5.2** the CSRF `state` is stored in MongoDB (`oauth_states`), used on
 | Database Credentials | Use strong passwords, rotate regularly |
 | API Keys | Use environment variables, not config files |
 | MinIO Credentials | Separate credentials per environment; root password is a `SecretStr` with a ≥16-character validator and no default — the server refuses to start if the value is absent or matches a known-default string |
+| Project storage secrets | Encrypted at rest with `secrets_key.bin` in `DEPICTIO_AUTH_KEYS_DIR`; back the keys volume up with the JWT key pair and mount it on the worker too, see [Per-project storage credentials](#per-project-storage-credentials) |
 
 ### Environment Configuration
 

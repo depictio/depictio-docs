@@ -19,7 +19,7 @@ A template is a `template.yaml` file that ships inside Depictio under `depictio/
 
 Every template declares its own variables. Variable names are **template-specific** — each pipeline decides what it needs.
 
-`DATA_ROOT` is the only universal variable: it is always required, and it is the results directory given to `depictio ingest` (formerly `--data-root`). All others are passed via `--var KEY=VALUE`.
+`DATA_ROOT` is the usual root variable: the results directory given to `depictio ingest` (formerly `--data-root`), a local folder or an `s3://` prefix. A manifest-driven template declares `MANIFEST_URL` instead, set with `--manifest`. All others are passed via `--var KEY=VALUE`. `--bind TAG=LOCATION` can stand in for either root variable by pointing each data collection at its own location; see [Instantiating with `--manifest` or `--bind`](#instantiating-with-manifest-or-bind).
 
 **Auto-detected variables:** When a metadata file is provided, the system reads its headers and auto-populates:
 
@@ -112,8 +112,10 @@ variables are dropped before the call, so the recipe falls back to its own defau
 
 | Flag | Type | Required | Description |
 |------|------|----------|-------------|
-| `--template` | `string` | [one of](#pipeline-id) | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+) |
-| `DATA_DIR` (argument) | `path` | yes | The results directory, substituted for `{DATA_ROOT}`. Formerly `--data-root` |
+| `--template` | `string` | [one of](#pipeline-id) | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+). On the CLI, also a path to an [exported bundle](#running-an-exported-bundle) |
+| `DATA_DIR` (argument) | `path` | one of the three | The results directory, a local folder or an `s3://` prefix, substituted for `{DATA_ROOT}`. Formerly `--data-root` |
+| `--manifest` | `url` or `path` | one of the three | Data manifest substituted for `{MANIFEST_URL}`. Not with `DATA_DIR` |
+| `--bind` | `TAG=LOCATION` | one of the three | Point one data collection at a location; the scan mode is inferred from its shape. Repeatable |
 | `--var` | `KEY=VALUE` | depends on template | Pass template-specific variables; repeatable |
 | `--dashboard` | `path` | no | Override default dashboard(s); repeatable |
 | `--skip dashboards` | `flag` | no | Skip automatic dashboard import. Formerly `--skip-dashboard-import` |
@@ -133,13 +135,57 @@ depictio ingest /path/to/results --template nf-core/ampliseq/latest
   [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) passes for you since
   **v1.10.0**, read from the `manifest` block of its `nextflow.config`. Its version
   must match a shipped template, or the run stops with an error;
-- the results directory itself: the run information an nf-core pipeline writes
-  under `pipeline_info/` names the pipeline and its version, and the matching
-  template is used. When no shipped version matches, the closest version that is
-  not newer is used, with a warning.
+- the results directory itself, local or an `s3://` prefix: the run information
+  an nf-core pipeline writes under `pipeline_info/` names the pipeline and its
+  version, and the matching template is used. When no shipped version matches,
+  the closest version that is not newer is used, with a warning.
+
+The web UI's **From a run folder** tab detects the template the same way and
+shows the comparison before anything is created; see
+[From a run folder](remote-data.md#from-a-run-folder).
 
 When none applies, the command stops and asks for `--template` or
 `--project-config-path`.
+
+### Instantiating with `--manifest` or `--bind` { #instantiating-with-manifest-or-bind }
+
+`DATA_DIR`, `--manifest` and `--bind` all answer the same question, where
+the data is, and a template run needs at least one of them:
+
+```bash
+# A manifest-driven template: no results directory at all
+depictio ingest --template generic/manifest-tables/1 \
+  --manifest https://data.example.org/run42/manifest.json
+
+# Any template, each data collection pointed at its own location
+depictio ingest --template my-lab/rnaseq-qc/1 \
+  --bind metadata=/data/run42/metadata.tsv \
+  --bind samples=s3://my-bucket/run42/*.samples.csv
+```
+
+`--manifest` takes a URL or a local file path and becomes the `MANIFEST_URL`
+variable. `--bind` is applied after resolution, so it wins over whatever
+`{DATA_ROOT}` or `{MANIFEST_URL}` resolved to for that collection, and a
+required variable that no collection uses any more is not asked for. A
+`--bind` naming a tag the template does not declare is an error, listing the
+tags that exist. The location shapes and the mode each one implies are on
+[Remote data and manifests](remote-data.md#bind-a-data-collection-to-a-location).
+
+### Running an exported bundle { #running-an-exported-bundle }
+
+On the CLI, `--template` also accepts a path: a directory holding a
+`template.yaml` (or `project.yaml`), or a YAML file. That is what makes an
+[exported bundle](#export-a-project-as-a-template) usable by whoever receives
+it, without copying it into an installation first:
+
+```bash
+depictio ingest --template ./my-lab/rnaseq-qc/1 \
+  --bind samples=s3://their-bucket/run7/*.samples.csv
+```
+
+An existing path wins over an installed template of the same name. The server
+never accepts the path form: it resolves ids on behalf of remote callers, and
+ids are confined to the templates directory in both contexts.
 
 ---
 
@@ -316,9 +362,72 @@ Tags are resolved to MongoDB ObjectIds after the project is synced to the server
 
 ---
 
+## Export a project as a template { #export-a-project-as-a-template }
+
+The inverse of instantiation: freeze a live project and its dashboards into a
+template bundle. Build one good project interactively, export it, and the next
+run of the same pipeline is one command.
+
+=== "CLI"
+
+    ```bash
+    depictio template export <project_id> \
+      --template-id my-lab/rnaseq-qc/1 \
+      -o depictio/projects
+    ```
+
+    The bundle is unpacked into `<output-dir>/<template-id>/`. `--server`,
+    `--version`, `--description` and `--data-dir` are optional; see the
+    [CLI reference](../../depictio-cli/usage.md#template-commands).
+
+=== "Web UI"
+
+    On the project page, **Project settings**, then **Export template**: a
+    **Template ID**, a **Version**, a **Description (optional)** and a
+    **Data root (optional)**. **Export** downloads the bundle as a zip named
+    after the template ID. Owners and editors can export; on a public
+    instance, administrators only.
+
+=== "API"
+
+    `POST /projects/{project_id}/export_template` with
+    `{"template_id", "version", "description", "data_root"}` returns the zip.
+
+### What the bundle contains
+
+| Path | Content |
+|------|---------|
+| `template.yaml` | A synthesised `template:` block (id, description, version, variables, dashboard list) followed by the project configuration |
+| `dashboards/*.yaml` | One file per main dashboard tab, child tabs included, referencing data collections by tag |
+
+Runtime state is stripped: ids, permissions, file hashes, runs, registration
+and modification timestamps, `template_origin`, `yaml_config_path`, the
+generated `workflow_tag`, and the per-collection size metadata that ingestion
+keeps on each data collection. Per-project storage credentials are never
+exported.
+
+Data bindings are re-parameterised. Stored manifest URLs become
+`{MANIFEST_URL}`, declared as a required variable. A data root, a local path
+or an `s3://` prefix, becomes `{DATA_ROOT}` when `--data-dir` is given, or when
+the project itself came from a template that recorded one. A template binds one manifest, so distinct
+stored manifest URLs all collapse onto the same placeholder, with a warning.
+
+### Round-trip guarantee
+
+Before the bundle is returned it is checked against the same models
+instantiation uses: the `template:` block must validate as template metadata,
+and the configuration with placeholders substituted must validate as a
+project. If either fails the request is rejected and nothing is emitted, so an
+exported bundle always re-instantiates through the resolver. Drop the
+directory under `depictio/projects/` and it is auto-discovered by the resolver
+and the picker, or run it directly by path with `--template ./folder`.
+
+---
+
 ## Additional Resources
 
 - **[Template Catalog](../../pipeline-templates/README.md)**: browse and use available templates
+- **[Remote data and manifests](remote-data.md)**: run folders on S3, URL, prefix and manifest scan modes, `--bind`, creating a project in the web UI, sharing a project
 - **[Recipes](recipes.md)**: how to write and test data transformation recipes
 - **[Contributing Templates](../../developer/contributing-templates.md)**: add a new template
 - **[CLI Usage](../../depictio-cli/usage.md#ingest-command)**: full `depictio ingest` reference

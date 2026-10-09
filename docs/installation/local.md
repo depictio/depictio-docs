@@ -176,12 +176,13 @@ in the viewer (see
 | `--port` | the previous run's, else `8058` or a free one | Port of the API and the viewer, kept for later runs. A busy `--port` fails |
 | `--open` / `--no-open` | `--open` | Open the dashboards page in a browser |
 | `--screenshots` / `--no-screenshots` | off | Dashboard thumbnails through Playwright. Installs Chromium (about 150 MB) if needed |
+| `--data-root-allow PATH` | | Also let the web UI read run folders under `PATH`, an existing absolute folder outside `~/.depictio/local`. Repeatable. Your home folder is always allowed. See [From a run folder](../usage/projects/remote-data.md#from-a-run-folder) |
 
 - Examples are seeded on the first run of a local home only: `up` warns when
   `--examples` names one the home was created without.
 - `up` on a server that is already running reuses it and prints the summary
-  again. `--port` and `--screenshots` then apply only after
-  `depictio local down`, and a warning says so.
+  again. `--port`, `--screenshots` and `--data-root-allow` then apply only
+  after `depictio local down`, and a warning says so.
 - A second `up` on the same home while one is starting fails at once.
 - Ctrl-C during startup stops what that run started, and exits with code 130.
   SIGTERM and SIGHUP, as when the terminal is closed, do the same, with code 128
