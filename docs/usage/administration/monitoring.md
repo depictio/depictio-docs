@@ -24,16 +24,21 @@ Celery task history (figures, screenshots, MultiQC, advanced viz, Delta tables) 
 
 ## Ingestion
 
-Ingestion runs, newest first: **status**, a `CLI` or `UI` source badge (a run from the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) shows `CLI`), instance label or hostname, project, and user. Uploads made through the web UI are recorded alongside CLI runs; recording is best-effort and never blocks an upload.
+Ingestion runs, newest first: **status**, a `CLI`, `Upload` or `Server` source badge (a run from the [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) shows `CLI`), instance label or hostname, project, and user. Uploads made through the web UI are recorded alongside CLI runs; recording is best-effort and never blocks an upload.
 
 A run is `running` until it ends as `success`, `partial` or `failed`. Since **v1.11.0** the CLI closes its record on every way out, so Ctrl-C or SIGTERM leaves `interrupted` rather than a run that spins forever. For the ends nobody can report, such as SIGKILL or a lost node, the server sweeps a `running` record with no write for `DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS` (24 by default) to `abandoned`. Filter by **Status**, **Instance** and **Project**; the instance is the CLI's `instance_label`, or its hostname when none is set.
 
-Expand a run for its **provenance** field grid: run id, host, CLI version, the resolved project id, the invoking command line, the CLI and project config paths, and the data root. Its **Trigger** says what started it: **Manual**, **Watch** (a [watcher](#watchers)) or **UI** (the web UI, such as **Run now** on a watcher's card), with the reason in a tooltip. Long paths are shortened to `head/…/tail`, with the full value in a tooltip and click-to-copy. Below it are two tables:
+Expand a run for its **provenance** field grid: run id, host, CLI version, the resolved project id, the invoking command line, the CLI and project config paths, and the data root. Its **Trigger** says what started it: **Manual**, **Watch** (a [watcher](#watchers)) or **UI** (the web UI, such as **Run now** on a watcher's card), with the reason in a tooltip. Long paths are shortened to `head/…/tail`, with the full value in a tooltip and click-to-copy. Below it come two blocks:
 
-- **Steps**: every phase the run went through (provisioning, template resolve, server and S3 checks, config validation, project sync, scan, process, joins, dashboard import), each with `success` / `failed` / `skipped` and a detail line such as *3 data collection(s) processed*. The summary line tallies ok / failed / skipped and the wall-clock duration.
-
-The CLI reports each step as it starts, so a running ingestion shows its steps as a live timeline: the current step is marked, with a progress bar when the CLI knows how far it is, and counters such as *scanned*, *new*, *updated*, *unchanged*, *failed*, *deleted*, *rows* and *bytes*. A step offloaded to a server worker carries an **offloaded** badge.
 - **Data collections**: one row per data collection: tag, type, format, scan mode (`recursive` / `single`), the regex or filename it matched on, the local directories scanned, and the file count when known. These local scan paths are not shown anywhere else in the UI.
+- **Steps**: a timeline of every phase the run went through (provisioning, template resolve, server and S3 checks, config validation, project sync, scan, process, joins, dashboard import), each with `success` / `failed` / `skipped` / `interrupted` and a detail line such as *3 data collection(s) processed*. The summary line tallies ok / failed / skipped and the wall-clock duration.
+
+The CLI reports each step as it starts, so a running ingestion shows its steps as a live timeline: the current step is marked, with a progress bar when the CLI knows how far it is, and counters such as *scanned*, *new*, *updated*, *unchanged*, *skipped*, *failed*, *deleted*, *rows*, *bytes* and *runs*. A step offloaded to a server worker carries an **offloaded** badge.
+
+![A running ingestion expanded: its provenance, the trigger UI, and the Steps timeline with process marked as the current step](../../images/guides/versioning/ingestion_live_steps_light.webp#only-light)
+![A running ingestion expanded: its provenance, the trigger UI, and the Steps timeline with process marked as the current step](../../images/guides/versioning/ingestion_live_steps_dark.webp#only-dark)
+
+*Administration → Log & Task → Ingestion: a run started by Run now, expanded while it runs.*
 
 ![Log & Task: Ingestion pane](../../images/react/admin_monitoring_ingestion_light.png#only-light)
 ![Log & Task: Ingestion pane](../../images/react/admin_monitoring_ingestion_dark.png#only-dark)
@@ -46,6 +51,11 @@ The CLI reports each step as it starts, so a running ingestion shows its steps a
 Every running [`depictio watch`](../../depictio-cli/usage.md#watch-command), one card each: its status (`idle`, `settling`, `scanning`, `ingesting` or `error`), host, project, mode (`incremental` or `full`), how it detects changes (`native`, `polling` or `both`), and the number of cycles it has run. Expand a card for its PID, CLI version, when it started and last fired, the last ingestion it ran, the locations it watches, and its last error.
 
 **Run now** asks the watcher for a cycle at once, without waiting for a change. The watcher picks the request up within a few seconds, since it polls the server for it, and the run shows **UI** as its trigger. The button is unavailable while a cycle runs, while a request is pending, and when the watcher has sent no heartbeat for over 3 minutes, which the card flags in red.
+
+![The Watchers pane with one idle watcher expanded: host, project, incremental mode, both backends, its PID, CLI version, last run, watched location and the Run now button](../../images/guides/versioning/watchers_pane_light.webp#only-light)
+![The Watchers pane with one idle watcher expanded: host, project, incremental mode, both backends, its PID, CLI version, last run, watched location and the Run now button](../../images/guides/versioning/watchers_pane_dark.webp#only-dark)
+
+*Administration → Log & Task → Watchers, a card expanded.*
 
 A watcher sends a heartbeat every minute and leaves the pane when it stops cleanly. One that dies leaves it once its last heartbeat is older than `DEPICTIO_MONITORING_AGENT_TTL_SECONDS`. See [How new data versions are written](../../features/versioning.md#how-new-data-versions-are-written) for what a watcher is for.
 

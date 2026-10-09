@@ -418,10 +418,9 @@ a warning, and the watcher stops if none is left.
 watcher is safe to run under systemd or as a container.
 
 **One per project.** A watcher holds a lock under `~/.depictio/state/`, per server and
-project, next to the scan-state cache (`DEPICTIO_CLI_STATE_DIR` moves both). A second
-watcher on the same project stops with an error once its first cycle is done.
-`depictio ingest` does not take the lock, so avoid running it on a project a watcher is
-writing to.
+project, next to the scan-state cache (`DEPICTIO_CLI_STATE_DIR` moves both).
+`depictio ingest` takes the same lock before its first write, so a second watcher or
+ingestion on the same project stops at once with an error that names the lock file.
 
 **In the admin panel.** A watcher registers with the server, sends a heartbeat every
 minute, and asks every 5 seconds whether someone pressed **Run now** on its card in the
@@ -447,6 +446,7 @@ environment variables:
 
     ```bash
     sudo cp deploy/depictio-watch@.service /etc/systemd/system/
+    sudo systemctl edit depictio-watch@.service    # set User=, the account it runs as
     sudo install -d /etc/depictio
     sudoedit /etc/depictio/myproject.env
     sudo systemctl enable --now depictio-watch@myproject
@@ -477,12 +477,13 @@ environment variables:
 | `DEPICTIO_WATCH_INTERVAL` | `300` | `300` |
 | `DEPICTIO_WATCH_DEBOUNCE` | `30` | `30` |
 | `DEPICTIO_WATCH_SETTLE` | `5` | `5` |
-| `DEPICTIO_CLI_BIN` | `depictio` | |
+| `DEPICTIO_CLI_BIN` | `/usr/local/bin/depictio` | |
 | `DEPICTIO_CLI_IMAGE` | | `ghcr.io/depictio/depictio-cli:latest` |
 | `WATCHER_NAME` | | `depictio-watcher`, the container name |
 
-Both give a stopping watcher 15 minutes to finish its cycle. The compose file keeps the
-lock and the scan-state cache in a named volume, so a restart does not rescan everything.
+Both give a stopping watcher 15 minutes to finish its cycle. The unit keeps the lock and
+the scan-state cache in `/var/lib/depictio-watch`, and the compose file in a named volume,
+so a restart does not rescan everything.
 
 ### 💻 Local Server Commands <small>(v1.12.0+)</small> { #local-commands }
 
