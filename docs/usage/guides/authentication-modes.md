@@ -120,7 +120,7 @@ DEPICTIO_AUTH_DEMO_MODE=true
 ## Pipeline provisioning and magic links (v1.1.3+)
 
 A pipeline often finishes before its owner has an account. Provisioning closes
-that gap: `depictio-cli run --user alice@example.org` creates-or-gets the
+that gap: `depictio ingest <results dir> --user alice@example.org` creates-or-gets the
 account, runs as them, and prints a passwordless link to the dashboard it just
 imported.
 

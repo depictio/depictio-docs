@@ -78,7 +78,10 @@ components:
 
 ### Reset Selection
 
-Click the :material-refresh: **Reset** button on the scatter plot to clear the selection and show all data.
+While the plot holds a selection, an orange :material-restore: **Clear selection (N)** button
+sits in its action row, N being the number of selected values. Click it to drop the selection
+and show all data. The button is gone again once nothing is selected <small>(v1.13.0+)</small>;
+before v1.13.0 a **Reset** button was always shown.
 
 ---
 
@@ -115,7 +118,8 @@ components:
 
 ### Reset Selection
 
-Click the :material-refresh: **Reset** button on the table to clear row selection.
+Click **Clear selection (N)** in the table's action row to clear the row selection. As on a
+scatter plot, the button only shows while rows are selected <small>(v1.13.0+)</small>.
 
 ---
 
@@ -231,6 +235,109 @@ neutral *All* reference leads, and the ungrouped rows trail as a dimmed *Other*.
 
 ---
 
+## :material-dna: Genome region selection { #genome-region-selection }
+
+A genome track (a [Genome view](components.md#genome-view) tile) can act as a **locus
+navigator**: brushing along its genome axis, typing a locus, or opening on its
+`default_region` selects a genomic region. A region is not a list of values, so it travels
+as two ordinary filters on the track's own collection, both under the source
+`genome_selection`:
+
+- a chromosome multi-select on the track's chromosome column;
+- a `[start, end]` range on its position column, applied as `start <= position <= end`.
+
+Other tiles on the same collection narrow straight away. Tiles on another collection follow
+through a [region link](cross-dc-filtering.md#region-links), which renames the two filters
+onto that collection's own coordinate columns. Clearing the brush clears both halves.
+
+### Which components follow a region { #region-scope }
+
+A region is a place to look, not a subset to summarise. If every component applied it, a
+tab opened on a small window would turn its run-wide cards into cards about that window: a
+mean depth of the window instead of the run, a per-chromosome donut showing one chromosome
+at 100 %. So the region is scoped:
+
+| Component | Follows the region? |
+|-----------|---------------------|
+| Genome tracks and other genomic advanced visualizations, tables | Yes |
+| Figures | Only when an encoding (`x`, `y`, `color`, ...) names the region's chromosome or position column |
+| Cards | No, unless the card sets `follow_region_filter: true` |
+| Interactive filters | No: their options stay those of the whole collection, so a chromosome picker keeps offering every chromosome |
+
+Every other active filter (dropdowns, selections, groups) still applies to all of them as
+usual; only the region pair is held back. The same rule runs in the viewer and on the
+server, so a card's saved value and its live preview agree.
+
+```yaml
+- tag: depth-in-window
+  component_type: card
+  workflow_tag: my_pipeline
+  data_collection_tag: coverage_bins
+  aggregation: average
+  column_name: depth
+  column_type: float64
+  follow_region_filter: true   # summarise the region in view, not the whole run
+```
+
+On a second genome track, `follow_region_filter: true` in its `config` means something
+close but distinct: the track **zooms** to a region another tile sends, instead of keeping
+its whole-genome overview. Stacking several such tracks in one section, with one of them
+navigating, gives a multi-track locus view.
+
+---
+
+## :material-card-account-details-outline: Record cards and their source { #record-cards }
+
+A [Record card](components.md#record-card) shows **one record** of a collection as labelled
+fields: the detail half of a master/detail layout. It has no selector of its own. It
+follows a selection made elsewhere and shows the record whose id column matches the picked
+value, with an empty state naming its source while nothing is picked.
+
+`linked_component` ties the card to the component whose selection drives it, by that
+component's `tag`:
+
+```yaml
+- tag: samples-table
+  component_type: table
+  workflow_tag: my_pipeline
+  data_collection_tag: sample_qc
+  row_selection_enabled: true
+  row_selection_column: sample
+  layout: {x: 0, y: 0, w: 8, h: 6}
+
+- tag: sample-record
+  component_type: advanced_viz
+  workflow_tag: my_pipeline
+  data_collection_tag: sample_qc
+  viz_kind: record_card
+  config:
+    viz_kind: record_card
+    id_col: sample
+    linked_component: samples-table
+  layout: {x: 8, y: 0, w: 4, h: 6}
+```
+
+The link is checked, not just stored:
+
+- The dashboard import resolves the tag to the component's index, which is what selection
+  filters carry, and rejects a tag that names no component of the dashboard, or the card
+  itself.
+- The source has to emit a selection: a table with `row_selection_enabled` and
+  `row_selection_column`, a figure or map with `selection_enabled` and `selection_column`,
+  or an advanced visualization that selects (embedding, Manhattan, genome view, profile,
+  scatter, chord) with `selection_enabled`.
+- When source and card read the same collection, the source must select on the card's
+  `id_col`, since that is the column the picked values are matched against. A source on
+  another collection reaches the card through a project [link](cross-dc-filtering.md)
+  instead, whose two sides are named independently.
+
+A linked card placed in the same section and row as its source, touching it edge to edge,
+is laid out as the source's **collapsible side panel**. Without `linked_component` the card
+follows whichever selection arrives (`selection_source: any`), which suits a dashboard with
+a single selecting tile.
+
+---
+
 
 ## :material-link-variant: How It Works
 
@@ -337,7 +444,7 @@ components:
 | Multi-select | Yes (lasso, box, ctrl+click) | Depends on component type |
 | Visual feedback | Highlighted points/rows | Selected values in control |
 | Best for | Exploratory filtering | Known filter criteria |
-| Reset | Per-component reset button | Per-component or global reset |
+| Reset | **Clear selection** on the component, shown while it holds a selection | Per-component or global reset |
 
 !!! tip "Combine Both Methods"
     Selection filtering and interactive components work together. Use dropdowns for known categories, then refine with scatter selections for data exploration.
@@ -362,7 +469,7 @@ components:
     Use a column with unique identifiers that exists in all components you want to filter. Typically this is `sample_id`, `id`, or similar.
 
 ??? question "Can I disable the reset button?"
-    Currently, the reset button always appears for selection-enabled components. This ensures users can always clear their selection.
+    No, but it only takes space when there is something to clear. Since v1.13.0 the **Clear selection** button appears on a component while it holds a selection, the scatter's lasso, a table's rows or a pick on an advanced visualization, and disappears once the selection is cleared.
 
 ??? question "Does selection work with Code Mode figures?"
     Yes, but you must include the `selection_column` in your figure's `custom_data` parameter for the selection to extract values correctly.

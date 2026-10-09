@@ -39,7 +39,7 @@ Depictio consists of several components that work together:
 1. **Backend API (FastAPI)**: Handles data processing, authentication, and business logic
 2. **Frontend (React viewer)**: Provides the user interface for creating and viewing dashboards
 3. **Database (MongoDB)**: Stores metadata, user information, and dashboard configurations
-4. **\[Optional\] Storage (MinIO)**: Stores data files and assets
+4. **\[Optional\] Storage (S3, SeaweedFS when bundled)**: Stores data files and assets
 5. **CLI Tool**: Used for data ingestion and management
 
 For more details on the architecture, see the [Architecture Overview](../features/architecture.md).
