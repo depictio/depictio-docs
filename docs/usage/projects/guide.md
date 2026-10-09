@@ -517,6 +517,27 @@ figures and tables read rows, and an `indexed_file` DC has none. Its consumer is
 track reading files directly: a [Genome view](../../features/components.md#genome-view)
 tile with `source: file`.
 
+##### Storage the browser can read <small>(v1.13.0+)</small> { #indexed-file-storage }
+
+The bytes of an indexed file never pass through the API: the browser reads them from the
+object store itself, with the presigned URLs the API hands out (valid 15 minutes). Two
+things follow for a deployment:
+
+- **The URLs are signed for the address the browser uses.** The API signs them against
+  `DEPICTIO_S3_PUBLIC_URL` when it is set, otherwise against
+  `DEPICTIO_S3_EXTERNAL_PROTOCOL`, `DEPICTIO_S3_EXTERNAL_HOST` and
+  `DEPICTIO_S3_EXTERNAL_PORT` (the older `DEPICTIO_MINIO_*` names still work). A signature
+  covers the host, so a URL signed for an in-cluster name such as `http://s3:9000` fails in
+  the browser.
+- **The store must answer the viewer's origin with CORS and serve range requests.** The
+  bundled SeaweedFS allows every origin by default; narrow it with
+  `-s3.allowedOrigins=https://viewer.example.org`, through the `s3` service's `command` in
+  Docker Compose or `s3.extraArgs` in the Helm chart. On AWS S3 or another gateway, add a
+  bucket CORS rule allowing `GET` and `HEAD` from the viewer's origin, with `Range` among the
+  allowed headers and `Content-Range`, `Content-Length`, `Accept-Ranges` and `ETag` exposed.
+
+Without this, a genome view shows no file tracks. Tracks read from table DCs are unaffected.
+
 ## Template Projects
 
 <!-- prettier-ignore -->

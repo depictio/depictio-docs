@@ -139,6 +139,9 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
+| Comments and annotations on dashboard components, with agent proposals held for review | v1.13.0 | [Comments and Annotations](../features/comments-annotations.md) |
+| Thirteen more nf-core templates, ten advanced visualization kinds including a GenomeSpy genome view | v1.13.0 | [Pipeline Templates](../pipeline-templates/README.md) · [Components](../features/components.md#genome-view) |
+| Genome regions carried between collections, record cards that follow a selection | v1.13.0 | [Cross-DC Filtering](../features/cross-dc-filtering.md#region-links) · [Interactive Selection Filtering](../features/interactive-selection-filtering.md#record-cards) |
 | The full server installed as a Python package, no containers: `depictio local up` | v1.12.0 | [Python package](../installation/local.md) |
 | One `depictio` package, `depictio ingest <results dir>`, refreshes that keep edited dashboards | v1.12.0 | [Ingest Command](../depictio-cli/usage.md#ingest-command) · [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) |
 | Recipes declare the schema of their inputs and their output, checked around the transform | v1.12.0 | [Recipes](../usage/projects/recipes.md#the-5-checkpoint-validation-pipeline) |

@@ -44,6 +44,10 @@ template:
     - name: "OPTIONAL_VAR"
       description: "An optional variable"
       required: false
+    - name: "GENOME"
+      description: "Assembly the run was aligned to"
+      required: false
+      default: "hg38"     # v1.13.0+: used when the run does not set it
 
   dashboards:
     - "dashboards/base.yaml"
@@ -57,6 +61,18 @@ template:
 ```
 
 Below the `template:` block is a standard project configuration with `{VAR_NAME}` placeholders.
+
+### Variable defaults <small>(v1.13.0+)</small> { #variable-defaults }
+
+A variable can declare a `default`, the value used when the run leaves it unset. A value
+passed with `--var`, read from the run's `params.json` or detected from the metadata file
+always wins over it. A defaulted variable fills `{NAME}` in `template.yaml` and in the
+dashboard YAMLs and satisfies `required`, but it does not count as provided: an
+`if_var_present` conditional does not fire on a default. A default may contain
+`{DATA_ROOT}`, as in `default: "{DATA_ROOT}/input/samplesheet.csv"`. The nf-core templates use
+defaults for `GENOME` (`hg38`), the axis of their genome tracks, for `GROUP_COL` where the
+samplesheet has a usual grouping column, and for cut-offs such as `SPLICING_FDR` in
+nf-core/rnasplice.
 
 ---
 

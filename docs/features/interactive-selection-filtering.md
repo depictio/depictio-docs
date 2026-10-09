@@ -78,7 +78,10 @@ components:
 
 ### Reset Selection
 
-Click the :material-refresh: **Reset** button on the scatter plot to clear the selection and show all data.
+While the plot holds a selection, an orange :material-restore: **Clear selection (N)** button
+sits in its action row, N being the number of selected values. Click it to drop the selection
+and show all data. The button is gone again once nothing is selected <small>(v1.13.0+)</small>;
+before v1.13.0 a **Reset** button was always shown.
 
 ---
 
@@ -115,7 +118,8 @@ components:
 
 ### Reset Selection
 
-Click the :material-refresh: **Reset** button on the table to clear row selection.
+Click **Clear selection (N)** in the table's action row to clear the row selection. As on a
+scatter plot, the button only shows while rows are selected <small>(v1.13.0+)</small>.
 
 ---
 
@@ -440,7 +444,7 @@ components:
 | Multi-select | Yes (lasso, box, ctrl+click) | Depends on component type |
 | Visual feedback | Highlighted points/rows | Selected values in control |
 | Best for | Exploratory filtering | Known filter criteria |
-| Reset | Per-component reset button | Per-component or global reset |
+| Reset | **Clear selection** on the component, shown while it holds a selection | Per-component or global reset |
 
 !!! tip "Combine Both Methods"
     Selection filtering and interactive components work together. Use dropdowns for known categories, then refine with scatter selections for data exploration.
@@ -465,7 +469,7 @@ components:
     Use a column with unique identifiers that exists in all components you want to filter. Typically this is `sample_id`, `id`, or similar.
 
 ??? question "Can I disable the reset button?"
-    Currently, the reset button always appears for selection-enabled components. This ensures users can always clear their selection.
+    No, but it only takes space when there is something to clear. Since v1.13.0 the **Clear selection** button appears on a component while it holds a selection, the scatter's lasso, a table's rows or a pick on an advanced visualization, and disappears once the selection is cleared.
 
 ??? question "Does selection work with Code Mode figures?"
     Yes, but you must include the `selection_column` in your figure's `custom_data` parameter for the selection to extract values correctly.
