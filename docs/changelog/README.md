@@ -8,6 +8,31 @@ hide:
 
 # Changelog
 
+## **[v1.14.1](https://github.com/depictio/depictio/releases/tag/v1.14.1)** (October 9, 2026)
+
+!!! success "Patch: nf-core templates v2, four new pipeline releases, and access checks on figure previews"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.14.1
+ghcr.io/depictio/depictio-viewer:1.14.1
+ghcr.io/depictio/depictio-worker:1.14.1
+ghcr.io/depictio/depictio-cli:1.14.1
+```
+
+### **✨ New Features**
+
+* **The nf-core templates move to v2**: each opens on an Overview landing tab, with its analyses in tab groups, built on one set of authoring rules. See [Contributing Templates](../developer/contributing-templates.md) ([#1160](https://github.com/depictio/depictio/pull/1160)).
+* **Templates for atacseq 2.1.2, chipseq 2.1.0, airrflow 5.1.1 and cutandrun 3.2.2**, whose outputs moved too far for the previous templates to ingest them. See [atacseq](../pipeline-templates/nf-core/atacseq.md) ([#1161](https://github.com/depictio/depictio/pull/1161)).
+* **`category_colors: auto`** picks the colours at import, and text tiles print **live values** computed from the data. See [Category colours](../features/yaml-sync.md#category-colors) and [Live values](../features/yaml-sync.md#text-live-values) ([#1160](https://github.com/depictio/depictio/pull/1160)).
+
+### **🐛 Bug Fixes**
+
+* **Figure previews and dashboard exports check access to the project**, and code figures reach only what a chart needs. See [Code execution security](../features/security.md#code-execution-security-code-mode) ([#1166](https://github.com/depictio/depictio/pull/1166)).
+
+---
+
 ## **[v1.14.0](https://github.com/depictio/depictio/releases/tag/v1.14.0)** (October 8, 2026)
 
 !!! success "Minor: landing tabs written in YAML, a Guide on every dashboard, and Spotlight search across its tabs"
