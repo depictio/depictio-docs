@@ -130,9 +130,6 @@ These variables override parts of a CLI configuration file, so the token can sta
 
 <span id="run-command"></span>
 
-<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest.cast" data-poster="npt:0:8"></div>
-<p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>🖥️ <code>depictio ingest</code> (v1.12.0) on nf-core/taxprofiler test results: a dry run, then the ingestion into a local server</strong></p>
-
 Ingest pipeline results into a Depictio server, from validation to dashboards. Formerly `run`, which still works and says it is now `ingest`.
 
 ```bash
@@ -152,6 +149,10 @@ depictio ingest results/ --update-config
 The template is detected from the run's own provenance, such as the pipeline name and version a Nextflow run records. Pass `--template <id>` to choose one, or `--project-config-path <project.yaml>` for a pipeline Depictio ships no template for.
 
 Without a template for the run's exact release, the CLI takes the highest shipped version that is not newer than the run, or the lowest one when the run predates them all. When that template was built for another major release of the pipeline, the CLI warns: outputs move between major releases, so data collections that find no files are skipped and the tabs built on them are dropped.
+
+Here the template is detected from nf-core/taxprofiler results, previewed with `--dry-run`, then ingested into the local server:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-detect.cast" data-poster="npt:0:51" data-idle-time-limit="2.5"></div>
 
 **Pipeline Steps:**
 
@@ -265,6 +266,10 @@ If the project already exists, `ingest` changes nothing, says how to go on, and 
 
 A project not on the server yet is created by `--update-config`, so a script can pass it every time.
 
+Here a third run is added to a project ingested from a project YAML: a dry run, then the refresh, which keeps its dashboard:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-refresh.cast" data-poster="npt:0:48" data-idle-time-limit="2.5"></div>
+
 **Dashboards.** Dashboards are matched by their origin, the template file or the `--dashboard` file they came from, not by their title. Renaming a dashboard in the viewer no longer makes the next refresh import a second copy, and the new title is kept. The summary at the end of the run lists each dashboard as `created`, `kept` or `replaced`, with its link.
 
 A `--dashboard` file inside the template or the project file's folder is matched by its path there. One from anywhere else is matched by its absolute path (v1.13.1+, by its file name before), so moving that file makes the next refresh create a new dashboard.
@@ -293,6 +298,10 @@ Attaching a directory that is already one of the project's locations records it,
 | `0` | Every step completed |
 | `1` | A step failed, including under `--continue-on-error`, the CLI configuration could not be used, or a refresh stopped on a missing run location |
 | `2` | Nothing to do as asked: no template detected and none given, the project already exists without `--update-config` or `--attach-run`, the project `--attach-run` names does not exist, or a usage error |
+
+Here the first step fails, as no server answers, and its message says how to start one:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-error.cast" data-poster="npt:0:13" data-idle-time-limit="2.5"></div>
 
 **Examples:**
 
@@ -674,14 +683,16 @@ depictio dashboard import dashboard.yaml --project 646b0f3c1e4a2d7f8e5b8c9a
 
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
 <pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Validating:</span> <span style="color: #c2185b;">dashboard.yaml</span>
+  Checks: schema + domain constraints
 <span style="color: #2e7d32;">✓ Validation passed</span>
   Title: Iris Dashboard Demo
   Components: 7
   Project: Iris_Dataset_Project (from YAML project_tag)
 
-<span style="color: #0097a7;">Loading CLI configuration...</span>
-<span style="color: #2e7d32;">✓ Configuration loaded</span>
-  API URL: localhost:8058
+• Server: <span>http://127.0.0.1:8058</span> (local server, as no ~/.depictio/CLI.yaml exists; configuration ~/.depictio/local/cli/admin_config.yaml)
+
+<span style="color: #0097a7;">Validating column names against server schema...</span>
+<span style="color: #2e7d32;">✓ Server schema OK</span>
 
 <span style="color: #0097a7;">Importing dashboard (project: Iris_Dataset_Project)...</span>
 <span style="color: #2e7d32;">✓ Dashboard imported successfully!</span>
@@ -689,7 +700,7 @@ depictio dashboard import dashboard.yaml --project 646b0f3c1e4a2d7f8e5b8c9a
   Title: Iris Dashboard Demo
   Project ID: 650a1b2c3d4e5f6a7b8c9d0e
 
-<span style="color: #0097a7;">View at:</span> localhost:8058/dashboard/6824cb3b89d2b72169309737
+<span style="color: #0097a7;">View at:</span> <span>http://127.0.0.1:8058/dashboard/6824cb3b89d2b72169309737</span>
 </pre>
 </div>
 
@@ -720,7 +731,7 @@ depictio dashboard export 6824cb3b89d2b72169309737 --server local -o iris_dashbo
 **Example Output:**
 
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
-<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Loading CLI configuration...</span>
+<pre style="margin: 0; color: var(--md-code-fg-color);">• Server: http://127.0.0.1:8058 (local server, as no ~/.depictio/CLI.yaml exists; configuration ~/.depictio/local/cli/admin_config.yaml)
 <span style="color: #0097a7;">Exporting dashboard 6824cb3b89d2b72169309737...</span>
 <span style="color: #2e7d32;">✓ Dashboard exported to:</span> <span style="color: #c2185b;">iris_dashboard.yaml</span>
 </pre>
@@ -739,6 +750,10 @@ For more information about dashboard YAML format and workflows, see [Dashboard Y
     Browse the bioinformatics tool→viz catalog by rendering its components on their bundled fixture data. Handy for previewing what a tool produces before wiring it into a dashboard. For the live, hosted version see the [Depictio Tools Catalog](../catalog/index.md).
 
 `depictio catalog list` lists every tool and output with its recipe and render targets, and `depictio catalog info <tool>` shows one tool in detail.
+
+Here a profiler is looked up in the list, then shown in detail:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-catalog.cast" data-poster="npt:0:25" data-idle-time-limit="2.5"></div>
 
 #### `catalog preview`
 
@@ -933,12 +948,15 @@ depictio dev recipe list
 **Output:**
 
 ```
-Available recipes (5):
-  nf-core/ampliseq/alpha_diversity.py
-  nf-core/ampliseq/alpha_rarefaction.py
-  nf-core/ampliseq/ancombc.py
-  nf-core/ampliseq/taxonomy_composition.py
-  nf-core/ampliseq/taxonomy_rel_abundance.py
+                 Available recipes (327)
+╭────────────────────────────────────────────────────────╮
+│ Recipe                                                 │
+├────────────────────────────────────────────────────────┤
+│ adapterremoval/settings.py                             │
+│ ampcombi/clusters.py                                   │
+│ ampcombi/embedding.py                                  │
+│ ampcombi/summary.py                                    │
+…
 ```
 
 ---
@@ -966,12 +984,31 @@ depictio dev recipe info nf-core/ampliseq/alpha_diversity.py
 Recipe: nf-core/ampliseq/alpha_diversity.py
 Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD table.
 
-Sources (1):
-  faith_pd: qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv (TSV)
-
-Output schema (2 columns):
-  sample: String
-  faith_pd: Float64
+When ampliseq is run with --metadata, QIIME2 embeds metadata columns directly
+into the faith_pd_vector/metadata.tsv file (e.g. habitat). This recipe handles
+both cases: with and without embedded metadata columns.
+                                     Sources (1)
+╭──────────┬───────────────────────────────────────────────────────────────┬────────╮
+│ Source   │ Location                                                      │ Format │
+├──────────┼───────────────────────────────────────────────────────────────┼────────┤
+│ faith_pd │ qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv │ tsv    │
+╰──────────┴───────────────────────────────────────────────────────────────┴────────╯
+    Input schema:
+faith_pd (2 columns)
+╭──────────┬────────╮
+│ Column   │ Type   │
+├──────────┼────────┤
+│ id       │ String │
+│ faith_pd │ String │
+╰──────────┴────────╯
+   Output schema (2
+       columns)
+╭──────────┬─────────╮
+│ Column   │ Type    │
+├──────────┼─────────┤
+│ sample   │ String  │
+│ faith_pd │ Float64 │
+╰──────────┴─────────╯
 ```
 
 Each source that declares an `input_schema` gets an `Input schema: <source> (N columns)` table before the output schema. A non-empty `OPTIONAL_OUTPUT_SCHEMA` adds an `Optional output schema (N columns)` table.
