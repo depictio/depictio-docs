@@ -30,33 +30,31 @@ hide:
 </div>
 
 The scrnaseq template follows a 10x run from the raw reads to the genes that mark
-each cluster, one tab per step:
+each cluster:
 
-- :material-chart-box-outline: **MultiQC**: FastQC on the raw reads and Cell Ranger's own summary
-- :material-check-decagram: **Library QC** and :material-chart-scatter-plot: **Cell calling**: library metrics against 10x's cut-offs, the knee curve and CellBender's ambient-RNA removal
-- :material-shield-check-outline: **Cell QC**: the MAD rules that flag a cell, which every later tab can filter on
-- :material-relation-many-to-many: **Embeddings** and :material-chart-donut: **Clusters**: UMAP, t-SNE and PCA, cluster sizes, cell cycle and stability across resolutions
-- :material-dna: **Markers** and :material-scale-balance: **Compare selections**: marker genes per cluster, and two lassoed groups of cells tested gene by gene
-- :material-set-merge: **Aligner concordance**: Cell Ranger against simpleaf and kallisto, when the run used several routes
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: FastQC and Cell Ranger's own summary from the MultiQC report, and each library's metrics against 10x Genomics' cut-offs
+- :material-scatter-plot: **Cells**: the barcodes called as cells and the ambient RNA removed, how the aligner routes agree, the MAD rules that flag a cell, the UMAP and t-SNE, and the clusters with their cell cycle
+- :material-dna: **Genes**: the marker genes of each cluster, and two lassoed groups of cells tested gene by gene
 
-A `Run at a glance` strip (cells called, median genes per cell, sequencing
-saturation, reads in cells), the collapsed `Sample sheet` and the `Sample`
-filter are pinned to every tab. A collapsed `Cell QC filters` group (cluster, QC
-status, UMI counts, genes detected) is pinned to the bottom and composes forward
-through the `cluster_label` links, so a cluster picked on any tab narrows the
-cluster, marker, per-cell expression and cell-cycle tables alike.
+The persistent `Sample filters` sit in the left panel and narrow every tab. On
+the tabs that draw cells, the collapsed `Cell filters` (cluster, QC status, UMIs
+and genes per cell) compose forward through the `cluster_label` links, so a
+cluster picked there narrows the cluster, marker, per-cell expression and
+cell-cycle tables alike.
 
 !!! info "The Cell Ranger route carries the dashboard"
     Only `--aligner cellranger` (the pipeline default) publishes the matrices,
     the secondary analysis and a MultiQC report the template reads, so it is
     required. The simpleaf and kallisto routes are optional and feed the Aligner
-    concordance tab only; a Cell Ranger-only run leaves that tab empty.
+    Concordance tab only; a Cell Ranger-only run has no Aligner Concordance tab.
 
 !!! warning "Two readings assume a human reference"
-    The mitochondrial fraction and the MAD mito rule read gene symbols starting
+    The mitochondrial share and the MAD mito rule read gene symbols starting
     with `MT-`, and the cell-cycle scores read the human Tirosh gene sets. On
     another organism, or a reference without mitochondrial genes, the mito
-    columns read 0 and the phase degrades to NA.
+    columns read 0 and the phase degrades to NA. The dashboard therefore leads
+    with the top-20 gene share and the ribosomal share.
 
 ---
 
@@ -82,7 +80,7 @@ cluster, marker, per-cell expression and cell-cycle tables alike.
 
     | Variable | Default | Role |
     |---|---|---|
-    | `MARKER_PANEL` | none | Comma-separated gene symbols the Markers violin and the gene UMAP's Colour by menu always carry. Unset, or with none of its genes in the reference, the tiles use the top markers of every graph-based cluster |
+    | `MARKER_PANEL` | none | Comma-separated gene symbols the Markers violins and the colour menu of the Embeddings gene UMAP always carry. Unset, or with none of its genes in the reference, the tiles use the top markers of every graph-based cluster |
 
 === "From the pipeline itself (v1.10.0+)"
 
@@ -123,234 +121,325 @@ raw MatrixMarket file with a streaming scan, never a dense matrix.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Nine tabs, read as a funnel: the report, the libraries, the cells called, the
-cells kept, where they sit, how they group, what marks each group, a
-comparison of your own, and how the aligner routes agree. Each tab below carries
-the **same icon and colour the dashboard gives it**.
+One dashboard: the **Overview**, then nine child tabs in three groups, read as a
+funnel from the reads to the cells, their clusters and the genes that mark them.
+Each tab below carries the **same icon and colour the dashboard gives it**, so the
+page and the app read alike.
+
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Library QC |
+| Cells | Cell Calling, Aligner Concordance, Cell QC, Embeddings, Clusters |
+| Genes | Markers, Compare Selections |
+
+Each child tab opens with a short intro and a strip of two to four cards, then at
+most three open sections; tables and details follow, collapsed. The persistent
+*Sample filters* (the sample) sit in the left panel and narrow every tab through
+the sample links. The persistent *Cell filters* (cluster, QC status, UMIs and genes
+per cell, on the per-cell QC table) sit collapsed at the bottom of the panel on the
+four tabs that draw cells: Cell QC, Embeddings, Clusters and Markers. A cluster
+picked there narrows the cluster summary, marker, expression and cell-cycle tables
+through the `cluster_label` links. The *Sample sheet* is pinned, collapsed, to the
+bottom of every child tab. Cell Ranger clusters each sample on its own, so on a
+multi-sample run a cluster label shared by two samples is not the same population.
+
+=== ":material-compass-outline: Overview"
+
+    *Droplet single-cell RNA-seq, from reads to called cells, clusters and their marker genes.*
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/scrnaseq/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/scrnaseq/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A short hero links the run parameters. *About this dashboard* says how the two
+    filter levels work, *The run* lists the samples, the aligner, the protocol and
+    the genome, and *Pipeline* walks the five steps from reads to marker genes
+    (reads, count, call, flag, cluster), each linked to its parameters and its tab.
+    Every key figure, finding and highlight reads the Cell Ranger route, which every
+    run writes. The findings are live values: they follow the filters.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · the left panel starts collapsed. *Key figures* has its own
+        filter bar (the QC status and the sample), and so does *Findings* (the
+        sample and the cluster): each narrows its own section only.
+
+        | Section | What it holds |
+        |---|---|
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: cells called, genes per cell, clusters, marker genes |
+        | Findings | Live result rows, then 4 figures: the UMAP by cluster, the barcode-rank curve, the cells per cluster with the flagged ones on top and the strongest marker of each cluster |
+        | How to read this dashboard | The tabs by group, each with its question |
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Are the raw reads sound, and what does Cell Ranger's own summary say?*
+    **Data & QC** · *Did the reads and Cell Ranger's own QC hold for every sample?*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/scrnaseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/scrnaseq/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    MultiQC panels only: FastQC on the raw reads, then Cell Ranger count's
-    summary stats and its median-genes and saturation curves. Cell Ranger's own
-    barcode-rank panel is left out, because the Cell calling tab draws the same
-    curve with cells and background coloured and the cutoff marked.
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/scrnaseq/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    MultiQC panels only, from the pipeline's own report. Open: the general
+    statistics and Cell Ranger count's summary table, then its median-genes and
+    saturation curves, then the FastQC sequence counts and per-sequence quality.
+    GC content and duplication are collapsed; duplication runs high by design, since
+    each transcript is read many times. Cell Ranger's own barcode-rank panel is left
+    out: the Cell Calling tab draws the same curve with the called cells marked.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample` on the sample hub, persistent and pinned to the
-        top of every tab, plus `Cluster`, `QC status` and ranges on `UMI counts
-        per cell` and `Genes detected` in the collapsed *Cell QC filters*
-        group pinned to the bottom.
+        **Filters** · no filter of its own: the persistent `Sample` filter reaches
+        the report through the sample link.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards, pinned to every tab |
-        | Sample sheet | *Sample hub*, collapsed and pinned to every tab |
-        | MultiQC general statistics | *General statistics* |
-        | Read quality | 4 MultiQC panels |
-        | Cell Ranger summary | 3 MultiQC panels |
+        | QC overview | 2 MultiQC panels |
+        | Cell Ranger curves | 2 MultiQC panels |
+        | Read quality | 2 MultiQC panels |
+        | QC details (collapsed) | 2 MultiQC panels |
 
 === ":material-check-decagram:{ .mc-blue } Library QC"
 
-    *Does each library clear 10x's own quality cut-offs?*
+    **Data & QC** · *Do the libraries meet 10x Genomics' own QC guidance?*
 
-    [![Library QC dashboard](../../images/pipeline-templates/nf-core/scrnaseq/library_qc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/library_qc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Library QC dashboard](../../images/pipeline-templates/nf-core/scrnaseq/library_qc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/library_qc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Five threshold cards (sequencing saturation, reads in cells, valid barcodes,
-    Q30 RNA, confidently mapped to the transcriptome) each show the lowest
-    library against 10x's cut-off, next to mean reads and median UMI per cell
-    and a count of the checks per QC band. The mapping breakdown is grouped
-    rather than stacked, because antisense overlaps exonic and intronic by Cell
-    Ranger's own definition.
+    [![Library QC dashboard](../../images/pipeline-templates/nf-core/scrnaseq/library_qc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/library_qc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · a `Metric` picker and a `QC band` switch on the
-        thresholded metrics, in the tab-local *Library filters*.
-
-        | Section | What it holds |
-        |---|---|
-        | Library metrics | 8 cards, *Thresholded library metrics* |
-        | Mapping breakdown | *Read mapping breakdown* |
-        | Cell Ranger metrics table | *Cell Ranger metrics*, collapsed |
-
-=== ":material-chart-scatter-plot:{ .mc-cyan } Cell calling"
-
-    *Which droplets became cells, and how much ambient RNA came out?*
-
-    [![Cell calling dashboard](../../images/pipeline-templates/nf-core/scrnaseq/cell_calling_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/cell_calling_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    The funnel opens the tab: every barcode observed, called a cell, kept by
-    CellBender, passing the per-cell QC, each a subset of the one before. The
-    barcode-rank curve, computed off the raw matrix, shows where the knee
-    separates cells from empty droplets. CellBender's accounting closes the tab;
-    its found over expected ratio carries no verdict, since a ratio far above 1
-    is as much a warning as one below it.
+    The reads in cells, the sequencing saturation and the reads on the
+    transcriptome as levels out of 100, and the reads per cell with the samples
+    counted against the 20,000 10x recommends. Then each library metric (saturation,
+    reads in cells, valid barcodes, Q30 on the RNA read, mapped to the transcriptome)
+    as a dot coloured by its verdict beside a grey tick at the 10x cut-off, and the
+    reads by genomic region, grouped rather than stacked because antisense overlaps
+    exonic and intronic. The checks table and Cell Ranger's metrics are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · a `UMIs per barcode` range on the rank curve, in the
-        tab-local *Barcode filters*.
+        **Filters** · `Check verdict` on `cellranger_library_metrics_long` and
+        `Mapping region` on `cellranger_mapping_breakdown`.
 
         | Section | What it holds |
         |---|---|
-        | Calling funnel | 4 cards, *Cell-calling funnel* |
-        | Cell calling | *Barcode-rank curve* |
-        | Ambient RNA removal | 4 cards, *CellBender metrics* |
+        | Libraries at a glance | 4 cards |
+        | Against 10x's guidance | *Library metrics against their cut-offs* |
+        | Where the reads map | *Read mapping by region* |
+        | Metrics tables (collapsed) | *Library checks*, *Cell Ranger metrics* |
+
+=== ":material-filter-variant:{ .mc-cyan } Cell Calling"
+
+    **Cells** · *How many barcodes are cells, and how much ambient RNA was removed?*
+
+    [![Cell Calling dashboard](../../images/pipeline-templates/nf-core/scrnaseq/cell_calling_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/cell_calling_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Cell Calling dashboard](../../images/pipeline-templates/nf-core/scrnaseq/cell_calling_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/cell_calling_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The barcodes observed, followed down to the cells Cell Ranger calls, the cells
+    CellBender keeps and the cells that pass QC, each stage a subset of the one
+    before; then the UMI counts CellBender keeps out of the raw counts. Then the
+    barcode-rank ("knee") curve, computed off the raw matrix, one curve per sample
+    with the called cells drawn darker. Most barcodes are empty droplets: the cliff
+    is where the cells end. The calling funnel and CellBender's metrics are
+    collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · a `UMIs per barcode` range on `cellranger_barcode_rank`.
+
+        | Section | What it holds |
+        |---|---|
+        | Calling at a glance | 2 cards |
+        | The knee | 1 advanced visualization |
+        | Calling tables (collapsed) | *Cell-calling funnel*, *CellBender metrics* |
+
+    !!! tip "Without CellBender"
+        A `--skip_cellbender` run has no CellBender card or table here, and the
+        funnel card widens. The funnel's CellBender stage and the CellBender shares
+        on Clusters read empty.
+
+=== ":material-set-merge:{ .mc-lime } Aligner Concordance"
+
+    **Cells** · *Do Cell Ranger, simpleaf and kallisto call the same cells?*
+
+    [![Aligner Concordance dashboard](../../images/pipeline-templates/nf-core/scrnaseq/aligner_concordance_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/aligner_concordance_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Aligner Concordance dashboard](../../images/pipeline-templates/nf-core/scrnaseq/aligner_concordance_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/aligner_concordance_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A run with several `--aligner` routes calls cells three ways, each with
+    CellBender on top. The cells each route calls, and the barcodes any method calls,
+    split by how many methods agree. Then each route's own call against CellBender's
+    on it (the diagonal is agreement) beside its mapping rate, and the UpSet of the
+    five cell calls, matched on the bare 16-base barcode so the overlap compares the
+    same droplets. Most cells should sit in the intersection of every method.
+    simpleaf's knee curve and both tables are collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Aligner route` on `aligner_summary` and a `Methods agreeing`
+        range on `cell_calls_by_method`.
+
+        | Section | What it holds |
+        |---|---|
+        | Routes at a glance | 2 cards |
+        | Routes side by side | 1 advanced visualization + *Mapping rate per route* |
+        | Cell-call overlap | 1 advanced visualization |
+        | Route details (collapsed) | 1 advanced visualization (the simpleaf knee), *Aligner summary*, *Cell calls by method* |
+
+    !!! tip "Only with more than one route"
+        Every collection this tab reads is optional. A Cell Ranger-only run, the
+        pipeline default, has no Aligner Concordance tab.
 
 === ":material-shield-check-outline:{ .mc-grape } Cell QC"
 
-    *Which cells does the MAD flag remove, and by which rule?*
+    **Cells** · *Which called cells do the MAD rules flag, and why?*
 
-    [![Cell QC dashboard](../../images/pipeline-templates/nf-core/scrnaseq/cell_qc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/cell_qc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Cell QC dashboard](../../images/pipeline-templates/nf-core/scrnaseq/cell_qc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/cell_qc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    The rules follow sc-best-practices, per sample on log1p values: 5 MAD below
-    the median for UMIs and genes, 5 MAD above for the top-20 gene share, and the
-    median plus 3 MAD or 8% for the mitochondrial fraction. Rule cards come first,
-    then the UMI against genes scatter and the mito and depth box plots by
-    cluster. The per-cell table drives a linked **Cell record** beside it, which
-    folds to a slim rail until a cell is picked.
+    [![Cell QC dashboard](../../images/pipeline-templates/nf-core/scrnaseq/cell_qc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/cell_qc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · `Failing rule` and a `Top-20 gene share` range, in the
-        tab-local *QC detail filters*, on top of the pinned cell filters.
-
-        | Section | What it holds |
-        |---|---|
-        | QC rules | 8 cards |
-        | QC distributions | *UMI counts vs genes detected*, *Mitochondrial fraction by cluster*, *log10 UMI count by cluster* |
-        | Flagged cells | *Per-cell QC table*, *Cell record* |
-
-=== ":material-relation-many-to-many:{ .mc-indigo } Embeddings"
-
-    *Where do the cells sit, and which genes separate them?*
-
-    [![Embeddings dashboard](../../images/pipeline-templates/nf-core/scrnaseq/embeddings_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/embeddings_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    The cluster UMAP and the t-SNE sit side by side, with depth and QC status
-    one Colour by pick away on either. `Gene expression on the map` is the same
-    UMAP bound to the per-cell expression matrix, where every panel gene is a
-    column of the searchable Colour by menu. Mean expression against normalised
-    dispersion and the PCA scree show what the embedding was built on.
+    The called cells as a ring by the rule that flags them, the UMIs and the genes
+    per cell, and the top-20 gene share. Then UMIs against genes per cell on log
+    axes, coloured by QC status, and the UMIs and top-20 share per cluster as boxes.
+    The rules run per sample on log1p values: 5 MAD below the median for UMIs and
+    genes, 5 MAD above for the top-20 share, the median plus 3 MAD or 8% for the
+    mitochondrial share. Flagged cells stay in the data; the cell filters take them
+    out. The per-cell table is collapsed, with a cell record beside it.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · a `Normalised dispersion` range on the dispersion scatter,
-        in the tab-local *Feature selection filters*.
+        **Filters** · `Failing rule` and a `Top-20 gene share (%)` range on
+        `cellranger_cell_qc`, plus the cell filters.
 
         | Section | What it holds |
         |---|---|
-        | Cell embeddings | *UMAP by cluster*, *t-SNE by cluster*, 2 cards |
-        | Gene expression on the map | *UMAP coloured by gene* |
-        | Feature selection | *Mean expression vs dispersion* |
-        | PCA | *PCA scree* |
+        | Cell QC at a glance | 4 cards |
+        | Depth against genes | 1 advanced visualization |
+        | Per cluster | *UMIs per cell, by cluster*, *Top-20 gene share, by cluster* |
+        | Flagged cells (collapsed) | *Per-cell QC* + a cell record card |
+
+=== ":material-scatter-plot:{ .mc-indigo } Embeddings"
+
+    **Cells** · *Do the cells separate into groups on the UMAP and t-SNE?*
+
+    [![Embeddings dashboard](../../images/pipeline-templates/nf-core/scrnaseq/embeddings_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/embeddings_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Embeddings dashboard](../../images/pipeline-templates/nf-core/scrnaseq/embeddings_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/embeddings_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The cells on the map, the genes scored for dispersion as a ring of those the PCA
+    used, the first component's share of the variance and the genes whose normalised
+    dispersion passes 0.5. Then the UMAP by cluster, where a lasso filters the other
+    tabs, and the same UMAP bound to the per-cell expression table: every panel gene
+    is a column of its colour menu. The t-SNE, mean expression against dispersion and
+    the variance per component are collapsed. Cell Ranger selects every gene with a
+    finite dispersion, so the selection is not a variable-gene call.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · a `Ribosomal share (%)` range on `cellranger_cell_qc` and a
+        `Normalised dispersion` range on `cellranger_hvg_dispersion`, plus the cell
+        filters.
+
+        | Section | What it holds |
+        |---|---|
+        | Maps at a glance | 4 cards |
+        | Cells on the map | 1 advanced visualization |
+        | A gene on the map | 1 advanced visualization |
+        | t-SNE (collapsed) | 1 advanced visualization |
+        | Feature selection and PCA (collapsed) | 1 advanced visualization + *Variance per component* |
 
 === ":material-chart-donut:{ .mc-violet } Clusters"
 
-    *Is a cluster a cell type, a QC artefact, or the same type cycling?*
+    **Cells** · *Which clusters are large and clean, and which are cycling?*
 
-    [![Clusters dashboard](../../images/pipeline-templates/nf-core/scrnaseq/clusters_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/clusters_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Clusters dashboard](../../images/pipeline-templates/nf-core/scrnaseq/clusters_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/clusters_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Cluster sizes, the QC status per cluster and a column-z-scored QC heatmap
-    say which clusters are driven by depth or flagged cells. The cell-cycle
-    section plots the S against the G2/M score per cell and the phase per
-    cluster, and a sankey shows how graph-based clusters split across the
-    k-means resolutions Cell Ranger computes. Cell Ranger clusters each sample on
-    its own, so on a multi-sample run a shared label is not the same population.
+    [![Clusters dashboard](../../images/pipeline-templates/nf-core/scrnaseq/clusters_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/clusters_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The cells in the clusters, the flagged share of the highest cluster against 5%
+    and 10%, the cells by cell-cycle phase and the share of the lowest cluster's
+    cells CellBender also calls, against 95% and 90%. Then the cells per cluster with
+    the flagged ones on top, the QC medians of each cluster coloured by z-score, and
+    S against G2/M score per cell beside the phase mix of each cluster. A cluster
+    with a high flagged share or low depth may be damaged cells, not a cell type. The
+    stability Sankey across resolutions and the cluster table are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · a `Cells per cluster` range and a `Cell-cycle phase`
-        picker, in the tab-local *Cluster filters*.
+        **Filters** · a `Cells per cluster` range on `cellranger_cluster_summary`
+        and `Cell-cycle phase` on `cellranger_cell_cycle`, plus the cell filters.
 
         | Section | What it holds |
         |---|---|
-        | Cluster composition | 4 cards, *Cluster composition per sample*, *QC status per cluster*, *Cluster QC heatmap*, *Cluster summary* |
-        | Cell cycle | 4 cards, *S score vs G2/M score*, *Phase per cluster* |
-        | Cluster stability | *Cluster stability across k* |
+        | Clusters at a glance | 4 cards |
+        | Cluster sizes | *Cells per cluster* |
+        | Cluster QC profile | *Cluster QC medians* |
+        | Cell cycle | 1 advanced visualization + *Phase mix per cluster* |
+        | Cluster details (collapsed) | 1 advanced visualization + *Cluster summary* |
 
 === ":material-dna:{ .mc-pink } Markers"
 
-    *What marks each cluster, and does the mean hide a bimodal cluster?*
+    **Genes** · *Which genes mark each cluster?*
 
-    [![Markers dashboard](../../images/pipeline-templates/nf-core/scrnaseq/markers_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/markers_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Markers dashboard](../../images/pipeline-templates/nf-core/scrnaseq/markers_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/markers_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    A marker dot plot gives mean expression and detection rate per cluster, then
-    a violin faceted by gene shows the same markers cell by cell. The volcano
-    reads Cell Ranger's top-ranked markers at any clustering resolution; it keeps
-    the volcano view only, since these are not a genome-wide test. The marker
-    gene table closes the tab with a linked **Gene record** beside it, one row
-    per clustering where the gene ranks, folded to a slim rail until a gene is
-    ticked.
+    [![Markers dashboard](../../images/pipeline-templates/nf-core/scrnaseq/markers_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/markers_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · `Clustering resolution` (opens on graph-based), `Gene`
-        and an `Expression, log1p(CP10k)` range, in the tab-local *Marker
-        filters*.
-
-        | Section | What it holds |
-        |---|---|
-        | Marker expression | *Marker dot plot*, 2 cards, *Marker expression table* |
-        | Per-cell marker spread | *Marker expression per cluster, one panel per gene*, *Expression per gene* |
-        | Differential expression | *Marker gene volcano*, 4 cards |
-        | Gene detail | *Marker gene table*, *Gene record* |
-
-=== ":material-scale-balance:{ .mc-teal } Compare selections"
-
-    *What differs between two groups of cells you pick yourself?*
-
-    [![Compare selections dashboard](../../images/pipeline-templates/nf-core/scrnaseq/compare_selections_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/compare_selections_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    Lasso a set of cells on the UMAP and save it as group A, lasso a second set
-    as group B, and read the volcano. With no groups saved, the comparison opens
-    on the two largest clusters. Each panel gene is tested with a Wilcoxon
-    rank-sum on log1p(CP10k), FDR-corrected, and the guard cards say what the
-    test runs over: narrow to passing cells first, and watch the depth, since two
-    groups of very different depth differ on almost every gene.
+    The marker genes up-regulated at adjusted p below 0.05, with how many recur
+    across clusters, and their median log2 fold change. Then the dot plot (dot size
+    the share of the cluster's cells expressing the gene, colour its mean), and the
+    volcano beside the strongest marker of each cluster. The volcano has no QQ view:
+    these are Cell Ranger's top-ranked markers per cluster, not a genome-wide test.
+    The violins cell by cell, the marker table with a gene record beside it and the
+    marker expression table are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Clusters on the map` and a `QC status` switch on the
-        per-cell expression matrix, in the tab-local *Comparison filters*.
+        **Filters** · `Clustering` on `cellranger_diffexp` (opens on `graphclust`)
+        and `Gene, cell by cell` on `cellranger_cell_expression_long`, plus the cell
+        filters.
 
         | Section | What it holds |
         |---|---|
-        | Pick the cells | *UMAP, lasso to build a group*, 4 cards |
-        | Compare the groups | *Group A vs group B, gene by gene* |
+        | Markers at a glance | 2 cards |
+        | Marker dot plot | 1 advanced visualization |
+        | Differential expression | 1 advanced visualization + *Strongest marker per cluster* |
+        | Per-cell marker spread (collapsed) | *Marker expression per cluster* |
+        | Gene detail (collapsed) | *Marker genes* + a gene record card, *Marker expression per cluster* |
 
-=== ":material-set-merge:{ .mc-orange } Aligner concordance"
+=== ":material-scale-balance:{ .mc-teal } Compare Selections"
 
-    *Do Cell Ranger, simpleaf and kallisto call the same cells?*
+    **Genes** · *Which genes separate two groups of cells you lasso?*
 
-    [![Aligner concordance dashboard](../../images/pipeline-templates/nf-core/scrnaseq/aligner_concordance_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/aligner_concordance_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Compare Selections dashboard](../../images/pipeline-templates/nf-core/scrnaseq/compare_selections_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/compare_selections_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    When simpleaf and kallisto also ran, the cards compare cells called,
-    CellBender cells, median UMI per cell and mapping rate per route, and a
-    scatter sets each route's own call against CellBender's. An UpSet plot shows
-    how the routes' cell calls, plus CellBender on each, agree on the same
-    physical barcode, normalised to the bare 16-mer. The two knee curves share
-    log-log axes. Every collection here is optional.
+    [![Compare Selections dashboard](../../images/pipeline-templates/nf-core/scrnaseq/compare_selections_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/scrnaseq/compare_selections_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The cells on the map as a ring by QC status, and the clusters on it. Then the
+    UMAP with lasso on: save one set of cells as group A and a second as group B,
+    and every gene of the marker panel is tested between them (Wilcoxon rank-sum on
+    log1p(CP10k), FDR-corrected across genes). With no groups saved it compares the
+    two largest clusters. Narrow to `pass` cells first: two groups of very different
+    depth differ on almost every gene for the wrong reason.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · an `Aligner route` picker and a `Methods agreeing` range,
-        in the tab-local *Route filters*.
+        **Filters** · `Clusters on the map` and a `QC status` switch on
+        `cellranger_cell_expression`.
 
         | Section | What it holds |
         |---|---|
-        | Aligner headlines | 4 cards, *Own cell call vs CellBender's*, *Cells called per route*, *Aligner summary* |
-        | Cell-call overlap | *Cell-call overlap across methods*, 4 cards, *Knee curve (Cell Ranger)*, *Knee curve (simpleaf/alevin-fry)*, *Cell calls by method* |
+        | Cells in play | 2 cards |
+        | Pick the cells | 1 advanced visualization |
+        | Compare the groups | 1 advanced visualization |
 
-The cell scatters and embeddings select on the barcode (the UMAP coloured by gene
-does not), and the tables select on their entity column (sample, cell, gene,
-cluster, route), so a pick narrows the
-other tiles on the same collection or one linked to it.
+Every scatter and embedding of cells selects on `barcode` (the UMI against genes
+scatter, the UMAP and t-SNE, the phase scatter, the lasso UMAP; the UMAP coloured
+by a gene does not), the route scatter on `aligner`, and the tables on their entity
+column: `sample_id` in the sample sheet, `sample` in the metrics and funnel tables,
+`barcode` for cells, `cluster_label` for clusters, `gene` for markers, `aligner`
+for routes and `barcode_core` for the cell-call overlap. A pick narrows the other
+tiles on the same collection or linked to it, and each record card follows the
+table beside it.
 
 ---
 
@@ -374,7 +463,7 @@ mkdir -p results/input && cp samplesheet.csv results/input/
 depictio ingest results/ --template nf-core/scrnaseq/latest
 ```
 
-To fill the Aligner concordance tab, run the pipeline once more per extra
+To fill the Aligner Concordance tab, run the pipeline once more per extra
 `--aligner` route and gather the route directories under one results root. See
 [nf-co.re/scrnaseq/usage](https://nf-co.re/scrnaseq/4.2.0/docs/usage) for full
 pipeline documentation.
@@ -413,7 +502,7 @@ The BAM, BUS, `.h5`, `.h5ad`, `.cloupe` and `.rds` binaries are not read.
 The template was validated against the AWS megatest of the 4.2.0 release,
 `results-3fc17b4f971a89e47c88337de71d0e777ffad8cc`: the pbmc8k sample (10x v2
 chemistry, GRCh38) on the Cell Ranger, simpleaf and kallisto routes, so the
-Aligner concordance tab is filled. The screenshots above come from that run.
+Aligner Concordance tab is filled. The screenshots above come from that run.
 `megatest.yaml` lists the tables-only subset the template needs; the samplesheet
 the run names in `params.json` is fetched into `input/` separately:
 

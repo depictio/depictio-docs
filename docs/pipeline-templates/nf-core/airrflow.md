@@ -155,7 +155,9 @@ colours the per-sample lines and annotates the heatmaps.
 
     *Immune receptor repertoires, from reads to the clones that expand and are shared.*
 
-    <!-- screenshot pending v2 -->
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/airrflow/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/airrflow/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     A short hero links the run parameters. *About this dashboard* says how to move
     through the tabs, *The run* lists the samples and subjects, the library
@@ -191,7 +193,9 @@ colours the per-sample lines and annotates the heatmaps.
 
     **Data & QC** · *Did trimming and read quality hold for every sample?*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/airrflow/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/airrflow/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/airrflow/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     MultiQC panels only: general statistics, fastp filtered reads and the FastQC
     sequence counts, then fastp's per-base quality beside the FastQC quality
@@ -213,9 +217,9 @@ colours the per-sample lines and annotates the heatmaps.
 
     **Data & QC** · *How many reads survive each pRESTO and Change-O step?*
 
-    <!-- screenshot pending v2 -->
+    [![Sequence Processing dashboard](../../images/pipeline-templates/nf-core/airrflow/sequence_processing_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/sequence_processing_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Sequence Processing dashboard](../../images/pipeline-templates/nf-core/airrflow/sequence_processing_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/sequence_processing_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Sequence Processing dashboard](../../images/pipeline-templates/nf-core/airrflow/sequence_processing_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/sequence_processing_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     **Input reads**, with the share kept through each pRESTO step, and the reads
     per sample with their spread. Then the read-fate Sankey, where losses peel off
@@ -240,9 +244,9 @@ colours the per-sample lines and annotates the heatmaps.
 
     **Repertoire** · *Which V families and genes build each repertoire?*
 
-    <!-- screenshot pending v2 -->
+    [![V Gene Usage dashboard](../../images/pipeline-templates/nf-core/airrflow/v_gene_usage_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/v_gene_usage_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![V Gene Usage dashboard](../../images/pipeline-templates/nf-core/airrflow/repertoire_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/repertoire_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![V Gene Usage dashboard](../../images/pipeline-templates/nf-core/airrflow/v_gene_usage_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/v_gene_usage_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Distinct **V genes**, the annotated **Sequences** split by V family, the
     largest share one family takes in a sample and the median share of a V gene.
@@ -265,7 +269,9 @@ colours the per-sample lines and annotates the heatmaps.
 
     **Repertoire** · *How long are CDR3 loops, and which V and J genes pair?*
 
-    <!-- screenshot pending v2 -->
+    [![CDR3 & Pairing dashboard](../../images/pipeline-templates/nf-core/airrflow/cdr3_pairing_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/cdr3_pairing_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![CDR3 & Pairing dashboard](../../images/pipeline-templates/nf-core/airrflow/cdr3_pairing_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/cdr3_pairing_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     **Productive sequences** and the largest share one CDR3 length takes in a
     sample. Then the spectratype, one line per sample: a smooth bell is a diverse
@@ -296,9 +302,9 @@ colours the per-sample lines and annotates the heatmaps.
 
     **Clonality** · *How many clones does each repertoire hold, and how diverse is it?*
 
-    <!-- screenshot pending v2 -->
+    [![Clonal Diversity dashboard](../../images/pipeline-templates/nf-core/airrflow/clonal_diversity_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/clonal_diversity_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Clonal Diversity dashboard](../../images/pipeline-templates/nf-core/airrflow/clonal_analysis_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/clonal_analysis_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Clonal Diversity dashboard](../../images/pipeline-templates/nf-core/airrflow/clonal_diversity_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/clonal_diversity_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     **Clones** and the median effective number of clones (Hill diversity at q = 1,
     on repertoires rarefied to a common depth). Then the Hill diversity profile,
@@ -327,7 +333,9 @@ colours the per-sample lines and annotates the heatmaps.
 
     **Clonality** · *How strongly do the largest clones dominate each repertoire?*
 
-    <!-- screenshot pending v2 -->
+    [![Clonal Expansion dashboard](../../images/pipeline-templates/nf-core/airrflow/clonal_expansion_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/clonal_expansion_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Clonal Expansion dashboard](../../images/pipeline-templates/nf-core/airrflow/clonal_expansion_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/clonal_expansion_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     **Clones** as a ring by size class, **Sequences** split by size class, the
     median share of a sample's largest clone, and the size of the largest clone
@@ -349,7 +357,9 @@ colours the per-sample lines and annotates the heatmaps.
 
     **Clonality** · *Which clones do the samples of one subject share?*
 
-    <!-- screenshot pending v2 -->
+    [![Clone Sharing dashboard](../../images/pipeline-templates/nf-core/airrflow/clone_sharing_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/clone_sharing_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Clone Sharing dashboard](../../images/pipeline-templates/nf-core/airrflow/clone_sharing_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/clone_sharing_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     **Clones** split by the number of samples holding them, and the sequences in
     shared clones. Then the clones by number of samples (log scale), the

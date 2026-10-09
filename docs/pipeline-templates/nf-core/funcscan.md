@@ -127,7 +127,9 @@ child tab.
 
     *Assemblies screened for resistance genes, peptides, gene clusters and CAZymes.*
 
-    <!-- screenshot pending v2 -->
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/funcscan/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/funcscan/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     A short hero links the run parameters. *About this dashboard* says how to move
     through the tabs, *The run* lists the assemblies, the screens that ran, the gene
@@ -153,7 +155,9 @@ child tab.
 
     **Data & QC** · *Which screens and tools did the run execute?*
 
-    <!-- screenshot pending v2 -->
+    [![Run report dashboard](../../images/pipeline-templates/nf-core/funcscan/run_report_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/run_report_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Run report dashboard](../../images/pipeline-templates/nf-core/funcscan/run_report_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/run_report_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The run's MultiQC report carries software versions only, so there is no
     MultiQC tab: this one reads the versions back out of it, one row per Nextflow
@@ -177,9 +181,9 @@ child tab.
 
     **Data & QC** · *What did each assembly yield across the four screens?*
 
-    <!-- screenshot pending v2 -->
+    [![Samples dashboard](../../images/pipeline-templates/nf-core/funcscan/samples_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/samples_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Samples dashboard](../../images/pipeline-templates/nf-core/funcscan/screening_overview_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/screening_overview_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Samples dashboard](../../images/pipeline-templates/nf-core/funcscan/samples_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/samples_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The median assembly's resistance genes, high-confidence AMPs, BGC product
     classes and CAZy families. Then the findings per assembly and screen as grouped
@@ -202,7 +206,9 @@ child tab.
 
     **Data & QC** · *Which contigs carry the screens' findings, and how densely?*
 
-    <!-- screenshot pending v2 -->
+    [![Contigs dashboard](../../images/pipeline-templates/nf-core/funcscan/contigs_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/contigs_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Contigs dashboard](../../images/pipeline-templates/nf-core/funcscan/contigs_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/contigs_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Every screen names the contig its feature sits on, so this tab counts, per
     contig, what the four screens put there. The cards give the annotated contigs,
@@ -227,7 +233,9 @@ child tab.
 
     **Antimicrobials** · *Which resistance genes do the assemblies carry, and which tools agree?*
 
-    [![Resistome dashboard](../../images/pipeline-templates/nf-core/funcscan/resistome_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/resistome_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Resistome dashboard](../../images/pipeline-templates/nf-core/funcscan/resistome_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/resistome_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Resistome dashboard](../../images/pipeline-templates/nf-core/funcscan/resistome_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/resistome_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     hAMRonization maps the hits of ABRicate, AMRFinderPlus, DeepARG, fARGene and
     RGI onto shared columns, but not their drug-class names. So the hierarchy starts
@@ -253,7 +261,9 @@ child tab.
 
     **Antimicrobials** · *Which peptide candidates look antimicrobial, and how do they cluster?*
 
-    [![AMPs dashboard](../../images/pipeline-templates/nf-core/funcscan/amps_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/amps_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![AMPs dashboard](../../images/pipeline-templates/nf-core/funcscan/amps_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/amps_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![AMPs dashboard](../../images/pipeline-templates/nf-core/funcscan/amps_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/amps_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     AMPcombi merges the ampir, Macrel and AMPlify predictions and computes the
     physicochemistry of each peptide. The property plane puts hydrophobicity against
@@ -277,7 +287,9 @@ child tab.
 
     **Metabolism** · *Which biosynthetic gene clusters do the assemblies carry, and where?*
 
-    [![BGCs dashboard](../../images/pipeline-templates/nf-core/funcscan/bgcs_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/bgcs_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![BGCs dashboard](../../images/pipeline-templates/nf-core/funcscan/bgcs_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/bgcs_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![BGCs dashboard](../../images/pipeline-templates/nf-core/funcscan/bgcs_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/bgcs_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     comBGC merges the antiSMASH, DeepBGC and GECCO calls into one table of regions.
     On fragmented assemblies most regions run off the end of their contig, so the
@@ -303,7 +315,9 @@ child tab.
 
     **Metabolism** · *Which carbohydrate-active enzymes do the assemblies carry, and for which substrates?*
 
-    [![CAZymes dashboard](../../images/pipeline-templates/nf-core/funcscan/cazymes_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/cazymes_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![CAZymes dashboard](../../images/pipeline-templates/nf-core/funcscan/cazymes_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/cazymes_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![CAZymes dashboard](../../images/pipeline-templates/nf-core/funcscan/cazymes_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/cazymes_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     run_dbCAN annotates every protein with HMMER, dbCAN-sub and DIAMOND. The cards
     give the CAZyme genes, the tools agreeing, the genes with a substrate call and

@@ -32,16 +32,13 @@ hide:
 The demultiplex template reads an nf-core/demultiplex run in the order a
 sequencing facility signs a run off:
 
-- :material-chart-box-outline: **MultiQC**: what CheckQC flagged, then the Falco and fastp read QC of the demultiplexed FASTQ files
-- :material-stethoscope: **Run health**: whether the instrument delivered, per lane, per read and per cycle
-- :material-chart-donut: **Demultiplexing**: how evenly the reads of each lane were shared between the libraries
-- :material-alert-outline: **Undetermined and index swaps**: what no index matched, and whether it is a swap between indexes in use
-- :material-test-tube: **Library QC**: how each library looks once demultiplexed, and whether the design groups differ
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: what CheckQC and the Falco and fastp read QC flagged in the MultiQC report, and whether the instrument delivered on every lane, read and cycle
+- :material-scale-balance: **Demultiplexing**: how evenly each lane's reads were shared between the libraries, what no index matched and whether it is an index swap, and which libraries stand out on read QC within their group
 
-`Run at a glance` (libraries, total yield, lowest-lane Q30, highest-lane
-Undetermined share) and the collapsed `Sample sheet` are pinned to the top of
-every tab, the `Lane table` to the bottom, and the `Library filters` group
-(library, design group, lane) applies everywhere.
+The persistent `Sample filters` (the design group, then the library) sit in the
+left panel and narrow every library tab through the project links; Run health
+reads lanes, so it keeps its own lane, read and cycle filters instead.
 
 !!! info "bcl2fastq by default, BCL Convert on request"
     The two demultiplexers write different reports: bcl2fastq a
@@ -99,9 +96,9 @@ every tab, the `Lane table` to the bottom, and the `Library filters` group
 The template reads the MultiQC report, the demultiplexer statistics of every
 flowcell and lane, the CheckQC report, the fastp JSON of every library and,
 when present, an Illumina InterOp summary table. A pipeline-local `libraries`
-recipe joins them into one row per library, the hub of the library filters.
-48 of its 79 components carry a `use:` catalog reference, so a tile says where
-its panel comes from.
+recipe joins them into one row per library, the hub of the sample filters.
+47 of its 60 tiles carry a `use:` catalog reference, so a tile says where its
+panel comes from.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -119,145 +116,234 @@ its panel comes from.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Five tabs, read as a funnel: what the checks flagged, whether the instrument
-delivered, how the reads were shared, what went to Undetermined, and how each
-library looks. Each tab below carries the **same icon and colour the dashboard
-gives it**. The screenshots come from the run described under Validation runs
-below.
+One dashboard: the **Overview**, then five child tabs in two groups, read as a
+funnel from what the checks flagged to how each library reads, in the order a
+facility signs a run off. Each tab below carries the **same icon and colour the
+dashboard gives it**, so the page and the app read alike.
+
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Run health |
+| Demultiplexing | Library balance, Undetermined reads, Library QC |
+
+Each child tab opens with a short intro and, except on MultiQC, a strip of four
+cards, then at most three open sections; tables and conditional detail follow,
+collapsed. The design comes from the optional `METADATA_FILE`: without it the
+`libraries` hub carries one group, "All libraries", and every tile still renders.
+The persistent *Sample filters* (the group, then the library, both on the hub)
+sit in the left panel and narrow every library tab through the project links.
+Run health reads lanes, which no library link reaches, so they are kept off that
+tab. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab
+except Run health.
+
+=== ":material-compass-outline: Overview"
+
+    *A sequencing run split into its libraries, from lanes to per-library read QC.*
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/demultiplex/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/demultiplex/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A short hero links the run parameters. *About this dashboard* says how the two
+    filter levels work, *The run* lists the demultiplexer (from `params.json`), the
+    libraries, the lanes and the yield, and *Pipeline* walks the five steps from
+    run folder to libraries (convert, split, leftovers, read QC, check), each
+    linked to the setting or tool version behind it and to its tab. The findings
+    are live values: they follow the filters, and a route that lacks their data
+    drops them.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · the left panel starts collapsed. *Key figures* and
+        *Findings* each have their own filter bar (the group and the library):
+        each narrows its own section only.
+
+        | Section | What it holds |
+        |---|---|
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: libraries by group, bases at Q30 on the weakest lane, the smallest library against an even share, the Undetermined share of the worst lane |
+        | Findings | Live result rows, then 4 figures: the base quality per cycle, reads against index purity, the library QC scatter and the most frequent unknown barcodes |
+        | How to read this dashboard | The tabs by group, each with its question |
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *What did CheckQC flag, and how do the demultiplexed FASTQ files look?*
+    **Data & QC** · *What did CheckQC and the read QC tools flag?*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/demultiplex/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/demultiplex/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    The tab opens on the CheckQC verdicts: libraries under the read threshold, the
-    Undetermined share against its limit, and the general statistics. Falco and
-    fastp follow with reads per FASTQ file, per-read quality, adapter content and
-    insert sizes. The remaining Falco and fastp panels are collapsed underneath.
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/demultiplex/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    MultiQC panels only. Open: the two CheckQC panels (libraries under the read
+    threshold, the Undetermined share against its limit) and the general
+    statistics, then Falco read counts, per-read quality and adapter content with
+    the fastp insert sizes. Start with CheckQC: a library far below an even share
+    of reads fails there first. The Falco status checks and the remaining Falco and
+    fastp panels are collapsed. The bcl2fastq panels, fastp Filtered Reads and
+    fastp Sequence Quality are left out: the other tabs read the same numbers from
+    the reports themselves.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Library`, the design group and `Lane` on the library hub,
-        persistent on every tab, plus a `Reads, % of an even share` range in a
-        *MultiQC scope* group.
+        **Filters** · `Library or FASTQ file` on `multiqc_data`, as MultiQC names
+        it, and a `Reads, % of an even share` range on the `libraries` hub, which
+        links into the report.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards, pinned |
-        | Sample sheet | *Libraries* (collapsed, pinned) |
-        | CheckQC verdicts | *Libraries under the read threshold*, *Undetermined share against its limit*, *General statistics* |
-        | Read QC after demultiplexing | 5 MultiQC panels (Falco and fastp) |
-        | More MultiQC panels | 9 MultiQC panels (collapsed) |
-        | Lane table | *Lane summary* (collapsed, pinned to the bottom) |
+        | CheckQC verdicts | 3 MultiQC panels |
+        | Read QC after demultiplexing | 4 MultiQC panels |
+        | More MultiQC panels (collapsed) | 10 MultiQC panels |
 
 === ":material-stethoscope:{ .mc-teal } Run health"
 
-    *Did the instrument deliver, per lane, per read and per cycle?*
+    **Data & QC** · *Did the instrument deliver on every lane, read and cycle?*
 
-    [![Run health dashboard](../../images/pipeline-templates/nf-core/demultiplex/run_health_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/run_health_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Run health dashboard](../../images/pipeline-templates/nf-core/demultiplex/run_health_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/run_health_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Cards report clusters passing filter, the lowest lane's pass-filter rate and
-    mean quality, and the weakest read's Q30. A scatter places each lane by
-    Undetermined share and base quality, a profile draws base quality per cycle, and
-    a dot plot crosses lanes with reads. Selecting a lane on the lane table or the
-    scatter narrows the tiles linked to it.
+    [![Run health dashboard](../../images/pipeline-templates/nf-core/demultiplex/run_health_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/run_health_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Clusters passing filter (then those assigned to a library), the lowest
+    pass-filter rate on a gauge, the share of bases at Q30 in the weakest read and
+    the yield split by read. Then every lane by Undetermined share and Q30, sized by
+    yield (a lane low and to the right lost reads to both), beside the lane by read
+    quality dot plot, and the base quality at every cycle, one curve per lane and
+    read with its 10th to 90th percentile band. A lane or read that drops alone
+    points at the flowcell or the chemistry, not at the libraries. The Sequencing
+    Analysis Viewer metrics and the lane table are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Read` and a `Cycle` range in a *Read and cycle scope*
-        group, on this tab only.
+        **Filters** · `Lane` on `lane_summary`, `Read` on `read_quality` and a
+        `Cycle` range on `cycle_quality`. The sample filters do not reach this tab.
 
         | Section | What it holds |
         |---|---|
-        | Lane health | 4 cards, *Lanes by Undetermined share and base quality* |
-        | Quality along the run | *Base quality per cycle*, *Lane by read quality* |
-        | Sequencing Analysis Viewer metrics | 4 cards, *PhiX error rate per lane and read*, *Phasing against prephasing* |
+        | Run health at a glance | 4 cards |
+        | Lanes and reads | 2 advanced visualizations: the lane scatter and the lane by read dot plot |
+        | Quality along the run | 1 advanced visualization |
+        | Sequencing Analysis Viewer metrics (collapsed) | 4 cards, 2 advanced visualizations: the PhiX error rate per lane and read, phasing against prephasing |
+        | Lane detail (collapsed) | *Lane summary* |
 
     !!! tip "The SAV section needs an InterOp summary table"
         Error rate, phasing and cluster density live in the InterOp binaries,
-        which Depictio does not parse. Run `interop_summary --csv=1 <run folder>`
-        and drop the output anywhere under the run (any `.csv` whose name contains
-        `interop_summary`); without it the section is hidden.
+        which Depictio does not parse. demultiplex 1.8.0 does not run
+        `interop_summary`, so on a stock run the collapsed section stays empty.
+        Run `interop_summary --csv=1 <run folder>` and drop the output anywhere
+        under the run (any `.csv` whose name contains `interop_summary`): the
+        section then shows the worst PhiX error rate, the lowest share of clusters
+        passing filter, the densest lane and the worst phasing, then the error
+        rate per lane and read and phasing against prephasing.
 
-=== ":material-chart-donut:{ .mc-indigo } Demultiplexing"
+=== ":material-scale-balance:{ .mc-indigo } Library balance"
 
-    *How evenly were the reads of each lane shared between the libraries?*
+    **Demultiplexing** · *How evenly were each lane's reads shared between the libraries?*
 
-    [![Demultiplexing dashboard](../../images/pipeline-templates/nf-core/demultiplex/demultiplexing_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/demultiplexing_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Library balance dashboard](../../images/pipeline-templates/nf-core/demultiplex/library_balance_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/library_balance_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    An even pool gives even bars. The stacked composition shows what each lane was
-    made of, Undetermined included, and the sunburst nests run, lane and library.
-    The library balance section puts each library's share of the lane beside a
-    scatter of reads against index purity, where a library with many imperfect
-    index matches stands out; points and table rows select their library.
+    [![Library balance dashboard](../../images/pipeline-templates/nf-core/demultiplex/library_balance_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/library_balance_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Reads assigned to libraries (with the share the three largest hold), the median
+    share of the lane per library, the smallest library against the mean library of
+    the least even lane (a gauge, 100 is the mean) and the worst perfect index
+    match. Then the composition of each lane (the eight largest libraries named,
+    the rest pooled, Undetermined kept) beside the run, lane, library sunburst, then
+    every library's share of its lane and its reads against index purity. A library
+    with few reads and a high perfect-match share was under-pooled; one with few
+    reads and a low perfect-match share lost reads to index errors. The reads per
+    library and lane, Undetermined rows included, are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Share of the lane (%)` and `Perfect index match (%)` ranges
-        in a *Balance scope* group, on this tab only.
+        **Filters** · `Lane` on `lane_summary`, and `Share of the lane (%)` and
+        `Perfect index match (%)` ranges on `demux_stats`.
 
         | Section | What it holds |
         |---|---|
         | Balance at a glance | 4 cards |
-        | Lane composition | *Libraries per lane*, *Run, lane, library* |
-        | Library balance | *Share of the lane per library*, *Reads against index purity* |
-        | Per-lane library counts | *Reads per library and lane* (collapsed) |
+        | Lane composition | 2 advanced visualizations: the libraries per lane and the run, lane, library sunburst |
+        | Library balance | *Share of the lane per library*, 1 advanced visualization (reads against index purity) |
+        | Per-lane library counts (collapsed) | *Reads per library and lane* |
 
-=== ":material-alert-outline:{ .mc-orange } Undetermined and index swaps"
+=== ":material-alert-outline:{ .mc-orange } Undetermined reads"
 
-    *Is the Undetermined share an index swap, a missing library or a wrong sample sheet?*
+    **Demultiplexing** · *What did no index match, and is it an index swap?*
 
-    [![Undetermined and index swaps dashboard](../../images/pipeline-templates/nf-core/demultiplex/undetermined_and_index_swaps_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/undetermined_and_index_swaps_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Undetermined reads dashboard](../../images/pipeline-templates/nf-core/demultiplex/undetermined_reads_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/undetermined_reads_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Every unassigned index pair is split into its i7 and i5 and checked against the
-    libraries of the same lane. *Both indexes in use* is the index-hopping or swap
-    signature; *Only i7* or *Only i5 in use* often points to a mistyped index;
-    *Neither index in use* to a library missing from the sheet or a contamination;
-    *Poly-G or N index* to a failed index read. The bar chart ranks the top unknown
-    barcodes by share of the lane, coloured by that class.
+    [![Undetermined reads dashboard](../../images/pipeline-templates/nf-core/demultiplex/undetermined_reads_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/undetermined_reads_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The Undetermined share of the worst lane on a gauge, the Undetermined reads
+    ranked by lane, the reads in the top unknown barcodes split by class and the
+    share of a lane's Undetermined reads carried by its most frequent barcode. Then
+    the fifteen most frequent unknown barcodes over the lanes in view, coloured by
+    class. Each unassigned index pair is split into its i7 and i5 and checked
+    against the libraries of the same lane: *Both indexes in use* is the
+    index-hopping or swap signature, *Only i7 in use* or *Only i5 in use* often a
+    mistyped index, *Neither index in use* a library missing from the sample sheet
+    or a contamination, *Poly-G or N index* a failed index read. The unknown
+    barcode table and the CheckQC findings (one row per finding, a pass row for
+    each silent check) are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Barcode class` and a `Rank in its lane` range in a
-        *Barcode scope* group, on this tab only.
+        **Filters** · `Lane` on `lane_summary`, and `Barcode class` and a `Rank in
+        its lane` range on `unknown_barcodes`.
 
         | Section | What it holds |
         |---|---|
         | Undetermined at a glance | 4 cards |
-        | Top unknown barcodes | *Unknown barcodes by share of the lane* |
-        | Barcode and verdict tables | *Unknown barcodes*, *CheckQC findings* (collapsed) |
+        | Top unknown barcodes | *Most frequent unknown barcodes* |
+        | Barcode and verdict tables (collapsed) | *Unknown barcodes*, *CheckQC findings* |
+
+    !!! info "No unknown barcodes, no barcode tiles"
+        bcl2fastq keeps the top unknown barcodes of each lane, and the recipes keep
+        the 100 most frequent per lane. A report without them skips
+        `unknown_barcodes`: its cards, figure, table and filters go, and the lane
+        cards of the tab remain.
 
 === ":material-test-tube:{ .mc-grape } Library QC"
 
-    *Which library looks different from its group once demultiplexed?*
+    **Demultiplexing** · *Which libraries stand out on read QC within their group?*
 
-    [![Library QC dashboard](../../images/pipeline-templates/nf-core/demultiplex/library_qc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/library_qc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Library QC dashboard](../../images/pipeline-templates/nf-core/demultiplex/library_qc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/library_qc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Cards summarise the fastp read QC of every library and lane. A scatter of
-    duplication against base quality sits beside a linked `Library card`, which
-    folds to a slim rail until a point is lassoed and then shows that library in
-    full. The group comparison sets the design groups against each other metric by
-    metric, which needs a `METADATA_FILE` to say anything.
+    [![Library QC dashboard](../../images/pipeline-templates/nf-core/demultiplex/library_qc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/demultiplex/library_qc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The reads fastp was given (then those it kept), the median duplication ranked
+    by group, the median share of reads with an adapter and the median share of
+    bases at Q30 after filtering. Then duplication against base quality, one point
+    per library sized by reads and coloured by group, beside the library card,
+    which stays a thin rail until a library is lassoed in the scatter or picked in
+    the fastp table. Below, every numeric library metric compared between two
+    groups or two saved selections: with a few libraries per group the test is a
+    screen, not a verdict. The fastp table is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Duplication (%)` and `GC content (%)` ranges in a
-        *Library QC scope* group, on this tab only.
+        **Filters** · `Duplication (%)` and `GC content (%)` ranges on the
+        `libraries` hub.
 
         | Section | What it holds |
         |---|---|
         | Library QC at a glance | 4 cards |
-        | Library QC distributions | *Duplication against base quality*, *Library card*, *Design groups compared metric by metric* |
-        | fastp table | *fastp read QC* (collapsed) |
+        | Libraries against each other | 2 advanced visualizations: the duplication against base quality scatter and the library card |
+        | Design groups compared | 1 advanced visualization |
+        | fastp table (collapsed) | *fastp read QC* |
 
-Tables and point views select on their entity column: the lane table and the
-lane health and phasing scatters on `lane_label`; the sample sheet, the per-lane
+    !!! info "One group without a metadata file"
+        Without `METADATA_FILE` the hub carries a single group, "All libraries":
+        the group breakdowns show one bar, and the comparison has nothing to
+        compare until two selections are saved.
+
+Tables and points select on their entity column: the lane table and the lane
+health and phasing scatters on `lane_label`; the sample sheet, the per-lane
 library table, the index purity and library QC scatters and the fastp table on
 `sample`; the unknown barcode table on `barcode`. A pick narrows the other tiles
 of its collection and follows the project links to the collections they reach.
-The per-cycle quality profile and the CheckQC verdict table do not select: their
-collections have no outgoing link.
+The library card on Library QC follows the scatter beside it. The per-cycle
+quality profile and the CheckQC findings table do not select: their collections
+have no outgoing link. The SAV collection has no incoming link either, so the
+lane filters do not narrow it.
 
 ---
 
