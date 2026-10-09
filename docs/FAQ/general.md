@@ -65,7 +65,7 @@ Depictio relies on [Polars](https://pola.rs/) and [Delta lake](https://delta.io/
 
 ### Can I integrate Depictio with my existing workflows?
 
-Yes, Depictio is designed to integrate with existing bioinformatics workflows. The [depictio-CLI](../depictio-cli/usage.md) tool can be used to push data from your workflows to Depictio for visualization.
+Yes, Depictio is designed to integrate with existing bioinformatics workflows. The [Depictio CLI](../depictio-cli/usage.md), `depictio ingest`, can be used to push data from your workflows to Depictio for visualization, and a Nextflow pipeline can run it itself when it completes ([Nextflow trigger](../depictio-cli/nextflow-trigger.md)).
 
 ### Is there an API for Depictio?
 
@@ -75,7 +75,7 @@ Yes, Depictio provides a comprehensive REST API that allows you to interact with
 
 ### I'm having trouble connecting to the Depictio server. What should I check?
 
-1. Ensure that all required services (API, MongoDB, MinIO) are running using Docker Compose or Kubernetes
+1. Ensure that all required services (API, MongoDB, the S3 store) are running using Docker Compose or Kubernetes
 2. Check the logs of the services for any error messages
 3. Check network connectivity and firewall settings
 4. Verify that the server URLs are correctly configured (in the `.env` file for Docker Compose or in the Kubernetes configuration)

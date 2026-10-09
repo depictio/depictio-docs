@@ -20,7 +20,7 @@ For most deployments, you only need to configure a few variables. See the [Quick
 # Minimal required configuration
 DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
 DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=changeme
-DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
+DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
 ```
 
 !!! tip "Complete Environment File"
@@ -34,7 +34,7 @@ DEPICTIO_MINIO_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [FastAPI Backend](#fastapi-backend)
 - [React Viewer Frontend](#react-viewer-frontend)
 - [MongoDB Database](#mongodb-database)
-- [MinIO/S3 Storage](#minios3-storage)
+- [S3 Storage](#s3-storage)
 - [Authentication](#authentication)
 - [Bootstrap](#bootstrap)
 - [Redis Cache](#redis-cache)
@@ -105,6 +105,7 @@ Base class for service configurations with internal/external URL handling.
 | `DEPICTIO_VIEWER_DEBUG` | `true` | Debug mode with hot reload |
 | `DEPICTIO_VIEWER_AUTO_GENERATE_FIGURES` | `false` | Automatic figure generation in UI mode |
 | `DEPICTIO_VIEWER_INSPECTOR_ENABLED` | `false` | Docked component inspector, replacing the per-component popovers for advanced-visualisation controls, notes and metadata. Experimental (v1.4.0+) |
+| `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` | `table` | View `/dashboards` opens in for someone who never picked one: `thumbnails` or `table`. A view chosen in the browser, or named by a shared link, wins (v1.11.2+; the default was `thumbnails` until v1.12.0) |
 
 ---
 
@@ -133,26 +134,39 @@ Base class for service configurations with internal/external URL handling.
 
 ---
 
-## MinIO/S3 Storage
+<a id="minios3-storage"></a>
+
+## S3 Storage { #s3-storage }
 
 **Config Class:** `S3DepictioCLIConfig`
-**Environment Prefix:** `DEPICTIO_MINIO_`
+**Environment Prefix:** `DEPICTIO_S3_` (legacy `DEPICTIO_MINIO_`)
 
-S3 configuration inheriting service URL management.
+S3-compatible object storage: the bundled SeaweedFS store (Compose service `s3`),
+or any external S3 endpoint (AWS, NetApp, Ceph, MinIO, …) set with
+`DEPICTIO_S3_PUBLIC_URL` and `DEPICTIO_S3_EXTERNAL_SERVICE=true`.
+
+!!! info "`DEPICTIO_MINIO_*` became `DEPICTIO_S3_*` in v1.12.0"
+    The bundled store is SeaweedFS instead of MinIO since **v1.12.0**, and these
+    settings were renamed with it. The former `DEPICTIO_MINIO_<FIELD>` names still
+    work: each is read when its `DEPICTIO_S3_<FIELD>` counterpart is unset, the new
+    name wins when both are set, and the server logs a deprecation warning naming
+    the old variables it found. An install that used the bundled MinIO has to copy
+    its data to the new store: see
+    [Upgrading to v1.12.0: MinIO → SeaweedFS](upgrade/v1.12.0-seaweedfs.md).
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_MINIO_SERVICE_NAME` | `minio` | - |
-| `DEPICTIO_MINIO_SERVICE_PORT` | `9000` | - |
-| `DEPICTIO_MINIO_EXTERNAL_HOST` | `localhost` | - |
-| `DEPICTIO_MINIO_EXTERNAL_PORT` | `9000` | - |
-| `DEPICTIO_MINIO_EXTERNAL_PROTOCOL` | `http` | - |
-| `DEPICTIO_MINIO_PUBLIC_URL` | - | - |
-| `DEPICTIO_MINIO_EXTERNAL_SERVICE` | `false` | - |
-| `DEPICTIO_MINIO_ROOT_USER` | `minio` | - |
-| `DEPICTIO_MINIO_ROOT_PASSWORD` | _(required, ≥8 chars)_ | MinIO root secret key. REQUIRED in server context — must not match a known-default value. |
-| `DEPICTIO_MINIO_BUCKET` | `depictio-bucket` | - |
-| `DEPICTIO_MINIO_VERIFY_TLS` | `true` | Verify TLS certificates when connecting to S3/MinIO. Set to `false` only for local dev with self-signed certificates. |
+| `DEPICTIO_S3_SERVICE_NAME` | `s3` | Host name of the store inside the Compose network (`minio` before v1.12.0, still an alias of the `s3` service) |
+| `DEPICTIO_S3_SERVICE_PORT` | `9000` | - |
+| `DEPICTIO_S3_EXTERNAL_HOST` | `localhost` | - |
+| `DEPICTIO_S3_EXTERNAL_PORT` | `9000` | - |
+| `DEPICTIO_S3_EXTERNAL_PROTOCOL` | `http` | - |
+| `DEPICTIO_S3_PUBLIC_URL` | - | Full endpoint URL of an external S3 |
+| `DEPICTIO_S3_EXTERNAL_SERVICE` | `false` | `true` when the store is outside the Docker Compose network |
+| `DEPICTIO_S3_ROOT_USER` | `minio` | S3 access key |
+| `DEPICTIO_S3_ROOT_PASSWORD` | _(required, ≥8 chars)_ | S3 secret key. REQUIRED in server context — must not match a known-default value. |
+| `DEPICTIO_S3_BUCKET` | `depictio-bucket` | - |
+| `DEPICTIO_S3_VERIFY_TLS` | `true` | Verify TLS certificates when connecting to S3. Set to `false` only for local dev with self-signed certificates. |
 
 ### Required S3 permissions
 
@@ -160,7 +174,7 @@ At startup the server checks that the configured bucket is usable. Since
 **v1.5.2** those checks are scoped to that single bucket: `HeadBucket`, then a
 put/delete round trip on a test object.
 
-A credential that can only reach `DEPICTIO_MINIO_BUCKET` is therefore enough,
+A credential that can only reach `DEPICTIO_S3_BUCKET` is therefore enough,
 which is useful on managed S3 where keys are issued per bucket rather than per
 account.
 
@@ -347,11 +361,16 @@ Performance and timeout settings that can be tuned per environment.
 | `DEPICTIO_PERFORMANCE_BROWSER_NAVIGATION_TIMEOUT` | `60000` | - |
 | `DEPICTIO_PERFORMANCE_BROWSER_PAGE_LOAD_TIMEOUT` | `90000` | - |
 | `DEPICTIO_PERFORMANCE_BROWSER_ELEMENT_TIMEOUT` | `30000` | - |
+| `DEPICTIO_PERFORMANCE_SCREENSHOTS_ENABLED` | `true` | Generate dashboard thumbnails with Playwright. `depictio local up` sets it to `false` unless `--screenshots` is passed |
+| `DEPICTIO_PERFORMANCE_SCREENSHOTS_DIR` | package's `api/static/screenshots` | Where thumbnails are written and served from. At startup, thumbnails of dashboards absent from the database are deleted from it |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_NAVIGATION_TIMEOUT` | `45000` | - |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_CONTENT_WAIT` | `15000` | - |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_STABILIZATION_WAIT` | `5000` | - |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_CAPTURE_TIMEOUT` | `90000` | - |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_API_TIMEOUT` | `300` | - |
+| `DEPICTIO_PERFORMANCE_SCREENSHOT_VIEWPORT_WIDTH` | `1440` | Width of the page a dashboard thumbnail is captured from, in CSS pixels (v1.11.2+) |
+| `DEPICTIO_PERFORMANCE_SCREENSHOT_VIEWPORT_HEIGHT` | `900` | Height of that page, in CSS pixels (v1.11.2+) |
+| `DEPICTIO_PERFORMANCE_SCREENSHOT_SCALE` | `2.0` | Pixel density of the capture, from `1.0` to `3.0`. Each capture also writes an `@2x` file for the hover preview (v1.11.2+) |
 | `DEPICTIO_PERFORMANCE_SERVICE_READINESS_RETRIES` | `5` | - |
 | `DEPICTIO_PERFORMANCE_SERVICE_READINESS_DELAY` | `3` | - |
 | `DEPICTIO_PERFORMANCE_SERVICE_READINESS_TIMEOUT` | `10` | - |
@@ -402,7 +421,7 @@ Backup and restore configuration settings.
 | `DEPICTIO_BACKUP_BACKUP_S3_REGION` | `us-east-1` | Backup S3 region |
 | `DEPICTIO_BACKUP_COMPRESS_LOCAL_BACKUPS` | `true` | Compress local S3 data backups |
 | `DEPICTIO_BACKUP_BACKUP_FILE_RETENTION_DAYS` | `30` | Days to retain backup files |
-| `DEPICTIO_BACKUP_MIGRATION_ALLOWED_S3_ENDPOINTS` | _(empty)_ | Comma-separated allowlist of external S3/MinIO endpoints permitted for project migration. Empty = only the deployment's own MinIO is allowed (SSRF guard). |
+| `DEPICTIO_BACKUP_MIGRATION_ALLOWED_S3_ENDPOINTS` | _(empty)_ | Comma-separated allowlist of external S3 endpoints permitted for project migration. Empty = only the deployment's own S3 store is allowed (SSRF guard). |
 
 ---
 
