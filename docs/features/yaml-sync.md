@@ -677,6 +677,30 @@ Heatmap `dict_kwargs` parameters:
 `compact`; `grid`; `box_plot`). The other twelve `secondary_layout` values compute their
 own block and ignore it — see the field table below.
 
+**Number format** — `format` sets how the value and its secondary print:
+
+| `format`     | Prints                                                                    |
+| ------------ | ------------------------------------------------------------------------- |
+| `percent`    | A 0 to 1 share as a percentage: `41%`, `4.7%` under 10%, `0.032%` under 1% |
+| `si`         | A large value with a suffix: `214k`, `3.7M`, `1.2G`                       |
+| `integer`    | A whole number with thousands separators                                  |
+| `decimals:N` | N decimals (0 to 6), kept as written so a row of values lines up          |
+
+`format` and `decimals` are exclusive, and `percent` is refused on a `count` or
+`nunique` card. Unset, a value keeps fewer decimals as it grows (`3,641`, `12.35`,
+`0.123`, `0.00032`). The same names apply to [text live values](#text-live-values).
+
+```yaml
+- tag: mapped-share
+  component_type: card
+  workflow_tag: python/samples_workflow
+  data_collection_tag: samples
+  aggregation: median
+  column_name: mapped_fraction
+  column_type: float64
+  format: percent
+```
+
 **Conditional aggregation** — pre-filter data before computing metrics:
 
 ```yaml

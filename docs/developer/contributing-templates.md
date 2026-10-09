@@ -339,6 +339,10 @@ main_dashboard:
   a `caption` naming that secondary.
 - The icon is the watermark on the right: never `icon_style: badge`, and no
   `title_color`, `title_font_size` or `value_font_size`.
+- A 0 to 1 share takes `format: percent` and a large count `format: si`, so a card
+  prints `41%` and `214k`, not `0.41` and `214,173`
+  ([number format](../features/yaml-sync.md)). A caption or description quotes the
+  same unit as the card.
 - A secondary with one value, a fraction printed as "of 1" or a ranking of long ids
   reads as a defect. RULES.md lists the fix for each.
 
@@ -369,6 +373,10 @@ main_dashboard:
   (controls on top). A sample correlation heatmap takes `w: 8`.
 - Axes carry words, not column names: `effect_label`, `significance_label`,
   `axis_prefix`, `labels:`.
+- A locus navigator on a non-model reference opens with `default_region: first`, the
+  whole first contig of the data, never a contig name from one run. A file track reads
+  its files only below its window (1 Mb for VCF), so the default region stays inside
+  it, or `file_window_size` grows.
 
 ### Heights
 
