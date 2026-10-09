@@ -148,6 +148,8 @@ depictio ingest results/ --update-config
 
 The template is detected from the run's own provenance, such as the pipeline name and version a Nextflow run records. Pass `--template <id>` to choose one, or `--project-config-path <project.yaml>` for a pipeline Depictio ships no template for.
 
+Without a template for the run's exact release, the CLI takes the highest shipped version that is not newer than the run, or the lowest one when the run predates them all. When that template was built for another major release of the pipeline, the CLI warns: outputs move between major releases, so data collections that find no files are skipped and the tabs built on them are dropped.
+
 Here the template is detected from nf-core/taxprofiler results, previewed with `--dry-run`, then ingested into the local server:
 
 <div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-detect.cast" data-poster="npt:0:51" data-idle-time-limit="2.5"></div>
