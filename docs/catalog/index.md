@@ -123,7 +123,7 @@ Either route produces the same three co-located files:
 <div class="module-flow__step module-flow__step--file" markdown>
 :material-identifier:{ .lg } **`module.yaml`**
 
-The tool's identity — `id`, display `name`, and a pointer to an upstream source (an nf-core module today; other catalogs later). Identity fields like homepage, bio.tools, and EDAM terms are derived from that source rather than duplicated.
+The tool's identity: `id`, display `name`, the `description` and `homepage` its catalog card shows, its `biotools_url` (`null` when bio.tools has no entry), and a pointer to an upstream source (an nf-core module today; other catalogs later). The identity is declared here, copied from the upstream metadata, never derived from it at runtime.
 </div>
 
 <div class="module-flow__step module-flow__step--module" markdown>

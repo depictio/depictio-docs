@@ -85,6 +85,11 @@ transform:
 
 The recipe Python code stays generic — path resolution happens via variable substitution in the YAML.
 
+When the variable changes what the recipe computes rather than where it reads (a grouping
+column, an identifier column, a cutoff), pass it under `transform.params` instead. Unset
+variables are dropped before the call, so the recipe falls back to its own default. See
+[Passing template parameters to a recipe](recipes.md#params).
+
 ---
 
 ## CLI Flags

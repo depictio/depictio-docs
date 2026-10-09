@@ -55,7 +55,7 @@ output file.
 
 | File | One per | Purpose |
 |------|---------|---------|
-| `module.yaml` | tool | Tool **identity** — `id`, `name`, `nf_core_url`. |
+| `module.yaml` | tool | Tool **identity**: `id`, `name`, `description`, `homepage`, `biotools_url`, `nf_core_url`. |
 | `<output>.yaml` | output | **`find`** the file, optional **`recipe`**, and the **`renders_as`** it offers. |
 | `<output>.tsv` | output | **Fixture** — a small sample, so CI previews & checks every render. |
 | `<output>.py` | output · optional | **Recipe** — only when the raw file needs reshaping. |
@@ -68,7 +68,7 @@ A real single-output tool (`depictio/catalog/ivar/`):
 
 ```
 ivar/
-├── module.yaml          # id: ivar, name: iVar, nf_core_url: …
+├── module.yaml          # id, name, description, homepage, biotools_url, nf_core_url
 ├── variants_long.yaml   # find + recipe + renders_as
 ├── variants_long.py     # recipe: reshape variants_long_table.csv
 └── variants_long.tsv    # fixture
@@ -76,19 +76,35 @@ ivar/
 
 ## Step 1 — `module.yaml` (identity)
 
-Keep it lightweight: homepage, bio.tools id and EDAM terms are derived from the
-nf-core `meta.yml` that `nf_core_url` points at — don't duplicate them. Declare
-an identity field here only to *override* a stale `meta.yml`.
+`module.yaml` declares the identity the tool's catalog card shows. Nothing reads
+the nf-core `meta.yml` at runtime: the catalog takes these fields from
+`module.yaml` alone, so copy them from `meta.yml` when you write the file.
 
 ```yaml
 id: ivar
 name: iVar
 nf_core_url: https://github.com/nf-core/modules/tree/master/modules/nf-core/ivar/variants
+biotools_url: https://bio.tools/andersen-lab_ivar # from nf-core meta.yml identifier
+description: >-
+  Functions for viral amplicon sequencing: primer trimming, variant calling
+  and consensus building.
+homepage: https://github.com/andersen-lab/ivar
 ```
 
-For a tool with no single nf-core module (e.g. QIIME 2), declare the full
-identity (`description`, `homepage`, `biotools_url`, `edam_topics`) here and set
-`nf_core_url` per output instead.
+| Field | Required | Where to take it from |
+|-------|----------|-----------------------|
+| `id`, `name` | yes | The folder name and the display label. |
+| `description` | yes | One or two sentences, usually the tool's `description` in `meta.yml`. |
+| `homepage` | yes | `homepage` in `meta.yml`; when it is empty, `tool_dev_url`, then `documentation`. |
+| `biotools_url` | yes, may be `null` | `https://bio.tools/<id>` from the `biotools:` identifier. Write `biotools_url: null` when bio.tools has no entry, so the gap is explicit rather than forgotten. |
+| `nf_core_url` | when an nf-core module exists | The module the outputs come from. CI checks it against the vendored nf-core index. |
+| `edam_topics` | no | Full EDAM URLs. |
+
+`depictio dev catalog validate` rejects a module with no `description` or
+`homepage`, and the catalog tests reject one that leaves `biotools_url` out.
+
+For a tool with no single nf-core module (e.g. QIIME 2), declare the same
+identity here and set `nf_core_url` per output instead.
 
 ## Step 2 — `<output>.yaml` (one per output file)
 
@@ -205,7 +221,7 @@ in your editor:
 
 Before submitting, check:
 
-- [ ] `module.yaml` has `id`, `name`, and (where applicable) `nf_core_url`.
+- [ ] `module.yaml` has `id`, `name`, `description`, `homepage`, `biotools_url` (or an explicit `null`), and (where applicable) `nf_core_url`.
 - [ ] Each `<output>.yaml` has a unique `id`, a `find`, and at least one `renders_as`.
 - [ ] On outputs that bind columns, set `recipe` **or** `columns` (declare one) — never both.
 - [ ] A fixture is committed for every output that binds columns, covering all bound columns.
