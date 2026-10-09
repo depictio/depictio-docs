@@ -137,6 +137,10 @@ A complete runnable example, pipeline included, is in
 [`depictio/cli/configs/nextflow/example/`](https://github.com/depictio/depictio/tree/main/depictio/cli/configs/nextflow/example).
 It needs no container and no bioinformatics tool.
 
+Here that example runs with the trigger installed by `--install`, its `nextflow.config` cut down to its manifest and the two parameters above:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-nextflow-trigger.cast" data-poster="npt:0:47" data-idle-time-limit="2.5"></div>
+
 <figure markdown="span">
   [![The dashboard imported by the example pipeline, eight cards each in a different secondary layout](../images/guides/nextflow-trigger/dashboard_cards.jpg)](../images/guides/nextflow-trigger/dashboard_cards.jpg){target=_blank}
   <figcaption>The dashboard the example pipeline imports, built from its own YAML rather than from a template.</figcaption>
