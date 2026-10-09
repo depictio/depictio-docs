@@ -277,11 +277,47 @@
          <lastmod>2026-10-09</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/demultiplex/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/differentialabundance/</loc>
          <lastmod>2026-10-09</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/eager/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/funcscan/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/genomeassembler/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/hic/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/mag/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/methylseq/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/mhcquant/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/nanoseq/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/riboseq/</loc>
          <lastmod>2026-10-09</lastmod>
     </url>
     <url>
@@ -290,6 +326,22 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/rnaseq/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/rnasplice/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/sarek/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/scrnaseq/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/smrnaseq/</loc>
          <lastmod>2026-10-09</lastmod>
     </url>
     <url>
@@ -361,6 +413,14 @@
          <lastmod>2026-10-09</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/demultiplex-1.8.0/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/demultiplex-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/differentialabundance-2.0.0/</loc>
          <lastmod>2026-10-09</lastmod>
     </url>
@@ -369,11 +429,75 @@
          <lastmod>2026-10-09</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/eager-2.4.5/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/eager-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/funcscan-4.0.0/</loc>
          <lastmod>2026-10-09</lastmod>
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/funcscan-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/genomeassembler-2.0.0/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/genomeassembler-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/hic-2.0.0/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/hic-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/mag-5.5.0/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/mag-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/methylseq-2.3.0/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/methylseq-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/mhcquant-3.2.0/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/mhcquant-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/nanoseq-3.0.0/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/nanoseq-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/riboseq-2.0.0/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/riboseq-latest/</loc>
          <lastmod>2026-10-09</lastmod>
     </url>
     <url>
@@ -390,6 +514,38 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/rnaseq-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/rnasplice-1.0.4/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/rnasplice-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/sarek-3.10.0/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/sarek-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/scrnaseq-4.2.0/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/scrnaseq-latest/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/smrnaseq-2.4.1/</loc>
+         <lastmod>2026-10-09</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.13.0/pipeline-templates/nf-core/_generated/smrnaseq-latest/</loc>
          <lastmod>2026-10-09</lastmod>
     </url>
     <url>
