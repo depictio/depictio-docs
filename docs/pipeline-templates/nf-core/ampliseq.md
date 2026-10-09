@@ -147,7 +147,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     *Amplicon communities, from reads to the taxa that differ between groups.*
 
-    <!-- screenshot pending v2 -->
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/ampliseq/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/ampliseq/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     A short hero links the run parameters. *About this dashboard* says how to move
     through the tabs, *The run* lists the samples, primers, reference taxonomy and
@@ -174,9 +176,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     **Data & QC** · *Did sequencing and primer trimming work for every sample?*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     MultiQC panels only: general statistics, Cutadapt filtered reads, FastQC
     sequence counts and quality histograms open, the other FastQC and Cutadapt
@@ -196,9 +198,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     **Diversity** · *How diverse is each sample, and was it sequenced deeply enough?*
 
-    [![Alpha Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Alpha Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Alpha Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Alpha Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The median **Shannon** diversity and **Faith PD** with their spread,
     **Observed ASVs** with their distribution and **Evenness** on a 0 to 1 gauge.
@@ -221,9 +223,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     **Diversity** · *Which samples have similar communities?*
 
-    [![Ordination & Clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Ordination & Clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Ordination & Clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Ordination & Clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The samples placed by the PCoA, split by group, and, when the run tested a
     PERMANOVA formula, the share of variation the group explains. Then the PCoA on
@@ -245,9 +247,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     **Taxa** · *Which taxa make up the samples, and which do groups share?*
 
-    [![Community & Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Community & Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Community & Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Community & Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Distinct phyla, classes, orders and families, each split or ranked. Then the
     phylum composition per group and per sample (the eight largest phyla and
@@ -271,9 +273,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     **Taxa** · *Which taxa differ in abundance between groups?*
 
-    [![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Pick a contrast first. The taxa tested, those significant at 5% FDR, and the
     enriched and depleted calls, each split by contrast. Then the volcano, whose
@@ -296,9 +298,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     **Taxa** · *How are the ASVs related, and how deeply are they classified?*
 
-    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The ASVs, the share classified to genus, the median classifier confidence and
     the distinct genera. The tree opens on its summary, the eight largest phyla

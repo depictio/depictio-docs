@@ -30,20 +30,17 @@ hide:
 </div>
 
 The nanoseq template follows a Nanopore RNA-seq run from the basecalled reads to
-the differential results, one tab per step:
+the genes and isoforms that differ between conditions:
 
-- :material-chart-box-outline: **MultiQC**: FastQC and the samtools flagstat and idxstats panels, as the report shows them
-- :material-waves: **Reads and read length**: NanoStat's length and quality readings per library, the Nx ladder and the yield above each quality floor
-- :material-chart-bar: **Alignment and coverage**: what minimap2 placed, per-base identity, coverage depth and the indel spectrum
-- :material-dna: **Quantification and sample structure**: what Bambu counted, and whether the libraries group by condition or by preparation
-- :material-chart-scatter-plot: **Gene expression (DESeq2)**: the genes that moved in the run's contrast
-- :material-chart-timeline-variant: **Isoform usage and expression**: the transcripts whose share of their gene shifted, and isoform-level counts
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: FastQC and samtools panels from the reprocessed MultiQC report, NanoStat's length and quality per library with the Nx and quality ladders, and what minimap2 placed with its identity, depth and indel spectrum
+- :material-dna: **Expression**: what Bambu counted and whether the libraries group by condition or by preparation, the genes DESeq2 calls between the conditions, and the transcripts DEXSeq finds shifting their share of their gene
 
-A `Run at a glance` strip (libraries by condition, reads basecalled, gigabases
-sequenced, read length N50), the collapsed `Sample sheet` and the `Sample
-filters` (sample, condition, library preparation) are pinned to every tab, and
-the template's links carry a pick to NanoStat, the samtools distributions, the
-melted Bambu counts and the MultiQC panels alike.
+The persistent `Sample filters` (condition, library, library preparation,
+flow-cell run, source replicate) sit in the left panel, and the template's links
+carry a pick to NanoStat, the samtools distributions, the melted Bambu counts and
+the MultiQC panels alike. The DESeq2 and DEXSeq results carry no sample column,
+so the filters do not narrow them.
 
 !!! warning "nanoseq 3.0.0 writes no MultiQC parquet"
     The release ships MultiQC 1.11, which writes `multiqc_data.json` only, and
@@ -132,165 +129,245 @@ the `ENSG` or `ENST` id and promote the biotype to its own filterable column.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Six tabs, read as a funnel: what the report says, how long and how good the
-reads are, how they aligned, what Bambu counted and whether the libraries group
-by condition, which genes moved, and which transcripts changed their share of
-their gene. Each tab below carries the **same icon and colour the dashboard
-gives it**.
+One dashboard: the **Overview**, then six child tabs in two groups, read as a
+funnel from the raw reads to the genes and isoforms that differ between
+conditions. Each tab below carries the **same icon and colour the dashboard gives
+it**, so the page and the app read alike.
 
-=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Reads, Alignment |
+| Expression | Quantification, Gene expression, Isoform usage |
 
-    *Did every library sequence and align the way the report expects?*
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The persistent *Sample
+filters* (condition, library, then the library preparation, flow-cell run and
+source replicate) sit in the left panel and narrow every tab with a sample column
+through the sample hub. DESeq2 and DEXSeq compare the conditions once over the
+whole run: their result tables carry no sample column, so the sample filters do
+not narrow the Gene expression tab or the DEXSeq tiles of Isoform usage. The
+*Sample sheet*, the library design table, is pinned, collapsed, to the bottom of
+every child tab.
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/nanoseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+=== ":material-compass-outline: Overview"
 
-    The general statistics table, the FastQC panels and samtools' flagstat and
-    idxstats, as MultiQC reports them. The panels a data-collection tile already
-    draws are left out: the NanoStat summary and quality ladder live on the Reads
-    tab, and the samtools summary block on the Alignment tab. A tab-local
-    `Run scope` narrows by flow-cell run and source replicate.
+    *Nanopore long reads, from QC to the genes and isoforms that differ.*
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/nanoseq/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/nanoseq/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A short hero links the run's provenance: nanoseq writes no `params.json`, so
+    the dialog holds the software versions. *About this dashboard* says how the two
+    filter levels work, *The run* lists facts read from the data (libraries,
+    conditions, library preparations, reads), and *Pipeline* walks the five steps
+    from QC to isoforms, each linked to the version of its tool and its tab. The
+    findings are live values: they follow the filters. The DESeq2 row counts one
+    call per tested annotation entry, as the key figure and the volcano do; the
+    Gene expression tab counts the distinct genes.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample`, `Condition` and `Library preparation` on the
-        sample hub, persistent and pinned to the top of every tab, plus
-        `Flow-cell run` and `Source replicate` in the tab-local *Run scope*.
+        **Filters** · the left panel starts collapsed. *Key figures* and
+        *Findings* each have their own filter bar (the condition and the
+        library): each narrows its own section only.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards, pinned to every tab |
-        | Sample sheet | *Sample hub*, collapsed and pinned to every tab |
-        | General statistics | *General statistics* |
-        | Read QC (FastQC) | 8 MultiQC panels |
-        | Alignment (samtools) | 4 MultiQC panels |
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: libraries by condition, read length N50, reads placed, DESeq2 calls up and down |
+        | Findings | Live result rows, then 4 figures: length against quality per library, the library PCA, the DESeq2 volcano and the DEXSeq volcano |
+        | How to read this dashboard | The tabs by group, each with its question |
 
-=== ":material-waves:{ .mc-cyan } Reads and read length"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *How long and how good are the reads each library delivered?*
+    **Data & QC** · *Did every library sequence and align as expected?*
 
-    [![Reads and read length dashboard](../../images/pipeline-templates/nf-core/nanoseq/reads_and_read_length_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/reads_and_read_length_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/nanoseq/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    NanoStat's length readings open the tab, then a length against quality
-    scatter with one point per library and a linked **Library record** beside
-    it, which folds to a slim rail until a library is picked. The Nx ladder,
-    recomputed from the samtools read-length histogram with N50 marked, shows
-    what a single N50 bar hides. The quality ladder follows: the Q10 cards and
-    the yield above each Phred cutoff, one curve per library.
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/nanoseq/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    MultiQC panels only, from the reprocessed report. Open: general statistics,
+    FastQC sequence counts and quality histograms, samtools flagstat and the
+    mapped reads per contig. The other FastQC panels, then the samtools
+    percentages and XY counts, are collapsed. The NanoStat panels are left out:
+    the Reads tab draws the NanoStat summary and its quality ladder from the data,
+    and the Alignment tab the samtools summary.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Library`, read from the MultiQC report.
+
+        | Section | What it holds |
+        |---|---|
+        | QC overview | 5 MultiQC panels |
+        | FastQC details (collapsed) | 6 MultiQC panels |
+        | samtools details (collapsed) | 2 MultiQC panels |
+
+=== ":material-waves:{ .mc-cyan } Reads"
+
+    **Data & QC** · *How long and how good are the reads of each library?*
+
+    [![Reads dashboard](../../images/pipeline-templates/nf-core/nanoseq/reads_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/reads_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Reads dashboard](../../images/pipeline-templates/nf-core/nanoseq/reads_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/reads_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    NanoPlot's summary of each library's raw reads. The reads basecalled, the
+    median read length N50, the median mean read quality (libraries against Q10,
+    failing under Q7) and the median share of reads at Q10 or above. Then mean
+    read length against mean quality, one point per library sized by its yield
+    (nanoseq publishes no per-read table), with the record of the clicked library
+    beside it. The two ladders sit side by side: the Nx ladder recomputed from the
+    samtools read-length histogram, N50 marked, and the share of reads above each
+    Phred floor, Q10 marked. The NanoStat and per-floor tables are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · a `Mean read quality at least` floor and a `Read length
-        N50` range on the NanoStat summary, in the tab-local *Read QC scope*.
+        N50` range on `nanostats`.
 
         | Section | What it holds |
         |---|---|
-        | Read length | 4 cards, *Length against quality*, *Library record*, *Nx ladder per library*, *Aligned read length distribution per library* |
-        | Quality ladder | 4 cards, *Yield above each quality cutoff* |
-        | Run dynamics (pycoQC) | a note: yield over time and the channel map need a `sequencing_summary.txt` |
-        | Read QC tables | *NanoStat summary*, *Yield per cutoff*, collapsed |
+        | Reads at a glance | 4 cards |
+        | Length and quality | 2 advanced visualizations: length against quality and the *Library record* |
+        | Ladders | 2 advanced visualizations: the Nx ladder and the reads above each quality floor |
+        | Read tables (collapsed) | *NanoStat summary*, *Yield per quality floor* |
 
-=== ":material-chart-bar:{ .mc-indigo } Alignment and coverage"
+=== ":material-chart-bar:{ .mc-indigo } Alignment"
 
-    *What did minimap2 place, and how evenly does it cover the reference?*
+    **Data & QC** · *How much of each library aligned, and how accurately?*
 
-    [![Alignment and coverage dashboard](../../images/pipeline-templates/nf-core/nanoseq/alignment_and_coverage_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/alignment_and_coverage_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Alignment dashboard](../../images/pipeline-templates/nf-core/nanoseq/alignment_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/alignment_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    The placement rate, per-base identity, mapped reads and supplementary
-    alignments come from the `samtools stats` summary block. The coverage depth
-    histogram and the indel length spectrum, with insertions and deletions as
-    separate curves, show the error mode behind the identity number. Both curves
-    select on the library, so a pick narrows the rest of the tab.
+    [![Alignment dashboard](../../images/pipeline-templates/nf-core/nanoseq/alignment_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/alignment_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    minimap2 alignments as `samtools stats` reads them, one summary per library.
+    The median share of reads placed, the median per-base identity (100 minus the
+    mismatch rate per aligned base), the reads mapped and the supplementary
+    alignments, the long-read signal of chimeras. Then the coverage depth
+    distribution, one curve per library, and the indel length spectrum beside the
+    aligned read lengths. The indel spectrum has no legend, as two curves per
+    library pass eight entries: hover a curve for its name. The distributions
+    table is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · a `Library` picker on the samtools distributions, in the
-        tab-local *Alignment scope*.
+        **Filters** · a `Library` picker on `samtools_stats_sections`.
 
         | Section | What it holds |
         |---|---|
-        | Mapping at a glance | 4 cards |
-        | Coverage and indels | *Coverage depth distribution*, *Indel length spectrum* |
-        | Alignment tables | *Alignment distributions*, collapsed |
+        | Alignment at a glance | 4 cards |
+        | Coverage | 1 advanced visualization |
+        | Indels and read lengths | 2 advanced visualizations: the indel length spectrum and the aligned read lengths |
+        | Alignment table (collapsed) | *Alignment distributions* |
 
-=== ":material-dna:{ .mc-violet } Quantification and sample structure"
+=== ":material-dna:{ .mc-violet } Quantification"
 
-    *Do the libraries group by condition, or by how they were prepared?*
+    **Expression** · *Do the libraries group by condition, or by preparation?*
 
-    [![Quantification and sample structure dashboard](../../images/pipeline-templates/nf-core/nanoseq/quantification_and_sample_structure_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/quantification_and_sample_structure_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Quantification dashboard](../../images/pipeline-templates/nf-core/nanoseq/quantification_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/quantification_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Library size, genes detected, protein-coding share and top-50 gene share say
-    what Bambu assigned per library. The structure section sets the libraries by
-    preparation and by flow-cell run next to a PCA on log CPM, a depth against
-    complexity scatter and a Spearman correlation heatmap, so a batch effect
-    reads before any differential result. The gene counts close the tab with the
-    per-library log-CPM distribution and the 100 most variable genes as a
-    row-standardised heatmap.
+    [![Quantification dashboard](../../images/pipeline-templates/nf-core/nanoseq/quantification_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/quantification_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Bambu's counts per library. The reads assigned by condition, the median genes
+    detected, the median protein-coding share and the median share of the 50 top
+    genes. Then the PCA on log CPM over the 500 most variable genes and the
+    Spearman correlation heatmap, full width with library ids on both axes. The
+    libraries should group by condition; a split by preparation or flow-cell run
+    is a confounder. Collapsed: the 100 most variable genes, row-standardised;
+    depth against complexity, the libraries by preparation and by flow-cell run
+    and the gene expression per library; then the tables.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Gene biotype` and a `log2(CPM + 1)` range on the melted
-        gene counts, in the tab-local *Feature scope*.
+        **Filters** · `Gene biotype` and a `log2(CPM + 1)` range on
+        `bambu_counts_gene_long`; the biotype also narrows the variable-gene
+        heatmap.
 
         | Section | What it holds |
         |---|---|
-        | Library composition | 4 cards |
-        | Sample structure | 2 cards, *Sample PCA on log-CPM gene expression*, *Depth against complexity*, *Sample correlation* |
-        | Gene counts | 4 cards, *Expression distribution per library*, *The 100 most variable genes* |
-        | Quantification tables | *Per-library readings*, *Correlation matrix*, *Gene counts per sample*, collapsed |
+        | Libraries at a glance | 4 cards |
+        | Sample structure | 1 advanced visualization (PCA) |
+        | Sample correlation | 1 advanced visualization (heatmap) |
+        | Most variable genes (collapsed) | 1 advanced visualization (heatmap) |
+        | Libraries and counts (collapsed) | 1 advanced visualization (depth against complexity), 2 cards, *Gene expression per library* |
+        | Quantification tables (collapsed) | *Per-library readings*, *Correlation matrix*, *Gene counts per library* |
 
-=== ":material-chart-scatter-plot:{ .mc-grape } Gene expression (DESeq2)"
+=== ":material-scale-balance:{ .mc-grape } Gene expression"
 
-    *Which genes moved between the two conditions?*
+    **Expression** · *Which genes differ between the two conditions?*
 
-    [![Gene expression (DESeq2) dashboard](../../images/pipeline-templates/nf-core/nanoseq/gene_expression_deseq2_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/gene_expression_deseq2_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Gene expression dashboard](../../images/pipeline-templates/nf-core/nanoseq/gene_expression_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/gene_expression_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    DESeq2 on Bambu's gene counts: direction counts, effect size, genes tested
-    and the strongest adjusted p-value, then one tile with three views switched
-    from its header (volcano, MA, QQ) and the twenty largest effects. DESeq2
-    collapses the run into one comparison, so these collections carry no sample
-    column and the sample picker does not narrow them; the per-library counts
-    are on the Quantification tab.
+    [![Gene expression dashboard](../../images/pipeline-templates/nf-core/nanoseq/gene_expression_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/gene_expression_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    DESeq2 on Bambu's gene counts, once over the whole run, so the sample filters
+    do not narrow this tab. The significant genes, ranked up and down, the median
+    log2 fold change of the up calls and of the down calls, each on its own card
+    so neither cancels the other, and the strongest significance against the 5%
+    FDR. Then one tile with three views of the same rows, switched from its View
+    control: the volcano, an MA plot from the mean expression and a QQ plot of the
+    raw p-values, without point labels (the labels are Ensembl ids). The twenty
+    largest fold changes follow, signed. The 200 best-measured rows are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `Adjusted p-value`, `log2 fold change` and `log2 mean
-        expression` ranges, plus `Direction` and `Gene biotype`, all on the
-        DESeq2 results, in the tab-local *DE scope*.
+        expression` ranges and `Gene biotype`, all on `deseq2_results`. There is
+        no direction filter: it would empty one of the two direction cards.
 
         | Section | What it holds |
         |---|---|
-        | Differential expression | 4 cards, *Volcano, MA and QQ*, *Largest effect sizes in the contrast* |
-        | DESeq2 tables | *Best-measured DESeq2 rows*, collapsed |
+        | Calls at a glance | 4 cards |
+        | Volcano | 1 advanced visualization with volcano, MA and QQ views |
+        | Largest effects | 1 advanced visualization |
+        | Best-measured genes (collapsed) | *Best-measured DESeq2 rows* |
 
-=== ":material-chart-timeline-variant:{ .mc-pink } Isoform usage and expression"
+=== ":material-chart-timeline-variant:{ .mc-pink } Isoform usage"
 
-    *Which transcripts changed their share of their gene?*
+    **Expression** · *Which transcripts change their share of their gene?*
 
-    [![Isoform usage and expression dashboard](../../images/pipeline-templates/nf-core/nanoseq/isoform_usage_and_expression_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/isoform_usage_and_expression_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Isoform usage dashboard](../../images/pipeline-templates/nf-core/nanoseq/isoform_usage_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/isoform_usage_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    DEXSeq first: whether a transcript is used more or less relative to its
-    siblings, with its volcano and the per-library transcript shares of the top
-    genes, recomputed from Bambu's transcript counts. Isoform expression follows
-    from the melted transcript matrix. The isoform lane view reads
-    `bambu/extended_annotations.gtf` and stays empty on a quantification-only
-    run; nanoseq publishes no splice-junction table, so there is no sashimi view.
+    [![Isoform usage dashboard](../../images/pipeline-templates/nf-core/nanoseq/isoform_usage_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/nanoseq/isoform_usage_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    DEXSeq on Bambu's transcript counts: whether a transcript is used more or less
+    relative to its gene's other transcripts, once over the whole run. The
+    transcripts tested against a 5% gene-level q-value, the median usage gain and
+    the median usage loss, each on its own card, and the reads on isoforms by
+    condition. Then the change in usage against the gene-level q-value, with a QQ
+    view and no MA view (DEXSeq writes no mean intensity), and the per-library
+    transcript shares of the top DEXSeq genes, each bar summing to 100% of its
+    gene's reads. The transcript expression per library, the isoform structures
+    and the tables are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Gene biotype` and a `log2(CPM + 1)` range on the melted
-        transcript counts, in the tab-local *Isoform scope*.
+        **Filters** · `Gene biotype` and a `log2(CPM + 1)` range on
+        `bambu_counts_transcript_long`.
 
         | Section | What it holds |
         |---|---|
-        | Transcript usage (DEXSeq) | 4 cards, *Volcano: differential transcript usage*, *Transcript usage per library, top DEXSeq genes* |
-        | Isoform expression | 4 cards, *Isoform expression distribution per library* |
-        | Isoform structures | *Isoform structures of one gene* |
-        | Isoform tables | *DEXSeq usage results*, *Transcript counts per sample*, collapsed |
+        | Usage at a glance | 4 cards |
+        | Usage volcano | 1 advanced visualization with volcano and QQ views |
+        | Usage per library | *Transcript usage per library, top DEXSeq genes* |
+        | Isoform expression (collapsed) | *Transcript expression per library* |
+        | Isoform structures (collapsed) | 1 advanced visualization |
+        | Isoform tables (collapsed) | *DEXSeq usage results*, *Transcript counts per library* |
 
-Every per-library plot and table selects on the sample column, which the sample
-hub links to every sample-keyed collection, so a pick on one panel narrows the
-rest of the tab. The long gene and transcript count tables and the DESeq2 table
-do not select: their feature ids link to nothing else on their tab.
+    !!! info "The isoform structures need Bambu's extended annotation"
+        The isoform lane view reads `bambu/extended_annotations.gtf`, which a
+        quantification-only run does not write; without it the view is dropped.
+        nanoseq publishes no splice-junction table, so there is no sashimi view.
+
+Every per-library plot (length against quality, the ladders, the coverage, indel
+and read-length curves, the PCA, depth against complexity) and every per-library
+table selects on the library, which the sample hub links to every sample-keyed
+collection, so a pick narrows the rest of the tab. The length against quality
+scatter drives the library record card, which waits for a pick. The DEXSeq usage
+table selects on `feature_id`, which narrows the other tiles of `dexseq_results`.
+The gene and transcript count tables and the DESeq2 table do not select: their
+feature ids link to no other collection.
 
 ---
 
@@ -316,7 +393,7 @@ depictio ingest results/ --template nf-core/nanoseq/latest
 ```
 
 DESeq2 and DEXSeq need at least two conditions in the samplesheet; a run with
-one condition simply leaves the last two tabs empty. See
+one condition leaves the Gene expression and Isoform usage tabs empty. See
 [nf-co.re/nanoseq/usage](https://nf-co.re/nanoseq/3.0.0/docs/usage) for full
 pipeline documentation.
 
