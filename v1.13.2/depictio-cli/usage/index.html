@@ -6617,7 +6617,7 @@
 <td><code>--dry-run</code></td>
 <td><code>flag</code></td>
 <td><code>false</code></td>
-<td>Validate the project configuration locally and list the steps that would run, without contacting the server</td>
+<td>Validate the project configuration locally and list the steps that would run, without contacting the server. From v1.13.2 it also lists how many files each data collection would match</td>
 </tr>
 </tbody>
 </table>
@@ -6934,9 +6934,12 @@ from its own logs. See
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Validate the configuration without contacting the server</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Validate the configuration and preview the scan, without contacting the server</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/data/my_ampliseq_run<span class="w"> </span>--dry-run
 </code></pre></div>
+<p>From v1.13.2 the dry run prints a table of the files each data collection would match,
+counted by the scanner itself. A derived collection shows <code>n/a (no scan)</code>, and a
+collection that would match nothing is named in a warning.</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># DEBUG logs, carry on past a failed step, skip the server checks</span>
