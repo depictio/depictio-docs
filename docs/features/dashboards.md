@@ -24,6 +24,7 @@ Read-only mode for exploring data:
 - :material-filter: Use filter components to explore data
 - :material-download: Export data from tables (v0.6.0+)
 - :material-share-variant: Share dashboards with collaborators
+- :material-comment-text-multiple-outline: Discuss and annotate components (project editors and owners), see [Comments and Annotations](comments-annotations.md)
 - :material-lock: No accidental modifications
 
 ### :material-pencil: Editor Mode
