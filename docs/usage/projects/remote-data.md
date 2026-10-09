@@ -261,19 +261,28 @@ Everything the project reads must be in the run folder: a template variable
 that points elsewhere, even a URL, is refused. The CLI has no such limit.
 
 **Source.** Type or paste the **Run folder**, or **Browse** to it. As soon as
-the folder is read, a card compares the run with the template Depictio would
-read it with:
+the folder is read, Depictio recognises the pipeline from the run's records (a
+Nextflow run's `pipeline_info/` versions file, or, for an older DSL1 nf-core
+run, its `pipeline_info/software_versions.csv`) and runs the preview on its
+own. A **Checks** card then compares the run with the template, one line each:
 
-| Row | **This run** | **Depictio template** |
-|-----|--------------|-----------------------|
-| **Pipeline** | What the run's records name | The template's pipeline |
-| **Version** | The pipeline version that made the run | The version the template was written for |
-| **Engine** | The workflow engine, such as Nextflow | The template's engine |
+| Check | What it says |
+|-------|--------------|
+| **Pipeline** | The pipeline the run's records name, and the template that reads it |
+| **Version** | The pipeline version that made the run, next to the version the template was written for (one value when both agree) |
+| **Engine** | The workflow engine and its version, such as Nextflow |
+| **Tasks** | How the run's tasks ended (completed, failed, cached), read from its execution trace; opens onto the trace file |
+| **Folder** | One run or several, of one pipeline version, and whether the folder was listed in full; opens onto the runs found |
+| **Input files** | The files the template is pointed at, such as the samplesheet: found, not found or not set |
+| **Collections** | What the template finds in the folder; opens onto every data collection, as in the Preview step |
 
-A verdict follows: **Exact match**, **Closest available version** (no template
-exists for the run's version, the nearest one is used), **Different version**,
-**Different pipeline** or **No matching template**. **What this template finds
-here** unfolds the preview of every data collection from the card.
+Each line is marked **Passes**, **Differs**, **Needs a look**, **Fails**,
+**Optional, absent** or **Cannot be checked**. A verdict sums them up: **Exact
+match**, **Closest available version** (no template exists for the run's
+version, the nearest one is used), **Different version**, **Different
+pipeline** or **No matching template**. The answer is kept for two minutes per
+folder and template, so the folder browser and the Source step do not read the
+same folder twice.
 
 | Field | Content |
 |-------|---------|
@@ -288,20 +297,31 @@ that is neither public nor one the server is set up to read, opens the
 [**Private bucket**](#private-bucket-at-creation) section.
 
 **Preview.** A summary card counts the collections that are ready (*3 of 23
-collections ready*), then lists them in three groups:
+collections ready*) above the same **Checks**, then lists the collections in
+three groups:
 
 | Group | Meaning |
 |-------|---------|
 | **Not found** | Found nothing in this folder. The project can still be created: they stay empty until their files exist |
-| **Ready to ingest** | Found in the run folder and ingested when the project is created |
-| **Optional, not found** | The template can do without them; they are skipped |
+| **Found** | Found in the run folder and ingested when the project is created |
+| **Optional, not found** | The template can do without them; they are skipped. Folded |
 
-Each row shows its location relative to the run folder, what it looked for and
-found (or, for a table built by a recipe, the recipe and what each of its
-inputs found), and a badge: **Ready**, **Not found**, **No matching files**,
-**Optional, not found** or **Left out** (a template setting turns it off for
-this run). **Template settings** lists what the template resolved for this
-folder.
+Each line names the collection, where it **Looks in** (relative to the run
+folder, the real path on hover; for a search of the whole folder, the folder
+holding every file it found) and how much it found. A click opens what it
+looked for and found: the rule of a scan and the first files it matched, or,
+for a table built by a recipe, the recipe and what each of its inputs found.
+A collection is marked **Found**, **Not found**, **Its folder holds no
+matching file**, **Optional, not found** or **Left out** (a template setting
+turns it off for this run). **Template settings** lists what the template
+resolved for this folder.
+
+**File previews.** The eye beside a collection, an input file or any file
+found opens it onto its first rows, below its line: a table for a CSV, TSV or
+parquet file (the first 20 rows), the first lines of a text file, and in plain
+words why not for a report or a binary file. The server reads the start of
+the file only (64 KB, or a parquet file's schema and first rows), with the
+same checks as the preview.
 
 When no data collection matched anything, the preview says **Nothing to ingest
 in this folder** and the project cannot be created: a run folder set one level
@@ -333,11 +353,12 @@ private bucket's details are given.
   details were given). Folders that look like runs carry a **Run folder** badge.
   **Recent** keeps the last five folders chosen per source.
 - The path bar takes a typed path and suggests the folders below it.
-- Selecting a folder shows **The run and its template** (the same comparison and
-  preview as the Source step), **Why this is a run folder** (its
-  `pipeline_info` and MultiQC records, with a preview of the run's engine,
-  parameters, tools and report files), **Run folders below this one** with
-  **Find run folders here**, and its **Contents**.
+- Selecting a folder shows the same **Checks** as the Source step, **Why this
+  is a run folder** (its `pipeline_info` and MultiQC records, with a preview of
+  the run's engine, parameters, tools and report files), **Run folders below
+  this one** with **Find run folders here**, and its **Contents**. Every file
+  of the contents opens onto its first rows with the eye, as in the
+  [Preview](#from-a-run-folder).
 - **Select this folder** fills in the run folder. A folder that does not look
   like a run can still be selected.
 
@@ -353,7 +374,11 @@ listed.
 
 For an `s3://` run folder, the switch **This bucket needs credentials** opens
 the **Private bucket** section; it opens by itself when the server is refused
-access to the bucket.
+access to the bucket. The folder browser does the same: a bucket refused there
+shows the section under the path bar, and the tree opens on the folder once
+**Test connection** passes. The details belong to one bucket at a time: while they are
+given for one bucket, another bucket refused in the browser shows the switch
+closed, and turning it on replaces them.
 
 | Field | Content |
 |-------|---------|
@@ -571,6 +596,10 @@ A refused or failed read answers with `detail` and a `code`:
 | `s3_wrong_region` | 502 | The bucket answered from another region |
 | `s3_unreachable` | 502 | The storage could not be reached |
 | `s3_error` | 502 | Any other S3 error |
+
+In the run-folder flow and its folder browser, `s3_refused` and
+`s3_access_denied` open the [Private bucket](#private-bucket-at-creation)
+section, so the bucket's details can be given there.
 
 ### Project storage settings { #project-storage-settings }
 
