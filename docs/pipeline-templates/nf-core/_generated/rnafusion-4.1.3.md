@@ -93,7 +93,7 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 
 ### :material-directions-fork: Conditional routes
 
-Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (3 collections are unaffected by any variable — present on every run.)
+Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (2 collections are unaffected by any variable — present on every run.)
 
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 
@@ -104,6 +104,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><th class="dc"><code>multiqc_data</code></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_QC is set">−</td></tr>
 <tr><th class="dc"><code>samplesheet</code></th><td class="swap" title="re-sourced when SAMPLESHEET_FILE is set">⇄</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><th class="dc"><code>arriba_fusions</code></th><td></td><td class="minus" title="removed when SKIP_ARRIBA is set">−</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>arriba_fusion_links</code></th><td></td><td class="minus" title="removed when SKIP_ARRIBA is set">−</td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><th class="dc"><code>starfusion_fusions</code></th><td></td><td></td><td class="minus" title="removed when SKIP_STARFUSION is set">−</td><td></td><td></td><td></td><td></td></tr>
 <tr><th class="dc"><code>fusioncatcher_fusions</code></th><td></td><td></td><td></td><td class="minus" title="removed when SKIP_FUSIONCATCHER is set">−</td><td></td><td></td><td></td></tr>
 <tr><th class="dc"><code>fusioninspector_fusions</code></th><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_FUSIONINSPECTOR is set">−</td><td></td><td></td></tr>

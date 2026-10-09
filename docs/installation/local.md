@@ -61,6 +61,10 @@ The `[local]` extra adds the server's Python dependencies, about 1.6 GB
 installed, from prebuilt wheels on Python 3.11 to 3.14. The package carries the
 viewer, already built.
 
+The install with uv, then a first look at the `depictio` command:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-install.cast" data-poster="npt:0:28" data-idle-time-limit="2.5"></div>
+
 ??? info "From a clone of the repository"
     To run the code of a clone, install it in editable mode:
 
@@ -121,7 +125,7 @@ under `input/`, pass it explicitly.
 ```bash
 depictio ingest path/to/results \
   --template nf-core/rnaseq/latest \
-  --var SAMPLESHEET_FILE=samplesheet.csv
+  --var SAMPLESHEET_FILE=$PWD/samplesheet.csv
 ```
 
 If the ingestion fails, the command exits with an error and the server keeps
@@ -151,6 +155,10 @@ in the viewer (see
 | `depictio local down` | Stop every process. The data and the ports are kept for the next `up` |
 | `depictio local wipe` | Stop the server and delete all its data. The downloaded binaries are kept. `--yes` skips the prompt |
 | `depictio local export` | Stop the server and copy its data into a directory that Docker Compose runs, see [Move to Docker Compose](#move-to-docker-compose). Formerly `export-compose`, which still works |
+
+Here a first `up`, which downloads the services, then `status`, `open` and `down`:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-local.cast" data-poster="npt:0:18" data-idle-time-limit="2.5"></div>
 
 === "status"
 
