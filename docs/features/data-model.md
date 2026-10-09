@@ -79,6 +79,10 @@ collections the location and the schema of each aggregation live in a separate
 API joins them in as it serves the project, which is why `delta_location` and
 `last_aggregation` show up in API responses and nowhere in your YAML.
 
+Dashboards are versioned apart from their data, in a `dashboard_versions` collection:
+each entry is a copy of every tab of one dashboard, plus the Delta commit each of its
+data collections was at. See [Dashboard and data versions](versioning.md).
+
 ---
 
 ## Data collection types
@@ -98,6 +102,10 @@ without changing its type. See [Components](components.md#map-components).
 A `phylogeny` collection points at a `table` collection for its tip annotations rather
 than carrying them itself. See
 [Phylogeny DCs and their metadata table](../usage/projects/guide.md#example-phylogeny-dcs-and-their-metadata-table).
+
+Only `table` and `image` collections keep versions: every write to their Delta table is
+a commit that a dashboard can later be read against. See
+[Dashboard and data versions](versioning.md#what-can-be-pinned).
 
 An `indexed_file` collection has no rows and no Delta table at all. It exists for files
 too large or too dense to materialise as a table, such as a per-sample VCF or a coverage

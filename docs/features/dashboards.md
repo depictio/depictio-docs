@@ -558,6 +558,10 @@ Depictio automatically saves certain changes to prevent data loss. Understanding
 !!! tip "Saving Layout Changes"
 After repositioning or resizing components, use the **Save Layout** button in the dashboard toolbar to persist your layout changes.
 
+Every save, automatic or not, is also kept as a version of the dashboard, which can be
+previewed or restored from **Settings → History** in the editor. See
+[Dashboard and data versions](versioning.md).
+
 ---
 
 ## :material-clipboard-check-outline: Ingestion Report & Health
