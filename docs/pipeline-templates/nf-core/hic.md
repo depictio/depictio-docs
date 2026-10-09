@@ -30,19 +30,15 @@ hide:
 </div>
 
 The hic template follows an nf-core/hic run from read pairs to chromatin
-architecture, each tab reading the output built on the one before:
+architecture:
 
-- :material-chart-box-outline: **MultiQC**: FastQC and HiC-Pro mapping, pairing and valid-pair panels from the run's MultiQC report
-- :material-filter-variant: **Run QC**: every read pair followed to the long-range cis contacts a Hi-C library is built for
-- :material-chart-line: **Library shape**: how contact probability falls off with genomic distance, with its log-log slope
-- :material-grid: **Contact maps**: the contact triangle, the domain, insulation and compartment tracks on one genomic axis
-- :material-border-all-variant: **Domains and compartments**: TAD sizes and the A/B split genome-wide, the rows behind the tracks
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: FastQC and HiC-Pro panels from the regenerated MultiQC report, and every read pair followed to the valid contacts
+- :material-grid: **Contacts**: how contact probability falls off with distance, and the contact triangle with its domain, insulation and compartment tracks at one locus
+- :material-border-all-variant: **Architecture**: TAD domain sizes and the A/B compartment split, genome-wide
 
-A `Run at a glance` strip (pairs sequenced, valid-pair rate, cis share, the
-cis/trans/duplicate split), the `Sample filters` and a collapsed sample sheet are
-pinned to the top of every tab, so the question "is this library any good?" is
-answered wherever you land. A pick in the sample filter reaches the funnel, the
-matrix, every track and both distance curves through the project links.
+The persistent `Sample filters` sit in the left panel, and a pick there reaches the
+funnel, the matrix, every track and the P(s) curve through the project links.
 
 !!! warning "The MultiQC report must be regenerated"
     hic 2.0.0 ships MultiQC 1.13, which writes no parquet, and Depictio reads
@@ -57,8 +53,8 @@ matrix, every track and both distance curves through the project links.
     The HiC-Pro panels stay on the MultiQC tab, because that is the report a
     reader may already know. A MultiQC panel cannot be filtered or joined, so
     `hicpro/stats/<sample>/*` is also read directly into a funnel row per sample
-    and a weighted row per read-pair fate, which is what feeds the cards, the
-    Sankey and the pinned strip.
+    and a weighted row per read-pair fate, which is what the Valid pairs tab and
+    the Overview's key figures read.
 
 ---
 
@@ -96,8 +92,8 @@ matrix, every track and both distance curves through the project links.
 
 The template reads the validated samplesheet, the regenerated MultiQC report,
 HiC-Pro's statistics, the balanced `cooler dump` contacts and bins, the cooltools
-compartment and insulation outputs, and hicexplorer's distance-decay curve. 52 of
-its 54 tiles carry a `use:` catalog reference (`hicpro/*`, `cooler/*`,
+compartment and insulation outputs, and hicexplorer's distance-decay curve. 51 of
+its 53 tiles carry a `use:` catalog reference (`hicpro/*`, `cooler/*`,
 `cooltools/*`, `hicexplorer/*`, `multiqc/*`), so a tile says where its panel
 comes from.
 
@@ -117,140 +113,220 @@ comes from.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Five tabs, read as a funnel: is the report normal, where do the read pairs go,
-what kind of genome does the contact curve describe, what does one locus look
-like, and how do domains and compartments split the whole genome. Each tab below
-carries the **same icon and colour the dashboard gives it**. A picked row or
-point becomes a filter that follows the project links to the tiles it reaches.
+One dashboard: the **Overview**, then six child tabs in three groups, read as a
+funnel from the read pairs to the domains and compartments of the genome. Each tab
+below carries the **same icon and colour the dashboard gives it**, so the page and
+the app read alike.
+
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Valid pairs |
+| Contacts | Distance decay, Contact maps |
+| Architecture | Domains, Compartments |
+
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables follow, collapsed. The template has no group column:
+the sample hub carries the sample id and the FASTQ pairs merged into it, and every
+collection carries a sample column. The persistent *Sample filters* (the sample)
+sit in the left panel and narrow every tab through the project links. The *Sample
+sheet* is pinned, collapsed, to the bottom of every child tab.
+
+=== ":material-compass-outline: Overview"
+
+    *Chromatin conformation, from read pairs to domains and compartments.*
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/hic/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/hic/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A short hero links the run's provenance: hic 2.0.0 writes no `params.json`, so
+    the dialog holds the software versions. *About this dashboard* says how the two
+    filter levels work, *The run* lists facts read from the data (samples, read
+    pairs, unique valid pairs, map resolutions), and *Pipeline* walks the six steps
+    from mapping to compartments, each linked to the versions of its process and
+    its tab. The findings are live values: they follow the filters. Contact maps
+    has no figure here, because it is a browser on one region, not a summary.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · the left panel starts collapsed. *Key figures* and
+        *Findings* each have their own filter bar (the sample and a FASTQ-pairs
+        range): each narrows its own section only.
+
+        | Section | What it holds |
+        |---|---|
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: FASTQ pairs, valid-pair rate, decay slope, domain size |
+        | Findings | Live result rows, then 4 figures: the read-pair flow, the contact probability curve, the domain size per insulation window and the A and B bins per chromosome |
+        | How to read this dashboard | The tabs by group, each with its question |
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Check the reads and the HiC-Pro processing as the report shows them.*
+    **Data & QC** · *Did the reads map, pair and filter down to valid contacts?*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/hic/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/hic/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    The general statistics open the report, then FastQC on the merged reads and
-    HiC-Pro's signature panels: two-step mapping, read pairing, valid-pair
-    filtering (dangling ends, self circles, re-ligations dropped) and the cis/trans
-    split of what survives. There is no trimming module: HiC-Pro's own mapping
-    step does the trimming.
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/hic/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · `Sample` on the sample hub, persistent and pinned to the top
-        of every tab, plus a tab-local `Valid-pair rate` range that narrows the
-        pinned strip.
-
-        | Section | What it holds |
-        |---|---|
-        | Run at a glance | 4 cards: pairs sequenced, valid-pair rate, cis share, cis/trans/duplicates |
-        | Sample sheet | 1 card, *Sample hub* |
-        | MultiQC general statistics | *General statistics* |
-        | Read quality | 7 FastQC panels |
-        | HiC-Pro processing | 4 HiC-Pro panels |
-
-=== ":material-filter-variant:{ .mc-teal } Run QC"
-
-    *Follow every read pair to the long-range cis contacts.*
-
-    [![Run QC dashboard](../../images/pipeline-templates/nf-core/hic/run_qc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/run_qc_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    The Sankey follows HiC-Pro's three decisions, weighted by read pairs: does
-    the pair map uniquely at both ends, could a real ligation have joined its two
-    fragments, and is the surviving contact cis or trans. Losses peel off at the
-    step they stopped at, and the three levels reconcile exactly with the totals
-    HiC-Pro reports. The collapsed table pivots the same funnel to one row per
-    sample.
+    MultiQC panels only, from the regenerated report. Open: general statistics,
+    FastQC sequence counts and per-base quality, then HiC-Pro's read mapping, read
+    pairing, valid-pair filtering (dangling ends, self circles and re-ligations
+    dropped) and contact statistics. The other FastQC panels are collapsed. There
+    is no trimming module: HiC-Pro's mapping step trims.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Mapping fate` and `Contact fate` on the read-pair flow.
+        **Filters** · a `FASTQ pairs merged` range on the sample hub, which links
+        into the report.
 
         | Section | What it holds |
         |---|---|
-        | Funnel at a glance | 4 cards: low-quality rate, duplicate rate, mapping fates, unique valid pairs |
-        | Where the pairs go | *Read-pair fates* (Sankey), *Read-pair fates table* |
-        | The funnel in numbers | *Valid-pair funnel* (collapsed) |
+        | QC overview | 3 MultiQC panels |
+        | HiC-Pro processing | 4 MultiQC panels |
+        | Read details (collapsed) | 5 MultiQC panels |
 
-=== ":material-chart-line:{ .mc-cyan } Library shape"
+=== ":material-filter-variant:{ .mc-teal } Valid pairs"
 
-    *Read how contact probability decays with distance.*
+    **Data & QC** · *Where do the read pairs go, and how many become valid contacts?*
 
-    [![Library shape dashboard](../../images/pipeline-templates/nf-core/hic/library_shape_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/library_shape_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Valid pairs dashboard](../../images/pipeline-templates/nf-core/hic/valid_pairs_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/valid_pairs_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    P(s), the probability that two loci a distance s apart touch, is recomputed
-    per chromosome from the balanced contact dump, because nf-core/hic never runs
-    `cooltools expected-cis`. Its denominator counts every bin pair that could have
-    been observed, which keeps the tail from flattening. A derivative panel under
-    the curves draws the local log-log slope: near -1 is the usual interphase
-    range, and a bump or plateau points to trans contamination or a rearrangement.
+    [![Valid pairs dashboard](../../images/pipeline-templates/nf-core/hic/valid_pairs_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/valid_pairs_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    HiC-Pro's statistics as numbers: the read pairs processed, the median
+    valid-pair rate, the median duplicate rate and the read pairs by mapping
+    outcome. Then the read-pair flow, HiC-Pro's three decisions weighted by read
+    pairs: does the pair map uniquely at both ends, could a real ligation have
+    joined its fragments, and is the contact cis or trans. Each loss peels off into
+    a `Lost` lane at the step it stopped at. The read-pair fates and the funnel per
+    sample are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Chromosome` on the P(s) curve. Picking a curve narrows
-        the P(s) table and card to that chromosome.
+        **Filters** · `Mapping fate` and `Contact fate` on `pair_flow`, and a
+        `Valid-pair rate` range on `pair_stats`.
 
         | Section | What it holds |
         |---|---|
-        | Shape at a glance | 4 cards: log-log slope, trans share, long-range cis share and count |
-        | Contact probability | *Contact probability P(s) and its slope* |
-        | P(s) tables | *P(s) bins*, *Distance-decay table* (collapsed) |
+        | Pairs at a glance | 4 cards |
+        | Where the pairs go | 1 advanced visualization |
+        | Pair tables (collapsed) | *Read-pair fates*, *Valid-pair funnel* |
+
+=== ":material-chart-line:{ .mc-cyan } Distance decay"
+
+    **Contacts** · *How fast does contact frequency fall off with genomic distance?*
+
+    [![Distance decay dashboard](../../images/pipeline-templates/nf-core/hic/distance_decay_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/distance_decay_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Distance decay dashboard](../../images/pipeline-templates/nf-core/hic/distance_decay_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/distance_decay_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The median log-log slope, the valid pairs split into cis, trans and
+    duplicates, the median long-range share of cis contacts and the long-range cis
+    contacts. Then P(s), the probability that two loci a distance s apart touch,
+    one curve per chromosome plus the pooled curve, with its local slope in a panel
+    underneath. It is recomputed from the balanced contact dump, because
+    nf-core/hic never runs `cooltools expected-cis`, and its denominator counts
+    every bin pair that could have been observed, which keeps the tail from
+    flattening. A slope near -1 is the usual interphase range; a bump or a plateau
+    points to trans contamination or a rearrangement.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Chromosome` on `distance_profile`. Picking a curve narrows
+        the P(s) table to that chromosome.
+
+        | Section | What it holds |
+        |---|---|
+        | Decay at a glance | 4 cards |
+        | Contact probability | 1 advanced visualization |
+        | Curve tables (collapsed) | *P(s) bins*, *Distance-decay curve* |
 
 === ":material-grid:{ .mc-indigo } Contact maps"
 
-    *Examine one locus: domains, the contact triangle, insulation and compartments.*
+    **Contacts** · *What do the contacts, domains and compartments look like at one locus?*
 
-    [![Contact maps dashboard](../../images/pipeline-templates/nf-core/hic/contact_maps_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/contact_maps_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Contact maps dashboard](../../images/pipeline-templates/nf-core/hic/contact_maps_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/contact_maps_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Contact maps dashboard](../../images/pipeline-templates/nf-core/hic/contact_maps_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/contact_maps_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The locus tab stacks four collections on one `{GENOME}` axis. The TAD domain
-    track is the navigator: a brush or a typed locus emits a region that `region`
-    links carry to the contact triangle, the insulation score and the phased E1
-    compartment track below it. The triangle reads the finest dumped resolution
-    that fits the span, so zooming re-bins it; the cards read the region in view.
+    track is the navigator: a typed locus or a brush on its axis emits a region
+    that `region` links carry to the contact triangle, the insulation score and the
+    phased E1 compartment track below it. The triangle reads the finest dumped
+    resolution that fits the span, so zooming re-bins it. The four cards (median
+    balanced contact, insulation score, domains, A and B bins) are recounted on the
+    region in view.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `Domain window (bp)`, `Insulation window (bp)` and
-        `Compartment resolution (bp)` choose which calls the tracks draw. There is no chromosome
-        filter: the locus field is the section's chromosome.
+        `Compartment resolution (bp)` choose which calls the tracks draw. There is
+        no chromosome filter: the locus field is the tab's chromosome.
 
         | Section | What it holds |
         |---|---|
-        | Matrix at a glance | 4 cards on the region in view: balanced contacts, insulation, E1, A and B bins |
-        | Genome architecture | *TAD domains, the navigator*, *Contact triangle*, *Insulation score*, *A/B compartment track (E1)* |
+        | Region at a glance | 4 cards |
+        | One region, four tracks | 4 advanced visualizations: the TAD domain navigator, the contact triangle, the insulation score and the E1 track |
 
-=== ":material-border-all-variant:{ .mc-violet } Domains and compartments"
+=== ":material-border-all-variant:{ .mc-pink } Domains"
 
-    *Read TADs and compartments across the whole genome.*
+    **Architecture** · *How many TAD domains are there, and how large are they?*
 
-    [![Domains and compartments dashboard](../../images/pipeline-templates/nf-core/hic/domains_and_compartments_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/domains_and_compartments_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Domains dashboard](../../images/pipeline-templates/nf-core/hic/domains_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/domains_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    cooltools calls boundaries, not domains, and nf-core/hic 2.x emits no
-    interval list, so the domains are derived from runs of boundary bins, with
-    mostly unmappable spans dropped. E1 is phased per chromosome and resolution
-    against bin coverage, so the better-covered side is A and the call does not
-    flip between resolutions. Domain sizes per insulation window and the A and B
-    bins per chromosome sit above the collapsed tables.
+    [![Domains dashboard](../../images/pipeline-templates/nf-core/hic/domains_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/domains_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Genome-wide, no tracks. The median domain size, the domains called, the median
+    mappable share of a domain and the insulation bins split into boundaries and
+    the rest. Then the domain size per insulation window, one box per window.
+    cooltools calls boundaries, not domains, and nf-core/hic 2.x emits no interval
+    list, so the domains are derived from runs of boundary bins, and a domain that
+    is mostly unmappable is dropped. Each window calls its own set: pick one before
+    comparing counts.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Domain window (bp)`, `Insulation window (bp)`,
-        `Compartment resolution (bp)` and `Compartment`; no chromosome filter.
+        **Filters** · `Domain window (bp)` on `tad_domains` and `Insulation window
+        (bp)` on `tad_insulation`.
 
         | Section | What it holds |
         |---|---|
-        | Domains at a glance | 4 cards: domain size, domains called, mappable share, boundary bins |
-        | Compartments at a glance | 4 cards: A and B bins, E1 spread, eigenvalues 1 and 2 |
-        | Domain and compartment distributions | *Domain size by insulation window*, *A and B bins per chromosome* |
-        | Domain, insulation and compartment tables | 4 tables (collapsed) |
+        | Domains at a glance | 4 cards |
+        | Domain sizes | *Domain size by insulation window* |
+        | Domain tables (collapsed) | *TAD domains*, *Insulation bins* |
 
-Tables and point views select on their entity column: the pinned sample sheet
-on `sample_id`; the pair statistics, pair flow, P(s) and eigenvalue tables on
-`sample`; the P(s) curve on `chrom`, which narrows the P(s) table and card to
-the chromosome picked. A pick narrows the other tiles of its collection and
-follows the project links to the collections they reach. The domain, insulation
-and compartment tables do not select: their rows are bins and domains with no
-identifier column.
+=== ":material-scale-balance:{ .mc-violet } Compartments"
+
+    **Architecture** · *How does the genome split between the A and B compartments?*
+
+    [![Compartments dashboard](../../images/pipeline-templates/nf-core/hic/compartments_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/compartments_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Compartments dashboard](../../images/pipeline-templates/nf-core/hic/compartments_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/compartments_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Genome-wide, no tracks. The bins with an E1 sign split into A and B, the median
+    E1 (two humps when compartments are strong) and the first and second
+    eigenvalues. Then the A and B bins per chromosome. nf-core/hic passes no
+    phasing track, so E1 is oriented per chromosome and resolution to correlate
+    with bin coverage: the better-covered side is A, and the call does not flip
+    between resolutions. Pick one resolution before comparing.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Compartment resolution (bp)` and `Compartment` on
+        `compartment_eigenvector`.
+
+        | Section | What it holds |
+        |---|---|
+        | Compartments at a glance | 4 cards |
+        | A and B per chromosome | *A and B bins per chromosome* |
+        | Compartment tables (collapsed) | *Compartment bins*, *Compartment eigenvalues* |
+
+Tables select rows and the P(s) curve selects a chromosome: the sample sheet on
+`sample_id`; the pair fates, the funnel, the P(s) bins and the eigenvalue tables
+on `sample`; the P(s) curve on `chrom`. A pick narrows the other tiles of its
+collection and follows the project links to the collections they reach. The
+domain, insulation and compartment tables do not select: their rows are bins and
+domains with no identifier column.
 
 ---
 

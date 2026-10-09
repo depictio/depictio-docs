@@ -13,13 +13,13 @@ Templates for [nf-core](https://nf-co.re) pipelines. Each template configures a 
 | [variantbenchmarking](variantbenchmarking.md) | Variant caller benchmarking against truth sets | 1.4.0 |
 | [differentialabundance](differentialabundance.md) | DESeq2 differential expression | 2.0.0 |
 | [funcscan](funcscan.md) | Functional screening of assembled contigs | 4.0.0 |
-| [airrflow](airrflow.md) | B and T cell receptor repertoire (AIRR) | 5.1.0 |
+| [airrflow](airrflow.md) | B and T cell receptor repertoire (AIRR) | 5.1.0, 5.1.1 |
 | [rnafusion](rnafusion.md) | Gene-fusion detection from RNA-seq | 4.1.3 |
 | [rnaseq](rnaseq.md) | Bulk RNA-seq quantification | 3.26.0 |
 | [taxprofiler](taxprofiler.md) | Metagenomic taxonomic profiling | 2.0.1 |
 | [chipseq](chipseq.md) | Transcription-factor / histone ChIP-seq | 2.1.0 |
 | [atacseq](atacseq.md) | Chromatin accessibility (ATAC-seq) | 2.1.2 |
-| [cutandrun](cutandrun.md) | CUT&amp;RUN / CUT&amp;Tag chromatin profiling | 3.1 |
+| [cutandrun](cutandrun.md) | CUT&amp;RUN / CUT&amp;Tag chromatin profiling | 3.1, 3.2.2 |
 | [eager](eager.md) | Ancient DNA authentication and genotyping | 2.4.5 |
 | [hic](hic.md) | Chromosome conformation capture (Hi-C) | 2.0.0 |
 | [mag](mag.md) | Metagenome assembly and binning | 5.5.0 |
