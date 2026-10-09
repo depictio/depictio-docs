@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.13.0",
-    "x-generated-at": "2026-10-07T21:57:43Z",
-    "x-depictio-version": "v1.13.0"
+    "version": "1.14.1",
+    "x-generated-at": "2026-10-09T17:46:01Z",
+    "x-depictio-version": "v1.14.1"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -6063,7 +6063,7 @@
           "Dashboards"
         ],
         "summary": "Update Tab",
-        "description": "Update tab properties (title, icon, icon_color, main_tab_name).\n\nFor main tabs, you can also update main_tab_name.\nFor child tabs, you can update title, tab_icon, and tab_icon_color.\n\nArgs:\n    dashboard_id: The dashboard/tab ID to update\n    data: Dictionary with fields to update:\n        - title: New tab title (for child tabs or dashboard title for main tabs)\n        - tab_icon: Icon name (e.g., \"mdi:chart-bar\")\n        - tab_icon_color: Color for the icon\n        - main_tab_name: Custom name for the main tab (main tabs only)\n\nReturns:\n    Updated dashboard information",
+        "description": "Update tab properties (title, icon, icon_color, group, main_tab_name).\n\nFor main tabs, you can also update main_tab_name.\nFor child tabs, you can update title, tab_icon, tab_icon_color and tab_group.\n\nArgs:\n    dashboard_id: The dashboard/tab ID to update\n    data: Dictionary with fields to update:\n        - title: New tab title (for child tabs or dashboard title for main tabs)\n        - tab_icon: Icon name (e.g., \"mdi:chart-bar\")\n        - tab_icon_color: Color for the icon\n        - tab_group: Sidebar category name; null or blank ungroups the tab\n        - main_tab_name: Custom name for the main tab (main tabs only)\n        - show_guide: Offer the Guide page for the whole dashboard (main tabs only)\n        - guide_intro: Author note (markdown) atop the Guide (main tabs only)\n\nReturns:\n    Updated dashboard information",
         "operationId": "update_tab_depictio_api_v1_dashboards_tab__dashboard_id__patch",
         "security": [
           {
@@ -6378,7 +6378,7 @@
           "Dashboards"
         ],
         "summary": "Bulk Compute Cards",
-        "description": "Compute card values with interactive filters applied.\n\nCalled by the React viewer whenever the filter state changes. Dedupes\nDelta-table loads: multiple cards referencing the same (wf_id, dc_id, filter\nfingerprint) share one load. Returns a map keyed by component index.\n\nRequest body:\n    {\n        \"filters\": [\n            {\"index\": \"...\", \"value\": ..., \"column_name\": \"...\",\n             \"interactive_component_type\": \"MultiSelect\"},\n            ...\n        ],\n        \"component_ids\": [\"...\", ...]   # optional; defaults to all cards\n    }\n\nResponse:\n    {\n        \"values\": {\"<component_index>\": <scalar or null>, ...},\n        \"secondary_values\": {\n            \"<component_index>\": {\"<aggregation>\": <scalar or null>, ...},\n            ...\n        },\n        \"aggregations\": {\"<component_index>\": [\"<aggregation>\", ...], ...},\n        \"group_status\": {\"<component_index>\": [<group status>, ...], ...},\n        \"filter_applied\": bool,\n        \"filter_count\": int\n    }\n\n    ``secondary_values`` and ``aggregations`` are only populated for cards\n    that declare ``aggregations`` in YAML (multi-metrics card).\n\nNotes:\n    - Uses load_deltatable_lite with the same metadata format as Dash so\n      the filter semantics match the Dash viewer exactly.\n    - The Dash callback render_card_value_background in\n      card_component/callbacks/core.py remains the source of truth for the\n      edit path; this endpoint mirrors its math.",
+        "description": "Compute card values with interactive filters applied.\n\nCalled by the React viewer whenever the filter state changes. Dedupes\nDelta-table loads: multiple cards referencing the same (wf_id, dc_id, filter\nfingerprint) share one load. Returns a map keyed by component index.\n\nRequest body:\n    {\n        \"filters\": [\n            {\"index\": \"...\", \"value\": ..., \"column_name\": \"...\",\n             \"interactive_component_type\": \"MultiSelect\"},\n            ...\n        ],\n        \"component_ids\": [\"...\", ...]   # optional; defaults to all cards\n    }\n\nResponse:\n    {\n        \"values\": {\"<component_index>\": <scalar or null>, ...},\n        \"secondary_values\": {\n            \"<component_index>\": {\"<aggregation>\": <scalar or null>, ...},\n            ...\n        },\n        \"aggregations\": {\"<component_index>\": [\"<aggregation>\", ...], ...},\n        \"group_status\": {\"<component_index>\": [<group status>, ...], ...},\n        \"filter_applied\": bool,\n        \"filter_count\": int\n    }\n\n    ``secondary_values`` and ``aggregations`` are only populated for cards\n    that declare ``aggregations`` in YAML (multi-metrics card).\n\n    A text tile with live values (``values:``, or a ``{{param:KEY}}`` in its\n    title or body) is computed too, and answers under its own index with\n    one entry per value: ``values[\"<text index>\"] = {\"<name>\": <number,\n    string or null>, \"param:<KEY>\": <string or null>}``. Numbers are raw;\n    the viewer formats them.\n\nNotes:\n    - Uses load_deltatable_lite with the same metadata format as Dash so\n      the filter semantics match the Dash viewer exactly.\n    - The Dash callback render_card_value_background in\n      card_component/callbacks/core.py remains the source of truth for the\n      edit path; this endpoint mirrors its math.",
         "operationId": "bulk_compute_cards_depictio_api_v1_dashboards_bulk_compute_cards__dashboard_id__post",
         "security": [
           {
@@ -6437,7 +6437,7 @@
           "Dashboards"
         ],
         "summary": "Render Figure Endpoint",
-        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when the render is\nactually heavy — code mode, or a source frame at/above\n`offload_size_threshold_bytes` — or unconditionally if\n`offload_rendering` is forced on (see `should_offload_render`). Cheap\ninteractive figures build inline to skip the broker round-trip. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\", \"full_load\": bool,\n     \"groups\": [{name, column_name, values, color}], \"color_by_group\": bool,\n     \"color_by_column\": {\"column_name\": str, \"color_map\": {value: \"#rrggbb\"}},\n     \"grouping_display\": \"color\" | \"facet\",\n     \"include_other\": bool}\n\n``full_load`` (default False) bypasses the point-plot row cap so the client\ncan explicitly render every point on demand (slow on large datasets).\n\n``groups`` + ``color_by_group`` (optional) ask for the figure to be colored\nby the caller's selection groups (issue #89); ``color_by_column`` asks for\nthe dashboard-global color-by-a-real-column override instead (groups win\nwhen both are present). All sanitized here at the trust boundary, applied\nin ``build_figure_preview``.\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}\n\n``metadata.group_status`` (present whenever ``color_by_group`` was asked\nfor) is one entry per submitted group saying whether it reached this\nfigure's data collection — directly, through a declared project link, or\nnot at all, with the reason. See ``resolve_group_defs_for_dc``.",
+        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when the render is\nactually heavy — code mode, or a source frame at/above\n`offload_size_threshold_bytes` — or unconditionally if\n`offload_rendering` is forced on (see `should_offload_render`). Cheap\ninteractive figures build inline to skip the broker round-trip. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\", \"full_load\": bool,\n     \"groups\": [{name, column_name, values, color}], \"color_by_group\": bool,\n     \"color_by_column\": {\"column_name\": str, \"color_map\": {value: \"#rrggbb\"}},\n     \"grouping_display\": \"color\" | \"facet\",\n     \"include_other\": bool,\n     \"style\": {\"figure_style\": \"default\" | \"minimal\",\n               \"header_title\": bool, \"hide_legend\": bool}}\n\n``full_load`` (default False) bypasses the point-plot row cap so the client\ncan explicitly render every point on demand (slow on large datasets).\n\n``style`` (optional) overrides the figure's own look: a highlight drawing\nthis figure on another tab sends its own style and header. Without it the\nfigure's ``figure_style`` applies, else its grid section's (see\n``figure_style_payload``).\n\n``groups`` + ``color_by_group`` (optional) ask for the figure to be colored\nby the caller's selection groups (issue #89); ``color_by_column`` asks for\nthe dashboard-global color-by-a-real-column override instead (groups win\nwhen both are present). All sanitized here at the trust boundary, applied\nin ``build_figure_preview``.\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}\n\n``metadata.group_status`` (present whenever ``color_by_group`` was asked\nfor) is one entry per submitted group saying whether it reached this\nfigure's data collection — directly, through a declared project link, or\nnot at all, with the reason. See ``resolve_group_defs_for_dc``.",
         "operationId": "render_figure_endpoint_depictio_api_v1_dashboards_render_figure__dashboard_id___component_id__post",
         "security": [
           {
@@ -7097,7 +7097,7 @@
           "Dashboards"
         ],
         "summary": "Import Dashboard From Yaml",
-        "description": "Import a dashboard from YAML content.\n\nSupports both single dashboard and multi-tab dashboard formats:\n- Single: Standard YAML with title, components, etc.\n- Multi-tab: YAML with main_dashboard and tabs keys\n\nA new dashboard_id will be generated, and the current user will be set as owner.\n\nIf `overwrite=True`, the dashboard imported earlier from the same `source_key`\nis updated instead of creating a new one, whatever its title is now; without\none, a dashboard with the same title in the project is. Either kind of match\nis a 409 without `overwrite`.\n\n`existing` says what becomes of a dashboard so matched, over `overwrite`:\n- `replace`: as `overwrite=True`;\n- `keep`: it is left as it is, its layout and components as edited in the\n  viewer, and the response says `\"status\": \"kept\"` with its id. `main_title`\n  still renames a kept main dashboard, which changes nothing else. A kept\n  multi-tab main keeps its tabs as they are: a tab the YAML adds is not\n  imported. A dashboard with no match is created as usual.\nEvery response says what happened in `status`: `created`, `replaced` or `kept`.\n\nTitles: a dashboard takes the title in the YAML, unless\n- `keep_titles=True` and the import replaces an existing dashboard: that\n  dashboard keeps its current title, so a refresh does not undo a rename made\n  in the viewer. Applies to the main dashboard and to every tab;\n- `main_title` is given: the main dashboard (the multi-tab `main_dashboard`,\n  or a single dashboard that is not a child tab) is titled that, over the YAML\n  and over `keep_titles`. The tabs are not affected. A 400 on a child tab.\n\nA single-format child tab names its parent by title (`parent_dashboard_tag`).\n`parent_source_key`, the `source_key` the parent was imported under, finds\nthe parent first, so a parent renamed in the viewer keeps its tabs. Without a\nmatch by key or by title, a refreshed child tab stays under its current parent.\n\nProject identification:\n- If `project_id` is provided, uses that project directly (404 if it does not exist)\n- If `project_id` is not provided, extracts `project_tag` from YAML and\n  looks up the project by name\n\nArgs:\n    yaml_content: The YAML content defining the dashboard(s)\n    project_id: Optional project ID (if not provided, uses project_tag from YAML)\n    overwrite: If True, update the dashboard this one replaces (default: False)\n    source_key: Optional stable origin of the YAML (e.g.\n        \"nf-core/rnaseq:dashboards/base.yaml\"), stored on the dashboard so a\n        later import of the same source finds it after a rename\n    keep_titles: If True, a dashboard this import replaces keeps its current\n        title (default: False, the YAML's title)\n    main_title: Optional title for the main dashboard, over the YAML's and\n        over keep_titles\n    parent_source_key: Optional source_key of a child tab's parent dashboard\n    existing: Optional \"keep\" or \"replace\", for a dashboard the project\n        already has; without it, `overwrite` decides\n    current_user: The authenticated user (will be set as owner)\n\nReturns:\n    Created/updated dashboard information including dashboard_id",
+        "description": "Import a dashboard from YAML content.\n\nSupports both single dashboard and multi-tab dashboard formats:\n- Single: Standard YAML with title, components, etc.\n- Multi-tab: YAML with main_dashboard and tabs keys\n\nA new dashboard_id will be generated, and the current user will be set as owner.\n\nIf `overwrite=True`, the dashboard imported earlier from the same `source_key`\nis updated instead of creating a new one, whatever its title is now; without\none, a dashboard with the same title is, if it has no `source_key` yet (one\nkeyed to another source is left alone). A main dashboard is only matched\nwith a main one, and a tab with the tabs of its parent. Either kind of match\nis a 409 without `overwrite`.\n\n`existing` says what becomes of a dashboard so matched, over `overwrite`:\n- `replace`: as `overwrite=True`;\n- `keep`: it is left as it is, its layout and components as edited in the\n  viewer, and the response says `\"status\": \"kept\"` with its id. `main_title`\n  still renames a kept main dashboard, which changes nothing else. A kept\n  multi-tab main keeps the tabs it has as they are and gains those of the\n  YAML it lacks, after its last one; `tabs_added` says how many. A tab\n  removed in the viewer so comes back. A dashboard with no match is created\n  as usual.\nEvery response says what happened in `status`: `created`, `replaced` or `kept`.\n\nTitles: a dashboard takes the title in the YAML, unless\n- `keep_titles=True` and the import replaces an existing dashboard: that\n  dashboard keeps its current title, so a refresh does not undo a rename made\n  in the viewer. Applies to the main dashboard and to every tab;\n- `main_title` is given: the main dashboard (the multi-tab `main_dashboard`,\n  or a single dashboard that is not a child tab) is titled that, over the YAML\n  and over `keep_titles`. The tabs are not affected. A 400 on a child tab.\n\nA single-format child tab names its parent by title (`parent_dashboard_tag`).\n`parent_source_key`, the `source_key` the parent was imported under, finds\nthe parent first, so a parent renamed in the viewer keeps its tabs. Without a\nmatch by key or by title, the tab imported from the same `source_key` stays\nunder its current parent.\n\nProject identification:\n- If `project_id` is provided, uses that project directly (404 if it does not exist)\n- If `project_id` is not provided, extracts `project_tag` from YAML and\n  looks up the project by name\n\nArgs:\n    yaml_content: The YAML content defining the dashboard(s)\n    project_id: Optional project ID (if not provided, uses project_tag from YAML)\n    overwrite: If True, update the dashboard this one replaces (default: False)\n    source_key: Optional stable origin of the YAML (e.g.\n        \"nf-core/rnaseq:dashboards/base.yaml\"), stored on the dashboard so a\n        later import of the same source finds it after a rename\n    keep_titles: If True, a dashboard this import replaces keeps its current\n        title (default: False, the YAML's title)\n    main_title: Optional title for the main dashboard, over the YAML's and\n        over keep_titles\n    parent_source_key: Optional source_key of a child tab's parent dashboard\n    existing: Optional \"keep\" or \"replace\", for a dashboard the project\n        already has; without it, `overwrite` decides\n    current_user: The authenticated user (will be set as owner)\n\nReturns:\n    Created/updated dashboard information including dashboard_id",
         "operationId": "import_dashboard_from_yaml_depictio_api_v1_dashboards_import_yaml_post",
         "security": [
           {
@@ -8392,7 +8392,7 @@
           "Figure Builder"
         ],
         "summary": "Preview Figure",
-        "description": "Build a figure from the supplied builder metadata and return its JSON.\n\nDiffers from ``/dashboards/render_figure/{id}/{cid}`` in that the metadata\nis supplied directly, not looked up. Suitable for live preview during the\ncreate / edit flow.\n\nHeavy work (delta-table load + Plotly build) runs on a Celery worker by\ndefault — see `settings.celery.offload_preview`. The endpoint awaits the\ntask via a non-blocking poll loop so the FastAPI event loop stays free.\n\nRequest body::\n\n    {\n      \"metadata\": { ...full figure stored_metadata shape... },\n      \"filters\": [...] (optional),\n      \"theme\": \"light\" | \"dark\" (default \"light\"),\n      \"dashboard_id\": \"...\" (optional)\n    }\n\n``dashboard_id``, when supplied, pulls that dashboard's ``brand_theme``\ndefaults into the preview so it matches what the saved component will\nrender (#397).",
+        "description": "Build a figure from the supplied builder metadata and return its JSON.\n\nDiffers from ``/dashboards/render_figure/{id}/{cid}`` in that the metadata\nis supplied directly, not looked up. Suitable for live preview during the\ncreate / edit flow.\n\nHeavy work (delta-table load + Plotly build) runs on a Celery worker by\ndefault — see `settings.celery.offload_preview`. The endpoint awaits the\ntask via a non-blocking poll loop so the FastAPI event loop stays free.\n\nRequest body::\n\n    {\n      \"metadata\": { ...full figure stored_metadata shape... },\n      \"filters\": [...] (optional),\n      \"theme\": \"light\" | \"dark\" (default \"light\"),\n      \"dashboard_id\": \"...\" (optional)\n    }\n\n``dashboard_id``, when supplied, pulls that dashboard's ``brand_theme``\ndefaults and ``category_colors`` into the preview so it matches what the\nsaved component will render (#397), and its grid sections' figure style.\n``style`` (optional) overrides the style, as on ``render_figure``.",
         "operationId": "preview_figure_depictio_api_v1_figure_preview_post",
         "requestBody": {
           "content": {
@@ -14273,7 +14273,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -14384,10 +14384,62 @@
             "title": "Grid Sections",
             "default": []
           },
+          "category_colors": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category Colors"
+          },
           "funnel_filtering": {
             "type": "boolean",
             "title": "Funnel Filtering",
             "default": true
+          },
+          "filter_panel_default": {
+            "type": "string",
+            "enum": [
+              "open",
+              "collapsed"
+            ],
+            "title": "Filter Panel Default",
+            "default": "open"
+          },
+          "content_width_default": {
+            "type": "string",
+            "enum": [
+              "full",
+              "wide",
+              "comfortable",
+              "compact"
+            ],
+            "title": "Content Width Default",
+            "default": "full"
+          },
+          "show_tab_header": {
+            "type": "boolean",
+            "title": "Show Tab Header",
+            "default": true
+          },
+          "show_guide": {
+            "type": "boolean",
+            "title": "Show Guide",
+            "default": true
+          },
+          "guide_intro": {
+            "type": "string",
+            "title": "Guide Intro",
+            "default": ""
           },
           "advanced_viz_controls": {
             "type": "string",
@@ -14550,6 +14602,17 @@
             ],
             "title": "Tab Icon Color"
           },
+          "tab_group": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tab Group"
+          },
           "parent_dashboard_title": {
             "anyOf": [
               {
@@ -14572,6 +14635,30 @@
               }
             ],
             "title": "Project Realtime"
+          },
+          "inherited_brand_theme": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inherited Brand Theme"
+          },
+          "inherited_category_colors": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inherited Category Colors"
           },
           "source_key": {
             "anyOf": [
@@ -14602,7 +14689,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -14665,7 +14752,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -14911,7 +14998,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -15136,6 +15223,108 @@
             "title": "Pin",
             "description": "Where a persistent section sits relative to the tab's other sections: 'top' before them, 'bottom' after. Applied on every tab of the family, the owning one included, so the section keeps the same place wherever the viewer lands. 'bottom' is what a reference block (a raw-data table, a legend) usually wants: present everywhere without preceding the tab's own introduction. Ignored unless `persistent` is set.",
             "default": "top"
+          },
+          "appearance": {
+            "type": "string",
+            "enum": [
+              "box",
+              "plain"
+            ],
+            "title": "Appearance",
+            "description": "`box` (default): a bordered, foldable section with a header bar. `plain`: a light heading over the tiles, always open, no frame -- for a landing page whose tiles carry their own cards. Grid sections only.",
+            "default": "box"
+          },
+          "exclude_tabs": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exclude Tabs",
+            "description": "Tabs (by displayed name, the owning tab included) a persistent section is not shown on. A landing tab that already summarises the sample sheet does not need it pinned under its own key figures. Ignored unless `persistent` is set."
+          },
+          "card_variant": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "default",
+                  "headline",
+                  "compact",
+                  "minimal",
+                  "accent",
+                  "split"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Card Variant",
+            "description": "The style every card in this section is drawn in, unless the card sets its own `variant`: one setting turns a row of key figures into headline (or compact, or minimal) cards, and a card added to the section later matches them without being told. Unset leaves each card to its own `variant`. Grid sections only."
+          },
+          "display": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "grid",
+                  "strip"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display",
+            "description": "How a grid section lays out its members. Unset or `grid`: one tile each on the dashboard grid. `strip`: a filter bar -- the interactive components naming this section leave the left filter panel and render as one compact row of controls (label, chips or a thin slider, dividers between), ignoring their grid coordinates. Their values filter the whole tab, as the panel's do. Any non-interactive members still render as tiles below the bar. Grid sections only."
+          },
+          "filter_bar": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filter Bar",
+            "description": "Give this grid section a filter bar of its own: the interactive components naming it leave the left filter panel and render as one compact row under the section's heading, and their values narrow only this section's tiles (cards, figures, tables, maps). The rest of the tab and the other tabs ignore them. Ignored on a `display: strip` section and in `filter_sections`."
+          },
+          "visible_filters": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Visible Filters",
+            "description": "How many filters a bar shows before a 'More filters' toggle, which unfolds the rest in place. Unset: 2 on a section's own bar (`filter_bar`), every filter on a `display: strip` bar. Bars only."
+          },
+          "figure_style": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "default",
+                  "minimal"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Figure Style",
+            "description": "The style every figure in this section is drawn in, unless the figure sets its own `figure_style`: `minimal` gives a row of figures the landing-page look (title and icon in the card header, faint grid, legend under the plot). Unset leaves each figure to its own style. Grid sections only."
           }
         },
         "additionalProperties": false,
@@ -15144,7 +15333,7 @@
           "name"
         ],
         "title": "FilterSectionSpec",
-        "description": "Presentation of one left-panel filter section.\n\nOnly needed to override a section's defaults. A section named by a\ncomponent's ``section`` field but absent from ``filter_sections`` still\nrenders — expanded, no icon — and sorts after the declared ones.\n\nExample YAML:\n    filter_sections:\n      - name: Sample\n        icon: mdi:test-tube\n        color: teal\n      - name: Quality\n        icon: mdi:check-decagram\n        collapsed: true"
+        "description": "Presentation of one left-panel filter section, or one grid section.\n\nOnly needed to override a section's defaults. A section named by a\ncomponent's ``section`` field but absent from ``filter_sections`` still\nrenders — expanded, no icon — and sorts after the declared ones.\n\nExample YAML:\n    filter_sections:\n      - name: Sample\n        icon: mdi:test-tube\n        color: teal\n      - name: Quality\n        icon: mdi:check-decagram\n        collapsed: true\n\nFilters can also sit on the dashboard itself, as a compact bar, in two\nways. Both take the interactive components whose ``section`` names the grid\nsection, and those leave the left filter panel:\n\n- ``display: strip`` draws the grid section as a filter bar. Its filters\n  join the tab's filters, like the panel's: they narrow every component on\n  the tab whose data has the column (directly or through a link).\n- ``filter_bar: true`` gives a grid section of tiles a bar of its own, under\n  its heading. Its filters narrow that section's tiles only; the rest of the\n  tab, the filter panel and the other tabs ignore them.\n\n``visible_filters`` caps how many filters a bar shows before a \"More\nfilters\" toggle (unset: 2 on a section's own bar, all on a filter bar)::\n\n    grid_sections:\n      - name: Key figures\n        filter_bar: true\n        visible_filters: 2\n    components:\n      - tag: city\n        component_type: interactive\n        section: Key figures   # drawn in that section's bar, filters it only"
       },
       "GeoNote": {
         "properties": {
@@ -17054,7 +17243,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -17324,7 +17513,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -18509,7 +18698,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -18615,7 +18804,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -18848,7 +19037,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6ac6c051515cede3525910d9"
+            "default": "6ac9285389e769431fda1a25"
           }
         },
         "type": "object",
@@ -18985,7 +19174,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19104,7 +19293,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19186,7 +19375,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19272,7 +19461,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19473,7 +19662,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19648,7 +19837,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19765,7 +19954,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19822,6 +20011,13 @@
               }
             ],
             "title": "Runs Regex"
+          },
+          "attached_locations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Attached Locations"
           }
         },
         "additionalProperties": false,
@@ -19863,7 +20059,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [

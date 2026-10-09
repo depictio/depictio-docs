@@ -174,7 +174,7 @@ Without a template for the run's exact release, the CLI takes the highest shippe
 | `--project-config-path` | `string` | | Project YAML, for a pipeline Depictio ships no template for. Not with `--template` |
 | `--update-config` | `flag` | `false` | Refresh a project that exists, see [Refreshing a project](#refreshing-a-project). `--overwrite` is the same option |
 | `--var` | `KEY=VALUE` | | Template variable, repeatable |
-| `--dry-run` | `flag` | `false` | Validate the project configuration locally and list the steps that would run, without contacting the server |
+| `--dry-run` | `flag` | `false` | Validate the project configuration locally and list the steps that would run, without contacting the server. From v1.13.2 it also lists how many files each data collection would match |
 
 Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/projects/templates.md#recipe-seeds) committed beside the data: a `source: transformed` data collection with a `{DATA_ROOT}/{dc_tag}.tsv` next to it is scanned from that file instead of re-running its recipe against raw pipeline inputs the bundled projects do not ship. See [Templates](../usage/projects/templates.md) for full documentation.
 
@@ -329,9 +329,13 @@ Attaching a directory that is already one of the project's locations records it,
 === "Dry Run"
 
     ```bash
-    # Validate the configuration without contacting the server
+    # Validate the configuration and preview the scan, without contacting the server
     depictio ingest /data/my_ampliseq_run --dry-run
     ```
+
+    From v1.13.2 the dry run prints a table of the files each data collection would match,
+    counted by the scanner itself. A derived collection shows `n/a (no scan)`, and a
+    collection that would match nothing is named in a warning.
 
 === "Debugging"
 

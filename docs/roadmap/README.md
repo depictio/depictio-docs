@@ -139,6 +139,9 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
+| Landing tabs: block markdown, tab links, filter bars, minimal figures, a phylogeny summary | v1.14.0 | [Landing tabs](../features/dashboards.md#landing-tabs) |
+| A built-in Guide on every dashboard | v1.14.0 | [The dashboard Guide](../usage/guides/dashboard-guide.md) |
+| Search every component of every tab with ⌘K | v1.14.0 | [Spotlight search](../usage/guides/spotlight-search.md) |
 | Comments and annotations on dashboard components, with agent proposals held for review | v1.13.0 | [Comments and Annotations](../features/comments-annotations.md) |
 | Thirteen more nf-core templates, ten advanced visualization kinds including a GenomeSpy genome view | v1.13.0 | [Pipeline Templates](../pipeline-templates/README.md) · [Components](../features/components.md#genome-view) |
 | Genome regions carried between collections, record cards that follow a selection | v1.13.0 | [Cross-DC Filtering](../features/cross-dc-filtering.md#region-links) · [Interactive Selection Filtering](../features/interactive-selection-filtering.md#record-cards) |
