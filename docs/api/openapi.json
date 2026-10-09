@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.13.0",
-    "x-generated-at": "2026-10-07T21:57:43Z",
-    "x-depictio-version": "v1.13.0"
+    "version": "1.13.1",
+    "x-generated-at": "2026-10-08T05:51:12Z",
+    "x-depictio-version": "v1.13.1"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -7097,7 +7097,7 @@
           "Dashboards"
         ],
         "summary": "Import Dashboard From Yaml",
-        "description": "Import a dashboard from YAML content.\n\nSupports both single dashboard and multi-tab dashboard formats:\n- Single: Standard YAML with title, components, etc.\n- Multi-tab: YAML with main_dashboard and tabs keys\n\nA new dashboard_id will be generated, and the current user will be set as owner.\n\nIf `overwrite=True`, the dashboard imported earlier from the same `source_key`\nis updated instead of creating a new one, whatever its title is now; without\none, a dashboard with the same title in the project is. Either kind of match\nis a 409 without `overwrite`.\n\n`existing` says what becomes of a dashboard so matched, over `overwrite`:\n- `replace`: as `overwrite=True`;\n- `keep`: it is left as it is, its layout and components as edited in the\n  viewer, and the response says `\"status\": \"kept\"` with its id. `main_title`\n  still renames a kept main dashboard, which changes nothing else. A kept\n  multi-tab main keeps its tabs as they are: a tab the YAML adds is not\n  imported. A dashboard with no match is created as usual.\nEvery response says what happened in `status`: `created`, `replaced` or `kept`.\n\nTitles: a dashboard takes the title in the YAML, unless\n- `keep_titles=True` and the import replaces an existing dashboard: that\n  dashboard keeps its current title, so a refresh does not undo a rename made\n  in the viewer. Applies to the main dashboard and to every tab;\n- `main_title` is given: the main dashboard (the multi-tab `main_dashboard`,\n  or a single dashboard that is not a child tab) is titled that, over the YAML\n  and over `keep_titles`. The tabs are not affected. A 400 on a child tab.\n\nA single-format child tab names its parent by title (`parent_dashboard_tag`).\n`parent_source_key`, the `source_key` the parent was imported under, finds\nthe parent first, so a parent renamed in the viewer keeps its tabs. Without a\nmatch by key or by title, a refreshed child tab stays under its current parent.\n\nProject identification:\n- If `project_id` is provided, uses that project directly (404 if it does not exist)\n- If `project_id` is not provided, extracts `project_tag` from YAML and\n  looks up the project by name\n\nArgs:\n    yaml_content: The YAML content defining the dashboard(s)\n    project_id: Optional project ID (if not provided, uses project_tag from YAML)\n    overwrite: If True, update the dashboard this one replaces (default: False)\n    source_key: Optional stable origin of the YAML (e.g.\n        \"nf-core/rnaseq:dashboards/base.yaml\"), stored on the dashboard so a\n        later import of the same source finds it after a rename\n    keep_titles: If True, a dashboard this import replaces keeps its current\n        title (default: False, the YAML's title)\n    main_title: Optional title for the main dashboard, over the YAML's and\n        over keep_titles\n    parent_source_key: Optional source_key of a child tab's parent dashboard\n    existing: Optional \"keep\" or \"replace\", for a dashboard the project\n        already has; without it, `overwrite` decides\n    current_user: The authenticated user (will be set as owner)\n\nReturns:\n    Created/updated dashboard information including dashboard_id",
+        "description": "Import a dashboard from YAML content.\n\nSupports both single dashboard and multi-tab dashboard formats:\n- Single: Standard YAML with title, components, etc.\n- Multi-tab: YAML with main_dashboard and tabs keys\n\nA new dashboard_id will be generated, and the current user will be set as owner.\n\nIf `overwrite=True`, the dashboard imported earlier from the same `source_key`\nis updated instead of creating a new one, whatever its title is now; without\none, a dashboard with the same title is, if it has no `source_key` yet (one\nkeyed to another source is left alone). A main dashboard is only matched\nwith a main one, and a tab with the tabs of its parent. Either kind of match\nis a 409 without `overwrite`.\n\n`existing` says what becomes of a dashboard so matched, over `overwrite`:\n- `replace`: as `overwrite=True`;\n- `keep`: it is left as it is, its layout and components as edited in the\n  viewer, and the response says `\"status\": \"kept\"` with its id. `main_title`\n  still renames a kept main dashboard, which changes nothing else. A kept\n  multi-tab main keeps the tabs it has as they are and gains those of the\n  YAML it lacks, after its last one; `tabs_added` says how many. A tab\n  removed in the viewer so comes back. A dashboard with no match is created\n  as usual.\nEvery response says what happened in `status`: `created`, `replaced` or `kept`.\n\nTitles: a dashboard takes the title in the YAML, unless\n- `keep_titles=True` and the import replaces an existing dashboard: that\n  dashboard keeps its current title, so a refresh does not undo a rename made\n  in the viewer. Applies to the main dashboard and to every tab;\n- `main_title` is given: the main dashboard (the multi-tab `main_dashboard`,\n  or a single dashboard that is not a child tab) is titled that, over the YAML\n  and over `keep_titles`. The tabs are not affected. A 400 on a child tab.\n\nA single-format child tab names its parent by title (`parent_dashboard_tag`).\n`parent_source_key`, the `source_key` the parent was imported under, finds\nthe parent first, so a parent renamed in the viewer keeps its tabs. Without a\nmatch by key or by title, the tab imported from the same `source_key` stays\nunder its current parent.\n\nProject identification:\n- If `project_id` is provided, uses that project directly (404 if it does not exist)\n- If `project_id` is not provided, extracts `project_tag` from YAML and\n  looks up the project by name\n\nArgs:\n    yaml_content: The YAML content defining the dashboard(s)\n    project_id: Optional project ID (if not provided, uses project_tag from YAML)\n    overwrite: If True, update the dashboard this one replaces (default: False)\n    source_key: Optional stable origin of the YAML (e.g.\n        \"nf-core/rnaseq:dashboards/base.yaml\"), stored on the dashboard so a\n        later import of the same source finds it after a rename\n    keep_titles: If True, a dashboard this import replaces keeps its current\n        title (default: False, the YAML's title)\n    main_title: Optional title for the main dashboard, over the YAML's and\n        over keep_titles\n    parent_source_key: Optional source_key of a child tab's parent dashboard\n    existing: Optional \"keep\" or \"replace\", for a dashboard the project\n        already has; without it, `overwrite` decides\n    current_user: The authenticated user (will be set as owner)\n\nReturns:\n    Created/updated dashboard information including dashboard_id",
         "operationId": "import_dashboard_from_yaml_depictio_api_v1_dashboards_import_yaml_post",
         "security": [
           {
@@ -14273,7 +14273,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -14602,7 +14602,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -14665,7 +14665,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -14911,7 +14911,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -17054,7 +17054,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -17324,7 +17324,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -18509,7 +18509,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -18615,7 +18615,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -18848,7 +18848,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6ac6c051515cede3525910d9"
+            "default": "6ac72f4adea2ed3ab723463a"
           }
         },
         "type": "object",
@@ -18985,7 +18985,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -19104,7 +19104,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -19186,7 +19186,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -19272,7 +19272,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -19473,7 +19473,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -19648,7 +19648,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -19765,7 +19765,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
@@ -19822,6 +19822,13 @@
               }
             ],
             "title": "Runs Regex"
+          },
+          "attached_locations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Attached Locations"
           }
         },
         "additionalProperties": false,
@@ -19863,7 +19870,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6c051515cede3525910d8"
+            "default": "6ac72f4adea2ed3ab7234639"
           },
           "description": {
             "anyOf": [
