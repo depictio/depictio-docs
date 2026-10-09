@@ -3,31 +3,35 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Documentation for Depictio">
+        <meta name="description" content="Search every component of every tab of a dashboard from the keyboard, and land on the one you pick.">
       
       
       
-        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v1.14.0/pipeline-templates/nf-core/_generated/methylseq-2.3.0/">
+        <link rel="canonical" href="https://depictio.github.io/depictio-docs/v1.14.0/usage/guides/spotlight-search/">
       
       
+        <link rel="prev" href="../dashboard-guide/">
+      
+      
+        <link rel="next" href="../realtime-events/">
       
       
         
       
       
-      <link rel="icon" href="../../../../images/logo/logo_icon.png">
+      <link rel="icon" href="../../../images/logo/logo_icon.png">
       <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.7">
     
     
       
-        <title>Methylseq 2.3.0 - Depictio Documentation</title>
+        <title>Spotlight search - Depictio Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -52,15 +56,15 @@
       
     
     
-      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
-      <link rel="stylesheet" href="../../../../stylesheets/timeline.css">
+      <link rel="stylesheet" href="../../../stylesheets/timeline.css">
     
-      <link rel="stylesheet" href="../../../../stylesheets/blog.css">
+      <link rel="stylesheet" href="../../../stylesheets/blog.css">
     
-      <link rel="stylesheet" href="../../../../stylesheets/neoteroi-mkdocs-v1.1.3.css">
+      <link rel="stylesheet" href="../../../stylesheets/neoteroi-mkdocs-v1.1.3.css">
     
-      <link rel="stylesheet" href="../../../../stylesheets/asciinema.css">
+      <link rel="stylesheet" href="../../../stylesheets/asciinema.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
     
@@ -68,7 +72,7 @@
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@3.17.0/dist/bundle/asciinema-player.css">
     
-    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -84,9 +88,9 @@
 
     
     
-  <link rel="preload" href="../../../../fonts/Virgil.ttf" as="font" type="font/ttf" crossorigin="">
+  <link rel="preload" href="../../../fonts/Virgil.ttf" as="font" type="font/ttf" crossorigin="">
 
-  <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -115,7 +119,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#template-variables" class="md-skip">
+        <a href="#spotlight-search-v1140" class="md-skip">
           Skip to content
         </a>
       
@@ -135,9 +139,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../.." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
+    <a href="../../.." title="Depictio Documentation" class="md-header__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../../../images/logo/animated_favicon.svg" alt="logo">
+  <img src="../../../images/logo/animated_favicon.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -154,7 +158,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Methylseq 2.3.0
+              Spotlight search
             
           </span>
         </div>
@@ -266,7 +270,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -289,7 +293,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../installation/" class="md-tabs__link">
+        <a href="../../../installation/" class="md-tabs__link">
           
   
   
@@ -309,11 +313,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../../usage/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -335,7 +341,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../tutorials/" class="md-tabs__link">
+      <a href="../../../tutorials/" class="md-tabs__link">
         
   
   
@@ -358,7 +364,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../features/" class="md-tabs__link">
+        <a href="../../../features/" class="md-tabs__link">
           
   
   
@@ -382,7 +388,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../api/" class="md-tabs__link">
+        <a href="../../../api/" class="md-tabs__link">
           
   
   
@@ -406,7 +412,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../" class="md-tabs__link">
+        <a href="../../../pipeline-templates/" class="md-tabs__link">
           
   
   
@@ -428,7 +434,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../catalog/" class="md-tabs__link">
+      <a href="../../../catalog/" class="md-tabs__link">
         
   
   
@@ -451,7 +457,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../developer/" class="md-tabs__link">
+        <a href="../../../developer/" class="md-tabs__link">
           
   
   
@@ -473,7 +479,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../roadmap/" class="md-tabs__link">
+      <a href="../../../roadmap/" class="md-tabs__link">
         
   
   
@@ -494,7 +500,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../changelog/" class="md-tabs__link">
+      <a href="../../../changelog/" class="md-tabs__link">
         
   
   
@@ -517,7 +523,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../blog/" class="md-tabs__link">
+        <a href="../../../blog/" class="md-tabs__link">
           
   
   
@@ -541,7 +547,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../more/" class="md-tabs__link">
+        <a href="../../../more/" class="md-tabs__link">
           
   
   
@@ -585,9 +591,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
+    <a href="../../.." title="Depictio Documentation" class="md-nav__button md-logo" aria-label="Depictio Documentation" data-md-component="logo">
       
-  <img src="../../../../images/logo/animated_favicon.svg" alt="logo">
+  <img src="../../../images/logo/animated_favicon.svg" alt="logo">
 
     </a>
     Depictio Documentation
@@ -614,7 +620,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -678,7 +684,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../installation/" class="md-nav__link ">
+            <a href="../../../installation/" class="md-nav__link ">
               
   
   
@@ -786,7 +792,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../installation/docker/" class="md-nav__link">
+      <a href="../../../installation/docker/" class="md-nav__link">
         
   
   
@@ -816,7 +822,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../installation/kubernetes/" class="md-nav__link">
+      <a href="../../../installation/kubernetes/" class="md-nav__link">
         
   
   
@@ -846,7 +852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../installation/local/" class="md-nav__link">
+      <a href="../../../installation/local/" class="md-nav__link">
         
   
   
@@ -942,7 +948,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../installation/upgrade/v1.12.0-seaweedfs/" class="md-nav__link">
+      <a href="../../../installation/upgrade/v1.12.0-seaweedfs/" class="md-nav__link">
         
   
   
@@ -1038,7 +1044,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../installation/cli/" class="md-nav__link">
+      <a href="../../../installation/cli/" class="md-nav__link">
         
   
   
@@ -1074,7 +1080,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../installation/configuration/" class="md-nav__link">
+      <a href="../../../installation/configuration/" class="md-nav__link">
         
   
   
@@ -1104,7 +1110,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../installation/env-reference/" class="md-nav__link">
+      <a href="../../../installation/env-reference/" class="md-nav__link">
         
   
   
@@ -1138,6 +1144,8 @@
       
   
   
+    
+  
   
   
     
@@ -1163,22 +1171,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../usage/" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   
@@ -1198,13 +1207,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1224,7 +1233,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/get_started/" class="md-nav__link">
+      <a href="../../get_started/" class="md-nav__link">
         
   
   
@@ -1249,6 +1258,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1278,20 +1289,21 @@
       
       
         
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
+          
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3">
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked="">
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../usage/guides/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1311,13 +1323,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1337,7 +1349,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/guides/web_ui/" class="md-nav__link">
+      <a href="../web_ui/" class="md-nav__link">
         
   
   
@@ -1365,7 +1377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/guides/dashboard_creation/" class="md-nav__link">
+      <a href="../dashboard_creation/" class="md-nav__link">
         
   
   
@@ -1393,7 +1405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/guides/catalog-picker/" class="md-nav__link">
+      <a href="../catalog-picker/" class="md-nav__link">
         
   
   
@@ -1421,7 +1433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/guides/dashboard_usage/" class="md-nav__link">
+      <a href="../dashboard_usage/" class="md-nav__link">
         
   
   
@@ -1449,7 +1461,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/guides/dashboard-guide/" class="md-nav__link">
+      <a href="../dashboard-guide/" class="md-nav__link">
         
   
   
@@ -1474,10 +1486,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../../usage/guides/spotlight-search/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spotlight search
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1493,6 +1532,61 @@
   
 
       </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#what-it-searches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What it searches
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-it-lands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where it lands
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1505,7 +1599,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/guides/realtime-events/" class="md-nav__link">
+      <a href="../realtime-events/" class="md-nav__link">
         
   
   
@@ -1563,10 +1657,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1576,7 +1673,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../usage/projects/" class="md-nav__link ">
+            <a href="../../projects/" class="md-nav__link ">
               
   
   
@@ -1596,7 +1693,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1622,7 +1719,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/projects/guide/" class="md-nav__link">
+      <a href="../../projects/guide/" class="md-nav__link">
         
   
   
@@ -1650,7 +1747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/projects/yaml-examples/" class="md-nav__link">
+      <a href="../../projects/yaml-examples/" class="md-nav__link">
         
   
   
@@ -1678,7 +1775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/projects/reference/" class="md-nav__link">
+      <a href="../../projects/reference/" class="md-nav__link">
         
   
   
@@ -1706,7 +1803,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/projects/recipes/" class="md-nav__link">
+      <a href="../../projects/recipes/" class="md-nav__link">
         
   
   
@@ -1734,7 +1831,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/projects/templates/" class="md-nav__link">
+      <a href="../../projects/templates/" class="md-nav__link">
         
   
   
@@ -1788,10 +1885,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1801,7 +1901,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../depictio-cli/" class="md-nav__link ">
+            <a href="../../../depictio-cli/" class="md-nav__link ">
               
   
   
@@ -1821,7 +1921,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1847,7 +1947,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../depictio-cli/usage/" class="md-nav__link">
+      <a href="../../../depictio-cli/usage/" class="md-nav__link">
         
   
   
@@ -1875,7 +1975,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../depictio-cli/nextflow-trigger/" class="md-nav__link">
+      <a href="../../../depictio-cli/nextflow-trigger/" class="md-nav__link">
         
   
   
@@ -1903,7 +2003,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../depictio-cli/minimal_config/" class="md-nav__link">
+      <a href="../../../depictio-cli/minimal_config/" class="md-nav__link">
         
   
   
@@ -1959,10 +2059,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1972,7 +2075,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../usage/administration/" class="md-nav__link ">
+            <a href="../../administration/" class="md-nav__link ">
               
   
   
@@ -1992,7 +2095,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -2018,7 +2121,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/administration/migrate/" class="md-nav__link">
+      <a href="../../administration/migrate/" class="md-nav__link">
         
   
   
@@ -2046,7 +2149,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/administration/backup/" class="md-nav__link">
+      <a href="../../administration/backup/" class="md-nav__link">
         
   
   
@@ -2074,7 +2177,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/administration/monitoring/" class="md-nav__link">
+      <a href="../../administration/monitoring/" class="md-nav__link">
         
   
   
@@ -2102,7 +2205,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/administration/branding/" class="md-nav__link">
+      <a href="../../administration/branding/" class="md-nav__link">
         
   
   
@@ -2150,10 +2253,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -2162,7 +2268,7 @@
         <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_7">
         
           
-          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
             
   
   
@@ -2198,7 +2304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/guides/authentication-modes/" class="md-nav__link">
+      <a href="../authentication-modes/" class="md-nav__link">
         
   
   
@@ -2226,7 +2332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../usage/guides/unauthenticated_mode/" class="md-nav__link">
+      <a href="../unauthenticated_mode/" class="md-nav__link">
         
   
   
@@ -2269,7 +2375,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/" class="md-nav__link">
+      <a href="../../../tutorials/" class="md-nav__link">
         
   
   
@@ -2329,7 +2435,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../features/" class="md-nav__link ">
+            <a href="../../../features/" class="md-nav__link ">
               
   
   
@@ -2439,7 +2545,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../features/dashboards/" class="md-nav__link">
+      <a href="../../../features/dashboards/" class="md-nav__link">
         
   
   
@@ -2469,7 +2575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../features/components/" class="md-nav__link">
+      <a href="../../../features/components/" class="md-nav__link">
         
   
   
@@ -2499,7 +2605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../features/interactive-selection-filtering/" class="md-nav__link">
+      <a href="../../../features/interactive-selection-filtering/" class="md-nav__link">
         
   
   
@@ -2529,7 +2635,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../features/comments-annotations/" class="md-nav__link">
+      <a href="../../../features/comments-annotations/" class="md-nav__link">
         
   
   
@@ -2629,7 +2735,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../features/cross-dc-filtering/" class="md-nav__link">
+      <a href="../../../features/cross-dc-filtering/" class="md-nav__link">
         
   
   
@@ -2659,7 +2765,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../features/filter-expressions/" class="md-nav__link">
+      <a href="../../../features/filter-expressions/" class="md-nav__link">
         
   
   
@@ -2689,7 +2795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../features/yaml-sync/" class="md-nav__link">
+      <a href="../../../features/yaml-sync/" class="md-nav__link">
         
   
   
@@ -2793,7 +2899,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../features/architecture/" class="md-nav__link">
+      <a href="../../../features/architecture/" class="md-nav__link">
         
   
   
@@ -2823,7 +2929,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../features/performance/" class="md-nav__link">
+      <a href="../../../features/performance/" class="md-nav__link">
         
   
   
@@ -2853,7 +2959,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../features/data-model/" class="md-nav__link">
+      <a href="../../../features/data-model/" class="md-nav__link">
         
   
   
@@ -2883,7 +2989,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../features/security/" class="md-nav__link">
+      <a href="../../../features/security/" class="md-nav__link">
         
   
   
@@ -2913,7 +3019,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../features/telemetry/" class="md-nav__link">
+      <a href="../../../features/telemetry/" class="md-nav__link">
         
   
   
@@ -2987,7 +3093,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../api/" class="md-nav__link ">
+            <a href="../../../api/" class="md-nav__link ">
               
   
   
@@ -3033,7 +3139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../api/reference/" class="md-nav__link">
+      <a href="../../../api/reference/" class="md-nav__link">
         
   
   
@@ -3061,7 +3167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../api/fastapi_docs/" class="md-nav__link">
+      <a href="../../../api/fastapi_docs/" class="md-nav__link">
         
   
   
@@ -3123,7 +3229,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../" class="md-nav__link ">
+            <a href="../../../pipeline-templates/" class="md-nav__link ">
               
   
   
@@ -3244,7 +3350,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../" class="md-nav__link ">
+            <a href="../../../pipeline-templates/nf-core/" class="md-nav__link ">
               
   
   
@@ -3288,7 +3394,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ampliseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/ampliseq/" class="md-nav__link">
         
   
   
@@ -3316,7 +3422,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../viralrecon/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/viralrecon/" class="md-nav__link">
         
   
   
@@ -3344,7 +3450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../variantbenchmarking/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/variantbenchmarking/" class="md-nav__link">
         
   
   
@@ -3372,7 +3478,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../differentialabundance/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/differentialabundance/" class="md-nav__link">
         
   
   
@@ -3400,7 +3506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../funcscan/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/funcscan/" class="md-nav__link">
         
   
   
@@ -3428,7 +3534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../airrflow/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/airrflow/" class="md-nav__link">
         
   
   
@@ -3456,7 +3562,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rnafusion/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/rnafusion/" class="md-nav__link">
         
   
   
@@ -3484,7 +3590,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rnaseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/rnaseq/" class="md-nav__link">
         
   
   
@@ -3512,7 +3618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../taxprofiler/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/taxprofiler/" class="md-nav__link">
         
   
   
@@ -3540,7 +3646,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../chipseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/chipseq/" class="md-nav__link">
         
   
   
@@ -3568,7 +3674,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../atacseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/atacseq/" class="md-nav__link">
         
   
   
@@ -3596,7 +3702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cutandrun/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/cutandrun/" class="md-nav__link">
         
   
   
@@ -3624,7 +3730,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../eager/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/eager/" class="md-nav__link">
         
   
   
@@ -3652,7 +3758,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../hic/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/hic/" class="md-nav__link">
         
   
   
@@ -3680,7 +3786,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mag/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/mag/" class="md-nav__link">
         
   
   
@@ -3708,7 +3814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../methylseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/methylseq/" class="md-nav__link">
         
   
   
@@ -3736,7 +3842,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../nanoseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/nanoseq/" class="md-nav__link">
         
   
   
@@ -3764,7 +3870,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../sarek/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/sarek/" class="md-nav__link">
         
   
   
@@ -3792,7 +3898,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scrnaseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/scrnaseq/" class="md-nav__link">
         
   
   
@@ -3820,7 +3926,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../riboseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/riboseq/" class="md-nav__link">
         
   
   
@@ -3848,7 +3954,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../smrnaseq/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/smrnaseq/" class="md-nav__link">
         
   
   
@@ -3876,7 +3982,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomeassembler/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/genomeassembler/" class="md-nav__link">
         
   
   
@@ -3904,7 +4010,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mhcquant/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/mhcquant/" class="md-nav__link">
         
   
   
@@ -3932,7 +4038,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../demultiplex/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/demultiplex/" class="md-nav__link">
         
   
   
@@ -3960,7 +4066,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rnasplice/" class="md-nav__link">
+      <a href="../../../pipeline-templates/nf-core/rnasplice/" class="md-nav__link">
         
   
   
@@ -4003,7 +4109,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../catalog/" class="md-nav__link">
+      <a href="../../../catalog/" class="md-nav__link">
         
   
   
@@ -4065,7 +4171,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../developer/" class="md-nav__link ">
+            <a href="../../../developer/" class="md-nav__link ">
               
   
   
@@ -4111,7 +4217,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../developer/contributing/" class="md-nav__link">
+      <a href="../../../developer/contributing/" class="md-nav__link">
         
   
   
@@ -4139,7 +4245,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../developer/contributing-a-tool/" class="md-nav__link">
+      <a href="../../../developer/contributing-a-tool/" class="md-nav__link">
         
   
   
@@ -4169,7 +4275,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../developer/tool-studio/" class="md-nav__link">
+      <a href="../../../developer/tool-studio/" class="md-nav__link">
         
   
   
@@ -4197,7 +4303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../developer/contributing-templates/" class="md-nav__link">
+      <a href="../../../developer/contributing-templates/" class="md-nav__link">
         
   
   
@@ -4234,7 +4340,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../roadmap/" class="md-nav__link">
+      <a href="../../../roadmap/" class="md-nav__link">
         
   
   
@@ -4263,7 +4369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../changelog/" class="md-nav__link">
+      <a href="../../../changelog/" class="md-nav__link">
         
   
   
@@ -4321,7 +4427,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../blog/" class="md-nav__link ">
+            <a href="../../../blog/" class="md-nav__link ">
               
   
   
@@ -4429,7 +4535,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../blog/archive/2026/" class="md-nav__link">
+      <a href="../../../blog/archive/2026/" class="md-nav__link">
         
   
   
@@ -4459,7 +4565,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../blog/archive/2025/" class="md-nav__link">
+      <a href="../../../blog/archive/2025/" class="md-nav__link">
         
   
   
@@ -4563,7 +4669,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../blog/category/announcements/" class="md-nav__link">
+      <a href="../../../blog/category/announcements/" class="md-nav__link">
         
   
   
@@ -4593,7 +4699,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../blog/category/demo/" class="md-nav__link">
+      <a href="../../../blog/category/demo/" class="md-nav__link">
         
   
   
@@ -4623,7 +4729,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../blog/category/features/" class="md-nav__link">
+      <a href="../../../blog/category/features/" class="md-nav__link">
         
   
   
@@ -4653,7 +4759,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../blog/category/launch/" class="md-nav__link">
+      <a href="../../../blog/category/launch/" class="md-nav__link">
         
   
   
@@ -4683,7 +4789,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../blog/category/tutorials/" class="md-nav__link">
+      <a href="../../../blog/category/tutorials/" class="md-nav__link">
         
   
   
@@ -4759,7 +4865,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../more/" class="md-nav__link ">
+            <a href="../../../more/" class="md-nav__link ">
               
   
   
@@ -4832,7 +4938,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../FAQ/" class="md-nav__link ">
+            <a href="../../../FAQ/" class="md-nav__link ">
               
   
   
@@ -4878,7 +4984,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../FAQ/general/" class="md-nav__link">
+      <a href="../../../FAQ/general/" class="md-nav__link">
         
   
   
@@ -4914,7 +5020,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../more/funding/" class="md-nav__link">
+      <a href="../../../more/funding/" class="md-nav__link">
         
   
   
@@ -4942,7 +5048,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../more/palette/" class="md-nav__link">
+      <a href="../../../more/palette/" class="md-nav__link">
         
   
   
@@ -4970,7 +5076,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../animated-logo/" class="md-nav__link">
+      <a href="../../../animated-logo/" class="md-nav__link">
         
   
   
@@ -5017,6 +5123,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -5025,10 +5133,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#template-variables" class="md-nav__link">
+  <a href="#what-it-searches" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Template variables
+        What it searches
       
     </span>
   </a>
@@ -5036,10 +5144,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#data-collections" class="md-nav__link">
+  <a href="#results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data collections
+        Results
       
     </span>
   </a>
@@ -5047,32 +5155,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#conditional-routes" class="md-nav__link">
+  <a href="#where-it-lands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Conditional routes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cross-dc-links" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cross-DC links
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recipes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Recipes
+        Where it lands
       
     </span>
   </a>
@@ -5099,459 +5185,74 @@
   
 
 
-  <h1>Methylseq 2.3.0</h1>
-
-<!-- GENERATED by depictio/dev_scripts/gen_template_docs.py — do not edit. --><!-- Source: depictio/projects/nf-core/methylseq/2.3.0/template.yaml --><!-- Regenerate: python -m depictio.dev_scripts.gen_template_docs --><style>
-.gtd-badge{display:inline-block;padding:0 .5em;border-radius:10px;font-size:.78em;font-weight:600;line-height:1.5;white-space:nowrap;}
-.gtd-scan{background:#eef1fb;color:#3949ab;}
-.gtd-transformed{background:#e6f7f5;color:#2a8c82;}
-.gtd-direct{background:#eaf2ff;color:#2563c9;}
-.gtd-derived{background:#f3e8fd;color:#8e44ad;}
-.gtd-recipe{background:#fbe9f1;color:#b4337a;}
-.gtd-file{background:#eef0f2;color:#5a6573;}
-.gtd-opt{background:#fff6e6;color:#b9770e;}
-.gtd-req{background:#e9f7ef;color:#1e8e5a;}
-.gtd-plus-chip{background:#e9f7ef;color:#1e8e5a;}
-.gtd-minus-chip{background:#fdecea;color:#c0392b;}
-.gtd-swap-chip{background:#fff6e6;color:#b9770e;}
-.gtd-legend{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:.2rem 0 .8rem;}
-.gtd-legend-note{font-size:.8rem;opacity:.85;}
-/* Let long code/paths wrap so the wide reference tables fit without their own
-   horizontal scrollbar (Material wraps each table in a scroller at runtime). */
-.md-typeset table{font-size:.78rem;}
-.md-typeset table code{font-size:.92em;}
-/* First-column identifiers (variable / DC / recipe names) stay on one line;
-   only the other columns' long paths may wrap. */
-.md-typeset table td:first-child{white-space:nowrap;}
-.md-typeset table td:not(:first-child) code{overflow-wrap:anywhere;}
-/* Reads-column paths: smaller monospace + wrap so long scan targets keep the row tidy. */
-.md-typeset table code.gtd-path{font-size:.62rem;overflow-wrap:anywhere;}
-.gtd-mtx{margin:.8rem 0;}
-.gtd-mtx table{border-collapse:separate;border-spacing:0;font-size:.7rem;}
-.gtd-mtx th,.gtd-mtx td{border:1px solid var(--md-default-fg-color--lightest,#e6e6e6);padding:2px 5px;text-align:center;}
-.gtd-mtx thead th{background:#45B8AC;color:#fff;vertical-align:bottom;white-space:nowrap;font-size:.64rem;line-height:1.12;}
-.gtd-mtx th.dc{text-align:left;white-space:nowrap;font-weight:600;background:var(--md-default-bg-color,#fff);}
-.gtd-mtx thead th.dc{background:#45B8AC;color:#fff;}
-/* Only large matrices get the capped, scroll-both-ways container with a pinned
-   header row + first column; tables that fit the page render plain (no overflow). */
-.gtd-mtx.scroll{max-height:75vh;overflow:auto;}
-.gtd-mtx.scroll thead th{position:sticky;top:0;z-index:2;}
-.gtd-mtx.scroll th.dc{position:sticky;left:0;z-index:1;}
-.gtd-mtx.scroll thead th.dc{z-index:3;}
-.gtd-mtx td.plus,.gtd-mtx td.minus,.gtd-mtx td.swap{font-size:1rem;font-weight:700;line-height:1;}
-.gtd-mtx td.plus{color:#1e8e5a;}
-.gtd-mtx td.minus{color:#c0392b;}
-.gtd-mtx td.swap{color:#b9770e;}
-.gtd-mtx tbody tr:nth-child(even) td{background:var(--md-default-fg-color--lightest,#f6f8fa);}
-.gtd-mtx code{background:none;padding:0;color:inherit;}
-.gtd-links{margin:1rem 0;}
-.gtd-links table{border-collapse:collapse;font-size:.74rem;width:100%;}
-.gtd-links th,.gtd-links td{border:1px solid var(--md-default-fg-color--lightest,#e6e6e6);padding:2px 6px;text-align:left;}
-.gtd-links thead th{background:#45B8AC;color:#fff;}
-.gtd-links td.arr{color:#45B8AC;text-align:center;font-weight:700;}
-.gtd-links .col{opacity:.7;font-size:.92em;}
-.gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
-.gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
-</style>
-
-<h3 id="template-variables"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 3a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2H3v2h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h2v-2H8v-5a2 2 0 0 0-2-2 2 2 0 0 0 2-2V5h2V3m6 0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3z"></path></svg></span> Template variables<a class="headerlink" href="#template-variables" title="Permanent link">¶</a></h3>
-<p>Variables you provide when running the template: <code>DATA_ROOT</code> is the results directory given to <code>depictio ingest</code>, the others are set with <code>--var NAME=value</code>:</p>
-<table>
-<thead>
-<tr>
-<th>Variable</th>
-<th style="text-align: center;">Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>DATA_ROOT</code></td>
-<td style="text-align: center;">✓</td>
-<td>Root directory containing methylseq Bismark-route output (bismark/, fastqc/, trimgalore/, qualimap/, pipeline_info/, input/) plus the reprocessed multiqc/multiqc_data/multiqc.parquet.</td>
-</tr>
-<tr>
-<td><code>METADATA_FILE</code></td>
-<td style="text-align: center;">—</td>
-<td>Optional design table (TSV): sample id in a column named sample or in the first column, one column per factor. Enables the design filters and colouring and the window group comparison (on GROUP_COL, else the first two-level factor).</td>
-</tr>
-<tr>
-<td><code>METADATA_ID_COL</code></td>
-<td style="text-align: center;">—</td>
-<td>Design table sample-id column. Auto-detected as the first column.</td>
-</tr>
-<tr>
-<td><code>GROUP_COL</code></td>
-<td style="text-align: center;">—</td>
-<td>Design column the dashboards group, colour and filter by. Auto-detected as the first factor column of METADATA_FILE. The window group comparison tests it when it has exactly two levels.</td>
-</tr>
-<tr>
-<td><code>GENOME</code></td>
-<td style="text-align: center;">—</td>
-<td>UCSC assembly name of the reference the run aligned to, used by the locus tracks' gene annotation and region search.</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Auto-detected</strong> (set from the run's metadata / <code>params.json</code>; the route flags drive <em>Conditional routes</em> below): <code>GROUP_COL_DISPLAY</code>, <code>ANNOTATION_COLS</code></p>
-<h3 id="data-collections"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"></path></svg></span> Data collections<a class="headerlink" href="#data-collections" title="Permanent link">¶</a></h3>
-<p>29 data collections — <span class="gtd-badge gtd-req">27 required</span> <span class="gtd-badge gtd-opt">2 optional</span> · <span class="gtd-badge gtd-direct">12 direct</span> <span class="gtd-badge gtd-derived">17 derived</span>.</p>
-<p><strong>Origin</strong> tells you whether a collection is <em>real pipeline data</em> or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more <em>direct</em> collections into the layout a visualization needs (no new measurement). <strong>Reads</strong> shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> <code>.py</code> transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A <code>direct</code> collection can still have a recipe — one that merely parses/cleans the raw file; <code>derived</code> means the recipe reshapes another collection.)</p>
-<table>
-<thead>
-<tr>
-<th>Tag</th>
-<th style="text-align: center;">Origin</th>
-<th>Type</th>
-<th>Reads</th>
-<th style="text-align: center;">Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>metadata</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{METADATA_FILE}</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
-</tr>
-<tr>
-<td><code>samples</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/methylseq/recipes/samples.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/methylseq/samples.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>samplesheet</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">samplesheet_full.csv$</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>multiqc_data</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
-<td><img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc.parquet$</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_alignment_raw</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*<em>bismark</em>[a-z0-9]+_(PE|SE)_report.txt$</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_alignment_summary</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/alignment_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bismark/alignment_summary.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_dedup_raw</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*.deduplication_report.txt$</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_deduplication_summary</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/deduplication_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bismark/deduplication_summary.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_splitting_raw</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*_splitting_report.txt$</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_methylation_context_summary</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/methylation_context_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bismark/methylation_context_summary.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_mbias_raw</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*.M-bias.txt$</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_mbias_curve</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/mbias_curve.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bismark/mbias_curve.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_summary_report</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/summary_report.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bismark/summary_report.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_mbias_all_contexts</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/mbias_all_contexts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bismark/mbias_all_contexts.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_bedgraph_index</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*.bedGraph.gz$</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_binned_methylation</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/binned_methylation.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bismark/binned_methylation.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_methylation_density</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/methylation_density.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bismark/methylation_density.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_window_pca</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/window_pca.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bismark/window_pca.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_window_correlation</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/window_correlation.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bismark/window_correlation.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_top_variable_windows</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/top_variable_windows.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bismark/top_variable_windows.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>bismark_window_group_compare</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/window_group_compare.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bismark/window_group_compare.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
-</tr>
-<tr>
-<td><code>qualimap_bamqc_genome_results_raw</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?genome_results.txt$</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>qualimap_bamqc_genome_results</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/qualimap/bamqc_genome_results.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">qualimap/bamqc_genome_results.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>qualimap_coverage_across_reference_raw</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*coverage_across_reference.txt$</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>qualimap_coverage_across_reference</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/qualimap/coverage_across_reference.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">qualimap/coverage_across_reference.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>qualimap_coverage_histogram_raw</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*coverage_histogram.txt$</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>qualimap_coverage_histogram</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/qualimap/coverage_histogram.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">qualimap/coverage_histogram.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>qualimap_genome_fraction_coverage_raw</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*genome_fraction_coverage.txt$</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-<tr>
-<td><code>qualimap_genome_fraction_coverage</code></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
-<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/qualimap/genome_fraction_coverage.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">qualimap/genome_fraction_coverage.py</code></a></td>
-<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
-</tr>
-</tbody>
-</table>
-<h3 id="conditional-routes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 4v8.5l3-3L9 13c1 1 1 2 1 2v6h4v-7s0-1-.53-2S12 10 12 10L9 6.58 11.5 4M18 4l-4.46 4.47L14 9s.93 1 1.47 2c.21.4.33.79.4 1.13L21 7"></path></svg></span> Conditional routes<a class="headerlink" href="#conditional-routes" title="Permanent link">¶</a></h3>
-<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (27 collections are unaffected by any variable — present on every run.)</p>
-<p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
-
-<div class="gtd-mtx">
-<table>
-<thead><tr><th class="dc">Data collection</th><th><code>METADATA_FILE</code></th></tr></thead>
-<tbody>
-<tr><th class="dc"><code>metadata</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td></tr>
-<tr><th class="dc"><code>bismark_window_group_compare</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td></tr>
-</tbody></table></div>
-
-<h3 id="cross-dc-links"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> Cross-DC links<a class="headerlink" href="#cross-dc-links" title="Permanent link">¶</a></h3>
-<p>16 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
-<div class="gtd-links">
-<table>
-<thead><tr><th>Source · column</th><th></th><th>Target</th><th>Filters</th></tr></thead>
-<tbody>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter the MultiQC panels by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>bismark_alignment_summary</code></td><td>Filter the alignment summary by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>bismark_deduplication_summary</code></td><td>Filter the deduplication summary by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>bismark_methylation_context_summary</code></td><td>Filter the per-context methylation summary by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>bismark_mbias_curve</code></td><td>Filter the M-bias curves by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>bismark_summary_report</code></td><td>Filter the run summary by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>bismark_mbias_all_contexts</code></td><td>Filter the per-context M-bias curves by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>bismark_binned_methylation</code></td><td>Filter the binned methylation track by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>bismark_methylation_density</code></td><td>Filter the per-CpG methylation density curves by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>bismark_window_pca</code></td><td>Filter the library PCA by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>qualimap_bamqc_genome_results</code></td><td>Filter the Qualimap BamQC summary by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>qualimap_coverage_across_reference</code></td><td>Filter the depth track by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>qualimap_coverage_histogram</code></td><td>Filter the depth histogram by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>qualimap_genome_fraction_coverage</code></td><td>Filter the genome-fraction curves by the samples picked in the left panel</td></tr>
-<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>bismark_window_correlation</code></td><td>Filter the window-correlation matrix rows by the samples picked in the left panel</td></tr>
-<tr><td><code>bismark_window_group_compare</code> <span class="col">·&nbsp;chromosome</span></td><td class="arr">→</td><td><code>bismark_binned_methylation</code></td><td>A region brushed or typed on the group-comparison navigator narrows the binned per-library windows</td></tr>
-</tbody></table></div>
-
-<h3 id="recipes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.5 1.5c-1.77 0-3.33 1.17-3.83 2.87C8.14 4.13 7.58 4 7 4a4 4 0 0 0-4 4 4.01 4.01 0 0 0 3 3.87V19h13v-7.13c1.76-.46 3-2.05 3-3.87a4 4 0 0 0-4-4c-.58 0-1.14.13-1.67.37-.5-1.7-2.06-2.87-3.83-2.87m-.5 9h1v7h-1zm-3 2h1v5H9zm6 0h1v5h-1zM6 20v1a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-1z"></path></svg></span> Recipes<a class="headerlink" href="#recipes" title="Permanent link">¶</a></h3>
-<p>Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; <em>Output</em> lists the validated <code>OUTPUT_SCHEMA</code> columns.</p>
-<table>
-<thead>
-<tr>
-<th>Recipe</th>
-<th>Transforms</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/alignment_summary.py"><code>bismark/alignment_summary.py</code></a></td>
-<td>Per-sample Bismark alignment summary, one row per library.</td>
-<td><code>sample</code>, <code>pairs_analysed</code>, <code>unique_best_hit</code>, <code>mapping_efficiency_pct</code>, <code>no_alignment</code>, <code>not_unique</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/binned_methylation.py"><code>bismark/binned_methylation.py</code></a></td>
-<td>Genome-wide CpG methylation in fixed windows, one row per sample per window.</td>
-<td><code>sample</code>, <code>chromosome</code>, <code>start</code>, <code>end</code>, <code>position</code>, <code>methylation_pct</code>, <code>n_cpg</code>, <code>cpg_density_class</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/deduplication_summary.py"><code>bismark/deduplication_summary.py</code></a></td>
-<td>Per-sample Bismark deduplication summary, one row per library.</td>
-<td><code>sample</code>, <code>total_alignments</code>, <code>duplicates_removed</code>, <code>pct_duplication</code>, <code>leftover_sequences</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/mbias_all_contexts.py"><code>bismark/mbias_all_contexts.py</code></a></td>
-<td>M-bias in all three cytosine contexts, read 1 and read 2, one long frame.</td>
-<td><code>sample</code>, <code>context</code>, <code>read</code>, <code>series</code>, <code>position</code>, <code>pct_methylation</code>, <code>coverage</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/mbias_curve.py"><code>bismark/mbias_curve.py</code></a></td>
-<td>CpG M-bias curve, one row per sample x read x position.</td>
-<td><code>sample</code>, <code>read</code>, <code>series</code>, <code>position</code>, <code>pct_methylation</code>, <code>coverage</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/methylation_context_summary.py"><code>bismark/methylation_context_summary.py</code></a></td>
-<td>Per-sample, per-context methylation summary, long format (one row per</td>
-<td><code>sample</code>, <code>context</code>, <code>methylated_c</code>, <code>unmethylated_c</code>, <code>pct_methylated</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/methylation_density.py"><code>bismark/methylation_density.py</code></a></td>
-<td>Distribution of per-CpG methylation, one curve per library.</td>
-<td><code>sample</code>, <code>series</code>, <code>methylation_bin</code>, <code>n_cpgs</code>, <code>fraction_of_cpgs</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/summary_report.py"><code>bismark/summary_report.py</code></a></td>
-<td>Bismark's own run-level summary table, one row per library.</td>
-<td><code>sample</code>, <code>total_reads</code>, <code>aligned_reads</code>, <code>unaligned_reads</code>, <code>ambiguous_reads</code>, <code>duplicate_reads</code>, <code>unique_reads</code>, <code>total_cs</code>, <code>methylated_cpg</code>, <code>unmethylated_cpg</code>, <code>methylated_chg</code>, <code>unmethylated_chg</code>, <code>methylated_chh</code>, <code>unmethylated_chh</code>, <code>cpgs_called</code>, <code>pct_aligned</code>, <code>pct_duplicate</code>, <code>pct_cpg_methylation</code>, <code>pct_chg_methylation</code>, <code>pct_chh_methylation</code>, <code>conversion_efficiency_pct</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/top_variable_windows.py"><code>bismark/top_variable_windows.py</code></a></td>
-<td>The windows whose methylation moves most across the cohort.</td>
-<td><code>window_id</code>, <code>chromosome</code>, <code>window_variance</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/window_correlation.py"><code>bismark/window_correlation.py</code></a></td>
-<td>Pairwise correlation of the libraries over their binned methylomes.</td>
-<td><code>sample</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/window_group_compare.py"><code>bismark/window_group_compare.py</code></a></td>
-<td>Window-by-window methylation comparison between the run's two groups.</td>
-<td><code>window_id</code>, <code>chromosome</code>, <code>position</code>, <code>start</code>, <code>end</code>, <code>group_a</code>, <code>group_b</code>, <code>mean_a</code>, <code>mean_b</code>, <code>delta_methylation</code>, <code>t_statistic</code>, <code>p_value</code>, <code>padj</code>, <code>neg_log10_padj</code>, <code>direction</code>, <code>n_cpg_min</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bismark/window_pca.py"><code>bismark/window_pca.py</code></a></td>
-<td>Where each library sits in the space of its own binned methylome.</td>
-<td><code>sample_id</code>, <code>dim_1</code>, <code>dim_2</code>, <code>dim_3</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/methylseq/recipes/samples.py"><code>nf-core/methylseq/samples.py</code></a></td>
-<td>One row per methylseq sample: the samplesheet, joined to the run's design.</td>
-<td><code>sample_id</code>, <code>fastq_1</code>, <code>fastq_2</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/qualimap/bamqc_genome_results.py"><code>qualimap/bamqc_genome_results.py</code></a></td>
-<td>One row per sample from a Qualimap BamQC <code>genome_results.txt</code> report.</td>
-<td><code>sample</code>, <code>total_reads</code>, <code>mapped_reads</code>, <code>percentage_aligned</code>, <code>mean_coverage</code>, <code>mean_mapping_quality</code>, <code>general_error_rate</code>, <code>gc_percentage</code>, <code>duplication_rate</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/qualimap/coverage_across_reference.py"><code>qualimap/coverage_across_reference.py</code></a></td>
-<td>Read depth along the reference, from Qualimap BamQC's own windowed table.</td>
-<td><code>sample</code>, <code>chromosome</code>, <code>position</code>, <code>coverage</code>, <code>coverage_std</code>, <code>global_position</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/qualimap/coverage_histogram.py"><code>qualimap/coverage_histogram.py</code></a></td>
-<td>How many bases of the reference sit at each depth, from Qualimap BamQC.</td>
-<td><code>sample</code>, <code>coverage</code>, <code>n_genomic_locations</code>, <code>fraction</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/qualimap/genome_fraction_coverage.py"><code>qualimap/genome_fraction_coverage.py</code></a></td>
-<td>What share of the reference is covered at least X deep, from Qualimap BamQC.</td>
-<td><code>sample</code>, <code>min_coverage</code>, <code>genome_fraction_pct</code></td>
-</tr>
-</tbody>
-</table>
+<h1 id="spotlight-search-v1140"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg></span> Spotlight search <small>(v1.14.0+)</small><a class="headerlink" href="#spotlight-search-v1140" title="Permanent link">¶</a></h1>
+<p>A dashboard with a dozen tabs of thirty components each used to mean opening tabs until
+the right plot showed up. <strong>⌘K</strong> on a Mac, <strong>Ctrl+K</strong> elsewhere, or the magnifier in the
+header, opens a search across every component of every tab of the dashboard. Picking a
+result takes you to that component.</p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/spotlight/spotlight-phylum.webp" target="_blank"><img alt="Searching &quot;phylum&quot;: results on this tab first, then on Community &amp; Diversity" src="https://depictio.github.io/depictio-docs/images/guides/spotlight/spotlight-phylum.webp"></a></p>
+<hr>
+<h2 id="what-it-searches">What it searches<a class="headerlink" href="#what-it-searches" title="Permanent link">¶</a></h2>
+<p>The search reads what the dashboard already says about itself:</p>
+<ul>
+<li>tab names, descriptions and the sidebar group they sit under;</li>
+<li>component titles, subtitles, captions and descriptions;</li>
+<li>type and chart-kind labels (<em>filter</em>, <em>card</em>, <em>phylogenetic</em>, <em>sankey</em>), and a MultiQC
+  panel's module and plot;</li>
+<li>the columns a component binds;</li>
+<li>the prose of text tiles, without its markdown;</li>
+<li>section names.</li>
+</ul>
+<p>Every word typed must be found; case and accents are ignored. A word is found where a
+field starts with it, then where one of its words does, then anywhere inside it, though a
+word of one or two letters only counts at the start of a word. A hit in a title ranks
+above the same hit in a text body. There is no typo tolerance: a misspelt word finds
+nothing rather than a list of near misses.</p>
+<p>In the editor, the tab you are on is searched with its unsaved changes. The other tabs
+are fetched the first time the search opens, and only those you can open.</p>
+<hr>
+<h2 id="results">Results<a class="headerlink" href="#results" title="Permanent link">¶</a></h2>
+<p>Results are grouped by tab: the tab you are on first, marked <strong>This tab</strong>, then the others
+in sidebar order. Tabs are results too, and an empty field lists them, as a tab switcher.
+Each row shows a type icon (MultiQC panels wear the MultiQC logo), the title with the
+match highlighted, a dimmed <em>tab · section · snippet</em> line and, on the right, what it is
+(<em>Card</em>, <em>Filter</em>, <em>Sunburst</em>, <em>Tab</em>). <strong>↑</strong> and <strong>↓</strong> move, <strong>Enter</strong> opens, <strong>Esc</strong> or
+<strong>⌘K</strong> / <strong>Ctrl+K</strong> again closes, and a middle-click or ⌘/Ctrl-click opens a result in a
+new browser tab. A tab shows at most eight matches, then <em>N more in this tab — add a word
+to narrow it down</em>. Reopening the search keeps the last query, selected.</p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/spotlight/spotlight-fastqc.webp" target="_blank"><img alt="Searching &quot;fastqc&quot;: the MultiQC panels of the Sequencing QC tab" src="https://depictio.github.io/depictio-docs/images/guides/spotlight/spotlight-fastqc.webp"></a></p>
+<hr>
+<h2 id="where-it-lands">Where it lands<a class="headerlink" href="#where-it-lands" title="Permanent link">¶</a></h2>
+<ol>
+<li>Whatever hides the component opens first: the <a href="../dashboard-guide/">Guide</a>, a folded
+   section, a filter group, the collapsed filter panel, a
+   <a href="../../../features/dashboards/#persistent-sections">section shown on every tab</a>, or the
+   filter drawer on a phone.</li>
+<li>The page scrolls to the component and rings it for a moment. If a tile above it grows
+   meanwhile, the page scrolls once more to correct.</li>
+</ol>
+<p>A result on another tab opens that tab with <code>?component=</code> in the address, which the tab
+acts on and then removes. A component this tab also shows, such as one in a section
+pinned from another tab, is landed on in place. Picking a tab opens it; picking the tab
+you are on scrolls back to its top. In the editor, pending changes are saved before leaving the
+tab; if the save fails, you stay on the tab and a notification says so.</p>
+<p>Search works in view mode, in edit mode and on public dashboards. The shortcut is
+ignored while you type in a field or in the code editor.</p>
+<div class="admonition note">
+<p class="admonition-title">Known limit</p>
+<p>A filter folded under a filter bar's <strong>More filters</strong>, or a map panel the reader has
+hidden, is not uncovered. You get a <em>That component is not on screen</em> notice
+instead.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -5585,7 +5286,7 @@
 
       <!-- Logo Column -->
       <div class="depictio-footer__section depictio-footer__brand">
-        <img src="../../../../images/logo/logo_icon.png" alt="Depictio" class="depictio-footer__logo">
+        <img src="../../../images/logo/logo_icon.png" alt="Depictio" class="depictio-footer__logo">
         <span class="depictio-footer__title">Depictio</span>
         <p class="depictio-footer__tagline">Interactive dashboards for bioinformatics</p>
       </div>
@@ -5613,9 +5314,9 @@
       <div class="depictio-footer__section">
         <h4 class="depictio-footer__heading">Resources</h4>
         <ul class="depictio-footer__links">
-          <li><a href="../../../../usage/get_started/">Getting Started</a></li>
-          <li><a href="../../../../installation/docker/">Installation</a></li>
-          <li><a href="../../../../features/">Features</a></li>
+          <li><a href="../../get_started/">Getting Started</a></li>
+          <li><a href="../../../installation/docker/">Installation</a></li>
+          <li><a href="../../../features/">Features</a></li>
           <li><a href="https://demo.depictio.embl.org/" target="_blank" rel="noopener">Live Demo</a></li>
         </ul>
       </div>
@@ -5625,7 +5326,7 @@
         <h4 class="depictio-footer__heading">About</h4>
         <ul class="depictio-footer__links">
           <li><a href="https://github.com/depictio/depictio/blob/main/LICENSE" target="_blank" rel="noopener">License (MIT)</a></li>
-          <li><a href="../../../../developer/contributing/">Contributing</a></li>
+          <li><a href="../../../developer/contributing/">Contributing</a></li>
           <li><a href="https://github.com/depictio/depictio/releases" target="_blank" rel="noopener">Releases</a></li>
         </ul>
       </div>
@@ -5637,10 +5338,10 @@
       <div class="depictio-footer__funding-label">Supported by</div>
       <div class="depictio-footer__funding-logos">
         <a href="https://www.embl.org/" target="_blank" rel="noopener" title="EMBL - European Molecular Biology Laboratory">
-          <img src="../../../../assets/EMBL_logo_colour_DIGITAL.png" alt="EMBL Logo" class="depictio-footer__funding-logo">
+          <img src="../../../assets/EMBL_logo_colour_DIGITAL.png" alt="EMBL Logo" class="depictio-footer__funding-logo">
         </a>
         <a href="https://www.embl.org/about/info/arise/" target="_blank" rel="noopener" title="ARISE Programme">
-          <img src="../../../../assets/AriseLogo300dpi.png" alt="ARISE Logo" class="depictio-footer__funding-logo">
+          <img src="../../../assets/AriseLogo300dpi.png" alt="ARISE Logo" class="depictio-footer__funding-logo">
         </a>
       </div>
     </div>
@@ -5689,26 +5390,26 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.sections", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.expand", "navigation.top", "header.autohide", "toc.follow", "search.highlight", "search.share", "search.suggest", "announce.dismiss"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.sections", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.expand", "navigation.top", "header.autohide", "toc.follow", "search.highlight", "search.share", "search.suggest", "announce.dismiss"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="../../../../javascripts/depictio-rose.js"></script>
+        <script src="../../../javascripts/depictio-rose.js"></script>
       
-        <script src="../../../../javascripts/depictio-logo.js"></script>
+        <script src="../../../javascripts/depictio-logo.js"></script>
       
-        <script src="../../../../javascripts/depictio-theme-sync.js"></script>
+        <script src="../../../javascripts/depictio-theme-sync.js"></script>
       
-        <script src="../../../../javascripts/catalog-fullscreen.js"></script>
+        <script src="../../../javascripts/catalog-fullscreen.js"></script>
       
-        <script src="../../../../javascripts/template-version.js"></script>
+        <script src="../../../javascripts/template-version.js"></script>
       
-        <script src="../../../../javascripts/doc-sections.js"></script>
+        <script src="../../../javascripts/doc-sections.js"></script>
       
-        <script src="../../../../javascripts/template-catalog.js"></script>
+        <script src="../../../javascripts/template-catalog.js"></script>
       
-        <script src="../../../../javascripts/asciinema.js"></script>
+        <script src="../../../javascripts/asciinema.js"></script>
       
     
   

@@ -13,7 +13,7 @@
         <link rel="prev" href="../catalog-picker/">
       
       
-        <link rel="next" href="../realtime-events/">
+        <link rel="next" href="../dashboard-guide/">
       
       
         
@@ -1279,6 +1279,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1583,12 +1587,12 @@
   <a href="#dashboard-settings-drawer" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Dashboard settings drawer
+        Dashboard settings
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Dashboard settings drawer">
+    <nav class="md-nav" aria-label="Dashboard settings">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1596,6 +1600,17 @@
     <span class="md-ellipsis">
       
         Appearance (v1.8.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settings-for-everyone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings for everyone (v1.14.0+)
       
     </span>
   </a>
@@ -1750,6 +1765,62 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dashboard-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The dashboard Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spotlight-search/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spotlight search
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -5388,12 +5459,12 @@
   <a href="#dashboard-settings-drawer" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Dashboard settings drawer
+        Dashboard settings
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Dashboard settings drawer">
+    <nav class="md-nav" aria-label="Dashboard settings">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -5401,6 +5472,17 @@
     <span class="md-ellipsis">
       
         Appearance (v1.8.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settings-for-everyone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings for everyone (v1.14.0+)
       
     </span>
   </a>
@@ -5647,27 +5729,65 @@
 <li>Lasso, click and row-ticking all produce the same filter, so they replace one another instead of stacking.</li>
 </ul>
 <hr>
-<h2 id="dashboard-settings-drawer">Dashboard settings drawer<a class="headerlink" href="#dashboard-settings-drawer" title="Permanent link">¶</a></h2>
-<p><strong>Settings</strong>, at the top right, opens a drawer describing the dashboard: its project, owner, visibility and last-modified date, then the dashboard and project IDs, each with a copy button. Since <strong>v1.6.0</strong> the project name is a link to that project's page, and <strong>View ingestion report</strong> below it opens the <a href="../../../features/dashboards/#ingestion-report-health">ingestion report</a> for any project, not just one built from a template. The same body backs the inspector's <strong>Info</strong> tab. Since <strong>v1.8.0</strong> the drawer is no longer read-only: in edit mode it also carries the <a href="#appearance">Appearance</a> controls.</p>
+<h2 id="dashboard-settings-drawer">Dashboard settings<a class="headerlink" href="#dashboard-settings-drawer" title="Permanent link">¶</a></h2>
+<p><strong>Settings</strong>, at the top right, opens <strong>Dashboard settings</strong>. Since <strong>v1.14.0</strong> it is a dialog with a rail of sections beside the one you are on, full screen on a phone, where the rail becomes a select. It opens on <strong>Your view</strong> (on <strong>Tab defaults</strong> in the editor), then on the section you visited last, and changes save as you make them. Its icons and switches wear the dashboard's own brand.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Shown</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>About this dashboard</strong></td>
+<td>Always</td>
+<td>What the dashboard is, below</td>
+</tr>
+<tr>
+<td><strong>Your view</strong></td>
+<td>Always</td>
+<td><strong>Font size</strong> and <strong>Page width</strong>, for you only, saved in this browser. See <a href="#appearance">Appearance</a></td>
+</tr>
+<tr>
+<td><strong>Tab defaults</strong>, <strong>Tiles</strong>, <strong>Filtering</strong>, <strong>Guide</strong></td>
+<td>Edit mode</td>
+<td>Saved with the dashboard. See <a href="#settings-for-everyone">Settings for everyone</a></td>
+</tr>
+<tr>
+<td><strong>Branding</strong></td>
+<td>Edit mode</td>
+<td>Logo, colours and figure palette. See <a href="#appearance">Appearance</a></td>
+</tr>
+<tr>
+<td><strong>Feedback</strong></td>
+<td>When a <a href="../../../installation/env-reference/#feedback">feedback link</a> is configured</td>
+<td>Report a problem or suggest an improvement</td>
+</tr>
+</tbody>
+</table>
+<p><strong>About this dashboard</strong> gives its project, template, owner, visibility and last-modified date. Since <strong>v1.6.0</strong> the project name is a link to that project's page, and <strong>View ingestion report</strong> below it opens the <a href="../../../features/dashboards/#ingestion-report-health">ingestion report</a> for any project, not just one built from a template. Since <strong>v1.14.0</strong> the dashboard and project IDs, each with a copy button, are folded under <strong>Identifiers</strong>. The same body backs the inspector's <strong>Info</strong> tab.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="https://depictio.github.io/depictio-docs/images/guides/dashboard_creation/dashboard_settings.png" target="_blank">
         <img src="https://depictio.github.io/depictio-docs/images/guides/dashboard_creation/dashboard_settings.png" width="600">
     </a>
 </div>
 
-<p>Since <strong>v1.8.3</strong> a <strong>Run parameters</strong> row sits alongside it, showing the parameters the pipeline ran with. Only the keys the template highlights appear inline; the full grouped listing is one click away in the ingestion report. See <a href="../../projects/templates/#run-provenance">Run provenance</a>.</p>
+<p>Since <strong>v1.8.3</strong> a <strong>Run parameters</strong> row sits alongside it, showing the parameters the pipeline ran with. Only the keys the template highlights appear inline; <strong>All N parameters →</strong> opens the full grouped listing and <strong>Ingestion report →</strong> the report. Since <strong>v1.14.0</strong> a text tile can open the same listing with a <a href="../../../features/components/#markdown"><code>params:</code> link</a>. See <a href="../../projects/templates/#run-provenance">Run provenance</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">This replaced the Parameters panel (v1.0.0)</p>
 <p>The Dash UI put a <em>Parameters</em> panel here, with switches for edit mode and interactivity and buttons to remove every component or reset every filter. Only one of those survived the React rewrite: <strong>Reset all</strong>, now at the top of the filter panel. Editing is the <strong>Edit</strong> button, and there is no global interactivity switch.</p>
 </div>
 <h3 id="appearance">Appearance <small>(v1.8.0+)</small><a class="headerlink" href="#appearance" title="Permanent link">¶</a></h3>
-<p>In viewer mode this section holds one control, <strong>Font size</strong>. In edit mode it holds everything about how this dashboard looks.</p>
+<p>Since <strong>v1.14.0</strong> the controls of this former section sit in <strong>Your view</strong> (<strong>Font size</strong> and <strong>Page width</strong>, in view and edit mode), <strong>Tiles</strong> and <strong>Branding</strong>, the last two in edit mode.</p>
 <p><strong>Font size.</strong> <strong>A-</strong> and <strong>A+</strong> step the content through 85%, 100%, 115% and 130%. Figures, tables and cards scale; the header, sidebar and panels keep their size. The preference is stored per browser, like the dark-mode toggle, so it follows the reader rather than the dashboard.</p>
+<p><strong>Page width</strong> <small>(v1.14.0+)</small>. <strong>Full</strong>, <strong>Wide</strong> (1600px), <strong>Comfortable</strong> (1240px) or <strong>Compact</strong> (1080px): how wide the dashboard runs on a large screen, centred. Each tab remembers its own, per browser.</p>
 <div class="admonition tip">
 <p class="admonition-title">Scaling one figure rather than all of them</p>
 <p>A single tile takes a <code>font_scale</code> of its own from its edit menu, between 0.7× and 2×, applied to the whole Plotly layout font. See <a href="../../../features/components/#figure-components">Components</a>.</p>
 </div>
-<p><strong>Branding.</strong> <strong>Inherit instance</strong> or <strong>Customise</strong>. Under <em>Customise</em>, anything left empty still follows the instance branding, so an override states only what differs.</p>
+<p><strong>Branding.</strong> <strong>Source</strong>: <strong>Inherit instance</strong> (<strong>Inherit main tab</strong> on a child tab whose main tab is branded) or <strong>Customise</strong>. Under <em>Customise</em>, anything left empty still follows the instance branding, so an override states only what differs.</p>
 <table>
 <thead>
 <tr>
@@ -5715,6 +5835,39 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>component explicit  &gt;  dashboard default  &gt;  instance branding  &gt;  Mantine default
 </code></pre></div>
 <p>See <a href="../../administration/branding/">Branding</a> for the model behind all of this, and for the <code>brand_theme:</code> YAML equivalent.</p>
+<h3 id="settings-for-everyone">Settings for everyone <small>(v1.14.0+)</small><a class="headerlink" href="#settings-for-everyone" title="Permanent link">¶</a></h3>
+<p>In edit mode, the sections after <strong>Your view</strong> are saved with the dashboard for every
+reader, and the <strong>Guide</strong> settings hold for every tab of it. Light or dark stays the sun / moon switch at
+the foot of the sidebar.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tab defaults</strong></td>
+<td>What this tab opens with: <strong>Page width</strong>, <strong>Filter panel</strong> open or collapsed, and <strong>Show the tab's name</strong>. A reader's own choice still wins. See <a href="../../../features/dashboards/#tab-defaults">Tab defaults</a></td>
+</tr>
+<tr>
+<td><strong>Tiles</strong></td>
+<td><strong>Fit tiles to their content</strong> (<code>autofit</code>) and <strong>Advanced viz controls</strong>: <em>Popover</em>, <em>Under title</em> or <em>Side rail</em> (<code>advanced_viz_controls</code>). See <a href="../../../features/yaml-sync/#tile-height">Tile height and control placement</a></td>
+</tr>
+<tr>
+<td><strong>Filtering</strong></td>
+<td><strong>Funnel filtering by default</strong></td>
+</tr>
+<tr>
+<td><strong>Guide</strong></td>
+<td><strong>Show the Guide</strong> and an <strong>Introduction</strong> shown at the top of it. See <a href="../dashboard-guide/">The dashboard Guide</a></td>
+</tr>
+</tbody>
+</table>
+<p>A child tab without a brand of its own now draws in its main tab's brand, figures and
+component builder previews included. Its Branding section offers <strong>Inherit main tab</strong>,
+and <strong>Customise</strong> starts from the main tab's brand.</p>
 <h2 id="component-wise-options">Component-wise options<a class="headerlink" href="#component-wise-options" title="Permanent link">¶</a></h2>
 <p>In edit mode, hovering a component reveals three icons in its top-right corner, and resize handles on its edges and corners.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
@@ -5726,8 +5879,9 @@
 <ul>
 <li><span style="color: #888888;"><i class="mdi mdi-dots-grid"></i> <strong>Drag handle</strong></span>: grab it to move the component in the grid.</li>
 <li><span style="color: #15aabf;"><i class="mdi mdi-information-outline"></i> <strong>Info</strong></span>: the component's metadata: type, data source, configuration.</li>
-<li><span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> <strong>Menu</strong></span>: <strong>Edit</strong> reopens the builder on this component, <strong>Duplicate</strong> copies it, <strong>Move to section</strong> hands it to another section, <strong>Delete</strong> removes it.</li>
+<li><span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> <strong>Menu</strong></span>: <strong>Edit</strong> reopens the builder on this component, <strong>Duplicate</strong> copies it, <strong>Move to section</strong> hands it to another section, <strong>Copy to tab…</strong> <small>(v1.14.0+)</small> adds a copy to another tab (see <a href="../../../features/dashboards/#copy-to-tab">Copy to tab</a>), <strong>Highlight on…</strong> <small>(v1.14.0+)</small> shows a figure or advanced visualization on another tab without copying it (see <a href="../../../features/components/#highlight-components">Highlight Components</a>), <strong>Delete</strong> removes it. A figure's menu also carries its <strong>Font size</strong>, and a tile resized by hand that could fit its content offers <strong>Reset to auto height</strong>.</li>
 </ul>
+<p>To find a component on any tab, press <strong>⌘K</strong> / <strong>Ctrl+K</strong> or click the magnifier in the header <small>(v1.14.0+)</small>. See <a href="../spotlight-search/">Spotlight search</a>.</p>
 <hr>
 <h2 id="table-component-features">Table Component Features<a class="headerlink" href="#table-component-features" title="Permanent link">¶</a></h2>
 <h3 id="data-export-v060"><span style="color: #45B8AC;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"></path></svg></span></span> Data Export (v0.6.0+)<a class="headerlink" href="#data-export-v060" title="Permanent link">¶</a></h3>

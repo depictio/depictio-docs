@@ -1277,6 +1277,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1437,6 +1441,62 @@
     
   
     Using the dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/dashboard-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The dashboard Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/spotlight-search/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spotlight search
   
 
     
@@ -5261,7 +5321,7 @@
 </tr>
 <tr>
 <td>Dashboard override</td>
-<td>The dashboard's Settings drawer, or <code>brand_theme:</code> in its YAML</td>
+<td>The dashboard's Settings, or <code>brand_theme:</code> in its YAML</td>
 <td>No</td>
 </tr>
 </tbody>
@@ -5334,7 +5394,8 @@
 <h2 id="attribution">The "Powered by Depictio" attribution <small>(v1.8.2+)</small><a class="headerlink" href="#attribution" title="Permanent link">¶</a></h2>
 <p>The badge renders exactly when the Depictio wordmark does not, meaning when the logo in scope resolves to <code>custom</code> or <code>none</code>. A stock deployment already carries the wordmark in the app rail and on the login card, so a badge there would only repeat it; a branded one is where it is the only thing saying what the app is built on. It appears once per surface: under the logo on the login card, in the app rail outside dashboards, and in a dashboard header.</p>
 <h2 id="a-dashboard-override">A dashboard override<a class="headerlink" href="#a-dashboard-override" title="Permanent link">¶</a></h2>
-<p>From a dashboard in edit mode: <strong>Settings → Appearance → Branding → Customise</strong>. The same fields appear, with the instance's values shown as placeholders. The override applies to that dashboard's page only, so it can wear its own identity inside a differently branded instance. See <a href="../../guides/dashboard_usage/#appearance">Using the dashboard</a> for the rest of the Appearance section.</p>
+<p>From a dashboard in edit mode: <strong>Settings → Branding → Customise</strong>. The same fields appear, with the instance's values shown as placeholders. The override applies to that dashboard's page only, so it can wear its own identity inside a differently branded instance. See <a href="../../guides/dashboard_usage/#appearance">Using the dashboard</a> for the rest of the Appearance controls.</p>
+<p>Since <strong>v1.14.0</strong> a child tab with no brand of its own draws in its main tab's, figures included, and its <strong>Source</strong> reads <strong>Inherit main tab</strong>. Before, it fell back to the instance's.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/guides/branding/dashboard-brand-override.webp" target="_blank"><img alt="A dashboard wearing its own brand" src="https://depictio.github.io/depictio-docs/images/guides/branding/dashboard-brand-override.webp"></a></p>
 <p>In YAML it is a top-level <code>brand_theme:</code> block. The bundled penguins demo carries one as a worked example:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">brand_theme</span><span class="p">:</span>
