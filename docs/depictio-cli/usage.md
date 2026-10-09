@@ -12,6 +12,7 @@
 - [Which server a command uses](#choosing-a-server)
 - [🚀 Commands](#commands)
   - [📥 Ingest Command](#ingest-command)
+  - [👀 Watch Command](#watch-command)
   - [💻 Local Server Commands](#local-commands)
   - [📋 Config Commands](#config-commands)
   - [📊 Data Commands](#data-commands)
@@ -39,6 +40,7 @@ Running `depictio` with no command prints a quick start. `depictio --help` lists
 | `local up`                    | Start a complete Depictio server on this machine              | All users      |
 | `local open` / `status` / `down` / `wipe` / `export` | Manage that local server             | All users      |
 | `ingest <results dir>`        | Ingest pipeline results, from validation to dashboards        | All users      |
+| `watch <results dir>`         | Ingest pipeline results, then again whenever they change      | All users      |
 | `config show`                 | Show the CLI configuration in use                             | All users      |
 | `config check`                | Check the server and its S3 storage, or validate a project file | All users    |
 | `config sync`                 | Validate a project configuration and sync it to the server    | All users      |
@@ -47,6 +49,8 @@ Running `depictio` with no command prints a quick start. `depictio --help` lists
 | `data process`                | Process data collections                                      | All users      |
 | `data join`                   | Run the table joins the project configuration defines         | All users      |
 | `data push-images`            | Upload a directory of images for an image data collection     | All users      |
+| `data versions`               | List the Delta commits of a data collection                   | All users      |
+| `data vacuum`                 | Remove the Delta files no retained commit needs               | All users      |
 | `dashboard validate`          | Validate a dashboard YAML file                                | All users      |
 | `dashboard import`            | Import a dashboard YAML file to the server                    | All users      |
 | `dashboard export`            | Export a dashboard to a YAML file                             | All users      |
@@ -204,6 +208,11 @@ Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/
     | `--data-collection-tag` | `string` | | Scan and process only this data collection |
     | `--skip` | `STEP` | | Steps to skip, see [Skipping steps](#skipping-steps) |
     | `--continue-on-error` | `flag` | `false` | Carry on when a step fails. The command still exits with code 1 at the end |
+    | `--sync-changed` | `flag` | `false` | Re-upload only the files whose size or modification time moved since the last scan. Narrower than `--update-config`, which re-uploads every file |
+    | `--write-mode` | `string` | `overwrite` | How step 6 writes a table. `overwrite` rewrites it whole. `replace-runs` partitions it by run and rewrites only the runs in this batch, leaving the others untouched. See [Data versions](../features/versioning.md#how-new-data-versions-are-written) |
+    | `--incremental-write` | `flag` | `false` | With `--write-mode replace-runs`, rewrite only the runs that changed instead of rebuilding the whole table. Falls back to a full rebuild whenever that cannot be done safely (run removed, table not partitioned by run, column type changed) |
+    | `--skip-unchanged` | `flag` | `false` | Leave a data collection's table untouched when the scan found no new, changed or removed file for it. Off by default, so that ingesting again always rebuilds a project that drifted |
+    | `--repartition` | `flag` | `false` | Let `--write-mode replace-runs` partition by run a table that is not yet. This rewrites every row, so it is never done implicitly, and never by the watcher |
 
 ??? info "🔑 Automation"
 
@@ -236,6 +245,10 @@ Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/
     | `--streaming` | `flag` | `false` | Stream the Delta write instead of materialising the whole table in memory. Lowers peak RSS on large ingests. Experimental, falls back to the standard write on any failure (v1.3.0+) |
     | `--preview-recipes` | `flag` | `false` | Show recipe input sources and transformed output before writing to Delta Lake |
     | `--rich-tables` | `flag` | `false` | Show a detailed summary of the run |
+    | `--concurrency` | `int` | `4` | Parallel HTTP requests for file uploads and cleanup deletes |
+    | `--upload-chunk-size` | `int` | `1000` | Files per `/files/upsert_batch` request |
+    | `--state-cache` / `--no-state-cache` | `flag` | `--state-cache` | Skip the runs whose file tree is unchanged since the last successful scan, from a local cache. Only applies when rescanning |
+    | `--async-upsert` | `flag` | `false` | Ask the server to profile each written table in the background, and poll until it finishes, instead of holding one long request open. A server without offloading enabled ignores it and answers inline |
 
     | Variable | Default | Description |
     |----------|---------|-------------|
@@ -355,6 +368,133 @@ Here the first step fails, as no server answers, and its message says how to sta
       --skip server-check,s3-check \
       --rich-tables
     ```
+
+### 👀 Watch Command { #watch-command }
+
+`depictio ingest` on a loop: ingest the results directory, then again whenever its files
+change. Each cycle writes new [data versions](../features/versioning.md#data-versions) of
+the tables it touches.
+
+```bash
+depictio watch [OPTIONS] [DATA_DIR]
+```
+
+```bash
+# Rewrite only the runs that changed, on each cycle
+depictio watch results/ --write-mode replace-runs --incremental-write
+```
+
+The project is chosen as `ingest` chooses it, from `DATA_DIR`, `--template` or
+`--project-config-path`. The first cycle runs at once and refreshes the project as
+`ingest --update-config` does, which brings it up to date with whatever changed while
+nothing watched. The later cycles rescan and rewrite what moved. No cycle checks the
+server and S3 or imports dashboards: run `depictio ingest` once first if the project
+should have its dashboards.
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `DATA_DIR` | `path` | | Directory of the pipeline results to watch. Without `--template` or `--project-config-path`, the template is detected from it |
+| `--server` | `string` | see [Which server a command uses](#choosing-a-server) | `local`, or a CLI configuration file |
+| `--template` | `string` | detected | Template to build the project from, as for `ingest`. Not with `--project-config-path` |
+| `--project-config-path` | `string` | | Project YAML, for a pipeline Depictio ships no template for. Not with `--template` |
+| `--project` | `string` | | Project name. Replaces the name the template gives, or the `name` in the project file |
+| `--var` | `KEY=VALUE` | | Template variable, repeatable |
+| `--mode` | `string` | `incremental` | `incremental` re-uploads only the files that changed. `full` re-uploads and rewrites everything on every cycle |
+| `--full-every` | `int` | | Run a full cycle every N incremental ones |
+| `--backend` | `string` | `auto` | `native` (filesystem events only), `polling` (a periodic walk), `both`, or `auto`: `both` on local disk, `polling` on a network filesystem, where events do not see writes made from another host |
+| `--interval` | `float` | `300` | Seconds between polling walks, also the backstop for lost events |
+| `--debounce` | `float` | `30` | Seconds of quiet before a cycle starts |
+| `--max-delay` | `float` | `300` | Ceiling on the debounce, so a tree written continuously still gets ingested |
+| `--settle` | `float` | `5` | Seconds a file must keep the same size and modification time before it is ingested |
+| `--write-mode` | `string` | `overwrite` | How each cycle writes a table, as for `ingest`: `overwrite` or `replace-runs` |
+| `--incremental-write` | `flag` | `false` | With `--write-mode replace-runs`, rewrite only the runs that changed. Ignored, with a warning, with `overwrite` |
+| `--drop-missing-runs` | `flag` | `false` | Remove the runs of a location added with `ingest --attach-run` that is not on this host. Without it, such a project stops the first cycle |
+| `--concurrency` | `int` | `4` | Parallel HTTP requests during each cycle |
+| `--once` | `flag` | `false` | Run a single cycle and exit with its status |
+| `--max-runs` | `int` | | Stop after this many cycles, the first included |
+| `--dry-run` | `flag` | `false` | Report each cycle's changes without writing to the server |
+
+With `--mode incremental` and the default `--write-mode overwrite`, the watcher warns at
+start-up: a collection whose files moved still has its whole table rewritten.
+`--write-mode replace-runs --incremental-write` rewrites only the runs that changed. An
+incremental cycle leaves alone the collections whose files did not move, as long as the
+previous cycle succeeded; after a failure, and on every full cycle, every table is
+rebuilt.
+
+`auto` picks polling alone as soon as one watched location is on NFS, SMB/CIFS, Lustre,
+GPFS, BeeGFS, GlusterFS, Ceph, AFS, 9p or a FUSE mount. A location of the project that does not exist on this machine is skipped with
+a warning, and the watcher stops if none is left.
+
+**Stopping.** Ctrl-C or SIGTERM lets the cycle in progress finish, then exits, so the
+watcher is safe to run under systemd or as a container.
+
+**One per project.** A watcher holds a lock under `~/.depictio/state/`, per server and
+project, next to the scan-state cache (`DEPICTIO_CLI_STATE_DIR` moves both).
+`depictio ingest` takes the same lock before its first write, so a second watcher or
+ingestion on the same project stops at once with an error that names the lock file.
+
+**In the admin panel.** A watcher registers with the server, sends a heartbeat every
+minute, and asks every 5 seconds whether someone pressed **Run now** on its card in the
+[Watchers pane](../usage/administration/monitoring.md#watchers). It reaches out to the
+server and never the reverse, so it works from a machine the server cannot reach, such
+as an HPC login node. Its runs show **Watch**, or **UI** for one started by **Run now**,
+as their trigger. On a server with `DEPICTIO_MONITORING_ENABLED=false`, the watcher
+carries on without reporting.
+
+#### Running a watcher as a service { #running-a-watcher-as-a-service }
+
+The depictio repository ships two ways to keep a watcher running, both configured through
+environment variables:
+
+- [`deploy/depictio-watch@.service`](https://github.com/depictio/depictio/blob/main/deploy/depictio-watch@.service),
+  a systemd template unit: one instance per project, each reading
+  `/etc/depictio/<instance>.env`;
+- [`deploy/docker-compose.watcher.yaml`](https://github.com/depictio/depictio/blob/main/deploy/docker-compose.watcher.yaml),
+  a container running the `depictio-cli` image, configured by a `.env` next to it
+  (start from [`deploy/.env.example`](https://github.com/depictio/depictio/blob/main/deploy/.env.example)).
+
+=== "systemd"
+
+    ```bash
+    sudo cp deploy/depictio-watch@.service /etc/systemd/system/
+    sudo systemctl edit depictio-watch@.service    # set User=, the account it runs as
+    sudo install -d /etc/depictio
+    sudoedit /etc/depictio/myproject.env
+    sudo systemctl enable --now depictio-watch@myproject
+    journalctl -u depictio-watch@myproject -f
+    ```
+
+=== "Docker Compose"
+
+    ```bash
+    cp deploy/.env.example deploy/.env    # then fill it in
+    docker compose -f deploy/docker-compose.watcher.yaml up -d
+    docker compose -f deploy/docker-compose.watcher.yaml logs -f
+    ```
+
+    For several projects, run it once per project with its own `COMPOSE_PROJECT_NAME`
+    and `--env-file`.
+
+| Variable | systemd | Docker Compose |
+|----------|---------|----------------|
+| `DEPICTIO_CLI_CONFIG` | Required: the CLI configuration | Required |
+| `DEPICTIO_PROJECT_CONFIG` | Required: the project YAML | Required |
+| `DEPICTIO_DATA_ROOT` | | Required: the data root on the host, mounted read-only |
+| `DEPICTIO_DATA_ROOT_MOUNT` | | `/data`. Must match the paths in the project YAML |
+| `DEPICTIO_WATCH_MODE` | `incremental` | `incremental` |
+| `DEPICTIO_WATCH_WRITE_MODE` | `overwrite` | `replace-runs` |
+| `DEPICTIO_WATCH_INCREMENTAL_WRITE` | `0`. `1` adds `--incremental-write` | Not a variable: uncomment `--incremental-write` in the compose file |
+| `DEPICTIO_WATCH_BACKEND` | `auto` | `polling`, since file events do not cross a bind mount reliably |
+| `DEPICTIO_WATCH_INTERVAL` | `300` | `300` |
+| `DEPICTIO_WATCH_DEBOUNCE` | `30` | `30` |
+| `DEPICTIO_WATCH_SETTLE` | `5` | `5` |
+| `DEPICTIO_CLI_BIN` | `/usr/local/bin/depictio` | |
+| `DEPICTIO_CLI_IMAGE` | | `ghcr.io/depictio/depictio-cli:latest` |
+| `WATCHER_NAME` | | `depictio-watcher`, the container name |
+
+Both give a stopping watcher 15 minutes to finish its cycle. The unit keeps the lock and
+the scan-state cache in `/var/lib/depictio-watch`, and the compose file in a named volume,
+so a restart does not rescan everything.
 
 ### 💻 Local Server Commands <small>(v1.12.0+)</small> { #local-commands }
 
@@ -487,6 +627,11 @@ depictio data scan [OPTIONS]
 | `--data-collection-tag` | `string`  |         | Data collection to scan                |
 | `--rescan-folders`      | `boolean` | `false` | Reprocess all runs for the data collection |
 | `--sync-files`          | `boolean` | `false` | Update files for the data collection   |
+| `--sync-changed`        | `boolean` | `false` | Re-upload only the files whose metadata moved since the last scan. Narrower than `--sync-files`, which re-uploads every registered file |
+| `--dry-run`             | `boolean` | `false` | Report what would be registered or removed, without writing to the server |
+| `--state-cache` / `--no-state-cache` | `boolean` | `--state-cache` | Skip the runs whose file tree is unchanged since the last successful scan, from a local cache. Only applies when rescanning |
+| `--concurrency`         | `int`     | `4`     | Parallel HTTP requests for file uploads and cleanup deletes |
+| `--upload-chunk-size`   | `int`     | `1000`  | Files per `/files/upsert_batch` request |
 | `--rich-tables`         | `boolean` | `false` | Display rich tables in the output      |
 
 ```bash
@@ -508,6 +653,9 @@ depictio data process [OPTIONS]
 | `--server`              | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
 | `--project-config-path` | `string`  |         | Project configuration file       |
 | `--overwrite`           | `boolean` | `false` | Overwrite existing tables        |
+| `--write-mode`          | `string`  | `overwrite` | `overwrite` rewrites the whole table. `replace-runs` partitions it by run and rewrites only the runs in this batch, leaving the others untouched |
+| `--repartition`         | `boolean` | `false` | Let `--write-mode replace-runs` partition by run a table that is not yet. This rewrites every row |
+| `--async-upsert`        | `boolean` | `false` | Ask the server to profile the written table in the background and poll until it finishes. Servers without offloading enabled ignore it |
 | `--rich-tables`         | `boolean` | `false` | Display rich tables in the output |
 | `--preview-recipes`     | `boolean` | `false` | Show recipe input sources and transformed output without writing to Delta Lake |
 
@@ -571,6 +719,71 @@ The directory structure is kept, relative to the source directory, and images al
 
 ```bash
 depictio data push-images ./data/images s3://my-bucket/project/images/ --dry-run
+```
+
+---
+
+#### `data versions` { #data-versions }
+
+List the Delta commits of a data collection, with what Depictio recorded on each. The same
+history is on the project page, see [Dataset history](../features/versioning.md#dataset-history).
+
+```bash
+depictio data versions <data_collection_tag> [OPTIONS]
+```
+
+| Parameter               | Type      | Default | Description                                  |
+| ----------------------- | --------- | ------- | -------------------------------------------- |
+| `data_collection_tag`   | `string`  | **required** | Data collection whose Delta history to list |
+| `--server`              | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
+| `--project-config-path` | `string`  |         | Project configuration file                   |
+| `--limit`               | `int`     | `20`    | Number of commits to show                    |
+| `--json`                | `boolean` | `false` | Emit machine-readable JSON                   |
+
+Each row gives the `version`, its `timestamp` and Delta `operation`, then what Depictio
+recorded: the `write_mode`, the `trigger`, `rows_added`, `files_added`, the number of
+`runs`, and the `ingestion_run` that wrote it. The command reads the table's commit log on
+S3 directly, with the storage settings of the CLI configuration.
+
+Depictio stores that record on the commit itself, under `depictio.` keys:
+`data_collection_id`, `data_collection_tag` and `write_mode` always, and when known
+`ingestion_run_id`, `project_id`, `trigger`, `cli_version`, `user_email`, `file_count`,
+`row_count`, `run_count` and `run_tags` (the first 50).
+
+```bash
+depictio data versions my_table --project-config-path ./config.yaml --limit 5
+```
+
+---
+
+#### `data vacuum` { #data-vacuum }
+
+Remove the Delta files that no retained commit needs. Every ingestion leaves the previous
+commit's files behind, so a table's footprint on S3 grows until it is vacuumed, and
+nothing in Depictio vacuums on its own.
+
+```bash
+depictio data vacuum <data_collection_tag> [OPTIONS]
+```
+
+| Parameter               | Type      | Default | Description                                  |
+| ----------------------- | --------- | ------- | -------------------------------------------- |
+| `data_collection_tag`   | `string`  | **required** | Data collection whose stale Delta files to remove |
+| `--server`              | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
+| `--project-config-path` | `string`  |         | Project configuration file                   |
+| `--retention-hours`     | `int`     | `168`   | Keep the files that commits newer than this need. Going below the default breaks readers that are mid-query |
+| `--apply`               | `boolean` | `false` | Delete. Without it, the command only reports what it would remove |
+
+<!-- prettier-ignore -->
+!!! warning "Vacuumed commits can no longer be read"
+    A commit older than `--retention-hours` loses the files it needs. A
+    [dashboard version](../features/versioning.md#data-versions) pinned to it, a preview of
+    that version, and **At version** on the project page then have nothing to read.
+
+```bash
+# See what would go, then delete it
+depictio data vacuum my_table --project-config-path ./config.yaml
+depictio data vacuum my_table --project-config-path ./config.yaml --apply
 ```
 
 ### 📈 Dashboard Commands
