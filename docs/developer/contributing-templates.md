@@ -275,7 +275,7 @@ At most 24 grid rows at compact width, in this order:
 | About | Two card texts side by side: *About this dashboard*, and *The run* with run facts from `{{param:…}}` and live values |
 | Pipeline | A card text with a `::: steps` flow of 4 to 6 steps, each linking its parameters and its tab |
 | Key figures | A filter bar (the group, then the sample) and 4 `headline` cards, each with a `caption`, a `link: tab:<Tab>` and a `description` |
-| Findings | A filter bar, a findings text with [live values](../features/yaml-sync.md#text-live-values), then 4 figures, one per analysis tab, in two rows that fill the width |
+| Findings | A filter bar, a findings text with [live values](../features/yaml-sync.md#text-live-values), then 4 figures, one per analysis tab, two equal tiles (w4) per row |
 | How to read | One text: a heading per tab group, then one `[Tab](tab:Tab)` line per tab with its question |
 
 ```yaml
