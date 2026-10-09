@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/airrflow" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="5.1.0">
@@ -39,11 +39,11 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
 !!! info "No external metadata file"
     Everything the template reads comes from the run itself: the validated
     samplesheet the pipeline writes to `pipeline_info/samplesheet.valid.tsv` is
-    the hub data collection, so there is nothing to prepare. The dashboard groups
-    samples on its `treatment` column; a sample sheet that names the condition
-    differently passes `--var GROUP_COL=<column>`. 5.1.1 has no AWS megatest run,
-    so 5.1.0 is the newest release the template could be validated against; it
-    binds against both.
+    the hub data collection, so there is nothing to prepare. The one column to
+    name is the condition, `GROUP_COL`, which defaults to `treatment`, the
+    column airrflow's samplesheet schema documents for it. 5.1.1 has no AWS
+    megatest run, so 5.1.0 is the newest release the template could be validated
+    against; it binds against both.
 
 ---
 
@@ -60,11 +60,30 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
     up from `{DATA_ROOT}/pipeline_info/samplesheet.valid.tsv`; pass
     `--var SAMPLESHEET_FILE=...` to point somewhere else.
 
+    The condition filter reads the samplesheet column named by `GROUP_COL`
+    (default `treatment`, labelled `Condition`). A samplesheet that keeps the
+    condition in another free column names it, and can relabel it:
+
+    ```bash
+    depictio ingest /path/to/airrflow_results \
+      --template nf-core/airrflow/latest \
+      --var GROUP_COL=intervention \
+      --var GROUP_COL_DISPLAY=Intervention
+    ```
+
+    | Variable | Default | Meaning |
+    |---|---|---|
+    | `DATA_ROOT` | required | Root of the airrflow output directory |
+    | `SAMPLESHEET_FILE` | `{DATA_ROOT}/pipeline_info/samplesheet.valid.tsv` | The validated samplesheet, the hub data collection |
+    | `GROUP_COL` | `treatment` | Samplesheet column holding the condition; must exist in the samplesheet |
+    | `GROUP_COL_DISPLAY` | `Condition` | Reader-facing label of that column in filter titles |
+    | `SKIP_CLONAL_ANALYSIS`, `SKIP_REPORT`, `SKIP_THRESHOLD_REPORT`, `SKIP_MULTIQC`, `ASSEMBLED_MODE` | unset | Mirror the run's route flags; see *Conditional routes* below |
+
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/airrflow -profile docker --outdir results
+    nextflow run nf-core/airrflow -r 5.1.0 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -84,7 +103,8 @@ nf-core module, so the tile chrome names where each panel comes from.
 The route flags in the *Conditional routes* table are not read back from
 `params.json` yet, so a run started with `--skip_clonal_analysis`,
 `--skip_report`, `--skip_report_threshold`, `--skip_multiqc` or
-`--mode assembled` needs the matching `--var SKIP_...=true`. Omitting one still
+`--mode assembled` needs the matching `--var SKIP_...=true` (or
+`--var ASSEMBLED_MODE=true`). Omitting one still
 ingests: the affected collections are optional and simply come up empty.
 
 !!! info "Self-adapting layout"
@@ -150,11 +170,13 @@ colours the per-sample lines and annotates the heatmaps.
         | Findings | Live result rows, then 4 figures: V family composition per sample, the Hill diversity profile, clones by number of samples holding them and the clonal homeostasis sunburst |
         | How to read this dashboard | The tabs by group, each with its question |
 
-        The Key figures read the collections of the default fastq route. A
-        `--mode assembled` run (`ASSEMBLED_MODE`) has no input reads card and keeps
-        three: samples, clones and sequences per clone. A
-        `--skip_clonal_analysis` run (`SKIP_CLONAL_ANALYSIS`) has no clones or
-        sequences per clone cards and keeps two: samples and input reads.
+        Every route keeps four Key figures: a card whose collection a route
+        lacks gives its slot to an alternate. A `--mode assembled` run
+        (`ASSEMBLED_MODE`) counts the input sequences instead of the input reads,
+        and a `--skip_report` run (`SKIP_REPORT`) the sequences that entered
+        clonal assignment. A `--skip_clonal_analysis` run
+        (`SKIP_CLONAL_ANALYSIS`) shows unique sequences and V genes instead of
+        clones and sequences per clone.
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
@@ -254,6 +276,13 @@ colours the per-sample lines and annotates the heatmaps.
         | V-J pairing | 1 advanced visualization |
         | Spectratype per sample (collapsed) | *Spectratype per sample* |
 
+    !!! tip "Spectratype and V-J pairing need the AIRR table"
+        Both read the `*__repertoire-pass.tsv` rearrangement table enchantR's
+        repertoire analysis starts from, keeping only the handful of columns they
+        need. The two collections are optional: a run with
+        `--skip_clonal_analysis`, or a copy of the output without that table,
+        drops the CDR3 & Pairing tab and keeps the rest of the dashboard.
+
 === ":material-chart-bell-curve:{ .mc-teal } Clonal Diversity"
 
     **Clonality** · *How many clones does each repertoire hold, and how diverse is it?*
@@ -338,6 +367,13 @@ colours the per-sample lines and annotates the heatmaps.
     from `clonal_diversity.tsv`, so its diversity values are missing while its
     clone counts stand.
 
+Tables and scatters select on their entity column: the sample sheet, the
+repertoire summary, the sequence counts and clonal overlap tables, the
+clones-against-depth figure, the richness-against-evenness scatter and the
+rank-abundance curve on `sample_id`, and the clonal threshold table on
+`subject_id`. A pick becomes a dashboard filter that the project links carry to
+every collection they reach.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -346,14 +382,14 @@ Depictio reads the **output** of nf-core/airrflow, it does not run the pipeline.
 Run the pipeline first:
 
 ```bash
-nextflow run nf-core/airrflow \
+nextflow run nf-core/airrflow -r 5.1.0 \
   --input samplesheet.tsv \
   --mode fastq \
   --library_generation_method specific_pcr_umi \
   --cprimers CPrimers.fasta \
   --vprimers VPrimers.fasta \
   --umi_length 12 \
-  -profile docker
+  --outdir results -profile docker
 ```
 
 Then point Depictio at the results:
@@ -394,16 +430,20 @@ somewhere under the root. Nothing outside the run is needed.
 └── clonal_analysis/
     ├── find_threshold/all_reps_dist_report/tables/
     │   └── all_reps_threshold-summary.tsv          # shazam threshold per subject
-    └── repertoire_analysis/repertoire_analysis_report/tables/
-        ├── clonal_diversity.tsv
-        ├── clonal_overlap.tsv
-        ├── clone_sizes_table.tsv
-        └── num_clones_table.tsv
+    └── repertoire_analysis/repertoire_analysis_report/
+        ├── repertoires/
+        │   └── *__repertoire-pass.tsv              # AIRR table: spectratype, V-J pairing
+        └── tables/
+            ├── clonal_abundance.tsv                # rank abundance with bootstrap band
+            ├── clonal_diversity.tsv
+            ├── clonal_overlap.tsv
+            ├── clone_sizes_table.tsv
+            └── num_clones_table.tsv
 ```
 
 ---
 
-## :material-flask-outline: Test data
+## :material-flask-outline: Validation runs
 
 The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/download_test_data.sh),
@@ -418,7 +458,9 @@ The run is
 `s3://nf-core-awsmegatests/airrflow/results-e69d49e3f23f11a3391755b5fb7aa4283c0a2471/`
 (the 5.1.0 release tag): a ten-sample, two-subject multiple sclerosis B cell
 study of cervical lymph node and brain lesion tissue, run in the default
-`--mode fastq` UMI route. The manifest fetches thirteen keys, about 3 MB;
+`--mode fastq` UMI route. The manifest fetches fifteen keys, about 330 MB,
+nearly all of it the AIRR rearrangement table behind the spectratype and the
+V-J grid;
 `post_fetch_help` in `megatest.yaml` prints the dry-run and full-run commands
 once the download finishes.
 
@@ -453,7 +495,7 @@ depictio ingest /tmp/airrflow_test \
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it a Draft.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it Experimental.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

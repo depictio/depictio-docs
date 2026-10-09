@@ -331,8 +331,7 @@ bash depictio/projects/nf-core/chipseq/2.1.0/download_test_data.sh /tmp/chipseq_
 
 Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
-To ingest a run again, add `--update-config`: the project is refreshed in place,
-and its dashboards are kept as they are rather than imported a second time.
+Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 
 ---
 

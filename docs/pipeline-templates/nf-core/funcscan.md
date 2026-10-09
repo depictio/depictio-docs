@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/funcscan" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="4.0.0">
@@ -29,7 +29,7 @@ hide:
   <span class="tpl-version-badge">latest</span>
 </div>
 
-The funcscan template covers the four aggregated screening reports of a standard nf-core/funcscan run:
+The funcscan template covers the four aggregated screening reports of a standard nf-core/funcscan run, plus the annotated contigs they share and the run's own record of what it ran:
 
 - :material-compass-outline: **Overview**: one key figure per screen, live findings and one figure per screen, each linked to the tab that explains it
 - :material-flask-outline: **Data & QC**: the screens and tool versions the run recorded, what each assembly yielded, and the contigs the screens share
@@ -43,11 +43,12 @@ The funcscan template covers the four aggregated screening reports of a standard
     no report, so its collections prune themselves. `--var SKIP_ARG=true` (or
     `SKIP_AMP`, `SKIP_BGC`, `SKIP_CAZYME`) prunes an arm explicitly.
 
-!!! note "No MultiQC tab"
+!!! note "No MultiQC panels, only versions"
     funcscan feeds MultiQC nothing but software versions: the parquet holds one
     run-metadata row, with no general-statistics table and no module sections.
-    The **Run report** tab reads those versions back out of the report, and
-    **Samples** carries the per-assembly read.
+    The template turns that row into a table of tools per screen, which the
+    **Run report** tab reads, and the same versions reach the dashboard Settings
+    drawer through the template's provenance block.
 
 ---
 
@@ -68,7 +69,7 @@ The funcscan template covers the four aggregated screening reports of a standard
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/funcscan -profile docker --outdir results
+    nextflow run nf-core/funcscan -r 4.0.0 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -83,7 +84,9 @@ The template reads one aggregated report per arm: hAMRonization for the
 resistome, AMPcombi for the peptides, comBGC for the gene clusters and run_dbCAN
 for the CAZymes. From whichever of them the run produced it derives a per-sample
 hub collection, joined to every screening collection on `sample`, so one sample
-selection reaches every tab.
+selection reaches every tab. A second hub, the per-contig annotation layer,
+is rebuilt from the four screens and carries a contig selection into each of
+them.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -153,9 +156,12 @@ child tab.
     <!-- screenshot pending v2 -->
 
     The run's MultiQC report carries software versions only, so there is no
-    MultiQC tab: this one reads the versions back out of it. The screens that ran
-    and the distinct tools come first, then the tool versions per screen. A screen
-    missing here did not run, the first thing to check when a tab is empty.
+    MultiQC tab: this one reads the versions back out of it, one row per Nextflow
+    process and tool, assigned to a screen by the process name. Processes that
+    belong to no screen are labelled as workflow plumbing rather than dropped. The
+    screens that ran and the distinct tools come first, then the tool versions per
+    screen. A screen missing here did not run, the first thing to check when a tab
+    is empty.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -323,6 +329,15 @@ child tab.
     each report in their own terms, so every concordance panel is scored on a
     shared key (the contig for ARGs and BGCs, the gene for CAZymes).
 
+Every hub selects on its own key: the screening hub on `sample`, the contig
+tiles on `contig`, the resistance hits on `gene_symbol`, the AMP plane and
+candidate table on `cds_id`, the peptide cluster table on `cluster_id`, the BGC
+tiles on `contig`, the CAZyme gene table on `family`, the substrate table on
+`cgc_id` and the versions table on `tool`. A pick narrows the other tiles of its
+collection and follows the project links to the collections they reach. The
+pinned sample sheet and the AMP embedding do not select: their collections have
+no outgoing link.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -331,11 +346,11 @@ Depictio reads the **output** of nf-core/funcscan, it does not run the pipeline.
 Run the pipeline first:
 
 ```bash
-nextflow run nf-core/funcscan \
+nextflow run nf-core/funcscan -r 4.0.0 \
   --input samplesheet.csv \
   --run_arg_screening --run_amp_screening \
   --run_bgc_screening --run_cazyme_screening \
-  -profile docker
+  --outdir results -profile docker
 ```
 
 Then point Depictio at the results:
@@ -360,7 +375,7 @@ recursively and matches on file name; only the aggregated reports below matter.
 ├── pipeline_info/
 │   ├── params.json                                # carries the four run_*_screening flags
 │   └── software_versions.yml
-├── multiqc/multiqc_data/multiqc.parquet           # versions only, no QC tab
+├── multiqc/multiqc_data/multiqc.parquet           # versions only, read by the Run report tab
 ├── reports/
 │   ├── hamronization_summarize/
 │   │   └── hamronization_combined_report.tsv      # ARG: one row per hit, five tools
@@ -379,12 +394,12 @@ recursively and matches on file name; only the aggregated reports below matter.
 
 !!! warning "Use the run-level comBGC summary"
     The per-sample `reports/combgc/<sample>/combgc_summary.tsv` files carry the
-    antiSMASH branch alone (137 of the reference run's 155 regions), which is why
-    the template reads `combgc_complete_summary.tsv`.
+    antiSMASH branch alone, which is why the template reads
+    `combgc_complete_summary.tsv`.
 
 ---
 
-## :material-flask-outline: Test data
+## :material-flask-outline: Validation runs
 
 The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/funcscan/4.0.0/download_test_data.sh),
@@ -430,7 +445,7 @@ depictio ingest /tmp/funcscan_test \
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it a Draft.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it Experimental.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

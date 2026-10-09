@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/cutandrun" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="3.1">
@@ -69,13 +69,21 @@ The cutandrun template covers the peak-calling chain of a standard run:
     ```
 
     The results directory is the only thing you have to pass: the sample hub is built
-    from the run's own `pipeline_info/samplesheet.valid.csv`.
+    from the run's own `pipeline_info/samplesheet.valid.csv`. `GENOME` sets the
+    genome axis of the Locus tab and defaults to `hg38`; pass the UCSC assembly
+    the run was aligned to otherwise:
+
+    ```bash
+    depictio ingest /path/to/cutandrun_results \
+      --template nf-core/cutandrun/latest \
+      --var GENOME=mm10
+    ```
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/cutandrun -profile docker --outdir results
+    nextflow run nf-core/cutandrun -r 3.1 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -86,12 +94,15 @@ The cutandrun template covers the peak-calling chain of a standard run:
 
 ## :material-book-open-variant: Reference
 
-The template reads the validated samplesheet, the SEACR stringent calls, the
-MACS2 narrow peaks, the per-target consensus peak counts, the fragment-length
-histograms and the three deepTools QC tables, on top of the reprocessed MultiQC
-parquet. Every collection and recipe matches on file **name**, so the numbered
-stage directories cutandrun publishes are never spelled out. The pipeline ships
-no `params.json` at 3.1, so `DATA_ROOT` is the only variable.
+The template reads the validated samplesheet, the bowtie2 logs, the samtools
+flagstat of the marked-duplicate BAMs, the SEACR stringent calls, the MACS2
+narrow peaks, the per-target consensus peak counts, the fragment-length
+histograms, the fragment BEDs and the three deepTools QC tables, on top of the
+reprocessed MultiQC parquet. Every collection and recipe matches on file
+**name**, so the numbered stage directories cutandrun publishes are never
+spelled out. The pipeline ships no `params.json` at 3.1, so no variable is set
+from the run's parameters: `DATA_ROOT` is required and `GENOME` (default
+`hg38`) is the only optional one.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -238,8 +249,6 @@ throughout; only the peak collections omit them.
 
     <!-- screenshot pending v2 -->
 
-    [![Peaks dashboard](../../images/pipeline-templates/nf-core/cutandrun/peak_calls_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/peak_calls_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
     SEACR regions, their width, their coverage per base and the lowest FRiP in
     view. Then the region width beside the mean pile-up on the summits, the
     summit-centred pile-up of each sample's strongest regions, and the fragment
@@ -260,6 +269,12 @@ throughout; only the peak collections omit them.
         | Pile-up per region | 1 advanced visualization |
         | Signal in peaks | 1 bar |
         | Peak tables (collapsed) | *SEACR regions*, *MACS2 peaks*, *SEACR summary per sample*, *Signal budget* |
+
+    !!! tip "The pile-up needs the fragment BEDs"
+        Both fragment collections are optional. A run or a mirror without the
+        `*.frags.cut.bed` files ingests everything else, and the pile-up tiles here,
+        the fragment track of the Locus tab and the pile-up figure on the Overview
+        drop out.
 
 === ":material-scale-balance:{ .mc-red } Caller agreement"
 
@@ -289,8 +304,6 @@ throughout; only the peak collections omit them.
 === ":material-set-merge:{ .mc-grape } Consensus"
 
     **Agreement** · *Which peaks do a target's replicates reproduce?*
-
-    [![Consensus dashboard](../../images/pipeline-templates/nf-core/cutandrun/consensus_and_reproducibility_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/consensus_and_reproducibility_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     Consensus intervals by replicate support, the reproducible ones (two
     replicates or more) by target, the interval width and the coverage per
@@ -333,10 +346,27 @@ throughout; only the peak collections omit them.
         | Region at a glance | 4 cards |
         | One region, four tracks | 4 advanced visualizations |
 
+    !!! tip "Pass the assembly for a run not on hg38"
+        The navigator fetches only the chromosome of its region from the
+        assembly it is given, which defaults to `hg38`. For a run aligned to
+        another build, pass `--var GENOME=<assembly>` at ingest, or the tracks
+        land on the wrong coordinates.
+
 !!! tip "A broad mark reproduces poorly, and the dashboard says so"
     The replicates of a broad histone mark overlap badly, so a large part of its
     consensus intervals rests on a single replicate. That is a property of the
     data, not of the template.
+
+Tables and point views select on their entity column: the sample sheet on
+`sample_id`; the per-sample tables (SEACR summary, fragment classes, spike-in
+factors, signal budget, caller comparison), the caller, depth and duplication
+scatters and the fingerprint tile on `sample`; the peak and consensus tables, the
+MACS2 significance track and the SEACR, MACS2 and consensus tracks of the Locus
+tab on `peak_id`. A lasso on a scatter, a brush on a track or a picked table row
+becomes a dashboard filter that narrows the other tiles of its collection and
+follows the project links to the collections they reach. The deepTools PCA emits
+a selection, but its collection has no outgoing link, so it narrows no other
+tile.
 
 ---
 
@@ -345,11 +375,11 @@ throughout; only the peak collections omit them.
 Depictio reads the **output** of nf-core/cutandrun. Run the pipeline first:
 
 ```bash
-nextflow run nf-core/cutandrun \
+nextflow run nf-core/cutandrun -r 3.1 \
   --input samplesheet.csv \
   --genome GRCh38 \
   --peakcaller seacr,macs2 \
-  -profile docker
+  --outdir results -profile docker
 ```
 
 Then regenerate the MultiQC report Depictio reads, and point Depictio at the
@@ -388,7 +418,9 @@ reference run's layout, not a requirement.
 │   │   ├── seacr/*.seacr.peaks.stringent.bed          # required, the default caller
 │   │   └── macs2/*.macs2_peaks.narrowPeak             # optional, plus *.macs2_peaks.xls
 │   ├── 05_consensus_peaks/*.consensus.peak_counts.bed
-│   └── 06_fragments_from_bams/*.frags.len.txt
+│   └── 06_fragments_from_bams/
+│       ├── *.frags.len.txt
+│       └── *.frags.cut.bed                            # optional, the pile-up and fragment track
 ├── 04_reporting/deeptools_qc/
 │   ├── *.plotFingerprint.qcmetrics.txt
 │   └── all_target_bams.plot{PCA.tab,Correlation.mat.tab}
@@ -398,11 +430,11 @@ reference run's layout, not a requirement.
 
 ---
 
-## :material-flask-outline: Test data
+## :material-flask-outline: Validation runs
 
 The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/cutandrun/3.1/download_test_data.sh),
-which fetches the megatest subset the template needs, 103 files and about 90 MB:
+which fetches the megatest subset the template needs, fragment BEDs included:
 
 ```bash
 bash depictio/projects/nf-core/cutandrun/3.1/download_test_data.sh /tmp/cutandrun_test
@@ -411,7 +443,7 @@ bash depictio/projects/nf-core/cutandrun/3.1/download_test_data.sh /tmp/cutandru
 The run is
 `s3://nf-core-awsmegatests/cutandrun/results-42502fb44975e930eec865353c5481f472bcf766/`
 (GSE145187): H3K4me3 and H3K27me3 in two replicates each, against two IgG
-controls. Two steps follow the fetch, both in `post_fetch_help` in
+controls; the screenshots above come from it. Two steps follow the fetch, both in `post_fetch_help` in
 `megatest.yaml` next to the script:
 
 ```bash
@@ -450,7 +482,7 @@ depictio ingest /tmp/cutandrun_test --template nf-core/cutandrun/latest
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it a Draft.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it Experimental.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

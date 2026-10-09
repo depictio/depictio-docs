@@ -230,6 +230,8 @@ project_tag: Project_Name
 
 grid_sections: []      # optional — see Dashboard Sections below
 filter_sections: []    # optional
+autofit: true          # optional (v1.13.0+) — see Tile height below
+advanced_viz_controls: popover   # optional (v1.13.0+) — popover, rail or header
 
 components:
   - tag: component-identifier
@@ -237,7 +239,36 @@ components:
     workflow_tag: engine/workflow_name
     data_collection_tag: dc_tag
     section: Section Name   # optional — the section this component belongs to
+    layout: {x: 0, y: 0, w: 6, h: 4, fit: fixed}   # optional; fit is v1.13.0+
     # Component-specific fields...
+```
+
+### Tile height and control placement <small>(v1.13.0+)</small> { #tile-height }
+
+A tile takes the height its content needs, within bounds set per component type, and the
+tiles of one grid row are levelled to the same height. Two keys decide which tiles do this:
+
+| Key | Where | Default | Meaning |
+| --- | ----- | ------- | ------- |
+| `autofit` | dashboard | `true` | `false` turns content-fitting off for the whole dashboard: every tile keeps the height of its `layout` |
+| `fit` | a component's `layout` block | per type | `auto` follows the content, `fixed` keeps the `layout` height. Unset, text, card, table and advanced visualization tiles follow their content, while figure and MultiQC tiles keep their height, since their aspect ratio is an authoring choice |
+
+Resizing a tile by hand in the editor writes `fit: fixed` on it, so a height set on purpose is
+never overridden. The height is only pinned at the grid breakpoint the dashboard is saved at.
+
+`advanced_viz_controls` sets where the controls of every advanced visualization on the
+dashboard sit: behind the settings icon (`popover`), in a rail beside the plot (`rail`) or
+under the tile title (`header`). A tile's own `controls_placement` wins over it. See
+[Shared settings](components.md#advanced-viz-shared-settings).
+
+```yaml
+title: Variant QC
+autofit: true
+advanced_viz_controls: header
+components:
+  - tag: coverage-by-sample
+    component_type: figure
+    layout: {x: 0, y: 0, w: 6, h: 5, fit: auto}   # let this figure grow with its legend
 ```
 
 ### Dashboard Sections <small>(v1.4.0+)</small> { #dashboard-sections }
@@ -572,7 +603,7 @@ Two rendering modes are supported:
     title: Chart Title
 ```
 
-**Valid `visu_type` values (UI mode):** `scatter`, `line`, `bar`, `box`, `histogram`, `heatmap`
+**Valid `visu_type` values (UI mode):** `scatter`, `line`, `bar`, `box`, `violin` <small>(v1.13.0+)</small>, `histogram`, `heatmap`
 
 **Code Mode** — write arbitrary Python/Plotly code for full flexibility:
 
@@ -747,7 +778,8 @@ render is in [Components](components.md#secondary-layout-modes).
 | `coverage_max`        | float           | `null`     | `coverage`, `gauge`                           |
 | `threshold_value` <small>(v1.4.0+)</small> | float | `null` | `threshold` — the QC cut-off; without it the strip is not drawn |
 | `threshold_direction` <small>(v1.4.0+)</small> | `min` \| `max` | `min` | `threshold` — `min` is at-least (coverage, %Q30), `max` is at-most (duplication, contamination) |
-| `threshold_warn` <small>(v1.4.0+)</small> | float | `null` | `threshold` — ignored unless on the failing side of `threshold_value` |
+| `threshold_warn` <small>(v1.4.0+)</small> | float | `null` | `threshold` — must lie on the failing side of `threshold_value` (below it for `min`, above it for `max`), and needs `threshold_value`. Since v1.13.0 a warn value on the passing side fails validation instead of being dropped |
+| `follow_region_filter` <small>(v1.13.0+)</small> | bool | `false` | Any layout — let a genome region brushed on the dashboard narrow the card. See [Which components follow a region](interactive-selection-filtering.md#region-scope) |
 | `attrition_cols` <small>(v1.4.0+)</small> | list[str] | `[]` | `attrition` — ordered stage columns after the card's own, never re-sorted by value |
 | `trend_col` <small>(v1.4.0+)</small> | str | `null` | `trend` — the ordered column the sparkline buckets along |
 
@@ -812,6 +844,40 @@ render is in [Components](components.md#secondary-layout-modes).
 ```
 
 `filter_expr` scopes the component's options/range to the filtered subset. See [Filter Expressions](filter-expressions.md).
+
+#### Initial values and slider options <small>(v1.13.0+)</small> { #interactive-defaults }
+
+| Field | Type | Applies to | Meaning |
+| ----- | ---- | ---------- | ------- |
+| `default_value` | value or list | `Select`, `MultiSelect` (list allowed), `SegmentedControl`, `Slider` (number), `Checkbox`, `Switch` | The value the filter starts with, and returns to on **Reset all** |
+| `default_range` | `[low, high]` | `RangeSlider` (numbers), `DateRangePicker` (ISO dates) | The range the filter starts with |
+| `slider_mode` | `gte`, `gt`, `lte`, `lt`, `eq`, `ne` | `Slider` | How the column is compared with the slider's value. `gte` (keep rows at or above it) by default |
+| `show_histogram` | bool | `RangeSlider` | Draw the column's distribution above the slider track, on the same scale, so a threshold is placed against the data. Off by default |
+
+A default on the wrong control fails validation: `default_value` on a `RangeSlider`, a list on
+a `Slider`, or a `default_range` whose low end is above its high end.
+
+```yaml
+- tag: min-depth
+  component_type: interactive
+  workflow_tag: python/workflow_name
+  data_collection_tag: table_dc
+  interactive_component_type: Slider
+  column_name: depth
+  default_value: 10        # rows with depth >= 10 at first load
+- tag: qvalue-range
+  component_type: interactive
+  workflow_tag: python/workflow_name
+  data_collection_tag: table_dc
+  interactive_component_type: RangeSlider
+  column_name: qvalue
+  default_range: [0, 0.05]
+  show_histogram: true
+```
+
+!!! warning "A `Slider` is a threshold since v1.13.0"
+    A single-value `Slider` used to keep only the rows equal to its value. It now keeps the
+    rows at or above it. Set `slider_mode: eq` on a slider that should keep the exact match.
 
 **Interactive type × column_type compatibility:**
 

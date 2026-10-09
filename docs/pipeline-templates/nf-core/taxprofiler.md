@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/taxprofiler" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="2.0.1">
@@ -72,7 +72,7 @@ run, whichever classifiers it used:
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/taxprofiler -profile docker --outdir results
+    nextflow run nf-core/taxprofiler -r 2.0.1 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -200,6 +200,11 @@ collapsed, to the bottom of every child tab.
         | Coverage against diversity | *Coverage against diversity* |
         | Tables (collapsed) | *Nonpareil per library* |
 
+    !!! tip "The Sequencing depth tab needs nonpareil"
+        The two nonpareil collections are optional and only written by a
+        short-read run with `--perform_shortread_redundancyestimation`. Without
+        them the Sequencing depth tab is dropped.
+
 === ":material-bacteria-outline:{ .mc-grape } Profiles"
 
     **Communities** · *What does each classifier say the community is made of?*
@@ -311,6 +316,14 @@ collapsed, to the bottom of every child tab.
     carrying the database as a suffix, which no samplesheet value reduces to. The
     cross-classifier view of the same data, on the Profiles tab, does filter.
 
+Tables and point views select on their entity column: the sample sheet on
+`sample`; the Nonpareil scatter and table on `library`; the richness scatter, the
+per-run table and the Bray-Curtis ordination on `profiler_db`; the
+cross-classifier tables on the taxon `name`, the melon table on `species` and the
+sylph clade table on `clade_name`; the ANI scatter and the sylph containment
+table on `genome`. A pick narrows the other tiles of its collection and follows
+the project links to the collections they reach.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -319,12 +332,13 @@ Depictio reads the **output** of nf-core/taxprofiler, it does not run the
 pipeline. Run the pipeline first:
 
 ```bash
-nextflow run nf-core/taxprofiler \
+nextflow run nf-core/taxprofiler -r 2.0.1 \
   --input samplesheet.csv \
   --databases database.csv \
   --perform_shortread_qc --run_profile_standardisation \
   --run_kraken2 --run_bracken --run_sylph \
-  -profile docker
+  --perform_shortread_redundancyestimation \
+  --outdir results -profile docker
 ```
 
 Then point Depictio at the results:
@@ -366,12 +380,12 @@ collections are what every cross-profiler tile is built from.
 ├── melon/                                     # ⚠ Requires --run_melon and long reads
 │   └── <database>/<sample>_<database>/*.tsv
 ├── nanoq/*.stats
-└── nonpareil/nonpareil_all_samples.tsv
+└── nonpareil/nonpareil_all_samples.tsv       # ⚠ Requires --perform_shortread_redundancyestimation (short reads)
 ```
 
 ---
 
-## :material-flask-outline: Test data
+## :material-flask-outline: Validation runs
 
 The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/taxprofiler/2.0.1/download_test_data.sh),
@@ -421,7 +435,7 @@ depictio ingest /tmp/taxprofiler_test \
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it a Draft.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it Experimental.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

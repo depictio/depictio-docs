@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/variantbenchmarking" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 The variantbenchmarking template turns a benchmarking run into a precision/recall funnel:
@@ -40,7 +40,7 @@ any of them, one route or several under one root.
 There is no variable and no selector for this choice. It is made entirely by the id you
 pass to `--template`. Pick the row matching the run you want to explore.
 
-| `--template` id | Produced by a run with | Benchmark tools | Expected under the results directory |
+| `--template` id | Produced by a run with | Benchmark tools | Expected in the results directory |
 | --- | --- | --- | --- |
 | `nf-core/variantbenchmarking/1.4.0/categories/small` | `--analysis germline --variant_type small` | hap.py, rtg-tools vcfeval | `small/` and `multiqc/multiqc_data/multiqc.parquet` |
 | `nf-core/variantbenchmarking/1.4.0/categories/indel` | `--analysis somatic --variant_type indel` | som.py, rtg-tools vcfeval | `indel/` and `multiqc/multiqc_data/multiqc.parquet` |
@@ -297,6 +297,13 @@ labels.
         | SVanalyzer and Wittyer | 2 bars |
         | Structural tables (collapsed) | *Truvari summary*, *SVanalyzer svbenchmark summary*, *Wittyer summary* |
 
+The callset tables select rows on their identifier: `label` for the vcfeval,
+Truvari, SVanalyzer and Wittyer tables, `caller` for the som.py tables and the
+somatic vcfeval table. A pick narrows the tiles that read the same table; a som.py
+pick also reaches its allele-fraction strata and the cross-check, and a Truvari
+pick reaches the SVanalyzer and Wittyer tiles, through the links. The hap.py
+pooled summary and threshold sweep have no callset column and do not select.
+
 ### Per-variant-type templates
 
 The three `categories/` templates keep their own layout, one project per variant type:
@@ -376,7 +383,7 @@ nextflow run nf-core/variantbenchmarking -r 1.4.0 \
   --input samplesheet.csv \
   --outdir results/ \
   --genome GRCh38 \
-  --sample HG002 \
+  --truth_id HG002 --truth_vcf truth.vcf.gz \
   --analysis germline \
   --variant_type small \
   -profile docker
@@ -433,7 +440,7 @@ reads no MultiQC report, and shows the tab of each route it finds under the root
 
 ---
 
-## :material-flask-outline: Test data
+## :material-flask-outline: Validation runs
 
 The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/variantbenchmarking/1.4.0/download_test_data.sh),
@@ -477,7 +484,7 @@ It fetches the `small/` and `indel/` summary tables plus the hap.py per-sample f
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run them on their own data and signed them off yet, which is what keeps the status Draft.</span>
+    <span class="tpl-credit-note">Nobody has run them on their own data and signed them off yet, which is what keeps the status Experimental.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

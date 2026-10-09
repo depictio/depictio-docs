@@ -21,6 +21,7 @@ User-facing features for building and interacting with dashboards.
 | [Dashboards](dashboards.md) | Dashboard modes, layouts, tabs, and organization |
 | [Components](components.md) | Guide to available component types and configuration |
 | [Interactive Selection Filtering](interactive-selection-filtering.md) | Filter components via scatter plot and table row selections |
+| [Comments and Annotations](comments-annotations.md) | Discuss components in threads and draw ranges, lines, marked points and notes on them |
 
 <div class="grid cards" markdown>
 
@@ -47,6 +48,14 @@ User-facing features for building and interacting with dashboards.
     Filter by selecting points or rows directly on visualizations
 
     [:octicons-arrow-right-24: Selection Filtering](interactive-selection-filtering.md)
+
+-   :material-comment-text-multiple-outline:{ .lg .middle } **Comments and Annotations**
+
+    ---
+
+    Discuss components in threads and annotate charts, tables and maps
+
+    [:octicons-arrow-right-24: Comments and Annotations](comments-annotations.md)
 
 </div>
 

@@ -11,13 +11,13 @@ hide:
   </a>
   <div class="template-banner-body">
     <h1 class="template-title">Amplicon Sequencing</h1>
-    <p class="template-subtitle">Amplicon sequencing analysis workflow using DADA2 and QIIME2 — 16S, ITS, CO1, 18S and other amplicons across Illumina, PacBio, IonTorrent.</p>
+    <p class="template-subtitle">Amplicon sequencing analysis workflow using DADA2 and QIIME2: 16S, ITS, CO1, 18S and other amplicons across Illumina, PacBio, IonTorrent.</p>
     <p class="template-links">
       <a href="https://nf-co.re/ampliseq" target="_blank"><i class="mdi mdi-open-in-new"></i> nf-co.re</a>
       <a href="https://github.com/nf-core/ampliseq" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-reviewed template-banner-badge" data-tooltip="Reviewed — tested, CI passes, and reviewed by the Depictio team or community."><i class="mdi mdi-check-circle-outline"></i> Reviewed</span>
+  <span class="template-status-reviewed template-banner-badge" data-tooltip="Reviewed: tested, CI passes, and reviewed by the Depictio team or community."><i class="mdi mdi-check-circle-outline"></i> Reviewed</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="2.18.0">
@@ -31,7 +31,8 @@ hide:
   <span class="tpl-version-badge">latest</span>
 </div>
 
-The ampliseq template covers the main outputs of a standard nf-core/ampliseq run:
+The ampliseq template follows a standard nf-core/ampliseq run from reads to
+differential taxa, one tab per step:
 
 - :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
 - :material-chart-bar: **MultiQC quality control**: FastQC read quality and Cutadapt trimming
@@ -43,33 +44,40 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 
 ## :material-rocket-launch-outline: Quick start
 
-=== "Base (no metadata)"
+=== "Point at a finished run"
 
     ```bash
     depictio ingest /path/to/ampliseq_results \
-      --template nf-core/ampliseq/latest \
-      --var SAMPLESHEET_FILE=samplesheet.csv
+      --template nf-core/ampliseq/latest
     ```
 
-    MultiQC + taxonomy dashboards. No diversity or differential abundance.
+    The results directory is the only thing you have to pass. The samplesheet is picked up
+    from `input/`, and `pipeline_info/params.json` fills in the metadata file the
+    run was given (`--metadata`) and the route flags: multi-region, `--skip_qiime`,
+    `--skip_taxonomy`, `--skip_alpha_rarefaction`, `--skip_ancom`, and the depth of
+    the Phylum rank in the taxonomy database.
 
-=== "Extended (with metadata)"
+=== "Choose the grouping column"
 
     ```bash
     depictio ingest /path/to/ampliseq_results \
       --template nf-core/ampliseq/latest \
-      --var SAMPLESHEET_FILE=samplesheet.csv \
-      --var METADATA_FILE=Metadata.tsv \
+      --var METADATA_FILE=/path/to/Metadata.tsv \
       --var GROUP_COL=habitat
     ```
 
-    Full dashboard: diversity, group comparisons and ANCOM-BC.
+    `GROUP_COL` is the metadata column every grouped tile, the group filter and
+    the ANCOM-BC contrast read. It defaults to the first annotation column of the
+    metadata file, so pass it when the factor you care about is another one.
+    `METADATA_ID_COL` names the sample-ID column (the first column by default),
+    and `SAMPLESHEET_FILE` or `TREE_FILE` override the auto-detected samplesheet
+    and Newick tree.
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/ampliseq -r 2.16.0 -profile docker --outdir results
+    nextflow run nf-core/ampliseq -r 2.18.0 -profile docker --outdir results
     ```
 
     No ingestion command and no template named: the pipeline ingests its own
@@ -81,8 +89,9 @@ The ampliseq template covers the main outputs of a standard nf-core/ampliseq run
 ## :material-book-open-variant: Reference
 
 Running without `METADATA_FILE` prunes the metadata-dependent collections
-(see the *Conditional routes* table); the `--skip_qiime` / `--skip_taxonomy`
-/ multi-region routes are auto-detected from the run's `params.json`.
+(see the *Conditional routes* table); the multi-region, `--skip_qiime`,
+`--skip_taxonomy`, `--skip_alpha_rarefaction` and `--skip_ancom` routes are
+auto-detected from the run's `params.json`.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound to
@@ -187,9 +196,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     **Diversity** · *How diverse is each sample, and was it sequenced deeply enough?*
 
-    [![Alpha diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Alpha Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Alpha diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Alpha Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     The median **Shannon** diversity and **Faith PD** with their spread,
     **Observed ASVs** with their distribution and **Evenness** on a 0 to 1 gauge.
@@ -212,9 +221,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     **Diversity** · *Which samples have similar communities?*
 
-    [![Ordination and clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Ordination & Clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Ordination and clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Ordination & Clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     The samples placed by the PCoA, split by group, and, when the run tested a
     PERMANOVA formula, the share of variation the group explains. Then the PCoA on
@@ -236,9 +245,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     **Taxa** · *Which taxa make up the samples, and which do groups share?*
 
-    [![Community and diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Community & Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Community and diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Community & Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     Distinct phyla, classes, orders and families, each split or ranked. Then the
     phylum composition per group and per sample (the eight largest phyla and
@@ -262,9 +271,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     **Taxa** · *Which taxa differ in abundance between groups?*
 
-    [![Differential abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Differential abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
     Pick a contrast first. The taxa tested, those significant at 5% FDR, and the
     enriched and depleted calls, each split by contrast. Then the volcano, whose
@@ -339,19 +348,28 @@ run was resolved against; the dashboard substitutes its real name everywhere.
     and the diversity they go with). Both are bound to metadata columns that only
     that dataset ships.
 
+Tables select rows and the SIDLE k-mer scatter selects points: the pinned
+sample sheet on the metadata id column, the alpha-diversity table on
+`sample_id`, the two relative-abundance tables on `taxonomy`, the ANCOM-BC table
+on `id` (which also drives the *Taxon record*), the tip taxonomy table on
+`taxon`, and both SIDLE tables and the scatter on `feature_id`. A pick narrows the
+other tiles of the same collection and, through the project links, the
+collections downstream of it. The bar and box figures do not select, and the
+ordination embedding narrows nothing, since its collection has no outgoing link.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
 
-Depictio reads the **output** of nf-core/ampliseq — it does not run the pipeline. Run the pipeline first:
+Depictio reads the **output** of nf-core/ampliseq, it does not run the pipeline. Run the pipeline first:
 
 ```bash
-nextflow run nf-core/ampliseq \
-  --input samplesheet.csv \
+nextflow run nf-core/ampliseq -r 2.18.0 \
+  --input samplesheet.tsv \
   --FW_primer GTGYCAGCMGCCGCGGTAA \
   --RV_primer GGACTACNVGGGTWTCTAAT \
   --metadata Metadata.tsv \
-  -profile docker
+  -profile docker --outdir results
 ```
 
 Then point Depictio at the results:
@@ -359,53 +377,73 @@ Then point Depictio at the results:
 ```bash
 depictio ingest results/ \
   --template nf-core/ampliseq/latest \
-  --var SAMPLESHEET_FILE=samplesheet.csv \
-  --var METADATA_FILE=Metadata.tsv
+  --var GROUP_COL=habitat
 ```
 
-See [nf-co.re/ampliseq/usage](https://nf-co.re/ampliseq/2.16.0/docs/usage) for full pipeline documentation.
+See [nf-co.re/ampliseq/usage](https://nf-co.re/ampliseq/2.18.0/docs/usage) for full pipeline documentation.
 
 ---
 
 ## :material-folder-open-outline: Required data structure
 
-Point `depictio ingest` at the directory containing your ampliseq outputs. This can be a single run's `results/` folder or a parent directory containing multiple runs: Depictio scans recursively. Not all files are required; the template adapts based on what's present and which `--var` flags you provide.
+Point `depictio ingest` at the output directory of one run. Not every file is
+required: the template adapts to what is present and to the route flags read
+from `params.json`.
 
 ```text
 <DATA_ROOT>/
-├── samplesheet.csv                                # --var SAMPLESHEET_FILE
-├── Metadata.tsv                                   # --var METADATA_FILE (optional)
-└── <run_id>/                                      # One or more pipeline run output folders
-    ├── multiqc/
-    │   └── multiqc_data/
-    │       └── multiqc.parquet
-    └── qiime2/
-        ├── alpha-rarefaction/                      # ⚠ Requires --metadata
-        │   └── faith_pd.csv
-        ├── ancombc/differentials/                  # ⚠ Requires --metadata + --ancombc
-        │   └── Category-<GROUP_COL>-level-2/
-        │       ├── lfc_slice.csv
-        │       ├── p_val_slice.csv
-        │       ├── q_val_slice.csv
-        │       ├── se_slice.csv
-        │       └── w_slice.csv
-        ├── barplot/
-        │   └── level-2.csv
-        ├── diversity/alpha_diversity/              # ⚠ Requires --metadata
-        │   └── faith_pd_vector/
-        │       └── metadata.tsv
-        └── rel_abundance_tables/
-            └── rel-table-2.tsv
+├── input/
+│   ├── Samplesheet.tsv                            # auto-detected (or --var SAMPLESHEET_FILE)
+│   └── Metadata.tsv                               # read from params.json (or --var METADATA_FILE)
+├── pipeline_info/
+│   ├── params_<timestamp>.json                    # route flags and the metadata path
+│   └── software_versions.yml
+├── multiqc/multiqc_data/
+│   └── multiqc.parquet
+├── qiime2/
+│   ├── alpha-rarefaction/*.csv                    # requires --metadata
+│   ├── diversity/alpha_diversity/
+│   │   └── <metric>_vector/metadata.tsv           # shannon, observed_features, faith_pd, evenness
+│   ├── barplot/level-<N>.csv                      # N = Phylum depth of the database
+│   ├── rel_abundance_tables/rel-table-<N>.tsv     # Phylum down to Genus
+│   ├── ancombc/differentials/                     # requires --metadata, skipped by --skip_ancom
+│   │   └── Category-<GROUP_COL>-level-<N>/
+│   │       └── {lfc,p_val,q_val,se,w}_slice.csv
+│   └── phylogenetic_tree/tree.nwk                 # or --var TREE_FILE
+├── dada2/ASV_table.tsv                            # --skip_qiime route only
+├── sintax/ASV_tax_sintax.*.tsv                    # --skip_qiime route only
+└── sidle/                                         # multi-region route only
+    ├── reconstructed/reconstructed_merged.tsv
+    └── DB/3_reconstructed/reconstruction_summary/metadata.tsv
 ```
+
+---
+
+## :material-flask-outline: Validation runs
+
+The template is validated against the nf-core AWS megatest of the 2.18.0
+release, a 16S run with sample metadata, and the screenshots above come from
+the bundled Ammer catchment reference project resolved with
+`GROUP_COL=habitat`. `megatest.yaml` lists the tables-only subset of that run
+the template needs:
+
+```bash
+python scripts/nfcore_megatest.py fetch --pipeline ampliseq --version 2.18.0 --dest /tmp/ampliseq_test
+depictio ingest /tmp/ampliseq_test --template nf-core/ampliseq/2.18.0 --var GROUP_COL=habitat
+```
+
+Do not pass `--project` when ingesting: the dashboard is attached to the
+project by name, so renaming it breaks a later `depictio dashboard import`.
+Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 
 ---
 
 ## :material-link-variant: Additional resources
 
-- [nf-co.re/ampliseq](https://nf-co.re/ampliseq) — official pipeline documentation
-- [nf-co.re/ampliseq/2.16.0/results](https://nf-co.re/ampliseq/2.16.0/results) — AWS test results
-- [Template System Reference](../../usage/projects/templates.md) — YAML format, variables, conditionals
-- [Recipes](../../usage/projects/recipes.md) — how to read, test, and write recipes
+- [nf-co.re/ampliseq](https://nf-co.re/ampliseq): official pipeline documentation
+- [nf-co.re/ampliseq/2.18.0/results](https://nf-co.re/ampliseq/2.18.0/results): AWS test results
+- [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
+- [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes
 
 ---
 

@@ -8,6 +8,62 @@ hide:
 
 # Changelog
 
+## **[v1.13.0](https://github.com/depictio/depictio/releases/tag/v1.13.0)** (October 7, 2026)
+
+!!! success "Minor: comments and annotations on dashboards, ten new visualization kinds, and thirteen new nf-core templates"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.13.0
+ghcr.io/depictio/depictio-viewer:1.13.0
+ghcr.io/depictio/depictio-worker:1.13.0
+ghcr.io/depictio/depictio-cli:1.13.0
+```
+
+### **♻️ Migration**
+
+* **A `Slider` filter is now a threshold**, keeping the rows at or above its value; add `slider_mode: eq` to keep the exact match. See [Initial values and slider options](../features/yaml-sync.md#interactive-defaults) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **A card's `threshold_warn` on the passing side of `threshold_value` fails validation** instead of being dropped silently. See [Secondary Layout Modes](../features/components.md#secondary-layout-modes) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **`ma`, `qq`, `enrichment` and `roc_pr_curve` are views of the volcano, dot plot and `pr_benchmark` tiles**; stored dashboards and YAML files are rewritten when read, nothing to edit. See [Switchable views](../features/components.md#advanced-viz-views) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+* **A catalog tool's `module.yaml` must declare `description` and `homepage`** (and may add `biotools_url`); copy them into your own modules. See [Step 1: `module.yaml`](../developer/contributing-a-tool.md#step-1-moduleyaml-identity) ([#1102](https://github.com/depictio/depictio/pull/1102), [0f1d6e21](https://github.com/depictio/depictio/commit/0f1d6e21)).
+* **Reworked templates do not replace your dashboards on refresh**: delete the old dashboard in the viewer, then refresh, to get the new layout. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1102](https://github.com/depictio/depictio/pull/1102), [b9cd837f](https://github.com/depictio/depictio/commit/b9cd837f)).
+
+### **✨ New Features**
+
+* **Comments and annotations on dashboard components**: threads that restore the filters and selection they were written under, and marks drawn on figures, advanced visualizations, MultiQC plots, tables and maps. See [Comments and Annotations](../features/comments-annotations.md) ([#1109](https://github.com/depictio/depictio/pull/1109), [61bc6cf6](https://github.com/depictio/depictio/commit/61bc6cf6)).
+* **Threads flag when their subject changed** (*Data changed*, *Component changed*, *Component removed*), and **agent proposals** wait for a person to accept them. See [When the data or the component changes](../features/comments-annotations.md#when-the-data-or-the-component-changes) and [Agent proposals](../features/comments-annotations.md#agent-proposals) ([#1109](https://github.com/depictio/depictio/pull/1109), [cab8ddd6](https://github.com/depictio/depictio/commit/cab8ddd6)).
+* **Ten new advanced visualization kinds**: [Contact map](../features/components.md#contact-map), [Knee plot](../features/components.md#knee-plot), [Damage profile](../features/components.md#damage-profile), [Genome view](../features/components.md#genome-view), [Group compare](../features/components.md#group-compare), [Transcript structure](../features/components.md#transcript-structure), [Copy-number profile](../features/components.md#cnv-profile), [Genome chord](../features/components.md#genome-chord), [Parallel coordinates](../features/components.md#parallel-coordinates) and [Record card](../features/components.md#record-card) ([#1102](https://github.com/depictio/depictio/pull/1102), [02f56618](https://github.com/depictio/depictio/commit/02f56618), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+* **Record cards follow a selection**, showing the row picked in their `linked_component`, as its side panel. See [Record cards and their source](../features/interactive-selection-filtering.md#record-cards) ([#1102](https://github.com/depictio/depictio/pull/1102), [60ebff4b](https://github.com/depictio/depictio/commit/60ebff4b)).
+* **Genome regions filter the dashboard**: a region brushed or typed on a track becomes a chromosome and position filter, carried across collections by a `region` link. See [Genome region selection](../features/interactive-selection-filtering.md#genome-region-selection) and [Region links](../features/cross-dc-filtering.md#region-links) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+* **`indexed_file` data collections**: VCF, BAM, bigWig, bigBed, GFF3 or tabix files read by the browser by byte range, with no table built. See [Indexed-file DCs](../usage/projects/guide.md#example-indexed-file-dcs) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+* **Templates and recipes take parameters**: recipes read template values through `transform.params` (and a file's path through `source_path`), and template variables can declare a `default`. See [Passing template parameters to a recipe](../usage/projects/recipes.md#params) and [Variable defaults](../usage/projects/templates.md#variable-defaults) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **Filters can start with a value** (`default_value`, `default_range`), and a range slider can show the column's histogram (`show_histogram`). See [Initial values and slider options](../features/yaml-sync.md#interactive-defaults) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+
+### **🚀 Improvements**
+
+* **Tiles take the height their content needs**, levelled per row; `autofit: false` or a tile's `fit: fixed` turns it off. See [Tile height and control placement](../features/yaml-sync.md#tile-height) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+* **Advanced visualization controls can sit beside the plot or under the title** (`controls_placement`, `advanced_viz_controls`). See [Shared settings](../features/components.md#advanced-viz-shared-settings) ([#1102](https://github.com/depictio/depictio/pull/1102), [60ebff4b](https://github.com/depictio/depictio/commit/60ebff4b)).
+* **The kind picker ranks kinds for the data**, with a badge saying why each one matches. See [The kind picker](../features/components.md#kind-picker) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **Clear selection (N)** replaces the always-visible reset, and shows only while a tile holds a selection. See [Reset Selection](../features/interactive-selection-filtering.md#reset-selection) ([#1102](https://github.com/depictio/depictio/pull/1102), [60ebff4b](https://github.com/depictio/depictio/commit/60ebff4b)).
+* **A card breakdown follows the card's aggregation** (max, mean or median per group instead of a count). See [Secondary Layout Modes](../features/components.md#secondary-layout-modes) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **56 new catalog tools** (93 in all), each card with description, homepage and bio.tools link. See [Catalog](../catalog/index.md) ([#1102](https://github.com/depictio/depictio/pull/1102), [a72c8efa](https://github.com/depictio/depictio/commit/a72c8efa)).
+* **An annotation on a multi-view tile stays on the view it was drawn on**. See [Components with several views](../features/comments-annotations.md#components-with-several-views) ([#1113](https://github.com/depictio/depictio/pull/1113), [1dacf9f1](https://github.com/depictio/depictio/commit/1dacf9f1)).
+
+### **🧬 Pipeline Templates**
+
+* **Thirteen new nf-core templates**. Experimental: [mag](../pipeline-templates/nf-core/mag.md), [nanoseq](../pipeline-templates/nf-core/nanoseq.md), [riboseq](../pipeline-templates/nf-core/riboseq.md), [rnasplice](../pipeline-templates/nf-core/rnasplice.md). Draft: [demultiplex](../pipeline-templates/nf-core/demultiplex.md), [eager](../pipeline-templates/nf-core/eager.md), [genomeassembler](../pipeline-templates/nf-core/genomeassembler.md), [hic](../pipeline-templates/nf-core/hic.md), [methylseq](../pipeline-templates/nf-core/methylseq.md), [mhcquant](../pipeline-templates/nf-core/mhcquant.md), [sarek](../pipeline-templates/nf-core/sarek.md), [scrnaseq](../pipeline-templates/nf-core/scrnaseq.md), [smrnaseq](../pipeline-templates/nf-core/smrnaseq.md). See [Pipeline Templates](../pipeline-templates/README.md) ([#1102](https://github.com/depictio/depictio/pull/1102), [02f56618](https://github.com/depictio/depictio/commit/02f56618)).
+* **Seven templates move from Draft to Experimental**: [airrflow](../pipeline-templates/nf-core/airrflow.md), [cutandrun](../pipeline-templates/nf-core/cutandrun.md), [differentialabundance](../pipeline-templates/nf-core/differentialabundance.md), [funcscan](../pipeline-templates/nf-core/funcscan.md), [rnaseq](../pipeline-templates/nf-core/rnaseq.md), [taxprofiler](../pipeline-templates/nf-core/taxprofiler.md), [variantbenchmarking](../pipeline-templates/nf-core/variantbenchmarking.md); atacseq, chipseq and rnafusion are reworked and stay Draft ([#1102](https://github.com/depictio/depictio/pull/1102), [4dab4c9a](https://github.com/depictio/depictio/commit/4dab4c9a), [b9cd837f](https://github.com/depictio/depictio/commit/b9cd837f)).
+* **Every template tab follows one layout**: pinned sample filters, four glance cards, tiles that filter each other and record cards; ampliseq and viralrecon included ([#1102](https://github.com/depictio/depictio/pull/1102), [b9cd837f](https://github.com/depictio/depictio/commit/b9cd837f)).
+* **Some catalog outputs changed shape** (a `sample` column on the fusion and dbCAN outputs, `caller` / `truth_set` on the benchmarking outputs, MACS2 cards at q 0.05); refresh the project to rebuild the tables. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1102](https://github.com/depictio/depictio/pull/1102), [4dab4c9a](https://github.com/depictio/depictio/commit/4dab4c9a)).
+
+### **🐛 Bug Fixes**
+
+* **A table's numeric filter keeps its operator** (*greater than*, *less than*, *not equal*), and a value of 0 is no longer ignored ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **`visu_type: violin` passes validation** ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+
+---
+
 ## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (October 7, 2026)
 
 !!! success "Minor: the full server without Docker, one `depictio` command, and SeaweedFS as the bundled S3 store"

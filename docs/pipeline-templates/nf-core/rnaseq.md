@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/rnaseq" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="3.26.0">
@@ -71,14 +71,14 @@ nf-core/rnaseq run:
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/rnaseq -profile docker --outdir results
+    nextflow run nf-core/rnaseq -r 3.26.0 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
-!!! warning "The results directory is one aligner route, not the run root"
+!!! warning "Ingest one aligner route, not the run root"
     A run that publishes more than one aligner (the nf-core megatest publishes
     `aligner_star_salmon/` and `aligner_star_rsem/` side by side) writes a
     complete output tree per route, each with its own `multiqc/`, `star_salmon/`
@@ -92,16 +92,21 @@ nf-core/rnaseq run:
 ## :material-book-open-variant: Reference
 
 The template reads one MultiQC report and one merged expression matrix. The
-`salmon` catalog recipes reshape `star_salmon/salmon.merged.gene_tpm.tsv` three
-ways: one row per library (PCA coordinates, detection counts, median TPM), the
-500 most variable genes wide with a condition annotation strip, and one row per
-gene and sample. The merged count matrix ships as rows only.
+`salmon` catalog recipes reshape `star_salmon/salmon.merged.gene_tpm.tsv` into
+one row per library (detection counts, median TPM), the 500 most variable genes
+wide with the samplesheet annotation, one row per gene and sample, and one row
+per expressed gene with its mean, spread and peak condition. The pipeline's
+DESeq2 QC files, the RSeQC read distribution reports and the MultiQC general
+statistics feed the Sample Space and Library QC tabs, and all three are
+optional. The merged count matrix ships as rows only.
 
 MultiQC 1.33 wrote this pipeline's report one directory deeper and with a
 different suffix, `multiqc/star_salmon/multiqc_report_data/` rather than
-`multiqc/multiqc_data/`. The template pins that literal path in its scan
-pattern, because a bare basename would attach whichever nested report the walk
-found first.
+`multiqc/multiqc_data/`. The scan pattern is path-qualified but
+aligner-agnostic: `multiqc/`, then an optional route directory (`star_salmon/`,
+`salmon/`, or none), then either spelling of the data directory. A
+`--skip_alignment` run, which writes `multiqc/salmon/`, therefore finds its
+report too.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -237,7 +242,7 @@ condition, and every tile that shows one says so.
 
     **Expression** · *Which genes vary most between the libraries and conditions?*
 
-    [![Variable Genes dashboard](../../images/pipeline-templates/nf-core/rnaseq/expression_heatmap_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/expression_heatmap_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    <!-- screenshot pending v2 -->
 
     The genes in view, their median log2(TPM + 1), the genes two-fold higher in
     one condition and the highest TPM. Then the 500 most variable genes as a
@@ -282,6 +287,19 @@ condition, and every tile that shows one says so.
         | Gene rows (collapsed) | *Gene expression* |
         | Count matrix (collapsed) | *Merged gene counts* |
 
+!!! tip "Optional sections"
+    The DESeq2 QC files, the RSeQC read distribution reports and the MultiQC
+    general statistics are optional collections. A run that skipped one of them
+    ingests without it, and the panels it fed (the Sample Space PCA and distances,
+    the read distribution, the Library QC profile) disappear.
+
+Tables and point views select on their entity column: the samplesheet on
+`sample`; the DESeq2 QC PCA and the library summary on `sample_id`; the
+mean-variance plane on `gene_id`; the expression-by-condition figure and the
+gene expression table on `gene_name`. A pick narrows the other tiles of its
+collection and follows the project links to the collections they reach, and each
+record card follows the tile beside it.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -290,7 +308,7 @@ Depictio reads the **output** of nf-core/rnaseq, it does not run the pipeline.
 Run the pipeline first:
 
 ```bash
-nextflow run nf-core/rnaseq \
+nextflow run nf-core/rnaseq -r 3.26.0 \
   --input samplesheet.csv \
   --genome GRCh38 \
   --outdir results \
@@ -317,7 +335,8 @@ pipeline documentation.
 ## :material-folder-open-outline: Required data structure
 
 Point `depictio ingest` at one aligner route directory. Depictio scans recursively
-and matches on file name, except for the MultiQC report, whose path is pinned.
+and matches on file name, except for the MultiQC report, whose scan pattern is
+path-qualified.
 
 ```text
 <DATA_ROOT>/                                    # one aligner route, e.g. aligner_star_salmon/
@@ -329,11 +348,12 @@ and matches on file name, except for the MultiQC report, whose path is pinned.
 ├── multiqc/
 │   └── star_salmon/
 │       └── multiqc_report_data/
-│           └── multiqc.parquet                 # pinned literal path
+│           └── multiqc.parquet                 # or multiqc/multiqc_data/
 ├── star_salmon/
 │   ├── salmon.merged.gene_tpm.tsv              # every expression panel
 │   ├── salmon.merged.gene_counts.tsv           # Gene Explorer count matrix
-│   ├── deseq2_qc/                              # PCA values, sample distances, size factors
+│   ├── deseq2_qc/                              # *.pca.vals.txt, *.sample.dists.txt (optional)
+│   ├── rseqc/read_distribution/                # *.read_distribution.txt (optional)
 │   └── featurecounts/                          # biotype tables MultiQC renders
 ├── salmon/                                     # read instead with PSEUDOALIGNER_ONLY=true
 │   ├── salmon.merged.gene_tpm.tsv
@@ -344,7 +364,7 @@ and matches on file name, except for the MultiQC report, whose path is pinned.
 
 ---
 
-## :material-flask-outline: Test data
+## :material-flask-outline: Validation runs
 
 The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnaseq/3.26.0/download_test_data.sh),
@@ -360,7 +380,7 @@ The run is
 eight libraries from four ENCODE cell lines, two replicates each, human GRCh37,
 Trim Galore then STAR + Salmon. The manifest fetches only the
 `aligner_star_salmon/` route and mirrors it below the destination, so the
-directory the script writes is already the right results directory. The samplesheet
+directory the script writes is already the right one to ingest. The samplesheet
 is not part of the published run; `post_fetch_help` in `megatest.yaml` next to
 the script gives the `curl` that puts it under `input/`.
 
@@ -394,7 +414,7 @@ depictio ingest /tmp/rnaseq_test \
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it a Draft.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it Experimental.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

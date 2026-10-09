@@ -37,12 +37,13 @@ through to the protein a fusion would produce:
 - :material-set-merge: **Fusion calls**: fusion-report's ranked consensus and caller agreement, each caller's read support, and Arriba's breakpoints on the genome
 - :material-check-decagram: **Follow-up**: FusionInspector re-quantification and fusion allelic ratios, the Pfam domains each fusion protein keeps, and CTAT-splicing junctions
 
-!!! info "The fusion is the unit of analysis"
+!!! info "One row is one fusion in one sample"
     rnafusion writes one file per tool per sample and none of those files carries
-    a sample column, so every recipe reads the sample off the file name, and the
-    samplesheet links to every fusion and splicing table on it. The fusion-report
-    consensus is the hub: every caller table links to it on the fusion name, so a
-    fusion picked anywhere follows you to every tab that reads fusions.
+    a sample column. Every recipe the template binds reads the sample off the file
+    name instead, so every fusion and splicing table carries `sample` and the
+    samplesheet links to all of them: on a cohort run, the sample filter narrows
+    every tab. The fusion name stays the key a fusion selection fans out on,
+    across the consensus, the three callers and the FusionInspector tables.
 
 !!! note "Route flags are not auto-detected"
     rnafusion's `--tools` selection is not read back from `params.json`, so a run
@@ -70,7 +71,7 @@ through to the protein a fusion would produce:
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/rnafusion -profile docker --outdir results
+    nextflow run nf-core/rnafusion -r 4.1.3 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -322,6 +323,14 @@ tabs. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
     match against. The fusion filters stay off the Splice Junctions tab on
     purpose: the sample filters and the tab's own junction filters narrow it.
 
+Fusions select on `fusion`: the ranked fusion bars, the *Arriba against
+STAR-Fusion* and allelic-ratio scatters, and the consensus, evidence, caller,
+FusionInspector and Pfam tables. The sample sheet selects on `sample`, and the
+junction Manhattan and junction table select on `gene`, which stays inside the
+Splice Junctions tab. A pick narrows every tile that reads the same collection or
+one linked from it. The partner chords, the flow, the UpSet and the dot plots do
+not select.
+
 ---
 
 ## :material-play-circle-outline: Running the pipeline
@@ -330,7 +339,7 @@ Depictio reads the **output** of nf-core/rnafusion, it does not run the
 pipeline. Build the references once, then run the pipeline:
 
 ```bash
-nextflow run nf-core/rnafusion \
+nextflow run nf-core/rnafusion -r 4.1.3 \
   --input samplesheet.csv \
   --genomes_base /path/to/references \
   --tools arriba,starfusion,fusioncatcher,ctatsplicing \
@@ -385,7 +394,7 @@ does not publish: put it under `input/`, or pass `--var SAMPLESHEET_FILE=...`.
 
 ---
 
-## :material-flask-outline: Test data
+## :material-flask-outline: Validation runs
 
 The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnafusion/4.1.3/download_test_data.sh),

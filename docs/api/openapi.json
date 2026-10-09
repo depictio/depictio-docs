@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.12.0",
-    "x-generated-at": "2026-10-07T20:27:26Z",
-    "x-depictio-version": "v1.12.0"
+    "version": "1.13.0",
+    "x-generated-at": "2026-10-07T21:57:43Z",
+    "x-depictio-version": "v1.13.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -1238,7 +1238,7 @@
           "Data Collections"
         ],
         "summary": "Viz Suggestions",
-        "description": "Rank advanced-viz kinds by how well they fit this DC.\n\nDrives the React builder's \"suggest but tolerate\" picker (Recommended vs.\nthe rest) and the DC card's suggestion chips via the graded scoring engine\nin `depictio/models/components/advanced_viz/schemas.py`. Every viz kind is\nscored and returned (ranked) — nothing is filtered out by default — so the\nbuilder can still let the user pick a low-scoring kind and bind columns\nmanually. Each entry carries:\n\n  - `score`: 0.0-1.0 graded fit (dtype compatibility × column-name\n    similarity across required roles, plus optional-role and structural\n    nudges).\n  - `role_candidates`: per required role, dtype-compatible columns ranked\n    best-first — the UI uses these to pre-fill bindings.\n  - `unmet_roles` / `weak_roles`: required roles with no candidate, or\n    satisfied only by dtype/cast — drive the builder's inline guidance.\n\nQuery params:\n    min_confidence: optional score floor (0.0-1.0). Default 0.0 returns\n        every kind ranked; raise it to keep only confident matches.",
+        "description": "Rank advanced-viz kinds by how well they fit this DC.\n\nDrives the React builder's \"suggest but tolerate\" picker (Recommended vs.\nthe rest) and the DC card's suggestion chips via the graded scoring engine\nin `depictio/models/components/advanced_viz/schemas.py`. Every viz kind is\nscored and returned (ranked) — nothing is filtered out by default — so the\nbuilder can still let the user pick a low-scoring kind and bind columns\nmanually. Each entry carries:\n\n  - `score`: 0.0-1.0, for ranking only (>= 0.8 is \"Recommended\"). Not a\n    quality measure: the UI shows `match` and `reasons` instead.\n  - `match`: the evidence behind the score: \"named\" (every distinctive\n    role has a column named like it), \"shape\" (the table has the shape\n    the kind reads, e.g. a numeric pair or many numeric axes), \"context\"\n    (the dashboard tab makes it right, e.g. a record card following a\n    selection) or \"weak\".\n  - `reasons`: short strings behind the match, e.g.\n    \"x/y: numeric pair dim_1, dim_2\".\n  - `role_candidates`: per required role, dtype-compatible columns ranked\n    best-first — the UI uses these to pre-fill bindings.\n  - `unmet_roles` / `weak_roles`: required roles with no candidate, or\n    satisfied only by dtype/cast — drive the builder's inline guidance.\n\nQuery params:\n    min_confidence: optional score floor (0.0-1.0). Default 0.0 returns\n        every kind ranked; raise it to keep only confident matches.\n    selection_columns: repeatable. Columns emitted by the selection-capable\n        tiles of the dashboard tab the new tile lands on. A record card is\n        recommended only when the DC holds one of them.\n    existing_kinds: repeatable. Advanced-viz kinds already on that tab;\n        flagged in `reasons`, the score is unchanged.",
         "operationId": "viz_suggestions_depictio_api_v1_datacollections_viz_suggestions__data_collection_id__get",
         "security": [
           {
@@ -1264,6 +1264,44 @@
               "type": "number",
               "default": 0.0,
               "title": "Min Confidence"
+            }
+          },
+          {
+            "name": "selection_columns",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Selection Columns"
+            }
+          },
+          {
+            "name": "existing_kinds",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Existing Kinds"
             }
           }
         ],
@@ -3524,6 +3562,116 @@
               "title": "S3 Path"
             },
             "description": "Full S3 path to the image (e.g., s3://bucket/path/image.png)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/files/indexed/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "Files"
+        ],
+        "summary": "List Indexed Files",
+        "description": "Manifest of an indexed_file DC: one entry per sample, with presigned URLs.\n\nThis is what a file-backed track fetches before it builds its GenomeSpy\nspec: it needs the format (which lazy source to declare), the assembly and,\nper sample, a URL for the object and one for its index.",
+        "operationId": "list_indexed_files_depictio_api_v1_files_indexed__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/files/{data_collection_id}/{sample}/{name}": {
+      "get": {
+        "tags": [
+          "Files"
+        ],
+        "summary": "Get Indexed File Url",
+        "description": "Presigned URL for one object of an indexed_file DC, valid 15 minutes.\n\nThe key is rebuilt from the path parameters through ``indexed_file_s3_key``\nrather than read from the request, so a caller-supplied ``sample`` or\n``name`` cannot reach outside the DC's own prefix. The object must also be\nregistered for this DC, which is what stops a reader with access to one DC\nfrom guessing keys in another.",
+        "operationId": "get_indexed_file_url_depictio_api_v1_files__data_collection_id___sample___name__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "sample",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Sample"
+            }
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Name"
+            }
           }
         ],
         "responses": {
@@ -7524,6 +7672,649 @@
         }
       }
     },
+    "/depictio/api/v1/comments/access/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Get Comment Access",
+        "description": "Whether the caller may read and write threads on this tab. Never raises.",
+        "operationId": "get_comment_access_depictio_api_v1_comments_access__dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentAccess"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/comments/dashboard/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "List Threads",
+        "description": "Threads of a tab (``scope=tab``) or of every tab of its dashboard (``family``).\n\nRejected threads are hidden unless ``status=rejected`` is asked for.",
+        "operationId": "list_threads_depictio_api_v1_comments_dashboard__dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "tab",
+                "family"
+              ],
+              "type": "string",
+              "default": "tab",
+              "title": "Scope"
+            }
+          },
+          {
+            "name": "component_index",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only this component's threads; '__tab__' for the tab's own.",
+              "title": "Component Index"
+            },
+            "description": "Only this component's threads; '__tab__' for the tab's own."
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "open",
+                    "resolved",
+                    "proposed",
+                    "rejected"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ThreadOut"
+                  },
+                  "title": "Response List Threads Depictio Api V1 Comments Dashboard  Dashboard Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/comments/counts/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Count Threads",
+        "description": "Open and proposed threads of a tab, per component index (``__tab__`` for the tab).",
+        "operationId": "count_threads_depictio_api_v1_comments_counts__dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "integer"
+                    }
+                  },
+                  "title": "Response Count Threads Depictio Api V1 Comments Counts  Dashboard Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/comments/published/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "List Published Annotations",
+        "description": "Published annotations of a tab, for anyone who can view it. Never the comments.",
+        "operationId": "list_published_annotations_depictio_api_v1_comments_published__dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PublishedAnnotation"
+                  },
+                  "title": "Response List Published Annotations Depictio Api V1 Comments Published  Dashboard Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/comments/threads": {
+      "post": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Create Thread",
+        "description": "Open a thread on a component or a tab.\n\nWith ``agent`` set, the thread is written by an agent on behalf of the\ncaller and starts ``proposed``. A ``dedupe_key`` already used on the same\nanchor updates that thread instead of creating a new one (200).\nFingerprints in the anchor are always computed here; client values are ignored.",
+        "operationId": "create_thread_depictio_api_v1_comments_threads_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThreadCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThreadOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/comments/threads/{thread_id}": {
+      "patch": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Update Thread",
+        "description": "Resolve or reopen a thread, and/or edit its annotation (including publishing it).",
+        "operationId": "update_thread_depictio_api_v1_comments_threads__thread_id__patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Thread Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThreadUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThreadOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Delete Thread",
+        "description": "Delete a thread: its creator (or the user an agent wrote it for), a project owner, or an admin.",
+        "operationId": "delete_thread_depictio_api_v1_comments_threads__thread_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Thread Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/comments/threads/{thread_id}/review": {
+      "post": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Review Thread",
+        "description": "Accept or reject an agent's proposed thread. The decision and reason are kept.",
+        "operationId": "review_thread_depictio_api_v1_comments_threads__thread_id__review_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Thread Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThreadReview"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThreadOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/comments/threads/{thread_id}/comments": {
+      "post": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Add Comment",
+        "description": "Reply to a thread.",
+        "operationId": "add_comment_depictio_api_v1_comments_threads__thread_id__comments_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Thread Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThreadOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/comments/threads/{thread_id}/comments/{comment_id}": {
+      "patch": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Edit Comment",
+        "description": "Edit one's own comment.",
+        "operationId": "edit_comment_depictio_api_v1_comments_threads__thread_id__comments__comment_id__patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Thread Id"
+            }
+          },
+          {
+            "name": "comment_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Comment Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThreadOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Delete Comment",
+        "description": "Soft-delete a comment (its author or a project owner). The body is cleared.",
+        "operationId": "delete_comment_depictio_api_v1_comments_threads__thread_id__comments__comment_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Thread Id"
+            }
+          },
+          {
+            "name": "comment_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Comment Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThreadOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/figure/visualizations": {
       "get": {
         "tags": [
@@ -8176,6 +8967,107 @@
         }
       }
     },
+    "/depictio/api/v1/advanced_viz/compute_contact_map": {
+      "post": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Dispatch Compute Contact Map",
+        "description": "Dispatch one region of a contact matrix, at one resolution.\n\nRegion and resolution are part of the payload, so they are part of the\ncache key: zooming in dispatches a new job and zooming back out lands on\nthe one already computed. `resolution: null` lets the server pick the level\nwhose bins-per-pixel is closest to the target for the span the client says\nit is showing.",
+        "operationId": "dispatch_compute_contact_map_depictio_api_v1_advanced_viz_compute_contact_map_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Payload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Dispatch Compute Contact Map Depictio Api V1 Advanced Viz Compute Contact Map Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_contact_map/{job_id}": {
+      "get": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Poll Compute Contact Map",
+        "description": "Poll a previously-dispatched contact-map window.",
+        "operationId": "poll_compute_contact_map_depictio_api_v1_advanced_viz_compute_contact_map__job_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Poll Compute Contact Map Depictio Api V1 Advanced Viz Compute Contact Map  Job Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/advanced_viz/compute_sankey": {
       "post": {
         "tags": [
@@ -8260,6 +9152,107 @@
                   "type": "object",
                   "additionalProperties": true,
                   "title": "Response Poll Compute Sankey Depictio Api V1 Advanced Viz Compute Sankey  Job Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_group_compare": {
+      "post": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Dispatch Compute Group Compare",
+        "description": "Dispatch a two-group differential test as a Celery task.\n\nSame dispatch + poll + cache contract as ``compute_upset``: the cache key\nhashes the whole payload, so the two group definitions and every statistic\ntunable pick their own cache entry, and re-running the identical\ncomparison is free.",
+        "operationId": "dispatch_compute_group_compare_depictio_api_v1_advanced_viz_compute_group_compare_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Payload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Dispatch Compute Group Compare Depictio Api V1 Advanced Viz Compute Group Compare Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/advanced_viz/compute_group_compare/{job_id}": {
+      "get": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Poll Compute Group Compare",
+        "description": "Poll a previously-dispatched group comparison.",
+        "operationId": "poll_compute_group_compare_depictio_api_v1_advanced_viz_compute_group_compare__job_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Poll Compute Group Compare Depictio Api V1 Advanced Viz Compute Group Compare  Job Id  Get"
                 }
               }
             }
@@ -10683,6 +11676,57 @@
   },
   "components": {
     "schemas": {
+      "AgentInfo": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "on_behalf_of": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "On Behalf Of"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "AgentInfo"
+      },
       "AggregationFunction": {
         "type": "string",
         "enum": [
@@ -10697,6 +11741,464 @@
         ],
         "title": "AggregationFunction",
         "description": "Supported aggregation functions for granularity mismatches."
+      },
+      "Anchor": {
+        "properties": {
+          "dashboard_id": {
+            "type": "string",
+            "title": "Dashboard Id"
+          },
+          "component_index": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Component Index"
+          },
+          "component_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Component Title"
+          },
+          "view_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ViewState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "component_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Component Hash"
+          },
+          "data_hashes": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Data Hashes"
+          },
+          "version_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version Id"
+          },
+          "pins": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Pins"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dashboard_id"
+        ],
+        "title": "Anchor",
+        "description": "Where a thread points."
+      },
+      "Annotation": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "range",
+              "line",
+              "points",
+              "note"
+            ],
+            "title": "Kind"
+          },
+          "geometry": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/XRange"
+              },
+              {
+                "$ref": "#/components/schemas/YRange"
+              },
+              {
+                "$ref": "#/components/schemas/RefLine"
+              },
+              {
+                "$ref": "#/components/schemas/MarkedPoints"
+              },
+              {
+                "$ref": "#/components/schemas/ArrowNote"
+              },
+              {
+                "$ref": "#/components/schemas/GeoNote"
+              }
+            ],
+            "title": "Geometry",
+            "discriminator": {
+              "propertyName": "kind",
+              "mapping": {
+                "arrow_note": "#/components/schemas/ArrowNote",
+                "geo_note": "#/components/schemas/GeoNote",
+                "points": "#/components/schemas/MarkedPoints",
+                "ref_line": "#/components/schemas/RefLine",
+                "x_range": "#/components/schemas/XRange",
+                "y_range": "#/components/schemas/YRange"
+              }
+            }
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "color": {
+            "type": "string",
+            "enum": [
+              "blue",
+              "cyan",
+              "teal",
+              "green",
+              "lime",
+              "yellow",
+              "orange",
+              "red",
+              "pink",
+              "grape",
+              "violet",
+              "indigo",
+              "gray"
+            ],
+            "title": "Color",
+            "default": "yellow"
+          },
+          "style": {
+            "$ref": "#/components/schemas/AnnotationStyle"
+          },
+          "published": {
+            "type": "boolean",
+            "title": "Published",
+            "default": false
+          },
+          "variant": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variant"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "geometry",
+          "label"
+        ],
+        "title": "Annotation",
+        "description": "The shape a thread carries."
+      },
+      "AnnotationPatch": {
+        "properties": {
+          "geometry": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/XRange"
+                  },
+                  {
+                    "$ref": "#/components/schemas/YRange"
+                  },
+                  {
+                    "$ref": "#/components/schemas/RefLine"
+                  },
+                  {
+                    "$ref": "#/components/schemas/MarkedPoints"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ArrowNote"
+                  },
+                  {
+                    "$ref": "#/components/schemas/GeoNote"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "kind",
+                  "mapping": {
+                    "arrow_note": "#/components/schemas/ArrowNote",
+                    "geo_note": "#/components/schemas/GeoNote",
+                    "points": "#/components/schemas/MarkedPoints",
+                    "ref_line": "#/components/schemas/RefLine",
+                    "x_range": "#/components/schemas/XRange",
+                    "y_range": "#/components/schemas/YRange"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Geometry"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "color": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "blue",
+                  "cyan",
+                  "teal",
+                  "green",
+                  "lime",
+                  "yellow",
+                  "orange",
+                  "red",
+                  "pink",
+                  "grape",
+                  "violet",
+                  "indigo",
+                  "gray"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color"
+          },
+          "style": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnnotationStyle"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "published": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "AnnotationPatch",
+        "description": "Partial update of a thread's annotation."
+      },
+      "AnnotationStyle": {
+        "properties": {
+          "opacity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Opacity"
+          },
+          "dash": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "solid",
+                  "dash",
+                  "dot"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dash"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 10.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width"
+          },
+          "fill_opacity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fill Opacity"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "AnnotationStyle"
+      },
+      "ArrowNote": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "arrow_note",
+            "title": "Kind",
+            "default": "arrow_note"
+          },
+          "x": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "X"
+          },
+          "y": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Y"
+          },
+          "ax": {
+            "type": "number",
+            "title": "Ax",
+            "default": -40
+          },
+          "ay": {
+            "type": "number",
+            "title": "Ay",
+            "default": -40
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "x",
+          "y"
+        ],
+        "title": "ArrowNote",
+        "description": "A numbered note with an arrow pointing at a data point.\n\n``x``/``y`` are the arrow head in data coordinates; ``ax``/``ay`` offset\nthe label from it in pixels, so the label keeps its place on resize."
+      },
+      "Author": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "human",
+              "agent"
+            ],
+            "title": "Kind",
+            "default": "human"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "agent": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AgentInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "user_id"
+        ],
+        "title": "Author"
       },
       "BackupListItem": {
         "properties": {
@@ -11599,6 +13101,82 @@
         ],
         "title": "Body_upload_dashboard_logo_depictio_api_v1_dashboards_upload_logo__dashboard_id__post"
       },
+      "BoxRegion": {
+        "properties": {
+          "shape": {
+            "type": "string",
+            "const": "box",
+            "title": "Shape",
+            "default": "box"
+          },
+          "x0": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "X0"
+          },
+          "x1": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "X1"
+          },
+          "y0": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Y0"
+          },
+          "y1": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Y1"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "x0",
+          "x1",
+          "y0",
+          "y1"
+        ],
+        "title": "BoxRegion",
+        "description": "The rectangle a box selection covered."
+      },
       "BrandPlots": {
         "properties": {
           "template": {
@@ -12039,6 +13617,97 @@
         "title": "ColumnAggregation",
         "description": "Aggregation configuration for a specific column.\n\nAllows fine-grained control over how individual columns are aggregated\nwhen joining tables with different granularities."
       },
+      "Comment": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "author": {
+            "$ref": "#/components/schemas/Author"
+          },
+          "body": {
+            "type": "string",
+            "title": "Body"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "edited_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edited At"
+          },
+          "deleted": {
+            "type": "boolean",
+            "title": "Deleted",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "author",
+          "body",
+          "created_at"
+        ],
+        "title": "Comment"
+      },
+      "CommentAccess": {
+        "properties": {
+          "can_comment": {
+            "type": "boolean",
+            "title": "Can Comment"
+          }
+        },
+        "type": "object",
+        "required": [
+          "can_comment"
+        ],
+        "title": "CommentAccess"
+      },
+      "CommentCreate": {
+        "properties": {
+          "body": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Body"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "body"
+        ],
+        "title": "CommentCreate"
+      },
+      "CommentUpdate": {
+        "properties": {
+          "body": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Body"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "body"
+        ],
+        "title": "CommentUpdate"
+      },
       "DCGeoJSONConfig": {
         "properties": {
           "feature_id_key": {
@@ -12171,6 +13840,81 @@
         ],
         "title": "DCImageConfig",
         "description": "Configuration for Image data collection type.\n\nImage DCs extend Table DC functionality with a mandatory image column.\nThey create delta tables and support all component types."
+      },
+      "DCIndexedFileConfig": {
+        "properties": {
+          "format": {
+            "type": "string",
+            "enum": [
+              "vcf",
+              "bam",
+              "bigwig",
+              "bigbed",
+              "gff3",
+              "fasta",
+              "tabix"
+            ],
+            "title": "Format",
+            "description": "File format. Each maps to one GenomeSpy lazy data source: vcf, bam, bigwig, bigbed, gff3, fasta (indexedFasta) or tabix (any other bgzip-compressed, tabix-indexed interval file such as BED)."
+          },
+          "index_suffix": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index Suffix",
+            "description": "Suffix of the index sidecar, appended to the primary file name (.tbi, .bai, .fai). Null uses the format default; an empty string declares a self-indexed format such as bigwig or bigbed."
+          },
+          "sample_regex": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Regex",
+            "description": "Regular expression with a named group 'sample', matched against the scanned file path to name the sample. Null falls back to the file name with its format and compression suffixes stripped."
+          },
+          "sample_col": {
+            "type": "string",
+            "title": "Sample Col",
+            "description": "Name the sample id is known by elsewhere in the project. Used to line a file track up with table-backed tracks and with the dashboard's sample filter; it is not a column of this DC.",
+            "default": "sample"
+          },
+          "assembly": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assembly",
+            "description": "Genome assembly the files are aligned to (hg38, mm10, ...). A track reading this DC uses it for the genome axis; null leaves the choice to the component config."
+          },
+          "max_file_size_mb": {
+            "type": "integer",
+            "maximum": 51200.0,
+            "minimum": 1.0,
+            "title": "Max File Size Mb",
+            "description": "Per-file upload cap. A primary file above it is skipped with a warning instead of pushing gigabytes into the bucket.",
+            "default": 512
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "format"
+        ],
+        "title": "DCIndexedFileConfig",
+        "description": "Config for an indexed genomic file data collection.\n\nThe DC carries no columns: a tile bound to it reads whole files from S3\nrather than rows from a delta table. ``sample_col`` is the join handle,\nnot a column of this DC: it names the column a companion table DC uses for\nthe same sample id, so a file-backed track can sit beside table-backed\ntracks and answer the dashboard's sample filter."
       },
       "DCJBrowse2Config": {
         "properties": {
@@ -12529,7 +14273,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -12643,6 +14387,21 @@
           "funnel_filtering": {
             "type": "boolean",
             "title": "Funnel Filtering",
+            "default": true
+          },
+          "advanced_viz_controls": {
+            "type": "string",
+            "enum": [
+              "popover",
+              "rail",
+              "header"
+            ],
+            "title": "Advanced Viz Controls",
+            "default": "popover"
+          },
+          "autofit": {
+            "type": "boolean",
+            "title": "Autofit",
             "default": true
           },
           "brand_theme": {
@@ -12843,7 +14602,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -12906,7 +14665,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -12993,6 +14752,9 @@
               },
               {
                 "$ref": "#/components/schemas/DCPhylogenyConfig"
+              },
+              {
+                "$ref": "#/components/schemas/DCIndexedFileConfig"
               }
             ],
             "title": "Dc Specific Properties"
@@ -13036,6 +14798,61 @@
         ],
         "title": "DataCollectionSource",
         "description": "Origin/source type of a data collection."
+      },
+      "Evidence": {
+        "properties": {
+          "claim": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Claim"
+          },
+          "query": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 4000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Query"
+          },
+          "values": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Values"
+          },
+          "view_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ViewState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "claim"
+        ],
+        "title": "Evidence",
+        "description": "A structured claim an agent backs its comment with, for one-click checks."
       },
       "ExpectedDataCollection": {
         "properties": {
@@ -13094,7 +14911,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -13191,6 +15008,54 @@
           },
           "permissions": {
             "$ref": "#/components/schemas/Permission"
+          },
+          "sample": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample",
+            "description": "Sample the file belongs to (indexed_file DCs only)"
+          },
+          "s3_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "S3 Key",
+            "description": "Bucket-relative key of the mirrored object (indexed_file DCs only)"
+          },
+          "index_s3_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index S3 Key",
+            "description": "Bucket-relative key of the index sidecar, when the format has one"
+          },
+          "index_filesize": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index Filesize",
+            "description": "Size in bytes of the index sidecar, when the format has one"
           }
         },
         "additionalProperties": false,
@@ -13280,6 +15145,36 @@
         ],
         "title": "FilterSectionSpec",
         "description": "Presentation of one left-panel filter section.\n\nOnly needed to override a section's defaults. A section named by a\ncomponent's ``section`` field but absent from ``filter_sections`` still\nrenders — expanded, no icon — and sorts after the declared ones.\n\nExample YAML:\n    filter_sections:\n      - name: Sample\n        icon: mdi:test-tube\n        color: teal\n      - name: Quality\n        icon: mdi:check-decagram\n        collapsed: true"
+      },
+      "GeoNote": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "geo_note",
+            "title": "Kind",
+            "default": "geo_note"
+          },
+          "lat": {
+            "type": "number",
+            "maximum": 90.0,
+            "minimum": -90.0,
+            "title": "Lat"
+          },
+          "lon": {
+            "type": "number",
+            "maximum": 180.0,
+            "minimum": -180.0,
+            "title": "Lon"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "lat",
+          "lon"
+        ],
+        "title": "GeoNote",
+        "description": "A numbered note pinned to a place on a map."
       },
       "GoogleOAuthLoginResponse": {
         "properties": {
@@ -14346,6 +16241,62 @@
         "title": "JoinType",
         "description": "Supported join types."
       },
+      "LassoRegion": {
+        "properties": {
+          "shape": {
+            "type": "string",
+            "const": "lasso",
+            "title": "Shape",
+            "default": "lasso"
+          },
+          "x": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "type": "array",
+            "maxItems": 1000,
+            "minItems": 3,
+            "title": "X"
+          },
+          "y": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "type": "array",
+            "maxItems": 1000,
+            "minItems": 3,
+            "title": "Y"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "x",
+          "y"
+        ],
+        "title": "LassoRegion",
+        "description": "The polygon a lasso selection traced, one vertex per ``x``/``y`` pair."
+      },
       "LinkConfig": {
         "properties": {
           "resolver": {
@@ -14355,11 +16306,27 @@
               "sample_mapping",
               "pattern",
               "regex",
-              "wildcard"
+              "wildcard",
+              "region"
             ],
             "title": "Resolver",
             "description": "Resolution strategy for mapping source values to target identifiers",
             "default": "direct"
+          },
+          "columns": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Columns",
+            "description": "Role to target-column mapping for the 'region' resolver: 'chrom' names the target's chromosome column and 'pos' its coordinate column. Ignored by every other resolver, which map values rather than column names."
           },
           "mappings": {
             "anyOf": [
@@ -14413,7 +16380,7 @@
         "additionalProperties": false,
         "type": "object",
         "title": "LinkConfig",
-        "description": "Configuration for how to resolve link values between data collections.\n\nThe resolver determines the strategy used to map source values to target identifiers:\n- direct: 1:1 mapping - same value in source and target\n- sample_mapping: Expand canonical IDs to sample name variants (for MultiQC)\n- pattern: Template substitution (e.g., \"{sample}.bam\" -> \"S1.bam\")\n- regex: Match target values using regex pattern\n- wildcard: Glob-style matching (e.g., \"S1*\" matches \"S1_R1.bam\")\n\nExample:\n    LinkConfig(\n        resolver=\"sample_mapping\",\n        mappings={\"S1\": [\"S1_R1\", \"S1_R2\"], \"S2\": [\"S2_R1\"]},\n        target_field=\"sample_name\"\n    )"
+        "description": "Configuration for how to resolve link values between data collections.\n\nThe resolver determines the strategy used to map source values to target identifiers:\n- direct: 1:1 mapping - same value in source and target\n- sample_mapping: Expand canonical IDs to sample name variants (for MultiQC)\n- pattern: Template substitution (e.g., \"{sample}.bam\" -> \"S1.bam\")\n- regex: Match target values using regex pattern\n- wildcard: Glob-style matching (e.g., \"S1*\" matches \"S1_R1.bam\")\n- region: Rename a genomic region onto the target's own coordinate columns\n\nExample:\n    LinkConfig(\n        resolver=\"sample_mapping\",\n        mappings={\"S1\": [\"S1_R1\", \"S1_R2\"], \"S2\": [\"S2_R1\"]},\n        target_field=\"sample_name\"\n    )\n\nThe ``region`` resolver is the one that reads no data at all. A genomic\nregion travels the dashboard as two ordinary filters, a chromosome\nmulti-select and a position range (``genomeRegionFilters`` in\n``packages/depictio-react-core/src/selection.ts``), and a chromosome name\nand a base-pair coordinate mean the same thing in every collection of the\nsame assembly. Only the column *names* differ, which is what ``columns``\ncarries:\n\n    LinkConfig(\n        resolver=\"region\",\n        columns={\"chrom\": \"chromosome\", \"pos\": \"position\"},\n    )"
       },
       "LinkCreateRequest": {
         "properties": {
@@ -14630,6 +16597,12 @@
             "title": "Reverse",
             "description": "Walk the link against its declared direction. The link is looked up as target_dc_id -> source_dc_id, source_column is read on the link's target, and the resolved values name the link's source_column. Only links using the 'direct' resolver can be walked this way; any other answers 404.",
             "default": false
+          },
+          "range_filter": {
+            "type": "boolean",
+            "title": "Range Filter",
+            "description": "filter_values is the [low, high] pair of a RangeSlider or DateRangePicker on source_column, to be read as an inclusive range rather than a set of two values. The rows inside the range are translated to the link's join column before resolving, so a position or q-value slider reaches the linked collection as the ids it selects, not as two ids that do not exist.",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -14802,6 +16775,87 @@
           "level"
         ],
         "title": "LogLevelRequest"
+      },
+      "MarkedPoints": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "points",
+            "title": "Kind",
+            "default": "points"
+          },
+          "column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Column"
+          },
+          "ids": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "number"
+                }
+              ]
+            },
+            "type": "array",
+            "maxItems": 5000,
+            "title": "Ids"
+          },
+          "coords": {
+            "items": {
+              "$ref": "#/components/schemas/PointCoord"
+            },
+            "type": "array",
+            "maxItems": 5000,
+            "title": "Coords"
+          },
+          "region": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/BoxRegion"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LassoRegion"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "shape",
+                  "mapping": {
+                    "box": "#/components/schemas/BoxRegion",
+                    "lasso": "#/components/schemas/LassoRegion"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Region"
+          },
+          "geo": {
+            "type": "boolean",
+            "title": "Geo",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "MarkedPoints",
+        "description": "Points, bars or table rows to circle or outline.\n\nRows are identified by the component's selection column when it has one\n(``column`` + ``ids``), which survives re-sorting and re-ingest. Charts\nwithout one (bars, histograms) fall back to plain coordinates.\n``region`` keeps the area the selection gesture covered, drawn as a\nshaded background behind the points.\n\n``geo`` marks points on a map: coordinates and region vertices are then\nlongitude (``x``) and latitude (``y``)."
       },
       "MigrateExportRequest": {
         "properties": {
@@ -15000,7 +17054,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -15202,13 +17256,75 @@
         "type": "object",
         "title": "Permission"
       },
+      "PointCoord": {
+        "properties": {
+          "x": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "X"
+          },
+          "y": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Y"
+          },
+          "trace": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trace"
+          },
+          "index": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "x",
+          "y"
+        ],
+        "title": "PointCoord"
+      },
       "Project": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -15469,6 +17585,135 @@
         "title": "ProvenanceReportGroup",
         "description": "One display group of run-provenance entries (Cutadapt, DADA2, ...)."
       },
+      "PublishedAnnotation": {
+        "properties": {
+          "thread_id": {
+            "type": "string",
+            "title": "Thread Id"
+          },
+          "dashboard_id": {
+            "type": "string",
+            "title": "Dashboard Id"
+          },
+          "component_index": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Component Index"
+          },
+          "number": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Number"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "range",
+              "line",
+              "points",
+              "note"
+            ],
+            "title": "Kind"
+          },
+          "geometry": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/XRange"
+              },
+              {
+                "$ref": "#/components/schemas/YRange"
+              },
+              {
+                "$ref": "#/components/schemas/RefLine"
+              },
+              {
+                "$ref": "#/components/schemas/MarkedPoints"
+              },
+              {
+                "$ref": "#/components/schemas/ArrowNote"
+              },
+              {
+                "$ref": "#/components/schemas/GeoNote"
+              }
+            ],
+            "title": "Geometry",
+            "discriminator": {
+              "propertyName": "kind",
+              "mapping": {
+                "arrow_note": "#/components/schemas/ArrowNote",
+                "geo_note": "#/components/schemas/GeoNote",
+                "points": "#/components/schemas/MarkedPoints",
+                "ref_line": "#/components/schemas/RefLine",
+                "x_range": "#/components/schemas/XRange",
+                "y_range": "#/components/schemas/YRange"
+              }
+            }
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "color": {
+            "type": "string",
+            "enum": [
+              "blue",
+              "cyan",
+              "teal",
+              "green",
+              "lime",
+              "yellow",
+              "orange",
+              "red",
+              "pink",
+              "grape",
+              "violet",
+              "indigo",
+              "gray"
+            ],
+            "title": "Color"
+          },
+          "style": {
+            "$ref": "#/components/schemas/AnnotationStyle"
+          },
+          "variant": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variant"
+          }
+        },
+        "type": "object",
+        "required": [
+          "thread_id",
+          "dashboard_id",
+          "component_index",
+          "number",
+          "kind",
+          "geometry",
+          "label",
+          "color",
+          "style"
+        ],
+        "title": "PublishedAnnotation",
+        "description": "What a viewer gets of a published annotation: the shape and its label."
+      },
       "PydanticObjectId": {
         "type": "string",
         "maxLength": 24,
@@ -15510,6 +17755,46 @@
         "type": "object",
         "title": "RealtimeConfig",
         "description": "Project-level real-time configuration (stored in project.yaml or Project model)."
+      },
+      "RefLine": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "ref_line",
+            "title": "Kind",
+            "default": "ref_line"
+          },
+          "axis": {
+            "type": "string",
+            "enum": [
+              "x",
+              "y"
+            ],
+            "title": "Axis"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "axis",
+          "value"
+        ],
+        "title": "RefLine",
+        "description": "A dashed reference line, drawn in front of the data."
       },
       "Regex": {
         "properties": {
@@ -15575,6 +17860,47 @@
           "password"
         ],
         "title": "RequestUserRegistration"
+      },
+      "Review": {
+        "properties": {
+          "decision": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "rejected"
+            ],
+            "title": "Decision"
+          },
+          "by": {
+            "type": "string",
+            "title": "By"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "At"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "decision",
+          "by",
+          "at"
+        ],
+        "title": "Review"
       },
       "S3DepictioCLIConfig": {
         "properties": {
@@ -15762,6 +18088,28 @@
         "title": "SourceOverride",
         "description": "Override a recipe source binding in project.yaml.\n\nRepoints a recipe source at a different file without editing the recipe — used\nby route conditionals (e.g. nanopore) to point the same recipe at a divergent\nsub-workflow's output layout. Set ``path`` for single-file sources or\n``glob_pattern`` for multi-file (glob) sources; exactly one is required."
       },
+      "Staleness": {
+        "properties": {
+          "component_missing": {
+            "type": "boolean",
+            "title": "Component Missing",
+            "default": false
+          },
+          "component_changed": {
+            "type": "boolean",
+            "title": "Component Changed",
+            "default": false
+          },
+          "data_changed": {
+            "type": "boolean",
+            "title": "Data Changed",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "Staleness",
+        "description": "How an anchor compares with the dashboard as it is now."
+      },
       "TableJoinConfig": {
         "properties": {
           "on_columns": {
@@ -15862,13 +18210,306 @@
         "title": "TemplateOrigin",
         "description": "Stored on Project model to track that a template was used to create the project.\n\nThis enables the DB and UI to distinguish template-instantiated projects from\nmanually configured ones, and to show which template was used."
       },
+      "ThreadCreate": {
+        "properties": {
+          "anchor": {
+            "$ref": "#/components/schemas/Anchor"
+          },
+          "body": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 4000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body"
+          },
+          "annotation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Annotation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Evidence"
+                },
+                "type": "array",
+                "maxItems": 20
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence"
+          },
+          "dedupe_key": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dedupe Key"
+          },
+          "agent": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AgentInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "anchor"
+        ],
+        "title": "ThreadCreate"
+      },
+      "ThreadOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "parent_dashboard_id": {
+            "type": "string",
+            "title": "Parent Dashboard Id"
+          },
+          "anchor": {
+            "$ref": "#/components/schemas/Anchor"
+          },
+          "annotation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Annotation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "number": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Number"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "resolved",
+              "proposed",
+              "rejected"
+            ],
+            "title": "Status",
+            "default": "open"
+          },
+          "review": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Review"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Evidence"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence"
+          },
+          "dedupe_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dedupe Key"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "created_by": {
+            "$ref": "#/components/schemas/Author"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          },
+          "resolved_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolved By"
+          },
+          "resolved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolved At"
+          },
+          "human_edited": {
+            "type": "boolean",
+            "title": "Human Edited",
+            "default": false
+          },
+          "comments": {
+            "items": {
+              "$ref": "#/components/schemas/Comment"
+            },
+            "type": "array",
+            "title": "Comments"
+          },
+          "staleness": {
+            "$ref": "#/components/schemas/Staleness"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "project_id",
+          "parent_dashboard_id",
+          "anchor",
+          "created_by",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "ThreadOut"
+      },
+      "ThreadReview": {
+        "properties": {
+          "decision": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "rejected"
+            ],
+            "title": "Decision"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "decision"
+        ],
+        "title": "ThreadReview"
+      },
+      "ThreadUpdate": {
+        "properties": {
+          "status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "resolved"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "annotation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnnotationPatch"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ThreadUpdate"
+      },
       "TokenBase": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -15974,7 +18615,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -16207,7 +18848,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6ac6ab29a6ca0dd48fd39427"
+            "default": "6ac6c051515cede3525910d9"
           }
         },
         "type": "object",
@@ -16237,6 +18878,20 @@
             "type": "boolean",
             "title": "Materialized",
             "default": false
+          },
+          "params": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Params"
           }
         },
         "additionalProperties": false,
@@ -16330,7 +18985,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -16449,7 +19104,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -16531,7 +19186,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -16617,7 +19272,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -16765,6 +19420,34 @@
         ],
         "title": "ValidationError"
       },
+      "ViewState": {
+        "properties": {
+          "filters": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Filters"
+          },
+          "selection": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selection"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ViewState",
+        "description": "What the author saw: the filters applied and the selection made.\n\nKept as the viewer's own payloads (the same shapes as the ``#filters=``\nshare link) rather than re-modelled here, so the viewer can restore them\nwithout a translation layer that would drift."
+      },
       "WildcardRegexBase": {
         "properties": {
           "name": {
@@ -16790,7 +19473,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -16965,7 +19648,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -17082,7 +19765,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -17180,7 +19863,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac6ab29a6ca0dd48fd39426"
+            "default": "6ac6c051515cede3525910d8"
           },
           "description": {
             "anyOf": [
@@ -17340,6 +20023,78 @@
           "files_id"
         ],
         "title": "WorkflowRunScan"
+      },
+      "XRange": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "x_range",
+            "title": "Kind",
+            "default": "x_range"
+          },
+          "x0": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "X0"
+          },
+          "x1": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "X1"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "x0",
+          "x1"
+        ],
+        "title": "XRange",
+        "description": "A band across the x axis, drawn behind the data."
+      },
+      "YRange": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "y_range",
+            "title": "Kind",
+            "default": "y_range"
+          },
+          "y0": {
+            "type": "number",
+            "title": "Y0"
+          },
+          "y1": {
+            "type": "number",
+            "title": "Y1"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "y0",
+          "y1"
+        ],
+        "title": "YRange",
+        "description": "A band across the y axis, drawn behind the data."
       },
       "_CreateMeTokenRequest": {
         "properties": {

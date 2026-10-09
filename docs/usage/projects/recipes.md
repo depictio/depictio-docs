@@ -348,6 +348,44 @@ Matched files are read individually and concatenated with
 `pl.concat([...], how="diagonal_relaxed")`. `glob_pattern` is mutually
 exclusive with `path` and `dc_ref`.
 
+### `source_path` (a key the file content lacks) { #source-path }
+
+Some tools write one file per sample and leave the sample out of the file itself: the only
+place it appears is the file name or the directory. Concatenating those files with
+`glob_pattern` alone would pool every sample's rows into one table with nothing to tell
+them apart.
+
+Set `source_path` to a column name and the runner adds that column to every row, holding
+the path of the file the row was read from, relative to the data root with `/` separators
+(absolute when the file sits outside the data root). The recipe then derives the key from
+it:
+
+```python
+SOURCES: list[RecipeSource] = [
+    RecipeSource(
+        ref="calls",
+        glob_pattern="caller/*.calls.tsv",
+        format="TSV",
+        source_path="_source_path",
+    ),
+]
+
+
+def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
+    df = sources["calls"]
+    # caller/S1.calls.tsv -> S1
+    sample = (
+        pl.col("_source_path").str.split("/").list.last().str.strip_suffix(".calls.tsv")
+    )
+    return df.with_columns(sample.alias("sample")).drop("_source_path")
+```
+
+The column is added after the file is read and before the files are concatenated, so it
+works with `path` and `glob_pattern` alike. The runner refuses a `source_path` name the file
+already has as a column, rather than overwriting real data, so pick a name no tool writes
+(a leading underscore is the usual choice). It is the recipe's job to drop the column, or
+keep it, in what `transform()` returns.
+
 ---
 
 ## Declaring a Recipe in `project.yaml`
@@ -390,6 +428,49 @@ The recipe is executed during `depictio data process` (the process step of `depi
 <!-- prettier-ignore -->
 !!! tip "Using templates"
     For nf-core/ampliseq, all six recipes are pre-configured in the bundled template. Use `depictio ingest /your/data --template nf-core/ampliseq/2.16.0 --var SAMPLESHEET_FILE=samplesheet.csv` to set up the complete project without writing any YAML. See [Templates](templates.md).
+
+### Passing template parameters to a recipe (`params`) { #params }
+
+`source_overrides` changes *where* a recipe reads. `params` changes *what it does* with the
+data: a grouping column, an identifier column, a significance cutoff, anything the user
+chooses when instantiating the template and the recipe would otherwise have to hardcode.
+
+Declare them under `transform.params` as string values, usually template variables:
+
+```yaml
+  - data_collection_tag: "grouped_metadata"
+    config:
+      type: "Table"
+      source: "transformed"
+      transform:
+        recipe: "nf-core/<pipeline>/<recipe>.py"
+        params:
+          group_col: "{GROUP_COL}"
+          id_col: "{METADATA_ID_COL}"
+```
+
+A recipe opts in by giving `transform()` a `params` keyword, and should treat every key as
+optional:
+
+```python
+def transform(
+    sources: dict[str, pl.DataFrame], params: dict[str, str] | None = None
+) -> pl.DataFrame:
+    group_col = (params or {}).get("group_col")
+    if group_col is None:
+        ...  # fall back: detect a usable column, or skip the grouping
+```
+
+How the values reach the recipe:
+
+- The template variables are substituted first, like everywhere else in the template.
+- A value still holding an unresolved `{VAR}` placeholder (the user did not set that
+  variable) is dropped before the call, so the recipe sees the key as absent and takes its
+  own fallback rather than receiving the literal placeholder.
+- A recipe whose `transform()` has no `params` keyword is called exactly as before, so
+  existing recipes need no change.
+- A standalone run of the recipe test harness (`depictio dev recipe run`) passes no
+  parameters, which is the same as every key being absent.
 
 ---
 
@@ -447,6 +528,25 @@ depictio dev recipe run nf-core/ampliseq/taxonomy_rel_abundance.py \
   --data-dir /data/run \
   --version 2.14.0
 ```
+
+---
+
+## Shared helpers (`depictio/recipes/lib/`) { #shared-helpers }
+
+The runner loads each recipe straight from its file, not as part of a Python package, so one
+recipe cannot import another. When several recipes need the same parsing step (recovering a
+sample id from a file name, reading a cutoff from `params`, a dimensionality reduction, an
+empty frame with the right schema), that code lives in `depictio/recipes/lib/`, an ordinary
+package every recipe can import:
+
+```python
+from depictio.recipes.lib.sample_ids import strip_stage_suffixes
+```
+
+Put a helper there when a second recipe needs it, and keep it free of anything specific to
+one pipeline's layout: the helper receives frames, column names and parameters, and the
+recipe keeps the paths and the output schema. Tests for a helper go under
+`depictio/tests/recipes/`, beside the recipe edge-case tests.
 
 ---
 

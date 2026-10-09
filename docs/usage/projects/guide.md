@@ -469,6 +469,75 @@ its tips from any column of the metadata DC. See
 [Phylogenetic](../../features/components.md#phylogenetic) for the component
 schema and its controls.
 
+#### :material-dna: Example: Indexed-file DCs { #example-indexed-file-dcs }
+
+An `indexed_file` DC is file-backed too, and it is the one to reach for when a genomic
+file is too large or too dense to become a table: a per-sample VCF, a BAM, a coverage
+bigWig, an annotation GFF3, or any bgzip-compressed, tabix-indexed interval file such as a
+BED. Ingestion builds no Delta table. It copies each matched file and its index sidecar to
+S3, one object per sample, and a genome track in the browser asks the API for presigned
+URLs and range-reads only the part of the file covering the region in view.
+
+```yaml
+- data_collection_tag: "variant_files"
+  description: "Annotated VCF per sample with its tabix index"
+  optional: true
+  config:
+    type: "indexed_file"
+    metatype: "Metadata"
+    scan:
+      mode: "recursive"
+      scan_parameters:
+        regex_config:
+          pattern: ".*\\.ann\\.vcf\\.gz$"
+    dc_specific_properties:
+      format: "vcf"            # vcf, bam, bigwig, bigbed, gff3, fasta or tabix
+      assembly: "{GENOME}"     # genome axis of the tracks reading this DC
+      sample_regex: "(?P<sample>[^/]+?)\\.ann\\.vcf\\.gz$"
+      max_file_size_mb: 64     # files above the cap are skipped with a warning
+```
+
+| Key | Default | Meaning |
+|-----|---------|---------|
+| `format` | required | Which lazy reader the track uses. `tabix` covers any bgzip + tabix interval file that is not a VCF or GFF3. `bw`, `bb` and `gff` are accepted as aliases. |
+| `index_suffix` | per format | Suffix of the index beside each file: `.tbi` for `vcf`, `gff3` and `tabix`, `.bai` for `bam`, `.fai` for `fasta`, none for the self-indexed `bigwig` and `bigbed`. Set it only when the pipeline names its indexes differently; an empty string declares a self-indexed file. |
+| `sample_regex` | file name | A regular expression with a named `sample` group, matched against the file path. Without it, the file name minus its format and compression suffixes is the sample. |
+| `sample_col` | `sample` | The name the sample id has in the project's tables, so a file track can sit beside table-backed tracks and answer the dashboard's sample filter. It is not a column of this DC. |
+| `assembly` | none | Genome assembly the files are aligned to. Left out, the component config decides. |
+| `max_file_size_mb` | `512` | Per-file upload cap. |
+
+The scan matches **one primary file per sample**. A file with no index beside it is skipped
+with a warning rather than uploaded unreadable, and a second file resolving to a sample
+already taken is skipped too, so which file wins never depends on scan order. Making the DC
+`optional`, as above, keeps a run that was fetched without its index sidecars from failing
+the whole ingestion.
+
+Prefer a `table` DC when the data is small enough to filter and aggregate as rows: cards,
+figures and tables read rows, and an `indexed_file` DC has none. Its consumer is a genome
+track reading files directly: a [Genome view](../../features/components.md#genome-view)
+tile with `source: file`.
+
+##### Storage the browser can read <small>(v1.13.0+)</small> { #indexed-file-storage }
+
+The bytes of an indexed file never pass through the API: the browser reads them from the
+object store itself, with the presigned URLs the API hands out (valid 15 minutes). Two
+things follow for a deployment:
+
+- **The URLs are signed for the address the browser uses.** The API signs them against
+  `DEPICTIO_S3_PUBLIC_URL` when it is set, otherwise against
+  `DEPICTIO_S3_EXTERNAL_PROTOCOL`, `DEPICTIO_S3_EXTERNAL_HOST` and
+  `DEPICTIO_S3_EXTERNAL_PORT` (the older `DEPICTIO_MINIO_*` names still work). A signature
+  covers the host, so a URL signed for an in-cluster name such as `http://s3:9000` fails in
+  the browser.
+- **The store must answer the viewer's origin with CORS and serve range requests.** The
+  bundled SeaweedFS allows every origin by default; narrow it with
+  `-s3.allowedOrigins=https://viewer.example.org`, through the `s3` service's `command` in
+  Docker Compose or `s3.extraArgs` in the Helm chart. On AWS S3 or another gateway, add a
+  bucket CORS rule allowing `GET` and `HEAD` from the viewer's origin, with `Range` among the
+  allowed headers and `Content-Range`, `Content-Length`, `Accept-Ranges` and `ETag` exposed.
+
+Without this, a genome view shows no file tracks. Tracks read from table DCs are unaffected.
+
 ## Template Projects
 
 <!-- prettier-ignore -->

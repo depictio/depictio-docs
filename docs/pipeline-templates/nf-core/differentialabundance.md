@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/differentialabundance" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="2.0.0">
@@ -62,11 +62,22 @@ nf-core/differentialabundance run:
     auto-detected from `{DATA_ROOT}/input/`; pass
     `--var SAMPLESHEET_FILE=...` to point somewhere else.
 
+    GSEA is opt-in in the pipeline. For a run that did not run it, add
+    `--var NO_GSEA=true`: the two enrichment collections are pruned and the
+    Enrichment tab drops out instead of scanning for tables that were never
+    written.
+
+    | Variable | Required | Meaning |
+    |---|---|---|
+    | `DATA_ROOT` | yes | The run's output directory (`tables/`, `other/`, `pipeline_info/`) |
+    | `SAMPLESHEET_FILE` | no | The pipeline's `--input` observation sheet, CSV or TSV; auto-detected from `{DATA_ROOT}/input/` |
+    | `NO_GSEA` | no | Set for a run without GSEA; prunes the Enrichment tab |
+
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/differentialabundance -profile docker --outdir results
+    nextflow run nf-core/differentialabundance -r 2.0.0 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -147,10 +158,9 @@ is pinned, collapsed, to the bottom of every child tab.
 
     **Data & QC** · *Do the samples separate by design, and are they normalised alike?*
 
-    [![Samples dashboard](../../images/pipeline-templates/nf-core/differentialabundance/samples_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/samples_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
     <!-- screenshot pending v2 -->
-    [![Samples dashboard, top variable features](../../images/pipeline-templates/nf-core/differentialabundance/expression_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/expression_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Samples dashboard](../../images/pipeline-templates/nf-core/differentialabundance/samples_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/samples_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     The samples by group, the DESeq2 size factor, the median variance-stabilised
     expression per sample and the share of features at the matrix floor. Then the
@@ -247,10 +257,18 @@ is pinned, collapsed, to the bottom of every child tab.
         | Set table (collapsed) | *GSEA report* |
 
 !!! tip "A contrast that found nothing still has to read as such"
-    The reference run keeps a contrast with no significant calls on purpose. Its
-    volcano is a symmetric cloud with no labelled points and its effect-size panel
-    is empty, which is what an honest null result looks like rather than a broken
+    A contrast with no significant calls keeps its place. Its volcano is a
+    symmetric cloud with no labelled points and its effect-size panel is empty,
+    which is what an honest null result looks like rather than a broken
     dashboard.
+
+Tables and point views select on their entity column: the sample sheet and the
+PCA on `sample_id`, which narrows the distance matrix, the heatmap and the
+distribution panel; the results tables, the contrast-against-contrast scatter and
+the Manhattan panel on `gene_id`; the GSEA table on `term`. A pick narrows the
+other tiles of its collection and follows the project links to the collections
+they reach. The distribution panel does not select: its collection has no
+outgoing link.
 
 ---
 
@@ -260,13 +278,17 @@ Depictio reads the **output** of nf-core/differentialabundance, it does not run
 the pipeline. Run the pipeline first:
 
 ```bash
-nextflow run nf-core/differentialabundance \
+nextflow run nf-core/differentialabundance -r 2.0.0 \
   --input samplesheet.csv \
   --contrasts contrasts.csv \
   --matrix counts.tsv \
   --gtf genome.gtf \
-  -profile docker
+  --functional_method gsea --gene_sets_files gene_sets.gmt \
+  --outdir results -profile docker
 ```
+
+Leave out the two GSEA flags to skip enrichment, and pass `--var NO_GSEA=true` to
+Depictio for that run.
 
 Then point Depictio at the results:
 
@@ -298,8 +320,10 @@ sets at once) binds identically.
 │   ├── differential/
 │   │   ├── <contrast>.deseq2.results.tsv       # per-contrast statistics
 │   │   └── <contrast>_deseq2.annotated.tsv     # the same, joined to the GTF
-│   └── processed_abundance/
-│       └── all.vst.tsv                         # variance-stabilised matrix
+│   ├── processed_abundance/
+│   │   └── all.vst.tsv                         # variance-stabilised matrix
+│   └── gsea/<contrast>/
+│       └── *.gsea_report_for_<pole>.tsv        # optional, one per pole
 └── other/
     └── deseq2/
         └── <contrast>.deseq2.sizefactors.tsv   # library-size normalisation
@@ -307,7 +331,7 @@ sets at once) binds identically.
 
 ---
 
-## :material-flask-outline: Test data
+## :material-flask-outline: Validation runs
 
 The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/differentialabundance/2.0.0/download_test_data.sh),
@@ -323,7 +347,9 @@ The run is
 24 mouse RNA-seq samples over two contrasts. The observation sheet and the
 contrasts file live outside the results prefix; `post_fetch_help` in
 `megatest.yaml` next to the script gives the two `curl` commands that put them
-under `input/`.
+under `input/`. The pinned prefix publishes no `tables/gsea/`, so the GSEA
+reports behind the Enrichment tab screenshot come from a sibling prefix of the
+same pipeline; the fetch command is in the `megatest.yaml` header.
 
 Then run Depictio against it:
 
@@ -355,7 +381,7 @@ depictio ingest /tmp/differentialabundance_test \
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it a Draft.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it Experimental.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">
