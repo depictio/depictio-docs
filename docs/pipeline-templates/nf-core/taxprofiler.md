@@ -130,7 +130,9 @@ collapsed, to the bottom of every child tab.
 
     *Many classifiers, one community, from reads to the taxa they agree on.*
 
-    <!-- screenshot pending v2 -->
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/taxprofiler/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/taxprofiler/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     A short hero links the run parameters. *About this dashboard* says how to move
     through the tabs, *The run* lists the samples, classifiers, databases and read
@@ -156,7 +158,9 @@ collapsed, to the bottom of every child tab.
 
     **Data & QC** · *Were the reads clean, and how much host was removed?*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/taxprofiler/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/taxprofiler/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/taxprofiler/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     MultiQC panels only: general statistics, fastp filtered reads, FastQC quality
     before trimming, then the host alignment and the share mapped to the host. The
@@ -179,7 +183,9 @@ collapsed, to the bottom of every child tab.
 
     **Data & QC** · *Did the sequencing reach enough of each metagenome?*
 
-    <!-- screenshot pending v2 -->
+    [![Sequencing depth dashboard](../../images/pipeline-templates/nf-core/taxprofiler/sequencing_depth_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/sequencing_depth_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Sequencing depth dashboard](../../images/pipeline-templates/nf-core/taxprofiler/sequencing_depth_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/sequencing_depth_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Nonpareil turns read redundancy into the share of the metagenome each library
     covers. The cards give the median coverage against Nonpareil's 0.95 target,
@@ -209,7 +215,9 @@ collapsed, to the bottom of every child tab.
 
     **Communities** · *What does each classifier say the community is made of?*
 
-    [![Profiles dashboard](../../images/pipeline-templates/nf-core/taxprofiler/profiles_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/profiles_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Profiles dashboard](../../images/pipeline-templates/nf-core/taxprofiler/profiles_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/profiles_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Profiles dashboard](../../images/pipeline-templates/nf-core/taxprofiler/profiles_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/profiles_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     taxpasta standardises every classifier's profile into one table. The
     composition draws one bar per profiling run, so a bar never mixes two naming
@@ -237,7 +245,9 @@ collapsed, to the bottom of every child tab.
 
     **Communities** · *How diverse is each profile, by each classifier?*
 
-    <!-- screenshot pending v2 -->
+    [![Diversity dashboard](../../images/pipeline-templates/nf-core/taxprofiler/diversity_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/diversity_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Diversity dashboard](../../images/pipeline-templates/nf-core/taxprofiler/diversity_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/diversity_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Diversity is computed per profiling run, so one sample has one value per
     classifier, and the spread between them is classifier disagreement. Richness
@@ -262,7 +272,9 @@ collapsed, to the bottom of every child tab.
 
     **Classifiers** · *Where do the classifiers agree, and where does each stand alone?*
 
-    [![Concordance dashboard](../../images/pipeline-templates/nf-core/taxprofiler/concordance_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/concordance_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Concordance dashboard](../../images/pipeline-templates/nf-core/taxprofiler/concordance_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/concordance_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Concordance dashboard](../../images/pipeline-templates/nf-core/taxprofiler/concordance_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/concordance_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The Bray-Curtis PCoA puts one point per profiling run, so runs of one sample
     land together when their classifiers agree; a lasso narrows the flow below to
@@ -288,7 +300,9 @@ collapsed, to the bottom of every child tab.
 
     **Classifiers** · *How close are the reads to the genomes sylph matched?*
 
-    [![Confidence dashboard](../../images/pipeline-templates/nf-core/taxprofiler/confidence_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/confidence_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Confidence dashboard](../../images/pipeline-templates/nf-core/taxprofiler/confidence_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/confidence_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Confidence dashboard](../../images/pipeline-templates/nf-core/taxprofiler/confidence_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/taxprofiler/confidence_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     sylph reports the adjusted ANI of every genome it detects beside its abundance,
     so a high-abundance, low-identity genome reads as the divergent relative it is.
