@@ -302,6 +302,12 @@ celery:
     DEPICTIO_CELERY_ENABLED: "true"   # async view mode (recommended for production)
 ```
 
+!!! note "No ingestion worker in the chart <small>(v1.15.0)</small>"
+    The chart's worker reads only the default `celery` queue, and the chart has no
+    [ingestion worker](docker.md#ingestion-worker) to read the `ingestion` queue. Leave
+    `DEPICTIO_INGESTION_ASYNC_DELTATABLE_UPSERT` and `DEPICTIO_INGESTION_BROWSER_TRIGGER`
+    off on Kubernetes: with either on, the jobs they create are never picked up.
+
 ### Resource limits
 
 ```yaml

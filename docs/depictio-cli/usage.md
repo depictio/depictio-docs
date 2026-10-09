@@ -214,6 +214,11 @@ Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/
     | `--skip-unchanged` | `flag` | `false` | Leave a data collection's table untouched when the scan found no new, changed or removed file for it. Off by default, so that ingesting again always rebuilds a project that drifted |
     | `--repartition` | `flag` | `false` | Let `--write-mode replace-runs` partition by run a table that is not yet. This rewrites every row, so it is never done implicitly, and never by the watcher |
 
+    Since v1.15.0 the scan honours each data collection's `max_depth` and `ignore`, and
+    prints a warning naming the collections that set them, since it may now register
+    fewer files than before. `ingest` also takes `--legacy-scan-depth`, left out of its help, to ignore
+    them for one more release. See [Limiting a recursive scan](../usage/projects/yaml-examples.md#scan-bounds).
+
 ??? info "🔑 Automation"
 
     | Parameter | Type | Default | Description |
@@ -248,12 +253,13 @@ Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/
     | `--concurrency` | `int` | `4` | Parallel HTTP requests for file uploads and cleanup deletes |
     | `--upload-chunk-size` | `int` | `1000` | Files per `/files/upsert_batch` request |
     | `--state-cache` / `--no-state-cache` | `flag` | `--state-cache` | Skip the runs whose file tree is unchanged since the last successful scan, from a local cache. Only applies when rescanning |
-    | `--async-upsert` | `flag` | `false` | Ask the server to profile each written table in the background, and poll until it finishes, instead of holding one long request open. A server without offloading enabled ignores it and answers inline |
+    | `--async-upsert` | `flag` | `false` | Ask the server to profile each written table in the background, and poll until it finishes, instead of holding one long request open. A server without offloading enabled ignores it and answers inline. See [Offloading the table profile](../installation/docker.md#async-upsert) |
 
     | Variable | Default | Description |
     |----------|---------|-------------|
     | `DEPICTIO_INGEST_STREAMING_WRITE` | unset | Same as `--streaming`, as an environment toggle. |
     | `DEPICTIO_INGEST_DC_WORKERS` | `1` | Ingest this many data collections concurrently. Clamped to 4 and to the number of data collections, so an over-large value degrades to the cap. An unparseable value logs a warning and falls back to sequential. |
+    | `DEPICTIO_INGEST_JOB_TIMEOUT_SECONDS` | `3600` | With `--async-upsert`, the longest wait for one server job, in seconds. `0` waits without limit. (v1.15.0+) |
 
 #### Skipping steps { #skipping-steps }
 
@@ -629,6 +635,7 @@ depictio data scan [OPTIONS]
 | `--sync-files`          | `boolean` | `false` | Update files for the data collection   |
 | `--sync-changed`        | `boolean` | `false` | Re-upload only the files whose metadata moved since the last scan. Narrower than `--sync-files`, which re-uploads every registered file |
 | `--dry-run`             | `boolean` | `false` | Report what would be registered or removed, without writing to the server |
+| `--legacy-scan-depth`   | `boolean` | `false` | Ignore each data collection's scan `max_depth` and `ignore`, as releases before v1.15.0 did. Deprecated, and to be removed. See [Limiting a recursive scan](../usage/projects/yaml-examples.md#scan-bounds) |
 | `--state-cache` / `--no-state-cache` | `boolean` | `--state-cache` | Skip the runs whose file tree is unchanged since the last successful scan, from a local cache. Only applies when rescanning |
 | `--concurrency`         | `int`     | `4`     | Parallel HTTP requests for file uploads and cleanup deletes |
 | `--upload-chunk-size`   | `int`     | `1000`  | Files per `/files/upsert_batch` request |
@@ -655,7 +662,7 @@ depictio data process [OPTIONS]
 | `--overwrite`           | `boolean` | `false` | Overwrite existing tables        |
 | `--write-mode`          | `string`  | `overwrite` | `overwrite` rewrites the whole table. `replace-runs` partitions it by run and rewrites only the runs in this batch, leaving the others untouched |
 | `--repartition`         | `boolean` | `false` | Let `--write-mode replace-runs` partition by run a table that is not yet. This rewrites every row |
-| `--async-upsert`        | `boolean` | `false` | Ask the server to profile the written table in the background and poll until it finishes. Servers without offloading enabled ignore it |
+| `--async-upsert`        | `boolean` | `false` | Ask the server to profile the written table in the background and poll until it finishes. Servers without offloading enabled ignore it. See [Offloading the table profile](../installation/docker.md#async-upsert) |
 | `--rich-tables`         | `boolean` | `false` | Display rich tables in the output |
 | `--preview-recipes`     | `boolean` | `false` | Show recipe input sources and transformed output without writing to Delta Lake |
 

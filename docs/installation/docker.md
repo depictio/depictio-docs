@@ -189,6 +189,109 @@ DEPICTIO_CELERY_ENABLED=true   # false = synchronous view mode (simpler for debu
 !!! info "Kubernetes/Helm"
     Background callbacks are also supported in Kubernetes via the Helm chart (`celery.enabled: true` by default). See the [Kubernetes installation guide](kubernetes/).
 
+### Ingestion worker <small>(v1.15.0+)</small> { #ingestion-worker }
+
+`depictio-ingestion-worker` is a second Celery worker for long ingestion tasks: profiling
+a table after the CLI has written it, and an ingestion started from a project page. It
+runs the same image as `depictio-celery-worker` but reads only the `ingestion` queue, so
+a 20-minute table read never holds up the dashboard editor. It is behind a Compose
+profile, so `docker compose up -d` alone does not start it:
+
+```bash
+docker compose --profile ingestion up -d
+```
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_INGESTION_WORKER_CONCURRENCY` | `2` | Tasks run at once. Each holds a table's columns in memory, so memory runs out before CPU does |
+
+Each worker process takes one task at a time and is replaced after 10 tasks. The worker
+stays idle until one of the two features below is turned on. Both are off by default,
+and only this Compose file has the worker: the Helm chart and `depictio local up` do not
+start one.
+
+!!! warning "Set `DEPICTIO_VERSION` before starting the profile"
+    In the v1.15.0 `docker-compose.yaml`, this service defaults to the `1.14.0` image
+    while the others default to `1.15.0`. That image ignores the queue setting, reads the
+    dashboard queue instead of `ingestion`, and never reports healthy. Set
+    `DEPICTIO_VERSION=1.15.0` in `.env`.
+
+Start the worker before turning either feature on. With nothing reading the `ingestion`
+queue, jobs stay pending.
+
+#### Offloading the table profile { #async-upsert }
+
+After the CLI writes a Delta table, the server reads it back to profile its columns. On
+a large table that takes longer than an HTTP request should. With offloading on, the
+server records the new table version at once and hands the profiling to the ingestion
+worker. A CLI run with `--async-upsert` then waits for that job instead of a response.
+
+```bash
+# .env
+DEPICTIO_JOBS_ENABLED=true
+DEPICTIO_INGESTION_ASYNC_DELTATABLE_UPSERT=true
+```
+
+```bash
+depictio ingest results/ --server ~/.depictio/CLI.yaml --async-upsert
+```
+
+The CLI waits at most `DEPICTIO_INGEST_JOB_TIMEOUT_SECONDS` for each job (`3600`; `0`
+waits without limit). Without both settings, or against an older server, the server
+ignores `--async-upsert` and profiles the table within the request. MultiQC collections
+are never offloaded.
+
+#### Starting an ingestion from the browser { #browser-trigger }
+
+This turns on [**Run ingestion**](../features/dashboards.md#run-ingestion) on project
+pages. The server then scans and processes the data itself, so it has to see the files:
+`depictio-backend` checks that the data locations exist, and
+`depictio-ingestion-worker` reads them.
+
+```bash
+# .env
+DEPICTIO_JOBS_ENABLED=true
+DEPICTIO_INGESTION_BROWSER_TRIGGER=true
+DEPICTIO_INGESTION_ALLOWED_DATA_ROOTS=/data/runs
+```
+
+`DEPICTIO_INGESTION_ALLOWED_DATA_ROOTS` takes a comma-separated or JSON list of
+directories. Every data location, single-file path and image directory of a project
+must resolve inside one of them, following symlinks, and so must every file the scan
+registers. It is checked when the button is pressed, again when the worker starts, and on
+the registered files before they are read. Any signed-in user can create a project and
+name any path in it, so this list is what keeps an ingestion away from other groups' runs
+and from the server's own files. Empty, it refuses every ingestion.
+
+Mount the data at the same path in both containers, for example read-only from a
+`docker-compose.override.yaml` next to `docker-compose.yaml`:
+
+```yaml
+services:
+  depictio-backend:
+    volumes:
+      - /srv/sequencing/runs:/data/runs:ro
+  depictio-ingestion-worker:
+    volumes:
+      - /srv/sequencing/runs:/data/runs:ro
+```
+
+The projects then name their data under `/data/runs`, the path inside the containers.
+
+On the server, the scan skips any symlink that points outside the directory it walks, so
+it cannot be led out of the allowed directories. A results directory that Nextflow filled
+with links into `work/` (`publishDir mode: 'symlink'`) therefore yields no files: publish
+copies instead, or ingest it with the CLI, which reads a symlinked file wherever it
+points.
+
+#### Request timeouts
+
+Since v1.15.0 the API server lets a request run for 300 seconds instead of 120, as long
+as the CLI waits for the server to profile a written table. Before, a slow profile was
+cut off and the CLI saw a dropped connection rather than an error. The bundled viewer's
+nginx allows 3600 seconds on API requests. A reverse proxy in front of Depictio should
+allow at least 300 seconds, or the CLI should use `--async-upsert`.
+
 ---
 
 ## :material-wrench: Managing Services

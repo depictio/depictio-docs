@@ -355,8 +355,10 @@ data_collections:
             pattern: string    # Required: Regex pattern for file discovery
                               # Example: "stats/.*_stats\\.tsv"
             wildcards: [...]   # Optional: Named capture groups for metadata extraction
-          max_depth: int | null # Optional: Maximum directory depth to search
-          ignore: [string] | null  # Optional: Patterns to exclude from search
+          max_depth: int | null # Optional: directory levels searched below each run
+                                # directory; 0 = files directly in it (v1.15.0+)
+          ignore: [string] | null  # Optional: glob patterns to skip, matched against
+                                   # the name or the run-relative path (v1.15.0+)
 
       dc_specific_properties:   # Required: Type-specific configuration
         # See "Table Configuration" section for details
@@ -650,6 +652,34 @@ scan:
 # run_001/star_salmon/sample_B/quant.sf
 # run_002/star_salmon/sample_C/quant.sf
 ```
+
+#### Limiting a recursive scan <small>(v1.15.0+)</small> { #scan-bounds }
+
+Two optional `scan_parameters` keep a recursive scan out of directories it does not need:
+
+- `max_depth`: how many directory levels below each run directory to search. `0` keeps
+  the scan to files directly in the run directory, `1` adds its subdirectories, and so on.
+  In the example above, `star_salmon/sample_A/quant.sf` sits at depth 2.
+- `ignore`: glob patterns, such as `work` or `*.tmp`. Each is matched against the
+  file or directory name and against its path from the run directory, so `logs/*` works
+  too. A matching directory is not entered at all.
+
+```yaml
+scan:
+  mode: "recursive"
+  scan_parameters:
+    regex_config:
+      pattern: "star_salmon/.*/quant.sf"
+    max_depth: 2
+    ignore:
+      - "work"
+      - "*.tmp"
+```
+
+Earlier releases accepted both keys and ignored them. From v1.15.0 the scan applies
+them, so a project that set them may register fewer files than before, and the CLI
+prints a warning naming its collections. `--legacy-scan-depth` on `depictio ingest` or
+`depictio data scan` ignores them again for one release.
 
 ### Cross-DC Links (Interactive Filtering)
 
@@ -1206,8 +1236,8 @@ scan_parameters:
     pattern: "results/.*\\.tsv"
   max_depth: 3  # Don't search too deep
   ignore:
-    - "backup/.*"   # Skip backup directories
-    - ".*\\.tmp"    # Skip temporary files
+    - "backup"   # Skip backup directories
+    - "*.tmp"    # Skip temporary files
 
 # 3. Use efficient file formats
 format: "parquet"  # Much faster than CSV for large data

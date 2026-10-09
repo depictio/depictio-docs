@@ -665,7 +665,7 @@ Two rendering modes are supported:
     title: Chart Title
 ```
 
-**Valid `visu_type` values (UI mode):** `scatter`, `line`, `bar`, `box`, `violin` <small>(v1.13.0+)</small>, `histogram`, `heatmap`
+**Valid `visu_type` values (UI mode):** `scatter`, `line`, `bar`, `box`, `violin` <small>(v1.13.0+)</small>, `histogram`, `ecdf`, `strip`, `area`, `funnel`, `density_heatmap`, `density_contour` <small>(v1.15.0+)</small>, `heatmap`
 
 **Code Mode** — write arbitrary Python/Plotly code for full flexibility:
 
@@ -1202,7 +1202,14 @@ project/
 └── README.md
 ```
 
-### Component Naming
+### Component Naming { #component-naming }
+
+A component's `tag` is its identity. Since v1.15.0 a component without an `index` gets
+an id derived from its tag, so importing the same YAML again gives the same ids and each
+component keeps its [history](versioning.md#component-history). On a child tab the id
+also depends on the tab's title, so two tabs can reuse a tag. Within one tab, tags must
+be unique: a YAML that repeats one is refused with *Component tags must be unique within
+a tab*. A component without a tag gets a new id at each import.
 
 Use descriptive tags that indicate purpose:
 
