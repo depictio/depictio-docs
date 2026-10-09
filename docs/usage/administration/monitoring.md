@@ -1,11 +1,11 @@
 ---
 title: Monitoring (Log & Task)
-description: Admin-only panel for Celery tasks, ingestion runs, logs, and worker health.
+description: Admin-only panel for Celery tasks, ingestion runs, running watchers, logs, and worker health.
 ---
 
 # :material-chart-timeline-variant:{ style="color: #009688" } Monitoring: Log & Task
 
-Admin-only panel (**Administration → Log & Task**, `/admin`) exposing a durable MongoDB ledger of background activity: Celery tasks, ingestion runs, application logs, and worker health. Since **v1.11.0** each pane has its own address, `/admin/tasks`, `/admin/ingestion`, `/admin/logs` and `/admin/health`, and the Ingestion pane keeps its filters in the query string, so a filtered view can be bookmarked or sent. `/admin/monitoring` redirects to `/admin/tasks`.
+Admin-only panel (**Administration → Log & Task**, `/admin`) exposing a durable MongoDB ledger of background activity: Celery tasks, ingestion runs, running watchers, application logs, and worker health. Since **v1.11.0** each pane has its own address, `/admin/tasks`, `/admin/ingestion`, `/admin/logs` and `/admin/health`, joined by `/admin/watchers` for the Watchers pane, and the Ingestion pane keeps its filters in the query string, so a filtered view can be bookmarked or sent. `/admin/monitoring` redirects to `/admin/tasks`.
 
 !!! info "Availability"
     Admin-only. Shown in single- and multi-user mode, hidden in public/demo; non-admins get *Forbidden*.
@@ -28,9 +28,11 @@ Ingestion runs, newest first: **status**, a `CLI` or `UI` source badge (a run fr
 
 A run is `running` until it ends as `success`, `partial` or `failed`. Since **v1.11.0** the CLI closes its record on every way out, so Ctrl-C or SIGTERM leaves `interrupted` rather than a run that spins forever. For the ends nobody can report, such as SIGKILL or a lost node, the server sweeps a `running` record with no write for `DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS` (24 by default) to `abandoned`. Filter by **Status**, **Instance** and **Project**; the instance is the CLI's `instance_label`, or its hostname when none is set.
 
-Expand a run for its **provenance** field grid: run id, host, CLI version, the resolved project id, the invoking command line, the CLI and project config paths, and the data root. Long paths are shortened to `head/…/tail`, with the full value in a tooltip and click-to-copy. Below it are two tables:
+Expand a run for its **provenance** field grid: run id, host, CLI version, the resolved project id, the invoking command line, the CLI and project config paths, and the data root. Its **Trigger** says what started it: **Manual**, **Watch** (a [watcher](#watchers)) or **UI** (the web UI, such as **Run now** on a watcher's card), with the reason in a tooltip. Long paths are shortened to `head/…/tail`, with the full value in a tooltip and click-to-copy. Below it are two tables:
 
 - **Steps**: every phase the run went through (provisioning, template resolve, server and S3 checks, config validation, project sync, scan, process, joins, dashboard import), each with `success` / `failed` / `skipped` and a detail line such as *3 data collection(s) processed*. The summary line tallies ok / failed / skipped and the wall-clock duration.
+
+The CLI reports each step as it starts, so a running ingestion shows its steps as a live timeline: the current step is marked, with a progress bar when the CLI knows how far it is, and counters such as *scanned*, *new*, *updated*, *unchanged*, *failed*, *deleted*, *rows* and *bytes*. A step offloaded to a server worker carries an **offloaded** badge.
 - **Data collections**: one row per data collection: tag, type, format, scan mode (`recursive` / `single`), the regex or filename it matched on, the local directories scanned, and the file count when known. These local scan paths are not shown anywhere else in the UI.
 
 ![Log & Task: Ingestion pane](../../images/react/admin_monitoring_ingestion_light.png#only-light)
@@ -38,6 +40,14 @@ Expand a run for its **provenance** field grid: run id, host, CLI version, the r
 
 ![Log & Task: expanded ingestion run detail](../../images/react/admin_monitoring_ingestion_detail_light.png#only-light)
 ![Log & Task: expanded ingestion run detail](../../images/react/admin_monitoring_ingestion_detail_dark.png#only-dark)
+
+## Watchers
+
+Every running [`depictio watch`](../../depictio-cli/usage.md#watch-command), one card each: its status (`idle`, `settling`, `scanning`, `ingesting` or `error`), host, project, mode (`incremental` or `full`), how it detects changes (`native`, `polling` or `both`), and the number of cycles it has run. Expand a card for its PID, CLI version, when it started and last fired, the last ingestion it ran, the locations it watches, and its last error.
+
+**Run now** asks the watcher for a cycle at once, without waiting for a change. The watcher picks the request up within a few seconds, since it polls the server for it, and the run shows **UI** as its trigger. The button is unavailable while a cycle runs, while a request is pending, and when the watcher has sent no heartbeat for over 3 minutes, which the card flags in red.
+
+A watcher sends a heartbeat every minute and leaves the pane when it stops cleanly. One that dies leaves it once its last heartbeat is older than `DEPICTIO_MONITORING_AGENT_TTL_SECONDS`. See [How new data versions are written](../../features/versioning.md#how-new-data-versions-are-written) for what a watcher is for.
 
 ## Logs
 
@@ -65,7 +75,8 @@ Celery worker and broker health: status, worker count, active tasks, live-update
 | `DEPICTIO_MONITORING_APP_LOG_MIN_LEVEL` | `WARNING` | Default log capture floor. |
 | `DEPICTIO_MONITORING_APP_LOG_CAPPED_MB` | `64` | Log collection size cap. |
 | `DEPICTIO_MONITORING_LIVE_UPDATES` | `true` | Enables live WebSocket push. |
-| `DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS` | `24` | Hours without a write before a `running` ingestion is swept to `abandoned`; `0` disables the sweep. Not forwarded by the bundled compose files or Helm chart. (v1.11.0+) |
+| `DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS` | `24` | Hours without a write before a `running` ingestion is swept to `abandoned`; `0` disables the sweep. Every live step update counts as a write. Not forwarded by the bundled compose files or Helm chart. (v1.11.0+) |
+| `DEPICTIO_MONITORING_AGENT_TTL_SECONDS` | `300` | How long a watcher stays listed after its last heartbeat. At least 60 |
 
 !!! warning "Live push"
     Requires `DEPICTIO_EVENTS_ENABLED=true`. Without it the panel still works over polling.
