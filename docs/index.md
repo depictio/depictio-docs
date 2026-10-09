@@ -24,8 +24,10 @@ hide:
 <!-- Hero Section -->
 <section class="hero-section">
   <div class="container text-center">
-    <img src="./images/logo/logo_hd.svg" alt="Depictio logo" width="350" class="logo-dark">
-    <img src="./images/logo/logo_hd_white.svg" alt="Depictio logo" width="350" class="logo-light">
+    <div class="hero-logo">
+      <img src="./images/logo/logo_hd.svg" alt="Depictio logo" width="460" class="logo-dark">
+      <img src="./images/logo/logo_hd_white.svg" alt="Depictio logo" width="460" class="logo-light">
+    </div>
 
     <p class="hero-description">
       A modern open-source platform that transforms bioinformatics workflow outputs into interactive dashboards.<br>
@@ -257,7 +259,7 @@ hide:
         <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
       </svg>
     </button>
-    <iframe id="demo-iframe" src="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" width="100%" height="1080" frameborder="0" allowfullscreen style="zoom: 0.56;">
+    <iframe id="demo-iframe" data-depictio-embed src="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" width="100%" height="1080" frameborder="0" allowfullscreen style="zoom: 0.56;">
       <p>Your browser does not support iframes. <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2">Click here to view the Depictio dashboard</a></p>
     </iframe>
   </div>
@@ -323,7 +325,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/></svg><span>Ingest</span></span>
         <h3>Read where your data lives</h3>
-        <p>Point <code>depictio-cli</code> at a finished run, on your laptop or on the cluster where it landed, and it scans the output in place, pushing only the aggregated results, never the raw files. Or let a Nextflow pipeline <a href="depictio-cli/nextflow-trigger/">run that ingestion itself</a> when it completes. Smaller collections can be added straight from the browser instead. Either way the ingestion report says what was found, what was missing, and the parameters the pipeline ran with.</p>
+        <p>Point <code>depictio ingest</code> at a finished run, on your laptop or on the cluster where it landed, and it scans the output in place, pushing only the aggregated results, never the raw files. Or let a Nextflow pipeline <a href="depictio-cli/nextflow-trigger/">run that ingestion itself</a> when it completes. Smaller collections can be added straight from the browser instead. Either way the ingestion report says what was found, what was missing, and the parameters the pipeline ran with.</p>
         <a class="feature-link" href="depictio-cli/usage/">Ingest with the CLI &rarr;</a>
       </div>
     </article>
@@ -383,7 +385,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <div class="feature-code" role="img" aria-label="A terminal exporting a dashboard to dashboard.yaml, the file itself, and the command that imports it back">
-          <div class="fc-line"><span class="fc-p">$ depictio-cli dashboard export \</span>
+          <div class="fc-line"><span class="fc-p">$ depictio dashboard export \</span>
 <span class="fc-arg">    &lt;id&gt; -o dashboard.yaml</span></div>
           <div class="fc-file">
             <div class="fc-name">dashboard.yaml</div>
@@ -396,7 +398,7 @@ hide:
     <span class="fc-g">data_collection_tag: ancombc</span>
     viz_kind: volcano</code></pre>
           </div>
-          <div class="fc-line"><span class="fc-p">$ depictio-cli dashboard import \</span>
+          <div class="fc-line"><span class="fc-p">$ depictio dashboard import \</span>
 <span class="fc-arg">    dashboard.yaml</span></div>
         </div>
       </div>
@@ -1255,17 +1257,35 @@ hide:
     display: none;
   }
 
+  /* The hero statement: one large, tight headline over a quieter line. It
+     stays inside the page's own 800px column, so it reads centred; rather
+     than forcing single lines, `text-wrap: balance` spreads the words evenly
+     across however many lines the viewport gives, which is what keeps a
+     wrapped headline looking deliberate. */
   .hero-description {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+    font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0 auto 2rem;
+    max-width: 54ch;
   }
 
   .hero-subtext {
-    font-size: 1rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: 0;
     color: var(--md-default-fg-color--light);
     display: block;
-    margin-top: 0.5rem;
+    /* `pretty` rather than `balance`: this line is short enough to sit on one
+       line, and balancing would split it in two to even out the ragged edge. */
+    text-wrap: pretty;
+    margin: 1rem auto 0;
+    max-width: 78ch;
   }
+
 
   /* Dashboard Components Section */
   .components-section {

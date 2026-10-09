@@ -24,7 +24,6 @@ docker compose up -d
     |-|---------|-----|-------|
     | :material-view-dashboard: | **Depictio** | [localhost:5080](http://localhost:5080) | Single-user mode — no login required |
     | :material-api: | **API docs** | [localhost:8058/docs](http://localhost:8058/docs) | Interactive OpenAPI interface |
-    | :simple-minio: | **MinIO console** | [localhost:9001](http://localhost:9001) | `minio` / `minio123` |
 
 <div class="grid cards" markdown>
 
@@ -32,7 +31,7 @@ docker compose up -d
 
     ---
 
-    Copy `.env.example` to `.env` to change the MinIO password or switch to multi-user mode.
+    Copy `.env.example` to `.env` to change the S3 password or switch to multi-user mode.
 
     [:octicons-arrow-right-24: Advanced configuration](docker/#advanced-configuration)
 
@@ -50,27 +49,39 @@ docker compose up -d
 
 ## Server Deployment
 
+Three ways to run the same Depictio server, which differ in how its services run.
+
 <div class="grid cards" markdown>
 
--   :fontawesome-brands-docker:{ .lg .middle } **Docker Compose**
+-   :simple-kubernetes:{ .lg .middle } **Kubernetes** · Helm chart
 
     ---
 
-    The recommended way to run Depictio. MinIO is bundled — one command starts everything.
+    Deploy Depictio on a Kubernetes cluster with the official Helm chart.
+
+    Ideal for production environments and scalable deployments.
+
+    [:octicons-arrow-right-24: Installation guide](kubernetes/)
+
+-   :simple-docker:{ .lg .middle } **Docker Compose** · containers
+
+    ---
+
+    The recommended way to run Depictio. One compose file starts every service in containers, object storage included. Upgrading from before v1.12.0? Copy the former MinIO store's data first: [Upgrading to v1.12.0](upgrade/v1.12.0-seaweedfs.md).
 
     Ideal for development, testing, and small-scale deployments.
 
     [:octicons-arrow-right-24: Installation guide](docker/)
 
--   :simple-kubernetes:{ .lg .middle } **Kubernetes**
+-   :simple-python:{ .lg .middle } **Python package** · pip / uv, no containers
 
     ---
 
-    Deploy Depictio on a Kubernetes cluster using the official Helm chart.
+    Install `depictio[local]` with uv or pip: `depictio local up` then runs every service as a local process on your machine.
 
-    Ideal for production environments and scalable deployments.
+    Ideal for reviewing a template on your own results, on a laptop.
 
-    [:octicons-arrow-right-24: Installation guide](kubernetes/)
+    [:octicons-arrow-right-24: Installation guide](local/)
 
 </div>
 
@@ -90,7 +101,7 @@ docker compose up -d
 
     ---
 
-    Configure authentication, S3/MinIO, backups, and advanced features via environment variables.
+    Configure authentication, S3 storage, backups, and advanced features via environment variables.
 
     [:octicons-arrow-right-24: Configuration guide](configuration/)
 

@@ -1,12 +1,12 @@
 ---
 title: "Dashboard YAML Management"
 icon: material/file-code
-description: "Manage dashboards as code using YAML files with depictio-cli import/export commands."
+description: "Manage dashboards as code using YAML files with the depictio dashboard import and export commands."
 ---
 
 # Dashboard YAML Management
 
-Depictio supports managing dashboards as human-readable YAML files using the `depictio-cli` command-line tool. This enables Infrastructure-as-Code (IaC) workflows, version control integration, and reproducible dashboard deployments.
+Depictio supports managing dashboards as human-readable YAML files using the `depictio` command-line tool. This enables Infrastructure-as-Code (IaC) workflows, version control integration, and reproducible dashboard deployments.
 
 !!! info "Implementation Reference"
     The DashboardDataLite model and CLI dashboard commands were introduced in [:material-github: PR #663](https://github.com/depictio/depictio/pull/663){ target="\_blank" }. Domain validation (enum constraints, cross-field rules, server schema checks) was added in [:material-github: PR #684](https://github.com/depictio/depictio/pull/684){ target="\_blank" }.
@@ -15,10 +15,10 @@ Depictio supports managing dashboards as human-readable YAML files using the `de
 
 ```text
 ┌─────────────────┐                        ┌─────────────────┐
-│   YAML Files    │  depictio-cli import   │    MongoDB      │
+│   YAML Files    │    dashboard import    │    MongoDB      │
 │   (version      │ ─────────────────────▶ │   Dashboard     │
 │    controlled)  │                        │                 │
-│                 │  depictio-cli export   │                 │
+│                 │    dashboard export    │                 │
 │                 │ ◀───────────────────── │                 │
 └─────────────────┘                        └─────────────────┘
 ```
@@ -33,7 +33,7 @@ Depictio supports managing dashboards as human-readable YAML files using the `de
 
 ## CLI Commands
 
-The `depictio-cli dashboard` command group provides three commands for YAML management:
+The `depictio dashboard` command group provides three commands for YAML management. Each one takes `--server`, either `local` or a CLI configuration file; without it, the default server is used. See [Which server a command uses](../depictio-cli/usage.md#choosing-a-server).
 
 | Command    | Description                              | Server Required          |
 | ---------- | ---------------------------------------- | ------------------------ |
@@ -46,31 +46,34 @@ The `depictio-cli dashboard` command group provides three commands for YAML mana
 Validate a dashboard YAML file. Runs in two passes:
 
 - **Pass 1 — schema + domain** (always, no server required): checks required fields, enum values (`visu_type`, `column_type`), and cross-field rules (aggregation × column_type, interactive_type × column_type, mode/code_content).
-- **Pass 2 — server schema** (default when `--config` is provided): resolves each component's `workflow_tag` + `data_collection_tag` against the live delta table schema, checks that `column_name` exists, and validates aggregation/interactive type against the inferred column type. Skip with `--offline`.
+- **Pass 2: server schema** (when a server is configured): resolves each component's `workflow_tag` + `data_collection_tag` against the live delta table schema, checks that `column_name` exists, and validates aggregation/interactive type against the inferred column type. Without `--server`, it uses the default server, is skipped when that has no configuration, and reports its findings as warnings only. Skip it with `--offline`.
 
 ```bash
-depictio-cli dashboard validate <yaml_file> [OPTIONS]
+depictio dashboard validate <yaml_file> [OPTIONS]
 ```
 
 | Option              | Description                                                              |
 | ------------------- | ------------------------------------------------------------------------ |
-| `--config`, `-c`    | Path to CLI config file (enables server schema validation — Pass 2)      |
-| `--offline`         | Skip server schema check (Pass 1 only — useful without server access)    |
-| `--verbose`, `-v`   | Show detailed validation output                                          |
-| `--api`             | API base URL (default: from config)                                      |
+| `--server`          | `local`, or a CLI configuration file. Default: the default server (Pass 2) |
+| `--offline`         | Skip the server schema check (Pass 1 only, useful without server access) |
 
 **Examples:**
 
 ```bash
-# Schema + domain only (no server needed)
-depictio-cli dashboard validate my_dashboard.yaml
+# Schema + domain, plus the server check when a default server is set up
+depictio dashboard validate my_dashboard.yaml
 
-# Full validation including server column check
-depictio-cli dashboard validate my_dashboard.yaml --config ~/.depictio/admin_config.yaml
+# Full validation against the server `depictio local up` runs
+depictio dashboard validate my_dashboard.yaml --server local
 
-# Force offline even when config is provided
-depictio-cli dashboard validate my_dashboard.yaml --config ~/.depictio/admin_config.yaml --offline
+# Full validation against another server
+depictio dashboard validate my_dashboard.yaml --server ~/.depictio/admin_config.yaml
+
+# Schema + domain only, even when a server is configured
+depictio dashboard validate my_dashboard.yaml --offline
 ```
+
+For detailed logs, put `-v` before the command: `depictio -v dashboard validate my_dashboard.yaml`.
 
 **Example Output (all passes OK):**
 
@@ -105,20 +108,19 @@ depictio-cli dashboard validate my_dashboard.yaml --config ~/.depictio/admin_con
 
 ### Import
 
-Import a dashboard YAML file to the server. Always runs schema + domain validation first (Pass 1). Also runs server schema validation by default (Pass 2) — skip with `--offline`.
+Import a dashboard YAML file to the server. Always runs schema + domain validation first (Pass 1). Also runs server schema validation by default (Pass 2); skip it with `--offline`.
 
 ```bash
-depictio-cli dashboard import <yaml_file> [OPTIONS]
+depictio dashboard import <yaml_file> [OPTIONS]
 ```
 
 | Option              | Description                                                    |
 | ------------------- | -------------------------------------------------------------- |
-| `--config`, `-c`    | Path to CLI config file (required unless `--dry-run`)          |
+| `--server`          | `local`, or a CLI configuration file. Default: the default server (none needed with `--dry-run`) |
 | `--project`, `-p`   | Project ID (overrides `project_tag` in YAML)                   |
 | `--overwrite`       | Update existing dashboard with same title                      |
 | `--dry-run`         | Validate schema + domain only, don't import (no server needed) |
 | `--offline`         | Skip server schema check (column names not verified)           |
-| `--api`             | API base URL (default: from config)                            |
 
 !!! note "Validation before import"
     `dashboard import` always validates your YAML before sending it to the server. A failed validation aborts the import — you never import a dashboard that fails schema or domain checks.
@@ -126,20 +128,23 @@ depictio-cli dashboard import <yaml_file> [OPTIONS]
 **Examples:**
 
 ```bash
-# Schema + domain validation only (no config, no import)
-depictio-cli dashboard import dashboard.yaml --dry-run
+# Schema + domain validation only (no server, no import)
+depictio dashboard import dashboard.yaml --dry-run
 
-# Full validation + import (server schema check runs by default)
-depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml
+# Full validation + import into the server `depictio local up` runs
+depictio dashboard import dashboard.yaml --server local
+
+# Full validation + import into another server
+depictio dashboard import dashboard.yaml --server ~/.depictio/admin_config.yaml
 
 # Import without server schema check
-depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --offline
+depictio dashboard import dashboard.yaml --server ~/.depictio/admin_config.yaml --offline
 
 # Update existing dashboard with same title
-depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --overwrite
+depictio dashboard import dashboard.yaml --server ~/.depictio/admin_config.yaml --overwrite
 
 # Override project from YAML
-depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.yaml --project 646b0f3c1e4a2d7f8e5b8c9a
+depictio dashboard import dashboard.yaml --server ~/.depictio/admin_config.yaml --project 646b0f3c1e4a2d7f8e5b8c9a
 ```
 
 **Example Output:**
@@ -170,23 +175,22 @@ depictio-cli dashboard import dashboard.yaml --config ~/.depictio/admin_config.y
 Export a dashboard from the server to a YAML file.
 
 ```bash
-depictio-cli dashboard export <dashboard_id> [OPTIONS]
+depictio dashboard export <dashboard_id> [OPTIONS]
 ```
 
 | Option            | Description                                  |
 | ----------------- | -------------------------------------------- |
-| `--config`, `-c`  | Path to CLI config file (required)           |
+| `--server`        | `local`, or a CLI configuration file. Default: the default server |
 | `--output`, `-o`  | Output file path (default: `dashboard.yaml`) |
-| `--api`           | API base URL (default: from config)          |
 
 **Examples:**
 
 ```bash
-# Export to default file
-depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admin_config.yaml
+# Export to default file, from the default server
+depictio dashboard export 6824cb3b89d2b72169309737
 
-# Export to specific file
-depictio-cli dashboard export 6824cb3b89d2b72169309737 --config ~/.depictio/admin_config.yaml -o iris_dashboard.yaml
+# Export to specific file, from another server
+depictio dashboard export 6824cb3b89d2b72169309737 --server ~/.depictio/admin_config.yaml -o iris_dashboard.yaml
 ```
 
 ## YAML Format
@@ -202,6 +206,8 @@ project_tag: Project_Name
 
 grid_sections: []      # optional — see Dashboard Sections below
 filter_sections: []    # optional
+autofit: true          # optional (v1.13.0+) — see Tile height below
+advanced_viz_controls: popover   # optional (v1.13.0+) — popover, rail or header
 
 components:
   - tag: component-identifier
@@ -209,7 +215,36 @@ components:
     workflow_tag: engine/workflow_name
     data_collection_tag: dc_tag
     section: Section Name   # optional — the section this component belongs to
+    layout: {x: 0, y: 0, w: 6, h: 4, fit: fixed}   # optional; fit is v1.13.0+
     # Component-specific fields...
+```
+
+### Tile height and control placement <small>(v1.13.0+)</small> { #tile-height }
+
+A tile takes the height its content needs, within bounds set per component type, and the
+tiles of one grid row are levelled to the same height. Two keys decide which tiles do this:
+
+| Key | Where | Default | Meaning |
+| --- | ----- | ------- | ------- |
+| `autofit` | dashboard | `true` | `false` turns content-fitting off for the whole dashboard: every tile keeps the height of its `layout` |
+| `fit` | a component's `layout` block | per type | `auto` follows the content, `fixed` keeps the `layout` height. Unset, text, card, table and advanced visualization tiles follow their content, while figure and MultiQC tiles keep their height, since their aspect ratio is an authoring choice |
+
+Resizing a tile by hand in the editor writes `fit: fixed` on it, so a height set on purpose is
+never overridden. The height is only pinned at the grid breakpoint the dashboard is saved at.
+
+`advanced_viz_controls` sets where the controls of every advanced visualization on the
+dashboard sit: behind the settings icon (`popover`), in a rail beside the plot (`rail`) or
+under the tile title (`header`). A tile's own `controls_placement` wins over it. See
+[Shared settings](components.md#advanced-viz-shared-settings).
+
+```yaml
+title: Variant QC
+autofit: true
+advanced_viz_controls: header
+components:
+  - tag: coverage-by-sample
+    component_type: figure
+    layout: {x: 0, y: 0, w: 6, h: 5, fit: auto}   # let this figure grow with its legend
 ```
 
 ### Dashboard Sections <small>(v1.4.0+)</small> { #dashboard-sections }
@@ -555,7 +590,7 @@ Two rendering modes are supported:
     title: Chart Title
 ```
 
-**Valid `visu_type` values (UI mode):** `scatter`, `line`, `bar`, `box`, `histogram`, `heatmap`
+**Valid `visu_type` values (UI mode):** `scatter`, `line`, `bar`, `box`, `violin` <small>(v1.13.0+)</small>, `histogram`, `heatmap`
 
 **Code Mode** — write arbitrary Python/Plotly code for full flexibility:
 
@@ -691,7 +726,7 @@ own block and ignore it — see the field table below.
 | `object`     | `count`, `mode`, `nunique`                                                      |
 
 !!! tip "column_type is optional"
-    If you omit `column_type`, validation against the compatibility table is skipped offline. When `--config` is provided, the column type is inferred from the server schema and used for validation automatically.
+    If you omit `column_type`, validation against the compatibility table is skipped offline. When a server is configured (`--server`, or the default server), the column type is inferred from the server schema and used for validation automatically.
 
 **Secondary layout fields** — `secondary_layout` picks how the block under the hero value is
 drawn, and each layout reads one companion field. The full list of layouts and what they
@@ -706,7 +741,8 @@ render is in [Components](components.md#secondary-layout-modes).
 | `coverage_max`        | float           | `null`     | `coverage`, `gauge`                           |
 | `threshold_value` <small>(v1.4.0+)</small> | float | `null` | `threshold` — the QC cut-off; without it the strip is not drawn |
 | `threshold_direction` <small>(v1.4.0+)</small> | `min` \| `max` | `min` | `threshold` — `min` is at-least (coverage, %Q30), `max` is at-most (duplication, contamination) |
-| `threshold_warn` <small>(v1.4.0+)</small> | float | `null` | `threshold` — ignored unless on the failing side of `threshold_value` |
+| `threshold_warn` <small>(v1.4.0+)</small> | float | `null` | `threshold` — must lie on the failing side of `threshold_value` (below it for `min`, above it for `max`), and needs `threshold_value`. Since v1.13.0 a warn value on the passing side fails validation instead of being dropped |
+| `follow_region_filter` <small>(v1.13.0+)</small> | bool | `false` | Any layout — let a genome region brushed on the dashboard narrow the card. See [Which components follow a region](interactive-selection-filtering.md#region-scope) |
 | `attrition_cols` <small>(v1.4.0+)</small> | list[str] | `[]` | `attrition` — ordered stage columns after the card's own, never re-sorted by value |
 | `trend_col` <small>(v1.4.0+)</small> | str | `null` | `trend` — the ordered column the sparkline buckets along |
 
@@ -771,6 +807,40 @@ render is in [Components](components.md#secondary-layout-modes).
 ```
 
 `filter_expr` scopes the component's options/range to the filtered subset. See [Filter Expressions](filter-expressions.md).
+
+#### Initial values and slider options <small>(v1.13.0+)</small> { #interactive-defaults }
+
+| Field | Type | Applies to | Meaning |
+| ----- | ---- | ---------- | ------- |
+| `default_value` | value or list | `Select`, `MultiSelect` (list allowed), `SegmentedControl`, `Slider` (number), `Checkbox`, `Switch` | The value the filter starts with, and returns to on **Reset all** |
+| `default_range` | `[low, high]` | `RangeSlider` (numbers), `DateRangePicker` (ISO dates) | The range the filter starts with |
+| `slider_mode` | `gte`, `gt`, `lte`, `lt`, `eq`, `ne` | `Slider` | How the column is compared with the slider's value. `gte` (keep rows at or above it) by default |
+| `show_histogram` | bool | `RangeSlider` | Draw the column's distribution above the slider track, on the same scale, so a threshold is placed against the data. Off by default |
+
+A default on the wrong control fails validation: `default_value` on a `RangeSlider`, a list on
+a `Slider`, or a `default_range` whose low end is above its high end.
+
+```yaml
+- tag: min-depth
+  component_type: interactive
+  workflow_tag: python/workflow_name
+  data_collection_tag: table_dc
+  interactive_component_type: Slider
+  column_name: depth
+  default_value: 10        # rows with depth >= 10 at first load
+- tag: qvalue-range
+  component_type: interactive
+  workflow_tag: python/workflow_name
+  data_collection_tag: table_dc
+  interactive_component_type: RangeSlider
+  column_name: qvalue
+  default_range: [0, 0.05]
+  show_histogram: true
+```
+
+!!! warning "A `Slider` is a threshold since v1.13.0"
+    A single-value `Slider` used to keep only the rows equal to its value. It now keeps the
+    rows at or above it. Set `slider_mode: eq` on a slider that should keep the exact match.
 
 **Interactive type × column_type compatibility:**
 
@@ -948,7 +1018,7 @@ The CLI validates YAML files in two passes:
 │  ✓ MultiQC: selected_module + selected_plot both required    │
 │  ✓ Image: image_column required                              │
 ├──────────────────────────────────────────────────────────────┤
-│  Pass 2 — Server Schema  (with --config, skip: --offline)    │
+│  Pass 2: Server Schema  (with a server, skip: --offline)     │
 │                                                              │
 │  ✓ Resolves workflow_tag + data_collection_tag → DC schema   │
 │  ✓ Checks column_name exists in delta table schema           │
@@ -1002,20 +1072,20 @@ Use descriptive tags that indicate purpose:
 ### Incremental Validation Workflow
 
 ```bash
-# Step 1 — check schema and domain constraints (no server needed)
-depictio-cli dashboard validate my.yaml
+# Step 1: check schema and domain constraints (no server needed)
+depictio dashboard validate my.yaml --offline
 
-# Step 2 — full validation including column names
-depictio-cli dashboard validate my.yaml --config ~/.depictio/admin_config.yaml
+# Step 2: full validation including column names
+depictio dashboard validate my.yaml --server ~/.depictio/admin_config.yaml
 
-# Step 3 — dry import (schema check only, no write)
-depictio-cli dashboard import my.yaml --dry-run
+# Step 3: dry import (schema check only, no write)
+depictio dashboard import my.yaml --dry-run
 
-# Step 4 — actual import
-depictio-cli dashboard import my.yaml --config ~/.depictio/admin_config.yaml
+# Step 4: actual import
+depictio dashboard import my.yaml --server ~/.depictio/admin_config.yaml
 
-# Step 5 — roundtrip check (export back and diff)
-depictio-cli dashboard export <id> -o out.yaml
+# Step 5: roundtrip check (export back and diff)
+depictio dashboard export <id> --server ~/.depictio/admin_config.yaml -o out.yaml
 diff my.yaml out.yaml
 ```
 

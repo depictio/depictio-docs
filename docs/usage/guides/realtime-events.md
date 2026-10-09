@@ -60,7 +60,7 @@ The refresh is driven entirely by data ingestion. There is no separate "push" AP
 
 ```text
 producer ingests / upserts a data collection
-        │  (depictio-cli run …, or a POST to /deltatables/upsert)
+        │  (depictio ingest …, or a POST to /deltatables/upsert)
         ▼
 API re-reads the Delta table, recomputes column specs, bumps its version
         │
@@ -72,7 +72,7 @@ subscribed dashboards refetch and re-render (updated items highlight)
 ```
 
 Any producer that re-ingests or upserts a data collection triggers this. The CLI does it on
-every `depictio-cli run`, and an external instrument or pipeline can do the same by POSTing to
+every `depictio ingest`, and an external instrument or pipeline can do the same by POSTing to
 the `/deltatables/upsert` endpoint.
 
 ---
@@ -197,8 +197,10 @@ The `Year … Min` buttons do not change the selection itself.
 
 Once enabled, any of these will move a live dashboard:
 
-- **Re-ingest with the CLI**: `depictio-cli run --project-config-path <project.yaml> …`
-  re-scans and upserts the data collection, which broadcasts the refresh.
+- **Re-ingest with the CLI**: `depictio ingest --project-config-path <project.yaml> --update-config`
+  refreshes the project in place: it re-scans and upserts the data collection, which
+  broadcasts the refresh, and keeps the dashboards as edited in the viewer. See
+  [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project).
 - **An external producer**: an instrument or pipeline that POSTs new data to the
   `/deltatables/upsert` API endpoint (with a valid token) triggers the same path. This is the
   intended integration point for a live experimental feed, and how SVLT feeds the dashboard

@@ -111,9 +111,11 @@ outside the collections a restore overwrites.
 
 ## What is covered
 
-Eleven collections: `users`, `groups`, `projects`, `dashboards`,
+Twelve collections: `users`, `groups`, `projects`, `dashboards`,
 `data_collections`, `workflows`, `files`, `deltatables`, `runs`,
-`instance_settings` and `branding_assets`.
+`instance_settings`, `branding_assets` and `comment_threads` (the
+[comments and annotations](../../features/comments-annotations.md) of every
+dashboard).
 
 Deliberately excluded:
 
@@ -160,7 +162,7 @@ and the only one that survives losing the Depictio deployment.
 **2. The CLI, with `--include-s3-data`.**
 
 ```bash
-depictio-cli backup create --include-s3-data --s3-backup-prefix backup
+depictio backup create --include-s3-data --s3-backup-prefix backup
 ```
 
 Driven by `DEPICTIO_BACKUP_S3_BACKUP_STRATEGY`:
@@ -233,21 +235,22 @@ Full reference: [Backup Commands](../../depictio-cli/usage.md#backup-commands).
 
 ```bash
 # Snapshot the database
-depictio-cli backup create
+depictio backup create
 
 # List what the server holds
-depictio-cli backup list
+depictio backup list
 
 # Check a backup deserializes against the current models
-depictio-cli backup validate 20260315_143000
+depictio backup validate 20260315_143000
 
 # Preview, then restore
-depictio-cli backup restore 20260315_143000 --dry-run
-depictio-cli backup restore 20260315_143000
+depictio backup restore 20260315_143000 --dry-run
+depictio backup restore 20260315_143000
 ```
 
 | Flag | Applies to | Description |
 |------|-----------|-------------|
+| `--server` | all | `local`, or a CLI configuration file; default as for every command, see [Which server a command uses](../../depictio-cli/usage.md#choosing-a-server) |
 | `--include-s3-data` | `create` | Also copy the Delta tables (see above) |
 | `--s3-backup-prefix` | `create` | Prefix for the S3 backup folder, default `backup` |
 | `--dry-run` | `create`, `restore` | Validate without writing anything |
