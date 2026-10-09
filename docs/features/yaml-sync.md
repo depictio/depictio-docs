@@ -170,6 +170,30 @@ depictio dashboard import dashboard.yaml --server ~/.depictio/admin_config.yaml 
 </pre>
 </div>
 
+#### Re-importing a dashboard { #reimport }
+
+Without `--overwrite`, importing a title the project already has fails with a conflict.
+With it, the import replaces that dashboard with the YAML's: layout and components
+edited in the viewer since are lost.
+
+For a multi-tab YAML (`main_dashboard` and `tabs`), the main dashboard and each tab the
+YAML holds are replaced, matched by title. What else happens:
+
+- Tabs added in the viewer stay. They come from no YAML, so no import replaces them.
+- Tabs the YAML no longer holds (renamed or removed in the file) are removed when the
+  import knows which file each tab came from: a template refresh with
+  `depictio ingest --reset-dashboards` (see
+  [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project)).
+  `depictio dashboard import --overwrite` matches by title only and leaves such a tab
+  in place: delete it in the viewer.
+- Colours resolved from [`auto`](#category-colors) are kept: each value keeps the
+  colour it already had.
+
+Every import, the first one included, also drops what the project's data cannot fill:
+a highlight (a figure redrawn from another tab) whose source tab or figure is gone, and
+each list item of a text tile that cites a [live value](#text-live-values) whose data
+collection is missing or empty in the project.
+
 ### Export
 
 Export a dashboard from the server to a YAML file.
@@ -439,6 +463,49 @@ Since **v1.14.0** an export also keeps what a round trip used to drop: a compone
 and an advanced visualization's `viz_kind` and `config`, the latter without the keys left
 at their default.
 
+### Category colours { #category-colors }
+
+`category_colors` gives each value of a categorical column one colour, which figures,
+advanced visualizations, maps and filter chips all use. Declare it on the main tab
+(`main_dashboard` in a multi-tab YAML): the child tabs inherit it, so a value has the
+same colour on every tab.
+
+```yaml
+main_dashboard:
+  title: nf-core/ampliseq
+  category_colors:
+    "{GROUP_COL}": auto            # in a template, a variable works as a key
+    Kingdom:
+      "*": auto                    # every value not pinned below
+      Unclassified: "#adb5bd"
+    Phylum:
+      "*": "auto:rel_abundance"    # the largest phyla by summed rel_abundance
+      Other: "#adb5bd"
+```
+
+| Entry | Colours |
+|---|---|
+| `column: {value: "#hex", …}` | The values listed. Other values take the dashboard's colorway, then grey |
+| `column: auto` | Every value of the column, from an 8-colour, colour-blind-safe palette, in natural order (`S2` before `S10`) |
+| `column: {"*": auto, value: "#hex"}` | The pinned values as written, every other value from the palette colours the pins leave free |
+| `column: {"*": "auto:<column>"}` | The values ranked by the sum of the numeric `<column>`, largest first, until the palette runs out. The rest get no fixed colour |
+
+The import turns `auto` into plain colours, read from a table of the project that has
+the column (the metadata or sample sheet first). An export writes those colours.
+
+!!! note "What `auto` does and does not do"
+    - A re-import keeps the colour each value already had, so a refresh never
+      reshuffles them. That colour comes before a pin added since.
+    - Plain `auto` on a column with more values than free palette colours colours none
+      of them. Use `auto:<column>` for such a column (phyla, genera), and pin `Other`
+      and `Unclassified` beside it.
+    - With `auto:<column>`, one table must hold both columns.
+    - A column that no table of the project holds is dropped, its pins included.
+    - `"*"` only takes `auto` or `auto:<column>`, and `auto` is only valid there or as
+      the whole entry. Anything else fails validation.
+
+See [Category colours](dashboards.md#category-colors) for how the viewer uses them.
+
 ### Complete Example
 
 ```yaml
@@ -702,6 +769,30 @@ Heatmap `dict_kwargs` parameters:
 `compact`; `grid`; `box_plot`). The other twelve `secondary_layout` values compute their
 own block and ignore it — see the field table below.
 
+**Number format** — `format` sets how the value and its secondary print:
+
+| `format`     | Prints                                                                    |
+| ------------ | ------------------------------------------------------------------------- |
+| `percent`    | A 0 to 1 share as a percentage: `41%`, `4.7%` under 10%, `0.032%` under 1% |
+| `si`         | A large value with a suffix: `214k`, `3.7M`, `1.2G`                       |
+| `integer`    | A whole number with thousands separators                                  |
+| `decimals:N` | N decimals (0 to 6), kept as written so a row of values lines up          |
+
+`format` and `decimals` are exclusive, and `percent` is refused on a `count` or
+`nunique` card. Unset, a value keeps fewer decimals as it grows (`3,641`, `12.35`,
+`0.123`, `0.00032`). The same names apply to [text live values](#text-live-values).
+
+```yaml
+- tag: mapped-share
+  component_type: card
+  workflow_tag: python/samples_workflow
+  data_collection_tag: samples
+  aggregation: median
+  column_name: mapped_fraction
+  column_type: float64
+  format: percent
+```
+
 **Conditional aggregation** — pre-filter data before computing metrics:
 
 ```yaml
@@ -902,12 +993,61 @@ source, so `workflow_tag` and `data_collection_tag` are unused.
 | `alignment`          | `left` \| `center` \| `right` | `left`   | Horizontal alignment of the title and body          |
 | `vertical_alignment` | `top` \| `center` \| `bottom` | `center` | Where the text block sits vertically in its tile    |
 | `body`               | str                           | `""`     | Optional paragraph below the heading. Block markdown since v1.14.0, see [Components](components.md#markdown) |
+| `values`             | map                           | `null`   | Live values the title and body print, see [Live values](#text-live-values) |
 | `surface` <small>(v1.14.0+)</small> | `none` \| `card` \| `tinted` | `none` | Bare prose, a framed card, or a tinted tile |
 | `accent` <small>(v1.14.0+)</small>  | str \| null           | `null`   | Palette name, CSS colour or `tab:<name>`: the tint of a `tinted` tile and the marks of a step flow; a `tab:` accent also rests the tab's icon in a `card`'s corner. Ignored without a frame |
 
 !!! note "`vertical_alignment` defaults to `center` <small>(v1.4.0+)</small>"
     Set `vertical_alignment: top` for the pre-v1.4.0 rendering. See
     [Components](components.md#text-components) for why the default changed.
+
+#### Live values { #text-live-values }
+
+A text tile can print values computed from the data. Declare each one under `values`,
+then cite it as `{{name}}` in the title or the body. `{{param:KEY}}` prints a pipeline
+parameter of the run, read from the project's
+[run provenance](dashboards.md#run-provenance-card), and needs no declaration.
+
+```yaml
+- tag: findings
+  component_type: text
+  values:
+    top: {dc: taxonomy_rel_abundance, column: Phylum, aggregation: top, weight: rel_abundance}
+    top_share: {dc: taxonomy_rel_abundance, column: Phylum, aggregation: top_share, weight: rel_abundance, format: percent}
+    shannon: {dc: alpha_diversity, column: shannon, aggregation: median, format: "decimals:2"}
+  body: |
+    - **{{top_share}}** of the reads are {{top}}, the most abundant phylum
+    - **{{shannon}}** median Shannon diversity
+    - Classified against {{param:dada_ref_taxonomy}}
+```
+
+| Field         | Required | Description |
+| ------------- | -------- | ----------- |
+| `dc`          | yes      | `data_collection_tag` the value is computed on |
+| `column`      | yes      | Column to aggregate |
+| `aggregation` | yes      | A card aggregation except `box_plot_stats` (`count`, `nunique`, `sum`, `average`, `median`, `min`, `max`, `mode`, …), or `top` / `top_share` |
+| `weight`      | no       | `top` and `top_share` only: the column summed per category. Without it, categories are ranked by row count |
+| `filter_expr` | no       | A [filter expression](filter-expressions.md) applied before aggregating, as on a card |
+| `format`      | no       | `percent` (a 0 to 1 fraction, printed as a percentage), `integer`, `si` (`1.2k`, `3.4M`) or `decimals:N`, N from 0 to 6. Unset, a number prints as a card prints it and text as is |
+
+`top` is the category with the largest summed `weight`, and `top_share` its share of the
+total, as a fraction. Both are for text only: a card refuses them.
+
+!!! note "How live values behave"
+    - **They follow the filters**, as cards do: the tab's filters, and the filter bar
+      of the section the tile sits in. They are computed with the cards, in the same
+      request.
+    - **A value that cannot be computed prints a dash** (–). While a value loads, the
+      tile shows a dimmed ellipsis.
+    - **Names** are lower-case letters, digits and `_`, start with a letter and have at
+      most 12 characters. There is no space inside the braces. Validation fails on a
+      placeholder that names no declared value, and on a value the tile never prints.
+    - **Placeholders fill** prose, bold text, link labels, headings, tables and the
+      title. Code spans stay literal.
+    - **At import**, a list item that cites a value whose data collection is missing
+      or empty in the project is removed, so each item should make sense on its own.
+      A line that is not a list item stays and prints the dash. A tile left with
+      nothing to say is removed.
 
 ### Image Component
 
