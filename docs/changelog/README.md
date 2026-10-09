@@ -8,6 +8,28 @@ hide:
 
 # Changelog
 
+## **[v1.13.1](https://github.com/depictio/depictio/releases/tag/v1.13.1)** (October 8, 2026)
+
+!!! success "Patch: refreshes that keep attached runs and gain the template's new tabs"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.13.1
+ghcr.io/depictio/depictio-viewer:1.13.1
+ghcr.io/depictio/depictio-worker:1.13.1
+ghcr.io/depictio/depictio-cli:1.13.1
+```
+
+### **🐛 Bug Fixes**
+
+* **A refresh keeps the runs attached with `--attach-run`**, and stops if one of their locations is missing (`--drop-missing-runs` drops them). See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1157](https://github.com/depictio/depictio/pull/1157)).
+* **A kept multi-tab dashboard gains the template tabs it lacks**, and two `--dashboard` files with the same name stay two dashboards. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1157](https://github.com/depictio/depictio/pull/1157)).
+* **`-v` no longer logs the substituted project configuration**, and your own AWS session token is no longer sent to Depictio's S3 ([#1157](https://github.com/depictio/depictio/pull/1157)).
+* **Interrupting `depictio local up` no longer leaves processes running** ([#1157](https://github.com/depictio/depictio/pull/1157)).
+
+---
+
 ## **[v1.13.0](https://github.com/depictio/depictio/releases/tag/v1.13.0)** (October 7, 2026)
 
 !!! success "Minor: comments and annotations on dashboards, ten new visualization kinds, and thirteen new nf-core templates"
