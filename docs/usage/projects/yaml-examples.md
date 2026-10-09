@@ -367,6 +367,7 @@ data_collections:
           # For mode: "s3_prefix"
           prefix: string        # Required: s3:// prefix, bucket included
           pattern: string       # Optional: Glob on the key relative to the prefix (default "*")
+          pattern_syntax: string  # Optional: "glob" (default) or "regex"
           id_regex: string | null  # Optional: One capture group; the capture becomes depictio_manifest_id
           max_files: int        # Optional: Listing ceiling (default 10000)
 
@@ -673,8 +674,8 @@ scan:
 
 #### Remote Modes
 
-Three modes fetch data from where it already is; the server performs the
-fetch and the result is materialised like any scanned file. The full parameter
+Three modes fetch data from where it already is, read by the CLI or the
+server, and the result is materialised like any scanned file. The full parameter
 tables are in the [reference](reference.md#remote-scan-modes), and
 [Remote data and manifests](remote-data.md) explains when to use which.
 

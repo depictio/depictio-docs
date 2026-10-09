@@ -188,6 +188,7 @@ workflows:
               # For mode: "s3_prefix" - list a bucket prefix (the remote counterpart of recursive)
               # prefix: "s3://my-bucket/run42/"          # Required: s3:// prefix, bucket included
               # pattern: "*.samples.csv"                 # Optional: glob on the key relative to the prefix (default "*")
+              # pattern_syntax: "glob"                   # Optional: "glob" (default) or "regex"
               # id_regex: "^([^/]+?)\\.samples\\.csv$"   # Optional: one capture group; the capture becomes depictio_manifest_id
               # max_files: 10000                         # Optional: listing ceiling (default 10000, max 100000)
 
@@ -379,9 +380,10 @@ workflows:
 ## Remote scan modes { #remote-scan-modes }
 
 Three scan modes fetch data from where it already is instead of walking a local
-directory. The server performs the fetch, through a gateway that validates every
-URL (see [Security](../../features/security.md#remote-data-sources)), and the
-files are materialised to Delta Lake exactly like scanned local files.
+directory. Whoever ingests, the CLI or the server, reads the files there; the
+server goes through a gateway that validates every URL and decides which
+buckets it may read (see [Security](../../features/security.md#remote-data-sources)).
+The files are materialised to Delta Lake exactly like scanned local files.
 [Remote data and manifests](remote-data.md) explains when to use which.
 
 `mode` and `scan_parameters` are cross-checked: declaring `mode: url` with a
@@ -411,6 +413,7 @@ HTTPS exposes no listing operation.
 |-----------|----------|---------|-------------|
 | `prefix` | yes | | `s3://` prefix, bucket included, e.g. `s3://my-bucket/run42/` |
 | `pattern` | no | `"*"` | Glob applied to the key *relative to* the prefix, so `*.csv` rather than the full path |
+| `pattern_syntax` | no | `"glob"` | How `pattern` is read: `glob` (fnmatch) or `regex`. A [run folder on S3](remote-data.md#a-run-folder-on-s3) turns each `recursive` collection into an `s3_prefix` scan that keeps the template's regex, with `regex` here |
 | `id_regex` | no | `null` | Regex with exactly one capture group, matched against the object key. The capture is stored as the file's entity id and read back as the `depictio_manifest_id` column, which gives a prefix scan the same cross-DC join key as a manifest |
 | `max_files` | no | `10000` | Ceiling on the number of listed objects (at most `100000`), a backstop against pointing a collection at a bucket root |
 
