@@ -20,11 +20,12 @@ hide:
   <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="3.1">
+<div class="tpl-version-pick" data-latest="3.2.2">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Template version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
-    <option value="3.1" selected>3.1</option>
+    <option value="3.2.2" selected>3.2.2</option>
+    <option value="3.1">3.1</option>
   </select>
   <span class="tpl-version-badge">latest</span>
 </div>
@@ -36,26 +37,33 @@ The cutandrun template covers the peak-calling chain of a standard run:
 - :material-waves: **Chromatin signal**: the nucleosomal fragment ladder, then the SEACR regions, their pile-up and the signal they hold
 - :material-scale-balance: **Agreement**: how much SEACR and MACS2 agree, the consensus set each target's replicates reproduce, and both on one genomic region
 
-!!! warning "Reprocess MultiQC first, or the QC tab is empty"
-    cutandrun 3.1 published a MultiQC 1.14 report, which writes no parquet at
-    all, and Depictio reads only `multiqc.parquet`. This step is mandatory:
+!!! warning "One MultiQC report per run, chosen by `MULTIQC_REPROCESSED`"
+    cutandrun 3.2.2 pins MultiQC 1.19, which writes no parquet, and Depictio
+    reads only `multiqc.parquet` (MultiQC 1.31 and later). A run made with a
+    newer MultiQC, as the Nextflow trigger runs are, publishes
+    `04_reporting/multiqc/multiqc_data/multiqc.parquet` itself, and the template
+    binds that one by default. A run on the pinned 1.19 needs its report
+    re-generated first:
 
     ```bash
     python -m depictio.dev_scripts.multiqc_reprocess --src DATA_ROOT --dest DATA_ROOT
     ```
 
     It re-runs the pinned MultiQC 1.35 over the run's own raw tool outputs and
-    writes the parquet next to a `REPROCESSED.json` recording both versions;
-    `--dry-run` prints the plan first. Reprocessing adds no panels here: 1.14
-    already parsed every module 1.35 does for this run, so it buys the format
-    and nothing else.
+    writes `multiqc/multiqc_data/multiqc.parquet` at the root, next to a
+    `REPROCESSED.json` recording both versions; `--dry-run` prints the plan
+    first. Ingest such a run with `--var MULTIQC_REPROCESSED=true`, which binds
+    the re-generated report instead of the pipeline's. The template never binds
+    both: a re-generated report ingested without the variable is not read, and
+    the MultiQC tab stays empty.
 
 !!! info "Both callers, or either one"
-    The validated run called peaks with both callers (`--peakcaller
+    Both validation runs called peaks with both callers (`--peakcaller
     seacr,macs2`). SEACR is cutandrun's default and the path the template is
     built on; the MACS2 collections are optional, so a SEACR-only run still
-    ingests and the layout drops what is missing. Read **Caller agreement** with
-    care then: with one caller the comparison reads as complete disagreement.
+    ingests and the layout drops what is missing; a MACS2-only run drops the SEACR
+    tiles the same way. Read **Caller agreement** with care then: with one caller
+    the comparison reads as complete disagreement.
 
 ---
 
@@ -68,22 +76,29 @@ The cutandrun template covers the peak-calling chain of a standard run:
       --template nf-core/cutandrun/latest
     ```
 
-    The results directory is the only thing you have to pass: the sample hub is built
-    from the run's own `pipeline_info/samplesheet.valid.csv`. `GENOME` sets the
-    genome axis of the Locus tab and defaults to `hg38`; pass the UCSC assembly
-    the run was aligned to otherwise:
+    The results directory is the only thing you have to pass for a run whose own
+    MultiQC report is a parquet (MultiQC 1.31 or later): the sample hub is built
+    from the run's own `pipeline_info/samplesheet.valid.csv`. For a run aligned to
+    another build than hg38, add `--var GENOME=<assembly>`.
+
+=== "A run on the pinned MultiQC 1.19"
 
     ```bash
+    python -m depictio.dev_scripts.multiqc_reprocess \
+      --src /path/to/cutandrun_results --dest /path/to/cutandrun_results
     depictio ingest /path/to/cutandrun_results \
       --template nf-core/cutandrun/latest \
-      --var GENOME=mm10
+      --var MULTIQC_REPROCESSED=true
     ```
+
+    The release's own report has no parquet, so it is re-generated first, and the
+    variable points the MultiQC collection at the re-generated one.
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/cutandrun -r 3.1 -profile docker --outdir results
+    nextflow run nf-core/cutandrun -r 3.2.2 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -94,15 +109,20 @@ The cutandrun template covers the peak-calling chain of a standard run:
 
 ## :material-book-open-variant: Reference
 
-The template reads the validated samplesheet, the bowtie2 logs, the samtools
-flagstat of the marked-duplicate BAMs, the SEACR stringent calls, the MACS2
-narrow peaks, the per-target consensus peak counts, the fragment-length
-histograms, the fragment BEDs and the three deepTools QC tables, on top of the
-reprocessed MultiQC parquet. Every collection and recipe matches on file
-**name**, so the numbered stage directories cutandrun publishes are never
-spelled out. The pipeline ships no `params.json` at 3.1, so no variable is set
-from the run's parameters: `DATA_ROOT` is required and `GENOME` (default
-`hg38`) is the only optional one.
+The template reads the validated samplesheet, the Bowtie 2 logs (target and
+spike-in), the SEACR stringent calls, the MACS2 narrow peaks, the per-target
+consensus peak counts, the fragment-length histograms and fragment BEDs and the
+three deepTools QC tables, on top of the MultiQC parquet. Every collection and
+recipe matches on file **name**, so the numbered stage directories cutandrun
+publishes are never spelled out. The SEACR scan skips `igv/`, where the pipeline
+copies every SEACR bed for its IGV session, so no region is read twice. A caller
+that finds nothing for a sample still writes its peak file, at 0 bytes: the ingest
+skips it with a warning, and the caller comparison keeps a row with no peaks for
+that sample.
+
+cutandrun 3.2.2 still ships no `params.json`, so no variable is set from the run's
+parameters. Besides `DATA_ROOT`, `MULTIQC_REPROCESSED` says which MultiQC report
+to bind and `GENOME` (default `hg38`) sets the genome axis of the Locus tab.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -110,9 +130,15 @@ from the run's parameters: `DATA_ROOT` is required and `GENOME` (default
     visualizations are dropped entirely, and the remaining components are
     re-packed so there are no empty rows.
 
-<div class="tpl-version-block" data-version="3.1" markdown>
+<div class="tpl-version-block" data-version="3.2.2" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/cutandrun-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="3.1" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/cutandrun-3.1.md"
 
 </div>
 
@@ -145,14 +171,14 @@ throughout; only the peak collections omit them.
 
     <!-- screenshot pending v2 -->
 
-    A short hero links the run parameters, which for cutandrun 3.1 are the software
-    versions: the run ships no `params.json`. *About this dashboard* says how the
-    two filter levels work, *The run* lists the samples, targets, IgG controls and
-    peak callers read from the data, and *Pipeline* walks the six steps from
-    trimming to the consensus merge, each linked to its tool versions and its tab.
-    The findings are live values: they follow the filters, and a route that lacks
-    their data drops them. The Locus tab has no figure here, since it is a browser
-    rather than a summary.
+    A short hero links the run parameters, which for cutandrun 3.2.2 are the
+    software versions: the run ships no `params.json`. *About this dashboard* says
+    how the two filter levels work, *The run* lists the samples, targets, IgG
+    controls and peak callers read from the data, and *Pipeline* walks the six steps
+    from trimming to the consensus merge, each linked to its tool versions and its
+    tab. The findings are live values: they follow the filters, and a route that
+    lacks their data drops them. The Locus tab has no figure here, since it is a
+    browser rather than a summary.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -171,13 +197,17 @@ throughout; only the peak collections omit them.
 
     **Data & QC** · *Did reads trim, align and rise above the IgG control?*
 
+    <!-- screenshot pending v2 -->
+
     [![MultiQC dashboard](../../images/pipeline-templates/nf-core/cutandrun/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    MultiQC panels only, from the reprocessed report. Open: general statistics,
-    FastQC sequence counts and the reads kept after trimming, Bowtie 2 against
-    samtools percent mapped (spike-in libraries carry a `.spikein` suffix), then
-    the deepTools fingerprint. Base quality, GC content, insert sizes and reads
-    per contig are collapsed.
+    MultiQC panels only. Open: general statistics, FastQC sequence counts and the
+    reads kept after trimming, the Bowtie 2 alignments to the target genome beside
+    those to the spike-in genome, then the deepTools fingerprint. Percent mapped,
+    base quality, GC content, insert sizes and reads per contig are collapsed. A
+    re-generated report has no separate spike-in Bowtie 2 module: the import drops
+    the spike-in tile, and the target tile, now full width, shows both genomes,
+    the spike-in libraries carrying a `.spikein` suffix.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -187,9 +217,9 @@ throughout; only the peak collections omit them.
         | Section | What it holds |
         |---|---|
         | QC overview | 3 MultiQC panels |
-        | Alignment and spike-in | 2 MultiQC panels |
+        | Alignment and spike-in | 2 MultiQC panels (target and spike-in genome) |
         | Enrichment over the control | 1 MultiQC panel (fingerprint) |
-        | QC details (collapsed) | 4 MultiQC panels |
+        | QC details (collapsed) | 5 MultiQC panels |
 
 === ":material-flask-outline:{ .mc-cyan } Libraries"
 
@@ -331,9 +361,10 @@ throughout; only the peak collections omit them.
     <!-- screenshot pending v2 -->
 
     One region on one genome axis. The cards count what the region in view holds
-    and follow it as the tracks do. The SEACR navigator opens on a default region:
-    type a locus in its header or brush its axis, and the fragment pile-up, the
-    MACS2 calls and the consensus intervals over the gene lane follow.
+    and follow it as the tracks do. The SEACR navigator opens on the first contig
+    the calls sit on, so a run aligned to part of the genome opens on data: type a
+    locus in its header or brush its axis, and the fragment pile-up, the MACS2
+    calls and the consensus intervals over the gene lane follow.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -375,22 +406,26 @@ tile.
 Depictio reads the **output** of nf-core/cutandrun. Run the pipeline first:
 
 ```bash
-nextflow run nf-core/cutandrun -r 3.1 \
+nextflow run nf-core/cutandrun -r 3.2.2 \
   --input samplesheet.csv \
   --genome GRCh38 \
   --peakcaller seacr,macs2 \
   --outdir results -profile docker
 ```
 
-Then regenerate the MultiQC report Depictio reads, and point Depictio at the
-results:
+Then point Depictio at the results. A run on the release's pinned MultiQC 1.19
+needs its report re-generated first, and the variable that binds it:
 
 ```bash
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio ingest results/ --template nf-core/cutandrun/latest
+depictio ingest results/ --template nf-core/cutandrun/latest \
+  --var MULTIQC_REPROCESSED=true
 ```
 
-See [nf-co.re/cutandrun/usage](https://nf-co.re/cutandrun/3.1/docs/usage) for
+A run made with MultiQC 1.31 or later skips both: `depictio ingest results/
+--template nf-core/cutandrun/latest` reads the report the pipeline published.
+
+See [nf-co.re/cutandrun/usage](https://nf-co.re/cutandrun/3.2.2/docs/usage) for
 full pipeline documentation.
 
 ---
@@ -417,54 +452,63 @@ reference run's layout, not a requirement.
 │   ├── 04_called_peaks/
 │   │   ├── seacr/*.seacr.peaks.stringent.bed          # required, the default caller
 │   │   └── macs2/*.macs2_peaks.narrowPeak             # optional, plus *.macs2_peaks.xls
-│   ├── 05_consensus_peaks/*.consensus.peak_counts.bed
+│   ├── 05_consensus_peaks/*.consensus.peak_counts.bed # *.seacr.consensus.* in 3.2.2
 │   └── 06_fragments_from_bams/
 │       ├── *.frags.len.txt
-│       └── *.frags.cut.bed                            # optional, the pile-up and fragment track
-├── 04_reporting/deeptools_qc/
-│   ├── *.plotFingerprint.qcmetrics.txt
-│   └── all_target_bams.plot{PCA.tab,Correlation.mat.tab}
+│       └── *.frags.cut.bed                            # optional, for the pile-up tiles
+├── 04_reporting/
+│   ├── deeptools_qc/
+│   │   ├── *.plotFingerprint.qcmetrics.txt
+│   │   └── all_target_bams.plot{PCA.tab,Correlation.mat.tab}
+│   ├── igv/                                           # copies of the SEACR beds, skipped
+│   └── multiqc/multiqc_data/multiqc.parquet           # the run's own, MultiQC 1.31 or later
 └── multiqc/multiqc_data/
-    └── multiqc.parquet                                # written by multiqc_reprocess
+    └── multiqc.parquet                                # or this one, from multiqc_reprocess
 ```
+
+A tree may hold both MultiQC parquets: the default binds the run's own under
+`04_reporting/`, `--var MULTIQC_REPROCESSED=true` the re-generated one at the
+root, and the template never loads the two together.
 
 ---
 
 ## :material-flask-outline: Validation runs
 
-The repository ships
-[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/cutandrun/3.1/download_test_data.sh),
-which fetches the megatest subset the template needs, fragment BEDs included:
+No AWS megatest is usable for 3.2.2: every cutandrun 3.2.x prefix in the bucket
+holds directory markers only. The template was validated on two EMBL HPC runs of
+the release instead: `cutandrun322-full`, the `test_full` profile (the megatest
+design, two histone marks in two replicates each against IgG controls), and
+`cutandrun322-small`, the `test_full_small` profile (the same design on a read
+subset against one chromosome, with linear duplicate removal and mitochondrial
+filtering on). Both runs wrote MultiQC 1.19, so both were re-generated with
+`multiqc_reprocess` and checked with `--var MULTIQC_REPROCESSED=true`; the
+pipeline's own MultiQC 1.35 report was checked on the small run only. The small
+run was ingested on a local stack, its zero-byte peak file included; the full run
+was checked by dry runs and by building every collection without a server.
+
+`megatest.yaml` lists the tables-only subset a 3.2.2 megatest would need, so a
+usable S3 run can be pinned later without rewriting it. The 3.1 megatest the
+previous template version was built on is still fetched by
+[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/cutandrun/3.1/download_test_data.sh)
+next to the 3.1 template:
 
 ```bash
 bash depictio/projects/nf-core/cutandrun/3.1/download_test_data.sh /tmp/cutandrun_test
-```
-
-The run is
-`s3://nf-core-awsmegatests/cutandrun/results-42502fb44975e930eec865353c5481f472bcf766/`
-(GSE145187): H3K4me3 and H3K27me3 in two replicates each, against two IgG
-controls; the screenshots above come from it. Two steps follow the fetch, both in `post_fetch_help` in
-`megatest.yaml` next to the script:
-
-```bash
-# MACS2 called nothing for h3k27me3_R2 and published zero-byte files, which the
-# glob loader cannot parse. The null result stays visible without them.
-find /tmp/cutandrun_test/03_peak_calling -type f -size 0 -delete
-
-# The run wrote MultiQC 1.14, so regenerate the parquet Depictio reads.
 python -m depictio.dev_scripts.multiqc_reprocess \
   --src /tmp/cutandrun_test --dest /tmp/cutandrun_test
-
-# Then ingest it.
-depictio ingest /tmp/cutandrun_test --template nf-core/cutandrun/latest
+depictio ingest /tmp/cutandrun_test --template nf-core/cutandrun/3.1
 ```
+
+The screenshots above show the 3.1 template on an earlier layout of the
+dashboard; the 3.2.2 layout has not been captured yet.
 
 ---
 
 ## :material-link-variant: Additional resources
 
 - [nf-co.re/cutandrun](https://nf-co.re/cutandrun): official pipeline documentation
-- [nf-co.re/cutandrun/3.1/results](https://nf-co.re/cutandrun/3.1/results): AWS test results
+- [nf-co.re/cutandrun/3.2.2/docs/output](https://nf-co.re/cutandrun/3.2.2/docs/output): the output files the template reads
+- [nf-co.re/cutandrun/3.1/results](https://nf-co.re/cutandrun/3.1/results): AWS test results of the 3.1 release (3.2.x has none)
 - [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes
 
