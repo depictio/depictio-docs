@@ -30,24 +30,20 @@ hide:
 </div>
 
 The atacseq template covers the merged-library, broad-peak route of a standard
-nf-core/atacseq run, one tab per step:
+nf-core/atacseq run:
 
-- :material-chart-box-outline: **MultiQC**: FastQC and trimming, the merged libraries before and after filtering, and the pipeline's own FRiP and peak-count content
-- :material-waves: **ATAC signal**: the ataqv metrics, the TSS enrichment curve, the fragment ladder and the per-chromosome read matrix
-- :material-chart-scatter-plot: **Peaks**: MACS2 broad calls per library, their significance along the genome, and the HOMER annotation
-- :material-set-merge: **Consensus**: the merged peak set, which libraries agree on an interval, and how the samples group on the counts over it
-
-A `Sample sheet` section is pinned to the top of every tab and `Reference tables`
-to the bottom, so the design rows and the per-library peak QC follow you from tab
-to tab.
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: the MultiQC report, the ataqv library quality (TSS enrichment, the fragment ladder, where the reads landed), and the deepTools and Picard signal tables
+- :material-chart-scatter-plot: **Peak calls**: MACS2 broad calls per library, where HOMER places them relative to genes, and one genomic region across libraries
+- :material-set-merge: **Comparison**: the consensus peak set, which libraries agree on an interval, and where the libraries sit on the DESeq2 QC of its counts
 
 !!! warning "One MultiQC parquet per run, in one of two places"
-    The tiles are bound to the report the pipeline writes itself with MultiQC
-    1.31 or later swapped in, which is what the Nextflow trigger ingests:
-    `multiqc/broad_peak/multiqc_data/multiqc.parquet`. The release pins MultiQC
-    1.13, which writes no parquet; for such a run the reprocess step writes
-    `multiqc/multiqc_data/multiqc.parquet` instead and the collection binds that
-    too:
+    The release pins MultiQC 1.13, which writes no parquet. The collection binds
+    the report the pipeline writes itself with MultiQC 1.31 or later swapped in,
+    which is what the Nextflow trigger ingests:
+    `multiqc/broad_peak/multiqc_data/multiqc.parquet`. For a run on the pinned
+    1.13, the reprocess step writes `multiqc/multiqc_data/multiqc.parquet`
+    instead and the collection binds that one:
 
     ```bash
     python -m depictio.dev_scripts.multiqc_reprocess --src <outdir> --dest <outdir>
@@ -55,9 +51,12 @@ to tab.
 
     The CLI ingests every parquet it finds under the data root as its own report,
     so a tree must hold exactly one of the two: never reprocess a run that already
-    published a parquet. The tiles read the merged-library module ids
-    (`samtools-1`, `picard`, `picard-1`, `mlib_deeptools`), which a reprocessed
-    report merges under one id per tool, leaving those tiles empty.
+    published a parquet. The two reports name their modules differently: the
+    pipeline's numbers a tool run at several levels (`picard-1`,
+    `mlib_deeptools`), a reprocessed one keeps the plain ids. The MultiQC tab
+    binds the panels both carry under one id, gives the fingerprint and the
+    insert sizes one tile per report on the same slot, and the import drops the
+    tiles the bound report lacks.
 
 !!! info "The broad-peak, merged-library route"
     The pipeline default calls broad peaks, so the calls are
@@ -71,8 +70,8 @@ to tab.
 !!! note "No DESeq2 differential accessibility"
     nf-core/atacseq 2.0 removed the differential accessibility analysis, so this
     template has no Differential accessibility tab. What the pipeline still runs
-    is a DESeq2 sample QC on the consensus counts, published as MultiQC custom
-    content, and it closes the Consensus tab.
+    is a DESeq2 sample QC on the consensus counts, its PCA and its sample
+    distances, and the Consensus tab reads both in its *Sample space* section.
 
 ---
 
@@ -88,7 +87,9 @@ to tab.
     The results directory is the only thing you have to pass. The hub of the dashboard is
     the samplesheet the run validated, `pipeline_info/samplesheet.valid.csv`,
     which a template-local recipe turns into one row per merged library with its
-    group, replicate, read type, role and control.
+    group, replicate, read type, role and control. For a run aligned to another
+    build than hg38, add `--var GENOME=<assembly>`: it sets the genome axis of the
+    Locus tab.
 
 === "From the pipeline itself (v1.10.0+)"
 
@@ -105,10 +106,15 @@ to tab.
 
 ## :material-book-open-variant: Reference
 
-The template reads the validated samplesheet, the ataqv JSON reports, the MACS2
-broad calls and their HOMER annotation, the consensus boolean and fold-enrichment
-matrices, and the MultiQC parquet. 49 of its 91 components carry a `use:` catalog
-reference, so a tile says where its panel comes from.
+The template reads the validated samplesheet, the ataqv JSON reports, the
+deepTools fingerprint and profile tables, the Picard MarkDuplicates metrics, the
+MACS2 broad calls and their HOMER annotation, the consensus boolean and
+fold-enrichment matrices, the DESeq2 QC of the consensus counts and the MultiQC
+parquet. The preseq curve and the DESeq2 QC are optional: 2.x skips preseq by
+default, and `--skip_deseq2_qc` or a design without replicated groups skips the
+QC. 70 of its 122 components carry a `use:` catalog reference, so a tile says
+where its panel comes from. The run writes no `params.json`, so nothing is set
+from its parameters: `GENOME` is the only variable besides `DATA_ROOT`.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -126,116 +132,250 @@ reference, so a tile says where its panel comes from.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Four tabs, read as a funnel: are the libraries clean, is the ATAC signal where it
-should be, what did MACS2 call, and which calls do the libraries agree on. Each
-tab below carries the **same icon and colour the dashboard gives it**. Each
-library has two spellings, bare and `.mLb.clN`, and the hub carries both, so one
-pick in the filter reaches every panel. The screenshots come from a `test_full`
-run: six GM12878 libraries across three transposition protocols, two replicates
-each.
+One dashboard: the **Overview**, then seven child tabs in three groups, read as a
+funnel from library quality to the peaks the libraries agree on. Each tab below
+carries the **same icon and colour the dashboard gives it**, so the page and the
+app read alike.
 
-=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, ATAC quality, Signal |
+| Peak calls | Peaks, Annotation, Locus |
+| Comparison | Consensus |
 
-    *Reads in, alignment out, and how concentrated the signal is.*
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The persistent *Sample
+filters* (group, sample, replicate) sit in the left panel and narrow every tab
+through the project links; *QC thresholds* (TSS enrichment, FRiP, peaks called)
+sit collapsed under them. The *Sample sheet* and *Reference tables* (the
+per-library peak QC) are pinned, collapsed, to the bottom of every child tab. The
+template has no metadata file and no grouping variable: every grouped tile reads
+the samplesheet's `group` column. Each library has two spellings, bare and
+`.mLb.clN`, and the hub carries both, so one pick in the filter reaches every
+panel. The consensus matrices have the libraries as columns, so the sample
+filters do not narrow them.
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/atacseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+=== ":material-compass-outline: Overview"
 
-    FastQC names a library after its technical replicate and read, so a sample
-    appears in `Read quality` once per library and read. `Alignment and
-    duplication` reads the merged libraries before filtering (`samtools-1`), where
-    unmapped and mitochondrial reads are still there, with the insert size from
-    Picard on the filtered library. `Signal and peak yield` closes with the
-    deepTools fingerprint and the pipeline's own FRiP, peak count and peak
-    annotation content.
+    *Chromatin accessibility, from library quality to the peaks the libraries agree on.*
+
+    <!-- screenshot pending v2 -->
+
+    A short hero links the run parameters, which for atacseq 2.x are the software
+    versions: the run ships no `params.json`. *About this dashboard* says how the
+    two filter levels work, *The run* lists the samples and groups, the sequenced
+    libraries, the genome build and the peaks called, and *Pipeline* walks the five
+    steps from trimming to the consensus merge, each linked to its tool version and
+    its tab. The findings are live values: they follow the filters, and a route that
+    lacks their data drops them. The fragment ladder takes the first figure slot: it
+    is the ATAC-specific check a reader looks at first.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `ATAC sample`, `Sample group` and `Library role` on
-        `sample_design`, pinned to the top of every tab, plus `TSS enrichment`
-        and `FRiP score` floors in a collapsed *QC thresholds* group.
+        **Filters** · the left panel starts collapsed. *Key figures* has its own
+        filter bar (group and sample), and so does *Findings* (group and
+        chromosome): each narrows its own section only. The consensus card reads
+        a table with the libraries as columns, which the Key figures bar does not
+        reach.
 
         | Section | What it holds |
         |---|---|
-        | Sample sheet | *Sample design* |
-        | Read quality | 3 MultiQC panels |
-        | Alignment and duplication | 4 MultiQC panels |
-        | Signal and peak yield | 4 MultiQC panels |
-        | Reference tables | *Peak QC summary* |
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: samples, peaks called, consensus intervals, FRiP |
+        | Findings | Live result rows, then 4 figures: the fragment ladder, the peak significance along the genome, the peaks around the nearest start site and the consensus intervals by the number of libraries calling them |
+        | How to read this dashboard | The tabs by group, each with its question |
 
-=== ":material-waves:{ .mc-cyan } ATAC signal"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *What ataqv measures: TSS enrichment, the nucleosome ladder, and where the reads landed.*
+    **Data & QC** · *Did sequencing, alignment and filtering work for every library?*
 
-    [![ATAC signal dashboard](../../images/pipeline-templates/nf-core/atacseq/atac_signal_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/atac_signal_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    <!-- screenshot pending v2 -->
 
-    The first card row is the quartet a library is accepted or rejected on: TSS
-    enrichment, reads inside peaks, mitochondrial fraction and duplicate fraction.
-    The TSS coverage curve below is the canonical ATAC read, a sharp central spike
-    against a flat line, and the scatter beside it puts each library on TSS
-    enrichment against reads in peaks. It is the tab's selection source, so
-    lassoing there narrows the ataqv table. Read the `chrM` row of the read
-    distribution matrix first: a high share there is the classic ATAC failure.
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/atacseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    MultiQC panels only. Open: general statistics, FastQC sequence counts beside
+    samtools percent mapped, then the deepTools fingerprint, FRiP scores, peaks per
+    library and featureCounts assignments. Per-base quality, Trim Galore kept
+    reads, Picard insert sizes and duplicates, mapped reads per contig and the
+    ataqv mapping quality are collapsed. The general statistics, featureCounts and
+    ataqv tiles exist on a reprocessed report only, and the import drops them on the
+    pipeline's own.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Sequencing library` on `samplesheet`, in its own *Library
+        scope* group: the read-level panels are keyed on the sequencing library, a
+        finer grain than the sample every other tab works in.
+
+        | Section | What it holds |
+        |---|---|
+        | Run summary | 1 MultiQC panel |
+        | Reads and alignment | 2 MultiQC panels |
+        | Enrichment | 4 MultiQC panels (the fingerprint has one tile per report, on one slot) |
+        | QC details (collapsed) | 6 MultiQC panels (the insert sizes have one tile per report, on one slot) |
+
+=== ":material-target:{ .mc-lime } ATAC quality"
+
+    **Data & QC** · *Did transposition work, library by library?*
+
+    <!-- screenshot pending v2 -->
+
+    [![ATAC quality dashboard](../../images/pipeline-templates/nf-core/atacseq/atac_signal_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/atac_signal_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    The ataqv numbers a library is accepted or rejected on: TSS enrichment, the
+    lowest share of reads in peaks, the mitochondrial fraction and the duplicate
+    fraction. Then the coverage around start sites beside the signal against
+    specificity scatter, where a lasso selects libraries. The fragment ladder has
+    four cards of its own (fragment length, reads by nucleosome window, the sub- to
+    mononucleosomal ratio, properly paired reads), the fragment-length curve with
+    the nucleosome-free and mononucleosome windows shaded, and the reads per
+    fragment class. The read distribution matrix closes the tab: read its `chrM` row
+    first, since a high share there is the classic ATAC failure.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `Fragment class` and a `Fragment length` range on
         `ataqv_fragment_length`, plus `Reference sequence` on
-        `ataqv_chromosome_counts`, in a *Fragment windows* group.
+        `ataqv_chromosome_counts`.
 
         | Section | What it holds |
         |---|---|
-        | Library quality at a glance | 7 cards |
-        | Depth and coverage concentration | *Library complexity with its confidence ribbon*, *Coverage concentration per library* |
-        | Signal at transcription start sites | *Coverage around transcription start sites*, *Signal against specificity*, *Metagene signal profile* |
-        | Fragment length ladder | *Fragment length distribution*, *Reads per fragment class* |
-        | Read distribution | *Read distribution matrix* |
-        | ATAC quality tables | *ATAC quality metrics* |
+        | Library quality at a glance | 4 cards |
+        | Signal at start sites | 1 line chart + 1 scatter |
+        | Fragment ladder | 4 cards, 1 line chart + 1 bar |
+        | Read distribution | 1 advanced visualization |
+        | ATAC quality table (collapsed) | *ATAC quality metrics* |
 
-    !!! tip "Two panels depend on how the run was made"
-        preseq is off by default in 2.x, so the complexity ribbon stays empty
-        unless the run passed `--skip_preseq false`. ataqv only writes
-        per-reference counts for paired-end libraries, so single-end ones are
-        absent from the read distribution matrix.
+    !!! tip "Single-end libraries read thinner"
+        ataqv writes no per-reference counts and no TSS values for single-end
+        libraries, so they are absent from the read distribution matrix and from
+        the TSS readings.
 
-=== ":material-chart-scatter-plot:{ .mc-indigo } Peaks"
+=== ":material-waves:{ .mc-cyan } Signal"
 
-    *MACS2 broad calls per library, and where they land relative to genes.*
+    **Data & QC** · *How enriched and how complex is each library?*
 
-    [![Peaks dashboard](../../images/pipeline-templates/nf-core/atacseq/peaks_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/peaks_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    <!-- screenshot pending v2 -->
 
-    The manhattan panel places every call at its midpoint over `-log10(q)`, next
-    to a scatter of enrichment against significance, which carries the selection
-    on `peak_id`, and a width histogram on a log axis. *Where the peaks land*
-    reads the HOMER annotation twice over: the histogram pools libraries and
-    splits them by feature class, while the TSS distance `profile` below it does
-    the opposite, one curve per library as a share of that library's peaks, which
-    is what lets libraries of different depth be compared.
+    The tables deepTools and Picard write beside the curves MultiQC draws. The
+    coverage concentration, the divergence from a uniform library, the library size
+    Picard estimates and the metagene signal at the start site. Then the fingerprint
+    scatter, and Picard's duplication against depth beside the deepTools metagene
+    profile, with the start site marked and the gene body shaded. Picard makes no
+    size estimate for single-end reads, so the library-size card is the median of
+    the paired-end libraries.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Peak significance` and `Peak width` ranges on
-        `macs2_broad_peaks`, plus `Feature class` on `homer_annotated_peaks`.
+        **Filters** · a `Coverage concentration` range on
+        `deeptools_fingerprint_metrics`, a `Duplication rate` range on
+        `picard_markduplicates_metrics` and, on a preseq run, an `Extrapolated
+        depth` range on `preseq_complexity_curve`.
+
+        | Section | What it holds |
+        |---|---|
+        | Signal at a glance | 4 cards |
+        | Coverage concentration | 1 advanced visualization |
+        | Complexity and metagene | 2 advanced visualizations |
+        | Complexity curve (collapsed) | 1 advanced visualization, preseq runs only |
+
+    !!! tip "The complexity curve needs preseq"
+        preseq is off by default in 2.x, so the *Complexity curve* section and the
+        depth filter drop unless the run passed `--skip_preseq false`. Picard's
+        duplication holds the complexity reading on every route.
+
+=== ":material-chart-scatter-plot:{ .mc-indigo } Peaks"
+
+    **Peak calls** · *How many peaks did each library yield, and how strong?*
+
+    <!-- screenshot pending v2 -->
+
+    [![Peaks dashboard](../../images/pipeline-templates/nf-core/atacseq/peaks_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/peaks_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    MACS2 broad calls, one row per peak and library: a broad call reports a region
+    rather than a summit. The peaks in view, their width, their fold enrichment and
+    the median `-log10(q)`, with the line at q 0.05. Then the significance along the
+    genome, where a lasso narrows the cards, the widths and the table to the peaks
+    picked, and the width distribution on a log axis.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Peak significance` and `Peak width` ranges, and
+        `Chromosome`, all on `macs2_broad_peaks`.
 
         | Section | What it holds |
         |---|---|
         | Peaks at a glance | 4 cards |
-        | Significance along the genome | *Peak significance along the genome*, *Enrichment against significance*, *Peak width distribution* |
-        | Where the peaks land | 4 cards, *Peak annotation per library*, *Distance to the nearest TSS*, *Peak distribution around the nearest TSS* |
-        | Peak tables | *MACS2 broad peaks*, *HOMER peak annotation* |
+        | Significance along the genome | 1 advanced visualization |
+        | Peak width | 1 histogram |
+        | Peak table (collapsed) | *MACS2 broad peaks* |
 
-=== ":material-set-merge:{ .mc-teal } Consensus"
+=== ":material-tag-outline:{ .mc-blue } Annotation"
 
-    *The merged peak set: which libraries agree on an interval, and how the samples group on it.*
+    **Peak calls** · *Where do the peaks fall relative to genes?*
+
+    <!-- screenshot pending v2 -->
+
+    HOMER assigns every peak to a feature class and to the nearest start site. The
+    annotated peaks by feature class, the genes reached, the distance to the
+    nearest start site and the peak score. Then the feature classes per library as
+    100% bars, and the peaks around the nearest start site with the promoter window
+    shaded. Accessible chromatin is promoter-heavy, so a working library puts a
+    large share of its peaks there. The collapsed HOMER table has a peak record card
+    beside it, which waits for a picked row.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Feature class` and a `Distance to TSS` range on
+        `homer_annotated_peaks`.
+
+        | Section | What it holds |
+        |---|---|
+        | Annotation at a glance | 4 cards |
+        | Feature classes | 1 histogram |
+        | Distance to the nearest TSS | 1 advanced visualization |
+        | Peak annotation (collapsed) | *HOMER peak annotation* + a peak record card |
+
+=== ":material-map-search-outline:{ .mc-teal } Locus"
+
+    **Peak calls** · *What do the libraries call at one genomic region?*
+
+    <!-- screenshot pending v2 -->
+
+    Three collections on one genome axis. The cards count what the region in view
+    holds and follow it as the tracks do. The navigator draws the broad calls, one
+    lane per library, on the `GENOME` assembly, and opens on the first chromosome
+    the calls carry: type a locus in its header or brush its axis, and the
+    consensus intervals (as high as their support) and the HOMER annotation
+    (coloured by feature class) follow. The HOMER track stands in for a gene lane,
+    which is bundled for hg38 and mm10 only.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Peak significance` on `macs2_broad_peaks`, `Libraries per
+        interval` on `macs2_consensus_boolean` and `Feature class` on
+        `homer_annotated_peaks`.
+
+        | Section | What it holds |
+        |---|---|
+        | Region at a glance | 4 cards |
+        | Peaks on one axis | 3 advanced visualizations |
+
+=== ":material-set-merge:{ .mc-violet } Consensus"
+
+    **Comparison** · *Which peaks do the libraries agree on?*
+
+    <!-- screenshot pending v2 -->
 
     [![Consensus dashboard](../../images/pipeline-templates/nf-core/atacseq/consensus_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/consensus_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The UpSet panel runs over the library columns of the consensus boolean matrix;
-    with three protocols in two replicates each, the protocol-specific
-    intersections are the ones to read. The signal heatmap is a top-N view on
-    purpose: the `test_full` merged set holds 104,659 intervals and the panel
-    clusters the 250 most accessible, so a selection elsewhere narrows it only
-    when it lands there. `Sample similarity` closes the tab with the pipeline's
-    DESeq2 QC, where replicates of a group should sit together.
+    The per-library calls merged into one set of intervals. The consensus
+    intervals, the libraries per interval, the peaks merged and the support of the
+    strongest intervals. Then the UpSet of the libraries calling each interval, and
+    the sample space: the pipeline's DESeq2 PCA of the consensus counts, coloured by
+    group, above the library distance heatmap, where replicates of a group should
+    sit together. The fold-enrichment heatmap over the strongest intervals sits
+    folded below them, since it grows to one row per interval.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -245,10 +385,15 @@ each.
         | Section | What it holds |
         |---|---|
         | Consensus at a glance | 4 cards |
-        | Replicate agreement | *Consensus peak overlap* |
-        | Signal at the strongest intervals | *Consensus signal heatmap* |
-        | Sample similarity | *Sample PCA on the consensus counts*, *Sample distances on the consensus counts* |
-        | Consensus tables | *Consensus intervals*, *Consensus fold enrichment* |
+        | Replicate agreement | 1 advanced visualization (UpSet) |
+        | Sample space | 2 advanced visualizations |
+        | Signal at the strongest intervals (collapsed) | 1 advanced visualization |
+        | Consensus tables (collapsed) | *Consensus intervals*, *Consensus fold enrichment*, *Principal components*, *Library distance matrix* |
+
+    !!! tip "The sample space needs replicated groups"
+        The DESeq2 QC is skipped with `--skip_deseq2_qc` and for a design without
+        replicated groups. The *Sample space* section and its two tables then drop,
+        and the rest of the tab stays as it is.
 
 ---
 
@@ -264,8 +409,11 @@ nextflow run nf-core/atacseq -r 2.1.2 -profile docker \
 
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
 
-depictio ingest results/ --template nf-core/atacseq/latest
+depictio ingest results/ --template nf-core/atacseq/latest --var GENOME=hg19
 ```
+
+`GRCh37` is the iGenomes name of the UCSC `hg19` assembly, which is what
+`GENOME` takes.
 
 See [nf-co.re/atacseq/usage](https://nf-co.re/atacseq/2.1.2/docs/usage) for full
 pipeline documentation.
@@ -291,14 +439,15 @@ reason.
     ├── samtools_stats/                           # *.mLb.mkD.* and *.mLb.clN.*
     ├── picard_metrics/                           # MarkDuplicates, CollectMultipleMetrics
     ├── deeptools/{plotfingerprint,plotprofile}/
+    ├── preseq/*.lc_extrap.txt                    # optional: --skip_preseq false only
     ├── ataqv/broad_peak/*.ataqv.json             # the ATAC quality reports
     └── macs2/broad_peak/
         ├── *.mLb.clN_peaks.broadPeak             # BED6+3, no summit column
         ├── *.mLb.clN_peaks.annotatePeaks.txt     # HOMER annotation
-        ├── qc/*_mqc.tsv                          # FRiP, peak counts
+        ├── qc/                                   # peak QC summary and FRiP per library
         └── consensus/
             ├── consensus_peaks.mLb.clN.boolean.txt
-            └── deseq2/*_mqc.tsv                  # the sample QC, as MultiQC content
+            └── deseq2/*.{pca.vals,sample.dists}.txt  # optional: the DESeq2 QC
 ```
 
 ---
@@ -307,11 +456,14 @@ reason.
 
 No AWS megatest is usable for 2.1.2: the 2.1.1 and 2.1.2 prefixes in the bucket
 each hold a single 12 GB object, so nothing can be mirrored from them. The
-template was validated on EMBL HPC runs of the release instead: the `test`
-profile under each of the four aligners, `test_controls` for a run with input
-controls, and the megatest profile `test_full`, which is where the screenshots
-above come from. `megatest.yaml` describes that run file by file, so a usable S3
-run can be pinned later without rewriting it.
+template was validated on EMBL HPC runs of the release instead (keys
+`atacseq2-*`): the `test` profile under each of the four aligners (bwa, bowtie2,
+chromap and STAR), `test_controls` for a run with input controls, and the
+megatest profile `test_full` on hg19, ingested with `--var GENOME=hg19`.
+`megatest.yaml` describes that run file by file, so a usable S3 run can be pinned
+later without rewriting it. The screenshots above come from a `test_full` run of
+an earlier, four-tab layout of the dashboard; the current layout has not been
+captured yet.
 
 Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.

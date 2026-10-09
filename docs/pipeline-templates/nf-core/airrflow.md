@@ -20,11 +20,12 @@ hide:
   <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="5.1.0">
+<div class="tpl-version-pick" data-latest="5.1.1">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Template version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
-    <option value="5.1.0" selected>5.1.0</option>
+    <option value="5.1.1" selected>5.1.1</option>
+    <option value="5.1.0">5.1.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
 </div>
@@ -41,9 +42,11 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
     samplesheet the pipeline writes to `pipeline_info/samplesheet.valid.tsv` is
     the hub data collection, so there is nothing to prepare. The one column to
     name is the condition, `GROUP_COL`, which defaults to `treatment`, the
-    column airrflow's samplesheet schema documents for it. 5.1.1 has no AWS
-    megatest run, so 5.1.0 is the newest release the template could be validated
-    against; it binds against both.
+    column airrflow's samplesheet schema documents for it; a sample sheet that
+    names it differently passes `--var GROUP_COL=<column>`. 5.1.1 keeps the 5.1.0
+    output layout and has no AWS megatest run: the 5.1.1 template was validated
+    on an EMBL HPC run of the release, and the 5.1.0 megatest still serves to
+    try it.
 
 ---
 
@@ -113,9 +116,15 @@ ingests: the affected collections are optional and simply come up empty.
     visualizations are dropped entirely, and the remaining components are
     re-packed so there are no empty rows.
 
-<div class="tpl-version-block" data-version="5.1.0" markdown>
+<div class="tpl-version-block" data-version="5.1.1" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/airrflow-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="5.1.0" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/airrflow-5.1.0.md"
 
 </div>
 
@@ -382,7 +391,7 @@ Depictio reads the **output** of nf-core/airrflow, it does not run the pipeline.
 Run the pipeline first:
 
 ```bash
-nextflow run nf-core/airrflow -r 5.1.0 \
+nextflow run nf-core/airrflow -r 5.1.1 \
   --input samplesheet.tsv \
   --mode fastq \
   --library_generation_method specific_pcr_umi \
@@ -399,7 +408,7 @@ depictio ingest results/ \
   --template nf-core/airrflow/latest
 ```
 
-See [nf-co.re/airrflow/usage](https://nf-co.re/airrflow/5.1.0/docs/usage)
+See [nf-co.re/airrflow/usage](https://nf-co.re/airrflow/5.1.1/docs/usage)
 for full pipeline documentation.
 
 ---
@@ -445,9 +454,14 @@ somewhere under the root. Nothing outside the run is needed.
 
 ## :material-flask-outline: Validation runs
 
-The repository ships
-[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/download_test_data.sh),
-which fetches the subset of nf-core's AWS megatest run that the template needs:
+5.1.1 has no AWS megatest run: the bucket holds no prefix for the release. The
+5.1.1 template was validated on an EMBL HPC run of the release's `test` profile
+(`airrflow511`), ingested on a local stack; its MultiQC 1.34 report already
+carries the parquet, so no reprocess step is needed. 5.1.1 publishes the 5.1.0
+layout, so the megatest shown here is the 5.1.0 run. The repository ships
+[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/download_test_data.sh)
+next to the 5.1.0 template, which fetches the subset of that run the template
+needs:
 
 ```bash
 bash depictio/projects/nf-core/airrflow/5.1.0/download_test_data.sh \
@@ -460,9 +474,8 @@ The run is
 study of cervical lymph node and brain lesion tissue, run in the default
 `--mode fastq` UMI route. The manifest fetches fifteen keys, about 330 MB,
 nearly all of it the AIRR rearrangement table behind the spectratype and the
-V-J grid;
-`post_fetch_help` in `megatest.yaml` prints the dry-run and full-run commands
-once the download finishes.
+V-J grid. `post_fetch_help` in `megatest.yaml` prints the dry-run and full-run
+commands once the download finishes.
 
 Then run Depictio against it:
 
@@ -476,7 +489,7 @@ depictio ingest /tmp/airrflow_test \
 ## :material-link-variant: Additional resources
 
 - [nf-co.re/airrflow](https://nf-co.re/airrflow): official pipeline documentation
-- [nf-co.re/airrflow/5.1.0/results](https://nf-co.re/airrflow/5.1.0/results): AWS test results
+- [nf-co.re/airrflow/5.1.0/results](https://nf-co.re/airrflow/5.1.0/results): AWS test results of the 5.1.0 release (5.1.1 has none)
 - [Immcantation](https://immcantation.readthedocs.io): enchantR, alakazam and shazam, the toolset behind the repertoire panels
 - [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes

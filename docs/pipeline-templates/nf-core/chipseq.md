@@ -30,16 +30,12 @@ hide:
 </div>
 
 The chipseq template follows a standard nf-core/chipseq run from reads to a
-consensus peak set, one tab per step:
+consensus peak set per antibody:
 
-- :material-chart-box-outline: **MultiQC**: FastQC and trimming, alignment and duplication, and the enrichment panels that say whether a ChIP worked
-- :material-waves: **Signal**: the per-sample tables behind those curves, read from preseq and deepTools rather than from the report
-- :material-chart-scatter-plot: **Peaks**: MACS3 peaks per sample, their significance along the genome, and where they land relative to genes
-- :material-set-merge: **Consensus**: one merged peak set per antibody, which samples agree on an interval, and how the samples group on the counts over it
-
-A `ChIP design` section is pinned to the top of every tab and `Reference tables`
-to the bottom, so the design sheet and the per-sample peak QC rows follow you
-from tab to tab.
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: the MultiQC report, with the enrichment panels that say whether a ChIP worked, then the deepTools and Picard (or preseq) tables behind those curves
+- :material-chart-scatter-plot: **Peak calls**: MACS3 peaks per library, where HOMER places them relative to genes, and one genomic region across libraries
+- :material-set-merge: **Comparison**: one consensus peak set per antibody, which libraries agree on an interval, and where they sit on the DESeq2 QC of its counts
 
 !!! warning "One MultiQC parquet per run, in one of two places"
     The 2.1.0 release pins MultiQC 1.23, which writes no parquet, and Depictio
@@ -57,8 +53,9 @@ from tab to tab.
     The tiles are bound to the report the pipeline writes with its own
     `multiqc_config`, which files a tool under several module ids
     (`samtools-1` for the merged unfiltered libraries, `mlib_deeptools` for the
-    fingerprint). A reprocessed report merges each tool under one id, so on it
-    the percent mapped and fingerprint tiles stay empty.
+    fingerprint). A reprocessed report merges each tool under one id: on it the
+    import drops the percent-mapped tile, and the fingerprint is read from its
+    twin tile on `deepTools`, which holds the same slot.
 
 !!! info "Narrow or broad, both read"
     `recipes/peaks.py` reads whichever of `*_peaks.narrowPeak` and
@@ -70,7 +67,9 @@ from tab to tab.
 !!! note "No DESeq2 differential binding"
     nf-core/chipseq 2.0.0 removed the differential binding analysis, so this
     template has no Differential binding tab. What the pipeline still runs is a
-    DESeq2 sample QC on the consensus counts, and it closes the Consensus tab.
+    DESeq2 sample QC on the consensus counts of each antibody, its PCA and its
+    sample distances, and the Consensus tab reads both in its *Sample space*
+    section.
 
 ---
 
@@ -85,8 +84,12 @@ from tab to tab.
 
     The results directory is the only thing you have to pass. The hub of the dashboard is
     the samplesheet the run validated, `pipeline_info/samplesheet.valid.csv`,
-    which a template-local recipe collapses into one row per ChIP sample with its
-    input control and its antibody.
+    which a template-local recipe collapses into one row per merged library (the
+    ChIPs and their input controls alike) with its antibody, replicate, role and
+    condition. Three variables are optional: `--var METADATA_FILE=<table>` for a
+    design table whose `GROUP_COL` becomes the condition (the sample group
+    otherwise), `--var PRESEQ_RAN=true` for a run made with `--skip_preseq false`,
+    and `--var GENOME=<assembly>` for a run on a UCSC assembly.
 
 === "From the pipeline itself (v1.10.0+)"
 
@@ -103,10 +106,19 @@ from tab to tab.
 
 ## :material-book-open-variant: Reference
 
-The template reads the validated samplesheet, the MultiQC report, the MACS3 peak
+The template reads the validated samplesheet, the MultiQC report, the deepTools
+fingerprint and profile tables, the Picard MarkDuplicates metrics, the MACS3 peak
 calls and their HOMER annotation, the per-antibody consensus matrices and the
-DESeq2 QC tables. 40 of its 82 tiles carry a `use:` catalog reference, so a tile
-says where its panel comes from.
+DESeq2 QC tables, plus an optional design table. 58 of its 106 components carry a
+`use:` catalog reference, so a tile says where its panel comes from.
+
+The CLI sets no variable from chipseq's `params.json`, so the route flag is passed
+by hand: a run made with `--skip_preseq false` needs `--var PRESEQ_RAN=true`. The
+preseq card and filter then take the slots the Picard duplication card and filter
+hold on the Signal tab; without the variable both cards are kept and the strip
+wraps to a second row. `GENOME` is empty by default, which lays the Locus axis out
+from the contigs the calls carry and suits any reference, a custom FASTA
+included.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -124,138 +136,243 @@ says where its panel comes from.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Four tabs, read as a funnel: are the libraries good and is each ChIP enriched
-over its input, what do the tool tables say about that signal, what did MACS3
-call in each sample, and which of those calls the replicates agree on. Each tab
-below carries the **same icon and colour the dashboard gives it**. The
-screenshots come from a `test_full` run: EZH2 and FOXA1 ChIP against matched
-inputs, two replicates per condition.
+One dashboard: the **Overview**, then six child tabs in three groups, read as a
+funnel from library quality to the regions the replicates agree on. Each tab below
+carries the **same icon and colour the dashboard gives it**, so the page and the
+app read alike.
+
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Signal |
+| Peak calls | Peaks, Annotation, Locus |
+| Comparison | Consensus |
+
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The persistent *Sample
+filters* (condition, antibody, library, replicate, role) sit in the left panel and
+narrow every tab through the project links; *QC thresholds* (FRiP, peaks called)
+sit collapsed under them. The *Sample sheet* and *Reference tables* (the per-ChIP
+peak QC) are pinned, collapsed, to the bottom of every child tab. The hub column is
+always called `condition`: the `GROUP_COL` column of the design table when one is
+given, the sample name without its replicate suffix otherwise, so the dashboard
+reads the same with or without the table. The consensus sets have no library
+column: the antibody reaches them, through a prefix link on the set name.
+
+=== ":material-compass-outline: Overview"
+
+    *Protein-DNA binding, from library quality to the regions the replicates agree on.*
+
+    <!-- screenshot pending v2 -->
+
+    A short hero links the run parameters: 2.x writes a `params.json` and a
+    software versions file, and the dialog lists both. *About this dashboard* says
+    how the two filter levels work, *The run* lists the libraries and ChIPs, the
+    antibodies and conditions, the aligner and read length and the peaks called
+    with their type, and *Pipeline* walks the five steps from trimming to the
+    consensus merge, each linked to its tool version or settings and its tab. The
+    findings are live values: they follow the filters, and a route that lacks their
+    data drops them. The PCA of the consensus counts takes the figure slot a
+    volcano would hold: with no contrast to test, whether the libraries group by
+    condition is the comparison 2.x still draws.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · the left panel starts collapsed. *Key figures* has its own
+        filter bar (condition and library), and so does *Findings* (condition and
+        antibody): each narrows its own section only.
+
+        | Section | What it holds |
+        |---|---|
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: libraries, peaks called, consensus intervals, FRiP |
+        | Findings | Live result rows, then 4 figures: the peak significance along the genome, the peaks around the nearest start site, the DESeq2 QC PCA of the consensus counts and the fingerprint scatter |
+        | How to read this dashboard | The tabs by group, each with its question |
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Are the libraries good, and is each ChIP enriched over its own input?*
+    **Data & QC** · *Did sequencing, alignment and filtering work for every library?*
+
+    <!-- screenshot pending v2 -->
 
     [![MultiQC dashboard](../../images/pipeline-templates/nf-core/chipseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The tab is the MultiQC report as the run published it: FastQC and cutadapt
-    cover the reads, samtools and Picard the merged libraries, and featureCounts
-    how many reads fall inside the consensus peaks. `ChIP
-    enrichment` is the tab's point: the deepTools fingerprint separates an
-    enriched ChIP from a flat input, next to the FRiP scores and the strand
-    cross-correlation with its NSC and RSC coefficients. Every tile here reads the
-    report; the panels that read a tool's own tables are on the Signal tab.
+    MultiQC panels only. Open: general statistics, FastQC sequence counts beside
+    samtools percent mapped on the unfiltered merged libraries, then the enrichment
+    panels that say whether a ChIP worked: the deepTools fingerprint, the FRiP
+    scores and the NSC and RSC strand coefficients. Per-base quality, Trim Galore
+    kept reads, Picard duplicates, featureCounts assignments and the strand shift
+    correlation curve are collapsed. A reprocessed report has no `samtools-1`, so
+    that tile drops and FastQC takes the row.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `ChIP sample` and `Antibody` on `design`, persistent and
-        pinned to the top of every tab, plus `FRiP score` and `Peaks called`
-        ranges in a collapsed *QC thresholds* group.
+        **Filters** · `Sequencing library` on `samplesheet`, in its own *Library
+        scope* group: the read-level panels are keyed on the sequencing library,
+        a finer grain than the merged library every other tab works in.
 
         | Section | What it holds |
         |---|---|
-        | ChIP design | 4 cards, *ChIP design* |
-        | Run summary | *General statistics* |
-        | Read quality | 3 MultiQC panels |
-        | Alignment and library complexity | 3 MultiQC panels |
-        | ChIP enrichment | 5 MultiQC panels |
-        | Reference tables | *Peak QC summary* |
-
-    !!! warning "The General statistics tile has no data on a 2.1.0 report"
-        The reports published by the 2.1.0 runs carry no `general_stats_table`:
-        MultiQC assembles that table from the modules that ran, and this
-        pipeline's `multiqc_config` leaves it out. The tile of `Run summary`
-        therefore fails at render time, which is why the section is collapsed in
-        the screenshot above. Binding it is a template issue, not a broken run.
+        | Run summary | 1 MultiQC panel |
+        | Reads and alignment | 2 MultiQC panels |
+        | Enrichment | 4 MultiQC panels (the fingerprint has one tile per report, on one slot) |
+        | QC details (collapsed) | 5 MultiQC panels |
 
 === ":material-waves:{ .mc-cyan } Signal"
 
-    *The per-sample numbers behind the MultiQC curves.*
+    **Data & QC** · *How enriched and how complex is each library?*
+
+    <!-- screenshot pending v2 -->
 
     [![Signal dashboard](../../images/pipeline-templates/nf-core/chipseq/signal_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/signal_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    preseq, plotFingerprint and plotProfile each write a table beside the curve
-    MultiQC renders, and this tab reads those tables. The fingerprint scatter puts
-    the share of the genome called enriched against the Jensen-Shannon distance to
-    the input, so only the IP libraries carry a point. The metagene profile draws
-    the `plotProfile` matrix as one curve per library, with the TSS marked and the
-    gene body shaded.
+    The tables deepTools writes beside the curves MultiQC draws. 2.x runs
+    plotFingerprint without a JSD sample, so every fingerprint reading is against
+    a uniform library rather than the input, and the inputs are rows of their own:
+    the Role filter leaves them out. The coverage concentration, the distance from
+    a uniform coverage, the genome left at background and, in one slot, the
+    duplicate share Picard flags or, on a preseq run, the distinct fragments preseq
+    expects. Then the fingerprint scatter, and the metagene profile with the start
+    site marked and the gene body shaded, above the preseq complexity curves when
+    the run kept preseq.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · the persistent `Sample filters` group only.
+        **Filters** · a `Genome at background` range on
+        `deeptools_fingerprint_metrics`, plus a `Duplicate share` range on
+        `picard_markduplicates_metrics` or, on a preseq run, an `Extrapolated
+        depth` range on `preseq_complexity_curve`.
 
         | Section | What it holds |
         |---|---|
-        | Signal at a glance | 4 cards |
-        | Library complexity | *Library complexity with its confidence ribbon* |
-        | Coverage concentration | *Coverage concentration per IP* |
-        | Metagene signal | *Metagene signal profile* |
+        | Signal at a glance | 4 cards (the fourth is Picard's duplicate share or preseq's distinct fragments) |
+        | Coverage concentration | 1 advanced visualization |
+        | Metagene and complexity | 1 advanced visualization, plus the complexity curves on a preseq run |
 
-    !!! tip "The complexity section is often empty"
-        A default 2.x run skips preseq, so its collections are optional: the
-        project ingests without them and the section disappears. Pass
-        `--skip_preseq false` to get the curve.
+    !!! tip "The complexity curve needs preseq"
+        A default 2.x run skips preseq, so its collections are optional and the
+        curves drop. A run made with `--skip_preseq false` keeps them; pass
+        `--var PRESEQ_RAN=true` with it so the preseq card takes the Picard slot
+        alone.
 
 === ":material-chart-scatter-plot:{ .mc-indigo } Peaks"
 
-    *What MACS3 called in each sample, and where those calls sit.*
+    **Peak calls** · *How many peaks did each library yield, and how strong?*
+
+    <!-- screenshot pending v2 -->
 
     [![Peaks dashboard](../../images/pipeline-templates/nf-core/chipseq/peaks_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/peaks_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Every peak sits at its summit with `-log10(q)` as height, coloured by sample.
-    That panel is the tab's selection source: lasso a region and the peak ids travel
-    to both tables and, through the project links, to the HOMER annotation. The width
-    histogram separates a sharp transcription-factor profile from a broad histone
-    mark. Below, HOMER splits the same peaks by feature class, and a `profile` draws
-    the distance to the nearest TSS as one curve per sample, as a share of that
-    sample's peaks so libraries of different depth stay comparable.
+    MACS3 peaks, one row per peak and ChIP, each called against its input. The
+    peaks in view, their width, their fold enrichment and the median `-log10(q)`.
+    Then the significance along the genome, where a lasso narrows the tab and,
+    through the peak links, the HOMER annotation, and the width distribution on a
+    log axis, which separates a sharp factor from a broad mark. The two summit
+    profiles close the tab: the other libraries' summits around each summit
+    (replicates of a sharp factor pile up) beside the average footprint of a call.
+    Neither is a read coverage, since the recipe aggregates the calls themselves; on
+    a broadPeak run the summit is the centre of the region.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `-log10 q-value`, `Fold enrichment` and `Peak width` ranges
-        on the peak calls, plus `Feature class` and a `Distance to TSS` range on
-        `homer_annotated_peaks` in a collapsed *Annotation scope* group.
+        **Filters** · `Peak significance`, `Fold enrichment` and `Peak width`
+        ranges, and `Chromosome`, all on `macs2_peaks`.
 
         | Section | What it holds |
         |---|---|
-        | Peak yield | 4 cards |
-        | Significance along the genome | *Peak significance along the genome*, *Enrichment against significance*, *Peak width distribution* |
-        | Where the peaks land | 4 cards, *Peak annotation per sample*, *Distance to the nearest TSS*, *Peak distribution around the nearest TSS* |
-        | Peak tables | *Annotated peaks*, *MACS3 peak calls* |
+        | Peaks at a glance | 4 cards |
+        | Significance along the genome | 1 advanced visualization |
+        | Peak width | 1 histogram |
+        | Around the summits | 2 advanced visualizations |
+        | Peak table (collapsed) | *MACS3 peaks* |
 
-=== ":material-set-merge:{ .mc-cyan } Consensus"
+=== ":material-tag-outline:{ .mc-blue } Annotation"
 
-    *Which intervals the replicates agree on, one peak set per antibody.*
+    **Peak calls** · *Where do the peaks fall relative to genes?*
 
-    [![Consensus dashboard](../../images/pipeline-templates/nf-core/chipseq/consensus_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/consensus_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    <!-- screenshot pending v2 -->
 
-    The UpSet panel reads the per-sample presence columns of the boolean matrix:
-    each bar is a combination of samples calling exactly the same intervals. Pick a
-    single antibody first, because the combinations of one consensus set never meet
-    those of the other. The heatmap plots log1p fold enrichment for the 250 most
-    strongly bound intervals of each set; a cell is zero where that sample called no
-    peak, so condition-specific binding reads as a block. `Sample similarity` closes
-    the tab with the pipeline's DESeq2 QC, one PCA and one distance matrix per
-    antibody: lasso samples on the PCA to filter the linked panels.
+    HOMER assigns every peak to a feature class and to the nearest start site. The
+    annotated peaks by feature class, the genes reached, the distance to the
+    nearest start site and the peak score. Then the feature classes per library as
+    100% bars, and the peaks around the nearest start site with the promoter window
+    shaded: a promoter-bound factor puts most of its peaks there, a distal one
+    spreads them over introns and intergenic space. The collapsed HOMER table has a
+    peak record card beside it, which waits for a picked row.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Consensus set` and a `Samples per interval` range, both on
-        `macs2_consensus_boolean`.
+        **Filters** · `Feature class` and a `Distance to TSS` range on
+        `homer_annotated_peaks`.
+
+        | Section | What it holds |
+        |---|---|
+        | Annotation at a glance | 4 cards |
+        | Feature classes | 1 histogram |
+        | Distance to the nearest TSS | 1 advanced visualization |
+        | Peak annotation (collapsed) | *HOMER peak annotation* + a peak record card |
+
+=== ":material-map-search-outline:{ .mc-teal } Locus"
+
+    **Peak calls** · *What do the libraries call at one genomic region?*
+
+    <!-- screenshot pending v2 -->
+
+    Three collections on one genome axis. The cards count what the region in view
+    holds and follow it as the tracks do. The navigator draws the calls, one lane
+    per library, and opens on the first contig the calls carry: type a locus in its
+    header or brush its axis, and the consensus intervals (one lane per consensus
+    set) and the HOMER annotation (coloured by feature class) follow. The HOMER
+    track stands in for a gene lane, so the locus field takes coordinates, not gene
+    symbols. With `GENOME` left empty the axis is laid out from the contigs of the
+    calls; a UCSC assembly name uses its built-in axis.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Peak significance` on `macs2_peaks`, `Libraries per
+        interval` on `macs2_consensus_boolean` and `Feature class` on
+        `homer_annotated_peaks`.
+
+        | Section | What it holds |
+        |---|---|
+        | Region at a glance | 4 cards |
+        | Peaks on one axis | 3 advanced visualizations |
+
+=== ":material-set-merge:{ .mc-violet } Consensus"
+
+    **Comparison** · *Which peaks do the libraries agree on?*
+
+    <!-- screenshot pending v2 -->
+
+    [![Consensus dashboard](../../images/pipeline-templates/nf-core/chipseq/consensus_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/consensus_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    The per-ChIP calls merged into one set of intervals per antibody. The
+    consensus intervals, the libraries per interval, the peaks merged and the
+    support of the strongest intervals. Then the UpSet of the libraries calling each
+    interval, and the sample space: the PCA the pipeline's DESeq2 QC computed on
+    each antibody's consensus counts, coloured by condition, above the library
+    distance heatmap. The fold-enrichment heatmap over the strongest intervals of
+    each set sits folded below them.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Consensus set`, a `Libraries per interval` range and
+        `Chromosome`, all on `macs2_consensus_boolean`.
 
         | Section | What it holds |
         |---|---|
         | Consensus at a glance | 4 cards |
-        | Replicate agreement | *Consensus peak overlap* |
-        | Signal at the strongest intervals | *Consensus signal heatmap* |
-        | Sample similarity | *DESeq2 sample PCA*, *Sample-to-sample distance* |
-        | Consensus tables | *Consensus intervals*, *Consensus fold enrichment* |
+        | Replicate agreement | 1 advanced visualization (UpSet) |
+        | Sample space | 2 advanced visualizations |
+        | Signal at the strongest intervals (collapsed) | 1 advanced visualization |
+        | Consensus tables (collapsed) | *Consensus intervals*, *Consensus fold enrichment*, *Principal components*, *Library distance matrix* |
 
-    !!! tip "Pick one antibody before reading the last two sections"
-        Both the DESeq2 QC and the consensus set are computed per antibody, so the
-        PCA, the distance matrix and the UpSet combinations only mean something
-        once a single `Consensus set` is selected. `--skip_deseq2_qc` writes
-        neither collection, and the section then disappears.
+    !!! tip "Pick one consensus set first"
+        chipseq writes one count matrix, and so one PCA and one distance matrix,
+        per antibody, and the libraries of two sets never meet. The UpSet
+        combinations, the PCA and the distance matrix only mean something once a
+        single `Consensus set` is selected. `--skip_deseq2_qc` writes neither QC
+        table: the *Sample space* section, its two tables and the Overview PCA then
+        drop.
 
 ---
 
@@ -276,8 +393,11 @@ run kept the release's MultiQC 1.23:
 
 ```bash
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
-depictio ingest results/ --template nf-core/chipseq/latest
+depictio ingest results/ --template nf-core/chipseq/latest --var GENOME=hg19
 ```
+
+`GENOME` is optional: without it the Locus axis is built from the contigs of the
+calls. `GRCh37` is the iGenomes name of the UCSC `hg19` assembly.
 
 See [nf-co.re/chipseq/usage](https://nf-co.re/chipseq/2.1.0/docs/usage) for full pipeline documentation.
 
@@ -293,6 +413,7 @@ directory can differ from the tree below.
 <DATA_ROOT>/
 ├── pipeline_info/
 │   ├── samplesheet.valid.csv                      # the hub: one row per library
+│   ├── params_<timestamp>.json                    # provenance
 │   └── nf_core_chipseq_software_mqc_versions.yml
 ├── multiqc/narrow_peak/multiqc_data/
 │   └── multiqc.parquet                            # or multiqc/multiqc_data/ after a reprocess
@@ -311,7 +432,7 @@ directory can differ from the tree below.
         ├── qc/*.summary.txt                       # per-sample peak QC
         └── consensus/<antibody>/
             ├── *.consensus_peaks.boolean.txt      # per-antibody consensus set
-            └── deseq2/*.consensus_peaks.{pca.vals,sample.dists}.txt
+            └── deseq2/*.consensus_peaks.{pca.vals,sample.dists}.txt  # optional
 ```
 
 ---
@@ -320,10 +441,18 @@ directory can differ from the tree below.
 
 No AWS megatest is pinned for 2.1.0: every 2.x prefix in the bucket is a
 truncated sync. The template was validated on EMBL HPC runs of the release
-instead, the `test` profile under each of the four aligners, and the screenshots
-above come from a `test_full` run on hg19. `megatest.yaml` lists the tables-only
-subset of a run the template needs, so a usable S3 run can be pinned later
-without rewriting it:
+instead (keys `chipseq2-*`): the `test` profile with `--narrow_peak` under each of
+the four aligners (bwa, bowtie2, chromap and STAR), one antibody against its
+inputs. The broadPeak route, several antibodies and the preseq route are not
+covered by those runs: the broadPeak branch of `recipes/peaks.py` is covered by a
+synthetic check only, and the preseq card, filter and curves by the offline
+validation only. The megatest design (`test_full`) has not been run against this
+layout. The screenshots above come from a `test_full` run of an earlier,
+four-tab layout of the dashboard; the current layout has not been captured yet.
+
+`megatest.yaml` lists the tables-only subset of a run the template needs, so a
+usable S3 run can be pinned later without rewriting it. The wrapper below fetches
+that subset, and has nothing complete to mirror until such a run exists:
 
 ```bash
 bash depictio/projects/nf-core/chipseq/2.1.0/download_test_data.sh /tmp/chipseq_test
