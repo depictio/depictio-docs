@@ -81,12 +81,11 @@ to tab.
 === "Point at a finished run"
 
     ```bash
-    depictio run \
-      --template nf-core/atacseq/latest \
-      --data-root /path/to/atacseq_results
+    depictio ingest /path/to/atacseq_results \
+      --template nf-core/atacseq/latest
     ```
 
-    `--data-root` is the only thing you have to pass. The hub of the dashboard is
+    The results directory is the only thing you have to pass. The hub of the dashboard is
     the samplesheet the run validated, `pipeline_info/samplesheet.valid.csv`,
     which a template-local recipe turns into one row per merged library with its
     group, replicate, read type, role and control.
@@ -94,11 +93,11 @@ to tab.
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
-    depictio-cli config nextflow --install     # once per machine
+    depictio config nextflow --install     # once per machine
     nextflow run nf-core/atacseq -profile docker --outdir results
     ```
 
-    No `depictio run`, and no template named: the pipeline ingests its own
+    No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -265,7 +264,7 @@ nextflow run nf-core/atacseq -r 2.1.2 -profile docker \
 
 python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
 
-depictio run --template nf-core/atacseq/latest --data-root results/
+depictio ingest results/ --template nf-core/atacseq/latest
 ```
 
 See [nf-co.re/atacseq/usage](https://nf-co.re/atacseq/2.1.2/docs/usage) for full
@@ -275,7 +274,7 @@ pipeline documentation.
 
 ## :material-folder-open-outline: Required data structure
 
-Point `--data-root` at the directory holding the pipeline output. Depictio scans
+Point `depictio ingest` at the directory holding the pipeline output. Depictio scans
 recursively and every recipe matches on file name, so a run aligned with another
 aligner binds identically. Keep the `merged_replicate/` tree out for that same
 reason.
@@ -314,7 +313,7 @@ controls, and the megatest profile `test_full`, which is where the screenshots
 above come from. `megatest.yaml` describes that run file by file, so a usable S3
 run can be pinned later without rewriting it.
 
-Do not pass `--project-name` when ingesting: the dashboard is attached to the
+Do not pass `--project` when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later `depictio dashboard import`.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.
 

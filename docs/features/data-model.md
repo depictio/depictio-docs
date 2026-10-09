@@ -90,6 +90,7 @@ API joins them in as it serves the project, which is why `delta_location` and
 | ![MultiQC](../images/logos/multiqc_light.svg#only-light){ width="18" }![MultiQC](../images/logos/multiqc_dark.svg#only-dark){ width="18" } | `multiqc` | MultiQC report data | The report's parsed data, as Parquet on S3 |
 | :material-map-marker: | `geojson` | GeoJSON boundaries for choropleth maps | The file, copied to S3 unchanged |
 | :material-family-tree: | `phylogeny` | Newick or Nexus trees | Nothing. The file is read where it was found |
+| :material-dna: | `indexed_file` | Indexed genomic files: VCF, BAM, bigWig, bigBed, GFF3, FASTA, or any bgzip + tabix interval file | Each file and its index, copied to S3 unchanged and read by the browser by byte range |
 
 A `table` collection that declares latitude and longitude columns becomes map-capable
 without changing its type. See [Components](components.md#map-components).
@@ -97,6 +98,14 @@ without changing its type. See [Components](components.md#map-components).
 A `phylogeny` collection points at a `table` collection for its tip annotations rather
 than carrying them itself. See
 [Phylogeny DCs and their metadata table](../usage/projects/guide.md#example-phylogeny-dcs-and-their-metadata-table).
+
+An `indexed_file` collection has no rows and no Delta table at all. It exists for files
+too large or too dense to materialise as a table, such as a per-sample VCF or a coverage
+bigWig: ingestion copies each file and its index sidecar (`.tbi`, `.bai`, `.fai`) to S3,
+one object per sample, and a genome track asks the API for short-lived presigned URLs and
+then fetches only the bytes covering the region in view. Since it carries no columns, it
+lines up with the rest of the project through the sample id alone. See
+[Indexed-file DCs](../usage/projects/guide.md#example-indexed-file-dcs) for the YAML.
 
 ### Where a data collection came from
 
@@ -128,7 +137,8 @@ is *when* and *to what* each one applies:
 - A **DCLink** (`Project.links`) merges nothing and writes nothing. It runs in the
   dashboard, at render time, propagating *filters* from one data collection to another and
   resolving identifiers between them by one of several strategies (`direct`,
-  `sample_mapping`, `pattern`, `regex`, `wildcard`). Since it only has to translate
+  `sample_mapping`, `pattern`, `regex`, `wildcard`, or `region` for a genomic region,
+  which only renames the coordinate columns). Since it only has to translate
   identifiers, it works across types: a selection on a metadata table can narrow a MultiQC
   report and an image gallery at the same time.
 

@@ -219,7 +219,7 @@ Advanced Visualizations are a family of domain-specific scientific charts (catal
 
 Two ingredients work together:
 
-- a **per-viz `Config` class** (e.g. `VolcanoConfig`, `MAConfig`) that captures the role → column mapping plus per-viz display defaults (thresholds, top-N, sort order);
+- a **per-viz `Config` class** (e.g. `VolcanoConfig`, `DotPlotConfig`) that captures the role → column mapping plus per-viz display defaults (thresholds, top-N, sort order);
 - a **`CANONICAL_SCHEMAS` entry** declaring the required and optional roles plus their accepted polars dtypes, used by the dashboard builder to validate the binding and surface errors before the viz renders.
 
 Source of truth in the codebase:
@@ -227,6 +227,52 @@ Source of truth in the codebase:
 - `depictio/models/components/advanced_viz/configs.py` — per-viz Pydantic configs
 - `depictio/models/components/advanced_viz/schemas.py` — `CANONICAL_SCHEMAS` + `validate_binding()`
 - `depictio/models/components/types.py` — `AdvancedVizKind` literal enum
+
+### Shared settings <small>(v1.13.0+)</small> { #advanced-viz-shared-settings }
+
+Every kind accepts one layout setting on top of its own:
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `controls_placement` | `popover` \| `rail` \| `header` | `popover` | Where the tile draws its controls. `popover` keeps them all behind the settings icon. `header` draws the primary controls as a strip under the tile title and leaves the cosmetic ones in the popover. `rail` draws all of them in a 220 px column right of the plot (under the plot on a tile narrower than 480 px), and the tile then has no settings popover. |
+
+Each kind splits its controls into two tiers. The **primary** tier changes what the plot shows: the view switch, axes, colour by, thresholds, a gene, sample or chromosome picker. The **cosmetic** tier changes how it is drawn: marker sizes, palettes, labels, legend. A kind with no primary tier, such as [Record card](#record-card), puts its cosmetic controls in the header strip instead. Every controls block carries a placement picker: a reader's choice lasts the session, and in the editor it is saved as the tile's `controls_placement`.
+
+=== "popover"
+
+    [![Volcano tile with its controls in the settings popover](../images/guides/advanced-visualizations/controls_popover_light.webp#only-light)](../images/guides/advanced-visualizations/controls_popover_light.webp){target=_blank}
+
+    [![Volcano tile with its controls in the settings popover](../images/guides/advanced-visualizations/controls_popover_dark.webp#only-dark)](../images/guides/advanced-visualizations/controls_popover_dark.webp){target=_blank}
+
+=== "rail"
+
+    [![Volcano tile with its controls in a rail beside the plot](../images/guides/advanced-visualizations/controls_rail_light.webp#only-light)](../images/guides/advanced-visualizations/controls_rail_light.webp){target=_blank}
+
+    [![Volcano tile with its controls in a rail beside the plot](../images/guides/advanced-visualizations/controls_rail_dark.webp#only-dark)](../images/guides/advanced-visualizations/controls_rail_dark.webp){target=_blank}
+
+=== "header"
+
+    [![Volcano tile with its primary controls under the title](../images/guides/advanced-visualizations/controls_header_light.webp#only-light)](../images/guides/advanced-visualizations/controls_header_light.webp){target=_blank}
+
+    [![Volcano tile with its primary controls under the title](../images/guides/advanced-visualizations/controls_header_dark.webp#only-dark)](../images/guides/advanced-visualizations/controls_header_dark.webp){target=_blank}
+
+A dashboard sets the placement for every tile that leaves `controls_placement` unset with its own `advanced_viz_controls` key. See [Tile height and control placement](yaml-sync.md#tile-height).
+
+#### Switchable views { #advanced-viz-views }
+
+Some kinds draw the same rows in more than one way. They carry a `view` field, the view the tile opens on, and a `views` list, the views the tile offers. The switch between views is a primary control, so it sits wherever `controls_placement` puts that tier, and it is not drawn when only one view is offered. A view is offered only when the tile can draw it, whether `views` is unset or lists it:
+
+| Kind | Views (default first) | Offered when | Takes over |
+|------|-------|--------------|------------|
+| [Volcano](#volcano) | `volcano`, `ma`, `qq` | `ma`: `avg_log_intensity_col` is bound. `qq`: `p_value_col` is bound, or `significance_is_neg_log10` is false | the former `ma` and `qq` kinds |
+| [Dot plot](#dot-plot) | `dotplot`, `enrichment` | `dotplot`: the four marker columns are bound. `enrichment`: `term_col` and `nes_col` are bound | the former `enrichment` kind |
+| `pr_benchmark` | `pr`, `roc`, `both` | `roc`, `both`: `threshold_col` or `fpr_col` is bound, or a group holds more than one point | the former `roc_pr_curve` kind |
+| [Coverage track](#coverage-track) | `track`, `locus` | always | |
+| [Copy-number profile](#cnv-profile) | `plotly`, `locus` | always | |
+| `sashimi` | `plotly`, `genomespy` | always | |
+
+!!! info "Retired kinds still load"
+    `viz_kind: ma`, `qq`, `enrichment` and `roc_pr_curve` are still accepted, in a YAML file as in a stored dashboard. The config is rewritten when it is read into the surviving kind's, with `view` set to match, and every field keeps its name, so nothing needs editing. The stored dashboard only changes when it is saved again. The add-component wizard no longer offers the retired kinds.
 
 ### Automatic DC recognition <small>(v0.13.10+)</small>
 
@@ -245,6 +291,24 @@ Fingerprint matching is additive: a single DC can match several fingerprints (e.
 
 Source of truth: `depictio/models/components/advanced_viz/producer_fingerprints.py`.
 
+#### The kind picker <small>(v1.13.0+)</small> { #kind-picker }
+
+The builder's kind picker splits the kinds into three groups: the kind the tile already
+uses, pinned at the top whatever its fit, then **Recommended**, the kinds that fit the bound
+collection well, then the other kinds, folded. Each kind carries a badge saying what the
+suggestion rests on:
+
+| Badge | Meaning |
+|-------|---------|
+| **Named match** | The collection has columns named for the kind's roles (`log2FoldChange`, `padj`, …) |
+| **Shape match** | The columns have the right types and shape, such as a coordinate pair for a scatter, without matching names |
+| **Fits your selection** | The kind fits the tab, not just the collection: a [Record card](#record-card) is suggested when another tile on the tab emits a selection on one of the collection's columns |
+| **Weak** | Pickable, but some required role has no good column |
+
+Hovering a kind lists the reasons and any role the collection cannot fill. The retired kinds
+(`ma`, `qq`, `enrichment`, `roc_pr_curve`) are not offered; see
+[Switchable views](#advanced-viz-views).
+
 ### Catalog
 
 Every advanced viz consumes a **tabular DC** (CSV / TSV / Parquet → polars) with the column roles documented per-viz below. The **Accepted input** column lists upstream tools whose output natively has — or trivially reshapes to — those columns. Web renderers that *look* like a viz (Microreact, iTOL, IGV, JBrowse, Krona, EnhancedVolcano, qqman, …) aren't listed here — they're peers, not data sources; we call them out in the per-viz prose where the framing helps.
@@ -252,9 +316,9 @@ Every advanced viz consumes a **tabular DC** (CSV / TSV / Parquet → polars) wi
 | Viz | Description | Accepted input (canonical producer) |
 |-----|-------------|-------------------------------------|
 | :material-chart-scatter-plot: [Volcano](#volcano) | Effect size vs significance scatter for differential analysis. | **DESeq2** results table (`results()` → TSV) |
-| :material-chart-bell-curve-cumulative: [MA](#ma) | Mean intensity vs log fold change for DE / proteomics QC. | **DESeq2** results table: `log2(baseMean+1)` (or `log10`) → `avg_log_intensity`, `log2FoldChange` straight |
+| :material-chart-bell-curve-cumulative: [MA](#ma) | Mean intensity vs log fold change for DE / proteomics QC. A view of [Volcano](#volcano) since v1.13.0. | **DESeq2** results table: `log2(baseMean+1)` (or `log10`) → `avg_log_intensity`, `log2FoldChange` straight |
 | :material-view-grid-plus-outline: [DA barplot](#da-barplot) | Ranked signed-LFC bars for differential abundance — single panel or faceted by contrast. | **ANCOM-BC** `output$res` (feature, contrast, lfc, q-value) |
-| :material-chart-bubble: [Enrichment](#enrichment) | Pathway / GO-term enrichment dot plot. | **clusterProfiler** GSEA / ORA result (term, NES, padj, gene-count) |
+| :material-chart-bubble: [Enrichment](#enrichment) | Pathway / GO-term enrichment dot plot. A view of [Dot plot](#dot-plot) since v1.13.0. | **clusterProfiler** GSEA / ORA result (term, NES, padj, gene-count) |
 | :material-chart-histogram: [Manhattan](#manhattan) | Genome-wide signal scatter across chromosomes (GWAS). | **PLINK** `.assoc` (chr, pos, p-value) |
 | :material-chart-timeline-variant: [Lollipop](#lollipop) | Variant / mutation track along a gene body. | **maftools / vcf2maf** Mutation Annotation Format table — `Hugo_Symbol`, `Start_Position`, `Variant_Classification` (file format, **not** Minor Allele Frequency) |
 | :material-chart-areaspline: [Coverage track](#coverage-track) | Read depth / signal along genomic coordinates. | **mosdepth** per-base / by-region BED (chrom, pos, depth) |
@@ -265,10 +329,20 @@ Every advanced viz consumes a **tabular DC** (CSV / TSV / Parquet → polars) wi
 | :material-circle-multiple-outline: [Dot plot](#dot-plot) | Single-cell marker-gene expression by cluster. | **scanpy** aggregation (`sc.get.aggregate` or `groupby` on `adata.X`) producing `(cluster, gene, mean_expression, frac_expressing)` — `rank_genes_groups.to_df()` alone is DE stats, not the dot-plot schema |
 | :material-atom: [Embedding](#embedding) | 2D / 3D sample projection for cluster inspection (precomputed or live PCA / UMAP / t-SNE / PCoA). | **scanpy** `adata.obsm['X_umap']` (sample, dim1, dim2) |
 | :material-grid: [Hierarchical Heatmap](#hierarchical-heatmap) | Clustered matrix with dendrograms + annotation tracks. | **DESeq2** `vst()` matrix (sample × gene wide) |
-| :material-chart-line-stacked: [QQ](#qq) | p-value distribution QC for inflation / deflation. | **PLINK** `.assoc` (or any p-value column) |
+| :material-chart-line-stacked: [QQ](#qq) | p-value distribution QC for inflation / deflation. A view of [Volcano](#volcano) since v1.13.0. | **PLINK** `.assoc` (or any p-value column) |
 | :material-set-center: [UpSet](#upset) | Set-intersection visualisation, alternative to Venn. | Any binary membership matrix (sample × set) |
 | :material-chart-sankey: [Sankey](#sankey) | Categorical flow across N ordered levels. | Any tidy table with ≥2 ordered categorical columns |
 | :material-grid-large: [Oncoplot](#oncoplot) | Sample × gene mutation matrix. | **maftools / vcf2maf** Mutation Annotation Format table — `Tumor_Sample_Barcode`, `Hugo_Symbol`, `Variant_Classification` (file format, **not** Minor Allele Frequency) |
+| :material-triangle-outline: [Contact map](#contact-map) | Binned Hi-C contact matrix, square or as a triangle under a genome track. | **cooler** `.mcool` pixels dumped per resolution (chrom1, start1, chrom2, start2, count) |
+| :material-trending-down: [Knee plot](#knee-plot) | Barcode-rank curve with the cell-calling cutoff. | **STARsolo**, **alevin-fry** or **Cell Ranger** barcode counts (sample, rank, UMI count) |
+| :material-dna: [Damage profile](#damage-profile) | Ancient-DNA misincorporation frequency by distance from the read end. | **DamageProfiler** or **mapDamage** substitution tables |
+| :material-chart-timeline: [Genome view](#genome-view) | Zoomable GenomeSpy track on a chromosome axis, with per-sample lanes, a gene lane and a region brush. | Any chr / pos / score table (peaks, depth bins, association scores), or an indexed VCF, BAM, bigWig, GFF3 or tabix file |
+| :material-compare-horizontal: [Group compare](#group-compare) | Two groups of rows tested feature by feature on demand, drawn as a volcano with a ranked table. | Observation × feature matrix (cells × genes, samples × normalised counts) |
+| :material-reorder-horizontal: [Transcript structure](#transcript-structure) | Isoforms of one gene, one lane per transcript. | **StringTie** or **bambu** GTF exon / CDS rows |
+| :material-chart-scatter-plot-hexbin: [Copy-number profile](#cnv-profile) | Log2 ratio per bin, called segments and B-allele frequency along the genome. | **CNVkit**, **ASCAT** or **Control-FREEC** bins and segments |
+| :material-circle-double: [Genome chord](#genome-chord) | Chromosomes on a ring, one chord per link between two loci. | **Manta**, **TIDDIT** or **SvABA** breakends, **arriba** or **STAR-Fusion** fusions |
+| :material-chart-line-variant: [Parallel coordinates](#parallel-coordinates) | One polyline per sample across many metric axes, brushable per axis. | Any per-sample QC table (MultiQC general statistics) |
+| :material-card-account-details-outline: [Record card](#record-card) | One record of a collection as labelled fields and links, following a selection made elsewhere. | Any table with an identifier column |
 
 !!! info "Reading the schema tables"
     Each viz subsection lists its **required** column roles (must be bound for the viz to render) and **optional** roles (extra colour / size / label dimensions). Types use polars dtype families — `Float` accepts `Float32` / `Float64`, `Int` accepts `Int8`–`Int64` and unsigned widths, `String` accepts `String` / `Utf8`, `Numeric` is `Int` ∪ `Float`. The dashboard builder validates the binding via `validate_binding()` and surfaces dtype mismatches in-place.
@@ -285,7 +359,7 @@ Effect size vs significance scatter — classic differential-expression view wit
 | `effect_size` | ✓ | Float | Effect size (e.g. log2FC, lfc) |
 | `significance` | ✓ | Float | p-value or padj/q-value |
 | `label` | — | String | Hover label override |
-| `category` | — | String | Categorical annotation (pathway, cluster…) for point colour |
+| `category` | — | String | Categorical annotation (pathway, cluster…). Splits the QQ view into one trace per value; volcano and MA points stay coloured by tier |
 
 **Settings**
 
@@ -295,10 +369,43 @@ Effect size vs significance scatter — classic differential-expression view wit
 | `significance_threshold` | float | `0.05` | Cutoff applied to the `significance` column |
 | `effect_threshold` | float | `1.0` | Absolute `effect_size` cutoff |
 | `top_n_labels` | int (≥0) | `20` | Max features to auto-label |
+| `show_labels` | bool | `true` | Draw text labels on the highlighted points |
+| `view` | `volcano` \| `ma` \| `qq` | `volcano` | View the tile opens on (v1.13.0+) |
+| `views` | list \| null | `null` | Views offered in the view switch; null offers every view the bindings allow (v1.13.0+) |
+| `avg_log_intensity_col` | str \| null | `null` | MA view: average log intensity column (x axis). Without it the MA view is not offered (v1.13.0+) |
+| `log2_fold_change_col` | str \| null | `null` | MA view: log2 fold change column (y axis); null reuses `effect_size_col` (v1.13.0+) |
+| `fold_change_threshold` | float (≥0) | `1.0` | MA view: absolute fold-change cutoff (v1.13.0+) |
+| `p_value_col` | str \| null | `null` | QQ view: raw p-value column; null reuses `significance_col` (v1.13.0+) |
+| `show_ci` / `show_identity` / `point_size` | bool / bool / int | `true` / `true` / `5` | QQ view: 95% null band, y = x line, marker size (v1.13.0+) |
 
 **Filtering / row tagging**
 
-Every row is classified client-side as **UP**, **DOWN**, or **NS** based on `significance < threshold` combined with `|effect_size| > threshold`. The backend returns raw rows; classification + colouring happens in `VolcanoRenderer.tsx`.
+Every row is classified client-side as **UP**, **DOWN**, or **NS** based on `significance ≤ significance_threshold` combined with `|effect_size| ≥ effect_threshold`. The backend returns raw rows; classification + colouring happens in the viewer (`deViews.ts`, `VolcanoRenderer.tsx`).
+
+**Views** <small>(v1.13.0+)</small>
+
+One differential-expression table, three readings: effect against significance (volcano), effect against abundance ([MA](#ma)) and observed against expected significance ([QQ](#qq)). The tile fetches once and the view switch changes the projection; the significance threshold, labels, search and selection are shared. The MA view tiers its points against `fold_change_threshold` (its own **|log2 FC|** input) rather than `effect_threshold`, so its UP / DOWN counts can differ, and the QQ view draws no tiers.
+
+The view switch, thresholds, **Top-N labels** and **Search** are primary controls. **Show top-N labels** is cosmetic, and so are the QQ view's identity line, 95% band and point size.
+
+??? example "Volcano with the MA and QQ views"
+    ```yaml
+    - tag: viz-de
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: de_results
+      viz_kind: volcano
+      config:
+        viz_kind: volcano
+        feature_id_col: gene_id
+        effect_size_col: log2FoldChange
+        significance_col: padj
+        avg_log_intensity_col: log2_baseMean
+        p_value_col: pvalue
+        view: volcano
+        views: [volcano, ma, qq]
+        controls_placement: header
+    ```
 
 
 [![Volcano example](../images/guides/advanced-visualizations/volcano_light.webp#only-light)](../images/guides/advanced-visualizations/volcano_light.webp){target=_blank}
@@ -307,6 +414,9 @@ Every row is classified client-side as **UP**, **DOWN**, or **NS** based on `sig
 ### MA
 
 Mean log intensity (x) vs log2 fold change (y) — same hits as volcano, classic DE / proteomics layout. Shares the UP / DOWN / NS tier scheme with [Volcano](#volcano).
+
+!!! info "A view of Volcano since v1.13.0"
+    MA is now the `ma` view of the [Volcano](#volcano) tile: bind `avg_log_intensity_col` on a `volcano` config and the MA plot is one click away in the view switch, with the same significance threshold and selection; its fold-change cutoff is `fold_change_threshold`. A `viz_kind: ma` config keeps loading and opens on the MA view, its `log2_fold_change_col` also serving as the volcano's effect size. The roles below are those of the retired kind; it is read as a `volcano` config, so a setting it leaves unset takes the volcano default.
 
 **Columns**
 
@@ -322,13 +432,14 @@ Mean log intensity (x) vs log2 fold change (y) — same hits as volcano, classic
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `significance_threshold` | float (0–1) | `0.05` | Cutoff for `significance` |
+| `significance_threshold` | float | `0.05` | Cutoff for `significance` |
 | `fold_change_threshold` | float (≥0) | `1.0` | Absolute `log2_fold_change` cutoff |
-| `top_n_labels` | int (≥0) | `15` | Max features to auto-label |
+| `top_n_labels` | int (≥0) | `20` | Max features to auto-label. The retired kind defaulted to `15` |
+| `show_labels` | bool | `true` | Draw text labels on the highlighted points |
 
 **Filtering / row tagging**
 
-Mirror of the [Volcano](#volcano) tier scheme — UP / DOWN / NS classification (sig × FC thresholds), client-side in `MARenderer.tsx`.
+Same UP / DOWN / NS scheme as the [Volcano](#volcano), against `significance_threshold` and `fold_change_threshold` on the `log2_fold_change` column, computed client-side (`deViews.ts`).
 
 
 [![MA example](../images/guides/advanced-visualizations/ma_light.webp#only-light)](../images/guides/advanced-visualizations/ma_light.webp){target=_blank}
@@ -371,6 +482,27 @@ When `contrast_view == "all"` the renderer **facets by contrast** (one panel per
 
 GSEA / GO / KEGG / Reactome pathway-enrichment dot plot: term on y, NES on x, dot size = gene-set size, colour = -log10(padj).
 
+!!! info "A view of Dot plot since v1.13.0"
+    Enrichment is now the `enrichment` view of the [Dot plot](#dot-plot) tile: the same marks and the same size and colour channels, read over a gene-set table. Bind `term_col` and `nes_col` on a `dot_plot` config, plus `padj_col` for the cutoff and `gene_count_col` for the dot size, and set `view: enrichment`. A `viz_kind: enrichment` config keeps loading and offers the enrichment view only, since its table has no cluster column for the marker view. The roles and settings below keep their names on the dot plot; display settings the retired config left unset now take the dot plot's defaults (`max_dot_size` 22, `min_dot_size` 2, `colour_scale` Viridis, outline on).
+
+??? example "Enrichment view of a dot plot"
+    ```yaml
+    - tag: viz-enrichment
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: gsea_results
+      viz_kind: dot_plot
+      config:
+        viz_kind: dot_plot
+        term_col: term
+        nes_col: nes
+        padj_col: padj
+        gene_count_col: gene_count
+        source_col: source
+        view: enrichment
+        views: [enrichment]
+    ```
+
 **Columns**
 
 | Role | Required | Type | Description |
@@ -387,10 +519,12 @@ GSEA / GO / KEGG / Reactome pathway-enrichment dot plot: term on y, NES on x, do
 |--------|------|---------|-------------|
 | `padj_threshold` | float (0–1) | `0.05` | Filter cutoff |
 | `top_n` | int (≥1) | `20` | Max pathways shown |
+| `default_colour_by` | `neg_log10_padj` \| `abs_nes` \| `nes_sign` \| `gene_count` | `neg_log10_padj` | What the dot colour encodes on first render; **Colour by** in the tile |
+| `term_sort` | `nes` \| `significance` \| `gene_count` \| `name` | `nes` | Order of the terms on the y axis; **Sort terms** in the tile |
 
 **Filtering / row tagging**
 
-Renderer **filters by source** (MultiSelect) and ranks by |nes|; only the top-N pathways are shown. Dot colour encodes -log10(padj).
+Terms above `padj_threshold` are dropped, the `top_n` most significant are kept, then ordered by `term_sort`. A **Source** multi-select narrows the terms when `source_col` is bound. These are primary controls, as are **Top-N pathways**, **padj threshold** and **Colour by**; colour scale, dot sizes and outline are cosmetic.
 
 
 [![Enrichment example](../images/guides/advanced-visualizations/enrichment_light.webp#only-light)](../images/guides/advanced-visualizations/enrichment_light.webp){target=_blank}
@@ -408,7 +542,7 @@ Generic chr / pos / score plot — works for true GWAS (variants), peak signific
 | `pos` | ✓ | Int | Genomic position (1-based) |
 | `score` | ✓ | Float | Y-axis score (e.g. -log10(padj)) |
 | `feature` | — | String | Feature / locus id (gene, SNP, peak) |
-| `effect` | — | Float | Signed effect for point colouring |
+| `effect` | — | Float | Signed effect. Not drawn by itself: list it in `color_by_columns` to colour by it |
 
 **Settings**
 
@@ -420,12 +554,16 @@ Generic chr / pos / score plot — works for true GWAS (variants), peak signific
 | `marker_size_above` | int (1–30) | `6` | Marker size (px) for points at or above `score_threshold`. Only used when a threshold is set. |
 | `marker_size_below` | int (1–30) | `4` | Marker size (px) for sub-threshold points. Lower by default so the eye lands on the hits. |
 | `marker_size_uniform` | int (1–30) | `5` | Marker size when no threshold is set (uniform sizing). |
-| `color_by_columns` | list[str] | `[]` | Extra columns fetched alongside the required roles, exposed in the viz Colour-by dropdown. The renderer auto-detects numeric vs categorical (continuous colorscale vs palette). `Chromosome` and `Score` (the y-axis column) are always available without listing them here. Typical viralrecon usage: `['effect', 'lineage', 'sample']`. |
+| `color_by_columns` | list[str] | `[]` | Extra columns fetched alongside the required roles, offered in the tile's **Colour by** select, which only appears once this lists a column. The renderer auto-detects numeric vs categorical (continuous colorscale vs palette). `Chromosome` and `Score` (the y-axis column) are always available without listing them here. Typical viralrecon usage: `['effect', 'lineage', 'sample']`. |
 | `default_color_by` | str \| null | `null` | Initial value for the Colour-by dropdown. Either `Chromosome`, `Score`, or one of `color_by_columns`. Defaults to `Chromosome` when null. |
+| `top_n_labels` | int (≥0) | `8` | Highest-scoring loci labelled |
+| `selection_enabled` / `selection_column` | bool / str \| null | `false` / `null` | A click or lasso on markers emits that column's values as a selection filter |
+| `mode` | `manhattan` \| `rainfall` | `manhattan` | `rainfall` plots log10 of the distance to the previous variant on the same chromosome instead of the score: clustered mutations (kataegis) sink to the bottom. Switchable from the tile (**Score** / **Rainfall**) (v1.13.0+) |
+| `rainfall_class_col` | str \| null | `null` | Rainfall mode: column whose values colour each point (mutation class, consequence); null colours by chromosome (v1.13.0+) |
 
 **Filtering / row tagging**
 
-Renderer **facets by chromosome** (one subplot per unique `chr` value). The optional `score_threshold` draws a horizontal cutoff line — no explicit per-row tag, but the line gives a visual significance reference.
+Renderer lays the chromosomes end to end on one genome-wide axis, in alternating bands; the **Chromosomes** select narrows it. The optional `score_threshold` draws a horizontal cutoff line — no explicit per-row tag, but the line gives a visual significance reference.
 
 
 [![Manhattan example](../images/guides/advanced-visualizations/manhattan_light.webp#only-light)](../images/guides/advanced-visualizations/manhattan_light.webp){target=_blank}
@@ -443,16 +581,22 @@ Needle / variant track along a gene — each gene body as a horizontal line, eac
 | `position` | ✓ | Int | Position along the feature | `Start_Position` (or `Protein_position` for AA-space tracks) |
 | `category` | ✓ | String | Variant consequence category (colour) | `Variant_Classification` |
 | `effect` | — | Float | Numeric effect (marker size) | e.g. `VAF`, `t_alt_count / t_depth` |
+| `label` | — | String | Names each stem in the hover and the top-N labels | e.g. `HGVSp_Short` |
 
 **Settings**
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `max_subplot_genes` | int (≥1) | `6` | If the gene universe exceeds this, switch to a single-gene picker |
+| `gene_sort` | `name` \| `count` \| `effect` | `count` | Order of the gene panels |
+| `point_size` / `stem_width` | int (1–40) / float (0–10) | `8` / `1.2` | Head size and stem width |
+| `scale_points_by_effect` / `show_stems` / `marker_outline` | bool | `true` / `true` / `false` | Size heads by `effect`, draw the stems, outline the heads |
+| `palette` | `tab10` \| `tab20` | `tab10` | Palette of the consequence categories |
+| `top_n_labels` | int (≥0) | `0` | Label the most extreme points per gene; 0 draws none |
 
 **Filtering / row tagging**
 
-Renderer **facets by feature** (one subplot per gene, or a picker once the universe exceeds `max_subplot_genes`). Markers are **coloured by category** and **sized by effect** when bound.
+Renderer **facets by feature** (one subplot per gene, or a picker once the universe exceeds `max_subplot_genes`). Markers are **coloured by category** and **sized by effect** when bound. The gene picker and **Sort genes** are primary controls; the marker, stem, palette and label settings are cosmetic.
 
 
 [![Lollipop example](../images/guides/advanced-visualizations/lollipop_light.webp#only-light)](../images/guides/advanced-visualizations/lollipop_light.webp){target=_blank}
@@ -480,14 +624,43 @@ Read depth / signal along a coordinate axis. Universal genomics primitive — co
 | `y_scale` | `linear` \| `log` | `linear` | Y-axis scale |
 | `smoothing_window` | int (0–200) | `5` | Rolling-mean window in bins (0 disables). Default 5 ≈ 1 kb at 200-bp mosdepth bins — kills high-frequency wiggle without flattening amplicon-scale dropouts. |
 | `color_by` | `single` \| `category` \| `sample` | `single` | Trace colour assignment mode |
-| `show_annotation_lane` | bool | `true` | Render annotation strip when `category` is bound |
-| `annotation_id` | str \| null | `null` | Optional bundled-annotation override for the genome-feature overlay strip. When null, the renderer auto-detects the assembly from the bound DC's chromosome value (e.g. `MN908947.3` → SARS-CoV-2). Pin this when your data uses non-standard chromosome names but corresponds to a known assembly. Valid ids: `sars_cov_2`, `rsv_a`, `hiv_1`, `mpox`, `hbv` (see `depictio-react-core`'s `genome_annotations` registry). |
+| `show_annotation_lane` | bool | `true` | Draw the bundled gene strip under the track when the assembly is recognised or pinned by `annotation_id`; **Gene strip** in the tile |
+| `annotation_id` | str \| null | `null` | Optional bundled-annotation override for the genome-feature overlay strip. When null, the renderer auto-detects the assembly from the bound DC's chromosome value (e.g. `MN908947.3` → SARS-CoV-2). Pin this when your data uses non-standard chromosome names but corresponds to a known assembly. Valid ids: `sars_cov_2`, `rsv_a`, `hiv_1`, `hbv` (see `depictio-react-core`'s `genome_annotations` registry). |
 | `chromosomes_filter` | list[str] \| null | `null` | Whitelist of chromosomes; null = all |
 | `samples_filter` | list[str] \| null | `null` | Whitelist of samples; null = all |
+| `view_mode` | `aggregate` \| `facet` \| `overlay` \| null | `null` | How samples share the track: a cohort median with an IQR ribbon, one lane each, or all overlaid. Null picks from the sample count |
+| `show_individuals` | bool | `true` | Aggregate layout: draw each sample's trace faintly under the median |
+| `facet_by_sample` | bool | `false` | One lane per sample whatever `view_mode` says, in both views (v1.13.0+) |
+| `mark` | `line` \| `rect` \| `point` | `line` | Trace geometry of the per-sample traces: a continuous line, one filled bar per bin, or discrete points. The aggregate view's median and IQR ribbon has no single-mark equivalent and ignores it. Also switchable from the tile (v1.13.0+) |
+| `view` | `track` \| `locus` | `track` | `track` draws the smoothed Plotly line; `locus` draws the same rows as a zoomable GenomeSpy track, the one [Genome view](#genome-view) draws (v1.13.0+) |
+| `views` | list \| null | `null` | Views offered in the view switch; null offers both (v1.13.0+) |
+| `locus_annotation` | `none` \| `hg38` \| `mm10` | `none` | Locus view: bundled gene lane drawn under the track (v1.13.0+) |
+| `locus_assembly` | str \| null | `null` | Locus view: assembly whose contig lengths lay out the genome axis; null derives the axis from the rows (v1.13.0+) |
 
 **Filtering / row tagging**
 
-Renderer **facets by chromosome** (subplot per chr) and optionally by **sample** (stacked subplot rows). The `chromosomes_filter` / `samples_filter` whitelists narrow the view further; the category lane colour-segments the trace.
+Renderer draws one base-pair axis. The **Chromosomes** and **Samples** selects, seeded from `chromosomes_filter` / `samples_filter`, narrow it, and **Aggregate / Per-sample / Overlay** sets how samples share it. `category` feeds the **Region** colour mode. The view switch, sample layout, y scale, smoothing and the two selects are primary controls; mark, colour mode, individual traces and gene strip are cosmetic.
+
+Since v1.13.0 the track also follows a genomic region published elsewhere on the dashboard (a [Genome view](#genome-view) brush or locus field, or a plain chromosome filter): rows bound to the same columns are narrowed by the filter as usual, and the x axis clamps to the region.
+
+??? example "Coverage track with points and the locus view"
+    ```yaml
+    - tag: viz-coverage
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: depth_bins
+      viz_kind: coverage_track
+      config:
+        viz_kind: coverage_track
+        chromosome_col: chrom
+        position_col: start
+        end_col: end
+        value_col: depth
+        sample_col: sample
+        mark: point
+        view: track
+        views: [track, locus]
+    ```
 
 
 [![Coverage track example](../images/guides/advanced-visualizations/coverage_track_light.webp#only-light)](../images/guides/advanced-visualizations/coverage_track_light.webp){target=_blank}
@@ -512,9 +685,12 @@ Per-sample stacked relative-abundance bar with a rank dropdown.
 |--------|------|---------|-------------|
 | `default_rank` | str \| null | `null` | If `rank` carries multiple ranks, default-filter to this one |
 | `top_n` | int (≥1) | `20` | Show top-N taxa, lump rest into `Other` |
-| `sort_by` | `abundance` \| `alphabetical` | `abundance` | Stack-ordering rule |
+| `sort_by` | `abundance` \| `alphabetical` | `abundance` | Stack-ordering rule. Accepted, but the viewer always ranks taxa by total abundance |
+| `sample_sort` | `input` \| `total_abundance` \| `first_taxon` | `input` | Order of the samples on the x axis |
 | `normalise_to_one` | bool | `true` | Force each sample's bars to sum to 1 (true % composition) |
 | `annotation_strips` | list[dict] \| null | `null` | Per-sample categorical annotation strips drawn above or below the stacked bars. Each entry is a dict with: `column` (str, required), `label` (str, optional — defaults to column name), `position` (`top` \| `bottom`, default `bottom`), `palette` (`{value: hex}`, optional). Reusable across any per-sample categorical metadata (habitat, batch, treatment, timepoint) — renderer pulls the columns automatically, no recipe change needed. |
+| `show_legend` / `log_y` | bool | `true` / `false` | Taxon legend; log y axis, only offered when `normalise_to_one` is off |
+| `taxon_palette` | dict[str, str] \| null | `null` | `{taxon: hex}` colours pinned for the bars. Unlisted taxa keep the default cycle, which repeats past twelve taxa (v1.12.0+) |
 
 ??? example "Annotation strips YAML"
     ```yaml
@@ -529,9 +705,20 @@ Per-sample stacked relative-abundance bar with a rank dropdown.
           Soil: "#FF7F00"
     ```
 
+<small>(v1.12.0+)</small> Each strip is a row of cells under or over the bars, one per
+sample. Hovering a cell shows the sample and its category, and the legend lists each
+category under the strip's label. A strip reads its column from the data collection the
+figure draws. The bundled QIIME2 recipe behind the nf-core/ampliseq stacked taxonomy
+joins every categorical column of the sample metadata with at most 25 categories (text,
+categorical or boolean), so a strip can follow `locality`, `batch` or any other grouping,
+not only `habitat`. Samples are ordered by `habitat` when that column exists, otherwise
+by the first column joined. Collections ingested before v1.12.0 carry only `habitat`:
+re-ingest them to colour by another column. A taxon with no name at the shown rank is
+labelled `Unclassified`.
+
 **Filtering / row tagging**
 
-Renderer **filters by rank** (dropdown sourced from the unique `rank` values). Within the active rank, taxa are sorted by `sort_by`; everything past `top_n` is collapsed into an `Other` slice.
+Renderer **filters by rank** (**Rank** select sourced from the unique `rank` values). Within the active rank, taxa are ranked by total abundance; everything past `top_n` is collapsed into an `Other` slice. Rank, sample order, top-N and normalisation are primary controls; legend and log y are cosmetic.
 
 
 [![Stacked taxonomy example](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light)](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp){target=_blank}
@@ -555,12 +742,18 @@ Hierarchical taxonomy / pathway viewer — concentric rings from root to leaf. U
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `rank_cols` | list[str] (≥2) | _required_ | Hierarchical columns from root to leaf (e.g. `[Kingdom, Phylum, Class, Order, Family, Genus]`) |
-| `abundance_col` | str | _required_ | DC column that satisfies the `abundance` role above |
+| `abundance_col` | str | `abundance` | DC column that satisfies the `abundance` role above |
+| `start_rank` | str \| null | `null` | Rank of the innermost ring; null starts at the first of `rank_cols` |
+| `colour_by_rank` | str \| null | `null` | Rank driving the colour key; null colours by the innermost visible ring |
+| `max_depth` | int (≥1) | `3` | Rings drawn from the start rank outwards |
+| `palette` | `tab10` \| `tab20` | `tab20` | Categorical palette |
+| `min_percent` | float (0–50) | `0.5` | Hide arcs below this share of the root, in percent |
+| `show_counts` | bool | `true` | Label each arc with its share of the root |
 | `category_palette` | dict[str, str] \| null | `null` | Explicit value→colour overrides for the colour-key categories (whichever rank the user's Colour-by picker chooses). Pin domain palettes (e.g. `Habitat → Set1`) so the same category lands on the same colour across PCoA / UpSet / heatmap tiles. |
 
 **Filtering / row tagging**
 
-Renderer **hierarchically aggregates** by the `rank_cols` sequence. Intermediate arc sizes are reconstructed via Plotly's `branchvalues='total'`. No per-row tag — aggregation is deterministic and lossless.
+Renderer **hierarchically aggregates** by the `rank_cols` sequence. Intermediate arc sizes are reconstructed via Plotly's `branchvalues='total'`. No per-row tag — aggregation is deterministic and lossless. Start rank, colour rank and depth are primary controls; palette, minimum arc and arc labels are cosmetic.
 
 
 [![Sunburst example](../images/guides/advanced-visualizations/sunburst_light.webp#only-light)](../images/guides/advanced-visualizations/sunburst_light.webp){target=_blank}
@@ -568,7 +761,7 @@ Renderer **hierarchically aggregates** by the `rank_cols` sequence. Intermediate
 [![Sunburst example](../images/guides/advanced-visualizations/sunburst_dark.webp#only-dark)](../images/guides/advanced-visualizations/sunburst_dark.webp){target=_blank}
 ### Rarefaction
 
-Alpha-diversity vs sequencing depth — one line per sample with optional ±SE band and group colouring.
+Alpha-diversity vs sequencing depth — one line per sample with optional ±SE error bars and group colouring.
 
 **Columns**
 
@@ -584,12 +777,14 @@ Alpha-diversity vs sequencing depth — one line per sample with optional ±SE b
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `show_ci` | bool | `true` | Shade ±1 SE band around each sample's curve |
+| `metric_options` | list[str] \| null | `null` | Metric columns offered as tabs above the plot, each an alternative y axis; null shows `metric_col` only |
+| `top_n` | int (≥1) | `60` | Samples drawn before truncating |
+| `show_ci` | bool | `true` | Draw ±1 SE error bars on each sample's curve |
 | `category_palette` | dict[str, str] \| null | `null` | Explicit value→colour overrides for the `group` categories. Pins domain palettes (e.g. `habitat → Set1`) across PCoA + UpSet + heatmap + rarefaction for cross-tab consistency. |
 
 **Filtering / row tagging**
 
-Renderer **aggregates over `iter`** per `(sample_id, depth)` — computes mean ± CI. Optional `group` adds a colour split; otherwise one line per sample. No binary row tag.
+Renderer **aggregates over `iter`** per `(sample_id, depth)` — computes mean ± SE. Optional `group` adds a colour split; otherwise one line per sample. No binary row tag. **Group by** and **Top-N samples** are primary controls, the error bars cosmetic.
 
 
 [![Rarefaction example](../images/guides/advanced-visualizations/rarefaction_light.webp#only-light)](../images/guides/advanced-visualizations/rarefaction_light.webp){target=_blank}
@@ -615,6 +810,7 @@ The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `
 |--------|------|---------|-------------|
 | `tree_wf_id` / `tree_dc_id` | str | _required_ | Workflow + DC ids of the phylogeny DC |
 | `metadata_wf_id` / `metadata_dc_id` | str \| null | `null` | Optional metadata DC for tip annotations |
+| `tree_dc_tag` / `metadata_dc_tag` | str \| null | `null` | DC tags of the same two collections, for a YAML file; resolved to ids at import |
 | `taxon_col` | str | `"taxon"` | Column in the metadata DC matching tip labels in the tree |
 | `color_col` | str \| null | `null` | Metadata column for tip colouring (categorical or continuous) |
 | `label_col` | str \| null | `null` | Metadata column used to **label the tips**, so a tree whose tip names are hashes can read as something else. Changeable at view time from **Label by** (v1.8.0+) |
@@ -624,7 +820,7 @@ The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `
 | `ladderize` | bool | `true` | Ladderise the tree by default |
 | `show_metadata_strip` | bool | `true` | Render Microreact-style metadata strips beside the tips. Strips get their own legend sections (v1.8.0+) |
 | `show_branch_lengths` | bool | `true` | Annotate branches with lengths. Drawn as a clipped trace capped at the longest branches, so a dense tree is not buried in text (v1.8.0+) |
-| `show_internal_labels` | bool | `false` | Annotate internal nodes with their labels |
+| `show_internal_labels` | bool | `false` | Annotate internal nodes with their labels. Accepted, not drawn by the v1.13.0 viewer |
 
 #### Reading and navigating the tree <small>(v1.8.0+)</small> { #phylogeny-interaction }
 
@@ -648,7 +844,7 @@ Clicking an internal node marks its clade by taking contrast from everything els
 
 [![A collapsed clade drawn as a wedge](../images/guides/advanced-visualizations/phylogeny_collapsed_dark.webp#only-dark)](../images/guides/advanced-visualizations/phylogeny_collapsed_dark.webp){target=_blank}
 
-**Colour by**, **Label by** and **Scale bar** re-colour, re-label and annotate at view time. One colour scale per column feeds the tips, the strips and the legend, and the legend lists only what is drawn, shortening as you focus or collapse.
+**Colour by**, **Label by** and **Scale bar** re-colour, re-label and annotate at view time. Layout mode, ladderise, colour by and tip search are primary controls; labels, metadata strips, legend, support values and the scale bar are cosmetic. One colour scale per column feeds the tips, the strips and the legend, and the legend lists only what is drawn, shortening as you focus or collapse.
 
 [![Phylogenetic example](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light)](../images/guides/advanced-visualizations/phylogenetic_light.webp){target=_blank}
 
@@ -672,6 +868,17 @@ scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction ex
 |--------|------|---------|-------------|
 | `max_dot_size` | int (4–60) | `22` | Max marker size in pixels |
 | `min_dot_size` | int (0–20) | `2` | Min marker size in pixels |
+| `colour_scale` / `reverse_scale` | str / bool | `Viridis` / `false` | Continuous colour scale (`Viridis`, `Plasma`, `Inferno`, `Magma`, `Cividis`, `RdBu`, `Spectral`, or `Auto`, which follows the colour mode and the theme) |
+| `log_transform` | bool | `false` | Colour by log10(mean expression + 1) |
+| `gene_sort` / `cluster_sort` | `name` \| `mean` \| `frac` | `name` | Order of the genes and of the clusters |
+| `max_genes` | int (≥1) | `50` | Genes drawn before truncating |
+| `marker_outline` | bool | `true` | Outline each dot |
+| `annotate_top_n` | int (≥0) | `0` | Label the highest-mean dots; 0 draws none |
+| `view` | `dotplot` \| `enrichment` | `dotplot` | View the tile opens on (v1.13.0+) |
+| `views` | list \| null | `null` | Views offered in the view switch; null offers every view the bindings allow (v1.13.0+) |
+| `term_col`, `nes_col`, `padj_col`, `gene_count_col`, `source_col` | str \| null | `null` | Enrichment view bindings; see [Enrichment](#enrichment) for their meaning and the view's own settings (v1.13.0+) |
+
+The view switch, gene and cluster order and **Max genes** are primary controls; colour scale, dot sizes, outline and labels are cosmetic.
 
 
 [![Dot plot example](../images/guides/advanced-visualizations/dot_plot_light.webp#only-light)](../images/guides/advanced-visualizations/dot_plot_light.webp){target=_blank}
@@ -704,11 +911,21 @@ scanpy / Seurat marker-gene dot plot — cluster × gene with size = fraction ex
 | `pcoa_distance` | `bray_curtis` | `bray_curtis` | PCoA distance metric |
 | `show_density` | bool | `false` | Overlay density contours |
 | `point_size` | int (1–30) | `6` | Marker size |
+| `marker_outline` / `marker_outline_width` | bool / float (0.5–4) | `false` / `1.5` | Point outline and its width in px |
+| `ncontours` / `density_opacity` | int (≥1) / float (0–1) | `14` / `0.45` | Density overlay: contour count and opacity |
+| `show_centroids` | bool | `false` | Mark each colour group's centroid |
+| `view_3d` | bool | `false` | Open in 3D; needs `dim_3` |
+| `default_color_by` | str \| null | `null` | Initial **Colour by** column; null falls back to `color`, then `cluster` |
+| `reverse_scale` | bool | `true` | Reverse the continuous colour scale |
+| `plot_style` | `default` \| `grid` \| `clean` | `default` | Axis lines only, with gridlines and ticks, or no axes |
+| `legend_pos` | `right` \| `bottom` \| `in-tr` \| `hidden` | `right` | Colour legend position |
+| `hover_cols` | list[str] | `[]` | Extra columns in the hover |
+| `selection_enabled` / `selection_column` | bool / str \| null | `false` / `null` | A lasso, box or click emits a selection filter on that column (null: `sample_id`) |
 | `category_palette` | dict[str, str] \| null | `null` | Explicit value→colour overrides for the categorical `color` column. Wins over the default palette-index assignment so dashboards can pin domain-specific colours (e.g. `habitat → Set1`) without forking the renderer per project. |
 
 **Filtering / row tagging**
 
-In **precomputed mode** the renderer just plots the pre-existing coordinates. In **live-compute mode** it dispatches `POST /advanced_viz/compute_embedding`, which runs the chosen reduction on the wide sample × feature matrix and returns coordinates. Results are cached by `(dc_id, method, params, filters)`; tweaking a slider re-dispatches a fresh job.
+In **precomputed mode** the renderer just plots the pre-existing coordinates. In **live-compute mode** it dispatches `POST /advanced_viz/compute_embedding`, which runs the chosen reduction on the wide sample × feature matrix and returns coordinates. Results are cached by `(dc_id, method, params, filters)`; changing a method parameter dispatches a fresh job. Method (live mode), 2D / 3D and **Colour by** are primary controls; the method parameters and every display setting are cosmetic.
 
 
 [![Embedding example](../images/guides/advanced-visualizations/embedding_light.webp#only-light)](../images/guides/advanced-visualizations/embedding_light.webp){target=_blank}
@@ -730,12 +947,14 @@ Numeric matrix columns are inferred from the rest of the DC schema at compute ti
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `matrix_wf_id` / `matrix_dc_id` | str | _required_ | Workflow + DC ids of the wide matrix DC |
+| `matrix_wf_id` / `matrix_dc_id` | str \| null | `null` | Deprecated and unused: the tile reads the DC it is bound to |
 | `index_column` | str | `sample_id` | Row-label column |
 | `value_columns` | list[str] \| null | `null` | Subset of numeric columns; null = all numeric |
 | `value_columns_pattern` | str \| null | `null` | Regex naming the value columns, for a matrix whose column names depend on the run. Cannot be combined with `value_columns` (v1.11.0+) |
 | `row_annotation_cols` | list[str] | `[]` | Categorical columns rendered as a right-side annotation strip |
 | `col_annotations` | dict[str, dict[str, str]] \| null | `null` | Per-column categorical annotations rendered as a top strip. Shape: `{annotation_name: {column_label: category_value}}` (e.g. `{'habitat': {'SRR10070130': 'Riverwater', ...}}`). The renderer aligns the values to the matrix's column order. Use when per-sample metadata (treatment / habitat / batch) needs to live on the column axis without joining a second DC. |
+| `col_annotation_cols` | list[str] | `[]` | Columns of the linked metadata DC drawn as the top strip, instead of spelling them out in `col_annotations` (v1.11.0+) |
+| `annotation_source_dc_tag` | str \| null | `null` | Which linked metadata DC `col_annotation_cols` reads, when the matrix has several (v1.11.0+) |
 | `col_annotation_colors` | dict[str, dict[str, str]] \| null | `null` | Per-annotation palette overrides for the column-annotation track. Shape: `{annotation_name: {category_value: hex}}`. When unset the server picks colours from a Dark2 palette (chosen to contrast with the row-track's Set2 pastels). Use to pin domain palettes (e.g. `habitat → Set1`) across PCoA + UpSet + heatmap. |
 | `cluster_rows` / `cluster_cols` | bool | `true` | Enable hierarchical clustering |
 | `cluster_method` | `ward` \| `single` \| `complete` \| `average` | `ward` | Linkage method |
@@ -745,7 +964,7 @@ Numeric matrix columns are inferred from the rest of the DC schema at compute ti
 
 **Filtering / row tagging**
 
-A sample filter is mirrored as a **column subset**, since samples are the matrix's columns. Since **v1.8.3** this uses the same value-matching rule as [UpSet](#upset): a filter whose values are column names filters that axis, whatever the filter's own column is called. Before that it fired only for a filter literally named `sample` or `sample_id`, which is not what a metadata pick or a map lasso sends, so selecting samples left every column on screen.
+Normalisation, clustering method and row / column clustering are primary controls; the annotation pickers are cosmetic. A sample filter is mirrored as a **column subset**, since samples are the matrix's columns. Since **v1.8.3** this uses the same value-matching rule as [UpSet](#upset): a filter whose values are column names filters that axis, whatever the filter's own column is called. Before that it fired only for a filter literally named `sample` or `sample_id`, which is not what a metadata pick or a map lasso sends, so selecting samples left every column on screen.
 
 
 [![Hierarchical Heatmap example](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light)](../images/guides/advanced-visualizations/complex_heatmap_light.webp){target=_blank}
@@ -754,6 +973,9 @@ A sample filter is mirrored as a **column subset**, since samples are the matrix
 ### QQ
 
 Quantile-quantile plot for p-value distributions (GWAS / DE / eQTL QC). Sorts p-values and plots `-log10(observed)` against the theoretical `-log10(expected)` under a uniform null.
+
+!!! info "A view of Volcano since v1.13.0"
+    QQ is now the `qq` view of the [Volcano](#volcano) tile, which reads `p_value_col` (or `significance_col` when that holds raw p-values). It is the question a reader asks of the same column just before or after reading the volcano, so the two share one tile, one fetch and the view switch. A `viz_kind: qq` config keeps loading and opens on the QQ view, its `p_value_col` also serving as the volcano's significance. The roles below are those of the retired kind.
 
 **Columns**
 
@@ -768,6 +990,9 @@ Quantile-quantile plot for p-value distributions (GWAS / DE / eQTL QC). Sorts p-
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `show_ci` | bool | `true` | Shade the 95% null CI band |
+| `show_identity` | bool | `true` | Draw the y = x reference line |
+| `point_size` | int (1–30) | `5` | Marker size |
+| `top_n_labels` | int (≥0) | `0` | Most significant points labelled, when `feature_id` is bound. A retired config is read as a volcano, so it labels the volcano's default of 20 unless set |
 
 **Filtering / row tagging**
 
@@ -789,7 +1014,7 @@ No canonical role-based schema — the renderer enumerates binary columns at com
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `matrix_wf_id` / `matrix_dc_id` | str | _required_ | Workflow + DC ids of the membership DC |
+| `matrix_wf_id` / `matrix_dc_id` | str \| null | `null` | Deprecated and unused: the tile reads the DC it is bound to |
 | `set_columns` | list[str] \| null | `null` | Explicit list of set columns; null = auto-detect binary |
 | `set_columns_pattern` | str \| null | `null` | Regex naming the set columns, for a table whose column names depend on the run. Cannot be combined with `set_columns` (v1.11.0+) |
 | `sort_by` | `cardinality` \| `degree` \| `degree-cardinality` \| `input` | `cardinality` | Intersection ordering |
@@ -799,10 +1024,13 @@ No canonical role-based schema — the renderer enumerates binary columns at com
 | `show_set_sizes` | bool | `true` | Show horizontal set-size bar chart |
 | `color_intersections_by` | `none` \| `set` \| `degree` | `none` | Intersection-bar colour mode |
 | `set_colors` | dict[str, str] \| null | `null` | Per-set colour overrides (set name → hex). Drives set-size bars + matrix dots + intersection bars (when `color_intersections_by="set"`). Pin domain palettes (e.g. `habitat → Set1`) so the same set lands on the same colour across tiles. |
+| `default_annotation_cols` | list[str] \| null | `null` | Columns drawn as annotation tracks under the matrix on first paint |
+| `show_annotations` | bool | `true` | Set-size bars and annotation tracks together |
+| `show_values` | bool | `false` | Print the count above each intersection bar |
 
 **Filtering / row tagging**
 
-Renderer **filters by intersection size and degree** — `min_size` drops intersections below the threshold, `max_degree` drops intersections involving more sets than the limit.
+Renderer **filters by intersection size and degree** — `min_size` drops intersections below the threshold, `max_degree` drops intersections involving more sets than the limit. Sort, order, minimum size and intersection colouring are primary controls; annotations, set-size bars and count labels are cosmetic.
 
 Since **v1.8.3** dashboard filters reach the plot as well. The grouping values are matrix *columns*, so a filter on that column has no row to match; instead a filter whose values are set names is applied as a subset over the sets, whatever the filter's own column is called, with the sets auto-detected the same way the library detects them. A filter on any other column narrows rows as usual, provided the matrix carries that column: the ampliseq matrix now carries the source DC's per-taxon attributes, so a filter on a taxonomic rank has something to bite on.
 
@@ -823,7 +1051,8 @@ No canonical role-based schema — `step_cols` is a multi-column list (≥2 orde
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `step_cols` | list[str] (≥2, unique) | _required_ | Ordered categorical columns from source to leaf |
-| `available_step_cols` | list[str] \| null | `null` | Full ordered list of columns the user can wire as steps. When set, the renderer exposes a Depth slider that picks the first N columns from this list; `step_cols` becomes the initial prefix. Leaving it null locks the diagram to `step_cols`. |
+| `available_step_cols` | list[str] \| null | `null` | Full ordered list of columns the user can wire as steps. When it holds more than two columns, the tile shows a **Depth** control that draws the first N of them; `step_cols` becomes the initial prefix. Leaving it null locks the diagram to `step_cols`. |
+| `depth` | int (≥2) \| null | `null` | How many of `available_step_cols` to draw first; null uses the length of `step_cols` |
 | `value_col` | str \| null | `null` | Optional numeric weight; null = each row counts as 1 |
 | `value_label` | str \| null | `null` | Human-readable label for `value_col` shown in hover tooltips. Defaults to `value_col` when unset (e.g. `"abundance"`). |
 | `value_format` | `raw` \| `fraction` \| `count` | `raw` | Hover display mode. `fraction` multiplies by 100 and appends `%`; `count` uses thousands separators; `raw` adapts decimal precision to magnitude. |
@@ -838,7 +1067,7 @@ No canonical role-based schema — `step_cols` is a multi-column list (≥2 orde
 
 **Filtering / row tagging**
 
-Renderer **aggregates by the `step_cols` sequence** (via Celery `compute_sankey`) and filters out links whose aggregated value is below `min_link_value`.
+Renderer **aggregates by the `step_cols` sequence** (via Celery `compute_sankey`) and filters out links whose aggregated value is below `min_link_value`. Depth, node order and link colouring are primary controls; link opacity, node labels, minimum link value and the per-step value filters are cosmetic.
 
 
 [![Sankey example](../images/guides/advanced-visualizations/sankey_light.webp#only-light)](../images/guides/advanced-visualizations/sankey_light.webp){target=_blank}
@@ -858,7 +1087,9 @@ Sample × gene mutation matrix with discrete mutation-type colours and per-gene 
 
 **Settings**
 
-No additional knobs — the layout is fully determined by the column bindings.
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `sort_by_freq` | bool | `true` | Order genes and samples by mutation count; off sorts them by name. The tile's only control, **Sort by mutation frequency**, is primary |
 
 **Filtering / row tagging**
 
@@ -868,6 +1099,597 @@ Cells are **coloured categorically by `mutation_type`** (NA cells stay blank). S
 [![Oncoplot example](../images/guides/advanced-visualizations/oncoplot_light.webp#only-light)](../images/guides/advanced-visualizations/oncoplot_light.webp){target=_blank}
 
 [![Oncoplot example](../images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark)](../images/guides/advanced-visualizations/oncoplot_dark.webp){target=_blank}
+
+### Contact map <small>(v1.13.0+)</small> { #contact-map }
+
+Binned Hi-C contact matrix, one row per pair of bins. It draws binned counts, never per-read pairs: only one triangle of the matrix needs to be in the data, and the renderer mirrors it across the diagonal. Two displays: **square**, with genomic position on both axes, and **triangle**, which rotates the matrix 45 degrees so x is genomic position on the same scale as a [Genome view](#genome-view) track stacked above it and y is the distance between the two bins. A domain then reads as a triangle and a loop as a dot at its apex.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `chrom1` | ✓ | String | Chromosome of the first bin |
+| `start1` | ✓ | Numeric | Start of the first bin |
+| `chrom2` | ✓ | String | Chromosome of the second bin |
+| `start2` | ✓ | Numeric | Start of the second bin |
+| `count` | ✓ | Numeric | Contact count or interaction score |
+| `end1` / `end2` | — | Numeric | Bin ends |
+| `sample` | — | String | Sample a row belongs to; the tile has no sample picker, so narrow a multi-sample collection with a dashboard filter |
+| `resolution` | — | Numeric | Bin size each row was counted at, for a collection holding several resolutions |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `chrom` | str \| null | `null` | Chromosome to draw (intra-chromosomal view); null picks the first one seen |
+| `display` | `square` \| `triangle` \| null | `null` | Unset draws a triangle when a region filter reaches the tile and a square otherwise |
+| `max_separation_bins` | int (0–5000) | `0` | Triangle only: bins of separation drawn before the apex is cut off, since the far corner flattens the colour scale. 0 keeps every separation |
+| `log_scale` | bool | `true` | Log-transform counts before colouring |
+| `colour_scale` | `Viridis` \| `Plasma` \| `Inferno` \| `Magma` \| `Cividis` \| `RdBu` \| `Spectral` | `Viridis` | Continuous colour scale |
+| `balance` | bool | `false` | Single-pass row and column coverage normalisation before display (not iterative ICE) |
+| `max_bins` | int (10–5000) | `500` | Guard on the matrix side length; a whole chromosome above it is coarsened by merging adjacent bins |
+
+**Filtering / row tagging**
+
+With no region in force the tile reads the whole chromosome; when the collection carries a `resolution` column it draws the coarsest level. Once a region reaches the tile (a brush or locus field on a genome view, through a project region link when the two collections differ) or the reader zooms, the window is read by a background job from the resolution that best fits the visible span. Zooming in further re-reads a finer level; panning inside the loaded window does not. A collection with a single resolution behaves the same way without any extra configuration.
+
+Chromosome, display and resolution are primary controls; colour scale, log scale, balancing and the separation cut-off are cosmetic.
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-contacts
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: hic_pixels
+      viz_kind: contact_map
+      config:
+        viz_kind: contact_map
+        chrom1_col: chrom
+        start1_col: start
+        end1_col: end
+        chrom2_col: chrom2
+        start2_col: start2
+        end2_col: end2
+        count_col: count
+        resolution_col: resolution
+        display: triangle
+    ```
+
+[![Contact map example](../images/guides/advanced-visualizations/contact_map_light.webp#only-light)](../images/guides/advanced-visualizations/contact_map_light.webp){target=_blank}
+
+[![Contact map example](../images/guides/advanced-visualizations/contact_map_dark.webp#only-dark)](../images/guides/advanced-visualizations/contact_map_dark.webp){target=_blank}
+
+### Knee plot <small>(v1.13.0+)</small> { #knee-plot }
+
+Barcode-rank curve for single-cell libraries: UMI count against barcode rank, one line per sample, usually log-log. The called cells form a plateau, then the curve drops into the empty-droplet background; a reference line marks the cell-calling cutoff.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `sample` | ✓ | String | Library or sample, one curve each |
+| `rank` | ✓ | Numeric | Barcode rank, ascending from 1 |
+| `umi_count` | ✓ | Numeric | UMI count at that rank |
+| `is_cell` | — | Boolean | Marks called cells; the cutoff is read from where it switches off |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `log_x` | bool | `true` | Log-scale the rank axis |
+| `log_y` | bool | `true` | Log-scale the UMI-count axis |
+| `show_cutoff` | bool | `true` | Draw the cell-calling threshold as a reference line |
+
+**Filtering / row tagging**
+
+When `is_cell` is not bound, the cutoff is estimated from the curve's inflection. A barcode table can run into millions of rows, so the server thins it with a log-rank reduction: dense near rank 1, where the cells give way to the background, sparse across the flat tail.
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-knee
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: barcode_ranks
+      viz_kind: knee_plot
+      config:
+        viz_kind: knee_plot
+        sample_col: sample
+        rank_col: rank
+        umi_count_col: umi_count
+        is_cell_col: is_cell
+    ```
+
+[![Knee plot example](../images/guides/advanced-visualizations/knee_plot_light.webp#only-light)](../images/guides/advanced-visualizations/knee_plot_light.webp){target=_blank}
+
+[![Knee plot example](../images/guides/advanced-visualizations/knee_plot_dark.webp#only-dark)](../images/guides/advanced-visualizations/knee_plot_dark.webp){target=_blank}
+
+### Damage profile <small>(v1.13.0+)</small> { #damage-profile }
+
+Ancient-DNA misincorporation profile: substitution frequency by distance from the read end, one panel for the 5' end and one for the 3' end. C>T rising at the 5' end and G>A at the 3' end is the deamination signature that authenticates ancient DNA; those two substitutions are highlighted and every other one is drawn muted.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `sample` | ✓ | String | Sample or library |
+| `end` | ✓ | String | Read end the position is measured from: `5p` or `3p` |
+| `position` | ✓ | Numeric | Distance from the read end |
+| `base_change` | ✓ | String | Substitution, e.g. `C>T`, `G>A`, `other` |
+| `frequency` | ✓ | Numeric | Substitution frequency at that position |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `ends` | `both` \| `5p` \| `3p` | `both` | Read ends drawn, one panel each |
+| `max_position` | int (1–200) | `25` | Furthest distance from the read end displayed |
+| `highlight` | list[str] | `["C>T", "G>A"]` | Substitutions drawn in the deamination colours |
+| `facet_by` | `none` \| `length_bin` | `none` | `length_bin` draws one lane per read-length bin, since short reads should carry more damage than long ones |
+| `length_bin_col` | str | `length_bin` | Column holding the read-length bin when `facet_by` is `length_bin` |
+| `max_facets` | int (1–20) | `6` | Length-bin lanes drawn before truncating |
+
+**Filtering / row tagging**
+
+The table is already aggregated and is read whole, without sampling. Dashboard filters (a sample picker, typically) narrow the rows before they are drawn.
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-damage
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: misincorporation
+      viz_kind: damage_profile
+      config:
+        viz_kind: damage_profile
+        sample_col: sample
+        end_col: end
+        position_col: position
+        base_change_col: base_change
+        frequency_col: frequency
+    ```
+
+[![Damage profile example](../images/guides/advanced-visualizations/damage_profile_light.webp#only-light)](../images/guides/advanced-visualizations/damage_profile_light.webp){target=_blank}
+
+[![Damage profile example](../images/guides/advanced-visualizations/damage_profile_dark.webp#only-dark)](../images/guides/advanced-visualizations/damage_profile_dark.webp){target=_blank}
+
+### Genome view <small>(v1.13.0+)</small> { #genome-view }
+
+A genomic track drawn by [:material-open-in-new: GenomeSpy](https://genomespy.app/){ target="_blank" } on a chromosome-aware axis: chromosomes are concatenated, the reader scrolls to zoom and drags to pan, and the marks are GenomeSpy's own. It binds the same `chr` / `pos` / `score` roles as [Manhattan](#manhattan), so any collection a Manhattan reads renders here unchanged; the optional roles turn the same rows into intervals, per-sample lanes and a coloured profile.
+
+A tile binds one data collection, so a multi-track browser is several genome view tiles stacked in one section, sharing the region filter described below.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `chr` | ✓ | String | Chromosome or contig |
+| `pos` | ✓ | Int | Genomic start position |
+| `score` | ✓ | Float | Y-axis value |
+| `feature` | — | String | Names the row (SNP, peak, gene) in the hover |
+| `end` | — | Int | Interval end: each row becomes a rectangle from `pos` to `end` |
+| `sample` | — | String | Sample a row belongs to, for per-sample lanes |
+| `category` | — | String | Per-row annotation used as the colour channel instead of the chromosome |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `mark` | `point` \| `rect` \| `bar` | `point` | `rect` draws one rectangle per interval; `bar` draws the score as a bar from a baseline, which is the coverage-profile look. Without `end_col` both fall back to points |
+| `facet_by_sample` | bool | `false` | Stack one lane per sample on the shared genome axis. Needs `sample_col` |
+| `max_facets` | int (1–40) | `8` | Lanes drawn before the rest are dropped, with a note saying how many |
+| `annotation` | `none` \| `hg38` \| `mm10` | `none` | Bundled protein-coding gene lane drawn under the track. `GRCh38` and `GRCm38` are accepted as aliases; any other value draws no lane |
+| `assembly` | str \| null | `null` | GenomeSpy built-in assembly (`hg38`, `hg19`, `hg18`, `mm10`, `mm9`, `dm6`). Null derives contigs and sizes from the data, which suits a viral or draft reference |
+| `score_title` | str | `score` | Y-axis label |
+| `score_threshold` | float \| null | `null` | Horizontal reference rule |
+| `point_size` / `opacity` | int / float | `5` / `0.85` | Mark size and opacity |
+| `region_filter_enabled` | bool | `true` | Let a brush on the genome axis, or the tile's locus field, publish the region as a dashboard filter. Off, the locus field is disabled |
+| `follow_region_filter` | bool | `false` | Zoom to an incoming region instead of showing the whole genome |
+| `default_region` | str \| null | `null` | Region the tile opens on, e.g. `chr1:10,000,000-12,000,000`, `chr1:10Mb-12Mb`, a single coordinate (a 10 kb window around it) or a bare contig name. Emitted once per session and only when no region is in force. Needs `region_filter_enabled` |
+| `selection_enabled` / `selection_column` | bool / str \| null | `false` / `null` | A click on a mark emits that column's value as a selection filter, as on [Manhattan](#manhattan) |
+| `source` | `table` \| `file` | `table` | `file` hands GenomeSpy an indexed file (VCF, BAM, bigWig, GFF3, bgzip and tabix intervals) that the browser range-loads itself, for tracks too dense to materialise as a table. The `file_*` options tune that mode (VCF INFO fields, lane count, fetch window, BAM coverage or pileup) |
+
+**Filtering / row tagging**
+
+The tile's primary controls are a chromosome picker and a **Locus or gene** field: type a region such as `chr7:55,000,000-56,000,000`, or a gene symbol when a gene table is available for the track's assembly (hg38 or mm10). Typing a locus, brushing the axis and picking a chromosome in the left panel are the same act: each publishes the region as two ordinary filters on the tile's own collection, a chromosome multi-select and a position range. Every tile bound to the same columns, directly or through a project link, is narrowed by them. Genomic kinds that know their coordinate columns go further and follow the region: a genome view with `follow_region_filter` zooms to it, a [Coverage track](#coverage-track) clamps its axis, a [Contact map](#contact-map) reads the window (as a triangle unless `display` is pinned), a [Transcript structure](#transcript-structure) changes gene. A tile never narrows itself by its own brush.
+
+??? example "A navigator and a per-sample track that follows it"
+    ```yaml
+    - tag: viz-navigator
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: peaks
+      viz_kind: genome_view
+      config:
+        viz_kind: genome_view
+        controls_placement: header
+        chr_col: chrom
+        pos_col: start
+        end_col: end
+        score_col: score
+        category_col: peak_class
+        mark: bar
+        assembly: hg38
+        default_region: "chr8:127,400,000-128,100,000"
+        region_filter_enabled: true
+
+    - tag: viz-depth
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: depth_bins
+      viz_kind: genome_view
+      config:
+        viz_kind: genome_view
+        chr_col: chrom
+        pos_col: start
+        end_col: end
+        score_col: depth
+        sample_col: sample
+        mark: bar
+        facet_by_sample: true
+        annotation: hg38
+        assembly: hg38
+        region_filter_enabled: false
+        follow_region_filter: true
+    ```
+
+[![Genome view example](../images/guides/advanced-visualizations/genome_view_light.webp#only-light)](../images/guides/advanced-visualizations/genome_view_light.webp){target=_blank}
+
+[![Genome view example](../images/guides/advanced-visualizations/genome_view_dark.webp#only-dark)](../images/guides/advanced-visualizations/genome_view_dark.webp){target=_blank}
+
+### Group compare <small>(v1.13.0+)</small> { #group-compare }
+
+Two groups of rows compared feature by feature, on demand. The rows are observations (cells, samples) named by `index`, and the features are every other numeric column, as in the [Hierarchical Heatmap](#hierarchical-heatmap). The two groups are not columns of the data: they are picked in the tile's **Group A** and **Group B** pickers, either from the dashboard's [selection groups](interactive-selection-filtering.md#selection-groups) (a lasso on an embedding, ticked table rows, saved from the Analysis panel) or from the values of `group_col`. The result is drawn as a volcano with the ranked features in a table underneath.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `index` | ✓ | String | Names each observation (cell, sample) |
+| `group` | — | String | Precomputed group label (cluster, condition) offered as a group source |
+
+The feature columns are inferred from the rest of the collection's numeric columns.
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `test` | `wilcoxon` \| `t_test` | `wilcoxon` | Per-feature test: Wilcoxon rank-sum, or Welch's t-test |
+| `log_transform` | bool | `true` | `log1p` the values before testing. No effect on the rank-based Wilcoxon test; it is what makes the t-test usable on raw counts |
+| `max_features` | int (10–20000) | `2000` | Guard on the number of features tested |
+| `min_observations` | int (≥2) | `3` | Smallest group the test accepts |
+| `fdr_threshold` | float (0–1) | `0.05` | Significance line on the volcano |
+| `log2fc_threshold` | float (≥0) | `1.0` | Effect-size lines on the volcano |
+| `top_n_labels` | int (0–200) | `20` | Features labelled on the volcano |
+| `default_group_a` / `default_group_b` | str \| null | `null` | Pair the tile opens on: a saved group name or a value of `group_col`. Must differ; unknown names fall back to the first two groups offered |
+| `auto_run` | bool | `false` | Run as soon as two groups are picked, instead of waiting for **Compare** |
+
+**Filtering / row tagging**
+
+The test runs as a background job over the rows the dashboard's filters leave, and p-values are adjusted with Benjamini-Hochberg. Fold changes read as A relative to B: a positive `log2fc` means higher in group A. A feature with no spread in either group scores p = 1 rather than being dropped. The server caches each result, so reopening the tab reuses it. Changing the test or the transform asks for a new job; the two thresholds and the label count only change how the finished result is read and apply at once. The table shows the top of the ranking; the full result (means per group, log2 fold change, p-value, FDR) is in the tile's data view.
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-markers
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: cell_by_gene
+      viz_kind: group_compare
+      config:
+        viz_kind: group_compare
+        index_col: cell_id
+        group_col: cluster
+        test: wilcoxon
+        default_group_a: cluster_1
+        default_group_b: cluster_2
+        auto_run: true
+    ```
+
+[![Group compare example](../images/guides/advanced-visualizations/group_compare_light.webp#only-light)](../images/guides/advanced-visualizations/group_compare_light.webp){target=_blank}
+
+[![Group compare example](../images/guides/advanced-visualizations/group_compare_dark.webp#only-dark)](../images/guides/advanced-visualizations/group_compare_dark.webp){target=_blank}
+
+### Transcript structure <small>(v1.13.0+)</small> { #transcript-structure }
+
+The isoforms of one gene on a base-pair axis, one lane per transcript: exons are blocks, the coding part is drawn taller, introns are the line between blocks and their chevrons give the strand. One gene at a time is the design; a view of every locus at once is the job of [Genome view](#genome-view).
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `transcript_id` | ✓ | String | Isoform identifier |
+| `gene_id` | ✓ | String | Gene the isoform belongs to |
+| `chrom` | ✓ | String | Chromosome or contig of the block |
+| `start` | ✓ | Numeric | Block start (bp) |
+| `end` | ✓ | Numeric | Block end (bp) |
+| `feature` | ✓ | String | Block type: exon, CDS, UTR |
+| `strand` | ✓ | String | `+` or `-` |
+| `sample` | — | String | Picks one sample |
+| `gene_name` | — | String | Readable gene symbol |
+| `transcript_class` | — | String | Novelty or class label (known, novel, NIC, NNC) |
+| `expression` | — | Numeric | Per-transcript expression, for lane order or colour |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `gene` | str \| null | `null` | Gene to draw; null picks the gene with the most transcripts. Changeable from the gene picker |
+| `max_transcripts` | int (1–200) | `30` | Lanes drawn per gene |
+| `exon_feature` | str | `exon` | `feature` value drawn as a block |
+| `cds_feature` | str | `CDS` | `feature` value drawn as a taller block |
+| `colour_by` | `transcript_class` \| `expression` \| `none` | `transcript_class` | What the lane colour encodes |
+| `colour_scale` | `Viridis` \| `Plasma` \| `Inferno` \| `Magma` \| `Cividis` \| `RdBu` \| `Spectral` | `Viridis` | Continuous colour scale for `expression` |
+
+**Filtering / row tagging**
+
+Dashboard filters narrow the rows as usual. A genomic region published by a genome view or a chromosome filter moves the tile to a gene in that region. The tile emits no selection of its own.
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-isoforms
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: transcript_blocks
+      viz_kind: transcript_structure
+      config:
+        viz_kind: transcript_structure
+        transcript_id_col: transcript_id
+        gene_id_col: gene_id
+        chrom_col: chrom
+        start_col: start
+        end_col: end
+        feature_col: feature
+        strand_col: strand
+        gene_name_col: gene_name
+        transcript_class_col: transcript_class
+    ```
+
+[![Transcript structure example](../images/guides/advanced-visualizations/transcript_structure_light.webp#only-light)](../images/guides/advanced-visualizations/transcript_structure_light.webp){target=_blank}
+
+[![Transcript structure example](../images/guides/advanced-visualizations/transcript_structure_dark.webp#only-dark)](../images/guides/advanced-visualizations/transcript_structure_dark.webp){target=_blank}
+
+### Copy-number profile <small>(v1.13.0+)</small> { #cnv-profile }
+
+Copy-number profile: the log2 ratio of every bin along the genome, the called segments laid over it as thick strokes coloured gain, neutral or loss, and the B-allele frequency underneath when the collection carries one. Chromosomes are laid end to end as on [Manhattan](#manhattan), so picking a chromosome zooms onto it.
+
+A second view, `locus`, redraws the profile with GenomeSpy in the allele-specific layout: major and minor copy number per segment, the log2 ratio, and a mirrored BAF track, zoomable and with an optional gene lane. That is where a copy-neutral loss of heterozygosity shows, flat in log2 but split in BAF.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `sample` | ✓ | String | Sample |
+| `chrom` | ✓ | String | Chromosome of the bin or segment |
+| `start` | ✓ | Numeric | Start (bp) |
+| `end` | ✓ | Numeric | End (bp) |
+| `log2` | ✓ | Numeric | Log2 copy ratio |
+| `baf` | — | Float | B-allele frequency, drawn underneath |
+| `copy_number` | — | Numeric | Integer (or major-allele) copy number, colours the segments |
+| `segment` | — | String | Row type: rows whose value is `segment` are drawn as segments, the rest as bins |
+| `label` | — | String | Hover label (gene, cytoband) |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `sample` | str \| null | `null` | Sample to draw; null picks the first seen |
+| `chrom` | str \| null | `null` | Chromosome to zoom on; null draws the whole genome |
+| `y_range` | float (0–10) | `3.0` | Symmetric log2 axis limit |
+| `show_baf` | bool | `true` | Draw the BAF panel when `baf_col` is bound |
+| `point_size` | int (1–12) | `3` | Bin marker size |
+| `gain_threshold` / `loss_threshold` | float | `0.3` / `-0.3` | Log2 above or below which a segment reads as a gain or a loss |
+| `max_bins` | int (100–500000) | `50000` | Guard on the number of bin rows requested |
+| `view` | `plotly` \| `locus` | `plotly` | View the tile opens on |
+| `views` | list \| null | `null` | Views offered in the view switch; null offers both |
+| `minor_copy_number_col` | str \| null | `null` | Minor-allele copy number. With `copy_number_col` bound, the locus view draws major and minor copy number as two rules per segment |
+| `annotation` | `none` \| `hg38` \| `mm10` | `none` | Locus view: bundled gene lane, labelled on zoom |
+| `facet_by_sample` | bool | `false` | Locus view: one set of tracks per sample instead of the selected sample only |
+
+**Filtering / row tagging**
+
+The tile follows a region published elsewhere on the dashboard, like the other genomic kinds. In the locus view a brush on the genome axis publishes a region in turn, as a chromosome and position filter pair (see [Genome view](#genome-view)).
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-cnv
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: cnv_bins_segments
+      viz_kind: cnv_profile
+      config:
+        viz_kind: cnv_profile
+        sample_col: sample
+        chrom_col: chrom
+        start_col: start
+        end_col: end
+        log2_col: log2
+        baf_col: baf
+        copy_number_col: copy_number
+        minor_copy_number_col: minor_copy_number
+        segment_col: segment
+        view: locus
+        views: [plotly, locus]
+        annotation: hg38
+    ```
+
+[![Copy-number profile example](../images/guides/advanced-visualizations/cnv_profile_light.webp#only-light)](../images/guides/advanced-visualizations/cnv_profile_light.webp){target=_blank}
+
+[![Copy-number profile example](../images/guides/advanced-visualizations/cnv_profile_dark.webp#only-dark)](../images/guides/advanced-visualizations/cnv_profile_dark.webp){target=_blank}
+
+### Genome chord <small>(v1.13.0+)</small> { #genome-chord }
+
+Chromosomes on a ring, one chord per link between two loci: gene fusions, structural-variant breakends, translocations. Chord width follows the link weight and colour its class, so translocations cross the ring while local events stay near the rim.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `chrom_a` | ✓ | String | Chromosome of the first locus |
+| `pos_a` | ✓ | Numeric | Position of the first locus (bp) |
+| `chrom_b` | ✓ | String | Chromosome of the second locus |
+| `pos_b` | ✓ | Numeric | Position of the second locus (bp) |
+| `label` | — | String | Link label (fusion name, SV id) |
+| `weight` | — | Numeric | Link weight (supporting reads), drives chord width |
+| `category` | — | String | Link class (fusion type, SV type), drives chord colour |
+| `sample` | — | String | Sample a link belongs to, shown in the hover; name it as `selection_column` to select by sample |
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `assembly` | str \| null | `null` | Chromosome sizes for the ring (`hg38`, `hg19`, `mm10`); null derives them from the data |
+| `max_links` | int (1–5000) | `500` | Guard on the number of chords drawn |
+| `min_weight` | float \| null | `null` | Drop links lighter than this |
+| `colour_by` | `category` \| `chrom_a` \| `none` | `category` | What the chord colour encodes |
+| `show_labels` | bool | `true` | Label the chromosome arcs |
+| `intra_chromosomal` | bool | `true` | Draw links whose two loci share a chromosome |
+| `selection_enabled` | bool | `false` | Let a click on a chord emit a dashboard filter |
+| `selection_column` | str \| null | `null` | Column the emitted values belong to. Null uses `label_col`; name the sample column instead to select every link of the picked chords' samples |
+
+**Filtering / row tagging**
+
+Hovering a chord shows its two loci. With `selection_enabled`, a click emits the chord's value of `selection_column` (or `label_col`) as a selection filter that the rest of the dashboard follows and the [Analysis panel](interactive-selection-filtering.md#analysis-panel) can save as a group; a click on the background clears it. With neither column bound the chords stay inert.
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-rearrangements
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: sv_links
+      viz_kind: genome_chord
+      config:
+        viz_kind: genome_chord
+        chrom_a_col: chrom_a
+        pos_a_col: pos_a
+        chrom_b_col: chrom_b
+        pos_b_col: pos_b
+        label_col: event_id
+        weight_col: support
+        category_col: sv_type
+        assembly: hg38
+        selection_enabled: true
+    ```
+
+[![Genome chord example](../images/guides/advanced-visualizations/genome_chord_light.webp#only-light)](../images/guides/advanced-visualizations/genome_chord_light.webp){target=_blank}
+
+[![Genome chord example](../images/guides/advanced-visualizations/genome_chord_dark.webp#only-dark)](../images/guides/advanced-visualizations/genome_chord_dark.webp){target=_blank}
+
+### Parallel coordinates <small>(v1.13.0+)</small> { #parallel-coordinates }
+
+One polyline per sample across N metric axes: the many-metric view a scatter cannot give, where a QC table with a dozen columns is read as a whole. A sample that is not the worst on any single axis but bends the same way as the failing ones across several shows up here.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `sample` | ✓ | String | Names each polyline (sample, library, run) |
+| `group` | — | String | Categorical column driving the line colour |
+
+The axes are the numeric columns of the collection, or the list in `metric_cols`.
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `metric_cols` | list[str] \| null | `null` | Axes, in order. Null takes every numeric column, capped at `max_axes` |
+| `scale` | `raw` \| `zscore` \| `minmax` | `minmax` | Axis scaling. `minmax` and `zscore` make metrics in different units comparable; `raw` keeps the published values |
+| `max_rows` | int (≥1) | `2000` | Lines drawn; the server hands over the first `max_rows` |
+| `max_axes` | int (2–30) | `12` | Cap on the inferred axis count when `metric_cols` is null |
+| `colour_scale` | `Viridis` \| `Plasma` \| `Inferno` \| `Magma` \| `Cividis` \| `RdBu` \| `Spectral` | `Viridis` | Colour scale when the colour column is numeric |
+| `line_opacity` | float (0.05–1) | `0.6` | Line transparency |
+
+**Filtering / row tagging**
+
+Dragging along an axis brushes a range on it. Once the brush settles, it becomes a dashboard filter: a range filter on that column, the same one the left panel's range slider emits, one per brushed axis. Every tile bound to the column narrows to it, the tile itself keeps drawing every line so the brush can be moved, and **Reset brushes** clears it. A brushed range is not offered as a selection group.
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-qc-profile
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: qc_metrics
+      viz_kind: parallel_coordinates
+      config:
+        viz_kind: parallel_coordinates
+        sample_col: sample
+        group_col: group
+        scale: minmax
+        metric_cols: [total_reads, percent_duplicates, percent_gc, percent_aligned]
+    ```
+
+[![Parallel coordinates example](../images/guides/advanced-visualizations/parallel_coordinates_light.webp#only-light)](../images/guides/advanced-visualizations/parallel_coordinates_light.webp){target=_blank}
+
+[![Parallel coordinates example](../images/guides/advanced-visualizations/parallel_coordinates_dark.webp#only-dark)](../images/guides/advanced-visualizations/parallel_coordinates_dark.webp){target=_blank}
+
+### Record card <small>(v1.13.0+)</small> { #record-card }
+
+One record of a collection, read as labelled fields and links rather than as a mark: the detail half of a master/detail dashboard. A scatter, a table or a genome view emits a selection, and the card shows the row behind the pick. Run identifiers, QC verdicts and links out to a report are text, and a chart of one row is a worse way to read them. The card shows one record at a time: when a selection holds several, a searchable picker above the card lists them and opens on the one picked last.
+
+**Columns**
+
+| Role | Required | Type | Description |
+|------|:--------:|------|-------------|
+| `id` | ✓ | String | Identifies the record; matched against the incoming selection |
+| `title` | — | String | Card heading; defaults to the id value |
+
+Every other column of the collection is a field the card can show.
+
+**Settings**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `sections` | dict[str, list[str]] \| null | `null` | Section title to the columns it holds, in order. Null groups the columns by the collection's own `columns_description` groups |
+| `labels` | dict[str, str] \| null | `null` | Display label per column; unlisted columns fall back to a short column description, then the column name |
+| `link_templates` | dict[str, str] \| null | `null` | Column to a URL template containing `{value}`; the column then renders as a link |
+| `linked_component` | str \| null | `null` | Tag of the component whose selection drives the card. The card then follows that tile only, and when it sits directly beside it, on the same row of the same section, it is laid out as that tile's collapsible side panel |
+| `selection_source` | `scatter_selection` \| `table_selection` \| `any` | `any` | Which kind of selection the card follows when `linked_component` is not set |
+| `default_record` | str \| null | `null` | Id value shown when nothing is selected; a real selection always wins, and clearing it brings this record back |
+| `max_fields` | int (≥1) | `40` | Fields rendered before the card truncates and says so |
+
+**Filtering / row tagging**
+
+With no selection reaching it and no `default_record`, the card shows an empty state asking for a selection in a linked tile, never the first row of the collection: a card that silently showed row 0 would read as a pick. A `default_record` is labelled as the default so it never passes for one either. A pick on the card's own collection is matched directly; a pick on another collection is followed through the project's links.
+
+The card emits no filter of its own: a detail panel that narrowed the dashboard would narrow the tile the reader picks from.
+
+As a side panel, the card folds away while nothing is picked: its source takes the whole width the pair covered, and a slim rail on the source's edge stands in for the card. A pick unfolds it, and the rail's chevron folds or unfolds it by hand. This is a layout derived at view time; the stored dashboard keeps the author's geometry.
+
+??? example "A scatter with its record card as a side panel"
+    ```yaml
+    - tag: viz-gene-scatter
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: gene_summary
+      viz_kind: scatter_xy
+      config:
+        viz_kind: scatter_xy
+        x_col: mean_expression
+        y_col: effect_size
+        label_col: gene_symbol
+        selection_enabled: true
+        selection_column: feature_id
+      layout: { x: 0, y: 0, w: 5, h: 9 }
+
+    - tag: viz-gene-record
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: gene_summary
+      viz_kind: record_card
+      config:
+        viz_kind: record_card
+        id_col: feature_id
+        title_col: gene_symbol
+        linked_component: viz-gene-scatter
+        sections:
+          Identity: [gene_symbol, biotype]
+          Location: [chromosome, start, end, strand]
+        link_templates:
+          ensembl_id: "https://www.ensembl.org/id/{value}"
+      layout: { x: 5, y: 0, w: 3, h: 9 }
+    ```
+
+[![Record card example](../images/guides/advanced-visualizations/record_card_light.webp#only-light)](../images/guides/advanced-visualizations/record_card_light.webp){target=_blank}
+
+[![Record card example](../images/guides/advanced-visualizations/record_card_dark.webp#only-dark)](../images/guides/advanced-visualizations/record_card_dark.webp){target=_blank}
 
 ---
 
@@ -966,6 +1788,13 @@ is the layout that shows the shape.
 | `composition` <small>(v1.4.0+)</small> | One 100%-wide bar split into top-N segments plus a muted *Other*, captioned with Pielou evenness | `breakdown_col`, `top_n_count` (1–5) |
 | `donut` <small>(v1.4.0+)</small> | Same breakdown drawn as a ring | `breakdown_col`, `top_n_count` (1–5) |
 
+What each group's bar measures follows the card's own `aggregation` <small>(v1.13.0+)</small>.
+A `count` or `sum` card splits its total, so each group shows its share of it. A card whose
+hero is a `max`, `min`, `average`, `median`, `range`, `variance` or `std_dev` ranks the groups
+by that same aggregation in the column's unit, the highest first (the lowest first under
+`min`), with no percentages: a group's maximum is not a share of anything. Before v1.13.0
+those cards counted rows per group.
+
 **Progress toward a maximum**
 
 | `secondary_layout` | Renders | Companion fields required |
@@ -984,7 +1813,7 @@ is the layout that shows the shape.
 | `coverage_max` | float \| null | `null` | Denominator for `coverage` and `gauge`. Falls back to `vertical` if missing. |
 | `threshold_value` | float \| null | `null` | QC cut-off for `threshold`. Without it the strip is not drawn. |
 | `threshold_direction` | `min` \| `max` | `min` | Which side passes. `min` is at-least (coverage, %Q30), `max` is at-most (duplication, contamination). Explicit, because inferring it would silently invert a QC verdict. |
-| `threshold_warn` | float \| null | `null` | Softer cut-off between pass and fail. Ignored unless it lies on the failing side of `threshold_value`. |
+| `threshold_warn` | float \| null | `null` | Softer cut-off between pass and fail. It must lie on the failing side of `threshold_value` (below it under `min`, above it under `max`) and needs `threshold_value`. Since v1.13.0 a warn value on the passing side fails validation; earlier versions dropped it without a word. |
 | `trend_col` | str \| null | `null` | Ordered column the `trend` sparkline is bucketed along — a date, a timestamp, or any sortable number. The card's own column is what is aggregated inside each bucket. |
 | `attrition_cols` | list[str] | `[]` | Ordered stage columns for `attrition`, following the card's own column as the first stage. The order is the pipeline's order and is the content of the chart, so stages are never sorted by value. |
 
@@ -1159,6 +1988,7 @@ Interactive components let users filter data across the dashboard. These compone
 | Component | Input Type | Best For |
 |-----------|------------|----------|
 | :material-ray-start-end: **RangeSlider** | Numeric range | Coverage: 0-100x |
+| :material-ray-vertex: **Slider** | Numeric threshold | Minimum depth: 10x |
 | :material-format-list-checks: **MultiSelect** | Multiple choices | Sample types |
 | :material-calendar: **DatePicker** | Date range | Run dates |
 | :material-toggle-switch: **SegmentedControl** | Single choice | Condition A/B |
@@ -1173,7 +2003,15 @@ Filter data by numeric range:
 | Column | Numeric column to filter |
 | Min/Max | Range bounds |
 | Step | Increment value |
-| Default | Initial range values |
+| Default | Initial range values (`default_range` in YAML) |
+| Histogram <small>(v1.13.0+)</small> | `show_histogram: true` draws the column's distribution above the track |
+
+### Slider
+
+Filter by a single numeric value. Since v1.13.0 a slider is a threshold: it keeps the rows
+at or above its value. `slider_mode` changes the comparison (`gt`, `lte`, `lt`, `eq`, `ne`);
+`eq` restores the exact-match filter earlier versions applied. See
+[Initial values and slider options](yaml-sync.md#interactive-defaults).
 
 ### MultiSelect
 
@@ -1350,25 +2188,30 @@ If your images are already uploaded to S3/MinIO, specify the location in your pr
 s3_base_folder: "s3://bucket-name/images/"
 ```
 
-**Option 2: Upload local images with depictio-cli (Recommended)**
+**Option 2: Upload local images with the CLI (Recommended)**
 
-Use the `depictio-cli run` command to automatically upload images from a local directory to S3:
+Use the `depictio ingest` command to upload images from a local directory to S3 as part of the ingestion:
 
 ```yaml
 # In project.yaml - dc_specific_properties
-local_images_path: ./images  # Local path relative to project directory
+s3_base_folder: "s3://bucket-name/project/images/"  # Where the images go
+local_images_path: ./images  # Local directory, relative to where you run the CLI
 ```
 
 ```bash
-# Run depictio-cli to sync project and upload images
-depictio-cli run --project-dir /path/to/project
+# Sync the project, process its data and upload the images
+depictio ingest --project-config-path /path/to/project.yaml
 ```
 
 The CLI will:
 
 1. Read the `local_images_path` from your project configuration
-2. Upload images to the configured S3 bucket
-3. Set the correct `s3_base_folder` automatically
+2. Upload the images to `s3_base_folder`, skipping those already there
+3. Check that every image the table references is in storage
+
+`s3_base_folder` is required with `local_images_path`, and must be in the bucket
+the server uses. To upload a directory by hand, use
+`depictio data push-images <directory> <s3_base_folder>` (formerly `images push`).
 
 !!! tip "Cross-DC Filtering"
     Image components support filtering via interactive components on the same Data Collection. Select samples using a MultiSelect filter, and the image gallery updates automatically.

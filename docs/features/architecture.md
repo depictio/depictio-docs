@@ -28,7 +28,7 @@ Depictio's architecture consists of six main components organized by category:
 | Component | Technology | Purpose |
 |-----------|------------|---------|
 | :material-database-outline: **Database** | MongoDB | Metadata, users, configurations |
-| :material-cloud-upload: **Storage** | MinIO/S3 | Data files, Delta Lake tables |
+| :material-cloud-upload: **Storage** | S3 (SeaweedFS when bundled) | Data files, Delta Lake tables |
 
 ### :material-server-network: Infrastructure
 
@@ -59,13 +59,17 @@ MongoDB serves as the primary database, storing:
 - :material-view-dashboard-edit: Dashboard layouts, structure, and content
 - :material-table-of-contents: Data collection metadata
 
-### :material-cloud-upload: MinIO S3 Storage (Optional)
+### :material-cloud-upload: S3 Storage
 
-MinIO provides S3-compatible object storage for:
+S3-compatible object storage holds:
 
 - :material-delta: Processed data ready for visualization (Delta Lake format)
 - :material-dna: Genome-browser compatible data
 - :material-file-multiple: Large file assets
+
+Docker Compose and the Helm chart bundle [SeaweedFS](https://github.com/seaweedfs/seaweedfs)
+as the store since v1.12.0 (MinIO before). Any S3 endpoint can replace it: see
+[External S3](../installation/docker.md#external-s3).
 
 ### :material-memory: Redis Cache/Broker
 
@@ -193,7 +197,7 @@ See the [Real-time events guide](../usage/guides/realtime-events.md) for setup, 
                        │                                      │
                        ▼                                      │
                 ┌─────────────┐                               │
-                │   MinIO     │◀──────────────────────────────┘
+                │   S3        │◀──────────────────────────────┘
                 │  (Delta)    │
                 └─────────────┘
 ```

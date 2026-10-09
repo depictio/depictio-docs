@@ -72,7 +72,7 @@ Celery worker and broker health: status, worker count, active tasks, live-update
 
 ## CLI ingestion identity
 
-Set `instance_label` in the CLI YAML; each request then sends `X-Depictio-CLI-Instance` and `X-Depictio-CLI-Host`, and `depictio-cli run` records an ingestion run automatically, so multiple CLIs against one server stay distinguishable. Recording is best-effort and never blocks ingestion.
+Set `instance_label` in the CLI YAML; each request then sends `X-Depictio-CLI-Instance` and `X-Depictio-CLI-Host`, and `depictio ingest` records an ingestion run automatically, so multiple CLIs against one server stay distinguishable. Recording is best-effort and never blocks ingestion.
 
 !!! warning "What leaves the machine"
     Sensitive option values such as `--provisioning-key` are redacted to `***` before the run is reported, but the rest of the invocation and the local paths listed above (CLI and project config, data root, scanned directories) **are visible to server admins** whenever monitoring is enabled.
