@@ -1899,6 +1899,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Example: Indexed-file DCs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indexed-file-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage the browser can read (v1.13.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -5934,6 +5951,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Example: Indexed-file DCs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indexed-file-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage the browser can read (v1.13.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -6851,6 +6885,25 @@ the whole ingestion.</p>
 figures and tables read rows, and an <code>indexed_file</code> DC has none. Its consumer is a genome
 track reading files directly: a <a href="../../../features/components/#genome-view">Genome view</a>
 tile with <code>source: file</code>.</p>
+<h5 id="indexed-file-storage">Storage the browser can read <small>(v1.13.0+)</small><a class="headerlink" href="#indexed-file-storage" title="Permanent link">¶</a></h5>
+<p>The bytes of an indexed file never pass through the API: the browser reads them from the
+object store itself, with the presigned URLs the API hands out (valid 15 minutes). Two
+things follow for a deployment:</p>
+<ul>
+<li><strong>The URLs are signed for the address the browser uses.</strong> The API signs them against
+  <code>DEPICTIO_S3_PUBLIC_URL</code> when it is set, otherwise against
+  <code>DEPICTIO_S3_EXTERNAL_PROTOCOL</code>, <code>DEPICTIO_S3_EXTERNAL_HOST</code> and
+  <code>DEPICTIO_S3_EXTERNAL_PORT</code> (the older <code>DEPICTIO_MINIO_*</code> names still work). A signature
+  covers the host, so a URL signed for an in-cluster name such as <code>http://s3:9000</code> fails in
+  the browser.</li>
+<li><strong>The store must answer the viewer's origin with CORS and serve range requests.</strong> The
+  bundled SeaweedFS allows every origin by default; narrow it with
+  <code>-s3.allowedOrigins=https://viewer.example.org</code>, through the <code>s3</code> service's <code>command</code> in
+  Docker Compose or <code>s3.extraArgs</code> in the Helm chart. On AWS S3 or another gateway, add a
+  bucket CORS rule allowing <code>GET</code> and <code>HEAD</code> from the viewer's origin, with <code>Range</code> among the
+  allowed headers and <code>Content-Range</code>, <code>Content-Length</code>, <code>Accept-Ranges</code> and <code>ETag</code> exposed.</li>
+</ul>
+<p>Without this, a genome view shows no file tracks. Tracks read from table DCs are unaffected.</p>
 <h2 id="template-projects">Template Projects<a class="headerlink" href="#template-projects" title="Permanent link">¶</a></h2>
 <!-- prettier-ignore -->
 <div class="admonition success">

@@ -1781,6 +1781,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Template YAML Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variable-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variable defaults (v1.13.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -5286,6 +5303,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Template YAML Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variable-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variable defaults (v1.13.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -5526,18 +5560,32 @@
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"OPTIONAL_VAR"</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"An</span><span class="nv"> </span><span class="s">optional</span><span class="nv"> </span><span class="s">variable"</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span><span class="nt">dashboards</span><span class="p">:</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"dashboards/base.yaml"</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="nt">conditional</span><span class="p">:</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">if_var_absent</span><span class="p">:</span><span class="w"> </span><span class="s">"OPTIONAL_VAR"</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">      </span><span class="nt">remove_dc_tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"optional_dc"</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">      </span><span class="nt">dashboards</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"dashboards/base.yaml"</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">if_var_present</span><span class="p">:</span><span class="w"> </span><span class="s">"OPTIONAL_VAR"</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">      </span><span class="nt">dashboards</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"dashboards/base.yaml"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"dashboards/extended.yaml"</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"GENOME"</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Assembly</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">run</span><span class="nv"> </span><span class="s">was</span><span class="nv"> </span><span class="s">aligned</span><span class="nv"> </span><span class="s">to"</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">      </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">"hg38"</span><span class="w">     </span><span class="c1"># v1.13.0+: used when the run does not set it</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">  </span><span class="nt">dashboards</span><span class="p">:</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"dashboards/base.yaml"</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">  </span><span class="nt">conditional</span><span class="p">:</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">if_var_absent</span><span class="p">:</span><span class="w"> </span><span class="s">"OPTIONAL_VAR"</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">      </span><span class="nt">remove_dc_tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"optional_dc"</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">      </span><span class="nt">dashboards</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"dashboards/base.yaml"</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">if_var_present</span><span class="p">:</span><span class="w"> </span><span class="s">"OPTIONAL_VAR"</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">      </span><span class="nt">dashboards</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"dashboards/base.yaml"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"dashboards/extended.yaml"</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 <p>Below the <code>template:</code> block is a standard project configuration with <code>{VAR_NAME}</code> placeholders.</p>
+<h3 id="variable-defaults">Variable defaults <small>(v1.13.0+)</small><a class="headerlink" href="#variable-defaults" title="Permanent link">¶</a></h3>
+<p>A variable can declare a <code>default</code>, the value used when the run leaves it unset. A value
+passed with <code>--var</code>, read from the run's <code>params.json</code> or detected from the metadata file
+always wins over it. A defaulted variable fills <code>{NAME}</code> in <code>template.yaml</code> and in the
+dashboard YAMLs and satisfies <code>required</code>, but it does not count as provided: an
+<code>if_var_present</code> conditional does not fire on a default. A default may contain
+<code>{DATA_ROOT}</code>, as in <code>default: "{DATA_ROOT}/input/samplesheet.csv"</code>. The nf-core templates use
+defaults for <code>GENOME</code> (<code>hg38</code>), the axis of their genome tracks, for <code>GROUP_COL</code> where the
+samplesheet has a usual grouping column, and for cut-offs such as <code>SPLICING_FDR</code> in
+nf-core/rnasplice.</p>
 <hr>
 <h2 id="conditionals">Conditionals<a class="headerlink" href="#conditionals" title="Permanent link">¶</a></h2>
 <p>Conditionals adapt the project based on which optional variables the user provides. Each rule can:</p>

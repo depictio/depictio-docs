@@ -6458,8 +6458,10 @@ logging. See <a href="../../features/security/#oauth-callback-security">Security
 <h2 id="skip-bundled-example-projects">Skip Bundled Example Projects<a class="headerlink" href="#skip-bundled-example-projects" title="Permanent link">¶</a></h2>
 <p>Production deployments that ship their own catalogue can opt out of the
 bundled reference projects (Iris, Penguins, Advanced Visualisations,
-nf-core/ampliseq, nf-core/viralrecon) that Depictio otherwise seeds at
-API startup:</p>
+nf-core/ampliseq 2.18.0, nf-core/viralrecon 3.0.0) that Depictio otherwise seeds at
+API startup. These five are the only projects seeded at boot. Every other
+<a href="../../pipeline-templates/">pipeline template</a>, older nf-core/ampliseq
+versions included, is set up by ingesting a run with <code>depictio ingest</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Skip seeding the demo projects + dashboards on boot.</span>
 <a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="c1"># Default: false — preserves the current behaviour.</span>
 <a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="nv">DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS</span><span class="o">=</span><span class="nb">true</span>
