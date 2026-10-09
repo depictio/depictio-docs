@@ -692,7 +692,7 @@ An opt-in link on every dashboard that carries the reader's context to wherever 
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_FEEDBACK_ENABLED` | `false` | Show the link: an icon at the end of the dashboard header, and a **Feedback** section in the settings drawer |
+| `DEPICTIO_FEEDBACK_ENABLED` | `false` | Show the link: an icon at the end of the dashboard header, and a **Feedback** section in the dashboard's Settings |
 | `DEPICTIO_FEEDBACK_URL` | - | Link target. `{dashboard}`, `{dashboard_id}`, `{tab}` (the tab label the reader sees) and `{url}` are filled in and URL-encoded in the browser; no other placeholder is |
 | `DEPICTIO_FEEDBACK_LABEL` | `Feedback` | Icon tooltip and settings label |
 
