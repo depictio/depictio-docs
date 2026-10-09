@@ -32,11 +32,10 @@ hide:
 The differentialabundance template covers the DESeq2 route of a standard
 nf-core/differentialabundance run:
 
-- :material-test-tube: **Samples**: cohort census, DESeq2 size factors, the sample PCA, the distance matrix, per-sample expression densities and the 500 most variable features
-- :material-chart-scatter-plot: **Differential expression**: volcano, MA and QQ in one tile, the test's diagnostics, the effect by biotype and a gene record beside the annotated table
-- :material-dna: **Genome view**: every annotated call at its coordinate, with a per-gene lollipop one chromosome at a time
-- :material-set-merge: **Enrichment**: the GSEA gene sets at each pole of each contrast, as a dot plot, ranked bars and the report table
-- :material-table: **Reference tables**: the full result set, pinned to the bottom of every tab, under the sample sheet pinned to the top
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-flask-outline: **Data & QC**: the sample space, DESeq2 size factors, the expression distribution per sample and the most variable features
+- :material-chart-scatter-plot: **Differential**: volcano with MA and QQ views per contrast, test diagnostics, effect size by biotype, and every annotated call on the genome
+- :material-set-merge: **Gene sets**: GSEA enrichment per contrast and pole (needs a GSEA run)
 
 !!! info "The DESeq2 route only"
     This template binds `--differential_method deseq2`, the pipeline default. The
@@ -110,135 +109,152 @@ variable is needed.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Four tabs, read as a funnel: is the experiment sound and do the samples separate
-by design, what changed in a contrast and can the test be trusted, where do the
-calls sit, and which pathways move. Each tab below carries the **same icon and
-colour the dashboard gives it**, so the page and the app read alike.
+One dashboard: the **Overview**, then four child tabs in three groups, read as a
+funnel from the samples to the gene sets that move. Each tab below carries the
+**same icon and colour the dashboard gives it**, so the page and the app read
+alike.
 
-Two filter scopes are persistent and pinned to the top of every tab. `Sample
-scope` sits on the hub collection, so a pick there reaches the PCA and the
-distance matrix. The differential tables carry no sample column, so the sample
-fan-out stops there by design and `Contrast scope` takes over: it is sourced on
-`deseq2_results.contrast` and reaches the annotated table and the GSEA report
-through the template links, so one pick narrows the three analysis tabs at once.
-The `Run at a glance` cards and the collapsed `Sample sheet` are pinned to the
-top of every tab, `Reference tables` to the bottom.
+| Group | Tabs |
+|---|---|
+| Data & QC | Samples |
+| Differential | Differential expression, Genome view |
+| Gene sets | Enrichment |
 
-=== ":material-test-tube:{ .mc-teal } Samples"
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. Two persistent filter
+sections sit in the left panel. *Sample filters* (the group, the sample and three
+further factors) narrow the Samples tab and the sample sheet: a contrast pools its
+samples, so the differential tables have no sample column. *Contrast* narrows the
+three analysis tabs, and one pick follows you from tab to tab. The *Sample sheet*
+is pinned, collapsed, to the bottom of every child tab.
 
-    *Is the experiment sound, and do the samples separate the way the design says they should?*
+=== ":material-compass-outline: Overview"
+
+    *DESeq2 differential expression, from sample space to the gene sets that move.*
+
+    <!-- screenshot pending v2 -->
+
+    A short hero links the run parameters. *About this dashboard* says how to move
+    through the tabs, *The run* lists the samples, the contrasts, the test, the
+    cut-offs and the gene sets GSEA scored, and *Pipeline* walks the five steps
+    from the sample sheet to enrichment, each linked to its parameters and its
+    tab. The findings are live values: they follow the filters, and a run without
+    a GTF or GSEA drops the rows it cannot fill.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · the left panel starts collapsed. *Key figures* and
+        *Findings* each have a filter bar (the group and the contrast) that
+        narrows that section only.
+
+        | Section | What it holds |
+        |---|---|
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: samples, size factor, gene tests, significant calls |
+        | Findings | Live result rows, then 4 figures: the volcano, the sample PCA, the Manhattan plot and the GSEA dot plot |
+        | How to read this dashboard | The tabs by group, each with its question |
+
+=== ":material-flask-outline:{ .mc-teal } Samples"
+
+    **Data & QC** · *Do the samples separate by design, and are they normalised alike?*
+
+    <!-- screenshot pending v2 -->
 
     [![Samples dashboard](../../images/pipeline-templates/nf-core/differentialabundance/samples_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/samples_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The run size and its design come first, then the sample space read from the
-    variance-stabilised matrix: the PCA, the distances over the 500 most variable
-    features and one density curve per sample, so a library normalised
-    differently from the rest shows as a curve out of the bundle. The PCA is a
-    selection source: lasso a cluster and those samples travel to the linked
-    panels. The tab closes on the 500 most variable features, row z-scored and
-    clustered both ways; that matrix has no contrast column, so the contrast
-    filter does not reach it.
+    The samples by group, the DESeq2 size factor, the median variance-stabilised
+    expression per sample and the share of features at the matrix floor. Then the
+    PCA above the sample-to-sample distance heatmap; a lasso on the PCA carries
+    those samples to the other panels. Then the expression distribution of every
+    sample on one grid, where a curve out of the bundle is a library normalised
+    differently, and the most variable features, clustered both ways.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample`, `Condition` and `Second factor` to `Fourth factor`
-        on `samples` in the persistent *Sample scope*, and `Contrast` on
-        `deseq2_results` in the persistent *Contrast scope*, both pinned to the
-        top of every tab; plus a `Size factor` range in *Library scope*. The
-        factor filters bind to the sheet's next factor-like columns under stable
-        names, and the Sample sheet keeps each column's original name.
+        **Filters** · a `Size factor` range on `samples`, plus the sample filters.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards: *Samples*, *Contrasts*, *Features tested*, *Size factor* |
-        | Sample sheet | *Sample sheet*, every column of the `--input` sheet with the size factor joined on |
-        | Sample space | *Sample PCA*, *Sample-to-sample distance*, *Expression distribution per sample* |
-        | Top variable features | *Top variable features* |
-        | Reference tables | *DESeq2 results* |
+        | Samples at a glance | 4 cards |
+        | Sample relationships | 2 advanced visualizations |
+        | Normalisation | 1 advanced visualization |
+        | Top variable features | 1 advanced visualization |
 
 === ":material-chart-scatter-plot:{ .mc-indigo } Differential expression"
 
-    *What changed in this contrast, can the test be trusted, and which feature classes move?*
+    **Differential** · *Which genes change in each contrast, and can the test be trusted?*
 
     [![Differential expression dashboard](../../images/pipeline-templates/nf-core/differentialabundance/differential_expression_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/differential_expression_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    One tile carries the volcano, the MA and the QQ views of the same calls,
-    switched from its header and cut at the pipeline's own thresholds (padj 0.05,
-    two-fold change). The diagnostics check the raw p-value histogram per
-    contrast and pair the first two contrasts gene by gene; selecting a point
-    there carries its `gene_id` to the annotated table. The effect by biotype
-    says whether the calls concentrate in one class of feature. `Gene detail`
-    puts a linked gene record beside the annotated table: it folds to a slim
-    rail until a row is picked, then shows one card per contrast the gene was
-    tested in, with an Ensembl link.
+    Pick a contrast first. The gene tests that kept an adjusted p-value, the
+    significant calls by direction, the median log2 fold change and the median
+    adjusted p-value. Then the volcano, cut at the pipeline's thresholds, whose
+    View switch reads the same calls as an MA or a QQ plot. The test diagnostics
+    (raw p-values, one contrast against another) and the strongest calls and
+    effect sizes per biotype follow; the annotated table, with a gene record for
+    the row you pick, and the full DESeq2 table are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Direction`, and `log2 fold change`, `Significance` and
-        `Expression level` ranges on `deseq2_results`, plus `Biotype` on
-        `deseq2_results_annotated`, all in *Call scope*. The contrast follows the
-        pinned *Contrast scope*.
+        **Filters** · `Direction`, and log2 fold change, significance and
+        expression-level ranges on `deseq2_results`; `Biotype` on
+        `deseq2_results_annotated`; plus the persistent `Contrast`.
 
         | Section | What it holds |
         |---|---|
-        | Calls at a glance | 4 cards: *log2 fold change*, *Call composition*, *Significance*, *Best adjusted p-value* |
-        | Volcano, MA and QQ | *Volcano, MA and QQ* |
+        | Calls at a glance | 4 cards |
+        | Volcano, MA and QQ | 1 advanced visualization |
         | Test diagnostics | *Raw p-value distribution*, *Contrast against contrast* |
-        | Effect by biotype | *Strongest calls per contrast*, *Effect size by biotype* |
-        | Gene detail | *Annotated DESeq2 results*, *Gene record* |
+        | Effect by biotype | 1 advanced visualization + *Effect size by biotype* |
+        | Gene detail (collapsed) | *Annotated DESeq2 results* + a gene record card |
+        | All results (collapsed) | *DESeq2 results* |
 
 === ":material-dna:{ .mc-red } Genome view"
 
-    *Where do the calls sit on the genome?*
+    **Differential** · *Where on the genome do the calls sit?*
 
     [![Genome view dashboard](../../images/pipeline-templates/nf-core/differentialabundance/genome_view_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/genome_view_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The Manhattan plot places every annotated feature at its coordinate with
-    `-log10(padj)` as height and a threshold line at padj 0.05; it is a selection
-    source on `gene_id`. Below, the lollipop draws one lane per contrast and one
-    head per gene, coloured by direction and sized by significance, with the
-    strongest calls labelled. Pick a chromosome first, since coordinates from
-    different contigs otherwise stack on the same axis.
+    Needs the run's GTF. The gene tests the annotation places, the placed calls by
+    chromosome, the call strength and the biotypes the up and down calls reach.
+    Then the Manhattan plot, with a threshold line at padj 0.05, and the lollipop
+    panel, one lane per contrast and one head per gene. Pick a chromosome on the
+    left before reading the lollipop.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Chromosome` on `deseq2_results_annotated` in *Region
-        scope*, plus `Significance` and `log2 fold change` ranges in *Signal
-        scope*. The contrast follows the pinned *Contrast scope*.
+        **Filters** · `Chromosome`, and significance and log2 fold-change ranges,
+        on `deseq2_results_annotated`, plus the persistent `Contrast`.
 
         | Section | What it holds |
         |---|---|
-        | Calls on the genome | 4 cards: *Genes placed*, *Chromosomes*, *Significance*, *Best adjusted p-value* |
-        | Signal along the genome | *Significance along the genome* |
-        | Per-chromosome detail | *Calls per gene* |
+        | Genome at a glance | 4 cards |
+        | Signal along the genome | 1 advanced visualization |
+        | Per-chromosome detail | 1 advanced visualization |
 
 === ":material-set-merge:{ .mc-orange } Enrichment"
 
-    *Which pathways move, and at which pole of the contrast?*
+    **Gene sets** · *Which gene sets move in each contrast, and at which pole?*
 
-    [![Enrichment dashboard](../../images/pipeline-templates/nf-core/differentialabundance/enrichment_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/enrichment_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    <!-- screenshot pending v2 -->
 
-    The pipeline runs GSEA pre-ranked over the DESeq2 statistics and publishes
-    one report per pole of each contrast, so every panel splits on the pole as
-    well as on the contrast: a set enriched at one end and a set enriched at the
-    other are the two ends of one comparison, not two findings. The dot plot puts
-    every set on its normalised enrichment score, sized by the genes found and
-    coloured by significance; the ranked bars are the view that compares one
-    contrast against another. A run without GSEA loses this tab (see
-    `NO_GSEA` above).
+    Needs a GSEA run. The set reports by pole, the strongest absolute normalised
+    enrichment score, the median FDR and the median leading-edge share of each set.
+    Then the dot plot of every set on its normalised enrichment score, sized by the
+    genes found, and the same scores as bars grouped by contrast, which shows
+    whether a set moved in one comparison or in both.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Pole` on `gsea_report` in *Set scope*, plus
-        `Significance` and `Set size` ranges in *Evidence scope*. The contrast
-        follows the pinned *Contrast scope*.
+        **Filters** · `Pole`, and significance and set-size ranges, on
+        `gsea_report`, plus the persistent `Contrast`.
 
         | Section | What it holds |
         |---|---|
-        | Enrichment at a glance | 4 cards: *Sets reported*, *Strongest NES (absolute)*, *Median FDR*, *Leading edge (% of set)* |
-        | Enriched sets | *Enriched gene sets* |
-        | Scores side by side | *Enrichment score by contrast* |
-        | Set table | *GSEA report*, collapsed |
+        | Enrichment at a glance | 4 cards |
+        | Enriched sets | 1 advanced visualization |
+        | Scores side by side | 1 advanced visualization |
+        | Set table (collapsed) | *GSEA report* |
 
 !!! tip "A contrast that found nothing still has to read as such"
     A contrast with no significant calls keeps its place. Its volcano is a
@@ -246,12 +262,12 @@ top of every tab, `Reference tables` to the bottom.
     which is what an honest null result looks like rather than a broken
     dashboard.
 
-Tables and point views select on their entity column: the pinned sample sheet
-and the PCA on `sample_id`, which narrows the PCA, the distance matrix and the
-VST panels; the results tables, the contrast-against-contrast scatter and the
-Manhattan panel on `gene_id`; the GSEA table on `term`. A pick narrows the other
-tiles of its collection and follows the project links to the collections they
-reach. The VST distribution profile does not select: its collection has no
+Tables and point views select on their entity column: the sample sheet and the
+PCA on `sample_id`, which narrows the distance matrix, the heatmap and the
+distribution panel; the results tables, the contrast-against-contrast scatter and
+the Manhattan panel on `gene_id`; the GSEA table on `term`. A pick narrows the
+other tiles of its collection and follows the project links to the collections
+they reach. The distribution panel does not select: its collection has no
 outgoing link.
 
 ---

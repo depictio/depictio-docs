@@ -256,6 +256,10 @@ depictio backup restore 20260315_143000 --dry-run
 depictio backup restore 20260315_143000
 ```
 
+On the local server, whose CLI configuration is an admin's, a backup is created, validated, then restored in a dry run:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-backup.cast" data-poster="npt:0:10" data-idle-time-limit="2.5"></div>
+
 | Flag | Applies to | Description |
 |------|-----------|-------------|
 | `--server` | all | `local`, or a CLI configuration file; default as for every command, see [Which server a command uses](../../depictio-cli/usage.md#choosing-a-server) |

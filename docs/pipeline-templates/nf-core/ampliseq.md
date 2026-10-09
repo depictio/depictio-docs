@@ -34,17 +34,11 @@ hide:
 The ampliseq template follows a standard nf-core/ampliseq run from reads to
 differential taxa, one tab per step:
 
-- :material-chart-box-outline: **MultiQC**: FastQC read quality and Cutadapt primer trimming, straight from the report
-- :material-chart-bell-curve: **Alpha Diversity**: rarefaction curves, then observed features, Faith PD, evenness and Shannon per group
-- :material-bacteria-outline: **Community & Diversity**: what the samples are made of, ranked, stacked per sample, as a sunburst hierarchy, and shared between groups
-- :material-chart-scatter-plot-hexbin: **Ordination & Clustering**: a PCoA on Bray-Curtis, the distance matrix behind it and a clustered phylum by sample heatmap
-- :material-chart-scatter-plot: **Differential Abundance**: ANCOM-BC volcano and ranked effects per contrast, with a record card for the taxon picked
-- :material-family-tree: **Phylogeny**: the QIIME2 tree with each tip coloured by its taxonomy
-
-A seventh tab, **Reconstructed Community (SIDLE)**, only appears on multi-region
-runs. `Sample filters`, `Run at a glance` and `Sample sheet` are pinned to the top
-of every tab, so the sample and group picks and the four run-size cards follow
-you from tab to tab.
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-bar: **MultiQC quality control**: FastQC read quality and Cutadapt trimming
+- :material-chart-bell-curve: **Diversity**: alpha diversity with rarefaction curves, and the PCoA on Bray-Curtis distances (requires metadata)
+- :material-bacteria: **Taxa**: composition per group and per sample, the sunburst, the taxa groups share, and the phylogenetic tree
+- :material-chart-scatter-plot: **Differential abundance**: ANCOM-BC volcano with MA and QQ views, per contrast (requires metadata + `--ancombc`)
 
 ---
 
@@ -128,190 +122,212 @@ auto-detected from the run's `params.json`.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Seven tabs, read as a funnel: are the reads good, how diverse is each sample,
-what are the communities made of, how do the samples relate, which taxa differ
-between groups, and where those taxa sit on the tree. Each tab below carries the
-**same icon and colour the dashboard gives it**, so the page and the app read
-alike. The persistent `Sample filters` (sample ID and your grouping column, both
-on the metadata collection) reach every tab through the cross-DC links on the
-metadata sample column, see [Cross-DC links](#cross-dc-links); the tabs carry no
-sample or group filter of their own.
+One dashboard: the **Overview**, then seven child tabs in three groups, read as a
+funnel from the run to the taxa that differ between groups. Each tab below carries
+the **same icon and colour the dashboard gives it**, so the page and the app read
+alike.
+
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC |
+| Diversity | Alpha Diversity, Ordination & Clustering |
+| Taxa | Community & Diversity, Differential Abundance, Phylogeny, SIDLE |
+
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The persistent *Sample
+filters* (your grouping column, then the sample id) sit in the left panel and narrow
+every tab through cross-DC links on the metadata `sample` column, see
+[Cross-DC links](#cross-dc-links). The *Sample sheet* is pinned, collapsed, to the
+bottom of every child tab.
 
 Where a tab names *your grouping column*, that is whichever metadata column the
 run was resolved against; the dashboard substitutes its real name everywhere.
 
+=== ":material-compass-outline: Overview"
+
+    *Amplicon communities, from reads to the taxa that differ between groups.*
+
+    <!-- screenshot pending v2 -->
+
+    A short hero links the run parameters. *About this dashboard* says how to move
+    through the tabs, *The run* lists the samples, primers, reference taxonomy and
+    removed taxa, and *Pipeline* walks the six steps from trimming to the
+    differential test, each linked to its parameters and its tab. The findings are
+    live values: they follow the filters, and a route that lacks their data drops
+    them.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · the left panel starts collapsed. *Key figures* has its own
+        filter bar (your grouping column and the sample id), and so does
+        *Findings* (your grouping column and the kingdom): each narrows its own
+        section only.
+
+        | Section | What it holds |
+        |---|---|
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: samples, phyla, median Shannon diversity, reads kept |
+        | Findings | Live result rows, then 4 figures: phylum composition per group, the ANCOM-BC volcano, the PCoA and a tree of the eight largest phyla |
+        | How to read this dashboard | The tabs by group, each with its question |
+
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Are the reads good, and did the primers come off?*
+    **Data & QC** · *Did sequencing and primer trimming work for every sample?*
 
     [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     [![MultiQC dashboard](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Thirteen MultiQC panels: Cutadapt filtered reads, the FastQC sequence counts
-    and quality histograms up front, the other FastQC and Cutadapt panels in a
-    collapsed section. There is no per-sequence GC panel, because amplicon reads
-    sit in a narrow GC band and it reads as a flat line.
+    MultiQC panels only: general statistics, Cutadapt filtered reads, FastQC
+    sequence counts and quality histograms open, the other FastQC and Cutadapt
+    panels collapsed. Its sample filter reads the MultiQC report, so the tab works
+    on a run without metadata.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample ID` and your grouping column on `metadata`,
-        persistent and pinned to the top of every tab, plus a collapsed *MultiQC
-        report* section with a `Sample ID (MultiQC)` list read from the report
-        itself, which keeps the tab filterable on a run without `--metadata`.
+        **Filters** · `Sample ID`, read from the MultiQC report.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards, pinned to every tab |
         | QC overview | 4 MultiQC panels |
-        | QC details | 9 MultiQC panels |
-        | Sample sheet | *Sample sheet*, pinned to every tab |
+        | QC details (collapsed) | 9 MultiQC panels |
 
-=== ":material-chart-bell-curve:{ .mc-orange } Alpha Diversity"
+=== ":material-chart-bell-curve:{ .mc-grape } Alpha Diversity"
 
-    *Did sequencing reach saturation, and how rich is each sample?*
+    **Diversity** · *How diverse is each sample, and was it sequenced deeply enough?*
 
     [![Alpha Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     [![Alpha Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The cards summarise observed features, Faith PD and evenness as a median
-    with their spread, next to the deepest rarefaction depth. The rarefaction
-    curves come next, with the metric switch in the tile header, then the same
-    indices compared between groups.
+    The median **Shannon** diversity and **Faith PD** with their spread,
+    **Observed ASVs** with their distribution and **Evenness** on a 0 to 1 gauge.
+    Then the rarefaction curves, one per group with a metric switch, and Shannon
+    diversity per group with one point per sample.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · a `Shannon index` range on `alpha_diversity_multi_canonical`,
-        which carries the surviving samples to the rarefaction curves.
+        **Filters** · a Shannon diversity range on
+        `alpha_diversity_multi_canonical`, plus the sample filters.
 
         | Section | What it holds |
         |---|---|
         | Diversity at a glance | 4 cards |
-        | Rarefaction | *Rarefaction curves (multi-metric)* |
-        | Per-group comparison | *Alpha diversity by group (per metric)* |
-        | Per-sample table | *Per-sample alpha diversity (one row per sample)* |
-
-=== ":material-bacteria-outline:{ .mc-teal } Community & Diversity"
-
-    *What are the samples made of, and which taxa do the groups share?*
-
-    [![Community & Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    [![Community & Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    The 15 most abundant phyla by mean relative abundance per group open the tab,
-    followed by the stacked per-sample composition with a rank switch in the
-    header. The sunburst reads the same abundances as a hierarchy, and the UpSet
-    shows which taxa are shared between groups and which are exclusive. The
-    SINTAX tiles only fill on `--skip_qiime` runs.
-
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · `Kingdom`, `Phylum` and a relative-abundance range on
-        `taxonomy_rel_abundance`, plus a collapsed *SINTAX scope* with its own
-        `Kingdom` and `Phylum` pair for the SINTAX tiles.
-
-        | Section | What it holds |
-        |---|---|
-        | Composition | *Mean Relative Abundance by group*, *Stacked taxonomy (advanced)* |
-        | Taxonomic structure | *Taxonomic hierarchy (sunburst)* |
-        | Set overlap | *Taxa shared across groups (UpSet)* |
-        | SINTAX classifier | 1 bar, *Taxonomy Relative Abundance (sintax)* |
-        | Tables | *Taxonomy Relative Abundance* |
+        | Rarefaction | 1 advanced visualization |
+        | Group comparison | *Shannon diversity per group* |
+        | Per-sample table (collapsed) | *Alpha diversity per sample* |
 
 === ":material-chart-scatter-plot-hexbin:{ .mc-pink } Ordination & Clustering"
 
-    *Do the samples cluster by group, and which phyla drive it?*
+    **Diversity** · *Which samples have similar communities?*
 
     [![Ordination & Clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     [![Ordination & Clustering dashboard](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/ordination_clustering_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The PCoA embeds each sample in two dimensions from Bray-Curtis distances, and
-    the distance matrix beside it shows the pairs it was computed from, where a
-    sample unlike every other shows up as a bright row. Below, the phylum by
-    sample heatmap clusters both axes. The PCoA takes a lasso, which keeps the
-    picked samples as a selection.
+    The samples placed by the PCoA, split by group, and, when the run tested a
+    PERMANOVA formula, the share of variation the group explains. Then the PCoA on
+    Bray-Curtis beside the distances it was drawn from, and the phyla against the
+    samples with both axes clustered. A lasso on the PCoA makes an analysis group.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Phylum` on `complex_heatmap_canonical`, which narrows the
-        heatmap rows.
+        **Filters** · `Phylum` on `complex_heatmap_canonical`, narrowing the rows
+        of the heatmap, plus the sample filters.
 
         | Section | What it holds |
         |---|---|
-        | Sample relationships | *Sample ordination (PCoA, Bray-Curtis)*, *Sample distances (Bray-Curtis)* |
-        | Clustered abundance | *Taxonomy heatmap (clustered)* |
+        | Ordination at a glance | 2 cards |
+        | Sample relationships | 2 advanced visualizations |
+        | Clustered abundance | 1 advanced visualization |
+
+=== ":material-bacteria-outline:{ .mc-teal } Community & Diversity"
+
+    **Taxa** · *Which taxa make up the samples, and which do groups share?*
+
+    [![Community & Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Community & Diversity dashboard](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    Distinct phyla, classes, orders and families, each split or ranked. Then the
+    phylum composition per group and per sample (the eight largest phyla and
+    Other), the sunburst hierarchy and the UpSet of the taxa the groups share. A
+    `--skip_qiime` run shows its SINTAX tiles in the same places.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Kingdom` and `Phylum` on `taxonomy_rel_abundance`, or on
+        `sintax_rel_abundance` for a SINTAX run, plus the sample filters.
+
+        | Section | What it holds |
+        |---|---|
+        | Community at a glance | 4 cards |
+        | Composition | 1 bar + 1 advanced visualization |
+        | Taxonomic structure | 1 advanced visualization |
+        | Set overlap | 1 advanced visualization |
+        | Tables (collapsed) | *Relative abundance per sample and phylum* |
 
 === ":material-chart-scatter-plot:{ .mc-red } Differential Abundance"
 
-    *Which taxa differ between groups, and by how much?*
+    **Taxa** · *Which taxa differ in abundance between groups?*
 
     [![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     [![Differential Abundance dashboard](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/differential_abundance_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Pick a contrast first: every number on the tab is conditional on it. The cards
-    count the taxa tested, those significant at a 5% FDR and those enriched, above
-    the volcano and the ranked differential-abundance bars. `Taxon detail` holds
-    the full ANCOM-BC table with a linked record card beside it, which folds to a
-    slim rail until a row is picked and then opens on that taxon's test and
-    lineage.
+    Pick a contrast first. The taxa tested, those significant at 5% FDR, and the
+    enriched and depleted calls, each split by contrast. Then the volcano, whose
+    View switch reads the same calls as an MA or a QQ plot, and the largest effects
+    per contrast. The collapsed *Taxon detail* holds the ANCOM-BC table, with a
+    record card for the row you pick.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Contrast`, `Phylum` and `Kingdom` in a *Call scope* group,
-        plus `W Statistic Range` and `Log-Fold Change Range` in a *Thresholds*
-        group, all on `ancombc_results`.
+        **Filters** · `Contrast`, `Phylum`, `Kingdom` and a log-fold-change
+        range, all on `ancombc_results`.
 
         | Section | What it holds |
         |---|---|
-        | Summary | 4 cards |
-        | Volcano & ranked effects | *Volcano (advanced viz)*, *Differential-abundance bars (per contrast)* |
-        | Taxon detail | *ANCOM-BC differential abundance results*, *Taxon record* |
-
-    !!! note "No MA plot"
-        `ancombc_results` carries no mean abundance, and the contrast filter does
-        not reach the MA collection, so an MA tile would ignore the contrast every
-        other number on the tab depends on.
+        | Calls at a glance | 4 cards |
+        | Volcano and ranked effects | 2 advanced visualizations |
+        | Taxon detail (collapsed) | *ANCOM-BC results* + a taxon record card |
 
 === ":material-family-tree:{ .mc-lime } Phylogeny"
 
-    *Where do the taxa sit on the tree, and how confidently are they classified?*
+    **Taxa** · *How are the ASVs related, and how deeply are they classified?*
 
     [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
     [![Phylogeny dashboard](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    The cards count the ASVs, the share classified down to genus, the mean
-    classifier confidence and the unique genera. The tree follows, pruned to the
-    clade picked in the filters and coloured by any rank, with the full lineage of
-    each tip in a collapsed table.
+    The ASVs, the share classified to genus, the median classifier confidence and
+    the distinct genera. The tree opens on its summary, the eight largest phyla
+    with their share of the reads per group; its View switch draws every ASV,
+    coloured by any rank.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `Kingdom` and `Phylum` on
-        `phylogenetic_tree_metadata_canonical`.
+        `phylogenetic_tree_metadata_canonical`, pruning the tree to one clade.
 
         | Section | What it holds |
         |---|---|
         | Tree at a glance | 4 cards |
-        | Tree | *ASV phylogenetic tree* |
-        | Tip taxonomy | *ASV taxonomy table* |
+        | Tree | 1 advanced visualization |
+        | Tip taxonomy (collapsed) | *ASV taxonomy* |
 
-=== ":material-graph-outline:{ .mc-indigo } Reconstructed Community (SIDLE)"
+=== ":material-graph-outline:{ .mc-indigo } SIDLE"
 
-    *What community did SIDLE rebuild across regions, and on how much evidence?*
+    **Taxa** · *What does the community rebuilt across amplicon regions contain?*
 
     !!! info "Multi-region runs only"
         This tab is bound to `sidle_reconstructed`, which a single-region run never
         writes. On such a run the self-adapting layout drops the tab entirely.
 
-    Cards for the reconstructed features, samples, phyla and the mean number of
-    regions per feature, then the per-sample composition by phylum and by the most
-    abundant genera. The QC section plots how many regions and k-mers support each
-    feature: select points on the k-mer scatter to filter both tables below.
+    The reconstructed features, the samples that carry them, the phyla they
+    resolve to and the mean number of regions per feature. Then the composition
+    per sample, by phylum and by genus, and the reconstruction QC: regions and
+    k-mer support per feature.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -320,24 +336,17 @@ run was resolved against; the dashboard substitutes its real name everywhere.
         | Section | What it holds |
         |---|---|
         | Reconstruction at a glance | 4 cards |
-        | Composition | *Relative composition by phylum (per sample)*, *Genus-level composition (per sample)* |
-        | Reconstruction QC | *Cross-region support (features by regions mapped)*, *K-mer support vs region coverage* |
-        | Tables | *Reconstructed features (per-sample counts)*, *Reconstruction confidence (regions mapped, kmer support)* |
+        | Composition | 2 bars |
+        | Reconstruction QC | 1 bar + 1 scatter |
+        | Tables (collapsed) | *Reconstructed features per sample*, *Reconstruction support per feature* |
 
-!!! tip "Cross-selection"
-    Every table selects rows, and a pick becomes a dashboard filter that narrows
-    the other tiles of the same collection and, through the project links, the
-    collections downstream of it: the pinned sample sheet, the alpha-diversity
-    table, both relative-abundance tables, the ANCOM-BC table, the tip taxonomy
-    table and both SIDLE tables. The bar and box figures do not select.
-
-!!! tip "The reference dataset adds two more"
+!!! tip "The reference project adds two tabs"
     The Ammer catchment reference dashboard, seeded with the bundled demo data,
-    carries two further tabs on top of these seven:
-    :material-map-marker-outline:{ .mc-blue } **Sampling Campaign** (where and when
-    the catchment was sampled) and :material-waves:{ .mc-cyan } **Environment (CTD)**
-    (sonde readings per sample, and the diversity they go with). Both are bound to
-    metadata columns that only that dataset ships.
+    adds two tabs to *Data & QC*: :material-map-marker-outline:{ .mc-blue }
+    **Sampling Campaign** (where and when the catchment was sampled) and
+    :material-waves:{ .mc-cyan } **Environment (CTD)** (sonde readings per sample,
+    and the diversity they go with). Both are bound to metadata columns that only
+    that dataset ships.
 
 Tables select rows and the SIDLE k-mer scatter selects points: the pinned
 sample sheet on the metadata id column, the alpha-diversity table on
