@@ -88,6 +88,8 @@
     - **Placement** — which [section](../../features/dashboards.md#sections) the component joins. It appears only once the dashboard has sections; you can also move a placed component later, from its own menu on the dashboard.
     - **Performance** — for figures, **Max points**, the point count above which a scatter-family figure downsamples. Leave it blank for the global default; viewers can still load every point on demand.
 
+    Since **v1.14.0** every builder lays its form out in collapsible sections, each headed by an icon, a title and a one-line subtitle. The sections holding what the component cannot work without open every time; the others reopen as you left them, per builder type, in this browser. The preview draws in the dashboard's brand (a child tab's in its main tab's).
+
 3. **Finalize Customization**:
    - Review the component preview and ensure all settings are accurate.
    - Once complete, click **Next Step** to proceed to the final stage.

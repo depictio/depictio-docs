@@ -40,7 +40,13 @@ Depictio provides a variety of component types for building interactive dashboar
 
     ---
 
-    Section headers (H1, H2, H3)
+    Headings and prose, with block markdown and links to tabs since v1.14.0
+
+-   :material-star-four-points-outline:{ .lg .middle } **[Highlight](#highlight-components)**
+
+    ---
+
+    Another tab's figure, redrawn on this one (v1.14.0+)
 
 -   :material-tune:{ .lg .middle } **[Interactive](#interactive-components)**
 
@@ -140,6 +146,13 @@ fig = px.scatter(
 fig
 ```
 
+Since **v1.14.0** a code figure that sets no colours of its own is drawn in the
+dashboard's [category colours](dashboards.md#category-colors) when every trace name,
+*Other* aside, is a value of one coloured column; the map itself is
+`depictio_category_colors`. A template's
+`color_discrete_map=depictio_group_kwargs.get("color_discrete_map", {})` counts as setting
+none while no analysis group is active.
+
 !!! warning "Security Note :material-shield-lock:"
     Code Mode uses [RestrictedPython](https://restrictedpython.readthedocs.io/en/latest/) for security. Only approved libraries (pandas, plotly) are available. See [Security](security.md) for details.
 
@@ -155,6 +168,47 @@ fig
 | `max_points` | Point cap for scatter-family figures before downsampling (v1.3.0+) | Global default (10,000) |
 | `font_scale` | Font-size multiplier for the whole figure layout font: axis labels, ticks and legend. Set from the tile's edit menu, 0.7× to 2×, with a full lite-YAML round trip (v1.8.0+) | Unset (1×) |
 | Theme | Plotly template for this figure. `mantine_light` / `mantine_dark` mean *follow the UI colour scheme*. Unset falls back to the dashboard default, then to [instance branding](../usage/administration/branding.md) (v1.8.0+) | Unset |
+
+### Figure style <small>(v1.14.0+)</small> { #figure-style }
+
+`figure_style: minimal` gives a figure the landing-page look: the title in the card
+header beside an icon badge with the subtitle inline, a transparent plot with faint
+dashed grid lines and no axis lines, the legend in one line under the plot, large
+unoutlined markers, tight margins and the toolbar only on hover. Bars end in a slight
+round, stacked segments are parted by a hairline, and grouped bars get a coloured
+underline naming each group instead of facet titles. Plots in this style are set in Inter
+unless the figure or the brand sets a font. Unset, a figure takes the `figure_style` of
+its [grid section](dashboards.md#landing-tabs), else `default`. In the builder these keys
+are the **Card header & style** section.
+
+| Option | Description |
+|--------|-------------|
+| `figure_style` | `default` or `minimal` |
+| `subtitle` | A few dimmed words after the title (`minimal`) |
+| `icon_name` / `icon_color` | Iconify id and colour of the header badge (`minimal`). The colour defaults to the brand's primary |
+| `hide_legend` | Draw the figure without its legend, for a small tile |
+| `caption` | A line or two under the plot saying how to read it, in any style |
+| `link` | `tab:<name>`: the tab this figure summarises, linked from the end of the header (`minimal`) or from the tile's actions |
+
+An advanced visualization takes `figure_style`, `subtitle`, `icon_name`, `icon_color` and
+`link` for its card only: `minimal` draws the header and the frame, not the plot overlay,
+and `link` shows in that header alone. `hide_legend` is honoured by the
+[phylogeny summary](#phylogeny-summary), and `caption` is not drawn. Its component-level
+`controls_placement` says where its controls dock; see
+[Shared settings](#advanced-viz-shared-settings).
+
+```yaml
+- tag: pcoa-overview
+  component_type: figure
+  visu_type: scatter
+  figure_style: minimal
+  title: Communities by city
+  subtitle: PCoA, Bray-Curtis
+  icon_name: mdi:scatter-plot
+  caption: Each point is one sample; the closer two points, the more alike their plankton.
+  link: "tab:Ordination & Clustering"
+  # workflow_tag, data_collection_tag, dict_kwargs...
+```
 
 !!! tip "Clustered heatmaps moved"
     The ComplexHeatmap viz has been renamed and is now part of the Advanced Visualizations section below — see [Hierarchical Heatmap](#hierarchical-heatmap) for the full config, alongside the rest of the domain-specific viz family (volcano, MA, sankey, …).
@@ -234,9 +288,32 @@ Every kind accepts one layout setting on top of its own:
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `controls_placement` | `popover` \| `rail` \| `header` | `popover` | Where the tile draws its controls. `popover` keeps them all behind the settings icon. `header` draws the primary controls as a strip under the tile title and leaves the cosmetic ones in the popover. `rail` draws all of them in a 220 px column right of the plot (under the plot on a tile narrower than 480 px), and the tile then has no settings popover. |
+| `controls_placement` | `popover` \| `rail` \| `header` | `popover` | Where the tile draws its controls. `popover` keeps them behind the settings icon, unless the tile docks them (below). `header` draws the primary controls as a strip under the tile title and leaves the cosmetic ones in the popover. `rail` draws all of them in a 220 px column right of the plot (under the plot on a tile narrower than 480 px), and the tile then has no settings popover. |
 
-Each kind splits its controls into two tiers. The **primary** tier changes what the plot shows: the view switch, axes, colour by, thresholds, a gene, sample or chromosome picker. The **cosmetic** tier changes how it is drawn: marker sizes, palettes, labels, legend. A kind with no primary tier, such as [Record card](#record-card), puts its cosmetic controls in the header strip instead. Every controls block carries a placement picker: a reader's choice lasts the session, and in the editor it is saved as the tile's `controls_placement`.
+Each kind splits its controls into two tiers. The **primary** tier changes what the plot shows: the view switch, axes, colour by, thresholds, a gene, sample or chromosome picker. The **cosmetic** tier changes how it is drawn: marker sizes, palettes, labels, legend. A kind with no primary tier, such as [Record card](#record-card), puts its cosmetic controls in the header strip instead. Every controls block but a docked panel carries a placement picker: a reader's choice lasts the session, and in the editor it is saved as the tile's `controls_placement`.
+
+<small>(v1.14.0+)</small> A `popover` tile with room docks its controls instead: beside the
+plot when it spans its row and is at least 720 px wide, above it when it is at least
+300 px wide. A `minimal` card, a narrower tile, a tile split into group panels and a
+builder preview keep the popover. The panel, titled **Controls**, shows the first three
+controls that do something and folds the rest under **More options (n)**; the view switch
+heads it. The settings icon folds the panel away, remembered per tile in this browser.
+A second `controls_placement`, on the component rather than in its `config`, overrides
+the choice: `auto` (the default), `right`, `top` or `popover`, the builder's **Viz
+controls** section (**Auto**, **Right**, **Top**, **Behind icon**). `right` and `top` dock
+there whatever the width, and `popover` keeps the icon. It has no effect under `rail` or
+`header`.
+
+```yaml
+- tag: viz-de
+  component_type: advanced_viz
+  viz_kind: volcano
+  controls_placement: popover   # the v1.13 look: controls behind the icon
+  config:
+    viz_kind: volcano
+    controls_placement: popover # the tier placement, as before
+    # column bindings...
+```
 
 === "popover"
 
@@ -360,6 +437,8 @@ Effect size vs significance scatter — classic differential-expression view wit
 | `significance` | ✓ | Float | p-value or padj/q-value |
 | `label` | — | String | Hover label override |
 | `category` | — | String | Categorical annotation (pathway, cluster…). Splits the QQ view into one trace per value; volcano and MA points stay coloured by tier |
+| `p_value` | — | Float | Raw p-value (0–1), bound as `p_value_col`: adds the QQ view. Offered by the builder (v1.14.0+) |
+| `avg_log_intensity` | — | Float | Mean (log) abundance, bound as `avg_log_intensity_col`: adds the MA view. Offered by the builder (v1.14.0+) |
 
 **Settings**
 
@@ -706,9 +785,10 @@ Per-sample stacked relative-abundance bar with a rank dropdown.
     ```
 
 <small>(v1.12.0+)</small> Each strip is a row of cells under or over the bars, one per
-sample. Hovering a cell shows the sample and its category, and the legend lists each
-category under the strip's label. A strip reads its column from the data collection the
-figure draws. The bundled QIIME2 recipe behind the nf-core/ampliseq stacked taxonomy
+sample. Hovering a cell shows the sample and its category. Since **v1.14.0** a strip whose
+categories each span a wide enough block is labelled on itself, the others get a compact
+key of their own above the plot, and the taxa legend is titled with the active rank. A
+strip reads its column from the data collection the figure draws. The bundled QIIME2 recipe behind the nf-core/ampliseq stacked taxonomy
 joins every categorical column of the sample metadata with at most 25 categories (text,
 categorical or boolean), so a strip can follow `locality`, `batch` or any other grouping,
 not only `habitat`. Samples are ordered by `habitat` when that column exists, otherwise
@@ -744,16 +824,16 @@ Hierarchical taxonomy / pathway viewer — concentric rings from root to leaf. U
 | `rank_cols` | list[str] (≥2) | _required_ | Hierarchical columns from root to leaf (e.g. `[Kingdom, Phylum, Class, Order, Family, Genus]`) |
 | `abundance_col` | str | `abundance` | DC column that satisfies the `abundance` role above |
 | `start_rank` | str \| null | `null` | Rank of the innermost ring; null starts at the first of `rank_cols` |
-| `colour_by_rank` | str \| null | `null` | Rank driving the colour key; null colours by the innermost visible ring |
+| `colour_by_rank` | str \| null | `null` | Rank driving the colour key; null colours by the innermost visible ring. Since v1.14.0 its values take the dashboard's [`category_colors`](dashboards.md#category-colors), then `category_palette`, then `palette`; each outer ring is a lighter shade of its lineage's colour, and `Unclassified` / `Other` are grey |
 | `max_depth` | int (≥1) | `3` | Rings drawn from the start rank outwards |
 | `palette` | `tab10` \| `tab20` | `tab20` | Categorical palette |
-| `min_percent` | float (0–50) | `0.5` | Hide arcs below this share of the root, in percent |
+| `min_percent` | float (0–50) | `0.5` | Arcs below this share of the root, in percent, fold into a grey `Other (n)` when two or more share a parent (v1.14.0+) |
 | `show_counts` | bool | `true` | Label each arc with its share of the root |
 | `category_palette` | dict[str, str] \| null | `null` | Explicit value→colour overrides for the colour-key categories (whichever rank the user's Colour-by picker chooses). Pin domain palettes (e.g. `Habitat → Set1`) so the same category lands on the same colour across PCoA / UpSet / heatmap tiles. |
 
 **Filtering / row tagging**
 
-Renderer **hierarchically aggregates** by the `rank_cols` sequence. Intermediate arc sizes are reconstructed via Plotly's `branchvalues='total'`. No per-row tag — aggregation is deterministic and lossless. Start rank, colour rank and depth are primary controls; palette, minimum arc and arc labels are cosmetic.
+Renderer **hierarchically aggregates** by the `rank_cols` sequence. Intermediate arc sizes are reconstructed via Plotly's `branchvalues='total'`. Since **v1.14.0** the centre is **All**, and hovering an arc gives its share of the whole and of its parent. No per-row tag — aggregation is deterministic and lossless. Start rank, colour rank and depth are primary controls; palette, minimum arc and arc labels are cosmetic.
 
 
 [![Sunburst example](../images/guides/advanced-visualizations/sunburst_light.webp#only-light)](../images/guides/advanced-visualizations/sunburst_light.webp){target=_blank}
@@ -794,7 +874,7 @@ Renderer **aggregates over `iter`** per `(sample_id, depth)` — computes mean �
 
 Newick tree + tip metadata (Microreact-style): 5 layouts, tip search, subtree highlight, and since **v1.8.0** a navigable viewport with cross-filtering. See [Reading and navigating the tree](#phylogeny-interaction).
 
-The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `/advanced_viz/phylogeny/{dc_id}/newick`). Tip annotations live in a regular Table DC and are joined to tip labels at render time via `taxon_col`. The schema below validates the **metadata** DC only.
+The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `/advanced_viz/phylogeny/{dc_id}/newick`). Tip annotations live in a regular Table DC and are joined to tip labels at render time via `taxon_col`. The schema below validates the **metadata** DC only. Since **v1.14.0** the component itself may be bound to the phylogeny DC, the one non-table DC an advanced visualization accepts.
 
 **Columns** (metadata DC)
 
@@ -815,12 +895,72 @@ The tree itself comes from a separate DC with `dc_type: phylogeny` (served via `
 | `color_col` | str \| null | `null` | Metadata column for tip colouring (categorical or continuous) |
 | `label_col` | str \| null | `null` | Metadata column used to **label the tips**, so a tree whose tip names are hashes can read as something else. Changeable at view time from **Label by** (v1.8.0+) |
 | `extra_color_cols` | list[str] \| null | `null` | Extra metadata columns to pre-fetch so they appear in the viz Colour-by Select. Typical use: taxonomic ranks on ASV trees (Kingdom/Phylum/.../Species) so the user can re-colour tips at a different rank without reloading. |
-| `category_palettes` | dict[str, dict[str, str]] \| null | `null` | Per-column palette overrides for the Colour-by selector. Shape: `{column_name: {category_value: hex}}`. Pin domain palettes (e.g. `dominant_habitat → Set1`) so the same category lands on the same colour across PCoA / UpSet / heatmap / phylogeny tiles. |
+| `category_palettes` | dict[str, dict[str, str]] \| null | `null` | Per-column palette overrides for the Colour-by selector. Shape: `{column_name: {category_value: hex}}`. Pin domain palettes (e.g. `dominant_habitat → Set1`) so the same category lands on the same colour across PCoA / UpSet / heatmap / phylogeny tiles. Since v1.14.0 layered over the dashboard's [`category_colors`](dashboards.md#category-colors), so a column pinned there needs no entry |
 | `default_layout` | `rectangular` \| `circular` \| `radial` \| `diagonal` \| `hierarchical` | `rectangular` | Initial tree layout |
 | `ladderize` | bool | `true` | Ladderise the tree by default |
 | `show_metadata_strip` | bool | `true` | Render Microreact-style metadata strips beside the tips. Strips get their own legend sections (v1.8.0+) |
 | `show_branch_lengths` | bool | `true` | Annotate branches with lengths. Drawn as a clipped trace capped at the longest branches, so a dense tree is not buried in text (v1.8.0+) |
 | `show_internal_labels` | bool | `false` | Annotate internal nodes with their labels. Accepted, not drawn by the v1.13.0 viewer |
+
+#### Summary by rank <small>(v1.14.0+)</small> { #phylogeny-summary }
+
+`collapse_rank` draws the same component as a summary for a landing tile: a cladogram
+with one tip per value of a tip-metadata column, such as `Phylum`, the top `top_n` by
+share. Each value sits at its core clade, the largest clade whose classified tips all
+carry it, and the legend counts what is not shown. Dashboard filters reach the summary as
+they reach the full tree. Unset, the full tree is drawn as before.
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `collapse_rank` | str \| null | `null` | Tip-metadata column to collapse to. Needs `metadata_dc_tag` (or `metadata_dc_id`) |
+| `top_n` | int (1–60) | `10` | How many values to draw, by share |
+| `size_by` | `tips` \| `abundance` | `tips` | What a dot measures: the share of the tree's tips, or the mean share of a sample's reads from the abundance table |
+| `show_shares` | bool \| null | `null` | Print each value's % beside it. Unset: shown only with `size_by: abundance` |
+| `abundance_dc_tag` | str \| null | `null` | Abundance table, one row per sample and taxon, with a column named like `collapse_rank`. It or `abundance_wf_id` / `abundance_dc_id` is required by `size_by: abundance`; the tag is resolved to the ids at import |
+| `abundance_col` / `abundance_sample_col` | str | `rel_abundance` / `sample` | Its relative-abundance and sample columns; a table without the sample column has its abundance summed |
+| `abundance_split_col` | str \| null | `null` | A column of the abundance table, such as a site, drawn as one column of dots per value beside the tips. Each column wears that value's colour from the dashboard's [`category_colors`](dashboards.md#category-colors) or `category_palettes[abundance_split_col]`, else the lineage's. Viewers can switch it to any text column of the table with 2–8 values |
+| `show_split` | bool | `true` | Draw those columns; off keeps the setting for a viewer to switch back on |
+| `split_scale` | `shared` \| `row` | `shared` | One dot scale for every dot, or relative to each value's largest, to show where it is concentrated |
+| `show_tip_dots` | bool | `true` | Draw a dot sized by the share at each tip |
+
+```yaml
+- component_type: advanced_viz
+  viz_kind: phylogenetic
+  workflow_tag: ampliseq
+  data_collection_tag: phylogenetic_tree_canonical
+  figure_style: minimal
+  title: Tree of life
+  subtitle: top phyla
+  config:
+    viz_kind: phylogenetic
+    tree_wf_id: 646b0f3c1e4a2d7f8e5b8ca3   # placeholders, rewritten from
+    tree_dc_id: 646b0f3c1e4a2d7f8e5b8cdb   # tree_dc_tag at import
+    tree_dc_tag: phylogenetic_tree_canonical
+    metadata_dc_tag: phylogenetic_tree_metadata_canonical
+    color_col: Kingdom
+    extra_color_cols: [Phylum, Class, Order]   # what Collapse to offers
+    collapse_rank: Phylum
+    top_n: 10
+    size_by: abundance
+    abundance_dc_tag: taxonomy_rel_abundance   # has a Phylum column
+    abundance_split_col: locality              # one column of dots per site
+```
+
+In the component builder the tree is set up in steps, each marked required or optional:
+**Tree** (required, and enough to draw it), **Tip metadata** (the table and the tip,
+colour and label bindings), **View** (**Full tree** or **Summary by rank**, with
+**Collapse to**, **Lineages shown**, **Size by**, **Show %**, **Tip dots** and the
+**Columns viewers can switch to**) and **Read shares** (the **Abundance table**, its
+**Value column**, **Sample column** and **Split by**, and the **Strip dot scale**). The
+form and the preview write the same keys, so they cannot disagree. **Collapse to** lists
+ranks from root to leaf (Domain, Kingdom, Supergroup, Division, Subdivision, Phylum,
+Class, … Species), then any other column; other rank pickers (Colour by, the stacked
+taxonomy's Rank, UpSet and heatmap annotations) put rank columns in that order where
+they stand.
+
+On the dashboard, the tile's settings open on a **View** switch between the full tree and
+its summary, which keeps the summary's settings across a switch. The summary tile
+shrinks to the rows it draws.
 
 #### Reading and navigating the tree <small>(v1.8.0+)</small> { #phylogeny-interaction }
 
@@ -844,7 +984,7 @@ Clicking an internal node marks its clade by taking contrast from everything els
 
 [![A collapsed clade drawn as a wedge](../images/guides/advanced-visualizations/phylogeny_collapsed_dark.webp#only-dark)](../images/guides/advanced-visualizations/phylogeny_collapsed_dark.webp){target=_blank}
 
-**Colour by**, **Label by** and **Scale bar** re-colour, re-label and annotate at view time. Layout mode, ladderise, colour by and tip search are primary controls; labels, metadata strips, legend, support values and the scale bar are cosmetic. One colour scale per column feeds the tips, the strips and the legend, and the legend lists only what is drawn, shortening as you focus or collapse.
+**Colour by**, **Label by** and **Scale bar** re-colour, re-label and annotate at view time. The **View** switch (v1.14.0+), colour by, tip search, layout mode and ladderise are primary controls; labels, metadata strips, legend, support values and the scale bar are cosmetic. One colour scale per column feeds the tips, the strips and the legend, and the legend lists only what is drawn, shortening as you focus or collapse.
 
 [![Phylogenetic example](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light)](../images/guides/advanced-visualizations/phylogenetic_light.webp){target=_blank}
 
@@ -1027,12 +1167,21 @@ No canonical role-based schema — the renderer enumerates binary columns at com
 | `default_annotation_cols` | list[str] \| null | `null` | Columns drawn as annotation tracks under the matrix on first paint |
 | `show_annotations` | bool | `true` | Set-size bars and annotation tracks together |
 | `show_values` | bool | `false` | Print the count above each intersection bar |
+| `set_category_column` | str \| null | `null` | The column the sets are values of (`locality`). Set bars, matrix dots and, with `color_intersections_by: set`, single-set intersections take that column's [`category_colors`](dashboards.md#category-colors). Unset, the column is found by value: the one coloured column that pins every set drawn. `set_colors` still wins per set (v1.14.0+) |
+| `selection_enabled` | bool | `false` | Clicking an intersection, its bar or its matrix column, filters the dashboard to the rows it counts. Requires `selection_column` (v1.14.0+) |
+| `selection_column` | str \| null | `null` | The column whose values the selection emits. Pick an identifier the other tiles share (`Phylum`), not a set column; one listed in `set_columns` is rejected (v1.14.0+) |
 
 **Filtering / row tagging**
 
 Renderer **filters by intersection size and degree** — `min_size` drops intersections below the threshold, `max_degree` drops intersections involving more sets than the limit. Sort, order, minimum size and intersection colouring are primary controls; annotations, set-size bars and count labels are cosmetic.
 
 Since **v1.8.3** dashboard filters reach the plot as well. The grouping values are matrix *columns*, so a filter on that column has no row to match; instead a filter whose values are set names is applied as a subset over the sets, whatever the filter's own column is called, with the sets auto-detected the same way the library detects them. A filter on any other column narrows rows as usual, provided the matrix carries that column: the ampliseq matrix now carries the source DC's per-taxon attributes, so a filter on a taxonomic rank has something to bite on.
+
+Since **v1.14.0** an UpSet can be a filter itself. With `selection_enabled`, a click on an
+intersection emits the values its rows hold in `selection_column`, as a lasso does on a
+scatter: the UpSet highlights that intersection and dims the rest, and a second click or
+the tile's **Reset selection** clears it. The UpSet is not narrowed by its own selection,
+and its intersections cannot be clicked when the server had to sample the matrix.
 
 
 [![UpSet example](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light)](../images/guides/advanced-visualizations/upset_plot_light.webp){target=_blank}
@@ -1057,8 +1206,8 @@ No canonical role-based schema — `step_cols` is a multi-column list (≥2 orde
 | `value_label` | str \| null | `null` | Human-readable label for `value_col` shown in hover tooltips. Defaults to `value_col` when unset (e.g. `"abundance"`). |
 | `value_format` | `raw` \| `fraction` \| `count` | `raw` | Hover display mode. `fraction` multiplies by 100 and appends `%`; `count` uses thousands separators; `raw` adapts decimal precision to magnitude. |
 | `sort_mode` | `alphabetical` \| `total_flow` \| `input` | `total_flow` | Node-ordering rule |
-| `color_mode` | `source` \| `target` \| `step` | `source` | Link colouring rule |
-| `link_opacity` | float (0.05–1) | `0.5` | Link transparency |
+| `color_mode` | `source` \| `target` \| `step` | `source` | Link colouring rule, the tile's **Colour links by**: **Lineage** (`source`), **Target** or **Step**. Since v1.14.0, under `source` and `target` a node wears its lineage's colour, from the dashboard's [`category_colors`](dashboards.md#category-colors) when they pin that column, lighter at each step; `Unclassified` is grey |
+| `link_opacity` | float (0.05–1) | `0.4` | Link transparency (`0.5` before v1.14.0) |
 | `min_link_value` | float (≥0) | `0.0` | Hide links whose aggregated value is below this threshold |
 | `show_node_labels` | bool | `true` | Render node labels |
 
@@ -1918,12 +2067,43 @@ See [Filter Expressions](filter-expressions.md) for the complete expression refe
 | Option | Description | Example |
 |--------|-------------|---------|
 | Title | Metric label | "Total Samples" |
-| Description | Subtitle text | "Across all batches" |
+| Description | Shown in the tooltip on the card's title | "Across all batches" |
 | Icon | Iconify icon name | `mdi:chart-line` |
 | Icon Color | Icon accent color | `#2196F3` |
 | Title Color | Title text color | `#333333` |
 | Title Font Size | Title font size | `sm` |
 | Value Font Size | Hero value font size | `xl` |
+
+### Display options <small>(v1.14.0+)</small> { #card-display-options }
+
+| Option | Description |
+|--------|-------------|
+| `variant` | How the card is drawn. `default`; `headline`, a key figure with a large value and a faint resting icon; `compact`, title and value on one line; `minimal`, headline type with no frame; `accent`, headline type with a coloured rail on the left; `split`, the icon in a tinted block beside the figure. Unset takes the section's `card_variant`, else `default` |
+| `icon_style` | `watermark` (default), a large faint icon on the right, or `badge`, a small icon on a tint of `icon_color` before the title. `badge` applies to the `default` style only; the other styles place the icon themselves. YAML only |
+| `caption` | One line under the value, in place of the aggregation label, which moves to a tooltip on the header |
+| `decimals` | Decimal places of a fractional value, 0 to 6, trailing zeros kept so a row lines up; the card's strip follows. Unset, the places shrink as the value grows (0.0123, 12.35, 907.1, 3,641) |
+| `link` | Where clicking the card goes: `tab:<name>` for a sibling tab, a URL (opened beside the dashboard) or a `/` path. A tab the dashboard lacks leaves the card unlinked |
+
+Hovering the title shows the card's `description` and, when a `caption` takes the
+aggregation line, how the value is computed, for example *Median shannon*. In the
+builder, *Style*, *Caption* and *Decimals* are the **Display** block, and *Link to a tab*
+and *Description* are **Link & help**. In a section with a `card_variant`, *Style* shows
+the section's style with a hint; leaving it there stores nothing, so the card keeps
+following its section, and `variant: default` opts a card out.
+
+```yaml
+- tag: shannon-median
+  component_type: card
+  aggregation: median
+  column_name: shannon
+  title: Shannon diversity
+  variant: headline
+  icon_name: mdi:chart-bell-curve
+  caption: median per sample
+  decimals: 2
+  link: "tab:Alpha Diversity"
+  # workflow_tag, data_collection_tag, column_type...
+```
 
 ---
 
@@ -1940,7 +2120,9 @@ Text components are presentational tiles for section delimiters, narrative intro
 | `order` | int (1–6) | `1` | Heading level — renders as `<h1>` through `<h6>` (values outside 1–6 are clamped) |
 | `alignment` | `left` \| `center` \| `right` | `left` | Horizontal alignment for both title and body |
 | `vertical_alignment` <small>(v1.4.0+)</small> | `top` \| `center` \| `bottom` | `center` | Where the text block sits vertically within its tile |
-| `body` | str | `""` | Optional paragraph rendered below the title |
+| `body` | str | `""` | Optional paragraph rendered below the title. Block markdown since v1.14.0, see below |
+| `surface` <small>(v1.14.0+)</small> | `none` \| `card` \| `tinted` | `none` | `none`: bare prose. `card`: framed like a metric card. `tinted`: on a tint of `accent`, grey without one. On either frame, a leading heading that holds a number (`# 41%`) is set as a headline figure with the line under it as its caption, and a fact list becomes a two-column table |
+| `accent` <small>(v1.14.0+)</small> | str \| null | `null` | Mantine palette name, CSS colour, or `tab:<name>` to borrow a sibling tab's colour. Colours a `tinted` tile and the marks of a `::: steps` flow; a `tab:` accent on a `card` also rests that tab's icon in its corner. Ignored without a frame |
 
 !!! note "`vertical_alignment` defaults to `center` as of v1.4.0"
     The grid sizes a tile in whole row units, so a text tile is almost never the height of
@@ -1948,15 +2130,58 @@ Text components are presentational tiles for section delimiters, narrative intro
     dead space beneath itself. Set `vertical_alignment: top` to restore the earlier
     rendering.
 
-### Inline markdown
+### Markdown
 
-The body and title support a **limited inline subset** — no markdown library is loaded; rendering is done client-side in `TextRenderer.tsx`:
+The title is plain text. The body supports inline markdown: `**bold**`, `*italic*`,
+`` `code` `` and links. No markdown library is loaded and HTML is never rendered; the
+parsing is done client-side by the viewer.
 
-- `**bold**` → **bold**
-- `*italic*` → *italic*
-- `` `code` `` → `code`
+Since **v1.14.0** the body also supports block markdown and a few link schemes. A body
+with none of this syntax renders as before, as one paragraph that keeps its line breaks.
 
-Block-level constructs (lists, tables, blockquotes, fenced code, links, images) are **not** supported. For richer narrative content, use the dashboard's notes panel.
+| Syntax | Renders as |
+|--------|------------|
+| `#`, `##`, `###` | Headings, drawn as H3, H4 and H5 whatever the title's level. `####` stays text |
+| `- item`, `1. item` | Bullet and numbered lists |
+| Pipe tables | Tables; a `:` in the separator row aligns the column |
+| `---` | A divider |
+| `[label](https://…)` | A web link, opened beside the dashboard; a path such as `/dashboards` opens in place. Other schemes stay text |
+| `[label](tab:Tab name)` | A link to a sibling tab by its displayed name, case-insensitive, wearing that tab's icon and colour. An unknown name renders as plain text |
+| `[label](params:)`, `[label](params:primer)` | Opens the **Run parameters** dialog, its search filled with the text after `params:` (letters, digits, `_ . -`) |
+| `![](icon:mdi:dna)` | An inline Iconify icon |
+| `![Athens](color:#1a4f8f)` | A colour dot, the legend key of the category named beside it; a palette name such as `color:teal` works too |
+
+Some lists are drawn as layouts:
+
+| Pattern | Renders as |
+|---------|------------|
+| Every item of a bullet list `**Label** value`, optionally led by `![](icon:…)` | A fact list: one wrapping line of facts (grey label, bold value), or a two-column table on a framed tile. A numbered list stays a list |
+| A list inside `::: steps` … `:::` | A step flow, across the tile when it is wide, down it when narrow. Each item: an icon (else its number), a bold label, what was done; only the last is needed. Trailing `· [label](params:…)` or `· [label](tab:…)` links become small icons beside the step's name, the label on hover. On a framed tile the marks take its `accent`. Quarto's `::: {.steps}` works too |
+| Every item `**41%** claim — context [Tab](tab:…)`: a bold figure holding a digit, then a context, a closing link or both | Result rows, the figure in the linked tab's colour, the link on the right |
+| Every item `[Label](tab:Name)`, optionally followed by `: what it answers` | Tab tiles: the tab's icon, the link's label and the text after it, else the tab's subtitle. A numbered list numbers them 01, 02… as a reading order. Tabs the dashboard lacks are left out, so a template's landing page adapts to the run |
+| `**See also** · [A](tab:A) · [B](tab:B)`, or two links or more | A link row; links to tabs the dashboard lacks are dropped. On a framed tile, a closing paragraph of links alone, with no bold label, sits on its bottom edge |
+
+```yaml
+- tag: reading-path
+  component_type: text
+  title: From reads to communities
+  surface: card
+  body: |
+    ::: steps
+    1. ![](icon:mdi:dna) **Amplicon** V4–V5 · 515F-Y / 926R
+    2. ![](icon:mdi:filter) **Denoise** DADA2 to ASVs · [Settings](params:dada2) · [QC](tab:Sequencing QC)
+    3. ![](icon:mdi:tag) **Classify** SILVA 138.2 + PR2 5.0.0
+    :::
+
+    [All parameters](params:) · [Sequencing QC](tab:Sequencing QC)
+```
+
+The closing paragraph is links alone, so on this framed tile it sits on the bottom edge.
+
+The editor's text builder sets these in **Frame & accent**: **Frame** (`surface`) and, on
+a framed tile, **Accent**, a palette colour or a tab's. Its preview resolves `tab:` links,
+accents and tiles, and a collapsible **Markdown help** under the body has a copyable
+example of each syntax above except the colour dot, plus the headline figure.
 
 ### Example (from `depictio/projects/init/iris/dashboards/overview.yaml`)
 
@@ -1976,6 +2201,47 @@ Block-level constructs (lists, tables, blockquotes, fenced code, links, images) 
 - :material-view-grid: Visual organization of content
 - :material-label: Labeling groups of related components
 - :material-text-long: Short narrative intros above an analytical section
+- :material-view-dashboard-outline: A [landing tab](dashboards.md#landing-tabs): a study recap, a reading path through the tabs, findings that link to the tab showing each one
+
+---
+
+## :material-star-four-points-outline: Highlight Components <small>(v1.14.0+)</small> { #highlight-components }
+
+A highlight draws a figure that lives on another tab of the dashboard, without copying
+it. The figure is rendered from its own definition, so an edit on its tab shows here
+too; the highlight only says how to draw it. It takes this tab's filters, as any figure
+here does, and links back to the tab it comes from: in its header for a figure, among
+the tile's actions for an advanced visualization. It does not filter in turn: its
+figure's selection is off.
+
+The source can be a figure, restyled here (`minimal` unless `figure_style` says
+otherwise), or an advanced visualization, drawn as it is on its tab.
+
+| Field | Description |
+|-------|-------------|
+| `source_tab` | The tab the figure lives on, by its displayed name (the main tab also by the dashboard title). Survives an export to another instance, which writes it in place of the id |
+| `source_dashboard_id` | The tab's id, which the editor writes. Tried first; `source_tab` takes over when it is unknown |
+| `source_component` | The figure: its `index`, else its title, ignoring case and spacing. A figure made in the editor is best named by its title, since a re-import replaces its id |
+| `title`, `subtitle`, `icon_name`, `icon_color`, `hide_legend`, `caption` | As on a [figure](#figure-style). Unset, each takes the source's value |
+| `figure_style` | Style a figure is drawn in here; unset is `minimal`, whatever its tab draws it in. An advanced visualization keeps its own |
+
+```yaml
+- component_type: highlight
+  title: Faith PD per locality
+  subtitle: at the deepest rarefaction depth
+  source_tab: Alpha Diversity
+  source_component: trec-fig-alpha-plateau
+  icon_name: mdi:chart-scatter-plot
+  layout: {x: 0, y: 0, w: 6, h: 7}
+```
+
+A highlight binds to no data collection of its own, so it carries no `workflow_tag` or
+`data_collection_tag`.
+
+In the editor, a figure's or advanced visualization's ⋮ menu offers **Highlight on…**,
+which lists the other tabs; the highlight lands on the chosen tab at the source's size,
+above its sections if it has any. Its **Edit** opens **Figure shown** (the tab and the figure) and **Card
+header & style**. A missing tab or figure draws a placeholder saying so.
 
 ---
 
@@ -2043,6 +2309,21 @@ Single-selection toggle:
 | Column | Column to filter |
 | Options | Available choices |
 | Default | Initially selected option |
+
+### In a filter bar <small>(v1.14.0+)</small> { #filter-bar-keys }
+
+An interactive component placed in a grid section with `display: strip` or
+`filter_bar: true` is drawn in that section's [filter bar](dashboards.md#filter-bars)
+instead of the left panel. Two keys apply there only:
+
+| Option | Description |
+|--------|-------------|
+| `strip_label` | Short label shown in the bar instead of the title |
+| `strip_icon` | `false` hides the icon badge before the label. Unset: shown |
+
+In the interactive builder these are the **In a filter bar** block: *Short label in the
+bar* (up to 40 characters) and *Show icon badge*. Hovering a short label shows the full
+title.
 
 ### Scoped Filters (filter_expr)
 
@@ -2396,4 +2677,3 @@ The component builder guides you through creation:
 - :material-drag: **Drag and drop** components in Edit Mode
 - :material-grid: Components snap to a **grid layout**
 - :material-resize: Resize by dragging corner handles
-WATCHER-VERIFY-1778951276

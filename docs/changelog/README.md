@@ -8,6 +8,99 @@ hide:
 
 # Changelog
 
+## **[v1.14.0](https://github.com/depictio/depictio/releases/tag/v1.14.0)** (October 8, 2026)
+
+!!! success "Minor: landing tabs written in YAML, a Guide on every dashboard, and Spotlight search across its tabs"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.14.0
+ghcr.io/depictio/depictio-viewer:1.14.0
+ghcr.io/depictio/depictio-worker:1.14.0
+ghcr.io/depictio/depictio-cli:1.14.0
+```
+
+### **♻️ Migration**
+
+* **Advanced visualization controls dock beside or above the plot** on a tile with room for them, three in view and the rest under *More options*, unless the component sets `controls_placement: popover`. See [Shared settings](../features/components.md#advanced-viz-shared-settings) ([#1145](https://github.com/depictio/depictio/pull/1145), [97da4ef6](https://github.com/depictio/depictio/commit/97da4ef6), [e7321b4b](https://github.com/depictio/depictio/commit/e7321b4b)).
+
+### **✨ New Features**
+
+* **Text tiles take block markdown**: headings, lists, tables, `::: steps` flows, `tab:` and `params:` links, colour swatches and a `surface` frame, with lists of tab links drawn as tab tiles or result rows. See [Markdown](../features/components.md#markdown) ([#1145](https://github.com/depictio/depictio/pull/1145), [3a16fb36](https://github.com/depictio/depictio/commit/3a16fb36), [44ebf0e8](https://github.com/depictio/depictio/commit/44ebf0e8)).
+* **Plain sections and filter bars**: `appearance: plain` draws a section as a heading over its tiles, and `display: strip` or `filter_bar: true` gathers filters in a compact bar that narrows the tab or that section only. See [Filter bars](../features/dashboards.md#filter-bars) ([#1145](https://github.com/depictio/depictio/pull/1145), [efde5134](https://github.com/depictio/depictio/commit/efde5134), [2b5b3959](https://github.com/depictio/depictio/commit/2b5b3959)).
+* **`category_colors`** give each value of a column one colour on filter chips, figures, UpSets, trees, sunbursts and sankeys, and child tabs inherit them. See [Category colours](../features/dashboards.md#category-colors) ([#1145](https://github.com/depictio/depictio/pull/1145), [efde5134](https://github.com/depictio/depictio/commit/efde5134), [b83094e5](https://github.com/depictio/depictio/commit/b83094e5)).
+* **Card styles** (`variant`: `headline`, `compact`, `minimal`, `accent`, `split`) are set per card or per section with `card_variant`, beside a `caption`, fixed `decimals` and a `link` to a tab. See [Display options](../features/components.md#card-display-options) ([#1145](https://github.com/depictio/depictio/pull/1145), [cff3d3b2](https://github.com/depictio/depictio/commit/cff3d3b2), [f8bbe31c](https://github.com/depictio/depictio/commit/f8bbe31c)).
+* **`figure_style: minimal`** draws a figure or advanced visualization as a landing-page card, its title beside an icon badge, with a `caption` and a `link` to the tab it summarises. See [Figure style](../features/components.md#figure-style) ([#1145](https://github.com/depictio/depictio/pull/1145), [c8021f23](https://github.com/depictio/depictio/commit/c8021f23), [5d95c157](https://github.com/depictio/depictio/commit/5d95c157)).
+* **Highlight components** redraw a figure from another tab under this tab's filters, without copying it, from **Highlight on…** in its menu. See [Highlight Components](../features/components.md#highlight-components) ([#1145](https://github.com/depictio/depictio/pull/1145), [9b281d59](https://github.com/depictio/depictio/commit/9b281d59)).
+* **Phylogeny summary by rank**: `collapse_rank` draws one tip per lineage, sized by tips or reads, with a column of dots per site, and the builder sets a tree up in steps. See [Summary by rank](../features/components.md#phylogeny-summary) ([#1145](https://github.com/depictio/depictio/pull/1145), [58ba52c9](https://github.com/depictio/depictio/commit/58ba52c9), [cadbc5cf](https://github.com/depictio/depictio/commit/cadbc5cf)).
+* **An UpSet can filter the dashboard**: a click on an intersection emits its rows' `selection_column` values. See [UpSet](../features/components.md#upset) ([#1145](https://github.com/depictio/depictio/pull/1145), [9fa11889](https://github.com/depictio/depictio/commit/9fa11889)).
+* **Tab groups and tab defaults**: `tab_group` lists child tabs under headings in the sidebar, and `filter_panel_default`, `content_width_default` and `show_tab_header` set what a tab opens with. See [Tab groups](../features/dashboards.md#tab-groups) and [Tab defaults](../features/dashboards.md#tab-defaults) ([#1145](https://github.com/depictio/depictio/pull/1145), [922a4457](https://github.com/depictio/depictio/commit/922a4457), [22eadf99](https://github.com/depictio/depictio/commit/22eadf99)).
+* **The dashboard Guide**, an entry in every dashboard's sidebar, shows how to move around, filter and read it, with live demos built from the dashboard's own components. See [The dashboard Guide](../usage/guides/dashboard-guide.md) ([#1145](https://github.com/depictio/depictio/pull/1145), [2d40cdd8](https://github.com/depictio/depictio/commit/2d40cdd8), [454bf14a](https://github.com/depictio/depictio/commit/454bf14a)).
+* **Spotlight search**: **⌘K** / **Ctrl+K** searches every component of every tab and lands on the one picked, unfolding whatever hides it. See [Spotlight search](../usage/guides/spotlight-search.md) ([#1152](https://github.com/depictio/depictio/pull/1152), [d2a8cb84](https://github.com/depictio/depictio/commit/d2a8cb84), [12234adc](https://github.com/depictio/depictio/commit/12234adc)).
+* **Copy to tab…** in a component's menu adds a copy to another tab. See [Copy to tab](../features/dashboards.md#copy-to-tab) ([#1145](https://github.com/depictio/depictio/pull/1145), [bf42e2a3](https://github.com/depictio/depictio/commit/bf42e2a3)).
+
+### **🚀 Improvements**
+
+* **Settings is a dialog with a rail of sections**: *Your view* for the reader's font size and page width, then, in edit mode, tab defaults, tiles, filtering, Guide and branding, all in the dashboard's colours. See [Dashboard settings](../usage/guides/dashboard_usage.md#dashboard-settings-drawer) ([#1145](https://github.com/depictio/depictio/pull/1145), [e8545b20](https://github.com/depictio/depictio/commit/e8545b20), [f71da622](https://github.com/depictio/depictio/commit/f71da622)).
+* **A child tab without a brand of its own draws in its main tab's**, figures and builder previews included. See [Settings for everyone](../usage/guides/dashboard_usage.md#settings-for-everyone) ([#1145](https://github.com/depictio/depictio/pull/1145), [743ee0f8](https://github.com/depictio/depictio/commit/743ee0f8), [1cf3e4e8](https://github.com/depictio/depictio/commit/1cf3e4e8)).
+* **A section on every tab can skip some** with `exclude_tabs`, and says *Filtered* with a *Reset filters* action where it is pinned. See [Sections on every tab](../features/dashboards.md#persistent-sections) ([#1145](https://github.com/depictio/depictio/pull/1145), [35343b57](https://github.com/depictio/depictio/commit/35343b57)).
+* **Sunburst and sankey colour by lineage**, small sunburst arcs fold into *Other*, and stacked taxonomy strips are labelled in place. See [Sunburst](../features/components.md#sunburst) ([#1145](https://github.com/depictio/depictio/pull/1145), [b83094e5](https://github.com/depictio/depictio/commit/b83094e5), [a2bfc69d](https://github.com/depictio/depictio/commit/a2bfc69d)).
+* **Component builders are laid out in collapsible sections**, the required ones always open. See [Step 3](../usage/guides/dashboard_creation.md#step-3-customize-your-component) ([#1145](https://github.com/depictio/depictio/pull/1145), [ccb68f97](https://github.com/depictio/depictio/commit/ccb68f97), [c2953547](https://github.com/depictio/depictio/commit/c2953547)).
+* **Grids count in half rows**, so fitted text and cards leave less blank, and phones lay tiles out in reading order. See [Right Panel](../features/dashboards.md#right-panel-visualizations) ([#1145](https://github.com/depictio/depictio/pull/1145), [5755726c](https://github.com/depictio/depictio/commit/5755726c), [74c681cc](https://github.com/depictio/depictio/commit/74c681cc)).
+
+### **🐛 Bug Fixes**
+
+* **A YAML export keeps component descriptions, text tile bodies and advanced visualization configs**, which a re-import used to lose. See [Landing-tab keys](../features/yaml-sync.md#landing-tab-keys) ([#1145](https://github.com/depictio/depictio/pull/1145), [58ba52c9](https://github.com/depictio/depictio/commit/58ba52c9), [cec284e3](https://github.com/depictio/depictio/commit/cec284e3)).
+* **An editor opened on a narrow screen no longer saves its one-column layout as the desktop one** ([#1145](https://github.com/depictio/depictio/pull/1145), [72700706](https://github.com/depictio/depictio/commit/72700706)).
+* **`depictio ingest` reads boolean pipeline parameters stored as strings**, so an ampliseq run with `--ancombc true` keeps its Differential Abundance tab ([#1145](https://github.com/depictio/depictio/pull/1145), [f9a5dcb5](https://github.com/depictio/depictio/commit/f9a5dcb5)).
+* **The *Underlying data* grid opens its column menus over the popover** instead of behind it ([#1145](https://github.com/depictio/depictio/pull/1145), [572d711b](https://github.com/depictio/depictio/commit/572d711b)).
+* **Maps draw their title once, follow dark mode and float the legend on narrow tiles** ([#1145](https://github.com/depictio/depictio/pull/1145), [1847119f](https://github.com/depictio/depictio/commit/1847119f), [74c681cc](https://github.com/depictio/depictio/commit/74c681cc)).
+
+---
+
+## **[v1.13.2](https://github.com/depictio/depictio/releases/tag/v1.13.2)** (October 8, 2026)
+
+!!! success "Patch: a scan that finds nothing says so, and a dry run that previews the scan"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.13.2
+ghcr.io/depictio/depictio-viewer:1.13.2
+ghcr.io/depictio/depictio-worker:1.13.2
+ghcr.io/depictio/depictio-cli:1.13.2
+```
+
+### **🐛 Bug Fixes**
+
+* **A scan that matches nothing warns** where it looked, what it looked for and what it found, instead of reporting success ([#1040](https://github.com/depictio/depictio/pull/1040)).
+* **`--dry-run` previews the scan**: it validates the project configuration, still offline, and lists how many files each data collection would match. See [Ingest Command](../depictio-cli/usage.md#ingest-command) ([#1040](https://github.com/depictio/depictio/pull/1040)).
+
+---
+
+## **[v1.13.1](https://github.com/depictio/depictio/releases/tag/v1.13.1)** (October 8, 2026)
+
+!!! success "Patch: refreshes that keep attached runs and gain the template's new tabs"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.13.1
+ghcr.io/depictio/depictio-viewer:1.13.1
+ghcr.io/depictio/depictio-worker:1.13.1
+ghcr.io/depictio/depictio-cli:1.13.1
+```
+
+### **🐛 Bug Fixes**
+
+* **A refresh keeps the runs attached with `--attach-run`**, and stops if one of their locations is missing (`--drop-missing-runs` drops them). See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1157](https://github.com/depictio/depictio/pull/1157)).
+* **A kept multi-tab dashboard gains the template tabs it lacks**, and two `--dashboard` files with the same name stay two dashboards. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1157](https://github.com/depictio/depictio/pull/1157)).
+* **`-v` no longer logs the substituted project configuration**, and your own AWS session token is no longer sent to Depictio's S3 ([#1157](https://github.com/depictio/depictio/pull/1157)).
+* **Interrupting `depictio local up` no longer leaves processes running** ([#1157](https://github.com/depictio/depictio/pull/1157)).
+
+---
+
 ## **[v1.13.0](https://github.com/depictio/depictio/releases/tag/v1.13.0)** (October 7, 2026)
 
 !!! success "Minor: comments and annotations on dashboards, ten new visualization kinds, and thirteen new nf-core templates"
