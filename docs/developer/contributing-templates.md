@@ -222,7 +222,10 @@ workflows:
 Such a template is instantiated with `--manifest <url or path>` on the CLI, or
 from the **From Manifest** tab of the web UI (`POST /projects/from_manifest`).
 The tab only lists templates in which at least one data collection uses a
-`manifest` scan. Two things follow from the
+`manifest` scan. The **From a run folder** tab, likewise, lists only templates
+that read a data root: a data collection whose scan mentions `{DATA_ROOT}`, or
+a scan or recipe collection in a workflow whose locations do. `init/*`
+templates are never listed there. Two things follow from the
 [manifest contract](../usage/projects/remote-data.md#the-data-manifest-contract):
 
 - Mark `optional: true` the collections the manifest may not cover. When the

@@ -103,6 +103,10 @@ around.
 The manifest's optional `run` column plays the role a run directory plays locally. It
 is stored as the file's run and injected as `depictio_run_id`, with `remote` as the
 value when the manifest has no run column, so every per-run feature keeps working.
+A project made from an [`s3://` run folder](../usage/projects/remote-data.md#a-run-folder-on-s3)
+keeps its runs as a local one does: in a `sequencing-runs` workflow, each first-level
+folder under the prefix that matches `runs_regex` becomes a run, and its files carry its
+name as `depictio_run_id`.
 
 Materialisation is unchanged: a remote table still becomes a Delta Lake table on the
 instance's own S3, fetched once at ingestion rather than read through at render time.

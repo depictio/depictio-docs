@@ -170,13 +170,13 @@ The template is detected from the run's own provenance, such as the pipeline nam
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `DATA_DIR` | `path` | | The results directory to ingest, as the argument, or an `s3://` prefix holding them (see [Remote data and manifests](../usage/projects/remote-data.md)). Without `--template` or `--project-config-path`, the template is detected from it. Formerly `--data-root` |
+| `DATA_DIR` | `path` | | The results directory to ingest, as the argument, or an `s3://` prefix holding them (see [A run folder on S3](../usage/projects/remote-data.md#a-run-folder-on-s3)). Without `--template` or `--project-config-path`, the template is detected from it. Formerly `--data-root` |
 | `--server` | `string` | see [Which server a command uses](#choosing-a-server) | `local`, or a CLI configuration file. Formerly `--CLI-config-path` |
 | `--template` | `string` | detected | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, for the newest shipped version (v1.5.2+). Also the path of a template directory or YAML file, such as an [exported bundle](#template-export). Not with `--project-config-path` |
 | `--project-config-path` | `string` | | Project YAML, for a pipeline Depictio ships no template for. Not with `--template` |
 | `--update-config` | `flag` | `false` | Refresh a project that exists, see [Refreshing a project](#refreshing-a-project). `--overwrite` is the same option |
 | `--var` | `KEY=VALUE` | | Template variable, repeatable |
-| `--dry-run` | `flag` | `false` | Validate the project configuration locally and list the steps that would run, without contacting the server. From v1.13.2 it also lists how many files each data collection would match. With a template and `DATA_DIR`, it shows what each data collection finds there, see [Remote data and manifests](../usage/projects/remote-data.md) |
+| `--dry-run` | `flag` | `false` | Validate the project configuration locally and list the steps that would run, without contacting the server. From v1.13.2 it also lists how many files each data collection would match. With a template and `DATA_DIR`, it shows what each data collection finds there, see [Preview before ingesting](../usage/projects/remote-data.md#preview-before-ingesting) |
 
 Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/projects/templates.md#recipe-seeds) committed beside the data: a `source: transformed` data collection with a `{DATA_ROOT}/{dc_tag}.tsv` next to it is scanned from that file instead of re-running its recipe against raw pipeline inputs the bundled projects do not ship. See [Templates](../usage/projects/templates.md) for full documentation.
 
@@ -366,7 +366,7 @@ Attaching a directory that is already one of the project's locations records it,
     `not counted (remote)`, and a collection that would match nothing is named in a warning.
     With a template and `DATA_DIR`, the dry run prints what each data collection finds under
     `DATA_DIR` instead, recipe collections included: see
-    [Remote data and manifests](../usage/projects/remote-data.md).
+    [Preview before ingesting](../usage/projects/remote-data.md#preview-before-ingesting).
 
 === "Debugging"
 
@@ -789,7 +789,7 @@ depictio template export <project_id> --template-id <id> [OPTIONS]
 | `--output-dir` / `-o` | `path` | `.` | Directory to unpack into; the bundle lands in `<output-dir>/<template-id>/` |
 | `--version` | `string` | `1.0.0` | Template version |
 | `--description` | `string` | | Template description |
-| `--data-dir` | `string` | | Local path prefix to re-parameterise as `{DATA_ROOT}`. Defaults to the data root recorded when the project itself came from a template; leave empty for a manifest-driven project. Formerly `--data-root` |
+| `--data-dir` | `string` | | Path prefix to re-parameterise as `{DATA_ROOT}`, a local folder or an `s3://` prefix. Defaults to the data root recorded when the project itself came from a template; leave empty for a manifest-driven project. Formerly `--data-root` |
 
 ```bash
 depictio template export 6824cb3b89d2b72169309737 \

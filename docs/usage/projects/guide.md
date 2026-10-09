@@ -344,8 +344,9 @@ scan:
 
 A collection can also point at one file on the web or in a bucket (`url`), at
 every object under an S3 prefix (`s3_prefix`), or at the entries of a Data
-Manifest (`manifest`). The server fetches the files, so these modes also work
-from the web UI with no CLI installed. On the CLI, `--bind TAG=LOCATION` picks
+Manifest (`manifest`). Whoever ingests reads the files from there, the CLI or
+the server, so these modes also work from the web UI with no CLI installed, and
+the server can refresh them later. On the CLI, `--bind TAG=LOCATION` picks
 the mode from the shape of the location, so a template written for a local tree
 can be run against a bucket:
 
@@ -584,7 +585,7 @@ That single command:
 
 Without `--template`, the template is detected from the results directory when it can be. Running the same command again with `--update-config` refreshes the project and keeps its dashboards as edited in the viewer; see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project).
 
-The results directory can also be an `s3://` prefix, a manifest-driven template takes `--manifest <url or path>` in place of the directory, and any template can be pointed at other locations, collection by collection, with `--bind TAG=LOCATION`. See [Remote data and manifests](remote-data.md).
+The results directory can also be an `s3://` prefix, a manifest-driven template takes `--manifest <url or path>` in place of the directory, and any template can be pointed at other locations, collection by collection, with `--bind TAG=LOCATION`. The web UI creates a project from a run folder too, with **From a run folder**. See [Remote data and manifests](remote-data.md).
 
 ### When to use templates
 

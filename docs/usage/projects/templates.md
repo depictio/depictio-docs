@@ -135,10 +135,14 @@ depictio ingest /path/to/results --template nf-core/ampliseq/latest
   [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) passes for you since
   **v1.10.0**, read from the `manifest` block of its `nextflow.config`. Its version
   must match a shipped template, or the run stops with an error;
-- the results directory itself: the run information an nf-core pipeline writes
-  under `pipeline_info/` names the pipeline and its version, and the matching
-  template is used. When no shipped version matches, the closest version that is
-  not newer is used, with a warning.
+- the results directory itself, local or an `s3://` prefix: the run information
+  an nf-core pipeline writes under `pipeline_info/` names the pipeline and its
+  version, and the matching template is used. When no shipped version matches,
+  the closest version that is not newer is used, with a warning.
+
+The web UI's **From a run folder** tab detects the template the same way and
+shows the comparison before anything is created; see
+[From a run folder](remote-data.md#from-a-run-folder).
 
 When none applies, the command stops and asks for `--template` or
 `--project-config-path`.
@@ -378,11 +382,11 @@ run of the same pipeline is one command.
 
 === "Web UI"
 
-    On the project page, **Export as template**. The button is enabled for
-    users who can edit the project and shown disabled otherwise, with an
-    *Owner permission required* hint. The dialog asks for a template ID, a
-    version, an optional description and an optional data root, then
-    downloads the bundle as a zip.
+    On the project page, **Project settings**, then **Export template**: a
+    **Template ID**, a **Version**, a **Description (optional)** and a
+    **Data root (optional)**. **Export** downloads the bundle as a zip named
+    after the template ID. Owners and editors can export; on a public
+    instance, administrators only.
 
 === "API"
 
@@ -403,9 +407,9 @@ keeps on each data collection. Per-project storage credentials are never
 exported.
 
 Data bindings are re-parameterised. Stored manifest URLs become
-`{MANIFEST_URL}`, declared as a required variable. A local path prefix becomes
-`{DATA_ROOT}` when `--data-dir` is given, or when the project itself came
-from a template that recorded one. A template binds one manifest, so distinct
+`{MANIFEST_URL}`, declared as a required variable. A data root, a local path
+or an `s3://` prefix, becomes `{DATA_ROOT}` when `--data-dir` is given, or when
+the project itself came from a template that recorded one. A template binds one manifest, so distinct
 stored manifest URLs all collapse onto the same placeholder, with a warning.
 
 ### Round-trip guarantee
@@ -423,7 +427,7 @@ and the picker, or run it directly by path with `--template ./folder`.
 ## Additional Resources
 
 - **[Template Catalog](../../pipeline-templates/README.md)**: browse and use available templates
-- **[Remote data and manifests](remote-data.md)**: URL, prefix and manifest scan modes, `--bind`, sharing a project
+- **[Remote data and manifests](remote-data.md)**: run folders on S3, URL, prefix and manifest scan modes, `--bind`, creating a project in the web UI, sharing a project
 - **[Recipes](recipes.md)**: how to write and test data transformation recipes
 - **[Contributing Templates](../../developer/contributing-templates.md)**: add a new template
 - **[CLI Usage](../../depictio-cli/usage.md#ingest-command)**: full `depictio ingest` reference

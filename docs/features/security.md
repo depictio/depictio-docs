@@ -192,11 +192,14 @@ All user input is validated:
 
 ## Remote Data Sources { #remote-data-sources }
 
-The `url`, `s3_prefix` and `manifest` scan modes make the server fetch
-user-supplied URLs, which is a textbook server-side request forgery surface.
-Every such fetch, whether creating a data collection from a URL, ingesting a
-manifest, or a refresh task on the Celery worker, goes through one gateway
-module; nothing in server context reads a user-supplied URL directly. See
+The `url`, `s3_prefix` and `manifest` scan modes, and creating a project from
+a run folder, make the server read locations a user supplies, which is a
+textbook server-side request forgery surface. Every `https://` fetch, whether
+creating a data collection from a URL, ingesting a manifest, or a refresh task
+on the Celery worker, goes through one gateway module; every `s3://` read is
+decided by one [access module](#s3-locations); a folder on the server's disk is
+read only on a [`depictio local`](#folders-on-the-servers-disk) server. Nothing
+in server context reads a user-supplied location directly. See
 [Remote data and manifests](../usage/projects/remote-data.md) for the feature
 itself.
 
@@ -222,6 +225,53 @@ hosts, reads directly but keeps the redirect and size caps.
     **allowlist-only**: set `DEPICTIO_REMOTE_URL_ALLOWLIST` to the hosts you
     trust, which turns the address check into a host check.
 
+### S3 locations { #s3-locations }
+
+Which bucket the server reads, and with which credentials, is decided from the
+configuration before any request goes out, so a bucket name typed by a user
+never becomes an existence or region oracle.
+
+- The bucket that holds the instance's own data is refused as a source: it
+  holds every project's data.
+- The instance's own S3 keys are never used for a user-supplied location.
+- A bucket is read without credentials only when listed in
+  `DEPICTIO_REMOTE_PUBLIC_S3_BUCKETS`, and with the server's ambient
+  credentials only when listed in `DEPICTIO_REMOTE_CREDENTIALED_S3_BUCKETS`.
+  Anyone on the instance can read what the second list names. Both are empty
+  by default.
+- Any other bucket needs the project's storage settings, and is read with them
+  alone. Settings typed in while creating a project from a run folder are the
+  only credentials that request uses.
+- Errors name the bucket and the prefix, never an endpoint of the instance, a
+  key or a request id.
+
+The full order is under
+[Reading S3 buckets](../usage/projects/remote-data.md#reading-s3-buckets). The
+CLI reads from the user's own machine and skips the instance-bucket refusal and
+the credentialed list.
+
+### Folders on the server's disk { #folders-on-the-servers-disk }
+
+A server never reads a local path stored on a project on a user's behalf: data
+ingested from a local folder is refreshed by the CLI that ingested it. The one
+exception is a `depictio local` server, which is the user's own computer:
+
+- Local folders are off unless `DEPICTIO_LOCAL_DATA_ROOTS` is set, and only in
+  single-user mode (`DEPICTIO_AUTH_SINGLE_USER_MODE`). `depictio local up` sets
+  both, with the home folder and the folders given with `--data-root-allow`. A
+  server with roots but not in single-user mode logs a warning and keeps them
+  off.
+- Every local read (listing, inspecting, creating, refreshing) needs a request
+  addressed to a loopback host (`localhost` or a loopback address), which also
+  defends against DNS rebinding, from an administrator.
+- Paths are resolved to their real path and confined to the roots. Hidden
+  folders and the folders Depictio keeps for itself (`~/.depictio`, the local
+  home, the keys and CLI configuration folders, the backups) are refused even
+  below a root.
+- A run folder over 100,000 files is refused, and everything a project made
+  from a run folder reads must be inside it: a template variable or data
+  collection pointing elsewhere is refused.
+
 ### Per-project storage credentials
 
 A project owner can attach S3-compatible credentials so remote and manifest
@@ -235,8 +285,11 @@ collections can read a private bucket.
   Celery worker decrypts inside refresh tasks, so backend and worker must mount
   the same keys volume; a worker with a keys directory of its own would mint a
   second key and find every stored secret unreadable.
-- The secret is **write-only** in the API: responses only carry `has_secret`,
-  and an update that omits the secret keeps the stored one.
+- The secret is **write-only** in the API: responses only carry `has_secret`.
+  An update that omits the secret keeps the stored one only while the access
+  key, the endpoint and the bucket are unchanged, so a stored secret is never
+  sent to another endpoint.
+- Only project owners and administrators read or change the settings.
 - The endpoint URL passes the same host gating as remote data URLs. The
   instance's own object storage is always allowed; a private-network endpoint
   needs to be allowlisted.

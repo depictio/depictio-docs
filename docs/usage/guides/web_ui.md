@@ -180,25 +180,22 @@ filters. The link grants no access: it only narrows what they could already open
 - You can access workflows and data collections recursively within each project
 - Each entity allows you to view configuration details and preview data
 
-### <span style="color: #45B8AC;">:material-link-variant:</span> Creating a project from a manifest { #creating-a-project-from-a-manifest }
+### <span style="color: #45B8AC;">:material-link-variant:</span> Creating a project from a run folder or a manifest { #creating-a-project-from-a-manifest }
 
-**Create project** offers three tabs: **Create New**, **Import** and **From
-Manifest**. The third builds a project from a
-[Data Manifest](../projects/remote-data.md#the-data-manifest-contract) hosted at
-a URL, with no CLI involved, in three steps:
+**+ New Project** offers four tabs: **Create New**, **Import**, **From
+Manifest** and **From a run folder**. The last two build a project from data
+the server reads, with no CLI involved, in three steps: **Source**, **Preview**
+(a dry run, nothing is created) and **Create**.
 
-1. **Source**: paste the **Manifest URL**, pick a **Template** among the
-   manifest-capable ones, and optionally give the project a name and values for
-   the template's extra variables.
-2. **Preview**: a dry run of the plan. It shows how many manifest entries each
-   data collection will receive, which manifest types no collection consumes,
-   which optional collections were dropped because the manifest has no rows of
-   their type, and which dashboards will be imported. Nothing is created yet.
-3. **Create**: the data is fetched by the server and ingested, the template's
-   dashboards are imported, and you land on the first of them.
-
-The same flow is available to scripts as `POST /projects/from_manifest`; see
-[Remote data and manifests](../projects/remote-data.md#creating-a-project-from-a-manifest).
+- **From a run folder**: point at the results folder of one pipeline run, in a
+  bucket or, on a `depictio local` server, on this computer. Depictio
+  recognises the pipeline, picks the template and shows what each data
+  collection finds there; the data is ingested in the background. See
+  [From a run folder](../projects/remote-data.md#from-a-run-folder).
+- **From Manifest**: paste the URL of a
+  [data manifest](../projects/remote-data.md#the-data-manifest-contract) and
+  pick a template that reads one. See
+  [From a manifest](../projects/remote-data.md#creating-a-project-from-a-manifest).
 
 ## <span style="color: #8BC34A;">:material-account:</span> User Information (/profile)
 
@@ -267,28 +264,29 @@ dashboard's Settings <small>(v1.6.0+)</small>.
     </a>
 </div>
 
-Three controls on this page deal with data that is not on the server's own
-disk; the mechanisms are described on
+Data that is not on the server's own disk is handled in two places; the
+mechanisms are described on
 [Remote data and manifests](../projects/remote-data.md).
 
 - **Remote URL** in **Create Data Collection**: the *Table* tab offers
   **Upload a file** or **Remote URL**. With the latter, paste an `https://` or
   `s3://` file URL; the server fetches it, so the file never travels through
   the browser, and a private bucket is read with the project's storage
-  credentials.
-- **Storage** panel, below the links section: project owners attach
-  S3-compatible credentials (endpoint URL, bucket, region, access key ID,
-  secret access key) so remote and manifest collections can read a private
-  bucket, then **Test connection**. A badge reads *Secret set* or *No secret*;
-  the secret itself is never displayed again, and leaving it empty on an edit
-  keeps the stored one. **Remove** deletes the configuration. Other members see
-  the panel but cannot edit it.
-- **Export as template** in the header: packages the project and its dashboards
-  into a template bundle (zip) after asking for a template ID, a version, an
-  optional description and an optional data root. The button is enabled for
-  users who can edit the project and shown disabled otherwise, with an
-  *Owner permission required* hint. See
-  [Export a project as a template](../projects/templates.md#export-a-project-as-a-template).
+  settings.
+- **Project settings** in the header opens three sections; nothing is saved on
+  close, each acts on its own button:
+    - **Storage**, for project owners: the endpoint, bucket, region and keys of
+      a private bucket the project reads, with **Test connection**. See
+      [Project storage settings](../projects/remote-data.md#project-storage-settings).
+    - **Data refresh**: re-read the collections that come from a manifest, a
+      URL or a bucket, and rebuild their tables. See
+      [Refreshing the data](../projects/remote-data.md#refreshing-the-data).
+    - **Export template**: package the project and its dashboards as a template
+      bundle (zip). See
+      [Export a project as a template](../projects/templates.md#export-a-project-as-a-template).
+
+  **Data refresh** and **Export template** are for owners and editors; on a
+  public instance, administrators only.
 
 ### <span style="color: #45B8AC;">:material-monitor-eye:</span> Dashboard viewer (/dashboard/{id})
 
