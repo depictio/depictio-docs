@@ -47,7 +47,7 @@ links:
 | `source_dc_id` | :material-check: Yes | Data collection containing the filter |
 | `source_column` | :material-check: Yes | Column to filter on |
 | `target_dc_id` | :material-check: Yes | Data collection to receive filtered values |
-| `target_type` | :material-check: Yes | Type of target: `table` or `multiqc` |
+| `target_type` | :material-check: Yes | Type of target: `table`, `multiqc` or `image` |
 | `link_config` | :material-check: Yes | Resolution configuration (see below) |
 
 <!-- prettier-ignore -->
@@ -76,12 +76,49 @@ Resolvers map source values to target identifiers:
 | :material-equal: `direct` | Same value in both DCs | `sample_id` → `sample_id` |
 | :material-map: `sample_mapping` | Canonical ID → MultiQC variants | `S1` → `[S1_R1, S1_R2]` |
 | :material-regex: `pattern` | Template substitution | `{sample}.bam` |
+| :material-dna: `region` | A genomic region, renamed onto the target's coordinate columns | `chrom`, `start` → `chrom1`, `start1` |
 
 ### :material-help-circle: When to Use Each Resolver
 
 - :material-equal: **`direct`**: Source and target use identical identifiers
 - :material-map: **`sample_mapping`**: MultiQC sample names differ from your canonical IDs (most common for MultiQC)
 - :material-regex: **`pattern`**: Target uses predictable naming convention
+- :material-dna: **`region`**: A genomic region selected on one collection should narrow another collection that names its chromosome and position columns differently
+
+### :material-dna: Region links { #region-links }
+
+A [genome region selection](interactive-selection-filtering.md#genome-region-selection)
+travels the dashboard as two ordinary filters on the emitting collection: the chromosomes
+on its chromosome column and a `[start, end]` range on its position column. A tile bound
+to the **same** collection narrows with no link at all. A tile on **another** collection
+needs to know which of its own columns hold the chromosome and the position, and that is
+all a `region` link says:
+
+```yaml
+links:
+  - source_dc_tag: "domains"          # the collection the region is selected on
+    source_column: "chrom"            # its chromosome column
+    target_dc_tag: "contact_matrix"
+    target_type: "table"
+    link_config:
+      resolver: "region"
+      columns: {chrom: "chrom1", pos: "start1"}
+    description: "A region selected on the domain track narrows the contact matrix"
+```
+
+Unlike the other resolvers, a region link reads no data and maps no values: a chromosome
+name and a base-pair coordinate mean the same thing in every collection aligned to the same
+assembly, so the two filters are re-emitted unchanged under the target's column names.
+Consequences worth knowing:
+
+- `link_config.columns` must name both `chrom` and `pos`. A region link missing either is
+  rejected when the project is validated, rather than silently narrowing nothing.
+- The chromosome and the range travel together. A range with no chromosome would narrow
+  every chromosome of the target at once, so it is never forwarded alone.
+- `source_column` picks which chromosome column the link follows, for a collection that
+  carries two coordinate bindings. Leave it on the column the region is emitted on.
+- Region links take one hop. To narrow several collections from one track, declare one link
+  per target from the same source, as above.
 
 ## :material-target: Supported Target Types
 

@@ -69,14 +69,22 @@ extra_css:
   - stylesheets/timeline.css
   - stylesheets/blog.css
   - stylesheets/neoteroi-mkdocs-v1.1.3.css
+  - stylesheets/asciinema.css
   # - stylesheets/css-v1.0.4.css
   - https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
   - https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css
+  - https://cdn.jsdelivr.net/npm/asciinema-player@3.17.0/dist/bundle/asciinema-player.css
 
 # Extra JavaScript
 extra_javascript:
-  - javascripts/triangular-animation.js
+  - javascripts/depictio-rose.js
+  - javascripts/depictio-logo.js
+  - javascripts/depictio-theme-sync.js
   - javascripts/catalog-fullscreen.js
+  - javascripts/template-version.js
+  - javascripts/doc-sections.js
+  - javascripts/template-catalog.js
+  - javascripts/asciinema.js
 
 # Markdown Extensions
 markdown_extensions:
@@ -108,7 +116,8 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path:
         - docs
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.inlinehilite
   - pymdownx.superfences:
       custom_fences:
@@ -209,6 +218,9 @@ nav:
       - Server:
           - Docker Compose: installation/docker.md
           - Kubernetes: installation/kubernetes.md
+          - Python package: installation/local.md
+      - Upgrade guides:
+          - "v1.12.0: MinIO → SeaweedFS": installation/upgrade/v1.12.0-seaweedfs.md
       - CLI:
           - installation/cli.md
       - Configuration: installation/configuration.md
@@ -223,6 +235,8 @@ nav:
           - Dashboard creation: usage/guides/dashboard_creation.md
           - Picking from the catalog: usage/guides/catalog-picker.md
           - Using the dashboard: usage/guides/dashboard_usage.md
+          - The dashboard Guide: usage/guides/dashboard-guide.md
+          - Spotlight search: usage/guides/spotlight-search.md
           - Real-time events: usage/guides/realtime-events.md
       - Projects:
           - usage/projects/index.md
@@ -235,6 +249,7 @@ nav:
       - CLI:
           - depictio-cli/index.md
           - Usage: depictio-cli/usage.md
+          - Nextflow trigger: depictio-cli/nextflow-trigger.md
           - Minimal YAML config: depictio-cli/minimal_config.md
       - Administration:
           - usage/administration/index.md
@@ -252,6 +267,7 @@ nav:
           - Dashboards: features/dashboards.md
           - Components: features/components.md
           - Interactive Selection Filtering: features/interactive-selection-filtering.md
+          - Comments and Annotations: features/comments-annotations.md
       - Data Integration:
           - Cross-DC Filtering: features/cross-dc-filtering.md
           - Filter Expressions: features/filter-expressions.md
@@ -274,6 +290,29 @@ nav:
           - pipeline-templates/nf-core/index.md
           - ampliseq: pipeline-templates/nf-core/ampliseq.md
           - viralrecon: pipeline-templates/nf-core/viralrecon.md
+          - variantbenchmarking: pipeline-templates/nf-core/variantbenchmarking.md
+          - differentialabundance: pipeline-templates/nf-core/differentialabundance.md
+          - funcscan: pipeline-templates/nf-core/funcscan.md
+          - airrflow: pipeline-templates/nf-core/airrflow.md
+          - rnafusion: pipeline-templates/nf-core/rnafusion.md
+          - rnaseq: pipeline-templates/nf-core/rnaseq.md
+          - taxprofiler: pipeline-templates/nf-core/taxprofiler.md
+          - chipseq: pipeline-templates/nf-core/chipseq.md
+          - atacseq: pipeline-templates/nf-core/atacseq.md
+          - cutandrun: pipeline-templates/nf-core/cutandrun.md
+          - eager: pipeline-templates/nf-core/eager.md
+          - hic: pipeline-templates/nf-core/hic.md
+          - mag: pipeline-templates/nf-core/mag.md
+          - methylseq: pipeline-templates/nf-core/methylseq.md
+          - nanoseq: pipeline-templates/nf-core/nanoseq.md
+          - sarek: pipeline-templates/nf-core/sarek.md
+          - scrnaseq: pipeline-templates/nf-core/scrnaseq.md
+          - riboseq: pipeline-templates/nf-core/riboseq.md
+          - smrnaseq: pipeline-templates/nf-core/smrnaseq.md
+          - genomeassembler: pipeline-templates/nf-core/genomeassembler.md
+          - mhcquant: pipeline-templates/nf-core/mhcquant.md
+          - demultiplex: pipeline-templates/nf-core/demultiplex.md
+          - rnasplice: pipeline-templates/nf-core/rnasplice.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md

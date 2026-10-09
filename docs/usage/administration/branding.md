@@ -17,7 +17,7 @@ Mantine defaults  <-  DEPICTIO_BRANDING_*  <-  /admin overrides  <-  dashboard
 | --- | --- | --- |
 | Deployment defaults | `DEPICTIO_BRANDING_*` environment variables. See [Environment Reference](../../installation/env-reference.md#branding) | Yes |
 | Instance overrides | **Administration → Branding** at `/admin`, saved server-side | No |
-| Dashboard override | The dashboard's Settings drawer, or `brand_theme:` in its YAML | No |
+| Dashboard override | The dashboard's Settings, or `brand_theme:` in its YAML | No |
 
 Each layer states only what differs and inherits the rest. That is what makes a dashboard's *inherit the instance* real rather than a copy: change the instance logo and every dashboard that never uploaded its own follows.
 
@@ -74,7 +74,9 @@ The badge renders exactly when the Depictio wordmark does not, meaning when the 
 
 ## A dashboard override
 
-From a dashboard in edit mode: **Settings → Appearance → Branding → Customise**. The same fields appear, with the instance's values shown as placeholders. The override applies to that dashboard's page only, so it can wear its own identity inside a differently branded instance. See [Using the dashboard](../guides/dashboard_usage.md#appearance) for the rest of the Appearance section.
+From a dashboard in edit mode: **Settings → Branding → Customise**. The same fields appear, with the instance's values shown as placeholders. The override applies to that dashboard's page only, so it can wear its own identity inside a differently branded instance. See [Using the dashboard](../guides/dashboard_usage.md#appearance) for the rest of the Appearance controls.
+
+Since **v1.14.0** a child tab with no brand of its own draws in its main tab's, figures included, and its **Source** reads **Inherit main tab**. Before, it fell back to the instance's.
 
 [![A dashboard wearing its own brand](../../images/guides/branding/dashboard-brand-override.webp)](../../images/guides/branding/dashboard-brand-override.webp){target=_blank}
 

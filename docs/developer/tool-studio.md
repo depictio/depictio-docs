@@ -14,6 +14,10 @@ It runs entirely in the page, which is what makes it worth using: nothing to ins
 server to reach, and your file is parsed locally and only leaves the browser if you choose
 to open the pull request.
 
+<div class="catalog-cta-wrap" markdown>
+[Open Tool Studio :material-arrow-right:](https://depictio.github.io/depictio-tool-studio/){ .catalog-cta .catalog-cta--studio target=_blank }
+</div>
+
 <figure markdown="span">
   [![The Tool Studio start screen, showing the four steps and when the app applies](../images/tool-studio/00-start.webp)](../images/tool-studio/00-start.webp){target=_blank}
   <figcaption>The start screen states what an entry is before any form field, and where the app stops.</figcaption>
@@ -54,8 +58,14 @@ Identity on the left, the single output this entry describes on the right.
 
 <figure markdown="span">
   [![The Tool step, with tool identity on the left and the output it describes on the right](../images/tool-studio/01-tool.webp)](../images/tool-studio/01-tool.webp){target=_blank}
-  <figcaption>Four required fields. The <code>path_glob</code> is the load-bearing one, since it is how depictio recognises the file in a real run.</figcaption>
+  <figcaption>The <code>path_glob</code> is the load-bearing field, since it is how depictio recognises the file in a real run.</figcaption>
 </figure>
+
+A new tool needs six fields before **Next** unlocks: the tool id and name, the tool
+description and homepage, and the output slug and path glob. The description and the
+homepage are what the tool's catalog card shows, and `catalog validate` rejects a module
+without them, so the Studio asks for them up front rather than letting the pull request
+fail in CI.
 
 **Tool source** imports metadata from an **nf-core module**, a **Snakemake wrapper** or a
 **Galaxy tool**. Paste the URL and press **Import**.
@@ -65,9 +75,12 @@ Identity on the left, the single output this entry describes on the right.
   <figcaption>The app reads the module's <code>meta.yml</code> straight from raw.githubusercontent.com and offers every output channel it declares.</figcaption>
 </figure>
 
-Choosing an output fills the **Output slug**, the **Path glob** and the description.
-Import is a convenience, not a requirement: typing the four fields yourself produces an
-equally valid entry.
+An nf-core import also fills the tool's identity from `meta.yml`: the description, the
+homepage (falling back to `tool_dev_url`, then `documentation`, when `meta.yml` leaves
+`homepage` empty) and the bio.tools link from the `biotools:` identifier. Choosing an
+output fills the **Output slug**, the **Path glob** and the output description. Import is
+a convenience, not a requirement: typing the fields yourself produces an equally valid
+entry.
 
 Two checks run while you type, and either one may change what you do next.
 
@@ -190,7 +203,7 @@ Two ways out:
 
 <!-- prettier-ignore -->
 !!! info "The client-side checks are feedback, not the gate"
-    `depictio-cli dev catalog validate`, run by the `catalog` CI check on your pull
+    `depictio dev catalog validate`, run by the `catalog` CI check on your pull
     request, is the authoritative one. The Export panel says so too.
 
 ---
@@ -202,6 +215,10 @@ Two ways out:
 # yaml-language-server: $schema=../module.schema.json
 id: mytool
 name: My Tool
+description: One or two sentences on what the tool does.
+homepage: https://github.com/example/mytool
+nf_core_url: https://github.com/nf-core/modules/tree/master/modules/nf-core/mytool
+biotools_url: null  # no bio.tools entry for this tool
 
 # results.yaml
 # yaml-language-server: $schema=../output.schema.json
@@ -213,6 +230,10 @@ renders_as:
   - { component: card, column: coverage, aggregation: average }
   - { component: advanced_viz, kind: volcano, roles: {feature_id: gene, effect_size: log2fc, significance: pvalue} }
 ```
+
+`biotools_url` is always written: the link when the import found a `biotools:` identifier,
+an explicit `null` otherwise, which is what the catalog tests require of every
+`module.yaml`.
 
 Plus the fixture itself, byte-identical to what you dropped. `columns:` is deliberately
 omitted: the fixture is what grounds the bindings, and declaring both is rejected by the

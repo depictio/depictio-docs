@@ -8,12 +8,411 @@ hide:
 
 # Changelog
 
-!!! success "React viewer is the sole frontend as of v1.0.0"
-    The Dash frontend was removed in **v0.13.12**. As of **v1.0.0** the React
-    viewer serves canonical URLs (`/dashboards`, `/dashboard/{id}`,
-    `/dashboard-edit/{id}`, `/projects`); the `*-beta` suffix paths redirect
-    to canonical. The 0.13.x patch series prepared the data-fetch and
-    bundled-seed paths for this cutover.
+## **[v1.14.0](https://github.com/depictio/depictio/releases/tag/v1.14.0)** (October 8, 2026)
+
+!!! success "Minor: landing tabs written in YAML, a Guide on every dashboard, and Spotlight search across its tabs"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.14.0
+ghcr.io/depictio/depictio-viewer:1.14.0
+ghcr.io/depictio/depictio-worker:1.14.0
+ghcr.io/depictio/depictio-cli:1.14.0
+```
+
+### **♻️ Migration**
+
+* **Advanced visualization controls dock beside or above the plot** on a tile with room for them, three in view and the rest under *More options*, unless the component sets `controls_placement: popover`. See [Shared settings](../features/components.md#advanced-viz-shared-settings) ([#1145](https://github.com/depictio/depictio/pull/1145), [97da4ef6](https://github.com/depictio/depictio/commit/97da4ef6), [e7321b4b](https://github.com/depictio/depictio/commit/e7321b4b)).
+
+### **✨ New Features**
+
+* **Text tiles take block markdown**: headings, lists, tables, `::: steps` flows, `tab:` and `params:` links, colour swatches and a `surface` frame, with lists of tab links drawn as tab tiles or result rows. See [Markdown](../features/components.md#markdown) ([#1145](https://github.com/depictio/depictio/pull/1145), [3a16fb36](https://github.com/depictio/depictio/commit/3a16fb36), [44ebf0e8](https://github.com/depictio/depictio/commit/44ebf0e8)).
+* **Plain sections and filter bars**: `appearance: plain` draws a section as a heading over its tiles, and `display: strip` or `filter_bar: true` gathers filters in a compact bar that narrows the tab or that section only. See [Filter bars](../features/dashboards.md#filter-bars) ([#1145](https://github.com/depictio/depictio/pull/1145), [efde5134](https://github.com/depictio/depictio/commit/efde5134), [2b5b3959](https://github.com/depictio/depictio/commit/2b5b3959)).
+* **`category_colors`** give each value of a column one colour on filter chips, figures, UpSets, trees, sunbursts and sankeys, and child tabs inherit them. See [Category colours](../features/dashboards.md#category-colors) ([#1145](https://github.com/depictio/depictio/pull/1145), [efde5134](https://github.com/depictio/depictio/commit/efde5134), [b83094e5](https://github.com/depictio/depictio/commit/b83094e5)).
+* **Card styles** (`variant`: `headline`, `compact`, `minimal`, `accent`, `split`) are set per card or per section with `card_variant`, beside a `caption`, fixed `decimals` and a `link` to a tab. See [Display options](../features/components.md#card-display-options) ([#1145](https://github.com/depictio/depictio/pull/1145), [cff3d3b2](https://github.com/depictio/depictio/commit/cff3d3b2), [f8bbe31c](https://github.com/depictio/depictio/commit/f8bbe31c)).
+* **`figure_style: minimal`** draws a figure or advanced visualization as a landing-page card, its title beside an icon badge, with a `caption` and a `link` to the tab it summarises. See [Figure style](../features/components.md#figure-style) ([#1145](https://github.com/depictio/depictio/pull/1145), [c8021f23](https://github.com/depictio/depictio/commit/c8021f23), [5d95c157](https://github.com/depictio/depictio/commit/5d95c157)).
+* **Highlight components** redraw a figure from another tab under this tab's filters, without copying it, from **Highlight on…** in its menu. See [Highlight Components](../features/components.md#highlight-components) ([#1145](https://github.com/depictio/depictio/pull/1145), [9b281d59](https://github.com/depictio/depictio/commit/9b281d59)).
+* **Phylogeny summary by rank**: `collapse_rank` draws one tip per lineage, sized by tips or reads, with a column of dots per site, and the builder sets a tree up in steps. See [Summary by rank](../features/components.md#phylogeny-summary) ([#1145](https://github.com/depictio/depictio/pull/1145), [58ba52c9](https://github.com/depictio/depictio/commit/58ba52c9), [cadbc5cf](https://github.com/depictio/depictio/commit/cadbc5cf)).
+* **An UpSet can filter the dashboard**: a click on an intersection emits its rows' `selection_column` values. See [UpSet](../features/components.md#upset) ([#1145](https://github.com/depictio/depictio/pull/1145), [9fa11889](https://github.com/depictio/depictio/commit/9fa11889)).
+* **Tab groups and tab defaults**: `tab_group` lists child tabs under headings in the sidebar, and `filter_panel_default`, `content_width_default` and `show_tab_header` set what a tab opens with. See [Tab groups](../features/dashboards.md#tab-groups) and [Tab defaults](../features/dashboards.md#tab-defaults) ([#1145](https://github.com/depictio/depictio/pull/1145), [922a4457](https://github.com/depictio/depictio/commit/922a4457), [22eadf99](https://github.com/depictio/depictio/commit/22eadf99)).
+* **The dashboard Guide**, an entry in every dashboard's sidebar, shows how to move around, filter and read it, with live demos built from the dashboard's own components. See [The dashboard Guide](../usage/guides/dashboard-guide.md) ([#1145](https://github.com/depictio/depictio/pull/1145), [2d40cdd8](https://github.com/depictio/depictio/commit/2d40cdd8), [454bf14a](https://github.com/depictio/depictio/commit/454bf14a)).
+* **Spotlight search**: **⌘K** / **Ctrl+K** searches every component of every tab and lands on the one picked, unfolding whatever hides it. See [Spotlight search](../usage/guides/spotlight-search.md) ([#1152](https://github.com/depictio/depictio/pull/1152), [d2a8cb84](https://github.com/depictio/depictio/commit/d2a8cb84), [12234adc](https://github.com/depictio/depictio/commit/12234adc)).
+* **Copy to tab…** in a component's menu adds a copy to another tab. See [Copy to tab](../features/dashboards.md#copy-to-tab) ([#1145](https://github.com/depictio/depictio/pull/1145), [bf42e2a3](https://github.com/depictio/depictio/commit/bf42e2a3)).
+
+### **🚀 Improvements**
+
+* **Settings is a dialog with a rail of sections**: *Your view* for the reader's font size and page width, then, in edit mode, tab defaults, tiles, filtering, Guide and branding, all in the dashboard's colours. See [Dashboard settings](../usage/guides/dashboard_usage.md#dashboard-settings-drawer) ([#1145](https://github.com/depictio/depictio/pull/1145), [e8545b20](https://github.com/depictio/depictio/commit/e8545b20), [f71da622](https://github.com/depictio/depictio/commit/f71da622)).
+* **A child tab without a brand of its own draws in its main tab's**, figures and builder previews included. See [Settings for everyone](../usage/guides/dashboard_usage.md#settings-for-everyone) ([#1145](https://github.com/depictio/depictio/pull/1145), [743ee0f8](https://github.com/depictio/depictio/commit/743ee0f8), [1cf3e4e8](https://github.com/depictio/depictio/commit/1cf3e4e8)).
+* **A section on every tab can skip some** with `exclude_tabs`, and says *Filtered* with a *Reset filters* action where it is pinned. See [Sections on every tab](../features/dashboards.md#persistent-sections) ([#1145](https://github.com/depictio/depictio/pull/1145), [35343b57](https://github.com/depictio/depictio/commit/35343b57)).
+* **Sunburst and sankey colour by lineage**, small sunburst arcs fold into *Other*, and stacked taxonomy strips are labelled in place. See [Sunburst](../features/components.md#sunburst) ([#1145](https://github.com/depictio/depictio/pull/1145), [b83094e5](https://github.com/depictio/depictio/commit/b83094e5), [a2bfc69d](https://github.com/depictio/depictio/commit/a2bfc69d)).
+* **Component builders are laid out in collapsible sections**, the required ones always open. See [Step 3](../usage/guides/dashboard_creation.md#step-3-customize-your-component) ([#1145](https://github.com/depictio/depictio/pull/1145), [ccb68f97](https://github.com/depictio/depictio/commit/ccb68f97), [c2953547](https://github.com/depictio/depictio/commit/c2953547)).
+* **Grids count in half rows**, so fitted text and cards leave less blank, and phones lay tiles out in reading order. See [Right Panel](../features/dashboards.md#right-panel-visualizations) ([#1145](https://github.com/depictio/depictio/pull/1145), [5755726c](https://github.com/depictio/depictio/commit/5755726c), [74c681cc](https://github.com/depictio/depictio/commit/74c681cc)).
+
+### **🐛 Bug Fixes**
+
+* **A YAML export keeps component descriptions, text tile bodies and advanced visualization configs**, which a re-import used to lose. See [Landing-tab keys](../features/yaml-sync.md#landing-tab-keys) ([#1145](https://github.com/depictio/depictio/pull/1145), [58ba52c9](https://github.com/depictio/depictio/commit/58ba52c9), [cec284e3](https://github.com/depictio/depictio/commit/cec284e3)).
+* **An editor opened on a narrow screen no longer saves its one-column layout as the desktop one** ([#1145](https://github.com/depictio/depictio/pull/1145), [72700706](https://github.com/depictio/depictio/commit/72700706)).
+* **`depictio ingest` reads boolean pipeline parameters stored as strings**, so an ampliseq run with `--ancombc true` keeps its Differential Abundance tab ([#1145](https://github.com/depictio/depictio/pull/1145), [f9a5dcb5](https://github.com/depictio/depictio/commit/f9a5dcb5)).
+* **The *Underlying data* grid opens its column menus over the popover** instead of behind it ([#1145](https://github.com/depictio/depictio/pull/1145), [572d711b](https://github.com/depictio/depictio/commit/572d711b)).
+* **Maps draw their title once, follow dark mode and float the legend on narrow tiles** ([#1145](https://github.com/depictio/depictio/pull/1145), [1847119f](https://github.com/depictio/depictio/commit/1847119f), [74c681cc](https://github.com/depictio/depictio/commit/74c681cc)).
+
+---
+
+## **[v1.13.2](https://github.com/depictio/depictio/releases/tag/v1.13.2)** (October 8, 2026)
+
+!!! success "Patch: a scan that finds nothing says so, and a dry run that previews the scan"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.13.2
+ghcr.io/depictio/depictio-viewer:1.13.2
+ghcr.io/depictio/depictio-worker:1.13.2
+ghcr.io/depictio/depictio-cli:1.13.2
+```
+
+### **🐛 Bug Fixes**
+
+* **A scan that matches nothing warns** where it looked, what it looked for and what it found, instead of reporting success ([#1040](https://github.com/depictio/depictio/pull/1040)).
+* **`--dry-run` previews the scan**: it validates the project configuration, still offline, and lists how many files each data collection would match. See [Ingest Command](../depictio-cli/usage.md#ingest-command) ([#1040](https://github.com/depictio/depictio/pull/1040)).
+
+---
+
+## **[v1.13.1](https://github.com/depictio/depictio/releases/tag/v1.13.1)** (October 8, 2026)
+
+!!! success "Patch: refreshes that keep attached runs and gain the template's new tabs"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.13.1
+ghcr.io/depictio/depictio-viewer:1.13.1
+ghcr.io/depictio/depictio-worker:1.13.1
+ghcr.io/depictio/depictio-cli:1.13.1
+```
+
+### **🐛 Bug Fixes**
+
+* **A refresh keeps the runs attached with `--attach-run`**, and stops if one of their locations is missing (`--drop-missing-runs` drops them). See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1157](https://github.com/depictio/depictio/pull/1157)).
+* **A kept multi-tab dashboard gains the template tabs it lacks**, and two `--dashboard` files with the same name stay two dashboards. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1157](https://github.com/depictio/depictio/pull/1157)).
+* **`-v` no longer logs the substituted project configuration**, and your own AWS session token is no longer sent to Depictio's S3 ([#1157](https://github.com/depictio/depictio/pull/1157)).
+* **Interrupting `depictio local up` no longer leaves processes running** ([#1157](https://github.com/depictio/depictio/pull/1157)).
+
+---
+
+## **[v1.13.0](https://github.com/depictio/depictio/releases/tag/v1.13.0)** (October 7, 2026)
+
+!!! success "Minor: comments and annotations on dashboards, ten new visualization kinds, and thirteen new nf-core templates"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.13.0
+ghcr.io/depictio/depictio-viewer:1.13.0
+ghcr.io/depictio/depictio-worker:1.13.0
+ghcr.io/depictio/depictio-cli:1.13.0
+```
+
+### **♻️ Migration**
+
+* **A `Slider` filter is now a threshold**, keeping the rows at or above its value; add `slider_mode: eq` to keep the exact match. See [Initial values and slider options](../features/yaml-sync.md#interactive-defaults) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **A card's `threshold_warn` on the passing side of `threshold_value` fails validation** instead of being dropped silently. See [Secondary Layout Modes](../features/components.md#secondary-layout-modes) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **`ma`, `qq`, `enrichment` and `roc_pr_curve` are views of the volcano, dot plot and `pr_benchmark` tiles**; stored dashboards and YAML files are rewritten when read, nothing to edit. See [Switchable views](../features/components.md#advanced-viz-views) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+* **A catalog tool's `module.yaml` must declare `description` and `homepage`** (and may add `biotools_url`); copy them into your own modules. See [Step 1: `module.yaml`](../developer/contributing-a-tool.md#step-1-moduleyaml-identity) ([#1102](https://github.com/depictio/depictio/pull/1102), [0f1d6e21](https://github.com/depictio/depictio/commit/0f1d6e21)).
+* **Reworked templates do not replace your dashboards on refresh**: delete the old dashboard in the viewer, then refresh, to get the new layout. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1102](https://github.com/depictio/depictio/pull/1102), [b9cd837f](https://github.com/depictio/depictio/commit/b9cd837f)).
+
+### **✨ New Features**
+
+* **Comments and annotations on dashboard components**: threads that restore the filters and selection they were written under, and marks drawn on figures, advanced visualizations, MultiQC plots, tables and maps. See [Comments and Annotations](../features/comments-annotations.md) ([#1109](https://github.com/depictio/depictio/pull/1109), [61bc6cf6](https://github.com/depictio/depictio/commit/61bc6cf6)).
+* **Threads flag when their subject changed** (*Data changed*, *Component changed*, *Component removed*), and **agent proposals** wait for a person to accept them. See [When the data or the component changes](../features/comments-annotations.md#when-the-data-or-the-component-changes) and [Agent proposals](../features/comments-annotations.md#agent-proposals) ([#1109](https://github.com/depictio/depictio/pull/1109), [cab8ddd6](https://github.com/depictio/depictio/commit/cab8ddd6)).
+* **Ten new advanced visualization kinds**: [Contact map](../features/components.md#contact-map), [Knee plot](../features/components.md#knee-plot), [Damage profile](../features/components.md#damage-profile), [Genome view](../features/components.md#genome-view), [Group compare](../features/components.md#group-compare), [Transcript structure](../features/components.md#transcript-structure), [Copy-number profile](../features/components.md#cnv-profile), [Genome chord](../features/components.md#genome-chord), [Parallel coordinates](../features/components.md#parallel-coordinates) and [Record card](../features/components.md#record-card) ([#1102](https://github.com/depictio/depictio/pull/1102), [02f56618](https://github.com/depictio/depictio/commit/02f56618), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+* **Record cards follow a selection**, showing the row picked in their `linked_component`, as its side panel. See [Record cards and their source](../features/interactive-selection-filtering.md#record-cards) ([#1102](https://github.com/depictio/depictio/pull/1102), [60ebff4b](https://github.com/depictio/depictio/commit/60ebff4b)).
+* **Genome regions filter the dashboard**: a region brushed or typed on a track becomes a chromosome and position filter, carried across collections by a `region` link. See [Genome region selection](../features/interactive-selection-filtering.md#genome-region-selection) and [Region links](../features/cross-dc-filtering.md#region-links) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+* **`indexed_file` data collections**: VCF, BAM, bigWig, bigBed, GFF3 or tabix files read by the browser by byte range, with no table built. See [Indexed-file DCs](../usage/projects/guide.md#example-indexed-file-dcs) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+* **Templates and recipes take parameters**: recipes read template values through `transform.params` (and a file's path through `source_path`), and template variables can declare a `default`. See [Passing template parameters to a recipe](../usage/projects/recipes.md#params) and [Variable defaults](../usage/projects/templates.md#variable-defaults) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **Filters can start with a value** (`default_value`, `default_range`), and a range slider can show the column's histogram (`show_histogram`). See [Initial values and slider options](../features/yaml-sync.md#interactive-defaults) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+
+### **🚀 Improvements**
+
+* **Tiles take the height their content needs**, levelled per row; `autofit: false` or a tile's `fit: fixed` turns it off. See [Tile height and control placement](../features/yaml-sync.md#tile-height) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+* **Advanced visualization controls can sit beside the plot or under the title** (`controls_placement`, `advanced_viz_controls`). See [Shared settings](../features/components.md#advanced-viz-shared-settings) ([#1102](https://github.com/depictio/depictio/pull/1102), [60ebff4b](https://github.com/depictio/depictio/commit/60ebff4b)).
+* **The kind picker ranks kinds for the data**, with a badge saying why each one matches. See [The kind picker](../features/components.md#kind-picker) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **Clear selection (N)** replaces the always-visible reset, and shows only while a tile holds a selection. See [Reset Selection](../features/interactive-selection-filtering.md#reset-selection) ([#1102](https://github.com/depictio/depictio/pull/1102), [60ebff4b](https://github.com/depictio/depictio/commit/60ebff4b)).
+* **A card breakdown follows the card's aggregation** (max, mean or median per group instead of a count). See [Secondary Layout Modes](../features/components.md#secondary-layout-modes) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **56 new catalog tools** (93 in all), each card with description, homepage and bio.tools link. See [Catalog](../catalog/index.md) ([#1102](https://github.com/depictio/depictio/pull/1102), [a72c8efa](https://github.com/depictio/depictio/commit/a72c8efa)).
+* **An annotation on a multi-view tile stays on the view it was drawn on**. See [Components with several views](../features/comments-annotations.md#components-with-several-views) ([#1113](https://github.com/depictio/depictio/pull/1113), [1dacf9f1](https://github.com/depictio/depictio/commit/1dacf9f1)).
+
+### **🧬 Pipeline Templates**
+
+* **Thirteen new nf-core templates**. Experimental: [mag](../pipeline-templates/nf-core/mag.md), [nanoseq](../pipeline-templates/nf-core/nanoseq.md), [riboseq](../pipeline-templates/nf-core/riboseq.md), [rnasplice](../pipeline-templates/nf-core/rnasplice.md). Draft: [demultiplex](../pipeline-templates/nf-core/demultiplex.md), [eager](../pipeline-templates/nf-core/eager.md), [genomeassembler](../pipeline-templates/nf-core/genomeassembler.md), [hic](../pipeline-templates/nf-core/hic.md), [methylseq](../pipeline-templates/nf-core/methylseq.md), [mhcquant](../pipeline-templates/nf-core/mhcquant.md), [sarek](../pipeline-templates/nf-core/sarek.md), [scrnaseq](../pipeline-templates/nf-core/scrnaseq.md), [smrnaseq](../pipeline-templates/nf-core/smrnaseq.md). See [Pipeline Templates](../pipeline-templates/README.md) ([#1102](https://github.com/depictio/depictio/pull/1102), [02f56618](https://github.com/depictio/depictio/commit/02f56618)).
+* **Seven templates move from Draft to Experimental**: [airrflow](../pipeline-templates/nf-core/airrflow.md), [cutandrun](../pipeline-templates/nf-core/cutandrun.md), [differentialabundance](../pipeline-templates/nf-core/differentialabundance.md), [funcscan](../pipeline-templates/nf-core/funcscan.md), [rnaseq](../pipeline-templates/nf-core/rnaseq.md), [taxprofiler](../pipeline-templates/nf-core/taxprofiler.md), [variantbenchmarking](../pipeline-templates/nf-core/variantbenchmarking.md); atacseq, chipseq and rnafusion are reworked and stay Draft ([#1102](https://github.com/depictio/depictio/pull/1102), [4dab4c9a](https://github.com/depictio/depictio/commit/4dab4c9a), [b9cd837f](https://github.com/depictio/depictio/commit/b9cd837f)).
+* **Every template tab follows one layout**: pinned sample filters, four glance cards, tiles that filter each other and record cards; ampliseq and viralrecon included ([#1102](https://github.com/depictio/depictio/pull/1102), [b9cd837f](https://github.com/depictio/depictio/commit/b9cd837f)).
+* **Some catalog outputs changed shape** (a `sample` column on the fusion and dbCAN outputs, `caller` / `truth_set` on the benchmarking outputs, MACS2 cards at q 0.05); refresh the project to rebuild the tables. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1102](https://github.com/depictio/depictio/pull/1102), [4dab4c9a](https://github.com/depictio/depictio/commit/4dab4c9a)).
+
+### **🐛 Bug Fixes**
+
+* **A table's numeric filter keeps its operator** (*greater than*, *less than*, *not equal*), and a value of 0 is no longer ignored ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **`visu_type: violin` passes validation** ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+
+---
+
+## **[v1.12.0](https://github.com/depictio/depictio/releases/tag/v1.12.0)** (October 7, 2026)
+
+!!! success "Minor: the full server without Docker, one `depictio` command, and SeaweedFS as the bundled S3 store"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.12.0
+ghcr.io/depictio/depictio-viewer:1.12.0
+ghcr.io/depictio/depictio-worker:1.12.0
+ghcr.io/depictio/depictio-cli:1.12.0
+```
+
+### **♻️ Migration**
+
+* **The bundled S3 store is SeaweedFS instead of MinIO, and starts empty**: a Docker Compose or Helm install that ran the bundled store must copy its bucket over (on Helm, **before** `helm upgrade`). An external S3 or a fresh install is not affected. See [Upgrading to v1.12.0](../installation/upgrade/v1.12.0-seaweedfs.md) ([#1061](https://github.com/depictio/depictio/pull/1061), [dfbea424](https://github.com/depictio/depictio/commit/dfbea424)).
+* **`DEPICTIO_MINIO_*` settings are `DEPICTIO_S3_*`**, the Compose service `s3` and the Helm key `s3:`; the former names still work, with a deprecation warning. See [Renamed settings](../installation/upgrade/v1.12.0-seaweedfs.md#renamed-settings) ([b729d9bf](https://github.com/depictio/depictio/commit/b729d9bf), [0d20aab9](https://github.com/depictio/depictio/commit/0d20aab9)).
+* **The CLI is the `depictio` package** (`pip install depictio`, extras `[multiqc]` and `[local]`); `depictio-cli` stays an alias, but do not `pip uninstall depictio-cli` on its own. See [CLI Installation](../installation/cli.md#install-via-pip) ([#1146](https://github.com/depictio/depictio/pull/1146), [b59d127e](https://github.com/depictio/depictio/commit/b59d127e)).
+* **CLI commands renamed, former names still accepted**: `run` is `ingest <results dir>` (no `--data-root`), `--project-name` is `--project`, the `--skip-*` flags are one `--skip`, `--CLI-config-path` is `--server`, `images push` is `data push-images`. See [Quick Reference](../depictio-cli/usage.md#quick-reference) ([#1149](https://github.com/depictio/depictio/pull/1149), [2383d4ac](https://github.com/depictio/depictio/commit/2383d4ac)).
+* **A refresh keeps the dashboards and updates the project in place**: `ingest --update-config` (what the Nextflow hook runs) no longer replaces dashboards edited in the viewer, rewrites the tables as `--overwrite` did, and keeps attached runs; `--reset-dashboards` starts over from the template. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1149](https://github.com/depictio/depictio/pull/1149), [0aabde32](https://github.com/depictio/depictio/commit/0aabde32), [f2ab8c1e](https://github.com/depictio/depictio/commit/f2ab8c1e)).
+* **Custom recipes rename `EXPECTED_SCHEMA` to `OUTPUT_SCHEMA`** (and `OPTIONAL_SCHEMA` to `OPTIONAL_OUTPUT_SCHEMA`), with no fallback. See [Recipes](../usage/projects/recipes.md#what-is-a-recipe) ([#1128](https://github.com/depictio/depictio/pull/1128), [6d6e95eb](https://github.com/depictio/depictio/commit/6d6e95eb)).
+* **The dashboards listing opens on the table, thumbnails five per row**; `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW=thumbnails` restores the grid. See [Thumbnails or table](../usage/guides/web_ui.md#listing-views) ([#1139](https://github.com/depictio/depictio/pull/1139), [ed31df41](https://github.com/depictio/depictio/commit/ed31df41)).
+
+### **✨ New Features**
+
+* **`depictio local up` runs the whole server without Docker**: API, worker and viewer as plain processes, with MongoDB, Redis and SeaweedFS fetched from conda-forge; `uv` is the only prerequisite, on Linux and Apple silicon. `local export` hands it over to Docker Compose. See [Python package](../installation/local.md) ([#1110](https://github.com/depictio/depictio/pull/1110), [6c7021d0](https://github.com/depictio/depictio/commit/6c7021d0)).
+* **`depictio ingest <results dir>`** detects the template when `--template` is left out, and `--dry-run` lists the steps without contacting the server. See [Ingest Command](../depictio-cli/usage.md#ingest-command) ([#1149](https://github.com/depictio/depictio/pull/1149), [0aabde32](https://github.com/depictio/depictio/commit/0aabde32)).
+* **One `--server` option** names the target, `local` or a CLI configuration file, on every command that talks to a server. See [Which server a command uses](../depictio-cli/usage.md#choosing-a-server) ([#1149](https://github.com/depictio/depictio/pull/1149), [337a4f79](https://github.com/depictio/depictio/commit/337a4f79)).
+* **Recipe sources declare an `input_schema`**, checked before `transform()`: a missing column fails naming the source and the column. Every bundled recipe declares one. See [The 5-Checkpoint Validation Pipeline](../usage/projects/recipes.md#the-5-checkpoint-validation-pipeline) ([#1132](https://github.com/depictio/depictio/pull/1132), [9aef81a6](https://github.com/depictio/depictio/commit/9aef81a6)).
+
+### **🚀 Improvements**
+
+* **Clearer CLI output**: `-v` / `-vv` for INFO / DEBUG, each failure reported once, and `depictio --help` grouped by purpose. See [Global Options](../depictio-cli/usage.md#global-options) ([#1149](https://github.com/depictio/depictio/pull/1149), [987bc950](https://github.com/depictio/depictio/commit/987bc950)).
+* **Dashboard thumbnails can be turned off or moved** with `DEPICTIO_PERFORMANCE_SCREENSHOTS_ENABLED` / `_DIR`. See [Performance & Timeouts](../installation/env-reference.md#performance-timeouts) ([#1110](https://github.com/depictio/depictio/pull/1110), [6c7021d0](https://github.com/depictio/depictio/commit/6c7021d0)).
+* **Stacked taxonomy**: `taxon_palette` pins a colour per taxon, and the nf-core/ampliseq strips can use any categorical metadata column (re-ingest to get them). See [Stacked taxonomy](../features/components.md#stacked-taxonomy) ([#1140](https://github.com/depictio/depictio/pull/1140), [f80b7313](https://github.com/depictio/depictio/commit/f80b7313), [ca0172cd](https://github.com/depictio/depictio/commit/ca0172cd)).
+
+### **🐛 Bug Fixes**
+
+* **Stacked taxonomy strips colour each sample by its category**, with hover and a legend ([#1140](https://github.com/depictio/depictio/pull/1140), [895b20d5](https://github.com/depictio/depictio/commit/895b20d5)).
+* **A MultiQC report no longer stays on *preparing* after its worker dies**, and the first figures after a start no longer fail with a 500 ([#1110](https://github.com/depictio/depictio/pull/1110), [fd83f4fb](https://github.com/depictio/depictio/commit/fd83f4fb), [5ad046dd](https://github.com/depictio/depictio/commit/5ad046dd)).
+* **Visitors see a data collection's files** in the ingestion report, without the owners' emails ([#1144](https://github.com/depictio/depictio/pull/1144), [a62742ca](https://github.com/depictio/depictio/commit/a62742ca)).
+* **A failed ingestion step exits 1**, `--continue-on-error` included. See [Exit codes](../depictio-cli/usage.md#exit-codes) ([#1149](https://github.com/depictio/depictio/pull/1149), [24a2933e](https://github.com/depictio/depictio/commit/24a2933e)).
+* **`-v` no longer logs tokens and passwords** ([#1149](https://github.com/depictio/depictio/pull/1149), [a86df6f3](https://github.com/depictio/depictio/commit/a86df6f3)).
+* **Image dashboards import again and find their images**; a taken project name answers 409 instead of 500 ([#1149](https://github.com/depictio/depictio/pull/1149), [e1c2c1e0](https://github.com/depictio/depictio/commit/e1c2c1e0), [b74f95fc](https://github.com/depictio/depictio/commit/b74f95fc)).
+
+---
+
+??? info "Beta releases leading up to v1.12.0"
+
+    **v1.12.0-b1**
+
+    * SeaweedFS as the bundled store and the `DEPICTIO_S3_*` names ([#1061](https://github.com/depictio/depictio/pull/1061)).
+    * `depictio local up` in its first form, which also ingested results (`--template`, `--data-root`), and `local export-compose`; the first `depictio` release on PyPI ([#1110](https://github.com/depictio/depictio/pull/1110)).
+    * The listing opening on the table, and the stacked taxonomy strips ([#1139](https://github.com/depictio/depictio/pull/1139), [#1140](https://github.com/depictio/depictio/pull/1140)).
+    * The stable release adds the `depictio` package and the CLI rework ([#1146](https://github.com/depictio/depictio/pull/1146), [#1149](https://github.com/depictio/depictio/pull/1149)), the recipe schemas ([#1128](https://github.com/depictio/depictio/pull/1128), [#1132](https://github.com/depictio/depictio/pull/1132)) and the files listing fix ([#1144](https://github.com/depictio/depictio/pull/1144)); `local up` now only starts the server (its b1 ingest options exit 2 and print the `depictio ingest` command), and `local export-compose` is `local export`.
+
+---
+
+## **[v1.11.2](https://github.com/depictio/depictio/releases/tag/v1.11.2)** (September 24, 2026)
+
+!!! success "Patch: a builder preview that stays in view, and a tidier dashboards listing"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.11.2
+ghcr.io/depictio/depictio-viewer:1.11.2
+ghcr.io/depictio/depictio-worker:1.11.2
+ghcr.io/depictio/depictio-cli:1.11.2
+```
+
+### **🚀 Improvements**
+
+* **The builder's preview stays in view** while the controls scroll, and every figure parameter has a description ([#1105](https://github.com/depictio/depictio/pull/1105)).
+* **The dashboards listing has a Card display menu** and loses the Tiles view. `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` sets the view it opens in. See [Thumbnails or table](../usage/guides/web_ui.md#listing-views) ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **Sharper thumbnails**, sized by `DEPICTIO_PERFORMANCE_SCREENSHOT_*`. See [Performance & Timeouts](../installation/env-reference.md#performance-timeouts) ([#1108](https://github.com/depictio/depictio/pull/1108)).
+* **The tab sidebar opens by default, the loader shows the animated rose**, and an embedded dashboard can follow its host's colour scheme ([#1108](https://github.com/depictio/depictio/pull/1108)).
+
+---
+
+## **[v1.11.1](https://github.com/depictio/depictio/releases/tag/v1.11.1)** (September 17, 2026)
+
+!!! success "Patch: an opt-in Nextflow trigger, and General Stats only where the report has it"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.11.1
+ghcr.io/depictio/depictio-viewer:1.11.1
+ghcr.io/depictio/depictio-worker:1.11.1
+ghcr.io/depictio/depictio-cli:1.11.1
+```
+
+### **🚀 Improvements**
+
+* **The Nextflow trigger can be installed opt-in** with `depictio-cli config nextflow --install --default-disabled`. See [`config nextflow`](../depictio-cli/usage.md#config-nextflow) ([#1103](https://github.com/depictio/depictio/pull/1103)).
+
+### **🐛 Bug Fixes**
+
+* **General Stats is only offered when a MultiQC report has the table**, so nf-core/chipseq 2.1.0 dashboards no longer show a failed tile ([#1104](https://github.com/depictio/depictio/pull/1104)).
+* **Table renders in the catalog gallery show their rows again** ([#1101](https://github.com/depictio/depictio/pull/1101)).
+
+---
+
+## **[v1.11.0](https://github.com/depictio/depictio/releases/tag/v1.11.0)** (September 14, 2026)
+
+!!! success "Minor: a feedback link on dashboards, and a funnel that follows one column"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.11.0
+ghcr.io/depictio/depictio-viewer:1.11.0
+ghcr.io/depictio/depictio-worker:1.11.0
+ghcr.io/depictio/depictio-cli:1.11.0
+```
+
+### **✨ New Features**
+
+* **An opt-in feedback link on every dashboard**, carrying the dashboard, the tab and the page URL to wherever you point it, such as an issue form. Off by default: set `DEPICTIO_FEEDBACK_ENABLED` and `DEPICTIO_FEEDBACK_URL`. See [Feedback](../installation/env-reference.md#feedback) ([#1066](https://github.com/depictio/depictio/pull/1066), [26a99608](https://github.com/depictio/depictio/commit/26a99608)).
+* **The funnel overview can follow one column**: **Values of a column** charts how many of its distinct values survive each filter stage, with a matrix showing which stage removed each one. See [Funnel filtering](../features/dashboards.md#funnel-filtering) ([#1095](https://github.com/depictio/depictio/pull/1095), [ed28aabb](https://github.com/depictio/depictio/commit/ed28aabb)).
+* **The dashboards table has a Last viewed column**, newest first, with dashboards you never opened last ([f3152736](https://github.com/depictio/depictio/commit/f3152736)).
+
+### **🚀 Improvements**
+
+* **Every advanced visualization kind has a fixed answer to analysis groups**: it splits, colours one panel or stays whole. A figure the groups cannot reach carries a **not grouped** badge, and groups reach other tabs through the dashboard's links. See [The Analysis panel](../features/interactive-selection-filtering.md#analysis-panel) ([#1093](https://github.com/depictio/depictio/pull/1093), [8fc2b824](https://github.com/depictio/depictio/commit/8fc2b824)).
+* **Ingestion runs always close**: Ctrl-C or SIGTERM records `interrupted`, a run nobody closed is swept to `abandoned`, the Ingestion pane filters by status, instance and project, and each admin pane has its own URL. See [Monitoring](../usage/administration/monitoring.md#ingestion) ([#1097](https://github.com/depictio/depictio/pull/1097), [38e3acfe](https://github.com/depictio/depictio/commit/38e3acfe), [c681b76b](https://github.com/depictio/depictio/commit/c681b76b)).
+* **UpSet and complex heatmap can pick their columns by pattern**: `set_columns_pattern` and `value_columns_pattern` take a regex, so a consensus figure fits whatever samples a run has. See [UpSet](../features/components.md#upset) ([#1094](https://github.com/depictio/depictio/pull/1094), [#1098](https://github.com/depictio/depictio/pull/1098), [86851685](https://github.com/depictio/depictio/commit/86851685), [f5298ec6](https://github.com/depictio/depictio/commit/f5298ec6)).
+
+### **🧬 Pipeline Templates**
+
+* **nf-core/variantbenchmarking recipes find their inputs by variant-type directory**, so the germline, somatic and structural routes each fill their own collections ([#1081](https://github.com/depictio/depictio/pull/1081), [803fc271](https://github.com/depictio/depictio/commit/803fc271), [c729932e](https://github.com/depictio/depictio/commit/c729932e)).
+* **nf-core/ampliseq 2.18.0 serves its phylogeny from S3** and grafts `test_pplace` placements with EPA-ng, and `PHYLUM_LEVEL` is inferred from the run. Trees ingested before this need a re-ingest ([#1096](https://github.com/depictio/depictio/pull/1096), [056fb864](https://github.com/depictio/depictio/commit/056fb864)).
+
+### **🐛 Bug Fixes**
+
+* **A lasso drawn on a Manhattan plot holds in Split** instead of vanishing on the next render ([#1093](https://github.com/depictio/depictio/pull/1093), [8fc2b824](https://github.com/depictio/depictio/commit/8fc2b824)).
+* **UpSet fits long set names and highlights the hovered intersection** ([#1098](https://github.com/depictio/depictio/pull/1098), [c580bc5f](https://github.com/depictio/depictio/commit/c580bc5f)).
+* **Adding a MultiQC component to an already prerendered report rebuilds it**, rather than ending with *MultiQC figures took too long to build* ([ecd5207d](https://github.com/depictio/depictio/commit/ecd5207d)).
+
+---
+
+## **[v1.10.1](https://github.com/depictio/depictio/releases/tag/v1.10.1)** (September 13, 2026)
+
+!!! success "Patch: share a filtered listing by link"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.10.1
+ghcr.io/depictio/depictio-viewer:1.10.1
+ghcr.io/depictio/depictio-worker:1.10.1
+ghcr.io/depictio/depictio-cli:1.10.1
+```
+
+### **✨ New Features**
+
+* **The dashboard and project listings keep their filters in the URL**, so the address bar is always a link to the view on screen, and a button in the toolbar copies it. A new **Template** filter matches a pipeline whatever its version, and `/dashboards` gains a **Workflow system** filter. Opening such a link raises a **Shared view** banner, with **Show everything** to drop the scope. See [Share a filtered listing](../usage/guides/web_ui.md#share-a-filtered-listing) ([#1069](https://github.com/depictio/depictio/pull/1069), [eab269cc](https://github.com/depictio/depictio/commit/eab269cc), [5b4beb06](https://github.com/depictio/depictio/commit/5b4beb06)).
+
+### **🚀 Improvements**
+
+* **MinIO is pulled from `quay.io/minio/minio`** by the compose files and the Helm chart, with the same release tag. Update any mirror or pull-through cache that names the Docker Hub image ([#1080](https://github.com/depictio/depictio/pull/1080), [4421c5d3](https://github.com/depictio/depictio/commit/4421c5d3)).
+
+---
+
+## **[v1.10.0](https://github.com/depictio/depictio/releases/tag/v1.10.0)** (September 11, 2026)
+
+!!! success "Minor: the pipeline ingests its own results"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.10.0
+ghcr.io/depictio/depictio-viewer:1.10.0
+ghcr.io/depictio/depictio-worker:1.10.0
+ghcr.io/depictio/depictio-cli:1.10.0
+```
+
+### **✨ New Features**
+
+* **A Nextflow pipeline ingests its own results**: a `workflow.onComplete` snippet runs `depictio-cli run` on the output directory when the pipeline finishes, turned on once per machine with `depictio-cli config nextflow --install`. See [Nextflow trigger](../depictio-cli/nextflow-trigger.md) ([#1037](https://github.com/depictio/depictio/pull/1037)).
+* **`--pipeline-id <name>/<version>`**: names the pipeline that produced a run, so an automated trigger gets the bundled template without naming one. For a template project, the engine and pipeline versions and the names of the tools that ran are stamped on the workflow. See [Templates](../usage/projects/templates.md#pipeline-id) ([#1035](https://github.com/depictio/depictio/pull/1035), [#1036](https://github.com/depictio/depictio/pull/1036), [#1037](https://github.com/depictio/depictio/pull/1037)).
+* **A project says what triggered it**: `--triggered-by` is stored on the project, and anything but a manual run shows a badge on its ingestion tab. On a template project, **Triggered by Nextflow** gives the pipeline and engine versions, the tool count and the ingested directory. See [Ingestion Report & Health](../features/dashboards.md#triggered-by) ([#1037](https://github.com/depictio/depictio/pull/1037), [32a72156](https://github.com/depictio/depictio/commit/32a72156), [c0444f6c](https://github.com/depictio/depictio/commit/c0444f6c)).
+* **`--attach-run`**: register a data root as another run of an existing project instead of creating one. See [CLI Usage](../depictio-cli/usage.md#run-command) ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **CLI credentials from the environment**: `DEPICTIO_CLI_TOKEN`, `DEPICTIO_CLI_API_BASE_URL` and `DEPICTIO_CLI_CONFIG_PATH` override the `CLI.yaml`, so the token can stay out of it. See [CLI Usage](../depictio-cli/usage.md#environment-variables) ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+
+### **🧬 Pipeline Templates**
+
+* **nf-core/variantbenchmarking 1.4.0**: germline small variants, somatic indels and structural variants as three per-variant-type projects, with four benchmarking visualization kinds. See [variantbenchmarking](../pipeline-templates/nf-core/variantbenchmarking.md) ([#870](https://github.com/depictio/depictio/pull/870), [6e581d89](https://github.com/depictio/depictio/commit/6e581d89)).
+* **nf-core/ampliseq 2.18.0**: handles the `sbdi-gtdb` database that release defaults to, whose taxonomic ranks start deeper than the 7-rank databases. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md) ([#1027](https://github.com/depictio/depictio/pull/1027), [bcb39932](https://github.com/depictio/depictio/commit/bcb39932)).
+
+### **🚀 Improvements**
+
+* **Templates ship in the `depictio-cli` package**: a pip-installed CLI resolves `--template` and `--pipeline-id` without a checkout; only the reference datasets and seeds stay out ([#1037](https://github.com/depictio/depictio/pull/1037), [f578adc7](https://github.com/depictio/depictio/commit/f578adc7)).
+* **The CLI ships as a container image**: `ghcr.io/depictio/depictio-cli`, for a head node or CI runner that cannot install a Python environment. See [CLI Installation](../installation/cli.md#container-image) ([#1037](https://github.com/depictio/depictio/pull/1037)).
+* **`--dashboard` works without a template**, so a custom pipeline no longer finishes green with a project and nothing to look at ([#1037](https://github.com/depictio/depictio/pull/1037)).
+* **A connection failure in `run` and `config check` names the API URL and the config file it came from** ([#1037](https://github.com/depictio/depictio/pull/1037), [8c68c9c4](https://github.com/depictio/depictio/commit/8c68c9c4), [3d5a538c](https://github.com/depictio/depictio/commit/3d5a538c)).
+
+### **🐛 Bug Fixes**
+
+* **A second automated trigger no longer exits 1 with an empty message** when the project already exists ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **A multi-location rescan stops deleting runs it has not walked yet** ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **A failed project creation is no longer reported as success** ([#1035](https://github.com/depictio/depictio/pull/1035), [3f3d3190](https://github.com/depictio/depictio/commit/3f3d3190)).
+* **An expired token fails at step 1**: `run` used to print "Server accessibility check passed" right after rejecting the token, then fail later on a project error that did not mention authentication ([#1037](https://github.com/depictio/depictio/pull/1037), [058cc4b4](https://github.com/depictio/depictio/commit/058cc4b4)).
+* **After `-resume`, a template follows the latest attempt's parameters**, not the first attempt's ([#1037](https://github.com/depictio/depictio/pull/1037), [ced67d01](https://github.com/depictio/depictio/commit/ced67d01)).
+
+---
+
+## **[v1.9.2](https://github.com/depictio/depictio/releases/tag/v1.9.2)** (September 1, 2026)
+
+!!! success "Patch: MultiQC reports and ampliseq tiles on full-size runs"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.9.2
+ghcr.io/depictio/depictio-viewer:1.9.2
+ghcr.io/depictio/depictio-worker:1.9.2
+```
+
+### **🐛 Bug Fixes**
+
+* **One bad plot anchor no longer erases a whole MultiQC section**: extraction walked the report per section and let a single unparseable anchor take its neighbours with it ([#1015](https://github.com/depictio/depictio/pull/1015), [d39746dd](https://github.com/depictio/depictio/commit/d39746dd), [84711ba3](https://github.com/depictio/depictio/commit/84711ba3)).
+* **The ampliseq phylogeny and taxonomy tiles work on a full-size run**: the seeded demo bundle is small enough to hide the file-layout assumptions a real run breaks ([#1014](https://github.com/depictio/depictio/pull/1014), [e228f18b](https://github.com/depictio/depictio/commit/e228f18b), [00b5c1c4](https://github.com/depictio/depictio/commit/00b5c1c4)).
+* **The catalog-preview bundle ships in the API image**: it was built but not copied, so the preview served nothing ([#1019](https://github.com/depictio/depictio/pull/1019), [f238e5a7](https://github.com/depictio/depictio/commit/f238e5a7)).
+* **Backup-restore e2e runs serialized**: two specs restoring concurrently made each other's assertions non-deterministic ([#1015](https://github.com/depictio/depictio/pull/1015), [bb3a66f4](https://github.com/depictio/depictio/commit/bb3a66f4)).
+
+---
+
+## **[v1.9.1](https://github.com/depictio/depictio/releases/tag/v1.9.1)** (August 30, 2026)
+
+!!! success "Patch: seeded dashboards reworked, and grouping in advanced viz"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.9.1
+ghcr.io/depictio/depictio-viewer:1.9.1
+ghcr.io/depictio/depictio-worker:1.9.1
+```
+
+### **✨ New Features**
+
+* **Analysis grouping reaches advanced visualizations**: a split is expressed as a list of filter constraints appended to the dashboard's own, so each panel goes through the ordinary fetch path and cross-DC link resolution still applies. A column with more values than the grid can hold becomes splittable by being narrowed first, and a value keeps its tint however far you narrow. See [Interactive Selection Filtering](../features/interactive-selection-filtering.md#analysis-panel) ([#1013](https://github.com/depictio/depictio/pull/1013), [c617b62e](https://github.com/depictio/depictio/commit/c617b62e)).
+* **Sign in and land back on the shared link** you were sent, instead of on the dashboard list ([#1012](https://github.com/depictio/depictio/pull/1012), [2310bdf1](https://github.com/depictio/depictio/commit/2310bdf1)).
+
+### **🚀 Improvements**
+
+* **Every seeded dashboard reworked into a readable funnel**: the bundled iris, penguins and pipeline demos now lead with the question each tab answers rather than with whatever the data made easy to plot ([#1011](https://github.com/depictio/depictio/pull/1011), [e4dbdaa0](https://github.com/depictio/depictio/commit/e4dbdaa0), [ed011dc2](https://github.com/depictio/depictio/commit/ed011dc2)).
+
+### **🐛 Bug Fixes**
+
+* **Seeded text tiles size to their prose** instead of clipping it, and the docked map fit is sent to the subplot Plotly actually drew ([#1012](https://github.com/depictio/depictio/pull/1012), [ed011dc2](https://github.com/depictio/depictio/commit/ed011dc2)).
+* **Tool Studio's footer takes the full width of the bar**, with the deploy commit in parentheses on the version line ([#1010](https://github.com/depictio/depictio/pull/1010), [23c8babb](https://github.com/depictio/depictio/commit/23c8babb), [35d32849](https://github.com/depictio/depictio/commit/35d32849)).
+
+---
 
 ## **[v1.9.0](https://github.com/depictio/depictio/releases/tag/v1.9.0)** (August 28, 2026)
 

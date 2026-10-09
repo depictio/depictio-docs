@@ -19,7 +19,7 @@ A template is a `template.yaml` file that ships inside Depictio under `depictio/
 
 Every template declares its own variables. Variable names are **template-specific** — each pipeline decides what it needs.
 
-`DATA_ROOT` is the usual root variable, set via `--data-root`. A manifest-driven template declares `MANIFEST_URL` instead, set via `--manifest`. All others are passed via `--var KEY=VALUE`. `--bind TAG=LOCATION` can stand in for either root variable by pointing each data collection at its own location; see [Instantiating with `--manifest` or `--bind`](#instantiating-with-manifest-or-bind).
+`DATA_ROOT` is the usual root variable: the results directory given to `depictio ingest` (formerly `--data-root`), a local folder or an `s3://` prefix. A manifest-driven template declares `MANIFEST_URL` instead, set with `--manifest`. All others are passed via `--var KEY=VALUE`. `--bind TAG=LOCATION` can stand in for either root variable by pointing each data collection at its own location; see [Instantiating with `--manifest` or `--bind`](#instantiating-with-manifest-or-bind).
 
 **Auto-detected variables:** When a metadata file is provided, the system reads its headers and auto-populates:
 
@@ -44,6 +44,10 @@ template:
     - name: "OPTIONAL_VAR"
       description: "An optional variable"
       required: false
+    - name: "GENOME"
+      description: "Assembly the run was aligned to"
+      required: false
+      default: "hg38"     # v1.13.0+: used when the run does not set it
 
   dashboards:
     - "dashboards/base.yaml"
@@ -57,6 +61,18 @@ template:
 ```
 
 Below the `template:` block is a standard project configuration with `{VAR_NAME}` placeholders.
+
+### Variable defaults <small>(v1.13.0+)</small> { #variable-defaults }
+
+A variable can declare a `default`, the value used when the run leaves it unset. A value
+passed with `--var`, read from the run's `params.json` or detected from the metadata file
+always wins over it. A defaulted variable fills `{NAME}` in `template.yaml` and in the
+dashboard YAMLs and satisfies `required`, but it does not count as provided: an
+`if_var_present` conditional does not fire on a default. A default may contain
+`{DATA_ROOT}`, as in `default: "{DATA_ROOT}/input/samplesheet.csv"`. The nf-core templates use
+defaults for `GENOME` (`hg38`), the axis of their genome tracks, for `GROUP_COL` where the
+samplesheet has a usual grouping column, and for cut-offs such as `SPLICING_FDR` in
+nf-core/rnasplice.
 
 ---
 
@@ -85,33 +101,60 @@ transform:
 
 The recipe Python code stays generic — path resolution happens via variable substitution in the YAML.
 
+When the variable changes what the recipe computes rather than where it reads (a grouping
+column, an identifier column, a cutoff), pass it under `transform.params` instead. Unset
+variables are dropped before the call, so the recipe falls back to its own default. See
+[Passing template parameters to a recipe](recipes.md#params).
+
 ---
 
 ## CLI Flags
 
 | Flag | Type | Required | Description |
 |------|------|----------|-------------|
-| `--template` | `string` | yes | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+). On the CLI, also a path to an [exported bundle](#running-an-exported-bundle) |
-| `--data-root` | `path` | one of the three | Root directory substituted for `{DATA_ROOT}` |
-| `--manifest` | `url` or `path` | one of the three | Data Manifest substituted for `{MANIFEST_URL}`; mutually exclusive with `--data-root` |
+| `--template` | `string` | [one of](#pipeline-id) | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+). On the CLI, also a path to an [exported bundle](#running-an-exported-bundle) |
+| `DATA_DIR` (argument) | `path` | one of the three | The results directory, a local folder or an `s3://` prefix, substituted for `{DATA_ROOT}`. Formerly `--data-root` |
+| `--manifest` | `url` or `path` | one of the three | Data manifest substituted for `{MANIFEST_URL}`. Not with `DATA_DIR` |
 | `--bind` | `TAG=LOCATION` | one of the three | Point one data collection at a location; the scan mode is inferred from its shape. Repeatable |
 | `--var` | `KEY=VALUE` | depends on template | Pass template-specific variables; repeatable |
 | `--dashboard` | `path` | no | Override default dashboard(s); repeatable |
-| `--skip-dashboard-import` | `flag` | no | Skip automatic dashboard import |
-| `--project-name` | `string` | no | Custom project name |
+| `--skip dashboards` | `flag` | no | Skip automatic dashboard import. Formerly `--skip-dashboard-import` |
+| `--project` | `string` | no | Custom project name. Formerly `--project-name` |
+
+```bash
+depictio ingest /path/to/results --template nf-core/ampliseq/latest
+```
+
+### Which template a run uses { #pipeline-id }
+
+`depictio ingest` takes the project from the first of these that applies:
+
+- `--template nf-core/ampliseq/2.16.0`, for a pipeline Depictio ships a template for,
+  or `--project-config-path my_project.yaml`, for a pipeline of your own;
+- `--pipeline-id nf-core/ampliseq/2.16.0`, which the
+  [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) passes for you since
+  **v1.10.0**, read from the `manifest` block of its `nextflow.config`. Its version
+  must match a shipped template, or the run stops with an error;
+- the results directory itself: the run information an nf-core pipeline writes
+  under `pipeline_info/` names the pipeline and its version, and the matching
+  template is used. When no shipped version matches, the closest version that is
+  not newer is used, with a warning.
+
+When none applies, the command stops and asks for `--template` or
+`--project-config-path`.
 
 ### Instantiating with `--manifest` or `--bind` { #instantiating-with-manifest-or-bind }
 
-`--data-root`, `--manifest` and `--bind` all answer the same question, where
+`DATA_DIR`, `--manifest` and `--bind` all answer the same question, where
 the data is, and a template run needs at least one of them:
 
 ```bash
-# A manifest-driven template: no local root at all
-depictio-cli run --template generic/manifest-tables/1 \
+# A manifest-driven template: no results directory at all
+depictio ingest --template generic/manifest-tables/1 \
   --manifest https://data.example.org/run42/manifest.json
 
 # Any template, each data collection pointed at its own location
-depictio-cli run --template my-lab/rnaseq-qc/1 \
+depictio ingest --template my-lab/rnaseq-qc/1 \
   --bind metadata=/data/run42/metadata.tsv \
   --bind samples=s3://my-bucket/run42/*.samples.csv
 ```
@@ -132,7 +175,7 @@ On the CLI, `--template` also accepts a path: a directory holding a
 it, without copying it into an installation first:
 
 ```bash
-depictio-cli run --template ./my-lab/rnaseq-qc/1 \
+depictio ingest --template ./my-lab/rnaseq-qc/1 \
   --bind samples=s3://their-bucket/run7/*.samples.csv
 ```
 
@@ -144,7 +187,7 @@ ids are confined to the templates directory in both contexts.
 
 ## Resolution Workflow
 
-When `--template` is set, `depictio run` inserts **Step 0: Template resolution** before the standard pipeline:
+When a template is used, `depictio ingest` inserts **Step 0: Template resolution** before the standard pipeline:
 
 | Step | Name | Description |
 |------|------|-------------|
@@ -156,7 +199,7 @@ When `--template` is set, `depictio run` inserts **Step 0: Template resolution**
 | 5 | Data process | Execute recipes, write to Delta Lake |
 | 6 | Join computation | Compute cross-DC joins |
 | 7 | Finalize | Mark project as ready |
-| **8** | Dashboard import | Import bundled dashboard YAML (with variable substitution) |
+| **8** | Dashboard import | Import the bundled dashboard YAML the project lacks (with variable substitution). On a refresh, the dashboards it has are kept as edited in the viewer, unless `--reset-dashboards` |
 
 Dashboard YAML files also undergo variable substitution (e.g. `{GROUP_COL}` in filter columns, chart titles).
 
@@ -180,12 +223,6 @@ gated out even with a seed sitting beside it.
     Only a `source: transformed` collection is redirected. A `{dc_tag}.tsv` next
     to a `source: native` collection of the same tag is that collection's own
     input, and is scanned normally.
-
-!!! warning "Templates ship with the repository, not the wheel"
-    The bundled projects live under `depictio/projects/`, which is not part of the
-    published `depictio-cli` package. Re-ingesting a bundled project from its own
-    directory works from a repository checkout or a container image that carries
-    them.
 
 ---
 
@@ -266,7 +303,7 @@ the flattened key) to a named group, in declaration order, first match winning.
 
 ### `highlight`
 
-Keys surfaced inline in the dashboard's settings drawer. The full listing always
+Keys surfaced inline in the dashboard's Settings. The full listing always
 stays in the ingestion report.
 
 <!-- prettier-ignore -->
@@ -284,7 +321,7 @@ A template with no `provenance:` block gets a default spec: the latest
 and lists its entries under a **User provided** group. The flag is repeatable.
 
 ```bash
-depictio-cli run --provenance-file run_summary.yaml --provenance-file thresholds.tsv
+depictio ingest /path/to/results --provenance-file run_summary.yaml --provenance-file thresholds.tsv
 ```
 
 ### Where it surfaces
@@ -292,7 +329,7 @@ depictio-cli run --provenance-file run_summary.yaml --provenance-file thresholds
 - **Ingestion report**: a *Run provenance* card, one accordion per group, with
   per-row copy, full-text search across keys and values, and the source files
   listed. See [Ingestion Report & Health](../../features/dashboards.md#ingestion-report-health).
-- **Dashboard settings drawer**: a *Run parameters* row showing the highlighted
+- **Dashboard settings**: a *Run parameters* row showing the highlighted
   keys inline, linking to the full report. See
   [Using the dashboard](../guides/dashboard_usage.md#dashboard-settings-drawer).
 
@@ -330,14 +367,13 @@ run of the same pipeline is one command.
 === "CLI"
 
     ```bash
-    depictio-cli template export <project_id> \
+    depictio template export <project_id> \
       --template-id my-lab/rnaseq-qc/1 \
-      --config ~/.depictio/admin_config.yaml \
       -o depictio/projects
     ```
 
-    The bundle is unpacked into `<output-dir>/<template-id>/`. `--version`,
-    `--description` and `--data-root` are optional; see the
+    The bundle is unpacked into `<output-dir>/<template-id>/`. `--server`,
+    `--version`, `--description` and `--data-dir` are optional; see the
     [CLI reference](../../depictio-cli/usage.md#template-commands).
 
 === "Web UI"
@@ -368,7 +404,7 @@ exported.
 
 Data bindings are re-parameterised. Stored manifest URLs become
 `{MANIFEST_URL}`, declared as a required variable. A local path prefix becomes
-`{DATA_ROOT}` when `--data-root` is given, or when the project itself came
+`{DATA_ROOT}` when `--data-dir` is given, or when the project itself came
 from a template that recorded one. A template binds one manifest, so distinct
 stored manifest URLs all collapse onto the same placeholder, with a warning.
 
@@ -386,8 +422,8 @@ and the picker, or run it directly by path with `--template ./folder`.
 
 ## Additional Resources
 
-- **[Template Catalog](../../pipeline-templates/README.md)** — browse and use available templates
+- **[Template Catalog](../../pipeline-templates/README.md)**: browse and use available templates
 - **[Remote data and manifests](remote-data.md)**: URL, prefix and manifest scan modes, `--bind`, sharing a project
-- **[Recipes](recipes.md)** — how to write and test data transformation recipes
-- **[Contributing Templates](../../developer/contributing-templates.md)** — add a new template
-- **[CLI Usage](../../depictio-cli/usage.md)** — full `depictio run` reference
+- **[Recipes](recipes.md)**: how to write and test data transformation recipes
+- **[Contributing Templates](../../developer/contributing-templates.md)**: add a new template
+- **[CLI Usage](../../depictio-cli/usage.md#ingest-command)**: full `depictio ingest` reference

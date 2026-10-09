@@ -33,7 +33,7 @@ git clone https://github.com/YOUR-USERNAME/depictio.git
 cd depictio
 git remote add upstream https://github.com/depictio/depictio.git
 
-# 2. Run the full stack with hot-reload (MongoDB, Redis, MinIO, API, viewer)
+# 2. Run the full stack with hot-reload (MongoDB, Redis, SeaweedFS, API, viewer)
 docker compose -f docker-compose.dev.yaml up --build -d
 
 # 3. Install local Python tooling for tests & pre-commit
@@ -52,8 +52,11 @@ Then open the app at **<http://localhost:5080>** and the API docs at
 
 ### Recommended — Docker dev (hot-reload)
 
-`docker-compose.dev.yaml` mounts your local source and reloads on change. All
-critical defaults are baked into the compose file, so no `.env` is required.
+`docker-compose.dev.yaml` mounts your local source and reloads on change. Its
+settings come from `docker-compose/.env`, which the repository ships populated for
+local development. Since v1.12.0 it requires `DEPICTIO_S3_ROOT_USER` and
+`DEPICTIO_S3_ROOT_PASSWORD` under these names: a `docker-compose/.env` that still
+says `DEPICTIO_MINIO_ROOT_*` stops the stack with an error naming the variable.
 
 ```bash
 docker compose -f docker-compose.dev.yaml up --build -d
@@ -64,7 +67,7 @@ docker compose -f docker-compose.dev.yaml up --build -d
 | Frontend | `http://localhost:5080` |
 | Backend API | `http://localhost:8058` |
 | API Docs | `http://localhost:8058/docs` |
-| MinIO Console | `http://localhost:9001` |
+| SeaweedFS admin UI (S3 root credentials) | `http://localhost:9001` |
 
 Useful environment overrides (set in `docker-compose/.env`, already populated for
 local dev):
@@ -78,11 +81,11 @@ local dev):
 
 ### Quickstart — pre-built images
 
-To run released images from GHCR without building (MinIO bundled by default):
+To run released images from GHCR without building (SeaweedFS bundled as the S3 store):
 
 ```bash
 docker compose up -d
-# Bring your own S3 / external MinIO:
+# Bring your own S3:
 docker compose -f docker-compose/docker-compose.no-minio.yaml up -d
 ```
 
@@ -100,13 +103,17 @@ uv run playwright install chromium   # E2E browser
 uv run pre-commit install            # git hooks
 ```
 
-The CLI is a standalone package with its own `pyproject.toml`:
+Since v1.12.0 the CLI is part of the root `depictio` package, so the environment
+above already has it:
 
 ```bash
-cd depictio/cli && uv sync && uv run depictio --help
+uv run depictio --help
 ```
 
-> Prefer a different tool? `pixi install` (bundles MongoDB/Redis/MinIO) or
+`depictio/cli/pyproject.toml` only builds the `depictio-cli` alias for PyPI; do not
+install it to work on the CLI.
+
+> Prefer a different tool? `pixi install` (bundles MongoDB/Redis/SeaweedFS) or
 > `pip install -e ".[dev]"` both work as alternatives to `uv`.
 
 ### React viewer dev server

@@ -140,6 +140,9 @@ workflows:
             #   "Image" - Image files with metadata
             #   "geojson" - GeoJSON boundary files for choropleth maps
             #   "phylogeny" - Newick / Nexus trees for the phylogenetic viz
+            #   "indexed_file" - Indexed genomic files (VCF, BAM, bigWig,
+            #     bigBed, GFF3, FASTA, bgzip + tabix), range-read by the
+            #     browser; see the guide's "Indexed-file DCs" example
             #   "jbrowse2" - Genome browser tracks
 
           # Required: Data aggregation strategy
@@ -259,7 +262,7 @@ workflows:
               NumReads: "Estimated read count" # Example format: column_name: "Description"
 
         # Optional: Data joining configuration (client-side pre-computed)
-        # NOTE: Joins combine Table DCs during depictio-cli run
+        # NOTE: Joins combine Table DCs during depictio ingest
         # Use project-level "links" for runtime cross-DC filtering in UI
         join: # Optional: Join this collection with others
           on_columns:

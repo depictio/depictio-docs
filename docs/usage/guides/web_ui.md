@@ -41,9 +41,39 @@ If you have configured Google OAuth for your Depictio instance (see [Configurati
     </a>
 </div>
 
-Each dashboard is shown as a card. Cards display the dashboard's screenshot thumbnail
+The listing opens on the **Table** view <small>(v1.12.0+)</small>, one row per dashboard. In the
+**Thumbnails** view each dashboard is shown as a card. Cards display the dashboard's screenshot thumbnail
 once one has been captured, and fall back to the dashboard's logo (when set) before the
 generic placeholder.
+
+The table view has a **Last viewed** column <small>(v1.11.0+)</small>, sorted newest
+first, with dashboards you never opened last. It is kept per browser.
+
+#### <span style="color: #45B8AC;">:material-view-grid-outline:</span> Thumbnails or table <small>(v1.11.2+)</small> { #listing-views }
+
+The view switcher in the toolbar picks between **Thumbnails**, the card grid, and
+**Table**, with sortable columns and bulk selection. The Tiles view of earlier
+versions is gone, and a browser that had it opens on Thumbnails.
+
+In Thumbnails, the **Card display** menu beside the switcher sets:
+
+- **Cards per row**: 5 by default since v1.12.0, or 2 to 6, or Auto. Auto never makes
+  more columns than a section has cards, so a section with a single dashboard draws
+  it across the whole width.
+- **Badges**: which of Project, Template, Owner, Visibility, Last modified and Tabs a
+  card shows. Hovering a badge gives its long form.
+
+**Reset to defaults** restores both, so five cards per row. They are layout preferences,
+kept in the browser and left out of shared links. A browser that opened the listing
+before v1.12.0 stored Auto, the former default, and keeps it until you pick another
+value or reset. Resting the pointer on a thumbnail opens a larger,
+sharper preview.
+
+Someone who never picked a view gets the one the deployment sets with
+[`DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW`](../../installation/env-reference.md#react-viewer-frontend):
+**Table** since v1.12.0, Thumbnails before. Set it to `thumbnails` to open the grid
+again. A view picked in the browser, or named by a shared link such as
+`/dashboards?view=thumbnails`, wins over it.
 
 ### <span style="color: #7A5DC7;">:material-menu:</span> Sidebar Navigation
 
@@ -106,6 +136,19 @@ At the bottom of the sidebar, you will find:
     </div>
     Both "public" and "private" dashboards are listed in the **Dashboards** section. Public dashboards are accessible to all users, while private dashboards are only visible to the user who created them.
     Only the user who created a private dashboard can edit, or delete it.
+
+#### <span style="color: #45B8AC;">:material-link-variant:</span> Share a filtered listing <small>(v1.10.1+)</small> { #share-a-filtered-listing }
+
+The filters of `/dashboards` and `/projects` are kept in the URL. Set them, then
+press the link button in the toolbar to copy a link to that view:
+
+| Link | Shows |
+| --- | --- |
+| `/dashboards?template=nf-core/rnaseq` | Dashboards built from nf-core/rnaseq, any version |
+| `/projects?template=nf-core/rnaseq,nf-core/viralrecon` | Projects built from either pipeline |
+
+Whoever opens it sees a **Shared view** banner, with **Show everything** to clear the
+filters. The link grants no access: it only narrows what they could already open.
 
 ## <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects section (/projects)
 
@@ -216,7 +259,7 @@ A single project's data, organised into tabs:
 
 You can reach this page directly by clicking the **project badge** shown on any
 dashboard card or in the dashboards table, or the **project name** in an open
-dashboard's settings drawer <small>(v1.6.0+)</small>.
+dashboard's Settings <small>(v1.6.0+)</small>.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/react/page_project_detail.png" target="_blank">
@@ -269,7 +312,7 @@ Design mode — add, configure, and arrange components.
 
 ### <span style="color: #45B8AC;">:material-key-chain:</span> CLI agents / tokens (/cli-agents)
 
-Generate and manage CLI configurations for the [depictio-cli](../../depictio-cli/usage.md).
+Generate and manage CLI configurations for the [`depictio` CLI](../../depictio-cli/usage.md). Saved as `~/.depictio/CLI.yaml`, a configuration is the server every CLI command uses by default.
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/react/page_cli_agents.png" target="_blank">

@@ -11,7 +11,7 @@ description: "How to add a pipeline template to Depictio — a single-folder bun
 
 A **template** turns a whole pipeline run into a ready-made Depictio project —
 data collections, recipes, and dashboards — that a user sets up with a single
-`depictio-cli run --template …` command. Where a [catalog tool](contributing-a-tool.md)
+`depictio ingest <results dir> --template …` command. Where a [catalog tool](contributing-a-tool.md)
 wires up *one* tool's outputs, a template assembles *many* into a complete,
 opinionated analysis for a specific pipeline.
 
@@ -103,12 +103,12 @@ workflows:
 data collections resolve — without ingesting anything:
 
 ```bash
-depictio-cli run --template <pipeline>/<version> --data-root /path/to/run --dry-run
+depictio ingest /path/to/run --template <pipeline>/<version> --dry-run
 ```
 
 ## Step 3 — Write recipes (only for outputs that need reshaping)
 
-Same recipe contract as the catalog: `SOURCES`, `EXPECTED_SCHEMA`, `transform`.
+Same recipe contract as the catalog: `SOURCES`, `OUTPUT_SCHEMA`, `transform`.
 
 ```python
 """Short description of what this recipe produces."""
@@ -120,22 +120,22 @@ SOURCES: list[RecipeSource] = [
     RecipeSource(ref="my_file", path="relative/path/from/DATA_ROOT/to/file.csv", format="CSV"),
 ]
 
-EXPECTED_SCHEMA: dict[str, type[pl.DataType]] = {
+OUTPUT_SCHEMA: dict[str, type[pl.DataType]] = {
     "sample": pl.Utf8,
     "value":  pl.Float64,
 }
 
 def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
     df = sources["my_file"]
-    return df.select("sample", "value")        # exactly the EXPECTED_SCHEMA columns
+    return df.select("sample", "value")        # exactly the OUTPUT_SCHEMA columns
 ```
 
-Test it against real data before moving on (all four checkpoints — load →
-resolve → transform → schema — must pass green):
+Test it against real data before moving on (all five checkpoints, load →
+resolve → input schema → transform → output schema, must pass green):
 
 ```bash
-depictio-cli dev recipe info <pipeline>/my_recipe.py
-depictio-cli dev recipe run  <pipeline>/my_recipe.py --data-dir /path/to/run --head 10
+depictio dev recipe info <pipeline>/my_recipe.py
+depictio dev recipe run  <pipeline>/my_recipe.py --data-dir /path/to/run --head 10
 ```
 
 ## Step 4 — Build the dashboards
@@ -143,20 +143,19 @@ depictio-cli dev recipe run  <pipeline>/my_recipe.py --data-dir /path/to/run --h
 The fastest path is to build interactively and export:
 
 1. Ingest the run without importing dashboards:
-   `depictio-cli run --template <id> --data-root <path> --skip-dashboard-import`
+   `depictio ingest <path> --template <id> --skip dashboards`
 2. Build the dashboard in the Depictio UI.
 3. **Dashboard settings → Export YAML**, and save it as `dashboards/main.yaml`.
 
 ### Shortcut: export the whole bundle
 
 If the project already exists on an instance, built by hand or from an earlier
-run, `depictio-cli template export` writes the entire bundle in one go:
+run, `depictio template export` writes the entire bundle in one go:
 
 ```bash
-depictio-cli template export <project_id> \
+depictio template export <project_id> \
   --template-id <pipeline>/<version> \
-  --config ~/.depictio/admin_config.yaml \
-  --data-root /path/to/run \
+  --data-dir /path/to/run \
   -o depictio/projects
 ```
 
@@ -245,28 +244,94 @@ scan mode the template declares.
 ## Step 5 — Test end-to-end & open a PR
 
 ```bash
-depictio-cli run --template <pipeline>/<version> --data-root /path/to/run
+depictio ingest /path/to/run --template <pipeline>/<version>
 ```
 
 Check before submitting:
 
 - [ ] `template_id` follows `<org>/<pipeline>/<version>`.
-- [ ] Every recipe has a docstring and a typed `EXPECTED_SCHEMA`; `depictio-cli dev recipe run` passes for each.
+- [ ] Every recipe has a docstring and a typed `OUTPUT_SCHEMA`; `depictio dev recipe run` passes for each.
 - [ ] Dashboard YAML is committed.
 - [ ] No hardcoded absolute paths or URLs: only `{DATA_ROOT}`, `{MANIFEST_URL}` and other template variables.
-- [ ] A full `depictio-cli run --template …` completes without error and dashboards render with the template badge.
+- [ ] A full `depictio ingest <path> --template …` completes without error and dashboards render with the template badge.
 
 In the PR, include: the pipeline name + docs link, the version tested, the
 reference dataset used (e.g. an nf-core AWS results URL), and a screenshot of at
 least one dashboard.
 
+## Step 6 — Document the template
+
+Every template gets one page, `docs/pipeline-templates/nf-core/<pipeline>.md` in
+[depictio-docs](https://github.com/depictio/depictio-docs), registered in three
+places: the nav in `mkdocs.yml`, a row in `pipeline-templates/nf-core/index.md`,
+and a card in `pipeline-templates/README.md` carrying `data-tpl-name`,
+`data-tpl-status`, `data-tpl-version` and `data-tpl-keywords`, which is what the
+catalogue search, the status chips and the table view read.
+
+Copy the skeleton from [ampliseq](../pipeline-templates/nf-core/ampliseq.md).
+**Required** means every page has it; the two optional sections answer a question
+most templates do not raise.
+
+| Section | Presence | What goes in it |
+|---|---|---|
+| Front matter | <span class="gtd-badge gtd-req">required</span> | `title:` the domain name a reader would search for, and `hide: [navigation]` |
+| `.template-banner` | <span class="gtd-badge gtd-req">required</span> | logo pair, title, subtitle, nf-co.re and GitHub links, status badge |
+| Intro | <span class="gtd-badge gtd-req">required</span> | one sentence, then 4 to 6 `:material-*:` bullets, one per analysis area |
+| Scope admonition | <span class="gtd-badge gtd-opt">optional</span> | `!!! info` or `!!! warning`, when the template covers one route of the pipeline only |
+| `## Quick start` | <span class="gtd-badge gtd-req">required</span> | the `depictio ingest` that needs nothing but the results directory, and the Nextflow trigger beside it |
+| `## Choosing a template` | <span class="gtd-badge gtd-opt">optional</span> | a table of `--template` ids, when the template ships under several |
+| `## Reference` | <span class="gtd-badge gtd-req">required</span> | the picker, then one version block per version around its generated partial |
+| `## Dashboard tabs` | <span class="gtd-badge gtd-req">required</span> | one content tab per dashboard tab, in dashboard order: summary line, screenshot, two or three sentences, `??? abstract` with the filters and sections |
+| `## Running the pipeline` | <span class="gtd-badge gtd-req">required</span> | the `nextflow run` that produces the inputs, the `depictio ingest` that reads them, the pipeline usage link |
+| `## Required data structure` | <span class="gtd-badge gtd-req">required</span> | a `text` tree of `<DATA_ROOT>/`, with the mandatory files called out |
+| `## Test data` | <span class="gtd-badge gtd-opt">if shipped</span> | `download_test_data.sh` or the megatest prefix, and the run that follows |
+| `## Additional resources` | <span class="gtd-badge gtd-req">required</span> | four links: nf-co.re, the AWS results, Template System Reference, Recipes |
+| `## Authorship` | <span class="gtd-badge gtd-req">required</span> | developers, reviewers and maintainers, as `.tpl-credits` cards |
+
+Four rules are easy to get wrong:
+
+**Tab names, icons and colours are read, never chosen.** A tab is titled with its
+`title` in `dashboards/base.yaml`, or `main_tab_name` for the first one, and
+`tab_icon: mdi:chart-scatter-plot` with `tab_icon_color: indigo` becomes
+`:material-chart-scatter-plot:{ .mc-indigo }`. A tab whose icon is the MultiQC
+logo carries the logo image instead. Check the icon exists in the bundled Material
+set before using it: `mdi:target-arrow` does not, `bullseye-arrow` is the same glyph.
+
+**The reference is one block per version**, driven by the picker rather than by a
+tab strip, with the include flush left inside it:
+
+```markdown
+<div class="tpl-version-block" data-version="2.18.0" markdown>
+
+;--8<-- "pipeline-templates/nf-core/_generated/ampliseq-latest.md"
+
+</div>
+```
+
+Generate those partials with
+`python -m depictio.dev_scripts.gen_template_docs --docs-root <depictio-docs>`.
+It rewrites every template, so stage only your own.
+
+**Screenshots** live at
+`docs/images/pipeline-templates/nf-core/<pipeline>/<tab_slug>_light.png`, named
+after the tab they show, and are linked with
+`{ .tpl-shot target="_blank" rel="noopener" }` so a full-height capture lands in
+the scrollable frame instead of being cropped. Add the `_dark.png` twin, with
+`#only-light` and `#only-dark`, when you have one.
+
+**Keep it near 300 lines**, and no em dashes in new prose. The template's own
+`docs/dashboards.md` is source material to condense, not to port: implementation
+notes and megatest bookkeeping stay in the depictio repo.
+
 ## Badge promotion
 
-Submitted templates start **Experimental** and are promoted as they're reviewed
-and tested:
+A template starts **Draft** while it still needs a review to be usable, or
+**Experimental** when it works but is shared as-is. Both are promoted as they're
+reviewed and tested:
 
 | Badge | Criteria |
 |-------|----------|
+| <span style="white-space: nowrap">:material-pencil-outline:{ style="color: #90A4AE" } **Draft**</span> | Generated and not yet reviewed. Expect it to need fixes before it is usable. |
 | <span style="white-space: nowrap">:material-flask-outline:{ style="color: #FF9800" } **Experimental**</span> | Shared as-is. PR submitted; feedback and PRs welcome. |
 | <span style="white-space: nowrap">:material-check-circle-outline:{ style="color: #2196F3" } **Reviewed**</span> | Tested, CI passes, reviewed by the Depictio team or community. |
 | <span style="white-space: nowrap">:material-shield-check:{ style="color: #4CAF50" } **Certified**</span> | Validated by the pipeline lead developer. Highest trust level. |

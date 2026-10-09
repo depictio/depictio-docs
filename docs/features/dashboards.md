@@ -24,6 +24,7 @@ Read-only mode for exploring data:
 - :material-filter: Use filter components to explore data
 - :material-download: Export data from tables (v0.6.0+)
 - :material-share-variant: Share dashboards with collaborators
+- :material-comment-text-multiple-outline: Discuss and annotate components (project editors and owners), see [Comments and Annotations](comments-annotations.md)
 - :material-lock: No accidental modifications
 
 ### :material-pencil: Editor Mode
@@ -117,7 +118,7 @@ everything else you have already picked, which of these values still lead somewh
 
 For each control, the answer is computed against every **other** active filter, with that
 control's own selection excluded, since otherwise a control would grey out everything it
-did not itself select. Values that can still narrow the data carry a teal marker; values
+did not itself select. Values that can still narrow the data carry a marker in the analysis grouping colour; values
 that would return nothing are dimmed, disabled and sorted last, and each control carries
 an `n/N available` badge that turns orange when nothing remains.
 
@@ -148,6 +149,14 @@ data collection gets its own bar in each band, side by side, so a filter that gu
 collection while leaving another untouched is visible at a glance. Bars can be labelled
 with rows, percent of start, or percent of the previous stage.
 
+Since **v1.11.0** a switch at the top of the overview picks what it counts: **Rows by
+data collection**, as above, or **Values of a column**. The second follows one column,
+picked with **Data collection** and **Column**, and charts how many of its distinct
+values survive each stage. A matrix under the chart shows which stage removed each value,
+searchable and capped at 200 rows. A stage that comes from a saved
+[selection group](interactive-selection-filtering.md#selection-groups) takes that
+group's colour.
+
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-overview-modal.png" target="_blank">
         <img src="../../images/guides/funnel-filtering/funnel-overview-modal.png" width="600">
@@ -172,7 +181,7 @@ find out.
 !!! note "Scope and defaults"
     Funnel filtering is **on by default**: knowing which values still lead somewhere is
     rather the point of a filter panel, so authors opt out rather than in. The author-level
-    default is a switch in the editor's settings drawer, stored on the dashboard as
+    default is a switch in the editor's **Settings → Filtering**, stored on the dashboard as
     `funnel_filtering` and round-tripping through [YAML Sync](yaml-sync.md#funnel-filtering);
     the button in the filter panel flips it for your page view only and writes nothing, so
     viewers without edit rights can still turn it off.
@@ -191,6 +200,7 @@ The **right panel** is the main canvas where visualization components are displa
 - :material-cog-outline: **Configured** through component edit menus
 - :material-link-variant: **Cross-panel filtering** - Responds to filters from the left panel
 - :material-view-sequential: **Grouped into sections** (v1.4.0+) - `grid_sections` splits the canvas into named, foldable boxes; see [Sections](#sections) below
+- :material-cellphone: **Laid out for the screen** (v1.14.0+) - A read-only grid counts in half-height rows, so text and cards fit to the nearest half row while figures keep their pixels. On a phone, tiles reflow in reading order, quarter-width tiles two to a row and wider ones full width
 
 Available component types include:
 
@@ -200,7 +210,8 @@ Available component types include:
 | :material-table: **Tables**                 | Data tables with filtering and pagination      |
 | :material-card-text: **Cards**              | Summary statistics and KPIs                    |
 | :material-tune: **Interactive Filters**     | Dropdowns, sliders, and other controls         |
-| :material-format-header-1: **Text/Headers** | Section headers (H1, H2, H3)                   |
+| :material-format-header-1: **Text/Headers** | Headings and prose; block markdown since v1.14.0 |
+| :material-star-four-points-outline: **Highlights** | Another tab's figure, redrawn here (v1.14.0+) |
 | :material-map-marker-multiple: **Maps**     | Geospatial scatter, density and choropleth maps |
 | :material-microscope: **MultiQC**           | Quality control report visualizations          |
 | :material-image: **Images**                 | Display grid of static images (PNG, JPEG, SVG) |
@@ -317,6 +328,118 @@ Persistent sections do nothing on a dashboard with a single tab. See
 [YAML Sync](yaml-sync.md#persistent-sections) for the `persistent` and `pin`
 keys.
 
+Since **v1.14.0** `exclude_tabs` lists the tabs a persistent section stays off, its own
+tab included, by displayed name (the main tab by its `main_tab_name`), case ignored. A
+landing tab that already sums up the sample sheet does not need it pinned under its own
+key figures. In the section form it is **Hide on these tabs**, under **Every tab**; the
+editor still draws such a section on the tab being edited, badged **Hidden on this tab**.
+
+On a tab that does not own it, a pinned grid section says **Filtered** while a filter
+narrows it; folded, its cards read *filtered / total*, and **Reset filters** clears the
+filters.
+
+### :material-view-dashboard-outline: Landing tabs <small>(v1.14.0+)</small> { #landing-tabs }
+
+A landing tab opens a dashboard with prose and a few chosen figures rather than a grid of
+analyses: what the study is, its key numbers, what the data says and which tab shows it.
+Every piece below is an option on an existing component or section, set in YAML or in
+the editor, and off by default, so a dashboard that sets none of them looks as it did.
+
+[![The top of a landing tab: a title, a framed text tile, a fact table and a step flow](../images/guides/landing-tabs/overview-top.webp)](../images/guides/landing-tabs/overview-top.webp){target=_blank}
+
+The TREC AML2024 Overview. `show_tab_header: false` lets the first text tile be the page
+title. *About the study* and *The campaign* are framed text tiles, the campaign's colour
+dots are swatches, and the five steps are a `::: steps` block whose small icons link to
+the run's settings and to the tabs that show each step. See [Text Components](components.md#text-components).
+
+[![Key figures under a section filter bar, then a map and a PCoA in the minimal style](../images/guides/landing-tabs/key-figures.webp)](../images/guides/landing-tabs/key-figures.webp){target=_blank}
+
+*Key figures* is a plain section with a filter bar of its own: *City* and *Size*, with
+two more filters behind **More filters**, narrow its four cards and nothing else. The
+cards are headline cards with a caption and fixed decimals. *At a glance* draws a map
+and, in the minimal figure style, a PCoA, both coloured by city in the colours
+`category_colors` gives it, written into each one's own colour map.
+
+[![Result rows linking to their tabs, beside a phylogeny summary sized by reads per city](../images/guides/landing-tabs/findings-phylogeny.webp)](../images/guides/landing-tabs/findings-phylogeny.webp){target=_blank}
+
+*Findings*: result rows whose figure takes the linked tab's colour, beside a
+[phylogeny summary](components.md#phylogeny-summary) collapsed to phyla, sized by
+share of reads, with one column of dots per city.
+
+[![A stacked bar and a strip plot in the minimal style with captions, then tab tiles](../images/guides/landing-tabs/minimal-figures.webp)](../images/guides/landing-tabs/minimal-figures.webp){target=_blank}
+
+Minimal figures with a `caption` under the plot and a `link` back to their tab, then
+*How to read this dashboard*: two lists of `tab:` links drawn as tab tiles, under
+headings that repeat the sidebar's groups.
+
+| Building block | Where it is documented |
+| -------------- | ---------------------- |
+| Block markdown, `tab:` links, swatches, steps, framed tiles | [Text Components](components.md#text-components) |
+| `icon_style`, `caption`, `decimals`, `variant`, `link` on cards | [Card Components](components.md#card-display-options) |
+| `figure_style: minimal`, `caption`, `link` on figures | [Figure Components](components.md#figure-style) |
+| Another tab's figure, redrawn here | [Highlight](components.md#highlight-components) |
+| Phylogeny summary by rank | [Phylogenetic](components.md#phylogeny-summary) |
+| An UpSet that filters the tab | [UpSet](components.md#upset) |
+| Plain sections, filter bars, colours, tab defaults | Below, and [YAML Sync](yaml-sync.md#landing-tab-keys) |
+
+#### Plain sections
+
+`appearance: plain` draws a grid section as a heading and its description over the tiles:
+no frame, no chevron, never folded. It suits tiles that are already cards. A grid section
+can also set the style its members take unless they set their own: `card_variant` for
+its cards and `figure_style` for its figures and advanced visualizations.
+
+The section form groups its fields as **Look**, **Layout**, **Section filters**, **Card
+and figure style** and **Every tab**. **Layout** is a choice of tiles or a filter bar,
+each with a thumbnail saying what its filters narrow, and **Plain heading** sits there
+too.
+
+#### Filter bars { #filter-bars }
+
+The interactive components that name a bar section leave the left filter panel and are
+drawn as one compact row of controls. There are two kinds of bar:
+
+| Key on the grid section | What its filters narrow |
+| ----------------------- | ----------------------- |
+| `display: strip` | The whole tab, like the filter panel. The section is the bar; any other members render as tiles under it |
+| `filter_bar: true` | Only the tiles of that section, drawn under its heading. The rest of the tab, the panel and the other tabs ignore it |
+
+A categorical control is chosen by how many values the column has:
+
+- **up to 3**: a segmented control, with as many segments pressed at once as the filter
+  allows;
+- **4 to 10**: a dropdown listing the values as chips in their colour;
+- **more than 10**: a dropdown with a plain list and a search field.
+
+A RangeSlider or Slider becomes a thin inline slider, a Switch or Checkbox a small
+switch, and a date filter the panel's date picker. A Timeline (`placement: top`) stays out
+of bars. A value carries a colour dot when its column is in `category_colors` (grey for a
+value the map leaves out), else when the column has ten values or fewer and no more than
+the colorway has colours.
+
+`visible_filters` caps how many controls a bar shows before a **More filters** toggle,
+which counts the filters folded behind it and, separately, how many of those are set; it
+unfolds them in place. Unset, it is 2 on a section's own bar and every filter on a
+`display: strip` bar. A section narrowed by its own bar shows **Filtered** beside its
+heading, and each bar offers **Reset**, which clears its own controls only. A section's
+bar adds to the tab's filters rather than replacing them.
+
+On each filter, `strip_label` sets a shorter label for the bar (*Habitat* for *Sampling
+habitat*), and `strip_icon: false` drops the icon badge before it. See
+[In a filter bar](components.md#filter-bar-keys).
+
+#### Category colours { #category-colors }
+
+`category_colors`, at dashboard level, gives one colour per value of a column, so a city
+is the same colour on every tile: the filter bar's chips, a figure's points and bars, an
+UpSet's sets, sunburst, sankey and tree colours, and code figures. Maps do not read it.
+Child tabs inherit the main tab's map, and a child's own map overrides it value by value.
+A figure's own `color_discrete_map` still wins value by value. Values left out fall back
+to the brand colorway, then to grey (grey on a filter chip). In code mode the map is
+available as `depictio_category_colors`, and a code figure that sets no colours of its
+own is recoloured from it when every trace name, *Other* aside, is a value of one
+coloured column. See [Code Mode](components.md#code-mode).
+
 ---
 
 ## :material-tab-plus: Dashboard Tabs
@@ -356,14 +479,49 @@ a tab opened on a bare title while every other tab got its glyph.
     `tab_order`, so a reader never saw the order the dashboard laid out. Since
     **v1.8.3** both honour `tab_order`.
 
+### :material-folder-multiple-outline: Tab groups <small>(v1.14.0+)</small> { #tab-groups }
+
+A child tab takes an optional `tab_group`, such as *Samples & data* or *Analysis*. The
+sidebar lists ungrouped tabs first, then each group under a small uppercase heading, in
+the order of its first tab; moving a tab up or down stays within its group. The main tab
+is never grouped, and names differing only in case or spacing are one group. In the
+editor, the sidebar's **Add tab or group** button offers **Add tab** or **Add group**,
+which can move existing tabs into the new group. A group's ⋮ menu offers **Rename
+group…** (another group's name merges the two), **Add tab to this group**, **Move group
+up** / **Move group down** and **Ungroup**; a tab joins a group from its own **Move to
+group** or the **Group** field of its dialog.
+
+### :material-tune-vertical: Tab defaults <small>(v1.14.0+)</small> { #tab-defaults }
+
+Three keys set what a tab opens with before a viewer has chosen otherwise. A viewer's own
+choice, kept in their browser, still wins.
+
+| Key | Values | Default | Effect |
+| --- | ------ | ------- | ------ |
+| `filter_panel_default` | `open` \| `collapsed` | `open` | Whether the left filter panel starts open |
+| `content_width_default` | `full` \| `wide` \| `comfortable` \| `compact` | `full` | Page width on a large screen: `full` fills it; the others cap it at 1600, 1240 or 1080 px, centred |
+| `show_tab_header` | bool | `true` | Show the tab's icon, name and description above the canvas. Off for a tab whose first text tile is its title |
+
+In the editor they sit under **Settings → Tab defaults** (**Page width**, **Filter
+panel**, **Show the tab's name**). A viewer's width is kept per tab, their filter panel
+per dashboard.
+
 ### :material-creation: Creating a Tab
 
-1. :material-plus-circle: Click **"+ New Tab"** in the navbar
-2. :material-form-textbox: Enter a **tab name**
-3. :material-text-short: Optionally add a **description**, shown in the canvas header
-4. :material-emoticon-outline: Select an **icon** from the dropdown
-5. :material-palette-outline: Choose an **icon color**
-6. :material-check: Click **Create**
+1. :material-plus-circle: In edit mode, click **Add tab or group** at the foot of the sidebar's tab list, then **Add tab**
+2. :material-form-textbox: Enter a **Tab name**
+3. :material-folder-multiple-outline: Optionally pick a **Group** <small>(v1.14.0+)</small>
+4. :material-emoticon-outline: Enter an **Icon** (an Iconify name)
+5. :material-palette-outline: Choose an **Icon color**
+6. :material-check: Click **Add Tab**
+
+### :material-content-copy: Copy to tab <small>(v1.14.0+)</small> { #copy-to-tab }
+
+In the editor, a component's ⋮ menu offers **Copy to tab…**, which adds a copy to another
+tab of the dashboard, the main tab included. The copy keeps its section when the target
+tab has one of that name, and a notification links to where it landed. Filters and
+floating maps are not offered: a filter acts on its own tab, and a filter meant for every
+tab belongs in a [section shown on every tab](#persistent-sections).
 
 <!-- ### :material-tools: Tab Operations
 
@@ -410,7 +568,7 @@ project came from, and since **v1.6.0** a badge in the report header says which 
 you are reading:
 
 - :material-file-document-check: **Template manifest** — the project was created from a
-  [pipeline template](../pipeline-templates/README.md) by `depictio-cli run --template`,
+  [pipeline template](../pipeline-templates/README.md) by `depictio ingest`,
   which froze the list of data collections the template *expected*. The report compares
   that list against what was actually found and aggregated during the scan.
 - :material-database-eye: **Live project** — there is no such list, so the report is read
@@ -420,7 +578,7 @@ you are reading:
 
 !!! note "Templates seeded at first boot read as *Live project*"
     The nf-core projects a fresh deployment seeds for you carry no manifest. Only a
-    project you create yourself with `depictio-cli run --template` does.
+    project you create yourself from a template with `depictio ingest` does.
 
 ### :material-magnify: What the report shows
 
@@ -461,6 +619,15 @@ only keys the template explicitly excludes are omitted, and anything no group ru
 matches lands in **Other**. See
 [Run provenance](../usage/projects/templates.md#run-provenance).
 
+### :material-rocket-launch-outline: What triggered the run <small>(v1.10.0+)</small> { #triggered-by }
+
+A project records what invoked its latest ingestion, from `--triggered-by`.
+Anything other than a manual run shows a badge on the project's ingestion tab: a
+project the [Nextflow trigger](../depictio-cli/nextflow-trigger.md) ingests shows
+**Triggered by Nextflow**, with the Nextflow logo. For a project built from a
+template, its tooltip also gives the pipeline and engine versions, the number of
+tools that ran and the directory that was ingested.
+
 ### :material-heart-pulse: Health status & banner
 
 The report rolls up into a single project **health** value:
@@ -472,7 +639,7 @@ The report rolls up into a single project **health** value:
 When a template-derived dashboard is missing or only partially has a required collection,
 a dismissible **health banner** appears above the dashboard. The full report is reachable
 from any project's **Ingestion** tab on its [project page](../usage/guides/web_ui.md), and
-from the **View ingestion report** row in a dashboard's settings drawer.
+from the **View ingestion report** row in a dashboard's **Settings**.
 
 ---
 
