@@ -403,6 +403,10 @@ main_dashboard:
   list item whose data collection is missing. Give highlight sources a short,
   meaningful `index`.
 - Text that cannot be pruned (hero, steps, how to read) names no `{VARIABLE}`.
+- No `filter_expr` names `{GROUP_COL}`. Without metadata it resolves to the
+  `__no_group__` sentinel, which the filter check rejects, and the import fails
+  before any pruning. Narrow to the group column in the recipe instead, with
+  `params: {group_col: "{GROUP_COL}"}`.
 
 ### Prose
 
