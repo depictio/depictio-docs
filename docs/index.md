@@ -2899,6 +2899,35 @@ hide:
     }
   }
 
+  /* One card per line on a phone: lower cards, so the list stays short. */
+  @media (max-width: 600px) {
+    .installation-grid,
+    .getting-started-section .installation-grid {
+      gap: 0.9rem;
+    }
+
+    .installation-card {
+      gap: 0.85rem;
+      padding: 1rem 1.1rem;
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+    }
+
+    .card-content h3 {
+      margin-bottom: 0.25rem;
+      font-size: 1.05rem;
+    }
+
+    .card-content p {
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+    }
+  }
+
   /* Section Background Alternation */
   .workflow-section,
   .tech-section,
