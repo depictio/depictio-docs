@@ -1523,8 +1523,7 @@ hide:
   }
 
   @media (max-width: 900px) {
-    .component-card,
-    .workflow-card {
+    .component-card {
       width: calc((100% - 1.5rem) / 2);
     }
   }
@@ -1532,13 +1531,12 @@ hide:
   @media (max-width: 768px) {
     .components-section {
       padding: 1rem 1rem 2rem 1rem;
-      margin: 0 -1rem;
+      margin: 0 -0.8rem;
     }
   }
 
   @media (max-width: 500px) {
-    .component-card,
-    .workflow-card {
+    .component-card {
       width: 100%;
     }
   }
@@ -1692,6 +1690,37 @@ hide:
 
   [data-md-color-scheme="slate"] .workflow-card {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* On a phone, one card per line, lower, the Snakemake label beside its logo. */
+  @media (max-width: 600px) {
+    .workflow-logos {
+      gap: 0.9rem;
+    }
+
+    .workflow-card {
+      width: 100%;
+      min-height: 96px;
+      padding: 1rem;
+    }
+
+    .workflow-card .snakemake-catalog-link {
+      flex-direction: row;
+      gap: 0.9rem;
+    }
+
+    .workflow-card .workflow-label {
+      margin-top: 0;
+    }
+
+    .snakemake-catalog-link .workflow-logo {
+      height: 48px;
+      width: 48px;
+    }
+
+    .workflow-card .workflow-logo {
+      max-height: 56px;
+    }
   }
 
   .workflow-card:hover {
@@ -2153,7 +2182,9 @@ hide:
 
   .feature-row {
     display: grid;
-    grid-template-columns: 1fr;
+    /* minmax(0, …): a 1fr column grows to its widest unbreakable content, and
+       the terminal blocks would then widen the whole page on a phone. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.25rem;
     align-items: center;
   }
@@ -2234,6 +2265,42 @@ hide:
 
   .fc-g {
     color: #8ce563;
+  }
+
+  /* Two columns start at 900px, where the YAML terminal's column is narrowest. */
+  @media (min-width: 900px) and (max-width: 1099px) {
+    .feature-code {
+      font-size: 0.72rem;
+    }
+  }
+
+  /* On a phone the YAML terminal keeps its longest line on screen: smaller type,
+     tighter padding. */
+  @media (max-width: 600px) {
+    .feature-code {
+      padding: 1rem;
+      font-size: clamp(0.5rem, 2.9vw, 0.78rem);
+    }
+
+    .fc-file {
+      padding: 0.6rem 0.7rem;
+    }
+
+    /* No room for the hairline and the link beside the label: the link goes
+       to its own line, under the label. */
+    .md-typeset .feature-group-title {
+      flex-wrap: wrap;
+      row-gap: 0.5rem;
+    }
+
+    .md-typeset .feature-group-title::after {
+      display: none;
+    }
+
+    .md-typeset .feature-group-link {
+      flex-basis: 100%;
+      padding-left: calc(1.7rem + 0.85rem);
+    }
   }
 
   /* Material attaches a copy button to every `pre > code`. This block is an
@@ -2824,27 +2891,19 @@ hide:
     overflow-x: auto;
   }
 
-  /* A single column below 900px: the column must be allowed to shrink below
-     the width of the longest command, or the terminal runs off a phone. */
-  @media (max-width: 899px) {
-    .getting-started-quickstart {
-      grid-template-columns: minmax(0, 1fr);
-    }
-  }
-
   /* The type follows the width where the column is narrow, so the longest
      command still ends short of the copy button: in the right half of the row
      up to 1220px, and full width on a phone. */
   @media (min-width: 900px) and (max-width: 1219px) {
     .getting-started-quickstart .feature-code {
-      font-size: 1.55vw;
+      font-size: 1.4vw;
     }
   }
 
   @media (max-width: 600px) {
     .getting-started-quickstart .feature-code {
-      padding: 1rem;
-      font-size: clamp(0.6rem, 3.4vw, 0.85rem);
+      padding: 1rem 0.8rem;
+      font-size: clamp(0.52rem, 3.2vw, 0.85rem);
     }
   }
 
@@ -2932,7 +2991,23 @@ hide:
     .funding-section,
     .partners-section {
       padding: 1rem 1rem 2rem 1rem;
-      margin: 0 -1rem;
+      margin: 0 -0.8rem;
+    }
+  }
+
+  /* Until the page is 1280px wide the content starts 0.8rem from the window
+     edge, so the -2rem bleed ran the sections 24px past it. */
+  @media (min-width: 769px) and (max-width: 1279px) {
+    .components-section,
+    .workflow-section,
+    .tech-section,
+    .key-features-section,
+    .getting-started-section,
+    .funding-section,
+    .partners-section,
+    .demo-unavailable-message {
+      margin-left: -0.8rem;
+      margin-right: -0.8rem;
     }
   }
 
@@ -3009,7 +3084,7 @@ hide:
   @media (max-width: 768px) {
     .demo-unavailable-message {
       padding: 1rem 1rem 2rem 1rem;
-      margin: 0 -1rem;
+      margin: 0 -0.8rem;
     }
 
     .demo-alternative-actions {
