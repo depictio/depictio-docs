@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.14.0",
-    "x-generated-at": "2026-10-08T09:24:10Z",
-    "x-depictio-version": "v1.14.0"
+    "version": "1.15.0",
+    "x-generated-at": "2026-10-09T18:36:36Z",
+    "x-depictio-version": "v1.15.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -273,6 +273,177 @@
                 "schema": {
                   "$ref": "#/components/schemas/IngestionSummary"
                 }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/ingestion-runs/{project_id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Project Ingestion Runs",
+        "description": "Ingestion-run history for one project, newest first.\n\nDeliberately *not* an extension of the admin monitoring gate: that gate is\nall-or-nothing across every project, whereas the people who most need this\nare project editors who are not admins. Guarded instead by the same\n``_async_get_project_from_id`` the ingestion report already uses, so\nvisibility follows project permissions.\n\nOwners, editors and admins see runs in full; everyone else gets the\noperator-machine fields removed (see ``_redact_run``).",
+        "operationId": "get_project_ingestion_runs_depictio_api_v1_projects_ingestion_runs__project_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Skip"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/ingestion/trigger-status/{project_id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Ingestion Trigger Status",
+        "description": "Whether this project can be re-ingested from the browser, and why not.\n\nTwo separate booleans, because they drive different UI. ``enabled`` is\nwhether the server offers this at all — when it is false the control is not\nrendered, since a permanently dead button on every deployment that never\nturns the flag on is just noise. ``available`` is whether *this* caller can\nuse it *right now*; when that is false the control is rendered and disabled\nwith ``reason`` attached, because \"the server cannot read /data/runs\" is\nactionable and a missing button is not.",
+        "operationId": "get_ingestion_trigger_status_depictio_api_v1_projects_ingestion_trigger_status__project_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/ingestion/trigger/{project_id}": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Trigger Project Ingestion",
+        "description": "Start a server-side ingestion of this project. Returns a job to poll.\n\nOff by default (``DEPICTIO_INGESTION_BROWSER_TRIGGER``) and useless where\nthe API cannot see the data, so every precondition is checked here rather\nthan discovered by a task that fails ten minutes later. Every path the\nproject names must also sit inside ``DEPICTIO_INGESTION_ALLOWED_DATA_ROOTS``\n(see ``ingestion_roots``); the task checks that again before it reads.",
+        "operationId": "trigger_project_ingestion_depictio_api_v1_projects_ingestion_trigger__project_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "overwrite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Overwrite"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -1041,6 +1212,51 @@
             }
           }
         }
+      }
+    },
+    "/depictio/api/v1/runs/delete_batch": {
+      "post": {
+        "tags": [
+          "Workflows runs"
+        ],
+        "summary": "Delete Runs Batch",
+        "description": "Delete many runs in one request.\n\nDeliberately does *not* cascade to the runs' files: ``delete_run`` has never\ndone so, and changing that here would turn a performance fix into a silent\nbehaviour change. The CLI deletes orphaned files explicitly via\n/files/delete_batch.",
+        "operationId": "delete_runs_batch_depictio_api_v1_runs_delete_batch_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteRunsBatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/depictio/api/v1/runs/delete/{run_id}": {
@@ -3497,6 +3713,51 @@
         }
       }
     },
+    "/depictio/api/v1/files/delete_batch": {
+      "post": {
+        "tags": [
+          "Files"
+        ],
+        "summary": "Delete Files Batch",
+        "description": "Delete many files in one request.\n\nScan cleanup used to issue one blocking round-trip per file, so removing a\nstale run meant thousands of sequential requests.\n\nUnknown or malformed ids are counted as ``not_found`` rather than rejected:\nthe caller is reconciling its own view of the registry against the server's,\nand a partially stale list must not fail the whole cleanup.",
+        "operationId": "delete_files_batch_depictio_api_v1_files_delete_batch_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteFilesBatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/files/delete/{file_id}": {
       "delete": {
         "tags": [
@@ -3839,13 +4100,70 @@
         ]
       }
     },
+    "/depictio/api/v1/deltatables/history/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Delta History",
+        "description": "Commit history of a data collection's Delta table, newest first.\n\nMerges what Delta itself records (version, timestamp, operation, row and\nfile counts, plus depictio's own commit metadata) with what Mongo knows\nabout each aggregation (who ran it). Degrades to the Mongo-only view when\nthe object store is unreachable, so a transient S3 problem shows a partial\nhistory rather than an error page.\n\nWho ran an ingestion is shown to owners, editors and admins only — see\n``_caller_is_project_operator``.\n\n``truncated`` says whether rows exist beyond ``limit``, so a client can\ntell a short history from a cut one.",
+        "operationId": "get_delta_history_depictio_api_v1_deltatables_history__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/deltatables/specs/{data_collection_id}": {
       "get": {
         "tags": [
           "DeltaTables"
         ],
         "summary": "Specs",
-        "description": "Fetch columns list and specs from data collection.\n\nArgs:\n    data_collection_id: The data collection identifier.\n    current_user: Authenticated or anonymous user.\n\nReturns:\n    Column specifications from the latest aggregation.\n\nRaises:\n    HTTPException: If data collection not found or access denied.\n\nNote:\n    Currently returns the last aggregation; versioning support planned.",
+        "description": "Fetch columns list and specs from data collection.\n\nArgs:\n    data_collection_id: The data collection identifier.\n    current_user: Authenticated or anonymous user.\n\nReturns:\n    Column specifications from the latest aggregation.\n\nRaises:\n    HTTPException: If data collection not found or access denied.\n\nNote:\n    Returns the newest aggregation that has its specs (see\n    ``latest_complete_aggregation``), so an offload still computing them\n    serves the previous schema rather than an empty one.",
         "operationId": "specs_depictio_api_v1_deltatables_specs__data_collection_id__get",
         "security": [
           {
@@ -4222,7 +4540,7 @@
           "DeltaTables"
         ],
         "summary": "Get Preview",
-        "description": "Return the first `limit` rows + column names for a data collection's\ndelta table, for the React stepper data-source preview pane.\n\nMirrors what the Dash stepper builds via\n``load_deltatable_lite(..., limit_rows=100, load_for_preview=True)``.\n\nHeavy work (Polars scan + collect) runs on Celery when\n`settings.celery.offload_preview` is true (default).",
+        "description": "Return the first `limit` rows + column names for a data collection's\ndelta table, for the React stepper data-source preview pane.\n\nMirrors what the Dash stepper builds via\n``load_deltatable_lite(..., limit_rows=100, load_for_preview=True)``.\n\nHeavy work (Polars scan + collect) runs on Celery when\n`settings.celery.offload_preview` is true (default).\n\n``version`` reads an older Delta commit instead of the current table. This\npath scans directly rather than through ``load_deltatable_lite``, so it was\nalways safe here. Reading a past commit *through* the cache is now safe too:\n``load_deltatable_lite(delta_version=N)`` folds the requested version into\nthe cache-key salt, so a historical frame can no longer be stored under the\nlive key and handed to a caller who asked for current data. That salt is\nthe precondition for any cached time-travel read — see\n``deltatables_utils.load_deltatable_lite``.",
         "operationId": "get_preview_depictio_api_v1_deltatables_preview__data_collection_id__get",
         "security": [
           {
@@ -4248,6 +4566,22 @@
               "type": "integer",
               "default": 100,
               "title": "Limit"
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Version"
             }
           }
         ],
@@ -4731,6 +5065,31 @@
         "summary": "Telemetry Preview",
         "description": "Show exactly what anonymous installation telemetry would send. Admin only.\n\nTelemetry defaults to on, so operators are owed a way to verify the claim that\nit carries nothing identifying — on their own deployment, with their own data,\nrather than by trusting the documentation. This returns the real payload built\nby the real builder.\n\nReads the send guard rather than claiming it, so inspecting the payload never\nconsumes the day's slot and suppresses the actual heartbeat.",
         "operationId": "telemetry_preview_depictio_api_v1_utils_telemetry_preview_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/utils/capabilities": {
+      "get": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Capabilities",
+        "description": "What this server supports, so a client can adapt instead of guessing.\n\nFeature strings are emitted only when the corresponding capability is\nactually usable, so this reflects runtime configuration rather than build\nversion. Clients treat a 404 as \"empty feature set\" — which is exactly what\na server predating this endpoint returns — and read ``limits`` to size their\nrequests rather than discovering a ceiling by being rejected.\n\nAuthenticated rather than public: the limits and feature set are\noperational detail, and /status already covers liveness.",
+        "operationId": "capabilities_depictio_api_v1_utils_capabilities_get",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -5515,6 +5874,595 @@
         }
       }
     },
+    "/depictio/api/v1/dashboards/{dashboard_id}/versions": {
+      "get": {
+        "tags": [
+          "Dashboard Versions"
+        ],
+        "summary": "List Dashboard Versions",
+        "description": "Version timeline for a dashboard family, newest first.",
+        "operationId": "list_dashboard_versions_depictio_api_v1_dashboards__dashboard_id__versions_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "before_seq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Before Seq"
+            }
+          },
+          {
+            "name": "pinned_only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Pinned Only"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Dashboard Versions"
+        ],
+        "summary": "Create Dashboard Version",
+        "description": "Name the dashboard's current state.\n\n``kind=\"explicit\"``, so it never folds into a neighbouring autosave and is\nkept for the full retention window.\n\nWhen the current state is already the newest version (the common case,\nsince every save records one), this names *that* version rather than\nwriting a duplicate. It never names a version whose content differs from\nthe live state: a snapshot that could not be taken at all is an error that\nsays why, 409 when versioning is off and 413 when the dashboard is over\nthe size cap.",
+        "operationId": "create_dashboard_version_depictio_api_v1_dashboards__dashboard_id__versions_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVersionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/{dashboard_id}/versions/current": {
+      "get": {
+        "tags": [
+          "Dashboard Versions"
+        ],
+        "summary": "Current Dashboard Version",
+        "description": "The version whose content matches the live dashboard, if any.",
+        "operationId": "current_dashboard_version_depictio_api_v1_dashboards__dashboard_id__versions_current_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/versions/{version_id}/compatibility": {
+      "get": {
+        "tags": [
+          "Dashboard Versions"
+        ],
+        "summary": "Dashboard Version Compatibility",
+        "description": "Can this version still render against today's data?\n\nAnswered per data collection, naming the columns that changed and the\ncomponents that reference them — a pair of schema hashes can only say\n\"different\", which is not something anyone can act on.",
+        "operationId": "dashboard_version_compatibility_depictio_api_v1_dashboards_versions__version_id__compatibility_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "version_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Version Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/versions/{version_id}": {
+      "get": {
+        "tags": [
+          "Dashboard Versions"
+        ],
+        "summary": "Get Dashboard Version",
+        "description": "One version in full, including the snapshot.",
+        "operationId": "get_dashboard_version_depictio_api_v1_dashboards_versions__version_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "version_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Version Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Dashboard Versions"
+        ],
+        "summary": "Rename Dashboard Version",
+        "description": "Set or clear a version's label.",
+        "operationId": "rename_dashboard_version_depictio_api_v1_dashboards_versions__version_id__patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "version_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Version Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RenameVersionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Dashboard Versions"
+        ],
+        "summary": "Delete Dashboard Version",
+        "description": "Erase one version.\n\nRequires **owner**: unlike a restore, this is not recoverable. A pinned\nversion additionally needs ``force=true``, so the pin has to be overridden\ndeliberately rather than by a mis-click.",
+        "operationId": "delete_dashboard_version_depictio_api_v1_dashboards_versions__version_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "version_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Version Id"
+            }
+          },
+          {
+            "name": "force",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Force"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/versions/{version_id}/pin": {
+      "post": {
+        "tags": [
+          "Dashboard Versions"
+        ],
+        "summary": "Pin Dashboard Version",
+        "description": "Pin a version so retention can never remove it.\n\nPinning also *seals* the version: ``coalesce_until`` is pulled back to the\ncreation instant so the next autosave opens a fresh version instead of\nfolding into — and rewriting — the state the user just chose to keep.",
+        "operationId": "pin_dashboard_version_depictio_api_v1_dashboards_versions__version_id__pin_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "version_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Version Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinVersionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Dashboard Versions"
+        ],
+        "summary": "Unpin Dashboard Version",
+        "description": "Unpin a version, making it eligible for retention again.",
+        "operationId": "unpin_dashboard_version_depictio_api_v1_dashboards_versions__version_id__pin_delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "version_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Version Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/versions/{version_id}/restore": {
+      "post": {
+        "tags": [
+          "Dashboard Versions"
+        ],
+        "summary": "Restore Dashboard Version",
+        "description": "Put a past version back, without destroying the present.\n\nThe current state is captured as a version *before* anything is written,\nso a restore is always undoable by restoring the entry that precedes the\nnew restore point. That pre-capture is a no-op when the live state already\nmatches the newest version — the usual case — so a restore normally adds\nexactly one entry to the timeline.\n\nOnly content is written. ``permissions``, ``is_public`` and ``project_id``\nare never taken from the snapshot — a months-old version must not be able\nto re-grant access that has since been revoked.\n\nOnly the fields a stored tab holds are written, so a version recorded\nbefore a setting existed leaves that setting as it is live rather than\nresetting it to a default.",
+        "operationId": "restore_dashboard_version_depictio_api_v1_dashboards_versions__version_id__restore_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "version_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Version Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/versions/{version_id}/restore_component": {
+      "post": {
+        "tags": [
+          "Dashboard Versions"
+        ],
+        "summary": "Restore Component From Version",
+        "description": "Put **one** component back, leaving the rest of the dashboard alone.\n\nRestoring a whole version to recover a single chart is a blunt instrument:\nit reverts every other component, and any work done since, to get one thing\nback. This is the narrow edit — the component's stored config replaces the\nlive one, and nothing else on the dashboard moves.\n\nDeliberately not simply \"write the snapshot's component over the live one\":\n\n* **Access-control fields are not restorable.** They live on the dashboard\n  document rather than the component, so they cannot travel through here,\n  and that is checked by construction rather than by hoping.\n* **The layout is opt-in.** ``restore_layout`` is off by default because\n  the common request is \"give me back what this chart showed\", and silently\n  shuffling neighbours to reinstate an old grid position is a second,\n  unasked-for change. Off, the component keeps its live place: grid entry\n  *and* section, group and panel, which a grid entry is relative to.\n* **A component absent from the live dashboard is re-added.** Restoring a\n  component someone deleted is the single most valuable case, so it is\n  supported rather than 404'd — placed using the snapshot's layout, since\n  there is no live position to preserve.\n\nLike a full restore, the pre-change state is captured first, so this is\nundoable by restoring the version that precedes the new entry.",
+        "operationId": "restore_component_from_version_depictio_api_v1_dashboards_versions__version_id__restore_component_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "version_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Version Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestoreComponentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/dashboards/sync_with_projects": {
       "post": {
         "tags": [
@@ -5546,7 +6494,7 @@
           "Dashboards"
         ],
         "summary": "Get Dashboard",
-        "description": "Fetch dashboard data related to a dashboard ID.\nNow uses project-based permissions instead of dashboard-specific permissions.\nFor child tabs, includes parent_dashboard_title for header display.",
+        "description": "Fetch dashboard data related to a dashboard ID.\nNow uses project-based permissions instead of dashboard-specific permissions.\nFor child tabs, includes parent_dashboard_title for header display.\n\n``version_id`` renders a past version instead of the live content. Only\ncontent is overlaid — ``permissions``, ``is_public``, ``project_id`` and\nthe realtime config always come from the live document, so a stale\nsnapshot can never widen access.",
         "operationId": "get_dashboard_depictio_api_v1_dashboards_get__dashboard_id__get",
         "security": [
           {
@@ -5562,6 +6510,22 @@
               "type": "string",
               "format": "objectid",
               "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "version_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Version Id"
             }
           }
         ],
@@ -6378,7 +7342,7 @@
           "Dashboards"
         ],
         "summary": "Bulk Compute Cards",
-        "description": "Compute card values with interactive filters applied.\n\nCalled by the React viewer whenever the filter state changes. Dedupes\nDelta-table loads: multiple cards referencing the same (wf_id, dc_id, filter\nfingerprint) share one load. Returns a map keyed by component index.\n\nRequest body:\n    {\n        \"filters\": [\n            {\"index\": \"...\", \"value\": ..., \"column_name\": \"...\",\n             \"interactive_component_type\": \"MultiSelect\"},\n            ...\n        ],\n        \"component_ids\": [\"...\", ...]   # optional; defaults to all cards\n    }\n\nResponse:\n    {\n        \"values\": {\"<component_index>\": <scalar or null>, ...},\n        \"secondary_values\": {\n            \"<component_index>\": {\"<aggregation>\": <scalar or null>, ...},\n            ...\n        },\n        \"aggregations\": {\"<component_index>\": [\"<aggregation>\", ...], ...},\n        \"group_status\": {\"<component_index>\": [<group status>, ...], ...},\n        \"filter_applied\": bool,\n        \"filter_count\": int\n    }\n\n    ``secondary_values`` and ``aggregations`` are only populated for cards\n    that declare ``aggregations`` in YAML (multi-metrics card).\n\nNotes:\n    - Uses load_deltatable_lite with the same metadata format as Dash so\n      the filter semantics match the Dash viewer exactly.\n    - The Dash callback render_card_value_background in\n      card_component/callbacks/core.py remains the source of truth for the\n      edit path; this endpoint mirrors its math.",
+        "description": "Compute card values with interactive filters applied.\n\nCalled by the React viewer whenever the filter state changes. Dedupes\nDelta-table loads: multiple cards referencing the same (wf_id, dc_id, filter\nfingerprint) share one load. Returns a map keyed by component index.\n\nRequest body:\n    {\n        \"filters\": [\n            {\"index\": \"...\", \"value\": ..., \"column_name\": \"...\",\n             \"interactive_component_type\": \"MultiSelect\"},\n            ...\n        ],\n        \"component_ids\": [\"...\", ...],  # optional; defaults to all cards\n        \"as_of_version\": \"<version id>\",   # optional, see ``_data_pins``\n        \"data_versions\": {\"<dc_id>\": <int | null>},\n        \"definition_version\": \"<version id>\"  # optional, see below\n    }\n\n``definition_version`` computes the cards as that version defined them on\nthis tab (its cards, when ``component_ids`` is absent). A card that version\ncannot draw is reported in ``definition_errors`` rather than failing the\nrest.\n\nResponse:\n    {\n        \"values\": {\"<component_index>\": <scalar or null>, ...},\n        \"secondary_values\": {\n            \"<component_index>\": {\"<aggregation>\": <scalar or null>, ...},\n            ...\n        },\n        \"aggregations\": {\"<component_index>\": [\"<aggregation>\", ...], ...},\n        \"group_status\": {\"<component_index>\": [<group status>, ...], ...},\n        \"filter_applied\": bool,\n        \"filter_count\": int\n    }\n\n    ``secondary_values`` and ``aggregations`` are only populated for cards\n    that declare ``aggregations`` in YAML (multi-metrics card).\n\n    A text tile with live values (``values:``, or a ``{{param:KEY}}`` in its\n    title or body) is computed too, and answers under its own index with\n    one entry per value: ``values[\"<text index>\"] = {\"<name>\": <number,\n    string or null>, \"param:<KEY>\": <string or null>}``. Numbers are raw;\n    the viewer formats them.\n\n    ``definition_errors`` (only with ``definition_version``, only when some\n    card failed): ``{\"<component_index>\": {\"status\": 404 | 409, \"detail\": str}}``,\n    each such card's value being null. 409: the card read another data\n    collection in that version. 404: it did not exist in that version, or\n    it was deleted since and its collection is no longer in the project.\n\nNotes:\n    - Uses load_deltatable_lite with the same metadata format as Dash so\n      the filter semantics match the Dash viewer exactly.\n    - The Dash callback render_card_value_background in\n      card_component/callbacks/core.py remains the source of truth for the\n      edit path; this endpoint mirrors its math.",
         "operationId": "bulk_compute_cards_depictio_api_v1_dashboards_bulk_compute_cards__dashboard_id__post",
         "security": [
           {
@@ -6505,7 +7469,7 @@
           "Dashboards"
         ],
         "summary": "Render Table Endpoint",
-        "description": "Return table rows + column definitions for the React viewer's AG Grid.\n\nRequest body:\n    {\"filters\": [...], \"start\": 0, \"limit\": 100,\n     \"sort_by\": <col|null>, \"sort_dir\": \"asc\"|\"desc\"}\n\nResponse:\n    {\"columns\": [{\"field\", \"headerName\", \"type\"}, ...],\n     \"rows\":    [{...}, ...],\n     \"total\":   <int>,\n     \"sort_by\": <col|null>, \"sort_dir\": \"asc\"|\"desc\"}\n\nSort runs server-side because the React grid uses AG Grid's *infinite*\nrow model — only the visible page is loaded, so client-side header sort\ncan't reorder unloaded rows. When ``sort_by`` is null the server picks\nany ``acquisition*`` column (newest first) so realtime ingests land at\nthe top of the visible table; users can override via header click.",
+        "description": "Return table rows + column definitions for the React viewer's AG Grid.\n\nRequest body:\n    {\"filters\": [...], \"start\": 0, \"limit\": 100,\n     \"sort_by\": <col|null>, \"sort_dir\": \"asc\"|\"desc\",\n     \"as_of_version\": <version id>, \"data_versions\": {<dc_id>: <int>}}\n\nThe two time-travel keys are optional (see ``_data_pins``); when they pin\nthis table's collection, the schema, the total and the page are all read at\nthat commit.\n\nResponse:\n    {\"columns\": [{\"field\", \"headerName\", \"type\"}, ...],\n     \"rows\":    [{...}, ...],\n     \"total\":   <int>,\n     \"sort_by\": <col|null>, \"sort_dir\": \"asc\"|\"desc\"}\n\nSort runs server-side because the React grid uses AG Grid's *infinite*\nrow model — only the visible page is loaded, so client-side header sort\ncan't reorder unloaded rows. When ``sort_by`` is null the server picks\nany ``acquisition*`` column (newest first) so realtime ingests land at\nthe top of the visible table; users can override via header click.",
         "operationId": "render_table_endpoint_depictio_api_v1_dashboards_render_table__dashboard_id___component_id__post",
         "security": [
           {
@@ -6731,7 +7695,7 @@
           "Dashboards"
         ],
         "summary": "Map Data Endpoint",
-        "description": "Return the rows behind a map component, for the viewer's \"show data\" table.\n\nNothing is rendered here, hence the name: this is the map's equivalent of\n``POST /advanced_viz/data``, and it deliberately answers in the same\ncolumn-oriented shape so the viewer can reuse that popover's grid verbatim.\n\nEvery column of the data collection is returned, reordered so the map's own\ncolumns lead (see ``_map_column_order``). Callers are expected to send the\ndashboard's filters *minus* the map's own ``map_selection``, so the table\nmatches the points currently drawn rather than only the lassoed ones.\n\nResponse:\n    {\n      \"columns\": [str],           # ordering, map columns first\n      \"rows\": {col: [values]},    # column-oriented\n      \"row_count\": int,           # rows actually returned\n      \"total_rows\": int,          # rows matching the filters, before the cap\n      \"truncated\": bool,          # row_count < total_rows because of the cap\n      \"filter_applied\": bool,\n    }",
+        "description": "Return the rows behind a map component, for the viewer's \"show data\" table.\n\nNothing is rendered here, hence the name: this is the map's equivalent of\n``POST /advanced_viz/data``, and it deliberately answers in the same\ncolumn-oriented shape so the viewer can reuse that popover's grid verbatim.\n\nEvery column of the data collection is returned, reordered so the map's own\ncolumns lead (see ``_map_column_order``). Callers are expected to send the\ndashboard's filters *minus* the map's own ``map_selection``, so the table\nmatches the points currently drawn rather than only the lassoed ones.\n\nTakes the same optional ``as_of_version`` / ``data_versions`` keys as\n``render_map`` (see ``_data_pins``), and reads the rows *and* the total at\nthe pinned commit. A map drawn as of an old version whose \"show data\" table\nthen listed today's rows would contradict the points it sits beside.\n\nResponse:\n    {\n      \"columns\": [str],           # ordering, map columns first\n      \"rows\": {col: [values]},    # column-oriented\n      \"row_count\": int,           # rows actually returned\n      \"total_rows\": int,          # rows matching the filters, before the cap\n      \"truncated\": bool,          # row_count < total_rows because of the cap\n      \"filter_applied\": bool,\n    }",
         "operationId": "map_data_endpoint_depictio_api_v1_dashboards_map_data__dashboard_id___component_id__post",
         "security": [
           {
@@ -6846,7 +7810,7 @@
           "Dashboards"
         ],
         "summary": "Get Cross Tab Components",
-        "description": "Return everything a tab renders on behalf of its siblings, in one request.\n\nSupersedes ``/floating_components`` for the React viewer (that endpoint\nstays for compatibility): alongside the family's floating maps, this\nreturns every section marked ``persistent: true`` in a tab's\n``grid_sections`` / ``filter_sections``, with its member components and —\nfor grid sections — the owner tab's layout entries for those members. Each\nmember carries its owning ``dashboard_id``, so render calls target the\nowner tab exactly like floating maps do.\n\nSections are keyed ``(owner_dashboard_id, kind, name)``: two tabs each\ndeclaring a persistent section with the same name stay two sections.",
+        "description": "Return everything a tab renders on behalf of its siblings, in one request.\n\nSupersedes ``/floating_components`` for the React viewer (that endpoint\nstays for compatibility): alongside the family's floating maps, this\nreturns every section marked ``persistent: true`` in a tab's\n``grid_sections`` / ``filter_sections``, with its member components and —\nfor grid sections — the owner tab's layout entries for those members. Each\nmember carries its owning ``dashboard_id``, so render calls target the\nowner tab exactly like floating maps do.\n\nSections are keyed ``(owner_dashboard_id, kind, name)``: two tabs each\ndeclaring a persistent section with the same name stay two sections.\n\nWith ``version_id``, the sections and floating maps as that version held\nthem, for a ``?version=`` preview: otherwise the preview of a child tab\nshowed today's cross-tab content under the version's banner. The renders\nthen name the same version as ``definition_version`` with the owner's id,\nwhich finds each component on its owner tab in that version.\n``omitted_tab_ids`` lists the owner tabs deleted since, whose content\ncannot be drawn.",
         "operationId": "get_cross_tab_components_depictio_api_v1_dashboards_cross_tab_components__dashboard_id__get",
         "security": [
           {
@@ -6862,6 +7826,22 @@
               "type": "string",
               "format": "objectid",
               "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "version_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Version Id"
             }
           }
         ],
@@ -7645,6 +8625,130 @@
               "schema": {
                 "type": "object",
                 "additionalProperties": true,
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/filter_options/{dashboard_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Filter Options Endpoint",
+        "description": "The options an interactive filter offers, at the data version in effect.\n\nA filter's option list read today's data while the tiles beside it showed a\npinned version: a variety select offered values the pinned data does not\nhold, and picking one emptied every chart.\n\nRequest body:\n    {\"dc_id\": str, \"column\": str, \"kind\": \"unique\" | \"range\",\n     \"filter_expr\": str (optional),\n     \"as_of_version\": str, \"data_versions\": {\"<dc_id>\": int | null}}\n\nResponse, the shapes ``GET /deltatables/unique_values/{dc}`` and a column's\n``/deltatables/specs/{dc}`` entry give:\n    unique: {\"column\": str, \"values\": [str, ...]}\n    range:  {\"min\": number | null, \"max\": number | null,\n             \"dtype\": str | null, \"unique\": int | null}\n\nViewer permission on the dashboard; ``dc_id`` must belong to its project\n(404 otherwise). The pins resolve exactly as a render's do (``_data_pins``,\nwith the same 400s). Unpinned, the answer comes from the paths the viewer\nused before, cache included.",
+        "operationId": "filter_options_endpoint_depictio_api_v1_dashboards_filter_options__dashboard_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/data_version_status/{dashboard_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Data Version Status Endpoint",
+        "description": "What each data collection of a tab family shows under a time-travel request.\n\nA banner saying \"every value is from v3\" was wrong for anything v3 could\nnot pin: a collection added since, one kept live, MultiQC reports. The\nclient asks this once per selection and badges what still shows live data.\n\nRequest body: ``{\"as_of_version\": str, \"data_versions\": {\"<dc_id>\": int | null}}``,\nboth optional, resolved exactly as a render resolves them (same 400s).\n\nResponse:\n    {\"collections\": [{\"dc_id\", \"workflow_tag\", \"data_collection_tag\",\n                      \"dc_type\", \"status\": \"pinned\" | \"live\" | \"not_versioned\",\n                      \"delta_version\": int | null, \"reason\": str | null}]}\n\nOne entry per collection the family's live components read, then per\ncollection the version stamped that none of them reads any more. See\n``data_versions.collection_statuses`` for the statuses and reasons.",
+        "operationId": "data_version_status_endpoint_depictio_api_v1_dashboards_data_version_status__dashboard_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
                 "title": "Request"
               }
             }
@@ -9722,7 +10826,7 @@
           "Monitoring"
         ],
         "summary": "Start Ingestion",
-        "description": "Open an ingestion-run record. Auth-only (the ingesting user), not admin-gated.\n\nBest-effort from the CLI's perspective — failures here must never abort a\nreal ingestion, so the CLI calls this in a try/except.",
+        "description": "Open an ingestion-run record. Auth-only (the ingesting user), not admin-gated.\n\nBest-effort from the CLI's perspective — failures here must never abort a\nreal ingestion, so the CLI calls this in a try/except.\n\nThe record is upserted by ``run_id``, which the client may supply, so an\nexisting run of another user is refused rather than overwritten, and a\n``project_id`` needs write access to that project.",
         "operationId": "start_ingestion_depictio_api_v1_monitoring_ingestion_start_post",
         "security": [
           {
@@ -9801,7 +10905,7 @@
           "Monitoring"
         ],
         "summary": "Finish Ingestion",
-        "description": "Close an ingestion-run record with the final status + per-step tally.",
+        "description": "Close an ingestion-run record with the final status + per-step tally.\n\nOnly the user who opened the run, or an admin, may close it. A\n``project_id`` the caller may not write is dropped rather than refused:\nthe run still closes, but it cannot be filed under someone else's project.",
         "operationId": "finish_ingestion_depictio_api_v1_monitoring_ingestion__run_id__finish_post",
         "security": [
           {
@@ -9857,7 +10961,7 @@
           "Monitoring"
         ],
         "summary": "Update Ingestion Step",
-        "description": "Upsert a single step of an in-flight ingestion and mark it as current.\n\nPlaceholder for future async/offloaded ingestion: a long-running worker calls\nthis to push per-step progress while the run stays ``running``, so the admin\nUI reflects live state instead of only the final tally. The current\nsynchronous CLI does not call this yet — it reports all steps at ``finish``.",
+        "description": "Upsert a single step of an in-flight ingestion and mark it as current.\n\nThe CLI calls this as each step starts and finishes, so the admin UI shows\nlive state rather than only the final tally.\n\nThrottled per run: over the configured rate the update is dropped and the\nresponse says so, rather than returning 429. A dropped progress ping is not\nan error and must not make the client retry — but a *terminal* step always\ngoes through, so a run's final tally is never lost to throttling.\n\nOnly the user who opened the run, or an admin, may update it. Checked before\nthe throttle, or anyone could spend the owner's update budget.",
         "operationId": "update_ingestion_step_depictio_api_v1_monitoring_ingestion__run_id__step_post",
         "security": [
           {
@@ -9885,6 +10989,254 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/monitoring/agents/heartbeat": {
+      "post": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "Agent Heartbeat",
+        "description": "Record that a long-running CLI agent (a watcher) is alive.\n\nAuth-only rather than admin-gated, like the ingestion start/finish calls:\nthe agent reports about itself, using its own credentials.\n\n``expires_at`` is set several heartbeat intervals ahead so one missed beat\ndoes not evict a healthy agent, while a dead one clears within minutes.",
+        "operationId": "agent_heartbeat_depictio_api_v1_monitoring_agents_heartbeat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CliAgent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/monitoring/agents/{agent_id}": {
+      "delete": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "Deregister Agent",
+        "description": "Remove an agent immediately, on clean shutdown.\n\nWithout this the agent would linger until its TTL expires, which reads as\n\"still running\" for several minutes after a deliberate stop.\n\nScoped to the caller's own agents. The bare id is derived from\nhostname:pid:project_id and is therefore enumerable, so deleting by it\nalone would let anyone unregister anyone else's watcher — the process would\nkeep running while disappearing from the admin's view.",
+        "operationId": "deregister_agent_depictio_api_v1_monitoring_agents__agent_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Agent Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/monitoring/agents/{agent_id}/trigger": {
+      "post": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "Request Agent Run",
+        "description": "Ask a running watcher to start an ingestion cycle now.\n\nThe registry is one-way — agents heartbeat in, and the server has no route\nback out to a process on a login node behind a firewall — so this records a\nrequest that the agent claims on its next command poll. The response says\nthe request was *recorded*, not that a cycle ran; the agent card shows it\nturning into a run a few seconds later.\n\n``agent_id`` is the stored (owner-scoped) id, as returned by ``GET /agents``.\nAuthorised against the agent's recorded ``user_id`` rather than by parsing\nthat id, so a caller cannot drive someone else's watcher by constructing a\nplausible-looking one.",
+        "operationId": "request_agent_run_depictio_api_v1_monitoring_agents__agent_id__trigger_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Agent Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/monitoring/agents/{agent_id}/claim": {
+      "post": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "Claim Agent Run",
+        "description": "Claim a pending run request. Polled by the watcher itself.\n\nTakes the bare id and scopes it to the caller, exactly as the heartbeat\ndoes, so an agent can only ever claim its own requests.\n\nDeliberately does not 404 on an unknown agent — it answers \"nothing\npending\". That keeps 404 meaning one thing to the CLI: this server predates\nUI triggers, so stop polling.",
+        "operationId": "claim_agent_run_depictio_api_v1_monitoring_agents__agent_id__claim_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Agent Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/monitoring/agents": {
+      "get": {
+        "tags": [
+          "Monitoring"
+        ],
+        "summary": "List Agents",
+        "description": "List live CLI agents. Admin-gated, like the rest of the monitoring views.",
+        "operationId": "list_agents_depictio_api_v1_monitoring_agents_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -13596,6 +14948,237 @@
         "title": "CLIValidationResponse",
         "description": "Response model for CLI config validation.\n\nArgs:\n    success: Whether the validation was successful.\n    message: A human-readable message about the validation result.\n    is_admin: Whether the user is an admin.\n    user_id: The user's ID if validation was successful.\n    email: The user's email if validation was successful."
       },
+      "CliAgent": {
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "title": "Agent Id",
+            "description": "Stable id for this agent process"
+          },
+          "kind": {
+            "type": "string",
+            "const": "watcher",
+            "title": "Kind",
+            "default": "watcher"
+          },
+          "instance_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Instance Label"
+          },
+          "hostname": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hostname"
+          },
+          "pid": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pid"
+          },
+          "cli_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cli Version"
+          },
+          "user_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Id"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "project_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Id"
+          },
+          "project_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Name"
+          },
+          "mode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mode",
+            "description": "incremental or full"
+          },
+          "backend": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Backend",
+            "description": "native, polling or both"
+          },
+          "watching": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Watching",
+            "description": "Roots being watched"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "idle",
+              "settling",
+              "scanning",
+              "ingesting",
+              "error"
+            ],
+            "title": "Status",
+            "default": "idle"
+          },
+          "last_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Error"
+          },
+          "last_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Run Id"
+          },
+          "last_trigger_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Trigger At"
+          },
+          "runs_total": {
+            "type": "integer",
+            "title": "Runs Total",
+            "default": 0
+          },
+          "run_requested_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Requested At"
+          },
+          "run_requested_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Requested By"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Started At"
+          },
+          "heartbeat_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Heartbeat At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "agent_id"
+        ],
+        "title": "CliAgent",
+        "description": "A long-running CLI process — today, a watcher — reporting that it is alive.\n\nStored in ``cli_agents`` with a TTL on ``expires_at``, so an agent that dies\ndisappears on its own rather than lingering as a phantom. A watcher that\nnobody can see is a watcher nobody can debug: this is what makes \"is it\nactually running, and against what?\" answerable."
+      },
       "ColumnAggregation": {
         "properties": {
           "column": {
@@ -13707,6 +15290,24 @@
           "body"
         ],
         "title": "CommentUpdate"
+      },
+      "CreateVersionRequest": {
+        "properties": {
+          "label": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          }
+        },
+        "type": "object",
+        "title": "CreateVersionRequest"
       },
       "DCGeoJSONConfig": {
         "properties": {
@@ -14273,7 +15874,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -14689,7 +16290,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -14752,7 +16353,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -14886,6 +16487,42 @@
         "title": "DataCollectionSource",
         "description": "Origin/source type of a data collection."
       },
+      "DeleteFilesBatchRequest": {
+        "properties": {
+          "file_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 5000,
+            "minItems": 1,
+            "title": "File Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file_ids"
+        ],
+        "title": "DeleteFilesBatchRequest"
+      },
+      "DeleteRunsBatchRequest": {
+        "properties": {
+          "run_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 5000,
+            "minItems": 1,
+            "title": "Run Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "run_ids"
+        ],
+        "title": "DeleteRunsBatchRequest"
+      },
       "Evidence": {
         "properties": {
           "claim": {
@@ -14998,7 +16635,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -15579,6 +17216,217 @@
             ],
             "title": "File Count",
             "description": "Files matched, when known"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          },
+          "duration_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Ms"
+          },
+          "files_matched": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Files Matched"
+          },
+          "files_new": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Files New"
+          },
+          "files_changed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Files Changed"
+          },
+          "files_updated": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Files Updated"
+          },
+          "files_skipped": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Files Skipped"
+          },
+          "files_deleted": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Files Deleted"
+          },
+          "files_failed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Files Failed"
+          },
+          "rows_written": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rows Written"
+          },
+          "delta_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delta Version"
+          },
+          "write_mode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Write Mode"
+          },
+          "dirs_walked": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dirs Walked"
+          },
+          "files_seen": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Files Seen"
+          },
+          "regex_rejected": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Regex Rejected"
+          },
+          "skip_reasons": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Skip Reasons"
+          },
+          "sample_rejected": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Sample Rejected",
+            "description": "Up to a handful of paths seen but not matched"
+          },
+          "errors": {
+            "items": {
+              "$ref": "#/components/schemas/IngestionError"
+            },
+            "type": "array",
+            "title": "Errors"
           }
         },
         "additionalProperties": false,
@@ -15634,6 +17482,11 @@
           "files_new": {
             "type": "integer",
             "title": "Files New",
+            "default": 0
+          },
+          "files_updated": {
+            "type": "integer",
+            "title": "Files Updated",
             "default": 0
           },
           "files_skipped": {
@@ -15698,6 +17551,55 @@
           "status"
         ],
         "title": "IngestionDataCollection"
+      },
+      "IngestionError": {
+        "properties": {
+          "stage": {
+            "type": "string",
+            "title": "Stage",
+            "description": "Where it happened: scan, process, join, ..."
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "description": "Short machine-readable classification"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "dc_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dc Tag"
+          },
+          "file_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Path"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "stage",
+          "kind",
+          "message"
+        ],
+        "title": "IngestionError",
+        "description": "One failure encountered during a run, with enough context to act on it."
       },
       "IngestionFinishRequest": {
         "properties": {
@@ -15954,6 +17856,21 @@
           "status": {
             "type": "string",
             "title": "Status"
+          },
+          "files_total": {
+            "type": "integer",
+            "title": "Files Total",
+            "default": 0
+          },
+          "files_new": {
+            "type": "integer",
+            "title": "Files New",
+            "default": 0
+          },
+          "files_updated": {
+            "type": "integer",
+            "title": "Files Updated",
+            "default": 0
           }
         },
         "type": "object",
@@ -16058,6 +17975,34 @@
               }
             ],
             "title": "Data Root"
+          },
+          "trigger": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "manual",
+                  "watch",
+                  "schedule",
+                  "ui"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trigger"
+          },
+          "trigger_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trigger Reason"
           }
         },
         "type": "object",
@@ -16087,6 +18032,120 @@
             ],
             "title": "Detail",
             "description": "Optional human-readable detail"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          },
+          "duration_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Ms"
+          },
+          "index": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index",
+            "description": "Position in the run, for 'step 3 of 7'"
+          },
+          "total": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total",
+            "description": "Total steps in the run"
+          },
+          "progress": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Progress",
+            "description": "Fraction complete, only when a denominator exists"
+          },
+          "counters": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Counters"
+          },
+          "data_collection_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Collection Tag"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id",
+            "description": "Server-side job, for offloaded work"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
           }
         },
         "additionalProperties": false,
@@ -16112,6 +18171,32 @@
               }
             ],
             "title": "Current Step"
+          },
+          "counters": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "integer"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Counters"
+          },
+          "progress": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Progress"
           }
         },
         "type": "object",
@@ -16119,7 +18204,7 @@
           "step"
         ],
         "title": "IngestionStepRequest",
-        "description": "Live per-step update. Placeholder for future async/offloaded ingestion:\na long-running worker PATCHes a step's status while the run is ``running``."
+        "description": "Live per-step update, pushed while the run is still ``running``."
       },
       "IngestionSummary": {
         "properties": {
@@ -17243,7 +19328,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -17445,6 +19530,24 @@
         "type": "object",
         "title": "Permission"
       },
+      "PinVersionRequest": {
+        "properties": {
+          "label": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          }
+        },
+        "type": "object",
+        "title": "PinVersionRequest"
+      },
       "PointCoord": {
         "properties": {
           "x": {
@@ -17513,7 +19616,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -18013,6 +20116,24 @@
         ],
         "title": "Regex"
       },
+      "RenameVersionRequest": {
+        "properties": {
+          "label": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          }
+        },
+        "type": "object",
+        "title": "RenameVersionRequest"
+      },
       "RequestEditPassword": {
         "properties": {
           "old_password": {
@@ -18049,6 +20170,34 @@
           "password"
         ],
         "title": "RequestUserRegistration"
+      },
+      "RestoreComponentRequest": {
+        "properties": {
+          "component_index": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Component Index"
+          },
+          "tab_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Tab Id"
+          },
+          "restore_layout": {
+            "type": "boolean",
+            "title": "Restore Layout",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "component_index",
+          "tab_id"
+        ],
+        "title": "RestoreComponentRequest",
+        "description": "Put one component back, leaving every other component alone."
       },
       "Review": {
         "properties": {
@@ -18698,7 +20847,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -18804,7 +20953,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -19037,7 +21186,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6ac76134dae656a091891b88"
+            "default": "6ac9342f89481b4fe391d59a"
           }
         },
         "type": "object",
@@ -19117,6 +21266,108 @@
               }
             ],
             "title": "Deltatable Size Bytes"
+          },
+          "delta_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delta Version"
+          },
+          "delta_commit_timestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delta Commit Timestamp"
+          },
+          "write_mode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Write Mode"
+          },
+          "rows_total": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rows Total"
+          },
+          "rows_added": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rows Added"
+          },
+          "files_added": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Files Added"
+          },
+          "run_tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Run Tags",
+            "default": []
+          },
+          "ingestion_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ingestion Run Id"
+          },
+          "trigger": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trigger"
+          },
+          "async_mode": {
+            "type": "boolean",
+            "title": "Async Mode",
+            "default": false
           }
         },
         "type": "object",
@@ -19133,6 +21384,7 @@
               "$ref": "#/components/schemas/File"
             },
             "type": "array",
+            "maxItems": 5000,
             "title": "Files"
           },
           "update": {
@@ -19174,7 +21426,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -19293,7 +21545,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -19375,7 +21627,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -19461,7 +21713,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -19662,7 +21914,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -19837,7 +22089,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -19954,7 +22206,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [
@@ -20059,7 +22311,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9342f89481b4fe391d599"
           },
           "description": {
             "anyOf": [

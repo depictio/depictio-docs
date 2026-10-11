@@ -160,6 +160,18 @@ RestrictedPython prevents these operations at compile-time:
 | **Dangerous Built-ins** | `exec()`, `eval()`, `__import__()`, `compile()` |
 | **Attribute Access** | Private attributes (underscore methods) on unsafe objects |
 
+### Past versions in a render <small>(v1.15.0+)</small> { #past-versions-in-a-render }
+
+A render request can draw a component as a past [dashboard version](versioning.md)
+defined it. The request names that version with `definition_version`, and the server
+reads the component from its own record of the version. A request cannot send a
+component definition, so the code of a code-mode figure always comes from a saved
+dashboard.
+
+- A request that carries `component_overrides` is refused with 400.
+- A version that no longer exists, or belongs to another dashboard, is refused with 400.
+- A component that read another data collection in that version is refused with 409.
+
 ---
 
 ## Data Protection

@@ -160,6 +160,10 @@ You can now use the CLI tool to interact with your Depictio instance. For exampl
 
 Saved as `~/.depictio/CLI.yaml`, the configuration is the one every command uses by default, so none of them needs `--server`. See [Which server a command uses](../depictio-cli/usage.md#choosing-a-server) for the other ways to name a server.
 
+With no `~/.depictio/CLI.yaml`, the CLI uses the [local server](../installation/local.md): here pipeline results are previewed, then ingested into it:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-detect.cast" data-poster="npt:0:51" data-idle-time-limit="2.5"></div>
+
 In that get started guide, you can use the **palmer penguins dataset** to test the CLI tool. This dataset mimics the [palmer penguins dataset](https://allisonhorst.github.io/palmerpenguins/), which is a popular dataset for testing data visualization tools.
 
 ```bash

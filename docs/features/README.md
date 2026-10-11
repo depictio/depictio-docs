@@ -22,6 +22,7 @@ User-facing features for building and interacting with dashboards.
 | [Components](components.md) | Guide to available component types and configuration |
 | [Interactive Selection Filtering](interactive-selection-filtering.md) | Filter components via scatter plot and table row selections |
 | [Comments and Annotations](comments-annotations.md) | Discuss components in threads and draw ranges, lines, marked points and notes on them |
+| [Dashboard and Data Versions](versioning.md) | Preview, restore or bookmark any saved version of a dashboard, and read it against the data of the time |
 
 <div class="grid cards" markdown>
 
@@ -56,6 +57,14 @@ User-facing features for building and interacting with dashboards.
     Discuss components in threads and annotate charts, tables and maps
 
     [:octicons-arrow-right-24: Comments and Annotations](comments-annotations.md)
+
+-   :material-history:{ .lg .middle } **Dashboard and Data Versions**
+
+    ---
+
+    Go back to any saved version of a dashboard, and to the data it showed
+
+    [:octicons-arrow-right-24: Dashboard and Data Versions](versioning.md)
 
 </div>
 

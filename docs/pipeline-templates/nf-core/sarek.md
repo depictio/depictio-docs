@@ -33,17 +33,14 @@ The sarek template follows a variant-calling run from the reads to the genes the
 calls land on, and reads the VCFs themselves, so callers are compared call by
 call and gene by gene rather than only by how many calls each made:
 
-- :material-chart-box-outline: **MultiQC**: read quality, alignment and recalibration, the pooled variant-call QC and the annotation summaries
-- :material-chart-bell-curve: **Cohort QC**: coverage per contig and per capture target, a locus browser, and an X against Y sex check
-- :material-dna: **Variant yield**: each caller's own statistics side by side, its mutation spectra, what its filters removed
-- :material-set-merge: **Caller concordance**: which callsets agree, allele fraction against depth, and where the calls fall
-- :material-chart-donut: **Consequences**: SnpEff's composition, recomputed per call with a variant record beside the scatter
-- :material-dna: **Genes**: the per-gene burden across callsets and the coding variants along the protein
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: read, mapping and recalibration panels from the pipeline's own MultiQC report, and the depth over the intervals with an X against Y sex check
+- :material-set-merge: **Variant calls**: what each caller called and of what kind, how clean each callset looks, and which calls the callers share
+- :material-dna: **Annotation**: SnpEff's consequences recomputed per call, the genes that carry the calls, and depth and calls at one region on one axis
 
-A `Run at a glance` strip (SNPs called, indels per callset, samples by status,
-median Ts/Tv), the collapsed `Sample sheet` and the `Sample filters` (sample,
-tumour or normal status) are pinned to every tab, with a collapsed `QC
-thresholds` group (a Ts/Tv floor) pinned to the bottom.
+The persistent `Sample filters` (status, patient, sample) sit in the left panel,
+and a pick there reaches every per-sample collection and the MultiQC panels
+through the sample links.
 
 !!! info "Concordance is agreement, not truth"
     Nothing in this template compares a callset against a benchmark truth set:
@@ -123,176 +120,303 @@ recipes keep one pass per sample, so no tile counts a sample twice.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Six tabs, read as a funnel: the report, how deeply the targets were covered, how
-much each caller called, which callers agree, what the calls do to the
-transcript, and which genes carry them. Each tab below carries the **same icon
-and colour the dashboard gives it**.
+One dashboard: the **Overview**, then eight child tabs in three groups, read as a
+funnel from the reads to the genes the calls hit and one region of the genome.
+Each tab below carries the **same icon and colour the dashboard gives it**, so the
+page and the app read alike.
 
-=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Coverage |
+| Variant calls | Variant yield, Call quality, Caller concordance |
+| Annotation | Consequences, Genes, Locus |
 
-    *Are the reads, the alignments and the pooled calls sound, before any caller is compared?*
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables follow, collapsed. The template has no group column:
+the sample hub is built from sarek's CSV manifests and carries the patient, sex,
+status and the callers run per sample. A callset is one caller on one sample. The
+persistent *Sample filters* (status, patient, sample) sit in the left panel and
+narrow every tab through the sample links. The *Sample sheet* is pinned,
+collapsed, to the bottom of every child tab.
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/sarek/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+=== ":material-compass-outline: Overview"
 
-    The run's native MultiQC report, no reprocess needed: FastQC and fastp on
-    the reads, then mapping, duplication, BQSR calibration, mosdepth coverage
-    and insert size. The variant-call QC section is what bcftools and VCFtools
-    see with every caller pooled, and the annotation section holds the SnpEff
-    and VEP summaries. A tab-local `Glance scope` narrows the pinned strip to
-    one caller.
+    *Germline variant calls, from coverage to the genes they hit.*
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/sarek/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/sarek/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A short hero links the run parameters. *About this dashboard* says how the two
+    filter levels work, *The run* lists the samples, the callsets and the callers
+    they come from, the genome and the aligner, and *Pipeline* walks the six steps
+    from mapping to annotation, each linked to the parameters that drive it and
+    its tab. The findings are live values: they follow the filters, and a run
+    without SnpEff drops the HIGH-impact row and the impact figure.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample` and `Status` on the sample hub, persistent and
-        pinned to the top of every tab, a `Ts/Tv ratio` range in the collapsed
-        *QC thresholds* group pinned to the bottom, and a `Variant caller`
-        picker in the tab-local *Glance scope*.
+        **Filters** · the left panel starts collapsed. *Key figures* and
+        *Findings* each have their own filter bar (the caller and the sample id):
+        each narrows its own section only.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards, pinned to every tab |
-        | Sample sheet | *Sample hub*, collapsed and pinned to every tab |
-        | MultiQC general statistics | *General statistics* |
-        | Read quality | 4 MultiQC panels |
-        | Alignment and recalibration | 5 MultiQC panels |
-        | Variant-call QC | 4 MultiQC panels |
-        | Annotation | 4 MultiQC panels |
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: variant calls by caller, depth on target, PASS share, Ts/Tv against a 1.8 floor |
+        | Findings | Live result rows, then 4 figures: the substitution spectrum, the calls per FILTER value, allele fraction against depth and the impact classes per caller |
+        | How to read this dashboard | The tabs by group, each with its question |
 
-=== ":material-chart-bell-curve:{ .mc-blue } Cohort QC"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Were the targets covered deeply enough for a call to mean anything?*
+    **Data & QC** · *Did reads, mapping and recalibration work for every sample?*
 
-    [![Cohort QC dashboard](../../images/pipeline-templates/nf-core/sarek/cohort_qc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/cohort_qc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/sarek/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Coverage bounds every call, so it comes first: target depth per contig,
-    depth per capture target, targets under 20x and the X to Y ratio. `One
-    locus, three tracks` is a locus browser: a depth navigator binned to 1 Mb
-    windows drives, through its locus field or brush, the per-target depth, the
-    calls over the gene lane and the annotated VCFs range-read from their files.
-    mosdepth's whole-contig and capture-target scopes are then compared per
-    contig, and an X against Y depth scatter gives a heuristic sex check.
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/sarek/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    MultiQC panels only, from the run's native report. Open: general statistics,
+    fastp filtered reads, Samtools percent mapped, MarkDuplicates and the mosdepth
+    cumulative coverage. Collapsed: the FastQC panels, the BQSR fit and insert
+    sizes, the bcftools and VCFtools panels with every caller pooled, and the
+    SnpEff and VEP panels. A library carries a lane and a read suffix in the
+    report, so a sample can appear once per read.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · a `Contig or targets` picker on mosdepth's summary, in the
-        tab-local *Coverage scope*.
+        **Filters** · `Sample ID`, read from the MultiQC report.
+
+        | Section | What it holds |
+        |---|---|
+        | QC overview | 5 MultiQC panels |
+        | Read quality (collapsed) | 3 MultiQC panels |
+        | Alignment details (collapsed) | 2 MultiQC panels |
+        | Variant-call panels (collapsed) | 4 MultiQC panels |
+        | Annotation panels (collapsed) | 4 MultiQC panels |
+
+=== ":material-layers-outline:{ .mc-blue } Coverage"
+
+    **Data & QC** · *How deeply were the intervals covered, sample by sample?*
+
+    [![Coverage dashboard](../../images/pipeline-templates/nf-core/sarek/coverage_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/coverage_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Coverage dashboard](../../images/pipeline-templates/nf-core/sarek/coverage_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/coverage_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    mosdepth's depth over the intervals (the capture targets, or the calling
+    intervals of a whole genome) and over each contig. The depth on target per
+    sample, the median depth of an interval against a 20x floor, the depth across
+    contigs and the intervals under 20x, with the contigs that have most. Then the
+    mean depth per contig, one bar per sample and contig, with a bar above it that
+    switches between the intervals and the whole contig (it opens on the
+    intervals), and the X against Y depth scatter, a heuristic sex check. The
+    per-contig and sex-check tables are collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · a `Mean depth` range on `mosdepth_summary`. *Depth per
+        contig* has its own bar, `Intervals or whole contig`. There is no contig
+        or scope picker in the left panel: it would empty the *Depth on target*
+        card, which reads mosdepth's `total` row of the intervals.
 
         | Section | What it holds |
         |---|---|
         | Coverage at a glance | 4 cards |
-        | One locus, three tracks | *Depth navigator, 1 Mb windows*, *Depth per capture target*, *Calls over the genes*, *The annotated VCFs, read from the files* |
-        | Depth per contig | *Mean depth per contig*, *Per-contig coverage summary* |
-        | Sex check | *X depth against Y depth*, *X and Y coverage per sample* |
+        | Depth per contig | *Mean depth per contig*, with its own filter bar |
+        | Sex check | 1 advanced visualization |
+        | Coverage tables (collapsed) | *Per-contig coverage summary*, *X and Y coverage per sample* |
 
-=== ":material-dna:{ .mc-violet } Variant yield"
+=== ":material-chart-bar:{ .mc-violet } Variant yield"
 
-    *How much did each caller call, and what did its own filters throw away?*
+    **Variant calls** · *How much did each caller call, and of what kind?*
 
-    [![Variant yield dashboard](../../images/pipeline-templates/nf-core/sarek/variant_yield_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/variant_yield_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Variant yield dashboard](../../images/pipeline-templates/nf-core/sarek/variant_yield_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/variant_yield_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Each caller's own bcftools stats and VCFtools reports, caller against
-    caller: SNP and indel counts, the substitution and indel spectra as shares
-    of each callset, and a parallel-coordinates profile that puts eight QC
-    numbers per callset on one plot. The FILTER partitions show what each caller
-    discarded, and Ts/Tv against a rising quality floor shows where its quality
-    score stops separating variants from noise. The remaining bcftools blocks
-    sit behind a block picker.
+    [![Variant yield dashboard](../../images/pipeline-templates/nf-core/sarek/variant_yield_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/variant_yield_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Each caller's own bcftools stats report. The median records per callset,
+    ranked by caller (a structural-variant caller writes orders of magnitude
+    fewer), the SNPs and the indels split by caller, and the multiallelic sites.
+    Then SNPs and indels per caller, one bar per sample, and the substitution and
+    indel length spectra, one bar per caller with its callsets' shares averaged.
+    The spectra compare shapes, not yields: a caller whose transversion bars rise
+    is the one with the lower Ts/Tv. The bcftools distribution blocks and the
+    per-caller count table are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Caller` and `FILTER value` in the tab-local *Caller
-        scope*, and a `bcftools block` picker in *Distribution scope*.
+        **Filters** · `Caller` on `bcftools_stats_summary`, and a `bcftools
+        block` picker on `bcftools_stats_sections` that chooses the block the
+        collapsed distribution draws (it opens on depth).
 
         | Section | What it holds |
         |---|---|
-        | Caller yield | 4 cards |
-        | SNPs and indels by caller | *SNPs called per caller*, *Indels called per caller* |
+        | Yield at a glance | 4 cards |
+        | Calls per caller | *SNPs per caller*, *Indels per caller* |
         | Mutation spectra | *Substitution spectrum*, *Indel length spectrum* |
-        | Callset QC profile | *Callset QC profile* |
-        | Filters and what they cost | *Calls per FILTER partition*, *FILTER breakdown per caller* |
-        | Quality calibration | *Ts/Tv against the quality floor* |
-        | Distributions | *The chosen distribution, caller by caller*, *bcftools stats distributions* |
-        | Variant tables | *Per-caller variant counts*, *Per-caller Ts/Tv*, collapsed |
+        | bcftools distributions (collapsed) | *The chosen block, caller by caller*, *bcftools stats distributions* |
+        | Yield table (collapsed) | *Per-caller variant counts* |
+
+=== ":material-check-decagram:{ .mc-cyan } Call quality"
+
+    **Variant calls** · *Do the callsets look like clean germline calls?*
+
+    [![Call quality dashboard](../../images/pipeline-templates/nf-core/sarek/call_quality_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/call_quality_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Call quality dashboard](../../images/pipeline-templates/nf-core/sarek/call_quality_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/call_quality_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    QC numbers computed from each callset's VCF. The median Ts/Tv against a 1.8
+    floor, the PASS share, the het to hom ratio and the allele fraction of
+    heterozygous calls. Then the callset QC profile, six numbers per callset on
+    parallel axes coloured by caller, the calls per FILTER value per caller, with
+    PASS in green, and the Ts/Tv above a rising quality floor on a log axis,
+    because callers write QUAL on scales a thousand-fold apart. A clean germline
+    SNP callset has a Ts/Tv near 2 on a genome, higher on an exome, and its
+    heterozygous calls sit near an allele fraction of 0.5. The FILTER breakdown
+    and the Ts/Tv per callset are collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Caller` and a `Ts/Tv ratio` range on `callset_qc`, and
+        `FILTER value` on `vcftools_filter_summary`.
+
+        | Section | What it holds |
+        |---|---|
+        | Quality at a glance | 4 cards |
+        | Callset QC profile | 1 advanced visualization |
+        | FILTER partitions | *Calls per FILTER value* |
+        | Quality calibration | 1 advanced visualization |
+        | Quality tables (collapsed) | *FILTER breakdown per caller*, *Ts/Tv per callset* |
+
+    !!! info "Without VCFtools"
+        A run that skipped VCFtools has no FILTER partitions, no quality sweep and
+        no `FILTER value` filter here, and the Overview drops its FILTER figure.
 
 === ":material-set-merge:{ .mc-teal } Caller concordance"
 
-    *Which calls do the callers share, and where do they part ways?*
+    **Variant calls** · *Which calls do the callers share, and where do they differ?*
 
-    [![Caller concordance dashboard](../../images/pipeline-templates/nf-core/sarek/caller_concordance_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/caller_concordance_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Caller concordance dashboard](../../images/pipeline-templates/nf-core/sarek/caller_concordance_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/caller_concordance_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Two UpSet plots ask the same question twice: exact PASS calls shared between
-    callsets, then genes hit by a coding variant. Allele fraction against depth,
-    as a density and as a histogram per caller, is the plane a germline callset
-    is read on. A rainfall plot of inter-call distances shows where calls
-    cluster along the genome, and selecting a call on it narrows the call table.
+    [![Caller concordance dashboard](../../images/pipeline-templates/nf-core/sarek/caller_concordance_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/caller_concordance_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    One row per call, read from the VCFs. The calls ranked by caller, the calls by
+    variant type, the allele fraction and the depth at the call. Then the UpSet of
+    PASS calls shared between callsets, matched on locus and allele (fixed: the
+    pickers on this tab do not narrow it), allele fraction against depth as a
+    density beside its histogram per caller (a clean diploid callset forms ridges
+    at 0.5 and 1), and the rainfall of the calls along the genome, each at its
+    distance to the previous call. The call table is collapsed. Agreement between
+    callers is not truth.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `Caller`, `Variant type`, `Contig` and a `Depth at the
-        call` range on the called VCFs, in the tab-local *Call scope*.
+        call` range on `vcf_variants`.
 
         | Section | What it holds |
         |---|---|
         | Concordance at a glance | 4 cards |
-        | Which callsets agree | *PASS calls shared between callsets*, *Genes hit by a coding variant, shared between callers* |
-        | Depth sensitivity | *Allele fraction against depth, as a density*, *Allele-fraction distribution per caller* |
-        | Calls along the genome | *Rainfall, distance to the previous call* |
-        | Call table | *Variant calls*, collapsed |
+        | Shared calls | 1 advanced visualization |
+        | Depth sensitivity | 1 advanced visualization, *Allele fraction per caller* |
+        | Calls along the genome | 1 advanced visualization |
+        | Call table (collapsed) | *Variant calls* |
 
-=== ":material-chart-donut:{ .mc-orange } Consequences"
+=== ":material-chart-donut:{ .mc-red } Consequences"
 
-    *What do the calls do to the transcript?*
+    **Annotation** · *What do the calls do to the transcripts?*
 
-    [![Consequences dashboard](../../images/pipeline-templates/nf-core/sarek/consequences_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/consequences_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Consequences dashboard](../../images/pipeline-templates/nf-core/sarek/consequences_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/consequences_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    SnpEff's published composition, section by section and caller by caller,
-    next to the same composition recomputed from the annotated calls. The allele
-    fraction against depth scatter, coloured by impact, drives a linked
-    **Variant record** beside it, which folds to a slim rail until a call is
-    picked and then links its gene to Ensembl.
+    [![Consequences dashboard](../../images/pipeline-templates/nf-core/sarek/consequences_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/consequences_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    SnpEff gives each call its most severe effect on a transcript, in four impact
+    classes. The annotated calls by impact class, the HIGH-impact calls by variant
+    type, the genes with a HIGH or MODERATE call and the depth at HIGH-impact
+    calls. Then SnpEff's own counts for the summary section picked in the left
+    panel (opening on impact), caller by caller, and the impact recomputed on the
+    calls: the impact classes per caller as shares (MODIFIER left out), and the
+    allele fraction against depth scatter coloured by impact, with the record of
+    the picked call beside it. The SnpEff summary and the annotated calls are
+    collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `SnpEff section` and `Caller` in the tab-local
-        *Composition scope*, and `Impact class` and `Consequence` on the
-        annotated calls in *Impact scope*.
+        **Filters** · `Caller` on `snpeff_ann_variants` and `SnpEff section` on
+        `snpeff_csv_stats`. *Impact per call* has its own bar, `Impact class`
+        and `Consequence`, rather than the left panel, because three cards pin
+        an impact class.
 
         | Section | What it holds |
         |---|---|
         | Consequences at a glance | 4 cards |
-        | What kind of variants | *The chosen section, caller by caller*, *SnpEff composition sections* |
-        | Impact per call | *Allele fraction against depth, coloured by impact*, *Variant record* |
-        | Annotated calls | *Annotated variant calls*, collapsed |
+        | What kind of variants | *The chosen section, caller by caller* |
+        | Impact per call | *Impact classes per caller*, then 2 advanced visualizations: the impact scatter and the *Variant record*, with its own filter bar |
+        | Consequence tables (collapsed) | *SnpEff summary sections*, *Annotated variant calls* |
 
 === ":material-dna:{ .mc-pink } Genes"
 
-    *Which genes carry the variant burden, callset by callset?*
+    **Annotation** · *Which genes carry the calls, and where on the protein?*
 
-    [![Genes dashboard](../../images/pipeline-templates/nf-core/sarek/genes_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/genes_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Genes dashboard](../../images/pipeline-templates/nf-core/sarek/genes_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/genes_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    The per-gene burden SnpEff writes, as a clustered gene by callset heatmap of
-    coding-variant counts, then a protein lollipop of the coding variants at
-    their amino-acid position. A row picked in the per-gene table drives the
-    lollipop. A high burden on long, repetitive genes is a mappability signal
-    before it is a biological one.
+    [![Genes dashboard](../../images/pipeline-templates/nf-core/sarek/genes_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/genes_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    SnpEff's per-gene counts. The genes with a call by biotype, the HIGH-impact
+    variants by caller, the top gene burden (the most HIGH or MODERATE variants on
+    one gene, the callers' maxima) and the protein changes by impact class. Then
+    the gene by callset burden heatmap, coloured by log(1 + variants) so one long
+    gene does not wash out the rest, the UpSet of genes the callers share (fixed),
+    and the coding variants along the protein, one lane per gene. A high burden is
+    often a long, repetitive or poorly mappable gene before it is a biological
+    signal. The per-gene burden and protein position tables are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Biotype` and `Caller` on the per-gene table, in the
-        tab-local *Gene scope*, and `Impact class` on the lollipop in *Protein
-        scope*.
+        **Filters** · `Biotype` and `Caller` on `snpeff_genes`, and `Impact
+        class` on `snpeff_protein_lollipop`.
 
         | Section | What it holds |
         |---|---|
         | Genes at a glance | 4 cards |
-        | Burden across callsets | *Variant burden, gene against callset* |
-        | Along the protein | *Coding variants along the protein*, *Coding variants with a protein position* |
-        | Gene table | *Per-gene variant burden*, collapsed |
+        | Burden across callsets | 1 advanced visualization |
+        | Genes the callers share | 1 advanced visualization |
+        | Along the protein | 1 advanced visualization |
+        | Gene tables (collapsed) | *Per-gene variant burden*, *Coding variants with a protein position* |
+
+=== ":material-map-marker-outline:{ .mc-indigo } Locus"
+
+    **Annotation** · *What do depth and calls show at one region?*
+
+    [![Locus dashboard](../../images/pipeline-templates/nf-core/sarek/locus_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/locus_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Locus dashboard](../../images/pipeline-templates/nf-core/sarek/locus_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/locus_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The locus tab stacks four tracks on one `{GENOME}` axis. The depth navigator,
+    the mean depth in 1 Mb windows, drives the others: a typed locus or gene, or a
+    brush on its axis, moves the depth per interval, the calls over the gene lane
+    (one lane per caller) and the annotated VCFs, range-read from their files
+    below 2 Mb. It opens on `chr1:1,000,000-2,000,000`. The four cards (calls by
+    caller, depth per interval, allele fraction, depth at the call) are recounted
+    on the region in view.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Caller` and `Variant type` on `vcf_variants`, for the call
+        track and the cards.
+
+        | Section | What it holds |
+        |---|---|
+        | Region at a glance | 4 cards |
+        | One region, four tracks | 4 advanced visualizations: the depth navigator, the depth per interval, the calls over the genes and the annotated VCFs |
 
 Tables and point views select on their entity column: the sample sheet on
-`sample_id`, the per-caller tables on `caller`, the call tables and the rainfall
-plot on the variant, and the per-gene table on the gene. A pick narrows every
-tile on the tab that reads the same collection or one linked from it.
+`sample_id`; the contig, sex-check, FILTER and distribution tables and the
+sex-check scatter on `sample`; the bcftools and SnpEff summary tables on
+`caller`; the rainfall plot, the impact scatter and the call tables on
+`variant_key`; the per-gene table on `gene_name`, which reaches the protein
+lollipop. A pick narrows the other tiles of its collection and follows the
+project links to the collections downstream of it. The variant record on
+Consequences shows the call picked in the scatter beside it.
 
 ---
 

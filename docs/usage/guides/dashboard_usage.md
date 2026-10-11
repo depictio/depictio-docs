@@ -84,6 +84,8 @@ When a dashboard has a map authored as a dashboard-wide panel, it follows you ac
 | **Your view** | Always | **Font size** and **Page width**, for you only, saved in this browser. See [Appearance](#appearance) |
 | **Tab defaults**, **Tiles**, **Filtering**, **Guide** | Edit mode | Saved with the dashboard. See [Settings for everyone](#settings-for-everyone) |
 | **Branding** | Edit mode | Logo, colours and figure palette. See [Appearance](#appearance) |
+| **History** | Edit mode | Every saved version of the dashboard, to preview, restore, bookmark or delete. See [Dashboard and data versions](../../features/versioning.md#history) |
+| **Data version** | Edit mode | Draws the editor from earlier data, for you only, until you reload. See [Data versions](../../features/versioning.md#data-versions) |
 | **Feedback** | When a [feedback link](../../installation/env-reference.md#feedback) is configured | Report a problem or suggest an improvement |
 
 **About this dashboard** gives its project, template, owner, visibility and last-modified date. Since **v1.6.0** the project name is a link to that project's page, and **View ingestion report** below it opens the [ingestion report](../../features/dashboards.md#ingestion-report-health) for any project, not just one built from a template. Since **v1.14.0** the dashboard and project IDs, each with a copy button, are folded under **Identifiers**. The same body backs the inspector's **Info** tab.
@@ -171,7 +173,7 @@ In edit mode, hovering a component reveals three icons in its top-right corner, 
 
 - <span style="color: #888888;"><i class="mdi mdi-dots-grid"></i> **Drag handle**</span>: grab it to move the component in the grid.
 - <span style="color: #15aabf;"><i class="mdi mdi-information-outline"></i> **Info**</span>: the component's metadata: type, data source, configuration.
-- <span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> **Menu**</span>: **Edit** reopens the builder on this component, **Duplicate** copies it, **Move to section** hands it to another section, **Copy to tab…** <small>(v1.14.0+)</small> adds a copy to another tab (see [Copy to tab](../../features/dashboards.md#copy-to-tab)), **Highlight on…** <small>(v1.14.0+)</small> shows a figure or advanced visualization on another tab without copying it (see [Highlight Components](../../features/components.md#highlight-components)), **Delete** removes it. A figure's menu also carries its **Font size**, and a tile resized by hand that could fit its content offers **Reset to auto height**.
+- <span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> **Menu**</span>: **Edit** reopens the builder on this component, **History** shows it across the dashboard's saved versions, to compare or restore it alone (see [Component history](../../features/versioning.md#component-history)), **Duplicate** copies it, **Move to section** hands it to another section, **Copy to tab…** <small>(v1.14.0+)</small> adds a copy to another tab (see [Copy to tab](../../features/dashboards.md#copy-to-tab)), **Highlight on…** <small>(v1.14.0+)</small> shows a figure or advanced visualization on another tab without copying it (see [Highlight Components](../../features/components.md#highlight-components)), **Delete** removes it. A figure's menu also carries its **Font size**, and a tile resized by hand that could fit its content offers **Reset to auto height**.
 
 To find a component on any tab, press **⌘K** / **Ctrl+K** or click the magnifier in the header <small>(v1.14.0+)</small>. See [Spotlight search](spotlight-search.md).
 
@@ -270,6 +272,8 @@ There are currently two types of interactive actions available in the dashboard:
 Layout and section changes persist on their own, about half a second after you stop editing. There is no unsaved state to lose if you close the tab.
 
 **Save**, in the editor toolbar, writes immediately instead of waiting for that delay, and queues a fresh thumbnail for the dashboard card. A short notification confirms it.
+
+Every save is kept as a version: the automatic ones fold into one version per 5 minutes of editing, and **Save** always records its own. **Settings → History** lists them, to preview or restore one. See [Dashboard and data versions](../../features/versioning.md).
 
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../../images/guides/dashboard_creation/save_notification.png" target="_blank">

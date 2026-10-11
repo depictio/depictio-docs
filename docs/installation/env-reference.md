@@ -47,6 +47,9 @@ DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [Google Analytics](#google-analytics)
 - [Logging](#logging)
 - [Monitoring](#monitoring)
+- [Dashboard Versions](#dashboard-versions)
+- [Ingestion](#ingestion)
+- [Jobs](#jobs)
 - [Telemetry](#telemetry)
 - [MultiQC Prerender](#multiqc-prerender)
 <!-- - [JBrowse Integration](#jbrowse-integration) -->
@@ -363,7 +366,8 @@ Celery task queue configuration for background processing.
 | `DEPICTIO_CELERY_TASK_SOFT_TIME_LIMIT` | `300` | Task soft time limit in seconds (5min) |
 | `DEPICTIO_CELERY_TASK_TIME_LIMIT` | `600` | Task hard time limit in seconds (10min) |
 | `DEPICTIO_CELERY_RESULT_EXPIRES` | `3600` | Task result expiration in seconds (1hr) |
-| `DEPICTIO_CELERY_DEFAULT_QUEUE` | `dashboard_tasks` | Default task queue name |
+| `DEPICTIO_CELERY_DEFAULT_QUEUE` | `dashboard_tasks` | Not applied: a task with no route goes to the `celery` queue, the one the bundled worker reads |
+| `DEPICTIO_CELERY_INGESTION_QUEUE` | `ingestion` | Queue of the offloaded ingestion tasks, read by the [ingestion worker](docker.md#ingestion-worker) (v1.15.0+) |
 | `DEPICTIO_CELERY_WORKER_SEND_TASK_EVENTS` | `true` | Enable task event monitoring |
 | `DEPICTIO_CELERY_TASK_SEND_SENT_EVENT` | `true` | Send task sent events |
 | `DEPICTIO_CELERY_OFFLOAD_PREVIEW` | `true` | Offload component-design preview endpoints (`/figure/preview`, etc.) to Celery |
@@ -641,6 +645,57 @@ Feeds the admin Log & Task panel. See [Monitoring](../usage/administration/monit
 | `DEPICTIO_MONITORING_APP_LOG_CAPPED_MB` | `64` | Size cap in MB of the capped `app_logs` collection |
 | `DEPICTIO_MONITORING_LIVE_UPDATES` | `true` | Push live task and ingestion status over the events WebSocket. Only active when `DEPICTIO_EVENTS_ENABLED` is also true |
 | `DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS` | `24` | Hours without a write after which a `running` ingestion is swept to `abandoned`. `0` disables the sweep. The bundled compose files and Helm chart do not forward it, so set it on the backend yourself (v1.11.0+) |
+| `DEPICTIO_MONITORING_AGENT_TTL_SECONDS` | `300` | How long a [watcher](../usage/administration/monitoring.md#watchers) stays listed after its last heartbeat. At least 60 |
+
+---
+
+## Dashboard Versions
+
+**Config Class:** `DashboardVersionsConfig`
+**Environment Prefix:** `DEPICTIO_DASHBOARD_VERSIONS_`
+
+The version history of every dashboard. See [Dashboard and data versions](../features/versioning.md#retention-and-configuration).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_DASHBOARD_VERSIONS_ENABLED` | `true` | Record a version on each dashboard save. Off, nothing new is recorded |
+| `DEPICTIO_DASHBOARD_VERSIONS_COALESCE_WINDOW_SECONDS` | `300` | How long consecutive autosaves by the same author fold into one version, counted from its creation |
+| `DEPICTIO_DASHBOARD_VERSIONS_MAX_VERSIONS_PER_FAMILY` | `100` | Autosaves kept per dashboard, bookmarked ones aside |
+| `DEPICTIO_DASHBOARD_VERSIONS_RETENTION_DAYS` | `90` | Age after which versions that are not bookmarked are dropped |
+| `DEPICTIO_DASHBOARD_VERSIONS_KEEP_DAILY_FOR_DAYS` | `30` | Age after which autosaves thin to the last one of each day |
+| `DEPICTIO_DASHBOARD_VERSIONS_MAX_SNAPSHOT_BYTES` | `8388608` (8 MiB) | Largest version recorded. A larger one is skipped and logged; the save itself goes through |
+
+---
+
+## Ingestion
+
+**Config Class:** `IngestionConfig`
+**Environment Prefix:** `DEPICTIO_INGESTION_`
+
+Server-side limits and opt-ins for ingestion (v1.15.0+). Everything but the step limit is off by default. See [Ingestion worker](docker.md#ingestion-worker).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_INGESTION_STEP_UPDATES_PER_MINUTE` | `60` | Live step updates recorded per ingestion run and minute. `success`, `failed` and `skipped` steps always pass. See [Monitoring](../usage/administration/monitoring.md#ingestion) |
+| `DEPICTIO_INGESTION_ASYNC_DELTATABLE_UPSERT` | `false` | Hand the profiling of a written table to the ingestion worker when the CLI asks with `--async-upsert`. Needs `DEPICTIO_JOBS_ENABLED`, without which it stays inline. See [Offloading the table profile](docker.md#async-upsert) |
+| `DEPICTIO_INGESTION_BROWSER_TRIGGER` | `false` | Offer [**Run ingestion**](../features/dashboards.md#run-ingestion) on project pages to owners, editors and admins. Needs `DEPICTIO_JOBS_ENABLED` and `DEPICTIO_INGESTION_ALLOWED_DATA_ROOTS`. See [Starting an ingestion from the browser](docker.md#browser-trigger) |
+| `DEPICTIO_INGESTION_ALLOWED_DATA_ROOTS` | empty | Directories a browser-started ingestion may read, comma-separated or as a JSON list. Every path a project names, and every file its scan registers, must resolve inside one of them. Empty refuses every ingestion |
+
+---
+
+## Jobs
+
+**Config Class:** `JobsConfig`
+**Environment Prefix:** `DEPICTIO_JOBS_`
+
+Records of work the server accepted but finishes in the background, polled through the [`/jobs` API](../api/README.md#jobs) (v1.15.0+). Off by default.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_JOBS_ENABLED` | `false` | Create the `jobs` collection and serve `/jobs`. Required by both offloaded ingestion features |
+| `DEPICTIO_JOBS_RETENTION_HOURS` | `24` | How long a successful job is kept |
+| `DEPICTIO_JOBS_FAILED_RETENTION_HOURS` | `168` | How long a failed or cancelled job is kept |
+| `DEPICTIO_JOBS_MAX_RESULT_BYTES` | `262144` | Largest job result stored. A larger one is dropped and the job marked `result_truncated` |
 
 ---
 
