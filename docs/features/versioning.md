@@ -70,9 +70,10 @@ A save that changes nothing records nothing, whatever its kind. **Save** then tu
 newest version, if it is an autosave, into **Saved**, so later autosaves no longer fold
 into it, and **Bookmark the current state** names and bookmarks that newest version.
 
-[![How saves become versions: the coalescing window, an unchanged save, the Save button, a bookmark, and retention](../images/guides/versioning/schema_version_capture.svg)](../images/guides/versioning/schema_version_capture.svg){target=_blank}
-
-The diagram says *pinned* where the History list says *bookmarked*.
+<figure markdown="span">
+  [![How saves become versions: the coalescing window, an unchanged save, the Save button, a bookmark, and retention](../images/guides/versioning/schema_version_capture.svg)](../images/guides/versioning/schema_version_capture.svg){target=_blank}
+  <figcaption><strong>How saves become versions.</strong> Autosaves by the same person fold into one version for up to 5 minutes, a save that changes nothing records nothing, and <em>Save</em> or a bookmark seals the newest version so the next autosave opens a new one. Retention keeps bookmarked versions for good and prunes the rest after 90 days. The diagram says <em>pinned</em> where the History list says <em>bookmarked</em>.</figcaption>
+</figure>
 
 ---
 
@@ -86,11 +87,11 @@ data, such as *2 data collections pinned*. The version the dashboard is at is ma
 **Current**, and the one the editor's data comes from, **Data in use**. **Load older
 versions** pages further back.
 
-[![The editor with Settings open on History: a version list grouped by day, the newest marked Current, with one row's details open](../images/guides/versioning/settings_history_light.webp#only-light)](../images/guides/versioning/settings_history_light.webp){target=_blank}
-
-[![The editor with Settings open on History: a version list grouped by day, the newest marked Current, with one row's details open](../images/guides/versioning/settings_history_dark.webp#only-dark)](../images/guides/versioning/settings_history_dark.webp){target=_blank}
-
-*Editor → Settings → History.*
+<figure markdown="span">
+  [![The editor with Settings open on History: a version list grouped by day, the newest marked Current, with one row's details open](../images/guides/versioning/settings_history_light.webp#only-light)](../images/guides/versioning/settings_history_light.webp){target=_blank}
+  [![The editor with Settings open on History: a version list grouped by day, the newest marked Current, with one row's details open](../images/guides/versioning/settings_history_dark.webp#only-dark)](../images/guides/versioning/settings_history_dark.webp){target=_blank}
+  <figcaption><strong>Editor → Settings → History.</strong> The versions grouped by day, newest first, the top one marked <em>Current</em>. The open row shows its kind, date and author, its component and tab counts, and how many data collections it pinned; bookmarked versions show their name and a bookmark badge.</figcaption>
+</figure>
 
 Each row has **Restore**, and a ⋮ menu with the other three actions:
 
@@ -101,11 +102,11 @@ Each row has **Restore**, and a ⋮ menu with the other three actions:
 | :material-bookmark-outline: **Bookmark** | Names the version and keeps it for good. See [Bookmarks](#bookmarks) |
 | :material-delete-outline: **Delete** | Removes the version for good. Only the dashboard's owners can, and not while its data is in use under **Data version** |
 
-[![History rows: the restore button with its tooltip, and a row's ⋮ menu open on Preview in a new tab, Bookmark and Delete](../images/guides/versioning/history_row_actions_light.webp#only-light)](../images/guides/versioning/history_row_actions_light.webp){target=_blank}
-
-[![History rows: the restore button with its tooltip, and a row's ⋮ menu open on Preview in a new tab, Bookmark and Delete](../images/guides/versioning/history_row_actions_dark.webp#only-dark)](../images/guides/versioning/history_row_actions_dark.webp){target=_blank}
-
-*A row's Restore button and its ⋮ menu.*
+<figure markdown="span">
+  [![History rows: the restore button with its tooltip, and a row's ⋮ menu open on Preview in a new tab, Bookmark and Delete](../images/guides/versioning/history_row_actions_light.webp#only-light)](../images/guides/versioning/history_row_actions_light.webp){target=_blank}
+  [![History rows: the restore button with its tooltip, and a row's ⋮ menu open on Preview in a new tab, Bookmark and Delete](../images/guides/versioning/history_row_actions_dark.webp#only-dark)](../images/guides/versioning/history_row_actions_dark.webp){target=_blank}
+  <figcaption><strong>A History row's actions.</strong> The <em>Restore</em> button, with its tooltip, and the ⋮ menu with <em>Preview in a new tab</em>, <em>Bookmark</em> and <em>Delete</em>. <em>Restore</em> is unavailable on the current version.</figcaption>
+</figure>
 
 !!! note "Deleting a version cannot be undone"
     Every other action here, a restore included, can be undone by restoring an earlier
@@ -118,11 +119,11 @@ A bookmark gives a version a name, keeps it for good, and stops later autosaves 
 folding into it. **Bookmark** in a row's ⋮ menu opens a dialog with an optional **Name**;
 **Remove bookmark** takes it off again.
 
-[![The Bookmark dialog for v2, with the name Before recalibration typed in](../images/guides/versioning/bookmark_dialog_light.webp#only-light)](../images/guides/versioning/bookmark_dialog_light.webp){target=_blank}
-
-[![The Bookmark dialog for v2, with the name Before recalibration typed in](../images/guides/versioning/bookmark_dialog_dark.webp#only-dark)](../images/guides/versioning/bookmark_dialog_dark.webp){target=_blank}
-
-*⋮ → Bookmark on a row.*
+<figure markdown="span">
+  [![The Bookmark dialog for v2, with the name Before recalibration typed in](../images/guides/versioning/bookmark_dialog_light.webp#only-light)](../images/guides/versioning/bookmark_dialog_light.webp){target=_blank}
+  [![The Bookmark dialog for v2, with the name Before recalibration typed in](../images/guides/versioning/bookmark_dialog_dark.webp#only-dark)](../images/guides/versioning/bookmark_dialog_dark.webp){target=_blank}
+  <figcaption><strong>⋮ → Bookmark on a History row.</strong> The dialog names v2 <em>Before recalibration</em>. The name is optional; a bookmarked version is kept for good, and later autosaves no longer fold into it.</figcaption>
+</figure>
 
 **Bookmark the current state**, at the top of the section, records the dashboard as it is
 now and bookmarks it in one step. It needs a name.
@@ -139,11 +140,11 @@ from this version*, where each data collection comes from:
 | *Latest data: {collection}* | The version recorded no commit for it, such as a collection added since |
 | *No data version recorded, so the latest data is shown: {collection}* | A type that is never pinned. See [What can be pinned](#what-can-be-pinned) |
 
-[![A preview of v3 Scale recalibrated: the banner names the version, its author and the past data of each collection, with Open in editor and Back to current](../images/guides/versioning/preview_banner_light.webp#only-light)](../images/guides/versioning/preview_banner_light.webp){target=_blank}
-
-[![A preview of v3 Scale recalibrated: the banner names the version, its author and the past data of each collection, with Open in editor and Back to current](../images/guides/versioning/preview_banner_dark.webp#only-dark)](../images/guides/versioning/preview_banner_dark.webp){target=_blank}
-
-*A row's ⋮ → Preview in a new tab.*
+<figure markdown="span">
+  [![A preview of v3 Scale recalibrated: the banner names the version, its author and the past data of each collection, with Open in editor and Back to current](../images/guides/versioning/preview_banner_light.webp#only-light)](../images/guides/versioning/preview_banner_light.webp){target=_blank}
+  [![A preview of v3 Scale recalibrated: the banner names the version, its author and the past data of each collection, with Open in editor and Back to current](../images/guides/versioning/preview_banner_dark.webp#only-dark)](../images/guides/versioning/preview_banner_dark.webp){target=_blank}
+  <figcaption><strong>⋮ → Preview in a new tab.</strong> The read-only preview of v3 <em>Scale recalibrated</em>: its banner names the version, its author and the past data each collection is drawn from. <em>Back to current</em> leaves the preview; owners also get <em>Open in editor</em>, to restore it from History.</figcaption>
+</figure>
 
 The preview is read-only: editing, live updates and the notes footer are off, and links
 between tabs keep the version. The tab list itself is today's: a tab deleted since the
@@ -167,7 +168,10 @@ content back into every tab:
 A restore brings back the dashboard, not the data: after it, components read the latest
 data. To undo a restore, restore the version recorded just before it.
 
-[![Restore: the present is captured first, each tab is written to match the version, and access is never taken from a snapshot](../images/guides/versioning/schema_version_restore.svg)](../images/guides/versioning/schema_version_restore.svg){target=_blank}
+<figure markdown="span">
+  [![Restore: the present is captured first, each tab is written to match the version, and access is never taken from a snapshot](../images/guides/versioning/schema_version_restore.svg)](../images/guides/versioning/schema_version_restore.svg){target=_blank}
+  <figcaption><strong>What a restore does.</strong> The present is recorded as a version first, then every tab is written back to match the version: tabs deleted since are recreated, tabs added since are deleted. Permissions, visibility, comments and the logo never come from the snapshot.</figcaption>
+</figure>
 
 Before you confirm, the dialog checks the version against the data as it is now:
 
@@ -181,11 +185,11 @@ Each changed collection is listed with the missing and retyped columns and the n
 components affected. The check never blocks a restore: components whose data is gone
 render empty.
 
-[![The Restore this version dialog for v5, showing Still matches the current data and a note that the current state is saved first](../images/guides/versioning/restore_dialog_light.webp#only-light)](../images/guides/versioning/restore_dialog_light.webp){target=_blank}
-
-[![The Restore this version dialog for v5, showing Still matches the current data and a note that the current state is saved first](../images/guides/versioning/restore_dialog_dark.webp#only-dark)](../images/guides/versioning/restore_dialog_dark.webp){target=_blank}
-
-*A row's Restore button opens the dialog with the check.*
+<figure markdown="span">
+  [![The Restore this version dialog for v5, showing Still matches the current data and a note that the current state is saved first](../images/guides/versioning/restore_dialog_light.webp#only-light)](../images/guides/versioning/restore_dialog_light.webp){target=_blank}
+  [![The Restore this version dialog for v5, showing Still matches the current data and a note that the current state is saved first](../images/guides/versioning/restore_dialog_dark.webp#only-dark)](../images/guides/versioning/restore_dialog_dark.webp){target=_blank}
+  <figcaption><strong>A History row → Restore.</strong> The dialog for v5 checks the version against today's data, here <em>Still matches the current data</em>, and says the current state is saved first. The other results, <em>Data has changed since</em> and <em>Some components will not render</em>, list the collections and columns concerned; none of them blocks the restore.</figcaption>
+</figure>
 
 ---
 
@@ -195,11 +199,11 @@ In the editor, **History** in a component's ⋮ menu shows that one component ac
 dashboard's versions. It is offered on tiles and on filters, once the dashboard has at
 least one version.
 
-[![A box plot's ⋮ menu open in the editor, with History below Edit](../images/guides/versioning/component_menu_history_light.webp#only-light)](../images/guides/versioning/component_menu_history_light.webp){target=_blank}
-
-[![A box plot's ⋮ menu open in the editor, with History below Edit](../images/guides/versioning/component_menu_history_dark.webp#only-dark)](../images/guides/versioning/component_menu_history_dark.webp){target=_blank}
-
-*Editor → a component's ⋮ menu → History.*
+<figure markdown="span">
+  [![A box plot's ⋮ menu open in the editor, with History below Edit](../images/guides/versioning/component_menu_history_light.webp#only-light)](../images/guides/versioning/component_menu_history_light.webp){target=_blank}
+  [![A box plot's ⋮ menu open in the editor, with History below Edit](../images/guides/versioning/component_menu_history_dark.webp#only-dark)](../images/guides/versioning/component_menu_history_dark.webp){target=_blank}
+  <figcaption><strong>Editor → a component's ⋮ menu → History.</strong> Here on a box plot, below <em>Edit</em>. It is offered on tiles and on filters once the dashboard has at least one version.</figcaption>
+</figure>
 
 | Control | What it does |
 |---------|--------------|
@@ -208,20 +212,20 @@ least one version.
 | **Historical data** | On by default: draws the version from the data it recorded. Off, it uses the latest data |
 | **Data version** | Picks the data for each side: *This version's data*, *Latest data*, or any commit of the collection |
 
-[![Component history of a box plot at v2 Before recalibration, drawn from that version's data (v1)](../images/guides/versioning/component_history_light.webp#only-light)](../images/guides/versioning/component_history_light.webp){target=_blank}
-
-[![Component history of a box plot at v2 Before recalibration, drawn from that version's data (v1)](../images/guides/versioning/component_history_dark.webp#only-dark)](../images/guides/versioning/component_history_dark.webp){target=_blank}
-
-*One version of the component, drawn from the data it recorded.*
+<figure markdown="span">
+  [![Component history of a box plot at v2 Before recalibration, drawn from that version's data (v1)](../images/guides/versioning/component_history_light.webp#only-light)](../images/guides/versioning/component_history_light.webp){target=_blank}
+  [![Component history of a box plot at v2 Before recalibration, drawn from that version's data (v1)](../images/guides/versioning/component_history_dark.webp#only-dark)](../images/guides/versioning/component_history_dark.webp){target=_blank}
+  <figcaption><strong>Component history, one version.</strong> The box plot as it was in v2 <em>Before recalibration</em>, drawn through its own stored definition from the data that version recorded (commit v1). <em>Older version</em> and <em>Newer version</em> step through the others.</figcaption>
+</figure>
 
 With **Compare** on and both sides reading the same commit, any difference comes from the
 component's configuration alone. A component that did not exist in a version says so.
 
-[![Compare on: the box plot as it was in Before recalibration on the left, and as it is now, Current, on the right](../images/guides/versioning/component_history_compare_light.webp#only-light)](../images/guides/versioning/component_history_compare_light.webp){target=_blank}
-
-[![Compare on: the box plot as it was in Before recalibration on the left, and as it is now, Current, on the right](../images/guides/versioning/component_history_compare_dark.webp#only-dark)](../images/guides/versioning/component_history_compare_dark.webp){target=_blank}
-
-*With Compare on: the version on the left, Current on the right.*
+<figure markdown="span">
+  [![Compare on: the box plot as it was in Before recalibration on the left, and as it is now, Current, on the right](../images/guides/versioning/component_history_compare_light.webp#only-light)](../images/guides/versioning/component_history_compare_light.webp){target=_blank}
+  [![Compare on: the box plot as it was in Before recalibration on the left, and as it is now, Current, on the right](../images/guides/versioning/component_history_compare_dark.webp#only-dark)](../images/guides/versioning/component_history_compare_dark.webp){target=_blank}
+  <figcaption><strong>Component history with Compare on.</strong> The stored version, <em>Before recalibration</em>, on the left, and the component as it is now, <em>Current</em>, on the right. Each side has its own <em>Data version</em>: set both to the same commit and any difference left comes from the configuration alone.</figcaption>
+</figure>
 
 **Restore this component** puts back only this component, as it was in the selected
 version, and leaves the rest of the dashboard alone. **Also restore its position and
@@ -231,11 +235,11 @@ its old position. The present state is recorded as a version first, so this can 
 undone. A component whose tab no longer exists cannot be restored alone: restore the whole
 version instead.
 
-[![The Restore this component dialog, with the Also restore its position and size switch off](../images/guides/versioning/restore_component_dialog_light.webp#only-light)](../images/guides/versioning/restore_component_dialog_light.webp){target=_blank}
-
-[![The Restore this component dialog, with the Also restore its position and size switch off](../images/guides/versioning/restore_component_dialog_dark.webp#only-dark)](../images/guides/versioning/restore_component_dialog_dark.webp){target=_blank}
-
-*Component history → Restore this component.*
+<figure markdown="span">
+  [![The Restore this component dialog, with the Also restore its position and size switch off](../images/guides/versioning/restore_component_dialog_light.webp#only-light)](../images/guides/versioning/restore_component_dialog_light.webp){target=_blank}
+  [![The Restore this component dialog, with the Also restore its position and size switch off](../images/guides/versioning/restore_component_dialog_dark.webp#only-dark)](../images/guides/versioning/restore_component_dialog_dark.webp){target=_blank}
+  <figcaption><strong>Component history → Restore this component.</strong> Only this component goes back to the selected version. With <em>Also restore its position and size</em> off, as here, it keeps its current place in the grid. The present state is recorded first, so this can be undone.</figcaption>
+</figure>
 
 !!! tip "Keep components matched across YAML imports"
     Versions match a component by its id within its tab. A component imported from YAML with a `tag`
@@ -254,12 +258,12 @@ collection it uses, the commit that was current when it was saved.
 
 ### What can be pinned { #what-can-be-pinned }
 
-| Data collection type | Pinned to a past commit |
-|----------------------|-------------------------|
-| `table` | Yes |
-| `image` | The list of image paths, yes. The image files themselves always show as they are now |
-| `multiqc`, `jbrowse2` | No: always the latest data |
-| `geojson`, `phylogeny` | No: always the latest data |
+| Data collection type | Pinned to a past commit | What a past version shows |
+|----------------------|:-----------------------:|---------------------------|
+| `table` | <span class="status-pill is-yes">:material-check: Yes</span> | The table as that commit wrote it |
+| `image` | <span class="status-pill is-partial">:material-tilde: Paths only</span> | The list of image paths as it was; the image files themselves as they are now |
+| `multiqc`, `jbrowse2` | <span class="status-pill is-no">:material-close: No</span> | Always the latest data |
+| `geojson`, `phylogeny` | <span class="status-pill is-no">:material-close: No</span> | Always the latest data |
 
 A table written before Depictio recorded commit numbers has no commit to pin either.
 Wherever a collection cannot be pinned, the latest data is shown: the History rows say how
@@ -278,21 +282,21 @@ never its data.
 | **As of a dashboard version** | Every collection goes back to the data a dashboard version was saved with. Only versions that recorded a data version are listed. **Use this data** applies it |
 | **One collection** | Pins one collection to one of its commits, such as today's layout against last month's data. Applies as you pick, and wins over the version above for that collection |
 
-[![Settings open on Data version: Showing data as of Before recalibration, the version picked under As of a dashboard version, and each collection at This version's data (v1)](../images/guides/versioning/settings_data_version_light.webp#only-light)](../images/guides/versioning/settings_data_version_light.webp){target=_blank}
-
-[![Settings open on Data version: Showing data as of Before recalibration, the version picked under As of a dashboard version, and each collection at This version's data (v1)](../images/guides/versioning/settings_data_version_dark.webp#only-dark)](../images/guides/versioning/settings_data_version_dark.webp){target=_blank}
-
-*Editor → Settings → Data version, after Use this data.*
+<figure markdown="span">
+  [![Settings open on Data version: Showing data as of Before recalibration, the version picked under As of a dashboard version, and each collection at This version's data (v1)](../images/guides/versioning/settings_data_version_light.webp#only-light)](../images/guides/versioning/settings_data_version_light.webp){target=_blank}
+  [![Settings open on Data version: Showing data as of Before recalibration, the version picked under As of a dashboard version, and each collection at This version's data (v1)](../images/guides/versioning/settings_data_version_dark.webp#only-dark)](../images/guides/versioning/settings_data_version_dark.webp){target=_blank}
+  <figcaption><strong>Editor → Settings → Data version, after <em>Use this data</em>.</strong> The editor reads the data of <em>Before recalibration</em>: that version is picked under <em>As of a dashboard version</em>, and each collection is at <em>This version's data (v1)</em>. One collection can also be set to any of its own commits.</figcaption>
+</figure>
 
 While the editor shows earlier data, a banner above the grid says so (*Showing data as of
 {version}*), with a **Not current** badge and the commit each collection is drawn from,
 and **Back to current data** returns to the latest data.
 
-[![The editor drawn from earlier data: the banner above the grid reads Showing data as of Before recalibration, with Not current and one badge per collection](../images/guides/versioning/editor_data_banner_light.webp#only-light)](../images/guides/versioning/editor_data_banner_light.webp){target=_blank}
-
-[![The editor drawn from earlier data: the banner above the grid reads Showing data as of Before recalibration, with Not current and one badge per collection](../images/guides/versioning/editor_data_banner_dark.webp#only-dark)](../images/guides/versioning/editor_data_banner_dark.webp){target=_blank}
-
-*The editor's data banner.*
+<figure markdown="span">
+  [![The editor drawn from earlier data: the banner above the grid reads Showing data as of Before recalibration, with Not current and one badge per collection](../images/guides/versioning/editor_data_banner_light.webp#only-light)](../images/guides/versioning/editor_data_banner_light.webp){target=_blank}
+  [![The editor drawn from earlier data: the banner above the grid reads Showing data as of Before recalibration, with Not current and one badge per collection](../images/guides/versioning/editor_data_banner_dark.webp#only-dark)](../images/guides/versioning/editor_data_banner_dark.webp){target=_blank}
+  <figcaption><strong>The editor drawn from earlier data.</strong> The banner above the grid reads <em>Showing data as of Before recalibration</em>, with a <em>Not current</em> badge and one badge per collection naming the commit it is drawn from. <em>Back to current data</em> returns to the latest data.</figcaption>
+</figure>
 
 ### Dataset history
 
@@ -308,22 +312,22 @@ panel below the **Data Preview** lists its commits:
 | **Rows**, **Files** | Rows added, files added and removed |
 | **By** | What triggered the ingestion (**Manual**, **Watch** or **UI**) and who ran it |
 
-[![The Version history panel of physical_features: eight commits, v7 current, the latest four written by a watcher and the first four by hand](../images/guides/versioning/dataset_version_history_light.webp#only-light)](../images/guides/versioning/dataset_version_history_light.webp){target=_blank}
-
-[![The Version history panel of physical_features: eight commits, v7 current, the latest four written by a watcher and the first four by hand](../images/guides/versioning/dataset_version_history_dark.webp#only-dark)](../images/guides/versioning/dataset_version_history_dark.webp){target=_blank}
-
-*Projects → a project → a data collection → Version history.*
+<figure markdown="span">
+  [![The Version history panel of physical_features: eight commits, v7 current, the latest four written by a watcher and the first four by hand](../images/guides/versioning/dataset_version_history_light.webp#only-light)](../images/guides/versioning/dataset_version_history_light.webp){target=_blank}
+  [![The Version history panel of physical_features: eight commits, v7 current, the latest four written by a watcher and the first four by hand](../images/guides/versioning/dataset_version_history_dark.webp#only-dark)](../images/guides/versioning/dataset_version_history_dark.webp){target=_blank}
+  <figcaption><strong>Projects → a project → a data collection → Version history.</strong> The eight commits of <code>physical_features</code>, v7 the current one: the latest four written by a watcher (<em>Watch</em>), the first four by hand (<em>Manual</em>), each with its operation and the rows and files it added.</figcaption>
+</figure>
 
 When the object store cannot be reached, the panel shows only what Depictio recorded, and
 says so. Once the data preview is loaded, a table with two commits or more offers
 **At version**, which shows the table as an earlier commit wrote it, under a warning that
 it is not the current data.
 
-[![Data Preview at version v2: 223 rows instead of 342, under the warning Viewing v2: this is not the current data](../images/guides/versioning/dataset_at_version_light.webp#only-light)](../images/guides/versioning/dataset_at_version_light.webp){target=_blank}
-
-[![Data Preview at version v2: 223 rows instead of 342, under the warning Viewing v2: this is not the current data](../images/guides/versioning/dataset_at_version_dark.webp#only-dark)](../images/guides/versioning/dataset_at_version_dark.webp){target=_blank}
-
-*In Data Preview: Load Data, then At version.*
+<figure markdown="span">
+  [![Data Preview at version v2: 223 rows instead of 342, under the warning Viewing v2: this is not the current data](../images/guides/versioning/dataset_at_version_light.webp#only-light)](../images/guides/versioning/dataset_at_version_light.webp){target=_blank}
+  [![Data Preview at version v2: 223 rows instead of 342, under the warning Viewing v2: this is not the current data](../images/guides/versioning/dataset_at_version_dark.webp#only-dark)](../images/guides/versioning/dataset_at_version_dark.webp){target=_blank}
+  <figcaption><strong>Data Preview → Load Data → At version.</strong> The table as commit v2 wrote it: 223 rows instead of today's 342, under the warning <em>Viewing v2: this is not the current data</em>.</figcaption>
+</figure>
 
 ---
 
@@ -345,7 +349,10 @@ changes, so a project's data versions follow the pipeline without anyone running
 command. Each watcher appears in the admin [**Watchers** pane](../usage/administration/monitoring.md#watchers),
 where **Run now** asks it for a cycle at once.
 
-[![Run now: the watcher polls the server for the request, so it works from a machine the API cannot reach](../images/guides/versioning/schema_watch_trigger.svg)](../images/guides/versioning/schema_watch_trigger.svg){target=_blank}
+<figure markdown="span">
+  [![Run now: the watcher polls the server for the request, so it works from a machine the API cannot reach](../images/guides/versioning/schema_watch_trigger.svg)](../images/guides/versioning/schema_watch_trigger.svg){target=_blank}
+  <figcaption><strong>Run now, from the Watchers pane.</strong> The server records the request and the watcher picks it up on its next poll, so <em>Run now</em> reaches a watcher on a machine the API cannot connect to.</figcaption>
+</figure>
 
 See [`depictio watch`](../depictio-cli/usage.md#watch-command) for its options, and
 [Running a watcher as a service](../depictio-cli/usage.md#running-a-watcher-as-a-service)
