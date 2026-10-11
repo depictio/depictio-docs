@@ -1560,6 +1560,26 @@ body.catalog-fs-lock .md-main {
 .md-typeset .mc-yellow { color: #fab005; }
 .md-typeset .mc-orange { color: #fd7e14; }
 
+/* Yes / partly / no pills for support tables, e.g. "What can be pinned" on
+   features/versioning.md. The colour repeats the word, it never replaces it. */
+.md-typeset .status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  padding: 0.1em 0.6em;
+  border-radius: 999px;
+  font-size: 0.85em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.md-typeset .status-pill .twemoji { height: 1em; }
+.md-typeset .status-pill.is-yes { color: #2b8a3e; background: rgba(64, 192, 87, 0.15); }
+.md-typeset .status-pill.is-partial { color: #c45c00; background: rgba(253, 126, 20, 0.15); }
+.md-typeset .status-pill.is-no { color: #c92a2a; background: rgba(250, 82, 82, 0.13); }
+[data-md-color-scheme="slate"] .md-typeset .status-pill.is-yes { color: #69db7c; }
+[data-md-color-scheme="slate"] .md-typeset .status-pill.is-partial { color: #ffa94d; }
+[data-md-color-scheme="slate"] .md-typeset .status-pill.is-no { color: #ff8787; }
+
 /* Template version picker: sits under the template banner and chooses which
    generated reference block is shown. See javascripts/template-version.js. */
 .tpl-version-pick {
