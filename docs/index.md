@@ -656,6 +656,22 @@ hide:
     </h2>
   <p class="getting-started-intro">Ready to get started with Depictio?</p>
 
+  <article class="feature-row getting-started-quickstart">
+    <div class="feature-row-text">
+      <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="m14.25.18.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg><span>Python package</span></span>
+      <h3>Three commands, from results to dashboard</h3>
+      <p>On a laptop and without Docker: install the package, start the server, then point it at a pipeline's output. The same server runs in Docker Compose or Kubernetes when a team needs it, and a local server <a href="installation/local/#move-to-docker-compose">moves to Docker Compose</a> with its data.</p>
+      <a class="feature-link" href="installation/local/">Python package installation &rarr;</a>
+    </div>
+    <div class="feature-row-visual">
+      <div class="feature-code">
+<pre><code><span class="gs-cmd">uv tool install "depictio[local]"</span>
+<span class="gs-cmd">depictio local up</span>
+<span class="gs-cmd">depictio ingest path/to/results</span></code></pre>
+      </div>
+    </div>
+  </article>
+
   <div class="installation-grid">
     <a href="installation/local/" class="installation-card python">
       <div class="card-icon">
@@ -724,13 +740,6 @@ hide:
     </a>
   </div>
 
-  <div class="getting-started-code">
-    <p>Results on your laptop and no Docker? Three commands go from a pipeline's output to its dashboard:</p>
-    <div class="language-bash highlight"><pre><span></span><code>uv tool install "depictio[local]"
-depictio local up
-depictio ingest path/to/results</code></pre></div>
-    <p class="getting-started-code-note">The same server runs in Docker Compose or Kubernetes when a team needs it, and a local server <a href="installation/local/#move-to-docker-compose">moves to Docker Compose</a> with its data.</p>
-  </div>
 </section>
 
 <!-- Funding Section -->
@@ -2738,18 +2747,71 @@ depictio ingest path/to/results</code></pre></div>
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .getting-started-code {
-    max-width: 640px;
-    margin: 2.5rem auto 0;
+  /* Getting Started opens on the three commands, in the terminal frame of the
+     YAML band in Key Features. Larger type than there: three lines, to be read
+     at a glance and run. CSS draws the prompts, so the copy button copies the
+     commands alone. */
+  .getting-started-quickstart {
+    margin: 2.5rem 0 3rem;
   }
 
-  .getting-started-code p {
-    text-align: center;
-    color: var(--md-default-fg-color--light);
+  .getting-started-quickstart .feature-code {
+    padding: 1.6rem 1.75rem;
+    font-size: 0.95rem;
   }
 
-  .getting-started-code .getting-started-code-note {
-    font-size: 0.85rem;
+  .md-typeset .getting-started-quickstart .feature-code pre > code {
+    color: #ffffff;
+    line-height: 2;
+    overflow-x: auto;
+  }
+
+  /* A single column below 900px: the column must be allowed to shrink below
+     the width of the longest command, or the terminal runs off a phone. */
+  @media (max-width: 899px) {
+    .getting-started-quickstart {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* The type follows the width where the column is narrow, so the longest
+     command still ends short of the copy button: in the right half of the row
+     up to 1220px, and full width on a phone. */
+  @media (min-width: 900px) and (max-width: 1219px) {
+    .getting-started-quickstart .feature-code {
+      font-size: 1.55vw;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .getting-started-quickstart .feature-code {
+      padding: 1rem;
+      font-size: clamp(0.6rem, 3.4vw, 0.85rem);
+    }
+  }
+
+  .gs-cmd::before {
+    content: "$ ";
+    color: #8ce563;
+  }
+
+  /* Unlike the YAML band, these are commands to run: Material's copy button
+     stays. */
+  .getting-started-quickstart .feature-code .md-code__nav {
+    display: flex !important;
+  }
+
+  .getting-started-quickstart .feature-code .md-code__button {
+    display: block !important;
+    color: #9aa0ab;
+  }
+
+  .getting-started-quickstart .feature-code .md-code__button:hover {
+    color: #ffffff;
+  }
+
+  .getting-started-quickstart .feature-row-text a:not(.feature-link) {
+    color: var(--depictio-purple);
   }
 
   .card-arrow {
