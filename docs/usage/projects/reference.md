@@ -187,18 +187,18 @@ workflows:
 
               # For mode: "s3_prefix" - list a bucket prefix (the remote counterpart of recursive)
               # prefix: "s3://my-bucket/run42/"          # Required: s3:// prefix, bucket included
-              # pattern: "*.samples.csv"                 # Optional: glob on the key relative to the prefix (default "*")
+              # pattern: "*.samples.csv"                 # Optional: glob on the key relative to the prefix, or on the file name (default "*")
               # pattern_syntax: "glob"                   # Optional: "glob" (default) or "regex"
-              # id_regex: "^([^/]+?)\\.samples\\.csv$"   # Optional: one capture group; the capture becomes depictio_manifest_id
-              # max_files: 10000                         # Optional: listing ceiling (default 10000, max 100000)
+              # id_regex: "^([^/]+?)\\.samples\\.csv$"   # Optional: one capture group, searched in the key relative to the prefix; the capture becomes depictio_manifest_id
+              # max_files: 10000                         # Optional: ceiling on matching objects (default 10000, max 100000)
 
               # For mode: "manifest" - consume the entries of a Data Manifest
-              # manifest_url: "https://data.example.org/run42/manifest.json"  # Required: manifest URL (a local path in CLI context)
+              # manifest_url: "https://data.example.org/run42/manifest.json"  # Required: https:// manifest URL (a local path in CLI context)
               # manifest_type: "samples"                 # Required: manifest `type` this collection consumes (its tag, by convention)
               # id_field: "id"                           # Optional: manifest column holding the entity id
               # url_field: "url"                         # Optional: manifest column holding the file URL
               # type_field: "type"                       # Optional: manifest column holding the type
-              # run_field: "run"                         # Optional: manifest column holding the run grouping (null to ignore)
+              # run_field: "run"                         # Optional: manifest column holding the run grouping
 
           # Required: Type-specific configuration
           dc_specific_properties:
@@ -377,7 +377,7 @@ workflows:
               #                   underscore-separated token of the leaf name)
 ```
 
-## Remote scan modes { #remote-scan-modes }
+## Remote scan modes <small>(v1.16.0+)</small> { #remote-scan-modes }
 
 Three scan modes fetch data from where it already is instead of walking a local
 directory. Whoever ingests, the CLI or the server, reads the files there; the
@@ -388,13 +388,15 @@ The files are materialised to Delta Lake exactly like scanned local files.
 
 `mode` and `scan_parameters` are cross-checked: declaring `mode: url` with a
 `filename` block, for instance, is rejected with a message naming the mode the
-parameters belong to and the parameters the declared mode expects.
+parameters belong to and the parameters the declared mode expects. The
+[scan bounds](yaml-examples.md#scan-bounds) `max_depth` and `ignore` belong to
+`recursive`: a remote mode that declares them is rejected the same way.
 
 ### `url`: one remote file
 
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
-| `url` | yes | | Absolute `s3://` or `https://` URL of the file. `http://` is accepted only when the instance sets `DEPICTIO_REMOTE_ALLOW_HTTP`. Validation here is syntactic; reachability and address checks happen at fetch time. |
+| `url` | yes | | Absolute `s3://` or `https://` URL of the file. `http://` is accepted only with `DEPICTIO_REMOTE_ALLOW_HTTP=true`, set on the server and, for a CLI ingestion, in the CLI's environment too. Validation here is syntactic; reachability and address checks happen at fetch time. |
 
 ```yaml
 scan:
@@ -412,10 +414,10 @@ HTTPS exposes no listing operation.
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
 | `prefix` | yes | | `s3://` prefix, bucket included, e.g. `s3://my-bucket/run42/` |
-| `pattern` | no | `"*"` | Glob applied to the key *relative to* the prefix, so `*.csv` rather than the full path |
-| `pattern_syntax` | no | `"glob"` | How `pattern` is read: `glob` (fnmatch) or `regex`. A [run folder on S3](remote-data.md#a-run-folder-on-s3) turns each `recursive` collection into an `s3_prefix` scan that keeps the template's regex, with `regex` here |
-| `id_regex` | no | `null` | Regex with exactly one capture group, matched against the object key. The capture is stored as the file's entity id and read back as the `depictio_manifest_id` column, which gives a prefix scan the same cross-DC join key as a manifest |
-| `max_files` | no | `10000` | Ceiling on the number of listed objects (at most `100000`), a backstop against pointing a collection at a bucket root |
+| `pattern` | no | `"*"` | Glob matched against the key *relative to* the prefix and against the file name, so `*.csv` rather than the full path. Its `*` also crosses `/`, so `*.csv` reaches the keys of sub-prefixes too |
+| `pattern_syntax` | no | `"glob"` | How `pattern` is read: `glob` (fnmatch) or `regex`. A regex is matched from the start of the file name, and of the relative key when it contains a `/`, as in a `recursive` scan. A [run folder on S3](remote-data.md#a-run-folder-on-s3) turns each `recursive` collection into an `s3_prefix` scan that keeps the template's regex, with `regex` here |
+| `id_regex` | no | `null` | Regex with exactly one capture group, searched in the key relative to the prefix, then in the file name. The capture is stored as the file's entity id and read back as the `depictio_manifest_id` column, which gives a prefix scan the same cross-DC join key as a manifest. An object it does not match is kept without an id, and the scan warns how many there are |
+| `max_files` | no | `10000` | Ceiling on the number of matching objects (at most `100000`), a backstop against pointing a collection at a bucket root. The listing also stops after 10 × `max_files` keys. Either limit is reported as a warning |
 
 ```yaml
 scan:
@@ -434,15 +436,17 @@ described on [Remote data and manifests](remote-data.md#the-data-manifest-contra
 
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
-| `manifest_url` | yes | | Remote URL of the manifest (JSON or CSV). In CLI context a local path is accepted too |
+| `manifest_url` | yes | | `https://` URL of the manifest (JSON or CSV). In CLI context a local path is accepted too. An `s3://` URL passes validation but is not read yet |
 | `manifest_type` | yes | | Which manifest `type` this collection consumes. By convention, the collection's own tag |
 | `id_field` | no | `"id"` | Manifest column holding the entity id |
 | `url_field` | no | `"url"` | Manifest column holding the file URL |
 | `type_field` | no | `"type"` | Manifest column holding the type |
-| `run_field` | no | `"run"` | Manifest column holding the run grouping; `null` to ignore |
+| `run_field` | no | `"run"` | Manifest column holding the run grouping. Files of a manifest without that column get `remote` as their run |
 
 The `*_field` overrides remap a manifest with non-canonical column names onto
-the contract without rewriting it.
+the contract without rewriting it. In a template, every `manifest` collection
+reads the same manifest, so they must all name the same columns: **From
+Manifest** refuses a template whose collections disagree.
 
 ```yaml
 scan:

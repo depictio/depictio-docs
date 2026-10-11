@@ -112,10 +112,10 @@ variables are dropped before the call, so the recipe falls back to its own defau
 
 | Flag | Type | Required | Description |
 |------|------|----------|-------------|
-| `--template` | `string` | [one of](#pipeline-id) | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+). On the CLI, also a path to an [exported bundle](#running-an-exported-bundle) |
-| `DATA_DIR` (argument) | `path` | one of the three | The results directory, a local folder or an `s3://` prefix, substituted for `{DATA_ROOT}`. Formerly `--data-root` |
-| `--manifest` | `url` or `path` | one of the three | Data manifest substituted for `{MANIFEST_URL}`. Not with `DATA_DIR` |
-| `--bind` | `TAG=LOCATION` | one of the three | Point one data collection at a location; the scan mode is inferred from its shape. Repeatable |
+| `--template` | `string` | [one of](#pipeline-id) | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+). On the CLI, also a path to an [exported bundle](#running-an-exported-bundle) (v1.16.0+) |
+| `DATA_DIR` (argument) | `path` | one of the three | The results directory, a local folder or, from v1.16.0, an `s3://` prefix, substituted for `{DATA_ROOT}`. Formerly `--data-root` |
+| `--manifest` | `url` or `path` | one of the three | Data manifest substituted for `{MANIFEST_URL}`. Not with `DATA_DIR` (v1.16.0+) |
+| `--bind` | `TAG=LOCATION` | one of the three | Point one data collection at a location; the scan mode is inferred from its shape. Repeatable (v1.16.0+) |
 | `--var` | `KEY=VALUE` | depends on template | Pass template-specific variables; repeatable |
 | `--dashboard` | `path` | no | Override default dashboard(s); repeatable |
 | `--skip dashboards` | `flag` | no | Skip automatic dashboard import. Formerly `--skip-dashboard-import` |
@@ -151,7 +151,7 @@ shows the comparison before anything is created; see
 When none applies, the command stops and asks for `--template` or
 `--project-config-path`.
 
-### Instantiating with `--manifest` or `--bind` { #instantiating-with-manifest-or-bind }
+### Instantiating with `--manifest` or `--bind` <small>(v1.16.0+)</small> { #instantiating-with-manifest-or-bind }
 
 `DATA_DIR`, `--manifest` and `--bind` all answer the same question, where
 the data is, and a template run needs at least one of them:
@@ -175,7 +175,7 @@ required variable that no collection uses any more is not asked for. A
 tags that exist. The location shapes and the mode each one implies are on
 [Remote data and manifests](remote-data.md#bind-a-data-collection-to-a-location).
 
-### Running an exported bundle { #running-an-exported-bundle }
+### Running an exported bundle <small>(v1.16.0+)</small> { #running-an-exported-bundle }
 
 On the CLI, `--template` also accepts a path: a directory holding a
 `template.yaml` (or `project.yaml`), or a YAML file. That is what makes an
@@ -366,7 +366,7 @@ Tags are resolved to MongoDB ObjectIds after the project is synced to the server
 
 ---
 
-## Export a project as a template { #export-a-project-as-a-template }
+## Export a project as a template <small>(v1.16.0+)</small> { #export-a-project-as-a-template }
 
 The inverse of instantiation: freeze a live project and its dashboards into a
 template bundle. Build one good project interactively, export it, and the next
@@ -386,10 +386,11 @@ run of the same pipeline is one command.
 
 === "Web UI"
 
-    On the project page, **Project settings**, then **Export template**: a
+    On the project page, **Project settings**, then **Export**: a
     **Template ID**, a **Version**, a **Description (optional)** and a
-    **Data root (optional)**. **Export** downloads the bundle as a zip named
-    after the template ID. Owners and editors can export; on a public
+    **Data root (optional)**, left empty for the default below. **Export**
+    downloads the bundle as a zip named after the template ID, `/` becoming
+    `_`. Owners, editors and administrators can export; on a public
     instance, administrators only.
 
 === "API"
@@ -413,18 +414,32 @@ exported.
 Data bindings are re-parameterised. Stored manifest URLs become
 `{MANIFEST_URL}`, declared as a required variable. A data root, a local path
 or an `s3://` prefix, becomes `{DATA_ROOT}` when `--data-dir` is given, or when
-the project itself came from a template that recorded one. A template binds one manifest, so distinct
-stored manifest URLs all collapse onto the same placeholder, with a warning.
+the project itself came from a template that recorded one. Only locations
+below the data root are rewritten: a URL or an `s3://` location elsewhere is
+kept as it is. A template binds one manifest, so distinct stored manifest URLs
+all collapse onto the same placeholder; only the server log notes it.
 
 ### Round-trip guarantee
 
 Before the bundle is returned it is checked against the same models
 instantiation uses: the `template:` block must validate as template metadata,
 and the configuration with placeholders substituted must validate as a
-project. If either fails the request is rejected and nothing is emitted, so an
-exported bundle always re-instantiates through the resolver. Drop the
-directory under `depictio/projects/` and it is auto-discovered by the resolver
-and the picker, or run it directly by path with `--template ./folder`.
+project. If either fails the request is rejected with a 422 and nothing is
+emitted, so an exported bundle always re-instantiates through the resolver.
+
+!!! warning "A project read from an `s3://` folder"
+    The check gives `{DATA_ROOT}` a local test path, which an `s3_prefix` or
+    `url` collection does not accept. With an `s3://` data root, the default
+    for a project made from a run folder on S3, the export therefore stops
+    with *Exported config does not round-trip through Project validation*.
+    From the CLI, `--data-dir ""` exports without a data root and keeps the
+    `s3://` locations as they are. In the web form, an empty **Data root**
+    means the default.
+
+Unpacked in the server's `depictio/projects/` folder, which an installed
+package keeps as `depictio/cli/projects/`, the bundle is found by the resolver
+and offered in the picker. Anywhere else, run it by path with
+`--template ./folder`.
 
 ---
 

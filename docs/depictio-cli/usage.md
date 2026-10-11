@@ -56,8 +56,8 @@ Running `depictio` with no command prints a quick start. `depictio --help` lists
 | `dashboard validate`          | Validate a dashboard YAML file                                | All users      |
 | `dashboard import`            | Import a dashboard YAML file to the server                    | All users      |
 | `dashboard export`            | Export a dashboard to a YAML file                             | All users      |
-| `template export`             | Export a project and its dashboards as a template bundle      | All users      |
-| `manifest from-table`         | Write a data manifest from a samplesheet or any table         | All users      |
+| `template export`             | Export a project and its dashboards as a template bundle (v1.16.0+) | All users |
+| `manifest from-table`         | Write a data manifest from a samplesheet or any table (v1.16.0+) | All users |
 | `catalog list` / `info` / `preview` / `gallery` | Browse the tools catalog                    | All users      |
 | `backup create`               | Create a backup                                               | **Admin only** |
 | `backup list`                 | List available backups                                        | **Admin only** |
@@ -177,13 +177,13 @@ Here the template is detected from nf-core/taxprofiler results, previewed with `
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `DATA_DIR` | `path` | | The results directory to ingest, as the argument, or an `s3://` prefix holding them (see [A run folder on S3](../usage/projects/remote-data.md#a-run-folder-on-s3)). Without `--template` or `--project-config-path`, the template is detected from it. Formerly `--data-root` |
+| `DATA_DIR` | `path` | | The results directory to ingest, as the argument, or, from v1.16.0, an `s3://` prefix holding them (see [A run folder on S3](../usage/projects/remote-data.md#a-run-folder-on-s3)). Without `--template` or `--project-config-path`, the template is detected from it. Formerly `--data-root` |
 | `--server` | `string` | see [Which server a command uses](#choosing-a-server) | `local`, or a CLI configuration file. Formerly `--CLI-config-path` |
-| `--template` | `string` | detected | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, for the newest shipped version (v1.5.2+). Also the path of a template directory or YAML file, such as an [exported bundle](#template-export). Not with `--project-config-path` |
+| `--template` | `string` | detected | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, for the newest shipped version (v1.5.2+). From v1.16.0, also the path of a template directory or YAML file, such as an [exported bundle](#template-export). Not with `--project-config-path` |
 | `--project-config-path` | `string` | | Project YAML, for a pipeline Depictio ships no template for. Not with `--template` |
 | `--update-config` | `flag` | `false` | Refresh a project that exists, see [Refreshing a project](#refreshing-a-project). `--overwrite` is the same option |
 | `--var` | `KEY=VALUE` | | Template variable, repeatable |
-| `--dry-run` | `flag` | `false` | Validate the project configuration locally and list the steps that would run, without contacting the server. From v1.13.2 it also lists how many files each data collection would match. With a template and `DATA_DIR`, it shows what each data collection finds there, see [Preview before ingesting](../usage/projects/remote-data.md#preview-before-ingesting) |
+| `--dry-run` | `flag` | `false` | Validate the project configuration locally and list the steps that would run, without contacting the server. From v1.13.2 it also lists how many files each data collection would match. From v1.16.0, with a template and `DATA_DIR`, it shows what each data collection finds there instead, see [Preview before ingesting](../usage/projects/remote-data.md#preview-before-ingesting) |
 
 Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/projects/templates.md#recipe-seeds) committed beside the data: a `source: transformed` data collection with a `{DATA_ROOT}/{dc_tag}.tsv` next to it is scanned from that file instead of re-running its recipe against raw pipeline inputs the bundled projects do not ship. See [Templates](../usage/projects/templates.md) for full documentation.
 
@@ -191,12 +191,12 @@ Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/
 
     | Parameter | Type | Default | Description |
     |-----------|------|---------|-------------|
-    | `--manifest` | `url` or `path` | | A [data manifest](../usage/projects/remote-data.md#the-data-manifest-contract), as an `https://` URL or a local file, in place of `DATA_DIR`. Needs `--template`, a manifest-driven one such as `generic/manifest-tables/1`, whose `MANIFEST_URL` variable it sets. Not with `DATA_DIR` |
+    | `--manifest` | `url` or `path` | | A [data manifest](../usage/projects/remote-data.md#the-data-manifest-contract), as an `https://` URL or a local file, in place of `DATA_DIR`. Needs `--template`, a manifest-driven one such as `generic/manifest-tables/1`, whose `MANIFEST_URL` variable it sets. Not with `DATA_DIR` (v1.16.0+) |
     | `--project` | `string` | the template's | Project name. Replaces the name the template gives, or the `name` in the `--project-config-path` file. `--attach-run` and `--update-config` find the project by it. Formerly `--project-name` |
     | `--attach-run` | `flag` | `false` | Add the results directory to an existing project as **another run**, see [Refreshing a project](#refreshing-a-project) (v1.10.0+) |
     | `--drop-missing-runs` | `flag` | `false` | On a refresh, remove the runs of a location added with `--attach-run` that is not on this machine. Without it, such a refresh stops before changing anything. Cannot be combined with `--attach-run` (v1.13.1+) |
     | `--provenance-file` | `path` | | Extra recap file (JSON, YAML or two-column key/value TSV) listed in the project's [run provenance](../usage/projects/templates.md#run-provenance) under *User provided*. Repeatable (v1.8.3+) |
-    | `--bind` | `TAG=LOCATION` | | Point one data collection at where its data is. Repeatable. The scan mode follows the location: a local folder or glob, a local file, an `https://` URL, an `s3://` prefix or glob. With `--template` it stands in for `DATA_DIR`; with `--project-config-path` the file is left untouched. See [Bind a data collection to a location](../usage/projects/remote-data.md#bind-a-data-collection-to-a-location) |
+    | `--bind` | `TAG=LOCATION` | | Point one data collection at where its data is. Repeatable. The scan mode follows the location: a local folder or glob, a local file, an `https://` URL, an `s3://` prefix or glob. With `--template` it stands in for `DATA_DIR`; with `--project-config-path` the file is left untouched. See [Bind a data collection to a location](../usage/projects/remote-data.md#bind-a-data-collection-to-a-location) (v1.16.0+) |
 
 ??? info "📈 Dashboards"
 
@@ -394,8 +394,8 @@ Here the first step fails, as no server answers, and its message says how to sta
     From v1.13.2 the dry run prints a table of the files each data collection would match,
     counted by the scanner itself. A derived collection shows `n/a (no scan)`, a remote one
     `not counted (remote)`, and a collection that would match nothing is named in a warning.
-    With a template and `DATA_DIR`, the dry run prints what each data collection finds under
-    `DATA_DIR` instead, recipe collections included: see
+    From v1.16.0, with a template and `DATA_DIR`, the dry run prints what each data collection
+    finds under `DATA_DIR` instead, recipe collections included: see
     [Preview before ingesting](../usage/projects/remote-data.md#preview-before-ingesting).
 
 === "Debugging"
@@ -461,8 +461,17 @@ previous cycle succeeded; after a failure, and on every full cycle, every table 
 rebuilt.
 
 `auto` picks polling alone as soon as one watched location is on NFS, SMB/CIFS, Lustre,
-GPFS, BeeGFS, GlusterFS, Ceph, AFS, 9p or a FUSE mount. A location of the project that does not exist on this machine is skipped with
-a warning, and the watcher stops if none is left.
+GPFS, BeeGFS, GlusterFS, Ceph, AFS, 9p or a FUSE mount. A location of the project that
+does not exist on this machine is skipped with a warning, and the watcher stops if none is
+left.
+
+**Remote data** <small>(v1.16.0+)</small>. A watcher watches folders on its own machine.
+An `s3://` location counts as one that does not exist: with an `s3://` `DATA_DIR`, the
+first cycle ingests it as `ingest` would, then the watcher stops with *No existing data
+locations to watch in this project.* and exit code 1, unless `--once` or `--max-runs 1`
+asked for that single cycle. `watch` takes neither `--bind` nor `--manifest`. To bring
+remote data up to date, refresh it from the server, see
+[Refreshing the data](../usage/projects/remote-data.md#refreshing-the-data).
 
 **Stopping.** Ctrl-C or SIGTERM lets the cycle in progress finish, then exits, so the
 watcher is safe to run under systemd or as a container.
@@ -996,7 +1005,7 @@ For more information about dashboard YAML format and workflows, see [Dashboard Y
 
 ---
 
-### 📦 Template Commands
+### 📦 Template Commands <small>(v1.16.0+)</small> { #template-commands }
 
 <!-- prettier-ignore -->
 !!! info "Command Group: `depictio template`"
@@ -1022,7 +1031,7 @@ depictio template export <project_id> --template-id <id> [OPTIONS]
 | `--output-dir` / `-o` | `path` | `.` | Directory to unpack into; the bundle lands in `<output-dir>/<template-id>/` |
 | `--version` | `string` | `1.0.0` | Template version |
 | `--description` | `string` | | Template description |
-| `--data-dir` | `string` | | Path prefix to re-parameterise as `{DATA_ROOT}`, a local folder or an `s3://` prefix. Defaults to the data root recorded when the project itself came from a template; leave empty for a manifest-driven project. Formerly `--data-root` |
+| `--data-dir` | `string` | | Path prefix to re-parameterise as `{DATA_ROOT}`, a local folder or an `s3://` prefix. Defaults to the data root recorded when the project itself came from a template. `--data-dir ""` exports without one, which a project read from an `s3://` folder needs, see [Round-trip guarantee](../usage/projects/templates.md#round-trip-guarantee). Formerly `--data-root` |
 
 ```bash
 depictio template export 6824cb3b89d2b72169309737 \
@@ -1032,14 +1041,15 @@ depictio template export 6824cb3b89d2b72169309737 \
 ```
 
 The result is `depictio/projects/my-lab/rnaseq-qc/1/` holding `template.yaml`
-and `dashboards/*.yaml`. Anyone can run it in place with
-`depictio ingest --template ./my-lab/rnaseq-qc/1`, with `DATA_DIR` or
-`--bind`. Archive members that would land outside the target directory are
-refused before anything is written.
+and `dashboards/*.yaml`; the command lists the files it wrote. Anyone can run
+it in place with `depictio ingest --template ./my-lab/rnaseq-qc/1`, with
+`DATA_DIR` or `--bind`. Archive members that would land outside the target
+directory are refused before anything is written. An export the server
+refuses prints its HTTP status and answer, and exits with code 1.
 
 ---
 
-### 🗒️ Manifest Commands
+### 🗒️ Manifest Commands <small>(v1.16.0+)</small> { #manifest-commands }
 
 <!-- prettier-ignore -->
 !!! info "Command Group: `depictio manifest`"
@@ -1058,8 +1068,8 @@ depictio manifest from-table <table> [OPTIONS]
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `table` | `path` | **required** | Wide table to pivot (CSV or TSV; the delimiter follows the extension, then the header) |
-| `--out` / `-o` | `path` | `manifest.json` | Output manifest, `.json` or `.csv` |
+| `table` | `path` | **required** | Wide table to pivot, CSV or TSV. A `.tsv` or `.tab` file is read as tab-separated, any other as comma-separated, unless its header holds only another separator (tab, comma, semicolon) |
+| `--out` / `-o` | `path` | `manifest.json` | Output manifest. A `.json` file gets a JSON list of entries; any other extension, a CSV with `id,type,url,run` columns |
 | `--id-col` | `string` | auto | Entity id column. Auto-detected from conventional names (`sample`, `id`, `name`, ...), else the first column |
 | `--file-cols` | `string` | auto | Columns holding file locations. Repeatable. Auto-detected as the columns whose populated values all look like files |
 | `--run-col` | `string` | | Column to use as the manifest `run` grouping |
@@ -1073,10 +1083,12 @@ depictio manifest from-table samplesheet.csv \
 ```
 
 The command prints the detected id and file columns, the number of entries
-written, and the manifest types produced. A blank cell is an absent file, not
-an error. Local paths with no `--base-url` stop the command; if the files
-already sit under one S3 prefix, `depictio ingest --bind TAG=s3://bucket/prefix/*.csv`
-needs no manifest at all.
+written, and the manifest types produced. A blank file cell is an absent file,
+not an error, but a blank id cell stops the command. A value that is already a
+URL is kept as written; `--base-url` is joined to every other one, so give the
+table relative paths. Local paths with no `--base-url` stop the command; if the
+files already sit under one S3 prefix,
+`depictio ingest --bind TAG=s3://bucket/prefix/*.csv` needs no manifest at all.
 
 ---
 

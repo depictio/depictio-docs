@@ -340,7 +340,7 @@ scan:
       pattern: "star_salmon/.*/quant.sf"
 ```
 
-#### Remote Modes
+#### Remote Modes <small>(v1.16.0+)</small> { #remote-modes }
 
 A collection can also point at one file on the web or in a bucket (`url`), at
 every object under an S3 prefix (`s3_prefix`), or at the entries of a Data
@@ -577,11 +577,10 @@ depictio ingest /data/my_ampliseq_run \
 
 That single command:
 
-1. Validates your data directory structure against the template's `expected_files`
-2. Resolves all `{DATA_ROOT}` placeholders throughout the config
-3. Creates the project in MongoDB
-4. Discovers and processes all data collections (running recipes automatically)
-5. Imports the bundled dashboard
+1. Resolves all `{DATA_ROOT}` placeholders, and the template's other variables, throughout the config
+2. Creates the project in MongoDB
+3. Discovers and processes all data collections (running recipes automatically)
+4. Imports the bundled dashboard
 
 Without `--template`, the template is detected from the results directory when it can be. Running the same command again with `--update-config` refreshes the project and keeps its dashboards as edited in the viewer; see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project).
 

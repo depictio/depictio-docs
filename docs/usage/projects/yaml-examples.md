@@ -702,15 +702,20 @@ them, so a project that set them may register fewer files than before, and the C
 prints a warning naming its collections. `--legacy-scan-depth` on `depictio ingest` or
 `depictio data scan` ignores them again for one release.
 
-#### Remote Modes
+Both keys belong to `recursive` scans. The [remote modes](#remote-modes) reject them,
+and from v1.16.0 they are not carried over when a `recursive` collection is read from
+an [`s3://` run folder](remote-data.md#a-run-folder-on-s3) or pointed at another folder
+with `--bind`: that scan walks everything below its folder.
+
+#### Remote Modes <small>(v1.16.0+)</small> { #remote-modes }
 
 Three modes fetch data from where it already is, read by the CLI or the
 server, and the result is materialised like any scanned file. The full parameter
 tables are in the [reference](reference.md#remote-scan-modes), and
 [Remote data and manifests](remote-data.md) explains when to use which.
 
-An S3 prefix, with the glob applied to the key relative to the prefix and the
-`*` captured as the cross-DC join key:
+An S3 prefix, with the glob matched against the key relative to the prefix and
+`id_regex` capturing the cross-DC join key:
 
 ```yaml
 workflows:
@@ -768,7 +773,7 @@ workflows:
           dc_specific_properties:
             format: "CSV"
       - data_collection_tag: "measurements"
-        optional: true      # dropped when the manifest has no "measurements" rows
+        optional: true      # in a template, dropped when the manifest has no "measurements" rows
         config:
           type: "Table"
           metatype: "Aggregate"
@@ -785,6 +790,11 @@ workflows:
 #   S1,samples,https://data.example.org/run42/S1.samples.csv,run42
 #   S1,measurements,https://data.example.org/run42/S1.measurements.csv,run42
 ```
+
+`optional: true` takes effect when the project comes from a template, through
+`depictio ingest --template … --manifest` or **From Manifest**. Ingested as is, with
+`--project-config-path`, a manifest with no `measurements` row stops the run with
+*Manifest has no entries of type 'measurements'*.
 
 ### Cross-DC Links (Interactive Filtering)
 
@@ -1413,14 +1423,6 @@ template:
     - name: "DATA_ROOT"
       description: "Root directory containing ampliseq pipeline output data"
       required: true
-  expected_files:
-    - relative_path: "input/Metadata_full.tsv"
-      description: "Sample metadata"
-      format: "TSV"
-      columns: ["ID", "name", "habitat"]
-  expected_directories:
-    - relative_path: "qiime2"
-      description: "QIIME2 output directory"
   dashboards:
     - "dashboards/full_analysis.yaml"
 ```

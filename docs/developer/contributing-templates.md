@@ -163,7 +163,7 @@ the structure of the reference template, `nf-core/ampliseq/2.18.0/dashboards/bas
 
 5. Import it on a running server and open every tab.
 
-### Shortcut: export the whole bundle
+### Shortcut: export the whole bundle <small>(v1.16.0+)</small> { #shortcut-export-the-whole-bundle }
 
 If the project already exists on an instance, built by hand or from an earlier
 run, `depictio template export` writes the entire bundle in one go:
@@ -180,10 +180,11 @@ stored manifest URL as `{MANIFEST_URL}`), exports every dashboard as tag-based
 YAML, synthesises the `template:` block, and refuses to emit a bundle that
 would not re-instantiate. What comes out is a valid starting point; you still
 edit the description, declare extra variables and conditionals, and add
-recipes by hand. See
+recipes by hand. A URL or an `s3://` location outside the data root is kept as
+it is: turn it into a variable before submitting. See
 [Export a project as a template](../usage/projects/templates.md#export-a-project-as-a-template).
 
-## Manifest-driven templates { #manifest-driven-templates }
+## Manifest-driven templates <small>(v1.16.0+)</small> { #manifest-driven-templates }
 
 A template does not have to expect a local directory tree. Declare a
 `MANIFEST_URL` variable and give each data collection a `manifest` scan whose
@@ -241,7 +242,8 @@ The tab only lists templates in which at least one data collection uses a
 `manifest` scan. The **From a run folder** tab, likewise, lists only templates
 that read a data root: a data collection whose scan mentions `{DATA_ROOT}`, or
 a scan or recipe collection in a workflow whose locations do. `init/*`
-templates are never listed there. Two things follow from the
+templates are never listed there. The exception is a template detected in the
+run folder, or picked earlier, which stays in the list whatever it reads. Two things follow from the
 [manifest contract](../usage/projects/remote-data.md#the-data-manifest-contract):
 
 - Mark `optional: true` the collections the manifest may not cover. When the
@@ -252,9 +254,13 @@ templates are never listed there. Two things follow from the
   column, so links between them can use the `direct` resolver on that column
   with no mapping.
 
-There is no `{DATA_ROOT}` to validate against, so `expected_files` does not
-apply; the preview step of the UI, or `dry_run: true` on the endpoint, plays
-that role by reporting the coverage of the manifest against the template.
+There is no `{DATA_ROOT}` to check the files against. The preview step of the
+UI, or `dry_run: true` on the endpoint, reports instead how the manifest covers
+the template: the entries each collection receives, the manifest types no
+collection reads, and the optional collections left out. Every `manifest`
+collection of the template must read the manifest with the same `id_field`,
+`type_field`, `url_field` and `run_field`, since one manifest backs them all:
+**From Manifest** refuses a template whose collections disagree.
 
 Do not over-think where the data must live: whoever instantiates the template
 can override any collection's location with `--bind TAG=LOCATION`, whatever

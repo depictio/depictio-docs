@@ -201,7 +201,7 @@ against an existing bucket needs no extra permission.
 
 ---
 
-## Remote Data Sources { #remote-data-sources }
+## Remote Data Sources <small>(v1.16.0+)</small> { #remote-data-sources }
 
 **Config Class:** `RemoteConfig`
 **Environment Prefix:** `DEPICTIO_REMOTE_`
@@ -212,7 +212,8 @@ gating of per-project storage credentials), and which `s3://` buckets the
 server may read without the project's storage settings. The section is read
 from the environment on every read, so the API and the Celery worker apply the
 same policy, and a malformed value fails at the first read instead of silently
-falling back to a default. See
+falling back to a default. The run-folder browser then offers no S3 location,
+and the server log says why. See
 [Remote data and manifests](../usage/projects/remote-data.md#reading-s3-buckets)
 and [Security](../features/security.md#remote-data-sources).
 
@@ -221,10 +222,10 @@ and [Security](../features/security.md#remote-data-sources).
 | `DEPICTIO_REMOTE_ALLOW_HTTP` | `false` | Accept plain `http://` URLs in addition to `https://` and `s3://`. Off by default: the gateway and the models reject `http://` locations. Turn on for local or airgapped deployments that serve data without TLS |
 | `DEPICTIO_REMOTE_URL_ALLOWLIST` | _(empty)_ | Comma-separated host names the gateway may fetch from. **Exclusive while set**: any host not listed is rejected, and a listed host skips the private/loopback address rejection, which is how internal deployments opt an intranet host in. Empty accepts every public host |
 | `DEPICTIO_REMOTE_URL_DENYLIST` | _(empty)_ | Comma-separated host names the gateway always rejects. Checked before the allowlist, so a host present in both lists is denied |
-| `DEPICTIO_REMOTE_PUBLIC_S3_BUCKETS` | _(empty)_ | Comma-separated S3 locations read without credentials, each `bucket` or `bucket/prefix`, on Amazon S3. Unsigned access is opt-in: any other `s3://` location needs the project's storage settings, or an entry in the next list |
+| `DEPICTIO_REMOTE_PUBLIC_S3_BUCKETS` | _(empty)_ | Comma-separated S3 locations read without credentials, each `bucket` or `bucket/prefix`, on Amazon S3. Unsigned access is opt-in: any other `s3://` location needs the project's storage settings, read unsigned too when they hold no key, or an entry in the next list |
 | `DEPICTIO_REMOTE_CREDENTIALED_S3_BUCKETS` | _(empty)_ | Comma-separated S3 locations, same syntax, that the API and the worker read with their own ambient credentials (the AWS default chain: environment, IAM role, web identity). Every user of the instance can read what is listed here. Not used by the CLI |
-| `DEPICTIO_REMOTE_MAX_DOWNLOAD_BYTES` | `524288000` (500 MiB) | Size cap in bytes for a single remote download, data file or manifest. Downloads stream and abort, removing the partial file, once the cap is exceeded |
-| `DEPICTIO_REMOTE_TIMEOUT_S` | `30.0` | Timeout in seconds applied to each connect, read and write operation of a remote fetch, not a total download time |
+| `DEPICTIO_REMOTE_MAX_DOWNLOAD_BYTES` | `524288000` (500 MiB) | Size cap in bytes for a single remote download: a data file, a manifest the CLI reads, a MultiQC report. Downloads stream and abort, removing the partial file, once the cap is exceeded. The server reads a manifest up to 50 MiB, or this cap when it is lower |
+| `DEPICTIO_REMOTE_TIMEOUT_S` | `30.0` | Timeout in seconds applied to each connect, read and write operation of a remote fetch, not a total download time. Also the connect and read timeouts of the S3 client that reads a user-supplied `s3://` location |
 | `DEPICTIO_REMOTE_MAX_REDIRECTS` | `3` | Maximum redirect hops followed for a remote URL. Every `Location` is re-validated against this policy before it is followed |
 
 !!! warning "A listed host bypasses the private-address check"
@@ -238,9 +239,9 @@ The backend and the Celery worker must agree on these variables:
 |------------|-------------------|
 | Kubernetes | `backend.env` in the Helm values, rendered for both the backend and the Celery worker |
 | Docker Compose | `.env`, passed to both the backend and the worker |
-| Python package | The shell that runs `depictio local up`, which passes `DEPICTIO_REMOTE_*` on to the server |
+| Python package | The shell that runs `depictio local up`, which passes `DEPICTIO_REMOTE_*` on to the server, but not `AWS_*`: see [`depictio local`](local.md) |
 
-### Local data folders { #local-data-folders }
+### Local data folders <small>(v1.16.0+)</small> { #local-data-folders }
 
 **Config Class:** `LocalDataConfig`
 **Environment Prefix:** `DEPICTIO_LOCAL_DATA_`

@@ -202,7 +202,7 @@ All user input is validated:
 
 ---
 
-## Remote Data Sources { #remote-data-sources }
+## Remote Data Sources <small>(v1.16.0+)</small> { #remote-data-sources }
 
 The `url`, `s3_prefix` and `manifest` scan modes, and creating a project from
 a run folder, make the server read locations a user supplies, which is a
@@ -210,8 +210,9 @@ textbook server-side request forgery surface. Every `https://` fetch, whether
 creating a data collection from a URL, ingesting a manifest, or a refresh task
 on the Celery worker, goes through one gateway module; every `s3://` read is
 decided by one [access module](#s3-locations); a folder on the server's disk is
-read only on a [`depictio local`](#folders-on-the-servers-disk) server. Nothing
-in server context reads a user-supplied location directly. See
+read only on a [`depictio local`](#folders-on-the-servers-disk) server, or by a
+**Run ingestion** inside the folders an administrator allowed. Nothing in
+server context reads a user-supplied location directly. See
 [Remote data and manifests](../usage/projects/remote-data.md) for the feature
 itself.
 
@@ -220,15 +221,16 @@ itself.
 | Check | Behaviour |
 |-------|-----------|
 | **Scheme allowlist** | `https://` and `s3://`. Plain `http://` only with `DEPICTIO_REMOTE_ALLOW_HTTP=true` |
-| **Address check** | The host is resolved and private, loopback, link-local and reserved ranges are rejected, including the cloud metadata endpoint |
+| **Address check** | The host is resolved and private, loopback, link-local, reserved, multicast and unspecified addresses are rejected, including the cloud metadata endpoint |
 | **Redirects** | Every `Location` is re-validated against the same policy before it is followed; hops are capped by `DEPICTIO_REMOTE_MAX_REDIRECTS` |
 | **Bounded download** | Streamed, with a size cap (`DEPICTIO_REMOTE_MAX_DOWNLOAD_BYTES`) and a per-operation timeout (`DEPICTIO_REMOTE_TIMEOUT_S`); a download that exceeds the cap is aborted and the partial file removed |
-| **Host lists** | `DEPICTIO_REMOTE_URL_DENYLIST` always rejects. `DEPICTIO_REMOTE_URL_ALLOWLIST` is exclusive while set, and a listed host bypasses the private-range check |
+| **Host lists** | Exact host names, compared without case. `DEPICTIO_REMOTE_URL_DENYLIST` always rejects. `DEPICTIO_REMOTE_URL_ALLOWLIST` is exclusive while set, and a listed host bypasses the private-range check. An `s3://` location skips both: the [S3 rules](#s3-locations) apply instead |
 | **Sanitised errors** | Transport and HTTP errors are logged with their cause and surfaced to the client without internal details |
 
 The policy is read from the environment on every call, so the API and the
-worker always agree. The CLI, which fetches the user's own loopback and intranet
-hosts, reads directly but keeps the redirect and size caps.
+worker apply the same one as long as both are given the same
+`DEPICTIO_REMOTE_*` settings. The CLI, which fetches the user's own loopback and
+intranet hosts, reads directly but keeps the redirect and size caps.
 
 !!! warning "Residual risk: DNS rebinding"
     The address is checked when the host is resolved, and a hostile resolver
@@ -246,11 +248,11 @@ never becomes an existence or region oracle.
 - The bucket that holds the instance's own data is refused as a source: it
   holds every project's data.
 - The instance's own S3 keys are never used for a user-supplied location.
-- A bucket is read without credentials only when listed in
-  `DEPICTIO_REMOTE_PUBLIC_S3_BUCKETS`, and with the server's ambient
-  credentials only when listed in `DEPICTIO_REMOTE_CREDENTIALED_S3_BUCKETS`.
-  Anyone on the instance can read what the second list names. Both are empty
-  by default.
+- A bucket is read without credentials when listed in
+  `DEPICTIO_REMOTE_PUBLIC_S3_BUCKETS`, or with project storage settings that
+  hold no key, and with the server's ambient credentials only when listed in
+  `DEPICTIO_REMOTE_CREDENTIALED_S3_BUCKETS`. Anyone on the instance can read
+  what the second list names. Both lists are empty by default.
 - Any other bucket needs the project's storage settings, and is read with them
   alone. Settings typed in while creating a project from a run folder are the
   only credentials that request uses.
@@ -264,9 +266,13 @@ the credentialed list.
 
 ### Folders on the server's disk { #folders-on-the-servers-disk }
 
-A server never reads a local path stored on a project on a user's behalf: data
-ingested from a local folder is refreshed by the CLI that ingested it. The one
-exception is a `depictio local` server, which is the user's own computer:
+A server reads a local path stored on a project in two cases only:
+[**Run ingestion**](dashboards.md#run-ingestion) <small>(v1.15.0+)</small>,
+which reads inside `DEPICTIO_INGESTION_ALLOWED_DATA_ROOTS` alone, see
+[Starting an ingestion from the browser](../installation/docker.md#browser-trigger),
+and a `depictio local` server, which is the user's own computer. Otherwise,
+data ingested from a local folder is refreshed by the CLI that ingested it. On
+a `depictio local` server:
 
 - Local folders are off unless `DEPICTIO_LOCAL_DATA_ROOTS` is set, and only in
   single-user mode (`DEPICTIO_AUTH_SINGLE_USER_MODE`). `depictio local up` sets
@@ -280,18 +286,20 @@ exception is a `depictio local` server, which is the user's own computer:
   folders and the folders Depictio keeps for itself (`~/.depictio`, the local
   home, the keys and CLI configuration folders, the backups) are refused even
   below a root.
-- A run folder over 100,000 files is refused, and everything a project made
-  from a run folder reads must be inside it: a template variable or data
-  collection pointing elsewhere is refused.
+- A run folder over 100,000 files is refused. For a project made from a run
+  folder, every template variable given as a path and every location a data
+  collection scans must be inside it; one pointing elsewhere is refused.
 
 ### Per-project storage credentials
 
-A project owner can attach S3-compatible credentials so remote and manifest
-collections can read a private bucket.
+A project owner or an administrator can attach S3-compatible credentials so
+remote and manifest collections can read a private bucket.
 
 - Credentials live in their own collection, never on the project document, so
   they cannot leak through project responses or exports. Template bundles never
-  include them.
+  include them. An instance [backup](../usage/administration/backup.md#what-is-covered)
+  does, with the secret still encrypted: keep backup files as safe as the keys
+  volume.
 - The secret is **encrypted at rest** with a symmetric key stored next to the
   JWT key pair, in `DEPICTIO_AUTH_KEYS_DIR`. The API encrypts on write and the
   Celery worker decrypts inside refresh tasks, so backend and worker must mount
@@ -303,8 +311,14 @@ collections can read a private bucket.
   sent to another endpoint.
 - Only project owners and administrators read or change the settings.
 - The endpoint URL passes the same host gating as remote data URLs. The
-  instance's own object storage is always allowed; a private-network endpoint
-  needs to be allowlisted.
+  instance's own object storage is always allowed. Any other endpoint on a
+  private network needs to be allowlisted, while an allowlist is set every
+  endpoint must be on it, and `http://` needs `DEPICTIO_REMOTE_ALLOW_HTTP`.
+  An empty endpoint, possible through the API only, means Amazon S3 and is
+  not gated.
+- The stored endpoint is checked again at every read, so tightening the host
+  lists also stops settings saved before: their reads answer 409 until an
+  owner updates them. A secret the instance cannot decrypt answers 500.
 - These are read credentials only. Delta tables are still written with the
   instance's own storage configuration, and refresh workers re-read the
   credentials from the database rather than receiving them through the task

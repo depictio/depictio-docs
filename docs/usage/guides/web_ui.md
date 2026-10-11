@@ -180,7 +180,7 @@ filters. The link grants no access: it only narrows what they could already open
 - You can access workflows and data collections recursively within each project
 - Each entity allows you to view configuration details and preview data
 
-### <span style="color: #45B8AC;">:material-link-variant:</span> Creating a project from a run folder or a manifest { #creating-a-project-from-a-manifest }
+### <span style="color: #45B8AC;">:material-link-variant:</span> Creating a project from a run folder or a manifest <small>(v1.16.0+)</small> { #creating-a-project-from-a-manifest }
 
 **+ New Project** offers four tabs: **Create New**, **Import**, **From
 Manifest** and **From a run folder**. The last two build a project from data
@@ -266,29 +266,33 @@ dashboard's Settings <small>(v1.6.0+)</small>.
     </a>
 </div>
 
-Data that is not on the server's own disk is handled in two places; the
-mechanisms are described on
+Data that is not on the server's own disk is handled in two places
+<small>(v1.16.0+)</small>; the mechanisms are described on
 [Remote data and manifests](../projects/remote-data.md).
 
-- **Remote URL** in **Create Data Collection**: the *Table* tab offers
-  **Upload a file** or **Remote URL**. With the latter, paste an `https://` or
-  `s3://` file URL; the server fetches it, so the file never travels through
-  the browser, and a private bucket is read with the project's storage
-  settings.
-- **Project settings** in the header opens three sections; nothing is saved on
-  close, each acts on its own button:
-    - **Storage**, for project owners: the endpoint, bucket, region and keys of
-      a private bucket the project reads, with **Test connection**. See
+- **Remote URL** in **Create Data Collection**: the **Table (CSV / TSV /
+  Parquet)** tab offers **Upload a file** or **Remote URL**. With the latter,
+  paste an `https://` or `s3://` address as the **File URL** (`http://` only
+  when the server allows it); the name and format are filled in from its last
+  segment. The server fetches the file, so it never travels through the
+  browser, and a private bucket is read with the project's storage settings.
+  MultiQC reports are uploaded only.
+- **Project settings** in the header, next to **Permissions**, opens three
+  sections; nothing is saved on close, each acts on its own button:
+    - **Storage**, for project owners and administrators: the endpoint,
+      bucket, region and keys of a private bucket the project reads, with
+      **Test connection**. See
       [Project storage settings](../projects/remote-data.md#project-storage-settings).
     - **Data refresh**: re-read the collections that come from a manifest, a
       URL or a bucket, and rebuild their tables. See
       [Refreshing the data](../projects/remote-data.md#refreshing-the-data).
-    - **Export template**: package the project and its dashboards as a template
-      bundle (zip). See
+    - **Export**: package the project and its dashboards as a template bundle
+      (zip). See
       [Export a project as a template](../projects/templates.md#export-a-project-as-a-template).
 
-  **Data refresh** and **Export template** are for owners and editors; on a
-  public instance, administrators only.
+  **Data refresh** and **Export** are for owners, editors and administrators;
+  on a public instance, administrators only. The dialog opens on the section
+  used last.
 
 ### <span style="color: #45B8AC;">:material-monitor-eye:</span> Dashboard viewer (/dashboard/{id})
 

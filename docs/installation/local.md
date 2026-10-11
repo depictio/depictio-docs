@@ -184,13 +184,15 @@ Here a first `up`, which downloads the services, then `status`, `open` and `down
 | `--port` | the previous run's, else `8058` or a free one | Port of the API and the viewer, kept for later runs. A busy `--port` fails |
 | `--open` / `--no-open` | `--open` | Open the dashboards page in a browser |
 | `--screenshots` / `--no-screenshots` | off | Dashboard thumbnails through Playwright. Installs Chromium (about 150 MB) if needed |
-| `--data-root-allow PATH` | | Also let the web UI read run folders under `PATH`, an existing absolute folder outside `~/.depictio/local`. Repeatable. Your home folder is always allowed. See [From a run folder](../usage/projects/remote-data.md#from-a-run-folder) |
+| `--data-root-allow PATH` | | Also let the web UI read run folders under `PATH`, an existing absolute folder outside `~/.depictio/local` with no comma in its path. Repeatable. Your home folder is always allowed. See [From a run folder](../usage/projects/remote-data.md#from-a-run-folder) (v1.16.0+) |
 
 - Examples are seeded on the first run of a local home only: `up` warns when
   `--examples` names one the home was created without.
 - `up` on a server that is already running reuses it and prints the summary
   again. `--port`, `--screenshots` and `--data-root-allow` then apply only
-  after `depictio local down`, and a warning says so.
+  after `depictio local down`, and a warning says so. For the folders, it also
+  warns when `up` names fewer or none: the running server keeps those it was
+  started with.
 - A second `up` on the same home while one is starting fails at once.
 - Ctrl-C during startup stops what that run started, and exits with code 130.
   SIGTERM and SIGHUP, as when the terminal is closed, do the same, with code 128
@@ -364,13 +366,17 @@ SSH, open the server through the `ssh -L` tunnel that `up` prints, and mind the
 
 `up` does not pass the `DEPICTIO_*` variables of your shell to the server, since
 they usually target another instance (`DEPICTIO_LOCAL_HOME` is read by
-`depictio local` itself). The exception is `DEPICTIO_TELEMETRY_*`:
+`depictio local` itself). There are two exceptions. `DEPICTIO_TELEMETRY_*`:
 `DEPICTIO_TELEMETRY_ENABLED=false` (or `DO_NOT_TRACK=1`) turns
-[telemetry](../features/telemetry.md) off for the local server too. The `AWS_*`
-variables are not passed on either, so the services never reach another S3
-store. Likewise, `DEPICTIO_CLI_TOKEN` and `DEPICTIO_CLI_API_BASE_URL`, which
-usually hold the credentials of another server, never apply to
-`--server local`.
+[telemetry](../features/telemetry.md) off for the local server too. And, since
+v1.16.0, `DEPICTIO_REMOTE_*`, the
+[remote data settings](env-reference.md#remote-data-sources): the hosts and
+buckets the server may read. The `AWS_*` variables are not passed on, so the
+services never reach another S3 store with your shell's keys. A bucket on
+`DEPICTIO_REMOTE_CREDENTIALED_S3_BUCKETS` is then read with the default profile
+of your `~/.aws` files or the machine's role, never with `AWS_*` variables.
+Likewise, `DEPICTIO_CLI_TOKEN` and `DEPICTIO_CLI_API_BASE_URL`, which usually
+hold the credentials of another server, never apply to `--server local`.
 
 #### The example dashboards show no data
 
