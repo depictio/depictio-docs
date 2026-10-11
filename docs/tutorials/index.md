@@ -57,7 +57,7 @@ Shorter clips, embedded alongside the documentation they belong to:
 
 - **[Live demo](https://demo.depictio.embl.org/)** is a running instance with example
   projects. No account needed, and it resets periodically.
-- **[Open in Codespaces](https://codespaces.new/depictio/depictio)** is a full stack in the
-  browser, nothing to install.
+- **[Open in Codespaces](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&quickstart=1)**
+  runs the Python package in a GitHub cloud workspace, nothing to install.
 - **[Getting Started](../usage/get_started.md)** covers the same ground as the webinar, in
   written form, on your own machine.

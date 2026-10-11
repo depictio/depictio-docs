@@ -131,6 +131,11 @@ A pre-configured environment is available via the
 ("Reopen in Container") or **Codespaces** ("Code" → "Codespaces" → "Create
 codespace on main") on the [repository](https://github.com/depictio/depictio).
 
+The *Open in Codespaces* links of this site and of the README open a lighter
+configuration, `.devcontainer/try/devcontainer.json`. It runs the published
+`depictio[local]` package instead of the sources, to try Depictio rather than
+develop it.
+
 ## Project Structure
 
 ```

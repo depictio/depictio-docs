@@ -109,8 +109,8 @@ Three ways to run the same Depictio server, which differ in how its services run
 
     ---
 
-    Launch a temporary cloud workspace with Depictio pre-configured — no local setup required. Boots in single-user mode with the Iris reference project pre-seeded and the viewer opened automatically.
+    A cloud workspace that installs the [Python package](local.md) and runs `depictio local up`: nothing to set up on your machine, a GitHub account is enough. The viewer opens on its own after about two minutes, in single-user mode, with the Iris and Penguins examples.
 
-    [:octicons-arrow-right-24: Open in Codespaces](https://codespaces.new/depictio/depictio)
+    [:octicons-arrow-right-24: Open in Codespaces](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&quickstart=1)
 
 </div>
