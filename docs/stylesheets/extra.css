@@ -231,6 +231,85 @@ body.page-changelog .md-sidebar--secondary .md-nav__list .md-nav__list {
     font-family: "Virgil", cursive !important;
 }
 
+/* Header below Material's 76.25em breakpoint, where the menu button appears.
+ *
+ * Material hides the logo there and keeps the whole site name in the 24px
+ * Virgil of the desktop header, so a phone showed "Depicti…" between the menu
+ * and the palette buttons. The rose comes back, smaller and after the menu
+ * button, and the type shrinks. On a phone the name itself is too long: it
+ * becomes "Depictio" and a small DOCS tag, both drawn by CSS with empty alt
+ * text, so screen readers still read the site name. */
+@media screen and (max-width: 76.234375em) {
+    /* The 1rem side padding lines the desktop header up with the tabs row,
+       which a phone does not show. */
+    .md-header .md-grid {
+        padding: 0 0.2rem;
+    }
+
+    .md-header__inner > label.md-header__button[for="__drawer"] {
+        order: -1;
+    }
+
+    .md-header__button.md-logo {
+        display: block;
+        min-width: 0;
+        min-height: 0;
+        margin: 0;
+        padding: 0.3rem;
+    }
+
+    .md-header__button.md-logo img,
+    .md-header__button.md-logo depictio-rose {
+        width: 34px !important;
+        height: 34px !important;
+    }
+
+    [dir] .md-header__title {
+        margin-left: 0.2rem;
+        font-size: 1.05rem !important;
+    }
+}
+
+@media screen and (max-width: 37.5em) {
+    .md-header__topic:first-child .md-ellipsis {
+        font-size: 0;
+    }
+
+    .md-header__topic:first-child .md-ellipsis::before {
+        content: "Depictio";
+        content: "Depictio" / "";
+        font-size: 1rem;
+    }
+
+    .md-header__topic:first-child .md-ellipsis::after {
+        content: "docs";
+        content: "docs" / "";
+        margin-left: 0.45rem;
+        padding: 0.15rem 0.45rem;
+        border-radius: 0.5rem;
+        background: #7a5dc7;
+        color: #ffffff;
+        font-family: var(--md-text-font-family, sans-serif);
+        font-size: 0.55rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        vertical-align: 0.3em;
+    }
+
+    [data-md-color-scheme="slate"] .md-header__topic:first-child .md-ellipsis::after {
+        background: #9d85e0;
+        color: #1e2129;
+    }
+}
+
+/* Under 360px the tag no longer fits beside the name. */
+@media screen and (max-width: 22.4375em) {
+    .md-header__topic:first-child .md-ellipsis::after {
+        display: none;
+    }
+}
+
 /* Apply Virgil font to all H1 titles */
 h1 {
     font-family: "Virgil", cursive !important;
