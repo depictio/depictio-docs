@@ -62,6 +62,15 @@ A hex brand colour is expanded into a 10-shade tuple with **your colour on shade
 
 [![The Presets menu](../../images/guides/branding/branding-presets.webp)](../../images/guides/branding/branding-presets.webp){target=_blank}
 
+## Default look <small>(v1.17.0+)</small> { #default-look }
+
+The first card of **Administration → Branding** sets the [look](../guides/web_ui.md#looks)
+of the app for every user who has not picked one: **Paper**, the default, or **Classic**.
+A user's own pick in **Account settings → Preferences** wins over it, in their browser.
+
+[![The top of Administration, Branding: Default look with Paper selected and Classic, above the Identity, logo and colour fields](../../images/guides/web-ui/admin_default_look_light.webp#only-light)](../../images/guides/web-ui/admin_default_look_light.webp){target=_blank}
+[![The top of Administration, Branding: Default look with Paper selected and Classic, above the Identity, logo and colour fields](../../images/guides/web-ui/admin_default_look_dark.webp#only-dark)](../../images/guides/web-ui/admin_default_look_dark.webp){target=_blank}
+
 ## Where the logos live <small>(v1.8.2+)</small> { #logo-storage }
 
 Uploaded logos are stored in a `branding_assets` collection and served from the API, at `/utils/branding/logo/{variant}` for the instance and `/dashboards/logo/{id}` for a dashboard. Nothing is written to the container filesystem, so a rebuild or a pod redeploy cannot leave a theme pointing at an image that no longer exists, and no volume or PVC has to be provisioned. Each is capped at 2 MB, as PNG, JPEG or WebP; SVG is refused because it can carry scripts and would be served same-origin.

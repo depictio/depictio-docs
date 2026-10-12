@@ -25,6 +25,7 @@ Read-only mode for exploring data:
 - :material-download: Export data from tables (v0.6.0+)
 - :material-share-variant: Share dashboards with collaborators
 - :material-comment-text-multiple-outline: Discuss and annotate components (project editors and owners), see [Comments and Annotations](comments-annotations.md)
+- :material-code-json: Export one component to another website, when the server allows it, see [Component export and embedding](component-export.md) <small>(v1.17.0+)</small>
 - :material-lock: No accidental modifications
 
 ### :material-pencil: Editor Mode
@@ -44,6 +45,12 @@ Full editing capabilities:
 ## :material-view-grid: Three-Panel Layout
 
 The dashboard interface uses a **three-panel layout** with a collapsible sidebar:
+
+!!! info "Paper look <small>(v1.17.0+)</small>"
+    The diagram below is the **Classic** look. In **Paper**, the default since v1.17.0, the
+    header bar becomes a top bar with the dashboard title, the tab sidebar folds to an icon
+    rail, and Search, Analysis, Comments and Edit move to a floating dock. The panels are
+    the same. See [Paper and Classic](../usage/guides/web_ui.md#looks).
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────┐
