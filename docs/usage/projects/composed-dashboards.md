@@ -27,6 +27,12 @@ depictio template compose results/ -o my_template/
 depictio ingest results/ --template my_template/
 ```
 
+Here a results directory no bundled template fits is previewed with
+`depictio template compose`, then ingested into the local server, which
+composes the same template and imports the dashboard:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-compose.cast" data-poster="npt:0:19" data-idle-time-limit="2.5"></div>
+
 ---
 
 ## When a dashboard is composed { #when-a-dashboard-is-composed }
@@ -91,7 +97,8 @@ Before ingesting, the CLI prints what it decided:
   whose columns are missing, a recipe whose input is absent, a table written
   twice as `.csv` and `.tsv`;
 - **Not recognised**: the [tabular files the catalog does not know](#files-the-catalog-does-not-recognise),
-  with what each could show.
+  with what each could show. The count in its heading also takes in the
+  files that could not be read as a table, which get no line.
 
 `depictio ingest` shows the first 15 items left out and the first 10 files not
 recognised; `depictio template compose --verbose` lists them all.
@@ -104,10 +111,16 @@ One multi-tab dashboard:
 
 | Tab | What it holds |
 |-----|---------------|
-| **Overview** | **About this run**: the tools recognised, the MultiQC report, the tabs in pipeline order and how many other tabular files there are. **Key metrics**: the number of samples, then the cards the catalog marks as a tool's [headline](../../developer/contributing-a-tool.md#composition-hints), eight cards in all at most. **General statistics**: MultiQC's General Statistics table, and *Headline metrics per sample, across tools*, one row per sample and one column per headline card |
+| **Overview** | **About this run**: the tools recognised, the MultiQC report and the tabs in pipeline order, then, when the catalog does not know some tabular files, how many were left out, with a pointer to the project page and `--include-unknown` (once all are added, that they are in their tool's tab or in **Other data**). **Key metrics**: the number of samples, then the cards the catalog marks as a tool's [headline](../../developer/contributing-a-tool.md#composition-hints), eight cards in all at most. **General statistics**: MultiQC's General Statistics table, and *Headline metrics per sample, across tools*, one row per sample and one column per headline card |
 | One tab per stage | Each stage present, in this order: Quality control, Alignment & coverage, Quantification, Peaks, Variants, Fusions, Taxonomy & diversity, Functional annotation, Immune repertoire, Differential analysis, Benchmarking, Other results. The subtitle lists the tools, and each tool has a section: its cards (eight at most, none twice), figures and advanced visualizations. The tables are folded under **Tables**, and the catalog's filters sit in a *… filters* section |
 | **MultiQC** | Every plot of the report, in sections by stage. A run with several reports gets one tab each, named by what tells them apart, such as *MultiQC (test_aws)* |
 | **Other data** | Only when files the catalog does not know are [added](#adding-them) |
+
+<figure markdown="span">
+  [![The Overview tab of a composed dashboard: About this run lists four tools, the MultiQC report, five tabs and one tabular file the catalog does not know; Key metrics shows 52 samples and the median amplicon coverage; General statistics starts below](../../images/guides/composed/overview_tab_light.webp#only-light)](../../images/guides/composed/overview_tab_light.webp){target=_blank}
+  [![The Overview tab of a composed dashboard: About this run lists four tools, the MultiQC report, five tabs and one tabular file the catalog does not know; Key metrics shows 52 samples and the median amplicon coverage; General statistics starts below](../../images/guides/composed/overview_tab_dark.webp#only-dark)](../../images/guides/composed/overview_tab_dark.webp){target=_blank}
+  <figcaption>The <strong>Overview</strong> of the dashboard composed in the recording above, from Depictio's catalog conformance outputs and one table the catalog does not know. The key metrics are the sample count and the headline card of mosdepth.</figcaption>
+</figure>
 
 A tool's stage comes from the catalog. A MultiQC plot goes to the stage of the
 catalog's section for its module, Quality control when the catalog has none.
