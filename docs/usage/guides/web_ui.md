@@ -249,7 +249,7 @@ Depictio's main pages and their URLs:
 
 A single project's data, below its summary, in two tabs:
 
-- **Data collections** — the project's workflows, a sortable, filterable table of its data collections, its cross-DC links, and the details of the selected collection.
+- **Data collections** — the project's workflows, a sortable, filterable table of its data collections, its cross-DC links, and the details of the selected collection. For a [composed](../projects/composed-dashboards.md) project, a **Files the catalog did not recognise** card lists the tables left out, with the command that adds each <small>(v1.16.0+)</small>.
 - **Ingestion** — the [ingestion report](../../features/dashboards.md#ingestion-report-health), offered for **every** project since v1.6.0. For one created from a [pipeline template](../../pipeline-templates/README.md) it compares expected against ingested data collections; for any other it reads the collections the project declares today, and a **Live project** badge says so. Since v1.15.0 a **History** view lists the project's [ingestion runs](../../features/dashboards.md#ingestion-history), and, where the server allows it, [**Run ingestion**](../../features/dashboards.md#run-ingestion) starts one from the browser.
 
 Selecting a data collection shows its details, including its **Delta version**, and for a

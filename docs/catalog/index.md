@@ -14,7 +14,9 @@ hide:
 
 **The catalog turns a bioinformatics tool's outputs into ready-made dashboard
 components.** Point Depictio at a pipeline run and every output it recognises
-becomes a render — no manual wiring.
+becomes a render — no manual wiring. Since v1.16.0, `depictio ingest` builds a
+whole dashboard that way for a results directory no bundled template fits: see
+[Composed dashboards](../usage/projects/composed-dashboards.md).
 
 <div class="module-flow" markdown>
 
@@ -142,6 +144,7 @@ A small sample of that file, right beside its YAML, so `depictio catalog validat
 
 <div class="catalog-cta-wrap" markdown>
 [Use the catalog in a dashboard :material-arrow-right:](../usage/guides/catalog-picker.md){ .catalog-cta }
+[Compose a dashboard from a run :material-arrow-right:](../usage/projects/composed-dashboards.md){ .catalog-cta }
 [Read the contributing guide :material-arrow-right:](../developer/contributing-a-tool.md){ .catalog-cta }
 [Open Tool Studio :material-arrow-right:](https://depictio.github.io/depictio-tool-studio/){ .catalog-cta .catalog-cta--studio target=_blank }
 </div>

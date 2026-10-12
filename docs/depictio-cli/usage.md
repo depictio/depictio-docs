@@ -57,6 +57,7 @@ Running `depictio` with no command prints a quick start. `depictio --help` lists
 | `dashboard import`            | Import a dashboard YAML file to the server                    | All users      |
 | `dashboard export`            | Export a dashboard to a YAML file                             | All users      |
 | `template export`             | Export a project and its dashboards as a template bundle (v1.16.0+) | All users |
+| `template compose`            | Compose a template from what the catalog recognises in a results directory (v1.16.0+) | All users |
 | `manifest from-table`         | Write a data manifest from a samplesheet or any table (v1.16.0+) | All users |
 | `catalog list` / `info` / `preview` / `gallery` | Browse the tools catalog                    | All users      |
 | `backup create`               | Create a backup                                               | **Admin only** |
@@ -156,6 +157,8 @@ depictio ingest results/ --update-config
 
 The template is detected from the run's own provenance, such as the pipeline name and version a Nextflow run records. Pass `--template <id>` to choose one, or `--project-config-path <project.yaml>` for a pipeline Depictio ships no template for.
 
+Since **v1.16.0**, when no bundled template fits a local results directory, the CLI composes one from what the [tools catalog](../catalog/index.md) recognises in it, the way MultiQC builds its report: an Overview, one tab per pipeline stage and a MultiQC tab, with the files the catalog does not know listed rather than added. See [Composed dashboards](../usage/projects/composed-dashboards.md).
+
 Without a template for the run's exact release, the CLI takes the highest shipped version that is not newer than the run, or the lowest one when the run predates them all. When that template was built for another major release of the pipeline, the CLI warns: outputs move between major releases, so data collections that find no files are skipped and the tabs built on them are dropped.
 
 Here the template is detected from nf-core/taxprofiler results, previewed with `--dry-run`, then ingested into the local server:
@@ -179,7 +182,7 @@ Here the template is detected from nf-core/taxprofiler results, previewed with `
 |-----------|------|---------|-------------|
 | `DATA_DIR` | `path` | | The results directory to ingest, as the argument, or, from v1.16.0, an `s3://` prefix holding them (see [A run folder on S3](../usage/projects/remote-data.md#a-run-folder-on-s3)). Without `--template` or `--project-config-path`, the template is detected from it. Formerly `--data-root` |
 | `--server` | `string` | see [Which server a command uses](#choosing-a-server) | `local`, or a CLI configuration file. Formerly `--CLI-config-path` |
-| `--template` | `string` | detected | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, for the newest shipped version (v1.5.2+). From v1.16.0, also the path of a template directory or YAML file, such as an [exported bundle](#template-export). Not with `--project-config-path` |
+| `--template` | `string` | detected, else composed | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, for the newest shipped version (v1.5.2+). From v1.16.0, also the path of a template directory or YAML file, such as an [exported bundle](#template-export) or a [composed template](#template-compose). Without it, a local `DATA_DIR` that no bundled template fits is [composed from the catalog](../usage/projects/composed-dashboards.md) (v1.16.0+). Not with `--project-config-path` |
 | `--project-config-path` | `string` | | Project YAML, for a pipeline Depictio ships no template for. Not with `--template` |
 | `--update-config` | `flag` | `false` | Refresh a project that exists, see [Refreshing a project](#refreshing-a-project). `--overwrite` is the same option |
 | `--var` | `KEY=VALUE` | | Template variable, repeatable |
@@ -196,6 +199,9 @@ Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/
     | `--attach-run` | `flag` | `false` | Add the results directory to an existing project as **another run**, see [Refreshing a project](#refreshing-a-project) (v1.10.0+) |
     | `--drop-missing-runs` | `flag` | `false` | On a refresh, remove the runs of a location added with `--attach-run` that is not on this machine. Without it, such a refresh stops before changing anything. Cannot be combined with `--attach-run` (v1.13.1+) |
     | `--provenance-file` | `path` | | Extra recap file (JSON, YAML or two-column key/value TSV) listed in the project's [run provenance](../usage/projects/templates.md#run-provenance) under *User provided*. Repeatable (v1.8.3+) |
+    | `--compose` | `flag` | `false` | Compose the template from what the catalog recognises in `DATA_DIR`, even when a bundled template fits. Without it, composing is the fallback when none does. Not with `--template` or `--project-config-path`. See [Composed dashboards](../usage/projects/composed-dashboards.md) (v1.16.0+) |
+    | `--include-unknown` | `flag` | `false` | When composing, also ingest the tabular files the catalog does not recognise. See [Files the catalog does not recognise](../usage/projects/composed-dashboards.md#files-the-catalog-does-not-recognise) (v1.16.0+) |
+    | `--include` | `GLOB` | | When composing, ingest the unrecognised files matching this glob, relative to `DATA_DIR`, such as `'stats/*.tsv'`. Repeatable. See [Adding them](../usage/projects/composed-dashboards.md#adding-them) (v1.16.0+) |
     | `--bind` | `TAG=LOCATION` | | Point one data collection at where its data is. Repeatable. The scan mode follows the location: a local folder or glob, a local file, an `https://` URL, an `s3://` prefix or glob. With `--template` it stands in for `DATA_DIR`; with `--project-config-path` the file is left untouched. See [Bind a data collection to a location](../usage/projects/remote-data.md#bind-a-data-collection-to-a-location) (v1.16.0+) |
 
 ??? info "📈 Dashboards"
@@ -230,6 +236,7 @@ Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/
     | Parameter | Type | Default | Description |
     |-----------|------|---------|-------------|
     | `--pipeline-id` | `string` | | Which pipeline produced this data, as `<name>/<version>`. Resolves a bundled template when neither `--template` nor `--project-config-path` is given, and is ignored otherwise, so an explicit choice always wins. The [Nextflow trigger](nextflow-trigger.md) fills it from the pipeline's `manifest` block (v1.10.0+) |
+    | `--result-json` | `path` | | Write how the ingestion ended to this file as JSON, for scripts: its status, the project and its dashboards with their ids and links. See [Result file](#result-json) (v1.16.0+) |
     | `--triggered-by` | `string` | `manual` | What invoked this ingestion, recorded on the project and shown as a badge in its [ingestion report](../features/dashboards.md#triggered-by) (v1.10.0+) |
     | `--user` | `string` | | Email of a user to provision and run as. Requires `--provisioning-key` (v1.1.3+) |
     | `--provisioning-key` | `string` | | Shared provisioning secret. Reads `DEPICTIO_AUTH_PROVISIONING_API_KEY` from the environment if the flag is omitted |
@@ -316,13 +323,52 @@ Attaching a directory that is already one of the project's locations records it,
 
 **Single-file collections.** A data collection with `scan.mode: single` (a samplesheet, a metadata table, a tree) keeps reading the run that created the project.
 
+#### Result file <small>(v1.16.0+)</small> { #result-json }
+
+`--result-json FILE` writes how the ingestion ended, for a script that runs `depictio ingest` and then links to what it made:
+
+```json
+{
+  "status": "success",
+  "project": {
+    "name": "results (run42)",
+    "id": "6845c5892bf43fee63e14bab",
+    "url": "https://depictio.example.org/projects/6845c5892bf43fee63e14bab"
+  },
+  "dashboards": [
+    {
+      "title": "results (run42)",
+      "id": "6845c5a12bf43fee63e14bb0",
+      "url": "https://depictio.example.org/dashboard/6845c5a12bf43fee63e14bb0",
+      "status": "created"
+    }
+  ],
+  "template_id": "composed/results",
+  "composed": {
+    "template_dir": "/home/me/.depictio/composed/results-3f2a9c41d0b7",
+    "tabs": ["Overview", "Quality control", "Taxonomy & diversity", "MultiQC"],
+    "unrecognised": 4
+  }
+}
+```
+
+| Field | Content |
+| ----- | ------- |
+| `status` | `success` when every step completed, `partial` when a step failed under `--continue-on-error`, `exists` when the project exists and neither `--update-config` nor `--attach-run` was given (the command then exits with code 2) |
+| `project` | `name`, `id` and `url`. With `exists`, also `locations`, the run directories the project already has, which tell a second ingestion of the same directory from another run that got the same project name |
+| `dashboards` | In import order, so the first is the template's main dashboard: `title`, `id`, `url`, and `status`, what the import did to it (`created`, `kept`, `replaced`, or `kept (2 tabs added)`). With `exists`, the project's dashboards, without `status` |
+| `template_id` | The template used, `null` with `--project-config-path` |
+| `composed` | Only for a [composed](../usage/projects/composed-dashboards.md) template: `template_dir`, its folder, `tabs`, and `unrecognised`, how many proposals for [files the catalog does not recognise](../usage/projects/composed-dashboards.md#files-the-catalog-does-not-recognise) were left out |
+
+A `url` is `null` when the server does not report its viewer's address, and on a dry run, which does not contact the server. A run that stops on a failed step without `--continue-on-error` writes no file. Writing the file never fails the ingestion: a path that cannot be written prints a warning.
+
 #### Exit codes
 
 | Code | Meaning |
 | ---- | ------- |
 | `0` | Every step completed |
-| `1` | A step failed, including under `--continue-on-error`, the CLI configuration could not be used, or a refresh stopped on a missing run location |
-| `2` | Nothing to do as asked: no template detected and none given, the project already exists without `--update-config` or `--attach-run`, the project `--attach-run` names does not exist, or a usage error |
+| `1` | A step failed, including under `--continue-on-error`, the CLI configuration could not be used, a refresh stopped on a missing run location, or, from v1.16.0, the catalog recognises nothing in the `DATA_DIR` it was to compose from |
+| `2` | Nothing to do as asked: no template detected and none given (from v1.16.0, for an `s3://` `DATA_DIR` or none, since a local one is composed), the project already exists without `--update-config` or `--attach-run`, the project `--attach-run` names does not exist, or a usage error |
 
 Here the first step fails, as no server answers, and its message says how to start one:
 
@@ -344,6 +390,13 @@ Here the first step fails, as no server answers, and its message says how to sta
     depictio ingest /data/my_ampliseq_run \
       --template nf-core/ampliseq/latest \
       --var SAMPLESHEET_FILE=/data/samplesheet.tsv
+    ```
+
+=== "Composed"
+
+    ```bash
+    # No bundled template fits: compose the dashboard from the catalog (v1.16.0+)
+    depictio ingest /data/my_run --include-unknown --result-json result.json
     ```
 
 === "Run folder on S3"
@@ -1009,7 +1062,7 @@ For more information about dashboard YAML format and workflows, see [Dashboard Y
 
 <!-- prettier-ignore -->
 !!! info "Command Group: `depictio template`"
-    The inverse of `depictio ingest --template`: freeze an existing project and its dashboards into a bundle someone else can run on their own data. See [Export a project as a template](../usage/projects/templates.md#export-a-project-as-a-template).
+    The inverse of `depictio ingest --template`: freeze an existing project and its dashboards into a bundle someone else can run on their own data. See [Export a project as a template](../usage/projects/templates.md#export-a-project-as-a-template). Or compose one from what the catalog recognises in a results directory.
 
 #### `template export`
 
@@ -1046,6 +1099,30 @@ it in place with `depictio ingest --template ./my-lab/rnaseq-qc/1`, with
 `DATA_DIR` or `--bind`. Archive members that would land outside the target
 directory are refused before anything is written. An export the server
 refuses prints its HTTP status and answer, and exits with code 1.
+
+#### `template compose` { #template-compose }
+
+Compose a template from what the tools catalog recognises in a results directory, offline: nothing is ingested and no server is contacted. It prints what was recognised, the tabs and key metrics of the dashboard, what was left out and why, and the tabular files the catalog does not know with what each could show, then writes the template. This is what `depictio ingest <dir>` does by itself when no bundled template fits. See [Composed dashboards](../usage/projects/composed-dashboards.md#template-compose).
+
+```bash
+depictio template compose DATA_ROOT [OPTIONS]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `DATA_ROOT` | `path` | **required** | Results directory to compose a dashboard for |
+| `--output` / `-o` | `path` | `~/.depictio/composed/<directory>-<hash>/` | Where to write the template, to edit it and ingest with `depictio ingest <dir> --template <out>`. The default, below `DEPICTIO_COMPOSE_HOME` when it is set, is where `depictio ingest` keeps the templates it composes |
+| `--include-unknown` | `flag` | `false` | Also include the tabular files the catalog does not recognise |
+| `--include` | `GLOB` | | Include the unrecognised files matching this glob, relative to the directory. Repeatable |
+| `--project` | `string` | `<directory> (<parent directory>)` | Name of the project to create |
+| `--verbose` | `flag` | `false` | List everything left out, with the reason, and every unrecognised file |
+
+```bash
+depictio template compose results/ -o my_template/
+depictio ingest results/ --template my_template/
+```
+
+The folder holds `template.yaml`, `dashboards/composed.yaml`, and the `general_stats.tsv` and `samples.tsv` it computed from the run. When nothing is recognised or included, no template is written and the command exits with code 1, as it does for a path that is not a directory.
 
 ---
 

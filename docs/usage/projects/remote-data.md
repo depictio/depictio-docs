@@ -56,6 +56,9 @@ depictio ingest s3://my-bucket/ampliseq/run42
 depictio ingest s3://my-bucket/ampliseq/run42 --template nf-core/ampliseq/latest --dry-run
 ```
 
+Unlike a local folder, an `s3://` folder that no bundled template reads is not
+[composed from the catalog](composed-dashboards.md): pass `--template`.
+
 No template is modified for this. Each data collection is pointed at the prefix
 as follows:
 
@@ -324,7 +327,8 @@ not read the same folder twice.
 
 **Pipeline** lists one entry per pipeline among the templates that read a
 data root, grouped by source (nf-core first), plus the detected one whatever it
-reads. A folder that cannot be read on its own, in a bucket that is neither
+reads. The web UI does not [compose a dashboard](composed-dashboards.md) from
+the catalog as the CLI does: a folder no template reads needs one picked here. A folder that cannot be read on its own, in a bucket that is neither
 public nor one the server is set up to read, opens the
 [**Private bucket**](#private-bucket-at-creation) section. **Next** stays
 disabled while something is missing, and says what, for instance *No template
