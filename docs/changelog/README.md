@@ -8,6 +8,52 @@ hide:
 
 # Changelog
 
+## **[v1.16.0](https://github.com/depictio/depictio/releases/tag/v1.16.0)** (October 11, 2026)
+
+!!! success "Minor: data read where it lives, projects from a run folder, and dashboards composed from the catalog"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.16.0
+ghcr.io/depictio/depictio-viewer:1.16.0
+ghcr.io/depictio/depictio-worker:1.16.0
+ghcr.io/depictio/depictio-cli:1.16.0
+```
+
+### **♻️ Migration**
+
+* **`depictio ingest` composes where it used to stop**: a local results directory that no bundled template fits exited 2, and now gets a project with a composed dashboard, as does `depictio watch`. See [Exit codes](../depictio-cli/usage.md#exit-codes) ([#1147](https://github.com/depictio/depictio/pull/1147), [e337430d](https://github.com/depictio/depictio/commit/e337430d)).
+
+### **✨ New Features**
+
+* **Data read where it lives**: a data collection can read an `https://` or `s3://` file, an S3 prefix or a data manifest, and `--bind TAG=LOCATION` points one collection of a template at its own location. See [Remote data and manifests](../usage/projects/remote-data.md#bind-a-data-collection-to-a-location) ([#965](https://github.com/depictio/depictio/pull/965), [9456fe4b](https://github.com/depictio/depictio/commit/9456fe4b), [64fce850](https://github.com/depictio/depictio/commit/64fce850)).
+* **An `s3://` run folder as `DATA_DIR`**: `depictio ingest s3://bucket/run42` detects the template and ingests the results where they are, and `--dry-run` previews what each collection would read. See [A run folder on S3](../usage/projects/remote-data.md#a-run-folder-on-s3) ([#1047](https://github.com/depictio/depictio/pull/1047), [7b452923](https://github.com/depictio/depictio/commit/7b452923), [5b32d899](https://github.com/depictio/depictio/commit/5b32d899)).
+* **From a run folder**, a new way to create a project in the web UI, checks a folder of an S3 bucket, or of this computer under `depictio local`, against its detected template, previews each collection and ingests in the background. See [From a run folder](../usage/projects/remote-data.md#from-a-run-folder) ([#1047](https://github.com/depictio/depictio/pull/1047), [4a0ac6ce](https://github.com/depictio/depictio/commit/4a0ac6ce), [6fee7d57](https://github.com/depictio/depictio/commit/6fee7d57)).
+* **A project's own bucket**: **Project settings → Storage** keeps the endpoint and keys a project reads its `s3://` data with, and **From a run folder** asks for them when a bucket cannot be read without them. See [Project storage settings](../usage/projects/remote-data.md#project-storage-settings) ([#1047](https://github.com/depictio/depictio/pull/1047), [3bf0bdd1](https://github.com/depictio/depictio/commit/3bf0bdd1), [1a871d95](https://github.com/depictio/depictio/commit/1a871d95)).
+* **Projects from a manifest, refreshed in place**: **From Manifest** creates a project from a manifest URL, and **Project settings → Data refresh** reads its remote sources again. See [Refreshing the data](../usage/projects/remote-data.md#refreshing-the-data) ([#965](https://github.com/depictio/depictio/pull/965), [21f633eb](https://github.com/depictio/depictio/commit/21f633eb), [b5d4d86e](https://github.com/depictio/depictio/commit/b5d4d86e)).
+* **A project shared as a template**: **Project settings → Export** and `depictio template export` write a bundle that `--template <path>` runs elsewhere, and `depictio manifest from-table` writes a manifest from a sample table. See [Sharing a project](../usage/projects/remote-data.md#sharing-a-project) ([#965](https://github.com/depictio/depictio/pull/965), [9456fe4b](https://github.com/depictio/depictio/commit/9456fe4b)).
+* **Dashboards composed from the catalog**: for a run no bundled template fits, `depictio ingest` builds an Overview, a tab per pipeline stage and a Samples filter from the outputs the catalog recognises, and `depictio template compose` writes that template without ingesting. See [Composed dashboards](../usage/projects/composed-dashboards.md) ([#1147](https://github.com/depictio/depictio/pull/1147), [e337430d](https://github.com/depictio/depictio/commit/e337430d), [8d774c29](https://github.com/depictio/depictio/commit/8d774c29)).
+* **Files the catalog does not recognise** are listed by the ingestion and on the project page with the command that adds each, and `--include-unknown` or `--include GLOB` adds them to the dashboard. See [Files the catalog does not recognise](../usage/projects/composed-dashboards.md#files-the-catalog-does-not-recognise) ([#1147](https://github.com/depictio/depictio/pull/1147), [c69db652](https://github.com/depictio/depictio/commit/c69db652), [dcf3b8be](https://github.com/depictio/depictio/commit/dcf3b8be)).
+
+### **🚀 Improvements**
+
+* **`--result-json FILE`** writes how an ingestion ended, for scripts: its status, the project, and each dashboard's link and whether it was created, kept or replaced. See [Result file](../depictio-cli/usage.md#result-json) ([#1147](https://github.com/depictio/depictio/pull/1147), [3512139b](https://github.com/depictio/depictio/commit/3512139b)).
+* **Composition hints in the catalog**: a tool or output declares its `stage`, a card `headline` and any render `priority`, which place its renders in a composed dashboard. See [Composition hints](../developer/contributing-a-tool.md#composition-hints) ([#1147](https://github.com/depictio/depictio/pull/1147), [00f81c4b](https://github.com/depictio/depictio/commit/00f81c4b)).
+* **Wildcards become columns**: each `{name}` placeholder of a recursive pattern adds a column with the value read off the path, unless the file has one. See [Recursive Mode](../usage/projects/yaml-examples.md#recursive-mode) ([#1147](https://github.com/depictio/depictio/pull/1147), [dcf3b8be](https://github.com/depictio/depictio/commit/dcf3b8be)).
+
+### **🔒 Security**
+
+* **Remote reads go through one gateway**: the server fetches an `https://` URL only from a public host or one `DEPICTIO_REMOTE_URL_ALLOWLIST` names, and reads an `s3://` location with the project's keys or from a bucket an administrator lists, never with the instance's keys. See [Remote data sources](../features/security.md#remote-data-sources) ([#965](https://github.com/depictio/depictio/pull/965), [e43a4764](https://github.com/depictio/depictio/commit/e43a4764), [40e23999](https://github.com/depictio/depictio/commit/40e23999)).
+* **The ingestion report no longer probes the server's disk**: a recipe's inputs are shown as stored, so a reader cannot learn whether a server file exists or where a link leads. See [What the report shows](../features/dashboards.md#what-the-report-shows) ([#1047](https://github.com/depictio/depictio/pull/1047), [9a3f681b](https://github.com/depictio/depictio/commit/9a3f681b), [64b8cfad](https://github.com/depictio/depictio/commit/64b8cfad)).
+
+### **🐛 Bug Fixes**
+
+* **A refresh keeps the files of every run**: walking each run deleted the files of the runs walked before it, so only the last run of a collection kept any. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1047](https://github.com/depictio/depictio/pull/1047), [73ccb8eb](https://github.com/depictio/depictio/commit/73ccb8eb)).
+* **The catalog's General Statistics offer adds the General Statistics table**, not the first plot of another MultiQC module. See [Where the offers come from](../usage/guides/catalog-picker.md#matching) ([#1147](https://github.com/depictio/depictio/pull/1147), [c69db652](https://github.com/depictio/depictio/commit/c69db652)).
+
+---
+
 ## **[v1.15.0](https://github.com/depictio/depictio/releases/tag/v1.15.0)** (October 9, 2026)
 
 !!! success "Minor: dashboard version history, data versions with time travel, and ingestion that runs on its own"
