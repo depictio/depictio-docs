@@ -1563,6 +1563,8 @@
       
         
       
+        
+      
     
     
     
@@ -1748,6 +1750,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/projects/remote-data/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.43-1.8 2.13-3.42Q9.07 4.1 11 4.1q.83 0 1.41.59.59.59.59 1.41v6.05l1.6-1.55L16 12l-4 4-4-4 1.4-1.4 1.6 1.55V6.1q-1.9.35-2.95 1.84T7 11h-.5q-1.45 0-2.47 1.03Q3 13.05 3 14.5T4.03 17q1.02 1 2.47 1h12q1.05 0 1.77-.73.73-.72.73-1.77t-.73-1.77Q19.55 13 18.5 13H17v-2q0-1.2-.55-2.24Q15.9 7.73 15 7V4.68q1.85.87 2.93 2.58Q19 9 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20M12 11.05"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote data and manifests
   
 
     
@@ -3231,6 +3263,67 @@
     <span class="md-ellipsis">
       
         Input Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remote-data-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote Data Sources (v1.16.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Remote Data Sources (v1.16.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-the-gateway-enforces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the gateway enforces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s3-locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        S3 locations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#folders-on-the-servers-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Folders on the server's disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-project-storage-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-project storage credentials
       
     </span>
   </a>
@@ -5794,6 +5887,67 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#remote-data-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote Data Sources (v1.16.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Remote Data Sources (v1.16.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-the-gateway-enforces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the gateway enforces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s3-locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        S3 locations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#folders-on-the-servers-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Folders on the server's disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-project-storage-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-project storage credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#content-security-policy" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6309,6 +6463,147 @@ dashboard.</p>
 <li><strong>Size limits</strong> on uploads and queries</li>
 </ul>
 <hr>
+<h2 id="remote-data-sources">Remote Data Sources <small>(v1.16.0+)</small><a class="headerlink" href="#remote-data-sources" title="Permanent link">¶</a></h2>
+<p>The <code>url</code>, <code>s3_prefix</code> and <code>manifest</code> scan modes, and creating a project from
+a run folder, make the server read locations a user supplies, which is a
+textbook server-side request forgery surface. Every <code>https://</code> fetch, whether
+creating a data collection from a URL, ingesting a manifest, or a refresh task
+on the Celery worker, goes through one gateway module; every <code>s3://</code> read is
+decided by one <a href="#s3-locations">access module</a>; a folder on the server's disk is
+read only on a <a href="#folders-on-the-servers-disk"><code>depictio local</code></a> server, or by a
+<strong>Run ingestion</strong> inside the folders an administrator allowed. Nothing in
+server context reads a user-supplied location directly. See
+<a href="../../usage/projects/remote-data/">Remote data and manifests</a> for the feature
+itself.</p>
+<h3 id="what-the-gateway-enforces">What the gateway enforces<a class="headerlink" href="#what-the-gateway-enforces" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Scheme allowlist</strong></td>
+<td><code>https://</code> and <code>s3://</code>. Plain <code>http://</code> only with <code>DEPICTIO_REMOTE_ALLOW_HTTP=true</code></td>
+</tr>
+<tr>
+<td><strong>Address check</strong></td>
+<td>The host is resolved and private, loopback, link-local, reserved, multicast and unspecified addresses are rejected, including the cloud metadata endpoint</td>
+</tr>
+<tr>
+<td><strong>Redirects</strong></td>
+<td>Every <code>Location</code> is re-validated against the same policy before it is followed; hops are capped by <code>DEPICTIO_REMOTE_MAX_REDIRECTS</code></td>
+</tr>
+<tr>
+<td><strong>Bounded download</strong></td>
+<td>Streamed, with a size cap (<code>DEPICTIO_REMOTE_MAX_DOWNLOAD_BYTES</code>) and a per-operation timeout (<code>DEPICTIO_REMOTE_TIMEOUT_S</code>); a download that exceeds the cap is aborted and the partial file removed</td>
+</tr>
+<tr>
+<td><strong>Host lists</strong></td>
+<td>Exact host names, compared without case. <code>DEPICTIO_REMOTE_URL_DENYLIST</code> always rejects. <code>DEPICTIO_REMOTE_URL_ALLOWLIST</code> is exclusive while set, and a listed host bypasses the private-range check. An <code>s3://</code> location skips both: the <a href="#s3-locations">S3 rules</a> apply instead</td>
+</tr>
+<tr>
+<td><strong>Sanitised errors</strong></td>
+<td>Transport and HTTP errors are logged with their cause and surfaced to the client without internal details</td>
+</tr>
+</tbody>
+</table>
+<p>The policy is read from the environment on every call, so the API and the
+worker apply the same one as long as both are given the same
+<code>DEPICTIO_REMOTE_*</code> settings. The CLI, which fetches the user's own loopback and
+intranet hosts, reads directly but keeps the redirect and size caps.</p>
+<div class="admonition warning">
+<p class="admonition-title">Residual risk: DNS rebinding</p>
+<p>The address is checked when the host is resolved, and a hostile resolver
+could answer differently between that check and the connection. The
+gateway does not pin the resolved address. Hardened deployments should run
+<strong>allowlist-only</strong>: set <code>DEPICTIO_REMOTE_URL_ALLOWLIST</code> to the hosts you
+trust, which turns the address check into a host check.</p>
+</div>
+<h3 id="s3-locations">S3 locations<a class="headerlink" href="#s3-locations" title="Permanent link">¶</a></h3>
+<p>Which bucket the server reads, and with which credentials, is decided from the
+configuration before any request goes out, so a bucket name typed by a user
+never becomes an existence or region oracle.</p>
+<ul>
+<li>The bucket that holds the instance's own data is refused as a source: it
+  holds every project's data.</li>
+<li>The instance's own S3 keys are never used for a user-supplied location.</li>
+<li>A bucket is read without credentials when listed in
+  <code>DEPICTIO_REMOTE_PUBLIC_S3_BUCKETS</code>, or with project storage settings that
+  hold no key, and with the server's ambient credentials only when listed in
+  <code>DEPICTIO_REMOTE_CREDENTIALED_S3_BUCKETS</code>. Anyone on the instance can read
+  what the second list names. Both lists are empty by default.</li>
+<li>Any other bucket needs the project's storage settings, and is read with them
+  alone. Settings typed in while creating a project from a run folder are the
+  only credentials that request uses.</li>
+<li>Errors name the bucket and the prefix, never an endpoint of the instance, a
+  key or a request id.</li>
+</ul>
+<p>The full order is under
+<a href="../../usage/projects/remote-data/#reading-s3-buckets">Reading S3 buckets</a>. The
+CLI reads from the user's own machine and skips the instance-bucket refusal and
+the credentialed list.</p>
+<h3 id="folders-on-the-servers-disk">Folders on the server's disk<a class="headerlink" href="#folders-on-the-servers-disk" title="Permanent link">¶</a></h3>
+<p>A server reads a local path stored on a project in two cases only:
+<a href="../dashboards/#run-ingestion"><strong>Run ingestion</strong></a> <small>(v1.15.0+)</small>,
+which reads inside <code>DEPICTIO_INGESTION_ALLOWED_DATA_ROOTS</code> alone, see
+<a href="../../installation/docker/#browser-trigger">Starting an ingestion from the browser</a>,
+and a <code>depictio local</code> server, which is the user's own computer. Otherwise,
+data ingested from a local folder is refreshed by the CLI that ingested it. On
+a <code>depictio local</code> server:</p>
+<ul>
+<li>Local folders are off unless <code>DEPICTIO_LOCAL_DATA_ROOTS</code> is set, and only in
+  single-user mode (<code>DEPICTIO_AUTH_SINGLE_USER_MODE</code>). <code>depictio local up</code> sets
+  both, with the home folder and the folders given with <code>--data-root-allow</code>. A
+  server with roots but not in single-user mode logs a warning and keeps them
+  off.</li>
+<li>Every local read (listing, inspecting, creating, refreshing) needs a request
+  addressed to a loopback host (<code>localhost</code> or a loopback address), which also
+  defends against DNS rebinding, from an administrator.</li>
+<li>Paths are resolved to their real path and confined to the roots. Hidden
+  folders and the folders Depictio keeps for itself (<code>~/.depictio</code>, the local
+  home, the keys and CLI configuration folders, the backups) are refused even
+  below a root.</li>
+<li>A run folder over 100,000 files is refused. For a project made from a run
+  folder, every template variable given as a path and every location a data
+  collection scans must be inside it; one pointing elsewhere is refused.</li>
+</ul>
+<h3 id="per-project-storage-credentials">Per-project storage credentials<a class="headerlink" href="#per-project-storage-credentials" title="Permanent link">¶</a></h3>
+<p>A project owner or an administrator can attach S3-compatible credentials so
+remote and manifest collections can read a private bucket.</p>
+<ul>
+<li>Credentials live in their own collection, never on the project document, so
+  they cannot leak through project responses or exports. Template bundles never
+  include them. An instance <a href="../../usage/administration/backup/#what-is-covered">backup</a>
+  does, with the secret still encrypted: keep backup files as safe as the keys
+  volume.</li>
+<li>The secret is <strong>encrypted at rest</strong> with a symmetric key stored next to the
+  JWT key pair, in <code>DEPICTIO_AUTH_KEYS_DIR</code>. The API encrypts on write and the
+  Celery worker decrypts inside refresh tasks, so backend and worker must mount
+  the same keys volume; a worker with a keys directory of its own would mint a
+  second key and find every stored secret unreadable.</li>
+<li>The secret is <strong>write-only</strong> in the API: responses only carry <code>has_secret</code>.
+  An update that omits the secret keeps the stored one only while the access
+  key, the endpoint and the bucket are unchanged, so a stored secret is never
+  sent to another endpoint.</li>
+<li>Only project owners and administrators read or change the settings.</li>
+<li>The endpoint URL passes the same host gating as remote data URLs. The
+  instance's own object storage is always allowed. Any other endpoint on a
+  private network needs to be allowlisted, while an allowlist is set every
+  endpoint must be on it, and <code>http://</code> needs <code>DEPICTIO_REMOTE_ALLOW_HTTP</code>.
+  An empty endpoint, possible through the API only, means Amazon S3 and is
+  not gated.</li>
+<li>The stored endpoint is checked again at every read, so tightening the host
+  lists also stops settings saved before: their reads answer 409 until an
+  owner updates them. A secret the instance cannot decrypt answers 500.</li>
+<li>These are read credentials only. Delta tables are still written with the
+  instance's own storage configuration, and refresh workers re-read the
+  credentials from the database rather than receiving them through the task
+  broker.</li>
+</ul>
+<hr>
 <h2 id="content-security-policy">Content Security Policy<a class="headerlink" href="#content-security-policy" title="Permanent link">¶</a></h2>
 <p>Deployed instances send a Content-Security-Policy header. The development server sends
 none, so a policy violation only ever shows up on a deployment.</p>
@@ -6460,6 +6755,10 @@ verbose logging.</p>
 <tr>
 <td>MinIO Credentials</td>
 <td>Separate credentials per environment; root password is a <code>SecretStr</code> with a ≥16-character validator and no default — the server refuses to start if the value is absent or matches a known-default string</td>
+</tr>
+<tr>
+<td>Project storage secrets</td>
+<td>Encrypted at rest with <code>secrets_key.bin</code> in <code>DEPICTIO_AUTH_KEYS_DIR</code>; back the keys volume up with the JWT key pair and mount it on the worker too, see <a href="#per-project-storage-credentials">Per-project storage credentials</a></td>
 </tr>
 </tbody>
 </table>

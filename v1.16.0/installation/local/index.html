@@ -1881,6 +1881,8 @@
       
         
       
+        
+      
     
     
     
@@ -2066,6 +2068,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/projects/remote-data/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.43-1.8 2.13-3.42Q9.07 4.1 11 4.1q.83 0 1.41.59.59.59.59 1.41v6.05l1.6-1.55L16 12l-4 4-4-4 1.4-1.4 1.6 1.55V6.1q-1.9.35-2.95 1.84T7 11h-.5q-1.45 0-2.47 1.03Q3 13.05 3 14.5T4.03 17q1.02 1 2.47 1h12q1.05 0 1.77-.73.73-.72.73-1.77t-.73-1.77Q19.55 13 18.5 13H17v-2q0-1.2-.55-2.24Q15.9 7.73 15 7V4.68q1.85.87 2.93 2.58Q19 9 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20M12 11.05"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote data and manifests
   
 
     
@@ -5856,14 +5888,21 @@ exits with code 2.</p>
 <td>off</td>
 <td>Dashboard thumbnails through Playwright. Installs Chromium (about 150 MB) if needed</td>
 </tr>
+<tr>
+<td><code>--data-root-allow PATH</code></td>
+<td></td>
+<td>Also let the web UI read run folders under <code>PATH</code>, an existing absolute folder outside <code>~/.depictio/local</code> with no comma in its path. Repeatable. Your home folder is always allowed. See <a href="../../usage/projects/remote-data/#from-a-run-folder">From a run folder</a> (v1.16.0+)</td>
+</tr>
 </tbody>
 </table>
 <ul>
 <li>Examples are seeded on the first run of a local home only: <code>up</code> warns when
   <code>--examples</code> names one the home was created without.</li>
 <li><code>up</code> on a server that is already running reuses it and prints the summary
-  again. <code>--port</code> and <code>--screenshots</code> then apply only after
-  <code>depictio local down</code>, and a warning says so.</li>
+  again. <code>--port</code>, <code>--screenshots</code> and <code>--data-root-allow</code> then apply only
+  after <code>depictio local down</code>, and a warning says so. For the folders, it also
+  warns when <code>up</code> names fewer or none: the running server keeps those it was
+  started with.</li>
 <li>A second <code>up</code> on the same home while one is starting fails at once.</li>
 <li>Ctrl-C during startup stops what that run started, and exits with code 130.
   SIGTERM and SIGHUP, as when the terminal is closed, do the same, with code 128
@@ -6115,13 +6154,17 @@ SSH, open the server through the <code>ssh -L</code> tunnel that <code>up</code>
 <h4 id="depictio_-settings-are-ignored"><code>DEPICTIO_*</code> settings are ignored<a class="headerlink" href="#depictio_-settings-are-ignored" title="Permanent link">¶</a></h4>
 <p><code>up</code> does not pass the <code>DEPICTIO_*</code> variables of your shell to the server, since
 they usually target another instance (<code>DEPICTIO_LOCAL_HOME</code> is read by
-<code>depictio local</code> itself). The exception is <code>DEPICTIO_TELEMETRY_*</code>:
+<code>depictio local</code> itself). There are two exceptions. <code>DEPICTIO_TELEMETRY_*</code>:
 <code>DEPICTIO_TELEMETRY_ENABLED=false</code> (or <code>DO_NOT_TRACK=1</code>) turns
-<a href="../../features/telemetry/">telemetry</a> off for the local server too. The <code>AWS_*</code>
-variables are not passed on either, so the services never reach another S3
-store. Likewise, <code>DEPICTIO_CLI_TOKEN</code> and <code>DEPICTIO_CLI_API_BASE_URL</code>, which
-usually hold the credentials of another server, never apply to
-<code>--server local</code>.</p>
+<a href="../../features/telemetry/">telemetry</a> off for the local server too. And, since
+v1.16.0, <code>DEPICTIO_REMOTE_*</code>, the
+<a href="../env-reference/#remote-data-sources">remote data settings</a>: the hosts and
+buckets the server may read. The <code>AWS_*</code> variables are not passed on, so the
+services never reach another S3 store with your shell's keys. A bucket on
+<code>DEPICTIO_REMOTE_CREDENTIALED_S3_BUCKETS</code> is then read with the default profile
+of your <code>~/.aws</code> files or the machine's role, never with <code>AWS_*</code> variables.
+Likewise, <code>DEPICTIO_CLI_TOKEN</code> and <code>DEPICTIO_CLI_API_BASE_URL</code>, which usually
+hold the credentials of another server, never apply to <code>--server local</code>.</p>
 <h4 id="the-example-dashboards-show-no-data">The example dashboards show no data<a class="headerlink" href="#the-example-dashboards-show-no-data" title="Permanent link">¶</a></h4>
 <p>The examples load in the background on the first run. If the server was stopped
 before they finished, they stay incomplete, and <code>up</code> then warns that they did

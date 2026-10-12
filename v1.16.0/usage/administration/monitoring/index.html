@@ -1569,6 +1569,8 @@
       
         
       
+        
+      
     
     
     
@@ -1757,6 +1759,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/remote-data/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.43-1.8 2.13-3.42Q9.07 4.1 11 4.1q.83 0 1.41.59.59.59.59 1.41v6.05l1.6-1.55L16 12l-4 4-4-4 1.4-1.4 1.6 1.55V6.1q-1.9.35-2.95 1.84T7 11h-.5q-1.45 0-2.47 1.03Q3 13.05 3 14.5T4.03 17q1.02 1 2.47 1h12q1.05 0 1.77-.73.73-.72.73-1.77t-.73-1.77Q19.55 13 18.5 13H17v-2q0-1.2-.55-2.24Q15.9 7.73 15 7V4.68q1.85.87 2.93 2.58Q19 9 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20M12 11.05"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote data and manifests
   
 
     
@@ -5341,11 +5373,11 @@
 <p><img alt="Log &amp; Task: expanded task detail" src="https://depictio.github.io/depictio-docs/images/react/admin_monitoring_task_detail_light.png#only-light">
 <img alt="Log &amp; Task: expanded task detail" src="https://depictio.github.io/depictio-docs/images/react/admin_monitoring_task_detail_dark.png#only-dark"></p>
 <h2 id="ingestion">Ingestion<a class="headerlink" href="#ingestion" title="Permanent link">¶</a></h2>
-<p>Ingestion runs, newest first: <strong>status</strong>, a <code>CLI</code>, <code>Upload</code> or <code>Server</code> source badge (a run from the <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger</a> shows <code>CLI</code>), instance label or hostname, project, and user. Uploads made through the web UI are recorded alongside CLI runs; recording is best-effort and never blocks an upload. <code>Server</code> marks an ingestion the server ran itself after someone pressed <a href="../../../features/dashboards/#run-ingestion"><strong>Run ingestion</strong></a> on a project page <small>(v1.15.0+)</small>; its instance is <em>Web UI</em>. The runs of one project also appear in its <a href="../../../features/dashboards/#ingestion-history">ingestion history</a>, for anyone who can open the project.</p>
+<p>Ingestion runs, newest first: <strong>status</strong>, a <code>CLI</code>, <code>Upload</code> or <code>Server</code> source badge (a run from the <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger</a> shows <code>CLI</code>), instance label or hostname, project, and user. Uploads made through the web UI are recorded alongside CLI runs; recording is best-effort and never blocks an upload. <code>Server</code> marks an ingestion the server ran itself after someone pressed <a href="../../../features/dashboards/#run-ingestion"><strong>Run ingestion</strong></a> on a project page <small>(v1.15.0+)</small>, created a project <a href="../../projects/remote-data/#from-a-run-folder">from a run folder</a> or started a <a href="../../projects/remote-data/#refreshing-the-data"><strong>Data refresh</strong></a> <small>(v1.16.0+)</small>; its instance is <em>Web UI</em>. The last two record <code>from_run</code> or <code>refresh_manifest</code> as their command, <strong>Manual</strong> as their trigger, and one step per data collection, named by its tag, in place of the CLI's phases. The runs of one project also appear in its <a href="../../../features/dashboards/#ingestion-history">ingestion history</a>, for anyone who can open the project.</p>
 <p>A run is <code>running</code> until it ends as <code>success</code>, <code>partial</code> or <code>failed</code>. Since <strong>v1.11.0</strong> the CLI closes its record on every way out, so Ctrl-C or SIGTERM leaves <code>interrupted</code> rather than a run that spins forever. For the ends nobody can report, such as SIGKILL or a lost node, the server sweeps a <code>running</code> record with no write for <code>DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS</code> (24 by default) to <code>abandoned</code>. Filter by <strong>Status</strong>, <strong>Instance</strong> and <strong>Project</strong>; the instance is the CLI's <code>instance_label</code>, or its hostname when none is set.</p>
 <p>Expand a run for its <strong>provenance</strong> field grid: run id, host, CLI version, the resolved project id, the invoking command line, the CLI and project config paths, and the data root. Its <strong>Trigger</strong> says what started it: <strong>Manual</strong>, <strong>Watch</strong> (a <a href="#watchers">watcher</a>) or <strong>UI</strong> (the web UI: <strong>Run now</strong> on a watcher's card, or <strong>Run ingestion</strong> on a project page), with the reason in a tooltip. Long paths are shortened to <code>head/…/tail</code>, with the full value in a tooltip and click-to-copy. Below it come two blocks:</p>
 <ul>
-<li><strong>Data collections</strong>: one row per data collection: tag, type, format, scan mode (<code>recursive</code> / <code>single</code>), the regex or filename it matched on, the local directories scanned, and the file count when known. These local scan paths are not shown anywhere else in the UI.</li>
+<li><strong>Data collections</strong>: one row per data collection: tag, type, format, scan mode (<code>recursive</code> / <code>single</code>, and from v1.16.0 <code>url</code> / <code>s3_prefix</code> / <code>manifest</code>, or <code>recipe</code> for a derived collection the server re-ran), what it matched on (the regex or filename for the local modes; the URL, the prefix plus its glob, or the manifest URL for the remote ones), the local directories scanned, and the file count when known. These local scan paths are not shown anywhere else in the UI.</li>
 <li><strong>Steps</strong>: a timeline of every phase the run went through (provisioning, template resolve, server and S3 checks, config validation, project sync, scan, process, joins, dashboard import), each with <code>success</code> / <code>failed</code> / <code>skipped</code> / <code>interrupted</code> and a detail line such as <em>3 data collection(s) processed</em>. The summary line tallies ok / failed / skipped and the wall-clock duration.</li>
 </ul>
 <p>The CLI reports each step as it starts, so a running ingestion shows its steps as a live timeline: the current step is marked, with a progress bar when the CLI knows how far it is, and counters such as <em>scanned</em>, <em>new</em>, <em>updated</em>, <em>unchanged</em>, <em>skipped</em>, <em>failed</em>, <em>deleted</em>, <em>rows</em>, <em>bytes</em> and <em>runs</em>. A step offloaded to a server worker carries an <strong>offloaded</strong> badge. The server records at most <code>DEPICTIO_INGESTION_STEP_UPDATES_PER_MINUTE</code> step updates per run and minute (60 by default) and drops the rest; a step reported as <code>success</code>, <code>failed</code> or <code>skipped</code> always gets through <small>(v1.15.0+)</small>.</p>

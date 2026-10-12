@@ -1571,6 +1571,8 @@
       
         
       
+        
+      
     
     
     
@@ -1849,6 +1851,17 @@
     <span class="md-ellipsis">
       
         Recursive Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote Modes (v1.16.0+)
       
     </span>
   </a>
@@ -2457,6 +2470,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../remote-data/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.43-1.8 2.13-3.42Q9.07 4.1 11 4.1q.83 0 1.41.59.59.59.59 1.41v6.05l1.6-1.55L16 12l-4 4-4-4 1.4-1.4 1.6 1.55V6.1q-1.9.35-2.95 1.84T7 11h-.5q-1.45 0-2.47 1.03Q3 13.05 3 14.5T4.03 17q1.02 1 2.47 1h12q1.05 0 1.77-.73.73-.72.73-1.77t-.73-1.77Q19.55 13 18.5 13H17v-2q0-1.2-.55-2.24Q15.9 7.73 15 7V4.68q1.85.87 2.93 2.58Q19 9 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20M12 11.05"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote data and manifests
   
 
     
@@ -5939,6 +5982,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#remote-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote Modes (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -6756,7 +6810,10 @@
 <a id="__codelineno-3-104" name="__codelineno-3-104" href="#__codelineno-3-104"></a><span class="w">      </span><span class="nt">resolver</span><span class="p">:</span><span class="w"> </span><span class="s">"direct"</span><span class="w">               </span><span class="c1"># Same value in both DCs</span>
 </code></pre></div>
 <h3 id="file-discovery-patterns">File Discovery Patterns<a class="headerlink" href="#file-discovery-patterns" title="Permanent link">¶</a></h3>
-<p>Advanced projects use two scanning modes:</p>
+<p>Advanced projects use five scanning modes. Two walk a local directory tree,
+<code>single</code> and <code>recursive</code>. Three fetch data from where it already is, <code>url</code>,
+<code>s3_prefix</code> and <code>manifest</code>, and are covered on
+<a href="../remote-data/">Remote data and manifests</a>.</p>
 <h4 id="single-file-mode">Single File Mode<a class="headerlink" href="#single-file-mode" title="Permanent link">¶</a></h4>
 <p>Perfect for metadata files or summary statistics generated once per project:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">scan</span><span class="p">:</span>
@@ -6772,10 +6829,23 @@
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="nt">regex_config</span><span class="p">:</span>
 <a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">      </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="s">"star_salmon/.*/quant.sf"</span>
 </code></pre></div>
+<h4 id="remote-modes">Remote Modes <small>(v1.16.0+)</small><a class="headerlink" href="#remote-modes" title="Permanent link">¶</a></h4>
+<p>A collection can also point at one file on the web or in a bucket (<code>url</code>), at
+every object under an S3 prefix (<code>s3_prefix</code>), or at the entries of a Data
+Manifest (<code>manifest</code>). Whoever ingests reads the files from there, the CLI or
+the server, so these modes also work from the web UI with no CLI installed, and
+the server can refresh them later. On the CLI, <code>--bind TAG=LOCATION</code> picks
+the mode from the shape of the location, so a template written for a local tree
+can be run against a bucket:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--template<span class="w"> </span>my-lab/rnaseq-qc/1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>--bind<span class="w"> </span><span class="nv">samples</span><span class="o">=</span>s3://my-bucket/run42/*.samples.csv
+</code></pre></div>
+<p>See <a href="../remote-data/">Remote data and manifests</a> for the modes, the manifest
+contract, and how to refresh or share such a project.</p>
 <h3 id="cli-workflow">CLI Workflow<a class="headerlink" href="#cli-workflow" title="Permanent link">¶</a></h3>
 <p>Process advanced projects using the CLI:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Complete workflow execution</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./rnaseq_project.yaml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Complete workflow execution</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./rnaseq_project.yaml
 </code></pre></div>
 <p>The CLI executes this pipeline:</p>
 <ol>
@@ -6867,34 +6937,34 @@ found, never parsed or converted. What it declares at the DC level is <strong>wh
 tip annotations come from</strong>: a separate Table DC keyed by taxon name, the same
 split Microreact uses. Every phylogenetic figure built on the tree inherits that
 join.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"bacterial_tree"</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Bacterial</span><span class="nv"> </span><span class="s">phylogeny</span><span class="nv"> </span><span class="s">(21</span><span class="nv"> </span><span class="s">taxa),</span><span class="nv"> </span><span class="s">Newick</span><span class="nv"> </span><span class="s">format"</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"phylogeny"</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="s">"Aggregate"</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="nt">scan</span><span class="p">:</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"single"</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">      </span><span class="nt">scan_parameters</span><span class="p">:</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="s">"{DATA_ROOT}/trees/bacterial_tree.nwk"</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">      </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"newick"</span><span class="w">          </span><span class="c1"># or "nexus"</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">      </span><span class="nt">ladderize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">      </span><span class="nt">metadata_dc_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"bacterial_metadata"</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">      </span><span class="nt">metadata_taxon_column</span><span class="p">:</span><span class="w"> </span><span class="s">"taxon"</span>
-<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
-<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"bacterial_metadata"</span>
-<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Tip</span><span class="nv"> </span><span class="s">metadata</span><span class="nv"> </span><span class="s">(group</span><span class="nv"> </span><span class="s">/</span><span class="nv"> </span><span class="s">habitat</span><span class="nv"> </span><span class="s">/</span><span class="nv"> </span><span class="s">resistance)"</span>
-<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span>
-<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"Table"</span>
-<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">    </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="s">"Aggregate"</span>
-<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span><span class="nt">scan</span><span class="p">:</span>
-<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"single"</span>
-<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="w">      </span><span class="nt">scan_parameters</span><span class="p">:</span>
-<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="w">        </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="s">"{DATA_ROOT}/trees/bacterial_metadata.tsv"</span>
-<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="w">    </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
-<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="w">      </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"TSV"</span>
-<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="w">      </span><span class="nt">polars_kwargs</span><span class="p">:</span>
-<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="w">        </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="s">"\t"</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"bacterial_tree"</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Bacterial</span><span class="nv"> </span><span class="s">phylogeny</span><span class="nv"> </span><span class="s">(21</span><span class="nv"> </span><span class="s">taxa),</span><span class="nv"> </span><span class="s">Newick</span><span class="nv"> </span><span class="s">format"</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"phylogeny"</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="s">"Aggregate"</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="nt">scan</span><span class="p">:</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"single"</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">      </span><span class="nt">scan_parameters</span><span class="p">:</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="s">"{DATA_ROOT}/trees/bacterial_tree.nwk"</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">      </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"newick"</span><span class="w">          </span><span class="c1"># or "nexus"</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">      </span><span class="nt">ladderize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">      </span><span class="nt">metadata_dc_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"bacterial_metadata"</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">      </span><span class="nt">metadata_taxon_column</span><span class="p">:</span><span class="w"> </span><span class="s">"taxon"</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"bacterial_metadata"</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Tip</span><span class="nv"> </span><span class="s">metadata</span><span class="nv"> </span><span class="s">(group</span><span class="nv"> </span><span class="s">/</span><span class="nv"> </span><span class="s">habitat</span><span class="nv"> </span><span class="s">/</span><span class="nv"> </span><span class="s">resistance)"</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"Table"</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">    </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="s">"Aggregate"</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">    </span><span class="nt">scan</span><span class="p">:</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"single"</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">      </span><span class="nt">scan_parameters</span><span class="p">:</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">        </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="s">"{DATA_ROOT}/trees/bacterial_metadata.tsv"</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="w">    </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="w">      </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"TSV"</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="w">      </span><span class="nt">polars_kwargs</span><span class="p">:</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="w">        </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="s">"\t"</span>
 </code></pre></div>
 <p>Leave the three metadata keys out and the tree still renders, just unannotated.
 Use <code>tip_label_strategy: "first_token"</code> when leaf names carry a suffix
@@ -6910,22 +6980,22 @@ bigWig, an annotation GFF3, or any bgzip-compressed, tabix-indexed interval file
 BED. Ingestion builds no Delta table. It copies each matched file and its index sidecar to
 S3, one object per sample, and a genome track in the browser asks the API for presigned
 URLs and range-reads only the part of the file covering the region in view.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"variant_files"</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Annotated</span><span class="nv"> </span><span class="s">VCF</span><span class="nv"> </span><span class="s">per</span><span class="nv"> </span><span class="s">sample</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">its</span><span class="nv"> </span><span class="s">tabix</span><span class="nv"> </span><span class="s">index"</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">optional</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"indexed_file"</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="s">"Metadata"</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="nt">scan</span><span class="p">:</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"recursive"</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">      </span><span class="nt">scan_parameters</span><span class="p">:</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">        </span><span class="nt">regex_config</span><span class="p">:</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">          </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="s">".*\\.ann\\.vcf\\.gz$"</span>
-<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
-<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">      </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"vcf"</span><span class="w">            </span><span class="c1"># vcf, bam, bigwig, bigbed, gff3, fasta or tabix</span>
-<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">      </span><span class="nt">assembly</span><span class="p">:</span><span class="w"> </span><span class="s">"{GENOME}"</span><span class="w">     </span><span class="c1"># genome axis of the tracks reading this DC</span>
-<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">      </span><span class="nt">sample_regex</span><span class="p">:</span><span class="w"> </span><span class="s">"(?P&lt;sample&gt;[^/]+?)\\.ann\\.vcf\\.gz$"</span>
-<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">      </span><span class="nt">max_file_size_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span><span class="w">     </span><span class="c1"># files above the cap are skipped with a warning</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"variant_files"</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Annotated</span><span class="nv"> </span><span class="s">VCF</span><span class="nv"> </span><span class="s">per</span><span class="nv"> </span><span class="s">sample</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">its</span><span class="nv"> </span><span class="s">tabix</span><span class="nv"> </span><span class="s">index"</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">optional</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"indexed_file"</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="s">"Metadata"</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="nt">scan</span><span class="p">:</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"recursive"</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">      </span><span class="nt">scan_parameters</span><span class="p">:</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">        </span><span class="nt">regex_config</span><span class="p">:</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">          </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="s">".*\\.ann\\.vcf\\.gz$"</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">      </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"vcf"</span><span class="w">            </span><span class="c1"># vcf, bam, bigwig, bigbed, gff3, fasta or tabix</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">      </span><span class="nt">assembly</span><span class="p">:</span><span class="w"> </span><span class="s">"{GENOME}"</span><span class="w">     </span><span class="c1"># genome axis of the tracks reading this DC</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">      </span><span class="nt">sample_regex</span><span class="p">:</span><span class="w"> </span><span class="s">"(?P&lt;sample&gt;[^/]+?)\\.ann\\.vcf\\.gz$"</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">      </span><span class="nt">max_file_size_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span><span class="w">     </span><span class="c1"># files above the cap are skipped with a warning</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7004,18 +7074,18 @@ things follow for a deployment:</p>
 </div>
 <p>Templates are pre-packaged project configurations that ship with Depictio. Each template bundles a project YAML (with <code>{DATA_ROOT}</code> placeholders), bundled dashboards, and referenced data transformation recipes for a specific pipeline version.</p>
 <h3 id="one-command-setup">One-command setup<a class="headerlink" href="#one-command-setup" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/data/my_ampliseq_run<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/ampliseq/2.16.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/data/my_ampliseq_run<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/ampliseq/2.16.0
 </code></pre></div>
 <p>That single command:</p>
 <ol>
-<li>Validates your data directory structure against the template's <code>expected_files</code></li>
-<li>Resolves all <code>{DATA_ROOT}</code> placeholders throughout the config</li>
+<li>Resolves all <code>{DATA_ROOT}</code> placeholders, and the template's other variables, throughout the config</li>
 <li>Creates the project in MongoDB</li>
 <li>Discovers and processes all data collections (running recipes automatically)</li>
 <li>Imports the bundled dashboard</li>
 </ol>
 <p>Without <code>--template</code>, the template is detected from the results directory when it can be. Running the same command again with <code>--update-config</code> refreshes the project and keeps its dashboards as edited in the viewer; see <a href="../../../depictio-cli/usage/#refreshing-a-project">Refreshing a project</a>.</p>
+<p>The results directory can also be an <code>s3://</code> prefix, a manifest-driven template takes <code>--manifest &lt;url or path&gt;</code> in place of the directory, and any template can be pointed at other locations, collection by collection, with <code>--bind TAG=LOCATION</code>. The web UI creates a project from a run folder too, with <strong>From a run folder</strong>. See <a href="../remote-data/">Remote data and manifests</a>.</p>
 <h3 id="when-to-use-templates">When to use templates<a class="headerlink" href="#when-to-use-templates" title="Permanent link">¶</a></h3>
 <p>Use templates when:</p>
 <ul>
@@ -7043,7 +7113,7 @@ things follow for a deployment:</p>
     class A,F endpoints</code></pre>
 <h3 id="template-origin-badge">Template origin badge<a class="headerlink" href="#template-origin-badge" title="Permanent link">¶</a></h3>
 <p>Once imported, every dashboard card in the UI shows a badge:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Template: nf-core/ampliseq/2.16.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Template: nf-core/ampliseq/2.16.0
 </code></pre></div>
 <p>This tells you and your collaborators which template generated the project, enabling template discovery and making provenance visible throughout the UI.</p>
 <p>For full template reference — available templates, data validation levels, YAML structure, and all CLI flags — see <strong><a href="../templates/">Templates</a></strong>.</p>
@@ -7194,15 +7264,15 @@ backing up immediately before a delete.</p>
 </ul>
 <p>Future Depictio versions will support aforementioned features progressively, enhancing user experience and data management capabilities.</p>
 <h3 id="storage-hierarchy">Storage Hierarchy<a class="headerlink" href="#storage-hierarchy" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Project Storage Structure:
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>├── metadata/           # Project configuration and metadata
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>├── data_collections/   # Raw data collections
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>│   ├── collection_1/
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>│   │   ├── delta_table/  # Optimized Delta Lake format
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>│   │   └── metadata.json # Collection-specific metadata
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>│   └── collection_2/
-<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>├── dashboards/        # Dashboard configurations
-<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>└── permissions/       # Access control data
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Project Storage Structure:
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>├── metadata/           # Project configuration and metadata
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>├── data_collections/   # Raw data collections
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>│   ├── collection_1/
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>│   │   ├── delta_table/  # Optimized Delta Lake format
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>│   │   └── metadata.json # Collection-specific metadata
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>│   └── collection_2/
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>├── dashboards/        # Dashboard configurations
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>└── permissions/       # Access control data
 </code></pre></div>
 <h3 id="performance-optimizations">Performance Optimizations<a class="headerlink" href="#performance-optimizations" title="Permanent link">¶</a></h3>
 <ul>
@@ -7215,45 +7285,45 @@ backing up immediately before a delete.</p>
 <h2 id="advanced-configuration-options">🔧 Advanced Configuration Options<a class="headerlink" href="#advanced-configuration-options" title="Permanent link">¶</a></h2>
 <h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h3>
 <p>Use environment variables for flexible deployments:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Configuration with environment variables</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nt">parent_runs_location</span><span class="p">:</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"{DATA_LOCATION}/study1"</span><span class="w"> </span><span class="c1"># Resolved at runtime</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"{BACKUP_LOCATION}/study1"</span><span class="w"> </span><span class="c1"># Alternative location</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Configuration with environment variables</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nt">parent_runs_location</span><span class="p">:</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"{DATA_LOCATION}/study1"</span><span class="w"> </span><span class="c1"># Resolved at runtime</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"{BACKUP_LOCATION}/study1"</span><span class="w"> </span><span class="c1"># Alternative location</span>
 </code></pre></div>
 <h3 id="polars-integration">Polars Integration<a class="headerlink" href="#polars-integration" title="Permanent link">¶</a></h3>
 <p>Advanced data processing with <a href="https://pola.rs/">Polars</a> DataFrames:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">dc_specific_properties</span><span class="p">:</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"CSV"</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="nt">polars_kwargs</span><span class="p">:</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="s">","</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="nt">has_header</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="nt">skip_rows</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">    </span><span class="nt">column_types</span><span class="p">:</span>
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">      </span><span class="nt">sample_id</span><span class="p">:</span><span class="w"> </span><span class="s">"String"</span>
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">      </span><span class="nt">expression</span><span class="p">:</span><span class="w"> </span><span class="s">"Float64"</span>
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">      </span><span class="nt">p_value</span><span class="p">:</span><span class="w"> </span><span class="s">"Float64"</span>
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">    </span><span class="nt">null_values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"NA"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"NULL"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">""</span><span class="p p-Indicator">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">dc_specific_properties</span><span class="p">:</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"CSV"</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="nt">polars_kwargs</span><span class="p">:</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="s">","</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="nt">has_header</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="nt">skip_rows</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="nt">column_types</span><span class="p">:</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">      </span><span class="nt">sample_id</span><span class="p">:</span><span class="w"> </span><span class="s">"String"</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">      </span><span class="nt">expression</span><span class="p">:</span><span class="w"> </span><span class="s">"Float64"</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">      </span><span class="nt">p_value</span><span class="p">:</span><span class="w"> </span><span class="s">"Float64"</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="nt">null_values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"NA"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"NULL"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">""</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 <h3 id="cross-dc-links">Cross-DC Links<a class="headerlink" href="#cross-dc-links" title="Permanent link">¶</a></h3>
 <p>Interactive filtering between data collections at runtime:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">links</span><span class="p">:</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source_dc_id</span><span class="p">:</span><span class="w"> </span><span class="s">"metadata"</span><span class="w">           </span><span class="c1"># Filter from this DC</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="nt">source_column</span><span class="p">:</span><span class="w"> </span><span class="s">"sample_id"</span><span class="w">          </span><span class="c1"># Filter by this column</span>
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="nt">target_dc_id</span><span class="p">:</span><span class="w"> </span><span class="s">"multiqc_report"</span><span class="w">      </span><span class="c1"># Update this DC</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="nt">target_type</span><span class="p">:</span><span class="w"> </span><span class="s">"multiqc"</span><span class="w">              </span><span class="c1"># Target type: table or multiqc</span>
-<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="nt">link_config</span><span class="p">:</span>
-<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">      </span><span class="nt">resolver</span><span class="p">:</span><span class="w"> </span><span class="s">"sample_mapping"</span><span class="w">        </span><span class="c1"># Maps canonical IDs to MultiQC variants</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">links</span><span class="p">:</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source_dc_id</span><span class="p">:</span><span class="w"> </span><span class="s">"metadata"</span><span class="w">           </span><span class="c1"># Filter from this DC</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="nt">source_column</span><span class="p">:</span><span class="w"> </span><span class="s">"sample_id"</span><span class="w">          </span><span class="c1"># Filter by this column</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="nt">target_dc_id</span><span class="p">:</span><span class="w"> </span><span class="s">"multiqc_report"</span><span class="w">      </span><span class="c1"># Update this DC</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="nt">target_type</span><span class="p">:</span><span class="w"> </span><span class="s">"multiqc"</span><span class="w">              </span><span class="c1"># Target type: table or multiqc</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="nt">link_config</span><span class="p">:</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">      </span><span class="nt">resolver</span><span class="p">:</span><span class="w"> </span><span class="s">"sample_mapping"</span><span class="w">        </span><span class="c1"># Maps canonical IDs to MultiQC variants</span>
 </code></pre></div>
 <p>See <a href="../../../features/cross-dc-filtering/">Cross-DC Filtering</a> for details.</p>
 <h3 id="custom-workflows">Custom Workflows<a class="headerlink" href="#custom-workflows" title="Permanent link">¶</a></h3>
 <p>Support for various workflow engines:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">engine</span><span class="p">:</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"nextflow"</span><span class="w"> </span><span class="c1"># or "snakemake", "python", "cwl", "galaxy"</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"24.10.3"</span><span class="w"> </span><span class="c1"># Version for reproducibility</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="nt">catalog</span><span class="p">:</span>
-<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"nf-core"</span><span class="w"> </span><span class="c1"># Workflow catalog</span>
-<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">"https://nf-co.re/rnaseq"</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">engine</span><span class="p">:</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"nextflow"</span><span class="w"> </span><span class="c1"># or "snakemake", "python", "cwl", "galaxy"</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"24.10.3"</span><span class="w"> </span><span class="c1"># Version for reproducibility</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="nt">catalog</span><span class="p">:</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"nf-core"</span><span class="w"> </span><span class="c1"># Workflow catalog</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">"https://nf-co.re/rnaseq"</span>
 </code></pre></div>
 <h2 id="best-practices">🚀 Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>
 <h3 id="project-organization">Project Organization<a class="headerlink" href="#project-organization" title="Permanent link">¶</a></h3>
@@ -7291,11 +7361,11 @@ backing up immediately before a delete.</p>
 <div class="tabbed-block">
 <p><strong>Problem:</strong> YAML validation fails</p>
 <p><strong>Solutions:</strong>
-</p><div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Validate configuration</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>depictio<span class="w"> </span>-v<span class="w"> </span>config<span class="w"> </span>check<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Check YAML syntax</span>
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>yamllint<span class="w"> </span>config.yaml
+</p><div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Validate configuration</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>depictio<span class="w"> </span>-v<span class="w"> </span>config<span class="w"> </span>check<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Check YAML syntax</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>yamllint<span class="w"> </span>config.yaml
 </code></pre></div><p></p>
 </div>
 <div class="tabbed-block">
@@ -7325,16 +7395,16 @@ backing up immediately before a delete.</p>
 </div>
 </div>
 <h3 id="debugging-commands">Debugging Commands<a class="headerlink" href="#debugging-commands" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Verbose execution with detailed logging (-v for INFO, -vv for DEBUG)</span>
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>depictio<span class="w"> </span>-vv<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
-<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Dry run to preview operations</span>
-<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--dry-run
-<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
-<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1"># Step-by-step execution for debugging</span>
-<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>depictio<span class="w"> </span>config<span class="w"> </span>check
-<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>depictio<span class="w"> </span>config<span class="w"> </span>check<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
-<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>depictio<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Verbose execution with detailed logging (-v for INFO, -vv for DEBUG)</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>depictio<span class="w"> </span>-vv<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># Dry run to preview operations</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--dry-run
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="c1"># Step-by-step execution for debugging</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>depictio<span class="w"> </span>config<span class="w"> </span>check
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>depictio<span class="w"> </span>config<span class="w"> </span>check<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>depictio<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
 </code></pre></div>
 <h2 id="additional-resources">📚 Additional Resources<a class="headerlink" href="#additional-resources" title="Permanent link">¶</a></h2>
 <ul>

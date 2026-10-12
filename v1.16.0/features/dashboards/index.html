@@ -1563,6 +1563,8 @@
       
         
       
+        
+      
     
     
     
@@ -1748,6 +1750,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/projects/remote-data/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.43-1.8 2.13-3.42Q9.07 4.1 11 4.1q.83 0 1.41.59.59.59.59 1.41v6.05l1.6-1.55L16 12l-4 4-4-4 1.4-1.4 1.6 1.55V6.1q-1.9.35-2.95 1.84T7 11h-.5q-1.45 0-2.47 1.03Q3 13.05 3 14.5T4.03 17q1.02 1 2.47 1h12q1.05 0 1.77-.73.73-.72.73-1.77t-.73-1.77Q19.55 13 18.5 13H17v-2q0-1.2-.55-2.24Q15.9 7.73 15 7V4.68q1.85.87 2.93 2.58Q19 9 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20M12 11.05"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote data and manifests
   
 
     
@@ -6833,6 +6865,11 @@ from the <strong>View ingestion report</strong> row in a dashboard's <strong>Set
 (<strong>Manual</strong>, <strong>Watch</strong> or <strong>UI</strong>), the command, how long it took and when
 it started. Expand a run for its instance, CLI version, start time, a tally of its steps,
 the steps as a timeline, and its error if it failed. A search box filters the runs.</p>
+<p>From v1.16.0 the list also holds the runs the server makes for remote data: the
+ingestion of a project created <a href="../../usage/projects/remote-data/#from-a-run-folder">from a run folder</a>,
+command <code>from_run</code>, and each <a href="../../usage/projects/remote-data/#refreshing-the-data"><strong>Data refresh</strong></a>,
+command <code>refresh_manifest</code>. They show <strong>Manual</strong> as their trigger and one step per data
+collection.</p>
 <p>These are the runs the admin <a href="../../usage/administration/monitoring/#ingestion"><strong>Log &amp; Task → Ingestion</strong></a>
 pane shows, limited to this project, for anyone who can open it. Owners, editors and
 admins see each run in full. Other viewers, such as visitors of a public project, do not
@@ -6854,6 +6891,11 @@ button is not shown. An administrator turns it on as described in
   outside the directories the server may read, or no such directory is set;</li>
 <li>the server cannot find one of the project's data locations.</li>
 </ul>
+<p>From v1.16.0, an <code>s3://</code> or <code>https://</code> location always lies outside the directories the
+server may read. A project made from a run folder on S3 or from a manifest, or one with a
+<strong>Remote URL</strong> collection, therefore cannot use <strong>Run ingestion</strong>: its remote collections
+are re-read with <a href="../../usage/projects/remote-data/#refreshing-the-data"><strong>Data refresh</strong></a>
+instead. A <a href="../../installation/local/"><code>depictio local</code></a> server does not offer the button.</p>
 <p><strong>Run ingestion</strong> opens a dialog with an <strong>Overwrite existing tables</strong> switch. <strong>Start</strong>
 runs the same steps as <code>depictio ingest</code>: scan, process with image upload, then joins. It
 does not sync the project configuration or import dashboards, and unlike the CLI it skips

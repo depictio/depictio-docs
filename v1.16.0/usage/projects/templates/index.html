@@ -13,7 +13,7 @@
         <link rel="prev" href="../recipes/">
       
       
-        <link rel="next" href="../../../depictio-cli/">
+        <link rel="next" href="../remote-data/">
       
       
         
@@ -1571,6 +1571,8 @@
       
         
       
+        
+      
     
     
     
@@ -1905,6 +1907,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#instantiating-with-manifest-or-bind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instantiating with --manifest or --bind (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-an-exported-bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running an exported bundle (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2033,6 +2057,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#export-a-project-as-a-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Export a project as a template (v1.16.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Export a project as a template (v1.16.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-the-bundle-contains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the bundle contains
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#round-trip-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Round-trip guarantee
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#additional-resources" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2047,6 +2110,36 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../remote-data/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.43-1.8 2.13-3.42Q9.07 4.1 11 4.1q.83 0 1.41.59.59.59.59 1.41v6.05l1.6-1.55L16 12l-4 4-4-4 1.4-1.4 1.6 1.55V6.1q-1.9.35-2.95 1.84T7 11h-.5q-1.45 0-2.47 1.03Q3 13.05 3 14.5T4.03 17q1.02 1 2.47 1h12q1.05 0 1.77-.73.73-.72.73-1.77t-.73-1.77Q19.55 13 18.5 13H17v-2q0-1.2-.55-2.24Q15.9 7.73 15 7V4.68q1.85.87 2.93 2.58Q19 9 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20M12 11.05"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote data and manifests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -5459,6 +5552,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#instantiating-with-manifest-or-bind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instantiating with --manifest or --bind (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-an-exported-bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running an exported bundle (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5587,6 +5702,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#export-a-project-as-a-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Export a project as a template (v1.16.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Export a project as a template (v1.16.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-the-bundle-contains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the bundle contains
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#round-trip-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Round-trip guarantee
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#additional-resources" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5631,7 +5785,7 @@
 <hr>
 <h2 id="template-variables">Template Variables<a class="headerlink" href="#template-variables" title="Permanent link">¶</a></h2>
 <p>Every template declares its own variables. Variable names are <strong>template-specific</strong> — each pipeline decides what it needs.</p>
-<p><code>DATA_ROOT</code> is the only universal variable: it is always required, and it is the results directory given to <code>depictio ingest</code> (formerly <code>--data-root</code>). All others are passed via <code>--var KEY=VALUE</code>.</p>
+<p><code>DATA_ROOT</code> is the usual root variable: the results directory given to <code>depictio ingest</code> (formerly <code>--data-root</code>), a local folder or an <code>s3://</code> prefix. A manifest-driven template declares <code>MANIFEST_URL</code> instead, set with <code>--manifest</code>. All others are passed via <code>--var KEY=VALUE</code>. <code>--bind TAG=LOCATION</code> can stand in for either root variable by pointing each data collection at its own location; see <a href="#instantiating-with-manifest-or-bind">Instantiating with <code>--manifest</code> or <code>--bind</code></a>.</p>
 <p><strong>Auto-detected variables:</strong> When a metadata file is provided, the system reads its headers and auto-populates:</p>
 <ul>
 <li><code>GROUP_COL</code> — first non-ID annotation column (overridable)</li>
@@ -5716,13 +5870,25 @@ variables are dropped before the call, so the recipe falls back to its own defau
 <td><code>--template</code></td>
 <td><code>string</code></td>
 <td><a href="#pipeline-id">one of</a></td>
-<td>Template ID. Pin a version (<code>nf-core/ampliseq/2.16.0</code>), or use <code>nf-core/ampliseq/latest</code>, or just <code>nf-core/ampliseq</code>, to resolve the newest shipped version (v1.5.2+)</td>
+<td>Template ID. Pin a version (<code>nf-core/ampliseq/2.16.0</code>), or use <code>nf-core/ampliseq/latest</code>, or just <code>nf-core/ampliseq</code>, to resolve the newest shipped version (v1.5.2+). On the CLI, also a path to an <a href="#running-an-exported-bundle">exported bundle</a> (v1.16.0+)</td>
 </tr>
 <tr>
 <td><code>DATA_DIR</code> (argument)</td>
 <td><code>path</code></td>
-<td>yes</td>
-<td>The results directory, substituted for <code>{DATA_ROOT}</code>. Formerly <code>--data-root</code></td>
+<td>one of the three</td>
+<td>The results directory, a local folder or, from v1.16.0, an <code>s3://</code> prefix, substituted for <code>{DATA_ROOT}</code>. Formerly <code>--data-root</code></td>
+</tr>
+<tr>
+<td><code>--manifest</code></td>
+<td><code>url</code> or <code>path</code></td>
+<td>one of the three</td>
+<td>Data manifest substituted for <code>{MANIFEST_URL}</code>. Not with <code>DATA_DIR</code> (v1.16.0+)</td>
+</tr>
+<tr>
+<td><code>--bind</code></td>
+<td><code>TAG=LOCATION</code></td>
+<td>one of the three</td>
+<td>Point one data collection at a location; the scan mode is inferred from its shape. Repeatable (v1.16.0+)</td>
 </tr>
 <tr>
 <td><code>--var</code></td>
@@ -5764,13 +5930,46 @@ variables are dropped before the call, so the recipe falls back to its own defau
   <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger</a> passes for you since
   <strong>v1.10.0</strong>, read from the <code>manifest</code> block of its <code>nextflow.config</code>. Its version
   must match a shipped template, or the run stops with an error;</li>
-<li>the results directory itself: the run information an nf-core pipeline writes
-  under <code>pipeline_info/</code> names the pipeline and its version, and the matching
-  template is used. When no shipped version matches, the closest version that is
-  not newer is used, with a warning.</li>
+<li>the results directory itself, local or an <code>s3://</code> prefix: the run information
+  an nf-core pipeline writes under <code>pipeline_info/</code> names the pipeline and its
+  version, and the matching template is used. When no shipped version matches,
+  the closest version that is not newer is used, with a warning.</li>
 </ul>
+<p>The web UI's <strong>From a run folder</strong> tab detects the template the same way and
+shows the comparison before anything is created; see
+<a href="../remote-data/#from-a-run-folder">From a run folder</a>.</p>
 <p>When none applies, the command stops and asks for <code>--template</code> or
 <code>--project-config-path</code>.</p>
+<h3 id="instantiating-with-manifest-or-bind">Instantiating with <code>--manifest</code> or <code>--bind</code> <small>(v1.16.0+)</small><a class="headerlink" href="#instantiating-with-manifest-or-bind" title="Permanent link">¶</a></h3>
+<p><code>DATA_DIR</code>, <code>--manifest</code> and <code>--bind</code> all answer the same question, where
+the data is, and a template run needs at least one of them:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># A manifest-driven template: no results directory at all</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--template<span class="w"> </span>generic/manifest-tables/1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>--manifest<span class="w"> </span>https://data.example.org/run42/manifest.json
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Any template, each data collection pointed at its own location</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--template<span class="w"> </span>my-lab/rnaseq-qc/1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span>--bind<span class="w"> </span><span class="nv">metadata</span><span class="o">=</span>/data/run42/metadata.tsv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span>--bind<span class="w"> </span><span class="nv">samples</span><span class="o">=</span>s3://my-bucket/run42/*.samples.csv
+</code></pre></div>
+<p><code>--manifest</code> takes a URL or a local file path and becomes the <code>MANIFEST_URL</code>
+variable. <code>--bind</code> is applied after resolution, so it wins over whatever
+<code>{DATA_ROOT}</code> or <code>{MANIFEST_URL}</code> resolved to for that collection, and a
+required variable that no collection uses any more is not asked for. A
+<code>--bind</code> naming a tag the template does not declare is an error, listing the
+tags that exist. The location shapes and the mode each one implies are on
+<a href="../remote-data/#bind-a-data-collection-to-a-location">Remote data and manifests</a>.</p>
+<h3 id="running-an-exported-bundle">Running an exported bundle <small>(v1.16.0+)</small><a class="headerlink" href="#running-an-exported-bundle" title="Permanent link">¶</a></h3>
+<p>On the CLI, <code>--template</code> also accepts a path: a directory holding a
+<code>template.yaml</code> (or <code>project.yaml</code>), or a YAML file. That is what makes an
+<a href="#export-a-project-as-a-template">exported bundle</a> usable by whoever receives
+it, without copying it into an installation first:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--template<span class="w"> </span>./my-lab/rnaseq-qc/1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--bind<span class="w"> </span><span class="nv">samples</span><span class="o">=</span>s3://their-bucket/run7/*.samples.csv
+</code></pre></div>
+<p>An existing path wins over an installed template of the same name. The server
+never accepts the path form: it resolves ids on behalf of remote callers, and
+ids are confined to the templates directory in both contexts.</p>
 <hr>
 <h2 id="resolution-workflow">Resolution Workflow<a class="headerlink" href="#resolution-workflow" title="Permanent link">¶</a></h2>
 <p>When a template is used, <code>depictio ingest</code> inserts <strong>Step 0: Template resolution</strong> before the standard pipeline:</p>
@@ -5876,28 +6075,28 @@ about how the CLI was invoked (host, CLI version, command line), and
 the project.</p>
 </div>
 <p>A template declares the recipe under <code>template.provenance</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">template</span><span class="p">:</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">provenance</span><span class="p">:</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">sources</span><span class="p">:</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"params"</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">        </span><span class="nt">glob</span><span class="p">:</span><span class="w"> </span><span class="s">"pipeline_info/params*.json"</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">        </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"json"</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="nt">pick</span><span class="p">:</span><span class="w"> </span><span class="s">"latest"</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">        </span><span class="nt">exclude_keys</span><span class="p">:</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"*_ref_databases*"</span><span class="w">     </span><span class="c1"># bulky reference-DB catalogs</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"software_versions"</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">        </span><span class="nt">glob</span><span class="p">:</span><span class="w"> </span><span class="s">"pipeline_info/*software*versions.yml"</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">        </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"yaml"</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">        </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s">"Software</span><span class="nv"> </span><span class="s">versions"</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">    </span><span class="nt">groups</span><span class="p">:</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s">"Cutadapt</span><span class="nv"> </span><span class="s">(primer</span><span class="nv"> </span><span class="s">trimming)"</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">        </span><span class="nt">key_patterns</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"FW_primer"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"RV_primer"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"cutadapt_*"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"skip_cutadapt"</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s">"DADA2</span><span class="nv"> </span><span class="s">(denoising</span><span class="nv"> </span><span class="s">&amp;</span><span class="nv"> </span><span class="s">filtering)"</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">        </span><span class="nt">key_patterns</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"trunclenf"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"trunclenr"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"trunc_qmin"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"max_ee"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"dada_*"</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">    </span><span class="nt">highlight</span><span class="p">:</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"FW_primer"</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"RV_primer"</span>
-<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"diversity_rarefaction_depth"</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">template</span><span class="p">:</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">provenance</span><span class="p">:</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">sources</span><span class="p">:</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"params"</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">        </span><span class="nt">glob</span><span class="p">:</span><span class="w"> </span><span class="s">"pipeline_info/params*.json"</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">        </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"json"</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">        </span><span class="nt">pick</span><span class="p">:</span><span class="w"> </span><span class="s">"latest"</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span><span class="nt">exclude_keys</span><span class="p">:</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"*_ref_databases*"</span><span class="w">     </span><span class="c1"># bulky reference-DB catalogs</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"software_versions"</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">        </span><span class="nt">glob</span><span class="p">:</span><span class="w"> </span><span class="s">"pipeline_info/*software*versions.yml"</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">        </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"yaml"</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">        </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s">"Software</span><span class="nv"> </span><span class="s">versions"</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="nt">groups</span><span class="p">:</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s">"Cutadapt</span><span class="nv"> </span><span class="s">(primer</span><span class="nv"> </span><span class="s">trimming)"</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">        </span><span class="nt">key_patterns</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"FW_primer"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"RV_primer"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"cutadapt_*"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"skip_cutadapt"</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s">"DADA2</span><span class="nv"> </span><span class="s">(denoising</span><span class="nv"> </span><span class="s">&amp;</span><span class="nv"> </span><span class="s">filtering)"</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">        </span><span class="nt">key_patterns</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"trunclenf"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"trunclenr"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"trunc_qmin"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"max_ee"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"dada_*"</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="nt">highlight</span><span class="p">:</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"FW_primer"</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"RV_primer"</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"diversity_rarefaction_depth"</span>
 </code></pre></div>
 <h3 id="sources"><code>sources</code><a class="headerlink" href="#sources" title="Permanent link">¶</a></h3>
 <p>One entry per file, or file family, to read.</p>
@@ -5961,7 +6160,7 @@ being dropped.</p>
 <h3 id="files-with-no-template">Files with no template<a class="headerlink" href="#files-with-no-template" title="Permanent link">¶</a></h3>
 <p><code>--provenance-file</code> takes an arbitrary recap file, JSON, YAML or two-column TSV,
 and lists its entries under a <strong>User provided</strong> group. The flag is repeatable.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/path/to/results<span class="w"> </span>--provenance-file<span class="w"> </span>run_summary.yaml<span class="w"> </span>--provenance-file<span class="w"> </span>thresholds.tsv
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/path/to/results<span class="w"> </span>--provenance-file<span class="w"> </span>run_summary.yaml<span class="w"> </span>--provenance-file<span class="w"> </span>thresholds.tsv
 </code></pre></div>
 <h3 id="where-it-surfaces">Where it surfaces<a class="headerlink" href="#where-it-surfaces" title="Permanent link">¶</a></h3>
 <ul>
@@ -5978,20 +6177,102 @@ skipped steps and software versions.</p>
 <hr>
 <h2 id="cross-dc-links">Cross-DC Links<a class="headerlink" href="#cross-dc-links" title="Permanent link">¶</a></h2>
 <p>Templates define links between data collections using <strong>tags</strong> (not IDs):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">links</span><span class="p">:</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source_dc_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"metadata"</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">source_column</span><span class="p">:</span><span class="w"> </span><span class="s">"ID"</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="nt">target_dc_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"alpha_diversity"</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="nt">target_type</span><span class="p">:</span><span class="w"> </span><span class="s">"table"</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nt">link_config</span><span class="p">:</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">      </span><span class="nt">resolver</span><span class="p">:</span><span class="w"> </span><span class="s">"direct"</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">      </span><span class="nt">target_field</span><span class="p">:</span><span class="w"> </span><span class="s">"sample"</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">links</span><span class="p">:</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source_dc_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"metadata"</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">source_column</span><span class="p">:</span><span class="w"> </span><span class="s">"ID"</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">target_dc_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"alpha_diversity"</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="nt">target_type</span><span class="p">:</span><span class="w"> </span><span class="s">"table"</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="nt">link_config</span><span class="p">:</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">      </span><span class="nt">resolver</span><span class="p">:</span><span class="w"> </span><span class="s">"direct"</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">      </span><span class="nt">target_field</span><span class="p">:</span><span class="w"> </span><span class="s">"sample"</span>
 </code></pre></div>
 <p>Tags are resolved to MongoDB ObjectIds after the project is synced to the server. Links referencing removed DCs (via conditionals) are auto-pruned.</p>
+<hr>
+<h2 id="export-a-project-as-a-template">Export a project as a template <small>(v1.16.0+)</small><a class="headerlink" href="#export-a-project-as-a-template" title="Permanent link">¶</a></h2>
+<p>The inverse of instantiation: freeze a live project and its dashboards into a
+template bundle. Build one good project interactively, export it, and the next
+run of the same pipeline is one command.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">CLI</label><label for="__tabbed_1_2">Web UI</label><label for="__tabbed_1_3">API</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>depictio<span class="w"> </span>template<span class="w"> </span><span class="nb">export</span><span class="w"> </span>&lt;project_id&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>--template-id<span class="w"> </span>my-lab/rnaseq-qc/1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>-o<span class="w"> </span>depictio/projects
+</code></pre></div>
+<p>The bundle is unpacked into <code>&lt;output-dir&gt;/&lt;template-id&gt;/</code>. <code>--server</code>,
+<code>--version</code>, <code>--description</code> and <code>--data-dir</code> are optional; see the
+<a href="../../../depictio-cli/usage/#template-commands">CLI reference</a>.</p>
+</div>
+<div class="tabbed-block">
+<p>On the project page, <strong>Project settings</strong>, then <strong>Export</strong>: a
+<strong>Template ID</strong>, a <strong>Version</strong>, a <strong>Description (optional)</strong> and a
+<strong>Data root (optional)</strong>, left empty for the default below. <strong>Export</strong>
+downloads the bundle as a zip named after the template ID, <code>/</code> becoming
+<code>_</code>. Owners, editors and administrators can export; on a public
+instance, administrators only.</p>
+</div>
+<div class="tabbed-block">
+<p><code>POST /projects/{project_id}/export_template</code> with
+<code>{"template_id", "version", "description", "data_root"}</code> returns the zip.</p>
+</div>
+</div>
+</div>
+<h3 id="what-the-bundle-contains">What the bundle contains<a class="headerlink" href="#what-the-bundle-contains" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>template.yaml</code></td>
+<td>A synthesised <code>template:</code> block (id, description, version, variables, dashboard list) followed by the project configuration</td>
+</tr>
+<tr>
+<td><code>dashboards/*.yaml</code></td>
+<td>One file per main dashboard tab, child tabs included, referencing data collections by tag</td>
+</tr>
+</tbody>
+</table>
+<p>Runtime state is stripped: ids, permissions, file hashes, runs, registration
+and modification timestamps, <code>template_origin</code>, <code>yaml_config_path</code>, the
+generated <code>workflow_tag</code>, and the per-collection size metadata that ingestion
+keeps on each data collection. Per-project storage credentials are never
+exported.</p>
+<p>Data bindings are re-parameterised. Stored manifest URLs become
+<code>{MANIFEST_URL}</code>, declared as a required variable. A data root, a local path
+or an <code>s3://</code> prefix, becomes <code>{DATA_ROOT}</code> when <code>--data-dir</code> is given, or when
+the project itself came from a template that recorded one. Only locations
+below the data root are rewritten: a URL or an <code>s3://</code> location elsewhere is
+kept as it is. A template binds one manifest, so distinct stored manifest URLs
+all collapse onto the same placeholder; only the server log notes it.</p>
+<h3 id="round-trip-guarantee">Round-trip guarantee<a class="headerlink" href="#round-trip-guarantee" title="Permanent link">¶</a></h3>
+<p>Before the bundle is returned it is checked against the same models
+instantiation uses: the <code>template:</code> block must validate as template metadata,
+and the configuration with placeholders substituted must validate as a
+project. If either fails the request is rejected with a 422 and nothing is
+emitted, so an exported bundle always re-instantiates through the resolver.</p>
+<div class="admonition warning">
+<p class="admonition-title">A project read from an <code>s3://</code> folder</p>
+<p>The check gives <code>{DATA_ROOT}</code> a local test path, which an <code>s3_prefix</code> or
+<code>url</code> collection does not accept. With an <code>s3://</code> data root, the default
+for a project made from a run folder on S3, the export therefore stops
+with <em>Exported config does not round-trip through Project validation</em>.
+From the CLI, <code>--data-dir ""</code> exports without a data root and keeps the
+<code>s3://</code> locations as they are. In the web form, an empty <strong>Data root</strong>
+means the default.</p>
+</div>
+<p>Unpacked in the server's <code>depictio/projects/</code> folder, which an installed
+package keeps as <code>depictio/cli/projects/</code>, the bundle is found by the resolver
+and offered in the picker. Anywhere else, run it by path with
+<code>--template ./folder</code>.</p>
 <hr>
 <h2 id="additional-resources">Additional Resources<a class="headerlink" href="#additional-resources" title="Permanent link">¶</a></h2>
 <ul>
 <li><strong><a href="../../../pipeline-templates/">Template Catalog</a></strong>: browse and use available templates</li>
+<li><strong><a href="../remote-data/">Remote data and manifests</a></strong>: run folders on S3, URL, prefix and manifest scan modes, <code>--bind</code>, creating a project in the web UI, sharing a project</li>
 <li><strong><a href="../recipes/">Recipes</a></strong>: how to write and test data transformation recipes</li>
 <li><strong><a href="../../../developer/contributing-templates/">Contributing Templates</a></strong>: add a new template</li>
 <li><strong><a href="../../../depictio-cli/usage/#ingest-command">CLI Usage</a></strong>: full <code>depictio ingest</code> reference</li>

@@ -1563,6 +1563,8 @@
       
         
       
+        
+      
     
     
     
@@ -1748,6 +1750,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/projects/remote-data/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.43-1.8 2.13-3.42Q9.07 4.1 11 4.1q.83 0 1.41.59.59.59.59 1.41v6.05l1.6-1.55L16 12l-4 4-4-4 1.4-1.4 1.6 1.55V6.1q-1.9.35-2.95 1.84T7 11h-.5q-1.45 0-2.47 1.03Q3 13.05 3 14.5T4.03 17q1.02 1 2.47 1h12q1.05 0 1.77-.73.73-.72.73-1.77t-.73-1.77Q19.55 13 18.5 13H17v-2q0-1.2-.55-2.24Q15.9 7.73 15 7V4.68q1.85.87 2.93 2.58Q19 9 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20M12 11.05"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote data and manifests
   
 
     
@@ -4352,6 +4384,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 4 — Build the dashboards">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shortcut-export-the-whole-bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shortcut: export the whole bundle (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manifest-driven-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manifest-driven templates (v1.16.0+)
+      
+    </span>
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
@@ -5391,6 +5451,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 4 — Build the dashboards">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shortcut-export-the-whole-bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shortcut: export the whole bundle (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manifest-driven-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manifest-driven templates (v1.16.0+)
+      
+    </span>
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
@@ -5734,15 +5822,107 @@ the structure of the reference template, <code>nf-core/ampliseq/2.18.0/dashboard
 <p>Import it on a running server and open every tab.</p>
 </li>
 </ol>
+<h3 id="shortcut-export-the-whole-bundle">Shortcut: export the whole bundle <small>(v1.16.0+)</small><a class="headerlink" href="#shortcut-export-the-whole-bundle" title="Permanent link">¶</a></h3>
+<p>If the project already exists on an instance, built by hand or from an earlier
+run, <code>depictio template export</code> writes the entire bundle in one go:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>depictio<span class="w"> </span>template<span class="w"> </span><span class="nb">export</span><span class="w"> </span>&lt;project_id&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>--template-id<span class="w"> </span>&lt;pipeline&gt;/&lt;version&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>--data-dir<span class="w"> </span>/path/to/run<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span>-o<span class="w"> </span>depictio/projects
+</code></pre></div>
+<p>It strips runtime state, rewrites the data root as <code>{DATA_ROOT}</code> (and any
+stored manifest URL as <code>{MANIFEST_URL}</code>), exports every dashboard as tag-based
+YAML, synthesises the <code>template:</code> block, and refuses to emit a bundle that
+would not re-instantiate. What comes out is a valid starting point; you still
+edit the description, declare extra variables and conditionals, and add
+recipes by hand. A URL or an <code>s3://</code> location outside the data root is kept as
+it is: turn it into a variable before submitting. See
+<a href="../../usage/projects/templates/#export-a-project-as-a-template">Export a project as a template</a>.</p>
+<h2 id="manifest-driven-templates">Manifest-driven templates <small>(v1.16.0+)</small><a class="headerlink" href="#manifest-driven-templates" title="Permanent link">¶</a></h2>
+<p>A template does not have to expect a local directory tree. Declare a
+<code>MANIFEST_URL</code> variable and give each data collection a <code>manifest</code> scan whose
+<code>manifest_type</code> names the manifest <code>type</code> it consumes, by convention its own
+tag:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">template</span><span class="p">:</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">template_id</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;org&gt;/&lt;name&gt;/&lt;version&gt;"</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Short</span><span class="nv"> </span><span class="s">description</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">template</span><span class="nv"> </span><span class="s">index"</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"1.0.0"</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="nt">variables</span><span class="p">:</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"MANIFEST_URL"</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"URL</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Data</span><span class="nv"> </span><span class="s">Manifest</span><span class="nv"> </span><span class="s">(JSON</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">CSV)</span><span class="nv"> </span><span class="s">listing</span><span class="nv"> </span><span class="s">{id,</span><span class="nv"> </span><span class="s">type,</span><span class="nv"> </span><span class="s">url[,</span><span class="nv"> </span><span class="s">run]}</span><span class="nv"> </span><span class="s">entries"</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span><span class="nt">dashboards</span><span class="p">:</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"dashboards/main.yaml"</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"My</span><span class="nv"> </span><span class="s">Manifest</span><span class="nv"> </span><span class="s">Analysis"</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="nt">project_type</span><span class="p">:</span><span class="w"> </span><span class="s">"basic"</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="nt">workflows</span><span class="p">:</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"manifest"</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">    </span><span class="nt">engine</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="s">"python"</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">    </span><span class="nt">data_location</span><span class="p">:</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">      </span><span class="nt">structure</span><span class="p">:</span><span class="w"> </span><span class="s">"flat"</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">      </span><span class="nt">locations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"{MANIFEST_URL}"</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">    </span><span class="nt">data_collections</span><span class="p">:</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"samples"</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"Table"</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">          </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="s">"Metadata"</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="w">          </span><span class="nt">scan</span><span class="p">:</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="w">            </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">manifest</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="w">            </span><span class="nt">scan_parameters</span><span class="p">:</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="w">              </span><span class="nt">manifest_url</span><span class="p">:</span><span class="w"> </span><span class="s">"{MANIFEST_URL}"</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="w">              </span><span class="nt">manifest_type</span><span class="p">:</span><span class="w"> </span><span class="s">"samples"</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="w">          </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="w">            </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"CSV"</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"measurements"</span>
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="w">        </span><span class="nt">optional</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"Table"</span>
+<a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a><span class="w">          </span><span class="nt">scan</span><span class="p">:</span>
+<a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a><span class="w">            </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">manifest</span>
+<a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a><span class="w">            </span><span class="nt">scan_parameters</span><span class="p">:</span>
+<a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a><span class="w">              </span><span class="nt">manifest_url</span><span class="p">:</span><span class="w"> </span><span class="s">"{MANIFEST_URL}"</span>
+<a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a><span class="w">              </span><span class="nt">manifest_type</span><span class="p">:</span><span class="w"> </span><span class="s">"measurements"</span>
+<a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a><span class="w">          </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
+<a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a><span class="w">            </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"CSV"</span>
+</code></pre></div>
+<p>Such a template is instantiated with <code>--manifest &lt;url or path&gt;</code> on the CLI, or
+from the <strong>From Manifest</strong> tab of the web UI (<code>POST /projects/from_manifest</code>).
+The tab only lists templates in which at least one data collection uses a
+<code>manifest</code> scan. The <strong>From a run folder</strong> tab, likewise, lists only templates
+that read a data root: a data collection whose scan mentions <code>{DATA_ROOT}</code>, or
+a scan or recipe collection in a workflow whose locations do. <code>init/*</code>
+templates are never listed there. The exception is a template detected in the
+run folder, or picked earlier, which stays in the list whatever it reads. Two things follow from the
+<a href="../../usage/projects/remote-data/#the-data-manifest-contract">manifest contract</a>:</p>
+<ul>
+<li>Mark <code>optional: true</code> the collections the manifest may not cover. When the
+  manifest has no rows of that <code>type</code>, the collection and the links referencing
+  it are pruned and the ingestion report records why. A <em>required</em> collection
+  with no rows fails the run instead, naming the missing type.</li>
+<li>Every collection built from the manifest carries the <code>depictio_manifest_id</code>
+  column, so links between them can use the <code>direct</code> resolver on that column
+  with no mapping.</li>
+</ul>
+<p>There is no <code>{DATA_ROOT}</code> to check the files against. The preview step of the
+UI, or <code>dry_run: true</code> on the endpoint, reports instead how the manifest covers
+the template: the entries each collection receives, the manifest types no
+collection reads, and the optional collections left out. Every <code>manifest</code>
+collection of the template must read the manifest with the same <code>id_field</code>,
+<code>type_field</code>, <code>url_field</code> and <code>run_field</code>, since one manifest backs them all:
+<strong>From Manifest</strong> refuses a template whose collections disagree.</p>
+<p>Do not over-think where the data must live: whoever instantiates the template
+can override any collection's location with <code>--bind TAG=LOCATION</code>, whatever
+scan mode the template declares.</p>
 <h2 id="step-5-test-end-to-end-open-a-pr">Step 5 — Test end-to-end &amp; open a PR<a class="headerlink" href="#step-5-test-end-to-end-open-a-pr" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/path/to/run<span class="w"> </span>--template<span class="w"> </span>&lt;pipeline&gt;/&lt;version&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/path/to/run<span class="w"> </span>--template<span class="w"> </span>&lt;pipeline&gt;/&lt;version&gt;
 </code></pre></div>
 <p>Check before submitting:</p>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled=""><span class="task-list-indicator"></span></label> <code>template_id</code> follows <code>&lt;org&gt;/&lt;pipeline&gt;/&lt;version&gt;</code>.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled=""><span class="task-list-indicator"></span></label> Every recipe has a docstring and a typed <code>OUTPUT_SCHEMA</code>; <code>depictio dev recipe run</code> passes for each.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled=""><span class="task-list-indicator"></span></label> Dashboard YAML is committed, follows the <a href="#template-authoring-rules">Template authoring rules</a>, and the template's <code>docs/dashboards.md</code> describes every tab.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled=""><span class="task-list-indicator"></span></label> No hardcoded absolute paths — only <code>{DATA_ROOT}</code> / template variables.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled=""><span class="task-list-indicator"></span></label> No hardcoded absolute paths or URLs: only <code>{DATA_ROOT}</code>, <code>{MANIFEST_URL}</code> and other template variables.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled=""><span class="task-list-indicator"></span></label> A full <code>depictio ingest &lt;path&gt; --template …</code> completes without error and dashboards render with the template badge.</li>
 </ul>
 <p>In the PR, include: the pipeline name + docs link, the version tested, the
@@ -5843,11 +6023,11 @@ logo carries the logo image instead. Check the icon exists in the bundled Materi
 set before using it: <code>mdi:target-arrow</code> does not, <code>bullseye-arrow</code> is the same glyph.</p>
 <p><strong>The reference is one block per version</strong>, driven by the picker rather than by a
 tab strip, with the include flush left inside it:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>&lt;div class="tpl-version-block" data-version="2.18.0" markdown&gt;
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>--8&lt;-- "pipeline-templates/nf-core/_generated/ampliseq-latest.md"
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>&lt;/div&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&lt;div class="tpl-version-block" data-version="2.18.0" markdown&gt;
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>--8&lt;-- "pipeline-templates/nf-core/_generated/ampliseq-latest.md"
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>&lt;/div&gt;
 </code></pre></div>
 <p>Generate those partials with
 <code>python -m depictio.dev_scripts.gen_template_docs --docs-root &lt;depictio-docs&gt;</code>.
@@ -5915,36 +6095,36 @@ rule leaves room for doubt, do what it does.</p>
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">main_dashboard</span><span class="p">:</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nf-core/&lt;pipeline&gt;</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">main_tab_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Overview</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">tab_icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdi:compass-outline</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nt">filter_panel_default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">collapsed</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nt">content_width_default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compact</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="nt">show_tab_header</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="nt">category_colors</span><span class="p">:</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="s">"{GROUP_COL}"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auto</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">  </span><span class="nt">filter_sections</span><span class="p">:</span>
-<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Sample filters</span><span class="p p-Indicator">,</span><span class="nt"> persistent</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> pin</span><span class="p">:</span><span class="w"> </span><span class="nv">top</span><span class="p p-Indicator">,</span><span class="nt"> icon</span><span class="p">:</span><span class="w"> </span><span class="nv">mdi</span><span class="p p-Indicator">:</span><span class="nv">filter-variant</span><span class="p p-Indicator">,</span><span class="nt"> color</span><span class="p">:</span><span class="w"> </span><span class="nv">teal</span><span class="p p-Indicator">}</span>
-<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">  </span><span class="nt">grid_sections</span><span class="p">:</span>
-<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Key figures</span><span class="p p-Indicator">,</span><span class="nt"> appearance</span><span class="p">:</span><span class="w"> </span><span class="nv">plain</span><span class="p p-Indicator">,</span><span class="nt"> card_variant</span><span class="p">:</span><span class="w"> </span><span class="nv">headline</span><span class="p p-Indicator">,</span><span class="nt"> filter_bar</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> visible_filters</span><span class="p">:</span><span class="w"> </span><span class="nv">2</span><span class="p p-Indicator">}</span>
-<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Findings</span><span class="p p-Indicator">,</span><span class="nt"> appearance</span><span class="p">:</span><span class="w"> </span><span class="nv">plain</span><span class="p p-Indicator">,</span><span class="nt"> figure_style</span><span class="p">:</span><span class="w"> </span><span class="nv">minimal</span><span class="p p-Indicator">,</span><span class="nt"> filter_bar</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> visible_filters</span><span class="p">:</span><span class="w"> </span><span class="nv">2</span><span class="p p-Indicator">}</span>
-<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">How to read this dashboard</span><span class="p p-Indicator">,</span><span class="nt"> appearance</span><span class="p">:</span><span class="w"> </span><span class="nv">plain</span><span class="p p-Indicator">}</span>
-<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Sample sheet</span><span class="p p-Indicator">,</span><span class="nt"> persistent</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> pin</span><span class="p">:</span><span class="w"> </span><span class="nv">bottom</span><span class="p p-Indicator">,</span><span class="nt"> collapsed</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> exclude_tabs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Overview</span><span class="p p-Indicator">]}</span>
-<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">  </span><span class="nt">components</span><span class="p">:</span>
-<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">component_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">text</span>
-<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">      </span><span class="nt">section</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Findings</span>
-<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">      </span><span class="nt">surface</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">card</span>
-<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">      </span><span class="nt">values</span><span class="p">:</span>
-<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">        </span><span class="nt">top</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">dc</span><span class="p">:</span><span class="w"> </span><span class="nv">&lt;tag&gt;</span><span class="p p-Indicator">,</span><span class="nt"> column</span><span class="p">:</span><span class="w"> </span><span class="nv">&lt;category&gt;</span><span class="p p-Indicator">,</span><span class="nt"> aggregation</span><span class="p">:</span><span class="w"> </span><span class="nv">top</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">&lt;abundance&gt;</span><span class="p p-Indicator">}</span>
-<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">        </span><span class="nt">top_share</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">dc</span><span class="p">:</span><span class="w"> </span><span class="nv">&lt;tag&gt;</span><span class="p p-Indicator">,</span><span class="nt"> column</span><span class="p">:</span><span class="w"> </span><span class="nv">&lt;category&gt;</span><span class="p p-Indicator">,</span><span class="nt"> aggregation</span><span class="p">:</span><span class="w"> </span><span class="nv">top_share</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">&lt;abundance&gt;</span><span class="p p-Indicator">,</span><span class="nt"> format</span><span class="p">:</span><span class="w"> </span><span class="nv">percent</span><span class="p p-Indicator">}</span>
-<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="w">      </span><span class="nt">body</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="w">        </span><span class="no">- **{{top_share}}** of reads are {{top}} – the dominant &lt;category&gt; [&lt;Tab&gt;](tab:&lt;Tab&gt;)</span>
-<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">component_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">highlight</span>
-<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="w">      </span><span class="nt">section</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Findings</span>
-<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="w">      </span><span class="nt">source_tab</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;Tab&gt;</span>
-<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="w">      </span><span class="nt">source_component</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;index of a figure on that tab&gt;</span>
-<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="w">      </span><span class="nt">caption</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">One sentence on what the figure shows.</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">main_dashboard</span><span class="p">:</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nf-core/&lt;pipeline&gt;</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">main_tab_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Overview</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="nt">tab_icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdi:compass-outline</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span><span class="nt">filter_panel_default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">collapsed</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="nt">content_width_default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compact</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span><span class="nt">show_tab_header</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">  </span><span class="nt">category_colors</span><span class="p">:</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="s">"{GROUP_COL}"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auto</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">  </span><span class="nt">filter_sections</span><span class="p">:</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Sample filters</span><span class="p p-Indicator">,</span><span class="nt"> persistent</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> pin</span><span class="p">:</span><span class="w"> </span><span class="nv">top</span><span class="p p-Indicator">,</span><span class="nt"> icon</span><span class="p">:</span><span class="w"> </span><span class="nv">mdi</span><span class="p p-Indicator">:</span><span class="nv">filter-variant</span><span class="p p-Indicator">,</span><span class="nt"> color</span><span class="p">:</span><span class="w"> </span><span class="nv">teal</span><span class="p p-Indicator">}</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">  </span><span class="nt">grid_sections</span><span class="p">:</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Key figures</span><span class="p p-Indicator">,</span><span class="nt"> appearance</span><span class="p">:</span><span class="w"> </span><span class="nv">plain</span><span class="p p-Indicator">,</span><span class="nt"> card_variant</span><span class="p">:</span><span class="w"> </span><span class="nv">headline</span><span class="p p-Indicator">,</span><span class="nt"> filter_bar</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> visible_filters</span><span class="p">:</span><span class="w"> </span><span class="nv">2</span><span class="p p-Indicator">}</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Findings</span><span class="p p-Indicator">,</span><span class="nt"> appearance</span><span class="p">:</span><span class="w"> </span><span class="nv">plain</span><span class="p p-Indicator">,</span><span class="nt"> figure_style</span><span class="p">:</span><span class="w"> </span><span class="nv">minimal</span><span class="p p-Indicator">,</span><span class="nt"> filter_bar</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> visible_filters</span><span class="p">:</span><span class="w"> </span><span class="nv">2</span><span class="p p-Indicator">}</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">How to read this dashboard</span><span class="p p-Indicator">,</span><span class="nt"> appearance</span><span class="p">:</span><span class="w"> </span><span class="nv">plain</span><span class="p p-Indicator">}</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="nv">Sample sheet</span><span class="p p-Indicator">,</span><span class="nt"> persistent</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> pin</span><span class="p">:</span><span class="w"> </span><span class="nv">bottom</span><span class="p p-Indicator">,</span><span class="nt"> collapsed</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> exclude_tabs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Overview</span><span class="p p-Indicator">]}</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">  </span><span class="nt">components</span><span class="p">:</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">component_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">text</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">      </span><span class="nt">section</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Findings</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">      </span><span class="nt">surface</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">card</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">      </span><span class="nt">values</span><span class="p">:</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">        </span><span class="nt">top</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">dc</span><span class="p">:</span><span class="w"> </span><span class="nv">&lt;tag&gt;</span><span class="p p-Indicator">,</span><span class="nt"> column</span><span class="p">:</span><span class="w"> </span><span class="nv">&lt;category&gt;</span><span class="p p-Indicator">,</span><span class="nt"> aggregation</span><span class="p">:</span><span class="w"> </span><span class="nv">top</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">&lt;abundance&gt;</span><span class="p p-Indicator">}</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="w">        </span><span class="nt">top_share</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">dc</span><span class="p">:</span><span class="w"> </span><span class="nv">&lt;tag&gt;</span><span class="p p-Indicator">,</span><span class="nt"> column</span><span class="p">:</span><span class="w"> </span><span class="nv">&lt;category&gt;</span><span class="p p-Indicator">,</span><span class="nt"> aggregation</span><span class="p">:</span><span class="w"> </span><span class="nv">top_share</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">&lt;abundance&gt;</span><span class="p p-Indicator">,</span><span class="nt"> format</span><span class="p">:</span><span class="w"> </span><span class="nv">percent</span><span class="p p-Indicator">}</span>
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="w">      </span><span class="nt">body</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="w">        </span><span class="no">- **{{top_share}}** of reads are {{top}} – the dominant &lt;category&gt; [&lt;Tab&gt;](tab:&lt;Tab&gt;)</span>
+<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">component_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">highlight</span>
+<a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">      </span><span class="nt">section</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Findings</span>
+<a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="w">      </span><span class="nt">source_tab</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;Tab&gt;</span>
+<a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="w">      </span><span class="nt">source_component</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;index of a figure on that tab&gt;</span>
+<a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="w">      </span><span class="nt">caption</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">One sentence on what the figure shows.</span>
 </code></pre></div>
 <ul>
 <li>The filter bar of a section narrows that section only, and its description says

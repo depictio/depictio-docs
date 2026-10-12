@@ -1571,6 +1571,8 @@
       
         
       
+        
+      
     
     
     
@@ -1755,6 +1757,56 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#remote-scan-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote scan modes (v1.16.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Remote scan modes (v1.16.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#url-one-remote-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        url: one remote file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s3_prefix-every-object-under-a-prefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        s3_prefix: every object under a prefix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manifest-the-entries-of-a-data-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        manifest: the entries of a Data Manifest
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1817,6 +1869,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../remote-data/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.43-1.8 2.13-3.42Q9.07 4.1 11 4.1q.83 0 1.41.59.59.59.59 1.41v6.05l1.6-1.55L16 12l-4 4-4-4 1.4-1.4 1.6 1.55V6.1q-1.9.35-2.95 1.84T7 11h-.5q-1.45 0-2.47 1.03Q3 13.05 3 14.5T4.03 17q1.02 1 2.47 1h12q1.05 0 1.77-.73.73-.72.73-1.77t-.73-1.77Q19.55 13 18.5 13H17v-2q0-1.2-.55-2.24Q15.9 7.73 15 7V4.68q1.85.87 2.93 2.58Q19 9 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20M12 11.05"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote data and manifests
   
 
     
@@ -5143,6 +5225,56 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#remote-scan-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote scan modes (v1.16.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Remote scan modes (v1.16.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#url-one-remote-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        url: one remote file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s3_prefix-every-object-under-a-prefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        s3_prefix: every object under a prefix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manifest-the-entries-of-a-data-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        manifest: the entries of a Data Manifest
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5331,202 +5463,378 @@
 <a id="__codelineno-0-150" name="__codelineno-0-150" href="#__codelineno-0-150"></a><span class="w">              </span><span class="c1"># Options:</span>
 <a id="__codelineno-0-151" name="__codelineno-0-151" href="#__codelineno-0-151"></a><span class="w">              </span><span class="c1">#   "single" - Single file per project/run</span>
 <a id="__codelineno-0-152" name="__codelineno-0-152" href="#__codelineno-0-152"></a><span class="w">              </span><span class="c1">#   "recursive" - Pattern-based file discovery</span>
-<a id="__codelineno-0-153" name="__codelineno-0-153" href="#__codelineno-0-153"></a>
-<a id="__codelineno-0-154" name="__codelineno-0-154" href="#__codelineno-0-154"></a><span class="w">            </span><span class="c1"># Required: Mode-specific scan parameters</span>
-<a id="__codelineno-0-155" name="__codelineno-0-155" href="#__codelineno-0-155"></a><span class="w">            </span><span class="nt">scan_parameters</span><span class="p">:</span>
-<a id="__codelineno-0-156" name="__codelineno-0-156" href="#__codelineno-0-156"></a><span class="w">              </span><span class="c1"># For mode: "recursive" - specify search pattern</span>
-<a id="__codelineno-0-157" name="__codelineno-0-157" href="#__codelineno-0-157"></a><span class="w">              </span><span class="nt">regex_config</span><span class="p">:</span><span class="w"> </span><span class="c1"># Required for recursive mode: Pattern matching configuration</span>
-<a id="__codelineno-0-158" name="__codelineno-0-158" href="#__codelineno-0-158"></a><span class="w">                </span><span class="nt">pattern</span><span class="p">:</span>
-<a id="__codelineno-0-159" name="__codelineno-0-159" href="#__codelineno-0-159"></a><span class="w">                  </span><span class="s">"salmon/.*/quant.sf"</span><span class="w"> </span><span class="c1"># Required: Regex pattern for file discovery</span>
-<a id="__codelineno-0-160" name="__codelineno-0-160" href="#__codelineno-0-160"></a><span class="w">                  </span><span class="c1"># Example: "stats/.*_stats\\.tsv"</span>
-<a id="__codelineno-0-161" name="__codelineno-0-161" href="#__codelineno-0-161"></a><span class="w">                </span><span class="nt">wildcards</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: Named capture groups for metadata extraction</span>
-<a id="__codelineno-0-162" name="__codelineno-0-162" href="#__codelineno-0-162"></a><span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"sample_id"</span><span class="w"> </span><span class="c1"># Wildcard name for metadata extraction</span>
-<a id="__codelineno-0-163" name="__codelineno-0-163" href="#__codelineno-0-163"></a><span class="w">                    </span><span class="nt">wildcard_regex</span><span class="p">:</span><span class="w"> </span><span class="s">"salmon/([^/]+)/quant.sf"</span><span class="w"> </span><span class="c1"># Regex with capture group</span>
-<a id="__codelineno-0-164" name="__codelineno-0-164" href="#__codelineno-0-164"></a>
-<a id="__codelineno-0-165" name="__codelineno-0-165" href="#__codelineno-0-165"></a><span class="w">              </span><span class="c1"># For mode: "single" - specify exact file (alternative to regex_config)</span>
-<a id="__codelineno-0-166" name="__codelineno-0-166" href="#__codelineno-0-166"></a><span class="w">              </span><span class="c1"># filename: "metadata/sample_info.csv"  # Required for single mode: File path</span>
-<a id="__codelineno-0-167" name="__codelineno-0-167" href="#__codelineno-0-167"></a><span class="w">              </span><span class="c1"># Can be absolute or relative path</span>
-<a id="__codelineno-0-168" name="__codelineno-0-168" href="#__codelineno-0-168"></a>
-<a id="__codelineno-0-169" name="__codelineno-0-169" href="#__codelineno-0-169"></a><span class="w">          </span><span class="c1"># Required: Type-specific configuration</span>
-<a id="__codelineno-0-170" name="__codelineno-0-170" href="#__codelineno-0-170"></a><span class="w">          </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
-<a id="__codelineno-0-171" name="__codelineno-0-171" href="#__codelineno-0-171"></a><span class="w">            </span><span class="c1"># Required: File format specification</span>
-<a id="__codelineno-0-172" name="__codelineno-0-172" href="#__codelineno-0-172"></a><span class="w">            </span><span class="nt">format</span><span class="p">:</span>
-<a id="__codelineno-0-173" name="__codelineno-0-173" href="#__codelineno-0-173"></a><span class="w">              </span><span class="s">"tsv"</span><span class="w"> </span><span class="c1"># Required: File format</span>
-<a id="__codelineno-0-174" name="__codelineno-0-174" href="#__codelineno-0-174"></a><span class="w">              </span><span class="c1"># Values: "csv", "tsv", "xlsx", "xls", "parquet", "feather"</span>
-<a id="__codelineno-0-175" name="__codelineno-0-175" href="#__codelineno-0-175"></a><span class="w">              </span><span class="c1"># Case-insensitive, normalized to lowercase</span>
-<a id="__codelineno-0-176" name="__codelineno-0-176" href="#__codelineno-0-176"></a>
-<a id="__codelineno-0-177" name="__codelineno-0-177" href="#__codelineno-0-177"></a><span class="w">            </span><span class="c1"># Required: Data reading configuration using Polars</span>
-<a id="__codelineno-0-178" name="__codelineno-0-178" href="#__codelineno-0-178"></a><span class="w">            </span><span class="nt">polars_kwargs</span><span class="p">:</span>
-<a id="__codelineno-0-179" name="__codelineno-0-179" href="#__codelineno-0-179"></a><span class="w">              </span><span class="c1"># Common options</span>
-<a id="__codelineno-0-180" name="__codelineno-0-180" href="#__codelineno-0-180"></a><span class="w">              </span><span class="nt">separator</span><span class="p">:</span>
-<a id="__codelineno-0-181" name="__codelineno-0-181" href="#__codelineno-0-181"></a><span class="w">                </span><span class="s">"\t"</span><span class="w"> </span><span class="c1"># Required for CSV/TSV: Column separator character</span>
-<a id="__codelineno-0-182" name="__codelineno-0-182" href="#__codelineno-0-182"></a><span class="w">                </span><span class="c1"># Default: "," for CSV, "\t" for TSV</span>
-<a id="__codelineno-0-183" name="__codelineno-0-183" href="#__codelineno-0-183"></a><span class="w">                </span><span class="c1"># Example: ",", "\t", "|", ";"</span>
-<a id="__codelineno-0-184" name="__codelineno-0-184" href="#__codelineno-0-184"></a><span class="w">              </span><span class="nt">has_header</span><span class="p">:</span>
-<a id="__codelineno-0-185" name="__codelineno-0-185" href="#__codelineno-0-185"></a><span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># Required: First row contains column names</span>
-<a id="__codelineno-0-186" name="__codelineno-0-186" href="#__codelineno-0-186"></a><span class="w">                </span><span class="c1"># true: First row is headers, false: First row is data</span>
-<a id="__codelineno-0-187" name="__codelineno-0-187" href="#__codelineno-0-187"></a><span class="w">              </span><span class="nt">skip_rows</span><span class="p">:</span>
-<a id="__codelineno-0-188" name="__codelineno-0-188" href="#__codelineno-0-188"></a><span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"> </span><span class="c1"># Optional: Number of rows to skip at file beginning (default: 0)</span>
-<a id="__codelineno-0-189" name="__codelineno-0-189" href="#__codelineno-0-189"></a><span class="w">                </span><span class="c1"># Useful for files with metadata headers</span>
-<a id="__codelineno-0-190" name="__codelineno-0-190" href="#__codelineno-0-190"></a>
-<a id="__codelineno-0-191" name="__codelineno-0-191" href="#__codelineno-0-191"></a><span class="w">              </span><span class="c1"># Advanced options</span>
-<a id="__codelineno-0-192" name="__codelineno-0-192" href="#__codelineno-0-192"></a><span class="w">              </span><span class="nt">column_types</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: Explicit column type mapping</span>
-<a id="__codelineno-0-193" name="__codelineno-0-193" href="#__codelineno-0-193"></a><span class="w">                </span><span class="nt">Name</span><span class="p">:</span><span class="w"> </span><span class="s">"String"</span><span class="w"> </span><span class="c1"># Forces specific data types</span>
-<a id="__codelineno-0-194" name="__codelineno-0-194" href="#__codelineno-0-194"></a><span class="w">                </span><span class="nt">Length</span><span class="p">:</span><span class="w"> </span><span class="s">"Int64"</span><span class="w"> </span><span class="c1"># Example types: "String", "Int64", "Float64", "Boolean"</span>
-<a id="__codelineno-0-195" name="__codelineno-0-195" href="#__codelineno-0-195"></a><span class="w">                </span><span class="nt">EffectiveLength</span><span class="p">:</span><span class="w"> </span><span class="s">"Float64"</span>
-<a id="__codelineno-0-196" name="__codelineno-0-196" href="#__codelineno-0-196"></a><span class="w">                </span><span class="nt">TPM</span><span class="p">:</span><span class="w"> </span><span class="s">"Float64"</span>
-<a id="__codelineno-0-197" name="__codelineno-0-197" href="#__codelineno-0-197"></a><span class="w">                </span><span class="nt">NumReads</span><span class="p">:</span><span class="w"> </span><span class="s">"Float64"</span>
-<a id="__codelineno-0-198" name="__codelineno-0-198" href="#__codelineno-0-198"></a><span class="w">              </span><span class="nt">column_names</span><span class="p">:</span>
-<a id="__codelineno-0-199" name="__codelineno-0-199" href="#__codelineno-0-199"></a><span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># Optional: Override column names when has_header: false</span>
-<a id="__codelineno-0-200" name="__codelineno-0-200" href="#__codelineno-0-200"></a><span class="w">                </span><span class="c1"># Example: ["sample", "gene", "expression"]</span>
-<a id="__codelineno-0-201" name="__codelineno-0-201" href="#__codelineno-0-201"></a><span class="w">              </span><span class="nt">null_values</span><span class="p">:</span>
-<a id="__codelineno-0-202" name="__codelineno-0-202" href="#__codelineno-0-202"></a><span class="w">                </span><span class="p p-Indicator">[</span><span class="s">""</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"NULL"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"null"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"None"</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># Optional: Values to treat as null/missing</span>
-<a id="__codelineno-0-203" name="__codelineno-0-203" href="#__codelineno-0-203"></a><span class="w">                </span><span class="c1"># Default: ["", "NULL", "null", "None"]</span>
-<a id="__codelineno-0-204" name="__codelineno-0-204" href="#__codelineno-0-204"></a><span class="w">              </span><span class="nt">n_rows</span><span class="p">:</span>
-<a id="__codelineno-0-205" name="__codelineno-0-205" href="#__codelineno-0-205"></a><span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># Optional: Limit number of rows to read</span>
-<a id="__codelineno-0-206" name="__codelineno-0-206" href="#__codelineno-0-206"></a><span class="w">                </span><span class="c1"># Useful for testing configurations</span>
-<a id="__codelineno-0-207" name="__codelineno-0-207" href="#__codelineno-0-207"></a><span class="w">              </span><span class="nt">encoding</span><span class="p">:</span>
-<a id="__codelineno-0-208" name="__codelineno-0-208" href="#__codelineno-0-208"></a><span class="w">                </span><span class="s">"utf8"</span><span class="w"> </span><span class="c1"># Optional: File encoding (default: "utf8")</span>
-<a id="__codelineno-0-209" name="__codelineno-0-209" href="#__codelineno-0-209"></a><span class="w">                </span><span class="c1"># Example: "utf8", "latin1", "ascii"</span>
-<a id="__codelineno-0-210" name="__codelineno-0-210" href="#__codelineno-0-210"></a>
-<a id="__codelineno-0-211" name="__codelineno-0-211" href="#__codelineno-0-211"></a><span class="w">              </span><span class="c1"># Excel-specific options (for .xlsx, .xls files)</span>
-<a id="__codelineno-0-212" name="__codelineno-0-212" href="#__codelineno-0-212"></a><span class="w">              </span><span class="nt">sheet_name</span><span class="p">:</span>
-<a id="__codelineno-0-213" name="__codelineno-0-213" href="#__codelineno-0-213"></a><span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># Optional: Excel sheet name to read</span>
-<a id="__codelineno-0-214" name="__codelineno-0-214" href="#__codelineno-0-214"></a><span class="w">                </span><span class="c1"># Example: "Results", "Sheet1"</span>
-<a id="__codelineno-0-215" name="__codelineno-0-215" href="#__codelineno-0-215"></a><span class="w">              </span><span class="nt">sheet_id</span><span class="p">:</span>
-<a id="__codelineno-0-216" name="__codelineno-0-216" href="#__codelineno-0-216"></a><span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># Optional: Excel sheet index (0-based)</span>
-<a id="__codelineno-0-217" name="__codelineno-0-217" href="#__codelineno-0-217"></a><span class="w">                </span><span class="c1"># Example: 0 (first sheet), 1 (second sheet)</span>
-<a id="__codelineno-0-218" name="__codelineno-0-218" href="#__codelineno-0-218"></a>
-<a id="__codelineno-0-219" name="__codelineno-0-219" href="#__codelineno-0-219"></a><span class="w">            </span><span class="c1"># Optional: Column filtering for performance</span>
-<a id="__codelineno-0-220" name="__codelineno-0-220" href="#__codelineno-0-220"></a><span class="w">            </span><span class="nt">keep_columns</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: Column filtering</span>
-<a id="__codelineno-0-221" name="__codelineno-0-221" href="#__codelineno-0-221"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Name"</span><span class="w"> </span><span class="c1"># If specified, only these columns are retained</span>
-<a id="__codelineno-0-222" name="__codelineno-0-222" href="#__codelineno-0-222"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"TPM"</span><span class="w"> </span><span class="c1"># Improves performance for large datasets</span>
-<a id="__codelineno-0-223" name="__codelineno-0-223" href="#__codelineno-0-223"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"NumReads"</span><span class="w"> </span><span class="c1"># Example: ["sample_id", "expression", "p_value"]</span>
-<a id="__codelineno-0-224" name="__codelineno-0-224" href="#__codelineno-0-224"></a>
-<a id="__codelineno-0-225" name="__codelineno-0-225" href="#__codelineno-0-225"></a><span class="w">            </span><span class="c1"># Optional: Column documentation</span>
-<a id="__codelineno-0-226" name="__codelineno-0-226" href="#__codelineno-0-226"></a><span class="w">            </span><span class="nt">columns_description</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: Column documentation</span>
-<a id="__codelineno-0-227" name="__codelineno-0-227" href="#__codelineno-0-227"></a><span class="w">              </span><span class="nt">Name</span><span class="p">:</span><span class="w"> </span><span class="s">"Gene/transcript</span><span class="nv"> </span><span class="s">identifier"</span><span class="w"> </span><span class="c1"># Human-readable column descriptions</span>
-<a id="__codelineno-0-228" name="__codelineno-0-228" href="#__codelineno-0-228"></a><span class="w">              </span><span class="nt">TPM</span><span class="p">:</span><span class="w"> </span><span class="s">"Transcripts</span><span class="nv"> </span><span class="s">per</span><span class="nv"> </span><span class="s">million"</span><span class="w"> </span><span class="c1"># Used in dashboard tooltips and documentation</span>
-<a id="__codelineno-0-229" name="__codelineno-0-229" href="#__codelineno-0-229"></a><span class="w">              </span><span class="nt">NumReads</span><span class="p">:</span><span class="w"> </span><span class="s">"Estimated</span><span class="nv"> </span><span class="s">read</span><span class="nv"> </span><span class="s">count"</span><span class="w"> </span><span class="c1"># Example format: column_name: "Description"</span>
-<a id="__codelineno-0-230" name="__codelineno-0-230" href="#__codelineno-0-230"></a>
-<a id="__codelineno-0-231" name="__codelineno-0-231" href="#__codelineno-0-231"></a><span class="w">        </span><span class="c1"># Optional: Data joining configuration (client-side pre-computed)</span>
-<a id="__codelineno-0-232" name="__codelineno-0-232" href="#__codelineno-0-232"></a><span class="w">        </span><span class="c1"># NOTE: Joins combine Table DCs during depictio ingest</span>
-<a id="__codelineno-0-233" name="__codelineno-0-233" href="#__codelineno-0-233"></a><span class="w">        </span><span class="c1"># Use project-level "links" for runtime cross-DC filtering in UI</span>
-<a id="__codelineno-0-234" name="__codelineno-0-234" href="#__codelineno-0-234"></a><span class="w">        </span><span class="nt">join</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: Join this collection with others</span>
-<a id="__codelineno-0-235" name="__codelineno-0-235" href="#__codelineno-0-235"></a><span class="w">          </span><span class="nt">on_columns</span><span class="p">:</span>
-<a id="__codelineno-0-236" name="__codelineno-0-236" href="#__codelineno-0-236"></a><span class="w">            </span><span class="p p-Indicator">[</span><span class="s">"sample_id"</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># Column names for joining</span>
-<a id="__codelineno-0-237" name="__codelineno-0-237" href="#__codelineno-0-237"></a><span class="w">            </span><span class="c1"># Must exist in both datasets</span>
-<a id="__codelineno-0-238" name="__codelineno-0-238" href="#__codelineno-0-238"></a><span class="w">          </span><span class="nt">how</span><span class="p">:</span>
-<a id="__codelineno-0-239" name="__codelineno-0-239" href="#__codelineno-0-239"></a><span class="w">            </span><span class="s">"inner"</span><span class="w"> </span><span class="c1"># Join type: "inner", "outer", "left", "right"</span>
-<a id="__codelineno-0-240" name="__codelineno-0-240" href="#__codelineno-0-240"></a><span class="w">          </span><span class="nt">with_dc</span><span class="p">:</span>
-<a id="__codelineno-0-241" name="__codelineno-0-241" href="#__codelineno-0-241"></a><span class="w">            </span><span class="p p-Indicator">[</span><span class="s">"qc_summary"</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># Target data collection tags</span>
+<a id="__codelineno-0-153" name="__codelineno-0-153" href="#__codelineno-0-153"></a><span class="w">              </span><span class="c1">#   "url" - One remote file at an s3:// or https:// URL</span>
+<a id="__codelineno-0-154" name="__codelineno-0-154" href="#__codelineno-0-154"></a><span class="w">              </span><span class="c1">#   "s3_prefix" - Every object under an s3:// prefix matching a glob</span>
+<a id="__codelineno-0-155" name="__codelineno-0-155" href="#__codelineno-0-155"></a><span class="w">              </span><span class="c1">#   "manifest" - The files a Data Manifest lists for this collection</span>
+<a id="__codelineno-0-156" name="__codelineno-0-156" href="#__codelineno-0-156"></a><span class="w">              </span><span class="c1"># mode and scan_parameters must agree: a parameter block that</span>
+<a id="__codelineno-0-157" name="__codelineno-0-157" href="#__codelineno-0-157"></a><span class="w">              </span><span class="c1"># belongs to another mode is rejected with a message naming both.</span>
+<a id="__codelineno-0-158" name="__codelineno-0-158" href="#__codelineno-0-158"></a><span class="w">              </span><span class="c1"># The three remote modes are detailed under "Remote scan modes" below.</span>
+<a id="__codelineno-0-159" name="__codelineno-0-159" href="#__codelineno-0-159"></a>
+<a id="__codelineno-0-160" name="__codelineno-0-160" href="#__codelineno-0-160"></a><span class="w">            </span><span class="c1"># Required: Mode-specific scan parameters</span>
+<a id="__codelineno-0-161" name="__codelineno-0-161" href="#__codelineno-0-161"></a><span class="w">            </span><span class="nt">scan_parameters</span><span class="p">:</span>
+<a id="__codelineno-0-162" name="__codelineno-0-162" href="#__codelineno-0-162"></a><span class="w">              </span><span class="c1"># For mode: "recursive" - specify search pattern</span>
+<a id="__codelineno-0-163" name="__codelineno-0-163" href="#__codelineno-0-163"></a><span class="w">              </span><span class="nt">regex_config</span><span class="p">:</span><span class="w"> </span><span class="c1"># Required for recursive mode: Pattern matching configuration</span>
+<a id="__codelineno-0-164" name="__codelineno-0-164" href="#__codelineno-0-164"></a><span class="w">                </span><span class="nt">pattern</span><span class="p">:</span>
+<a id="__codelineno-0-165" name="__codelineno-0-165" href="#__codelineno-0-165"></a><span class="w">                  </span><span class="s">"salmon/.*/quant.sf"</span><span class="w"> </span><span class="c1"># Required: Regex pattern for file discovery</span>
+<a id="__codelineno-0-166" name="__codelineno-0-166" href="#__codelineno-0-166"></a><span class="w">                  </span><span class="c1"># Example: "stats/.*_stats\\.tsv"</span>
+<a id="__codelineno-0-167" name="__codelineno-0-167" href="#__codelineno-0-167"></a><span class="w">                </span><span class="nt">wildcards</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: Named capture groups for metadata extraction</span>
+<a id="__codelineno-0-168" name="__codelineno-0-168" href="#__codelineno-0-168"></a><span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"sample_id"</span><span class="w"> </span><span class="c1"># Wildcard name for metadata extraction</span>
+<a id="__codelineno-0-169" name="__codelineno-0-169" href="#__codelineno-0-169"></a><span class="w">                    </span><span class="nt">wildcard_regex</span><span class="p">:</span><span class="w"> </span><span class="s">"salmon/([^/]+)/quant.sf"</span><span class="w"> </span><span class="c1"># Regex with capture group</span>
+<a id="__codelineno-0-170" name="__codelineno-0-170" href="#__codelineno-0-170"></a>
+<a id="__codelineno-0-171" name="__codelineno-0-171" href="#__codelineno-0-171"></a><span class="w">              </span><span class="c1"># For mode: "single" - specify exact file (alternative to regex_config)</span>
+<a id="__codelineno-0-172" name="__codelineno-0-172" href="#__codelineno-0-172"></a><span class="w">              </span><span class="c1"># filename: "metadata/sample_info.csv"  # Required for single mode: File path</span>
+<a id="__codelineno-0-173" name="__codelineno-0-173" href="#__codelineno-0-173"></a><span class="w">              </span><span class="c1"># Can be absolute or relative path</span>
+<a id="__codelineno-0-174" name="__codelineno-0-174" href="#__codelineno-0-174"></a>
+<a id="__codelineno-0-175" name="__codelineno-0-175" href="#__codelineno-0-175"></a><span class="w">              </span><span class="c1"># For mode: "url" - one remote file, fetched by the server</span>
+<a id="__codelineno-0-176" name="__codelineno-0-176" href="#__codelineno-0-176"></a><span class="w">              </span><span class="c1"># url: "https://data.example.org/run42/metadata.tsv"  # Required: absolute s3:// or https:// URL</span>
+<a id="__codelineno-0-177" name="__codelineno-0-177" href="#__codelineno-0-177"></a>
+<a id="__codelineno-0-178" name="__codelineno-0-178" href="#__codelineno-0-178"></a><span class="w">              </span><span class="c1"># For mode: "s3_prefix" - list a bucket prefix (the remote counterpart of recursive)</span>
+<a id="__codelineno-0-179" name="__codelineno-0-179" href="#__codelineno-0-179"></a><span class="w">              </span><span class="c1"># prefix: "s3://my-bucket/run42/"          # Required: s3:// prefix, bucket included</span>
+<a id="__codelineno-0-180" name="__codelineno-0-180" href="#__codelineno-0-180"></a><span class="w">              </span><span class="c1"># pattern: "*.samples.csv"                 # Optional: glob on the key relative to the prefix, or on the file name (default "*")</span>
+<a id="__codelineno-0-181" name="__codelineno-0-181" href="#__codelineno-0-181"></a><span class="w">              </span><span class="c1"># pattern_syntax: "glob"                   # Optional: "glob" (default) or "regex"</span>
+<a id="__codelineno-0-182" name="__codelineno-0-182" href="#__codelineno-0-182"></a><span class="w">              </span><span class="c1"># id_regex: "^([^/]+?)\\.samples\\.csv$"   # Optional: one capture group, searched in the key relative to the prefix; the capture becomes depictio_manifest_id</span>
+<a id="__codelineno-0-183" name="__codelineno-0-183" href="#__codelineno-0-183"></a><span class="w">              </span><span class="c1"># max_files: 10000                         # Optional: ceiling on matching objects (default 10000, max 100000)</span>
+<a id="__codelineno-0-184" name="__codelineno-0-184" href="#__codelineno-0-184"></a>
+<a id="__codelineno-0-185" name="__codelineno-0-185" href="#__codelineno-0-185"></a><span class="w">              </span><span class="c1"># For mode: "manifest" - consume the entries of a Data Manifest</span>
+<a id="__codelineno-0-186" name="__codelineno-0-186" href="#__codelineno-0-186"></a><span class="w">              </span><span class="c1"># manifest_url: "https://data.example.org/run42/manifest.json"  # Required: https:// manifest URL (a local path in CLI context)</span>
+<a id="__codelineno-0-187" name="__codelineno-0-187" href="#__codelineno-0-187"></a><span class="w">              </span><span class="c1"># manifest_type: "samples"                 # Required: manifest `type` this collection consumes (its tag, by convention)</span>
+<a id="__codelineno-0-188" name="__codelineno-0-188" href="#__codelineno-0-188"></a><span class="w">              </span><span class="c1"># id_field: "id"                           # Optional: manifest column holding the entity id</span>
+<a id="__codelineno-0-189" name="__codelineno-0-189" href="#__codelineno-0-189"></a><span class="w">              </span><span class="c1"># url_field: "url"                         # Optional: manifest column holding the file URL</span>
+<a id="__codelineno-0-190" name="__codelineno-0-190" href="#__codelineno-0-190"></a><span class="w">              </span><span class="c1"># type_field: "type"                       # Optional: manifest column holding the type</span>
+<a id="__codelineno-0-191" name="__codelineno-0-191" href="#__codelineno-0-191"></a><span class="w">              </span><span class="c1"># run_field: "run"                         # Optional: manifest column holding the run grouping</span>
+<a id="__codelineno-0-192" name="__codelineno-0-192" href="#__codelineno-0-192"></a>
+<a id="__codelineno-0-193" name="__codelineno-0-193" href="#__codelineno-0-193"></a><span class="w">          </span><span class="c1"># Required: Type-specific configuration</span>
+<a id="__codelineno-0-194" name="__codelineno-0-194" href="#__codelineno-0-194"></a><span class="w">          </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
+<a id="__codelineno-0-195" name="__codelineno-0-195" href="#__codelineno-0-195"></a><span class="w">            </span><span class="c1"># Required: File format specification</span>
+<a id="__codelineno-0-196" name="__codelineno-0-196" href="#__codelineno-0-196"></a><span class="w">            </span><span class="nt">format</span><span class="p">:</span>
+<a id="__codelineno-0-197" name="__codelineno-0-197" href="#__codelineno-0-197"></a><span class="w">              </span><span class="s">"tsv"</span><span class="w"> </span><span class="c1"># Required: File format</span>
+<a id="__codelineno-0-198" name="__codelineno-0-198" href="#__codelineno-0-198"></a><span class="w">              </span><span class="c1"># Values: "csv", "tsv", "xlsx", "xls", "parquet", "feather"</span>
+<a id="__codelineno-0-199" name="__codelineno-0-199" href="#__codelineno-0-199"></a><span class="w">              </span><span class="c1"># Case-insensitive, normalized to lowercase</span>
+<a id="__codelineno-0-200" name="__codelineno-0-200" href="#__codelineno-0-200"></a>
+<a id="__codelineno-0-201" name="__codelineno-0-201" href="#__codelineno-0-201"></a><span class="w">            </span><span class="c1"># Required: Data reading configuration using Polars</span>
+<a id="__codelineno-0-202" name="__codelineno-0-202" href="#__codelineno-0-202"></a><span class="w">            </span><span class="nt">polars_kwargs</span><span class="p">:</span>
+<a id="__codelineno-0-203" name="__codelineno-0-203" href="#__codelineno-0-203"></a><span class="w">              </span><span class="c1"># Common options</span>
+<a id="__codelineno-0-204" name="__codelineno-0-204" href="#__codelineno-0-204"></a><span class="w">              </span><span class="nt">separator</span><span class="p">:</span>
+<a id="__codelineno-0-205" name="__codelineno-0-205" href="#__codelineno-0-205"></a><span class="w">                </span><span class="s">"\t"</span><span class="w"> </span><span class="c1"># Required for CSV/TSV: Column separator character</span>
+<a id="__codelineno-0-206" name="__codelineno-0-206" href="#__codelineno-0-206"></a><span class="w">                </span><span class="c1"># Default: "," for CSV, "\t" for TSV</span>
+<a id="__codelineno-0-207" name="__codelineno-0-207" href="#__codelineno-0-207"></a><span class="w">                </span><span class="c1"># Example: ",", "\t", "|", ";"</span>
+<a id="__codelineno-0-208" name="__codelineno-0-208" href="#__codelineno-0-208"></a><span class="w">              </span><span class="nt">has_header</span><span class="p">:</span>
+<a id="__codelineno-0-209" name="__codelineno-0-209" href="#__codelineno-0-209"></a><span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># Required: First row contains column names</span>
+<a id="__codelineno-0-210" name="__codelineno-0-210" href="#__codelineno-0-210"></a><span class="w">                </span><span class="c1"># true: First row is headers, false: First row is data</span>
+<a id="__codelineno-0-211" name="__codelineno-0-211" href="#__codelineno-0-211"></a><span class="w">              </span><span class="nt">skip_rows</span><span class="p">:</span>
+<a id="__codelineno-0-212" name="__codelineno-0-212" href="#__codelineno-0-212"></a><span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"> </span><span class="c1"># Optional: Number of rows to skip at file beginning (default: 0)</span>
+<a id="__codelineno-0-213" name="__codelineno-0-213" href="#__codelineno-0-213"></a><span class="w">                </span><span class="c1"># Useful for files with metadata headers</span>
+<a id="__codelineno-0-214" name="__codelineno-0-214" href="#__codelineno-0-214"></a>
+<a id="__codelineno-0-215" name="__codelineno-0-215" href="#__codelineno-0-215"></a><span class="w">              </span><span class="c1"># Advanced options</span>
+<a id="__codelineno-0-216" name="__codelineno-0-216" href="#__codelineno-0-216"></a><span class="w">              </span><span class="nt">column_types</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: Explicit column type mapping</span>
+<a id="__codelineno-0-217" name="__codelineno-0-217" href="#__codelineno-0-217"></a><span class="w">                </span><span class="nt">Name</span><span class="p">:</span><span class="w"> </span><span class="s">"String"</span><span class="w"> </span><span class="c1"># Forces specific data types</span>
+<a id="__codelineno-0-218" name="__codelineno-0-218" href="#__codelineno-0-218"></a><span class="w">                </span><span class="nt">Length</span><span class="p">:</span><span class="w"> </span><span class="s">"Int64"</span><span class="w"> </span><span class="c1"># Example types: "String", "Int64", "Float64", "Boolean"</span>
+<a id="__codelineno-0-219" name="__codelineno-0-219" href="#__codelineno-0-219"></a><span class="w">                </span><span class="nt">EffectiveLength</span><span class="p">:</span><span class="w"> </span><span class="s">"Float64"</span>
+<a id="__codelineno-0-220" name="__codelineno-0-220" href="#__codelineno-0-220"></a><span class="w">                </span><span class="nt">TPM</span><span class="p">:</span><span class="w"> </span><span class="s">"Float64"</span>
+<a id="__codelineno-0-221" name="__codelineno-0-221" href="#__codelineno-0-221"></a><span class="w">                </span><span class="nt">NumReads</span><span class="p">:</span><span class="w"> </span><span class="s">"Float64"</span>
+<a id="__codelineno-0-222" name="__codelineno-0-222" href="#__codelineno-0-222"></a><span class="w">              </span><span class="nt">column_names</span><span class="p">:</span>
+<a id="__codelineno-0-223" name="__codelineno-0-223" href="#__codelineno-0-223"></a><span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># Optional: Override column names when has_header: false</span>
+<a id="__codelineno-0-224" name="__codelineno-0-224" href="#__codelineno-0-224"></a><span class="w">                </span><span class="c1"># Example: ["sample", "gene", "expression"]</span>
+<a id="__codelineno-0-225" name="__codelineno-0-225" href="#__codelineno-0-225"></a><span class="w">              </span><span class="nt">null_values</span><span class="p">:</span>
+<a id="__codelineno-0-226" name="__codelineno-0-226" href="#__codelineno-0-226"></a><span class="w">                </span><span class="p p-Indicator">[</span><span class="s">""</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"NULL"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"null"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"None"</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># Optional: Values to treat as null/missing</span>
+<a id="__codelineno-0-227" name="__codelineno-0-227" href="#__codelineno-0-227"></a><span class="w">                </span><span class="c1"># Default: ["", "NULL", "null", "None"]</span>
+<a id="__codelineno-0-228" name="__codelineno-0-228" href="#__codelineno-0-228"></a><span class="w">              </span><span class="nt">n_rows</span><span class="p">:</span>
+<a id="__codelineno-0-229" name="__codelineno-0-229" href="#__codelineno-0-229"></a><span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># Optional: Limit number of rows to read</span>
+<a id="__codelineno-0-230" name="__codelineno-0-230" href="#__codelineno-0-230"></a><span class="w">                </span><span class="c1"># Useful for testing configurations</span>
+<a id="__codelineno-0-231" name="__codelineno-0-231" href="#__codelineno-0-231"></a><span class="w">              </span><span class="nt">encoding</span><span class="p">:</span>
+<a id="__codelineno-0-232" name="__codelineno-0-232" href="#__codelineno-0-232"></a><span class="w">                </span><span class="s">"utf8"</span><span class="w"> </span><span class="c1"># Optional: File encoding (default: "utf8")</span>
+<a id="__codelineno-0-233" name="__codelineno-0-233" href="#__codelineno-0-233"></a><span class="w">                </span><span class="c1"># Example: "utf8", "latin1", "ascii"</span>
+<a id="__codelineno-0-234" name="__codelineno-0-234" href="#__codelineno-0-234"></a>
+<a id="__codelineno-0-235" name="__codelineno-0-235" href="#__codelineno-0-235"></a><span class="w">              </span><span class="c1"># Excel-specific options (for .xlsx, .xls files)</span>
+<a id="__codelineno-0-236" name="__codelineno-0-236" href="#__codelineno-0-236"></a><span class="w">              </span><span class="nt">sheet_name</span><span class="p">:</span>
+<a id="__codelineno-0-237" name="__codelineno-0-237" href="#__codelineno-0-237"></a><span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># Optional: Excel sheet name to read</span>
+<a id="__codelineno-0-238" name="__codelineno-0-238" href="#__codelineno-0-238"></a><span class="w">                </span><span class="c1"># Example: "Results", "Sheet1"</span>
+<a id="__codelineno-0-239" name="__codelineno-0-239" href="#__codelineno-0-239"></a><span class="w">              </span><span class="nt">sheet_id</span><span class="p">:</span>
+<a id="__codelineno-0-240" name="__codelineno-0-240" href="#__codelineno-0-240"></a><span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># Optional: Excel sheet index (0-based)</span>
+<a id="__codelineno-0-241" name="__codelineno-0-241" href="#__codelineno-0-241"></a><span class="w">                </span><span class="c1"># Example: 0 (first sheet), 1 (second sheet)</span>
 <a id="__codelineno-0-242" name="__codelineno-0-242" href="#__codelineno-0-242"></a>
-<a id="__codelineno-0-243" name="__codelineno-0-243" href="#__codelineno-0-243"></a><span class="w">      </span><span class="c1"># --- MultiQC DATA COLLECTION (v0.5.0+) ---</span>
-<a id="__codelineno-0-244" name="__codelineno-0-244" href="#__codelineno-0-244"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span>
-<a id="__codelineno-0-245" name="__codelineno-0-245" href="#__codelineno-0-245"></a><span class="w">          </span><span class="s">"multiqc_data"</span><span class="w"> </span><span class="c1"># Required: Unique identifier for MultiQC data</span>
-<a id="__codelineno-0-246" name="__codelineno-0-246" href="#__codelineno-0-246"></a>
-<a id="__codelineno-0-247" name="__codelineno-0-247" href="#__codelineno-0-247"></a><span class="w">        </span><span class="nt">description</span><span class="p">:</span>
-<a id="__codelineno-0-248" name="__codelineno-0-248" href="#__codelineno-0-248"></a><span class="w">          </span><span class="s">"MultiQC</span><span class="nv"> </span><span class="s">quality</span><span class="nv"> </span><span class="s">control</span><span class="nv"> </span><span class="s">report</span><span class="nv"> </span><span class="s">data"</span><span class="w"> </span><span class="c1"># Optional: Description</span>
-<a id="__codelineno-0-249" name="__codelineno-0-249" href="#__codelineno-0-249"></a>
-<a id="__codelineno-0-250" name="__codelineno-0-250" href="#__codelineno-0-250"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span>
-<a id="__codelineno-0-251" name="__codelineno-0-251" href="#__codelineno-0-251"></a><span class="w">          </span><span class="c1"># Required: Type specification for MultiQC</span>
-<a id="__codelineno-0-252" name="__codelineno-0-252" href="#__codelineno-0-252"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span>
-<a id="__codelineno-0-253" name="__codelineno-0-253" href="#__codelineno-0-253"></a><span class="w">            </span><span class="s">"MultiQC"</span><span class="w"> </span><span class="c1"># Required: Identifies this as a MultiQC data collection</span>
-<a id="__codelineno-0-254" name="__codelineno-0-254" href="#__codelineno-0-254"></a><span class="w">            </span><span class="c1"># NOTE: MultiQC type has special handling:</span>
-<a id="__codelineno-0-255" name="__codelineno-0-255" href="#__codelineno-0-255"></a><span class="w">            </span><span class="c1">#   - Automatically detects multiqc_data/multiqc.parquet in each run</span>
-<a id="__codelineno-0-256" name="__codelineno-0-256" href="#__codelineno-0-256"></a><span class="w">            </span><span class="c1">#   - No scan configuration needed (auto-detected)</span>
-<a id="__codelineno-0-257" name="__codelineno-0-257" href="#__codelineno-0-257"></a><span class="w">            </span><span class="c1">#   - No metatype specification required</span>
-<a id="__codelineno-0-258" name="__codelineno-0-258" href="#__codelineno-0-258"></a><span class="w">            </span><span class="c1">#   - No dc_specific_properties needed</span>
-<a id="__codelineno-0-259" name="__codelineno-0-259" href="#__codelineno-0-259"></a><span class="w">            </span><span class="c1">#   - Requires MultiQC 1.29+ to generate parquet format</span>
-<a id="__codelineno-0-260" name="__codelineno-0-260" href="#__codelineno-0-260"></a>
-<a id="__codelineno-0-261" name="__codelineno-0-261" href="#__codelineno-0-261"></a><span class="w">        </span><span class="c1"># NOTE: For MultiQC, use project-level "links" instead of joins</span>
-<a id="__codelineno-0-262" name="__codelineno-0-262" href="#__codelineno-0-262"></a><span class="w">        </span><span class="c1"># Links enable interactive filtering with sample_mapping resolver</span>
-<a id="__codelineno-0-263" name="__codelineno-0-263" href="#__codelineno-0-263"></a><span class="w">        </span><span class="c1"># Example link configuration (at project level):</span>
-<a id="__codelineno-0-264" name="__codelineno-0-264" href="#__codelineno-0-264"></a><span class="w">        </span><span class="c1">#   links:</span>
-<a id="__codelineno-0-265" name="__codelineno-0-265" href="#__codelineno-0-265"></a><span class="w">        </span><span class="c1">#     - source_dc_id: "sample_metadata"</span>
-<a id="__codelineno-0-266" name="__codelineno-0-266" href="#__codelineno-0-266"></a><span class="w">        </span><span class="c1">#       source_column: "sample_id"</span>
-<a id="__codelineno-0-267" name="__codelineno-0-267" href="#__codelineno-0-267"></a><span class="w">        </span><span class="c1">#       target_dc_id: "multiqc_data"</span>
-<a id="__codelineno-0-268" name="__codelineno-0-268" href="#__codelineno-0-268"></a><span class="w">        </span><span class="c1">#       target_type: "multiqc"</span>
-<a id="__codelineno-0-269" name="__codelineno-0-269" href="#__codelineno-0-269"></a><span class="w">        </span><span class="c1">#       link_config:</span>
-<a id="__codelineno-0-270" name="__codelineno-0-270" href="#__codelineno-0-270"></a><span class="w">        </span><span class="c1">#         resolver: "sample_mapping"</span>
-<a id="__codelineno-0-271" name="__codelineno-0-271" href="#__codelineno-0-271"></a>
-<a id="__codelineno-0-272" name="__codelineno-0-272" href="#__codelineno-0-272"></a><span class="w">      </span><span class="c1"># --- GeoJSON DATA COLLECTION ---</span>
-<a id="__codelineno-0-273" name="__codelineno-0-273" href="#__codelineno-0-273"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span>
-<a id="__codelineno-0-274" name="__codelineno-0-274" href="#__codelineno-0-274"></a><span class="w">          </span><span class="s">"europe_geojson"</span><span class="w"> </span><span class="c1"># Required: Unique identifier for GeoJSON data</span>
-<a id="__codelineno-0-275" name="__codelineno-0-275" href="#__codelineno-0-275"></a>
-<a id="__codelineno-0-276" name="__codelineno-0-276" href="#__codelineno-0-276"></a><span class="w">        </span><span class="nt">description</span><span class="p">:</span>
-<a id="__codelineno-0-277" name="__codelineno-0-277" href="#__codelineno-0-277"></a><span class="w">          </span><span class="s">"GeoJSON</span><span class="nv"> </span><span class="s">boundaries</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">European</span><span class="nv"> </span><span class="s">regions"</span><span class="w"> </span><span class="c1"># Optional: Description</span>
-<a id="__codelineno-0-278" name="__codelineno-0-278" href="#__codelineno-0-278"></a>
-<a id="__codelineno-0-279" name="__codelineno-0-279" href="#__codelineno-0-279"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span>
-<a id="__codelineno-0-280" name="__codelineno-0-280" href="#__codelineno-0-280"></a><span class="w">          </span><span class="c1"># Required: Type specification for GeoJSON</span>
-<a id="__codelineno-0-281" name="__codelineno-0-281" href="#__codelineno-0-281"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span>
-<a id="__codelineno-0-282" name="__codelineno-0-282" href="#__codelineno-0-282"></a><span class="w">            </span><span class="s">"geojson"</span><span class="w"> </span><span class="c1"># Required: Identifies this as a GeoJSON data collection</span>
-<a id="__codelineno-0-283" name="__codelineno-0-283" href="#__codelineno-0-283"></a><span class="w">            </span><span class="c1"># NOTE: GeoJSON type stores FeatureCollection files in S3</span>
-<a id="__codelineno-0-284" name="__codelineno-0-284" href="#__codelineno-0-284"></a><span class="w">            </span><span class="c1">#   - Used as boundary source for choropleth_map components</span>
-<a id="__codelineno-0-285" name="__codelineno-0-285" href="#__codelineno-0-285"></a><span class="w">            </span><span class="c1">#   - Referenced by geojson_dc_tag in dashboard YAML</span>
-<a id="__codelineno-0-286" name="__codelineno-0-286" href="#__codelineno-0-286"></a><span class="w">            </span><span class="c1">#   - Requires a single .geojson file</span>
-<a id="__codelineno-0-287" name="__codelineno-0-287" href="#__codelineno-0-287"></a>
-<a id="__codelineno-0-288" name="__codelineno-0-288" href="#__codelineno-0-288"></a><span class="w">          </span><span class="nt">metatype</span><span class="p">:</span>
-<a id="__codelineno-0-289" name="__codelineno-0-289" href="#__codelineno-0-289"></a><span class="w">            </span><span class="s">"GeoJSON"</span><span class="w"> </span><span class="c1"># Required: Metatype identifier</span>
-<a id="__codelineno-0-290" name="__codelineno-0-290" href="#__codelineno-0-290"></a>
-<a id="__codelineno-0-291" name="__codelineno-0-291" href="#__codelineno-0-291"></a><span class="w">          </span><span class="c1"># Required: File discovery configuration</span>
-<a id="__codelineno-0-292" name="__codelineno-0-292" href="#__codelineno-0-292"></a><span class="w">          </span><span class="nt">scan</span><span class="p">:</span>
-<a id="__codelineno-0-293" name="__codelineno-0-293" href="#__codelineno-0-293"></a><span class="w">            </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">single</span>
-<a id="__codelineno-0-294" name="__codelineno-0-294" href="#__codelineno-0-294"></a><span class="w">            </span><span class="nt">scan_parameters</span><span class="p">:</span>
-<a id="__codelineno-0-295" name="__codelineno-0-295" href="#__codelineno-0-295"></a><span class="w">              </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="s">"path/to/boundaries.geojson"</span>
-<a id="__codelineno-0-296" name="__codelineno-0-296" href="#__codelineno-0-296"></a>
-<a id="__codelineno-0-297" name="__codelineno-0-297" href="#__codelineno-0-297"></a><span class="w">          </span><span class="c1"># Required: GeoJSON-specific configuration</span>
-<a id="__codelineno-0-298" name="__codelineno-0-298" href="#__codelineno-0-298"></a><span class="w">          </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
-<a id="__codelineno-0-299" name="__codelineno-0-299" href="#__codelineno-0-299"></a><span class="w">            </span><span class="nt">feature_id_key</span><span class="p">:</span>
-<a id="__codelineno-0-300" name="__codelineno-0-300" href="#__codelineno-0-300"></a><span class="w">              </span><span class="s">"properties.NAME"</span><span class="w"> </span><span class="c1"># Required: GeoJSON property path to match locations_column</span>
-<a id="__codelineno-0-301" name="__codelineno-0-301" href="#__codelineno-0-301"></a><span class="w">              </span><span class="c1"># Maps to Plotly's featureidkey parameter</span>
-<a id="__codelineno-0-302" name="__codelineno-0-302" href="#__codelineno-0-302"></a><span class="w">              </span><span class="c1"># Common values: "id", "properties.NAME", "properties.ISO_A3"</span>
-<a id="__codelineno-0-303" name="__codelineno-0-303" href="#__codelineno-0-303"></a>
-<a id="__codelineno-0-304" name="__codelineno-0-304" href="#__codelineno-0-304"></a><span class="w">      </span><span class="c1"># --- PHYLOGENY DATA COLLECTION ---</span>
-<a id="__codelineno-0-305" name="__codelineno-0-305" href="#__codelineno-0-305"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span>
-<a id="__codelineno-0-306" name="__codelineno-0-306" href="#__codelineno-0-306"></a><span class="w">          </span><span class="s">"bacterial_tree"</span><span class="w"> </span><span class="c1"># Required: Unique identifier for the tree</span>
-<a id="__codelineno-0-307" name="__codelineno-0-307" href="#__codelineno-0-307"></a>
-<a id="__codelineno-0-308" name="__codelineno-0-308" href="#__codelineno-0-308"></a><span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Bacterial</span><span class="nv"> </span><span class="s">phylogeny,</span><span class="nv"> </span><span class="s">Newick</span><span class="nv"> </span><span class="s">file"</span><span class="w"> </span><span class="c1"># Optional</span>
-<a id="__codelineno-0-309" name="__codelineno-0-309" href="#__codelineno-0-309"></a>
-<a id="__codelineno-0-310" name="__codelineno-0-310" href="#__codelineno-0-310"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span>
-<a id="__codelineno-0-311" name="__codelineno-0-311" href="#__codelineno-0-311"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span>
-<a id="__codelineno-0-312" name="__codelineno-0-312" href="#__codelineno-0-312"></a><span class="w">            </span><span class="s">"phylogeny"</span><span class="w"> </span><span class="c1"># Required: Identifies this as a tree data collection</span>
-<a id="__codelineno-0-313" name="__codelineno-0-313" href="#__codelineno-0-313"></a><span class="w">            </span><span class="c1"># NOTE: file-backed, nothing is parsed or converted</span>
-<a id="__codelineno-0-314" name="__codelineno-0-314" href="#__codelineno-0-314"></a><span class="w">            </span><span class="c1">#   - Read where it was found; served as raw Newick via</span>
-<a id="__codelineno-0-315" name="__codelineno-0-315" href="#__codelineno-0-315"></a><span class="w">            </span><span class="c1">#     /advanced_viz/phylogeny/{dc_id}/newick</span>
-<a id="__codelineno-0-316" name="__codelineno-0-316" href="#__codelineno-0-316"></a><span class="w">            </span><span class="c1">#   - Referenced by tree_dc_id in an advanced_viz component</span>
-<a id="__codelineno-0-317" name="__codelineno-0-317" href="#__codelineno-0-317"></a><span class="w">            </span><span class="c1">#     of kind "phylogenetic"</span>
-<a id="__codelineno-0-318" name="__codelineno-0-318" href="#__codelineno-0-318"></a>
-<a id="__codelineno-0-319" name="__codelineno-0-319" href="#__codelineno-0-319"></a><span class="w">          </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="s">"Aggregate"</span><span class="w"> </span><span class="c1"># Required: Metatype identifier</span>
+<a id="__codelineno-0-243" name="__codelineno-0-243" href="#__codelineno-0-243"></a><span class="w">            </span><span class="c1"># Optional: Column filtering for performance</span>
+<a id="__codelineno-0-244" name="__codelineno-0-244" href="#__codelineno-0-244"></a><span class="w">            </span><span class="nt">keep_columns</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: Column filtering</span>
+<a id="__codelineno-0-245" name="__codelineno-0-245" href="#__codelineno-0-245"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Name"</span><span class="w"> </span><span class="c1"># If specified, only these columns are retained</span>
+<a id="__codelineno-0-246" name="__codelineno-0-246" href="#__codelineno-0-246"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"TPM"</span><span class="w"> </span><span class="c1"># Improves performance for large datasets</span>
+<a id="__codelineno-0-247" name="__codelineno-0-247" href="#__codelineno-0-247"></a><span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"NumReads"</span><span class="w"> </span><span class="c1"># Example: ["sample_id", "expression", "p_value"]</span>
+<a id="__codelineno-0-248" name="__codelineno-0-248" href="#__codelineno-0-248"></a>
+<a id="__codelineno-0-249" name="__codelineno-0-249" href="#__codelineno-0-249"></a><span class="w">            </span><span class="c1"># Optional: Column documentation</span>
+<a id="__codelineno-0-250" name="__codelineno-0-250" href="#__codelineno-0-250"></a><span class="w">            </span><span class="nt">columns_description</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: Column documentation</span>
+<a id="__codelineno-0-251" name="__codelineno-0-251" href="#__codelineno-0-251"></a><span class="w">              </span><span class="nt">Name</span><span class="p">:</span><span class="w"> </span><span class="s">"Gene/transcript</span><span class="nv"> </span><span class="s">identifier"</span><span class="w"> </span><span class="c1"># Human-readable column descriptions</span>
+<a id="__codelineno-0-252" name="__codelineno-0-252" href="#__codelineno-0-252"></a><span class="w">              </span><span class="nt">TPM</span><span class="p">:</span><span class="w"> </span><span class="s">"Transcripts</span><span class="nv"> </span><span class="s">per</span><span class="nv"> </span><span class="s">million"</span><span class="w"> </span><span class="c1"># Used in dashboard tooltips and documentation</span>
+<a id="__codelineno-0-253" name="__codelineno-0-253" href="#__codelineno-0-253"></a><span class="w">              </span><span class="nt">NumReads</span><span class="p">:</span><span class="w"> </span><span class="s">"Estimated</span><span class="nv"> </span><span class="s">read</span><span class="nv"> </span><span class="s">count"</span><span class="w"> </span><span class="c1"># Example format: column_name: "Description"</span>
+<a id="__codelineno-0-254" name="__codelineno-0-254" href="#__codelineno-0-254"></a>
+<a id="__codelineno-0-255" name="__codelineno-0-255" href="#__codelineno-0-255"></a><span class="w">        </span><span class="c1"># Optional: Data joining configuration (client-side pre-computed)</span>
+<a id="__codelineno-0-256" name="__codelineno-0-256" href="#__codelineno-0-256"></a><span class="w">        </span><span class="c1"># NOTE: Joins combine Table DCs during depictio ingest</span>
+<a id="__codelineno-0-257" name="__codelineno-0-257" href="#__codelineno-0-257"></a><span class="w">        </span><span class="c1"># Use project-level "links" for runtime cross-DC filtering in UI</span>
+<a id="__codelineno-0-258" name="__codelineno-0-258" href="#__codelineno-0-258"></a><span class="w">        </span><span class="nt">join</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: Join this collection with others</span>
+<a id="__codelineno-0-259" name="__codelineno-0-259" href="#__codelineno-0-259"></a><span class="w">          </span><span class="nt">on_columns</span><span class="p">:</span>
+<a id="__codelineno-0-260" name="__codelineno-0-260" href="#__codelineno-0-260"></a><span class="w">            </span><span class="p p-Indicator">[</span><span class="s">"sample_id"</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># Column names for joining</span>
+<a id="__codelineno-0-261" name="__codelineno-0-261" href="#__codelineno-0-261"></a><span class="w">            </span><span class="c1"># Must exist in both datasets</span>
+<a id="__codelineno-0-262" name="__codelineno-0-262" href="#__codelineno-0-262"></a><span class="w">          </span><span class="nt">how</span><span class="p">:</span>
+<a id="__codelineno-0-263" name="__codelineno-0-263" href="#__codelineno-0-263"></a><span class="w">            </span><span class="s">"inner"</span><span class="w"> </span><span class="c1"># Join type: "inner", "outer", "left", "right"</span>
+<a id="__codelineno-0-264" name="__codelineno-0-264" href="#__codelineno-0-264"></a><span class="w">          </span><span class="nt">with_dc</span><span class="p">:</span>
+<a id="__codelineno-0-265" name="__codelineno-0-265" href="#__codelineno-0-265"></a><span class="w">            </span><span class="p p-Indicator">[</span><span class="s">"qc_summary"</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># Target data collection tags</span>
+<a id="__codelineno-0-266" name="__codelineno-0-266" href="#__codelineno-0-266"></a>
+<a id="__codelineno-0-267" name="__codelineno-0-267" href="#__codelineno-0-267"></a><span class="w">      </span><span class="c1"># --- MultiQC DATA COLLECTION (v0.5.0+) ---</span>
+<a id="__codelineno-0-268" name="__codelineno-0-268" href="#__codelineno-0-268"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span>
+<a id="__codelineno-0-269" name="__codelineno-0-269" href="#__codelineno-0-269"></a><span class="w">          </span><span class="s">"multiqc_data"</span><span class="w"> </span><span class="c1"># Required: Unique identifier for MultiQC data</span>
+<a id="__codelineno-0-270" name="__codelineno-0-270" href="#__codelineno-0-270"></a>
+<a id="__codelineno-0-271" name="__codelineno-0-271" href="#__codelineno-0-271"></a><span class="w">        </span><span class="nt">description</span><span class="p">:</span>
+<a id="__codelineno-0-272" name="__codelineno-0-272" href="#__codelineno-0-272"></a><span class="w">          </span><span class="s">"MultiQC</span><span class="nv"> </span><span class="s">quality</span><span class="nv"> </span><span class="s">control</span><span class="nv"> </span><span class="s">report</span><span class="nv"> </span><span class="s">data"</span><span class="w"> </span><span class="c1"># Optional: Description</span>
+<a id="__codelineno-0-273" name="__codelineno-0-273" href="#__codelineno-0-273"></a>
+<a id="__codelineno-0-274" name="__codelineno-0-274" href="#__codelineno-0-274"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-0-275" name="__codelineno-0-275" href="#__codelineno-0-275"></a><span class="w">          </span><span class="c1"># Required: Type specification for MultiQC</span>
+<a id="__codelineno-0-276" name="__codelineno-0-276" href="#__codelineno-0-276"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span>
+<a id="__codelineno-0-277" name="__codelineno-0-277" href="#__codelineno-0-277"></a><span class="w">            </span><span class="s">"MultiQC"</span><span class="w"> </span><span class="c1"># Required: Identifies this as a MultiQC data collection</span>
+<a id="__codelineno-0-278" name="__codelineno-0-278" href="#__codelineno-0-278"></a><span class="w">            </span><span class="c1"># NOTE: MultiQC type has special handling:</span>
+<a id="__codelineno-0-279" name="__codelineno-0-279" href="#__codelineno-0-279"></a><span class="w">            </span><span class="c1">#   - Automatically detects multiqc_data/multiqc.parquet in each run</span>
+<a id="__codelineno-0-280" name="__codelineno-0-280" href="#__codelineno-0-280"></a><span class="w">            </span><span class="c1">#   - No scan configuration needed (auto-detected)</span>
+<a id="__codelineno-0-281" name="__codelineno-0-281" href="#__codelineno-0-281"></a><span class="w">            </span><span class="c1">#   - No metatype specification required</span>
+<a id="__codelineno-0-282" name="__codelineno-0-282" href="#__codelineno-0-282"></a><span class="w">            </span><span class="c1">#   - No dc_specific_properties needed</span>
+<a id="__codelineno-0-283" name="__codelineno-0-283" href="#__codelineno-0-283"></a><span class="w">            </span><span class="c1">#   - Requires MultiQC 1.29+ to generate parquet format</span>
+<a id="__codelineno-0-284" name="__codelineno-0-284" href="#__codelineno-0-284"></a>
+<a id="__codelineno-0-285" name="__codelineno-0-285" href="#__codelineno-0-285"></a><span class="w">        </span><span class="c1"># NOTE: For MultiQC, use project-level "links" instead of joins</span>
+<a id="__codelineno-0-286" name="__codelineno-0-286" href="#__codelineno-0-286"></a><span class="w">        </span><span class="c1"># Links enable interactive filtering with sample_mapping resolver</span>
+<a id="__codelineno-0-287" name="__codelineno-0-287" href="#__codelineno-0-287"></a><span class="w">        </span><span class="c1"># Example link configuration (at project level):</span>
+<a id="__codelineno-0-288" name="__codelineno-0-288" href="#__codelineno-0-288"></a><span class="w">        </span><span class="c1">#   links:</span>
+<a id="__codelineno-0-289" name="__codelineno-0-289" href="#__codelineno-0-289"></a><span class="w">        </span><span class="c1">#     - source_dc_id: "sample_metadata"</span>
+<a id="__codelineno-0-290" name="__codelineno-0-290" href="#__codelineno-0-290"></a><span class="w">        </span><span class="c1">#       source_column: "sample_id"</span>
+<a id="__codelineno-0-291" name="__codelineno-0-291" href="#__codelineno-0-291"></a><span class="w">        </span><span class="c1">#       target_dc_id: "multiqc_data"</span>
+<a id="__codelineno-0-292" name="__codelineno-0-292" href="#__codelineno-0-292"></a><span class="w">        </span><span class="c1">#       target_type: "multiqc"</span>
+<a id="__codelineno-0-293" name="__codelineno-0-293" href="#__codelineno-0-293"></a><span class="w">        </span><span class="c1">#       link_config:</span>
+<a id="__codelineno-0-294" name="__codelineno-0-294" href="#__codelineno-0-294"></a><span class="w">        </span><span class="c1">#         resolver: "sample_mapping"</span>
+<a id="__codelineno-0-295" name="__codelineno-0-295" href="#__codelineno-0-295"></a>
+<a id="__codelineno-0-296" name="__codelineno-0-296" href="#__codelineno-0-296"></a><span class="w">      </span><span class="c1"># --- GeoJSON DATA COLLECTION ---</span>
+<a id="__codelineno-0-297" name="__codelineno-0-297" href="#__codelineno-0-297"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span>
+<a id="__codelineno-0-298" name="__codelineno-0-298" href="#__codelineno-0-298"></a><span class="w">          </span><span class="s">"europe_geojson"</span><span class="w"> </span><span class="c1"># Required: Unique identifier for GeoJSON data</span>
+<a id="__codelineno-0-299" name="__codelineno-0-299" href="#__codelineno-0-299"></a>
+<a id="__codelineno-0-300" name="__codelineno-0-300" href="#__codelineno-0-300"></a><span class="w">        </span><span class="nt">description</span><span class="p">:</span>
+<a id="__codelineno-0-301" name="__codelineno-0-301" href="#__codelineno-0-301"></a><span class="w">          </span><span class="s">"GeoJSON</span><span class="nv"> </span><span class="s">boundaries</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">European</span><span class="nv"> </span><span class="s">regions"</span><span class="w"> </span><span class="c1"># Optional: Description</span>
+<a id="__codelineno-0-302" name="__codelineno-0-302" href="#__codelineno-0-302"></a>
+<a id="__codelineno-0-303" name="__codelineno-0-303" href="#__codelineno-0-303"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-0-304" name="__codelineno-0-304" href="#__codelineno-0-304"></a><span class="w">          </span><span class="c1"># Required: Type specification for GeoJSON</span>
+<a id="__codelineno-0-305" name="__codelineno-0-305" href="#__codelineno-0-305"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span>
+<a id="__codelineno-0-306" name="__codelineno-0-306" href="#__codelineno-0-306"></a><span class="w">            </span><span class="s">"geojson"</span><span class="w"> </span><span class="c1"># Required: Identifies this as a GeoJSON data collection</span>
+<a id="__codelineno-0-307" name="__codelineno-0-307" href="#__codelineno-0-307"></a><span class="w">            </span><span class="c1"># NOTE: GeoJSON type stores FeatureCollection files in S3</span>
+<a id="__codelineno-0-308" name="__codelineno-0-308" href="#__codelineno-0-308"></a><span class="w">            </span><span class="c1">#   - Used as boundary source for choropleth_map components</span>
+<a id="__codelineno-0-309" name="__codelineno-0-309" href="#__codelineno-0-309"></a><span class="w">            </span><span class="c1">#   - Referenced by geojson_dc_tag in dashboard YAML</span>
+<a id="__codelineno-0-310" name="__codelineno-0-310" href="#__codelineno-0-310"></a><span class="w">            </span><span class="c1">#   - Requires a single .geojson file</span>
+<a id="__codelineno-0-311" name="__codelineno-0-311" href="#__codelineno-0-311"></a>
+<a id="__codelineno-0-312" name="__codelineno-0-312" href="#__codelineno-0-312"></a><span class="w">          </span><span class="nt">metatype</span><span class="p">:</span>
+<a id="__codelineno-0-313" name="__codelineno-0-313" href="#__codelineno-0-313"></a><span class="w">            </span><span class="s">"GeoJSON"</span><span class="w"> </span><span class="c1"># Required: Metatype identifier</span>
+<a id="__codelineno-0-314" name="__codelineno-0-314" href="#__codelineno-0-314"></a>
+<a id="__codelineno-0-315" name="__codelineno-0-315" href="#__codelineno-0-315"></a><span class="w">          </span><span class="c1"># Required: File discovery configuration</span>
+<a id="__codelineno-0-316" name="__codelineno-0-316" href="#__codelineno-0-316"></a><span class="w">          </span><span class="nt">scan</span><span class="p">:</span>
+<a id="__codelineno-0-317" name="__codelineno-0-317" href="#__codelineno-0-317"></a><span class="w">            </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">single</span>
+<a id="__codelineno-0-318" name="__codelineno-0-318" href="#__codelineno-0-318"></a><span class="w">            </span><span class="nt">scan_parameters</span><span class="p">:</span>
+<a id="__codelineno-0-319" name="__codelineno-0-319" href="#__codelineno-0-319"></a><span class="w">              </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="s">"path/to/boundaries.geojson"</span>
 <a id="__codelineno-0-320" name="__codelineno-0-320" href="#__codelineno-0-320"></a>
-<a id="__codelineno-0-321" name="__codelineno-0-321" href="#__codelineno-0-321"></a><span class="w">          </span><span class="nt">scan</span><span class="p">:</span>
-<a id="__codelineno-0-322" name="__codelineno-0-322" href="#__codelineno-0-322"></a><span class="w">            </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">single</span>
-<a id="__codelineno-0-323" name="__codelineno-0-323" href="#__codelineno-0-323"></a><span class="w">            </span><span class="nt">scan_parameters</span><span class="p">:</span>
-<a id="__codelineno-0-324" name="__codelineno-0-324" href="#__codelineno-0-324"></a><span class="w">              </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="s">"path/to/tree.nwk"</span>
-<a id="__codelineno-0-325" name="__codelineno-0-325" href="#__codelineno-0-325"></a>
-<a id="__codelineno-0-326" name="__codelineno-0-326" href="#__codelineno-0-326"></a><span class="w">          </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
-<a id="__codelineno-0-327" name="__codelineno-0-327" href="#__codelineno-0-327"></a><span class="w">            </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"newick"</span><span class="w"> </span><span class="c1"># Optional: "newick" (default) or "nexus"</span>
-<a id="__codelineno-0-328" name="__codelineno-0-328" href="#__codelineno-0-328"></a>
-<a id="__codelineno-0-329" name="__codelineno-0-329" href="#__codelineno-0-329"></a><span class="w">            </span><span class="nt">ladderize</span><span class="p">:</span>
-<a id="__codelineno-0-330" name="__codelineno-0-330" href="#__codelineno-0-330"></a><span class="w">              </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># Optional: ladderise the tree by default (default true)</span>
-<a id="__codelineno-0-331" name="__codelineno-0-331" href="#__codelineno-0-331"></a><span class="w">              </span><span class="c1"># Viewers can toggle this in the viz controls</span>
-<a id="__codelineno-0-332" name="__codelineno-0-332" href="#__codelineno-0-332"></a>
-<a id="__codelineno-0-333" name="__codelineno-0-333" href="#__codelineno-0-333"></a><span class="w">            </span><span class="c1"># Tip annotations live in a SEPARATE Table DC, keyed by taxon</span>
-<a id="__codelineno-0-334" name="__codelineno-0-334" href="#__codelineno-0-334"></a><span class="w">            </span><span class="c1"># name, the same pattern Microreact uses. All three keys are</span>
-<a id="__codelineno-0-335" name="__codelineno-0-335" href="#__codelineno-0-335"></a><span class="w">            </span><span class="c1"># optional; without them the tree renders unannotated.</span>
-<a id="__codelineno-0-336" name="__codelineno-0-336" href="#__codelineno-0-336"></a><span class="w">            </span><span class="nt">metadata_dc_tag</span><span class="p">:</span>
-<a id="__codelineno-0-337" name="__codelineno-0-337" href="#__codelineno-0-337"></a><span class="w">              </span><span class="s">"bacterial_metadata"</span><span class="w"> </span><span class="c1"># Optional: tag of the metadata Table DC</span>
-<a id="__codelineno-0-338" name="__codelineno-0-338" href="#__codelineno-0-338"></a><span class="w">            </span><span class="nt">metadata_taxon_column</span><span class="p">:</span>
-<a id="__codelineno-0-339" name="__codelineno-0-339" href="#__codelineno-0-339"></a><span class="w">              </span><span class="s">"taxon"</span><span class="w"> </span><span class="c1"># Optional: column joining to tip labels (default "taxon")</span>
-<a id="__codelineno-0-340" name="__codelineno-0-340" href="#__codelineno-0-340"></a><span class="w">            </span><span class="nt">tip_label_strategy</span><span class="p">:</span>
-<a id="__codelineno-0-341" name="__codelineno-0-341" href="#__codelineno-0-341"></a><span class="w">              </span><span class="s">"taxon"</span><span class="w"> </span><span class="c1"># Optional: "taxon" (leaf name IS the taxon id, default)</span>
-<a id="__codelineno-0-342" name="__codelineno-0-342" href="#__codelineno-0-342"></a><span class="w">              </span><span class="c1">#                   or "first_token" (take the first</span>
-<a id="__codelineno-0-343" name="__codelineno-0-343" href="#__codelineno-0-343"></a><span class="w">              </span><span class="c1">#                   underscore-separated token of the leaf name)</span>
+<a id="__codelineno-0-321" name="__codelineno-0-321" href="#__codelineno-0-321"></a><span class="w">          </span><span class="c1"># Required: GeoJSON-specific configuration</span>
+<a id="__codelineno-0-322" name="__codelineno-0-322" href="#__codelineno-0-322"></a><span class="w">          </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
+<a id="__codelineno-0-323" name="__codelineno-0-323" href="#__codelineno-0-323"></a><span class="w">            </span><span class="nt">feature_id_key</span><span class="p">:</span>
+<a id="__codelineno-0-324" name="__codelineno-0-324" href="#__codelineno-0-324"></a><span class="w">              </span><span class="s">"properties.NAME"</span><span class="w"> </span><span class="c1"># Required: GeoJSON property path to match locations_column</span>
+<a id="__codelineno-0-325" name="__codelineno-0-325" href="#__codelineno-0-325"></a><span class="w">              </span><span class="c1"># Maps to Plotly's featureidkey parameter</span>
+<a id="__codelineno-0-326" name="__codelineno-0-326" href="#__codelineno-0-326"></a><span class="w">              </span><span class="c1"># Common values: "id", "properties.NAME", "properties.ISO_A3"</span>
+<a id="__codelineno-0-327" name="__codelineno-0-327" href="#__codelineno-0-327"></a>
+<a id="__codelineno-0-328" name="__codelineno-0-328" href="#__codelineno-0-328"></a><span class="w">      </span><span class="c1"># --- PHYLOGENY DATA COLLECTION ---</span>
+<a id="__codelineno-0-329" name="__codelineno-0-329" href="#__codelineno-0-329"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span>
+<a id="__codelineno-0-330" name="__codelineno-0-330" href="#__codelineno-0-330"></a><span class="w">          </span><span class="s">"bacterial_tree"</span><span class="w"> </span><span class="c1"># Required: Unique identifier for the tree</span>
+<a id="__codelineno-0-331" name="__codelineno-0-331" href="#__codelineno-0-331"></a>
+<a id="__codelineno-0-332" name="__codelineno-0-332" href="#__codelineno-0-332"></a><span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Bacterial</span><span class="nv"> </span><span class="s">phylogeny,</span><span class="nv"> </span><span class="s">Newick</span><span class="nv"> </span><span class="s">file"</span><span class="w"> </span><span class="c1"># Optional</span>
+<a id="__codelineno-0-333" name="__codelineno-0-333" href="#__codelineno-0-333"></a>
+<a id="__codelineno-0-334" name="__codelineno-0-334" href="#__codelineno-0-334"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-0-335" name="__codelineno-0-335" href="#__codelineno-0-335"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span>
+<a id="__codelineno-0-336" name="__codelineno-0-336" href="#__codelineno-0-336"></a><span class="w">            </span><span class="s">"phylogeny"</span><span class="w"> </span><span class="c1"># Required: Identifies this as a tree data collection</span>
+<a id="__codelineno-0-337" name="__codelineno-0-337" href="#__codelineno-0-337"></a><span class="w">            </span><span class="c1"># NOTE: file-backed, nothing is parsed or converted</span>
+<a id="__codelineno-0-338" name="__codelineno-0-338" href="#__codelineno-0-338"></a><span class="w">            </span><span class="c1">#   - Read where it was found; served as raw Newick via</span>
+<a id="__codelineno-0-339" name="__codelineno-0-339" href="#__codelineno-0-339"></a><span class="w">            </span><span class="c1">#     /advanced_viz/phylogeny/{dc_id}/newick</span>
+<a id="__codelineno-0-340" name="__codelineno-0-340" href="#__codelineno-0-340"></a><span class="w">            </span><span class="c1">#   - Referenced by tree_dc_id in an advanced_viz component</span>
+<a id="__codelineno-0-341" name="__codelineno-0-341" href="#__codelineno-0-341"></a><span class="w">            </span><span class="c1">#     of kind "phylogenetic"</span>
+<a id="__codelineno-0-342" name="__codelineno-0-342" href="#__codelineno-0-342"></a>
+<a id="__codelineno-0-343" name="__codelineno-0-343" href="#__codelineno-0-343"></a><span class="w">          </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="s">"Aggregate"</span><span class="w"> </span><span class="c1"># Required: Metatype identifier</span>
+<a id="__codelineno-0-344" name="__codelineno-0-344" href="#__codelineno-0-344"></a>
+<a id="__codelineno-0-345" name="__codelineno-0-345" href="#__codelineno-0-345"></a><span class="w">          </span><span class="nt">scan</span><span class="p">:</span>
+<a id="__codelineno-0-346" name="__codelineno-0-346" href="#__codelineno-0-346"></a><span class="w">            </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">single</span>
+<a id="__codelineno-0-347" name="__codelineno-0-347" href="#__codelineno-0-347"></a><span class="w">            </span><span class="nt">scan_parameters</span><span class="p">:</span>
+<a id="__codelineno-0-348" name="__codelineno-0-348" href="#__codelineno-0-348"></a><span class="w">              </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="s">"path/to/tree.nwk"</span>
+<a id="__codelineno-0-349" name="__codelineno-0-349" href="#__codelineno-0-349"></a>
+<a id="__codelineno-0-350" name="__codelineno-0-350" href="#__codelineno-0-350"></a><span class="w">          </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
+<a id="__codelineno-0-351" name="__codelineno-0-351" href="#__codelineno-0-351"></a><span class="w">            </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"newick"</span><span class="w"> </span><span class="c1"># Optional: "newick" (default) or "nexus"</span>
+<a id="__codelineno-0-352" name="__codelineno-0-352" href="#__codelineno-0-352"></a>
+<a id="__codelineno-0-353" name="__codelineno-0-353" href="#__codelineno-0-353"></a><span class="w">            </span><span class="nt">ladderize</span><span class="p">:</span>
+<a id="__codelineno-0-354" name="__codelineno-0-354" href="#__codelineno-0-354"></a><span class="w">              </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># Optional: ladderise the tree by default (default true)</span>
+<a id="__codelineno-0-355" name="__codelineno-0-355" href="#__codelineno-0-355"></a><span class="w">              </span><span class="c1"># Viewers can toggle this in the viz controls</span>
+<a id="__codelineno-0-356" name="__codelineno-0-356" href="#__codelineno-0-356"></a>
+<a id="__codelineno-0-357" name="__codelineno-0-357" href="#__codelineno-0-357"></a><span class="w">            </span><span class="c1"># Tip annotations live in a SEPARATE Table DC, keyed by taxon</span>
+<a id="__codelineno-0-358" name="__codelineno-0-358" href="#__codelineno-0-358"></a><span class="w">            </span><span class="c1"># name, the same pattern Microreact uses. All three keys are</span>
+<a id="__codelineno-0-359" name="__codelineno-0-359" href="#__codelineno-0-359"></a><span class="w">            </span><span class="c1"># optional; without them the tree renders unannotated.</span>
+<a id="__codelineno-0-360" name="__codelineno-0-360" href="#__codelineno-0-360"></a><span class="w">            </span><span class="nt">metadata_dc_tag</span><span class="p">:</span>
+<a id="__codelineno-0-361" name="__codelineno-0-361" href="#__codelineno-0-361"></a><span class="w">              </span><span class="s">"bacterial_metadata"</span><span class="w"> </span><span class="c1"># Optional: tag of the metadata Table DC</span>
+<a id="__codelineno-0-362" name="__codelineno-0-362" href="#__codelineno-0-362"></a><span class="w">            </span><span class="nt">metadata_taxon_column</span><span class="p">:</span>
+<a id="__codelineno-0-363" name="__codelineno-0-363" href="#__codelineno-0-363"></a><span class="w">              </span><span class="s">"taxon"</span><span class="w"> </span><span class="c1"># Optional: column joining to tip labels (default "taxon")</span>
+<a id="__codelineno-0-364" name="__codelineno-0-364" href="#__codelineno-0-364"></a><span class="w">            </span><span class="nt">tip_label_strategy</span><span class="p">:</span>
+<a id="__codelineno-0-365" name="__codelineno-0-365" href="#__codelineno-0-365"></a><span class="w">              </span><span class="s">"taxon"</span><span class="w"> </span><span class="c1"># Optional: "taxon" (leaf name IS the taxon id, default)</span>
+<a id="__codelineno-0-366" name="__codelineno-0-366" href="#__codelineno-0-366"></a><span class="w">              </span><span class="c1">#                   or "first_token" (take the first</span>
+<a id="__codelineno-0-367" name="__codelineno-0-367" href="#__codelineno-0-367"></a><span class="w">              </span><span class="c1">#                   underscore-separated token of the leaf name)</span>
+</code></pre></div>
+<h2 id="remote-scan-modes">Remote scan modes <small>(v1.16.0+)</small><a class="headerlink" href="#remote-scan-modes" title="Permanent link">¶</a></h2>
+<p>Three scan modes fetch data from where it already is instead of walking a local
+directory. Whoever ingests, the CLI or the server, reads the files there; the
+server goes through a gateway that validates every URL and decides which
+buckets it may read (see <a href="../../../features/security/#remote-data-sources">Security</a>).
+The files are materialised to Delta Lake exactly like scanned local files.
+<a href="../remote-data/">Remote data and manifests</a> explains when to use which.</p>
+<p><code>mode</code> and <code>scan_parameters</code> are cross-checked: declaring <code>mode: url</code> with a
+<code>filename</code> block, for instance, is rejected with a message naming the mode the
+parameters belong to and the parameters the declared mode expects. The
+<a href="../yaml-examples/#scan-bounds">scan bounds</a> <code>max_depth</code> and <code>ignore</code> belong to
+<code>recursive</code>: a remote mode that declares them is rejected the same way.</p>
+<h3 id="url-one-remote-file"><code>url</code>: one remote file<a class="headerlink" href="#url-one-remote-file" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td>yes</td>
+<td></td>
+<td>Absolute <code>s3://</code> or <code>https://</code> URL of the file. <code>http://</code> is accepted only with <code>DEPICTIO_REMOTE_ALLOW_HTTP=true</code>, set on the server and, for a CLI ingestion, in the CLI's environment too. Validation here is syntactic; reachability and address checks happen at fetch time.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">scan</span><span class="p">:</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">url</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">scan_parameters</span><span class="p">:</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">"https://data.example.org/run42/metadata.tsv"</span>
+</code></pre></div>
+<h3 id="s3_prefix-every-object-under-a-prefix"><code>s3_prefix</code>: every object under a prefix<a class="headerlink" href="#s3_prefix-every-object-under-a-prefix" title="Permanent link">¶</a></h3>
+<p>The remote counterpart of <code>recursive</code>: list the objects under an <code>s3://</code> prefix
+and keep the keys matching a glob. It is S3-only by construction, since plain
+HTTPS exposes no listing operation.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prefix</code></td>
+<td>yes</td>
+<td></td>
+<td><code>s3://</code> prefix, bucket included, e.g. <code>s3://my-bucket/run42/</code></td>
+</tr>
+<tr>
+<td><code>pattern</code></td>
+<td>no</td>
+<td><code>"*"</code></td>
+<td>Glob matched against the key <em>relative to</em> the prefix and against the file name, so <code>*.csv</code> rather than the full path. Its <code>*</code> also crosses <code>/</code>, so <code>*.csv</code> reaches the keys of sub-prefixes too</td>
+</tr>
+<tr>
+<td><code>pattern_syntax</code></td>
+<td>no</td>
+<td><code>"glob"</code></td>
+<td>How <code>pattern</code> is read: <code>glob</code> (fnmatch) or <code>regex</code>. A regex is matched from the start of the file name, and of the relative key when it contains a <code>/</code>, as in a <code>recursive</code> scan. A <a href="../remote-data/#a-run-folder-on-s3">run folder on S3</a> turns each <code>recursive</code> collection into an <code>s3_prefix</code> scan that keeps the template's regex, with <code>regex</code> here</td>
+</tr>
+<tr>
+<td><code>id_regex</code></td>
+<td>no</td>
+<td><code>null</code></td>
+<td>Regex with exactly one capture group, searched in the key relative to the prefix, then in the file name. The capture is stored as the file's entity id and read back as the <code>depictio_manifest_id</code> column, which gives a prefix scan the same cross-DC join key as a manifest. An object it does not match is kept without an id, and the scan warns how many there are</td>
+</tr>
+<tr>
+<td><code>max_files</code></td>
+<td>no</td>
+<td><code>10000</code></td>
+<td>Ceiling on the number of matching objects (at most <code>100000</code>), a backstop against pointing a collection at a bucket root. The listing also stops after 10 × <code>max_files</code> keys. Either limit is reported as a warning</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">scan</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3_prefix</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">scan_parameters</span><span class="p">:</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="s">"s3://my-bucket/run42/"</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="s">"*.samples.csv"</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">id_regex</span><span class="p">:</span><span class="w"> </span><span class="s">"^([^/]+?)\\.samples\\.csv$"</span>
+</code></pre></div>
+<h3 id="manifest-the-entries-of-a-data-manifest"><code>manifest</code>: the entries of a Data Manifest<a class="headerlink" href="#manifest-the-entries-of-a-data-manifest" title="Permanent link">¶</a></h3>
+<p>The collection consumes every manifest entry whose <code>type</code> equals
+<code>manifest_type</code>. The manifest contract (<code>id</code>, <code>type</code>, <code>url</code>, optional <code>run</code>) is
+described on <a href="../remote-data/#the-data-manifest-contract">Remote data and manifests</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>manifest_url</code></td>
+<td>yes</td>
+<td></td>
+<td><code>https://</code> URL of the manifest (JSON or CSV). In CLI context a local path is accepted too. An <code>s3://</code> URL passes validation but is not read yet</td>
+</tr>
+<tr>
+<td><code>manifest_type</code></td>
+<td>yes</td>
+<td></td>
+<td>Which manifest <code>type</code> this collection consumes. By convention, the collection's own tag</td>
+</tr>
+<tr>
+<td><code>id_field</code></td>
+<td>no</td>
+<td><code>"id"</code></td>
+<td>Manifest column holding the entity id</td>
+</tr>
+<tr>
+<td><code>url_field</code></td>
+<td>no</td>
+<td><code>"url"</code></td>
+<td>Manifest column holding the file URL</td>
+</tr>
+<tr>
+<td><code>type_field</code></td>
+<td>no</td>
+<td><code>"type"</code></td>
+<td>Manifest column holding the type</td>
+</tr>
+<tr>
+<td><code>run_field</code></td>
+<td>no</td>
+<td><code>"run"</code></td>
+<td>Manifest column holding the run grouping. Files of a manifest without that column get <code>remote</code> as their run</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>*_field</code> overrides remap a manifest with non-canonical column names onto
+the contract without rewriting it. In a template, every <code>manifest</code> collection
+reads the same manifest, so they must all name the same columns: <strong>From
+Manifest</strong> refuses a template whose collections disagree.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">scan</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">manifest</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">scan_parameters</span><span class="p">:</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">manifest_url</span><span class="p">:</span><span class="w"> </span><span class="s">"{MANIFEST_URL}"</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">manifest_type</span><span class="p">:</span><span class="w"> </span><span class="s">"samples"</span>
 </code></pre></div>
 <h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <ul>
 <li><strong><a href="../yaml-examples/">YAML Examples</a></strong> - Complete configuration examples and patterns</li>
 <li><strong><a href="../guide/">Project Guide</a></strong> - Comprehensive project management guide</li>
+<li><strong><a href="../remote-data/">Remote data and manifests</a></strong> - Choosing between a URL, a prefix and a manifest</li>
 <li><strong><a href="../../../depictio-cli/usage/">CLI Reference</a></strong> - Command-line interface documentation</li>
 </ul>
 

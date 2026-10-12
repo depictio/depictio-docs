@@ -1605,6 +1605,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#creating-a-project-from-a-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a project from a run folder or a manifest (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1923,6 +1934,8 @@
       
         
       
+        
+      
     
     
     
@@ -2111,6 +2124,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/remote-data/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.43-1.8 2.13-3.42Q9.07 4.1 11 4.1q.83 0 1.41.59.59.59.59 1.41v6.05l1.6-1.55L16 12l-4 4-4-4 1.4-1.4 1.6 1.55V6.1q-1.9.35-2.95 1.84T7 11h-.5q-1.45 0-2.47 1.03Q3 13.05 3 14.5T4.03 17q1.02 1 2.47 1h12q1.05 0 1.77-.73.73-.72.73-1.77t-.73-1.77Q19.55 13 18.5 13H17v-2q0-1.2-.55-2.24Q15.9 7.73 15 7V4.68q1.85.87 2.93 2.58Q19 9 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20M12 11.05"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote data and manifests
   
 
     
@@ -5631,6 +5674,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#creating-a-project-from-a-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a project from a run folder or a manifest (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5945,6 +5999,22 @@ filters. The link grants no access: it only narrows what they could already open
 <li>You can access workflows and data collections recursively within each project</li>
 <li>Each entity allows you to view configuration details and preview data</li>
 </ul>
+<h3 id="creating-a-project-from-a-manifest"><span style="color: #45B8AC;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.59 13.41c.41.39.41 1.03 0 1.42-.39.39-1.03.39-1.42 0a5.003 5.003 0 0 1 0-7.07l3.54-3.54a5.003 5.003 0 0 1 7.07 0 5.003 5.003 0 0 1 0 7.07l-1.49 1.49c.01-.82-.12-1.64-.4-2.42l.47-.48a2.98 2.98 0 0 0 0-4.24 2.98 2.98 0 0 0-4.24 0l-3.53 3.53a2.98 2.98 0 0 0 0 4.24m2.82-4.24c.39-.39 1.03-.39 1.42 0a5.003 5.003 0 0 1 0 7.07l-3.54 3.54a5.003 5.003 0 0 1-7.07 0 5.003 5.003 0 0 1 0-7.07l1.49-1.49c-.01.82.12 1.64.4 2.43l-.47.47a2.98 2.98 0 0 0 0 4.24 2.98 2.98 0 0 0 4.24 0l3.53-3.53a2.98 2.98 0 0 0 0-4.24.973.973 0 0 1 0-1.42"></path></svg></span></span> Creating a project from a run folder or a manifest <small>(v1.16.0+)</small><a class="headerlink" href="#creating-a-project-from-a-manifest" title="Permanent link">¶</a></h3>
+<p><strong>+ New Project</strong> offers four tabs: <strong>Create New</strong>, <strong>Import</strong>, <strong>From
+Manifest</strong> and <strong>From a run folder</strong>. The last two build a project from data
+the server reads, with no CLI involved, in three steps: <strong>Source</strong>, <strong>Preview</strong>
+(a dry run, nothing is created) and <strong>Create</strong>.</p>
+<ul>
+<li><strong>From a run folder</strong>: point at the results folder of one pipeline run, in a
+  bucket or, on a <code>depictio local</code> server, on this computer. Depictio
+  recognises the pipeline, picks the template and shows what each data
+  collection finds there; the data is ingested in the background. See
+  <a href="../../projects/remote-data/#from-a-run-folder">From a run folder</a>.</li>
+<li><strong>From Manifest</strong>: paste the URL of a
+  <a href="../../projects/remote-data/#the-data-manifest-contract">data manifest</a> and
+  pick a template that reads one. See
+  <a href="../../projects/remote-data/#creating-a-project-from-a-manifest">From a manifest</a>.</li>
+</ul>
 <h2 id="user-information-profile"><span style="color: #8BC34A;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"></path></svg></span></span> User Information (/profile)<a class="headerlink" href="#user-information-profile" title="Permanent link">¶</a></h2>
 <p>You can access your user profile by clicking on the avatar icon in the bottom left corner of the sidebar.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
@@ -6002,6 +6072,35 @@ dashboard's Settings <small>(v1.6.0+)</small>.</p>
     </a>
 </div>
 
+<p>Data that is not on the server's own disk is handled in two places
+<small>(v1.16.0+)</small>; the mechanisms are described on
+<a href="../../projects/remote-data/">Remote data and manifests</a>.</p>
+<ul>
+<li><strong>Remote URL</strong> in <strong>Create Data Collection</strong>: the <strong>Table (CSV / TSV /
+  Parquet)</strong> tab offers <strong>Upload a file</strong> or <strong>Remote URL</strong>. With the latter,
+  paste an <code>https://</code> or <code>s3://</code> address as the <strong>File URL</strong> (<code>http://</code> only
+  when the server allows it); the name and format are filled in from its last
+  segment. The server fetches the file, so it never travels through the
+  browser, and a private bucket is read with the project's storage settings.
+  MultiQC reports are uploaded only.</li>
+<li><strong>Project settings</strong> in the header, next to <strong>Permissions</strong>, opens three
+  sections; nothing is saved on close, each acts on its own button:<ul>
+<li><strong>Storage</strong>, for project owners and administrators: the endpoint,
+  bucket, region and keys of a private bucket the project reads, with
+  <strong>Test connection</strong>. See
+  <a href="../../projects/remote-data/#project-storage-settings">Project storage settings</a>.</li>
+<li><strong>Data refresh</strong>: re-read the collections that come from a manifest, a
+  URL or a bucket, and rebuild their tables. See
+  <a href="../../projects/remote-data/#refreshing-the-data">Refreshing the data</a>.</li>
+<li><strong>Export</strong>: package the project and its dashboards as a template bundle
+  (zip). See
+  <a href="../../projects/templates/#export-a-project-as-a-template">Export a project as a template</a>.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Data refresh</strong> and <strong>Export</strong> are for owners, editors and administrators;
+  on a public instance, administrators only. The dialog opens on the section
+  used last.</p>
 <h3 id="dashboard-viewer-dashboardid"><span style="color: #45B8AC;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 4v12h18V4zm0-2h18a2 2 0 0 1 2 2v12c0 .53-.21 1.04-.59 1.41-.37.38-.88.59-1.41.59h-7v2h2v2H8v-2h2v-2H3c-.53 0-1.04-.21-1.41-.59C1.21 17.04 1 16.53 1 16V4c0-1.11.89-2 2-2m7.84 6.93c.31-.3.73-.48 1.16-.48.43.01.85.18 1.16.49.3.3.48.72.48 1.15 0 .44-.18.85-.48 1.16-.31.31-.73.48-1.16.48s-.85-.18-1.16-.48c-.3-.31-.48-.72-.48-1.16 0-.43.18-.85.48-1.16M10.07 12a2.68 2.68 0 0 0 3.86 0c.51-.5.8-1.19.8-1.91s-.29-1.42-.8-1.93-1.21-.8-1.93-.8-1.42.29-1.93.8-.8 1.21-.8 1.93.29 1.41.8 1.91M6 10.09A6.45 6.45 0 0 1 12 6c2.73 0 5.06 1.7 6 4.09a6.42 6.42 0 0 1-6 4.09c-2.73 0-5.06-1.68-6-4.09"></path></svg></span></span> Dashboard viewer (/dashboard/{id})<a class="headerlink" href="#dashboard-viewer-dashboardid" title="Permanent link">¶</a></h3>
 <p>Read-only dashboard with filters and component interactions.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">

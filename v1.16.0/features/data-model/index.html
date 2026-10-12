@@ -1563,6 +1563,8 @@
       
         
       
+        
+      
     
     
     
@@ -1748,6 +1750,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/projects/remote-data/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.43-1.8 2.13-3.42Q9.07 4.1 11 4.1q.83 0 1.41.59.59.59.59 1.41v6.05l1.6-1.55L16 12l-4 4-4-4 1.4-1.4 1.6 1.55V6.1q-1.9.35-2.95 1.84T7 11h-.5q-1.45 0-2.47 1.03Q3 13.05 3 14.5T4.03 17q1.02 1 2.47 1h12q1.05 0 1.77-.73.73-.72.73-1.77t-.73-1.77Q19.55 13 18.5 13H17v-2q0-1.2-.55-2.24Q15.9 7.73 15 7V4.68q1.85.87 2.93 2.58Q19 9 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20M12 11.05"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote data and manifests
   
 
     
@@ -2987,6 +3019,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="How files become dashboard data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remote-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote files (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -5230,6 +5279,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="How files become dashboard data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remote-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote files (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -5392,6 +5458,56 @@ API joins them in as it serves the project, which is why <code>delta_location</c
 <p>Dashboards are versioned apart from their data, in a <code>dashboard_versions</code> collection:
 each entry is a copy of every tab of one dashboard, plus the Delta commit each of its
 data collections was at. See <a href="../versioning/">Dashboard and data versions</a>.</p>
+<h3 id="remote-files">Remote files <small>(v1.16.0+)</small><a class="headerlink" href="#remote-files" title="Permanent link">¶</a></h3>
+<p>Three scan modes register files that were never on a local disk: <code>url</code> names one
+file, <code>s3_prefix</code> lists a bucket prefix, and <code>manifest</code> consumes an explicit list of
+files called a <a href="../../usage/projects/remote-data/#the-data-manifest-contract">Data Manifest</a>.
+The <strong>File</strong> record is the same object, with three differences:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Local scan</th>
+<th>Remote scan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>file_location</code></td>
+<td>A path on the machine that ran the scan</td>
+<td>The absolute URL. Existence is checked when the file is fetched, never at registration</td>
+</tr>
+<tr>
+<td><code>filesize</code></td>
+<td>Read from the filesystem</td>
+<td>From the listing for an <code>s3_prefix</code> scan, and from the content length an <code>https://</code> URL announces. <code>-1</code> when it is not known: always for a manifest entry and an <code>s3://</code> <code>url</code> scan</td>
+</tr>
+<tr>
+<td><code>manifest_id</code></td>
+<td>Unset</td>
+<td>The entity id: the manifest <code>id</code> column, or the part of the object key an <code>s3_prefix</code> scan's <code>id_regex</code> captured. Unset for a <code>url</code> scan</td>
+</tr>
+</tbody>
+</table>
+<p><code>manifest_id</code> is what makes remote collections filter each other without
+configuration. It is injected at read time as a <code>depictio_manifest_id</code> column, so
+every collection built from the same manifest, or from prefixes sharing a naming
+pattern, carries identical canonical values in a column of the same name. A
+<a href="#joining-and-linking">link</a> with the <code>direct</code> resolver then works with nothing to
+map: the manifest <code>id</code> is the canonical identifier the other resolvers were designed
+around.</p>
+<p>The manifest's optional <code>run</code> column plays the role a run directory plays locally. It
+is stored as the file's run tag and injected as <code>depictio_run_id</code>, with <code>remote</code> as the
+value when the manifest has no run column, so filters and links on that column keep
+working. Unlike a run directory, it creates no run record. An <code>s3_prefix</code> scan outside
+a <code>sequencing-runs</code> workflow tags its files <code>remote</code> too, and a <code>url</code> scan
+<code>&lt;tag&gt;-url-scan</code>. A project made from an
+<a href="../../usage/projects/remote-data/#a-run-folder-on-s3"><code>s3://</code> run folder</a> keeps its
+runs as a local one does: in a <code>sequencing-runs</code> workflow, each first-level
+folder under the prefix that matches <code>runs_regex</code> becomes a run, and its files carry its
+name as <code>depictio_run_id</code>.</p>
+<p>Materialisation is unchanged: a remote table still becomes a Delta Lake table on the
+instance's own S3, fetched once at ingestion rather than read through at render time.</p>
 <hr>
 <h2 id="data-collection-types">Data collection types<a class="headerlink" href="#data-collection-types" title="Permanent link">¶</a></h2>
 <table>
