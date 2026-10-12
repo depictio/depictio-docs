@@ -582,7 +582,7 @@ That single command:
 3. Discovers and processes all data collections (running recipes automatically)
 4. Imports the bundled dashboard
 
-Without `--template`, the template is detected from the results directory when it can be. Running the same command again with `--update-config` refreshes the project and keeps its dashboards as edited in the viewer; see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project).
+Without `--template`, the template is detected from the results directory when it can be, and since v1.16.0 a local directory no bundled template fits gets one [composed from the catalog](composed-dashboards.md). Running the same command again with `--update-config` refreshes the project and keeps its dashboards as edited in the viewer; see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project).
 
 The results directory can also be an `s3://` prefix, a manifest-driven template takes `--manifest <url or path>` in place of the directory, and any template can be pointed at other locations, collection by collection, with `--bind TAG=LOCATION`. The web UI creates a project from a run folder too, with **From a run folder**. See [Remote data and manifests](remote-data.md).
 

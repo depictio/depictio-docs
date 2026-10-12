@@ -142,14 +142,18 @@ Here an nf-core/rnaseq run is ingested with its template named, as the [Template
 - the results directory itself, local or an `s3://` prefix: the run information
   an nf-core pipeline writes under `pipeline_info/` names the pipeline and its
   version, and the matching template is used. When no shipped version matches,
-  the closest version that is not newer is used, with a warning.
+  the closest version that is not newer is used, with a warning;
+- since **v1.16.0**, a template composed from what the
+  [tools catalog](../../catalog/index.md) recognises in a local results
+  directory, when no bundled template fits it. `--compose` composes even when
+  one does. See [Composed dashboards](composed-dashboards.md).
 
 The web UI's **From a run folder** tab detects the template the same way and
 shows the comparison before anything is created; see
 [From a run folder](remote-data.md#from-a-run-folder).
 
-When none applies, the command stops and asks for `--template` or
-`--project-config-path`.
+When none applies, as for an `s3://` prefix no template reads, the command
+stops and asks for `--template` or `--project-config-path`.
 
 ### Instantiating with `--manifest` or `--bind` <small>(v1.16.0+)</small> { #instantiating-with-manifest-or-bind }
 
@@ -245,6 +249,7 @@ Once a project is created from a template, the UI shows a template badge on dash
 - `applied_at` — timestamp
 - `config_snapshot` — frozen copy of the resolved config
 - `run_provenance`: the pipeline's own run parameters, see below <small>(v1.8.3+)</small>
+- `unrecognised_files`: for a [composed](composed-dashboards.md) template, the tabular files of the run the catalog did not recognise and that were left out, each with what it would show; the project page lists them <small>(v1.16.0+)</small>
 
 ---
 

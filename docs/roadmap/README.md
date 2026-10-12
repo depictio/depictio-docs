@@ -116,6 +116,12 @@ Three sections, one question each:
   key: "completed"
   sub_title: "v1.15.0 ✅"
 
+- title: "Data where it lives, dashboards from a run"
+  content: "Run folders read on S3, projects created from a folder in the web UI, and a dashboard composed from whatever the catalog recognises"
+  icon: ":fontawesome-solid-wand-magic-sparkles:"
+  key: "completed"
+  sub_title: "v1.16.0 ✅"
+
 - title: "Project authoring & embedding"
   content: "Project builder, a component embedded in an external site"
   icon: ":fontawesome-solid-cubes:"
@@ -139,6 +145,8 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
+| A dashboard composed from what the tools catalog recognises in a results directory, the way MultiQC builds its report | v1.16.0 | [Composed dashboards](../usage/projects/composed-dashboards.md) |
+| Data read where it is: an `s3://` run folder, a URL, a bucket prefix or a data manifest; projects created from a run folder in the web UI, refreshed in place, exported as a template | v1.16.0 | [Remote data and manifests](../usage/projects/remote-data.md) · [Export a project as a template](../usage/projects/templates.md#export-a-project-as-a-template) |
 | Dashboard version history: bookmarks, read-only previews, restoring a dashboard or one component | v1.15.0 | [Dashboard and data versions](../features/versioning.md#history) · [Component history](../features/versioning.md#component-history) |
 | Every write a Delta commit; dashboards, previews and datasets read as a past commit wrote them | v1.15.0 | [Data versions](../features/versioning.md#data-versions) |
 | `depictio watch` re-ingests on its own, with a Watchers pane and live ingestion steps | v1.15.0 | [Watch Command](../depictio-cli/usage.md#watch-command) · [Monitoring](../usage/administration/monitoring.md#watchers) |
@@ -196,7 +204,8 @@ real state is always one click away.
 ### Authoring: templates and project setup
 
 Lowering the cost of contributing a tool or standing up a project. The catalog picker and
-Tool Studio both landed in v1.9.0; what is left is the path from a folder to a project.
+Tool Studio both landed in v1.9.0, and a dashboard composed from a results folder in v1.16.0;
+what is left is below.
 
 - [ ] **nf-core template harmonization**: the bundled templates reference the same catalog entries a dashboard does, rather than carrying bespoke inline tiles ([#873](https://github.com/depictio/depictio/pull/873))
 - [ ] **Project builder**: `depictio project-builder <folder>` turns a folder into a `project.yaml`, with live glob/regex matching and schema-consistency checks ([#901](https://github.com/depictio/depictio/pull/901))
@@ -217,8 +226,6 @@ something up.
 | ---- | ---------------------- | ---- |
 | :material-cloud-off-outline: **Serverless Depictio** | Explore a dashboard with no server to deploy or maintain: S3 files and prerenders read client-side, with WASM and DuckDB | [#934](https://github.com/depictio/depictio/issues/934) |
 | :material-filter-multiple-outline: **Journeys** | Named paths through tabs. The two halves of this idea already shipped: filters promoted to dashboard scope in [v1.6.0](../features/dashboards.md#persistent-sections), and [funnel filtering](../features/dashboards.md#funnel-filtering) in v1.7.0 | [#756](https://github.com/depictio/depictio/pull/756) · [#690](https://github.com/depictio/depictio/issues/690) · [#691](https://github.com/depictio/depictio/issues/691) |
-| :material-magic-staff: **Auto-compose from a run** | Point Depictio at a pipeline output directory and get a dashboard, no template chosen by hand (nf-core + Snakemake) | [#811](https://github.com/depictio/depictio/pull/811) · [#734](https://github.com/depictio/depictio/issues/734) · [#843](https://github.com/depictio/depictio/issues/843) |
-| :material-file-document-edit-outline: **Project → template via the UI** | Turn a working project and its dashboards into a reusable template without touching YAML | [#861](https://github.com/depictio/depictio/issues/861) |
 | :material-flask-outline: **Citable science** | DOI-backed snapshots per dashboard version, sample-to-viz provenance via [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/), static export to [Quarto](https://quarto.org/). Nothing is open for it yet; [#931](https://github.com/depictio/depictio/issues/931) is the nearest neighbour, surfacing pipeline and filtering provenance in a dashboard | [#931](https://github.com/depictio/depictio/issues/931) |
 | :material-robot-outline: **AI-assisted analysis** | Describe the analysis and get a proposed layout; anomaly detection, narration, and an MCP server for AI agents | [#844](https://github.com/depictio/depictio/issues/844) · [#79](https://github.com/depictio/depictio/issues/79) |
 | :material-table-merge-cells: **Grain-aware joins** | Detect each table's grain so a cross-DC join cannot silently explode rows | [#877](https://github.com/depictio/depictio/pull/877) · [#876](https://github.com/depictio/depictio/issues/876) |
