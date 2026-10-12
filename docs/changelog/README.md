@@ -8,6 +8,45 @@ hide:
 
 # Changelog
 
+## **[v1.15.1](https://github.com/depictio/depictio/releases/tag/v1.15.1)** (October 11, 2026)
+
+!!! success "Patch: a ready-to-run Codespaces demo, and safer startup and S3 cleanup"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.15.1
+ghcr.io/depictio/depictio-viewer:1.15.1
+ghcr.io/depictio/depictio-worker:1.15.1
+ghcr.io/depictio/depictio-cli:1.15.1
+```
+
+### **✨ New Features**
+
+* **The Codespaces badge opens a light *Try Depictio* workspace**: the Python package on a prebuilt image, with the examples loaded, so the viewer is up seconds after the codespace starts. See [Installation](../installation/README.md#quickstart) ([#1176](https://github.com/depictio/depictio/pull/1176)).
+
+### **🐛 Bug Fixes**
+
+* **The S3 orphan cleanup no longer deletes tables while they are being seeded** ([#1175](https://github.com/depictio/depictio/pull/1175)).
+* **Workers start cleanly after a MongoDB wipe**: none starts Beanie before the database is emptied, and a waiting worker reads this boot's lock ([#1177](https://github.com/depictio/depictio/pull/1177), [#1178](https://github.com/depictio/depictio/pull/1178)).
+
+??? info "Beta releases leading up to v1.15.1"
+
+    **v1.15.1-b1**
+
+    * The S3 orphan cleanup fix ([#1175](https://github.com/depictio/depictio/pull/1175)).
+
+    **v1.15.1-b2**
+
+    * No worker starts Beanie before a MongoDB wipe empties the database ([#1177](https://github.com/depictio/depictio/pull/1177)).
+
+    **v1.15.1-b3**
+
+    * A worker waiting for initialization reads this boot's lock, not an old marker ([#1178](https://github.com/depictio/depictio/pull/1178)).
+    * The stable release adds the *Try Depictio* codespace ([#1176](https://github.com/depictio/depictio/pull/1176)).
+
+---
+
 ## **[v1.15.0](https://github.com/depictio/depictio/releases/tag/v1.15.0)** (October 9, 2026)
 
 !!! success "Minor: dashboard version history, data versions with time travel, and ingestion that runs on its own"

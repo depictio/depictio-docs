@@ -36,17 +36,17 @@ hide:
 
   </div>
 
-<div style="padding: 64.29% 0 0 0; position: relative">
+<!-- One frame; javascripts/theme-video.js gives it the light or the dark take and swaps them on a palette toggle. -->
+<div class="hero-video">
   <iframe
-    src="https://player.vimeo.com/video/1194664914?h=4155d79379&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1"
+    data-src-light="https://player.vimeo.com/video/1234757675?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1&amp;title=0&amp;byline=0&amp;portrait=0"
+    data-src-dark="https://player.vimeo.com/video/1234757674?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1&amp;title=0&amp;byline=0&amp;portrait=0"
     frameborder="0"
     allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
     referrerpolicy="strict-origin-when-cross-origin"
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
-    title="depictio-main-1754915546775"
+    title="Depictio, from pipeline output to dashboard"
   ></iframe>
 </div>
-<script src="https://player.vimeo.com/api/player.js"></script>
 
 </section>
 
@@ -139,7 +139,8 @@ hide:
       </div>
       <div class="component-card">
         <div class="component-icon multiqc-logo-icon">
-          <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC">
+          <img class="only-light" src="images/logos/multiqc_light.svg" alt="MultiQC">
+          <img class="only-dark" src="images/logos/multiqc_dark.svg" alt="MultiQC">
         </div>
         <h4>MultiQC</h4>
         <p>Quality control reports embedded in dashboards</p>
@@ -222,7 +223,7 @@ hide:
               </svg>
               Try Demo Directly
             </a>
-            <a href="https://codespaces.new/depictio/depictio" class="demo-alt-btn" target="_blank" rel="noopener">
+            <a href="https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&amp;quickstart=1" class="demo-alt-btn" target="_blank" rel="noopener">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
               </svg>
@@ -325,8 +326,20 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/></svg><span>Ingest</span></span>
         <h3>Read where your data lives</h3>
-        <p>Point <code>depictio ingest</code> at a finished run, on your laptop or on the cluster where it landed, and it scans the output in place, pushing only the aggregated results, never the raw files. Or let a Nextflow pipeline <a href="depictio-cli/nextflow-trigger/">run that ingestion itself</a> when it completes. Smaller collections can be added straight from the browser instead. Either way the ingestion report says what was found, what was missing, and the parameters the pipeline ran with.</p>
+        <p>Point <code>depictio ingest</code> at a finished run, on your laptop or on the cluster where it landed, and it scans the output in place, pushing only the aggregated results, never the raw files. Smaller collections can be added straight from the browser instead. Either way the ingestion report says what was found, what was missing, and the parameters the pipeline ran with.</p>
         <a class="feature-link" href="depictio-cli/usage/">Ingest with the CLI &rarr;</a>
+      </div>
+    </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <div class="feature-cast asciinema-cast" data-cast="assets/casts/depictio-nextflow-trigger.cast" data-poster="npt:0:59" data-idle-time-limit="2.5"></div>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M.005 4.424V0c6.228.259 11.227 5.268 11.477 11.506H7.058C6.828 7.715 3.786 4.673.005 4.424m7.082 8.089h4.424C11.251 18.741 6.242 23.741.005 23.99v-4.423c3.79-.231 6.832-3.273 7.082-7.054m9.826-1.036h-4.424C12.749 5.249 17.758.25 23.995 0v4.424c-3.79.23-6.832 3.263-7.082 7.053m7.082 8.099V24c-6.228-.259-11.227-5.268-11.477-11.506h4.424c.23 3.791 3.272 6.833 7.053 7.082"/></svg><span>Nextflow trigger</span></span>
+        <h3>Or let the pipeline ingest itself</h3>
+        <p>Install the trigger once on the machine that runs <code>nextflow</code>, and a pipeline that completes is ingested into Depictio on its own, with the template picked from the pipeline's name and version and not a line about Depictio in the pipeline. Install it opt-in with <code>--default-disabled</code> and only the runs that pass <code>--depictio_enabled true</code> are ingested. A failed run is never ingested, and a problem on Depictio's side leaves the pipeline's exit status alone.</p>
+        <a class="feature-link" href="depictio-cli/nextflow-trigger/">Nextflow trigger &rarr;</a>
       </div>
     </article>
 
@@ -422,6 +435,22 @@ hide:
         <h3>Room for a real dashboard</h3>
         <p>Group cards into sections, keep one filter panel across a family of tabs, dock a map beside the data, and inspect any component to see where its numbers come from.</p>
         <a class="feature-link" href="features/dashboards/#sections">Sections and tabs &rarr;</a>
+      </div>
+    </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a dashboard's version history">
+          <img class="only-light" src="images/guides/versioning/settings_history_light.webp" alt="The History section of a dashboard's settings: its saved versions grouped by date, each with its author, a bookmark and its preview and restore actions" loading="lazy">
+          <img class="only-dark" src="images/guides/versioning/settings_history_dark.webp" alt="" loading="lazy">
+          <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
+        </button>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 8H12v5l4.28 2.54.72-1.21-3.5-2.08zM13 3a9 9 0 0 0-9 9H1l3.96 4.03L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.9 8.9 0 0 0 13 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9"/></svg><span>Versions</span></span>
+        <h3>Go back to any version, data included</h3>
+        <p>Every change to a dashboard is kept as a version: bookmark one, share it as a read-only preview link, restore it, or bring back a single component. A version also records which commit of each table it drew from, so a past dashboard is shown with the data it showed at the time, and the editor can draw today's layout from earlier data.</p>
+        <a class="feature-link" href="features/versioning/">Dashboard and data versions &rarr;</a>
       </div>
     </article>
 
@@ -627,14 +656,78 @@ hide:
     </h2>
   <p class="getting-started-intro">Ready to get started with Depictio?</p>
 
+  <article class="feature-row getting-started-quickstart">
+    <div class="feature-row-text">
+      <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="m14.25.18.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg><span>Python package</span></span>
+      <h3>Three commands, from results to dashboard</h3>
+      <p>On a laptop and without Docker: install the package, start the server, then point it at a pipeline's output. The same server runs in Docker Compose or Kubernetes when a team needs it, and a local server <a href="installation/local/#move-to-docker-compose">moves to Docker Compose</a> with its data.</p>
+      <a class="feature-link" href="installation/local/">Python package installation &rarr;</a>
+    </div>
+    <div class="feature-row-visual">
+      <div class="feature-code">
+<pre><code><span class="gs-cmd">uv tool install "depictio[local]"</span>
+<span class="gs-cmd">depictio local up</span>
+<span class="gs-cmd">depictio ingest path/to/results</span></code></pre>
+      </div>
+    </div>
+  </article>
+
   <div class="installation-grid">
+    <a href="https://demo.depictio.embl.org/" class="installation-card demo" target="_blank" rel="noopener">
+      <div class="card-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13,3V9H21V3M13,21H21V11H13M3,21H11V15H3M3,13H11V3H3V13Z"/></svg>
+      </div>
+      <div class="card-content">
+        <h3>Live demo</h3>
+        <p>Example dashboards, ready to explore</p>
+        <span class="card-badge demo">No sign-up</span>
+      </div>
+      <div class="card-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/>
+        </svg>
+      </div>
+    </a>
+
+    <a href="https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&amp;quickstart=1" class="installation-card codespaces" target="_blank" rel="noopener">
+      <div class="card-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      </div>
+      <div class="card-content">
+        <h3>Codespaces</h3>
+        <p>The Python package, in a cloud workspace</p>
+        <span class="card-badge codespaces">No install</span>
+      </div>
+      <div class="card-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/>
+        </svg>
+      </div>
+    </a>
+
+    <a href="installation/local/" class="installation-card python">
+      <div class="card-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="m14.25.18.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg>
+      </div>
+      <div class="card-content">
+        <h3>Python package</h3>
+        <p>Try it on a laptop, no containers</p>
+        <span class="card-badge local">No Docker</span>
+      </div>
+      <div class="card-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/>
+        </svg>
+      </div>
+    </a>
+
     <a href="installation/docker/" class="installation-card docker">
       <div class="card-icon">
         <img src="assets/docker.svg" alt="Docker" width="24" height="24">
       </div>
       <div class="card-content">
         <h3>Docker Compose</h3>
-        <p>Quickest way to get started</p>
+        <p>A shared instance for a team or a demo</p>
         <span class="card-badge recommended">Recommended</span>
       </div>
       <div class="card-arrow">
@@ -678,6 +771,7 @@ hide:
       </div>
     </a>
   </div>
+
 </section>
 
 <!-- Funding Section -->
@@ -1008,6 +1102,20 @@ hide:
 
   .hero-demo {
     margin: 2rem 0;
+  }
+
+  /* The overview video, 16:9; its src is set by javascripts/theme-video.js. */
+  .hero-video {
+    position: relative;
+    padding-top: 56.25%;
+  }
+
+  .hero-video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
   }
 
   .demo-image {
@@ -1391,6 +1499,15 @@ hide:
     object-fit: contain;
   }
 
+  .component-icon.multiqc-logo-icon img.only-dark,
+  [data-md-color-scheme="slate"] .component-icon.multiqc-logo-icon img.only-light {
+    display: none;
+  }
+
+  [data-md-color-scheme="slate"] .component-icon.multiqc-logo-icon img.only-dark {
+    display: block;
+  }
+
   .component-card h4 {
     margin: 0 0 0.5rem 0;
     font-size: 1.1rem;
@@ -1406,8 +1523,7 @@ hide:
   }
 
   @media (max-width: 900px) {
-    .component-card,
-    .workflow-card {
+    .component-card {
       width: calc((100% - 1.5rem) / 2);
     }
   }
@@ -1415,13 +1531,12 @@ hide:
   @media (max-width: 768px) {
     .components-section {
       padding: 1rem 1rem 2rem 1rem;
-      margin: 0 -1rem;
+      margin: 0 -0.8rem;
     }
   }
 
   @media (max-width: 500px) {
-    .component-card,
-    .workflow-card {
+    .component-card {
       width: 100%;
     }
   }
@@ -1575,6 +1690,37 @@ hide:
 
   [data-md-color-scheme="slate"] .workflow-card {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* On a phone, one card per line, lower, the Snakemake label beside its logo. */
+  @media (max-width: 600px) {
+    .workflow-logos {
+      gap: 0.9rem;
+    }
+
+    .workflow-card {
+      width: 100%;
+      min-height: 96px;
+      padding: 1rem;
+    }
+
+    .workflow-card .snakemake-catalog-link {
+      flex-direction: row;
+      gap: 0.9rem;
+    }
+
+    .workflow-card .workflow-label {
+      margin-top: 0;
+    }
+
+    .snakemake-catalog-link .workflow-logo {
+      height: 48px;
+      width: 48px;
+    }
+
+    .workflow-card .workflow-logo {
+      max-height: 56px;
+    }
   }
 
   .workflow-card:hover {
@@ -2036,7 +2182,9 @@ hide:
 
   .feature-row {
     display: grid;
-    grid-template-columns: 1fr;
+    /* minmax(0, …): a 1fr column grows to its widest unbreakable content, and
+       the terminal blocks would then widen the whole page on a phone. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.25rem;
     align-items: center;
   }
@@ -2119,6 +2267,42 @@ hide:
     color: #8ce563;
   }
 
+  /* Two columns start at 900px, where the YAML terminal's column is narrowest. */
+  @media (min-width: 900px) and (max-width: 1099px) {
+    .feature-code {
+      font-size: 0.72rem;
+    }
+  }
+
+  /* On a phone the YAML terminal keeps its longest line on screen: smaller type,
+     tighter padding. */
+  @media (max-width: 600px) {
+    .feature-code {
+      padding: 1rem;
+      font-size: clamp(0.5rem, 2.9vw, 0.78rem);
+    }
+
+    .fc-file {
+      padding: 0.6rem 0.7rem;
+    }
+
+    /* No room for the hairline and the link beside the label: the link goes
+       to its own line, under the label. */
+    .md-typeset .feature-group-title {
+      flex-wrap: wrap;
+      row-gap: 0.5rem;
+    }
+
+    .md-typeset .feature-group-title::after {
+      display: none;
+    }
+
+    .md-typeset .feature-group-link {
+      flex-basis: 100%;
+      padding-left: calc(1.7rem + 0.85rem);
+    }
+  }
+
   /* Material attaches a copy button to every `pre > code`. This block is an
      illustration, not a snippet to run, and the button lands on top of it. */
   .feature-code .md-clipboard,
@@ -2159,6 +2343,17 @@ hide:
     background: #0f1114;
     border-color: rgba(255, 255, 255, 0.14);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 18px 40px -14px rgba(0, 0, 0, 0.6);
+  }
+
+  /* A terminal recording in place of a screenshot: the same frame, no zoom. */
+  .feature-cast {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  [data-md-color-scheme="slate"] .feature-cast {
+    border-color: rgba(255, 255, 255, 0.14);
   }
 
   .feature-frame img {
@@ -2568,6 +2763,16 @@ hide:
     --card-color: #45B8AC;
   }
 
+  .installation-card.python {
+    --card-color: #E8A33D;
+  }
+  .installation-card.demo {
+    --card-color: #8BC34A;
+  }
+  .installation-card.codespaces {
+    --card-color: #E6779F;
+  }
+
   .card-icon {
     width: 48px;
     height: 48px;
@@ -2633,6 +2838,99 @@ hide:
     color: #45B8AC;
   }
 
+  .card-badge.local {
+    background: rgba(232, 163, 61, 0.12);
+    color: #B9771A;
+  }
+
+  [data-md-color-scheme="slate"] .card-badge.local {
+    color: #E8A33D;
+  }
+  .card-badge.demo {
+    background: rgba(139, 195, 74, 0.14);
+    color: #4F7A1F;
+  }
+  [data-md-color-scheme="slate"] .card-badge.demo {
+    color: #8BC34A;
+  }
+  .card-badge.codespaces {
+    background: rgba(230, 119, 159, 0.12);
+    color: #B8456F;
+  }
+  [data-md-color-scheme="slate"] .card-badge.codespaces {
+    color: #E6779F;
+  }
+
+  /* Six cards: the ways to try it, then the ways to run it. Three by two, two by
+     three on a tablet, a single column on a phone (below). */
+  .getting-started-section .installation-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (max-width: 1100px) {
+    .getting-started-section .installation-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Getting Started opens on the three commands, in the terminal frame of the
+     YAML band in Key Features. Larger type than there: three lines, to be read
+     at a glance and run. CSS draws the prompts, so the copy button copies the
+     commands alone. */
+  .getting-started-quickstart {
+    margin: 2.5rem 0 3rem;
+  }
+
+  .getting-started-quickstart .feature-code {
+    padding: 1.6rem 1.75rem;
+    font-size: 0.95rem;
+  }
+
+  .md-typeset .getting-started-quickstart .feature-code pre > code {
+    color: #ffffff;
+    line-height: 2;
+    overflow-x: auto;
+  }
+
+  /* The type follows the width where the column is narrow, so the longest
+     command still ends short of the copy button: in the right half of the row
+     up to 1220px, and full width on a phone. */
+  @media (min-width: 900px) and (max-width: 1219px) {
+    .getting-started-quickstart .feature-code {
+      font-size: 1.4vw;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .getting-started-quickstart .feature-code {
+      padding: 1rem 0.8rem;
+      font-size: clamp(0.52rem, 3.2vw, 0.85rem);
+    }
+  }
+
+  .gs-cmd::before {
+    content: "$ ";
+    color: #8ce563;
+  }
+
+  /* Unlike the YAML band, these are commands to run: Material's copy button
+     stays. */
+  .getting-started-quickstart .feature-code .md-code__nav {
+    display: flex !important;
+  }
+
+  .getting-started-quickstart .feature-code .md-code__button {
+    display: block !important;
+    color: #9aa0ab;
+  }
+
+  .getting-started-quickstart .feature-code .md-code__button:hover {
+    color: #ffffff;
+  }
+
+  .getting-started-quickstart .feature-row-text a:not(.feature-link) {
+    color: var(--depictio-purple);
+  }
+
   .card-arrow {
     width: 24px;
     height: 24px;
@@ -2653,8 +2951,38 @@ hide:
   }
 
   @media (max-width: 768px) {
-    .installation-grid {
+    .installation-grid,
+    .getting-started-section .installation-grid {
       grid-template-columns: 1fr;
+    }
+  }
+
+  /* One card per line on a phone: lower cards, so the list stays short. */
+  @media (max-width: 600px) {
+    .installation-grid,
+    .getting-started-section .installation-grid {
+      gap: 0.9rem;
+    }
+
+    .installation-card {
+      gap: 0.85rem;
+      padding: 1rem 1.1rem;
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+    }
+
+    .card-content h3 {
+      margin-bottom: 0.25rem;
+      font-size: 1.05rem;
+    }
+
+    .card-content p {
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
     }
   }
 
@@ -2692,7 +3020,23 @@ hide:
     .funding-section,
     .partners-section {
       padding: 1rem 1rem 2rem 1rem;
-      margin: 0 -1rem;
+      margin: 0 -0.8rem;
+    }
+  }
+
+  /* Until the page is 1280px wide the content starts 0.8rem from the window
+     edge, so the -2rem bleed ran the sections 24px past it. */
+  @media (min-width: 769px) and (max-width: 1279px) {
+    .components-section,
+    .workflow-section,
+    .tech-section,
+    .key-features-section,
+    .getting-started-section,
+    .funding-section,
+    .partners-section,
+    .demo-unavailable-message {
+      margin-left: -0.8rem;
+      margin-right: -0.8rem;
     }
   }
 
@@ -2769,7 +3113,7 @@ hide:
   @media (max-width: 768px) {
     .demo-unavailable-message {
       padding: 1rem 1rem 2rem 1rem;
-      margin: 0 -1rem;
+      margin: 0 -0.8rem;
     }
 
     .demo-alternative-actions {
@@ -2859,7 +3203,7 @@ async function checkDemoAvailability() {
         <h3>Live Demo Temporarily Unavailable</h3>
         <p>The interactive demo is currently not accessible. Please try again later or <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
         <div class="demo-alternative-actions">
-          <a href="https://codespaces.new/depictio/depictio" class="md-button" target="_blank" rel="noopener">Open in Codespaces</a>
+          <a href="https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&amp;quickstart=1" class="md-button" target="_blank" rel="noopener">Open in Codespaces</a>
           <a href="usage/get_started/" class="md-button">View Documentation</a>
         </div>
       </div>

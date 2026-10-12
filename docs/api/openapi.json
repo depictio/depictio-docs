@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.15.0",
-    "x-generated-at": "2026-10-09T18:36:36Z",
-    "x-depictio-version": "v1.15.0"
+    "version": "1.16.0",
+    "x-generated-at": "2026-10-11T20:13:10Z",
+    "x-depictio-version": "v1.16.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -444,6 +444,966 @@
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/ingest_manifest": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Ingest Manifest",
+        "description": "Ingest a remote Data Manifest into an existing project.\n\nMaps the manifest's ``type`` values onto the project's data-collection\ntags, switches each matched DC to ``scan.mode: manifest``, then runs\nscan + process in-process (same pipeline as ``/create_from_upload``).\n``dry_run=true`` returns the type→tag mapping plan without touching the\nproject. The manifest URL goes through the SSRF gateway before any fetch.",
+        "operationId": "ingest_manifest_depictio_api_v1_projects_ingest_manifest_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngestManifestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManifestIngestReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/refresh_manifest": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Refresh Manifest",
+        "description": "Re-scan and re-ingest a project's data collections in place.\n\nCovers every data collection the server can read again: any remote\nsource (manifest, url, s3_prefix), and, under ``depictio local`` only, a\nlocal one below a root of the local-data policy (for a loopback caller\nwho is an admin, as every local read). Overwrite-with-report semantics: File records sync to\nthe source's current files (``sync_files`` beats the identity-hash skip)\nand each Delta table is rebuilt from the resulting file set. A manifest\nDC whose manifest no longer lists its type is reported failed and left\nuntouched. ``dry_run=true`` reports what would refresh (per-DC entry\ncounts for manifest DCs) without touching any data.",
+        "operationId": "refresh_manifest_depictio_api_v1_projects_refresh_manifest_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshManifestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManifestRefreshReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/refresh_manifest/{run_id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Refresh Manifest Run",
+        "description": "Poll an async manifest refresh (``async_run=true``) by its run_id.\n\nAggregates the ingestion-run steps back into the same report shape as a\nsynchronous refresh; ``success`` flips once every worker finished green.",
+        "operationId": "get_refresh_manifest_run_depictio_api_v1_projects_refresh_manifest__run_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManifestRefreshReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/{project_id}/export_template": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Export Project Template",
+        "description": "Export the project and its dashboards as a template bundle (ZIP).\n\nThe archive holds ``template.yaml`` + ``dashboards/*.yaml`` ready to drop\ninto ``depictio/projects/<template_id>/``: runtime fields stripped, stored\nmanifest URLs re-parameterized to ``{MANIFEST_URL}``, an optional local\n``data_root`` prefix to ``{DATA_ROOT}``, dashboard references as portable\ntags. The bundle is round-trip-checked before it is returned.",
+        "operationId": "export_project_template_depictio_api_v1_projects__project_id__export_template_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportTemplateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/{project_id}/storage": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Project Storage",
+        "description": "Storage config of a project (the secret is never returned, only ``has_secret``).",
+        "operationId": "get_project_storage_depictio_api_v1_projects__project_id__storage_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectStorageConfigOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Set Project Storage",
+        "description": "Attach S3-compatible credentials to a project (owners only).\n\nThe secret is write-only: it is encrypted at rest and omitted secrets keep\nthe stored value. The endpoint URL goes through the same host gating as\nremote data URLs.",
+        "operationId": "set_project_storage_depictio_api_v1_projects__project_id__storage_put",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectStorageConfigIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectStorageConfigOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Delete Project Storage",
+        "description": "Remove a project's storage credentials (owners only).",
+        "operationId": "delete_project_storage_depictio_api_v1_projects__project_id__storage_delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/{project_id}/storage/test": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Test Project Storage",
+        "description": "Probe the configured endpoint/bucket with the stored credentials.",
+        "operationId": "test_project_storage_depictio_api_v1_projects__project_id__storage_test_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageTestResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/storage_test": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Test Run Storage",
+        "description": "Probe the bucket of ``location`` with storage settings that are not stored anywhere.\n\nThe probes of ``POST /projects/{project_id}/storage/test`` (HeadBucket,\nregion detection, one one-key listing under the location's prefix), for\nthe settings of a project not created yet. Settings without an access key\nand its secret are a 422; other settings no read could use, and failed\nprobes, answer ``success: false``. The detected region is answered, not\nsaved.",
+        "operationId": "test_run_storage_depictio_api_v1_projects_storage_test_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunStorageTestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageTestResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/templates": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "List Project Templates",
+        "description": "List the project templates shipped with this instance.\n\nBacks the builder UI's template picker: the ``manifest_capable`` flag\nmarks templates usable with ``POST /projects/from_manifest``. Purely\nfilesystem-derived; template YAMLs that fail to parse are skipped.",
+        "operationId": "list_project_templates_depictio_api_v1_projects_templates_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TemplateCatalog"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/from_manifest": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Create Project From Manifest",
+        "description": "Create a project (and its dashboards) from a template + a Data Manifest.\n\nThe zero-install flow: fetch the manifest through the SSRF gateway,\nresolve the manifest-driven template server-side, coverage-check the\nmanifest's ``type`` values against the template's DCs, create the\nproject, ingest every manifest DC, and import the template's dashboards\nin-process. ``dry_run=true`` returns the plan (coverage + per-DC entry\ncounts) without creating anything.",
+        "operationId": "create_project_from_manifest_depictio_api_v1_projects_from_manifest_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FromManifestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FromManifestReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/from_run": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Create Project From Run",
+        "description": "Create a project (and its dashboards) from a template + a run folder.\n\nThe browser twin of ``depictio ingest <run folder> --template <id>``:\nresolve the template against the run folder, report per data collection\nwhat it would find there, create the project, import its dashboards, and\nhand the ingestion itself to Celery workers, since a real run folder is\nminutes of work, far past a request. The response carries a ``run_id`` to\npoll via ``GET /projects/refresh_manifest/{run_id}``. ``dry_run=true``\nreturns the same per-collection plan and creates nothing.\n\nEither way the report also says what the run's own records say about it\n(``run_info``, as ``GET /projects/folder_inspect`` shows it) and where\neach file the template reads through a variable resolved\n(``input_files``: found or not, and the collections that use it).\n\nThe run folder is an ``s3://`` prefix or, when local folders are on, a\nfolder on the server's disk. Without ``template_id`` the pipeline is\nrecognised from the folder (``detected_template`` in the report).\n\nA run folder in a private bucket comes with ``storage``: it is read with\nthose settings alone, and they are stored on the created project before\nits ingestion starts (``storage_saved``); a failure to store them removes\nthe project. A dry run stores nothing.\n\nA taken project name is a 409, as on ``POST /projects/create``. A run\nfolder the server may not read, or whose read fails, and a pipeline that\nis not recognised answer ``{detail, code}``.",
+        "operationId": "create_project_from_run_depictio_api_v1_projects_from_run_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FromRunRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FromRunReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/run_file_preview": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Post Run File Preview",
+        "description": "Show the start of one file of a run folder, before a project is made from it.\n\nFor the run-folder dialog of ``POST /projects/from_run``: the first rows of\na table (CSV, TSV, a plain text table, gzipped or not, parquet), the first\nlines of a text, or in plain words why a file is not shown (an HTML\nreport, an image, an archive). ``data_root`` and ``storage`` are read\nexactly as ``from_run`` reads them, with its refusals and its public-mode\ngate; ``location`` must be a file below ``data_root``.\n\nBounded: at most 64 KB of the file is read (256 KB once a gzip file is\ndecompressed), and a parquet file of at most 512 MB shows its first rows\nand its row count, read from its metadata. Refusals answer\n``{detail, code}``.",
+        "operationId": "post_run_file_preview_depictio_api_v1_projects_run_file_preview_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunFilePreviewRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunFilePreview"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/local_dirs": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Local Dirs",
+        "description": "List the sub-folders of ``path`` on the server's own disk, or the allowed roots.\n\nFor ``depictio local``, where the server is the user's computer: backs the\nfolder picker of ``POST /projects/from_run``. Sub-directories only, sorted,\nhidden folders and symlinks that leave the allowed roots left out, at most\n500 (``truncated`` says when there were more). 404 when local folders are\noff or the path is outside the allowed roots, refused or missing; 403 for a\nnon-administrator or a request whose ``Host`` is not this machine.",
+        "operationId": "get_local_dirs_depictio_api_v1_projects_local_dirs_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "path",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocalDirListing"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/s3_dirs": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get S3 Dirs",
+        "description": "List the sub-folders of ``url``, or the S3 locations an administrator listed.\n\nThe S3 twin of ``GET /projects/local_dirs``, for any signed-in user: the\nlocations are the public and credentialed bucket lists, the instance's own\nbucket never among them. One listing page per call, at most 500 folders\n(``truncated`` says when there were more). A location outside the lists,\nand a read the store refuses or fails, answer ``{detail, code}``.",
+        "operationId": "get_s3_dirs_depictio_api_v1_projects_s3_dirs_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Url"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/S3DirListing"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Post S3 Dirs",
+        "description": "``GET /projects/s3_dirs``, with storage settings for a private bucket in the body.\n\nWith ``storage``, ``url`` is read with those settings alone: the bucket\nlists do not apply and the bucket itself is the root. The settings are not\nstored. Without ``storage``, the GET route's answer.",
+        "operationId": "post_s3_dirs_depictio_api_v1_projects_s3_dirs_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/S3DirsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/S3DirListing"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/folder_inspect": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Folder Inspect",
+        "description": "Describe one folder: its direct sub-folders and files, whether it looks\nlike a run, and (``detect``, the default) the template its run fits, with\nwhat the run's own records say about it (``run_info``): its engine,\nparameters, tools and reports, how many runs it holds and of which\npipelines when it holds several, and how its tasks ended, counted from\nthe first 8 MB of its execution trace (``run_info.tasks``, ``partial``\nwhen the trace is larger).\n\n``location`` is a folder on this computer (``depictio local``, with the\nguards of ``GET /projects/local_dirs``) or an ``s3://`` location (with\nthose of ``GET /projects/s3_dirs``). Refusals answer ``{detail, code}``.",
+        "operationId": "get_folder_inspect_depictio_api_v1_projects_folder_inspect_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Location"
+            }
+          },
+          {
+            "name": "detect",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Detect"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FolderInspection"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Post Folder Inspect",
+        "description": "``GET /projects/folder_inspect``, with storage settings for a private bucket.\n\nAn ``s3://`` location is read, and its run detected, with ``storage``\nalone when given. The settings are not stored.",
+        "operationId": "post_folder_inspect_depictio_api_v1_projects_folder_inspect_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FolderInspectRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FolderInspection"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/find_runs": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Find Runs",
+        "description": "Find the run folders (holding ``pipeline_info/`` or ``multiqc/``) below ``location``.\n\nBounded: six levels and 5,000 folders below a local folder, 20,000 keys\nbelow an ``s3://`` prefix, 100 runs; ``truncated`` says when a bound\nstopped the search. Below a local folder the first 50 runs carry their\ndetected template. Same locations and refusals as\n``GET /projects/folder_inspect``.",
+        "operationId": "get_find_runs_depictio_api_v1_projects_find_runs_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Location"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoundRuns"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Post Find Runs",
+        "description": "``GET /projects/find_runs``, with storage settings for a private bucket.\n\nAn ``s3://`` location is listed with ``storage`` alone when given. The\nsettings are not stored.",
+        "operationId": "post_find_runs_depictio_api_v1_projects_find_runs_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindRunsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoundRuns"
+                }
               }
             }
           },
@@ -2025,6 +2985,51 @@
             "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/Body_create_data_collection_from_upload_depictio_api_v1_datacollections_create_from_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/datacollections/create_from_url": {
+      "post": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Create Data Collection From Url",
+        "description": "Create a data collection from a remote s3:// or https:// URL.\n\nMirrors the ``/create_from_upload`` pipeline (scan + process via the CLI\nhelpers) for a remote URL instead of an uploaded file, no CLI needed on\nthe client side. The URL is validated by the SSRF gateway\n(depictio/api/v1/remote_fetch.py) before anything is fetched; column\nvalidation for lat/lon happens at process time.",
+        "operationId": "create_data_collection_from_url_depictio_api_v1_datacollections_create_from_url_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDCFromURLRequest"
               }
             }
           },
@@ -14892,6 +15897,16 @@
               }
             ],
             "title": "Instance Label"
+          },
+          "remote_storage_options": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProjectS3Config"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -15290,6 +16305,93 @@
           "body"
         ],
         "title": "CommentUpdate"
+      },
+      "CreateDCFromURLRequest": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "data_type": {
+            "type": "string",
+            "title": "Data Type",
+            "default": "table"
+          },
+          "file_format": {
+            "type": "string",
+            "title": "File Format",
+            "default": "csv"
+          },
+          "separator": {
+            "type": "string",
+            "title": "Separator",
+            "default": ","
+          },
+          "custom_separator": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Separator"
+          },
+          "compression": {
+            "type": "string",
+            "title": "Compression",
+            "default": "none"
+          },
+          "has_header": {
+            "type": "boolean",
+            "title": "Has Header",
+            "default": true
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          },
+          "lat_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat Column"
+          },
+          "lon_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lon Column"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id",
+          "name",
+          "url"
+        ],
+        "title": "CreateDCFromURLRequest",
+        "description": "Body of POST /create_from_url: the remote-URL twin of the upload form."
       },
       "CreateVersionRequest": {
         "properties": {
@@ -15874,7 +16976,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -16284,13 +17386,64 @@
         "title": "DashboardData",
         "description": "Full dashboard model with MongoDB and auth fields.\n\nExtends DashboardDataLite with:\n- MongoDB document fields (id, project_id, dashboard_id)\n- Permissions (owners, editors, viewers)\n- Versioning and timestamps\n- Tab support"
       },
+      "DashboardImportResult": {
+        "properties": {
+          "path": {
+            "type": "string",
+            "title": "Path"
+          },
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "dashboard_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dashboard Id"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "path",
+          "success"
+        ],
+        "title": "DashboardImportResult"
+      },
       "DataCollection": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -16353,7 +17506,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -16523,6 +17676,84 @@
         ],
         "title": "DeleteRunsBatchRequest"
       },
+      "DetectedTemplate": {
+        "properties": {
+          "template_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Id"
+          },
+          "template_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Version"
+          },
+          "pipeline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pipeline"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "engine": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Engine"
+          },
+          "match": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "exact",
+                  "closest",
+                  "none"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Match"
+          }
+        },
+        "type": "object",
+        "title": "DetectedTemplate",
+        "description": "What the run folder said about the run that produced it.\n\nThe other fields are None when the folder did not say. ``template_id`` is\nnullable to match the viewer's type, but a report always names one: a\nfolder no installed template fits is a 422 ``template_not_detected``.\n``GET /projects/folder_inspect`` answers in the same shape, and there it\ncan be None.\n\n``match`` says how the template was chosen: ``exact`` when its version is\nthe run's, ``closest`` when it is another version of the same pipeline,\n``none`` when no installed template fits the run."
+      },
       "Evidence": {
         "properties": {
           "claim": {
@@ -16629,13 +17860,54 @@
         "title": "ExpectedDataCollection",
         "description": "One entry in a project's frozen expected-DC manifest (see TemplateOrigin).\n\nRecords the *full* template DC superset at resolution time — including DCs that\nwere conditionally gated out — so the ingestion report can show what the template\nexpected vs. what was actually identified, faithful to the template version used."
       },
+      "ExportTemplateRequest": {
+        "properties": {
+          "template_id": {
+            "type": "string",
+            "title": "Template Id"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version",
+            "default": "1.0.0"
+          },
+          "data_root": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Root"
+          }
+        },
+        "type": "object",
+        "required": [
+          "template_id"
+        ],
+        "title": "ExportTemplateRequest",
+        "description": "Body of POST /projects/{project_id}/export_template."
+      },
       "File": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -16732,6 +18004,17 @@
           },
           "permissions": {
             "$ref": "#/components/schemas/Permission"
+          },
+          "manifest_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Manifest Id"
           },
           "sample": {
             "anyOf": [
@@ -16972,6 +18255,739 @@
         "title": "FilterSectionSpec",
         "description": "Presentation of one left-panel filter section, or one grid section.\n\nOnly needed to override a section's defaults. A section named by a\ncomponent's ``section`` field but absent from ``filter_sections`` still\nrenders — expanded, no icon — and sorts after the declared ones.\n\nExample YAML:\n    filter_sections:\n      - name: Sample\n        icon: mdi:test-tube\n        color: teal\n      - name: Quality\n        icon: mdi:check-decagram\n        collapsed: true\n\nFilters can also sit on the dashboard itself, as a compact bar, in two\nways. Both take the interactive components whose ``section`` names the grid\nsection, and those leave the left filter panel:\n\n- ``display: strip`` draws the grid section as a filter bar. Its filters\n  join the tab's filters, like the panel's: they narrow every component on\n  the tab whose data has the column (directly or through a link).\n- ``filter_bar: true`` gives a grid section of tiles a bar of its own, under\n  its heading. Its filters narrow that section's tiles only; the rest of the\n  tab, the filter panel and the other tabs ignore them.\n\n``visible_filters`` caps how many filters a bar shows before a \"More\nfilters\" toggle (unset: 2 on a section's own bar, all on a filter bar)::\n\n    grid_sections:\n      - name: Key figures\n        filter_bar: true\n        visible_filters: 2\n    components:\n      - tag: city\n        component_type: interactive\n        section: Key figures   # drawn in that section's bar, filters it only"
       },
+      "FindRunsRequest": {
+        "properties": {
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "storage": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunStorageIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "location"
+        ],
+        "title": "FindRunsRequest",
+        "description": "Body of POST /projects/find_runs. ``storage`` is for an ``s3://`` location."
+      },
+      "FolderInspectRequest": {
+        "properties": {
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "detect": {
+            "type": "boolean",
+            "title": "Detect",
+            "default": true
+          },
+          "storage": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunStorageIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "location"
+        ],
+        "title": "FolderInspectRequest",
+        "description": "Body of POST /projects/folder_inspect. ``storage`` is for an ``s3://`` location."
+      },
+      "FolderInspection": {
+        "properties": {
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "local",
+              "s3"
+            ],
+            "title": "Source"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "looks_like_run": {
+            "type": "boolean",
+            "title": "Looks Like Run",
+            "default": false
+          },
+          "markers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Markers"
+          },
+          "folders": {
+            "$ref": "#/components/schemas/FolderNames"
+          },
+          "files": {
+            "$ref": "#/components/schemas/FolderNames"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated",
+            "default": false
+          },
+          "detected": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DetectedTemplate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "run_info": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunInfoSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "location",
+          "source",
+          "name"
+        ],
+        "title": "FolderInspection",
+        "description": "What one folder holds, direct children only, and the run in it.\n\n``detected`` is None when detection was not asked for, or when no engine\nrecognised the folder. ``run_info`` is set whenever ``detected`` is, even\nwhen no installed template fits the run."
+      },
+      "FolderNames": {
+        "properties": {
+          "count": {
+            "type": "integer",
+            "title": "Count",
+            "default": 0
+          },
+          "names": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Names"
+          }
+        },
+        "type": "object",
+        "title": "FolderNames",
+        "description": "How many entries of one kind a folder holds, and the first\n:data:`MAX_NAMES` names, sorted."
+      },
+      "FoundRun": {
+        "properties": {
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "relative": {
+            "type": "string",
+            "title": "Relative"
+          },
+          "markers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Markers"
+          },
+          "detected": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DetectedTemplate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "location",
+          "name",
+          "relative"
+        ],
+        "title": "FoundRun",
+        "description": "One run folder below the searched folder.\n\n``relative`` is its path from the searched folder (``\".\"`` for that folder\nitself), ``location`` its real path or ``s3://`` URL."
+      },
+      "FoundRuns": {
+        "properties": {
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "runs": {
+            "items": {
+              "$ref": "#/components/schemas/FoundRun"
+            },
+            "type": "array",
+            "title": "Runs"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated",
+            "default": false
+          },
+          "scanned": {
+            "type": "integer",
+            "title": "Scanned",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "location"
+        ],
+        "title": "FoundRuns",
+        "description": "The run folders below ``location``, sorted by ``relative``.\n\n``scanned`` is how many folders the search opened (local) or keys it\nlisted (S3). ``truncated`` says a bound stopped it: the depth, the number\nof folders or keys, or more than :data:`FIND_MAX_RUNS` runs."
+      },
+      "FromManifestReport": {
+        "properties": {
+          "project_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Id"
+          },
+          "project_name": {
+            "type": "string",
+            "title": "Project Name"
+          },
+          "template_id": {
+            "type": "string",
+            "title": "Template Id"
+          },
+          "manifest_url": {
+            "type": "string",
+            "title": "Manifest Url"
+          },
+          "manifest_entries": {
+            "type": "integer",
+            "title": "Manifest Entries"
+          },
+          "ingestion": {
+            "items": {
+              "$ref": "#/components/schemas/ManifestIngestDCResult"
+            },
+            "type": "array",
+            "title": "Ingestion"
+          },
+          "dashboards": {
+            "items": {
+              "$ref": "#/components/schemas/DashboardImportResult"
+            },
+            "type": "array",
+            "title": "Dashboards"
+          },
+          "unmatched_manifest_types": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Unmatched Manifest Types"
+          },
+          "pruned_optional_dcs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Pruned Optional Dcs"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": false
+          },
+          "success": {
+            "type": "boolean",
+            "title": "Success",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_name",
+          "template_id",
+          "manifest_url",
+          "manifest_entries"
+        ],
+        "title": "FromManifestReport"
+      },
+      "FromManifestRequest": {
+        "properties": {
+          "manifest_url": {
+            "type": "string",
+            "title": "Manifest Url"
+          },
+          "template_id": {
+            "type": "string",
+            "title": "Template Id"
+          },
+          "project_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Name"
+          },
+          "variables": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Variables"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "manifest_url",
+          "template_id"
+        ],
+        "title": "FromManifestRequest",
+        "description": "Body of POST /projects/from_manifest."
+      },
+      "FromRunDCPreview": {
+        "properties": {
+          "data_collection_tag": {
+            "type": "string",
+            "title": "Data Collection Tag"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "mode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mode"
+          },
+          "location": {
+            "type": "string",
+            "title": "Location",
+            "default": ""
+          },
+          "matched": {
+            "type": "integer",
+            "title": "Matched",
+            "default": 0
+          },
+          "missing_sources": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Sources"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "ok"
+          },
+          "rule": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rule"
+          },
+          "samples": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Samples"
+          },
+          "found_in": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Found In"
+          },
+          "recipe": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FromRunRecipePreview"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "data_collection_tag",
+          "kind"
+        ],
+        "title": "FromRunDCPreview",
+        "description": "What one data collection would find under the data root.\n\nThe wire shape of ``template_preview.DataCollectionPreview``: ``status`` is\none of ``ok`` / ``empty`` / ``missing`` / ``pruned`` and ``kind`` is\n``scan`` or ``recipe``. ``rule`` is what a scanning collection looks for,\nas the template wrote it, ``samples`` the first few locations it matched,\n``found_in`` the deepest folder (relative to the data root) holding every\nlocation it matched, and ``recipe`` is set for a recipe collection."
+      },
+      "FromRunRecipePreview": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/FromRunRecipeSource"
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "FromRunRecipePreview",
+        "description": "The recipe a data collection is built with, and what each of its sources found."
+      },
+      "FromRunRecipeSource": {
+        "properties": {
+          "ref": {
+            "type": "string",
+            "title": "Ref"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "file",
+              "collection",
+              "url"
+            ],
+            "title": "Kind"
+          },
+          "pattern": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pattern"
+          },
+          "dc_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dc Ref"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
+          },
+          "matched": {
+            "type": "integer",
+            "title": "Matched",
+            "default": 0
+          },
+          "samples": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Samples"
+          },
+          "found": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Found"
+          },
+          "found_in": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Found In"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ref",
+          "kind"
+        ],
+        "title": "FromRunRecipeSource",
+        "description": "What one source of a recipe found under the data root.\n\nThe wire shape of ``template_preview.RecipeSourcePreview``: ``kind`` is\n``collection`` for a source read from another data collection, ``file``\nfor a glob or a path, and ``url`` for a URL outside the data root, which\nis read at ingest and so is neither found nor missing here (``found`` is\nNone)."
+      },
+      "FromRunReport": {
+        "properties": {
+          "project_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Id"
+          },
+          "project_name": {
+            "type": "string",
+            "title": "Project Name"
+          },
+          "template_id": {
+            "type": "string",
+            "title": "Template Id"
+          },
+          "detected_template": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DetectedTemplate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "data_root": {
+            "type": "string",
+            "title": "Data Root"
+          },
+          "detected_runs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Detected Runs"
+          },
+          "resolved_variables": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Resolved Variables"
+          },
+          "data_collections": {
+            "items": {
+              "$ref": "#/components/schemas/FromRunDCPreview"
+            },
+            "type": "array",
+            "title": "Data Collections"
+          },
+          "dashboards": {
+            "items": {
+              "$ref": "#/components/schemas/DashboardImportResult"
+            },
+            "type": "array",
+            "title": "Dashboards"
+          },
+          "pruned_optional_dcs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Pruned Optional Dcs"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated",
+            "default": false
+          },
+          "run_info": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunInfoSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "input_files": {
+            "items": {
+              "$ref": "#/components/schemas/RunInputFile"
+            },
+            "type": "array",
+            "title": "Input Files"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "storage_saved": {
+            "type": "boolean",
+            "title": "Storage Saved",
+            "default": false
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": false
+          },
+          "success": {
+            "type": "boolean",
+            "title": "Success",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_name",
+          "template_id",
+          "data_root"
+        ],
+        "title": "FromRunReport",
+        "description": "Result of a from_run request: the plan, and what was created from it.\n\n``success`` answers \"did the request do what it was asked\": the project was\ncreated, its dashboards imported, and every ingestable data collection\nhanded to a worker. It deliberately does *not* flip because a collection\ncame up ``missing`` - that is a fact about the run folder, reported per\ncollection, and the ingestion's own verdict arrives later on ``run_id``."
+      },
+      "FromRunRequest": {
+        "properties": {
+          "data_root": {
+            "type": "string",
+            "title": "Data Root"
+          },
+          "template_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Id"
+          },
+          "project_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Name"
+          },
+          "variables": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Variables"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": false
+          },
+          "storage": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunStorageIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "data_root"
+        ],
+        "title": "FromRunRequest",
+        "description": "Body of POST /projects/from_run."
+      },
       "GeoNote": {
         "properties": {
           "kind": {
@@ -17141,6 +19157,57 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "IngestManifestRequest": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "manifest_url": {
+            "type": "string",
+            "title": "Manifest Url"
+          },
+          "id_field": {
+            "type": "string",
+            "title": "Id Field",
+            "default": "id"
+          },
+          "url_field": {
+            "type": "string",
+            "title": "Url Field",
+            "default": "url"
+          },
+          "type_field": {
+            "type": "string",
+            "title": "Type Field",
+            "default": "type"
+          },
+          "run_field": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Field",
+            "default": "run"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id",
+          "manifest_url"
+        ],
+        "title": "IngestManifestRequest",
+        "description": "Body of POST /projects/ingest_manifest."
       },
       "IngestionDataCollection-Input": {
         "properties": {
@@ -18032,6 +20099,28 @@
             ],
             "title": "Detail",
             "description": "Optional human-readable detail"
+          },
+          "scans": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scans",
+            "description": "A refresh scan leader's scan outcomes, by data collection id: None for a scan that succeeded, else its failure message"
           },
           "started_at": {
             "anyOf": [
@@ -19036,6 +21125,91 @@
         "title": "LinkUpdateRequest",
         "description": "Request to update an existing DC link.\n\nAll fields are optional - only provided fields will be updated."
       },
+      "LocalDirEntry": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "path": {
+            "type": "string",
+            "title": "Path"
+          },
+          "looks_like_run": {
+            "type": "boolean",
+            "title": "Looks Like Run",
+            "default": false
+          },
+          "has_children": {
+            "type": "boolean",
+            "title": "Has Children",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "path"
+        ],
+        "title": "LocalDirEntry"
+      },
+      "LocalDirListing": {
+        "properties": {
+          "path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Path"
+          },
+          "root": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Root"
+          },
+          "parent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent"
+          },
+          "looks_like_run": {
+            "type": "boolean",
+            "title": "Looks Like Run",
+            "default": false
+          },
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/LocalDirEntry"
+            },
+            "type": "array",
+            "title": "Entries"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "LocalDirListing",
+        "description": "One folder's sub-directories, or the allowed roots when ``path`` is None.\n\n``looks_like_run`` says it of the listed folder itself (False for the roots)."
+      },
       "LogLevelRequest": {
         "properties": {
           "level": {
@@ -19049,6 +21223,140 @@
           "level"
         ],
         "title": "LogLevelRequest"
+      },
+      "ManifestIngestDCResult": {
+        "properties": {
+          "data_collection_tag": {
+            "type": "string",
+            "title": "Data Collection Tag"
+          },
+          "data_collection_id": {
+            "type": "string",
+            "title": "Data Collection Id"
+          },
+          "entries": {
+            "type": "integer",
+            "title": "Entries"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data_collection_tag",
+          "data_collection_id",
+          "entries",
+          "status"
+        ],
+        "title": "ManifestIngestDCResult"
+      },
+      "ManifestIngestReport": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "manifest_url": {
+            "type": "string",
+            "title": "Manifest Url"
+          },
+          "manifest_entries": {
+            "type": "integer",
+            "title": "Manifest Entries"
+          },
+          "matched": {
+            "items": {
+              "$ref": "#/components/schemas/ManifestIngestDCResult"
+            },
+            "type": "array",
+            "title": "Matched"
+          },
+          "unmatched_manifest_types": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Unmatched Manifest Types"
+          },
+          "unmatched_dc_tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Unmatched Dc Tags"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": false
+          },
+          "success": {
+            "type": "boolean",
+            "title": "Success",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id",
+          "manifest_url",
+          "manifest_entries"
+        ],
+        "title": "ManifestIngestReport"
+      },
+      "ManifestRefreshReport": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "refreshed": {
+            "items": {
+              "$ref": "#/components/schemas/ManifestIngestDCResult"
+            },
+            "type": "array",
+            "title": "Refreshed"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": false
+          },
+          "success": {
+            "type": "boolean",
+            "title": "Success",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id"
+        ],
+        "title": "ManifestRefreshReport"
       },
       "MarkedPoints": {
         "properties": {
@@ -19328,7 +21636,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -19616,7 +21924,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -19788,6 +22096,149 @@
           "permissions"
         ],
         "title": "ProjectPermissionRequest"
+      },
+      "ProjectS3Config": {
+        "properties": {
+          "endpoint_url": {
+            "type": "string",
+            "title": "Endpoint Url"
+          },
+          "bucket": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bucket"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region",
+            "default": "us-east-1"
+          },
+          "access_key_id": {
+            "type": "string",
+            "title": "Access Key Id",
+            "default": ""
+          },
+          "secret_access_key": {
+            "type": "string",
+            "title": "Secret Access Key",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "endpoint_url"
+        ],
+        "title": "ProjectS3Config",
+        "description": "A project's own storage settings, the only source of a ``project`` target.\n\nBuilt by the API from the stored, decrypted configuration. The polars\nspellings (``aws_access_key_id``, ``aws_region``, ...) are accepted too,\nso a hand-written ``remote_storage_options`` block in a CLI configuration\nkeeps loading."
+      },
+      "ProjectStorageConfigIn": {
+        "properties": {
+          "endpoint_url": {
+            "type": "string",
+            "title": "Endpoint Url"
+          },
+          "bucket": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Bucket"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region",
+            "default": "us-east-1"
+          },
+          "access_key_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Access Key Id"
+          },
+          "secret_access_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Secret Access Key"
+          }
+        },
+        "type": "object",
+        "required": [
+          "endpoint_url",
+          "bucket"
+        ],
+        "title": "ProjectStorageConfigIn",
+        "description": "Body of PUT /projects/{project_id}/storage.\n\n``bucket`` is required: the storage test probes that bucket and nothing\nelse (an endpoint-wide ``list_buckets`` is denied by gateways that scope a\nkey to one bucket). An empty ``endpoint_url`` means AWS S3.\n``secret_access_key`` is optional on update: omitted or null keeps the\nstored secret, so edits don't require retyping it, as long as the access\nkey ID, the endpoint and the bucket stay the ones it was saved with. An\nempty ``access_key_id`` means \"read without credentials\", and drops any\nstored secret."
+      },
+      "ProjectStorageConfigOut": {
+        "properties": {
+          "endpoint_url": {
+            "type": "string",
+            "title": "Endpoint Url"
+          },
+          "bucket": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bucket"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region",
+            "default": "us-east-1"
+          },
+          "access_key_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Access Key Id"
+          },
+          "has_secret": {
+            "type": "boolean",
+            "title": "Has Secret",
+            "default": false
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "endpoint_url"
+        ],
+        "title": "ProjectStorageConfigOut"
       },
       "ProvenanceEntry": {
         "properties": {
@@ -20088,6 +22539,41 @@
         "title": "RefLine",
         "description": "A dashed reference line, drawn in front of the data."
       },
+      "RefreshManifestRequest": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "data_collection_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Collection Tag"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": false
+          },
+          "async_run": {
+            "type": "boolean",
+            "title": "Async Run",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id"
+        ],
+        "title": "RefreshManifestRequest",
+        "description": "Body of POST /projects/refresh_manifest."
+      },
       "Regex": {
         "properties": {
           "pattern": {
@@ -20240,6 +22726,498 @@
         ],
         "title": "Review"
       },
+      "RunFilePreview": {
+        "properties": {
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "table",
+              "text",
+              "none"
+            ],
+            "title": "Format"
+          },
+          "columns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Columns"
+          },
+          "rows": {
+            "items": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Rows"
+          },
+          "columns_total": {
+            "type": "integer",
+            "title": "Columns Total",
+            "default": 0
+          },
+          "rows_total": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rows Total"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated",
+            "default": false
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "location",
+          "name",
+          "format"
+        ],
+        "title": "RunFilePreview",
+        "description": "What one file of a run folder holds, as much of it as the preview shows.\n\n``format`` is ``table`` (``columns`` and ``rows``, every cell as text),\n``text`` (``text``, its first lines) or ``none`` (``reason`` says why, in\nplain words). ``columns_total`` counts every column; ``rows_total`` every\nrow, known for a parquet file and for a table read whole, None otherwise.\n``truncated``: rows, columns, cells or text were cut."
+      },
+      "RunFilePreviewRequest": {
+        "properties": {
+          "data_root": {
+            "type": "string",
+            "title": "Data Root"
+          },
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "storage": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunStorageIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "max_rows": {
+            "type": "integer",
+            "maximum": 50.0,
+            "minimum": 1.0,
+            "title": "Max Rows",
+            "default": 20
+          }
+        },
+        "type": "object",
+        "required": [
+          "data_root",
+          "location"
+        ],
+        "title": "RunFilePreviewRequest",
+        "description": "Body of POST /projects/run_file_preview.\n\n``data_root`` and ``storage`` as ``POST /projects/from_run`` takes them;\n``location`` a file below ``data_root``, a real path or an ``s3://`` URL."
+      },
+      "RunInfoSummary": {
+        "properties": {
+          "engine": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Engine"
+          },
+          "engine_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Engine Version"
+          },
+          "run_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Name"
+          },
+          "homepage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Homepage"
+          },
+          "params": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Params"
+          },
+          "params_total": {
+            "type": "integer",
+            "title": "Params Total",
+            "default": 0
+          },
+          "tools_executed": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tools Executed"
+          },
+          "reports": {
+            "items": {
+              "$ref": "#/components/schemas/RunReportFile"
+            },
+            "type": "array",
+            "title": "Reports"
+          },
+          "extra": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Extra"
+          },
+          "tasks": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunTaskSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "identities_seen": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Identities Seen"
+          },
+          "runs_scanned": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runs Scanned"
+          }
+        },
+        "type": "object",
+        "title": "RunInfoSummary",
+        "description": "What the run's own records say about it, for display.\n\n``params`` holds at most ``run_folders.MAX_RUN_PARAMS`` of the run's\nparameters, by name: a list or a mapping is written as JSON, a long text\nis cut at ``run_folders.MAX_PARAM_CHARS`` characters, and a parameter\nwhose name says it holds a credential is shown as\n``run_folders.HIDDEN_PARAM``. ``params_total`` is how many the run has.\n``extra`` is the engine's other details that are a single text or number.\n\n``tasks`` is None when the run has no execution trace the server could\nread. ``identities_seen`` lists each pipeline and version when the folder\nholds runs of more than one, and ``runs_scanned`` how many run folders were\nread when it holds several (a sequencing-runs layout); None for one run."
+      },
+      "RunInputFile": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "required": {
+            "type": "boolean",
+            "title": "Required",
+            "default": false
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "found": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Found"
+          },
+          "used_by": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Used By"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "RunInputFile",
+        "description": "One file of the run the template reads through a variable, such as its samplesheet.\n\n``name`` is the variable (``SAMPLESHEET_FILE``), ``description`` and\n``required`` as the template declares it. ``location`` is where it\nresolved to, a real path or an ``s3://`` URL, None when it is not set.\n``found`` says whether the data root holds it, None when that cannot be\ntold: a location outside the root, or one a partial listing does not name.\n``used_by`` are the data collections that read it or that a conditional on\nit switches (see ``templates.variable_users``)."
+      },
+      "RunReportFile": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "software_versions",
+              "params",
+              "execution_report",
+              "execution_trace",
+              "pipeline_dag"
+            ],
+            "title": "Kind"
+          },
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "location",
+          "name"
+        ],
+        "title": "RunReportFile",
+        "description": "One file the run's engine wrote about the run, such as its execution report.\n\n``location`` is its real path, or its ``s3://`` URL. ``size`` is in bytes,\nNone when unknown."
+      },
+      "RunStorageIn": {
+        "properties": {
+          "endpoint_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Endpoint Url"
+          },
+          "region": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Region"
+          },
+          "access_key_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Access Key Id"
+          },
+          "secret_access_key": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "password",
+                "writeOnly": true
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Secret Access Key"
+          }
+        },
+        "type": "object",
+        "title": "RunStorageIn",
+        "description": "Storage settings typed in with an ``s3://`` run folder, before its project exists.\n\nNo bucket field: the bucket is the one the location names\n(:meth:`settings_for`). An empty ``endpoint_url`` means AWS S3, an empty\n``region`` the default one. The access key and its secret are required\n(:meth:`require_keys`), unlike on ``PUT /projects/{id}/storage``. The\nsecret is a ``SecretStr`` so a model that ends up in a log line or a\ntraceback shows it masked."
+      },
+      "RunStorageTestRequest": {
+        "properties": {
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "storage": {
+            "$ref": "#/components/schemas/RunStorageIn"
+          }
+        },
+        "type": "object",
+        "required": [
+          "location",
+          "storage"
+        ],
+        "title": "RunStorageTestRequest",
+        "description": "Body of POST /projects/storage_test: settings not stored anywhere yet."
+      },
+      "RunTaskSummary": {
+        "properties": {
+          "trace": {
+            "type": "string",
+            "title": "Trace"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "completed": {
+            "type": "integer",
+            "title": "Completed"
+          },
+          "cached": {
+            "type": "integer",
+            "title": "Cached"
+          },
+          "failed": {
+            "type": "integer",
+            "title": "Failed"
+          },
+          "retried": {
+            "type": "integer",
+            "title": "Retried"
+          },
+          "other": {
+            "type": "integer",
+            "title": "Other"
+          },
+          "partial": {
+            "type": "boolean",
+            "title": "Partial",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "trace",
+          "total",
+          "completed",
+          "cached",
+          "failed",
+          "retried",
+          "other"
+        ],
+        "title": "RunTaskSummary",
+        "description": "How the tasks of the run ended, counted from its execution trace.\n\n``trace`` is the trace read, a real path or an ``s3://`` URL. A task is\none line of the pipeline (the trace's ``name``, else its ``hash``) and is\ncounted once, by the status of its last attempt: ``completed``, ``cached``\n(reused from an earlier launch by ``-resume``), ``failed`` (``FAILED`` or\n``ABORTED``) or ``other``. ``retried`` counts the tasks that failed and\nthen succeeded, already counted as completed or cached. ``partial``: the\ntrace was larger than the server reads, so the counts cover its start only."
+      },
       "S3DepictioCLIConfig": {
         "properties": {
           "service_name": {
@@ -20319,6 +23297,91 @@
         "title": "S3DepictioCLIConfig",
         "description": "S3-compatible object storage configuration.\n\nThe bundled store is SeaweedFS (``weed mini``, compose service ``s3``);\nany S3 endpoint (AWS, NetApp, MinIO, …) works via ``DEPICTIO_S3_PUBLIC_URL``\n+ ``DEPICTIO_S3_EXTERNAL_SERVICE``. Every field also accepts the legacy\n``DEPICTIO_MINIO_<FIELD>`` name as a fallback (see ``settings_customise_sources``)."
       },
+      "S3DirListing": {
+        "properties": {
+          "path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Path"
+          },
+          "root": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Root"
+          },
+          "parent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent"
+          },
+          "looks_like_run": {
+            "type": "boolean",
+            "title": "Looks Like Run",
+            "default": false
+          },
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/LocalDirEntry"
+            },
+            "type": "array",
+            "title": "Entries"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "S3DirListing",
+        "description": "One ``s3://`` location's sub-folders, or the allowed locations when ``path`` is None.\n\nThe shape of :class:`LocalDirListing`, every path an ``s3://`` URL ending\nin ``/``. On an entry ``has_children`` is always True and ``looks_like_run``\nalways False: knowing would cost a request per entry. The listing's own\n``looks_like_run`` says whether the listed location holds ``pipeline_info/``,\nor a ``multiqc/`` holding MultiQC output (see :func:`_s3_markers`)."
+      },
+      "S3DirsRequest": {
+        "properties": {
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          },
+          "storage": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunStorageIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "title": "S3DirsRequest",
+        "description": "Body of POST /projects/s3_dirs: the query of the GET route, and storage settings.\n\nWithout ``url`` the listed locations are answered and ``storage`` is not used."
+      },
       "Scan": {
         "properties": {
           "mode": {
@@ -20332,6 +23395,15 @@
               },
               {
                 "$ref": "#/components/schemas/ScanSingle"
+              },
+              {
+                "$ref": "#/components/schemas/ScanURL"
+              },
+              {
+                "$ref": "#/components/schemas/ScanS3Prefix"
+              },
+              {
+                "$ref": "#/components/schemas/ScanManifest"
               }
             ],
             "title": "Scan Parameters"
@@ -20343,6 +23415,53 @@
           "scan_parameters"
         ],
         "title": "Scan"
+      },
+      "ScanManifest": {
+        "properties": {
+          "manifest_url": {
+            "type": "string",
+            "title": "Manifest Url"
+          },
+          "manifest_type": {
+            "type": "string",
+            "title": "Manifest Type"
+          },
+          "id_field": {
+            "type": "string",
+            "title": "Id Field",
+            "default": "id"
+          },
+          "url_field": {
+            "type": "string",
+            "title": "Url Field",
+            "default": "url"
+          },
+          "type_field": {
+            "type": "string",
+            "title": "Type Field",
+            "default": "type"
+          },
+          "run_field": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Field",
+            "default": "run"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "manifest_url",
+          "manifest_type"
+        ],
+        "title": "ScanManifest",
+        "description": "Manifest-driven acquisition: this DC consumes every entry of the\nmanifest whose ``type`` equals ``manifest_type`` (= this DC's tag by\nconvention). ``manifest_url`` may be a remote URL or, in CLI context, a\nlocal path. The ``*_field`` overrides remap non-canonical manifest\ncolumns onto the contract's id/type/url/run fields."
       },
       "ScanRecursive": {
         "properties": {
@@ -20382,6 +23501,53 @@
         ],
         "title": "ScanRecursive"
       },
+      "ScanS3Prefix": {
+        "properties": {
+          "prefix": {
+            "type": "string",
+            "title": "Prefix"
+          },
+          "pattern": {
+            "type": "string",
+            "title": "Pattern",
+            "default": "*"
+          },
+          "pattern_syntax": {
+            "type": "string",
+            "enum": [
+              "glob",
+              "regex"
+            ],
+            "title": "Pattern Syntax",
+            "default": "glob"
+          },
+          "id_regex": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id Regex"
+          },
+          "max_files": {
+            "type": "integer",
+            "maximum": 100000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Max Files",
+            "default": 10000
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "prefix"
+        ],
+        "title": "ScanS3Prefix",
+        "description": "Remote prefix listing: enumerate the objects under an ``s3://`` prefix and\nkeep those whose key matches ``pattern``.\n\nThe remote counterpart of ``recursive``. It is S3-only by construction:\nplain HTTPS exposes no listing operation, so a bare https:// prefix cannot\nbe enumerated; use ``url`` for one known file, or ``manifest`` to list\nseveral explicitly.\n\n``id_regex`` optionally captures an entity id from the object key. It lands\non the File as ``manifest_id`` and is read back as the\n``depictio_manifest_id`` column, so a prefix scan gets the same cross-DC\njoin key as manifest mode without anyone writing a manifest."
+      },
       "ScanSingle": {
         "properties": {
           "filename": {
@@ -20395,6 +23561,21 @@
           "filename"
         ],
         "title": "ScanSingle"
+      },
+      "ScanURL": {
+        "properties": {
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "title": "ScanURL",
+        "description": "Remote single-file acquisition: the DC's data lives at an absolute\ns3:// or https:// URL instead of a scanned local path. Validation is\nsyntactic only: reachability/SSRF checks happen at the API fetch gateway."
       },
       "SourceOverride": {
         "properties": {
@@ -20448,6 +23629,35 @@
         "title": "Staleness",
         "description": "How an anchor compares with the dashboard as it is now."
       },
+      "StorageTestResult": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "detected_region": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detected Region"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message"
+        ],
+        "title": "StorageTestResult"
+      },
       "TableJoinConfig": {
         "properties": {
           "on_columns": {
@@ -20478,6 +23688,116 @@
         ],
         "title": "TableJoinConfig"
       },
+      "TemplateCatalog": {
+        "properties": {
+          "templates": {
+            "items": {
+              "$ref": "#/components/schemas/TemplateInfo"
+            },
+            "type": "array",
+            "title": "Templates"
+          }
+        },
+        "type": "object",
+        "title": "TemplateCatalog"
+      },
+      "TemplateInfo": {
+        "properties": {
+          "template_id": {
+            "type": "string",
+            "title": "Template Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "manifest_capable": {
+            "type": "boolean",
+            "title": "Manifest Capable",
+            "default": false
+          },
+          "run_folder_capable": {
+            "type": "boolean",
+            "title": "Run Folder Capable",
+            "default": false
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "pipeline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pipeline"
+          },
+          "engine": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Engine"
+          },
+          "variables": {
+            "items": {
+              "$ref": "#/components/schemas/TemplateVariableInfo"
+            },
+            "type": "array",
+            "title": "Variables"
+          },
+          "dashboards": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Dashboards"
+          }
+        },
+        "type": "object",
+        "required": [
+          "template_id",
+          "name"
+        ],
+        "title": "TemplateInfo"
+      },
       "TemplateOrigin": {
         "properties": {
           "template_id": {
@@ -20491,9 +23811,16 @@
             "description": "Template schema version at time of use"
           },
           "data_root": {
-            "type": "string",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Data Root",
-            "description": "The actual --data-root value provided by the user"
+            "description": "The actual DATA_DIR value provided by the user. None for manifest-driven instantiations, where MANIFEST_URL in `variables` plays the equivalent provenance role."
           },
           "applied_at": {
             "type": "string",
@@ -20537,16 +23864,63 @@
             "type": "array",
             "title": "Run Provenance Files",
             "description": "The files the provenance was collected from (relative to data_root where possible)"
+          },
+          "unrecognised_files": {
+            "items": {
+              "$ref": "#/components/schemas/UnrecognisedFile"
+            },
+            "type": "array",
+            "title": "Unrecognised Files",
+            "description": "For a composed template: the run's tabular files no catalog output recognised and that were not included, with a proposal for each"
           }
         },
         "type": "object",
         "required": [
           "template_id",
-          "template_version",
-          "data_root"
+          "template_version"
         ],
         "title": "TemplateOrigin",
         "description": "Stored on Project model to track that a template was used to create the project.\n\nThis enables the DB and UI to distinguish template-instantiated projects from\nmanually configured ones, and to show which template was used."
+      },
+      "TemplateVariableInfo": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "required": {
+            "type": "boolean",
+            "title": "Required",
+            "default": true
+          },
+          "default": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Default"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "TemplateVariableInfo"
       },
       "ThreadCreate": {
         "properties": {
@@ -20847,7 +24221,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -20953,7 +24327,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -21186,7 +24560,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6ac9342f89481b4fe391d59a"
+            "default": "6acbedd00eabe4e7e6f7cb3d"
           }
         },
         "type": "object",
@@ -21239,6 +24613,79 @@
         ],
         "title": "TransformConfig",
         "description": "Config for a transformed data collection in project.yaml."
+      },
+      "UnrecognisedFile": {
+        "properties": {
+          "path": {
+            "type": "string",
+            "title": "Path",
+            "description": "Path relative to the data root; for files of one shape, a glob (`abricate/*/*.txt`) that `--include` takes as is"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title",
+            "description": "A short name for it"
+          },
+          "n_files": {
+            "type": "integer",
+            "title": "N Files",
+            "description": "How many files of this shape, one per sample",
+            "default": 1
+          },
+          "format": {
+            "type": "string",
+            "title": "Format",
+            "description": "csv, tsv or parquet"
+          },
+          "n_columns": {
+            "type": "integer",
+            "title": "N Columns",
+            "description": "Number of columns read",
+            "default": 0
+          },
+          "columns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Columns",
+            "description": "Its first columns, at most 30"
+          },
+          "sample_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Column",
+            "description": "The column that looks like a sample identifier"
+          },
+          "proposal": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Proposal",
+            "description": "The tiles it would get if included, e.g. 'card: mean of reads'"
+          }
+        },
+        "type": "object",
+        "required": [
+          "path",
+          "format"
+        ],
+        "title": "UnrecognisedFile",
+        "description": "A tabular file no catalog output recognised, with what it could show.\n\nWritten by the composer (``depictio template compose``) into a composed\ntemplate, and carried onto the project's ``TemplateOrigin`` so the project\npage can list what was left out and how to add it."
       },
       "UpsertDeltaTableAggregated": {
         "properties": {
@@ -21426,7 +24873,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -21545,7 +24992,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -21627,7 +25074,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -21713,7 +25160,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -21914,7 +25361,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -22089,7 +25536,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -22206,7 +25653,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
@@ -22311,7 +25758,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbedd00eabe4e7e6f7cb3c"
           },
           "description": {
             "anyOf": [
