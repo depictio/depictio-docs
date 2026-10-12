@@ -46,6 +46,7 @@ DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [Google Analytics](#google-analytics)
 - [Logging](#logging)
 - [Monitoring](#monitoring)
+- [Dashboard Versions](#dashboard-versions)
 - [Telemetry](#telemetry)
 - [MultiQC Prerender](#multiqc-prerender)
 <!-- - [JBrowse Integration](#jbrowse-integration) -->
@@ -586,6 +587,25 @@ Feeds the admin Log & Task panel. See [Monitoring](../usage/administration/monit
 | `DEPICTIO_MONITORING_APP_LOG_CAPPED_MB` | `64` | Size cap in MB of the capped `app_logs` collection |
 | `DEPICTIO_MONITORING_LIVE_UPDATES` | `true` | Push live task and ingestion status over the events WebSocket. Only active when `DEPICTIO_EVENTS_ENABLED` is also true |
 | `DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS` | `24` | Hours without a write after which a `running` ingestion is swept to `abandoned`. `0` disables the sweep. The bundled compose files and Helm chart do not forward it, so set it on the backend yourself (v1.11.0+) |
+| `DEPICTIO_MONITORING_AGENT_TTL_SECONDS` | `300` | How long a [watcher](../usage/administration/monitoring.md#watchers) stays listed after its last heartbeat. At least 60 |
+
+---
+
+## Dashboard Versions
+
+**Config Class:** `DashboardVersionsConfig`
+**Environment Prefix:** `DEPICTIO_DASHBOARD_VERSIONS_`
+
+The version history of every dashboard. See [Dashboard and data versions](../features/versioning.md#retention-and-configuration).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_DASHBOARD_VERSIONS_ENABLED` | `true` | Record a version on each dashboard save. Off, nothing new is recorded |
+| `DEPICTIO_DASHBOARD_VERSIONS_COALESCE_WINDOW_SECONDS` | `300` | How long consecutive autosaves by the same author fold into one version, counted from its creation |
+| `DEPICTIO_DASHBOARD_VERSIONS_MAX_VERSIONS_PER_FAMILY` | `100` | Autosaves kept per dashboard, bookmarked ones aside |
+| `DEPICTIO_DASHBOARD_VERSIONS_RETENTION_DAYS` | `90` | Age after which versions that are not bookmarked are dropped |
+| `DEPICTIO_DASHBOARD_VERSIONS_KEEP_DAILY_FOR_DAYS` | `30` | Age after which autosaves thin to the last one of each day |
+| `DEPICTIO_DASHBOARD_VERSIONS_MAX_SNAPSHOT_BYTES` | `8388608` (8 MiB) | Largest version recorded. A larger one is skipped and logged; the save itself goes through |
 
 ---
 

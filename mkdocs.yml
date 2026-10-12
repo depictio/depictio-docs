@@ -267,6 +267,7 @@ nav:
           - Components: features/components.md
           - Interactive Selection Filtering: features/interactive-selection-filtering.md
           - Comments and Annotations: features/comments-annotations.md
+          - Dashboard and Data Versions: features/versioning.md
       - Data Integration:
           - Cross-DC Filtering: features/cross-dc-filtering.md
           - Filter Expressions: features/filter-expressions.md

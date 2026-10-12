@@ -237,6 +237,10 @@ A single project's data, organised into tabs:
 - **Links** — cross-DC links and the joins graph, with sortable/filterable columns.
 - **Ingestion** — the [ingestion report](../../features/dashboards.md#ingestion-report-health), offered for **every** project since v1.6.0. For one created from a [pipeline template](../../pipeline-templates/README.md) it compares expected against ingested data collections; for any other it reads the collections the project declares today, and a **Live project** badge says so.
 
+Selecting a data collection shows its details, including its **Delta version**, and for a
+table a data preview and its **Version history**: see
+[Dataset history](../../features/versioning.md#dataset-history).
+
 You can reach this page directly by clicking the **project badge** shown on any
 dashboard card or in the dashboards table, or the **project name** in an open
 dashboard's Settings <small>(v1.6.0+)</small>.
