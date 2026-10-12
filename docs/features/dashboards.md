@@ -763,7 +763,7 @@ with *sign in again* when none is valid.
 
 ## :material-share-variant: Sharing Dashboards
 
-### :material-shield-account: Permissions
+### :material-shield-account: Permissions { #permissions }
 
 Dashboards inherit permissions from their project:
 
@@ -778,6 +778,9 @@ Dashboards inherit permissions from their project:
 - :material-eye: **Viewer URL**: `/dashboard/{id}` - Safe to share with collaborators
 - :material-pencil: **Editor URL**: `/dashboard-edit/{id}` - Only for authorized editors
 
-### :material-application-brackets: Embedding (Planned)
+### :material-application-brackets: Embedding a component <small>(v1.17.0+)</small> { #embedding }
 
-Future support for embedding dashboards in external sites via iframe.
+One component at a time can be served to another website, as a Plotly spec for the
+site's own plotly.js or as a self-contained page for an `<iframe>`, from the tile's
+**Export / embed** action. The feature is off until an administrator turns it on. See
+[Component export and embedding](component-export.md).

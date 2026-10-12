@@ -32,6 +32,7 @@ The Depictio API is organized around the following main resources:
 - **Dashboards** - Create and manage interactive visualization dashboards
 - **Users** - Handle user authentication and authorization
 - **Jobs** - Follow work the server finishes in the background (v1.15.0+)
+- **Export** - Serve one dashboard component to another website, as a Plotly spec or a self-contained page (v1.17.0+). See [Component export](../features/component-export.md#the-api)
 
 ## Authentication
 

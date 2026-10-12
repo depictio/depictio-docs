@@ -86,6 +86,16 @@ Base class for service configurations with internal/external URL handling.
 | `DEPICTIO_FASTAPI_CORS_ALLOWED_ORIGINS` | _(empty)_ | Allowed CORS origins — comma-separated list (e.g. `https://app.example.com,https://example.com`). Empty disables credentialed cross-origin requests. Wildcard `*` is rejected when used with credentials. |
 | `DEPICTIO_FASTAPI_CORS_ALLOW_CREDENTIALS` | `true` | Whether the CORS layer attaches credentials (cookies / Authorization header). |
 
+### Component export <small>(v1.17.0+)</small> { #component-export }
+
+The API that serves one dashboard component to another website. See [Component export and embedding](../features/component-export.md).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_FASTAPI_EMBED_ENABLED` | `false` | Serve `/depictio/api/v1/export` and show **Export / embed** on the tiles. Off, every export route answers `404` |
+| `DEPICTIO_FASTAPI_EMBED_ALLOWED_ORIGINS` | _(empty)_ | Sites allowed to frame an exported page, comma-separated. They become its CSP `frame-ancestors`. Empty: the pages open on their own but cannot be framed. `*` is refused |
+| `DEPICTIO_FASTAPI_EMBED_CSP_UNSAFE_INLINE` | `false` | Allow inline scripts in the exported page instead of listing their hashes |
+
 ---
 
 ## React Viewer Frontend
