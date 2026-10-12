@@ -230,12 +230,10 @@ Depictio's main pages and their URLs:
 
 ### <span style="color: #45B8AC;">:material-database-cog:</span> Project detail (/projects/{id})
 
-A single project's data, organised into tabs:
+A single project's data, below its summary, in two tabs:
 
-- **Overview** — project summary and metadata.
-- **Data Collections** — a sortable, filterable table of the project's data collections.
-- **Links** — cross-DC links and the joins graph, with sortable/filterable columns.
-- **Ingestion** — the [ingestion report](../../features/dashboards.md#ingestion-report-health), offered for **every** project since v1.6.0. For one created from a [pipeline template](../../pipeline-templates/README.md) it compares expected against ingested data collections; for any other it reads the collections the project declares today, and a **Live project** badge says so.
+- **Data collections** — the project's workflows, a sortable, filterable table of its data collections, its cross-DC links, and the details of the selected collection.
+- **Ingestion** — the [ingestion report](../../features/dashboards.md#ingestion-report-health), offered for **every** project since v1.6.0. For one created from a [pipeline template](../../pipeline-templates/README.md) it compares expected against ingested data collections; for any other it reads the collections the project declares today, and a **Live project** badge says so. Since v1.15.0 a **History** view lists the project's [ingestion runs](../../features/dashboards.md#ingestion-history), and, where the server allows it, [**Run ingestion**](../../features/dashboards.md#run-ingestion) starts one from the browser.
 
 Selecting a data collection shows its details, including its **Delta version**, and for a
 table a data preview and its **Version history**: see
