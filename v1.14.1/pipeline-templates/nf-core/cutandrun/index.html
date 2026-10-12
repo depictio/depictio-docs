@@ -3713,6 +3713,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#conditional-routes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional routes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#cross-dc-links" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3725,6 +3736,50 @@
         
           <li class="md-nav__item">
   <a href="#recipes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-variables_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-collections_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data collections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-dc-links_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-DC links
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipes_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Recipes
@@ -5269,6 +5324,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#conditional-routes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional routes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#cross-dc-links" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5281,6 +5347,50 @@
         
           <li class="md-nav__item">
   <a href="#recipes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-variables_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-collections_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data collections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-dc-links_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-DC links
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipes_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Recipes
@@ -5399,11 +5509,12 @@
   <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="3.1">
+<div class="tpl-version-pick" data-latest="3.2.2">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Template version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
-    <option value="3.1" selected="">3.1</option>
+    <option value="3.2.2" selected="">3.2.2</option>
+    <option value="3.1">3.1</option>
   </select>
   <span class="tpl-version-badge">latest</span>
 </div>
@@ -5416,45 +5527,58 @@
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> <strong>Agreement</strong>: how much SEACR and MACS2 agree, the consensus set each target's replicates reproduce, and both on one genomic region</li>
 </ul>
 <div class="admonition warning">
-<p class="admonition-title">Reprocess MultiQC first, or the QC tab is empty</p>
-<p>cutandrun 3.1 published a MultiQC 1.14 report, which writes no parquet at
-all, and Depictio reads only <code>multiqc.parquet</code>. This step is mandatory:</p>
+<p class="admonition-title">One MultiQC report per run, chosen by <code>MULTIQC_REPROCESSED</code></p>
+<p>cutandrun 3.2.2 pins MultiQC 1.19, which writes no parquet, and Depictio
+reads only <code>multiqc.parquet</code> (MultiQC 1.31 and later). A run made with a
+newer MultiQC, as the Nextflow trigger runs are, publishes
+<code>04_reporting/multiqc/multiqc_data/multiqc.parquet</code> itself, and the template
+binds that one by default. A run on the pinned 1.19 needs its report
+re-generated first:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-m<span class="w"> </span>depictio.dev_scripts.multiqc_reprocess<span class="w"> </span>--src<span class="w"> </span>DATA_ROOT<span class="w"> </span>--dest<span class="w"> </span>DATA_ROOT
 </code></pre></div>
 <p>It re-runs the pinned MultiQC 1.35 over the run's own raw tool outputs and
-writes the parquet next to a <code>REPROCESSED.json</code> recording both versions;
-<code>--dry-run</code> prints the plan first. Reprocessing adds no panels here: 1.14
-already parsed every module 1.35 does for this run, so it buys the format
-and nothing else.</p>
+writes <code>multiqc/multiqc_data/multiqc.parquet</code> at the root, next to a
+<code>REPROCESSED.json</code> recording both versions; <code>--dry-run</code> prints the plan
+first. Ingest such a run with <code>--var MULTIQC_REPROCESSED=true</code>, which binds
+the re-generated report instead of the pipeline's. The template never binds
+both: a re-generated report ingested without the variable is not read, and
+the MultiQC tab stays empty.</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title">Both callers, or either one</p>
-<p>The validated run called peaks with both callers (<code>--peakcaller
+<p>Both validation runs called peaks with both callers (<code>--peakcaller
 seacr,macs2</code>). SEACR is cutandrun's default and the path the template is
 built on; the MACS2 collections are optional, so a SEACR-only run still
-ingests and the layout drops what is missing. Read <strong>Caller agreement</strong> with
-care then: with one caller the comparison reads as complete disagreement.</p>
+ingests and the layout drops what is missing; a MACS2-only run drops the SEACR
+tiles the same way. Read <strong>Caller agreement</strong> with care then: with one caller
+the comparison reads as complete disagreement.</p>
 </div>
 <hr>
 <h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M19.22 4c.28 0 .53 0 .74.05.17 1.39-.02 4.25-3.3 7.53-1.7 1.71-3.73 3.02-6.01 3.89l-2.15-2.1c.92-2.31 2.23-4.34 3.92-6.03C15.18 4.58 17.64 4 19.22 4m0-2c-1.98 0-4.98.69-8.22 3.93-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.38.38.89.61 1.42.61.23 0 .47-.06.7-.15A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61S20.7 2 19.22 2m-4.68 7.46c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Point at a finished run</label><label for="__tabbed_1_2">From the pipeline itself (v1.10.0+)</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Point at a finished run</label><label for="__tabbed_1_2">A run on the pinned MultiQC 1.19</label><label for="__tabbed_1_3">From the pipeline itself (v1.10.0+)</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/path/to/cutandrun_results<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/cutandrun/latest
 </code></pre></div>
-<p>The results directory is the only thing you have to pass: the sample hub is built
-from the run's own <code>pipeline_info/samplesheet.valid.csv</code>. <code>GENOME</code> sets the
-genome axis of the Locus tab and defaults to <code>hg38</code>; pass the UCSC assembly
-the run was aligned to otherwise:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/path/to/cutandrun_results<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/cutandrun/latest<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">GENOME</span><span class="o">=</span>mm10
+<p>The results directory is the only thing you have to pass for a run whose own
+MultiQC report is a parquet (MultiQC 1.31 or later): the sample hub is built
+from the run's own <code>pipeline_info/samplesheet.valid.csv</code>. For a run aligned to
+another build than hg38, add <code>--var GENOME=&lt;assembly&gt;</code>.</p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-m<span class="w"> </span>depictio.dev_scripts.multiqc_reprocess<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>--src<span class="w"> </span>/path/to/cutandrun_results<span class="w"> </span>--dest<span class="w"> </span>/path/to/cutandrun_results
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/path/to/cutandrun_results<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/cutandrun/latest<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">MULTIQC_REPROCESSED</span><span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
+<p>The release's own report has no parquet, so it is re-generated first, and the
+variable points the MultiQC collection at the re-generated one.</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>nextflow<span class="w"> </span>--install<span class="w">     </span><span class="c1"># once per machine</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/cutandrun<span class="w"> </span>-r<span class="w"> </span><span class="m">3</span>.1<span class="w"> </span>-profile<span class="w"> </span>docker<span class="w"> </span>--outdir<span class="w"> </span>results
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/cutandrun<span class="w"> </span>-r<span class="w"> </span><span class="m">3</span>.2.2<span class="w"> </span>-profile<span class="w"> </span>docker<span class="w"> </span>--outdir<span class="w"> </span>results
 </code></pre></div>
 <p>No <code>depictio ingest</code>, and no template named: the pipeline ingests its own
 output directory when it finishes and resolves this template from its own
@@ -5464,15 +5588,19 @@ manifest. See <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger
 </div>
 <hr>
 <h2 id="reference"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.5c-1.35-.85-3.8-1.5-5.5-1.5-1.65 0-3.35.3-4.75 1.05-.1.05-.15.05-.25.05-.25 0-.5-.25-.5-.5V6c.6-.45 1.25-.75 2-1 1.11-.35 2.33-.5 3.5-.5 1.95 0 4.05.4 5.5 1.5 1.45-1.1 3.55-1.5 5.5-1.5 1.17 0 2.39.15 3.5.5.75.25 1.4.55 2 1v14.6c0 .25-.25.5-.5.5-.1 0-.15 0-.25-.05-1.4-.75-3.1-1.05-4.75-1.05-1.7 0-4.15.65-5.5 1.5M12 8v11.5c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5V7c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5m1 3.5c1.11-.68 2.6-1 4.5-1 .91 0 1.76.09 2.5.28V9.23c-.87-.15-1.71-.23-2.5-.23q-2.655 0-4.5.84zm4.5.17c-1.71 0-3.21.26-4.5.79v1.69c1.11-.65 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24v-1.5c-.87-.16-1.71-.23-2.5-.23m2.5 2.9c-.87-.16-1.71-.24-2.5-.24-1.83 0-3.33.27-4.5.8v1.69c1.11-.66 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24z"></path></svg></span> Reference<a class="headerlink" href="#reference" title="Permanent link">¶</a></h2>
-<p>The template reads the validated samplesheet, the bowtie2 logs, the samtools
-flagstat of the marked-duplicate BAMs, the SEACR stringent calls, the MACS2
-narrow peaks, the per-target consensus peak counts, the fragment-length
-histograms, the fragment BEDs and the three deepTools QC tables, on top of the
-reprocessed MultiQC parquet. Every collection and recipe matches on file
-<strong>name</strong>, so the numbered stage directories cutandrun publishes are never
-spelled out. The pipeline ships no <code>params.json</code> at 3.1, so no variable is set
-from the run's parameters: <code>DATA_ROOT</code> is required and <code>GENOME</code> (default
-<code>hg38</code>) is the only optional one.</p>
+<p>The template reads the validated samplesheet, the Bowtie 2 logs (target and
+spike-in), the SEACR stringent calls, the MACS2 narrow peaks, the per-target
+consensus peak counts, the fragment-length histograms and fragment BEDs and the
+three deepTools QC tables, on top of the MultiQC parquet. Every collection and
+recipe matches on file <strong>name</strong>, so the numbered stage directories cutandrun
+publishes are never spelled out. The SEACR scan skips <code>igv/</code>, where the pipeline
+copies every SEACR bed for its IGV session, so no region is read twice. A caller
+that finds nothing for a sample still writes its peak file, at 0 bytes: the ingest
+skips it with a warning, and the caller comparison keeps a row with no peaks for
+that sample.</p>
+<p>cutandrun 3.2.2 still ships no <code>params.json</code>, so no variable is set from the run's
+parameters. Besides <code>DATA_ROOT</code>, <code>MULTIQC_REPROCESSED</code> says which MultiQC report
+to bind and <code>GENOME</code> (default <code>hg38</code>) sets the genome axis of the Locus tab.</p>
 <div class="admonition info">
 <p class="admonition-title">Self-adapting layout</p>
 <p>The dashboard adapts to whatever the run actually produced: components bound
@@ -5480,10 +5608,10 @@ to pruned or unparsed data collections are hidden, tabs left with no real
 visualizations are dropped entirely, and the remaining components are
 re-packed so there are no empty rows.</p>
 </div>
-<div class="tpl-version-block" data-version="3.1">
-<!-- Alias of cutandrun-3.1.md — always tracks the newest template version. -->
+<div class="tpl-version-block" data-version="3.2.2">
+<!-- Alias of cutandrun-3.2.2.md — always tracks the newest template version. -->
 <!-- GENERATED by depictio/dev_scripts/gen_template_docs.py — do not edit. -->
-<!-- Source: depictio/projects/nf-core/cutandrun/3.1/template.yaml -->
+<!-- Source: depictio/projects/nf-core/cutandrun/3.2.2/template.yaml -->
 <!-- Regenerate: python -m depictio.dev_scripts.gen_template_docs -->
 <style>
 .gtd-badge{display:inline-block;padding:0 .5em;border-radius:10px;font-size:.78em;font-weight:600;line-height:1.5;white-space:nowrap;}
@@ -5551,12 +5679,17 @@ re-packed so there are no empty rows.</p>
 <tr>
 <td><code>DATA_ROOT</code></td>
 <td style="text-align: center;">✓</td>
-<td>Root directory containing cutandrun output (01_prealign/, 02_alignment/, 03_peak_calling/, 04_reporting/, pipeline_info/) plus the reprocessed multiqc/multiqc_data/multiqc.parquet.</td>
+<td>Root directory containing cutandrun output, the pipeline's --outdir (01_prealign/, 02_alignment/, 03_peak_calling/, 04_reporting/, pipeline_info/).</td>
+</tr>
+<tr>
+<td><code>MULTIQC_REPROCESSED</code></td>
+<td style="text-align: center;">—</td>
+<td>Set (any value) when the MultiQC report was re-generated with depictio.dev_scripts.multiqc_reprocess: binds multiqc/multiqc_data/multiqc.parquet instead of the pipeline's own 04_reporting/multiqc/multiqc_data/multiqc.parquet.</td>
 </tr>
 <tr>
 <td><code>GENOME</code></td>
 <td style="text-align: center;">—</td>
-<td>UCSC assembly the run was aligned to (hg38, hg19, mm10, ...). Sets the genome axis of the Locus tab; pass --var GENOME=<assembly> for a run on another build.</assembly></td>
+<td>UCSC assembly the run was aligned to (hg38, hg19, mm10, ...). Sets the genome axis of the Locus tab; pass --var GENOME=ASSEMBLY for a run on another build.</td>
 </tr>
 </tbody>
 </table>
@@ -5592,7 +5725,7 @@ re-packed so there are no empty rows.</p>
 <td><code>multiqc_data</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc.parquet$</code></td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">multiqc/multiqc_data/multiqc.parquet$</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
@@ -5730,6 +5863,25 @@ re-packed so there are no empty rows.</p>
 </tr>
 </tbody>
 </table>
+<h3 id="conditional-routes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 4v8.5l3-3L9 13c1 1 1 2 1 2v6h4v-7s0-1-.53-2S12 10 12 10L9 6.58 11.5 4M18 4l-4.46 4.47L14 9s.93 1 1.47 2c.21.4.33.79.4 1.13L21 7"></path></svg></span> Conditional routes<a class="headerlink" href="#conditional-routes" title="Permanent link">¶</a></h3>
+<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (21 collections are unaffected by any variable — present on every run.)</p>
+<p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
+<div class="gtd-mtx">
+<table>
+<thead>
+<tr>
+<th class="dc">Data collection</th>
+<th><code>MULTIQC_REPROCESSED</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="dc"><code>multiqc_data</code></th>
+<td class="swap" title="re-sourced when MULTIQC_REPROCESSED is unset">⇄</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h3 id="cross-dc-links"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> Cross-DC links<a class="headerlink" href="#cross-dc-links" title="Permanent link">¶</a></h3>
 <p>22 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
 <div class="gtd-links">
@@ -5967,6 +6119,492 @@ re-packed so there are no empty rows.</p>
 </tbody>
 </table>
 </div>
+<div class="tpl-version-block" data-version="3.1">
+<!-- GENERATED by depictio/dev_scripts/gen_template_docs.py — do not edit. -->
+<!-- Source: depictio/projects/nf-core/cutandrun/3.1/template.yaml -->
+<!-- Regenerate: python -m depictio.dev_scripts.gen_template_docs -->
+<style>
+.gtd-badge{display:inline-block;padding:0 .5em;border-radius:10px;font-size:.78em;font-weight:600;line-height:1.5;white-space:nowrap;}
+.gtd-scan{background:#eef1fb;color:#3949ab;}
+.gtd-transformed{background:#e6f7f5;color:#2a8c82;}
+.gtd-direct{background:#eaf2ff;color:#2563c9;}
+.gtd-derived{background:#f3e8fd;color:#8e44ad;}
+.gtd-recipe{background:#fbe9f1;color:#b4337a;}
+.gtd-file{background:#eef0f2;color:#5a6573;}
+.gtd-opt{background:#fff6e6;color:#b9770e;}
+.gtd-req{background:#e9f7ef;color:#1e8e5a;}
+.gtd-plus-chip{background:#e9f7ef;color:#1e8e5a;}
+.gtd-minus-chip{background:#fdecea;color:#c0392b;}
+.gtd-swap-chip{background:#fff6e6;color:#b9770e;}
+.gtd-legend{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:.2rem 0 .8rem;}
+.gtd-legend-note{font-size:.8rem;opacity:.85;}
+/* Let long code/paths wrap so the wide reference tables fit without their own
+   horizontal scrollbar (Material wraps each table in a scroller at runtime). */
+.md-typeset table{font-size:.78rem;}
+.md-typeset table code{font-size:.92em;}
+/* First-column identifiers (variable / DC / recipe names) stay on one line;
+   only the other columns' long paths may wrap. */
+.md-typeset table td:first-child{white-space:nowrap;}
+.md-typeset table td:not(:first-child) code{overflow-wrap:anywhere;}
+/* Reads-column paths: smaller monospace + wrap so long scan targets keep the row tidy. */
+.md-typeset table code.gtd-path{font-size:.62rem;overflow-wrap:anywhere;}
+.gtd-mtx{margin:.8rem 0;}
+.gtd-mtx table{border-collapse:separate;border-spacing:0;font-size:.7rem;}
+.gtd-mtx th,.gtd-mtx td{border:1px solid var(--md-default-fg-color--lightest,#e6e6e6);padding:2px 5px;text-align:center;}
+.gtd-mtx thead th{background:#45B8AC;color:#fff;vertical-align:bottom;white-space:nowrap;font-size:.64rem;line-height:1.12;}
+.gtd-mtx th.dc{text-align:left;white-space:nowrap;font-weight:600;background:var(--md-default-bg-color,#fff);}
+.gtd-mtx thead th.dc{background:#45B8AC;color:#fff;}
+/* Only large matrices get the capped, scroll-both-ways container with a pinned
+   header row + first column; tables that fit the page render plain (no overflow). */
+.gtd-mtx.scroll{max-height:75vh;overflow:auto;}
+.gtd-mtx.scroll thead th{position:sticky;top:0;z-index:2;}
+.gtd-mtx.scroll th.dc{position:sticky;left:0;z-index:1;}
+.gtd-mtx.scroll thead th.dc{z-index:3;}
+.gtd-mtx td.plus,.gtd-mtx td.minus,.gtd-mtx td.swap{font-size:1rem;font-weight:700;line-height:1;}
+.gtd-mtx td.plus{color:#1e8e5a;}
+.gtd-mtx td.minus{color:#c0392b;}
+.gtd-mtx td.swap{color:#b9770e;}
+.gtd-mtx tbody tr:nth-child(even) td{background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-mtx code{background:none;padding:0;color:inherit;}
+.gtd-links{margin:1rem 0;}
+.gtd-links table{border-collapse:collapse;font-size:.74rem;width:100%;}
+.gtd-links th,.gtd-links td{border:1px solid var(--md-default-fg-color--lightest,#e6e6e6);padding:2px 6px;text-align:left;}
+.gtd-links thead th{background:#45B8AC;color:#fff;}
+.gtd-links td.arr{color:#45B8AC;text-align:center;font-weight:700;}
+.gtd-links .col{opacity:.7;font-size:.92em;}
+.gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
+.gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+</style>
+<h3 id="template-variables_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 3a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2H3v2h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h2v-2H8v-5a2 2 0 0 0-2-2 2 2 0 0 0 2-2V5h2V3m6 0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3z"></path></svg></span> Template variables<a class="headerlink" href="#template-variables_1" title="Permanent link">¶</a></h3>
+<p>Variables you provide when running the template: <code>DATA_ROOT</code> is the results directory given to <code>depictio ingest</code>, the others are set with <code>--var NAME=value</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th style="text-align: center;">Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DATA_ROOT</code></td>
+<td style="text-align: center;">✓</td>
+<td>Root directory containing cutandrun output (01_prealign/, 02_alignment/, 03_peak_calling/, 04_reporting/, pipeline_info/) plus the reprocessed multiqc/multiqc_data/multiqc.parquet.</td>
+</tr>
+<tr>
+<td><code>GENOME</code></td>
+<td style="text-align: center;">—</td>
+<td>UCSC assembly the run was aligned to (hg38, hg19, mm10, ...). Sets the genome axis of the Locus tab; pass --var GENOME=<assembly> for a run on another build.</assembly></td>
+</tr>
+</tbody>
+</table>
+<h3 id="data-collections_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"></path></svg></span> Data collections<a class="headerlink" href="#data-collections_1" title="Permanent link">¶</a></h3>
+<p>22 data collections — <span class="gtd-badge gtd-req">19 required</span> <span class="gtd-badge gtd-opt">3 optional</span> · <span class="gtd-badge gtd-direct">13 direct</span> <span class="gtd-badge gtd-derived">9 derived</span>.</p>
+<p><strong>Origin</strong> tells you whether a collection is <em>real pipeline data</em> or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more <em>direct</em> collections into the layout a visualization needs (no new measurement). <strong>Reads</strong> shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> <code>.py</code> transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A <code>direct</code> collection can still have a recipe — one that merely parses/cleans the raw file; <code>derived</code> means the recipe reshapes another collection.)</p>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th style="text-align: center;">Origin</th>
+<th>Type</th>
+<th>Reads</th>
+<th style="text-align: center;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>samples</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/cutandrun/samples.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">cutandrun/samples.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>samplesheet</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">samplesheet.valid.csv$</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>multiqc_data</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc.parquet$</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>bowtie2_logs_raw</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*.bowtie2.log$</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>bowtie2_spikein_factors</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bowtie2/spikein_factors.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bowtie2/spikein_factors.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>deeptools_fingerprint_metrics</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/fingerprint_metrics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deeptools/fingerprint_metrics.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>deeptools_sample_pca</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/sample_pca.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deeptools/sample_pca.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>deeptools_correlation_matrix</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/correlation_matrix.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deeptools/correlation_matrix.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>seacr_peaks_raw</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?!(?:.<em>/)?igv/).</em>/[^/]*.seacr.peaks.\w+.bed$</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>seacr_peaks</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/peaks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">seacr/peaks.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>seacr_peak_summary</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/peak_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">seacr/peak_summary.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>macs2_peaks</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/peaks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">macs2/peaks.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
+<td><code>seacr_consensus_peaks</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/consensus_peaks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">seacr/consensus_peaks.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>seacr_fragment_lengths_raw</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*.frags.len.txt$</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>seacr_fragment_lengths</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/fragment_lengths.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">seacr/fragment_lengths.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>seacr_fragment_classes</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/fragment_classes.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">seacr/fragment_classes.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>frip</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/cutandrun/frip.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">cutandrun/frip.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>caller_agreement</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/cutandrun/caller_agreement.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">cutandrun/caller_agreement.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>samtools_flagstat_raw</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?markdup/[^/]+.flagstat$</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>samtools_flagstat</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/samtools/flagstat.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">samtools/flagstat.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>seacr_frags_raw</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*.frags.cut.bed$</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
+<td><code>seacr_frags_profile</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/frags_profile.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">seacr/frags_profile.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="cross-dc-links_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> Cross-DC links<a class="headerlink" href="#cross-dc-links_1" title="Permanent link">¶</a></h3>
+<p>22 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
+<div class="gtd-links">
+<table>
+<thead>
+<tr>
+<th>Source · column</th>
+<th></th>
+<th>Target</th>
+<th>Filters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>multiqc_data</code></td>
+<td>Filter the MultiQC panels by the samples picked in the left panel</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>seacr_peaks</code></td>
+<td>Filter the SEACR peak table by the samples picked in the left panel</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>seacr_peak_summary</code></td>
+<td>Filter the SEACR QC summary by the samples picked in the left panel</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>seacr_fragment_lengths</code></td>
+<td>Filter the fragment-length curves by the samples picked in the left panel</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>bowtie2_spikein_factors</code></td>
+<td>Filter the spike-in factors by the samples picked in the left panel</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>seacr_fragment_classes</code></td>
+<td>Filter the fragment-class composition by the samples picked in the left panel</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>frip</code></td>
+<td>Filter the signal budget by the samples picked in the left panel</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>caller_agreement</code></td>
+<td>Filter the caller comparison by the samples picked in the left panel</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>macs2_peaks</code></td>
+<td>Filter the MACS2 peak table by the samples picked in the left panel</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;target</span></td>
+<td class="arr">→</td>
+<td><code>seacr_consensus_peaks</code></td>
+<td>Filter the consensus intervals by the targets picked in the left panel</td>
+</tr>
+<tr>
+<td><code>caller_agreement</code> <span class="col">·&nbsp;sample</span></td>
+<td class="arr">→</td>
+<td><code>seacr_peaks</code></td>
+<td>Carry a sample selected on the caller comparison over to its SEACR peaks</td>
+</tr>
+<tr>
+<td><code>caller_agreement</code> <span class="col">·&nbsp;sample</span></td>
+<td class="arr">→</td>
+<td><code>seacr_peak_summary</code></td>
+<td>Carry a sample selected on the caller comparison over to its SEACR QC row</td>
+</tr>
+<tr>
+<td><code>bowtie2_spikein_factors</code> <span class="col">·&nbsp;sample</span></td>
+<td class="arr">→</td>
+<td><code>multiqc_data</code></td>
+<td>Carry the alignment and spike-in thresholds over to the MultiQC panels</td>
+</tr>
+<tr>
+<td><code>seacr_peaks</code> <span class="col">·&nbsp;sample</span></td>
+<td class="arr">→</td>
+<td><code>caller_agreement</code></td>
+<td>Carry a sample selected on the SEACR panels back to the caller comparison</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>deeptools_fingerprint_metrics</code></td>
+<td>Filter the fingerprint metrics by the samples picked on the samplesheet</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>deeptools_sample_pca</code></td>
+<td>Filter the PCA scatter by the samples picked on the samplesheet</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>deeptools_correlation_matrix</code></td>
+<td>Filter the correlation matrix rows by the samples picked on the samplesheet</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>samtools_flagstat</code></td>
+<td>Filter the duplication counts by the samples picked on the samplesheet</td>
+</tr>
+<tr>
+<td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>seacr_frags_profile</code></td>
+<td>Filter the fragment pile-up by the samples picked in the left panel</td>
+</tr>
+<tr>
+<td><code>seacr_peaks</code> <span class="col">·&nbsp;chr</span></td>
+<td class="arr">→</td>
+<td><code>seacr_frags_profile</code></td>
+<td>A region brushed or typed on the SEACR navigator narrows the fragment pile-up</td>
+</tr>
+<tr>
+<td><code>seacr_peaks</code> <span class="col">·&nbsp;chr</span></td>
+<td class="arr">→</td>
+<td><code>macs2_peaks</code></td>
+<td>A region brushed or typed on the SEACR navigator narrows the MACS2 calls</td>
+</tr>
+<tr>
+<td><code>seacr_peaks</code> <span class="col">·&nbsp;chr</span></td>
+<td class="arr">→</td>
+<td><code>seacr_consensus_peaks</code></td>
+<td>A region brushed or typed on the SEACR navigator narrows the consensus intervals</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="recipes_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.5 1.5c-1.77 0-3.33 1.17-3.83 2.87C8.14 4.13 7.58 4 7 4a4 4 0 0 0-4 4 4.01 4.01 0 0 0 3 3.87V19h13v-7.13c1.76-.46 3-2.05 3-3.87a4 4 0 0 0-4-4c-.58 0-1.14.13-1.67.37-.5-1.7-2.06-2.87-3.83-2.87m-.5 9h1v7h-1zm-3 2h1v5H9zm6 0h1v5h-1zM6 20v1a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-1z"></path></svg></span> Recipes<a class="headerlink" href="#recipes_1" title="Permanent link">¶</a></h3>
+<p>Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; <em>Output</em> lists the validated <code>OUTPUT_SCHEMA</code> columns.</p>
+<table>
+<thead>
+<tr>
+<th>Recipe</th>
+<th>Transforms</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bowtie2/spikein_factors.py"><code>bowtie2/spikein_factors.py</code></a></td>
+<td>Spike-in normalisation factors, from the two Bowtie 2 log sets of a run.</td>
+<td><code>sample</code>, <code>total_pairs</code>, <code>target_aligned</code>, <code>target_align_rate</code>, <code>spikein_aligned</code>, <code>spikein_align_rate</code>, <code>spikein_fraction</code>, <code>target_per_spikein</code>, <code>scale_factor</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/cutandrun/caller_agreement.py"><code>cutandrun/caller_agreement.py</code></a></td>
+<td>Do MACS2 and SEACR agree, sample by sample?</td>
+<td><code>sample</code>, <code>target</code>, <code>caller</code>, <code>n_peaks</code>, <code>total_bp</code>, <code>median_width</code>, <code>max_width</code>, <code>n_shared</code>, <code>n_unique</code>, <code>frac_shared</code>, <code>log10_n_peaks</code>, <code>other_caller</code>, <code>n_peaks_other</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/cutandrun/frip.py"><code>cutandrun/frip.py</code></a></td>
+<td>How much of a sample's fragment coverage falls inside its own peaks.</td>
+<td><code>sample</code>, <code>target</code>, <code>signal_class</code>, <code>coverage_bp</code>, <code>fraction</code>, <code>frip</code>, <code>n_peaks</code>, <code>peak_span_bp</code>, <code>fragment_bp</code>, <code>scale_factor</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/cutandrun/samples.py"><code>cutandrun/samples.py</code></a></td>
+<td>One row per CUT&amp;RUN sample, from the samplesheet the pipeline validated.</td>
+<td><code>sample_id</code>, <code>target</code>, <code>replicate</code>, <code>replicate_label</code>, <code>role</code>, <code>is_control</code>, <code>control_target</code>, <code>n_libraries</code>, <code>library_ids</code>, <code>single_end</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/correlation_matrix.py"><code>deeptools/correlation_matrix.py</code></a></td>
+<td>deepTools plotCorrelation matrix as a square table, one row per sample.</td>
+<td><code>sample</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/fingerprint_metrics.py"><code>deeptools/fingerprint_metrics.py</code></a></td>
+<td>Per-sample deepTools fingerprint metrics, one row per library.</td>
+<td><code>sample</code>, <code>auc</code>, <code>synthetic_auc</code>, <code>auc_ratio</code>, <code>x_intercept</code>, <code>synthetic_x_intercept</code>, <code>elbow_point</code>, <code>synthetic_elbow_point</code>, <code>synthetic_js_distance</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/sample_pca.py"><code>deeptools/sample_pca.py</code></a></td>
+<td>deepTools plotPCA coordinates in long form, one row per sample.</td>
+<td><code>sample</code>, <code>pc1</code>, <code>pc2</code>, <code>pc3</code>, <code>pc1_variance</code>, <code>pc2_variance</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/peaks.py"><code>macs2/peaks.py</code></a></td>
+<td>Concatenate MACS2 narrowPeak calls into one tidy peak table.</td>
+<td><code>sample</code>, <code>peak_id</code>, <code>chr</code>, <code>start</code>, <code>end</code>, <code>width</code>, <code>summit</code>, <code>score</code>, <code>fold_enrichment</code>, <code>neg_log10_pvalue</code>, <code>neg_log10_qvalue</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/samtools/flagstat.py"><code>samtools/flagstat.py</code></a></td>
+<td>One row per (sample, filter stage) from a <code>samtools flagstat</code> report.</td>
+<td><code>sample</code>, <code>stage</code>, <code>total_reads</code>, <code>mapped_reads</code>, <code>mapped_pct</code>, <code>duplicate_reads</code>, <code>properly_paired_reads</code>, <code>properly_paired_pct</code>, <code>singleton_pct</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/consensus_peaks.py"><code>seacr/consensus_peaks.py</code></a></td>
+<td>Consensus peak x replicate presence matrix from CUT&amp;RUN consensus BEDs.</td>
+<td><code>peak_id</code>, <code>target</code>, <code>caller</code>, <code>chr</code>, <code>start</code>, <code>end</code>, <code>width</code>, <code>num_peaks</code>, <code>num_samples</code>, <code>support</code>, <code>total_signal</code>, <code>max_signal</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/fragment_classes.py"><code>seacr/fragment_classes.py</code></a></td>
+<td>The fragment-length histogram binned into nucleosome classes.</td>
+<td><code>sample</code>, <code>target</code>, <code>fragment_class</code>, <code>class_order</code>, <code>n_fragments</code>, <code>fraction</code>, <code>median_length</code>, <code>mono_to_sub</code>, <code>sample_median_length</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/fragment_lengths.py"><code>seacr/fragment_lengths.py</code></a></td>
+<td>Fragment-length distribution per sample, the signature CUT&amp;RUN QC figure.</td>
+<td><code>sample</code>, <code>target</code>, <code>fragment_length</code>, <code>count</code>, <code>fraction</code>, <code>cumulative_fraction</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/frags_profile.py"><code>seacr/frags_profile.py</code></a></td>
+<td>Fragment pile-up around the strongest SEACR regions, one window per region.</td>
+<td><code>sample</code>, <code>target</code>, <code>peak_id</code>, <code>peak_rank</code>, <code>chr</code>, <code>summit</code>, <code>offset_bp</code>, <code>bin_start</code>, <code>bin_end</code>, <code>fragments</code>, <code>cpm</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/peak_summary.py"><code>seacr/peak_summary.py</code></a></td>
+<td>One row per sample: what SEACR called and how strong those calls are.</td>
+<td><code>sample</code>, <code>threshold_mode</code>, <code>num_peaks</code>, <code>total_bp</code>, <code>width_median</code>, <code>width_mean</code>, <code>width_max</code>, <code>total_signal_sum</code>, <code>total_signal_median</code>, <code>max_signal_median</code>, <code>signal_density_median</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/peaks.py"><code>seacr/peaks.py</code></a></td>
+<td>Tidy every SEACR peak of every sample into one table.</td>
+<td><code>sample</code>, <code>peak_id</code>, <code>threshold_mode</code>, <code>chr</code>, <code>start</code>, <code>end</code>, <code>width</code>, <code>summit</code>, <code>total_signal</code>, <code>max_signal</code>, <code>signal_density</code>, <code>log10_total_signal</code></td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
 <p>One dashboard: the <strong>Overview</strong>, then seven child tabs in three groups, read as a
@@ -6007,14 +6645,14 @@ throughout; only the peak collections omit them.</p>
 <div class="tabbed-block">
 <p><em>Chromatin profiling, from fragments to the peaks replicates reproduce.</em></p>
 <!-- screenshot pending v2 -->
-<p>A short hero links the run parameters, which for cutandrun 3.1 are the software
-versions: the run ships no <code>params.json</code>. <em>About this dashboard</em> says how the
-two filter levels work, <em>The run</em> lists the samples, targets, IgG controls and
-peak callers read from the data, and <em>Pipeline</em> walks the six steps from
-trimming to the consensus merge, each linked to its tool versions and its tab.
-The findings are live values: they follow the filters, and a route that lacks
-their data drops them. The Locus tab has no figure here, since it is a browser
-rather than a summary.</p>
+<p>A short hero links the run parameters, which for cutandrun 3.2.2 are the
+software versions: the run ships no <code>params.json</code>. <em>About this dashboard</em> says
+how the two filter levels work, <em>The run</em> lists the samples, targets, IgG
+controls and peak callers read from the data, and <em>Pipeline</em> walks the six steps
+from trimming to the consensus merge, each linked to its tool versions and its
+tab. The findings are live values: they follow the filters, and a route that
+lacks their data drops them. The Locus tab has no figure here, since it is a
+browser rather than a summary.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> and
@@ -6050,12 +6688,15 @@ narrows its own section only.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Data &amp; QC</strong> · <em>Did reads trim, align and rise above the IgG control?</em></p>
+<!-- screenshot pending v2 -->
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/multiqc_light.png"></a></p>
-<p>MultiQC panels only, from the reprocessed report. Open: general statistics,
-FastQC sequence counts and the reads kept after trimming, Bowtie 2 against
-samtools percent mapped (spike-in libraries carry a <code>.spikein</code> suffix), then
-the deepTools fingerprint. Base quality, GC content, insert sizes and reads
-per contig are collapsed.</p>
+<p>MultiQC panels only. Open: general statistics, FastQC sequence counts and the
+reads kept after trimming, the Bowtie 2 alignments to the target genome beside
+those to the spike-in genome, then the deepTools fingerprint. Percent mapped,
+base quality, GC content, insert sizes and reads per contig are collapsed. A
+re-generated report has no separate spike-in Bowtie 2 module: the import drops
+the spike-in tile, and the target tile, now full width, shows both genomes,
+the spike-in libraries carrying a <code>.spikein</code> suffix.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>Target alignment rate</code> and <code>Spike-in scale factor</code> ranges
@@ -6074,7 +6715,7 @@ on <code>bowtie2_spikein_factors</code>, carried into the report by a reverse li
 </tr>
 <tr>
 <td>Alignment and spike-in</td>
-<td>2 MultiQC panels</td>
+<td>2 MultiQC panels (target and spike-in genome)</td>
 </tr>
 <tr>
 <td>Enrichment over the control</td>
@@ -6082,7 +6723,7 @@ on <code>bowtie2_spikein_factors</code>, carried into the report by a reverse li
 </tr>
 <tr>
 <td>QC details (collapsed)</td>
-<td>4 MultiQC panels</td>
+<td>5 MultiQC panels</td>
 </tr>
 </tbody>
 </table>
@@ -6315,9 +6956,10 @@ peaks</code> ranges, all on <code>seacr_consensus_peaks</code>.</p>
 <p><strong>Agreement</strong> · <em>Do the callers and the replicates agree on one region?</em></p>
 <!-- screenshot pending v2 -->
 <p>One region on one genome axis. The cards count what the region in view holds
-and follow it as the tracks do. The SEACR navigator opens on a default region:
-type a locus in its header or brush its axis, and the fragment pile-up, the
-MACS2 calls and the consensus intervals over the gene lane follow.</p>
+and follow it as the tracks do. The SEACR navigator opens on the first contig
+the calls sit on, so a run aligned to part of the genome opens on data: type a
+locus in its header or brush its axis, and the fragment pile-up, the MACS2
+calls and the consensus intervals over the gene lane follow.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>SEACR coverage per base</code> on <code>seacr_peaks</code>, <code>MACS2 -log10
@@ -6371,18 +7013,21 @@ tile.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/cutandrun. Run the pipeline first:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/cutandrun<span class="w"> </span>-r<span class="w"> </span><span class="m">3</span>.1<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/cutandrun<span class="w"> </span>-r<span class="w"> </span><span class="m">3</span>.2.2<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--input<span class="w"> </span>samplesheet.csv<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>--genome<span class="w"> </span>GRCh38<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>--peakcaller<span class="w"> </span>seacr,macs2<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span>--outdir<span class="w"> </span>results<span class="w"> </span>-profile<span class="w"> </span>docker
 </code></pre></div>
-<p>Then regenerate the MultiQC report Depictio reads, and point Depictio at the
-results:</p>
+<p>Then point Depictio at the results. A run on the release's pinned MultiQC 1.19
+needs its report re-generated first, and the variable that binds it:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>-m<span class="w"> </span>depictio.dev_scripts.multiqc_reprocess<span class="w"> </span>--src<span class="w"> </span>results/<span class="w"> </span>--dest<span class="w"> </span>results/
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>results/<span class="w"> </span>--template<span class="w"> </span>nf-core/cutandrun/latest
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>results/<span class="w"> </span>--template<span class="w"> </span>nf-core/cutandrun/latest<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">MULTIQC_REPROCESSED</span><span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
-<p>See <a href="https://nf-co.re/cutandrun/3.1/docs/usage">nf-co.re/cutandrun/usage</a> for
+<p>A run made with MultiQC 1.31 or later skips both: <code>depictio ingest results/
+--template nf-core/cutandrun/latest</code> reads the report the pipeline published.</p>
+<p>See <a href="https://nf-co.re/cutandrun/3.2.2/docs/usage">nf-co.re/cutandrun/usage</a> for
 full pipeline documentation.</p>
 <hr>
 <h2 id="required-data-structure"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.1 10 4 18V8h17a2 2 0 0 0-2-2h-7l-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h15c.9 0 1.7-.6 1.9-1.5l2.3-8.5zM19 18H6l1.6-6h13z"></path></svg></span> Required data structure<a class="headerlink" href="#required-data-structure" title="Permanent link">¶</a></h2>
@@ -6404,44 +7049,53 @@ reference run's layout, not a requirement.</p>
 <a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>│   ├── 04_called_peaks/
 <a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>│   │   ├── seacr/*.seacr.peaks.stringent.bed          # required, the default caller
 <a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>│   │   └── macs2/*.macs2_peaks.narrowPeak             # optional, plus *.macs2_peaks.xls
-<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>│   ├── 05_consensus_peaks/*.consensus.peak_counts.bed
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>│   ├── 05_consensus_peaks/*.consensus.peak_counts.bed # *.seacr.consensus.* in 3.2.2
 <a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>│   └── 06_fragments_from_bams/
 <a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>│       ├── *.frags.len.txt
-<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>│       └── *.frags.cut.bed                            # optional, the pile-up and fragment track
-<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>├── 04_reporting/deeptools_qc/
-<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>│   ├── *.plotFingerprint.qcmetrics.txt
-<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>│   └── all_target_bams.plot{PCA.tab,Correlation.mat.tab}
-<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>└── multiqc/multiqc_data/
-<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>    └── multiqc.parquet                                # written by multiqc_reprocess
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>│       └── *.frags.cut.bed                            # optional, for the pile-up tiles
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>├── 04_reporting/
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>│   ├── deeptools_qc/
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>│   │   ├── *.plotFingerprint.qcmetrics.txt
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>│   │   └── all_target_bams.plot{PCA.tab,Correlation.mat.tab}
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>│   ├── igv/                                           # copies of the SEACR beds, skipped
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>│   └── multiqc/multiqc_data/multiqc.parquet           # the run's own, MultiQC 1.31 or later
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>└── multiqc/multiqc_data/
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>    └── multiqc.parquet                                # or this one, from multiqc_reprocess
 </code></pre></div>
+<p>A tree may hold both MultiQC parquets: the default binds the run's own under
+<code>04_reporting/</code>, <code>--var MULTIQC_REPROCESSED=true</code> the re-generated one at the
+root, and the template never loads the two together.</p>
 <hr>
 <h2 id="validation-runs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1c0-.21-.07-.41-.18-.57L13 8.35V4h-2v4.35L5.18 18.43c-.11.16-.18.36-.18.57m1 3a3 3 0 0 1-3-3c0-.6.18-1.16.5-1.63L9 7.81V6a1 1 0 0 1-1-1V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1v1.81l5.5 9.56c.32.47.5 1.03.5 1.63a3 3 0 0 1-3 3zm7-6 1.34-1.34L16.27 18H7.73l2.66-4.61zm-.5-4a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5"></path></svg></span> Validation runs<a class="headerlink" href="#validation-runs" title="Permanent link">¶</a></h2>
-<p>The repository ships
-<a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/cutandrun/3.1/download_test_data.sh"><code>download_test_data.sh</code></a>,
-which fetches the megatest subset the template needs, fragment BEDs included:</p>
+<p>No AWS megatest is usable for 3.2.2: every cutandrun 3.2.x prefix in the bucket
+holds directory markers only. The template was validated on two EMBL HPC runs of
+the release instead: <code>cutandrun322-full</code>, the <code>test_full</code> profile (the megatest
+design, two histone marks in two replicates each against IgG controls), and
+<code>cutandrun322-small</code>, the <code>test_full_small</code> profile (the same design on a read
+subset against one chromosome, with linear duplicate removal and mitochondrial
+filtering on). Both runs wrote MultiQC 1.19, so both were re-generated with
+<code>multiqc_reprocess</code> and checked with <code>--var MULTIQC_REPROCESSED=true</code>; the
+pipeline's own MultiQC 1.35 report was checked on the small run only. The small
+run was ingested on a local stack, its zero-byte peak file included; the full run
+was checked by dry runs and by building every collection without a server.</p>
+<p><code>megatest.yaml</code> lists the tables-only subset a 3.2.2 megatest would need, so a
+usable S3 run can be pinned later without rewriting it. The 3.1 megatest the
+previous template version was built on is still fetched by
+<a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/cutandrun/3.1/download_test_data.sh"><code>download_test_data.sh</code></a>
+next to the 3.1 template:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>bash<span class="w"> </span>depictio/projects/nf-core/cutandrun/3.1/download_test_data.sh<span class="w"> </span>/tmp/cutandrun_test
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>python<span class="w"> </span>-m<span class="w"> </span>depictio.dev_scripts.multiqc_reprocess<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>--src<span class="w"> </span>/tmp/cutandrun_test<span class="w"> </span>--dest<span class="w"> </span>/tmp/cutandrun_test
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/tmp/cutandrun_test<span class="w"> </span>--template<span class="w"> </span>nf-core/cutandrun/3.1
 </code></pre></div>
-<p>The run is
-<code>s3://nf-core-awsmegatests/cutandrun/results-42502fb44975e930eec865353c5481f472bcf766/</code>
-(GSE145187): H3K4me3 and H3K27me3 in two replicates each, against two IgG
-controls; the screenshots above come from it. Two steps follow the fetch, both in <code>post_fetch_help</code> in
-<code>megatest.yaml</code> next to the script:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># MACS2 called nothing for h3k27me3_R2 and published zero-byte files, which the</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># glob loader cannot parse. The null result stays visible without them.</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>find<span class="w"> </span>/tmp/cutandrun_test/03_peak_calling<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-size<span class="w"> </span><span class="m">0</span><span class="w"> </span>-delete
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># The run wrote MultiQC 1.14, so regenerate the parquet Depictio reads.</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>python<span class="w"> </span>-m<span class="w"> </span>depictio.dev_scripts.multiqc_reprocess<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span>--src<span class="w"> </span>/tmp/cutandrun_test<span class="w"> </span>--dest<span class="w"> </span>/tmp/cutandrun_test
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># Then ingest it.</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/tmp/cutandrun_test<span class="w"> </span>--template<span class="w"> </span>nf-core/cutandrun/latest
-</code></pre></div>
+<p>The screenshots above show the 3.1 template on an earlier layout of the
+dashboard; the 3.2.2 layout has not been captured yet.</p>
 <hr>
 <h2 id="additional-resources"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.59 13.41c.41.39.41 1.03 0 1.42-.39.39-1.03.39-1.42 0a5.003 5.003 0 0 1 0-7.07l3.54-3.54a5.003 5.003 0 0 1 7.07 0 5.003 5.003 0 0 1 0 7.07l-1.49 1.49c.01-.82-.12-1.64-.4-2.42l.47-.48a2.98 2.98 0 0 0 0-4.24 2.98 2.98 0 0 0-4.24 0l-3.53 3.53a2.98 2.98 0 0 0 0 4.24m2.82-4.24c.39-.39 1.03-.39 1.42 0a5.003 5.003 0 0 1 0 7.07l-3.54 3.54a5.003 5.003 0 0 1-7.07 0 5.003 5.003 0 0 1 0-7.07l1.49-1.49c-.01.82.12 1.64.4 2.43l-.47.47a2.98 2.98 0 0 0 0 4.24 2.98 2.98 0 0 0 4.24 0l3.53-3.53a2.98 2.98 0 0 0 0-4.24.973.973 0 0 1 0-1.42"></path></svg></span> Additional resources<a class="headerlink" href="#additional-resources" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://nf-co.re/cutandrun">nf-co.re/cutandrun</a>: official pipeline documentation</li>
-<li><a href="https://nf-co.re/cutandrun/3.1/results">nf-co.re/cutandrun/3.1/results</a>: AWS test results</li>
+<li><a href="https://nf-co.re/cutandrun/3.2.2/docs/output">nf-co.re/cutandrun/3.2.2/docs/output</a>: the output files the template reads</li>
+<li><a href="https://nf-co.re/cutandrun/3.1/results">nf-co.re/cutandrun/3.1/results</a>: AWS test results of the 3.1 release (3.2.x has none)</li>
 <li><a href="../../../usage/projects/templates/">Template System Reference</a>: YAML format, variables, conditionals</li>
 <li><a href="../../../usage/projects/recipes/">Recipes</a>: how to read, test, and write recipes</li>
 </ul>

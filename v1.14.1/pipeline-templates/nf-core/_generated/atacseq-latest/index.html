@@ -5143,7 +5143,7 @@
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
 </style>
 
-<h3 id="template-variables">Template variables<a class="headerlink" href="#template-variables" title="Permanent link">¶</a></h3>
+<h3 id="template-variables"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 3a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2H3v2h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h2v-2H8v-5a2 2 0 0 0-2-2 2 2 0 0 0 2-2V5h2V3m6 0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3z"></path></svg></span> Template variables<a class="headerlink" href="#template-variables" title="Permanent link">¶</a></h3>
 <p>Variables you provide when running the template: <code>DATA_ROOT</code> is the results directory given to <code>depictio ingest</code>, the others are set with <code>--var NAME=value</code>:</p>
 <table>
 <thead>
@@ -5159,11 +5159,16 @@
 <td style="text-align: center;">✓</td>
 <td>The atacseq --outdir: ALIGNER/merged_library/, fastqc/, trimgalore/, multiqc/, pipeline_info/, plus a MultiQC 1.31 or later parquet, either the pipeline's own under multiqc/broad_peak/multiqc_data/ or a reprocessed one under multiqc/multiqc_data/.</td>
 </tr>
+<tr>
+<td><code>GENOME</code></td>
+<td style="text-align: center;">—</td>
+<td>UCSC assembly the run was aligned to (hg38, hg19, mm10, ...). Sets the genome axis of the Locus tab; pass --var GENOME=<assembly> for a run on another build.</assembly></td>
+</tr>
 </tbody>
 </table>
-<h3 id="data-collections">Data collections<a class="headerlink" href="#data-collections" title="Permanent link">¶</a></h3>
-<p>16 data collections — <span class="gtd-badge gtd-req">14 required</span> <span class="gtd-badge gtd-opt">2 optional</span> · <span class="gtd-badge gtd-direct">14 direct</span> <span class="gtd-badge gtd-derived">2 derived</span>.</p>
-<p><strong>Origin</strong> tells you whether a collection is <em>real pipeline data</em> or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more <em>direct</em> collections into the layout a visualization needs (no new measurement). <strong>Reads</strong> shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> <code>.py</code> transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A <code>direct</code> collection can still have a recipe — one that merely parses/cleans the raw file; <code>derived</code> means the recipe reshapes another collection.)</p>
+<h3 id="data-collections"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"></path></svg></span> Data collections<a class="headerlink" href="#data-collections" title="Permanent link">¶</a></h3>
+<p>21 data collections — <span class="gtd-badge gtd-req">17 required</span> <span class="gtd-badge gtd-opt">4 optional</span> · <span class="gtd-badge gtd-direct">18 direct</span> <span class="gtd-badge gtd-derived">3 derived</span>.</p>
+<p><strong>Origin</strong> tells you whether a collection is <em>real pipeline data</em> or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more <em>direct</em> collections into the layout a visualization needs (no new measurement). <strong>Reads</strong> shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> <code>.py</code> transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A <code>direct</code> collection can still have a recipe — one that merely parses/cleans the raw file; <code>derived</code> means the recipe reshapes another collection.)</p>
 <table>
 <thead>
 <tr>
@@ -5179,141 +5184,182 @@
 <td><code>sample_design</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>nf-core/atacseq/sample_design.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/2.1.2/recipes/sample_design.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/atacseq/sample_design.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>samplesheet</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">samplesheet.valid.csv$</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>multiqc_data</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path"><code>multiqc/(?:broad_peak/)?multiqc_data/multiqc\.parquet$</code></code></td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc.parquet$</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>ataqv_metrics</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>ataqv/metrics.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ataqv/metrics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ataqv/metrics.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>ataqv_fragment_length</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>ataqv/fragment_length.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ataqv/fragment_length.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ataqv/fragment_length.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>ataqv_tss_coverage</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>ataqv/tss_coverage.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ataqv/tss_coverage.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ataqv/tss_coverage.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>ataqv_chromosome_counts</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>ataqv/chromosome_counts.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ataqv/chromosome_counts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ataqv/chromosome_counts.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>picard_markduplicates_metrics_raw</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*.mLb.mkD.sorted.MarkDuplicates.metrics.txt$</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>picard_markduplicates_metrics</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/picard/markduplicates_metrics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">picard/markduplicates_metrics.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>preseq_ccurve_raw</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path"><code>.*\.lc_extrap\.txt$</code></code></td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*.lc_extrap.txt$</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
 </tr>
 <tr>
 <td><code>preseq_complexity_curve</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>preseq/complexity_curve.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/preseq/complexity_curve.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">preseq/complexity_curve.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
 </tr>
 <tr>
 <td><code>deeptools_fingerprint_metrics</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>deeptools/fingerprint_metrics.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/fingerprint_metrics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deeptools/fingerprint_metrics.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>deeptools_plot_profile</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>deeptools/plot_profile.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/plot_profile.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deeptools/plot_profile.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>macs2_peak_summary</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>macs2/peak_summary.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/2.1.2/recipes/peak_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/atacseq/peak_summary.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>macs2_broad_peaks</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>macs2/broad_peaks.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/broad_peaks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">macs2/broad_peaks.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>homer_annotated_peaks</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>homer/annotate_peaks.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/homer/annotate_peaks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">homer/annotate_peaks.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>homer_tss_distance_profile</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>homer/tss_distance_profile.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/homer/tss_distance_profile.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">homer/tss_distance_profile.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>macs2_consensus_boolean</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>macs2/consensus_boolean.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/consensus_boolean.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">macs2/consensus_boolean.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>macs2_consensus_fc</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>macs2/consensus_fc.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/consensus_fc.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">macs2/consensus_fc.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>deseq2_qc_pca</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/2.1.2/recipes/deseq2_qc_pca.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/atacseq/deseq2_qc_pca.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
+<td><code>deseq2_qc_sample_dists</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/qc_sample_dists.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deseq2/qc_sample_dists.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
 </tr>
 </tbody>
 </table>
-<h3 id="cross-dc-links">Cross-DC links<a class="headerlink" href="#cross-dc-links" title="Permanent link">¶</a></h3>
-<p>16 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
+<h3 id="cross-dc-links"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> Cross-DC links<a class="headerlink" href="#cross-dc-links" title="Permanent link">¶</a></h3>
+<p>22 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
 <div class="gtd-links">
 <table>
 <thead><tr><th>Source · column</th><th></th><th>Target</th><th>Filters</th></tr></thead>
 <tbody>
+<tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter the read-level MultiQC panels by the sequencing libraries picked in the left panel</td></tr>
 <tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter the MultiQC panels by the samples picked in the left rail</td></tr>
+<tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>macs2_peak_summary</code></td><td>Filter the peak QC summary by the samples picked in the left rail</td></tr>
 <tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>ataqv_metrics</code></td><td>Filter the ataqv metric table by the samples picked in the left rail</td></tr>
 <tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>ataqv_fragment_length</code></td><td>Filter the fragment-length ladder by the samples picked in the left rail</td></tr>
 <tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>ataqv_tss_coverage</code></td><td>Filter the TSS coverage profiles by the samples picked in the left rail</td></tr>
 <tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>ataqv_chromosome_counts</code></td><td>Filter the read-distribution matrix by the samples picked in the left rail</td></tr>
+<tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>picard_markduplicates_metrics</code></td><td>Filter the duplication metrics by the samples picked in the left rail</td></tr>
 <tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>preseq_complexity_curve</code></td><td>Filter the complexity curves by the samples picked in the left rail</td></tr>
 <tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>deeptools_fingerprint_metrics</code></td><td>Filter the fingerprint metrics by the samples picked in the left rail</td></tr>
-<tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>deeptools_plot_profile</code></td><td>Filter the TSS signal profiles by the samples picked in the left rail</td></tr>
-<tr><td><code>sample_design</code> <span class="col">·&nbsp;merged_library</span></td><td class="arr">→</td><td><code>macs2_peak_summary</code></td><td>Filter the peak QC summary by the samples picked in the left rail</td></tr>
+<tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>deeptools_plot_profile</code></td><td>Filter the metagene profiles by the samples picked in the left rail</td></tr>
 <tr><td><code>sample_design</code> <span class="col">·&nbsp;merged_library</span></td><td class="arr">→</td><td><code>macs2_broad_peaks</code></td><td>Filter the peak table by the samples picked in the left rail</td></tr>
 <tr><td><code>sample_design</code> <span class="col">·&nbsp;merged_library</span></td><td class="arr">→</td><td><code>homer_annotated_peaks</code></td><td>Filter the peak annotation by the samples picked in the left rail</td></tr>
 <tr><td><code>sample_design</code> <span class="col">·&nbsp;merged_library</span></td><td class="arr">→</td><td><code>homer_tss_distance_profile</code></td><td>Filter the TSS distance profiles by the samples picked in the left rail</td></tr>
 <tr><td><code>macs2_broad_peaks</code> <span class="col">·&nbsp;peak_id</span></td><td class="arr">→</td><td><code>homer_annotated_peaks</code></td><td>Carry a peak selected on the MACS2 panels over to its HOMER annotation</td></tr>
 <tr><td><code>homer_annotated_peaks</code> <span class="col">·&nbsp;peak_id</span></td><td class="arr">→</td><td><code>macs2_broad_peaks</code></td><td>Carry a peak selected in the annotation table back to the MACS2 panels</td></tr>
+<tr><td><code>macs2_broad_peaks</code> <span class="col">·&nbsp;chr</span></td><td class="arr">→</td><td><code>macs2_consensus_boolean</code></td><td>A region typed or brushed on the peak navigator narrows the consensus intervals</td></tr>
+<tr><td><code>macs2_broad_peaks</code> <span class="col">·&nbsp;chr</span></td><td class="arr">→</td><td><code>homer_annotated_peaks</code></td><td>A region typed or brushed on the peak navigator narrows the HOMER annotation track</td></tr>
 <tr><td><code>macs2_consensus_boolean</code> <span class="col">·&nbsp;peak_id</span></td><td class="arr">→</td><td><code>macs2_consensus_fc</code></td><td>Carry a consensus interval selected on the overlap panels over to the signal heatmap</td></tr>
 <tr><td><code>macs2_consensus_fc</code> <span class="col">·&nbsp;peak_id</span></td><td class="arr">→</td><td><code>macs2_consensus_boolean</code></td><td>Carry a consensus interval selected on the signal heatmap back to the overlap panels</td></tr>
+<tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>deseq2_qc_pca</code></td><td>Filter the consensus PCA by the samples picked in the left rail</td></tr>
+<tr><td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>deseq2_qc_sample_dists</code></td><td>Filter the consensus distance matrix by the samples picked in the left rail</td></tr>
 </tbody></table></div>
 
-<h3 id="recipes">Recipes<a class="headerlink" href="#recipes" title="Permanent link">¶</a></h3>
+<h3 id="recipes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.5 1.5c-1.77 0-3.33 1.17-3.83 2.87C8.14 4.13 7.58 4 7 4a4 4 0 0 0-4 4 4.01 4.01 0 0 0 3 3.87V19h13v-7.13c1.76-.46 3-2.05 3-3.87a4 4 0 0 0-4-4c-.58 0-1.14.13-1.67.37-.5-1.7-2.06-2.87-3.83-2.87m-.5 9h1v7h-1zm-3 2h1v5H9zm6 0h1v5h-1zM6 20v1a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-1z"></path></svg></span> Recipes<a class="headerlink" href="#recipes" title="Permanent link">¶</a></h3>
 <p>Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; <em>Output</em> lists the validated <code>OUTPUT_SCHEMA</code> columns.</p>
 <table>
 <thead>
@@ -5337,7 +5383,7 @@
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ataqv/metrics.py"><code>ataqv/metrics.py</code></a></td>
 <td>Per-library ATAC quality metrics from the ataqv JSON reports.</td>
-<td><code>sample</code>, <code>tss_enrichment</code>, <code>total_reads</code>, <code>hqaa</code>, <code>hqaa_fraction</code>, <code>hqaa_in_peaks</code>, <code>hqaa_overlapping_peaks_percent</code>, <code>total_autosomal_reads</code>, <code>total_mitochondrial_reads</code>, <code>mitochondrial_fraction</code>, <code>duplicate_fraction</code>, <code>duplicate_fraction_in_peaks</code>, <code>duplicate_fraction_not_in_peaks</code>, <code>peak_duplicate_ratio</code>, <code>total_peaks</code>, <code>total_peak_territory</code>, <code>hqaa_tf_count</code>, <code>hqaa_mononucleosomal_count</code>, <code>short_mononucleosomal_ratio</code>, <code>max_fraction_reads_from_single_autosome</code>, <code>median_mapq</code>, <code>properly_paired_fraction</code>, <code>maximum_proper_pair_fragment_size</code>, <code>ataqv_version</code></td>
+<td><code>sample</code>, <code>tss_enrichment</code>, <code>total_reads</code>, <code>hqaa</code>, <code>hqaa_fraction</code>, <code>hqaa_in_peaks</code>, <code>hqaa_overlapping_peaks_percent</code>, <code>total_autosomal_reads</code>, <code>total_mitochondrial_reads</code>, <code>mitochondrial_fraction</code>, <code>duplicate_fraction</code>, <code>duplicate_fraction_in_peaks</code>, <code>duplicate_fraction_not_in_peaks</code>, <code>peak_duplicate_ratio</code>, <code>total_peaks</code>, <code>total_peak_territory</code>, <code>hqaa_tf_count</code>, <code>hqaa_mononucleosomal_count</code>, <code>short_mononucleosomal_ratio</code>, <code>max_fraction_reads_from_single_autosome</code>, <code>median_mapq</code>, <code>properly_paired_fraction</code>, <code>maximum_proper_pair_fragment_size</code>, <code>median_fragment_length</code>, <code>ataqv_version</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ataqv/tss_coverage.py"><code>ataqv/tss_coverage.py</code></a></td>
@@ -5353,6 +5399,11 @@
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/plot_profile.py"><code>deeptools/plot_profile.py</code></a></td>
 <td>deepTools metagene profile in long form, one row per sample and bin.</td>
 <td><code>sample</code>, <code>group</code>, <code>bin</code>, <code>bin_label</code>, <code>signal</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/qc_sample_dists.py"><code>deseq2/qc_sample_dists.py</code></a></td>
+<td>The DESeq2 QC sample-distance matrix the pipeline already computed.</td>
+<td><code>sample</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/homer/annotate_peaks.py"><code>homer/annotate_peaks.py</code></a></td>
@@ -5380,14 +5431,24 @@
 <td><code>peak_id</code>, <code>consensus_set</code>, <code>interval_id</code>, <code>chr</code>, <code>region</code>, <code>support</code></td>
 </tr>
 <tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/peak_summary.py"><code>macs2/peak_summary.py</code></a></td>
-<td>Per-sample MACS2 peak QC: call count, FRiP score and peak-metric spreads.</td>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/2.1.2/recipes/deseq2_qc_pca.py"><code>nf-core/atacseq/deseq2_qc_pca.py</code></a></td>
+<td>DESeq2 QC principal components of the consensus counts, with each sample's group.</td>
+<td><code>sample_id</code>, <code>dim_1</code>, <code>dim_2</code>, <code>dim_1_percent</code>, <code>dim_2_percent</code>, <code>pca_set</code>, <code>group</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/2.1.2/recipes/peak_summary.py"><code>nf-core/atacseq/peak_summary.py</code></a></td>
+<td>Per-sample MACS2 peak QC for atacseq 2.x: call count, FRiP score, peak spreads.</td>
 <td><code>sample</code>, <code>num_peaks</code>, <code>frip_score</code>, <code>width_median</code>, <code>width_mean</code>, <code>width_max</code>, <code>fold_enrichment_median</code>, <code>fold_enrichment_mean</code>, <code>neg_log10_qvalue_median</code>, <code>neg_log10_pvalue_median</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/2.1.2/recipes/sample_design.py"><code>nf-core/atacseq/sample_design.py</code></a></td>
 <td>One row per ATAC sample, derived from the samplesheet the run validated.</td>
-<td><code>sample</code>, <code>merged_library</code>, <code>group</code>, <code>replicate</code>, <code>read_type</code>, <code>role</code>, <code>control</code>, <code>n_libraries</code>, <code>libraries</code></td>
+<td><code>sample</code>, <code>merged_library</code>, <code>group</code>, <code>replicate</code>, <code>replicate_label</code>, <code>read_type</code>, <code>role</code>, <code>control</code>, <code>n_libraries</code>, <code>libraries</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/picard/markduplicates_metrics.py"><code>picard/markduplicates_metrics.py</code></a></td>
+<td>Duplication metrics from a Picard MarkDuplicates report.</td>
+<td><code>sample</code>, <code>library</code>, <code>unpaired_reads_examined</code>, <code>read_pairs_examined</code>, <code>unmapped_reads</code>, <code>unpaired_read_duplicates</code>, <code>read_pair_duplicates</code>, <code>read_pair_optical_duplicates</code>, <code>duplicate_reads</code>, <code>reads_after_dedup</code>, <code>percent_duplication</code>, <code>estimated_library_size</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/preseq/complexity_curve.py"><code>preseq/complexity_curve.py</code></a></td>

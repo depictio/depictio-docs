@@ -365,6 +365,10 @@
          <lastmod>2026-10-12</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.14.1/pipeline-templates/nf-core/_generated/airrflow-5.1.1/</loc>
+         <lastmod>2026-10-12</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.14.1/pipeline-templates/nf-core/_generated/airrflow-latest/</loc>
          <lastmod>2026-10-12</lastmod>
     </url>
@@ -410,6 +414,10 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.14.1/pipeline-templates/nf-core/_generated/cutandrun-3.1/</loc>
+         <lastmod>2026-10-12</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.14.1/pipeline-templates/nf-core/_generated/cutandrun-3.2.2/</loc>
          <lastmod>2026-10-12</lastmod>
     </url>
     <url>

@@ -3577,6 +3577,61 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#template-variables_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-collections_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data collections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-routes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional routes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-dc-links_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-DC links
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipes
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5312,6 +5367,61 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#template-variables_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-collections_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data collections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-routes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional routes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-dc-links_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-DC links
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipes
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5421,11 +5531,12 @@
   <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="5.1.0">
+<div class="tpl-version-pick" data-latest="5.1.1">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Template version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
-    <option value="5.1.0" selected="">5.1.0</option>
+    <option value="5.1.1" selected="">5.1.1</option>
+    <option value="5.1.0">5.1.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
 </div>
@@ -5443,9 +5554,11 @@
 samplesheet the pipeline writes to <code>pipeline_info/samplesheet.valid.tsv</code> is
 the hub data collection, so there is nothing to prepare. The one column to
 name is the condition, <code>GROUP_COL</code>, which defaults to <code>treatment</code>, the
-column airrflow's samplesheet schema documents for it. 5.1.1 has no AWS
-megatest run, so 5.1.0 is the newest release the template could be validated
-against; it binds against both.</p>
+column airrflow's samplesheet schema documents for it; a sample sheet that
+names it differently passes <code>--var GROUP_COL=&lt;column&gt;</code>. 5.1.1 keeps the 5.1.0
+output layout and has no AWS megatest run: the 5.1.1 template was validated
+on an EMBL HPC run of the release, and the 5.1.0 megatest still serves to
+try it.</p>
 </div>
 <hr>
 <h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M19.22 4c.28 0 .53 0 .74.05.17 1.39-.02 4.25-3.3 7.53-1.7 1.71-3.73 3.02-6.01 3.89l-2.15-2.1c.92-2.31 2.23-4.34 3.92-6.03C15.18 4.58 17.64 4 19.22 4m0-2c-1.98 0-4.98.69-8.22 3.93-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.38.38.89.61 1.42.61.23 0 .47-.06.7-.15A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61S20.7 2 19.22 2m-4.68 7.46c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
@@ -5533,10 +5646,10 @@ to pruned or unparsed data collections are hidden, tabs left with no real
 visualizations are dropped entirely, and the remaining components are
 re-packed so there are no empty rows.</p>
 </div>
-<div class="tpl-version-block" data-version="5.1.0">
-<!-- Alias of airrflow-5.1.0.md — always tracks the newest template version. -->
+<div class="tpl-version-block" data-version="5.1.1">
+<!-- Alias of airrflow-5.1.1.md — always tracks the newest template version. -->
 <!-- GENERATED by depictio/dev_scripts/gen_template_docs.py — do not edit. -->
-<!-- Source: depictio/projects/nf-core/airrflow/5.1.0/template.yaml -->
+<!-- Source: depictio/projects/nf-core/airrflow/5.1.1/template.yaml -->
 <!-- Regenerate: python -m depictio.dev_scripts.gen_template_docs -->
 <style>
 .gtd-badge{display:inline-block;padding:0 .5em;border-radius:10px;font-size:.78em;font-weight:600;line-height:1.5;white-space:nowrap;}
@@ -5694,14 +5807,14 @@ re-packed so there are no empty rows.</p>
 <td><code>annotation_counts_assembled</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/recipes/annotation_counts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/airrflow/annotation_counts.py</code></a></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.1/recipes/annotation_counts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/airrflow/annotation_counts.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>annotation_counts_noclonal</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/recipes/annotation_counts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/airrflow/annotation_counts.py</code></a></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.1/recipes/annotation_counts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/airrflow/annotation_counts.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
@@ -5785,14 +5898,14 @@ re-packed so there are no empty rows.</p>
 <td><code>cdr3_spectratype</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/recipes/cdr3_spectratype.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/airrflow/cdr3_spectratype.py</code></a></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.1/recipes/cdr3_spectratype.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/airrflow/cdr3_spectratype.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
 </tr>
 <tr>
 <td><code>vj_usage_matrix</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/recipes/vj_usage_matrix.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/airrflow/vj_usage_matrix.py</code></a></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.1/recipes/vj_usage_matrix.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/airrflow/vj_usage_matrix.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
 </tr>
 <tr>
@@ -6165,6 +6278,725 @@ re-packed so there are no empty rows.</p>
 </table>
 </div>
 <h3 id="recipes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.5 1.5c-1.77 0-3.33 1.17-3.83 2.87C8.14 4.13 7.58 4 7 4a4 4 0 0 0-4 4 4.01 4.01 0 0 0 3 3.87V19h13v-7.13c1.76-.46 3-2.05 3-3.87a4 4 0 0 0-4-4c-.58 0-1.14.13-1.67.37-.5-1.7-2.06-2.87-3.83-2.87m-.5 9h1v7h-1zm-3 2h1v5H9zm6 0h1v5h-1zM6 20v1a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-1z"></path></svg></span> Recipes<a class="headerlink" href="#recipes" title="Permanent link">¶</a></h3>
+<p>Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; <em>Output</em> lists the validated <code>OUTPUT_SCHEMA</code> columns.</p>
+<table>
+<thead>
+<tr>
+<th>Recipe</th>
+<th>Transforms</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/clonal_abundance.py"><code>enchantr/clonal_abundance.py</code></a></td>
+<td>Rank-abundance curve per sample with its bootstrap confidence band.</td>
+<td><code>sample_id</code>, <code>subject_id</code>, <code>clone_id</code>, <code>rank</code>, <code>p</code>, <code>p_sd</code>, <code>lower</code>, <code>upper</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/clonal_diversity.py"><code>enchantr/clonal_diversity.py</code></a></td>
+<td>Hill diversity profiles per sample, from the enchantR repertoire analysis report.</td>
+<td><code>sample_id</code>, <code>subject_id</code>, <code>q</code>, <code>d</code>, <code>d_sd</code>, <code>d_lower</code>, <code>d_upper</code>, <code>e</code>, <code>e_lower</code>, <code>e_upper</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/clonal_overlap.py"><code>enchantr/clonal_overlap.py</code></a></td>
+<td>Sample by sample matrix of shared clones, for a clustered heatmap.</td>
+<td><code>sample_id</code>, <code>subject_id</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/clone_sets.py"><code>enchantr/clone_sets.py</code></a></td>
+<td>Clone by sample presence matrix (0/1) for an UpSet plot of shared clones.</td>
+<td><code>clone</code>, <code>subject_id</code>, <code>n_samples</code>, <code>total_sequences</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/clone_sizes.py"><code>enchantr/clone_sizes.py</code></a></td>
+<td>Clone sizes with a within-sample rank and a clonal-homeostasis size class.</td>
+<td><code>sample_id</code>, <code>subject_id</code>, <code>clone_id</code>, <code>seq_count</code>, <code>seq_freq</code>, <code>rank</code>, <code>size_class</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/diversity_orders.py"><code>enchantr/diversity_orders.py</code></a></td>
+<td>Hill diversity at the three named orders, from the enchantR repertoire analysis report.</td>
+<td><code>sample_id</code>, <code>subject_id</code>, <code>order</code>, <code>q</code>, <code>d</code>, <code>d_lower</code>, <code>d_upper</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/repertoire_summary.py"><code>enchantr/repertoire_summary.py</code></a></td>
+<td>One row per sample: clone counts, clone sizes and the three Hill numbers.</td>
+<td><code>sample_id</code>, <code>subject_id</code>, <code>sequences</code>, <code>number_of_clones</code>, <code>sequences_per_clone</code>, <code>clone_size_count_min</code>, <code>clone_size_count_median</code>, <code>clone_size_count_max</code>, <code>richness</code>, <code>richness_lower</code>, <code>richness_upper</code>, <code>shannon</code>, <code>shannon_lower</code>, <code>shannon_upper</code>, <code>simpson</code>, <code>simpson_lower</code>, <code>simpson_upper</code>, <code>evenness</code>, <code>evenness_lower</code>, <code>evenness_upper</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/sequence_counts.py"><code>enchantr/sequence_counts.py</code></a></td>
+<td>Sequences left after every pRESTO and Change-O step, one wide row per sample.</td>
+<td><code>sample_id</code>, <code>subject_id</code>, <code>sequences</code>, <code>retention</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/sequence_fates.py"><code>enchantr/sequence_fates.py</code></a></td>
+<td>Read fates through the airrflow pre-processing funnel, shaped for a Sankey.</td>
+<td><code>sample_id</code>, <code>subject_id</code>, <code>input</code>, <code>quality</code>, <code>paired</code>, <code>consensus</code>, <code>assembled</code>, <code>representative</code>, <code>reads</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/threshold_summary.py"><code>enchantr/threshold_summary.py</code></a></td>
+<td>Clonal distance threshold per subject, from enchantR's find-threshold report.</td>
+<td><code>subject_id</code>, <code>model</code>, <code>cutoff</code>, <code>loglk</code>, <code>threshold</code>, <code>sensitivity</code>, <code>specificity</code>, <code>pvalue</code>, <code>mean_threshold</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/v_gene_matrix.py"><code>enchantr/v_gene_matrix.py</code></a></td>
+<td>Sample by V gene usage matrix (sequence fractions) for a clustered heatmap.</td>
+<td><code>row_id</code>, <code>sample_id</code>, <code>subject_id</code>, <code>locus</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/v_gene_usage.py"><code>enchantr/v_gene_usage.py</code></a></td>
+<td>V gene usage per sample, at family and gene resolution, in long format.</td>
+<td><code>sample_id</code>, <code>subject_id</code>, <code>locus</code>, <code>rank</code>, <code>taxon</code>, <code>v_family</code>, <code>seq_count</code>, <code>locus_count</code>, <code>seq_freq</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.1/recipes/annotation_counts.py"><code>nf-core/airrflow/annotation_counts.py</code></a></td>
+<td>Sequences left after each V(D)J annotation and QC step, one row per sample.</td>
+<td><code>sample_id</code>, <code>input</code>, <code>collapsed</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.1/recipes/cdr3_spectratype.py"><code>nf-core/airrflow/cdr3_spectratype.py</code></a></td>
+<td>CDR3 length spectratype per sample, from the AIRR rearrangement table.</td>
+<td><code>sample_id</code>, <code>subject_id</code>, <code>locus</code>, <code>cdr3_aa_length</code>, <code>sequences</code>, <code>fraction</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.1/recipes/vj_usage_matrix.py"><code>nf-core/airrflow/vj_usage_matrix.py</code></a></td>
+<td>V by J gene pairing matrix per subject, from the AIRR rearrangement table.</td>
+<td><code>row_id</code>, <code>subject_id</code>, <code>locus</code>, <code>v_gene</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tpl-version-block" data-version="5.1.0">
+<!-- GENERATED by depictio/dev_scripts/gen_template_docs.py — do not edit. -->
+<!-- Source: depictio/projects/nf-core/airrflow/5.1.0/template.yaml -->
+<!-- Regenerate: python -m depictio.dev_scripts.gen_template_docs -->
+<style>
+.gtd-badge{display:inline-block;padding:0 .5em;border-radius:10px;font-size:.78em;font-weight:600;line-height:1.5;white-space:nowrap;}
+.gtd-scan{background:#eef1fb;color:#3949ab;}
+.gtd-transformed{background:#e6f7f5;color:#2a8c82;}
+.gtd-direct{background:#eaf2ff;color:#2563c9;}
+.gtd-derived{background:#f3e8fd;color:#8e44ad;}
+.gtd-recipe{background:#fbe9f1;color:#b4337a;}
+.gtd-file{background:#eef0f2;color:#5a6573;}
+.gtd-opt{background:#fff6e6;color:#b9770e;}
+.gtd-req{background:#e9f7ef;color:#1e8e5a;}
+.gtd-plus-chip{background:#e9f7ef;color:#1e8e5a;}
+.gtd-minus-chip{background:#fdecea;color:#c0392b;}
+.gtd-swap-chip{background:#fff6e6;color:#b9770e;}
+.gtd-legend{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:.2rem 0 .8rem;}
+.gtd-legend-note{font-size:.8rem;opacity:.85;}
+/* Let long code/paths wrap so the wide reference tables fit without their own
+   horizontal scrollbar (Material wraps each table in a scroller at runtime). */
+.md-typeset table{font-size:.78rem;}
+.md-typeset table code{font-size:.92em;}
+/* First-column identifiers (variable / DC / recipe names) stay on one line;
+   only the other columns' long paths may wrap. */
+.md-typeset table td:first-child{white-space:nowrap;}
+.md-typeset table td:not(:first-child) code{overflow-wrap:anywhere;}
+/* Reads-column paths: smaller monospace + wrap so long scan targets keep the row tidy. */
+.md-typeset table code.gtd-path{font-size:.62rem;overflow-wrap:anywhere;}
+.gtd-mtx{margin:.8rem 0;}
+.gtd-mtx table{border-collapse:separate;border-spacing:0;font-size:.7rem;}
+.gtd-mtx th,.gtd-mtx td{border:1px solid var(--md-default-fg-color--lightest,#e6e6e6);padding:2px 5px;text-align:center;}
+.gtd-mtx thead th{background:#45B8AC;color:#fff;vertical-align:bottom;white-space:nowrap;font-size:.64rem;line-height:1.12;}
+.gtd-mtx th.dc{text-align:left;white-space:nowrap;font-weight:600;background:var(--md-default-bg-color,#fff);}
+.gtd-mtx thead th.dc{background:#45B8AC;color:#fff;}
+/* Only large matrices get the capped, scroll-both-ways container with a pinned
+   header row + first column; tables that fit the page render plain (no overflow). */
+.gtd-mtx.scroll{max-height:75vh;overflow:auto;}
+.gtd-mtx.scroll thead th{position:sticky;top:0;z-index:2;}
+.gtd-mtx.scroll th.dc{position:sticky;left:0;z-index:1;}
+.gtd-mtx.scroll thead th.dc{z-index:3;}
+.gtd-mtx td.plus,.gtd-mtx td.minus,.gtd-mtx td.swap{font-size:1rem;font-weight:700;line-height:1;}
+.gtd-mtx td.plus{color:#1e8e5a;}
+.gtd-mtx td.minus{color:#c0392b;}
+.gtd-mtx td.swap{color:#b9770e;}
+.gtd-mtx tbody tr:nth-child(even) td{background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-mtx code{background:none;padding:0;color:inherit;}
+.gtd-links{margin:1rem 0;}
+.gtd-links table{border-collapse:collapse;font-size:.74rem;width:100%;}
+.gtd-links th,.gtd-links td{border:1px solid var(--md-default-fg-color--lightest,#e6e6e6);padding:2px 6px;text-align:left;}
+.gtd-links thead th{background:#45B8AC;color:#fff;}
+.gtd-links td.arr{color:#45B8AC;text-align:center;font-weight:700;}
+.gtd-links .col{opacity:.7;font-size:.92em;}
+.gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
+.gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+</style>
+<h3 id="template-variables_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 3a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2H3v2h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h2v-2H8v-5a2 2 0 0 0-2-2 2 2 0 0 0 2-2V5h2V3m6 0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3z"></path></svg></span> Template variables<a class="headerlink" href="#template-variables_1" title="Permanent link">¶</a></h3>
+<p>Variables you provide when running the template: <code>DATA_ROOT</code> is the results directory given to <code>depictio ingest</code>, the others are set with <code>--var NAME=value</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th style="text-align: center;">Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DATA_ROOT</code></td>
+<td style="text-align: center;">✓</td>
+<td>Root directory containing airrflow pipeline output (multiqc/, clonal_analysis/, repertoire_comparison/, parsed_logs/)</td>
+</tr>
+<tr>
+<td><code>SAMPLESHEET_FILE</code></td>
+<td style="text-align: center;">—</td>
+<td>Path to the validated samplesheet. Defaults to {DATA_ROOT}/pipeline_info/samplesheet.valid.tsv, which every airrflow run writes.</td>
+</tr>
+<tr>
+<td><code>SKIP_CLONAL_ANALYSIS</code></td>
+<td style="text-align: center;">—</td>
+<td>Set when the run used --skip_clonal_analysis (params.json skip_clonal_analysis). Prunes every clonal_analysis/ derived DC.</td>
+</tr>
+<tr>
+<td><code>SKIP_REPORT</code></td>
+<td style="text-align: center;">—</td>
+<td>Set when the run used --skip_report (params.json skip_report). Prunes the repertoire_comparison/ and parsed_logs/ derived DCs: the pRESTO log parser runs inside the report step.</td>
+</tr>
+<tr>
+<td><code>SKIP_THRESHOLD_REPORT</code></td>
+<td style="text-align: center;">—</td>
+<td>Set when the run used --skip_report_threshold, or an explicit --clonal_threshold instead of 'auto'. Prunes the threshold summary DC.</td>
+</tr>
+<tr>
+<td><code>SKIP_MULTIQC</code></td>
+<td style="text-align: center;">—</td>
+<td>Set when the run used --skip_multiqc (params.json skip_multiqc). Prunes the MultiQC DC, which drops the MultiQC tab; the other tabs are unaffected.</td>
+</tr>
+<tr>
+<td><code>ASSEMBLED_MODE</code></td>
+<td style="text-align: center;">—</td>
+<td>Set when the run used --mode assembled (params.json mode). Prunes the pRESTO log DCs: assembled input skips read pre-processing entirely.</td>
+</tr>
+<tr>
+<td><code>GROUP_COL</code></td>
+<td style="text-align: center;">—</td>
+<td>Samplesheet column holding the condition the dashboard filters and breaks down by (default: treatment). Must exist in pipeline_info/samplesheet.valid.tsv.</td>
+</tr>
+<tr>
+<td><code>GROUP_COL_DISPLAY</code></td>
+<td style="text-align: center;">—</td>
+<td>Reader-facing label of GROUP_COL in filter titles and descriptions (default: Condition).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="data-collections_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"></path></svg></span> Data collections<a class="headerlink" href="#data-collections_1" title="Permanent link">¶</a></h3>
+<p>20 data collections — <span class="gtd-badge gtd-req">13 required</span> <span class="gtd-badge gtd-opt">7 optional</span> · <span class="gtd-badge gtd-direct">20 direct</span> <span class="gtd-badge gtd-derived">0 derived</span>.</p>
+<p><strong>Origin</strong> tells you whether a collection is <em>real pipeline data</em> or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more <em>direct</em> collections into the layout a visualization needs (no new measurement). <strong>Reads</strong> shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> <code>.py</code> transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A <code>direct</code> collection can still have a recipe — one that merely parses/cleans the raw file; <code>derived</code> means the recipe reshapes another collection.)</p>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th style="text-align: center;">Origin</th>
+<th>Type</th>
+<th>Reads</th>
+<th style="text-align: center;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>multiqc_data</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc.parquet$</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>samplesheet</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{DATA_ROOT}/pipeline_info/samplesheet.valid.tsv</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>sequence_counts</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/sequence_counts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/sequence_counts.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>sequence_fates</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/sequence_fates.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/sequence_fates.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>annotation_counts_assembled</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/recipes/annotation_counts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/airrflow/annotation_counts.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>annotation_counts_noclonal</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/recipes/annotation_counts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/airrflow/annotation_counts.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>repertoire_summary</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/repertoire_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/repertoire_summary.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>repertoire_summary_noreport</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/repertoire_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/repertoire_summary.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>clonal_diversity</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/clonal_diversity.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/clonal_diversity.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
+<td><code>diversity_orders</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/diversity_orders.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/diversity_orders.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
+<td><code>clonal_abundance</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/clonal_abundance.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/clonal_abundance.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
+<td><code>clone_sizes</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/clone_sizes.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/clone_sizes.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>clone_sets</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/clone_sets.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/clone_sets.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>clonal_overlap</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/clonal_overlap.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/clonal_overlap.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
+<td><code>v_gene_usage</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/v_gene_usage.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/v_gene_usage.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>v_gene_matrix</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/v_gene_matrix.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/v_gene_matrix.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>v_gene_usage_noclonal</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/v_gene_usage.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/v_gene_usage.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>cdr3_spectratype</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/recipes/cdr3_spectratype.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/airrflow/cdr3_spectratype.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
+<td><code>vj_usage_matrix</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/recipes/vj_usage_matrix.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/airrflow/vj_usage_matrix.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
+<td><code>threshold_summary</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/enchantr/threshold_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">enchantr/threshold_summary.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="conditional-routes_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 4v8.5l3-3L9 13c1 1 1 2 1 2v6h4v-7s0-1-.53-2S12 10 12 10L9 6.58 11.5 4M18 4l-4.46 4.47L14 9s.93 1 1.47 2c.21.4.33.79.4 1.13L21 7"></path></svg></span> Conditional routes<a class="headerlink" href="#conditional-routes_1" title="Permanent link">¶</a></h3>
+<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (0 collections are unaffected by any variable — present on every run.)</p>
+<p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
+<div class="gtd-mtx scroll">
+<table>
+<thead>
+<tr>
+<th class="dc">Data collection</th>
+<th><code>SAMPLESHEET_FILE</code></th>
+<th><code>SKIP_CLONAL_ANALYSIS</code></th>
+<th><code>SKIP_REPORT</code></th>
+<th><code>SKIP_THRESHOLD_REPORT</code></th>
+<th><code>SKIP_MULTIQC</code></th>
+<th><code>ASSEMBLED_MODE</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="dc"><code>multiqc_data</code></th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="minus" title="removed when SKIP_MULTIQC is set">−</td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>samplesheet</code></th>
+<td class="swap" title="re-sourced when SAMPLESHEET_FILE is set">⇄</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>sequence_counts</code></th>
+<td></td>
+<td></td>
+<td class="minus" title="removed when SKIP_REPORT is set">−</td>
+<td></td>
+<td></td>
+<td class="minus" title="removed when ASSEMBLED_MODE is set">−</td>
+</tr>
+<tr>
+<th class="dc"><code>sequence_fates</code></th>
+<td></td>
+<td></td>
+<td class="minus" title="removed when SKIP_REPORT is set">−</td>
+<td></td>
+<td></td>
+<td class="minus" title="removed when ASSEMBLED_MODE is set">−</td>
+</tr>
+<tr>
+<th class="dc"><code>annotation_counts_assembled</code></th>
+<td></td>
+<td></td>
+<td class="minus" title="removed when SKIP_REPORT is set">−</td>
+<td></td>
+<td></td>
+<td class="plus" title="included only when ASSEMBLED_MODE is set">+</td>
+</tr>
+<tr>
+<th class="dc"><code>annotation_counts_noclonal</code></th>
+<td></td>
+<td class="plus" title="included only when SKIP_CLONAL_ANALYSIS is set">+</td>
+<td class="minus" title="removed when SKIP_REPORT is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>repertoire_summary</code></th>
+<td></td>
+<td class="minus" title="removed when SKIP_CLONAL_ANALYSIS is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>repertoire_summary_noreport</code></th>
+<td></td>
+<td class="minus" title="removed when SKIP_CLONAL_ANALYSIS is set">−</td>
+<td class="plus" title="included only when SKIP_REPORT is set">+</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>clonal_diversity</code></th>
+<td></td>
+<td class="minus" title="removed when SKIP_CLONAL_ANALYSIS is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>diversity_orders</code></th>
+<td></td>
+<td class="minus" title="removed when SKIP_CLONAL_ANALYSIS is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>clonal_abundance</code></th>
+<td></td>
+<td class="minus" title="removed when SKIP_CLONAL_ANALYSIS is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>clone_sizes</code></th>
+<td></td>
+<td class="minus" title="removed when SKIP_CLONAL_ANALYSIS is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>clone_sets</code></th>
+<td></td>
+<td class="minus" title="removed when SKIP_CLONAL_ANALYSIS is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>clonal_overlap</code></th>
+<td></td>
+<td class="minus" title="removed when SKIP_CLONAL_ANALYSIS is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>v_gene_usage</code></th>
+<td></td>
+<td></td>
+<td class="minus" title="removed when SKIP_REPORT is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>v_gene_matrix</code></th>
+<td></td>
+<td></td>
+<td class="minus" title="removed when SKIP_REPORT is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>v_gene_usage_noclonal</code></th>
+<td></td>
+<td class="plus" title="included only when SKIP_CLONAL_ANALYSIS is set">+</td>
+<td class="minus" title="removed when SKIP_REPORT is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>cdr3_spectratype</code></th>
+<td></td>
+<td class="minus" title="removed when SKIP_CLONAL_ANALYSIS is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>vj_usage_matrix</code></th>
+<td></td>
+<td class="minus" title="removed when SKIP_CLONAL_ANALYSIS is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>threshold_summary</code></th>
+<td></td>
+<td class="minus" title="removed when SKIP_CLONAL_ANALYSIS is set">−</td>
+<td></td>
+<td class="minus" title="removed when SKIP_THRESHOLD_REPORT is set">−</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="cross-dc-links_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> Cross-DC links<a class="headerlink" href="#cross-dc-links_1" title="Permanent link">¶</a></h3>
+<p>24 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
+<div class="gtd-links">
+<table>
+<thead>
+<tr>
+<th>Source · column</th>
+<th></th>
+<th>Target</th>
+<th>Filters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>multiqc_data</code></td>
+<td>Filter the MultiQC panels by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>sequence_counts</code></td>
+<td>Filter the sequence processing counts by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>sequence_fates</code></td>
+<td>Filter the attrition flow by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>annotation_counts_assembled</code></td>
+<td>Filter the assembled-route annotation counts by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>annotation_counts_noclonal</code></td>
+<td>Filter the no-clonal-route annotation counts by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>v_gene_usage_noclonal</code></td>
+<td>Filter the no-clonal-route V gene usage by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>repertoire_summary_noreport</code></td>
+<td>Filter the no-report-route repertoire summary by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>repertoire_summary</code></td>
+<td>Filter the repertoire summary by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>clonal_diversity</code></td>
+<td>Filter the diversity profiles by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>diversity_orders</code></td>
+<td>Filter the ranked diversity bars by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>clone_sizes</code></td>
+<td>Filter the clone size table by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>v_gene_usage</code></td>
+<td>Filter the V gene usage by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>cdr3_spectratype</code></td>
+<td>Filter the CDR3 spectratypes by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;subject_id</span></td>
+<td class="arr">→</td>
+<td><code>vj_usage_matrix</code></td>
+<td>Filter the V-J pairing grid by samplesheet donors</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>clonal_overlap</code></td>
+<td>Filter the clonal overlap matrix by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>v_gene_matrix</code></td>
+<td>Filter the V gene matrix by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>repertoire_summary</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>clone_sizes</code></td>
+<td>Filter the clone size table by the repertoire summary selection</td>
+</tr>
+<tr>
+<td><code>repertoire_summary</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>clonal_diversity</code></td>
+<td>Filter the diversity profiles by the repertoire summary selection</td>
+</tr>
+<tr>
+<td><code>repertoire_summary</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>diversity_orders</code></td>
+<td>Filter the ranked diversity bars by the repertoire summary selection</td>
+</tr>
+<tr>
+<td><code>repertoire_summary</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>clonal_overlap</code></td>
+<td>Filter the clonal overlap matrix by the repertoire summary selection</td>
+</tr>
+<tr>
+<td><code>repertoire_summary</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>clonal_abundance</code></td>
+<td>Filter the rank abundance curves by the repertoire summary selection</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>clonal_abundance</code></td>
+<td>Filter the rank abundance curves by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample_id</span></td>
+<td class="arr">→</td>
+<td><code>clone_sets</code></td>
+<td>Narrow the shared clone UpSet to the samplesheet samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;subject_id</span></td>
+<td class="arr">→</td>
+<td><code>threshold_summary</code></td>
+<td>Filter the fitted clonal threshold by samplesheet subjects</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="recipes_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.5 1.5c-1.77 0-3.33 1.17-3.83 2.87C8.14 4.13 7.58 4 7 4a4 4 0 0 0-4 4 4.01 4.01 0 0 0 3 3.87V19h13v-7.13c1.76-.46 3-2.05 3-3.87a4 4 0 0 0-4-4c-.58 0-1.14.13-1.67.37-.5-1.7-2.06-2.87-3.83-2.87m-.5 9h1v7h-1zm-3 2h1v5H9zm6 0h1v5h-1zM6 20v1a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-1z"></path></svg></span> Recipes<a class="headerlink" href="#recipes_1" title="Permanent link">¶</a></h3>
 <p>Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; <em>Output</em> lists the validated <code>OUTPUT_SCHEMA</code> columns.</p>
 <table>
 <thead>
@@ -6650,7 +7482,7 @@ every collection they reach.</p>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/airrflow, it does not run the pipeline.
 Run the pipeline first:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/airrflow<span class="w"> </span>-r<span class="w"> </span><span class="m">5</span>.1.0<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/airrflow<span class="w"> </span>-r<span class="w"> </span><span class="m">5</span>.1.1<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>--input<span class="w"> </span>samplesheet.tsv<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>--mode<span class="w"> </span>fastq<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>--library_generation_method<span class="w"> </span>specific_pcr_umi<span class="w"> </span><span class="se">\</span>
@@ -6663,7 +7495,7 @@ Run the pipeline first:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>results/<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/airrflow/latest
 </code></pre></div>
-<p>See <a href="https://nf-co.re/airrflow/5.1.0/docs/usage">nf-co.re/airrflow/usage</a>
+<p>See <a href="https://nf-co.re/airrflow/5.1.1/docs/usage">nf-co.re/airrflow/usage</a>
 for full pipeline documentation.</p>
 <hr>
 <h2 id="required-data-structure"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.1 10 4 18V8h17a2 2 0 0 0-2-2h-7l-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h15c.9 0 1.7-.6 1.9-1.5l2.3-8.5zM19 18H6l1.6-6h13z"></path></svg></span> Required data structure<a class="headerlink" href="#required-data-structure" title="Permanent link">¶</a></h2>
@@ -6701,9 +7533,14 @@ somewhere under the root. Nothing outside the run is needed.</p>
 </code></pre></div>
 <hr>
 <h2 id="validation-runs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1c0-.21-.07-.41-.18-.57L13 8.35V4h-2v4.35L5.18 18.43c-.11.16-.18.36-.18.57m1 3a3 3 0 0 1-3-3c0-.6.18-1.16.5-1.63L9 7.81V6a1 1 0 0 1-1-1V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1v1.81l5.5 9.56c.32.47.5 1.03.5 1.63a3 3 0 0 1-3 3zm7-6 1.34-1.34L16.27 18H7.73l2.66-4.61zm-.5-4a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5"></path></svg></span> Validation runs<a class="headerlink" href="#validation-runs" title="Permanent link">¶</a></h2>
-<p>The repository ships
-<a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/download_test_data.sh"><code>download_test_data.sh</code></a>,
-which fetches the subset of nf-core's AWS megatest run that the template needs:</p>
+<p>5.1.1 has no AWS megatest run: the bucket holds no prefix for the release. The
+5.1.1 template was validated on an EMBL HPC run of the release's <code>test</code> profile
+(<code>airrflow511</code>), ingested on a local stack; its MultiQC 1.34 report already
+carries the parquet, so no reprocess step is needed. 5.1.1 publishes the 5.1.0
+layout, so the megatest shown here is the 5.1.0 run. The repository ships
+<a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/download_test_data.sh"><code>download_test_data.sh</code></a>
+next to the 5.1.0 template, which fetches the subset of that run the template
+needs:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>bash<span class="w"> </span>depictio/projects/nf-core/airrflow/5.1.0/download_test_data.sh<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>/tmp/airrflow_test
 </code></pre></div>
@@ -6713,9 +7550,8 @@ which fetches the subset of nf-core's AWS megatest run that the template needs:<
 study of cervical lymph node and brain lesion tissue, run in the default
 <code>--mode fastq</code> UMI route. The manifest fetches fifteen keys, about 330 MB,
 nearly all of it the AIRR rearrangement table behind the spectratype and the
-V-J grid;
-<code>post_fetch_help</code> in <code>megatest.yaml</code> prints the dry-run and full-run commands
-once the download finishes.</p>
+V-J grid. <code>post_fetch_help</code> in <code>megatest.yaml</code> prints the dry-run and full-run
+commands once the download finishes.</p>
 <p>Then run Depictio against it:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/tmp/airrflow_test<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/airrflow/latest
@@ -6724,7 +7560,7 @@ once the download finishes.</p>
 <h2 id="additional-resources"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.59 13.41c.41.39.41 1.03 0 1.42-.39.39-1.03.39-1.42 0a5.003 5.003 0 0 1 0-7.07l3.54-3.54a5.003 5.003 0 0 1 7.07 0 5.003 5.003 0 0 1 0 7.07l-1.49 1.49c.01-.82-.12-1.64-.4-2.42l.47-.48a2.98 2.98 0 0 0 0-4.24 2.98 2.98 0 0 0-4.24 0l-3.53 3.53a2.98 2.98 0 0 0 0 4.24m2.82-4.24c.39-.39 1.03-.39 1.42 0a5.003 5.003 0 0 1 0 7.07l-3.54 3.54a5.003 5.003 0 0 1-7.07 0 5.003 5.003 0 0 1 0-7.07l1.49-1.49c-.01.82.12 1.64.4 2.43l-.47.47a2.98 2.98 0 0 0 0 4.24 2.98 2.98 0 0 0 4.24 0l3.53-3.53a2.98 2.98 0 0 0 0-4.24.973.973 0 0 1 0-1.42"></path></svg></span> Additional resources<a class="headerlink" href="#additional-resources" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://nf-co.re/airrflow">nf-co.re/airrflow</a>: official pipeline documentation</li>
-<li><a href="https://nf-co.re/airrflow/5.1.0/results">nf-co.re/airrflow/5.1.0/results</a>: AWS test results</li>
+<li><a href="https://nf-co.re/airrflow/5.1.0/results">nf-co.re/airrflow/5.1.0/results</a>: AWS test results of the 5.1.0 release (5.1.1 has none)</li>
 <li><a href="https://immcantation.readthedocs.io">Immcantation</a>: enchantR, alakazam and shazam, the toolset behind the repertoire panels</li>
 <li><a href="../../../usage/projects/templates/">Template System Reference</a>: YAML format, variables, conditionals</li>
 <li><a href="../../../usage/projects/recipes/">Recipes</a>: how to read, test, and write recipes</li>

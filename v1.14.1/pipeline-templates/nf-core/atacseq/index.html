@@ -5409,31 +5409,31 @@
 </div>
 
 <p>The atacseq template covers the merged-library, broad-peak route of a standard
-nf-core/atacseq run, one tab per step:</p>
+nf-core/atacseq run:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: FastQC and trimming, the merged libraries before and after filtering, and the pipeline's own FRiP and peak-count content</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> <strong>ATAC signal</strong>: the ataqv metrics, the TSS enrichment curve, the fragment ladder and the per-chromosome read matrix</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> <strong>Peaks</strong>: MACS2 broad calls per library, their significance along the genome, and the HOMER annotation</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> <strong>Consensus</strong>: the merged peak set, which libraries agree on an interval, and how the samples group on the counts over it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: the MultiQC report, the ataqv library quality (TSS enrichment, the fragment ladder, where the reads landed), and the deepTools and Picard signal tables</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> <strong>Peak calls</strong>: MACS2 broad calls per library, where HOMER places them relative to genes, and one genomic region across libraries</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> <strong>Comparison</strong>: the consensus peak set, which libraries agree on an interval, and where the libraries sit on the DESeq2 QC of its counts</li>
 </ul>
-<p>A <code>Sample sheet</code> section is pinned to the top of every tab and <code>Reference tables</code>
-to the bottom, so the design rows and the per-library peak QC follow you from tab
-to tab.</p>
 <div class="admonition warning">
 <p class="admonition-title">One MultiQC parquet per run, in one of two places</p>
-<p>The tiles are bound to the report the pipeline writes itself with MultiQC
-1.31 or later swapped in, which is what the Nextflow trigger ingests:
-<code>multiqc/broad_peak/multiqc_data/multiqc.parquet</code>. The release pins MultiQC
-1.13, which writes no parquet; for such a run the reprocess step writes
-<code>multiqc/multiqc_data/multiqc.parquet</code> instead and the collection binds that
-too:</p>
+<p>The release pins MultiQC 1.13, which writes no parquet. The collection binds
+the report the pipeline writes itself with MultiQC 1.31 or later swapped in,
+which is what the Nextflow trigger ingests:
+<code>multiqc/broad_peak/multiqc_data/multiqc.parquet</code>. For a run on the pinned
+1.13, the reprocess step writes <code>multiqc/multiqc_data/multiqc.parquet</code>
+instead and the collection binds that one:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-m<span class="w"> </span>depictio.dev_scripts.multiqc_reprocess<span class="w"> </span>--src<span class="w"> </span>&lt;outdir&gt;<span class="w"> </span>--dest<span class="w"> </span>&lt;outdir&gt;
 </code></pre></div>
 <p>The CLI ingests every parquet it finds under the data root as its own report,
 so a tree must hold exactly one of the two: never reprocess a run that already
-published a parquet. The tiles read the merged-library module ids
-(<code>samtools-1</code>, <code>picard</code>, <code>picard-1</code>, <code>mlib_deeptools</code>), which a reprocessed
-report merges under one id per tool, leaving those tiles empty.</p>
+published a parquet. The two reports name their modules differently: the
+pipeline's numbers a tool run at several levels (<code>picard-1</code>,
+<code>mlib_deeptools</code>), a reprocessed one keeps the plain ids. The MultiQC tab
+binds the panels both carry under one id, gives the fingerprint and the
+insert sizes one tile per report on the same slot, and the import drops the
+tiles the bound report lacks.</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title">The broad-peak, merged-library route</p>
@@ -5449,8 +5449,8 @@ bind identically.</p>
 <p class="admonition-title">No DESeq2 differential accessibility</p>
 <p>nf-core/atacseq 2.0 removed the differential accessibility analysis, so this
 template has no Differential accessibility tab. What the pipeline still runs
-is a DESeq2 sample QC on the consensus counts, published as MultiQC custom
-content, and it closes the Consensus tab.</p>
+is a DESeq2 sample QC on the consensus counts, its PCA and its sample
+distances, and the Consensus tab reads both in its <em>Sample space</em> section.</p>
 </div>
 <hr>
 <h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M19.22 4c.28 0 .53 0 .74.05.17 1.39-.02 4.25-3.3 7.53-1.7 1.71-3.73 3.02-6.01 3.89l-2.15-2.1c.92-2.31 2.23-4.34 3.92-6.03C15.18 4.58 17.64 4 19.22 4m0-2c-1.98 0-4.98.69-8.22 3.93-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.38.38.89.61 1.42.61.23 0 .47-.06.7-.15A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61S20.7 2 19.22 2m-4.68 7.46c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
@@ -5463,7 +5463,9 @@ content, and it closes the Consensus tab.</p>
 <p>The results directory is the only thing you have to pass. The hub of the dashboard is
 the samplesheet the run validated, <code>pipeline_info/samplesheet.valid.csv</code>,
 which a template-local recipe turns into one row per merged library with its
-group, replicate, read type, role and control.</p>
+group, replicate, read type, role and control. For a run aligned to another
+build than hg38, add <code>--var GENOME=&lt;assembly&gt;</code>: it sets the genome axis of the
+Locus tab.</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>nextflow<span class="w"> </span>--install<span class="w">     </span><span class="c1"># once per machine</span>
@@ -5477,10 +5479,15 @@ manifest. See <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger
 </div>
 <hr>
 <h2 id="reference"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.5c-1.35-.85-3.8-1.5-5.5-1.5-1.65 0-3.35.3-4.75 1.05-.1.05-.15.05-.25.05-.25 0-.5-.25-.5-.5V6c.6-.45 1.25-.75 2-1 1.11-.35 2.33-.5 3.5-.5 1.95 0 4.05.4 5.5 1.5 1.45-1.1 3.55-1.5 5.5-1.5 1.17 0 2.39.15 3.5.5.75.25 1.4.55 2 1v14.6c0 .25-.25.5-.5.5-.1 0-.15 0-.25-.05-1.4-.75-3.1-1.05-4.75-1.05-1.7 0-4.15.65-5.5 1.5M12 8v11.5c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5V7c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5m1 3.5c1.11-.68 2.6-1 4.5-1 .91 0 1.76.09 2.5.28V9.23c-.87-.15-1.71-.23-2.5-.23q-2.655 0-4.5.84zm4.5.17c-1.71 0-3.21.26-4.5.79v1.69c1.11-.65 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24v-1.5c-.87-.16-1.71-.23-2.5-.23m2.5 2.9c-.87-.16-1.71-.24-2.5-.24-1.83 0-3.33.27-4.5.8v1.69c1.11-.66 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24z"></path></svg></span> Reference<a class="headerlink" href="#reference" title="Permanent link">¶</a></h2>
-<p>The template reads the validated samplesheet, the ataqv JSON reports, the MACS2
-broad calls and their HOMER annotation, the consensus boolean and fold-enrichment
-matrices, and the MultiQC parquet. 49 of its 91 components carry a <code>use:</code> catalog
-reference, so a tile says where its panel comes from.</p>
+<p>The template reads the validated samplesheet, the ataqv JSON reports, the
+deepTools fingerprint and profile tables, the Picard MarkDuplicates metrics, the
+MACS2 broad calls and their HOMER annotation, the consensus boolean and
+fold-enrichment matrices, the DESeq2 QC of the consensus counts and the MultiQC
+parquet. The preseq curve and the DESeq2 QC are optional: 2.x skips preseq by
+default, and <code>--skip_deseq2_qc</code> or a design without replicated groups skips the
+QC. 70 of its 122 components carry a <code>use:</code> catalog reference, so a tile says
+where its panel comes from. The run writes no <code>params.json</code>, so nothing is set
+from its parameters: <code>GENOME</code> is the only variable besides <code>DATA_ROOT</code>.</p>
 <div class="admonition info">
 <p class="admonition-title">Self-adapting layout</p>
 <p>The dashboard adapts to whatever the run actually produced: components bound
@@ -5545,7 +5552,7 @@ re-packed so there are no empty rows.</p>
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
 </style>
-<h3 id="template-variables">Template variables<a class="headerlink" href="#template-variables" title="Permanent link">¶</a></h3>
+<h3 id="template-variables"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 3a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2H3v2h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h2v-2H8v-5a2 2 0 0 0-2-2 2 2 0 0 0 2-2V5h2V3m6 0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3z"></path></svg></span> Template variables<a class="headerlink" href="#template-variables" title="Permanent link">¶</a></h3>
 <p>Variables you provide when running the template: <code>DATA_ROOT</code> is the results directory given to <code>depictio ingest</code>, the others are set with <code>--var NAME=value</code>:</p>
 <table>
 <thead>
@@ -5561,11 +5568,16 @@ re-packed so there are no empty rows.</p>
 <td style="text-align: center;">✓</td>
 <td>The atacseq --outdir: ALIGNER/merged_library/, fastqc/, trimgalore/, multiqc/, pipeline_info/, plus a MultiQC 1.31 or later parquet, either the pipeline's own under multiqc/broad_peak/multiqc_data/ or a reprocessed one under multiqc/multiqc_data/.</td>
 </tr>
+<tr>
+<td><code>GENOME</code></td>
+<td style="text-align: center;">—</td>
+<td>UCSC assembly the run was aligned to (hg38, hg19, mm10, ...). Sets the genome axis of the Locus tab; pass --var GENOME=<assembly> for a run on another build.</assembly></td>
+</tr>
 </tbody>
 </table>
-<h3 id="data-collections">Data collections<a class="headerlink" href="#data-collections" title="Permanent link">¶</a></h3>
-<p>16 data collections — <span class="gtd-badge gtd-req">14 required</span> <span class="gtd-badge gtd-opt">2 optional</span> · <span class="gtd-badge gtd-direct">14 direct</span> <span class="gtd-badge gtd-derived">2 derived</span>.</p>
-<p><strong>Origin</strong> tells you whether a collection is <em>real pipeline data</em> or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more <em>direct</em> collections into the layout a visualization needs (no new measurement). <strong>Reads</strong> shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> <code>.py</code> transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A <code>direct</code> collection can still have a recipe — one that merely parses/cleans the raw file; <code>derived</code> means the recipe reshapes another collection.)</p>
+<h3 id="data-collections"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"></path></svg></span> Data collections<a class="headerlink" href="#data-collections" title="Permanent link">¶</a></h3>
+<p>21 data collections — <span class="gtd-badge gtd-req">17 required</span> <span class="gtd-badge gtd-opt">4 optional</span> · <span class="gtd-badge gtd-direct">18 direct</span> <span class="gtd-badge gtd-derived">3 derived</span>.</p>
+<p><strong>Origin</strong> tells you whether a collection is <em>real pipeline data</em> or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more <em>direct</em> collections into the layout a visualization needs (no new measurement). <strong>Reads</strong> shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> <code>.py</code> transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A <code>direct</code> collection can still have a recipe — one that merely parses/cleans the raw file; <code>derived</code> means the recipe reshapes another collection.)</p>
 <table>
 <thead>
 <tr>
@@ -5581,118 +5593,153 @@ re-packed so there are no empty rows.</p>
 <td><code>sample_design</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>nf-core/atacseq/sample_design.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/2.1.2/recipes/sample_design.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/atacseq/sample_design.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>samplesheet</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">samplesheet.valid.csv$</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>multiqc_data</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path"><code>multiqc/(?:broad_peak/)?multiqc_data/multiqc\.parquet$</code></code></td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc.parquet$</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>ataqv_metrics</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>ataqv/metrics.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ataqv/metrics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ataqv/metrics.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>ataqv_fragment_length</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>ataqv/fragment_length.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ataqv/fragment_length.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ataqv/fragment_length.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>ataqv_tss_coverage</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>ataqv/tss_coverage.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ataqv/tss_coverage.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ataqv/tss_coverage.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>ataqv_chromosome_counts</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>ataqv/chromosome_counts.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ataqv/chromosome_counts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ataqv/chromosome_counts.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>picard_markduplicates_metrics_raw</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*.mLb.mkD.sorted.MarkDuplicates.metrics.txt$</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>picard_markduplicates_metrics</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/picard/markduplicates_metrics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">picard/markduplicates_metrics.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>preseq_ccurve_raw</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path"><code>.*\.lc_extrap\.txt$</code></code></td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*.lc_extrap.txt$</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
 </tr>
 <tr>
 <td><code>preseq_complexity_curve</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>preseq/complexity_curve.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/preseq/complexity_curve.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">preseq/complexity_curve.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
 </tr>
 <tr>
 <td><code>deeptools_fingerprint_metrics</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>deeptools/fingerprint_metrics.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/fingerprint_metrics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deeptools/fingerprint_metrics.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>deeptools_plot_profile</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>deeptools/plot_profile.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/plot_profile.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deeptools/plot_profile.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>macs2_peak_summary</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>macs2/peak_summary.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/2.1.2/recipes/peak_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/atacseq/peak_summary.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>macs2_broad_peaks</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>macs2/broad_peaks.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/broad_peaks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">macs2/broad_peaks.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>homer_annotated_peaks</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>homer/annotate_peaks.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/homer/annotate_peaks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">homer/annotate_peaks.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>homer_tss_distance_profile</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>homer/tss_distance_profile.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/homer/tss_distance_profile.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">homer/tss_distance_profile.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>macs2_consensus_boolean</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>macs2/consensus_boolean.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/consensus_boolean.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">macs2/consensus_boolean.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
 <td><code>macs2_consensus_fc</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path"><code>macs2/consensus_fc.py</code></code></td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/consensus_fc.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">macs2/consensus_fc.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
+</tr>
+<tr>
+<td><code>deseq2_qc_pca</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/2.1.2/recipes/deseq2_qc_pca.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/atacseq/deseq2_qc_pca.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
+<td><code>deseq2_qc_sample_dists</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/qc_sample_dists.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">deseq2/qc_sample_dists.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
 </tr>
 </tbody>
 </table>
-<h3 id="cross-dc-links">Cross-DC links<a class="headerlink" href="#cross-dc-links" title="Permanent link">¶</a></h3>
-<p>16 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
+<h3 id="cross-dc-links"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> Cross-DC links<a class="headerlink" href="#cross-dc-links" title="Permanent link">¶</a></h3>
+<p>22 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
 <div class="gtd-links">
 <table>
 <thead>
@@ -5705,10 +5752,22 @@ re-packed so there are no empty rows.</p>
 </thead>
 <tbody>
 <tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td>
+<td class="arr">→</td>
+<td><code>multiqc_data</code></td>
+<td>Filter the read-level MultiQC panels by the sequencing libraries picked in the left panel</td>
+</tr>
+<tr>
 <td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td>
 <td class="arr">→</td>
 <td><code>multiqc_data</code></td>
 <td>Filter the MultiQC panels by the samples picked in the left rail</td>
+</tr>
+<tr>
+<td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td>
+<td class="arr">→</td>
+<td><code>macs2_peak_summary</code></td>
+<td>Filter the peak QC summary by the samples picked in the left rail</td>
 </tr>
 <tr>
 <td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td>
@@ -5737,6 +5796,12 @@ re-packed so there are no empty rows.</p>
 <tr>
 <td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td>
 <td class="arr">→</td>
+<td><code>picard_markduplicates_metrics</code></td>
+<td>Filter the duplication metrics by the samples picked in the left rail</td>
+</tr>
+<tr>
+<td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td>
+<td class="arr">→</td>
 <td><code>preseq_complexity_curve</code></td>
 <td>Filter the complexity curves by the samples picked in the left rail</td>
 </tr>
@@ -5750,13 +5815,7 @@ re-packed so there are no empty rows.</p>
 <td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td>
 <td class="arr">→</td>
 <td><code>deeptools_plot_profile</code></td>
-<td>Filter the TSS signal profiles by the samples picked in the left rail</td>
-</tr>
-<tr>
-<td><code>sample_design</code> <span class="col">·&nbsp;merged_library</span></td>
-<td class="arr">→</td>
-<td><code>macs2_peak_summary</code></td>
-<td>Filter the peak QC summary by the samples picked in the left rail</td>
+<td>Filter the metagene profiles by the samples picked in the left rail</td>
 </tr>
 <tr>
 <td><code>sample_design</code> <span class="col">·&nbsp;merged_library</span></td>
@@ -5789,6 +5848,18 @@ re-packed so there are no empty rows.</p>
 <td>Carry a peak selected in the annotation table back to the MACS2 panels</td>
 </tr>
 <tr>
+<td><code>macs2_broad_peaks</code> <span class="col">·&nbsp;chr</span></td>
+<td class="arr">→</td>
+<td><code>macs2_consensus_boolean</code></td>
+<td>A region typed or brushed on the peak navigator narrows the consensus intervals</td>
+</tr>
+<tr>
+<td><code>macs2_broad_peaks</code> <span class="col">·&nbsp;chr</span></td>
+<td class="arr">→</td>
+<td><code>homer_annotated_peaks</code></td>
+<td>A region typed or brushed on the peak navigator narrows the HOMER annotation track</td>
+</tr>
+<tr>
 <td><code>macs2_consensus_boolean</code> <span class="col">·&nbsp;peak_id</span></td>
 <td class="arr">→</td>
 <td><code>macs2_consensus_fc</code></td>
@@ -5800,10 +5871,22 @@ re-packed so there are no empty rows.</p>
 <td><code>macs2_consensus_boolean</code></td>
 <td>Carry a consensus interval selected on the signal heatmap back to the overlap panels</td>
 </tr>
+<tr>
+<td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td>
+<td class="arr">→</td>
+<td><code>deseq2_qc_pca</code></td>
+<td>Filter the consensus PCA by the samples picked in the left rail</td>
+</tr>
+<tr>
+<td><code>sample_design</code> <span class="col">·&nbsp;sample</span></td>
+<td class="arr">→</td>
+<td><code>deseq2_qc_sample_dists</code></td>
+<td>Filter the consensus distance matrix by the samples picked in the left rail</td>
+</tr>
 </tbody>
 </table>
 </div>
-<h3 id="recipes">Recipes<a class="headerlink" href="#recipes" title="Permanent link">¶</a></h3>
+<h3 id="recipes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.5 1.5c-1.77 0-3.33 1.17-3.83 2.87C8.14 4.13 7.58 4 7 4a4 4 0 0 0-4 4 4.01 4.01 0 0 0 3 3.87V19h13v-7.13c1.76-.46 3-2.05 3-3.87a4 4 0 0 0-4-4c-.58 0-1.14.13-1.67.37-.5-1.7-2.06-2.87-3.83-2.87m-.5 9h1v7h-1zm-3 2h1v5H9zm6 0h1v5h-1zM6 20v1a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-1z"></path></svg></span> Recipes<a class="headerlink" href="#recipes" title="Permanent link">¶</a></h3>
 <p>Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; <em>Output</em> lists the validated <code>OUTPUT_SCHEMA</code> columns.</p>
 <table>
 <thead>
@@ -5827,7 +5910,7 @@ re-packed so there are no empty rows.</p>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ataqv/metrics.py"><code>ataqv/metrics.py</code></a></td>
 <td>Per-library ATAC quality metrics from the ataqv JSON reports.</td>
-<td><code>sample</code>, <code>tss_enrichment</code>, <code>total_reads</code>, <code>hqaa</code>, <code>hqaa_fraction</code>, <code>hqaa_in_peaks</code>, <code>hqaa_overlapping_peaks_percent</code>, <code>total_autosomal_reads</code>, <code>total_mitochondrial_reads</code>, <code>mitochondrial_fraction</code>, <code>duplicate_fraction</code>, <code>duplicate_fraction_in_peaks</code>, <code>duplicate_fraction_not_in_peaks</code>, <code>peak_duplicate_ratio</code>, <code>total_peaks</code>, <code>total_peak_territory</code>, <code>hqaa_tf_count</code>, <code>hqaa_mononucleosomal_count</code>, <code>short_mononucleosomal_ratio</code>, <code>max_fraction_reads_from_single_autosome</code>, <code>median_mapq</code>, <code>properly_paired_fraction</code>, <code>maximum_proper_pair_fragment_size</code>, <code>ataqv_version</code></td>
+<td><code>sample</code>, <code>tss_enrichment</code>, <code>total_reads</code>, <code>hqaa</code>, <code>hqaa_fraction</code>, <code>hqaa_in_peaks</code>, <code>hqaa_overlapping_peaks_percent</code>, <code>total_autosomal_reads</code>, <code>total_mitochondrial_reads</code>, <code>mitochondrial_fraction</code>, <code>duplicate_fraction</code>, <code>duplicate_fraction_in_peaks</code>, <code>duplicate_fraction_not_in_peaks</code>, <code>peak_duplicate_ratio</code>, <code>total_peaks</code>, <code>total_peak_territory</code>, <code>hqaa_tf_count</code>, <code>hqaa_mononucleosomal_count</code>, <code>short_mononucleosomal_ratio</code>, <code>max_fraction_reads_from_single_autosome</code>, <code>median_mapq</code>, <code>properly_paired_fraction</code>, <code>maximum_proper_pair_fragment_size</code>, <code>median_fragment_length</code>, <code>ataqv_version</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ataqv/tss_coverage.py"><code>ataqv/tss_coverage.py</code></a></td>
@@ -5843,6 +5926,11 @@ re-packed so there are no empty rows.</p>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/plot_profile.py"><code>deeptools/plot_profile.py</code></a></td>
 <td>deepTools metagene profile in long form, one row per sample and bin.</td>
 <td><code>sample</code>, <code>group</code>, <code>bin</code>, <code>bin_label</code>, <code>signal</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/deseq2/qc_sample_dists.py"><code>deseq2/qc_sample_dists.py</code></a></td>
+<td>The DESeq2 QC sample-distance matrix the pipeline already computed.</td>
+<td><code>sample</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/homer/annotate_peaks.py"><code>homer/annotate_peaks.py</code></a></td>
@@ -5870,14 +5958,24 @@ re-packed so there are no empty rows.</p>
 <td><code>peak_id</code>, <code>consensus_set</code>, <code>interval_id</code>, <code>chr</code>, <code>region</code>, <code>support</code></td>
 </tr>
 <tr>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/peak_summary.py"><code>macs2/peak_summary.py</code></a></td>
-<td>Per-sample MACS2 peak QC: call count, FRiP score and peak-metric spreads.</td>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/2.1.2/recipes/deseq2_qc_pca.py"><code>nf-core/atacseq/deseq2_qc_pca.py</code></a></td>
+<td>DESeq2 QC principal components of the consensus counts, with each sample's group.</td>
+<td><code>sample_id</code>, <code>dim_1</code>, <code>dim_2</code>, <code>dim_1_percent</code>, <code>dim_2_percent</code>, <code>pca_set</code>, <code>group</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/2.1.2/recipes/peak_summary.py"><code>nf-core/atacseq/peak_summary.py</code></a></td>
+<td>Per-sample MACS2 peak QC for atacseq 2.x: call count, FRiP score, peak spreads.</td>
 <td><code>sample</code>, <code>num_peaks</code>, <code>frip_score</code>, <code>width_median</code>, <code>width_mean</code>, <code>width_max</code>, <code>fold_enrichment_median</code>, <code>fold_enrichment_mean</code>, <code>neg_log10_qvalue_median</code>, <code>neg_log10_pvalue_median</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/atacseq/2.1.2/recipes/sample_design.py"><code>nf-core/atacseq/sample_design.py</code></a></td>
 <td>One row per ATAC sample, derived from the samplesheet the run validated.</td>
-<td><code>sample</code>, <code>merged_library</code>, <code>group</code>, <code>replicate</code>, <code>read_type</code>, <code>role</code>, <code>control</code>, <code>n_libraries</code>, <code>libraries</code></td>
+<td><code>sample</code>, <code>merged_library</code>, <code>group</code>, <code>replicate</code>, <code>replicate_label</code>, <code>read_type</code>, <code>role</code>, <code>control</code>, <code>n_libraries</code>, <code>libraries</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/picard/markduplicates_metrics.py"><code>picard/markduplicates_metrics.py</code></a></td>
+<td>Duplication metrics from a Picard MarkDuplicates report.</td>
+<td><code>sample</code>, <code>library</code>, <code>unpaired_reads_examined</code>, <code>read_pairs_examined</code>, <code>unmapped_reads</code>, <code>unpaired_read_duplicates</code>, <code>read_pair_duplicates</code>, <code>read_pair_optical_duplicates</code>, <code>duplicate_reads</code>, <code>reads_after_dedup</code>, <code>percent_duplication</code>, <code>estimated_library_size</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/preseq/complexity_curve.py"><code>preseq/complexity_curve.py</code></a></td>
@@ -5889,30 +5987,63 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Four tabs, read as a funnel: are the libraries clean, is the ATAC signal where it
-should be, what did MACS2 call, and which calls do the libraries agree on. Each
-tab below carries the <strong>same icon and colour the dashboard gives it</strong>. Each
-library has two spellings, bare and <code>.mLb.clN</code>, and the hub carries both, so one
-pick in the filter reaches every panel. The screenshots come from a <code>test_full</code>
-run: six GM12878 libraries across three transposition protocols, two replicates
-each.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> ATAC signal</label><label for="__tabbed_2_3"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Peaks</label><label for="__tabbed_2_4"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> Consensus</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then seven child tabs in three groups, read as a
+funnel from library quality to the peaks the libraries agree on. Each tab below
+carries the <strong>same icon and colour the dashboard gives it</strong>, so the page and the
+app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, ATAC quality, Signal</td>
+</tr>
+<tr>
+<td>Peak calls</td>
+<td>Peaks, Annotation, Locus</td>
+</tr>
+<tr>
+<td>Comparison</td>
+<td>Consensus</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The persistent <em>Sample
+filters</em> (group, sample, replicate) sit in the left panel and narrow every tab
+through the project links; <em>QC thresholds</em> (TSS enrichment, FRiP, peaks called)
+sit collapsed under them. The <em>Sample sheet</em> and <em>Reference tables</em> (the
+per-library peak QC) are pinned, collapsed, to the bottom of every child tab. The
+template has no metadata file and no grouping variable: every grouped tile reads
+the samplesheet's <code>group</code> column. Each library has two spellings, bare and
+<code>.mLb.clN</code>, and the hub carries both, so one pick in the filter reaches every
+panel. The consensus matrices have the libraries as columns, so the sample
+filters do not narrow them.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:8"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><input id="__tabbed_2_8" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-lime"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 2v2.07A8 8 0 0 0 4.07 11H2v2h2.07A8 8 0 0 0 11 19.93V22h2v-2.07A8 8 0 0 0 19.93 13H22v-2h-2.07A8 8 0 0 0 13 4.07V2m-2 4.08V8h2V6.09c2.5.41 4.5 2.41 4.92 4.91H16v2h1.91c-.41 2.5-2.41 4.5-4.91 4.92V16h-2v1.91C8.5 17.5 6.5 15.5 6.08 13H8v-2H6.09C6.5 8.5 8.5 6.5 11 6.08M12 11a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1"></path></svg></span> ATAC quality</label><label for="__tabbed_2_4"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Signal</label><label for="__tabbed_2_5"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Peaks</label><label for="__tabbed_2_6"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21.41 11.58-9-9A2 2 0 0 0 11 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 .59 1.42l9 9A2 2 0 0 0 13 22a2 2 0 0 0 1.41-.59l7-7A2 2 0 0 0 22 13a2 2 0 0 0-.59-1.42M13 20l-9-9V4h7l9 9M6.5 5A1.5 1.5 0 1 1 5 6.5 1.5 1.5 0 0 1 6.5 5"></path></svg></span> Annotation</label><label for="__tabbed_2_7"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 12c2.5 0 4.5 2 4.5 4.5 0 .88-.25 1.7-.69 2.4l3.08 3.1L21 23.39l-3.12-3.07c-.69.43-1.51.68-2.38.68-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5m0 2a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5m4-12a.5.5 0 0 1 .5.5v9.31c-.58-.55-1.25-1-2-1.31V4.7l-3 1.16V10c-.7.07-1.38.24-2 .5V5.87l-4-1.4V16.5c0 .64.09 1.26.26 1.84L8 17.9l-5.34 2.07-.16.03a.5.5 0 0 1-.5-.5V4.38c0-.23.15-.41.36-.48L8 2l6 2.1 5.34-2.07zM4 5.46v11.85l3-1.16V4.45z"></path></svg></span> Locus</label><label for="__tabbed_2_8"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> Consensus</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Reads in, alignment out, and how concentrated the signal is.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/multiqc_light.png"></a></p>
-<p>FastQC names a library after its technical replicate and read, so a sample
-appears in <code>Read quality</code> once per library and read. <code>Alignment and
-duplication</code> reads the merged libraries before filtering (<code>samtools-1</code>), where
-unmapped and mitochondrial reads are still there, with the insert size from
-Picard on the filtered library. <code>Signal and peak yield</code> closes with the
-deepTools fingerprint and the pipeline's own FRiP, peak count and peak
-annotation content.</p>
+<p><em>Chromatin accessibility, from library quality to the peaks the libraries agree on.</em></p>
+<!-- screenshot pending v2 -->
+<p>A short hero links the run parameters, which for atacseq 2.x are the software
+versions: the run ships no <code>params.json</code>. <em>About this dashboard</em> says how the
+two filter levels work, <em>The run</em> lists the samples and groups, the sequenced
+libraries, the genome build and the peaks called, and <em>Pipeline</em> walks the five
+steps from trimming to the consensus merge, each linked to its tool version and
+its tab. The findings are live values: they follow the filters, and a route that
+lacks their data drops them. The fragment ladder takes the first figure slot: it
+is the ATAC-specific check a reader looks at first.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>ATAC sample</code>, <code>Sample group</code> and <code>Library role</code> on
-<code>sample_design</code>, pinned to the top of every tab, plus <code>TSS enrichment</code>
-and <code>FRiP score</code> floors in a collapsed <em>QC thresholds</em> group.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> has its own
+filter bar (group and sample), and so does <em>Findings</em> (group and
+chromosome): each narrows its own section only. The consensus card reads
+a table with the libraries as columns, which the Key figures bar does not
+reach.</p>
 <table>
 <thead>
 <tr>
@@ -5922,44 +6053,87 @@ and <code>FRiP score</code> floors in a collapsed <em>QC thresholds</em> group.<
 </thead>
 <tbody>
 <tr>
-<td>Sample sheet</td>
-<td><em>Sample design</em></td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Read quality</td>
-<td>3 MultiQC panels</td>
+<td>Key figures</td>
+<td>4 headline cards: samples, peaks called, consensus intervals, FRiP</td>
 </tr>
 <tr>
-<td>Alignment and duplication</td>
-<td>4 MultiQC panels</td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: the fragment ladder, the peak significance along the genome, the peaks around the nearest start site and the consensus intervals by the number of libraries calling them</td>
 </tr>
 <tr>
-<td>Signal and peak yield</td>
-<td>4 MultiQC panels</td>
-</tr>
-<tr>
-<td>Reference tables</td>
-<td><em>Peak QC summary</em></td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>What ataqv measures: TSS enrichment, the nucleosome ladder, and where the reads landed.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/atac_signal_light.png" rel="noopener" target="_blank"><img alt="ATAC signal dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/atac_signal_light.png"></a></p>
-<p>The first card row is the quartet a library is accepted or rejected on: TSS
-enrichment, reads inside peaks, mitochondrial fraction and duplicate fraction.
-The TSS coverage curve below is the canonical ATAC read, a sharp central spike
-against a flat line, and the scatter beside it puts each library on TSS
-enrichment against reads in peaks. It is the tab's selection source, so
-lassoing there narrows the ataqv table. Read the <code>chrM</code> row of the read
-distribution matrix first: a high share there is the classic ATAC failure.</p>
+<p><strong>Data &amp; QC</strong> · <em>Did sequencing, alignment and filtering work for every library?</em></p>
+<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/multiqc_light.png"></a></p>
+<p>MultiQC panels only. Open: general statistics, FastQC sequence counts beside
+samtools percent mapped, then the deepTools fingerprint, FRiP scores, peaks per
+library and featureCounts assignments. Per-base quality, Trim Galore kept
+reads, Picard insert sizes and duplicates, mapped reads per contig and the
+ataqv mapping quality are collapsed. The general statistics, featureCounts and
+ataqv tiles exist on a reprocessed report only, and the import drops them on the
+pipeline's own.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Sequencing library</code> on <code>samplesheet</code>, in its own <em>Library
+scope</em> group: the read-level panels are keyed on the sequencing library, a
+finer grain than the sample every other tab works in.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run summary</td>
+<td>1 MultiQC panel</td>
+</tr>
+<tr>
+<td>Reads and alignment</td>
+<td>2 MultiQC panels</td>
+</tr>
+<tr>
+<td>Enrichment</td>
+<td>4 MultiQC panels (the fingerprint has one tile per report, on one slot)</td>
+</tr>
+<tr>
+<td>QC details (collapsed)</td>
+<td>6 MultiQC panels (the insert sizes have one tile per report, on one slot)</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>Did transposition work, library by library?</em></p>
+<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/atac_signal_light.png" rel="noopener" target="_blank"><img alt="ATAC quality dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/atac_signal_light.png"></a></p>
+<p>The ataqv numbers a library is accepted or rejected on: TSS enrichment, the
+lowest share of reads in peaks, the mitochondrial fraction and the duplicate
+fraction. Then the coverage around start sites beside the signal against
+specificity scatter, where a lasso selects libraries. The fragment ladder has
+four cards of its own (fragment length, reads by nucleosome window, the sub- to
+mononucleosomal ratio, properly paired reads), the fragment-length curve with
+the nucleosome-free and mononucleosome windows shaded, and the reads per
+fragment class. The read distribution matrix closes the tab: read its <code>chrM</code> row
+first, since a high share there is the classic ATAC failure.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>Fragment class</code> and a <code>Fragment length</code> range on
 <code>ataqv_fragment_length</code>, plus <code>Reference sequence</code> on
-<code>ataqv_chromosome_counts</code>, in a <em>Fragment windows</em> group.</p>
+<code>ataqv_chromosome_counts</code>.</p>
 <table>
 <thead>
 <tr>
@@ -5970,53 +6144,97 @@ distribution matrix first: a high share there is the classic ATAC failure.</p>
 <tbody>
 <tr>
 <td>Library quality at a glance</td>
-<td>7 cards</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Depth and coverage concentration</td>
-<td><em>Library complexity with its confidence ribbon</em>, <em>Coverage concentration per library</em></td>
+<td>Signal at start sites</td>
+<td>1 line chart + 1 scatter</td>
 </tr>
 <tr>
-<td>Signal at transcription start sites</td>
-<td><em>Coverage around transcription start sites</em>, <em>Signal against specificity</em>, <em>Metagene signal profile</em></td>
-</tr>
-<tr>
-<td>Fragment length ladder</td>
-<td><em>Fragment length distribution</em>, <em>Reads per fragment class</em></td>
+<td>Fragment ladder</td>
+<td>4 cards, 1 line chart + 1 bar</td>
 </tr>
 <tr>
 <td>Read distribution</td>
-<td><em>Read distribution matrix</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>ATAC quality tables</td>
+<td>ATAC quality table (collapsed)</td>
 <td><em>ATAC quality metrics</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 <div class="admonition tip">
-<p class="admonition-title">Two panels depend on how the run was made</p>
-<p>preseq is off by default in 2.x, so the complexity ribbon stays empty
-unless the run passed <code>--skip_preseq false</code>. ataqv only writes
-per-reference counts for paired-end libraries, so single-end ones are
-absent from the read distribution matrix.</p>
+<p class="admonition-title">Single-end libraries read thinner</p>
+<p>ataqv writes no per-reference counts and no TSS values for single-end
+libraries, so they are absent from the read distribution matrix and from
+the TSS readings.</p>
 </div>
 </div>
 <div class="tabbed-block">
-<p><em>MACS2 broad calls per library, and where they land relative to genes.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/peaks_light.png" rel="noopener" target="_blank"><img alt="Peaks dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/peaks_light.png"></a></p>
-<p>The manhattan panel places every call at its midpoint over <code>-log10(q)</code>, next
-to a scatter of enrichment against significance, which carries the selection
-on <code>peak_id</code>, and a width histogram on a log axis. <em>Where the peaks land</em>
-reads the HOMER annotation twice over: the histogram pools libraries and
-splits them by feature class, while the TSS distance <code>profile</code> below it does
-the opposite, one curve per library as a share of that library's peaks, which
-is what lets libraries of different depth be compared.</p>
+<p><strong>Data &amp; QC</strong> · <em>How enriched and how complex is each library?</em></p>
+<!-- screenshot pending v2 -->
+<p>The tables deepTools and Picard write beside the curves MultiQC draws. The
+coverage concentration, the divergence from a uniform library, the library size
+Picard estimates and the metagene signal at the start site. Then the fingerprint
+scatter, and Picard's duplication against depth beside the deepTools metagene
+profile, with the start site marked and the gene body shaded. Picard makes no
+size estimate for single-end reads, so the library-size card is the median of
+the paired-end libraries.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Peak significance</code> and <code>Peak width</code> ranges on
-<code>macs2_broad_peaks</code>, plus <code>Feature class</code> on <code>homer_annotated_peaks</code>.</p>
+<p><strong>Filters</strong> · a <code>Coverage concentration</code> range on
+<code>deeptools_fingerprint_metrics</code>, a <code>Duplication rate</code> range on
+<code>picard_markduplicates_metrics</code> and, on a preseq run, an <code>Extrapolated
+depth</code> range on <code>preseq_complexity_curve</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Signal at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Coverage concentration</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Complexity and metagene</td>
+<td>2 advanced visualizations</td>
+</tr>
+<tr>
+<td>Complexity curve (collapsed)</td>
+<td>1 advanced visualization, preseq runs only</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">The complexity curve needs preseq</p>
+<p>preseq is off by default in 2.x, so the <em>Complexity curve</em> section and the
+depth filter drop unless the run passed <code>--skip_preseq false</code>. Picard's
+duplication holds the complexity reading on every route.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<p><strong>Peak calls</strong> · <em>How many peaks did each library yield, and how strong?</em></p>
+<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/peaks_light.png" rel="noopener" target="_blank"><img alt="Peaks dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/peaks_light.png"></a></p>
+<p>MACS2 broad calls, one row per peak and library: a broad call reports a region
+rather than a summit. The peaks in view, their width, their fold enrichment and
+the median <code>-log10(q)</code>, with the line at q 0.05. Then the significance along the
+genome, where a lasso narrows the cards, the widths and the table to the peaks
+picked, and the width distribution on a log axis.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Peak significance</code> and <code>Peak width</code> ranges, and
+<code>Chromosome</code>, all on <code>macs2_broad_peaks</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6031,30 +6249,108 @@ is what lets libraries of different depth be compared.</p>
 </tr>
 <tr>
 <td>Significance along the genome</td>
-<td><em>Peak significance along the genome</em>, <em>Enrichment against significance</em>, <em>Peak width distribution</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Where the peaks land</td>
-<td>4 cards, <em>Peak annotation per library</em>, <em>Distance to the nearest TSS</em>, <em>Peak distribution around the nearest TSS</em></td>
+<td>Peak width</td>
+<td>1 histogram</td>
 </tr>
 <tr>
-<td>Peak tables</td>
-<td><em>MACS2 broad peaks</em>, <em>HOMER peak annotation</em></td>
+<td>Peak table (collapsed)</td>
+<td><em>MACS2 broad peaks</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>The merged peak set: which libraries agree on an interval, and how the samples group on it.</em></p>
+<p><strong>Peak calls</strong> · <em>Where do the peaks fall relative to genes?</em></p>
+<!-- screenshot pending v2 -->
+<p>HOMER assigns every peak to a feature class and to the nearest start site. The
+annotated peaks by feature class, the genes reached, the distance to the
+nearest start site and the peak score. Then the feature classes per library as
+100% bars, and the peaks around the nearest start site with the promoter window
+shaded. Accessible chromatin is promoter-heavy, so a working library puts a
+large share of its peaks there. The collapsed HOMER table has a peak record card
+beside it, which waits for a picked row.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Feature class</code> and a <code>Distance to TSS</code> range on
+<code>homer_annotated_peaks</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Annotation at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Feature classes</td>
+<td>1 histogram</td>
+</tr>
+<tr>
+<td>Distance to the nearest TSS</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Peak annotation (collapsed)</td>
+<td><em>HOMER peak annotation</em> + a peak record card</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Peak calls</strong> · <em>What do the libraries call at one genomic region?</em></p>
+<!-- screenshot pending v2 -->
+<p>Three collections on one genome axis. The cards count what the region in view
+holds and follow it as the tracks do. The navigator draws the broad calls, one
+lane per library, on the <code>GENOME</code> assembly, and opens on the first chromosome
+the calls carry: type a locus in its header or brush its axis, and the
+consensus intervals (as high as their support) and the HOMER annotation
+(coloured by feature class) follow. The HOMER track stands in for a gene lane,
+which is bundled for hg38 and mm10 only.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Peak significance</code> on <code>macs2_broad_peaks</code>, <code>Libraries per
+interval</code> on <code>macs2_consensus_boolean</code> and <code>Feature class</code> on
+<code>homer_annotated_peaks</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Region at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Peaks on one axis</td>
+<td>3 advanced visualizations</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Comparison</strong> · <em>Which peaks do the libraries agree on?</em></p>
+<!-- screenshot pending v2 -->
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/consensus_light.png" rel="noopener" target="_blank"><img alt="Consensus dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/atacseq/consensus_light.png"></a></p>
-<p>The UpSet panel runs over the library columns of the consensus boolean matrix;
-with three protocols in two replicates each, the protocol-specific
-intersections are the ones to read. The signal heatmap is a top-N view on
-purpose: the <code>test_full</code> merged set holds 104,659 intervals and the panel
-clusters the 250 most accessible, so a selection elsewhere narrows it only
-when it lands there. <code>Sample similarity</code> closes the tab with the pipeline's
-DESeq2 QC, where replicates of a group should sit together.</p>
+<p>The per-library calls merged into one set of intervals. The consensus
+intervals, the libraries per interval, the peaks merged and the support of the
+strongest intervals. Then the UpSet of the libraries calling each interval, and
+the sample space: the pipeline's DESeq2 PCA of the consensus counts, coloured by
+group, above the library distance heatmap, where replicates of a group should
+sit together. The fold-enrichment heatmap over the strongest intervals sits
+folded below them, since it grows to one row per interval.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>Libraries per interval</code> and <code>Peaks merged</code> ranges on
@@ -6073,23 +6369,29 @@ DESeq2 QC, where replicates of a group should sit together.</p>
 </tr>
 <tr>
 <td>Replicate agreement</td>
-<td><em>Consensus peak overlap</em></td>
+<td>1 advanced visualization (UpSet)</td>
 </tr>
 <tr>
-<td>Signal at the strongest intervals</td>
-<td><em>Consensus signal heatmap</em></td>
+<td>Sample space</td>
+<td>2 advanced visualizations</td>
 </tr>
 <tr>
-<td>Sample similarity</td>
-<td><em>Sample PCA on the consensus counts</em>, <em>Sample distances on the consensus counts</em></td>
+<td>Signal at the strongest intervals (collapsed)</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Consensus tables</td>
-<td><em>Consensus intervals</em>, <em>Consensus fold enrichment</em></td>
+<td>Consensus tables (collapsed)</td>
+<td><em>Consensus intervals</em>, <em>Consensus fold enrichment</em>, <em>Principal components</em>, <em>Library distance matrix</em></td>
 </tr>
 </tbody>
 </table>
 </details>
+<div class="admonition tip">
+<p class="admonition-title">The sample space needs replicated groups</p>
+<p>The DESeq2 QC is skipped with <code>--skip_deseq2_qc</code> and for a design without
+replicated groups. The <em>Sample space</em> section and its two tables then drop,
+and the rest of the tab stays as it is.</p>
+</div>
 </div>
 </div>
 </div>
@@ -6103,8 +6405,10 @@ run kept the release's MultiQC 1.13:</p>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>python<span class="w"> </span>-m<span class="w"> </span>depictio.dev_scripts.multiqc_reprocess<span class="w"> </span>--src<span class="w"> </span>results/<span class="w"> </span>--dest<span class="w"> </span>results/
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>results/<span class="w"> </span>--template<span class="w"> </span>nf-core/atacseq/latest
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>results/<span class="w"> </span>--template<span class="w"> </span>nf-core/atacseq/latest<span class="w"> </span>--var<span class="w"> </span><span class="nv">GENOME</span><span class="o">=</span>hg19
 </code></pre></div>
+<p><code>GRCh37</code> is the iGenomes name of the UCSC <code>hg19</code> assembly, which is what
+<code>GENOME</code> takes.</p>
 <p>See <a href="https://nf-co.re/atacseq/2.1.2/docs/usage">nf-co.re/atacseq/usage</a> for full
 pipeline documentation.</p>
 <hr>
@@ -6124,24 +6428,28 @@ reason.</p>
 <a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    ├── samtools_stats/                           # *.mLb.mkD.* and *.mLb.clN.*
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    ├── picard_metrics/                           # MarkDuplicates, CollectMultipleMetrics
 <a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    ├── deeptools/{plotfingerprint,plotprofile}/
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    ├── ataqv/broad_peak/*.ataqv.json             # the ATAC quality reports
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    └── macs2/broad_peak/
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        ├── *.mLb.clN_peaks.broadPeak             # BED6+3, no summit column
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        ├── *.mLb.clN_peaks.annotatePeaks.txt     # HOMER annotation
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>        ├── qc/*_mqc.tsv                          # FRiP, peak counts
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        └── consensus/
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>            ├── consensus_peaks.mLb.clN.boolean.txt
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>            └── deseq2/*_mqc.tsv                  # the sample QC, as MultiQC content
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    ├── preseq/*.lc_extrap.txt                    # optional: --skip_preseq false only
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    ├── ataqv/broad_peak/*.ataqv.json             # the ATAC quality reports
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    └── macs2/broad_peak/
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        ├── *.mLb.clN_peaks.broadPeak             # BED6+3, no summit column
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>        ├── *.mLb.clN_peaks.annotatePeaks.txt     # HOMER annotation
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        ├── qc/                                   # peak QC summary and FRiP per library
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        └── consensus/
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>            ├── consensus_peaks.mLb.clN.boolean.txt
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>            └── deseq2/*.{pca.vals,sample.dists}.txt  # optional: the DESeq2 QC
 </code></pre></div>
 <hr>
 <h2 id="validation-runs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1c0-.21-.07-.41-.18-.57L13 8.35V4h-2v4.35L5.18 18.43c-.11.16-.18.36-.18.57m1 3a3 3 0 0 1-3-3c0-.6.18-1.16.5-1.63L9 7.81V6a1 1 0 0 1-1-1V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1v1.81l5.5 9.56c.32.47.5 1.03.5 1.63a3 3 0 0 1-3 3zm7-6 1.34-1.34L16.27 18H7.73l2.66-4.61zm-.5-4a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5"></path></svg></span> Validation runs<a class="headerlink" href="#validation-runs" title="Permanent link">¶</a></h2>
 <p>No AWS megatest is usable for 2.1.2: the 2.1.1 and 2.1.2 prefixes in the bucket
 each hold a single 12 GB object, so nothing can be mirrored from them. The
-template was validated on EMBL HPC runs of the release instead: the <code>test</code>
-profile under each of the four aligners, <code>test_controls</code> for a run with input
-controls, and the megatest profile <code>test_full</code>, which is where the screenshots
-above come from. <code>megatest.yaml</code> describes that run file by file, so a usable S3
-run can be pinned later without rewriting it.</p>
+template was validated on EMBL HPC runs of the release instead (keys
+<code>atacseq2-*</code>): the <code>test</code> profile under each of the four aligners (bwa, bowtie2,
+chromap and STAR), <code>test_controls</code> for a run with input controls, and the
+megatest profile <code>test_full</code> on hg19, ingested with <code>--var GENOME=hg19</code>.
+<code>megatest.yaml</code> describes that run file by file, so a usable S3 run can be pinned
+later without rewriting it. The screenshots above come from a <code>test_full</code> run of
+an earlier, four-tab layout of the dashboard; the current layout has not been
+captured yet.</p>
 <p>Do not pass <code>--project</code> when ingesting: the dashboard is attached to the
 project by name, so renaming it breaks a later <code>depictio dashboard import</code>.
 Re-ingesting accumulates dashboards, so delete the project before repeating a run.</p>
