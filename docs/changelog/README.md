@@ -8,6 +8,25 @@ hide:
 
 # Changelog
 
+## **[v1.17.1](https://github.com/depictio/depictio/releases/tag/v1.17.1)** (October 12, 2026)
+
+!!! success "Patch: section filter bars use their full width in the Paper look"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.17.1
+ghcr.io/depictio/depictio-viewer:1.17.1
+ghcr.io/depictio/depictio-worker:1.17.1
+ghcr.io/depictio/depictio-cli:1.17.1
+```
+
+### **🐛 Bug Fixes**
+
+* **A section's filter bar shares its width between its filters** in the Paper look: on a wide canvas, two filters no longer sit on the left half of the bar ([#1184](https://github.com/depictio/depictio/pull/1184)).
+
+---
+
 ## **[v1.17.0](https://github.com/depictio/depictio/releases/tag/v1.17.0)** (October 12, 2026)
 
 !!! success "Minor: components embedded in other sites, the Paper look, and Account settings"
