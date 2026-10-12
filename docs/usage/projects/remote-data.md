@@ -486,11 +486,13 @@ as for a [refresh](#refreshing-the-data).
 Most refusals answer with `detail` and a `code`, such as
 `template_not_detected`, `data_root_unsupported`, `local_folders_off`,
 `local_run_too_large`, `non_loopback_host`, `local_admin_only`, or one of the
-[S3 codes](#s3-errors). A variable or a collection outside the run folder, or
-`storage` without both keys, answers 422 with `detail` only. A project name
-already taken answers 409, on the real request only: a dry run does not check
-it. The API creates the project even when no collection found anything; only
-the web UI stops there.
+[S3 codes](#s3-errors). A variable or a collection outside the run folder
+answers 422 with `detail` only. So does `storage` without both keys, here and
+on every route below that takes it, before anything is read: *Give the
+bucket's access key and secret: a bucket without credentials is read only when
+an administrator allows it.* A project name already taken answers 409, on the
+real request only: a dry run does not check it. The API creates the project
+even when no collection found anything; only the web UI stops there.
 
 The web UI reads the run folder through a few more routes, under the same
 rules:
