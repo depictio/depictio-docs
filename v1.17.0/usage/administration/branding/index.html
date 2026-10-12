@@ -2293,6 +2293,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#default-look" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default look (v1.17.0+)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#logo-storage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5360,6 +5371,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#default-look" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default look (v1.17.0+)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#logo-storage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5516,6 +5538,12 @@
 <h2 id="presets-import-and-export">Presets, import and export<a class="headerlink" href="#presets-import-and-export" title="Permanent link">¶</a></h2>
 <p><strong>Presets</strong> seeds the form from a starting point, namely the stock Depictio look, TREC, EMBL or Ocean, also settable at deploy time with <code>DEPICTIO_BRANDING_PRESET</code>. Everything a preset fills in stays editable, and the flat environment variables override it field by field. <strong>Export</strong> writes the current theme as JSON and <strong>Import</strong> reads one back, so a brand can be version-controlled and moved between deployments. An imported file keeps the instance's uploaded logos unless it names logos of its own, on the same reasoning as a preset: a theme file is a palette, not an identity.</p>
 <p><a href="https://depictio.github.io/depictio-docs/images/guides/branding/branding-presets.webp" target="_blank"><img alt="The Presets menu" src="https://depictio.github.io/depictio-docs/images/guides/branding/branding-presets.webp"></a></p>
+<h2 id="default-look">Default look <small>(v1.17.0+)</small><a class="headerlink" href="#default-look" title="Permanent link">¶</a></h2>
+<p>The first card of <strong>Administration → Branding</strong> sets the <a href="../../guides/web_ui/#looks">look</a>
+of the app for every user who has not picked one: <strong>Paper</strong>, the default, or <strong>Classic</strong>.
+A user's own pick in <strong>Account settings → Preferences</strong> wins over it, in their browser.</p>
+<p><a href="https://depictio.github.io/depictio-docs/images/guides/web-ui/admin_default_look_light.webp" target="_blank"><img alt="The top of Administration, Branding: Default look with Paper selected and Classic, above the Identity, logo and colour fields" src="https://depictio.github.io/depictio-docs/images/guides/web-ui/admin_default_look_light.webp#only-light"></a>
+<a href="https://depictio.github.io/depictio-docs/images/guides/web-ui/admin_default_look_dark.webp" target="_blank"><img alt="The top of Administration, Branding: Default look with Paper selected and Classic, above the Identity, logo and colour fields" src="https://depictio.github.io/depictio-docs/images/guides/web-ui/admin_default_look_dark.webp#only-dark"></a></p>
 <h2 id="logo-storage">Where the logos live <small>(v1.8.2+)</small><a class="headerlink" href="#logo-storage" title="Permanent link">¶</a></h2>
 <p>Uploaded logos are stored in a <code>branding_assets</code> collection and served from the API, at <code>/utils/branding/logo/{variant}</code> for the instance and <code>/dashboards/logo/{id}</code> for a dashboard. Nothing is written to the container filesystem, so a rebuild or a pod redeploy cannot leave a theme pointing at an image that no longer exists, and no volume or PVC has to be provisioned. Each is capped at 2 MB, as PNG, JPEG or WebP; SVG is refused because it can carry scripts and would be served same-origin.</p>
 <p><code>branding_assets</code> and the overrides document in <code>instance_settings</code> are both part of the backup set, so a restore brings back the instance identity that every dashboard theme inherits from. A deployment branded before v1.8.2 keeps working: logos still on disk are imported into the database at startup, once, and their stored URLs rewritten.</p>

@@ -1548,6 +1548,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#release-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release Check (v1.17.0+)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#feedback" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5977,6 +5988,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#release-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release Check (v1.17.0+)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#feedback" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6082,6 +6104,7 @@
 <ul>
 <li><a href="#global-settings">Global Settings</a></li>
 <li><a href="#branding">Branding</a></li>
+<li><a href="#release-check">Release Check</a></li>
 <li><a href="#feedback">Feedback</a></li>
 <li><a href="#serviceconfig">ServiceConfig</a></li>
 </ul>
@@ -7868,6 +7891,42 @@ memory to MiB before they can reach the payload; neither is ever sent raw.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">DEPICTIO_BRANDING_THEME</span><span class="o">={</span><span class="s2">"surfaces_light"</span>:<span class="o">{</span><span class="s2">"app_bg"</span>:<span class="s2">"#f8faf9"</span>,<span class="s2">"nav_bg"</span>:<span class="s2">"#ffffff"</span>,<span class="s2">"heading"</span>:<span class="s2">"#00514b"</span><span class="o">}}</span>
 </code></pre></div>
 </div>
+<hr>
+<h2 id="release-check">Release Check <small>(v1.17.0+)</small><a class="headerlink" href="#release-check" title="Permanent link">¶</a></h2>
+<p><strong>Config Class:</strong> <code>VersionCheckConfig</code>
+<strong>Environment Prefix:</strong> <code>DEPICTIO_VERSION_CHECK_</code></p>
+<p>Tells administrators when a newer Depictio release is published. The API asks the GitHub Releases API with an unauthenticated <code>GET</code> that sends nothing about the instance. See <a href="../../usage/guides/web_ui/#release-check">Release check</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEPICTIO_VERSION_CHECK_ENABLED</code></td>
+<td><em>(unset)</em></td>
+<td>Unset: the check is on and administrators can turn it off in <strong>Administration → Settings</strong>. <code>true</code> or <code>false</code> decides instead and locks that switch</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_VERSION_CHECK_INTERVAL_HOURS</code></td>
+<td><code>6</code></td>
+<td>Hours between checks, <code>1</code> to <code>168</code>, once for the whole instance</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_VERSION_CHECK_REPOSITORY</code></td>
+<td><code>depictio/depictio</code></td>
+<td>GitHub repository whose releases are compared with the running version</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_VERSION_CHECK_TIMEOUT_SECONDS</code></td>
+<td><code>10</code></td>
+<td>Timeout of the GitHub request</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">¶</a></h2>
 <p><strong>Config Class:</strong> <code>FeedbackConfig</code>

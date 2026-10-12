@@ -7311,6 +7311,12 @@ render is in <a href="../components/#secondary-layout-modes">Components</a>.</p>
 <td><code>RangeSlider</code></td>
 <td>Draw the column's distribution above the slider track, on the same scale, so a threshold is placed against the data. Off by default</td>
 </tr>
+<tr>
+<td><code>show_mark_labels</code> <small>(v1.17.0+)</small></td>
+<td>bool</td>
+<td><code>Slider</code>, <code>RangeSlider</code></td>
+<td><code>false</code> keeps the tick marks but drops their values. Unset, every tick is labelled</td>
+</tr>
 </tbody>
 </table>
 <p>A default on the wrong control fails validation: <code>default_value</code> on a <code>RangeSlider</code>, a list on
