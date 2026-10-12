@@ -41,6 +41,10 @@ The `depictio dashboard` command group provides three commands for YAML manageme
 | `import`   | Import YAML to server                    | Yes (unless `--dry-run`) |
 | `export`   | Export dashboard to YAML                 | Yes                      |
 
+Here the Iris example dashboard is exported, edited, validated, then imported back over itself:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-dashboard-yaml.cast" data-poster="npt:0:39" data-idle-time-limit="2.5"></div>
+
 ### Validate
 
 Validate a dashboard YAML file. Runs in two passes:
@@ -151,14 +155,16 @@ depictio dashboard import dashboard.yaml --server ~/.depictio/admin_config.yaml 
 
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
 <pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Validating:</span> <span style="color: #c2185b;">dashboard.yaml</span>
+  Checks: schema + domain constraints
 <span style="color: #2e7d32;">✓ Validation passed</span>
   Title: Iris Dashboard Demo
   Components: 7
   Project: Iris_Dataset_Project (from YAML project_tag)
 
-<span style="color: #0097a7;">Loading CLI configuration...</span>
-<span style="color: #2e7d32;">✓ Configuration loaded</span>
-  API URL: localhost:8058
+• Server: <span>http://127.0.0.1:8058</span> (local server, as no ~/.depictio/CLI.yaml exists; configuration ~/.depictio/local/cli/admin_config.yaml)
+
+<span style="color: #0097a7;">Validating column names against server schema...</span>
+<span style="color: #2e7d32;">✓ Server schema OK</span>
 
 <span style="color: #0097a7;">Importing dashboard (project: Iris_Dataset_Project)...</span>
 <span style="color: #2e7d32;">✓ Dashboard imported successfully!</span>
@@ -166,7 +172,7 @@ depictio dashboard import dashboard.yaml --server ~/.depictio/admin_config.yaml 
   Title: Iris Dashboard Demo
   Project ID: 650a1b2c3d4e5f6a7b8c9d0e
 
-<span style="color: #0097a7;">View at:</span> localhost:8058/dashboard/6824cb3b89d2b72169309737
+<span style="color: #0097a7;">View at:</span> <span>http://127.0.0.1:8058/dashboard/6824cb3b89d2b72169309737</span>
 </pre>
 </div>
 
