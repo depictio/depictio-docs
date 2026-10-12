@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.14.0",
-    "x-generated-at": "2026-10-08T09:24:10Z",
-    "x-depictio-version": "v1.14.0"
+    "version": "1.14.1",
+    "x-generated-at": "2026-10-09T17:46:01Z",
+    "x-depictio-version": "v1.14.1"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -6378,7 +6378,7 @@
           "Dashboards"
         ],
         "summary": "Bulk Compute Cards",
-        "description": "Compute card values with interactive filters applied.\n\nCalled by the React viewer whenever the filter state changes. Dedupes\nDelta-table loads: multiple cards referencing the same (wf_id, dc_id, filter\nfingerprint) share one load. Returns a map keyed by component index.\n\nRequest body:\n    {\n        \"filters\": [\n            {\"index\": \"...\", \"value\": ..., \"column_name\": \"...\",\n             \"interactive_component_type\": \"MultiSelect\"},\n            ...\n        ],\n        \"component_ids\": [\"...\", ...]   # optional; defaults to all cards\n    }\n\nResponse:\n    {\n        \"values\": {\"<component_index>\": <scalar or null>, ...},\n        \"secondary_values\": {\n            \"<component_index>\": {\"<aggregation>\": <scalar or null>, ...},\n            ...\n        },\n        \"aggregations\": {\"<component_index>\": [\"<aggregation>\", ...], ...},\n        \"group_status\": {\"<component_index>\": [<group status>, ...], ...},\n        \"filter_applied\": bool,\n        \"filter_count\": int\n    }\n\n    ``secondary_values`` and ``aggregations`` are only populated for cards\n    that declare ``aggregations`` in YAML (multi-metrics card).\n\nNotes:\n    - Uses load_deltatable_lite with the same metadata format as Dash so\n      the filter semantics match the Dash viewer exactly.\n    - The Dash callback render_card_value_background in\n      card_component/callbacks/core.py remains the source of truth for the\n      edit path; this endpoint mirrors its math.",
+        "description": "Compute card values with interactive filters applied.\n\nCalled by the React viewer whenever the filter state changes. Dedupes\nDelta-table loads: multiple cards referencing the same (wf_id, dc_id, filter\nfingerprint) share one load. Returns a map keyed by component index.\n\nRequest body:\n    {\n        \"filters\": [\n            {\"index\": \"...\", \"value\": ..., \"column_name\": \"...\",\n             \"interactive_component_type\": \"MultiSelect\"},\n            ...\n        ],\n        \"component_ids\": [\"...\", ...]   # optional; defaults to all cards\n    }\n\nResponse:\n    {\n        \"values\": {\"<component_index>\": <scalar or null>, ...},\n        \"secondary_values\": {\n            \"<component_index>\": {\"<aggregation>\": <scalar or null>, ...},\n            ...\n        },\n        \"aggregations\": {\"<component_index>\": [\"<aggregation>\", ...], ...},\n        \"group_status\": {\"<component_index>\": [<group status>, ...], ...},\n        \"filter_applied\": bool,\n        \"filter_count\": int\n    }\n\n    ``secondary_values`` and ``aggregations`` are only populated for cards\n    that declare ``aggregations`` in YAML (multi-metrics card).\n\n    A text tile with live values (``values:``, or a ``{{param:KEY}}`` in its\n    title or body) is computed too, and answers under its own index with\n    one entry per value: ``values[\"<text index>\"] = {\"<name>\": <number,\n    string or null>, \"param:<KEY>\": <string or null>}``. Numbers are raw;\n    the viewer formats them.\n\nNotes:\n    - Uses load_deltatable_lite with the same metadata format as Dash so\n      the filter semantics match the Dash viewer exactly.\n    - The Dash callback render_card_value_background in\n      card_component/callbacks/core.py remains the source of truth for the\n      edit path; this endpoint mirrors its math.",
         "operationId": "bulk_compute_cards_depictio_api_v1_dashboards_bulk_compute_cards__dashboard_id__post",
         "security": [
           {
@@ -14273,7 +14273,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -14689,7 +14689,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -14752,7 +14752,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -14998,7 +14998,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -17243,7 +17243,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -17513,7 +17513,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -18698,7 +18698,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -18804,7 +18804,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19037,7 +19037,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6ac76134dae656a091891b88"
+            "default": "6ac9285389e769431fda1a25"
           }
         },
         "type": "object",
@@ -19174,7 +19174,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19293,7 +19293,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19375,7 +19375,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19461,7 +19461,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19662,7 +19662,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19837,7 +19837,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -19954,7 +19954,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
@@ -20059,7 +20059,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac76134dae656a091891b87"
+            "default": "6ac9285389e769431fda1a24"
           },
           "description": {
             "anyOf": [
