@@ -1571,6 +1571,8 @@
       
         
       
+        
+      
     
     
     
@@ -1759,6 +1761,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/projects/composed-dashboards/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 9a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5m-3.07-.85L2 20.59 3.41 22 15.85 9.57c-.6-.33-1.09-.82-1.42-1.42M13 5l.63-1.37L15 3l-1.37-.63L13 1l-.62 1.37L11 3l1.38.63zm8 0 .63-1.37L23 3l-1.37-.63L21 1l-.62 1.37L19 3l1.38.63zm0 4-.62 1.37L19 11l1.38.63L21 13l.63-1.37L23 11l-1.37-.63z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Composed dashboards
   
 
     
@@ -5441,6 +5473,16 @@ point the trigger at YAML of your own:</p>
 <p>The <a href="../../usage/projects/guide/">project YAML</a> says what to ingest, the
 <a href="../../features/yaml-sync/">dashboard YAML</a> says what to show. Their tags have to
 line up, or the import fails and names the component that broke.</p>
+<div class="admonition note">
+<p class="admonition-title">The trigger does not compose a dashboard (v1.16.0)</p>
+<p>Run by hand, <code>depictio ingest &lt;results dir&gt;</code>
+<a href="../../usage/projects/composed-dashboards/">composes a dashboard</a> from the
+tools catalog when no bundled template fits. The trigger does not get that
+far: it passes <code>--pipeline-id</code> from the pipeline's <code>manifest</code>, and a
+pipeline Depictio ships no template for stops there, with exit code 1 in
+the log; the pipeline still succeeds. Run <code>depictio ingest</code> on the results
+afterwards for a composed dashboard, or give the trigger YAML of your own.</p>
+</div>
 <p>A complete runnable example, pipeline included, is in
 <a href="https://github.com/depictio/depictio/tree/main/depictio/cli/configs/nextflow/example"><code>depictio/cli/configs/nextflow/example/</code></a>.
 It needs no container and no bioinformatics tool.</p>

@@ -1573,6 +1573,8 @@
       
         
       
+        
+      
     
     
     
@@ -1869,6 +1871,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../composed-dashboards/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 9a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5m-3.07-.85L2 20.59 3.41 22 15.85 9.57c-.6-.33-1.09-.82-1.42-1.42M13 5l.63-1.37L15 3l-1.37-.63L13 1l-.62 1.37L11 3l1.38.63zm8 0 .63-1.37L23 3l-1.37-.63L21 1l-.62 1.37L19 3l1.38.63zm0 4-.62 1.37L19 11l1.38.63L21 13l.63-1.37L23 11l-1.37-.63z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Composed dashboards
   
 
     
@@ -5475,11 +5507,11 @@
 <a id="__codelineno-0-162" name="__codelineno-0-162" href="#__codelineno-0-162"></a><span class="w">              </span><span class="c1"># For mode: "recursive" - specify search pattern</span>
 <a id="__codelineno-0-163" name="__codelineno-0-163" href="#__codelineno-0-163"></a><span class="w">              </span><span class="nt">regex_config</span><span class="p">:</span><span class="w"> </span><span class="c1"># Required for recursive mode: Pattern matching configuration</span>
 <a id="__codelineno-0-164" name="__codelineno-0-164" href="#__codelineno-0-164"></a><span class="w">                </span><span class="nt">pattern</span><span class="p">:</span>
-<a id="__codelineno-0-165" name="__codelineno-0-165" href="#__codelineno-0-165"></a><span class="w">                  </span><span class="s">"salmon/.*/quant.sf"</span><span class="w"> </span><span class="c1"># Required: Regex pattern for file discovery</span>
+<a id="__codelineno-0-165" name="__codelineno-0-165" href="#__codelineno-0-165"></a><span class="w">                  </span><span class="s">"salmon/{sample_id}/quant.sf"</span><span class="w"> </span><span class="c1"># Required: Regex pattern for file discovery</span>
 <a id="__codelineno-0-166" name="__codelineno-0-166" href="#__codelineno-0-166"></a><span class="w">                  </span><span class="c1"># Example: "stats/.*_stats\\.tsv"</span>
-<a id="__codelineno-0-167" name="__codelineno-0-167" href="#__codelineno-0-167"></a><span class="w">                </span><span class="nt">wildcards</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: Named capture groups for metadata extraction</span>
-<a id="__codelineno-0-168" name="__codelineno-0-168" href="#__codelineno-0-168"></a><span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"sample_id"</span><span class="w"> </span><span class="c1"># Wildcard name for metadata extraction</span>
-<a id="__codelineno-0-169" name="__codelineno-0-169" href="#__codelineno-0-169"></a><span class="w">                    </span><span class="nt">wildcard_regex</span><span class="p">:</span><span class="w"> </span><span class="s">"salmon/([^/]+)/quant.sf"</span><span class="w"> </span><span class="c1"># Regex with capture group</span>
+<a id="__codelineno-0-167" name="__codelineno-0-167" href="#__codelineno-0-167"></a><span class="w">                </span><span class="nt">wildcards</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional: what each {name} placeholder of the pattern stands for</span>
+<a id="__codelineno-0-168" name="__codelineno-0-168" href="#__codelineno-0-168"></a><span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"sample_id"</span><span class="w"> </span><span class="c1"># The placeholder, and since v1.16.0 a column of the table holding what it matched</span>
+<a id="__codelineno-0-169" name="__codelineno-0-169" href="#__codelineno-0-169"></a><span class="w">                    </span><span class="nt">wildcard_regex</span><span class="p">:</span><span class="w"> </span><span class="s">"[^/]+"</span><span class="w"> </span><span class="c1"># Regex the placeholder is replaced by</span>
 <a id="__codelineno-0-170" name="__codelineno-0-170" href="#__codelineno-0-170"></a>
 <a id="__codelineno-0-171" name="__codelineno-0-171" href="#__codelineno-0-171"></a><span class="w">              </span><span class="c1"># For mode: "single" - specify exact file (alternative to regex_config)</span>
 <a id="__codelineno-0-172" name="__codelineno-0-172" href="#__codelineno-0-172"></a><span class="w">              </span><span class="c1"># filename: "metadata/sample_info.csv"  # Required for single mode: File path</span>

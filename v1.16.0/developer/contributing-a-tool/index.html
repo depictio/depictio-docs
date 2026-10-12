@@ -1565,6 +1565,8 @@
       
         
       
+        
+      
     
     
     
@@ -1750,6 +1752,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/projects/composed-dashboards/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 9a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5m-3.07-.85L2 20.59 3.41 22 15.85 9.57c-.6-.33-1.09-.82-1.42-1.42M13 5l.63-1.37L15 3l-1.37-.63L13 1l-.62 1.37L11 3l1.38.63zm8 0 .63-1.37L23 3l-1.37-.63L21 1l-.62 1.37L19 3l1.38.63zm0 4-.62 1.37L19 11l1.38.63L21 13l.63-1.37L23 11l-1.37-.63z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Composed dashboards
   
 
     
@@ -4315,6 +4347,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 2 — &lt;output&gt;.yaml (one per output file)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#composition-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composition hints (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -5274,6 +5323,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 2 — &lt;output&gt;.yaml (one per output file)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#composition-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composition hints (v1.16.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -5432,6 +5498,7 @@ the nf-core <code>meta.yml</code> at runtime: the catalog takes these fields fro
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="no">Functions for viral amplicon sequencing: primer trimming, variant calling</span>
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="no">and consensus building.</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nt">homepage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/andersen-lab/ivar</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">variants</span><span class="w"> </span><span class="c1"># where its outputs sit in a pipeline (v1.16.0+)</span>
 </code></pre></div>
 <table>
 <thead>
@@ -5471,6 +5538,11 @@ the nf-core <code>meta.yml</code> at runtime: the catalog takes these fields fro
 <td><code>edam_topics</code></td>
 <td>no</td>
 <td>Full EDAM URLs.</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td>no</td>
+<td>Where the tool's outputs sit in a pipeline: <code>qc</code>, <code>alignment</code>, <code>quantification</code>, <code>peaks</code>, <code>variants</code>, <code>fusions</code>, <code>taxonomy</code>, <code>annotation</code>, <code>immune</code>, <code>differential</code>, <code>benchmarking</code> or <code>other</code> (the default). A <a href="../../usage/projects/composed-dashboards/">composed dashboard</a> opens one tab per stage present, in this order. Every bundled tool declares one (v1.16.0+).</td>
 </tr>
 </tbody>
 </table>
@@ -5540,36 +5612,70 @@ do <strong>not</strong> also declare <code>columns</code>. If the raw file is al
 skip the recipe and declare <code>columns: {NAME: Dtype, …}</code> (polars dtypes) instead.
 Validation rejects setting both.</p>
 </blockquote>
+<h3 id="composition-hints">Composition hints <small>(v1.16.0+)</small><a class="headerlink" href="#composition-hints" title="Permanent link">¶</a></h3>
+<p>When <code>depictio ingest</code> <a href="../../usage/projects/composed-dashboards/">composes a dashboard</a>
+from the catalog, three optional fields decide where an output's renders go:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>On</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stage</code></td>
+<td>the output</td>
+<td>Overrides the tool's <code>stage</code> for this output, e.g. a MultiQC section carrying STAR's numbers is <code>alignment</code>, not MultiQC's <code>qc</code></td>
+</tr>
+<tr>
+<td><code>headline: true</code></td>
+<td>a <code>card</code> render</td>
+<td>One of the run's key metrics: the card also goes to the composed Overview and, when its table has a sample column, its value per sample to the general statistics table, the way MultiQC's General Statistics picks a few columns per tool. Mark one or two per tool</td>
+</tr>
+<tr>
+<td><code>priority</code></td>
+<td>any render</td>
+<td>An integer ≥ 0: lower comes first within its output. Renders without one keep their declared order, after those with one</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">renders_as</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> component</span><span class="p">:</span><span class="w"> </span><span class="nv">card</span><span class="p p-Indicator">,</span><span class="nt"> column</span><span class="p">:</span><span class="w"> </span><span class="nv">frip_score</span><span class="p p-Indicator">,</span><span class="nt"> aggregation</span><span class="p">:</span><span class="w"> </span><span class="nv">average</span><span class="p p-Indicator">,</span><span class="nt"> secondary_layout</span><span class="p">:</span><span class="w"> </span><span class="nv">gauge</span><span class="p p-Indicator">,</span><span class="nt"> coverage_max</span><span class="p">:</span><span class="w"> </span><span class="nv">1.0</span><span class="p p-Indicator">,</span><span class="nt"> headline</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</code></pre></div>
+<p>There is no separate threshold for the Overview: a headline card keeps its own
+<code>threshold_value</code>, <code>threshold_direction</code> and <code>threshold_warn</code> there.</p>
 <h2 id="step-3-recipe-only-if-the-file-needs-reshaping">Step 3 — Recipe (only if the file needs reshaping)<a class="headerlink" href="#step-3-recipe-only-if-the-file-needs-reshaping" title="Permanent link">¶</a></h2>
 <p>A recipe is a small polars module co-located as <code>&lt;output&gt;.py</code>. It declares its
 inputs, its output schema, and a <code>transform</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="sd">"""Reshape variants_long_table.csv into tidy, bindable columns."""</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">depictio.models.models.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecipeSource</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># INPUT SCHEMA: the columns each source must contain, checked before transform().</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">SOURCES</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">RecipeSource</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="n">RecipeSource</span><span class="p">(</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        <span class="n">ref</span><span class="o">=</span><span class="s2">"variants_raw"</span><span class="p">,</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        <span class="n">glob_pattern</span><span class="o">=</span><span class="s2">"variants/*/variants_long_table.csv"</span><span class="p">,</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">,</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="n">input_schema</span><span class="o">=</span><span class="p">{</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>            <span class="s2">"sample"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"CHROM"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"POS"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Int64</span><span class="p">,</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>            <span class="s2">"AF"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"GENE"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"EFFECT"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        <span class="p">},</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="p">),</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="p">]</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="c1"># OUTPUT SCHEMA: the columns transform() returns, checked after it.</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="n">OUTPUT_SCHEMA</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">pl</span><span class="o">.</span><span class="n">DataType</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="s2">"sample"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"CHROM"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"POS"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Int64</span><span class="p">,</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="s2">"AF"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"GENE"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"EFFECT"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
-<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="p">}</span>
-<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>
-<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">sources</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">sources</span><span class="p">[</span><span class="s2">"variants_raw"</span><span class="p">]</span>
-<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">OUTPUT_SCHEMA</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>   <span class="c1"># exactly the OUTPUT_SCHEMA columns</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="sd">"""Reshape variants_long_table.csv into tidy, bindable columns."""</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">depictio.models.models.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecipeSource</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># INPUT SCHEMA: the columns each source must contain, checked before transform().</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">SOURCES</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">RecipeSource</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="n">RecipeSource</span><span class="p">(</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>        <span class="n">ref</span><span class="o">=</span><span class="s2">"variants_raw"</span><span class="p">,</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        <span class="n">glob_pattern</span><span class="o">=</span><span class="s2">"variants/*/variants_long_table.csv"</span><span class="p">,</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="nb">format</span><span class="o">=</span><span class="s2">"CSV"</span><span class="p">,</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        <span class="n">input_schema</span><span class="o">=</span><span class="p">{</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>            <span class="s2">"sample"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"CHROM"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"POS"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Int64</span><span class="p">,</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>            <span class="s2">"AF"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"GENE"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"EFFECT"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>        <span class="p">},</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="p">),</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="p">]</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="c1"># OUTPUT SCHEMA: the columns transform() returns, checked after it.</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="n">OUTPUT_SCHEMA</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">pl</span><span class="o">.</span><span class="n">DataType</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="s2">"sample"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"CHROM"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"POS"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Int64</span><span class="p">,</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>    <span class="s2">"AF"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span> <span class="s2">"GENE"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span> <span class="s2">"EFFECT"</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Utf8</span><span class="p">,</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="p">}</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">sources</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">sources</span><span class="p">[</span><span class="s2">"variants_raw"</span><span class="p">]</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">OUTPUT_SCHEMA</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>   <span class="c1"># exactly the OUTPUT_SCHEMA columns</span>
 </code></pre></div>
 <p><code>OUTPUT_SCHEMA</code> is what the catalog grounds every render binding against. This
 is the same recipe contract used by <a href="../contributing-templates/">templates</a>. To
@@ -5581,20 +5687,20 @@ also work), co-located in the folder. It must contain every column your
 <code>renders_as</code> binds to — CI reads its real columns to validate (and preview)
 each render.</p>
 <h2 id="step-5-validate-preview-and-open-a-pr">Step 5 — Validate, preview, and open a PR<a class="headerlink" href="#step-5-validate-preview-and-open-a-pr" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Validate just your tool (load → find → recipe → render bindings)</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>depictio<span class="w"> </span>dev<span class="w"> </span>catalog<span class="w"> </span>validate<span class="w"> </span>--path<span class="w"> </span>depictio/catalog/&lt;tool&gt;
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Live-preview an output rendered on its fixture</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>depictio<span class="w"> </span>catalog<span class="w"> </span>preview<span class="w"> </span>&lt;tool&gt;_&lt;output&gt;
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># Helpful while authoring</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>depictio<span class="w"> </span>catalog<span class="w"> </span>list<span class="w">                 </span><span class="c1"># every tool + output + render targets</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>depictio<span class="w"> </span>catalog<span class="w"> </span>info<span class="w"> </span>&lt;tool&gt;<span class="w">          </span><span class="c1"># one tool in detail</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>depictio<span class="w"> </span>dev<span class="w"> </span>catalog<span class="w"> </span>match<span class="w"> </span>/path/run<span class="w">  </span><span class="c1"># which outputs are recognised in a run</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Validate just your tool (load → find → recipe → render bindings)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>depictio<span class="w"> </span>dev<span class="w"> </span>catalog<span class="w"> </span>validate<span class="w"> </span>--path<span class="w"> </span>depictio/catalog/&lt;tool&gt;
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Live-preview an output rendered on its fixture</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>depictio<span class="w"> </span>catalog<span class="w"> </span>preview<span class="w"> </span>&lt;tool&gt;_&lt;output&gt;
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Helpful while authoring</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>depictio<span class="w"> </span>catalog<span class="w"> </span>list<span class="w">                 </span><span class="c1"># every tool + output + render targets</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>depictio<span class="w"> </span>catalog<span class="w"> </span>info<span class="w"> </span>&lt;tool&gt;<span class="w">          </span><span class="c1"># one tool in detail</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>depictio<span class="w"> </span>dev<span class="w"> </span>catalog<span class="w"> </span>match<span class="w"> </span>/path/run<span class="w">  </span><span class="c1"># which outputs are recognised in a run</span>
 </code></pre></div>
 <p>Tip — add this header to each catalog YAML for live validation and autocomplete
 in your editor:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># yaml-language-server: $schema=https://raw.githubusercontent.com/depictio/depictio/main/depictio/catalog/catalog.schema.json</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># yaml-language-server: $schema=https://raw.githubusercontent.com/depictio/depictio/main/depictio/catalog/catalog.schema.json</span>
 </code></pre></div>
 <p>Before submitting, check:</p>
 <ul class="task-list">

@@ -13,7 +13,7 @@
         <link rel="prev" href="../recipes/">
       
       
-        <link rel="next" href="../remote-data/">
+        <link rel="next" href="../composed-dashboards/">
       
       
         
@@ -1573,6 +1573,8 @@
       
         
       
+        
+      
     
     
     
@@ -2110,6 +2112,36 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../composed-dashboards/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 9a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5m-3.07-.85L2 20.59 3.41 22 15.85 9.57c-.6-.33-1.09-.82-1.42-1.42M13 5l.63-1.37L15 3l-1.37-.63L13 1l-.62 1.37L11 3l1.38.63zm8 0 .63-1.37L23 3l-1.37-.63L21 1l-.62 1.37L19 3l1.38.63zm0 4-.62 1.37L19 11l1.38.63L21 13l.63-1.37L23 11l-1.37-.63z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Composed dashboards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -5933,13 +5965,17 @@ variables are dropped before the call, so the recipe falls back to its own defau
 <li>the results directory itself, local or an <code>s3://</code> prefix: the run information
   an nf-core pipeline writes under <code>pipeline_info/</code> names the pipeline and its
   version, and the matching template is used. When no shipped version matches,
-  the closest version that is not newer is used, with a warning.</li>
+  the closest version that is not newer is used, with a warning;</li>
+<li>since <strong>v1.16.0</strong>, a template composed from what the
+  <a href="../../../catalog/">tools catalog</a> recognises in a local results
+  directory, when no bundled template fits it. <code>--compose</code> composes even when
+  one does. See <a href="../composed-dashboards/">Composed dashboards</a>.</li>
 </ul>
 <p>The web UI's <strong>From a run folder</strong> tab detects the template the same way and
 shows the comparison before anything is created; see
 <a href="../remote-data/#from-a-run-folder">From a run folder</a>.</p>
-<p>When none applies, the command stops and asks for <code>--template</code> or
-<code>--project-config-path</code>.</p>
+<p>When none applies, as for an <code>s3://</code> prefix no template reads, the command
+stops and asks for <code>--template</code> or <code>--project-config-path</code>.</p>
 <h3 id="instantiating-with-manifest-or-bind">Instantiating with <code>--manifest</code> or <code>--bind</code> <small>(v1.16.0+)</small><a class="headerlink" href="#instantiating-with-manifest-or-bind" title="Permanent link">¶</a></h3>
 <p><code>DATA_DIR</code>, <code>--manifest</code> and <code>--bind</code> all answer the same question, where
 the data is, and a template run needs at least one of them:</p>
@@ -6059,6 +6095,7 @@ input, and is scanned normally.</p>
 <li><code>applied_at</code> — timestamp</li>
 <li><code>config_snapshot</code> — frozen copy of the resolved config</li>
 <li><code>run_provenance</code>: the pipeline's own run parameters, see below <small>(v1.8.3+)</small></li>
+<li><code>unrecognised_files</code>: for a <a href="../composed-dashboards/">composed</a> template, the tabular files of the run the catalog did not recognise and that were left out, each with what it would show; the project page lists them <small>(v1.16.0+)</small></li>
 </ul>
 <hr>
 <h2 id="run-provenance">Run provenance <small>(v1.8.3+)</small><a class="headerlink" href="#run-provenance" title="Permanent link">¶</a></h2>

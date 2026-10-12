@@ -1573,6 +1573,8 @@
       
         
       
+        
+      
     
     
     
@@ -2336,6 +2338,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../composed-dashboards/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 9a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5m-3.07-.85L2 20.59 3.41 22 15.85 9.57c-.6-.33-1.09-.82-1.42-1.42M13 5l.63-1.37L15 3l-1.37-.63L13 1l-.62 1.37L11 3l1.38.63zm8 0 .63-1.37L23 3l-1.37-.63L21 1l-.62 1.37L19 3l1.38.63zm0 4-.62 1.37L19 11l1.38.63L21 13l.63-1.37L23 11l-1.37-.63z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Composed dashboards
   
 
     
@@ -6561,7 +6593,7 @@
 <a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a><span class="w">          </span><span class="nt">regex_config</span><span class="p">:</span><span class="w">         </span><span class="c1"># Required: Pattern matching configuration</span>
 <a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a><span class="w">            </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span><span class="w">    </span><span class="c1"># Required: Regex pattern for file discovery</span>
 <a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a><span class="w">                              </span><span class="c1"># Example: "stats/.*_stats\\.tsv"</span>
-<a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a><span class="w">            </span><span class="nt">wildcards</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">...</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># Optional: Named capture groups for metadata extraction</span>
+<a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a><span class="w">            </span><span class="nt">wildcards</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">...</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># Optional: {name} placeholders of the pattern, each a column (v1.16.0+)</span>
 <a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a><span class="w">          </span><span class="nt">max_depth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int | null</span><span class="w"> </span><span class="c1"># Optional: directory levels searched below each run</span>
 <a id="__codelineno-9-43" name="__codelineno-9-43" href="#__codelineno-9-43"></a><span class="w">                                </span><span class="c1"># directory; 0 = files directly in it (v1.15.0+)</span>
 <a id="__codelineno-9-44" name="__codelineno-9-44" href="#__codelineno-9-44"></a><span class="w">          </span><span class="nt">ignore</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">string</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="err"> null</span><span class="w">  </span><span class="c1"># Optional: glob patterns to skip, matched against</span>
@@ -6828,11 +6860,11 @@ it so every phylogenetic component inherits the same join.</p>
 <a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"recursive"</span>
 <a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="nt">scan_parameters</span><span class="p">:</span>
 <a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">    </span><span class="nt">regex_config</span><span class="p">:</span>
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">      </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="s">"star_salmon/.*/quant.sf"</span>
-<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">      </span><span class="c1"># Wildcards for metadata extraction (optional)</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">      </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="s">"star_salmon/{sample_id}/quant.sf"</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">      </span><span class="c1"># Wildcards (optional): each {name} in the pattern stands for its regex</span>
 <a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">      </span><span class="nt">wildcards</span><span class="p">:</span>
 <a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"sample_id"</span>
-<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">          </span><span class="nt">wildcard_regex</span><span class="p">:</span><span class="w"> </span><span class="s">"star_salmon/([^/]+)/quant.sf"</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">          </span><span class="nt">wildcard_regex</span><span class="p">:</span><span class="w"> </span><span class="s">"[^/]+"</span>
 <a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">    </span><span class="nt">max_depth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">        </span><span class="c1"># Optional: limit search depth</span>
 <a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
 <a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="c1"># Matches files like:</span>
@@ -6840,6 +6872,13 @@ it so every phylogenetic component inherits the same join.</p>
 <a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="c1"># run_001/star_salmon/sample_B/quant.sf</span>
 <a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="c1"># run_002/star_salmon/sample_C/quant.sf</span>
 </code></pre></div>
+<p>A wildcard names a part of the pattern: <code>{sample_id}</code> in <code>pattern</code> is replaced by
+its <code>wildcard_regex</code> before files are matched. Since <strong>v1.16.0</strong>, each wildcard
+also becomes a column of the table at ingestion, holding what it matched in each
+file's path: here <code>sample_id</code> is <code>sample_A</code> for the rows of
+<code>star_salmon/sample_A/quant.sf</code>. A file that already has a column of that name
+keeps its own. A <a href="../composed-dashboards/#adding-them">composed dashboard</a> relies
+on this to keep the sample of files that carry it in their path only.</p>
 <h4 id="scan-bounds">Limiting a recursive scan <small>(v1.15.0+)</small><a class="headerlink" href="#scan-bounds" title="Permanent link">¶</a></h4>
 <p>Two optional <code>scan_parameters</code> keep a recursive scan out of directories it does not need:</p>
 <ul>

@@ -1573,6 +1573,8 @@
       
         
       
+        
+      
     
     
     
@@ -2470,6 +2472,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../composed-dashboards/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 9a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5m-3.07-.85L2 20.59 3.41 22 15.85 9.57c-.6-.33-1.09-.82-1.42-1.42M13 5l.63-1.37L15 3l-1.37-.63L13 1l-.62 1.37L11 3l1.38.63zm8 0 .63-1.37L23 3l-1.37-.63L21 1l-.62 1.37L19 3l1.38.63zm0 4-.62 1.37L19 11l1.38.63L21 13l.63-1.37L23 11l-1.37-.63z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Composed dashboards
   
 
     
@@ -7084,7 +7116,7 @@ things follow for a deployment:</p>
 <li>Discovers and processes all data collections (running recipes automatically)</li>
 <li>Imports the bundled dashboard</li>
 </ol>
-<p>Without <code>--template</code>, the template is detected from the results directory when it can be. Running the same command again with <code>--update-config</code> refreshes the project and keeps its dashboards as edited in the viewer; see <a href="../../../depictio-cli/usage/#refreshing-a-project">Refreshing a project</a>.</p>
+<p>Without <code>--template</code>, the template is detected from the results directory when it can be, and since v1.16.0 a local directory no bundled template fits gets one <a href="../composed-dashboards/">composed from the catalog</a>. Running the same command again with <code>--update-config</code> refreshes the project and keeps its dashboards as edited in the viewer; see <a href="../../../depictio-cli/usage/#refreshing-a-project">Refreshing a project</a>.</p>
 <p>The results directory can also be an <code>s3://</code> prefix, a manifest-driven template takes <code>--manifest &lt;url or path&gt;</code> in place of the directory, and any template can be pointed at other locations, collection by collection, with <code>--bind TAG=LOCATION</code>. The web UI creates a project from a run folder too, with <strong>From a run folder</strong>. See <a href="../remote-data/">Remote data and manifests</a>.</p>
 <h3 id="when-to-use-templates">When to use templates<a class="headerlink" href="#when-to-use-templates" title="Permanent link">¶</a></h3>
 <p>Use templates when:</p>

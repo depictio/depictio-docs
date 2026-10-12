@@ -1565,6 +1565,8 @@
       
         
       
+        
+      
     
     
     
@@ -1750,6 +1752,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/projects/composed-dashboards/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 9a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5m-3.07-.85L2 20.59 3.41 22 15.85 9.57c-.6-.33-1.09-.82-1.42-1.42M13 5l.63-1.37L15 3l-1.37-.63L13 1l-.62 1.37L11 3l1.38.63zm8 0 .63-1.37L23 3l-1.37-.63L21 1l-.62 1.37L19 3l1.38.63zm0 4-.62 1.37L19 11l1.38.63L21 13l.63-1.37L23 11l-1.37-.63z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Composed dashboards
   
 
     
@@ -6817,6 +6849,11 @@ ending in <code>#ingestion-history</code> opens the history directly.</p>
 </table>
 <p>Expand a row to see its files (or the Delta-table path once aggregated), and filter or
 group rows by status.</p>
+<p>For a collection a recipe builds, the row also names the recipe and its <strong>Aggregation
+inputs</strong>. Since v1.16.0 an input is shown as the template stores it, joined to the data
+root. The server looks it up on its own disk only under <code>depictio local</code>, below an
+allowed folder, so the report no longer tells a reader whether a file exists on the
+server or where a symbolic link leads.</p>
 <p>A <strong>Changes</strong> column <small>(v1.15.0+)</small> shows what the latest scan of each run
 changed in that collection: <em>+12 new</em>, <em>3 updated</em>, <em>1 failed</em>, or <code>—</code> when nothing
 changed. It is not an all-time total. The <strong>Runs identified</strong> table below gives the new

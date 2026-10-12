@@ -10,7 +10,7 @@
         <link rel="canonical" href="https://depictio.github.io/depictio-docs/v1.16.0/usage/projects/remote-data/">
       
       
-        <link rel="prev" href="../templates/">
+        <link rel="prev" href="../composed-dashboards/">
       
       
         <link rel="next" href="../../../depictio-cli/">
@@ -1573,6 +1573,8 @@
       
         
       
+        
+      
     
     
     
@@ -1759,6 +1761,36 @@
     
   
     Template System Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../composed-dashboards/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.5 9a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5m-3.07-.85L2 20.59 3.41 22 15.85 9.57c-.6-.33-1.09-.82-1.42-1.42M13 5l.63-1.37L15 3l-1.37-.63L13 1l-.62 1.37L11 3l1.38.63zm8 0 .63-1.37L23 3l-1.37-.63L21 1l-.62 1.37L19 3l1.38.63zm0 4-.62 1.37L19 11l1.38.63L21 13l.63-1.37L23 11l-1.37-.63z"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Composed dashboards
   
 
     
@@ -5765,6 +5797,8 @@ pattern, which runs are under here) is answered from that one listing.</p>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Check what each data collection finds there first</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>s3://my-bucket/ampliseq/run42<span class="w"> </span>--template<span class="w"> </span>nf-core/ampliseq/latest<span class="w"> </span>--dry-run
 </code></pre></div>
+<p>Unlike a local folder, an <code>s3://</code> folder that no bundled template reads is not
+<a href="../composed-dashboards/">composed from the catalog</a>: pass <code>--template</code>.</p>
 <p>No template is modified for this. Each data collection is pointed at the prefix
 as follows:</p>
 <table>
@@ -6172,7 +6206,8 @@ not read the same folder twice.</p>
 </table>
 <p><strong>Pipeline</strong> lists one entry per pipeline among the templates that read a
 data root, grouped by source (nf-core first), plus the detected one whatever it
-reads. A folder that cannot be read on its own, in a bucket that is neither
+reads. The web UI does not <a href="../composed-dashboards/">compose a dashboard</a> from
+the catalog as the CLI does: a folder no template reads needs one picked here. A folder that cannot be read on its own, in a bucket that is neither
 public nor one the server is set up to read, opens the
 <a href="#private-bucket-at-creation"><strong>Private bucket</strong></a> section. <strong>Next</strong> stays
 disabled while something is missing, and says what, for instance <em>No template
