@@ -6819,7 +6819,7 @@ the column (the metadata or sample sheet first). An export writes those colours.
 <a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">    </span><span class="nt">color</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">category_column</span>
 <a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Chart Title</span>
 </code></pre></div>
-<p><strong>Valid <code>visu_type</code> values (UI mode):</strong> <code>scatter</code>, <code>line</code>, <code>bar</code>, <code>box</code>, <code>violin</code> <small>(v1.13.0+)</small>, <code>histogram</code>, <code>heatmap</code></p>
+<p><strong>Valid <code>visu_type</code> values (UI mode):</strong> <code>scatter</code>, <code>line</code>, <code>bar</code>, <code>box</code>, <code>violin</code> <small>(v1.13.0+)</small>, <code>histogram</code>, <code>ecdf</code>, <code>strip</code>, <code>area</code>, <code>funnel</code>, <code>density_heatmap</code>, <code>density_contour</code> <small>(v1.15.0+)</small>, <code>heatmap</code></p>
 <p><strong>Code Mode</strong> — write arbitrary Python/Plotly code for full flexibility:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-plot</span>
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">component_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">figure</span>
@@ -7588,6 +7588,12 @@ or folds it, their own choice is remembered for that dashboard family.</p>
 <a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a>└── README.md
 </code></pre></div>
 <h3 id="component-naming">Component Naming<a class="headerlink" href="#component-naming" title="Permanent link">¶</a></h3>
+<p>A component's <code>tag</code> is its identity. Since v1.15.0 a component without an <code>index</code> gets
+an id derived from its tag, so importing the same YAML again gives the same ids and each
+component keeps its <a href="../versioning/#component-history">history</a>. On a child tab the id
+also depends on the tab's title, so two tabs can reuse a tag. Within one tab, tags must
+be unique: a YAML that repeats one is refused with <em>Component tags must be unique within
+a tab</em>. A component without a tag gets a new id at each import.</p>
 <p>Use descriptive tags that indicate purpose:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="c1"># Good: Descriptive tags</span>
 <a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">box-variety-sepal-length</span><span class="w">   </span><span class="c1"># Chart type + data</span>

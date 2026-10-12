@@ -5112,6 +5112,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Jobs (v1.15.0+)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#in-this-section" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5164,6 +5175,7 @@
 <li><strong>Data Collections</strong> - Work with aggregated data from files following the same structure</li>
 <li><strong>Dashboards</strong> - Create and manage interactive visualization dashboards</li>
 <li><strong>Users</strong> - Handle user authentication and authorization</li>
+<li><strong>Jobs</strong> - Follow work the server finishes in the background (v1.15.0+)</li>
 </ul>
 <h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">¶</a></h2>
 <p>All API requests require authentication using JWT (JSON Web Tokens). To authenticate:</p>
@@ -5175,6 +5187,79 @@
 <p>The Depictio API uses versioning to ensure backward compatibility. The current version is <code>v1</code>, which is reflected in the URL path:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>https://your-depictio-instance.com/depictio/api/v1/...
 </code></pre></div>
+<h2 id="jobs">Jobs <small>(v1.15.0+)</small><a class="headerlink" href="#jobs" title="Permanent link">¶</a></h2>
+<p>Some requests start work that outlives an HTTP request. They answer with a <code>job_id</code>, and
+the client polls the job until it ends. Paths are under <code>/depictio/api/v1</code>. The routes exist only when <code>DEPICTIO_JOBS_ENABLED</code>
+is true; otherwise <code>/jobs</code> answers 404. See <a href="../installation/env-reference/#jobs">Jobs</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Method and path</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /jobs/{job_id}</code></td>
+<td>One job: <code>status</code>, <code>step</code>, <code>detail</code>, <code>progress</code>, <code>result</code> or <code>error</code>, timestamps, and <code>poll_after_seconds</code>, the suggested wait before the next poll</td>
+</tr>
+<tr>
+<td><code>GET /jobs</code></td>
+<td>Your jobs, newest first. Filters <code>kind</code>, <code>status</code> and <code>project_id</code>; <code>limit</code> (1–200, default 50) and <code>skip</code>. Admins see everyone's</td>
+</tr>
+<tr>
+<td><code>POST /jobs/{job_id}/cancel</code></td>
+<td>Cancels a job that has not ended, and asks the worker to stop its task</td>
+</tr>
+</tbody>
+</table>
+<p>A job is <code>pending</code>, <code>running</code>, <code>success</code>, <code>failed</code> or <code>cancelled</code>. A job that belongs to
+someone else answers 404, as a missing one does; admins can read any job. There is no
+route to create a job: the endpoint that owns the work creates it, and names its <code>kind</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Created by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deltatable.upsert</code></td>
+<td><code>POST /deltatables/upsert</code> with <code>async_mode: true</code>, when <a href="../installation/docker/#async-upsert">offloading</a> is on. Without it the response has no <code>job_id</code> and the work is done</td>
+</tr>
+<tr>
+<td><code>project.ingest</code></td>
+<td><code>POST /projects/ingestion/trigger/{project_id}</code>, the <a href="../features/dashboards/#run-ingestion"><strong>Run ingestion</strong></a> button</td>
+</tr>
+</tbody>
+</table>
+<p>The project page uses these routes for its ingestion tab:</p>
+<table>
+<thead>
+<tr>
+<th>Method and path</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /projects/ingestion-runs/{project_id}</code></td>
+<td>The project's ingestion runs, newest first, with <code>limit</code> and <code>skip</code>. Paths and host details are removed for viewers who cannot edit the project</td>
+</tr>
+<tr>
+<td><code>GET /projects/ingestion/trigger-status/{project_id}</code></td>
+<td>Whether <strong>Run ingestion</strong> is offered (<code>enabled</code>), usable by the caller (<code>available</code>), and the <code>reason</code> when it is not</td>
+</tr>
+<tr>
+<td><code>POST /projects/ingestion/trigger/{project_id}</code></td>
+<td>Starts an ingestion; <code>overwrite</code> as a query parameter. Returns <code>job_id</code>, <code>run_id</code> and <code>already_running</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>GET /utils/capabilities</code> lists <code>jobs</code>, <code>deltatables.async_upsert</code> and
+<code>ingestion.browser_trigger</code> in its <code>features</code> when each is turned on, so a client can
+check before relying on them.</p>
 <h2 id="in-this-section">In This Section<a class="headerlink" href="#in-this-section" title="Permanent link">¶</a></h2>
 <!-- - [API Overview](overview.md) - Detailed information about the API structure and authentication -->
 <!-- - [Endpoints](endpoints.md) - Summary of available API endpoints and their functionality -->

@@ -2907,6 +2907,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ingestion-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ingestion history (v1.15.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-ingestion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run ingestion (v1.15.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5960,6 +5982,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ingestion-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ingestion history (v1.15.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-ingestion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run ingestion (v1.15.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -6711,6 +6755,10 @@ you are reading:</p>
 <p>The nf-core projects a fresh deployment seeds for you carry no manifest. Only a
 project you create yourself from a template with <code>depictio ingest</code> does.</p>
 </div>
+<p>Since v1.15.0 the <strong>Ingestion</strong> tab has two views, <strong>Report</strong> and
+<a href="#ingestion-history"><strong>History</strong></a>, and, where the server allows it, a
+<a href="#run-ingestion"><strong>Run ingestion</strong></a> button next to them. A link to the project page
+ending in <code>#ingestion-history</code> opens the history directly.</p>
 <h3 id="what-the-report-shows"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg></span> What the report shows<a class="headerlink" href="#what-the-report-shows" title="Permanent link">¶</a></h3>
 <p>The report lists every expected data collection with a status:</p>
 <table>
@@ -6737,6 +6785,10 @@ project you create yourself from a template with <code>depictio ingest</code> do
 </table>
 <p>Expand a row to see its files (or the Delta-table path once aggregated), and filter or
 group rows by status.</p>
+<p>A <strong>Changes</strong> column <small>(v1.15.0+)</small> shows what the latest scan of each run
+changed in that collection: <em>+12 new</em>, <em>3 updated</em>, <em>1 failed</em>, or <code>—</code> when nothing
+changed. It is not an all-time total. The <strong>Runs identified</strong> table below gives the new
+and updated counts per run, next to its number of <strong>Files</strong>.</p>
 <p>Reading a <strong>Live project</strong>, the report drops what it cannot honestly state: <strong>Gated out</strong>
 shows <code>—</code> rather than <code>0</code>, since only a manifest records what a conditional excluded, and
 the required and optional tiles count the collections that have data without a total to
@@ -6776,6 +6828,52 @@ tools that ran and the directory that was ingested.</p>
 a dismissible <strong>health banner</strong> appears above the dashboard. The full report is reachable
 from any project's <strong>Ingestion</strong> tab on its <a href="../../usage/guides/web_ui/">project page</a>, and
 from the <strong>View ingestion report</strong> row in a dashboard's <strong>Settings</strong>.</p>
+<h3 id="ingestion-history"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5 8H12v5l4.28 2.54.72-1.21-3.5-2.08zM13 3a9 9 0 0 0-9 9H1l3.96 4.03L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.9 8.9 0 0 0 13 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9"></path></svg></span> Ingestion history <small>(v1.15.0+)</small><a class="headerlink" href="#ingestion-history" title="Permanent link">¶</a></h3>
+<p><strong>History</strong> lists this project's ingestion runs, newest first: status, what started it
+(<strong>Manual</strong>, <strong>Watch</strong> or <strong>UI</strong>), the command, how long it took and when
+it started. Expand a run for its instance, CLI version, start time, a tally of its steps,
+the steps as a timeline, and its error if it failed. A search box filters the runs.</p>
+<p>These are the runs the admin <a href="../../usage/administration/monitoring/#ingestion"><strong>Log &amp; Task → Ingestion</strong></a>
+pane shows, limited to this project, for anyone who can open it. Owners, editors and
+admins see each run in full. Other viewers, such as visitors of a public project, do not
+see local paths, host details, e-mail addresses or the text of each step, and a line
+above the list says so.</p>
+<p>The list refreshes every 30 seconds, and every 3 seconds while a run is in progress. With
+no run recorded yet, it shows the <code>depictio ingest</code> and <code>depictio watch</code> commands to start
+one. It needs <code>DEPICTIO_MONITORING_ENABLED</code>, which is on by default.</p>
+<h3 id="run-ingestion"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Run ingestion <small>(v1.15.0+)</small><a class="headerlink" href="#run-ingestion" title="Permanent link">¶</a></h3>
+<p><strong>Run ingestion</strong> starts an ingestion of the whole project on the server, without the
+CLI. It only works where the server can read the project's data, such as a shared volume
+or a mounted export, so it is off by default. When the server does not offer it, the
+button is not shown. An administrator turns it on as described in
+<a href="../../installation/docker/#browser-trigger">Starting an ingestion from the browser</a>.</p>
+<p>The button is shown but disabled, with the reason in its tooltip, when:</p>
+<ul>
+<li>you are not an owner or an editor of the project, or an admin;</li>
+<li>one of the project's data locations, single-file paths or image directories lies
+  outside the directories the server may read, or no such directory is set;</li>
+<li>the server cannot find one of the project's data locations.</li>
+</ul>
+<p><strong>Run ingestion</strong> opens a dialog with an <strong>Overwrite existing tables</strong> switch. <strong>Start</strong>
+runs the same steps as <code>depictio ingest</code>: scan, process with image upload, then joins. It
+does not sync the project configuration or import dashboards, and unlike the CLI it skips
+symlinks that point outside the scanned directory.</p>
+<div class="admonition warning">
+<p class="admonition-title">Leave Overwrite on for a project that already has data</p>
+<p>The dialog describes the switch as rebuilding everything rather than only what
+changed. In v1.15.0 it does not work that way. With the switch off, each data
+collection whose Delta table already exists fails with <em>already exists and overwrite
+is disabled</em>, as <code>depictio data process</code> does without <code>--overwrite</code>. Off is only
+useful for a project that has never been ingested.</p>
+</div>
+<p>Once the run starts, the tab switches to <strong>History</strong>, where it shows as <strong>UI</strong> with the
+source <strong>Server</strong> in the admin pane. The button shows the current step and a progress
+bar. A notification reports the end: <strong>Ingestion finished</strong>, <strong>Ingestion finished with
+errors</strong> when some collections or joins failed, or <strong>Ingestion failed</strong>. A project runs
+one ingestion at a time. Starting another while one runs follows the one in progress
+instead (<strong>Already running</strong>). The run stops after 2 hours.</p>
+<p>The ingestion runs as you. It reads your most recent token from the server, so it fails
+with <em>sign in again</em> when none is valid.</p>
 <hr>
 <h2 id="sharing-dashboards"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg></span> Sharing Dashboards<a class="headerlink" href="#sharing-dashboards" title="Permanent link">¶</a></h2>
 <h3 id="permissions"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.7 9.7 0 0 1 12 20.92 9.7 9.7 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53"></path></svg></span> Permissions<a class="headerlink" href="#permissions" title="Permanent link">¶</a></h3>

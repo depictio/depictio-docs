@@ -6971,6 +6971,10 @@
 </tr>
 </tbody>
 </table>
+<p>Since v1.15.0 the scan honours each data collection's <code>max_depth</code> and <code>ignore</code>, and
+prints a warning naming the collections that set them, since it may now register
+fewer files than before. <code>ingest</code> also takes <code>--legacy-scan-depth</code>, left out of its help, to ignore
+them for one more release. See <a href="../../usage/projects/yaml-examples/#scan-bounds">Limiting a recursive scan</a>.</p>
 </details>
 <details class="info">
 <summary>🔑 Automation</summary>
@@ -7074,7 +7078,7 @@ from its own logs. See
 <td><code>--async-upsert</code></td>
 <td><code>flag</code></td>
 <td><code>false</code></td>
-<td>Ask the server to profile each written table in the background, and poll until it finishes, instead of holding one long request open. A server without offloading enabled ignores it and answers inline</td>
+<td>Ask the server to profile each written table in the background, and poll until it finishes, instead of holding one long request open. A server without offloading enabled ignores it and answers inline. See <a href="../../installation/docker/#async-upsert">Offloading the table profile</a></td>
 </tr>
 </tbody>
 </table>
@@ -7096,6 +7100,11 @@ from its own logs. See
 <td><code>DEPICTIO_INGEST_DC_WORKERS</code></td>
 <td><code>1</code></td>
 <td>Ingest this many data collections concurrently. Clamped to 4 and to the number of data collections, so an over-large value degrades to the cap. An unparseable value logs a warning and falls back to sequential.</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_INGEST_JOB_TIMEOUT_SECONDS</code></td>
+<td><code>3600</code></td>
+<td>With <code>--async-upsert</code>, the longest wait for one server job, in seconds. <code>0</code> waits without limit. (v1.15.0+)</td>
 </tr>
 </tbody>
 </table>
@@ -7757,6 +7766,12 @@ ingest its own results when it finishes. Full guide:
 <td>Report what would be registered or removed, without writing to the server</td>
 </tr>
 <tr>
+<td><code>--legacy-scan-depth</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Ignore each data collection's scan <code>max_depth</code> and <code>ignore</code>, as releases before v1.15.0 did. Deprecated, and to be removed. See <a href="../../usage/projects/yaml-examples/#scan-bounds">Limiting a recursive scan</a></td>
+</tr>
+<tr>
 <td><code>--state-cache</code> / <code>--no-state-cache</code></td>
 <td><code>boolean</code></td>
 <td><code>--state-cache</code></td>
@@ -7833,7 +7848,7 @@ ingest its own results when it finishes. Full guide:
 <td><code>--async-upsert</code></td>
 <td><code>boolean</code></td>
 <td><code>false</code></td>
-<td>Ask the server to profile the written table in the background and poll until it finishes. Servers without offloading enabled ignore it</td>
+<td>Ask the server to profile the written table in the background and poll until it finishes. Servers without offloading enabled ignore it. See <a href="../../installation/docker/#async-upsert">Offloading the table profile</a></td>
 </tr>
 <tr>
 <td><code>--rich-tables</code></td>

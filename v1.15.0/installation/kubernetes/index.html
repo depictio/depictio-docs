@@ -5935,6 +5935,13 @@ Design mode always requires Celery. View mode behaviour is controlled separately
 <a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="nt">DEPICTIO_CELERY_WORKERS</span><span class="p">:</span><span class="w"> </span><span class="s">"4"</span>
 <a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="nt">DEPICTIO_CELERY_ENABLED</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span><span class="w">   </span><span class="c1"># async view mode (recommended for production)</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">No ingestion worker in the chart <small>(v1.15.0)</small></p>
+<p>The chart's worker reads only the default <code>celery</code> queue, and the chart has no
+<a href="../docker/#ingestion-worker">ingestion worker</a> to read the <code>ingestion</code> queue. Leave
+<code>DEPICTIO_INGESTION_ASYNC_DELTATABLE_UPSERT</code> and <code>DEPICTIO_INGESTION_BROWSER_TRIGGER</code>
+off on Kubernetes: with either on, the jobs they create are never picked up.</p>
+</div>
 <h3 id="resource-limits">Resource limits<a class="headerlink" href="#resource-limits" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># my-values.yaml</span>
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nt">backend</span><span class="p">:</span>

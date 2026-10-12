@@ -991,6 +991,56 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ingestion-worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ingestion worker (v1.15.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ingestion worker (v1.15.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#async-upsert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Offloading the table profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#browser-trigger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starting an ingestion from the browser
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-timeouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request timeouts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5460,6 +5510,56 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ingestion-worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ingestion worker (v1.15.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ingestion worker (v1.15.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#async-upsert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Offloading the table profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#browser-trigger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starting an ingestion from the browser
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-timeouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request timeouts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5789,6 +5889,97 @@ before v1.12.0, which still work.</p>
 <p class="admonition-title">Kubernetes/Helm</p>
 <p>Background callbacks are also supported in Kubernetes via the Helm chart (<code>celery.enabled: true</code> by default). See the <a href="kubernetes/">Kubernetes installation guide</a>.</p>
 </div>
+<h3 id="ingestion-worker">Ingestion worker <small>(v1.15.0+)</small><a class="headerlink" href="#ingestion-worker" title="Permanent link">¶</a></h3>
+<p><code>depictio-ingestion-worker</code> is a second Celery worker for long ingestion tasks: profiling
+a table after the CLI has written it, and an ingestion started from a project page. It
+runs the same image as <code>depictio-celery-worker</code> but reads only the <code>ingestion</code> queue, so
+a 20-minute table read never holds up the dashboard editor. It is behind a Compose
+profile, so <code>docker compose up -d</code> alone does not start it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>--profile<span class="w"> </span>ingestion<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEPICTIO_INGESTION_WORKER_CONCURRENCY</code></td>
+<td><code>2</code></td>
+<td>Tasks run at once. Each holds a table's columns in memory, so memory runs out before CPU does</td>
+</tr>
+</tbody>
+</table>
+<p>Each worker process takes one task at a time and is replaced after 10 tasks. The worker
+stays idle until one of the two features below is turned on. Both are off by default,
+and only this Compose file has the worker: the Helm chart and <code>depictio local up</code> do not
+start one.</p>
+<div class="admonition warning">
+<p class="admonition-title">Set <code>DEPICTIO_VERSION</code> before starting the profile</p>
+<p>In the v1.15.0 <code>docker-compose.yaml</code>, this service defaults to the <code>1.14.0</code> image
+while the others default to <code>1.15.0</code>. That image ignores the queue setting, reads the
+dashboard queue instead of <code>ingestion</code>, and never reports healthy. Set
+<code>DEPICTIO_VERSION=1.15.0</code> in <code>.env</code>.</p>
+</div>
+<p>Start the worker before turning either feature on. With nothing reading the <code>ingestion</code>
+queue, jobs stay pending.</p>
+<h4 id="async-upsert">Offloading the table profile<a class="headerlink" href="#async-upsert" title="Permanent link">¶</a></h4>
+<p>After the CLI writes a Delta table, the server reads it back to profile its columns. On
+a large table that takes longer than an HTTP request should. With offloading on, the
+server records the new table version at once and hands the profiling to the ingestion
+worker. A CLI run with <code>--async-upsert</code> then waits for that job instead of a response.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># .env</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nv">DEPICTIO_JOBS_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nv">DEPICTIO_INGESTION_ASYNC_DELTATABLE_UPSERT</span><span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>results/<span class="w"> </span>--server<span class="w"> </span>~/.depictio/CLI.yaml<span class="w"> </span>--async-upsert
+</code></pre></div>
+<p>The CLI waits at most <code>DEPICTIO_INGEST_JOB_TIMEOUT_SECONDS</code> for each job (<code>3600</code>; <code>0</code>
+waits without limit). Without both settings, or against an older server, the server
+ignores <code>--async-upsert</code> and profiles the table within the request. MultiQC collections
+are never offloaded.</p>
+<h4 id="browser-trigger">Starting an ingestion from the browser<a class="headerlink" href="#browser-trigger" title="Permanent link">¶</a></h4>
+<p>This turns on <a href="../../features/dashboards/#run-ingestion"><strong>Run ingestion</strong></a> on project
+pages. The server then scans and processes the data itself, so it has to see the files:
+<code>depictio-backend</code> checks that the data locations exist, and
+<code>depictio-ingestion-worker</code> reads them.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># .env</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nv">DEPICTIO_JOBS_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="nv">DEPICTIO_INGESTION_BROWSER_TRIGGER</span><span class="o">=</span><span class="nb">true</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="nv">DEPICTIO_INGESTION_ALLOWED_DATA_ROOTS</span><span class="o">=</span>/data/runs
+</code></pre></div>
+<p><code>DEPICTIO_INGESTION_ALLOWED_DATA_ROOTS</code> takes a comma-separated or JSON list of
+directories. Every data location, single-file path and image directory of a project
+must resolve inside one of them, following symlinks, and so must every file the scan
+registers. It is checked when the button is pressed, again when the worker starts, and on
+the registered files before they are read. Any signed-in user can create a project and
+name any path in it, so this list is what keeps an ingestion away from other groups' runs
+and from the server's own files. Empty, it refuses every ingestion.</p>
+<p>Mount the data at the same path in both containers, for example read-only from a
+<code>docker-compose.override.yaml</code> next to <code>docker-compose.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">services</span><span class="p">:</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="nt">depictio-backend</span><span class="p">:</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/srv/sequencing/runs:/data/runs:ro</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span><span class="nt">depictio-ingestion-worker</span><span class="p">:</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/srv/sequencing/runs:/data/runs:ro</span>
+</code></pre></div>
+<p>The projects then name their data under <code>/data/runs</code>, the path inside the containers.</p>
+<p>On the server, the scan skips any symlink that points outside the directory it walks, so
+it cannot be led out of the allowed directories. A results directory that Nextflow filled
+with links into <code>work/</code> (<code>publishDir mode: 'symlink'</code>) therefore yields no files: publish
+copies instead, or ingest it with the CLI, which reads a symlinked file wherever it
+points.</p>
+<h4 id="request-timeouts">Request timeouts<a class="headerlink" href="#request-timeouts" title="Permanent link">¶</a></h4>
+<p>Since v1.15.0 the API server lets a request run for 300 seconds instead of 120, as long
+as the CLI waits for the server to profile a written table. Before, a slow profile was
+cut off and the CLI saw a dropped connection rather than an error. The bundled viewer's
+nginx allows 3600 seconds on API requests. A reverse proxy in front of Depictio should
+allow at least 300 seconds, or the CLI should use <code>--async-upsert</code>.</p>
 <hr>
 <h2 id="managing-services"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4"></path></svg></span> Managing Services<a class="headerlink" href="#managing-services" title="Permanent link">¶</a></h2>
 <table>
@@ -5828,7 +6019,7 @@ before v1.12.0, which still work.</p>
 <hr>
 <h2 id="troubleshooting"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 12h-4v-2h4m0 6h-4v-2h4m6-6h-2.81a6 6 0 0 0-1.82-1.96L17 4.41 15.59 3l-2.17 2.17a6 6 0 0 0-2.83 0L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20z"></path></svg></span> Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
 <h3 id="a-container-fails-to-start">A container fails to start<a class="headerlink" href="#a-container-fails-to-start" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>&lt;service_name&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>&lt;service_name&gt;
 </code></pre></div>
 <p>Common causes: port conflict, volume permission error, MongoDB connection failure.</p>
 <h3 id="cannot-connect-to-services">Cannot connect to services<a class="headerlink" href="#cannot-connect-to-services" title="Permanent link">¶</a></h3>

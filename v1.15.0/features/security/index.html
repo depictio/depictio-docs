@@ -3176,6 +3176,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#past-versions-in-a-render" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Past versions in a render (v1.15.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5716,6 +5727,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#past-versions-in-a-render" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Past versions in a render (v1.15.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -6235,6 +6257,17 @@
 </tr>
 </tbody>
 </table>
+<h3 id="past-versions-in-a-render">Past versions in a render <small>(v1.15.0+)</small><a class="headerlink" href="#past-versions-in-a-render" title="Permanent link">¶</a></h3>
+<p>A render request can draw a component as a past <a href="../versioning/">dashboard version</a>
+defined it. The request names that version with <code>definition_version</code>, and the server
+reads the component from its own record of the version. A request cannot send a
+component definition, so the code of a code-mode figure always comes from a saved
+dashboard.</p>
+<ul>
+<li>A request that carries <code>component_overrides</code> is refused with 400.</li>
+<li>A version that no longer exists, or belongs to another dashboard, is refused with 400.</li>
+<li>A component that read another data collection in that version is refused with 409.</li>
+</ul>
 <hr>
 <h2 id="data-protection">Data Protection<a class="headerlink" href="#data-protection" title="Permanent link">¶</a></h2>
 <h3 id="encryption">Encryption<a class="headerlink" href="#encryption" title="Permanent link">¶</a></h3>

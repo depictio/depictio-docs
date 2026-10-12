@@ -1437,6 +1437,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ingestion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ingestion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Jobs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#telemetry" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5703,6 +5725,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ingestion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ingestion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Jobs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#telemetry" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5837,6 +5881,8 @@
 <li><a href="#logging">Logging</a></li>
 <li><a href="#monitoring">Monitoring</a></li>
 <li><a href="#dashboard-versions">Dashboard Versions</a></li>
+<li><a href="#ingestion">Ingestion</a></li>
+<li><a href="#jobs">Jobs</a></li>
 <li><a href="#telemetry">Telemetry</a></li>
 <li><a href="#multiqc-prerender">MultiQC Prerender</a></li>
 </ul>
@@ -6536,7 +6582,12 @@ entries are written with a TTL and broker keys are not, so only the cache is evi
 <tr>
 <td><code>DEPICTIO_CELERY_DEFAULT_QUEUE</code></td>
 <td><code>dashboard_tasks</code></td>
-<td>Default task queue name</td>
+<td>Not applied: a task with no route goes to the <code>celery</code> queue, the one the bundled worker reads</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_CELERY_INGESTION_QUEUE</code></td>
+<td><code>ingestion</code></td>
+<td>Queue of the offloaded ingestion tasks, read by the <a href="../docker/#ingestion-worker">ingestion worker</a> (v1.15.0+)</td>
 </tr>
 <tr>
 <td><code>DEPICTIO_CELERY_WORKER_SEND_TASK_EVENTS</code></td>
@@ -7177,6 +7228,78 @@ longer exists on `DashboardYAMLConfig`.)
 <td><code>DEPICTIO_DASHBOARD_VERSIONS_MAX_SNAPSHOT_BYTES</code></td>
 <td><code>8388608</code> (8 MiB)</td>
 <td>Largest version recorded. A larger one is skipped and logged; the save itself goes through</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="ingestion">Ingestion<a class="headerlink" href="#ingestion" title="Permanent link">¶</a></h2>
+<p><strong>Config Class:</strong> <code>IngestionConfig</code>
+<strong>Environment Prefix:</strong> <code>DEPICTIO_INGESTION_</code></p>
+<p>Server-side limits and opt-ins for ingestion (v1.15.0+). Everything but the step limit is off by default. See <a href="../docker/#ingestion-worker">Ingestion worker</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEPICTIO_INGESTION_STEP_UPDATES_PER_MINUTE</code></td>
+<td><code>60</code></td>
+<td>Live step updates recorded per ingestion run and minute. <code>success</code>, <code>failed</code> and <code>skipped</code> steps always pass. See <a href="../../usage/administration/monitoring/#ingestion">Monitoring</a></td>
+</tr>
+<tr>
+<td><code>DEPICTIO_INGESTION_ASYNC_DELTATABLE_UPSERT</code></td>
+<td><code>false</code></td>
+<td>Hand the profiling of a written table to the ingestion worker when the CLI asks with <code>--async-upsert</code>. Needs <code>DEPICTIO_JOBS_ENABLED</code>, without which it stays inline. See <a href="../docker/#async-upsert">Offloading the table profile</a></td>
+</tr>
+<tr>
+<td><code>DEPICTIO_INGESTION_BROWSER_TRIGGER</code></td>
+<td><code>false</code></td>
+<td>Offer <a href="../../features/dashboards/#run-ingestion"><strong>Run ingestion</strong></a> on project pages to owners, editors and admins. Needs <code>DEPICTIO_JOBS_ENABLED</code> and <code>DEPICTIO_INGESTION_ALLOWED_DATA_ROOTS</code>. See <a href="../docker/#browser-trigger">Starting an ingestion from the browser</a></td>
+</tr>
+<tr>
+<td><code>DEPICTIO_INGESTION_ALLOWED_DATA_ROOTS</code></td>
+<td>empty</td>
+<td>Directories a browser-started ingestion may read, comma-separated or as a JSON list. Every path a project names, and every file its scan registers, must resolve inside one of them. Empty refuses every ingestion</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="jobs">Jobs<a class="headerlink" href="#jobs" title="Permanent link">¶</a></h2>
+<p><strong>Config Class:</strong> <code>JobsConfig</code>
+<strong>Environment Prefix:</strong> <code>DEPICTIO_JOBS_</code></p>
+<p>Records of work the server accepted but finishes in the background, polled through the <a href="../../api/#jobs"><code>/jobs</code> API</a> (v1.15.0+). Off by default.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEPICTIO_JOBS_ENABLED</code></td>
+<td><code>false</code></td>
+<td>Create the <code>jobs</code> collection and serve <code>/jobs</code>. Required by both offloaded ingestion features</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_JOBS_RETENTION_HOURS</code></td>
+<td><code>24</code></td>
+<td>How long a successful job is kept</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_JOBS_FAILED_RETENTION_HOURS</code></td>
+<td><code>168</code></td>
+<td>How long a failed or cancelled job is kept</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_JOBS_MAX_RESULT_BYTES</code></td>
+<td><code>262144</code></td>
+<td>Largest job result stored. A larger one is dropped and the job marked <code>result_truncated</code></td>
 </tr>
 </tbody>
 </table>
