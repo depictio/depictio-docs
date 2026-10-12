@@ -172,11 +172,11 @@ workflows:
               # For mode: "recursive" - specify search pattern
               regex_config: # Required for recursive mode: Pattern matching configuration
                 pattern:
-                  "salmon/.*/quant.sf" # Required: Regex pattern for file discovery
+                  "salmon/{sample_id}/quant.sf" # Required: Regex pattern for file discovery
                   # Example: "stats/.*_stats\\.tsv"
-                wildcards: # Optional: Named capture groups for metadata extraction
-                  - name: "sample_id" # Wildcard name for metadata extraction
-                    wildcard_regex: "salmon/([^/]+)/quant.sf" # Regex with capture group
+                wildcards: # Optional: what each {name} placeholder of the pattern stands for
+                  - name: "sample_id" # The placeholder, and since v1.16.0 a column of the table holding what it matched
+                    wildcard_regex: "[^/]+" # Regex the placeholder is replaced by
 
               # For mode: "single" - specify exact file (alternative to regex_config)
               # filename: "metadata/sample_info.csv"  # Required for single mode: File path

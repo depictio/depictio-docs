@@ -89,6 +89,7 @@ description: >-
   Functions for viral amplicon sequencing: primer trimming, variant calling
   and consensus building.
 homepage: https://github.com/andersen-lab/ivar
+stage: variants # where its outputs sit in a pipeline (v1.16.0+)
 ```
 
 | Field | Required | Where to take it from |
@@ -99,6 +100,7 @@ homepage: https://github.com/andersen-lab/ivar
 | `biotools_url` | yes, may be `null` | `https://bio.tools/<id>` from the `biotools:` identifier. Write `biotools_url: null` when bio.tools has no entry, so the gap is explicit rather than forgotten. |
 | `nf_core_url` | when an nf-core module exists | The module the outputs come from. CI checks it against the vendored nf-core index. |
 | `edam_topics` | no | Full EDAM URLs. |
+| `stage` | no | Where the tool's outputs sit in a pipeline: `qc`, `alignment`, `quantification`, `peaks`, `variants`, `fusions`, `taxonomy`, `annotation`, `immune`, `differential`, `benchmarking` or `other` (the default). A [composed dashboard](../usage/projects/composed-dashboards.md) opens one tab per stage present, in this order. Every bundled tool declares one (v1.16.0+). |
 
 `depictio dev catalog validate` rejects a module with no `description` or
 `homepage`, and the catalog tests reject one that leaves `biotools_url` out.
@@ -149,6 +151,25 @@ Give an `advanced_viz` render an optional `id:` to address it from a dashboard a
 > do **not** also declare `columns`. If the raw file is already tidy and bindable,
 > skip the recipe and declare `columns: {NAME: Dtype, …}` (polars dtypes) instead.
 > Validation rejects setting both.
+
+### Composition hints <small>(v1.16.0+)</small> { #composition-hints }
+
+When `depictio ingest` [composes a dashboard](../usage/projects/composed-dashboards.md)
+from the catalog, three optional fields decide where an output's renders go:
+
+| Field | On | Effect |
+|-------|----|--------|
+| `stage` | the output | Overrides the tool's `stage` for this output, e.g. a MultiQC section carrying STAR's numbers is `alignment`, not MultiQC's `qc` |
+| `headline: true` | a `card` render | One of the run's key metrics: the card also goes to the composed Overview and, when its table has a sample column, its value per sample to the general statistics table, the way MultiQC's General Statistics picks a few columns per tool. Mark one or two per tool |
+| `priority` | any render | An integer ≥ 0: lower comes first within its output. Renders without one keep their declared order, after those with one |
+
+```yaml
+renders_as:
+  - { component: card, column: frip_score, aggregation: average, secondary_layout: gauge, coverage_max: 1.0, headline: true }
+```
+
+There is no separate threshold for the Overview: a headline card keeps its own
+`threshold_value`, `threshold_direction` and `threshold_warn` there.
 
 ## Step 3 — Recipe (only if the file needs reshaping)
 

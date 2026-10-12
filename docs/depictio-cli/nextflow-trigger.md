@@ -136,6 +136,15 @@ The [project YAML](../usage/projects/guide.md) says what to ingest, the
 [dashboard YAML](../features/yaml-sync.md) says what to show. Their tags have to
 line up, or the import fails and names the component that broke.
 
+!!! note "The trigger does not compose a dashboard (v1.16.0)"
+    Run by hand, `depictio ingest <results dir>`
+    [composes a dashboard](../usage/projects/composed-dashboards.md) from the
+    tools catalog when no bundled template fits. The trigger does not get that
+    far: it passes `--pipeline-id` from the pipeline's `manifest`, and a
+    pipeline Depictio ships no template for stops there, with exit code 1 in
+    the log; the pipeline still succeeds. Run `depictio ingest` on the results
+    afterwards for a composed dashboard, or give the trigger YAML of your own.
+
 A complete runnable example, pipeline included, is in
 [`depictio/cli/configs/nextflow/example/`](https://github.com/depictio/depictio/tree/main/depictio/cli/configs/nextflow/example).
 It needs no container and no bioinformatics tool.

@@ -357,7 +357,7 @@ data_collections:
           regex_config:         # Required: Pattern matching configuration
             pattern: string    # Required: Regex pattern for file discovery
                               # Example: "stats/.*_stats\\.tsv"
-            wildcards: [...]   # Optional: Named capture groups for metadata extraction
+            wildcards: [...]   # Optional: {name} placeholders of the pattern, each a column (v1.16.0+)
           max_depth: int | null # Optional: directory levels searched below each run
                                 # directory; 0 = files directly in it (v1.15.0+)
           ignore: [string] | null  # Optional: glob patterns to skip, matched against
@@ -661,11 +661,11 @@ scan:
   mode: "recursive"
   scan_parameters:
     regex_config:
-      pattern: "star_salmon/.*/quant.sf"
-      # Wildcards for metadata extraction (optional)
+      pattern: "star_salmon/{sample_id}/quant.sf"
+      # Wildcards (optional): each {name} in the pattern stands for its regex
       wildcards:
         - name: "sample_id"
-          wildcard_regex: "star_salmon/([^/]+)/quant.sf"
+          wildcard_regex: "[^/]+"
     max_depth: 5        # Optional: limit search depth
 
 # Matches files like:
@@ -673,6 +673,14 @@ scan:
 # run_001/star_salmon/sample_B/quant.sf
 # run_002/star_salmon/sample_C/quant.sf
 ```
+
+A wildcard names a part of the pattern: `{sample_id}` in `pattern` is replaced by
+its `wildcard_regex` before files are matched. Since **v1.16.0**, each wildcard
+also becomes a column of the table at ingestion, holding what it matched in each
+file's path: here `sample_id` is `sample_A` for the rows of
+`star_salmon/sample_A/quant.sf`. A file that already has a column of that name
+keeps its own. A [composed dashboard](composed-dashboards.md#adding-them) relies
+on this to keep the sample of files that carry it in their path only.
 
 #### Limiting a recursive scan <small>(v1.15.0+)</small> { #scan-bounds }
 

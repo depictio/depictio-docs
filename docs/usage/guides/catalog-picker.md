@@ -57,7 +57,9 @@ file does not carry is never proposed.
 !!! info "MultiQC is a special case"
     Every `multiqc/*` output keys the same `multiqc.parquet`, so offers are
     narrowed to the sections the ingested report actually holds, and the
-    originating tool is named on each one.
+    originating tool is named on each one. The General Statistics offer adds
+    the report's General Statistics table; before v1.16.0 it added the first
+    plot of another module.
 
 ---
 
