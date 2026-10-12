@@ -430,6 +430,18 @@ nothing watched. The later cycles rescan and rewrite what moved. No cycle checks
 server and S3 or imports dashboards: run `depictio ingest` once first if the project
 should have its dashboards.
 
+Here a project ingested from two runs with `--write-mode replace-runs` is watched. A
+third run lands in `data/`, a cycle ingests it on its own, and Ctrl-C stops the watcher
+(the waits are shortened):
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-watch.cast" data-poster="npt:0:30" data-idle-time-limit="2.5"></div>
+
+<figure markdown="span">
+  [![The Version history of physical_features after the watch: V2, by Watch, replaced one run and added 123 rows and one file; V1, by Watch, rewrote both runs; V0 is the depictio ingest](../images/guides/versioning/watch_version_history_light.webp#only-light)](../images/guides/versioning/watch_version_history_light.webp){target=_blank}
+  [![The Version history of physical_features after the watch: V2, by Watch, replaced one run and added 123 rows and one file; V1, by Watch, rewrote both runs; V0 is the depictio ingest](../images/guides/versioning/watch_version_history_dark.webp#only-dark)](../images/guides/versioning/watch_version_history_dark.webp){target=_blank}
+  <figcaption><strong>Projects → the project → <code>physical_features</code> → Version history, after the watch above.</strong> V0 is the <code>depictio ingest</code>. V1 is the watcher's first cycle, which rewrites both runs. V2 is the cycle that ingested <code>run_3_gentoo</code>: <em>runs replaced</em>, 123 rows and one file added, the other runs left as they were.</figcaption>
+</figure>
+
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `DATA_DIR` | `path` | | Directory of the pipeline results to watch. Without `--template` or `--project-config-path`, the template is detected from it |
@@ -440,7 +452,7 @@ should have its dashboards.
 | `--var` | `KEY=VALUE` | | Template variable, repeatable |
 | `--mode` | `string` | `incremental` | `incremental` re-uploads only the files that changed. `full` re-uploads and rewrites everything on every cycle |
 | `--full-every` | `int` | | Run a full cycle every N incremental ones |
-| `--backend` | `string` | `auto` | `native` (filesystem events only), `polling` (a periodic walk), `both`, or `auto`: `both` on local disk, `polling` on a network filesystem, where events do not see writes made from another host |
+| `--backend` | `string` | `auto` | `native` (filesystem events only, with the `watch` extra), `polling` (a periodic walk), `both`, or `auto`: `both` on local disk, `polling` on a network filesystem, where events do not see writes made from another host |
 | `--interval` | `float` | `300` | Seconds between polling walks, also the backstop for lost events |
 | `--debounce` | `float` | `30` | Seconds of quiet before a cycle starts |
 | `--max-delay` | `float` | `300` | Ceiling on the debounce, so a tree written continuously still gets ingested |
@@ -457,8 +469,14 @@ With `--mode incremental` and the default `--write-mode overwrite`, the watcher 
 start-up: a collection whose files moved still has its whole table rewritten.
 `--write-mode replace-runs --incremental-write` rewrites only the runs that changed. An
 incremental cycle leaves alone the collections whose files did not move, as long as the
-previous cycle succeeded; after a failure, and on every full cycle, every table is
-rebuilt.
+previous cycle succeeded; on the first cycle, after a failure, and on every full cycle,
+every table is rebuilt.
+
+**Filesystem events need the `watch` extra**: `pip install "depictio[watch]"`, or
+`uv tool install "depictio[local,watch]"` next to a local server. Without it the watcher
+silently polls alone, so a new file waits for the next walk, up to `--interval` (5
+minutes by default), while its *Watching … backend* banner still names `both` or
+`native`.
 
 `auto` picks polling alone as soon as one watched location is on NFS, SMB/CIFS, Lustre,
 GPFS, BeeGFS, GlusterFS, Ceph, AFS, 9p or a FUSE mount. A location of the project that
