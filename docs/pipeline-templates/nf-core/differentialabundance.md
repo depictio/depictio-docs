@@ -132,7 +132,9 @@ is pinned, collapsed, to the bottom of every child tab.
 
     *DESeq2 differential expression, from sample space to the gene sets that move.*
 
-    <!-- screenshot pending v2 -->
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/differentialabundance/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/differentialabundance/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     A short hero links the run parameters. *About this dashboard* says how to move
     through the tabs, *The run* lists the samples, the contrasts, the test, the
@@ -158,9 +160,9 @@ is pinned, collapsed, to the bottom of every child tab.
 
     **Data & QC** · *Do the samples separate by design, and are they normalised alike?*
 
-    <!-- screenshot pending v2 -->
+    [![Samples dashboard](../../images/pipeline-templates/nf-core/differentialabundance/samples_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/samples_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Samples dashboard](../../images/pipeline-templates/nf-core/differentialabundance/samples_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/samples_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Samples dashboard](../../images/pipeline-templates/nf-core/differentialabundance/samples_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/samples_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The samples by group, the DESeq2 size factor, the median variance-stabilised
     expression per sample and the share of features at the matrix floor. Then the
@@ -184,7 +186,9 @@ is pinned, collapsed, to the bottom of every child tab.
 
     **Differential** · *Which genes change in each contrast, and can the test be trusted?*
 
-    [![Differential expression dashboard](../../images/pipeline-templates/nf-core/differentialabundance/differential_expression_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/differential_expression_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Differential expression dashboard](../../images/pipeline-templates/nf-core/differentialabundance/differential_expression_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/differential_expression_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Differential expression dashboard](../../images/pipeline-templates/nf-core/differentialabundance/differential_expression_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/differential_expression_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Pick a contrast first. The gene tests that kept an adjusted p-value, the
     significant calls by direction, the median log2 fold change and the median
@@ -213,7 +217,9 @@ is pinned, collapsed, to the bottom of every child tab.
 
     **Differential** · *Where on the genome do the calls sit?*
 
-    [![Genome view dashboard](../../images/pipeline-templates/nf-core/differentialabundance/genome_view_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/genome_view_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Genome view dashboard](../../images/pipeline-templates/nf-core/differentialabundance/genome_view_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/genome_view_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Genome view dashboard](../../images/pipeline-templates/nf-core/differentialabundance/genome_view_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/genome_view_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Needs the run's GTF. The gene tests the annotation places, the placed calls by
     chromosome, the call strength and the biotypes the up and down calls reach.
@@ -236,7 +242,9 @@ is pinned, collapsed, to the bottom of every child tab.
 
     **Gene sets** · *Which gene sets move in each contrast, and at which pole?*
 
-    <!-- screenshot pending v2 -->
+    [![Enrichment dashboard](../../images/pipeline-templates/nf-core/differentialabundance/enrichment_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/enrichment_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Enrichment dashboard](../../images/pipeline-templates/nf-core/differentialabundance/enrichment_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/differentialabundance/enrichment_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Needs a GSEA run. The set reports by pole, the strongest absolute normalised
     enrichment score, the median FDR and the median leading-edge share of each set.

@@ -162,7 +162,9 @@ column: the antibody reaches them, through a prefix link on the set name.
 
     *Protein-DNA binding, from library quality to the regions the replicates agree on.*
 
-    <!-- screenshot pending v2 -->
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/chipseq/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/chipseq/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     A short hero links the run parameters: 2.x writes a `params.json` and a
     software versions file, and the dialog lists both. *About this dashboard* says
@@ -192,9 +194,9 @@ column: the antibody reaches them, through a prefix link on the set name.
 
     **Data & QC** · *Did sequencing, alignment and filtering work for every library?*
 
-    <!-- screenshot pending v2 -->
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/chipseq/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/chipseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/chipseq/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     MultiQC panels only. Open: general statistics, FastQC sequence counts beside
     samtools percent mapped on the unfiltered merged libraries, then the enrichment
@@ -221,9 +223,9 @@ column: the antibody reaches them, through a prefix link on the set name.
 
     **Data & QC** · *How enriched and how complex is each library?*
 
-    <!-- screenshot pending v2 -->
+    [![Signal dashboard](../../images/pipeline-templates/nf-core/chipseq/signal_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/signal_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Signal dashboard](../../images/pipeline-templates/nf-core/chipseq/signal_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/signal_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Signal dashboard](../../images/pipeline-templates/nf-core/chipseq/signal_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/signal_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The tables deepTools writes beside the curves MultiQC draws. 2.x runs
     plotFingerprint without a JSD sample, so every fingerprint reading is against
@@ -258,9 +260,9 @@ column: the antibody reaches them, through a prefix link on the set name.
 
     **Peak calls** · *How many peaks did each library yield, and how strong?*
 
-    <!-- screenshot pending v2 -->
+    [![Peaks dashboard](../../images/pipeline-templates/nf-core/chipseq/peaks_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/peaks_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Peaks dashboard](../../images/pipeline-templates/nf-core/chipseq/peaks_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/peaks_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Peaks dashboard](../../images/pipeline-templates/nf-core/chipseq/peaks_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/peaks_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     MACS3 peaks, one row per peak and ChIP, each called against its input. The
     peaks in view, their width, their fold enrichment and the median `-log10(q)`.
@@ -289,7 +291,9 @@ column: the antibody reaches them, through a prefix link on the set name.
 
     **Peak calls** · *Where do the peaks fall relative to genes?*
 
-    <!-- screenshot pending v2 -->
+    [![Annotation dashboard](../../images/pipeline-templates/nf-core/chipseq/annotation_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/annotation_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Annotation dashboard](../../images/pipeline-templates/nf-core/chipseq/annotation_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/annotation_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     HOMER assigns every peak to a feature class and to the nearest start site. The
     annotated peaks by feature class, the genes reached, the distance to the
@@ -315,7 +319,9 @@ column: the antibody reaches them, through a prefix link on the set name.
 
     **Peak calls** · *What do the libraries call at one genomic region?*
 
-    <!-- screenshot pending v2 -->
+    [![Locus dashboard](../../images/pipeline-templates/nf-core/chipseq/locus_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/locus_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Locus dashboard](../../images/pipeline-templates/nf-core/chipseq/locus_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/locus_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Three collections on one genome axis. The cards count what the region in view
     holds and follow it as the tracks do. The navigator draws the calls, one lane
@@ -341,9 +347,9 @@ column: the antibody reaches them, through a prefix link on the set name.
 
     **Comparison** · *Which peaks do the libraries agree on?*
 
-    <!-- screenshot pending v2 -->
+    [![Consensus dashboard](../../images/pipeline-templates/nf-core/chipseq/consensus_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/consensus_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Consensus dashboard](../../images/pipeline-templates/nf-core/chipseq/consensus_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/consensus_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Consensus dashboard](../../images/pipeline-templates/nf-core/chipseq/consensus_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/chipseq/consensus_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The per-ChIP calls merged into one set of intervals per antibody. The
     consensus intervals, the libraries per interval, the peaks merged and the

@@ -169,7 +169,9 @@ throughout; only the peak collections omit them.
 
     *Chromatin profiling, from fragments to the peaks replicates reproduce.*
 
-    <!-- screenshot pending v2 -->
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/cutandrun/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/cutandrun/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     A short hero links the run parameters, which for cutandrun 3.2.2 are the
     software versions: the run ships no `params.json`. *About this dashboard* says
@@ -197,9 +199,9 @@ throughout; only the peak collections omit them.
 
     **Data & QC** · *Did reads trim, align and rise above the IgG control?*
 
-    <!-- screenshot pending v2 -->
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/cutandrun/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/cutandrun/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/cutandrun/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     MultiQC panels only. Open: general statistics, FastQC sequence counts and the
     reads kept after trimming, the Bowtie 2 alignments to the target genome beside
@@ -225,7 +227,9 @@ throughout; only the peak collections omit them.
 
     **Data & QC** · *How deep and duplicated is each library, and is it enriched?*
 
-    <!-- screenshot pending v2 -->
+    [![Libraries dashboard](../../images/pipeline-templates/nf-core/cutandrun/libraries_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/libraries_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Libraries dashboard](../../images/pipeline-templates/nf-core/cutandrun/libraries_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/libraries_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The tables the pipeline publishes beside the report. Read pairs, the spike-in
     scale factor, duplicate reads and the distance from a uniform library. Then the
@@ -251,9 +255,9 @@ throughout; only the peak collections omit them.
 
     **Chromatin signal** · *Did the digestion work, and how nucleosomal are the fragments?*
 
-    <!-- screenshot pending v2 -->
+    [![Fragments dashboard](../../images/pipeline-templates/nf-core/cutandrun/fragments_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/fragments_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Fragments dashboard](../../images/pipeline-templates/nf-core/cutandrun/signal_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/signal_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Fragments dashboard](../../images/pipeline-templates/nf-core/cutandrun/fragments_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/fragments_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The nucleosomal ladder. The median fragment length, the fragments counted, the
     fragments by nucleosome class and the mononucleosome to sub-nucleosome ratio
@@ -277,7 +281,9 @@ throughout; only the peak collections omit them.
 
     **Chromatin signal** · *What did each sample call, and how much signal do peaks hold?*
 
-    <!-- screenshot pending v2 -->
+    [![Peaks dashboard](../../images/pipeline-templates/nf-core/cutandrun/peaks_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/peaks_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Peaks dashboard](../../images/pipeline-templates/nf-core/cutandrun/peaks_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/peaks_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     SEACR regions, their width, their coverage per base and the lowest FRiP in
     view. Then the region width beside the mean pile-up on the summits, the
@@ -310,7 +316,9 @@ throughout; only the peak collections omit them.
 
     **Agreement** · *Do SEACR and MACS2 call the same peaks on each sample?*
 
-    [![Caller agreement dashboard](../../images/pipeline-templates/nf-core/cutandrun/caller_agreement_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/caller_agreement_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Caller agreement dashboard](../../images/pipeline-templates/nf-core/cutandrun/caller_agreement_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/caller_agreement_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Caller agreement dashboard](../../images/pipeline-templates/nf-core/cutandrun/caller_agreement_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/caller_agreement_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Peaks called by caller, the peak width by caller, the share of one caller's
     peaks the other reproduces and the calls only one caller made. Then MACS2
@@ -335,6 +343,10 @@ throughout; only the peak collections omit them.
 
     **Agreement** · *Which peaks do a target's replicates reproduce?*
 
+    [![Consensus dashboard](../../images/pipeline-templates/nf-core/cutandrun/consensus_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/consensus_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Consensus dashboard](../../images/pipeline-templates/nf-core/cutandrun/consensus_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/consensus_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
     Consensus intervals by replicate support, the reproducible ones (two
     replicates or more) by target, the interval width and the coverage per
     interval. Then the UpSet of the replicates calling each interval, the
@@ -358,7 +370,9 @@ throughout; only the peak collections omit them.
 
     **Agreement** · *Do the callers and the replicates agree on one region?*
 
-    <!-- screenshot pending v2 -->
+    [![Locus dashboard](../../images/pipeline-templates/nf-core/cutandrun/locus_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/locus_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Locus dashboard](../../images/pipeline-templates/nf-core/cutandrun/locus_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/cutandrun/locus_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     One region on one genome axis. The cards count what the region in view holds
     and follow it as the tracks do. The SEACR navigator opens on the first contig

@@ -30,24 +30,22 @@ hide:
 </div>
 
 The riboseq template follows an nf-core/riboseq run from paired Ribo-seq and
-RNA-seq libraries to translated ORFs, one tab per question:
+RNA-seq libraries to translated ORFs:
 
-- :material-waves: **Ribo-seq QC**: whether the footprints step one codon at a time, sit on coding sequence and have the expected length
-- :material-chart-scatter-plot: **Sample space**: whether the libraries separate by assay first, then by design, on their Salmon expression
-- :material-scale-balance: **Translational regulation**: which genes change through translation, buffering or mRNA abundance, per anota2seq contrast
-- :material-chart-line: **Translational efficiency**: which genes are translated more or less than their mRNA predicts
-- :material-set-merge: **ORF discovery**: ORF classes per library, and where Ribo-TISH and RiboCode agree
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: the MultiQC report, riboWaltz periodicity of the footprints, and the Salmon sample space of both assays
+- :material-scale-balance: **Translation**: translational efficiency per gene, pooled over the run, and anota2seq translational regulation per contrast
+- :material-set-merge: **ORFs**: ORF classes per library, and where Ribo-TISH, RiboCode and the annotation agree
 
-A `Run at a glance` strip and the collapsed `Sample sheet` are pinned to the top
-of every tab, and the `Sample scope` filters (library, assay and, with a design
-table, the design group) apply everywhere.
+The persistent `Sample filters` (the design group, the library and the assay)
+sit in the left panel and narrow every tab that reads per-library data.
 
 !!! info "Two assays in one sample sheet"
     A riboseq run mixes total mRNA libraries (`type: rnaseq`) and ribosome
     footprint libraries (`type: riboseq`). The MultiQC and Sample space tabs read
     both; the riboWaltz, Ribo-TISH and RiboCode panels read the footprint
     libraries only, and anota2seq pairs the two per contrast. The `Assay` filter
-    splits them on every tab.
+    splits them on every tab that reads per-library data.
 
 ---
 
@@ -88,9 +86,9 @@ The template reads the sample sheet, the MultiQC report, the Salmon merged gene
 matrices, the riboWaltz QC tables, the anota2seq results per contrast, the
 in-frame P-site counts and the Ribo-TISH and RiboCode ORF calls. Every
 collection past the sample sheet, MultiQC and Salmon is optional, so a run that
-skipped riboWaltz, the contrasts or an ORF caller still imports. 47 of its 77
-components carry a `use:` catalog reference, so a tile says where its panel
-comes from.
+skipped riboWaltz, the contrasts or an ORF caller still imports. 45 of its 65
+tiles carry a `use:` catalog reference, so a tile says where its panel comes
+from.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -108,174 +106,255 @@ comes from.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Six tabs, read as a funnel: are the libraries usable, do the footprints come
-from translating ribosomes, do the libraries group by assay and design, which
-genes change translation between conditions, which are translated above or
-below their mRNA level, and which ORFs the callers find. Each tab below carries
-the **same icon and colour the dashboard gives it**. Screenshots come from the
-run described under Validation runs.
+One dashboard: the **Overview**, then six child tabs in three groups, read as a
+funnel from the reads to the ORFs being translated. Each tab below carries the
+**same icon and colour the dashboard gives it**, so the page and the app read
+alike.
 
-=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Ribo-seq QC, Sample space |
+| Translation | Translational efficiency, Translational regulation |
+| ORFs | ORF discovery |
 
-    *Did the reads survive trimming, rRNA removal and alignment?*
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The persistent *Sample
+filters* (the design group, the library and the assay) sit in the left panel and
+narrow every tab that reads per-library data; Translational efficiency and
+Translational regulation are pooled over the run and do not follow them. The
+*Sample sheet* section (the sample sheet and the optional design table) is pinned,
+collapsed, to the bottom of every child tab. Without a `METADATA_FILE` the design
+table and the group filters go; the library and assay filters remain.
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/riboseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+=== ":material-compass-outline: Overview"
 
-    The tab is the MultiQC report as the run published it. FastQC is read at three
-    stages (raw, trimmed and rRNA-filtered), SortMeRNA says how much of each
-    library was ribosomal RNA, STAR and Salmon what was placed and quantified, and
-    Ribo-TISH gives the reading-frame proportions and footprint lengths. The
-    remaining FastQC and samtools panels sit in a collapsed section.
+    *Ribosome footprints and mRNA, from read QC to the ORFs being translated.*
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/riboseq/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/riboseq/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A short hero links the run parameters. *About this dashboard* says what the
+    dashboard shows and how the two filter levels work, *The run* lists the
+    libraries, the contrasts, the rRNA removal tool, the aligners and the
+    efficiency method, and *Pipeline* walks the six steps from cleaning to ORFs,
+    each linked to its settings and its tab. The findings are live values: they
+    follow the filters, except the efficiency and ORF rows, which are pooled over
+    the run. No key figure reads anota2seq, so a run without `--contrasts` keeps
+    four cards; regulation is a findings row and a figure.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Library`, `Assay` and the design group (`GROUP_COL`) on the
-        sample sheet and design table, persistent and pinned to the top of every
-        tab, plus `Read layout` in a *Library layout* group.
+        **Filters** · the left panel starts collapsed. *Key figures* has its own
+        filter bar (the design group and the library), *Findings* another (the
+        design group and the contrast): each narrows its own section only.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards: libraries by assay, contrasts, genes quantified, P-sites assigned (pinned) |
-        | Sample sheet | *Sample sheet*, *Design table* (collapsed, pinned) |
-        | Read quality | *Raw sequence counts*, *Raw adapter content*, *Sequence counts after rRNA removal*, *Read length after rRNA removal* |
-        | rRNA depletion | *Reads matched to rRNA databases* |
-        | Alignment and quantification | *STAR alignment summary*, *Salmon fragment length distribution* |
-        | Footprint quality | *Reading frame proportions*, *Footprint length distribution* |
-        | More MultiQC panels | 4 FastQC and samtools panels (collapsed) |
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: libraries by assay, frame-0 share of CDS P-sites, genes expressed, ORFs by class |
+        | Findings | Live result rows, then 4 figures: the P-sites around the start codon, the efficiency plane, the fold-change plane and the caller UpSet |
+        | How to read this dashboard | The tabs by group, each with its question |
 
-=== ":material-waves:{ .mc-grape } Ribo-seq QC"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Do the footprints step one codon at a time and sit on coding sequence?*
+    **Data & QC** · *Did the reads survive trimming, rRNA removal and alignment?*
 
-    [![Ribo-seq QC dashboard](../../images/pipeline-templates/nf-core/riboseq/ribo_seq_qc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/ribo_seq_qc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/riboseq/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    riboWaltz tables drive the tab: P-sites per reading frame in each transcript
-    region, the footprint length profile, the metagene signal around the start and
-    stop codons and the P-site share per region. The frame 0 share is taken on
-    frame 0 itself, not on the dominant frame, so a mis-set P-site offset shows as
-    a low value. The phasing plane puts the frame 0 share against the CDS share,
-    with a linked library record beside it that folds to a slim rail until a point
-    is picked.
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/riboseq/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    MultiQC panels only. Open: FastQC sequence counts and adapter content on the
+    raw reads, then counts and read lengths after rRNA removal; the SortMeRNA rRNA
+    share beside the STAR summary; Ribo-TISH's reading-frame proportions and
+    footprint lengths. Footprints are short, so Ribo-seq libraries show heavy
+    adapter content and a large rRNA share: compare them with each other, not with
+    RNA-seq. The Salmon fragment lengths, the raw per-base quality, the read
+    lengths after trimming, the FastQC status after rRNA removal and the samtools
+    mapping rate are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Frame 0 share in CDS (%)` and `P-sites in CDS (%)` ranges
-        in a *Library quality* group, which reach every riboWaltz view.
+        **Filters** · `Sample ID`, read from the MultiQC report, and `Read layout`
+        on the sample sheet, so both work on a run without a design table.
+
+        | Section | What it holds |
+        |---|---|
+        | Read quality | 4 MultiQC panels |
+        | rRNA and alignment | 2 MultiQC panels |
+        | Footprint quality | 2 MultiQC panels |
+        | QC details (collapsed) | 5 MultiQC panels |
+
+=== ":material-waves:{ .mc-grape } Ribo-seq QC"
+
+    **Data & QC** · *Do the footprints come from translating ribosomes?*
+
+    [![Ribo-seq QC dashboard](../../images/pipeline-templates/nf-core/riboseq/ribo_seq_qc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/ribo_seq_qc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Ribo-seq QC dashboard](../../images/pipeline-templates/nf-core/riboseq/ribo_seq_qc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/ribo_seq_qc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The P-sites riboWaltz assigned, the median frame-0 share in the CDS, the
+    lowest frame margin against a 20-point threshold and the median CDS share of
+    P-sites. Then the P-sites per reading frame (the CDS first, a UTR one switch
+    away), the P-sites around the start and the stop codon, and the phasing plane
+    beside the footprint length profiles. The frame-0 share is taken on frame 0
+    itself, not on the dominant frame, so a mis-set P-site offset shows as a low
+    value. The region composition, the library table with its record card and the
+    region table against the length expectation are collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Frame 0 in CDS (%)` and `P-sites in CDS (%)` ranges on
+        `ribowaltz_summary`, which links to every other riboWaltz view.
 
         | Section | What it holds |
         |---|---|
         | Periodicity at a glance | 4 cards |
-        | Reading frame | *P-sites per reading frame* |
-        | Footprint length | *Footprint length per library* |
-        | Metagene profiles | *P-sites around the start codon*, *P-sites around the stop codon* |
-        | P-site regions | *P-sites per transcript region* |
-        | Library detail | *Phasing against CDS share*, *Library record* |
-        | Library rows | *Ribo-seq library quality*, *P-site regions against the length expectation* (collapsed) |
+        | Reading frame | 1 advanced visualization |
+        | Metagene profiles | 2 advanced visualizations |
+        | Libraries | 2 advanced visualizations: the phasing plane and the footprint length profiles |
+        | Library detail (collapsed) | 1 advanced visualization, *Ribo-seq library quality* + a library record card, *P-site regions against the length expectation* |
+
+    !!! tip "Only with riboWaltz"
+        A run with `--skip_ribowaltz` writes no riboWaltz tables: the tab is
+        dropped, and with it the frame-0 card, the frame-0 row and the start-codon
+        figure on the Overview.
 
 === ":material-chart-scatter-plot:{ .mc-cyan } Sample space"
 
-    *Do the libraries separate by assay first, then by design?*
+    **Data & QC** · *Do the libraries separate by assay first, then by design?*
 
-    [![Sample space dashboard](../../images/pipeline-templates/nf-core/riboseq/sample_space_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/sample_space_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Sample space dashboard](../../images/pipeline-templates/nf-core/riboseq/sample_space_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/sample_space_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    A PCA on the Salmon TPMs of every library, Ribo-seq and RNA-seq together.
-    The two assays are expected to split first and the design groups within each,
-    so a library that sits with the wrong assay or away from its group stands
-    out. Lasso a point to read that library in the record beside the PCA, which
-    stays a slim rail until then.
+    [![Sample space dashboard](../../images/pipeline-templates/nf-core/riboseq/sample_space_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/sample_space_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · a `Genes expressed` range in a *Library expression* group.
-
-        | Section | What it holds |
-        |---|---|
-        | Sample space | *Library PCA on Salmon TPMs*, *Library record* |
-        | Library rows | *Library PCA and expression summary* (collapsed) |
-
-=== ":material-scale-balance:{ .mc-indigo } Translational regulation"
-
-    *Which genes change through translation, buffering or mRNA abundance?*
-
-    [![Translational regulation dashboard](../../images/pipeline-templates/nf-core/riboseq/translational_regulation_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/translational_regulation_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    The fold-change plane puts ribosome-bound against total mRNA change per gene,
-    coloured by the regulatory mode anota2seq assigns with its default selection
-    thresholds. A translation volcano and one volcano per anota2seq analysis
-    follow. Selecting a gene in the regulation table opens the gene record beside
-    it across the four analyses, and a mode or contrast pick narrows the other
-    panels to the same genes.
+    The libraries placed, split by the sheet's leading factor (the assay on a
+    riboseq sheet), the median genes detected, and the median genes expressed and
+    median TPM per library with their spread. Then a PCA on the Salmon TPMs of
+    every library, Ribo-seq and RNA-seq together, coloured by the leading factor;
+    any other sheet column is one switch away. The first component usually splits
+    the two assays; read the next ones for the design groups within each. A lasso
+    filters the linked panels. The PCA table with the library record beside it is
+    collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Contrast`, `Regulatory mode` and `Gene` in a *Regulation*
-        group, plus `anota2seq analysis` for the per-analysis volcano.
+        **Filters** · a `Genes expressed` range on `sample_pca`.
 
         | Section | What it holds |
         |---|---|
-        | Regulation at a glance | 4 cards |
-        | Fold-change plane | *Ribosome-bound against total mRNA change* |
-        | Significance | *Translation effect against significance*, *Each anota2seq analysis* |
-        | Gene detail | *Regulatory mode per gene*, *Gene record* |
-
-    !!! tip "Only with contrasts"
-        anota2seq runs only when the pipeline got `--contrasts`. Without it the
-        regulation collections are not written and the tab is dropped.
+        | Libraries at a glance | 4 cards |
+        | Sample space | 1 advanced visualization |
+        | Library rows (collapsed) | *Library PCA and expression summary* + a library record card |
 
 === ":material-chart-line:{ .mc-teal } Translational efficiency"
 
-    *Which genes are translated more or less than their mRNA predicts?*
+    **Translation** · *Which genes carry more ribosomes than their mRNA level predicts?*
 
-    [![Translational efficiency dashboard](../../images/pipeline-templates/nf-core/riboseq/translational_efficiency_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/translational_efficiency_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Translational efficiency dashboard](../../images/pipeline-templates/nf-core/riboseq/translational_efficiency_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/translational_efficiency_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Translational efficiency dashboard](../../images/pipeline-templates/nf-core/riboseq/translational_efficiency_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/translational_efficiency_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Translational efficiency is log2 of Ribo-seq CPM over RNA-seq CPM, computed by
-    a template recipe from the in-frame P-site count matrix and pooled over the
-    run. The plane puts Ribo-seq against RNA-seq abundance per gene, so genes off
-    the diagonal are translated above or below their mRNA level. Click or lasso a
-    gene to read its record beside the plane.
+    a template recipe from the in-frame P-site count matrix and pooled over every
+    library of the run, so it needs no contrast. The genes both assays reach, the
+    median log2 efficiency and the median Ribo-seq and RNA-seq abundance. Then the
+    plane of Ribo-seq against RNA-seq abundance, one point per gene coloured by
+    efficiency, with the diagonal of equal efficiency: genes above it carry more
+    ribosomes than their mRNA level predicts. The plane has no point labels; hover
+    names a gene. The per-gene table with the gene record beside it is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · a `Translational efficiency (log2)` range and `Gene` in an
-        *Efficiency* group.
+        **Filters** · a `Translational efficiency (log2)` range and `Gene` on
+        `translational_efficiency`.
 
         | Section | What it holds |
         |---|---|
         | Efficiency at a glance | 4 cards |
-        | Efficiency plane | *Ribo-seq against RNA-seq abundance*, *Gene record* |
-        | Gene rows | *Translational efficiency per gene* (collapsed) |
+        | Efficiency plane | 1 advanced visualization |
+        | Gene detail (collapsed) | *Translational efficiency per gene* + a gene record card |
 
-=== ":material-set-merge:{ .mc-pink } ORF discovery"
+=== ":material-scale-balance:{ .mc-indigo } Translational regulation"
 
-    *Which ORFs are found, of which class, and do both callers agree?*
+    **Translation** · *Which genes change translation between conditions, and through which mode?*
 
-    [![ORF discovery dashboard](../../images/pipeline-templates/nf-core/riboseq/orf_discovery_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/orf_discovery_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Translational regulation dashboard](../../images/pipeline-templates/nf-core/riboseq/translational_regulation_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/translational_regulation_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Stacked bars give the share of each ORF class per library, for each caller.
-    The UpSet compares Ribo-TISH, RiboCode and the annotation on one key, the
-    genomic stop codon (`chrom:strand:stop`), so alternative start sites of one ORF
-    collapse onto one row. Selecting an ORF in the pooled table opens its record
-    beside it; an ORF-class or overlap pick reaches the per-library calls.
+    [![Translational regulation dashboard](../../images/pipeline-templates/nf-core/riboseq/translational_regulation_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/translational_regulation_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Pick a contrast first: every number on the tab depends on it. The regulated
+    calls by mode, the translation calls by direction, the median translation
+    effect and the smallest translation adjusted p against anota2seq's cut-off of
+    0.15. Then the fold-change plane, ribosome-bound against total mRNA change,
+    coloured by mode: on the diagonal the mRNA level drives the change, off it
+    translation does. Below, the translation volcano beside a volcano of any one
+    of the four anota2seq analyses, each with a View switch to its QQ plot. The
+    regulation table and its gene record, across the four analyses, are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `ORF class`, `Gene` and a `Protein length (aa)` range in an
-        *ORFs* group.
+        **Filters** · `Contrast`, `Regulatory mode` and `Gene` on
+        `anota2seq_regulation`, and an `anota2seq analysis` picker on
+        `anota2seq_results` for the second volcano.
+
+        | Section | What it holds |
+        |---|---|
+        | Regulation at a glance | 4 cards |
+        | Fold-change plane | 1 advanced visualization |
+        | Significance | 2 advanced visualizations |
+        | Gene detail (collapsed) | *Regulatory mode per gene* + a gene record card |
+
+    !!! tip "Only with contrasts"
+        anota2seq runs only when the pipeline got `--contrasts`. Without it the
+        regulation collections are not written and the tab is dropped, with the
+        contrast filter, the regulation row and the fold-change figure on the
+        Overview.
+
+=== ":material-set-merge:{ .mc-pink } ORF discovery"
+
+    **ORFs** · *Which ORFs are translated, and do Ribo-TISH and RiboCode agree?*
+
+    [![ORF discovery dashboard](../../images/pipeline-templates/nf-core/riboseq/orf_discovery_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/orf_discovery_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![ORF discovery dashboard](../../images/pipeline-templates/nf-core/riboseq/orf_discovery_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/riboseq/orf_discovery_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The pooled ORFs split by class, the ORFs Ribo-TISH and the ORFs RiboCode
+    report (each spread by the libraries reporting an ORF) and the median protein
+    length. Then the ORF classes per library, one caller at a time, and the UpSet
+    of Ribo-TISH, RiboCode and the annotated CDS. The callers are compared on the
+    genomic stop codon (`chrom:strand:stop`), so alternative start sites of one ORF
+    collapse onto one row; ORFs outside the annotated CDS that both callers report
+    are the best supported new candidates. The pooled table with the ORF record
+    beside it, then each caller's calls per library, are collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `ORF class`, `Gene` and a `Protein length (aa)` range on
+        `orf_overlap`.
 
         | Section | What it holds |
         |---|---|
         | ORFs at a glance | 4 cards |
-        | ORF classes per library | *ORF classes per library* |
-        | Caller agreement | *ORFs per caller and annotation* |
-        | ORF detail | *ORFs pooled over libraries*, *ORF record* |
-        | ORF rows | *Ribo-TISH calls per library*, *RiboCode calls per library* (collapsed) |
+        | ORF classes per library | 1 advanced visualization |
+        | Caller agreement | 1 advanced visualization |
+        | ORF detail (collapsed) | *ORFs pooled over libraries* + an ORF record card |
+        | Calls per library (collapsed) | *Ribo-TISH calls per library*, *RiboCode calls per library* |
 
-Tables and point views select on their entity column: the sample sheet, the
-phasing scatter and the Ribo-seq QC tables on `sample`, and the design table on
-its id column; the library PCA and its table on `sample_id`; the regulation and
-efficiency planes and their gene tables on `gene_id`; the pooled ORF table on
-`orf_id`. A pick narrows every tile on the tab that reads the same collection or
-one linked from it, and each record card follows the tile beside it.
+    !!! tip "One caller skipped"
+        The four cards read the pooled table, so with `--skip_ribotish` or
+        `--skip_ribocode` the skipped caller keeps its card and reads 0, and only
+        its per-library table goes. The tab is dropped only when both callers are
+        skipped.
+
+Tables select rows, and the phasing plane, the PCA and the efficiency and
+fold-change planes select points: the sample sheet, the riboWaltz tables and the
+phasing plane on `sample`, the design table on its id column, the PCA and its
+table on `sample_id`, the efficiency and regulation planes and tables on
+`gene_id`, the pooled ORF table on `orf_id`. A pick narrows the other tiles of its
+collection and follows the project links to the collections downstream of it.
+Each record card sits beside the table that drives it, in its collapsed section,
+and waits for a picked row or point.
 
 ---
 

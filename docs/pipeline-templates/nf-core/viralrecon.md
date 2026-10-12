@@ -159,7 +159,9 @@ pinned, collapsed, to the bottom of every child tab.
 
     *Viral genomes, from reads to variants, consensus and lineage.*
 
-    <!-- screenshot pending v2 -->
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/viralrecon/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/viralrecon/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     A short hero links the run parameters. *About this dashboard* says how to move
     through the tabs, *The run* lists the samples, platform and protocol, reference,
@@ -184,11 +186,9 @@ pinned, collapsed, to the bottom of every child tab.
 
     **Data & QC** · *Did reads trim, align and cover the genome in every sample?*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    <!-- screenshot pending v2 -->
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/viralrecon/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     MultiQC panels only: general statistics, the samples that failed mapping, fastp
     filtered reads, Bowtie 2 alignments and the mosdepth cumulative coverage open.
@@ -209,11 +209,9 @@ pinned, collapsed, to the bottom of every child tab.
 
     **Data & QC** · *Did each sample yield a well-covered, trustworthy consensus genome?*
 
-    [![Sample QC dashboard](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Sample QC dashboard](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Sample QC dashboard](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    <!-- screenshot pending v2 -->
+    [![Sample QC dashboard](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The median **Reads mapped** against the 1,000-read floor, the share of reads
     mapped, the **Median depth** and the **Genome at 10x**. Then median depth against
@@ -236,11 +234,9 @@ pinned, collapsed, to the bottom of every child tab.
 
     **Data & QC** · *Where along the genome does each sample lose depth?*
 
-    [![Coverage and depth dashboard](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Coverage & Depth dashboard](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Coverage and depth dashboard](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    <!-- screenshot pending v2 -->
+    [![Coverage & Depth dashboard](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The median depth per 200 bp window, the windows under 10x, the median amplicon
     depth and the amplicons under 10x in at least one sample; 10x is the depth under
@@ -264,11 +260,9 @@ pinned, collapsed, to the bottom of every child tab.
 
     **Genomes** · *Which mutations does each sample carry, and how well supported?*
 
-    [![Variants dashboard](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/variants_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Variants dashboard](../../images/pipeline-templates/nf-core/viralrecon/variants_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/variants_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Variants dashboard](../../images/pipeline-templates/nf-core/viralrecon/variants_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/variants_dark.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    <!-- screenshot pending v2 -->
+    [![Variants dashboard](../../images/pipeline-templates/nf-core/viralrecon/variants_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/variants_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The calls by functional class, the distinct mutations, the median allele
     frequency against the 0.75 consensus cut-off and the median read depth. Then the
@@ -296,11 +290,9 @@ pinned, collapsed, to the bottom of every child tab.
 
     **Genomes** · *Which lineage and clade is each sample, and do they agree?*
 
-    [![Lineage and clustering dashboard](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Lineage & Clustering dashboard](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Lineage and clustering dashboard](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    <!-- screenshot pending v2 -->
+    [![Lineage & Clustering dashboard](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The distinct Pangolin lineages, the distinct Nextclade clades, the median
     Nextclade QC score and the median missing bases. Then the flow from Pangolin QC

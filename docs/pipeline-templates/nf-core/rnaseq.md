@@ -147,7 +147,9 @@ condition, and every tile that shows one says so.
 
     *Bulk RNA-seq, from reads to the genes that vary between conditions.*
 
-    <!-- screenshot pending v2 -->
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/rnaseq/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/rnaseq/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     A short hero links the run parameters. *About this dashboard* says how to move
     through the tabs, *The run* lists the samples, genome, aligner and trimmer, and
@@ -172,7 +174,9 @@ condition, and every tile that shows one says so.
 
     **Data & QC** · *Did trimming, alignment and quantification work for every library?*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/rnaseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/rnaseq/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/rnaseq/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     MultiQC panels only. Open: general statistics, the raw read counts beside the
     reads Trim Galore kept, STAR's summary beside samtools percent mapped, then the
@@ -196,7 +200,9 @@ condition, and every tile that shows one says so.
 
     **Data & QC** · *Which library stands apart on mapping, duplication or read placement?*
 
-    <!-- screenshot pending v2 -->
+    [![Library QC dashboard](../../images/pipeline-templates/nf-core/rnaseq/library_qc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/library_qc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Library QC dashboard](../../images/pipeline-templates/nf-core/rnaseq/library_qc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/library_qc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Reads received by STAR, the uniquely mapped share on a gauge, the duplication
     share and the exonic share. Then eleven MultiQC general statistics as parallel
@@ -219,7 +225,9 @@ condition, and every tile that shows one says so.
 
     **Data & QC** · *Do the replicates of each condition sit together?*
 
-    [![Sample Space dashboard](../../images/pipeline-templates/nf-core/rnaseq/expression_overview_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/expression_overview_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Sample Space dashboard](../../images/pipeline-templates/nf-core/rnaseq/sample_space_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/sample_space_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Sample Space dashboard](../../images/pipeline-templates/nf-core/rnaseq/sample_space_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/sample_space_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Libraries by condition, genes expressed, genes detected and the median TPM,
     from the merged Salmon TPM matrix. Then the pipeline's own DESeq2 QC PCA beside
@@ -242,7 +250,9 @@ condition, and every tile that shows one says so.
 
     **Expression** · *Which genes vary most between the libraries and conditions?*
 
-    <!-- screenshot pending v2 -->
+    [![Variable Genes dashboard](../../images/pipeline-templates/nf-core/rnaseq/variable_genes_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/variable_genes_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Variable Genes dashboard](../../images/pipeline-templates/nf-core/rnaseq/variable_genes_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/variable_genes_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The genes in view, their median log2(TPM + 1), the genes two-fold higher in
     one condition and the highest TPM. Then the 500 most variable genes as a
@@ -265,9 +275,9 @@ condition, and every tile that shows one says so.
 
     **Expression** · *Where does a gene sit, and which condition does it peak in?*
 
-    <!-- screenshot pending v2 -->
+    [![Gene Explorer dashboard](../../images/pipeline-templates/nf-core/rnaseq/gene_explorer_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/gene_explorer_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Gene Explorer dashboard](../../images/pipeline-templates/nf-core/rnaseq/gene_explorer_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/gene_explorer_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Gene Explorer dashboard](../../images/pipeline-templates/nf-core/rnaseq/gene_explorer_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnaseq/gene_explorer_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The expressed genes by the condition they peak in, their mean level, their
     spread and the lead of the top condition. Then the mean-variance plane, one

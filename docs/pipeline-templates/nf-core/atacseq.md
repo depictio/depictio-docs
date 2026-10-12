@@ -159,7 +159,9 @@ filters do not narrow them.
 
     *Chromatin accessibility, from library quality to the peaks the libraries agree on.*
 
-    <!-- screenshot pending v2 -->
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/atacseq/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/atacseq/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     A short hero links the run parameters, which for atacseq 2.x are the software
     versions: the run ships no `params.json`. *About this dashboard* says how the
@@ -189,9 +191,9 @@ filters do not narrow them.
 
     **Data & QC** · *Did sequencing, alignment and filtering work for every library?*
 
-    <!-- screenshot pending v2 -->
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/atacseq/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/atacseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/atacseq/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     MultiQC panels only. Open: general statistics, FastQC sequence counts beside
     samtools percent mapped, then the deepTools fingerprint, FRiP scores, peaks per
@@ -218,9 +220,9 @@ filters do not narrow them.
 
     **Data & QC** · *Did transposition work, library by library?*
 
-    <!-- screenshot pending v2 -->
+    [![ATAC quality dashboard](../../images/pipeline-templates/nf-core/atacseq/atac_quality_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/atac_quality_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![ATAC quality dashboard](../../images/pipeline-templates/nf-core/atacseq/atac_signal_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/atac_signal_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![ATAC quality dashboard](../../images/pipeline-templates/nf-core/atacseq/atac_quality_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/atac_quality_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The ataqv numbers a library is accepted or rejected on: TSS enrichment, the
     lowest share of reads in peaks, the mitochondrial fraction and the duplicate
@@ -255,7 +257,9 @@ filters do not narrow them.
 
     **Data & QC** · *How enriched and how complex is each library?*
 
-    <!-- screenshot pending v2 -->
+    [![Signal dashboard](../../images/pipeline-templates/nf-core/atacseq/signal_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/signal_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Signal dashboard](../../images/pipeline-templates/nf-core/atacseq/signal_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/signal_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The tables deepTools and Picard write beside the curves MultiQC draws. The
     coverage concentration, the divergence from a uniform library, the library size
@@ -288,9 +292,9 @@ filters do not narrow them.
 
     **Peak calls** · *How many peaks did each library yield, and how strong?*
 
-    <!-- screenshot pending v2 -->
+    [![Peaks dashboard](../../images/pipeline-templates/nf-core/atacseq/peaks_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/peaks_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Peaks dashboard](../../images/pipeline-templates/nf-core/atacseq/peaks_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/peaks_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Peaks dashboard](../../images/pipeline-templates/nf-core/atacseq/peaks_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/peaks_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     MACS2 broad calls, one row per peak and library: a broad call reports a region
     rather than a summit. The peaks in view, their width, their fold enrichment and
@@ -314,7 +318,9 @@ filters do not narrow them.
 
     **Peak calls** · *Where do the peaks fall relative to genes?*
 
-    <!-- screenshot pending v2 -->
+    [![Annotation dashboard](../../images/pipeline-templates/nf-core/atacseq/annotation_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/annotation_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Annotation dashboard](../../images/pipeline-templates/nf-core/atacseq/annotation_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/annotation_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     HOMER assigns every peak to a feature class and to the nearest start site. The
     annotated peaks by feature class, the genes reached, the distance to the
@@ -340,7 +346,9 @@ filters do not narrow them.
 
     **Peak calls** · *What do the libraries call at one genomic region?*
 
-    <!-- screenshot pending v2 -->
+    [![Locus dashboard](../../images/pipeline-templates/nf-core/atacseq/locus_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/locus_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Locus dashboard](../../images/pipeline-templates/nf-core/atacseq/locus_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/locus_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Three collections on one genome axis. The cards count what the region in view
     holds and follow it as the tracks do. The navigator draws the broad calls, one
@@ -365,9 +373,9 @@ filters do not narrow them.
 
     **Comparison** · *Which peaks do the libraries agree on?*
 
-    <!-- screenshot pending v2 -->
+    [![Consensus dashboard](../../images/pipeline-templates/nf-core/atacseq/consensus_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/consensus_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    [![Consensus dashboard](../../images/pipeline-templates/nf-core/atacseq/consensus_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/consensus_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Consensus dashboard](../../images/pipeline-templates/nf-core/atacseq/consensus_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/atacseq/consensus_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The per-library calls merged into one set of intervals. The consensus
     intervals, the libraries per interval, the peaks merged and the support of the

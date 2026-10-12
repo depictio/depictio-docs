@@ -30,17 +30,15 @@ hide:
 </div>
 
 The smrnaseq template follows an nf-core/smrnaseq run from trimmed small RNA
-libraries to novel miRNA candidates, one tab per question:
+libraries to novel miRNA candidates:
 
-- :material-test-tube: **Library QC**: what each library is made of, how long its reads are and whether it was sequenced deep enough
-- :material-chart-box-outline: **miRNA expression**: which miRNAs each sample carries, which vary most and how they split by design group
-- :material-scale-balance: **Group comparison**: how the samples relate on miRNA expression, and which miRNAs separate two groups
-- :material-shape-outline: **isomiRs**: how far the reads stray from the reference miRNA sequences, by isomiR class
-- :material-star-outline: **Novel miRNAs**: the precursors miRDeep2 proposes beyond miRBase, and where to set its score cutoff
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: the MultiQC report, then what each library is made of, how long its reads are and whether it was sequenced deep enough
+- :material-scale-balance: **Expression**: which miRNAs each library carries and which vary most, how the libraries relate, and which miRNAs separate two groups
+- :material-shape-outline: **Sequences**: how far the reads stray from the reference miRNA sequences, and the precursors miRDeep2 proposes beyond miRBase
 
-A `Run at a glance` strip and the collapsed `Sample sheet` are pinned to the top
-of every tab, and the `Sample scope` filters (sample, design group, miRNA depth)
-apply everywhere.
+The persistent `Sample filters` (the design group, then the sample) sit in the
+left panel and narrow every tab.
 
 !!! info "Expression is aggregated from the mirtop isomiR table"
     The template reads miRNA expression from mirtop's joined isomiR table, one
@@ -65,8 +63,8 @@ apply everywhere.
     The pipeline samplesheet carries no design column, so the design comes from
     an optional table: `METADATA_FILE`, sample id in the first column (or in a
     column named `sample`), one column per factor, and `GROUP_COL` defaulting to
-    the first factor. Without it the design filter and card are dropped and the
-    figures fall back to one colour. `GENOME` (default `hg38`) is the UCSC
+    the first factor. Without it the design table, the group filters and the
+    group splits are dropped and the figures fall back to one colour. `GENOME` (default `hg38`) is the UCSC
     assembly the novel precursors link out to. A run with `--skip_mirdeep` takes
     `--var SKIP_MIRDEEP=true`, one with `--skip_multiqc` takes
     `--var SKIP_MULTIQC=true`.
@@ -89,8 +87,8 @@ apply everywhere.
 The template reads the MultiQC report, the mirtop joined isomiR table, the
 miRDeep2 per-sample results and the optional design table. The sample hub, the
 per-miRNA summary, the PCA, the heatmap matrix, the isomiR composition and the
-miRDeep2 precursors are recipes over those files. 24 of its 74 components carry
-a `use:` catalog reference, so a tile says where its panel comes from.
+miRDeep2 precursors are recipes over those files. 40 of its 58 tiles carry a
+`use:` catalog reference, so a tile says where its panel comes from.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -108,177 +106,251 @@ a `use:` catalog reference, so a tile says where its panel comes from.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Six tabs, read as a funnel: are the libraries small RNA libraries, what is each
-one made of, which miRNAs they carry, which miRNAs separate the design groups,
-how the reads differ from the reference sequences, and what miRDeep2 proposes
-beyond miRBase. Each tab below carries the **same icon and colour the dashboard
-gives it**. Screenshots come from the run described under Validation runs.
+One dashboard: the **Overview**, then six child tabs in three groups, read as a
+funnel from the libraries to the miRNAs they hold and the new ones they suggest.
+Each tab below carries the **same icon and colour the dashboard gives it**, so the
+page and the app read alike.
 
-=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Library QC |
+| Expression | miRNA Expression, Group Comparison |
+| Sequences | isomiRs, Novel miRNAs |
 
-    *Did trimming, the miRTrace verdict and the genome mapping go well?*
+Each child tab opens with a short intro and a strip of cards (four, two on Group
+Comparison), then at most three open sections; tables and details follow,
+collapsed. The persistent *Sample filters* (the design group, then the sample) sit
+in the left panel and narrow every tab; the group filter reads the design table
+and is pruned with it. The per-miRNA and per-precursor summaries aggregate over
+libraries, so the sample filters do not reach them. The *Sample sheet* section
+(the design table and the library summary) is pinned, collapsed, to the bottom of
+every child tab.
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/smrnaseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+=== ":material-compass-outline: Overview"
 
-    The tab is the MultiQC report as the run published it: what fastp kept and the
-    read length after trimming, miRTrace's read QC, the isomiR counts mirtop
-    assigned, and how much of each library Bowtie placed on the genome for
-    miRDeep2. The miRTrace composition, length and complexity panels are not
-    repeated here, Library QC draws them as tiles. The remaining fastp and FastQC
-    panels sit in a collapsed section.
+    *Small RNA libraries, from the reads to the miRNAs they hold and the new ones they suggest.*
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/smrnaseq/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/smrnaseq/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A short hero links the run parameters. *About this dashboard* says what the
+    dashboard shows and how the two filter levels work, *The run* lists the
+    samples, the genome, the miRTrace species, the read length window and the
+    miRNAs with reads, and *Pipeline* walks the six steps from trimming to
+    discovery, each linked to its settings and its tab. The findings are live
+    values: they follow the filters. A run with `SKIP_MIRDEEP` loses the novel
+    card, row and figure, and the Key figures keep three cards.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample`, the design group (`GROUP_COL`) and a `Reads
-        assigned to miRNAs` range, persistent and pinned to the top of every tab,
-        plus `miRNA reads (%)` and `rRNA reads (%)` ranges in a *Read QC scope*
-        group.
+        **Filters** · the left panel starts collapsed. *Key figures* and
+        *Findings* each have their own filter bar (the design group and the
+        sample): each narrows its own section only.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards: samples, design groups, reads assigned to miRNAs, miRNAs detected per sample (pinned) |
-        | Sample sheet | *Design table*, *Sample summary* (collapsed, pinned) |
-        | Read trimming | *Reads kept by fastp*, *Read length after trimming* |
-        | Small RNA QC | *miRTrace read QC*, *isomiR read counts by type*, *Distinct isomiR sequences by type* |
-        | Genome mapping | *Reads mapped to the genome*, *Alignment statistics* |
-        | More QC panels | 5 fastp, FastQC and mirtop panels (collapsed) |
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: samples by group, miRNAs detected, reference reads, novel precursors by star-arm reads |
+        | Findings | Live result rows, then 4 figures: the top miRNAs by group, the library PCA, the novel precursor plane and the isomiR composition |
+        | How to read this dashboard | The tabs by group, each with its question |
 
-=== ":material-test-tube:{ .mc-teal } Library QC"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Is each library a small RNA library, and was it sequenced deep enough?*
+    **Data & QC** · *Did the adapter come off and the reads map?*
 
-    [![Library QC dashboard](../../images/pipeline-templates/nf-core/smrnaseq/library_qc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/library_qc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/smrnaseq/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Cards give the miRNA, rRNA and tRNA shares and the share in the main clade. The
-    read length profile shades the miRNA window, the composition bars split each
-    library three ways (RNA type, QC outcome, clade), and the complexity curves
-    show how many distinct miRNAs deeper sequencing still finds. A parallel
-    coordinates profile puts every per-library measure on one line, and the
-    depth-against-share plane carries a linked sample record that stays a slim
-    rail until a library is picked.
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/smrnaseq/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    MultiQC panels only. Open: fastp's filtered reads beside the read length after
+    trimming, miRTrace's read QC beside mirtop's isomiR read counts, then
+    samtools' mapping rate, the reads Bowtie placed on the genome for miRDeep2.
+    Check that the adapter came off and the trimmed reads pile up near 22 nt
+    before reading any count. The distinct isomiR sequences, the raw FastQC
+    counts and adapter content, fastp's base quality, the post-trim FastQC status
+    (the `fastqc-1` panels), the mean isomiR read counts and samtools' alignment
+    statistics are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `miRNAs detected`, `tRNA reads (%)` and `miRNAs in the main
-        clade (%)` ranges in a *Library scope* group.
+        **Filters** · `Sample`, read from the MultiQC report.
+
+        | Section | What it holds |
+        |---|---|
+        | Read trimming | 2 MultiQC panels |
+        | Small RNA QC | 2 MultiQC panels |
+        | Genome mapping | 1 MultiQC panel |
+        | QC details (collapsed) | 7 MultiQC panels |
+
+=== ":material-test-tube:{ .mc-teal } Library QC"
+
+    **Data & QC** · *Is each library a small RNA library, and a clean one?*
+
+    [![Library QC dashboard](../../images/pipeline-templates/nf-core/smrnaseq/library_qc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/library_qc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Library QC dashboard](../../images/pipeline-templates/nf-core/smrnaseq/library_qc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/library_qc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    miRTrace's view of every library. The median miRNA share on a bar out of 100,
+    the median rRNA share, the reads on miRNAs (the deepest libraries ranked) and
+    the most miRNAs a library reaches at full depth. Then the read length profile,
+    the miRNA window shaded, beside the complexity curves; the composition bars
+    (RNA type, read QC outcome, organism clade); and the per-library measures as
+    parallel coordinates. A clean small RNA library peaks at 20 to 24 nt and is
+    mostly miRNA. Depth against miRNA share, one point per library coloured by its
+    main clade, beside the library record, is collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Reads on miRNAs`, `miRNAs detected`, `miRNA reads (%)`,
+        `rRNA reads (%)`, `tRNA reads (%)` and `miRNAs in the main clade (%)`
+        ranges on `samples`.
 
         | Section | What it holds |
         |---|---|
         | Libraries at a glance | 4 cards |
-        | Read length | *Read length distribution* |
-        | RNA composition | *Library composition* |
-        | Complexity | *miRNA complexity curves* |
-        | Library profile | *Per-library profile* |
-        | Sample detail | *miRNA depth and share per library*, *Sample record* |
+        | Read length and complexity | 2 advanced visualizations |
+        | RNA composition | 1 advanced visualization |
+        | Library profile | 1 advanced visualization |
+        | Library detail (collapsed) | 1 advanced visualization + a library record card |
 
-=== ":material-chart-box-outline:{ .mc-cyan } miRNA expression"
+    !!! tip "miRTrace comes through MultiQC"
+        miRTrace's numbers are read back from the MultiQC parquet. A run with
+        `--skip_multiqc` takes `--var SKIP_MULTIQC=true`: the MultiQC tab goes,
+        and so do the miRTrace cards, the length, complexity and composition
+        figures, and the miRNA share row on the Overview.
 
-    *Which miRNAs do the samples carry, and which vary most?*
+=== ":material-chart-box-outline:{ .mc-cyan } miRNA Expression"
 
-    [![miRNA expression dashboard](../../images/pipeline-templates/nf-core/smrnaseq/mirna_expression_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/mirna_expression_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    **Expression** · *Which miRNAs does each library express, and how much?*
 
-    A clustered heatmap of the most variable miRNAs with design strips, where
-    samples of one group should form a block, then boxes of the top miRNAs split
-    by design group. The mean-variance plane puts well expressed and variable
-    miRNAs top right; picking one opens the miRNA record beside it, linked to
-    miRBase, and the rows below are selectable too.
+    [![miRNA Expression dashboard](../../images/pipeline-templates/nf-core/smrnaseq/mirna_expression_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/mirna_expression_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![miRNA Expression dashboard](../../images/pipeline-templates/nf-core/smrnaseq/mirna_expression_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/mirna_expression_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    mirtop's counts, scaled to counts per million miRNA reads. The miRNAs with
+    reads, the miRNA reads by group, the median miRNAs at 10 CPM or more per
+    library and the median number of libraries detecting a miRNA. Then the
+    clustered heatmap of the most variable miRNAs, where libraries of one group
+    should form a block; the twelve most expressed miRNAs as boxes by group, every
+    library a dot; and the mean-variance plane beside the record of the picked
+    miRNA, linked to miRBase. A pick on the plane narrows the boxes to that miRNA.
+    The miRNA table is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `miRNA`, and `Mean log2(CPM + 1)` and `Samples detecting the
-        miRNA` ranges in a *miRNA scope* group.
+        **Filters** · a `miRNA` picker on `mirtop_mirna_counts`, and `Mean
+        log2(CPM + 1)` and `Libraries detecting the miRNA` ranges on
+        `mirtop_mirna_summary`.
 
         | Section | What it holds |
         |---|---|
         | Expression at a glance | 4 cards |
-        | Top variable miRNAs | *Top variable miRNAs* |
-        | Expression by group | *Expression of the top miRNAs by `GROUP_COL`* |
-        | miRNA detail | *Mean-variance plane*, *miRNA record* |
-        | miRNA rows | *miRNA summary* (collapsed) |
+        | Top variable miRNAs | 1 advanced visualization |
+        | Expression by group | *Expression of the top miRNAs by group* |
+        | miRNA detail | 1 advanced visualization + a miRNA record card |
+        | miRNA table (collapsed) | *miRNA summary* |
 
-=== ":material-scale-balance:{ .mc-grape } Group comparison"
+=== ":material-scale-balance:{ .mc-grape } Group Comparison"
 
-    *Which miRNAs separate two groups of samples?*
+    **Expression** · *Which libraries look alike, and which miRNAs separate two groups?*
 
-    [![Group comparison dashboard](../../images/pipeline-templates/nf-core/smrnaseq/group_comparison_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/group_comparison_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Group Comparison dashboard](../../images/pipeline-templates/nf-core/smrnaseq/group_comparison_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/group_comparison_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    The sample PCA on miRNA expression is coloured by the design group and takes
-    a lasso, so groups can also be drawn by hand. The two-group test runs a
-    Wilcoxon test on CPM with Benjamini-Hochberg correction and draws it as a
-    volcano. It is a screen, not a model-based differential expression analysis:
-    the pipeline publishes no edgeR or DESeq2 table to read instead.
+    [![Group Comparison dashboard](../../images/pipeline-templates/nf-core/smrnaseq/group_comparison_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/group_comparison_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Two cards rather than four: the libraries compared, by group, and their miRNA
+    depth, the two things to check before trusting a separation. Then the library
+    PCA on log2(CPM + 1), coloured by group, where a lasso saves a set of points
+    as a group, and the volcano of a Wilcoxon rank-sum test between two groups,
+    corrected for multiple testing. The volcano opens on the first two groups of
+    the design column and runs at once. It is a screen: the pipeline publishes no
+    model-based test, so read the hits as candidates to confirm with edgeR or
+    DESeq2.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `miRNAs at 10 CPM or more` and `First principal component`
-        ranges in a *Comparison scope* group, to drop shallow or off-target
-        libraries before comparing.
+        **Filters** · a `miRNAs at 10 CPM or more` range on `samples` and a `First
+        principal component` range on `mirtop_sample_pca`, to drop shallow or
+        outlying libraries before comparing.
 
         | Section | What it holds |
         |---|---|
-        | Sample relationships | *Sample PCA on miRNA expression* |
-        | Two-group test | *miRNAs that separate two groups* |
+        | Comparison at a glance | 2 cards |
+        | Sample relationships | 1 advanced visualization |
+        | Two-group test | 1 advanced visualization |
 
-=== ":material-shape-outline:{ .mc-orange } isomiRs"
+=== ":material-shape-outline:{ .mc-indigo } isomiRs"
 
-    *How far do the reads stray from the reference miRNA sequences?*
+    **Sequences** · *How far do the reads stray from the reference sequence?*
 
-    [![isomiRs dashboard](../../images/pipeline-templates/nf-core/smrnaseq/isomirs_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/isomirs_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![isomiRs dashboard](../../images/pipeline-templates/nf-core/smrnaseq/isomirs_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/isomirs_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Cards give the share of reads on the reference sequence, per library and per
-    miRNA, and how many isomiRs a miRNA carries. The composition bars split each
-    library's miRNA reads four ways (3' end, 5' end, non-templated addition,
-    nucleotide change), and a dot plot shows which isomiR classes each of the most
-    expressed miRNAs carries.
+    [![isomiRs dashboard](../../images/pipeline-templates/nf-core/smrnaseq/isomirs_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/isomirs_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    mirtop names every read of a miRNA by how it differs from the reference. The
+    median share of a library's miRNA reads on the reference sequence, the median
+    isomiRs of an expressed miRNA in a library, the miRNA reads by 3' end and the
+    reads with a non-templated 3' addition, the added bases ranked. Then the
+    isomiR composition of each library, opening on the 3' end with the 5' end,
+    the addition and the nucleotide change a switch away, and the landscape of
+    isomiR classes over the 40 most expressed miRNAs. The landscape table is
+    collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `isomiR class` and a `Reads on the reference sequence (%)`
-        range in an *isomiR scope* group.
+        **Filters** · `isomiR class` on `mirtop_isomir_landscape` and a `Reads on
+        the reference (%)` range on `samples`.
 
         | Section | What it holds |
         |---|---|
         | isomiRs at a glance | 4 cards |
-        | isomiR composition | *isomiR composition per library* |
-        | isomiR landscape | *isomiR landscape of the most expressed miRNAs* |
-        | isomiR rows | *isomiR landscape rows* (collapsed) |
+        | isomiR composition | 1 advanced visualization |
+        | isomiR landscape | 1 advanced visualization |
+        | isomiR table (collapsed) | *isomiR landscape rows* |
 
 === ":material-star-outline:{ .mc-red } Novel miRNAs"
 
-    *Which novel precursors are worth following up?*
+    **Sequences** · *Which new miRNAs does miRDeep2 propose, and how credible are they?*
 
-    [![Novel miRNAs dashboard](../../images/pipeline-templates/nf-core/smrnaseq/novel_mirnas_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/novel_mirnas_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Novel miRNAs dashboard](../../images/pipeline-templates/nf-core/smrnaseq/novel_mirnas_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/novel_mirnas_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    miRDeep2's own signal-to-noise and known-recovery curves, by score cutoff,
-    say where to set the threshold. The recurrence plane puts the number of
-    samples reporting a novel precursor against its best score; picking one opens
-    the precursor record beside it, linked to the UCSC browser on `GENOME`.
-    Recurrent, well scored precursors with star-arm reads are the ones to trust.
+    [![Novel miRNAs dashboard](../../images/pipeline-templates/nf-core/smrnaseq/novel_mirnas_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/smrnaseq/novel_mirnas_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The novel precursors merged across libraries, by star-arm reads, the median
+    libraries reporting one, the median true-positive estimate and every miRDeep2
+    call, novel or known. Then miRDeep2's signal-to-noise and known-recovery
+    curves by score cutoff, to set the threshold, and the plane of recurrence
+    against the true-positive estimate beside the record of the picked precursor,
+    linked to the UCSC browser on `GENOME`. The plane reads the estimate rather
+    than the raw score, which is unbounded. The precursor table and every
+    per-library call are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Samples reporting the precursor` and `Best miRDeep2 score`
-        ranges and `Star-arm reads` in a *Precursor scope* group.
+        **Filters** · `Libraries reporting it` and `True-positive estimate (%)`
+        ranges and `Star-arm reads` on `mirdeep2_novel_precursors`.
 
         | Section | What it holds |
         |---|---|
         | Discovery at a glance | 4 cards |
-        | Score calibration | *Signal-to-noise by score cutoff*, *Known precursors recovered by score cutoff* |
-        | Precursor detail | *Recurrence against score*, *Precursor record* |
-        | Precursor rows | *Novel precursors*, *Every miRDeep2 call, per sample* (collapsed) |
+        | Score calibration | 2 advanced visualizations |
+        | Precursor detail | 1 advanced visualization + a precursor record card |
+        | Precursor tables (collapsed) | *Novel precursors*, *Every miRDeep2 call, per library* |
 
     !!! tip "Dropped with `--skip_mirdeep`"
         A run without miRDeep2 writes no `result_*.csv`. Pass
         `--var SKIP_MIRDEEP=true` and the four miRDeep2 collections are pruned,
-        which drops this tab.
+        which drops this tab and the novel card, row and figure on the Overview.
 
-Tables and point views select on their entity column: the sample summary, the
-read-length and complexity profiles, the depth-and-share plane and the
-group-comparison PCA on `sample`, and the design table on its id column; the
-mean-variance plane, the miRNA summary and the isomiR table on `mirna`; the
-novel-precursor plane and table on `precursor_id`. A pick narrows every tile on
-the tab that reads the same collection or one linked from it, and each record
-card follows the tile beside it.
+Tables select rows and the planes and curves select points: the library summary,
+the read-length and complexity curves, the library plane and the PCA on `sample`,
+and the design table on its id column; the mean-variance plane, the miRNA summary
+and the isomiR landscape rows on `mirna`; the novel-precursor plane and table on
+`precursor_id`. A pick narrows the other tiles of its collection and follows the
+project links to the collections downstream of it: a miRNA picked on the plane
+narrows the per-library counts behind the boxes and the isomiR landscape. Each
+record card follows the plane beside it and waits for a pick.
 
 ---
 

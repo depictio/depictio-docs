@@ -127,7 +127,9 @@ tabs. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
 
     *Gene fusions, from the reads to the callers that agree and the proteins they would make.*
 
-    <!-- screenshot pending v2 -->
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/rnafusion/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/rnafusion/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     A short hero links the run parameters. *About this dashboard* says how to move
     through the tabs, *The run* lists the samples, the genome and GENCODE release,
@@ -153,7 +155,9 @@ tabs. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
 
     **Data & QC** · *Did the reads survive trimming and align to transcripts?*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/rnafusion/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/rnafusion/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/rnafusion/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     MultiQC panels only. The general statistics, the raw read quality beside the
     reads fastp kept, then STAR's alignment scores beside Picard's transcript
@@ -175,7 +179,9 @@ tabs. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
 
     **Fusion calls** · *Which fusions did the callers agree on, and how are they ranked?*
 
-    [![Caller Agreement dashboard](../../images/pipeline-templates/nf-core/rnafusion/fusion_calls_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/fusion_calls_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Caller Agreement dashboard](../../images/pipeline-templates/nf-core/rnafusion/caller_agreement_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/caller_agreement_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Caller Agreement dashboard](../../images/pipeline-templates/nf-core/rnafusion/caller_agreement_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/caller_agreement_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The distinct fusions ranked by 5' partner, the calls split by how many callers
     agree, the median Fusion Indication Index and the calls a knowledge base
@@ -200,7 +206,9 @@ tabs. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
 
     **Fusion calls** · *How much read support did each caller find for each fusion?*
 
-    [![Caller Evidence dashboard](../../images/pipeline-templates/nf-core/rnafusion/evidence_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/evidence_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Caller Evidence dashboard](../../images/pipeline-templates/nf-core/rnafusion/caller_evidence_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/caller_evidence_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Caller Evidence dashboard](../../images/pipeline-templates/nf-core/rnafusion/caller_evidence_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/caller_evidence_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The caller reports by caller, their median read support, the total support per
     caller and the share of a fusion's reads one caller accounts for. Then the dot
@@ -225,7 +233,9 @@ tabs. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
 
     **Fusion calls** · *Where on the genome do the two fusion partners sit?*
 
-    <!-- screenshot pending v2 -->
+    [![Breakpoints dashboard](../../images/pipeline-templates/nf-core/rnafusion/breakpoints_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/breakpoints_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Breakpoints dashboard](../../images/pipeline-templates/nf-core/rnafusion/breakpoints_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/breakpoints_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     Arriba's calls as loci. Its calls by event class, the calls between
     chromosomes by confidence, the share of the local reads that support a call
@@ -249,8 +259,9 @@ tabs. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
 
     **Follow-up** · *Which calls hold up when the reads are re-aligned?*
 
-    <!-- screenshot pending v2 -->
-    [![Validation dashboard](../../images/pipeline-templates/nf-core/rnafusion/fusioninspector_and_splicing_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/fusioninspector_and_splicing_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Validation dashboard](../../images/pipeline-templates/nf-core/rnafusion/validation_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/validation_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Validation dashboard](../../images/pipeline-templates/nf-core/rnafusion/validation_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/validation_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     FusionInspector's re-quantified calls. The validated fusions by predicted
     protein, the median fragments per million against STAR-Fusion's default
@@ -275,7 +286,9 @@ tabs. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
 
     **Follow-up** · *Which protein domains would each fusion protein keep?*
 
-    <!-- screenshot pending v2 -->
+    [![Protein Domains dashboard](../../images/pipeline-templates/nf-core/rnafusion/protein_domains_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/protein_domains_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Protein Domains dashboard](../../images/pipeline-templates/nf-core/rnafusion/protein_domains_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/protein_domains_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The Pfam domains of both partners. The domain hits by partner side, the hits
     the breakpoint cuts through, the domain length and the hit strength. Then the
@@ -299,7 +312,9 @@ tabs. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
 
     **Follow-up** · *Which splice junctions do the reads support, and how strongly?*
 
-    <!-- screenshot pending v2 -->
+    [![Splice Junctions dashboard](../../images/pipeline-templates/nf-core/rnafusion/splice_junctions_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/splice_junctions_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Splice Junctions dashboard](../../images/pipeline-templates/nf-core/rnafusion/splice_junctions_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnafusion/splice_junctions_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     CTAT-splicing's junctions. The distinct junctions ranked by gene, the unique
     read support, the reads summed over every junction by chromosome and the

@@ -197,7 +197,9 @@ labels.
 
     *Which callset recovers its truth set best, on precision, recall and F1.*
 
-    <!-- screenshot pending v2 -->
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     A short hero links the run parameters. *The run* lists the analysis and variant type,
     the truth set, the benchmarking methods, the genome and the callsets, and *Pipeline*
@@ -221,9 +223,9 @@ labels.
 
     **Small variants** · *How well does each germline callset recover the truth set?*
 
-    [![Germline dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_benchmark_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_benchmark_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Germline dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    <!-- screenshot pending v2: this capture shows the categories/small Benchmark tab -->
+    [![Germline dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/germline_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     F1 with its spread, recall against a 0.9 floor, the callers with most false
     positives and the true positives by caller, all from rtg-tools vcfeval. Then the
@@ -246,9 +248,9 @@ labels.
 
     **Small variants** · *How well does each somatic caller recover the truth set?*
 
-    [![Somatic dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_benchmark_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_benchmark_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Somatic dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    <!-- screenshot pending v2: this capture shows the categories/indel Benchmark tab -->
+    [![Somatic dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/somatic_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     F1 with its spread, precision against a 0.5 floor, the callers with most false
     positives and the true positives by caller, all from som.py. Then the
@@ -275,7 +277,9 @@ labels.
 
     **Structural** · *How well do the structural callsets match the truth set?*
 
-    <!-- screenshot pending v2 -->
+    [![Structural & CNV dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/structural_cnv_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/structural_cnv_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Structural & CNV dashboard](../../images/pipeline-templates/nf-core/variantbenchmarking/structural_cnv_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/variantbenchmarking/structural_cnv_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
     The true positives by caller, F1 with its spread, recall against a 0.8 floor and the
     spread of precision, all from Truvari. Then the Truvari precision-recall scatter
