@@ -312,7 +312,10 @@ links:
 
 ### File Discovery Patterns
 
-Advanced projects use two scanning modes:
+Advanced projects use five scanning modes. Two walk a local directory tree,
+`single` and `recursive`. Three fetch data from where it already is, `url`,
+`s3_prefix` and `manifest`, and are covered on
+[Remote data and manifests](remote-data.md).
 
 #### Single File Mode
 
@@ -336,6 +339,24 @@ scan:
     regex_config:
       pattern: "star_salmon/.*/quant.sf"
 ```
+
+#### Remote Modes <small>(v1.16.0+)</small> { #remote-modes }
+
+A collection can also point at one file on the web or in a bucket (`url`), at
+every object under an S3 prefix (`s3_prefix`), or at the entries of a Data
+Manifest (`manifest`). Whoever ingests reads the files from there, the CLI or
+the server, so these modes also work from the web UI with no CLI installed, and
+the server can refresh them later. On the CLI, `--bind TAG=LOCATION` picks
+the mode from the shape of the location, so a template written for a local tree
+can be run against a bucket:
+
+```bash
+depictio ingest --template my-lab/rnaseq-qc/1 \
+  --bind samples=s3://my-bucket/run42/*.samples.csv
+```
+
+See [Remote data and manifests](remote-data.md) for the modes, the manifest
+contract, and how to refresh or share such a project.
 
 ### CLI Workflow
 
@@ -556,13 +577,14 @@ depictio ingest /data/my_ampliseq_run \
 
 That single command:
 
-1. Validates your data directory structure against the template's `expected_files`
-2. Resolves all `{DATA_ROOT}` placeholders throughout the config
-3. Creates the project in MongoDB
-4. Discovers and processes all data collections (running recipes automatically)
-5. Imports the bundled dashboard
+1. Resolves all `{DATA_ROOT}` placeholders, and the template's other variables, throughout the config
+2. Creates the project in MongoDB
+3. Discovers and processes all data collections (running recipes automatically)
+4. Imports the bundled dashboard
 
 Without `--template`, the template is detected from the results directory when it can be. Running the same command again with `--update-config` refreshes the project and keeps its dashboards as edited in the viewer; see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project).
+
+The results directory can also be an `s3://` prefix, a manifest-driven template takes `--manifest <url or path>` in place of the directory, and any template can be pointed at other locations, collection by collection, with `--bind TAG=LOCATION`. The web UI creates a project from a run folder too, with **From a run folder**. See [Remote data and manifests](remote-data.md).
 
 ### When to use templates
 

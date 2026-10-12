@@ -111,13 +111,22 @@ outside the collections a restore overwrites.
 
 ## What is covered
 
-Fourteen collections: `users`, `groups`, `projects`, `dashboards`,
+Fifteen collections: `users`, `groups`, `projects`, `dashboards`,
 `data_collections`, `workflows`, `files`, `deltatables`, `runs`,
 `instance_settings`, `branding_assets`, `comment_threads` (the
 [comments and annotations](../../features/comments-annotations.md) of every
-dashboard), and `dashboard_versions` with `dashboard_version_counters` (the
+dashboard), `dashboard_versions` with `dashboard_version_counters` (the
 [version history](../../features/versioning.md) of every dashboard, and the
-counters that number it).
+counters that number it), and, from v1.16.0, `project_storage_configs`.
+
+`project_storage_configs` holds each project's
+[storage settings](../projects/remote-data.md#project-storage-settings): the
+endpoint, the access key and the secret, still encrypted with the
+`secrets_key.bin` of the instance that wrote it. Restored on an instance with
+another `DEPICTIO_AUTH_KEYS_DIR`, the settings come back, but every read with
+them fails until an owner enters the secret again: restore the keys volume with
+the backup. As the encrypted secret and that key together give the secret, keep
+backup files as safe as the keys.
 
 A dashboard version records which Delta commit each of its data collections was
 at, not the data. Reading it back as it was needs that commit's files on S3, so

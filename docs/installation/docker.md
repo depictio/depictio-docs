@@ -219,6 +219,12 @@ start one.
 Start the worker before turning either feature on. With nothing reading the `ingestion`
 queue, jobs stay pending.
 
+The server-side ingestions of remote data <small>(v1.16.0+)</small>, a project created
+[from a run folder](../usage/projects/remote-data.md#from-a-run-folder) and a
+[**Data refresh**](../usage/projects/remote-data.md#refreshing-the-data), run on
+`depictio-celery-worker` instead: they need neither this worker nor
+`DEPICTIO_JOBS_ENABLED`.
+
 #### Offloading the table profile { #async-upsert }
 
 After the CLI writes a Delta table, the server reads it back to profile its columns. On

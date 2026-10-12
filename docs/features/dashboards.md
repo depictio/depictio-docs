@@ -694,6 +694,12 @@ from the **View ingestion report** row in a dashboard's **Settings**.
 it started. Expand a run for its instance, CLI version, start time, a tally of its steps,
 the steps as a timeline, and its error if it failed. A search box filters the runs.
 
+From v1.16.0 the list also holds the runs the server makes for remote data: the
+ingestion of a project created [from a run folder](../usage/projects/remote-data.md#from-a-run-folder),
+command `from_run`, and each [**Data refresh**](../usage/projects/remote-data.md#refreshing-the-data),
+command `refresh_manifest`. They show **Manual** as their trigger and one step per data
+collection.
+
 These are the runs the admin [**Log & Task → Ingestion**](../usage/administration/monitoring.md#ingestion)
 pane shows, limited to this project, for anyone who can open it. Owners, editors and
 admins see each run in full. Other viewers, such as visitors of a public project, do not
@@ -718,6 +724,12 @@ The button is shown but disabled, with the reason in its tooltip, when:
 - one of the project's data locations, single-file paths or image directories lies
   outside the directories the server may read, or no such directory is set;
 - the server cannot find one of the project's data locations.
+
+From v1.16.0, an `s3://` or `https://` location always lies outside the directories the
+server may read. A project made from a run folder on S3 or from a manifest, or one with a
+**Remote URL** collection, therefore cannot use **Run ingestion**: its remote collections
+are re-read with [**Data refresh**](../usage/projects/remote-data.md#refreshing-the-data)
+instead. A [`depictio local`](../installation/local.md) server does not offer the button.
 
 **Run ingestion** opens a dialog with an **Overwrite existing tables** switch. **Start**
 runs the same steps as `depictio ingest`: scan, process with image upload, then joins. It

@@ -83,6 +83,41 @@ Dashboards are versioned apart from their data, in a `dashboard_versions` collec
 each entry is a copy of every tab of one dashboard, plus the Delta commit each of its
 data collections was at. See [Dashboard and data versions](versioning.md).
 
+### Remote files <small>(v1.16.0+)</small> { #remote-files }
+
+Three scan modes register files that were never on a local disk: `url` names one
+file, `s3_prefix` lists a bucket prefix, and `manifest` consumes an explicit list of
+files called a [Data Manifest](../usage/projects/remote-data.md#the-data-manifest-contract).
+The **File** record is the same object, with three differences:
+
+| Field | Local scan | Remote scan |
+| --- | --- | --- |
+| `file_location` | A path on the machine that ran the scan | The absolute URL. Existence is checked when the file is fetched, never at registration |
+| `filesize` | Read from the filesystem | From the listing for an `s3_prefix` scan, and from the content length an `https://` URL announces. `-1` when it is not known: always for a manifest entry and an `s3://` `url` scan |
+| `manifest_id` | Unset | The entity id: the manifest `id` column, or the part of the object key an `s3_prefix` scan's `id_regex` captured. Unset for a `url` scan |
+
+`manifest_id` is what makes remote collections filter each other without
+configuration. It is injected at read time as a `depictio_manifest_id` column, so
+every collection built from the same manifest, or from prefixes sharing a naming
+pattern, carries identical canonical values in a column of the same name. A
+[link](#joining-and-linking) with the `direct` resolver then works with nothing to
+map: the manifest `id` is the canonical identifier the other resolvers were designed
+around.
+
+The manifest's optional `run` column plays the role a run directory plays locally. It
+is stored as the file's run tag and injected as `depictio_run_id`, with `remote` as the
+value when the manifest has no run column, so filters and links on that column keep
+working. Unlike a run directory, it creates no run record. An `s3_prefix` scan outside
+a `sequencing-runs` workflow tags its files `remote` too, and a `url` scan
+`<tag>-url-scan`. A project made from an
+[`s3://` run folder](../usage/projects/remote-data.md#a-run-folder-on-s3) keeps its
+runs as a local one does: in a `sequencing-runs` workflow, each first-level
+folder under the prefix that matches `runs_regex` becomes a run, and its files carry its
+name as `depictio_run_id`.
+
+Materialisation is unchanged: a remote table still becomes a Delta Lake table on the
+instance's own S3, fetched once at ingestion rather than read through at render time.
+
 ---
 
 ## Data collection types
