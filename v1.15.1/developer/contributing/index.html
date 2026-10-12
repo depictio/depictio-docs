@@ -5685,6 +5685,10 @@ install it to work on the CLI.</p>
 <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers">Dev Containers extension</a>
 ("Reopen in Container") or <strong>Codespaces</strong> ("Code" → "Codespaces" → "Create
 codespace on main") on the <a href="https://github.com/depictio/depictio">repository</a>.</p>
+<p>The <em>Open in Codespaces</em> links of this site and of the README open a lighter
+configuration, <code>.devcontainer/try/devcontainer.json</code>. It runs the published
+<code>depictio[local]</code> package instead of the sources, to try Depictio rather than
+develop it.</p>
 <h2 id="project-structure">Project Structure<a class="headerlink" href="#project-structure" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>depictio/
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>├── api/                 # FastAPI backend (port 8058)
