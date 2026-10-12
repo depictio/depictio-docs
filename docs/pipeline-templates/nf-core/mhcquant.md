@@ -29,18 +29,17 @@ hide:
   <span class="tpl-version-badge">latest</span>
 </div>
 
-The mhcquant template follows an nf-core/mhcquant run from the Comet search to
-the presented peptides, one tab per question:
+The mhcquant template follows an nf-core/mhcquant run from the spectra to the
+peptides each sample presents:
 
-- :material-magnify-scan: **Identification**: PSMs, peptides and source proteins per sample, and how the raw search behaves as the FDR threshold moves
-- :material-ruler: **MHC signature**: the peptide length profile against the class I and class II windows, and the positional amino-acid preferences behind the anchor motifs
-- :material-set-merge: **Reproducibility**: how consistently the raw replicates of a sample quantify the same peptides
-- :material-relation-many-to-many: **Peptides and proteins**: peptides common to several conditions or private to one, and the proteins that feed them
-- :material-waves: **Physico-chemical checks**: observed against predicted retention time, hydropathy, precursor charge and m/z, and mass accuracy
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: the sections mhcquant writes into its own MultiQC report, and how consistently the replicate injections of a sample quantify the same peptides
+- :material-magnify-scan: **Search**: the spectra, PSMs and peptides of each raw file, how the raw search behaves as the FDR threshold moves, and whether the peptides elute and ionise as predicted
+- :material-ruler: **Immunopeptidome**: the length profile and anchor motifs that point to the MHC class, and the peptides the conditions share with the proteins they come from
 
-A `Run at a glance` strip and the collapsed `Sample sheet` are pinned to the top
-of every tab, `Reference tables` to the bottom, and the `Sample filters` group
-(sample, condition, raw file) applies everywhere.
+The persistent `Sample filters` (condition, sample, raw file) sit in the left
+panel and apply to every tab, and the collapsed `Sample sheet` and `Reference
+tables` sections are pinned to the bottom of every child tab.
 
 !!! info "The samplesheet is not in the output"
     mhcquant does not publish the samplesheet it ran on, and the samplesheet is
@@ -72,8 +71,8 @@ of every tab, `Reference tables` to the bottom, and the `Sample filters` group
     `METADATA_FILE` can be left out when the sheet already sits at
     `input/samplesheet.tsv` under the data root. A run started without
     `--quantify` has no replicate intensities: add `--var NO_QUANTIFICATION=true`
-    and the Reproducibility collections are dropped. A run without
-    `--annotate_ions` takes `--var NO_ION_ANNOTATION=true`.
+    and the replicate collections are dropped, with the Reproducibility tab. A
+    run without `--annotate_ions` takes `--var NO_ION_ANNOTATION=true`.
 
 === "From the pipeline itself (v1.10.0+)"
 
@@ -94,9 +93,9 @@ The template reads the samplesheet, the MultiQC report, the per-sample peptide
 tables at the output root, the Comet pin files that precede rescoring and the
 fragment-ion annotations. Every other collection (sample summary, length
 distribution, composition, motif matrix, replicate pairs and detection, source
-proteins, condition sharing) is a recipe over the peptide table. 39 of its 78
-components carry a `use:` catalog reference, so a tile says where its panel
-comes from.
+proteins, condition sharing) is a recipe over the peptide table. 42 of its 58
+tiles carry a `use:` catalog reference (`mhcquant/*`, `openms/*`, `multiqc/*`),
+so a tile says where its panel comes from.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -114,176 +113,246 @@ comes from.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Six tabs, read as a funnel: is the report healthy, how much did each sample
-identify, do the peptides look like MHC ligands, do the replicates agree, what is
-shared between conditions, and do the identifications behave physically like
-peptides. Each tab below carries the **same icon and colour the dashboard gives
-it**. The screenshots come from the run described under
-Validation runs below.
+One dashboard: the **Overview**, then six child tabs in three groups, read as a
+funnel from the spectra to the peptides each sample presents. Each tab below
+carries the **same icon and colour the dashboard gives it**, so the page and the
+app read alike.
 
-=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Reproducibility |
+| Search | Identification, Physico-chemical checks |
+| Immunopeptidome | MHC signature, Peptides and proteins |
 
-    *Are identification yield and score distributions sound before reading the peptides?*
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and record cards follow, collapsed. The design comes
+from the samplesheet: one row per raw file with its sample, its condition
+(`GROUP_COL`, `Condition` by default) and its search database. The persistent
+*Sample filters* (condition, sample, raw file) sit in the left panel and narrow
+every tab: the links carry a pick to every sample-level table by `sample_id` and
+to the Comet tables by `run_id`. The *Sample sheet* and the *Reference tables*
+(the per-sample summary) are pinned, collapsed, to the bottom of every child tab.
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/mhcquant/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+=== ":material-compass-outline: Overview"
 
-    The tab is the report mhcquant writes as MultiQC custom content: identification
-    counts, the q-value and Comet Xcorr distributions, then precursor m/z, retention
-    time and peptide intensity. Chromatograms, fragment mass error and the
-    Percolator feature weights sit in a collapsed section, useful when a sample
-    underperforms and the cause is the acquisition or the rescoring model.
+    *Immunopeptidomics, from the spectra to the peptides each sample presents.*
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/mhcquant/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/mhcquant/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A short hero links the run parameters. *About this dashboard* says how the two
+    filter levels work, *The run* lists the samples and raw files, the enzyme, the
+    FDR threshold, the peptide length bounds and the rescoring engine, and
+    *Pipeline* walks the six steps from the search to the comparison of conditions,
+    each linked to its parameters and its tab. The key figures read collections
+    every route writes, so a route never leaves a gap in them. The findings are live
+    values: they follow the filters.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample`, `Condition` and `Raw file` on the samplesheet,
-        persistent on every tab, plus `Report sample` in a *Report scope* group
-        that narrows the MultiQC panels only.
+        **Filters** · the left panel starts collapsed. *Key figures* has its own
+        filter bar (the condition and the sample), and so does *Findings* (the
+        condition and the peptide length): each narrows its own section only.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards: samples, raw files, condition groups, peptides identified |
-        | Sample sheet | *Samplesheet* (collapsed, pinned) |
-        | Identification yield | *Identification counts*, *q-value distribution*, *Comet Xcorr per sample* |
-        | Peptide properties | *Precursor m/z*, *Retention time*, *Peptide intensity* |
-        | Acquisition and rescoring | *Total ion chromatograms*, *Fragment mass error*, *Percolator feature weights* (collapsed) |
-        | Reference tables | *Immunopeptidome summary per sample* (collapsed, pinned) |
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: samples, PSMs, peptides, identification rate |
+        | Findings | Live result rows, then 4 figures: the accepted PSMs against the FDR threshold, the observed against predicted retention time, the length profile and the source proteins |
+        | How to read this dashboard | The tabs by group, each with its question |
 
-=== ":material-magnify-scan:{ .mc-blue } Identification"
+=== "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *How much did each sample identify, and how does the search behave across FDR thresholds?*
+    **Data & QC** · *Did the search identify peptides evenly across samples?*
 
-    [![Identification dashboard](../../images/pipeline-templates/nf-core/mhcquant/identification_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/identification_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/mhcquant/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Cards give PSMs, peptides and source proteins per sample and the Comet PSMs
-    accepted at 1% FDR per raw file. The FDR profile draws the accepted PSMs of each
-    raw file as the target-decoy q-value threshold is relaxed, so a file that gains
-    little from a looser cut stands apart. These Comet numbers come from the pin
-    files, before MS2Rescore and Percolator, so they describe the raw search and not
-    the final FDR.
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/mhcquant/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    MultiQC panels only: the sections mhcquant writes into its own report. Open:
+    identification counts, the q-value and Comet Xcorr distributions, then
+    precursor m/z, retention time and peptide intensity. Compare the counts across
+    samples first, then check that a low-yield sample's scores look like the
+    others. The total ion chromatograms, the fragment mass error and the Percolator
+    feature weights are collapsed, for when the cause is the acquisition or the
+    rescoring model.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Peptide score` and `PSMs per peptide` ranges in an
-        *Identification scope* group.
+        **Filters** · `Report sample`, read from the MultiQC report.
+
+        | Section | What it holds |
+        |---|---|
+        | Identification yield | 3 MultiQC panels |
+        | Peptide properties | 3 MultiQC panels |
+        | Acquisition and rescoring (collapsed) | 3 MultiQC panels |
+
+=== ":material-set-merge:{ .mc-cyan } Reproducibility"
+
+    **Data & QC** · *Do the replicate injections of a sample quantify the same peptides?*
+
+    [![Reproducibility dashboard](../../images/pipeline-templates/nf-core/mhcquant/reproducibility_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/reproducibility_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Reproducibility dashboard](../../images/pipeline-templates/nf-core/mhcquant/reproducibility_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/reproducibility_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    OpenMS aligns the replicate injections of each sample and quantifies every
+    peptide in each. The replicates per peptide, the peptide detections as a ring by
+    replicate, the median log10 intensity and the peptides quantified in both
+    replicates of a pair. Then the intensity scatter for every replicate pair and
+    the UpSet of the replicate combinations: a pair off the diagonal, or a small
+    all-replicate core, points at one injection to check. Replicate labels follow
+    the samplesheet `ID` order within a sample. The membership table is collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Replicate pair` on `mhcquant_replicate_pairs` and a
+        `Replicates detected` range on `mhcquant_replicate_detection`.
+
+        | Section | What it holds |
+        |---|---|
+        | Replicates at a glance | 4 cards |
+        | Replicate agreement | 1 advanced visualization |
+        | Replicate overlap | 1 advanced visualization |
+        | Replicate table (collapsed) | *Replicate membership per peptide* |
+
+    !!! tip "Only with `--quantify`"
+        Every tile here binds a replicate collection. A run without `--quantify`
+        takes `--var NO_QUANTIFICATION=true`: the tab is dropped, and the replicate
+        columns of the per-sample summary stay empty.
+
+=== ":material-magnify-scan:{ .mc-blue } Identification"
+
+    **Search** · *How many spectra became peptides, and at what FDR?*
+
+    [![Identification dashboard](../../images/pipeline-templates/nf-core/mhcquant/identification_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/identification_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Identification dashboard](../../images/pipeline-templates/nf-core/mhcquant/identification_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/identification_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The spectra searched, as a funnel to the target matches and the PSMs accepted
+    at 5% and 1% FDR; the identification rate per raw file; the PSMs that passed the
+    pipeline's filter; the accepted precursors by modification. Then the accepted
+    PSMs against the q-value threshold, one curve per raw file, and the score of the
+    accepted peptides by sample. The Comet numbers come from the pin files, before
+    MS2Rescore and Percolator, so they describe the raw search, not the final FDR.
+    The Comet search table is collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Peptide score` and `PSMs per peptide` ranges on
+        `mhcquant_peptides`.
 
         | Section | What it holds |
         |---|---|
         | Yield at a glance | 4 cards |
-        | Search and FDR | *Accepted PSMs against the FDR threshold, per raw file*, *Score of the accepted peptides* |
-        | Search tables | *Comet search yield per raw file* (collapsed) |
-
-=== ":material-ruler:{ .mc-violet } MHC signature"
-
-    *Which MHC class and which presenting alleles do the peptides point to?*
-
-    [![MHC signature dashboard](../../images/pipeline-templates/nf-core/mhcquant/mhc_signature_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/mhc_signature_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    The length profile shades the class I (8 to 12 residues) and class II (13 to 25)
-    windows, with cards for the 9-mer share, the share in each window and the median
-    length. The pipeline's own length filter bounds what can appear, so a class
-    share of zero can be structural. The motif heatmap gives the amino-acid
-    frequency at each position, per sample and length, which is where the anchor
-    residues of the presenting alleles show up.
-
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · `Peptide length` and `Modification` in a *Signature scope*
-        group.
-
-        | Section | What it holds |
-        |---|---|
-        | Length signature | 4 cards, *Peptide length distribution per sample*, *Peptide composition per sample* |
-        | Anchor motifs | *Amino-acid frequency by peptide position* |
-        | Signature tables | *Peptides per length and sample* (collapsed) |
-
-=== ":material-set-merge:{ .mc-cyan } Reproducibility"
-
-    *Are the peptides of a sample quantified consistently across its raw replicates?*
-
-    [![Reproducibility dashboard](../../images/pipeline-templates/nf-core/mhcquant/reproducibility_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/reproducibility_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    Cards give the median and weakest replicate correlation and the share of
-    peptides seen in every replicate. The scatter plots one replicate's intensity
-    against another's for every pair, and an UpSet counts the peptides quantified in
-    each combination of replicates. The peptide table does not name the raw file
-    behind each intensity column, so replicate labels follow the samplesheet `ID`
-    order within the sample.
-
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · `Replicate pair` and a `Replicates detected` range in a
-        *Replicate scope* group.
-
-        | Section | What it holds |
-        |---|---|
-        | Reproducibility at a glance | 4 cards |
-        | Replicate agreement | *Peptide intensity, replicate against replicate*, *Peptides quantified per replicate combination* |
-        | Replicate tables | *Replicate membership per peptide* (collapsed) |
-
-    !!! tip "Only with `--quantify`"
-        Replicate intensities exist only when the run quantified. Pass
-        `--var NO_QUANTIFICATION=true` for a run without it and the tab is dropped.
-
-=== ":material-relation-many-to-many:{ .mc-grape } Peptides and proteins"
-
-    *Which presented peptides are common to every condition, which are private, and where do they come from?*
-
-    [![Peptides and proteins dashboard](../../images/pipeline-templates/nf-core/mhcquant/peptides_and_proteins_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/peptides_and_proteins_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    An UpSet over one peptide set per condition separates shared from private
-    peptides. The source-protein scatter puts the number of peptides a protein
-    feeds into presentation against their intensity. Below, the peptide and protein
-    tables each carry a linked record card beside them: it folds to a slim rail
-    until a row is picked, then shows that peptide or protein in full. Picking a
-    peptide selects its `sequence`, which also narrows the condition-sharing view.
-
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · `Condition sharing` and a `Peptides per protein` range in a
-        *Peptide scope* group.
-
-        | Section | What it holds |
-        |---|---|
-        | Peptides at a glance | 4 cards |
-        | Sharing between conditions | *Peptides per condition combination* |
-        | Source proteins | *Peptides per source protein against their intensity* |
-        | Peptide detail | *Identified peptides*, *Peptide record* |
-        | Protein detail | *Source proteins*, *Protein record* |
+        | Search and FDR | 1 advanced visualization + *Score of the accepted peptides* |
+        | Search table (collapsed) | *Comet search yield per raw file* |
 
 === ":material-waves:{ .mc-lime } Physico-chemical checks"
 
-    *Do the identifications behave like real peptides?*
+    **Search** · *Do the identified peptides elute and ionise as peptides should?*
 
-    [![Physico-chemical checks dashboard](../../images/pipeline-templates/nf-core/mhcquant/physico_chemical_checks_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/physico_chemical_checks_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Physico-chemical checks dashboard](../../images/pipeline-templates/nf-core/mhcquant/physico_chemical_checks_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/physico_chemical_checks_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Observed retention time is plotted against the DeepLC prediction and against
-    Kyte-Doolittle hydropathy; false identifications drift off both trends. A
-    peptide picked on the retention-time scatter opens in the `Picked peptide`
-    record beside it, which stays a slim rail until then. Precursor m/z over the
-    gradient by charge, and cards for retention-time, precursor and fragment mass
-    error, close the tab.
+    [![Physico-chemical checks dashboard](../../images/pipeline-templates/nf-core/mhcquant/physico_chemical_checks_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/physico_chemical_checks_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The retention-time error per sample, the precursor mass error per raw file, the
+    correlation with the MS2PIP-predicted spectrum and the precursors by charge.
+    Then the observed against DeepLC-predicted retention time, with the record of a
+    picked peptide beside it, and side by side retention time against Kyte-Doolittle
+    hydropathy and precursor m/z over the gradient by charge. Outliers on these
+    plots are the identifications to question first. The fragment-ion cards and
+    table are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Precursor charge` and a `Retention time (min)` range in a
-        *Precursor scope* group.
+        **Filters** · `Precursor charge` and a `Retention time (min)` range on
+        `mhcquant_peptides`.
 
         | Section | What it holds |
         |---|---|
         | Accuracy at a glance | 4 cards |
-        | Chromatography | *Observed against predicted retention time*, *Picked peptide*, *Retention time against hydropathy* |
-        | Precursors | *Precursor m/z over the gradient, by charge* |
-        | Fragment tables | *Matched fragment ions per peptide* (collapsed) |
+        | Chromatography | 1 advanced visualization + a peptide record card |
+        | Hydropathy and charge | 2 advanced visualizations |
+        | Fragment ions (collapsed) | 2 cards, *Matched fragment ions per peptide* |
+
+    !!! tip "Only with `--annotate_ions`"
+        A run without `--annotate_ions` takes `--var NO_ION_ANNOTATION=true`, and
+        the Fragment ions section is dropped.
+
+=== ":material-ruler:{ .mc-violet } MHC signature"
+
+    **Immunopeptidome** · *Which MHC class do the peptide lengths and anchor motifs point to?*
+
+    [![MHC signature dashboard](../../images/pipeline-templates/nf-core/mhcquant/mhc_signature_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/mhc_signature_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![MHC signature dashboard](../../images/pipeline-templates/nf-core/mhcquant/mhc_signature_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/mhc_signature_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The 9-mer share per sample, the median peptide length, and the distinct
+    sequences ranked by their P2 and C-terminal residues, the two class I anchors.
+    Then the length profile with the class I (8 to 12) and class II (13 to 25)
+    ranges shaded, the composition per sample by length, switchable to charge and
+    modification, and the amino-acid frequency at each position per sample and
+    length, where the anchor motifs show. A flat or shifted length profile points at
+    co-purified peptides or a length filter set too wide. The length table is
+    collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Peptide length` and `Modification` on `mhcquant_peptides`,
+        which also narrow the length profile and the motif heatmap through the
+        project links.
+
+        | Section | What it holds |
+        |---|---|
+        | Signature at a glance | 4 cards |
+        | Length signature | 2 advanced visualizations |
+        | Anchor motifs | 1 advanced visualization |
+        | Length table (collapsed) | *Peptides per length and sample* |
+
+=== ":material-relation-many-to-many:{ .mc-grape } Peptides and proteins"
+
+    **Immunopeptidome** · *Which peptides do conditions share, and which proteins do they come from?*
+
+    [![Peptides and proteins dashboard](../../images/pipeline-templates/nf-core/mhcquant/peptides_and_proteins_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/peptides_and_proteins_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Peptides and proteins dashboard](../../images/pipeline-templates/nf-core/mhcquant/peptides_and_proteins_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/mhcquant/peptides_and_proteins_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The distinct sequences by condition sharing, the peptides per source protein,
+    the protein intensity and the source proteins per peptide. Then the UpSet of
+    the conditions each sequence was identified in, and the source proteins by the
+    peptides they give against their intensity; a click selects the protein.
+    Peptides private to one condition are the candidates for condition-specific
+    presentation: check their support in the peptide record first. The peptide and
+    protein tables are collapsed, each with a record card for the selected row.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Condition sharing` on `peptide_condition_sharing` and a
+        `Peptides per protein` range on `mhcquant_source_proteins`.
+
+        | Section | What it holds |
+        |---|---|
+        | Peptides at a glance | 4 cards |
+        | Sharing between conditions | 1 advanced visualization |
+        | Source proteins | 1 advanced visualization |
+        | Peptide detail (collapsed) | *Identified peptides* + a peptide record card |
+        | Protein detail (collapsed) | *Source proteins* + a protein record card |
+
+    !!! tip "One condition"
+        On a run with a single condition, the sharing split and the UpSet show a
+        single set.
 
 Tables and scatters select on their entity column: the sample sheet on
-`sample_id`, which the links carry to every collection and to the MultiQC
-panels, and the pinned per-sample summary on `sample`; the Comet table on raw
-files (`run_id`) and the replicate membership table on peptides; the peptide
-table and the three physico-chemical scatters on `sequence`, which also reaches
-the condition-sharing collection; the source-protein scatter and table on
-`protein`; the fragment-ion table on `peptide`. A pick narrows every tile that
-reads the same collection or one linked from it. The length table and the
-replicate-pair scatter select nothing.
+`sample_id`, which the links carry to every collection and to the MultiQC panels,
+and the pinned per-sample summary on `sample`; the Comet table on raw files
+(`run_id`) and the replicate membership table on peptides; the peptide table and
+the three scatters of Physico-chemical checks on `sequence`, which also reaches the
+condition-sharing collection; the source-protein scatter and table on `protein`;
+the fragment-ion table on `peptide`. A pick narrows every tile that reads the same
+collection or one linked from it, and each record card waits beside its table or
+scatter for a picked row or point. The length table and the replicate-pair scatter
+select nothing.
 
 ---
 

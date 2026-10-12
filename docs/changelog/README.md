@@ -8,6 +8,116 @@ hide:
 
 # Changelog
 
+## **[v1.15.1](https://github.com/depictio/depictio/releases/tag/v1.15.1)** (October 11, 2026)
+
+!!! success "Patch: a ready-to-run Codespaces demo, and safer startup and S3 cleanup"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.15.1
+ghcr.io/depictio/depictio-viewer:1.15.1
+ghcr.io/depictio/depictio-worker:1.15.1
+ghcr.io/depictio/depictio-cli:1.15.1
+```
+
+### **✨ New Features**
+
+* **The Codespaces badge opens a light *Try Depictio* workspace**: the Python package on a prebuilt image, with the examples loaded, so the viewer is up seconds after the codespace starts. See [Installation](../installation/README.md#quickstart) ([#1176](https://github.com/depictio/depictio/pull/1176)).
+
+### **🐛 Bug Fixes**
+
+* **The S3 orphan cleanup no longer deletes tables while they are being seeded** ([#1175](https://github.com/depictio/depictio/pull/1175)).
+* **Workers start cleanly after a MongoDB wipe**: none starts Beanie before the database is emptied, and a waiting worker reads this boot's lock ([#1177](https://github.com/depictio/depictio/pull/1177), [#1178](https://github.com/depictio/depictio/pull/1178)).
+
+??? info "Beta releases leading up to v1.15.1"
+
+    **v1.15.1-b1**
+
+    * The S3 orphan cleanup fix ([#1175](https://github.com/depictio/depictio/pull/1175)).
+
+    **v1.15.1-b2**
+
+    * No worker starts Beanie before a MongoDB wipe empties the database ([#1177](https://github.com/depictio/depictio/pull/1177)).
+
+    **v1.15.1-b3**
+
+    * A worker waiting for initialization reads this boot's lock, not an old marker ([#1178](https://github.com/depictio/depictio/pull/1178)).
+    * The stable release adds the *Try Depictio* codespace ([#1176](https://github.com/depictio/depictio/pull/1176)).
+
+---
+
+## **[v1.15.0](https://github.com/depictio/depictio/releases/tag/v1.15.0)** (October 9, 2026)
+
+!!! success "Minor: dashboard version history, data versions with time travel, and ingestion that runs on its own"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.15.0
+ghcr.io/depictio/depictio-viewer:1.15.0
+ghcr.io/depictio/depictio-worker:1.15.0
+ghcr.io/depictio/depictio-cli:1.15.0
+```
+
+### **♻️ Migration**
+
+* **The scan applies `max_depth` and `ignore`**, which earlier releases accepted and ignored, so a collection that sets them may register fewer files, and `--legacy-scan-depth` ignores them for one more release. See [Limiting a recursive scan](../usage/projects/yaml-examples.md#scan-bounds) ([#915](https://github.com/depictio/depictio/pull/915), [dd713ad1](https://github.com/depictio/depictio/commit/dd713ad1)).
+* **Component tags must be unique within a tab**: a YAML import that repeats one is refused, and a component without an `index` takes an id derived from its tag. See [Component Naming](../features/yaml-sync.md#component-naming) ([#1164](https://github.com/depictio/depictio/pull/1164), [062cfc42](https://github.com/depictio/depictio/commit/062cfc42), [48667fc9](https://github.com/depictio/depictio/commit/48667fc9)).
+
+### **✨ New Features**
+
+* **Dashboard version history**: **Settings → History** lists every saved state of a dashboard, with bookmarks, a read-only preview link, and a restore that records the present first. See [The History section](../features/versioning.md#history) ([#919](https://github.com/depictio/depictio/pull/919), [d4774967](https://github.com/depictio/depictio/commit/d4774967), [9f1d2e27](https://github.com/depictio/depictio/commit/9f1d2e27)).
+* **Component history**: **History** in a component's ⋮ menu compares it with any earlier version and restores it alone. See [Component history](../features/versioning.md#component-history) ([#1164](https://github.com/depictio/depictio/pull/1164), [fdd7bf14](https://github.com/depictio/depictio/commit/fdd7bf14), [981381a1](https://github.com/depictio/depictio/commit/981381a1)).
+* **Data versions and time travel**: each write to a table is a Delta commit, a dashboard version records the commit of each collection, and previews and **Settings → Data version** draw from earlier data, with a **Current data** badge on the components that cannot go back. See [Data versions](../features/versioning.md#data-versions) ([#1164](https://github.com/depictio/depictio/pull/1164), [341b1543](https://github.com/depictio/depictio/commit/341b1543), [5e6a3d88](https://github.com/depictio/depictio/commit/5e6a3d88)).
+* **Dataset history**: a table's **Version history** on its project page lists its commits, **At version** previews one, and `depictio data versions` and `depictio data vacuum` list and clean them up. See [Dataset history](../features/versioning.md#dataset-history) ([#915](https://github.com/depictio/depictio/pull/915), [50c3e9b5](https://github.com/depictio/depictio/commit/50c3e9b5), [dd713ad1](https://github.com/depictio/depictio/commit/dd713ad1)).
+* **Partial writes**: `--write-mode replace-runs` rewrites only the runs in a batch, `--incremental-write` only those that changed, and `--skip-unchanged` leaves alone a table whose files did not change. See [How new data versions are written](../features/versioning.md#how-new-data-versions-are-written) ([#915](https://github.com/depictio/depictio/pull/915), [e8db0da6](https://github.com/depictio/depictio/commit/e8db0da6), [dd713ad1](https://github.com/depictio/depictio/commit/dd713ad1)).
+* **`depictio watch`** runs the ingestion again whenever the results directory changes, as a service or a container, and a second watcher or ingestion of the same project on that machine stops at once. See [Watch Command](../depictio-cli/usage.md#watch-command) ([#915](https://github.com/depictio/depictio/pull/915), [dd713ad1](https://github.com/depictio/depictio/commit/dd713ad1)).
+* **Run ingestion** on a project page has the server ingest the project itself, where the server can read its data, and is off by default. See [Run ingestion](../features/dashboards.md#run-ingestion) ([#915](https://github.com/depictio/depictio/pull/915), [fde32da1](https://github.com/depictio/depictio/commit/fde32da1), [50c3e9b5](https://github.com/depictio/depictio/commit/50c3e9b5)).
+* **An ingestion worker and a jobs API**: the Compose `ingestion` profile adds a worker that profiles large tables for `--async-upsert` and runs **Run ingestion**, and `/jobs` reports on that work. See [Ingestion worker](../installation/docker.md#ingestion-worker) and [Jobs](../api/README.md#jobs) ([#915](https://github.com/depictio/depictio/pull/915), [fde32da1](https://github.com/depictio/depictio/commit/fde32da1)).
+
+### **🚀 Improvements**
+
+* **Live ingestion steps and a Watchers pane**: **Log & Task** shows a running ingestion's steps as they happen, and lists each watcher with **Run now**. See [Watchers](../usage/administration/monitoring.md#watchers) ([#915](https://github.com/depictio/depictio/pull/915), [50c3e9b5](https://github.com/depictio/depictio/commit/50c3e9b5)).
+* **Ingestion history on the project page**: the **Ingestion** tab's **History** view lists the project's runs for anyone who can open it, and the report counts new and updated files. See [Ingestion history](../features/dashboards.md#ingestion-history) ([#915](https://github.com/depictio/depictio/pull/915), [50c3e9b5](https://github.com/depictio/depictio/commit/50c3e9b5)).
+* **Faster rescans**: a rescan skips the runs whose files did not change since the last one (`--state-cache`, on by default), and `--sync-changed` re-uploads only the files that moved. See [Ingest Command](../depictio-cli/usage.md#ingest-command) ([#915](https://github.com/depictio/depictio/pull/915), [dd713ad1](https://github.com/depictio/depictio/commit/dd713ad1)).
+* **YAML figures take every chart the builder draws**, `ecdf`, `strip`, `area`, `funnel`, `density_heatmap` and `density_contour` included. See [Figure Component](../features/yaml-sync.md#figure-component) ([#1164](https://github.com/depictio/depictio/pull/1164), [062cfc42](https://github.com/depictio/depictio/commit/062cfc42)).
+
+### **🔒 Security**
+
+* **A render draws a past version from the server's own record**: it names the version with `definition_version`, and `component_overrides` is refused, so no request supplies a component's definition or code. See [Past versions in a render](../features/security.md#past-versions-in-a-render) ([#1164](https://github.com/depictio/depictio/pull/1164), [48667fc9](https://github.com/depictio/depictio/commit/48667fc9)).
+
+### **🐛 Bug Fixes**
+
+* **A slow table profile no longer drops the connection or stalls the server**: it runs off the request loop, and the API server allows a request 300 seconds instead of 120, as long as the CLI waits. See [Request timeouts](../installation/docker.md#request-timeouts) ([#915](https://github.com/depictio/depictio/pull/915), [fde32da1](https://github.com/depictio/depictio/commit/fde32da1)).
+
+---
+
+## **[v1.14.1](https://github.com/depictio/depictio/releases/tag/v1.14.1)** (October 9, 2026)
+
+!!! success "Patch: nf-core templates v2, four new pipeline releases, and access checks on figure previews"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.14.1
+ghcr.io/depictio/depictio-viewer:1.14.1
+ghcr.io/depictio/depictio-worker:1.14.1
+ghcr.io/depictio/depictio-cli:1.14.1
+```
+
+### **✨ New Features**
+
+* **The nf-core templates move to v2**: each opens on an Overview landing tab, with its analyses in tab groups, built on one set of authoring rules. See [Contributing Templates](../developer/contributing-templates.md) ([#1160](https://github.com/depictio/depictio/pull/1160)).
+* **Templates for atacseq 2.1.2, chipseq 2.1.0, airrflow 5.1.1 and cutandrun 3.2.2**, whose outputs moved too far for the previous templates to ingest them. See [atacseq](../pipeline-templates/nf-core/atacseq.md) ([#1161](https://github.com/depictio/depictio/pull/1161)).
+* **`category_colors: auto`** picks the colours at import, and text tiles print **live values** computed from the data. See [Category colours](../features/yaml-sync.md#category-colors) and [Live values](../features/yaml-sync.md#text-live-values) ([#1160](https://github.com/depictio/depictio/pull/1160)).
+
+### **🐛 Bug Fixes**
+
+* **Figure previews and dashboard exports check access to the project**, and code figures reach only what a chart needs. See [Code execution security](../features/security.md#code-execution-security-code-mode) ([#1166](https://github.com/depictio/depictio/pull/1166)).
+
+---
+
 ## **[v1.14.0](https://github.com/depictio/depictio/releases/tag/v1.14.0)** (October 8, 2026)
 
 !!! success "Minor: landing tabs written in YAML, a Guide on every dashboard, and Spotlight search across its tabs"

@@ -30,18 +30,15 @@ hide:
 </div>
 
 The methylseq template follows the Bismark route of an nf-core/methylseq run from
-trimmed reads to per-cytosine methylation, one question per tab:
+the reads to the windows whose methylation differs between groups:
 
-- :material-chart-box-outline: **MultiQC**: FastQC, Cutadapt, Bismark and Qualimap panels from the run's MultiQC report
-- :material-check-decagram: **Run QC**: which libraries fail the alignment, duplication or bisulfite conversion floors
-- :material-chart-line: **Coverage**: how deep and how evenly the deduplicated alignments cover the reference
-- :material-chart-bell-curve: **Bias and context**: whether the methylation extraction needs a read-position trim
-- :material-dna: **Global methylome**: whether each methylome is bimodal, and whether the libraries group by the design
-- :material-scale-balance: **Group comparison**: where two groups differ, genome-wide and at one locus
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: FastQC, Cutadapt, Bismark and Qualimap panels from the regenerated MultiQC report, the libraries that fail the alignment, duplication or conversion floors, and how deep and how evenly the alignments cover the reference
+- :material-dna: **Methylome**: whether the extraction needs a read-position trim, whether each methylome is bimodal, whether the libraries group by the design, and the windows that differ between two groups
 
-A `Run at a glance` strip, the `Sample filters` (sample and the design factor) and
-a collapsed sample sheet are pinned to the top of every tab, and a collapsed
-`QC thresholds` group (mapping efficiency, duplication, conversion) to the bottom.
+The persistent `Sample filters` (the design factor, then the sample id) sit in the
+left panel and narrow every tab through the project links, and the collapsed
+`Sample sheet` is pinned to the bottom of every child tab.
 
 !!! warning "The MultiQC report must be regenerated"
     methylseq 2.3.0 ships MultiQC 1.13, which writes no parquet, and Depictio
@@ -61,8 +58,9 @@ a collapsed sample sheet are pinned to the top of every tab, and a collapsed
 !!! note "The design is a table beside the run"
     The methylseq samplesheet carries no design column, and the template never
     parses one out of sample names. Pass a design table with `METADATA_FILE`:
-    without it the design filter has nothing to offer and the Group comparison
-    tab is pruned.
+    without it there is no group to filter or colour by, and the window
+    comparison is pruned, leaving the Group comparison tab with only the
+    per-library lanes of its collapsed locus section.
 
 ---
 
@@ -97,7 +95,7 @@ a collapsed sample sheet are pinned to the top of every tab, and a collapsed
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
-    manifest. Without a `METADATA_FILE` the Group comparison is pruned, and the
+    manifest. Without a `METADATA_FILE` the window comparison is pruned, and the
     MultiQC tab stays empty until the report is regenerated as above. See
     [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
 
@@ -107,9 +105,9 @@ a collapsed sample sheet are pinned to the top of every tab, and a collapsed
 
 The template reads the samplesheet and the design table, the regenerated MultiQC
 report, Bismark's alignment, deduplication, splitting and M-bias reports and its
-per-CpG bedGraphs, and Qualimap BamQC. 63 of its 69 tiles carry a `use:` catalog
-reference (`bismark/*`, `qualimap/*`, `multiqc/*`), and the locus tracks name
-their `viz_kind` explicitly.
+per-CpG bedGraphs, and Qualimap BamQC. 68 of its 74 tiles carry a `use:` catalog
+reference (`bismark/*`, `qualimap/*`, `multiqc/*`), and the two comparison tracks
+of the locus view name their `viz_kind` explicitly.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -127,172 +125,263 @@ their `viz_kind` explicitly.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Six tabs, read as a funnel: is the report normal, which libraries fail a floor,
-is depth even enough for a site call, does the extraction need a trim, what does
-the methylome look like, and where do the two groups differ. Each tab below
-carries the **same icon and colour the dashboard gives it**. A picked row or
-point becomes a filter that follows the project links to the tiles it reaches.
+One dashboard: the **Overview**, then seven child tabs in two groups, read as a
+funnel from the reads to the windows whose methylation differs between groups.
+Each tab below carries the **same icon and colour the dashboard gives it**, so the
+page and the app read alike.
+
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Run QC, Coverage |
+| Methylome | Bias and context, Methylation levels, Cohort structure, Group comparison |
+
+Each child tab opens with a short intro and a strip of two to four cards, then at
+most three open sections; tables, details and the locus view follow, collapsed.
+The design is a table beside the run (`METADATA_FILE`), and `GROUP_COL` is the
+factor every tab colours and filters by. The persistent *Sample filters* (the
+group, then the sample id, both on the sample hub) sit in the left panel and
+narrow every tab through the project links; each tab's own filters sit under them.
+The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
+
+=== ":material-compass-outline: Overview"
+
+    *Bisulfite methylomes, from read QC to the windows that differ between groups.*
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/methylseq/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/methylseq/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A short hero links the run's provenance: methylseq 2.3.0 writes no
+    `params.json`, so the dialog holds the software versions. *About this
+    dashboard* says how the two filter levels work, *The run* lists the samples,
+    read pairs, pairs aligned and CpG calls, and *Pipeline* walks the five steps
+    from trimming to the binned methylome, each linked to the version of its tool
+    and its tab. The findings are live values: they follow the filters. Without a
+    design table the windows row and the Manhattan drop out.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · the left panel starts collapsed. *Key figures* and
+        *Findings* each have their own filter bar (the group and the sample id):
+        each narrows its own section only.
+
+        | Section | What it holds |
+        |---|---|
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: samples, reads aligned, CpG methylation, the lowest conversion |
+        | Findings | Live result rows, then 4 figures, one per Methylome tab: the CpG M-bias curves, the per-CpG methylation density, the library PCA and the Manhattan of the tested windows |
+        | How to read this dashboard | The tabs by group, each with its question |
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Read the report from the reads to the methylation calls.*
+    **Data & QC** · *Did the reads trim, align and deduplicate cleanly in every library?*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/methylseq/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/methylseq/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Every module the report carries: the general statistics, all ten FastQC
-    panels, what Trim Galore removed, Bismark's five plots and Qualimap BamQC. A
-    bisulfite library legitimately fails the per-base sequence content and GC
-    checks, because converting unmethylated cytosines is the point, so the
-    quality, length and adapter panels are the ones to read.
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/methylseq/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    MultiQC panels only, from the report regenerated with MultiQC 1.35. Open:
+    general statistics, FastQC base quality and the reads Cutadapt kept, then
+    Bismark's alignment rates, deduplication, cytosine methylation and M-bias. A
+    bisulfite library fails the FastQC sequence content and GC checks by design,
+    since conversion turns unmethylated cytosines into thymines. The other FastQC
+    panels with the trimmed read lengths, and Bismark's strand alignment with the
+    four Qualimap BamQC panels, are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample` and the `GROUP_COL` factor, persistent and pinned
-        to the top of every tab; `Mapping efficiency`, `Duplication rate` and
-        `Conversion efficiency` ranges in the collapsed *QC thresholds* group
-        pinned to the bottom; plus a tab-local `CpG methylation` range that
-        narrows the pinned strip.
+        **Filters** · `Sample ID`, read from the MultiQC report.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards: samples by design factor, reads to CpG calls, CpG methylation, lowest conversion efficiency |
-        | Sample sheet | *Sample hub* |
-        | MultiQC general statistics | *General statistics* |
-        | Read quality | 10 FastQC panels |
-        | Trimming | 2 Cutadapt panels |
-        | Bisulfite alignment | 5 Bismark panels, M-bias included |
-        | Coverage | 4 Qualimap panels |
+        | QC overview | 3 MultiQC panels |
+        | Bisulfite alignment | 4 MultiQC panels |
+        | Read quality details (collapsed) | 10 MultiQC panels |
+        | Strand and coverage details (collapsed) | 5 MultiQC panels |
 
 === ":material-check-decagram:{ .mc-teal } Run QC"
 
-    *Spot the libraries below the alignment, duplication or conversion floors.*
+    **Data & QC** · *Which libraries fail the alignment, duplication or conversion floors?*
 
-    [![Run QC dashboard](../../images/pipeline-templates/nf-core/methylseq/run_qc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/run_qc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Run QC dashboard](../../images/pipeline-templates/nf-core/methylseq/run_qc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/run_qc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    The floor cards read the worst library of the selection: mapping efficiency
-    passes at 70 %, since bisulfite alignment searches four converted genomes, and
-    duplication up to 10 %. Conversion is read as `100 - %CHH`, which assumes
-    near-zero non-CpG methylation, as in mammals; on a plant run judge it on an
-    unmethylated spike-in instead. A parallel-coordinates panel draws each library
-    across the QC ratios, coloured by the design factor.
+    [![Run QC dashboard](../../images/pipeline-templates/nf-core/methylseq/run_qc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/run_qc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The read pairs Bismark analysed, followed to those aligned and kept; the worst
+    mapping efficiency, which passes at 70% since a bisulfite aligner tops out in
+    the seventies; the worst duplication (10% passes) and the worst conversion,
+    read as `100 - %CHH`. Then the conversion per library, coloured by group, and
+    five run-summary metrics on parallel axes: a library that crosses the others on
+    conversion is a bisulfite problem, on alignment and duplication a library
+    preparation one. Bismark's three report tables are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Reads analysed` and `Sequences kept after deduplication`
-        ranges.
+        **Filters** · `Read pairs analysed`, `CpG methylation` and `Conversion
+        efficiency` ranges on `bismark_summary_report`, `Mapping efficiency` on
+        `bismark_alignment_summary`, and `Duplication rate` and `Alignments kept
+        after deduplication` on `bismark_deduplication_summary`.
 
         | Section | What it holds |
         |---|---|
-        | Alignment and duplication | 4 cards: % aligned, % duplicates, mapping efficiency floor, duplication ceiling |
-        | Cytosine yield | 2 cards, *Bisulfite conversion efficiency per library* |
-        | Library QC profile | *Per-library QC profile* (parallel coordinates) |
-        | Library detail | Bismark run summary, alignment and deduplication tables (collapsed) |
+        | Run QC at a glance | 4 cards |
+        | Conversion per library | *Bisulfite conversion per library* |
+        | Library QC profile | 1 advanced visualization |
+        | Library detail (collapsed) | *Bismark run summary*, *Alignment summary*, *Deduplication summary* |
 
 === ":material-chart-line:{ .mc-cyan } Coverage"
 
-    *Measure how deep and how evenly the reference is covered.*
+    **Data & QC** · *How deep and how evenly do the alignments cover the reference?*
 
-    [![Coverage dashboard](../../images/pipeline-templates/nf-core/methylseq/coverage_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/coverage_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Coverage dashboard](../../images/pipeline-templates/nf-core/methylseq/coverage_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/coverage_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Qualimap BamQC on the deduplicated alignments. Mean depth counts the bases at
-    zero, so on a shallow run the genome-fraction curve is the number to judge,
-    and a low GC share is the conversion itself. Windowed depth is mapped back
-    onto its contigs as one lane per library.
+    [![Coverage dashboard](../../images/pipeline-templates/nf-core/methylseq/coverage_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/coverage_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Qualimap BamQC on the deduplicated alignments. The mean depth, the share of the
+    reference covered at least once, Qualimap's duplicate estimate and the mean
+    mapping quality on Bowtie 2's 0 to 42 scale. Mean depth counts the bases at
+    zero, so on a shallow run judge the breadth. Then the depth along the
+    reference, one lane per library, and side by side the bases at each depth and
+    the share of the reference covered at least X deep. The depth threshold in that
+    section's bar narrows that section only. The BamQC table is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Contig` on the windowed depth and a `Depth threshold` on the
-        genome fraction.
+        **Filters** · `Contig` on `qualimap_coverage_across_reference`; the
+        `Depth threshold` range sits in the bar of *Depth distribution*.
 
         | Section | What it holds |
         |---|---|
-        | Depth summary | 4 cards: mean depth, duplication rate, mean MAPQ, GC of mapped bases |
-        | Depth along the reference | *Read depth along the reference* |
-        | Depth distribution | *Bases of the reference at each depth*, *Share of the reference covered at least X deep* |
-        | Coverage detail | *Qualimap BamQC summary* (collapsed) |
+        | Coverage at a glance | 4 cards |
+        | Depth along the reference | 1 advanced visualization |
+        | Depth distribution | 2 advanced visualizations, under a filter bar |
+        | Coverage detail (collapsed) | *Qualimap BamQC summary* |
 
 === ":material-chart-bell-curve:{ .mc-pink } Bias and context"
 
-    *Decide whether a read-position trim is needed.*
+    **Methylome** · *Does the methylation extraction need a read-position trim?*
 
-    [![Bias and context dashboard](../../images/pipeline-templates/nf-core/methylseq/bias_and_context_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/bias_and_context_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Bias and context dashboard](../../images/pipeline-templates/nf-core/methylseq/bias_and_context_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/bias_and_context_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    One M-bias explorer over all six tables of Bismark's M-bias file, opening on
-    CpG. A CpG curve that has not flattened by the end of the read is Bismark's
-    own advice to add an `--ignore` or `--ignore_r2` trim and re-extract; a CHH
-    curve that climbs at one end is unconverted cytosine at those positions.
+    [![Bias and context dashboard](../../images/pipeline-templates/nf-core/methylseq/bias_and_context_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/bias_and_context_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · `Cytosine context`, `Read` and a `Read position` range.
-
-        | Section | What it holds |
-        |---|---|
-        | M-bias | *M-bias by context and read* |
-        | Context detail | *M-bias, every context and read*, *Methylation by context* (collapsed) |
-
-=== ":material-dna:{ .mc-violet } Global methylome"
-
-    *Check bimodality and whether the libraries group by the design.*
-
-    [![Global methylome dashboard](../../images/pipeline-templates/nf-core/methylseq/global_methylome_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/global_methylome_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    The per-CpG bedGraphs are streamed into 10 kb windows that hold enough CpGs in
-    every library. A healthy mammalian methylome is bimodal, and a low peak that
-    drifted upward points to incomplete conversion or too little depth. Windows
-    split into CpG-density tertiles stand in for an island annotation, which
-    methylseq does not bundle. The cohort is read as a PCA coloured by the design
-    factor, a library correlation matrix and the windows that vary most.
+    CpG and CHG methylation, the worst CHH methylation against a 2% line (the 98%
+    conversion floor on a mammalian genome) and the methylated calls by context.
+    Then one M-bias explorer over the six tables of Bismark's M-bias file; the bar
+    of its section picks the context and the read, opens on CpG and narrows the
+    explorer only. A CpG curve that has not flattened by the end of the read calls
+    for an `--ignore` or `--ignore_r2` trim and a re-extraction. The raw M-bias
+    positions and the per-context counts are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `CpG density class` and a `Window methylation` range.
+        **Filters** · a `Read position` range on `bismark_mbias_all_contexts`;
+        `Cytosine context` and `Read` sit in the bar of *M-bias*.
 
         | Section | What it holds |
         |---|---|
-        | Per-CpG methylation | 2 cards, *Per-CpG methylation density* |
-        | CpG density | 2 cards, *Methylation by CpG-density class* |
-        | Cohort structure | *Libraries on the first components of their binned methylome*, *Library correlation over the shared windows*, *The 150 windows that move most across the cohort* |
+        | Context at a glance | 4 cards |
+        | M-bias | 1 advanced visualization, under a filter bar |
+        | Context detail (collapsed) | *M-bias, every context and read*, *Methylation by context* |
 
-=== ":material-scale-balance:{ .mc-grape } Group comparison"
+=== ":material-dna:{ .mc-violet } Methylation levels"
 
-    *Locate the differences between the two groups.*
+    **Methylome** · *Is each methylome bimodal, and are CpG-dense regions unmethylated?*
 
-    [![Group comparison dashboard](../../images/pipeline-templates/nf-core/methylseq/group_comparison_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/group_comparison_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Methylation levels dashboard](../../images/pipeline-templates/nf-core/methylseq/methylation_levels_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/methylation_levels_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    methylseq ships no differential-methylation caller, so this is the screen the
-    published files support, labelled as one: every eligible window is tested with
-    a two-sample t-test on arcsine-transformed proportions and Benjamini-Hochberg
-    correction, and called at padj under 0.05 with a difference of at least ten
-    points. A Manhattan and a volcano open the tab; a locus navigator then drives
-    the per-library windows and the group difference on the same region.
+    [![Methylation levels dashboard](../../images/pipeline-templates/nf-core/methylseq/methylation_levels_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/methylation_levels_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Bismark's per-CpG calls, streamed into 2% buckets per library and into 10 kb
+    windows. The share of CpGs at 98 to 100%, the share at 0 to 2%, the median
+    window methylation and the median window per CpG-density class. Then the
+    per-CpG methylation density, one curve per library, and window methylation by
+    CpG-density class. A healthy mammalian methylome is bimodal. The CpG-density
+    tertiles stand in for a CpG-island annotation, which nf-core/methylseq does not
+    ship. Nothing on this tab is collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `CpG density class` and a `Window methylation` range on
+        `bismark_binned_methylation`.
+
+        | Section | What it holds |
+        |---|---|
+        | Levels at a glance | 4 cards |
+        | Per-CpG methylation | 1 advanced visualization |
+        | CpG density | *Methylation by CpG-density class* |
+
+=== ":material-relation-many-to-many:{ .mc-grape } Cohort structure"
+
+    **Methylome** · *Do the libraries group by the design?*
+
+    [![Cohort structure dashboard](../../images/pipeline-templates/nf-core/methylseq/cohort_structure_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/cohort_structure_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Cohort structure dashboard](../../images/pipeline-templates/nf-core/methylseq/cohort_structure_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/cohort_structure_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The library-by-window matrix read three ways. The libraries placed by the PCA,
+    as a ring by group, and the 150 most variable windows ranked by contig. Then
+    the PCA coloured by group, where a lasso makes an analysis group, and the
+    pairwise Pearson correlation, clustered. The heatmap of the 150 windows is
+    collapsed, too tall to open by default. A library that lands with the wrong
+    block in all three is a swap, a mislabelled sheet or a conversion failure.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Contig` on `bismark_top_variable_windows`.
+
+        | Section | What it holds |
+        |---|---|
+        | Cohort at a glance | 2 cards |
+        | Library relationships | 2 advanced visualizations |
+        | Variable windows (collapsed) | 1 advanced visualization |
+
+=== ":material-scale-balance:{ .mc-red } Group comparison"
+
+    **Methylome** · *Which windows differ in methylation between the two groups?*
+
+    [![Group comparison dashboard](../../images/pipeline-templates/nf-core/methylseq/group_comparison_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/group_comparison_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Group comparison dashboard](../../images/pipeline-templates/nf-core/methylseq/group_comparison_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/methylseq/group_comparison_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Every 10 kb window covered in every library is tested between the two levels
+    of the design factor, a t-test on arcsine-transformed proportions with
+    Benjamini-Hochberg correction, and called at padj below 0.05 with at least ten
+    points of difference. The windows tested and called, the median difference and
+    the strongest call. Then the Manhattan of every tested window, and the volcano
+    (its View switch draws a QQ plot) beside the spread of the differences. The
+    locus view, a navigator with two tracks on its region, and the window table are
+    collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
         **Filters** · `Call`, and `Methylation difference` and `Adjusted p`
-        ranges.
+        ranges, on `bismark_window_group_compare`.
 
         | Section | What it holds |
         |---|---|
-        | Window comparison | 4 cards, *Tested windows along the genome*, *Window methylation difference against significance* |
-        | Effect size distribution | *Distribution of the per-window difference* |
-        | Methylation at a locus | the locus navigator and two tracks that follow its region |
-        | Window detail | *Tested windows* (collapsed) |
+        | Calls at a glance | 4 cards |
+        | Along the genome | 1 advanced visualization |
+        | Effect and significance | 1 advanced visualization + *How the differences spread* |
+        | Methylation at a locus (collapsed) | 3 advanced visualizations: the locus navigator, the binned methylation per library and the group difference on the same region |
+        | Window detail (collapsed) | *Tested windows* |
 
     !!! tip "A window screen, not a DMR caller"
-        The unit is a 10 kb window, not a CpG or a called DMR, and with few
-        libraries a side the screen is low-powered by construction. Without a
-        design table, or without a factor of exactly two levels, the tab is
-        pruned.
+        nf-core/methylseq ships no differential-methylation caller. The unit is a
+        10 kb window, not a CpG or a called DMR, and with few libraries a side the
+        screen is low-powered by construction: read clusters of windows, not a lone
+        hit. Without a design table, or without a factor of exactly two levels, the
+        comparison is pruned and only the per-library lanes of the locus section
+        remain.
 
-Tables and point views select on their entity column: the pinned sample sheet
-on `sample_id`; the Bismark, Qualimap and M-bias tables and the per-library
-profiles on `sample`; the group comparison table and the two window tracks on
-`window_id`; the Manhattan panel on `chromosome`. A pick narrows the other tiles
-of its collection and follows the project links to the collections they reach.
-The methylation-by-context table, the binned methylation track and the depth
-histogram narrow nothing, and neither does the cohort PCA: their collections
-have no outgoing link and no sibling tile.
+A picked row or point becomes a filter that narrows the other tiles of its
+collection and follows the project links to the collections they reach. The
+pinned sample sheet selects on `sample_id`; the Bismark, Qualimap and M-bias
+tables and the per-library profiles on `sample`; the PCA on `sample_id`; the
+tested-window table and the two window tracks on `window_id`; the Manhattan on
+`chromosome`. The cohort-level collections (correlation, variable windows,
+comparison) hold the libraries as columns or test across them, so the sample
+filters do not narrow them; their own tab filters do.
 
 ---
 

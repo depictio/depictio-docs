@@ -123,6 +123,10 @@ variables are dropped before the call, so the recipe falls back to its own defau
 depictio ingest /path/to/results --template nf-core/ampliseq/latest
 ```
 
+Here an nf-core/rnaseq run is ingested with its template named, as the [Template Catalog](../../pipeline-templates/README.md) lists it, and its samplesheet passed as a variable:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-template.cast" data-poster="npt:0:42" data-idle-time-limit="2.5"></div>
+
 ### Which template a run uses { #pipeline-id }
 
 `depictio ingest` takes the project from the first of these that applies:
@@ -150,13 +154,13 @@ When a template is used, `depictio ingest` inserts **Step 0: Template resolution
 | Step | Name | Description |
 |------|------|-------------|
 | **0** | Template resolution | Load YAML, substitute variables, auto-detect metadata columns, apply conditionals, then [materialise recipe seeds](#recipe-seeds) |
-| 1 | Config validation | Pydantic validation of the resolved project config |
-| 2 | Authentication | Login + fetch JWT token |
-| 3 | Project sync | Create or update project on server |
-| 4 | File scan | Discover data collection files |
-| 5 | Data process | Execute recipes, write to Delta Lake |
-| 6 | Join computation | Compute cross-DC joins |
-| 7 | Finalize | Mark project as ready |
+| 1 | Server check | Check that the server answers |
+| 2 | S3 check | Check the S3 storage configuration |
+| 3 | Config validation | Pydantic validation of the resolved project config |
+| 4 | Project sync | Create or update project on server |
+| 5 | File scan | Discover data collection files |
+| 6 | Data process | Execute recipes, write to Delta Lake |
+| 7 | Join computation | Compute cross-DC joins |
 | **8** | Dashboard import | Import the bundled dashboard YAML the project lacks (with variable substitution). On a refresh, the dashboards it has are kept as edited in the viewer, unless `--reset-dashboards` |
 
 Dashboard YAML files also undergo variable substitution (e.g. `{GROUP_COL}` in filter columns, chart titles).

@@ -30,19 +30,16 @@ hide:
 </div>
 
 The rnasplice template follows an nf-core/rnasplice run from the reads to the
-splicing calls of up to five tools, one tab per question:
+splicing calls of up to five tests:
 
-- :material-chart-box-outline: **MultiQC**: FastQC, Trim Galore, STAR, samtools, featureCounts and Salmon, read from the report
-- :material-chart-scatter-plot: **Sample space**: whether the samples group by condition on their Salmon expression
-- :material-set-merge: **Splicing overview**: which genes each tool calls, and where the tools agree
-- :material-chart-scatter-plot: **Exon usage**: DEXSeq and edgeR differential exon usage per gene
-- :material-chart-timeline-variant: **Transcript usage**: DEXSeq DTU, transcripts that change their share of the gene
-- :material-shape-outline: **Splicing events**: rMATS and SUPPA2 events by type, direction and inclusion change
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-chart-box-outline: **Data & QC**: the MultiQC report (FastQC, Trim Galore, STAR, samtools, featureCounts and Salmon), and whether the replicates of each condition sit together on their Salmon expression
+- :material-set-merge: **Splicing**: where the five tests agree per gene, then exon usage (DEXSeq, edgeR), transcript usage (DEXSeq DTU) and local events (rMATS, SUPPA2)
 
-The `Run scope` filters (sample, condition, contrast) apply to every tab, and
-`Run at a glance` and the collapsed `Sample sheet` are pinned to the top. The
-contrast sheet is linked to every splicing collection, so one contrast pick
-scopes every tab.
+Two persistent filter sections sit in the left panel: `Sample filters` (the
+group, then the sample) apply to every tab, and `Splicing filters` (one contrast,
+then genes) to every splicing tab. The contrast sheet is linked to every
+splicing collection, so one contrast pick scopes every splicing tab.
 
 !!! warning "MultiQC 1.18 writes no parquet"
     rnasplice 1.0.4 pins MultiQC 1.18, and Depictio reads only
@@ -56,8 +53,10 @@ scopes every tab.
 !!! info "One sign for every tool, every tool optional"
     Effects are oriented treatment minus control across all five tools, so a
     contrast and its mirror give mirrored effects; rnasplice often lists both, so
-    pick one. A run that skips a tool drops its collection: its tiles stay empty
-    and the agreement UpSet shows an empty set.
+    pick one. A run that skips a tool drops its collection, and with it the
+    tool's cards, figures, filters, Overview row and figure; a tab left without
+    data is dropped. The cross-tool gene table is always built, so Tool Agreement
+    stays, and its UpSet shows an empty set for the skipped tool.
 
 ---
 
@@ -107,9 +106,10 @@ both conditions.
 The template reads the MultiQC report, the validated sample and contrast sheets,
 the merged Salmon gene TPMs and the result tables of the five splicing tools. A
 pipeline-local `splicing_genes` recipe joins the tools into one row per gene,
-linked on `gene_id` to every tool collection, so a gene or agreement filter on
-the overview reaches the per-tool tabs. 39 of its 82 components carry a `use:`
-catalog reference, so a tile says where its panel comes from.
+linked on `gene_id` to every tool collection, so the `Gene` filter of the left
+panel and the agreement filter of Tool Agreement reach the per-tool tabs. 42 of
+its 62 tiles carry a `use:` catalog reference, so a tile says where its panel
+comes from.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -127,163 +127,245 @@ catalog reference, so a tile says where its panel comes from.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Six tabs, read as a funnel: are the libraries usable, do the samples separate by
-condition, which genes the tools call together, and then each level of evidence
-in turn: exons, transcripts, events. Each tab below carries the **same icon and
-colour the dashboard gives it**. The screenshots come from the run described
-under Validation runs below.
+One dashboard: the **Overview**, then six child tabs in two groups, read as a
+funnel from the run to the genes whose splicing changes between conditions. Each
+tab below carries the **same icon and colour the dashboard gives it**, so the page
+and the app read alike.
+
+| Group | Tabs |
+|---|---|
+| Data & QC | MultiQC, Sample Space |
+| Splicing | Tool Agreement, Exon Usage, Transcript Usage, Splicing Events |
+
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. Two persistent filter
+sections sit in the left panel: the *Sample filters* (the group, then the sample)
+apply to every tab, and the *Splicing filters* (one contrast, then genes) to every
+splicing tab, through the contrast and gene links; MultiQC and Sample Space carry
+no contrast and leave them out. Pick one contrast first: rnasplice often runs a
+contrast and its mirror, and a gene called in both counts twice. The *Sample
+sheet* section (the samples and the contrasts) is pinned, collapsed, to the bottom
+of every child tab.
+
+=== ":material-compass-outline: Overview"
+
+    *Bulk RNA-seq, from reads to the genes whose splicing changes between conditions.*
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/rnasplice/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/rnasplice/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A short hero links the run parameters. *About this dashboard* says what the
+    dashboard shows and how the filters work, *The run* lists the samples, the
+    contrasts, the genome and the aligner, and *Pipeline* walks the six steps from
+    trimming to the cross-tool comparison, each linked to its settings and its
+    tab. The findings are live values: they follow the filters, and a tool the run
+    skipped takes its row and figure with it. The two volcanoes among the figures
+    answer different questions: one point per gene at its most significant exonic
+    bin, against one point per transcript.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · the left panel starts collapsed. *Key figures* has its own
+        filter bar (the group and the sample), *Findings* another (the contrast
+        and the rMATS event type): each narrows its own section only. The
+        splicing cards also follow the contrast and gene filters of the left
+        panel.
+
+        | Section | What it holds |
+        |---|---|
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: samples by group, genes expressed, genes called by two tools or more, rMATS events called |
+        | Findings | Live result rows, then 4 figures: each tool's calls by agreement, the DEXSeq exon usage volcano, the DEXSeq DTU transcript volcano and the called rMATS events per type |
+        | How to read this dashboard | The tabs by group, each with its question |
 
 === "![MultiQC](../../images/logos/multiqc_light.svg#only-light){ width=18 }![MultiQC](../../images/logos/multiqc_dark.svg#only-dark){ width=18 } MultiQC"
 
-    *Are the libraries usable for splicing tests?*
+    **Data & QC** · *Did trimming, alignment and quantification work for every library?*
 
-    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/rnasplice/multiqc_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/multiqc_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/rnasplice/multiqc_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/multiqc_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    The report reads as a funnel of its own: raw read counts and adapters, what
-    Trim Galore removed, how STAR and samtools placed the reads, then featureCounts
-    assignments and the Salmon fragment length distribution. The remaining FastQC,
-    STAR and samtools panels are collapsed at the bottom.
+    [![MultiQC dashboard](../../images/pipeline-templates/nf-core/rnasplice/multiqc_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/multiqc_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    MultiQC panels only, no card strip. Open: general statistics, FastQC sequence
+    counts beside the reads Trim Galore kept, STAR's summary beside samtools'
+    percent mapped, then featureCounts assignments (the exon-level tests' input)
+    beside Salmon's fragment lengths (the transcript-level tests' input).
+    Splicing tests need depth on junctions, so compare read counts and unique
+    mapping within each condition first. FastQC's adapter content, quality,
+    duplication and status, STAR's alignment scores and samtools' stats and
+    flagstat are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample`, the `GROUP_COL` group and `Contrast` in the
-        persistent *Run scope* group.
+        **Filters** · `Sample ID`, read from the MultiQC report, whose library
+        names carry read suffixes.
 
         | Section | What it holds |
         |---|---|
-        | Run at a glance | 4 cards: samples by group, contrasts by treatment, genes detected per sample, genes tested for splicing |
-        | Sample sheet | *Samples*, *Contrasts* (collapsed, pinned) |
-        | Read quality | *Sequence counts, raw and trimmed*, *Adapter content* |
-        | Trimming | *Reads kept by Trim Galore* |
-        | Alignment | *STAR alignment summary*, *Mapped reads (samtools)* |
-        | Quantification | *featureCounts assignments*, *Salmon fragment length distribution* |
-        | More MultiQC panels | 6 MultiQC panels (collapsed) |
+        | QC overview | 5 MultiQC panels |
+        | Quantification | 2 MultiQC panels |
+        | QC details (collapsed) | 7 MultiQC panels |
 
-=== ":material-chart-scatter-plot:{ .mc-cyan } Sample space"
+=== ":material-chart-scatter-plot:{ .mc-cyan } Sample Space"
 
-    *Do the samples group by condition on their gene expression?*
+    **Data & QC** · *Do the replicates of each condition sit together?*
 
-    [![Sample space dashboard](../../images/pipeline-templates/nf-core/rnasplice/sample_space_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/sample_space_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Sample Space dashboard](../../images/pipeline-templates/nf-core/rnasplice/sample_space_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/sample_space_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    A PCA on the Salmon TPMs places the samples on the leading components, beside a
-    linked `Sample record` that folds to a slim rail until a point is lassoed. A
-    clustered heatmap of the most variable genes follows. A sample that sits with
-    the other condition here will blur every splicing test downstream.
+    [![Sample Space dashboard](../../images/pipeline-templates/nf-core/rnasplice/sample_space_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/sample_space_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The libraries in the merged Salmon TPM matrix by group, the median genes
+    expressed and detected per library, and the median TPM ranked by condition.
+    Then the PCA on the TPMs, with a centroid per group, beside the sample record
+    it fills on a pick, and the most variable genes as a clustered, row z-scored
+    heatmap. Replicates of a condition should sit together: a sample far from its
+    group can drive a tool's calls on its own. The per-sample summary table is
+    collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · a `Genes expressed (TPM 1 or more)` range in a *Library
-        expression* group.
+        **Filters** · `Genes expressed` and `Median TPM` ranges on `sample_pca`.
 
         | Section | What it holds |
         |---|---|
-        | Sample space | *Sample PCA on Salmon TPMs*, *Sample record* |
-        | Top variable genes | *Most variable genes* |
-        | Sample rows | *Sample PCA and expression summary* (collapsed) |
+        | Libraries at a glance | 4 cards |
+        | Sample relationships | 1 advanced visualization + a sample record card |
+        | Top variable genes | 1 advanced visualization |
+        | Library summary (collapsed) | *Sample PCA and expression summary* |
 
-=== ":material-set-merge:{ .mc-violet } Splicing overview"
+=== ":material-set-merge:{ .mc-violet } Tool Agreement"
 
-    *Which genes does each splicing tool call, and where do the tools agree?*
+    **Splicing** · *Which genes does each tool call, and where do the tools agree?*
 
-    [![Splicing overview dashboard](../../images/pipeline-templates/nf-core/rnasplice/splicing_overview_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/splicing_overview_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Tool Agreement dashboard](../../images/pipeline-templates/nf-core/rnasplice/tool_agreement_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/tool_agreement_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    An UpSet counts the genes called by each combination of the five tools, and
-    cards give the genes called by any tool, by two or more, and the largest rMATS
-    PSI shift. The cross-tool table sits beside a linked `Gene record` that stays a
-    slim rail until a gene is picked, then lays out every tool's evidence for it.
-    The gene and agreement filters of this tab reach the per-tool tabs through the
-    gene links.
+    [![Tool Agreement dashboard](../../images/pipeline-templates/nf-core/rnasplice/tool_agreement_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/tool_agreement_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The five splicing tests joined per gene: a gene several of them call is a
+    stronger candidate than one a single test reports. The genes tested, the genes
+    called by any test (by contrast), the genes called by two or more, and the
+    median number of tests calling a called gene on a 0 to 5 gauge. Then each
+    test's calls as a bar, stacked by how many tests call the gene, and the UpSet
+    of called genes across the five tests; a test the run skipped shows an empty
+    set. The cross-tool table with the gene record card beside it (each test's
+    call and strongest evidence, the gene id linked to Ensembl) is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · a `Tools calling the gene` slider and a `Gene` pick in a
-        *Gene scope* group.
+        **Filters** · a `Tools calling the gene` slider on `splicing_genes`, which
+        reaches the per-tool tabs through the gene links.
 
         | Section | What it holds |
         |---|---|
         | Agreement at a glance | 4 cards |
-        | Tool agreement | *Genes called per combination of tools* |
-        | Gene detail | *Cross-tool calls per gene*, *Gene record* |
+        | Calls per tool | *Genes each tool calls, by agreement* |
+        | Tool combinations | 1 advanced visualization |
+        | Gene detail (collapsed) | *Cross-tool calls per gene* + a gene record card |
 
-=== ":material-chart-scatter-plot:{ .mc-indigo } Exon usage"
+=== ":material-content-cut:{ .mc-indigo } Exon Usage"
 
-    *Which genes use their exons differently, per DEXSeq and edgeR?*
+    **Splicing** · *Which genes use their exons differently, per DEXSeq and edgeR?*
 
-    [![Exon usage dashboard](../../images/pipeline-templates/nf-core/rnasplice/exon_usage_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/exon_usage_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Exon Usage dashboard](../../images/pipeline-templates/nf-core/rnasplice/exon_usage_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/exon_usage_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    One volcano per tool: the DEXSeq per-gene q-value against the fold change of
-    the gene's most significant bin, and the edgeR `diffSpliceDGE` gene F-test FDR
-    against the fold change of its most significant exon. Cards split the tested
-    genes by call and give the absolute fold change of the called ones. The gene
-    tables at the bottom select on `gene_id`.
+    [![Exon Usage dashboard](../../images/pipeline-templates/nf-core/rnasplice/exon_usage_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/exon_usage_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The DEXSeq calls by the direction of the gene's top bin, their absolute fold
+    change, the edgeR calls by direction and their absolute fold change. Then the
+    two gene volcanoes side by side in one section: the DEXSeq gene q-value
+    against the fold change of the most significant bin, and the edgeR
+    `diffSpliceDGE` gene F-test FDR against the fold change of the most
+    significant exon. Two tests of one question, so a gene far out on both is the
+    robust exon-level call. Both are unlabelled, since both name genes by id. The
+    two per-gene tables are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `DEXSeq call`, `edgeR call` and one absolute log2 fold
-        change range per tool, in an *Exon usage scope* group.
+        **Filters** · `Call, both tools` on `edger_genes` and an `Absolute log2
+        fold change, both tools` range on `dexseq_exon_genes`. Each narrows both
+        tools, since a filter reaches every collection with its column.
 
         | Section | What it holds |
         |---|---|
         | Exon usage at a glance | 4 cards |
-        | DEXSeq exon usage | *DEXSeq gene q-value against bin fold change* |
-        | edgeR diffSpliceDGE | *edgeR gene FDR against exon fold change* |
-        | Exon gene rows | *DEXSeq exon usage per gene*, *edgeR diffSpliceDGE per gene* (collapsed) |
+        | DEXSeq and edgeR | 2 advanced visualizations |
+        | Exon gene rows (collapsed) | *DEXSeq exon usage per gene*, *edgeR diffSpliceDGE per gene* |
 
-=== ":material-chart-timeline-variant:{ .mc-teal } Transcript usage"
+=== ":material-swap-vertical:{ .mc-teal } Transcript Usage"
 
-    *Which transcripts switch their share within their gene?*
+    **Splicing** · *Which transcripts change their share of the gene, per DEXSeq DTU?*
 
-    [![Transcript usage dashboard](../../images/pipeline-templates/nf-core/rnasplice/transcript_usage_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/transcript_usage_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Transcript Usage dashboard](../../images/pipeline-templates/nf-core/rnasplice/transcript_usage_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/transcript_usage_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    DEXSeq DTU tests each transcript's share of its gene on the Salmon counts of the
-    chosen `QUANT_ROUTE`. The volcano puts the transcript adjusted p-value against
-    the usage fold change, and cards count the transcripts called and the genes with
-    a switch. The transcript table selects on `gene_id`.
+    [![Transcript Usage dashboard](../../images/pipeline-templates/nf-core/rnasplice/transcript_usage_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/transcript_usage_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    DEXSeq DTU tests each transcript's share of its gene on the Salmon estimates
+    of the chosen `QUANT_ROUTE`, so a gene can switch isoforms without changing
+    its total. The called transcripts by direction, the genes with a switch by
+    contrast, the usage gain of the called transcripts that rise (over both
+    directions the median sits at 0) and their mean count. Then the DTU volcano,
+    unlabelled, its View switch drawing a QQ plot of the raw p-values. Look for
+    transcripts of one gene moving in opposite directions. The transcript table
+    is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Transcript call` and a `Usage log2 fold change` range in a
-        *Transcript scope* group.
+        **Filters** · `Transcript call` and a `Usage log2 fold change` range on
+        `dexseq_dtu`.
 
         | Section | What it holds |
         |---|---|
         | Transcript usage at a glance | 4 cards |
-        | Transcript volcano | *Transcript adjusted p-value against usage fold change* |
-        | Transcript rows | *DEXSeq transcript usage* (collapsed) |
+        | Transcript volcano | 1 advanced visualization |
+        | Transcript rows (collapsed) | *DEXSeq transcript usage* |
 
-=== ":material-shape-outline:{ .mc-grape } Splicing events"
+=== ":material-shape-outline:{ .mc-grape } Splicing Events"
 
-    *Which event types change, and by how much inclusion, per rMATS and SUPPA2?*
+    **Splicing** · *Which event types change, and by how much inclusion?*
 
-    [![Splicing events dashboard](../../images/pipeline-templates/nf-core/rnasplice/splicing_events_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/splicing_events_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Splicing Events dashboard](../../images/pipeline-templates/nf-core/rnasplice/splicing_events_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/splicing_events_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    Stacked bars count the significant events per type (skipped exon, retained
-    intron, alternative 3' and 5' sites, mutually exclusive exons) and direction for
-    each tool, and one volcano per tool plots significance against the PSI change.
-    The rMATS event table sits beside a linked `Event record` that folds to a slim
-    rail until an event is picked, then shows its junction coverage and inclusion
-    per condition with a UCSC link to the locus in the `GENOME` assembly.
+    [![Splicing Events dashboard](../../images/pipeline-templates/nf-core/rnasplice/splicing_events_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/rnasplice/splicing_events_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The rMATS events tested by type, the rMATS calls by direction of inclusion,
+    their absolute PSI change and the SUPPA2 calls by type. Then the called
+    events per type and direction for each tool, and the rMATS and SUPPA2
+    volcanoes side by side, each with a QQ view: one question, two methods
+    (junction reads against transcript abundances); only rMATS is labelled, with
+    gene symbols. Then a sashimi of the junctions around the called rMATS events,
+    one lane per condition: a gene picked in the left panel draws its locus,
+    otherwise it opens on the busiest cluster. The rMATS event table with its event record card (the locus linked to UCSC on
+    `GENOME`) and the SUPPA2 event table are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · event type, call and absolute PSI change for rMATS, event
-        type and call for SUPPA2, in an *Event scope* group.
+        **Filters** · `Event type, both tools` and an `Absolute PSI change, both
+        tools` range on `suppa_events`, and `Call, both tools` on
+        `rmats_events`. Each narrows both tools.
 
         | Section | What it holds |
         |---|---|
         | Events at a glance | 4 cards |
-        | Event types | *Significant rMATS events per type*, *Significant SUPPA2 events per type* |
-        | rMATS | *rMATS FDR against inclusion difference* |
-        | SUPPA2 | *SUPPA2 p-value against delta PSI* |
-        | Event detail | *rMATS events*, *Event record* |
-        | Event rows | *SUPPA2 local events* (collapsed) |
+        | Event types | *Called rMATS events per type*, *Called SUPPA2 events per type* |
+        | rMATS and SUPPA2 | 2 advanced visualizations |
+        | Event junctions | 1 advanced visualization |
+        | Event detail (collapsed) | *rMATS events* + an event record card |
+        | SUPPA2 rows (collapsed) | *SUPPA2 local events* |
 
-Tables and point views select on their entity column: the sample and contrast
-tables on `sample` and `contrast`; the sample PCA and its table on `sample_id`;
-the cross-tool, DEXSeq exon, edgeR and transcript-usage tables on `gene_id`; the
-rMATS and SUPPA2 event tables on `event_id`. A pick narrows every tile on the
-tab that reads the same collection or one linked from it, and each record card
-follows the tile beside it.
+    !!! tip "The sashimi needs rMATS and STAR"
+        A run that skipped rMATS, or has no STAR junction tables (pseudo-alignment
+        only), has no *Event junctions* section.
+
+Tables select rows and the PCA selects points: the samples and contrasts tables
+on `sample` and `contrast`, the sample summary and the PCA on `sample_id`, the
+cross-tool, exon and transcript tables on `gene_id`, the rMATS and SUPPA2 event
+tables on `event_id`. A pick narrows the other tiles of its collection and follows
+the project links to the collections downstream of it. The three record cards
+wait for a pick: the sample record reads the PCA, the gene record the cross-tool
+table, the event record the rMATS table. The sashimi follows the `Gene` filter of
+the left panel; an event picked in the rMATS table does not narrow it, since its
+rows are per gene.
 
 ---
 
@@ -334,7 +416,8 @@ value of `QUANT_ROUTE`.
 └── star_salmon/                               # alignment-based tools
     ├── dexseq_exon/results/{DEXSeqResults,perGeneQValue}.*.csv
     ├── edger/contrast_*.usage.*.csv
-    └── rmats/*/rmats_post/*.MATS.JCEC.txt
+    ├── rmats/*/rmats_post/*.MATS.JCEC.txt
+    └── log/*.SJ.out.tab                       # STAR junctions, the Splicing Events sashimi
 ```
 
 `METADATA_FILE` is optional: a TSV or CSV with the sample id in the first column

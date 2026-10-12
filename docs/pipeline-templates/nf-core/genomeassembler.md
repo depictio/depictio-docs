@@ -30,21 +30,21 @@ hide:
 </div>
 
 The genomeassembler template follows an nf-core/genomeassembler run from its raw
-assemblies through polishing and scaffolding, one tab per question:
+assemblies through polishing and scaffolding, one tab per question, in three
+groups:
 
-- :material-view-dashboard-outline: **Overview**: which assembly strategy gives the best contiguity, accuracy and gene completeness
-- :material-chart-timeline-variant: **Stages**: what each polishing and scaffolding step adds to a sample's assembly
-- :material-ruler: **Contiguity**: Nx curves for every assessed assembly, and QUAST's view of the ones it scored
-- :material-chart-bell-curve: **Genome profile**: the read k-mer spectrum and GenomeScope's genome estimates
-- :material-shield-check-outline: **Accuracy and genes**: Merqury QV, k-mer completeness and copy number, and BUSCO
+- :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
+- :material-flask-outline: **Data & QC**: which samples reached assembly QC and at which stages, and the genome the reads describe before any assembly, from the k-mer spectrum and GenomeScope
+- :material-trophy: **Assemblies**: which assembly is best across contiguity, accuracy and genes, and what each polishing and scaffolding step adds to a sample's assembly
+- :material-ruler: **Quality**: Nx curves and QUAST for contiguity, Merqury QV, k-mer completeness and copy number for accuracy, and BUSCO for gene completeness
 
-A `Run at a glance` strip and the collapsed `Sample sheet` are pinned to the top
-of every tab, and the `Sample filters` group (sample and design group) applies
-everywhere through the samplesheet links.
+The persistent `Sample filters` (the design group, then the sample id) sit in the
+left panel and narrow every per-assembly tab through the samplesheet links;
+Genome profile reads per read set and has its own `Read set` filter.
 
 !!! info "No MultiQC report, one row per assessed assembly"
-    nf-core/genomeassembler writes no MultiQC report, so the landing tab is an
-    Overview built from the QC tools' own files. The unit of every tile is the
+    nf-core/genomeassembler writes no MultiQC report, so there is no MultiQC tab:
+    every tile reads the QC tools' own files. The unit of every tile is the
     assessed assembly, which every QC tool names `<sample>_<stage>`: the raw
     assembly, each polishing step (medaka, dorado, pilon) and each scaffolder
     (LINKS, LongStitch, RagTag). A sample whose assembly never reached QC stays
@@ -91,8 +91,9 @@ curve are computed), Merqury's QV, completeness, per-sequence QV and copy-number
 spectrum, the BUSCO batch summary and QUAST's transposed report; and per read
 set, the jellyfish histogram and GenomeScope's summary. Every tool collection is
 optional, so a run that skipped a tool, or an assembly a tool never reached,
-leaves its tiles empty instead of breaking the import. 25 of its 58 components
-carry a `use:` catalog reference, so a tile says where its panel comes from.
+prunes that tool's tiles instead of breaking the import, and a tab left without
+data is dropped. 26 of its 57 tiles carry a `use:` catalog reference, so a tile
+says where its panel comes from.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound
@@ -110,133 +111,272 @@ carry a `use:` catalog reference, so a tile says where its panel comes from.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Five tabs, read as a funnel: which strategy wins overall, what each stage adds,
-how the length is distributed, what genome the reads describe, and how accurate
-and complete each assembly is against it. Each tab below carries the **same icon
-and colour the dashboard gives it**. Screenshots come from the run described
-under Validation runs.
+One dashboard: the **Overview**, then seven child tabs in three groups, read as a
+funnel from the samples and the genome their reads describe to the contiguity,
+accuracy and gene completeness of every assembly. Each tab below carries the
+**same icon and colour the dashboard gives it**, so the page and the app read
+alike.
 
-=== ":material-view-dashboard-outline:{ .mc-indigo } Overview"
+| Group | Tabs |
+|---|---|
+| Data & QC | Samples, Genome profile |
+| Assemblies | Best assembly, Stages |
+| Quality | Contiguity, Accuracy, Gene completeness |
 
-    *Which assembly strategy gives the best assembly?*
+Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables, details and comparisons follow, collapsed. The
+pipeline writes no MultiQC report, so there is no MultiQC tab, and the unit of
+every tile is the assessed assembly, `<sample>_<stage>`: one sample contributes
+several rows. The persistent *Sample filters* (the group, then the sample id, on
+the samplesheet) sit in the left panel and narrow every per-assembly tab through
+the samplesheet links; Genome profile reads per read set, which no sample link
+reaches. The *Sample sheet* (one row per samplesheet sample, with how far its
+assembly QC got) is pinned, collapsed, to the bottom of every child tab. Every QC
+collection is optional: a run without Merqury, BUSCO or k-mer profiling loses the
+Accuracy, Gene completeness or Genome profile tab, with the Overview rows and
+highlights that pointed at it.
 
-    [![Overview dashboard](../../images/pipeline-templates/nf-core/genomeassembler/overview_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/overview_light.png){ .tpl-shot target="_blank" rel="noopener" }
+=== ":material-compass-outline: Overview"
 
-    Cards give the assemblies assessed, the best Merqury QV, the best BUSCO
-    complete share and GenomeScope's genome size estimate. A parallel coordinates
-    plot lays every assembly across N50, L50, length, sequence count, QV, k-mer
-    completeness and BUSCO, coloured by the design group. The N50 against QV
-    scatter, coloured by assembler, carries a linked assembly record that folds to
-    a slim rail until a point is picked; BUSCO class bars close the tab.
+    *De novo assemblies scored for contiguity, k-mer accuracy and gene completeness.*
 
-    ??? abstract ":material-tune-variant: Filters and components"
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/genomeassembler/overview_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/overview_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-        **Filters** · `Sample` and the design group (`GROUP_COL`) on the
-        samplesheet, persistent and pinned to the top of every tab, plus
-        `Stage class`, `Assembler` and a `Consensus QV` range in an *Assembly
-        scope* group.
+    [![Overview dashboard](../../images/pipeline-templates/nf-core/genomeassembler/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-        | Section | What it holds |
-        |---|---|
-        | Run at a glance | 4 cards: samples by QC status, design groups, assemblers, stages assessed (pinned) |
-        | Sample sheet | *Samples and their assembly QC* (collapsed, pinned) |
-        | Best assembly | 4 cards, *Every assembly across the QC axes*, *Contiguity against accuracy*, *Assembly record* |
-        | Gene completeness | *BUSCO classes per assembly* |
-        | Assembly table | *Assessed assemblies* (collapsed) |
-
-=== ":material-chart-timeline-variant:{ .mc-grape } Stages"
-
-    *What do polishing and scaffolding add, step by step?*
-
-    [![Stages dashboard](../../images/pipeline-templates/nf-core/genomeassembler/stages_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/stages_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    Each sample's route runs from its raw assembly through polishing to each
-    scaffolder. Two profiles track the QV and the N50 fold change along every
-    route, so a step that costs accuracy or adds no contiguity shows as a flat or
-    falling segment. A group comparison then contrasts raw assemblies with
-    scaffolds metric by metric.
+    A short hero links the run parameters. *About this dashboard* says how the two
+    filter levels work, *The run* lists the samples, the assessed assemblies, the
+    BUSCO lineage and the k-mer size, and *Pipeline* walks the six steps from reads
+    to a scored genome (profile, assemble, polish, scaffold, measure, score), each
+    linked to the parameters that drive it and to its tab. The QV card reads
+    against QV 40, the Earth BioGenome Project floor. The three assembly cards read
+    `assemblies`, which every route writes, so a QC tool the run skipped leaves a
+    dash rather than a gap in the row. The findings are live values: they follow
+    the filters.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Final stage` and `Route` in a *Route scope* group.
+        **Filters** · the left panel starts collapsed. *Key figures* has its own
+        filter bar (the group and the sample id), and *Findings* another (the
+        group and the stage class): each narrows its own section only.
 
         | Section | What it holds |
         |---|---|
-        | What each stage adds | 4 cards, *QV along each route*, *N50 gain along each route* |
-        | Stage comparison | *Raw assemblies against scaffolds* |
-        | Route table | *Stage routes* (collapsed) |
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: samples by group, N50, consensus QV, BUSCO complete |
+        | Findings | Live result rows, then 4 figures: N50 against QV per assembly, the QV along each route, the Nx curves and the BUSCO classes per assembly |
+        | How to read this dashboard | The tabs by group, each with its question |
 
-=== ":material-ruler:{ .mc-blue } Contiguity"
+=== ":material-flask-outline:{ .mc-teal } Samples"
 
-    *How is the assembled length distributed across sequences?*
+    **Data & QC** · *Which samples reached assembly QC, and at which stages?*
 
-    [![Contiguity dashboard](../../images/pipeline-templates/nf-core/genomeassembler/contiguity_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/contiguity_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Samples dashboard](../../images/pipeline-templates/nf-core/genomeassembler/samples_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/samples_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    The Nx curves are computed from the idxstats sequence lengths of every
-    assessed assembly, so they cover assemblies QUAST never scored. QUAST's
-    reference-free N50 against length and the length kept above each contig
-    length follow, and, when the run had a reference, genome fraction against
-    misassemblies.
+    [![Samples dashboard](../../images/pipeline-templates/nf-core/genomeassembler/samples_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/samples_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The samples as a ring by QC status, the assessed assemblies split by stage
+    class, the distinct stages assessed ranked by stage class, and the mean number
+    of QC tools per assembly on a gauge out of four (samtools, Merqury, BUSCO,
+    QUAST). Then the assessed stages per sample, one block per assessed assembly
+    coloured by stage, a code figure so the count axis steps by one; a group-by
+    set in Analysis mode splits it into panels. A sample marked `No assembly QC`
+    reached no QC tool and appears on no other tab: the sample sheet below lists
+    it.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Stage` in a *Curve scope* group.
+        **Filters** · `QC status` on `sample_status`, and `Stage class` and
+        `Assembler` on `assemblies`.
 
         | Section | What it holds |
         |---|---|
-        | Nx curves | 4 cards, *Nx curve per assembly* |
-        | QUAST | *N50 against assembled length (QUAST)*, *Length kept above each contig length (QUAST)*, *Reference coverage against misassemblies (QUAST)* |
-        | QUAST tables | *QUAST against the reference*, *QUAST reference-free statistics* (collapsed) |
+        | Samples at a glance | 4 cards |
+        | Assessed stages | *Assessed stages per sample* |
 
 === ":material-chart-bell-curve:{ .mc-orange } Genome profile"
 
-    *What genome do the reads describe, before any assembly?*
+    **Data & QC** · *What genome do the reads describe, before any assembly?*
 
-    [![Genome profile dashboard](../../images/pipeline-templates/nf-core/genomeassembler/genome_profile_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/genome_profile_light.png){ .tpl-shot target="_blank" rel="noopener" }
+    [![Genome profile dashboard](../../images/pipeline-templates/nf-core/genomeassembler/genome_profile_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/genome_profile_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    GenomeScope's heterozygosity, repeat share, model fit and read error rate, next
-    to the jellyfish k-mer spectrum it fits. This is the yardstick for the other
-    tabs: an assembly much larger or smaller than the estimated genome size, or
-    far off the expected heterozygosity, deserves a second look. Both
-    collections are per read set, not per assembly: they link to each other but
-    not to the samplesheet, so the pinned sample filters do not reach this tab
-    and the `Read set` picker does the narrowing.
+    [![Genome profile dashboard](../../images/pipeline-templates/nf-core/genomeassembler/genome_profile_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/genome_profile_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · `Read set` in a *Read set scope* group.
-
-        | Section | What it holds |
-        |---|---|
-        | Genome from the reads | 4 cards, *Read k-mer spectrum* |
-        | Genome profile table | *GenomeScope estimates* (collapsed) |
-
-=== ":material-shield-check-outline:{ .mc-teal } Accuracy and genes"
-
-    *How accurate and how complete is each assembly?*
-
-    [![Accuracy and genes dashboard](../../images/pipeline-templates/nf-core/genomeassembler/accuracy_and_genes_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/accuracy_and_genes_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    Merqury QV against k-mer completeness places each assembly, and the
-    copy-number bars show how the read k-mers are represented in it, where
-    missing or duplicated content shows up. The per-sequence QV scatter against
-    sequence length says which sequences carry the error k-mers. BUSCO complete
-    against duplicated closes the tab.
+    GenomeScope's haploid genome size, heterozygosity, repeat share and the lowest
+    model fit over the read sets. Then the jellyfish k-mer spectrum GenomeScope
+    fits, one line per read set. The haploid length is the size an assembly should
+    approach; a high heterozygosity warns of duplicated haplotigs, and a poor model
+    fit means the other estimates are not to be trusted. The GenomeScope table is
+    collapsed. Both collections are per read set, not per assembly: the sample
+    filters do not reach this tab, and the `Read set` filter does the narrowing.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Error-free sequence` in a *Sequence scope* group.
+        **Filters** · `Read set` on `genomescope_summary`, which links to the
+        spectrum.
 
         | Section | What it holds |
         |---|---|
-        | K-mer accuracy | 4 cards, *QV against k-mer completeness*, *Copy number of the read k-mers in each assembly* |
-        | Per-sequence errors | *Per-sequence QV against sequence length* |
-        | BUSCO | *Complete against duplicated BUSCOs* |
-        | Accuracy tables | *Merqury QV and completeness*, *BUSCO batch summary* (collapsed) |
+        | Genome profile at a glance | 4 cards |
+        | K-mer spectrum | 1 advanced visualization |
+        | Genome profile table (collapsed) | *GenomeScope estimates* |
 
-Every per-assembly scatter and table selects on `assembly_id`, so a point picked on a QUAST,
-Merqury or BUSCO scatter narrows the other tiles of its collection and follows
-the project links; the stage profiles and route table select on `route`.
+=== ":material-trophy:{ .mc-indigo } Best assembly"
+
+    **Assemblies** · *Which assembly is best across contiguity, accuracy and genes?*
+
+    [![Best assembly dashboard](../../images/pipeline-templates/nf-core/genomeassembler/best_assembly_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/best_assembly_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Best assembly dashboard](../../images/pipeline-templates/nf-core/genomeassembler/best_assembly_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/best_assembly_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The best N50, QV, share of complete BUSCOs and k-mer completeness over the
+    assemblies in view, each with every assembly's spread. Then the parallel
+    coordinates over N50, sequence count, length, QV and k-mer completeness,
+    coloured by group; brush an axis to keep a range. BUSCO stays off it: the plot
+    drops a line that misses an axis, and BUSCO scores fewer assemblies than
+    Merqury. Below, N50 against QV coloured by assembler, with the assembly record
+    card beside it, which waits for a picked point. The assembly table is
+    collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Stage class`, `Assembler` and a `Consensus QV` range on
+        `assemblies`.
+
+        | Section | What it holds |
+        |---|---|
+        | Best assembly at a glance | 4 cards |
+        | Every assembly | 1 advanced visualization |
+        | Contiguity against accuracy | 2 advanced visualizations: the N50 against QV scatter and the assembly record card |
+        | Assembly table (collapsed) | *Assessed assemblies* |
+
+=== ":material-chart-timeline-variant:{ .mc-grape } Stages"
+
+    **Assemblies** · *What does each polishing and scaffolding step add?*
+
+    [![Stages dashboard](../../images/pipeline-templates/nf-core/genomeassembler/stages_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/stages_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Stages dashboard](../../images/pipeline-templates/nf-core/genomeassembler/stages_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/stages_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    A route runs from a sample's raw assembly through polishing to one scaffolder.
+    The routes ranked by the stage they end on, the largest QV gain, the largest
+    N50 fold change and the lowest share of complete BUSCOs over the steps. Then
+    the QV and the N50 fold change along each route, one line per route: a line
+    that climbs gained at that step, a flat one changed nothing the metric can
+    see. Pick a route on either chart to follow it on both. The comparison of raw
+    assemblies against scaffolds, metric by metric (a screen, not a verdict, with
+    few assemblies per class), and the route table are collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Final stage` and `Route` on `stage_steps`.
+
+        | Section | What it holds |
+        |---|---|
+        | Stages at a glance | 4 cards |
+        | QV along each route | 1 advanced visualization |
+        | N50 along each route | 1 advanced visualization |
+        | Stage comparison (collapsed) | 1 advanced visualization |
+        | Route table (collapsed) | *Stage routes* |
+
+=== ":material-ruler:{ .mc-blue } Contiguity"
+
+    **Quality** · *How long and how fragmented is each assembly?*
+
+    [![Contiguity dashboard](../../images/pipeline-templates/nf-core/genomeassembler/contiguity_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/contiguity_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Contiguity dashboard](../../images/pipeline-templates/nf-core/genomeassembler/contiguity_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/contiguity_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The median assembled length, N50, L50 and sequence count. Then the Nx curves,
+    computed from the samtools idxstats sequence lengths of every assessed
+    assembly, so they cover assemblies QUAST never scored: N50 is the point at 50%,
+    and a curve that stays high far to the right holds its length in few long
+    sequences. Then QUAST's reference-free view, N50 against assembled length
+    beside the length kept above each contig length. QUAST against a reference,
+    written only when the run had one, and the QUAST tables are collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Stage` and an `N50 (bp)` range on `assemblies`.
+
+        | Section | What it holds |
+        |---|---|
+        | Contiguity at a glance | 4 cards |
+        | Nx curves | 1 advanced visualization |
+        | QUAST | 2 advanced visualizations: N50 against assembled length and the length kept above each contig length |
+        | QUAST against a reference (collapsed) | 1 advanced visualization |
+        | QUAST tables (collapsed) | *QUAST reference-free statistics*, *QUAST against the reference* |
+
+    !!! info "QUAST is optional, the reference too"
+        A run without QUAST has no QUAST sections on this tab; a run without a
+        reference has no reference view or table. The Nx curves and the strip do
+        not depend on QUAST.
+
+=== ":material-check-decagram:{ .mc-cyan } Accuracy"
+
+    **Quality** · *How accurate is each assembly against the read k-mers?*
+
+    [![Accuracy dashboard](../../images/pipeline-templates/nf-core/genomeassembler/accuracy_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/accuracy_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Accuracy dashboard](../../images/pipeline-templates/nf-core/genomeassembler/accuracy_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/accuracy_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The median consensus QV, the median k-mer completeness, the sequences Merqury
+    scored (a ring, error-free or not) and the median error k-mers per assembly.
+    Then QV against k-mer completeness, with a line at Q40 and the points under it
+    dimmed, and the copy number of the read k-mers in each assembly. Merqury takes
+    the read k-mers as the truth set: assembly k-mers missing from the reads are
+    errors (the QV), solid read k-mers missing from the assembly are lost sequence,
+    and the copy-number bars show lost, collapsed and duplicated sequence. The
+    per-sequence QV scatter and the Merqury table are collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · a `Consensus QV` range on `merqury_assembly_qv` and
+        `Error-free sequence` on `merqury_sequence_qv`.
+
+        | Section | What it holds |
+        |---|---|
+        | Accuracy at a glance | 4 cards |
+        | QV and completeness | 1 advanced visualization |
+        | Copy number | 1 advanced visualization |
+        | Per-sequence errors (collapsed) | 1 advanced visualization |
+        | Accuracy table (collapsed) | *Merqury QV and completeness* |
+
+=== ":material-shield-check-outline:{ .mc-violet } Gene completeness"
+
+    **Quality** · *How many conserved single-copy genes does each assembly hold?*
+
+    [![Gene completeness dashboard](../../images/pipeline-templates/nf-core/genomeassembler/gene_completeness_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/gene_completeness_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    [![Gene completeness dashboard](../../images/pipeline-templates/nf-core/genomeassembler/gene_completeness_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/genomeassembler/gene_completeness_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    The median share of complete BUSCOs (counting the assemblies at 90% or above),
+    the highest duplicated share, and the median fragmented and missing shares,
+    each with its spread. Then the BUSCO classes per assembly and complete against
+    duplicated BUSCOs. Complete BUSCOs say the gene space is there; duplicated ones
+    point to retained haplotigs, fragmented and missing ones to gaps or errors.
+    The BUSCO table is collapsed.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `BUSCO lineage` and a `Complete BUSCOs (%)` range on
+        `busco_batch_summary`.
+
+        | Section | What it holds |
+        |---|---|
+        | Genes at a glance | 4 cards |
+        | BUSCO classes | 1 advanced visualization |
+        | Complete against duplicated | 1 advanced visualization |
+        | BUSCO table (collapsed) | *BUSCO batch summary* |
+
+Tables and points select on their entity column: every per-assembly tile (the
+Best assembly scatter and table, the QUAST, Merqury and BUSCO scatters and tables,
+the Nx curves) on `assembly_id`, the per-sequence QV scatter on `sequence`, the
+stage profiles and the route table on `route`, the GenomeScope table on
+`read_set` and the pinned sample sheet on `sample`. A pick narrows the other
+tiles of its collection and follows the project links to the collections they
+reach. The parallel coordinates, the k-mer spectrum, the length ladder, the
+copy-number bars and the BUSCO class bars do not select.
 
 ---
 

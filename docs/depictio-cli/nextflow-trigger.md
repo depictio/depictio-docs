@@ -61,7 +61,10 @@ depictio config check
 `includeConfig` line for it to `~/.nextflow/config` (`$NXF_HOME/config` if you
 set `NXF_HOME`), which Nextflow reads before every run. Your pipeline's own
 `onComplete` still runs. `--uninstall` removes the line, and
-`--depictio_enabled false` skips Depictio for one run. Run `--install` again
+`--depictio_enabled false` skips Depictio for one run. Add `--default-disabled`
+to install it opt-in instead: pipelines then stay silent unless a run passes
+`--depictio_enabled true`, as in the
+[example below](#a-pipeline-with-no-bundled-template). Run `--install` again
 after upgrading `depictio`, so the copy follows the new version. A copy
 installed by an earlier release still calls `depictio-cli run` with the former
 options, which keep working.
@@ -136,6 +139,13 @@ line up, or the import fails and names the component that broke.
 A complete runnable example, pipeline included, is in
 [`depictio/cli/configs/nextflow/example/`](https://github.com/depictio/depictio/tree/main/depictio/cli/configs/nextflow/example).
 It needs no container and no bioinformatics tool.
+
+Here that example runs with the trigger installed opt-in by
+`--install --default-disabled`, its `nextflow.config` cut down to its manifest
+and the two parameters above. A plain `nextflow run` leaves Depictio out, and
+`--depictio_enabled true` turns it on for that run only:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-nextflow-trigger.cast" data-poster="npt:0:59" data-idle-time-limit="2.5"></div>
 
 <figure markdown="span">
   [![The dashboard imported by the example pipeline, eight cards each in a different secondary layout](../images/guides/nextflow-trigger/dashboard_cards.jpg)](../images/guides/nextflow-trigger/dashboard_cards.jpg){target=_blank}
@@ -228,7 +238,7 @@ service account, set `params.depictio_user` and see
 
     | Parameter | Default | CLI option it drives |
     | --- | --- | --- |
-    | `depictio_enabled` | `true` | none, set it to `false` to disable the trigger |
+    | `depictio_enabled` | `true`, `false` if installed with `--default-disabled` | none, set it to `false` to disable the trigger |
     | `depictio_data_root` | `params.outdir` | the results directory, `ingest`'s argument |
     | `depictio_cli_config` | `$DEPICTIO_CLI_CONFIG_PATH` | `--server`; `local` for the server `depictio local up` runs. With neither set, no `--server` is passed and the CLI uses `~/.depictio/CLI.yaml`, else the local server |
     | `depictio_template` | none | `--template` |
