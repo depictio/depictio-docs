@@ -13,15 +13,10 @@ Depictio supports managing dashboards as human-readable YAML files using the `de
 
 ## Overview
 
-```text
-┌─────────────────┐                        ┌─────────────────┐
-│   YAML Files    │    dashboard import    │    MongoDB      │
-│   (version      │ ─────────────────────▶ │   Dashboard     │
-│    controlled)  │                        │                 │
-│                 │    dashboard export    │                 │
-│                 │ ◀───────────────────── │                 │
-└─────────────────┘                        └─────────────────┘
-```
+<figure markdown="span">
+  [![A dashboard.yaml file goes through validation (schema and domain rules, then columns on the server) before dashboard import sends it to the Depictio server; an invalid file is never sent, and dashboard export brings a dashboard back to a file](../images/guides/yaml-sync/yaml-sync_light.png#only-light)](../images/guides/yaml-sync/yaml-sync_light.png){target=_blank}
+  [![A dashboard.yaml file goes through validation (schema and domain rules, then columns on the server) before dashboard import sends it to the Depictio server; an invalid file is never sent, and dashboard export brings a dashboard back to a file](../images/guides/yaml-sync/yaml-sync_dark.png#only-dark)](../images/guides/yaml-sync/yaml-sync_dark.png){target=_blank}
+</figure>
 
 **Key Benefits:**
 
