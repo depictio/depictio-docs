@@ -634,6 +634,12 @@ The report lists every expected data collection with a status:
 Expand a row to see its files (or the Delta-table path once aggregated), and filter or
 group rows by status.
 
+For a collection a recipe builds, the row also names the recipe and its **Aggregation
+inputs**. Since v1.16.0 an input is shown as the template stores it, joined to the data
+root. The server looks it up on its own disk only under `depictio local`, below an
+allowed folder, so the report no longer tells a reader whether a file exists on the
+server or where a symbolic link leads.
+
 A **Changes** column <small>(v1.15.0+)</small> shows what the latest scan of each run
 changed in that collection: *+12 new*, *3 updated*, *1 failed*, or `—` when nothing
 changed. It is not an all-time total. The **Runs identified** table below gives the new

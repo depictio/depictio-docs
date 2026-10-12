@@ -485,9 +485,9 @@ should have its dashboards.
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `DATA_DIR` | `path` | | Directory of the pipeline results to watch. Without `--template` or `--project-config-path`, the template is detected from it |
+| `DATA_DIR` | `path` | | Directory of the pipeline results to watch. Without `--template` or `--project-config-path`, the template is detected from it. From v1.16.0, a local directory that no bundled template fits is [composed from the catalog](../usage/projects/composed-dashboards.md) at every cycle, as `ingest` does without `--include-unknown` or `--include` |
 | `--server` | `string` | see [Which server a command uses](#choosing-a-server) | `local`, or a CLI configuration file |
-| `--template` | `string` | detected | Template to build the project from, as for `ingest`. Not with `--project-config-path` |
+| `--template` | `string` | detected, else composed | Template to build the project from, as for `ingest`. Not with `--project-config-path` |
 | `--project-config-path` | `string` | | Project YAML, for a pipeline Depictio ships no template for. Not with `--template` |
 | `--project` | `string` | | Project name. Replaces the name the template gives, or the `name` in the project file |
 | `--var` | `KEY=VALUE` | | Template variable, repeatable |
