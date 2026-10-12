@@ -5627,6 +5627,9 @@ To do so, go to the <strong>profile</strong> section in the web interface (botto
 <h5 id="use-the-cli-tool"><span style="color: #7A5DC7;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5.14v14l11-7z"></path></svg></span></span> Use the CLI tool<a class="headerlink" href="#use-the-cli-tool" title="Permanent link">¶</a></h5>
 <p>You can now use the CLI tool to interact with your Depictio instance. For example, you can list available workflows, upload data collections, and manage your projects. Refer to the <a href="../../depictio-cli/usage/">CLI usage documentation</a> for detailed usage instructions.</p>
 <p>Saved as <code>~/.depictio/CLI.yaml</code>, the configuration is the one every command uses by default, so none of them needs <code>--server</code>. See <a href="../../depictio-cli/usage/#choosing-a-server">Which server a command uses</a> for the other ways to name a server.</p>
+<p>With no <code>~/.depictio/CLI.yaml</code>, the CLI uses the <a href="../../installation/local/">local server</a>: here pipeline results are previewed, then ingested into it:</p>
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-detect.cast" data-poster="npt:0:51" data-idle-time-limit="2.5"></div>
+
 <p>In that get started guide, you can use the <strong>palmer penguins dataset</strong> to test the CLI tool. This dataset mimics the <a href="https://allisonhorst.github.io/palmerpenguins/">palmer penguins dataset</a>, which is a popular dataset for testing data visualization tools.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>--project-config-path<span class="w"> </span>../api/v1/configs/penguins_dataset/penguins_project.yaml

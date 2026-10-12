@@ -6601,9 +6601,6 @@
 <h2 id="commands">🚀 Commands<a class="headerlink" href="#commands" title="Permanent link">¶</a></h2>
 <h3 id="ingest-command">📥 Ingest Command<a class="headerlink" href="#ingest-command" title="Permanent link">¶</a></h3>
 <p><span id="run-command"></span></p>
-<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest.cast" data-poster="npt:0:8"></div>
-<p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>🖥️ <code>depictio ingest</code> (v1.12.0) on nf-core/taxprofiler test results: a dry run, then the ingestion into a local server</strong></p>
-
 <p>Ingest pipeline results into a Depictio server, from validation to dashboards. Formerly <code>run</code>, which still works and says it is now <code>ingest</code>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>DATA_DIR<span class="o">]</span>
 </code></pre></div>
@@ -6616,6 +6613,9 @@
 </code></pre></div>
 <p>The template is detected from the run's own provenance, such as the pipeline name and version a Nextflow run records. Pass <code>--template &lt;id&gt;</code> to choose one, or <code>--project-config-path &lt;project.yaml&gt;</code> for a pipeline Depictio ships no template for.</p>
 <p>Without a template for the run's exact release, the CLI takes the highest shipped version that is not newer than the run, or the lowest one when the run predates them all. When that template was built for another major release of the pipeline, the CLI warns: outputs move between major releases, so data collections that find no files are skipped and the tabs built on them are dropped.</p>
+<p>Here the template is detected from nf-core/taxprofiler results, previewed with <code>--dry-run</code>, then ingested into the local server:</p>
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-detect.cast" data-poster="npt:0:51" data-idle-time-limit="2.5"></div>
+
 <p><strong>Pipeline Steps:</strong></p>
 <ol>
 <li>✅ Check that the server answers</li>
@@ -6933,6 +6933,9 @@ from its own logs. See
 </table>
 <p><code>--overwrite</code> is the same option as <code>--update-config</code>. <code>--rescan-folders</code> and <code>--sync-files</code>, which used to go with it, are part of every refresh now.</p>
 <p>A project not on the server yet is created by <code>--update-config</code>, so a script can pass it every time.</p>
+<p>Here a third run is added to a project ingested from a project YAML: a dry run, then the refresh, which keeps its dashboard:</p>
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-refresh.cast" data-poster="npt:0:48" data-idle-time-limit="2.5"></div>
+
 <p><strong>Dashboards.</strong> Dashboards are matched by their origin, the template file or the <code>--dashboard</code> file they came from, not by their title. Renaming a dashboard in the viewer no longer makes the next refresh import a second copy, and the new title is kept. The summary at the end of the run lists each dashboard as <code>created</code>, <code>kept</code> or <code>replaced</code>, with its link.</p>
 <p>A <code>--dashboard</code> file inside the template or the project file's folder is matched by its path there. One from anywhere else is matched by its absolute path (v1.13.1+, by its file name before), so moving that file makes the next refresh create a new dashboard.</p>
 <p><strong>Tabs</strong> <small>(v1.13.1+)</small>. A multi-tab dashboard that a refresh keeps gains the template tabs it lacks, after its existing tabs. The summary says how many, as in <code>kept (2 tabs added)</code>. A tab deleted in the viewer comes back on the next refresh.</p>
@@ -6969,6 +6972,9 @@ from its own logs. See
 </tr>
 </tbody>
 </table>
+<p>Here the first step fails, as no server answers, and its message says how to start one:</p>
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-error.cast" data-poster="npt:0:13" data-idle-time-limit="2.5"></div>
+
 <p><strong>Examples:</strong></p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><input id="__tabbed_1_5" name="__tabbed_1" type="radio"><input id="__tabbed_1_6" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Template detected</label><label for="__tabbed_1_2">Pinned template</label><label for="__tabbed_1_3">Project YAML</label><label for="__tabbed_1_4">Local server</label><label for="__tabbed_1_5">Dry Run</label><label for="__tabbed_1_6">Debugging</label></div>
 <div class="tabbed-content">
@@ -7617,14 +7623,16 @@ ingest its own results when it finishes. Full guide:
 <p><strong>Example Output:</strong></p>
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
 <pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Validating:</span> <span style="color: #c2185b;">dashboard.yaml</span>
+  Checks: schema + domain constraints
 <span style="color: #2e7d32;">✓ Validation passed</span>
   Title: Iris Dashboard Demo
   Components: 7
   Project: Iris_Dataset_Project (from YAML project_tag)
 
-<span style="color: #0097a7;">Loading CLI configuration...</span>
-<span style="color: #2e7d32;">✓ Configuration loaded</span>
-  API URL: localhost:8058
+• Server: <span>http://127.0.0.1:8058</span> (local server, as no ~/.depictio/CLI.yaml exists; configuration ~/.depictio/local/cli/admin_config.yaml)
+
+<span style="color: #0097a7;">Validating column names against server schema...</span>
+<span style="color: #2e7d32;">✓ Server schema OK</span>
 
 <span style="color: #0097a7;">Importing dashboard (project: Iris_Dataset_Project)...</span>
 <span style="color: #2e7d32;">✓ Dashboard imported successfully!</span>
@@ -7632,7 +7640,7 @@ ingest its own results when it finishes. Full guide:
   Title: Iris Dashboard Demo
   Project ID: 650a1b2c3d4e5f6a7b8c9d0e
 
-<span style="color: #0097a7;">View at:</span> localhost:8058/dashboard/6824cb3b89d2b72169309737
+<span style="color: #0097a7;">View at:</span> <span>http://127.0.0.1:8058/dashboard/6824cb3b89d2b72169309737</span>
 </pre>
 </div>
 
@@ -7679,7 +7687,7 @@ ingest its own results when it finishes. Full guide:
 </code></pre></div>
 <p><strong>Example Output:</strong></p>
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
-<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Loading CLI configuration...</span>
+<pre style="margin: 0; color: var(--md-code-fg-color);">• Server: http://127.0.0.1:8058 (local server, as no ~/.depictio/CLI.yaml exists; configuration ~/.depictio/local/cli/admin_config.yaml)
 <span style="color: #0097a7;">Exporting dashboard 6824cb3b89d2b72169309737...</span>
 <span style="color: #2e7d32;">✓ Dashboard exported to:</span> <span style="color: #c2185b;">iris_dashboard.yaml</span>
 </pre>
@@ -7695,6 +7703,9 @@ ingest its own results when it finishes. Full guide:
 <p>Browse the bioinformatics tool→viz catalog by rendering its components on their bundled fixture data. Handy for previewing what a tool produces before wiring it into a dashboard. For the live, hosted version see the <a href="../../catalog/">Depictio Tools Catalog</a>.</p>
 </div>
 <p><code>depictio catalog list</code> lists every tool and output with its recipe and render targets, and <code>depictio catalog info &lt;tool&gt;</code> shows one tool in detail.</p>
+<p>Here a profiler is looked up in the list, then shown in detail:</p>
+<div class="asciinema-cast" data-cast="assets/casts/depictio-catalog.cast" data-poster="npt:0:25" data-idle-time-limit="2.5"></div>
+
 <h4 id="catalog-preview"><code>catalog preview</code><a class="headerlink" href="#catalog-preview" title="Permanent link">¶</a></h4>
 <p>Render a single catalog output on its fixture and serve it on a throwaway localhost server (nothing is written to disk). Pass <code>--out</code> to export a portable, self-contained HTML file instead.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="c1"># Serve an ephemeral preview (Ctrl-C to stop)</span>
@@ -8010,12 +8021,15 @@ ingest its own results when it finishes. Full guide:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>list
 </code></pre></div>
 <p><strong>Output:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>Available recipes (5):
-<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>  nf-core/ampliseq/alpha_diversity.py
-<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>  nf-core/ampliseq/alpha_rarefaction.py
-<a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a>  nf-core/ampliseq/ancombc.py
-<a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>  nf-core/ampliseq/taxonomy_composition.py
-<a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>  nf-core/ampliseq/taxonomy_rel_abundance.py
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>                 Available recipes (327)
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>╭────────────────────────────────────────────────────────╮
+<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>│ Recipe                                                 │
+<a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a>├────────────────────────────────────────────────────────┤
+<a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>│ adapterremoval/settings.py                             │
+<a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>│ ampcombi/clusters.py                                   │
+<a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a>│ ampcombi/embedding.py                                  │
+<a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a>│ ampcombi/summary.py                                    │
+<a id="__codelineno-48-9" name="__codelineno-48-9" href="#__codelineno-48-9"></a>…
 </code></pre></div>
 <hr>
 <h4 id="dev-recipe-info-name"><code>dev recipe info &lt;name&gt;</code><a class="headerlink" href="#dev-recipe-info-name" title="Permanent link">¶</a></h4>
@@ -8055,12 +8069,31 @@ ingest its own results when it finishes. Full guide:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>Recipe: nf-core/ampliseq/alpha_diversity.py
 <a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD table.
 <a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>
-<a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>Sources (1):
-<a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a>  faith_pd: qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv (TSV)
-<a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a>
-<a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a>Output schema (2 columns):
-<a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a>  sample: String
-<a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a>  faith_pd: Float64
+<a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>When ampliseq is run with --metadata, QIIME2 embeds metadata columns directly
+<a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a>into the faith_pd_vector/metadata.tsv file (e.g. habitat). This recipe handles
+<a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a>both cases: with and without embedded metadata columns.
+<a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a>                                     Sources (1)
+<a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a>╭──────────┬───────────────────────────────────────────────────────────────┬────────╮
+<a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a>│ Source   │ Location                                                      │ Format │
+<a id="__codelineno-51-10" name="__codelineno-51-10" href="#__codelineno-51-10"></a>├──────────┼───────────────────────────────────────────────────────────────┼────────┤
+<a id="__codelineno-51-11" name="__codelineno-51-11" href="#__codelineno-51-11"></a>│ faith_pd │ qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv │ tsv    │
+<a id="__codelineno-51-12" name="__codelineno-51-12" href="#__codelineno-51-12"></a>╰──────────┴───────────────────────────────────────────────────────────────┴────────╯
+<a id="__codelineno-51-13" name="__codelineno-51-13" href="#__codelineno-51-13"></a>    Input schema:
+<a id="__codelineno-51-14" name="__codelineno-51-14" href="#__codelineno-51-14"></a>faith_pd (2 columns)
+<a id="__codelineno-51-15" name="__codelineno-51-15" href="#__codelineno-51-15"></a>╭──────────┬────────╮
+<a id="__codelineno-51-16" name="__codelineno-51-16" href="#__codelineno-51-16"></a>│ Column   │ Type   │
+<a id="__codelineno-51-17" name="__codelineno-51-17" href="#__codelineno-51-17"></a>├──────────┼────────┤
+<a id="__codelineno-51-18" name="__codelineno-51-18" href="#__codelineno-51-18"></a>│ id       │ String │
+<a id="__codelineno-51-19" name="__codelineno-51-19" href="#__codelineno-51-19"></a>│ faith_pd │ String │
+<a id="__codelineno-51-20" name="__codelineno-51-20" href="#__codelineno-51-20"></a>╰──────────┴────────╯
+<a id="__codelineno-51-21" name="__codelineno-51-21" href="#__codelineno-51-21"></a>   Output schema (2
+<a id="__codelineno-51-22" name="__codelineno-51-22" href="#__codelineno-51-22"></a>       columns)
+<a id="__codelineno-51-23" name="__codelineno-51-23" href="#__codelineno-51-23"></a>╭──────────┬─────────╮
+<a id="__codelineno-51-24" name="__codelineno-51-24" href="#__codelineno-51-24"></a>│ Column   │ Type    │
+<a id="__codelineno-51-25" name="__codelineno-51-25" href="#__codelineno-51-25"></a>├──────────┼─────────┤
+<a id="__codelineno-51-26" name="__codelineno-51-26" href="#__codelineno-51-26"></a>│ sample   │ String  │
+<a id="__codelineno-51-27" name="__codelineno-51-27" href="#__codelineno-51-27"></a>│ faith_pd │ Float64 │
+<a id="__codelineno-51-28" name="__codelineno-51-28" href="#__codelineno-51-28"></a>╰──────────┴─────────╯
 </code></pre></div>
 <p>Each source that declares an <code>input_schema</code> gets an <code>Input schema: &lt;source&gt; (N columns)</code> table before the output schema. A non-empty <code>OPTIONAL_OUTPUT_SCHEMA</code> adds an <code>Optional output schema (N columns)</code> table.</p>
 <hr>

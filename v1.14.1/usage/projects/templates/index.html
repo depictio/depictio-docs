@@ -5720,6 +5720,9 @@ variables are dropped before the call, so the recipe falls back to its own defau
 </table>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/path/to/results<span class="w"> </span>--template<span class="w"> </span>nf-core/ampliseq/latest
 </code></pre></div>
+<p>Here an nf-core/rnaseq run is ingested with its template named, as the <a href="../../../pipeline-templates/">Template Catalog</a> lists it, and its samplesheet passed as a variable:</p>
+<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-template.cast" data-poster="npt:0:42" data-idle-time-limit="2.5"></div>
+
 <h3 id="pipeline-id">Which template a run uses<a class="headerlink" href="#pipeline-id" title="Permanent link">¶</a></h3>
 <p><code>depictio ingest</code> takes the project from the first of these that applies:</p>
 <ul>
@@ -5755,38 +5758,38 @@ variables are dropped before the call, so the recipe falls back to its own defau
 </tr>
 <tr>
 <td>1</td>
+<td>Server check</td>
+<td>Check that the server answers</td>
+</tr>
+<tr>
+<td>2</td>
+<td>S3 check</td>
+<td>Check the S3 storage configuration</td>
+</tr>
+<tr>
+<td>3</td>
 <td>Config validation</td>
 <td>Pydantic validation of the resolved project config</td>
 </tr>
 <tr>
-<td>2</td>
-<td>Authentication</td>
-<td>Login + fetch JWT token</td>
-</tr>
-<tr>
-<td>3</td>
+<td>4</td>
 <td>Project sync</td>
 <td>Create or update project on server</td>
 </tr>
 <tr>
-<td>4</td>
+<td>5</td>
 <td>File scan</td>
 <td>Discover data collection files</td>
 </tr>
 <tr>
-<td>5</td>
+<td>6</td>
 <td>Data process</td>
 <td>Execute recipes, write to Delta Lake</td>
 </tr>
 <tr>
-<td>6</td>
+<td>7</td>
 <td>Join computation</td>
 <td>Compute cross-DC joins</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Finalize</td>
-<td>Mark project as ready</td>
 </tr>
 <tr>
 <td><strong>8</strong></td>

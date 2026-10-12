@@ -5669,6 +5669,9 @@ package installed.</p>
 <p>The <code>[local]</code> extra adds the server's Python dependencies, about 1.6 GB
 installed, from prebuilt wheels on Python 3.11 to 3.14. The package carries the
 viewer, already built.</p>
+<p>The install with uv, then a first look at the <code>depictio</code> command:</p>
+<div class="asciinema-cast" data-cast="assets/casts/depictio-install.cast" data-poster="npt:0:28" data-idle-time-limit="2.5"></div>
+
 <details class="info">
 <summary>From a clone of the repository</summary>
 <p>To run the code of a clone, install it in editable mode:</p>
@@ -5715,7 +5718,7 @@ nf-core results do not contain the samplesheet: when the template cannot find it
 under <code>input/</code>, pass it explicitly.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>path/to/results<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--template<span class="w"> </span>nf-core/rnaseq/latest<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">SAMPLESHEET_FILE</span><span class="o">=</span>samplesheet.csv
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--var<span class="w"> </span><span class="nv">SAMPLESHEET_FILE</span><span class="o">=</span><span class="nv">$PWD</span>/samplesheet.csv
 </code></pre></div>
 <p>If the ingestion fails, the command exits with an error and the server keeps
 running. To ingest the same results again after a new run, add
@@ -5767,6 +5770,9 @@ exits with code 2.</p>
 </tr>
 </tbody>
 </table>
+<p>Here a first <code>up</code>, which downloads the services, then <code>status</code>, <code>open</code> and <code>down</code>:</p>
+<div class="asciinema-cast" data-cast="assets/casts/depictio-local.cast" data-poster="npt:0:18" data-idle-time-limit="2.5"></div>
+
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">status</label><label for="__tabbed_2_2">down</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">

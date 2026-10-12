@@ -5317,7 +5317,10 @@ in <code>~/.nextflow/config</code>.</p>
 <code>includeConfig</code> line for it to <code>~/.nextflow/config</code> (<code>$NXF_HOME/config</code> if you
 set <code>NXF_HOME</code>), which Nextflow reads before every run. Your pipeline's own
 <code>onComplete</code> still runs. <code>--uninstall</code> removes the line, and
-<code>--depictio_enabled false</code> skips Depictio for one run. Run <code>--install</code> again
+<code>--depictio_enabled false</code> skips Depictio for one run. Add <code>--default-disabled</code>
+to install it opt-in instead: pipelines then stay silent unless a run passes
+<code>--depictio_enabled true</code>, as in the
+<a href="#a-pipeline-with-no-bundled-template">example below</a>. Run <code>--install</code> again
 after upgrading <code>depictio</code>, so the copy follows the new version. A copy
 installed by an earlier release still calls <code>depictio-cli run</code> with the former
 options, which keep working.</p>
@@ -5377,6 +5380,12 @@ line up, or the import fails and names the component that broke.</p>
 <p>A complete runnable example, pipeline included, is in
 <a href="https://github.com/depictio/depictio/tree/main/depictio/cli/configs/nextflow/example"><code>depictio/cli/configs/nextflow/example/</code></a>.
 It needs no container and no bioinformatics tool.</p>
+<p>Here that example runs with the trigger installed opt-in by
+<code>--install --default-disabled</code>, its <code>nextflow.config</code> cut down to its manifest
+and the two parameters above. A plain <code>nextflow run</code> leaves Depictio out, and
+<code>--depictio_enabled true</code> turns it on for that run only:</p>
+<div class="asciinema-cast" data-cast="assets/casts/depictio-nextflow-trigger.cast" data-poster="npt:0:59" data-idle-time-limit="2.5"></div>
+
 <figure>
   <a href="https://depictio.github.io/depictio-docs/images/guides/nextflow-trigger/dashboard_cards.jpg" target="_blank"><img alt="The dashboard imported by the example pipeline, eight cards each in a different secondary layout" src="https://depictio.github.io/depictio-docs/images/guides/nextflow-trigger/dashboard_cards.jpg"></a>
 <br>
@@ -5481,7 +5490,7 @@ service account, set <code>params.depictio_user</code> and see
 <tbody>
 <tr>
 <td><code>depictio_enabled</code></td>
-<td><code>true</code></td>
+<td><code>true</code>, <code>false</code> if installed with <code>--default-disabled</code></td>
 <td>none, set it to <code>false</code> to disable the trigger</td>
 </tr>
 <tr>
