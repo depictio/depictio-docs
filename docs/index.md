@@ -223,7 +223,7 @@ hide:
               </svg>
               Try Demo Directly
             </a>
-            <a href="https://codespaces.new/depictio/depictio" class="demo-alt-btn" target="_blank" rel="noopener">
+            <a href="https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&amp;quickstart=1" class="demo-alt-btn" target="_blank" rel="noopener">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
               </svg>
@@ -673,6 +673,38 @@ hide:
   </article>
 
   <div class="installation-grid">
+    <a href="https://demo.depictio.embl.org/" class="installation-card demo" target="_blank" rel="noopener">
+      <div class="card-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13,3V9H21V3M13,21H21V11H13M3,21H11V15H3M3,13H11V3H3V13Z"/></svg>
+      </div>
+      <div class="card-content">
+        <h3>Live demo</h3>
+        <p>Example dashboards, ready to explore</p>
+        <span class="card-badge demo">No sign-up</span>
+      </div>
+      <div class="card-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/>
+        </svg>
+      </div>
+    </a>
+
+    <a href="https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&amp;quickstart=1" class="installation-card codespaces" target="_blank" rel="noopener">
+      <div class="card-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      </div>
+      <div class="card-content">
+        <h3>Codespaces</h3>
+        <p>The Python package, in a cloud workspace</p>
+        <span class="card-badge codespaces">No install</span>
+      </div>
+      <div class="card-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/>
+        </svg>
+      </div>
+    </a>
+
     <a href="installation/local/" class="installation-card python">
       <div class="card-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="m14.25.18.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg>
@@ -2734,6 +2766,12 @@ hide:
   .installation-card.python {
     --card-color: #E8A33D;
   }
+  .installation-card.demo {
+    --card-color: #8BC34A;
+  }
+  .installation-card.codespaces {
+    --card-color: #E6779F;
+  }
 
   .card-icon {
     width: 48px;
@@ -2808,10 +2846,30 @@ hide:
   [data-md-color-scheme="slate"] .card-badge.local {
     color: #E8A33D;
   }
+  .card-badge.demo {
+    background: rgba(139, 195, 74, 0.14);
+    color: #4F7A1F;
+  }
+  [data-md-color-scheme="slate"] .card-badge.demo {
+    color: #8BC34A;
+  }
+  .card-badge.codespaces {
+    background: rgba(230, 119, 159, 0.12);
+    color: #B8456F;
+  }
+  [data-md-color-scheme="slate"] .card-badge.codespaces {
+    color: #E6779F;
+  }
 
-  /* Four cards: two by two, a single column on a phone (below). */
+  /* Six cards: the ways to try it, then the ways to run it. Three by two, two by
+     three on a tablet, a single column on a phone (below). */
   .getting-started-section .installation-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (max-width: 1100px) {
+    .getting-started-section .installation-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   /* Getting Started opens on the three commands, in the terminal frame of the
@@ -3145,7 +3203,7 @@ async function checkDemoAvailability() {
         <h3>Live Demo Temporarily Unavailable</h3>
         <p>The interactive demo is currently not accessible. Please try again later or <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
         <div class="demo-alternative-actions">
-          <a href="https://codespaces.new/depictio/depictio" class="md-button" target="_blank" rel="noopener">Open in Codespaces</a>
+          <a href="https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&amp;quickstart=1" class="md-button" target="_blank" rel="noopener">Open in Codespaces</a>
           <a href="usage/get_started/" class="md-button">View Documentation</a>
         </div>
       </div>
