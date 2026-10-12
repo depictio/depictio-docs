@@ -111,20 +111,28 @@ outside the collections a restore overwrites.
 
 ## What is covered
 
-Twelve collections: `users`, `groups`, `projects`, `dashboards`,
+Fourteen collections: `users`, `groups`, `projects`, `dashboards`,
 `data_collections`, `workflows`, `files`, `deltatables`, `runs`,
-`instance_settings`, `branding_assets` and `comment_threads` (the
+`instance_settings`, `branding_assets`, `comment_threads` (the
 [comments and annotations](../../features/comments-annotations.md) of every
-dashboard).
+dashboard), and `dashboard_versions` with `dashboard_version_counters` (the
+[version history](../../features/versioning.md) of every dashboard, and the
+counters that number it).
+
+A dashboard version records which Delta commit each of its data collections was
+at, not the data. Reading it back as it was needs that commit's files on S3, so
+restore the object store with the database (see
+[below](#your-data-s3-and-delta-lake)).
 
 Deliberately excluded:
 
 | Excluded | Why |
 |----------|-----|
 | `tokens` | Restoring them would be circular, and leaving them out is why an admin session survives a restore |
-| Temporary users and their dashboards | Short-lived by construction |
+| Temporary users and their dashboards | Short-lived by construction. Their comment threads and version history go with them |
 | `jbrowse`, `multiqc`, `multiqc_prerender` | Derived, regenerated from source data |
 | `task_events`, `app_logs`, `telemetry` | Operational, and self-expiring by design |
+| `jobs`, `cli_agents` | Background job status and watcher heartbeats. Both expire on their own, so a restore would only bring back expired rows |
 | `ingestion_runs` | Audit and lineage data with no TTL. A known gap, not a decision that it should never be backed up. |
 
 A coverage test fails CI when a new collection is added without being
@@ -247,6 +255,10 @@ depictio backup validate 20260315_143000
 depictio backup restore 20260315_143000 --dry-run
 depictio backup restore 20260315_143000
 ```
+
+On the local server, whose CLI configuration is an admin's, a backup is created, validated, then restored in a dry run:
+
+<div class="asciinema-cast" data-cast="assets/casts/depictio-backup.cast" data-poster="npt:0:10" data-idle-time-limit="2.5"></div>
 
 | Flag | Applies to | Description |
 |------|-----------|-------------|

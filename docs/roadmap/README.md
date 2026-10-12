@@ -110,15 +110,15 @@ Three sections, one question each:
   key: "completed"
   sub_title: "v1.10.0 ✅"
 
-- title: "Project authoring & embedding"
-  content: "Project builder, a component embedded in an external site"
-  icon: ":fontawesome-solid-cubes:"
-  key: "inprogress"
-  sub_title: "In progress 🚧"
-
 - title: "Versioning & the ingestion watcher"
   content: "Dataset and dashboard versioning, time travel, a watcher that re-ingests on its own"
   icon: ":fontawesome-solid-clock-rotate-left:"
+  key: "completed"
+  sub_title: "v1.15.0 ✅"
+
+- title: "Project authoring & embedding"
+  content: "Project builder, a component embedded in an external site"
+  icon: ":fontawesome-solid-cubes:"
   key: "inprogress"
   sub_title: "In progress 🚧"
 
@@ -139,6 +139,10 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
+| Dashboard version history: bookmarks, read-only previews, restoring a dashboard or one component | v1.15.0 | [Dashboard and data versions](../features/versioning.md#history) · [Component history](../features/versioning.md#component-history) |
+| Every write a Delta commit; dashboards, previews and datasets read as a past commit wrote them | v1.15.0 | [Data versions](../features/versioning.md#data-versions) |
+| `depictio watch` re-ingests on its own, with a Watchers pane and live ingestion steps | v1.15.0 | [Watch Command](../depictio-cli/usage.md#watch-command) · [Monitoring](../usage/administration/monitoring.md#watchers) |
+| Ingestion history on the project page, and an ingestion started from the browser | v1.15.0 | [Ingestion history](../features/dashboards.md#ingestion-history) · [Run ingestion](../features/dashboards.md#run-ingestion) |
 | Landing tabs: block markdown, tab links, filter bars, minimal figures, a phylogeny summary | v1.14.0 | [Landing tabs](../features/dashboards.md#landing-tabs) |
 | A built-in Guide on every dashboard | v1.14.0 | [The dashboard Guide](../usage/guides/dashboard-guide.md) |
 | Search every component of every tab with ⌘K | v1.14.0 | [Spotlight search](../usage/guides/spotlight-search.md) |
@@ -201,18 +205,6 @@ Tool Studio both landed in v1.9.0; what is left is the path from a folder to a p
 
 - [ ] **Embed a component in an external site**: serve one dashboard component either as a Plotly spec for your own `plotly.js`, or as a single self-contained offline page. Off by default ([#917](https://github.com/depictio/depictio/pull/917))
 
-### Versioning, time travel & automated ingestion
-
-Ingestion stops being a command someone has to remember, and nothing overwrites
-history. The first half arrived in v1.10.0: a Nextflow pipeline now
-[triggers its own ingestion](../depictio-cli/nextflow-trigger.md) when it
-completes. What is left is noticing files nobody announced, and keeping every
-version of what was written.
-
-- [ ] **Ingestion watcher**: `depictio watch` notices new files and re-ingests them, with native events plus polling as a backstop for network filesystems, and a *Run now* trigger from the UI ([#915](https://github.com/depictio/depictio/pull/915))
-- [ ] **Delta dataset versioning & time travel**: every write becomes an inspectable Delta version carrying Depictio's own provenance; browse and read the table as it was ([#915](https://github.com/depictio/depictio/pull/915))
-- [ ] **Dashboard version history**: every save is recorded, with a timeline, read-only preview of any past version, and a restore that cannot lose the present ([#919](https://github.com/depictio/depictio/pull/919), closes [#95](https://github.com/depictio/depictio/issues/95))
-
 ---
 
 ## :material-lightbulb-outline:{ .rn-idea } Ideas
@@ -245,7 +237,7 @@ mind. Most of the reproducibility story is shipped; citability is not.
 | A visualization can't be reproduced | :material-check-circle: YAML-defined dashboards over traceable data ([docs](../features/yaml-sync.md)) |
 | Experiment data sits in silos | :material-check-circle: Cross-DC linking ([docs](../features/cross-dc-filtering.md)) |
 | Dashboards disappear | :material-check-circle: Hosted on [SciLifeLab Serve](https://serve.scilifelab.se/) |
-| No data lineage | :material-progress-wrench: [Run provenance](../usage/projects/templates.md#run-provenance) records the parameters a run used; Delta dataset versioning and time travel are [in progress](#versioning-time-travel-automated-ingestion) |
+| No data lineage | :material-check-circle: [Run provenance](../usage/projects/templates.md#run-provenance) records the parameters a run used; each table write is a Delta commit that a dashboard can be read at ([docs](../features/versioning.md#data-versions)) |
 | Not citable, no sample-to-viz traceability | :material-lightbulb-outline: DOI snapshots + LabID provenance — [an idea](#ideas) |
 
 ---
