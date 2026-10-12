@@ -1426,6 +1426,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#dashboard-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard Versions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#telemetry" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2769,6 +2780,8 @@
       
         
       
+        
+      
     
     
     
@@ -2923,6 +2936,36 @@
     
   
     Comments and Annotations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/versioning/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5 8H12v5l4.28 2.54.72-1.21-3.5-2.08zM13 3a9 9 0 0 0-9 9H1l3.96 4.03L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.9 8.9 0 0 0 13 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Dashboard and Data Versions
   
 
     
@@ -5649,6 +5692,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#dashboard-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard Versions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#telemetry" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5782,6 +5836,7 @@
 <li><a href="#google-analytics">Google Analytics</a></li>
 <li><a href="#logging">Logging</a></li>
 <li><a href="#monitoring">Monitoring</a></li>
+<li><a href="#dashboard-versions">Dashboard Versions</a></li>
 <li><a href="#telemetry">Telemetry</a></li>
 <li><a href="#multiqc-prerender">MultiQC Prerender</a></li>
 </ul>
@@ -7071,6 +7126,57 @@ longer exists on `DashboardYAMLConfig`.)
 <td><code>DEPICTIO_MONITORING_INGESTION_STALE_AFTER_HOURS</code></td>
 <td><code>24</code></td>
 <td>Hours without a write after which a <code>running</code> ingestion is swept to <code>abandoned</code>. <code>0</code> disables the sweep. The bundled compose files and Helm chart do not forward it, so set it on the backend yourself (v1.11.0+)</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_MONITORING_AGENT_TTL_SECONDS</code></td>
+<td><code>300</code></td>
+<td>How long a <a href="../../usage/administration/monitoring/#watchers">watcher</a> stays listed after its last heartbeat. At least 60</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="dashboard-versions">Dashboard Versions<a class="headerlink" href="#dashboard-versions" title="Permanent link">¶</a></h2>
+<p><strong>Config Class:</strong> <code>DashboardVersionsConfig</code>
+<strong>Environment Prefix:</strong> <code>DEPICTIO_DASHBOARD_VERSIONS_</code></p>
+<p>The version history of every dashboard. See <a href="../../features/versioning/#retention-and-configuration">Dashboard and data versions</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEPICTIO_DASHBOARD_VERSIONS_ENABLED</code></td>
+<td><code>true</code></td>
+<td>Record a version on each dashboard save. Off, nothing new is recorded</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_DASHBOARD_VERSIONS_COALESCE_WINDOW_SECONDS</code></td>
+<td><code>300</code></td>
+<td>How long consecutive autosaves by the same author fold into one version, counted from its creation</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_DASHBOARD_VERSIONS_MAX_VERSIONS_PER_FAMILY</code></td>
+<td><code>100</code></td>
+<td>Autosaves kept per dashboard, bookmarked ones aside</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_DASHBOARD_VERSIONS_RETENTION_DAYS</code></td>
+<td><code>90</code></td>
+<td>Age after which versions that are not bookmarked are dropped</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_DASHBOARD_VERSIONS_KEEP_DAILY_FOR_DAYS</code></td>
+<td><code>30</code></td>
+<td>Age after which autosaves thin to the last one of each day</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_DASHBOARD_VERSIONS_MAX_SNAPSHOT_BYTES</code></td>
+<td><code>8388608</code> (8 MiB)</td>
+<td>Largest version recorded. A larger one is skipped and logged; the save itself goes through</td>
 </tr>
 </tbody>
 </table>

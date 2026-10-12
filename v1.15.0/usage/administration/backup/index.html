@@ -2585,6 +2585,8 @@
       
         
       
+        
+      
     
     
     
@@ -2739,6 +2741,36 @@
     
   
     Comments and Annotations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../features/versioning/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5 8H12v5l4.28 2.54.72-1.21-3.5-2.08zM13 3a9 9 0 0 0-9 9H1l3.96 4.03L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.9 8.9 0 0 0 13 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Dashboard and Data Versions
   
 
     
@@ -5490,11 +5522,17 @@ marker is written only when a restore completes without errors, and it lives
 outside the collections a restore overwrites.</p>
 <hr>
 <h2 id="what-is-covered">What is covered<a class="headerlink" href="#what-is-covered" title="Permanent link">¶</a></h2>
-<p>Twelve collections: <code>users</code>, <code>groups</code>, <code>projects</code>, <code>dashboards</code>,
+<p>Fourteen collections: <code>users</code>, <code>groups</code>, <code>projects</code>, <code>dashboards</code>,
 <code>data_collections</code>, <code>workflows</code>, <code>files</code>, <code>deltatables</code>, <code>runs</code>,
-<code>instance_settings</code>, <code>branding_assets</code> and <code>comment_threads</code> (the
+<code>instance_settings</code>, <code>branding_assets</code>, <code>comment_threads</code> (the
 <a href="../../../features/comments-annotations/">comments and annotations</a> of every
-dashboard).</p>
+dashboard), and <code>dashboard_versions</code> with <code>dashboard_version_counters</code> (the
+<a href="../../../features/versioning/">version history</a> of every dashboard, and the
+counters that number it).</p>
+<p>A dashboard version records which Delta commit each of its data collections was
+at, not the data. Reading it back as it was needs that commit's files on S3, so
+restore the object store with the database (see
+<a href="#your-data-s3-and-delta-lake">below</a>).</p>
 <p>Deliberately excluded:</p>
 <table>
 <thead>
@@ -5510,7 +5548,7 @@ dashboard).</p>
 </tr>
 <tr>
 <td>Temporary users and their dashboards</td>
-<td>Short-lived by construction</td>
+<td>Short-lived by construction. Their comment threads and version history go with them</td>
 </tr>
 <tr>
 <td><code>jbrowse</code>, <code>multiqc</code>, <code>multiqc_prerender</code></td>
@@ -5519,6 +5557,10 @@ dashboard).</p>
 <tr>
 <td><code>task_events</code>, <code>app_logs</code>, <code>telemetry</code></td>
 <td>Operational, and self-expiring by design</td>
+</tr>
+<tr>
+<td><code>jobs</code>, <code>cli_agents</code></td>
+<td>Background job status and watcher heartbeats. Both expire on their own, so a restore would only bring back expired rows</td>
 </tr>
 <tr>
 <td><code>ingestion_runs</code></td>

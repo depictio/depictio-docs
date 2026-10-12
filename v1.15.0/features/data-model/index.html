@@ -2394,6 +2394,8 @@
       
         
       
+        
+      
     
     
     
@@ -2551,6 +2553,36 @@
     
   
     Comments and Annotations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versioning/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5 8H12v5l4.28 2.54.72-1.21-3.5-2.08zM13 3a9 9 0 0 0-9 9H1l3.96 4.03L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.9 8.9 0 0 0 13 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Dashboard and Data Versions
   
 
     
@@ -5357,6 +5389,9 @@ collections the location and the schema of each aggregation live in a separate
 <code>deltatables</code> document; for the rest they are recorded on the file entries. Either way the
 API joins them in as it serves the project, which is why <code>delta_location</code> and
 <code>last_aggregation</code> show up in API responses and nowhere in your YAML.</p>
+<p>Dashboards are versioned apart from their data, in a <code>dashboard_versions</code> collection:
+each entry is a copy of every tab of one dashboard, plus the Delta commit each of its
+data collections was at. See <a href="../versioning/">Dashboard and data versions</a>.</p>
 <hr>
 <h2 id="data-collection-types">Data collection types<a class="headerlink" href="#data-collection-types" title="Permanent link">¶</a></h2>
 <table>
@@ -5412,6 +5447,9 @@ without changing its type. See <a href="../components/#map-components">Component
 <p>A <code>phylogeny</code> collection points at a <code>table</code> collection for its tip annotations rather
 than carrying them itself. See
 <a href="../../usage/projects/guide/#example-phylogeny-dcs-and-their-metadata-table">Phylogeny DCs and their metadata table</a>.</p>
+<p>Only <code>table</code> and <code>image</code> collections keep versions: every write to their Delta table is
+a commit that a dashboard can later be read against. See
+<a href="../versioning/#what-can-be-pinned">Dashboard and data versions</a>.</p>
 <p>An <code>indexed_file</code> collection has no rows and no Delta table at all. It exists for files
 too large or too dense to materialise as a table, such as a per-sample VCF or a coverage
 bigWig: ingestion copies each file and its index sidecar (<code>.tbi</code>, <code>.bai</code>, <code>.fai</code>) to S3,

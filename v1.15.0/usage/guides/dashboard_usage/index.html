@@ -2725,6 +2725,8 @@
       
         
       
+        
+      
     
     
     
@@ -2879,6 +2881,36 @@
     
   
     Comments and Annotations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../features/versioning/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5 8H12v5l4.28 2.54.72-1.21-3.5-2.08zM13 3a9 9 0 0 0-9 9H1l3.96 4.03L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.9 8.9 0 0 0 13 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Dashboard and Data Versions
   
 
     
@@ -5761,6 +5793,16 @@
 <td>Logo, colours and figure palette. See <a href="#appearance">Appearance</a></td>
 </tr>
 <tr>
+<td><strong>History</strong></td>
+<td>Edit mode</td>
+<td>Every saved version of the dashboard, to preview, restore, bookmark or delete. See <a href="../../../features/versioning/#history">Dashboard and data versions</a></td>
+</tr>
+<tr>
+<td><strong>Data version</strong></td>
+<td>Edit mode</td>
+<td>Draws the editor from earlier data, for you only, until you reload. See <a href="../../../features/versioning/#data-versions">Data versions</a></td>
+</tr>
+<tr>
 <td><strong>Feedback</strong></td>
 <td>When a <a href="../../../installation/env-reference/#feedback">feedback link</a> is configured</td>
 <td>Report a problem or suggest an improvement</td>
@@ -5879,7 +5921,7 @@ and <strong>Customise</strong> starts from the main tab's brand.</p>
 <ul>
 <li><span style="color: #888888;"><i class="mdi mdi-dots-grid"></i> <strong>Drag handle</strong></span>: grab it to move the component in the grid.</li>
 <li><span style="color: #15aabf;"><i class="mdi mdi-information-outline"></i> <strong>Info</strong></span>: the component's metadata: type, data source, configuration.</li>
-<li><span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> <strong>Menu</strong></span>: <strong>Edit</strong> reopens the builder on this component, <strong>Duplicate</strong> copies it, <strong>Move to section</strong> hands it to another section, <strong>Copy to tab…</strong> <small>(v1.14.0+)</small> adds a copy to another tab (see <a href="../../../features/dashboards/#copy-to-tab">Copy to tab</a>), <strong>Highlight on…</strong> <small>(v1.14.0+)</small> shows a figure or advanced visualization on another tab without copying it (see <a href="../../../features/components/#highlight-components">Highlight Components</a>), <strong>Delete</strong> removes it. A figure's menu also carries its <strong>Font size</strong>, and a tile resized by hand that could fit its content offers <strong>Reset to auto height</strong>.</li>
+<li><span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> <strong>Menu</strong></span>: <strong>Edit</strong> reopens the builder on this component, <strong>History</strong> shows it across the dashboard's saved versions, to compare or restore it alone (see <a href="../../../features/versioning/#component-history">Component history</a>), <strong>Duplicate</strong> copies it, <strong>Move to section</strong> hands it to another section, <strong>Copy to tab…</strong> <small>(v1.14.0+)</small> adds a copy to another tab (see <a href="../../../features/dashboards/#copy-to-tab">Copy to tab</a>), <strong>Highlight on…</strong> <small>(v1.14.0+)</small> shows a figure or advanced visualization on another tab without copying it (see <a href="../../../features/components/#highlight-components">Highlight Components</a>), <strong>Delete</strong> removes it. A figure's menu also carries its <strong>Font size</strong>, and a tile resized by hand that could fit its content offers <strong>Reset to auto height</strong>.</li>
 </ul>
 <p>To find a component on any tab, press <strong>⌘K</strong> / <strong>Ctrl+K</strong> or click the magnifier in the header <small>(v1.14.0+)</small>. See <a href="../spotlight-search/">Spotlight search</a>.</p>
 <hr>
@@ -5966,6 +6008,7 @@ behaviours and how to change them.</p>
 <h2 id="saving-the-dashboard">Saving the Dashboard<a class="headerlink" href="#saving-the-dashboard" title="Permanent link">¶</a></h2>
 <p>Layout and section changes persist on their own, about half a second after you stop editing. There is no unsaved state to lose if you close the tab.</p>
 <p><strong>Save</strong>, in the editor toolbar, writes immediately instead of waiting for that delay, and queues a fresh thumbnail for the dashboard card. A short notification confirms it.</p>
+<p>Every save is kept as a version: the automatic ones fold into one version per 5 minutes of editing, and <strong>Save</strong> always records its own. <strong>Settings → History</strong> lists them, to preview or restore one. See <a href="../../../features/versioning/">Dashboard and data versions</a>.</p>
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="https://depictio.github.io/depictio-docs/images/guides/dashboard_creation/save_notification.png" target="_blank">
         <img src="https://depictio.github.io/depictio-docs/images/guides/dashboard_creation/save_notification.png" width="600">

@@ -2061,6 +2061,34 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#watch-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        👀 Watch Command
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="👀 Watch Command">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-a-watcher-as-a-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running a watcher as a service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#local-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2182,6 +2210,28 @@
     <span class="md-ellipsis">
       
         data push-images (v1.12.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        data versions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-vacuum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        data vacuum
       
     </span>
   </a>
@@ -3052,6 +3102,8 @@
       
         
       
+        
+      
     
     
     
@@ -3206,6 +3258,36 @@
     
   
     Comments and Annotations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/versioning/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5 8H12v5l4.28 2.54.72-1.21-3.5-2.08zM13 3a9 9 0 0 0-9 9H1l3.96 4.03L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.9 8.9 0 0 0 13 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Dashboard and Data Versions
   
 
     
@@ -5828,6 +5910,34 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#watch-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        👀 Watch Command
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="👀 Watch Command">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-a-watcher-as-a-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running a watcher as a service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#local-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5949,6 +6059,28 @@
     <span class="md-ellipsis">
       
         data push-images (v1.12.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        data versions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-vacuum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        data vacuum
       
     </span>
   </a>
@@ -6321,6 +6453,7 @@
 <li><a href="#choosing-a-server">Which server a command uses</a></li>
 <li><a href="#commands">🚀 Commands</a></li>
 <li><a href="#ingest-command">📥 Ingest Command</a></li>
+<li><a href="#watch-command">👀 Watch Command</a></li>
 <li><a href="#local-commands">💻 Local Server Commands</a></li>
 <li><a href="#config-commands">📋 Config Commands</a></li>
 <li><a href="#data-commands">📊 Data Commands</a></li>
@@ -6362,6 +6495,11 @@
 <td>All users</td>
 </tr>
 <tr>
+<td><code>watch &lt;results dir&gt;</code></td>
+<td>Ingest pipeline results, then again whenever they change</td>
+<td>All users</td>
+</tr>
+<tr>
 <td><code>config show</code></td>
 <td>Show the CLI configuration in use</td>
 <td>All users</td>
@@ -6399,6 +6537,16 @@
 <tr>
 <td><code>data push-images</code></td>
 <td>Upload a directory of images for an image data collection</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>data versions</code></td>
+<td>List the Delta commits of a data collection</td>
+<td>All users</td>
+</tr>
+<tr>
+<td><code>data vacuum</code></td>
+<td>Remove the Delta files no retained commit needs</td>
 <td>All users</td>
 </tr>
 <tr>
@@ -6791,6 +6939,36 @@
 <td><code>false</code></td>
 <td>Carry on when a step fails. The command still exits with code 1 at the end</td>
 </tr>
+<tr>
+<td><code>--sync-changed</code></td>
+<td><code>flag</code></td>
+<td><code>false</code></td>
+<td>Re-upload only the files whose size or modification time moved since the last scan. Narrower than <code>--update-config</code>, which re-uploads every file</td>
+</tr>
+<tr>
+<td><code>--write-mode</code></td>
+<td><code>string</code></td>
+<td><code>overwrite</code></td>
+<td>How step 6 writes a table. <code>overwrite</code> rewrites it whole. <code>replace-runs</code> partitions it by run and rewrites only the runs in this batch, leaving the others untouched. See <a href="../../features/versioning/#how-new-data-versions-are-written">Data versions</a></td>
+</tr>
+<tr>
+<td><code>--incremental-write</code></td>
+<td><code>flag</code></td>
+<td><code>false</code></td>
+<td>With <code>--write-mode replace-runs</code>, rewrite only the runs that changed instead of rebuilding the whole table. Falls back to a full rebuild whenever that cannot be done safely (run removed, table not partitioned by run, column type changed)</td>
+</tr>
+<tr>
+<td><code>--skip-unchanged</code></td>
+<td><code>flag</code></td>
+<td><code>false</code></td>
+<td>Leave a data collection's table untouched when the scan found no new, changed or removed file for it. Off by default, so that ingesting again always rebuilds a project that drifted</td>
+</tr>
+<tr>
+<td><code>--repartition</code></td>
+<td><code>flag</code></td>
+<td><code>false</code></td>
+<td>Let <code>--write-mode replace-runs</code> partition by run a table that is not yet. This rewrites every row, so it is never done implicitly, and never by the watcher</td>
+</tr>
 </tbody>
 </table>
 </details>
@@ -6873,6 +7051,30 @@ from its own logs. See
 <td><code>flag</code></td>
 <td><code>false</code></td>
 <td>Show a detailed summary of the run</td>
+</tr>
+<tr>
+<td><code>--concurrency</code></td>
+<td><code>int</code></td>
+<td><code>4</code></td>
+<td>Parallel HTTP requests for file uploads and cleanup deletes</td>
+</tr>
+<tr>
+<td><code>--upload-chunk-size</code></td>
+<td><code>int</code></td>
+<td><code>1000</code></td>
+<td>Files per <code>/files/upsert_batch</code> request</td>
+</tr>
+<tr>
+<td><code>--state-cache</code> / <code>--no-state-cache</code></td>
+<td><code>flag</code></td>
+<td><code>--state-cache</code></td>
+<td>Skip the runs whose file tree is unchanged since the last successful scan, from a local cache. Only applies when rescanning</td>
+</tr>
+<tr>
+<td><code>--async-upsert</code></td>
+<td><code>flag</code></td>
+<td><code>false</code></td>
+<td>Ask the server to profile each written table in the background, and poll until it finishes, instead of holding one long request open. A server without offloading enabled ignores it and answers inline</td>
 </tr>
 </tbody>
 </table>
@@ -7018,10 +7220,311 @@ collection that would match nothing is named in a warning.</p>
 </div>
 </div>
 </div>
+<h3 id="watch-command">👀 Watch Command<a class="headerlink" href="#watch-command" title="Permanent link">¶</a></h3>
+<p><code>depictio ingest</code> on a loop: ingest the results directory, then again whenever its files
+change. Each cycle writes new <a href="../../features/versioning/#data-versions">data versions</a> of
+the tables it touches.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>depictio<span class="w"> </span>watch<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>DATA_DIR<span class="o">]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Rewrite only the runs that changed, on each cycle</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>depictio<span class="w"> </span>watch<span class="w"> </span>results/<span class="w"> </span>--write-mode<span class="w"> </span>replace-runs<span class="w"> </span>--incremental-write
+</code></pre></div>
+<p>The project is chosen as <code>ingest</code> chooses it, from <code>DATA_DIR</code>, <code>--template</code> or
+<code>--project-config-path</code>. The first cycle runs at once and refreshes the project as
+<code>ingest --update-config</code> does, which brings it up to date with whatever changed while
+nothing watched. The later cycles rescan and rewrite what moved. No cycle checks the
+server and S3 or imports dashboards: run <code>depictio ingest</code> once first if the project
+should have its dashboards.</p>
+<p>Here a project ingested from two runs with <code>--write-mode replace-runs</code> is watched. A
+third run lands in <code>data/</code>, a cycle ingests it on its own, and Ctrl-C stops the watcher
+(the waits are shortened):</p>
+<div class="asciinema-cast" data-cast="assets/casts/depictio-watch.cast" data-poster="npt:0:30" data-idle-time-limit="2.5"></div>
+
+<figure>
+  <a href="https://depictio.github.io/depictio-docs/images/guides/versioning/watch_version_history_light.webp" target="_blank"><img alt="The Version history of physical_features after the watch: V2, by Watch, replaced one run and added 123 rows and one file; V1, by Watch, rewrote both runs; V0 is the depictio ingest" src="https://depictio.github.io/depictio-docs/images/guides/versioning/watch_version_history_light.webp#only-light"></a>
+  <a href="https://depictio.github.io/depictio-docs/images/guides/versioning/watch_version_history_dark.webp" target="_blank"><img alt="The Version history of physical_features after the watch: V2, by Watch, replaced one run and added 123 rows and one file; V1, by Watch, rewrote both runs; V0 is the depictio ingest" src="https://depictio.github.io/depictio-docs/images/guides/versioning/watch_version_history_dark.webp#only-dark"></a>
+<br>
+<figcaption><strong>Projects → the project → <code>physical_features</code> → Version history, after the watch above.</strong> V0 is the <code>depictio ingest</code>. V1 is the watcher's first cycle, which rewrites both runs. V2 is the cycle that ingested <code>run_3_gentoo</code>: <em>runs replaced</em>, 123 rows and one file added, the other runs left as they were.</figcaption>
+</figure>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DATA_DIR</code></td>
+<td><code>path</code></td>
+<td></td>
+<td>Directory of the pipeline results to watch. Without <code>--template</code> or <code>--project-config-path</code>, the template is detected from it</td>
+</tr>
+<tr>
+<td><code>--server</code></td>
+<td><code>string</code></td>
+<td>see <a href="#choosing-a-server">Which server a command uses</a></td>
+<td><code>local</code>, or a CLI configuration file</td>
+</tr>
+<tr>
+<td><code>--template</code></td>
+<td><code>string</code></td>
+<td>detected</td>
+<td>Template to build the project from, as for <code>ingest</code>. Not with <code>--project-config-path</code></td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td></td>
+<td>Project YAML, for a pipeline Depictio ships no template for. Not with <code>--template</code></td>
+</tr>
+<tr>
+<td><code>--project</code></td>
+<td><code>string</code></td>
+<td></td>
+<td>Project name. Replaces the name the template gives, or the <code>name</code> in the project file</td>
+</tr>
+<tr>
+<td><code>--var</code></td>
+<td><code>KEY=VALUE</code></td>
+<td></td>
+<td>Template variable, repeatable</td>
+</tr>
+<tr>
+<td><code>--mode</code></td>
+<td><code>string</code></td>
+<td><code>incremental</code></td>
+<td><code>incremental</code> re-uploads only the files that changed. <code>full</code> re-uploads and rewrites everything on every cycle</td>
+</tr>
+<tr>
+<td><code>--full-every</code></td>
+<td><code>int</code></td>
+<td></td>
+<td>Run a full cycle every N incremental ones</td>
+</tr>
+<tr>
+<td><code>--backend</code></td>
+<td><code>string</code></td>
+<td><code>auto</code></td>
+<td><code>native</code> (filesystem events only, with the <code>watch</code> extra), <code>polling</code> (a periodic walk), <code>both</code>, or <code>auto</code>: <code>both</code> on local disk, <code>polling</code> on a network filesystem, where events do not see writes made from another host</td>
+</tr>
+<tr>
+<td><code>--interval</code></td>
+<td><code>float</code></td>
+<td><code>300</code></td>
+<td>Seconds between polling walks, also the backstop for lost events</td>
+</tr>
+<tr>
+<td><code>--debounce</code></td>
+<td><code>float</code></td>
+<td><code>30</code></td>
+<td>Seconds of quiet before a cycle starts</td>
+</tr>
+<tr>
+<td><code>--max-delay</code></td>
+<td><code>float</code></td>
+<td><code>300</code></td>
+<td>Ceiling on the debounce, so a tree written continuously still gets ingested</td>
+</tr>
+<tr>
+<td><code>--settle</code></td>
+<td><code>float</code></td>
+<td><code>5</code></td>
+<td>Seconds a file must keep the same size and modification time before it is ingested</td>
+</tr>
+<tr>
+<td><code>--write-mode</code></td>
+<td><code>string</code></td>
+<td><code>overwrite</code></td>
+<td>How each cycle writes a table, as for <code>ingest</code>: <code>overwrite</code> or <code>replace-runs</code></td>
+</tr>
+<tr>
+<td><code>--incremental-write</code></td>
+<td><code>flag</code></td>
+<td><code>false</code></td>
+<td>With <code>--write-mode replace-runs</code>, rewrite only the runs that changed. Ignored, with a warning, with <code>overwrite</code></td>
+</tr>
+<tr>
+<td><code>--drop-missing-runs</code></td>
+<td><code>flag</code></td>
+<td><code>false</code></td>
+<td>Remove the runs of a location added with <code>ingest --attach-run</code> that is not on this host. Without it, such a project stops the first cycle</td>
+</tr>
+<tr>
+<td><code>--concurrency</code></td>
+<td><code>int</code></td>
+<td><code>4</code></td>
+<td>Parallel HTTP requests during each cycle</td>
+</tr>
+<tr>
+<td><code>--once</code></td>
+<td><code>flag</code></td>
+<td><code>false</code></td>
+<td>Run a single cycle and exit with its status</td>
+</tr>
+<tr>
+<td><code>--max-runs</code></td>
+<td><code>int</code></td>
+<td></td>
+<td>Stop after this many cycles, the first included</td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td><code>flag</code></td>
+<td><code>false</code></td>
+<td>Report each cycle's changes without writing to the server</td>
+</tr>
+</tbody>
+</table>
+<p>With <code>--mode incremental</code> and the default <code>--write-mode overwrite</code>, the watcher warns at
+start-up: a collection whose files moved still has its whole table rewritten.
+<code>--write-mode replace-runs --incremental-write</code> rewrites only the runs that changed. An
+incremental cycle leaves alone the collections whose files did not move, as long as the
+previous cycle succeeded; on the first cycle, after a failure, and on every full cycle,
+every table is rebuilt.</p>
+<p><strong>Filesystem events need the <code>watch</code> extra</strong>: <code>pip install "depictio[watch]"</code>, or
+<code>uv tool install "depictio[local,watch]"</code> next to a local server. Without it the watcher
+silently polls alone, so a new file waits for the next walk, up to <code>--interval</code> (5
+minutes by default), while its <em>Watching … backend</em> banner still names <code>both</code> or
+<code>native</code>.</p>
+<p><code>auto</code> picks polling alone as soon as one watched location is on NFS, SMB/CIFS, Lustre,
+GPFS, BeeGFS, GlusterFS, Ceph, AFS, 9p or a FUSE mount. A location of the project that does not exist on this machine is skipped with
+a warning, and the watcher stops if none is left.</p>
+<p><strong>Stopping.</strong> Ctrl-C or SIGTERM lets the cycle in progress finish, then exits, so the
+watcher is safe to run under systemd or as a container.</p>
+<p><strong>One per project.</strong> A watcher holds a lock under <code>~/.depictio/state/</code>, per server and
+project, next to the scan-state cache (<code>DEPICTIO_CLI_STATE_DIR</code> moves both).
+<code>depictio ingest</code> takes the same lock before its first write, so a second watcher or
+ingestion on the same project stops at once with an error that names the lock file.</p>
+<p><strong>In the admin panel.</strong> A watcher registers with the server, sends a heartbeat every
+minute, and asks every 5 seconds whether someone pressed <strong>Run now</strong> on its card in the
+<a href="../../usage/administration/monitoring/#watchers">Watchers pane</a>. It reaches out to the
+server and never the reverse, so it works from a machine the server cannot reach, such
+as an HPC login node. Its runs show <strong>Watch</strong>, or <strong>UI</strong> for one started by <strong>Run now</strong>,
+as their trigger. On a server with <code>DEPICTIO_MONITORING_ENABLED=false</code>, the watcher
+carries on without reporting.</p>
+<h4 id="running-a-watcher-as-a-service">Running a watcher as a service<a class="headerlink" href="#running-a-watcher-as-a-service" title="Permanent link">¶</a></h4>
+<p>The depictio repository ships two ways to keep a watcher running, both configured through
+environment variables:</p>
+<ul>
+<li><a href="https://github.com/depictio/depictio/blob/main/deploy/depictio-watch@.service"><code>deploy/depictio-watch@.service</code></a>,
+  a systemd template unit: one instance per project, each reading
+  <code>/etc/depictio/&lt;instance&gt;.env</code>;</li>
+<li><a href="https://github.com/depictio/depictio/blob/main/deploy/docker-compose.watcher.yaml"><code>deploy/docker-compose.watcher.yaml</code></a>,
+  a container running the <code>depictio-cli</code> image, configured by a <code>.env</code> next to it
+  (start from <a href="https://github.com/depictio/depictio/blob/main/deploy/.env.example"><code>deploy/.env.example</code></a>).</li>
+</ul>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">systemd</label><label for="__tabbed_2_2">Docker Compose</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo<span class="w"> </span>cp<span class="w"> </span>deploy/depictio-watch@.service<span class="w"> </span>/etc/systemd/system/
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>edit<span class="w"> </span>depictio-watch@.service<span class="w">    </span><span class="c1"># set User=, the account it runs as</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>sudo<span class="w"> </span>install<span class="w"> </span>-d<span class="w"> </span>/etc/depictio
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>sudoedit<span class="w"> </span>/etc/depictio/myproject.env
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>depictio-watch@myproject
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>journalctl<span class="w"> </span>-u<span class="w"> </span>depictio-watch@myproject<span class="w"> </span>-f
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>cp<span class="w"> </span>deploy/.env.example<span class="w"> </span>deploy/.env<span class="w">    </span><span class="c1"># then fill it in</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>deploy/docker-compose.watcher.yaml<span class="w"> </span>up<span class="w"> </span>-d
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>deploy/docker-compose.watcher.yaml<span class="w"> </span>logs<span class="w"> </span>-f
+</code></pre></div>
+<p>For several projects, run it once per project with its own <code>COMPOSE_PROJECT_NAME</code>
+and <code>--env-file</code>.</p>
+</div>
+</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>systemd</th>
+<th>Docker Compose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEPICTIO_CLI_CONFIG</code></td>
+<td>Required: the CLI configuration</td>
+<td>Required</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_PROJECT_CONFIG</code></td>
+<td>Required: the project YAML</td>
+<td>Required</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_DATA_ROOT</code></td>
+<td></td>
+<td>Required: the data root on the host, mounted read-only</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_DATA_ROOT_MOUNT</code></td>
+<td></td>
+<td><code>/data</code>. Must match the paths in the project YAML</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_WATCH_MODE</code></td>
+<td><code>incremental</code></td>
+<td><code>incremental</code></td>
+</tr>
+<tr>
+<td><code>DEPICTIO_WATCH_WRITE_MODE</code></td>
+<td><code>overwrite</code></td>
+<td><code>replace-runs</code></td>
+</tr>
+<tr>
+<td><code>DEPICTIO_WATCH_INCREMENTAL_WRITE</code></td>
+<td><code>0</code>. <code>1</code> adds <code>--incremental-write</code></td>
+<td>Not a variable: uncomment <code>--incremental-write</code> in the compose file</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_WATCH_BACKEND</code></td>
+<td><code>auto</code></td>
+<td><code>polling</code>, since file events do not cross a bind mount reliably</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_WATCH_INTERVAL</code></td>
+<td><code>300</code></td>
+<td><code>300</code></td>
+</tr>
+<tr>
+<td><code>DEPICTIO_WATCH_DEBOUNCE</code></td>
+<td><code>30</code></td>
+<td><code>30</code></td>
+</tr>
+<tr>
+<td><code>DEPICTIO_WATCH_SETTLE</code></td>
+<td><code>5</code></td>
+<td><code>5</code></td>
+</tr>
+<tr>
+<td><code>DEPICTIO_CLI_BIN</code></td>
+<td><code>/usr/local/bin/depictio</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DEPICTIO_CLI_IMAGE</code></td>
+<td></td>
+<td><code>ghcr.io/depictio/depictio-cli:latest</code></td>
+</tr>
+<tr>
+<td><code>WATCHER_NAME</code></td>
+<td></td>
+<td><code>depictio-watcher</code>, the container name</td>
+</tr>
+</tbody>
+</table>
+<p>Both give a stopping watcher 15 minutes to finish its cycle. The unit keeps the lock and
+the scan-state cache in <code>/var/lib/depictio-watch</code>, and the compose file in a named volume,
+so a restart does not rescan everything.</p>
 <h3 id="local-commands">💻 Local Server Commands <small>(v1.12.0+)</small><a class="headerlink" href="#local-commands" title="Permanent link">¶</a></h3>
 <p><code>depictio local</code> runs a complete Depictio server on this machine, without Docker, and manages it: <code>up</code>, <code>open</code>, <code>down</code>, <code>status</code>, <code>wipe</code> and <code>export</code>. It manages the server only: data goes in with <code>depictio ingest</code>, which reaches the local server with <code>--server local</code>, or by default when no other server is configured (see <a href="#choosing-a-server">Which server a command uses</a>).</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>up
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>results/<span class="w"> </span>--server<span class="w"> </span><span class="nb">local</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>up
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>results/<span class="w"> </span>--server<span class="w"> </span><span class="nb">local</span>
 </code></pre></div>
 <p>See <a href="../../installation/local/">Python package installation</a> for every command and option.</p>
 <h3 id="config-commands">📋 Config Commands<a class="headerlink" href="#config-commands" title="Permanent link">¶</a></h3>
@@ -7032,7 +7535,7 @@ collection that would match nothing is named in a warning.</p>
 </div>
 <h4 id="config-show"><code>config show</code><a class="headerlink" href="#config-show" title="Permanent link">¶</a></h4>
 <p>Show the CLI configuration in use.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>show<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>show<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7058,12 +7561,12 @@ collection that would match nothing is named in a warning.</p>
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>show<span class="w"> </span>--project-name<span class="w"> </span>my-project
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>show<span class="w"> </span>--project-name<span class="w"> </span>my-project
 </code></pre></div>
 <hr>
 <h4 id="config-check"><code>config check</code><a class="headerlink" href="#config-check" title="Permanent link">¶</a></h4>
 <p>Run the preflight checks. Without <code>--project-config-path</code>, it checks that the server answers and that its S3 storage is reachable. With <code>--project-config-path</code>, it validates that project configuration, which also runs the S3 storage check it depends on.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>check<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>check<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7089,16 +7592,16 @@ collection that would match nothing is named in a warning.</p>
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># The server and its storage</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>depictio<span class="w"> </span>config<span class="w"> </span>check
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># A project configuration</span>
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>depictio<span class="w"> </span>config<span class="w"> </span>check<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># The server and its storage</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>depictio<span class="w"> </span>config<span class="w"> </span>check
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># A project configuration</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>depictio<span class="w"> </span>config<span class="w"> </span>check<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
 </code></pre></div>
 <hr>
 <h4 id="config-sync"><code>config sync</code><a class="headerlink" href="#config-sync" title="Permanent link">¶</a></h4>
 <p>Validate a project configuration and sync it to the server.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>sync<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>sync<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7130,14 +7633,14 @@ collection that would match nothing is named in a warning.</p>
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>sync<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--update
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>sync<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--update
 </code></pre></div>
 <hr>
 <h4 id="config-nextflow"><code>config nextflow</code> <small>(v1.10.0+)</small><a class="headerlink" href="#config-nextflow" title="Permanent link">¶</a></h4>
 <p>Print or install the <code>workflow.onComplete</code> snippet that lets a Nextflow pipeline
 ingest its own results when it finishes. Full guide:
 <a href="../nextflow-trigger/">Nextflow trigger</a>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>nextflow<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>nextflow<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7177,13 +7680,13 @@ ingest its own results when it finishes. Full guide:
 </table>
 <p>With no flag it prints the path of the bundled snippet, which is what makes the
 <code>$(...)</code> form below work.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># one pipeline, one run</span>
-<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq<span class="w"> </span>-profile<span class="w"> </span>docker<span class="w"> </span>--outdir<span class="w"> </span>results<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">  </span>-c<span class="w"> </span><span class="k">$(</span>depictio<span class="w"> </span>config<span class="w"> </span>nextflow<span class="k">)</span>
-<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
-<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="c1"># every pipeline on this machine, once</span>
-<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>depictio<span class="w"> </span>config<span class="w"> </span>nextflow<span class="w"> </span>--install
-<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq<span class="w"> </span>-profile<span class="w"> </span>docker<span class="w"> </span>--outdir<span class="w"> </span>results
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># one pipeline, one run</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq<span class="w"> </span>-profile<span class="w"> </span>docker<span class="w"> </span>--outdir<span class="w"> </span>results<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">  </span>-c<span class="w"> </span><span class="k">$(</span>depictio<span class="w"> </span>config<span class="w"> </span>nextflow<span class="k">)</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="c1"># every pipeline on this machine, once</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>depictio<span class="w"> </span>config<span class="w"> </span>nextflow<span class="w"> </span>--install
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq<span class="w"> </span>-profile<span class="w"> </span>docker<span class="w"> </span>--outdir<span class="w"> </span>results
 </code></pre></div>
 <h3 id="data-commands">📊 Data Commands<a class="headerlink" href="#data-commands" title="Permanent link">¶</a></h3>
 <!-- prettier-ignore -->
@@ -7193,7 +7696,7 @@ ingest its own results when it finishes. Full guide:
 </div>
 <h4 id="data-scan"><code>data scan</code><a class="headerlink" href="#data-scan" title="Permanent link">¶</a></h4>
 <p>Scan the project's data folders for the files its data collections match, and register them on the server. The project configuration must already be synced.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7242,6 +7745,36 @@ ingest its own results when it finishes. Full guide:
 <td>Update files for the data collection</td>
 </tr>
 <tr>
+<td><code>--sync-changed</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Re-upload only the files whose metadata moved since the last scan. Narrower than <code>--sync-files</code>, which re-uploads every registered file</td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Report what would be registered or removed, without writing to the server</td>
+</tr>
+<tr>
+<td><code>--state-cache</code> / <code>--no-state-cache</code></td>
+<td><code>boolean</code></td>
+<td><code>--state-cache</code></td>
+<td>Skip the runs whose file tree is unchanged since the last successful scan, from a local cache. Only applies when rescanning</td>
+</tr>
+<tr>
+<td><code>--concurrency</code></td>
+<td><code>int</code></td>
+<td><code>4</code></td>
+<td>Parallel HTTP requests for file uploads and cleanup deletes</td>
+</tr>
+<tr>
+<td><code>--upload-chunk-size</code></td>
+<td><code>int</code></td>
+<td><code>1000</code></td>
+<td>Files per <code>/files/upsert_batch</code> request</td>
+</tr>
+<tr>
 <td><code>--rich-tables</code></td>
 <td><code>boolean</code></td>
 <td><code>false</code></td>
@@ -7249,12 +7782,12 @@ ingest its own results when it finishes. Full guide:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--workflow-name<span class="w"> </span>my-workflow
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--workflow-name<span class="w"> </span>my-workflow
 </code></pre></div>
 <hr>
 <h4 id="data-process"><code>data process</code><a class="headerlink" href="#data-process" title="Permanent link">¶</a></h4>
 <p>Build each data collection's Delta table from the files <code>depictio data scan</code> found.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>process<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>process<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7285,6 +7818,24 @@ ingest its own results when it finishes. Full guide:
 <td>Overwrite existing tables</td>
 </tr>
 <tr>
+<td><code>--write-mode</code></td>
+<td><code>string</code></td>
+<td><code>overwrite</code></td>
+<td><code>overwrite</code> rewrites the whole table. <code>replace-runs</code> partitions it by run and rewrites only the runs in this batch, leaving the others untouched</td>
+</tr>
+<tr>
+<td><code>--repartition</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Let <code>--write-mode replace-runs</code> partition by run a table that is not yet. This rewrites every row</td>
+</tr>
+<tr>
+<td><code>--async-upsert</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Ask the server to profile the written table in the background and poll until it finishes. Servers without offloading enabled ignore it</td>
+</tr>
+<tr>
 <td><code>--rich-tables</code></td>
 <td><code>boolean</code></td>
 <td><code>false</code></td>
@@ -7298,7 +7849,7 @@ ingest its own results when it finishes. Full guide:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>process<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--overwrite
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>process<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--overwrite
 </code></pre></div>
 <hr>
 <h4 id="data-join"><code>data join</code><a class="headerlink" href="#data-join" title="Permanent link">¶</a></h4>
@@ -7308,7 +7859,7 @@ ingest its own results when it finishes. Full guide:
 <p class="admonition-title">Links vs Joins</p>
 <p>For interactive cross-DC filtering, use <strong>links</strong> (configured in YAML, resolved at runtime). Use <strong>joins</strong> only when you need a pre-computed combined dataset stored as a Delta table. See <a href="../../features/cross-dc-filtering/">Cross-DC Filtering</a>.</p>
 </div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>join<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>join<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7365,16 +7916,16 @@ ingest its own results when it finishes. Full guide:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1"># Preview all joins</span>
-<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>depictio<span class="w"> </span>data<span class="w"> </span>join<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--preview
-<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
-<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="c1"># Execute a specific join</span>
-<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>depictio<span class="w"> </span>data<span class="w"> </span>join<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--join-name<span class="w"> </span>my_join
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="c1"># Preview all joins</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>depictio<span class="w"> </span>data<span class="w"> </span>join<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--preview
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="c1"># Execute a specific join</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>depictio<span class="w"> </span>data<span class="w"> </span>join<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--join-name<span class="w"> </span>my_join
 </code></pre></div>
 <hr>
 <h4 id="data-push-images-v1120"><code>data push-images</code> <small>(v1.12.0+)</small><a class="headerlink" href="#data-push-images-v1120" title="Permanent link">¶</a></h4>
 <p>Upload a directory of images to S3 storage, for an image data collection. Formerly <code>images push</code>, which still works. <code>depictio ingest</code> does this itself for a collection that sets <code>local_images_path</code>, and checks the upload.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>push-images<span class="w"> </span>&lt;source_directory&gt;<span class="w"> </span>&lt;s3_destination&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>push-images<span class="w"> </span>&lt;source_directory&gt;<span class="w"> </span>&lt;s3_destination&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <p>The directory structure is kept, relative to the source directory, and images already in storage are skipped unless <code>--overwrite</code>. Upload to the collection's <code>s3_base_folder</code>: its <code>image_column</code> paths are relative to it.</p>
 <table>
@@ -7446,7 +7997,125 @@ ingest its own results when it finishes. Full guide:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>push-images<span class="w"> </span>./data/images<span class="w"> </span>s3://my-bucket/project/images/<span class="w"> </span>--dry-run
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>push-images<span class="w"> </span>./data/images<span class="w"> </span>s3://my-bucket/project/images/<span class="w"> </span>--dry-run
+</code></pre></div>
+<hr>
+<h4 id="data-versions"><code>data versions</code><a class="headerlink" href="#data-versions" title="Permanent link">¶</a></h4>
+<p>List the Delta commits of a data collection, with what Depictio recorded on each. The same
+history is on the project page, see <a href="../../features/versioning/#dataset-history">Dataset history</a>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>versions<span class="w"> </span>&lt;data_collection_tag&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data_collection_tag</code></td>
+<td><code>string</code></td>
+<td><strong>required</strong></td>
+<td>Data collection whose Delta history to list</td>
+</tr>
+<tr>
+<td><code>--server</code></td>
+<td><code>string</code></td>
+<td>see <a href="#choosing-a-server">above</a></td>
+<td><code>local</code>, or a CLI configuration file</td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td></td>
+<td>Project configuration file</td>
+</tr>
+<tr>
+<td><code>--limit</code></td>
+<td><code>int</code></td>
+<td><code>20</code></td>
+<td>Number of commits to show</td>
+</tr>
+<tr>
+<td><code>--json</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Emit machine-readable JSON</td>
+</tr>
+</tbody>
+</table>
+<p>Each row gives the <code>version</code>, its <code>timestamp</code> and Delta <code>operation</code>, then what Depictio
+recorded: the <code>write_mode</code>, the <code>trigger</code>, <code>rows_added</code>, <code>files_added</code>, the number of
+<code>runs</code>, and the <code>ingestion_run</code> that wrote it. The command reads the table's commit log on
+S3 directly, with the storage settings of the CLI configuration.</p>
+<p>Depictio stores that record on the commit itself, under <code>depictio.</code> keys:
+<code>data_collection_id</code>, <code>data_collection_tag</code> and <code>write_mode</code> always, and when known
+<code>ingestion_run_id</code>, <code>project_id</code>, <code>trigger</code>, <code>cli_version</code>, <code>user_email</code>, <code>file_count</code>,
+<code>row_count</code>, <code>run_count</code> and <code>run_tags</code> (the first 50).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>versions<span class="w"> </span>my_table<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--limit<span class="w"> </span><span class="m">5</span>
+</code></pre></div>
+<hr>
+<h4 id="data-vacuum"><code>data vacuum</code><a class="headerlink" href="#data-vacuum" title="Permanent link">¶</a></h4>
+<p>Remove the Delta files that no retained commit needs. Every ingestion leaves the previous
+commit's files behind, so a table's footprint on S3 grows until it is vacuumed, and
+nothing in Depictio vacuums on its own.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>depictio<span class="w"> </span>data<span class="w"> </span>vacuum<span class="w"> </span>&lt;data_collection_tag&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data_collection_tag</code></td>
+<td><code>string</code></td>
+<td><strong>required</strong></td>
+<td>Data collection whose stale Delta files to remove</td>
+</tr>
+<tr>
+<td><code>--server</code></td>
+<td><code>string</code></td>
+<td>see <a href="#choosing-a-server">above</a></td>
+<td><code>local</code>, or a CLI configuration file</td>
+</tr>
+<tr>
+<td><code>--project-config-path</code></td>
+<td><code>string</code></td>
+<td></td>
+<td>Project configuration file</td>
+</tr>
+<tr>
+<td><code>--retention-hours</code></td>
+<td><code>int</code></td>
+<td><code>168</code></td>
+<td>Keep the files that commits newer than this need. Going below the default breaks readers that are mid-query</td>
+</tr>
+<tr>
+<td><code>--apply</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Delete. Without it, the command only reports what it would remove</td>
+</tr>
+</tbody>
+</table>
+<!-- prettier-ignore -->
+<div class="admonition warning">
+<p class="admonition-title">Vacuumed commits can no longer be read</p>
+<p>A commit older than <code>--retention-hours</code> loses the files it needs. A
+<a href="../../features/versioning/#data-versions">dashboard version</a> pinned to it, a preview of
+that version, and <strong>At version</strong> on the project page then have nothing to read.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="c1"># See what would go, then delete it</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>depictio<span class="w"> </span>data<span class="w"> </span>vacuum<span class="w"> </span>my_table<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>depictio<span class="w"> </span>data<span class="w"> </span>vacuum<span class="w"> </span>my_table<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--apply
 </code></pre></div>
 <h3 id="dashboard-commands">📈 Dashboard Commands<a class="headerlink" href="#dashboard-commands" title="Permanent link">¶</a></h3>
 <!-- prettier-ignore -->
@@ -7483,7 +8152,7 @@ ingest its own results when it finishes. Full guide:
 </table>
 <h4 id="dashboard-validate"><code>dashboard validate</code><a class="headerlink" href="#dashboard-validate" title="Permanent link">¶</a></h4>
 <p>Validate a dashboard YAML file in two passes: schema and domain constraints (always), then the columns and types against the server's data collections. Without <code>--server</code>, the second pass uses the default server when one is configured, reports its findings as warnings only, and is skipped when no server is configured.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>validate<span class="w"> </span>&lt;yaml_file&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>validate<span class="w"> </span>&lt;yaml_file&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7516,14 +8185,14 @@ ingest its own results when it finishes. Full guide:
 </tbody>
 </table>
 <p>For detailed logs, put <code>-v</code> before the command: <code>depictio -v dashboard validate ...</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="c1"># Schema + domain, then the default server if one is configured</span>
-<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>validate<span class="w"> </span>my_dashboard.yaml
-<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
-<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="c1"># Full validation against the local server</span>
-<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>validate<span class="w"> </span>my_dashboard.yaml<span class="w"> </span>--server<span class="w"> </span><span class="nb">local</span>
-<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>
-<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="c1"># Schema + domain only</span>
-<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>validate<span class="w"> </span>my_dashboard.yaml<span class="w"> </span>--offline
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="c1"># Schema + domain, then the default server if one is configured</span>
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>validate<span class="w"> </span>my_dashboard.yaml
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="c1"># Full validation against the local server</span>
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>validate<span class="w"> </span>my_dashboard.yaml<span class="w"> </span>--server<span class="w"> </span><span class="nb">local</span>
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a><span class="c1"># Schema + domain only</span>
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>validate<span class="w"> </span>my_dashboard.yaml<span class="w"> </span>--offline
 </code></pre></div>
 <p><strong>Example Output (Success):</strong></p>
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
@@ -7555,7 +8224,7 @@ ingest its own results when it finishes. Full guide:
 <hr>
 <h4 id="dashboard-import"><code>dashboard import</code><a class="headerlink" href="#dashboard-import" title="Permanent link">¶</a></h4>
 <p>Import a dashboard YAML file to the server. The project is determined from the <code>--project</code> option, else from the YAML <code>project_tag</code> field.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>import<span class="w"> </span>&lt;yaml_file&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>import<span class="w"> </span>&lt;yaml_file&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7605,20 +8274,20 @@ ingest its own results when it finishes. Full guide:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="c1"># Validate locally without server (no config needed)</span>
-<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>import<span class="w"> </span>dashboard.yaml<span class="w"> </span>--dry-run
-<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>
-<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="c1"># Import to the default server</span>
-<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>import<span class="w"> </span>dashboard.yaml
-<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>
-<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="c1"># Import to the server a configuration file describes</span>
-<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>import<span class="w"> </span>dashboard.yaml<span class="w"> </span>--server<span class="w"> </span>~/.depictio/admin_config.yaml
-<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>
-<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="c1"># Update existing dashboard with same title</span>
-<a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>import<span class="w"> </span>dashboard.yaml<span class="w"> </span>--server<span class="w"> </span><span class="nb">local</span><span class="w"> </span>--overwrite
-<a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a>
-<a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a><span class="c1"># Override project from YAML</span>
-<a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>import<span class="w"> </span>dashboard.yaml<span class="w"> </span>--project<span class="w"> </span>646b0f3c1e4a2d7f8e5b8c9a
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="c1"># Validate locally without server (no config needed)</span>
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>import<span class="w"> </span>dashboard.yaml<span class="w"> </span>--dry-run
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="c1"># Import to the default server</span>
+<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>import<span class="w"> </span>dashboard.yaml
+<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>
+<a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a><span class="c1"># Import to the server a configuration file describes</span>
+<a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>import<span class="w"> </span>dashboard.yaml<span class="w"> </span>--server<span class="w"> </span>~/.depictio/admin_config.yaml
+<a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a>
+<a id="__codelineno-40-10" name="__codelineno-40-10" href="#__codelineno-40-10"></a><span class="c1"># Update existing dashboard with same title</span>
+<a id="__codelineno-40-11" name="__codelineno-40-11" href="#__codelineno-40-11"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>import<span class="w"> </span>dashboard.yaml<span class="w"> </span>--server<span class="w"> </span><span class="nb">local</span><span class="w"> </span>--overwrite
+<a id="__codelineno-40-12" name="__codelineno-40-12" href="#__codelineno-40-12"></a>
+<a id="__codelineno-40-13" name="__codelineno-40-13" href="#__codelineno-40-13"></a><span class="c1"># Override project from YAML</span>
+<a id="__codelineno-40-14" name="__codelineno-40-14" href="#__codelineno-40-14"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span>import<span class="w"> </span>dashboard.yaml<span class="w"> </span>--project<span class="w"> </span>646b0f3c1e4a2d7f8e5b8c9a
 </code></pre></div>
 <p><strong>Example Output:</strong></p>
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
@@ -7647,7 +8316,7 @@ ingest its own results when it finishes. Full guide:
 <hr>
 <h4 id="dashboard-export"><code>dashboard export</code><a class="headerlink" href="#dashboard-export" title="Permanent link">¶</a></h4>
 <p>Export a dashboard from the server to a YAML file.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span><span class="nb">export</span><span class="w"> </span>&lt;dashboard_id&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span><span class="nb">export</span><span class="w"> </span>&lt;dashboard_id&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7679,11 +8348,11 @@ ingest its own results when it finishes. Full guide:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="c1"># Export to default file</span>
-<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span><span class="nb">export</span><span class="w"> </span>6824cb3b89d2b72169309737
-<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>
-<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="c1"># Export to specific file</span>
-<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span><span class="nb">export</span><span class="w"> </span>6824cb3b89d2b72169309737<span class="w"> </span>--server<span class="w"> </span><span class="nb">local</span><span class="w"> </span>-o<span class="w"> </span>iris_dashboard.yaml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="c1"># Export to default file</span>
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span><span class="nb">export</span><span class="w"> </span>6824cb3b89d2b72169309737
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>
+<a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="c1"># Export to specific file</span>
+<a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>depictio<span class="w"> </span>dashboard<span class="w"> </span><span class="nb">export</span><span class="w"> </span>6824cb3b89d2b72169309737<span class="w"> </span>--server<span class="w"> </span><span class="nb">local</span><span class="w"> </span>-o<span class="w"> </span>iris_dashboard.yaml
 </code></pre></div>
 <p><strong>Example Output:</strong></p>
 <div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
@@ -7708,15 +8377,15 @@ ingest its own results when it finishes. Full guide:
 
 <h4 id="catalog-preview"><code>catalog preview</code><a class="headerlink" href="#catalog-preview" title="Permanent link">¶</a></h4>
 <p>Render a single catalog output on its fixture and serve it on a throwaway localhost server (nothing is written to disk). Pass <code>--out</code> to export a portable, self-contained HTML file instead.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="c1"># Serve an ephemeral preview (Ctrl-C to stop)</span>
-<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>depictio<span class="w"> </span>catalog<span class="w"> </span>preview<span class="w"> </span>&lt;output-id&gt;
-<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>
-<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="c1"># Export a standalone HTML file instead of serving</span>
-<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>depictio<span class="w"> </span>catalog<span class="w"> </span>preview<span class="w"> </span>&lt;output-id&gt;<span class="w"> </span>--out<span class="w"> </span>preview.html
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="c1"># Serve an ephemeral preview (Ctrl-C to stop)</span>
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>depictio<span class="w"> </span>catalog<span class="w"> </span>preview<span class="w"> </span>&lt;output-id&gt;
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>
+<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="c1"># Export a standalone HTML file instead of serving</span>
+<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>depictio<span class="w"> </span>catalog<span class="w"> </span>preview<span class="w"> </span>&lt;output-id&gt;<span class="w"> </span>--out<span class="w"> </span>preview.html
 </code></pre></div>
 <h4 id="catalog-gallery"><code>catalog gallery</code><a class="headerlink" href="#catalog-gallery" title="Permanent link">¶</a></h4>
 <p>Same as <code>preview</code>, but renders the whole catalog as a browsable gallery.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>depictio<span class="w"> </span>catalog<span class="w"> </span>gallery
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>depictio<span class="w"> </span>catalog<span class="w"> </span>gallery
 </code></pre></div>
 <table>
 <thead>
@@ -7764,7 +8433,7 @@ ingest its own results when it finishes. Full guide:
 <p>Backup and restore system data and configurations. Each command takes <a href="#choosing-a-server"><code>--server</code></a>, formerly <code>--CLI-config-path</code>.</p>
 <h4 id="backup-create"><code>backup create</code><a class="headerlink" href="#backup-create" title="Permanent link">¶</a></h4>
 <p>Create a backup of the MongoDB database.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>create<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>create<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7802,19 +8471,19 @@ ingest its own results when it finishes. Full guide:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>create<span class="w"> </span>--include-s3-data
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>create<span class="w"> </span>--include-s3-data
 </code></pre></div>
 <hr>
 <h4 id="backup-list"><code>backup list</code><a class="headerlink" href="#backup-list" title="Permanent link">¶</a></h4>
 <p>List available backup files on the server.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>list
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>list
 </code></pre></div>
 <hr>
 <h4 id="backup-validate"><code>backup validate</code><a class="headerlink" href="#backup-validate" title="Permanent link">¶</a></h4>
 <p>Validate a backup file against Pydantic models.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>validate<span class="w"> </span>&lt;backup_id&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>validate<span class="w"> </span>&lt;backup_id&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7834,12 +8503,12 @@ ingest its own results when it finishes. Full guide:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>validate<span class="w"> </span>20240115_143052
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>validate<span class="w"> </span>20240115_143052
 </code></pre></div>
 <hr>
 <h4 id="backup-restore"><code>backup restore</code><a class="headerlink" href="#backup-restore" title="Permanent link">¶</a></h4>
 <p>Restore data from a backup file. <strong>Warning: destructive operation.</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>&lt;backup_id&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>&lt;backup_id&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7889,7 +8558,7 @@ ingest its own results when it finishes. Full guide:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>20240115_143052<span class="w"> </span>--dry-run
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>depictio<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>20240115_143052<span class="w"> </span>--dry-run
 </code></pre></div>
 <p>The validation coverage audit, formerly <code>backup check-coverage</code>, is a maintainer tool: <code>depictio dev backup check-coverage</code>.</p>
 <h3 id="migrate-commands">🔄 Migrate Commands<a class="headerlink" href="#migrate-commands" title="Permanent link">¶</a></h3>
@@ -7900,7 +8569,7 @@ ingest its own results when it finishes. Full guide:
 </div>
 <h4 id="migrate"><code>migrate</code><a class="headerlink" href="#migrate" title="Permanent link">¶</a></h4>
 <p>Migrate a project from one Depictio instance to another: a non-destructive upsert that never wipes existing data on the target.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>depictio<span class="w"> </span>migrate<span class="w"> </span>--project<span class="w"> </span>&lt;name&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>depictio<span class="w"> </span>migrate<span class="w"> </span>--project<span class="w"> </span>&lt;name&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -7983,32 +8652,32 @@ ingest its own results when it finishes. Full guide:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="c1"># Dry-run first (recommended before any migration)</span>
-<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="w">  </span>--server<span class="w"> </span><span class="nb">local</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a><span class="w">  </span>--dry-run
-<a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>
-<a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a><span class="c1"># Full migration (MongoDB + S3)</span>
-<a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a><span class="w">  </span>--server<span class="w"> </span><span class="nb">local</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-12" name="__codelineno-46-12" href="#__codelineno-46-12"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml
-<a id="__codelineno-46-13" name="__codelineno-46-13" href="#__codelineno-46-13"></a>
-<a id="__codelineno-46-14" name="__codelineno-46-14" href="#__codelineno-46-14"></a><span class="c1"># Metadata-only (shared S3)</span>
-<a id="__codelineno-46-15" name="__codelineno-46-15" href="#__codelineno-46-15"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-16" name="__codelineno-46-16" href="#__codelineno-46-16"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-17" name="__codelineno-46-17" href="#__codelineno-46-17"></a><span class="w">  </span>--server<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-18" name="__codelineno-46-18" href="#__codelineno-46-18"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-19" name="__codelineno-46-19" href="#__codelineno-46-19"></a><span class="w">  </span>--mode<span class="w"> </span>metadata
-<a id="__codelineno-46-20" name="__codelineno-46-20" href="#__codelineno-46-20"></a>
-<a id="__codelineno-46-21" name="__codelineno-46-21" href="#__codelineno-46-21"></a><span class="c1"># Dashboard-only update</span>
-<a id="__codelineno-46-22" name="__codelineno-46-22" href="#__codelineno-46-22"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-23" name="__codelineno-46-23" href="#__codelineno-46-23"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-24" name="__codelineno-46-24" href="#__codelineno-46-24"></a><span class="w">  </span>--server<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-25" name="__codelineno-46-25" href="#__codelineno-46-25"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-46-26" name="__codelineno-46-26" href="#__codelineno-46-26"></a><span class="w">  </span>--mode<span class="w"> </span>dashboard
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="c1"># Dry-run first (recommended before any migration)</span>
+<a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a><span class="w">  </span>--server<span class="w"> </span><span class="nb">local</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-6" name="__codelineno-54-6" href="#__codelineno-54-6"></a><span class="w">  </span>--dry-run
+<a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a>
+<a id="__codelineno-54-8" name="__codelineno-54-8" href="#__codelineno-54-8"></a><span class="c1"># Full migration (MongoDB + S3)</span>
+<a id="__codelineno-54-9" name="__codelineno-54-9" href="#__codelineno-54-9"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-10" name="__codelineno-54-10" href="#__codelineno-54-10"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-11" name="__codelineno-54-11" href="#__codelineno-54-11"></a><span class="w">  </span>--server<span class="w"> </span><span class="nb">local</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-12" name="__codelineno-54-12" href="#__codelineno-54-12"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml
+<a id="__codelineno-54-13" name="__codelineno-54-13" href="#__codelineno-54-13"></a>
+<a id="__codelineno-54-14" name="__codelineno-54-14" href="#__codelineno-54-14"></a><span class="c1"># Metadata-only (shared S3)</span>
+<a id="__codelineno-54-15" name="__codelineno-54-15" href="#__codelineno-54-15"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-16" name="__codelineno-54-16" href="#__codelineno-54-16"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-17" name="__codelineno-54-17" href="#__codelineno-54-17"></a><span class="w">  </span>--server<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-18" name="__codelineno-54-18" href="#__codelineno-54-18"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-19" name="__codelineno-54-19" href="#__codelineno-54-19"></a><span class="w">  </span>--mode<span class="w"> </span>metadata
+<a id="__codelineno-54-20" name="__codelineno-54-20" href="#__codelineno-54-20"></a>
+<a id="__codelineno-54-21" name="__codelineno-54-21" href="#__codelineno-54-21"></a><span class="c1"># Dashboard-only update</span>
+<a id="__codelineno-54-22" name="__codelineno-54-22" href="#__codelineno-54-22"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-23" name="__codelineno-54-23" href="#__codelineno-54-23"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-24" name="__codelineno-54-24" href="#__codelineno-54-24"></a><span class="w">  </span>--server<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-25" name="__codelineno-54-25" href="#__codelineno-54-25"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-54-26" name="__codelineno-54-26" href="#__codelineno-54-26"></a><span class="w">  </span>--mode<span class="w"> </span>dashboard
 </code></pre></div>
 <h3 id="recipe-commands">🧑‍🍳 Recipe Commands<a class="headerlink" href="#recipe-commands" title="Permanent link">¶</a></h3>
 <!-- prettier-ignore -->
@@ -8018,23 +8687,23 @@ ingest its own results when it finishes. Full guide:
 </div>
 <h4 id="dev-recipe-list"><code>dev recipe list</code><a class="headerlink" href="#dev-recipe-list" title="Permanent link">¶</a></h4>
 <p>List all bundled recipes.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>list
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>list
 </code></pre></div>
 <p><strong>Output:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>                 Available recipes (327)
-<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>╭────────────────────────────────────────────────────────╮
-<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>│ Recipe                                                 │
-<a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a>├────────────────────────────────────────────────────────┤
-<a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>│ adapterremoval/settings.py                             │
-<a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>│ ampcombi/clusters.py                                   │
-<a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a>│ ampcombi/embedding.py                                  │
-<a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a>│ ampcombi/summary.py                                    │
-<a id="__codelineno-48-9" name="__codelineno-48-9" href="#__codelineno-48-9"></a>…
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>                 Available recipes (327)
+<a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>╭────────────────────────────────────────────────────────╮
+<a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>│ Recipe                                                 │
+<a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a>├────────────────────────────────────────────────────────┤
+<a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a>│ adapterremoval/settings.py                             │
+<a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a>│ ampcombi/clusters.py                                   │
+<a id="__codelineno-56-7" name="__codelineno-56-7" href="#__codelineno-56-7"></a>│ ampcombi/embedding.py                                  │
+<a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a>│ ampcombi/summary.py                                    │
+<a id="__codelineno-56-9" name="__codelineno-56-9" href="#__codelineno-56-9"></a>…
 </code></pre></div>
 <hr>
 <h4 id="dev-recipe-info-name"><code>dev recipe info &lt;name&gt;</code><a class="headerlink" href="#dev-recipe-info-name" title="Permanent link">¶</a></h4>
 <p>Show recipe details: description, sources, and output schema.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>info<span class="w"> </span>&lt;recipe_name&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>info<span class="w"> </span>&lt;recipe_name&gt;
 </code></pre></div>
 <table>
 <thead>
@@ -8063,43 +8732,43 @@ ingest its own results when it finishes. Full guide:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>info<span class="w"> </span>nf-core/ampliseq/alpha_diversity.py
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>info<span class="w"> </span>nf-core/ampliseq/alpha_diversity.py
 </code></pre></div>
 <p><strong>Output:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>Recipe: nf-core/ampliseq/alpha_diversity.py
-<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD table.
-<a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>
-<a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>When ampliseq is run with --metadata, QIIME2 embeds metadata columns directly
-<a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a>into the faith_pd_vector/metadata.tsv file (e.g. habitat). This recipe handles
-<a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a>both cases: with and without embedded metadata columns.
-<a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a>                                     Sources (1)
-<a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a>╭──────────┬───────────────────────────────────────────────────────────────┬────────╮
-<a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a>│ Source   │ Location                                                      │ Format │
-<a id="__codelineno-51-10" name="__codelineno-51-10" href="#__codelineno-51-10"></a>├──────────┼───────────────────────────────────────────────────────────────┼────────┤
-<a id="__codelineno-51-11" name="__codelineno-51-11" href="#__codelineno-51-11"></a>│ faith_pd │ qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv │ tsv    │
-<a id="__codelineno-51-12" name="__codelineno-51-12" href="#__codelineno-51-12"></a>╰──────────┴───────────────────────────────────────────────────────────────┴────────╯
-<a id="__codelineno-51-13" name="__codelineno-51-13" href="#__codelineno-51-13"></a>    Input schema:
-<a id="__codelineno-51-14" name="__codelineno-51-14" href="#__codelineno-51-14"></a>faith_pd (2 columns)
-<a id="__codelineno-51-15" name="__codelineno-51-15" href="#__codelineno-51-15"></a>╭──────────┬────────╮
-<a id="__codelineno-51-16" name="__codelineno-51-16" href="#__codelineno-51-16"></a>│ Column   │ Type   │
-<a id="__codelineno-51-17" name="__codelineno-51-17" href="#__codelineno-51-17"></a>├──────────┼────────┤
-<a id="__codelineno-51-18" name="__codelineno-51-18" href="#__codelineno-51-18"></a>│ id       │ String │
-<a id="__codelineno-51-19" name="__codelineno-51-19" href="#__codelineno-51-19"></a>│ faith_pd │ String │
-<a id="__codelineno-51-20" name="__codelineno-51-20" href="#__codelineno-51-20"></a>╰──────────┴────────╯
-<a id="__codelineno-51-21" name="__codelineno-51-21" href="#__codelineno-51-21"></a>   Output schema (2
-<a id="__codelineno-51-22" name="__codelineno-51-22" href="#__codelineno-51-22"></a>       columns)
-<a id="__codelineno-51-23" name="__codelineno-51-23" href="#__codelineno-51-23"></a>╭──────────┬─────────╮
-<a id="__codelineno-51-24" name="__codelineno-51-24" href="#__codelineno-51-24"></a>│ Column   │ Type    │
-<a id="__codelineno-51-25" name="__codelineno-51-25" href="#__codelineno-51-25"></a>├──────────┼─────────┤
-<a id="__codelineno-51-26" name="__codelineno-51-26" href="#__codelineno-51-26"></a>│ sample   │ String  │
-<a id="__codelineno-51-27" name="__codelineno-51-27" href="#__codelineno-51-27"></a>│ faith_pd │ Float64 │
-<a id="__codelineno-51-28" name="__codelineno-51-28" href="#__codelineno-51-28"></a>╰──────────┴─────────╯
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>Recipe: nf-core/ampliseq/alpha_diversity.py
+<a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD table.
+<a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>
+<a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a>When ampliseq is run with --metadata, QIIME2 embeds metadata columns directly
+<a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a>into the faith_pd_vector/metadata.tsv file (e.g. habitat). This recipe handles
+<a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a>both cases: with and without embedded metadata columns.
+<a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a>                                     Sources (1)
+<a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a>╭──────────┬───────────────────────────────────────────────────────────────┬────────╮
+<a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a>│ Source   │ Location                                                      │ Format │
+<a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a>├──────────┼───────────────────────────────────────────────────────────────┼────────┤
+<a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a>│ faith_pd │ qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv │ tsv    │
+<a id="__codelineno-59-12" name="__codelineno-59-12" href="#__codelineno-59-12"></a>╰──────────┴───────────────────────────────────────────────────────────────┴────────╯
+<a id="__codelineno-59-13" name="__codelineno-59-13" href="#__codelineno-59-13"></a>    Input schema:
+<a id="__codelineno-59-14" name="__codelineno-59-14" href="#__codelineno-59-14"></a>faith_pd (2 columns)
+<a id="__codelineno-59-15" name="__codelineno-59-15" href="#__codelineno-59-15"></a>╭──────────┬────────╮
+<a id="__codelineno-59-16" name="__codelineno-59-16" href="#__codelineno-59-16"></a>│ Column   │ Type   │
+<a id="__codelineno-59-17" name="__codelineno-59-17" href="#__codelineno-59-17"></a>├──────────┼────────┤
+<a id="__codelineno-59-18" name="__codelineno-59-18" href="#__codelineno-59-18"></a>│ id       │ String │
+<a id="__codelineno-59-19" name="__codelineno-59-19" href="#__codelineno-59-19"></a>│ faith_pd │ String │
+<a id="__codelineno-59-20" name="__codelineno-59-20" href="#__codelineno-59-20"></a>╰──────────┴────────╯
+<a id="__codelineno-59-21" name="__codelineno-59-21" href="#__codelineno-59-21"></a>   Output schema (2
+<a id="__codelineno-59-22" name="__codelineno-59-22" href="#__codelineno-59-22"></a>       columns)
+<a id="__codelineno-59-23" name="__codelineno-59-23" href="#__codelineno-59-23"></a>╭──────────┬─────────╮
+<a id="__codelineno-59-24" name="__codelineno-59-24" href="#__codelineno-59-24"></a>│ Column   │ Type    │
+<a id="__codelineno-59-25" name="__codelineno-59-25" href="#__codelineno-59-25"></a>├──────────┼─────────┤
+<a id="__codelineno-59-26" name="__codelineno-59-26" href="#__codelineno-59-26"></a>│ sample   │ String  │
+<a id="__codelineno-59-27" name="__codelineno-59-27" href="#__codelineno-59-27"></a>│ faith_pd │ Float64 │
+<a id="__codelineno-59-28" name="__codelineno-59-28" href="#__codelineno-59-28"></a>╰──────────┴─────────╯
 </code></pre></div>
 <p>Each source that declares an <code>input_schema</code> gets an <code>Input schema: &lt;source&gt; (N columns)</code> table before the output schema. A non-empty <code>OPTIONAL_OUTPUT_SCHEMA</code> adds an <code>Optional output schema (N columns)</code> table.</p>
 <hr>
 <h4 id="dev-recipe-run-name"><code>dev recipe run &lt;name&gt;</code><a class="headerlink" href="#dev-recipe-run-name" title="Permanent link">¶</a></h4>
 <p>Execute a recipe against a local data directory, with its validation checkpoints.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w"> </span>&lt;recipe_name&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w"> </span>&lt;recipe_name&gt;<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -8143,76 +8812,76 @@ ingest its own results when it finishes. Full guide:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="c1"># Run with validation output</span>
-<a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq/alpha_diversity.py<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="w">  </span>--data-dir<span class="w"> </span>/data/ampliseq_results
-<a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a>
-<a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="c1"># Save output and show first 5 rows</span>
-<a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq/alpha_diversity.py<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="w">  </span>--data-dir<span class="w"> </span>/data/ampliseq_results<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-53-8" name="__codelineno-53-8" href="#__codelineno-53-8"></a><span class="w">  </span>--output<span class="w"> </span>alpha_diversity.parquet<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-53-9" name="__codelineno-53-9" href="#__codelineno-53-9"></a><span class="w">  </span>--head<span class="w"> </span><span class="m">5</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="c1"># Run with validation output</span>
+<a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq/alpha_diversity.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a><span class="w">  </span>--data-dir<span class="w"> </span>/data/ampliseq_results
+<a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>
+<a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a><span class="c1"># Save output and show first 5 rows</span>
+<a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a>depictio<span class="w"> </span>dev<span class="w"> </span>recipe<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq/alpha_diversity.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-61-7" name="__codelineno-61-7" href="#__codelineno-61-7"></a><span class="w">  </span>--data-dir<span class="w"> </span>/data/ampliseq_results<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-61-8" name="__codelineno-61-8" href="#__codelineno-61-8"></a><span class="w">  </span>--output<span class="w"> </span>alpha_diversity.parquet<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-61-9" name="__codelineno-61-9" href="#__codelineno-61-9"></a><span class="w">  </span>--head<span class="w"> </span><span class="m">5</span>
 </code></pre></div>
 <h2 id="common-use-cases">🛠️ Common Use Cases<a class="headerlink" href="#common-use-cases" title="Permanent link">¶</a></h2>
 <h3 id="nextflow-trigger"><span style="color: #0dc09d;"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.005 4.424V0c6.228.259 11.227 5.268 11.477 11.506H7.058C6.828 7.715 3.786 4.673.005 4.424m7.082 8.089h4.424C11.251 18.741 6.242 23.741.005 23.99v-4.423c3.79-.231 6.832-3.273 7.082-7.054m9.826-1.036h-4.424C12.749 5.249 17.758.25 23.995 0v4.424c-3.79.23-6.832 3.263-7.082 7.053m7.082 8.099V24c-6.228-.259-11.227-5.268-11.477-11.506h4.424c.23 3.791 3.272 6.833 7.053 7.082"></path></svg></span></span> Let the pipeline run the CLI for you <small>(v1.10.0+)</small><a class="headerlink" href="#nextflow-trigger" title="Permanent link">¶</a></h3>
 <p>Everything below is a command someone has to remember. A Nextflow pipeline can
 run <code>depictio ingest</code> itself when it completes, on the output directory it just wrote:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>nextflow<span class="w"> </span>--install<span class="w">     </span><span class="c1"># once per machine</span>
-<a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq<span class="w"> </span>-profile<span class="w"> </span>docker<span class="w"> </span>--outdir<span class="w"> </span>results
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>nextflow<span class="w"> </span>--install<span class="w">     </span><span class="c1"># once per machine</span>
+<a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/ampliseq<span class="w"> </span>-profile<span class="w"> </span>docker<span class="w"> </span>--outdir<span class="w"> </span>results
 </code></pre></div>
 <p>See <a href="../nextflow-trigger/">Nextflow trigger</a> for the setup, custom pipelines,
 repeated runs and running the CLI from a container.</p>
 <h3 id="quick-start">🚀 Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Local server</label><label for="__tabbed_2_2">Complete Setup</label><label for="__tabbed_2_3">Step by Step</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><input id="__tabbed_3_3" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Local server</label><label for="__tabbed_3_2">Complete Setup</label><label for="__tabbed_3_3">Step by Step</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="c1"># 1. Start a server on this machine</span>
-<a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>up
-<a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>
-<a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="c1"># 2. Ingest your results into it</span>
-<a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/path/to/results<span class="w"> </span>--server<span class="w"> </span><span class="nb">local</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="c1"># 1. Start a server on this machine</span>
+<a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>depictio<span class="w"> </span><span class="nb">local</span><span class="w"> </span>up
+<a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>
+<a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a><span class="c1"># 2. Ingest your results into it</span>
+<a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>/path/to/results<span class="w"> </span>--server<span class="w"> </span><span class="nb">local</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="c1"># 1. Validate your project configuration</span>
-<a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>depictio<span class="w"> </span>config<span class="w"> </span>check<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
-<a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>
-<a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a><span class="c1"># 2. Run the complete workflow</span>
-<a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="c1"># 1. Validate your project configuration</span>
+<a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>depictio<span class="w"> </span>config<span class="w"> </span>check<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>
+<a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a><span class="c1"># 2. Run the complete workflow</span>
+<a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="c1"># 1. Check the server and its storage</span>
-<a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>depictio<span class="w"> </span>config<span class="w"> </span>check
-<a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a>
-<a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a><span class="c1"># 2. Validate and sync configuration</span>
-<a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a>depictio<span class="w"> </span>config<span class="w"> </span>check<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
-<a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a>depictio<span class="w"> </span>config<span class="w"> </span>sync<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
-<a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a>
-<a id="__codelineno-57-8" name="__codelineno-57-8" href="#__codelineno-57-8"></a><span class="c1"># 3. Scan and process data</span>
-<a id="__codelineno-57-9" name="__codelineno-57-9" href="#__codelineno-57-9"></a>depictio<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
-<a id="__codelineno-57-10" name="__codelineno-57-10" href="#__codelineno-57-10"></a>depictio<span class="w"> </span>data<span class="w"> </span>process<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="c1"># 1. Check the server and its storage</span>
+<a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>depictio<span class="w"> </span>config<span class="w"> </span>check
+<a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>
+<a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a><span class="c1"># 2. Validate and sync configuration</span>
+<a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a>depictio<span class="w"> </span>config<span class="w"> </span>check<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a>depictio<span class="w"> </span>config<span class="w"> </span>sync<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-65-7" name="__codelineno-65-7" href="#__codelineno-65-7"></a>
+<a id="__codelineno-65-8" name="__codelineno-65-8" href="#__codelineno-65-8"></a><span class="c1"># 3. Scan and process data</span>
+<a id="__codelineno-65-9" name="__codelineno-65-9" href="#__codelineno-65-9"></a>depictio<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
+<a id="__codelineno-65-10" name="__codelineno-65-10" href="#__codelineno-65-10"></a>depictio<span class="w"> </span>data<span class="w"> </span>process<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml
 </code></pre></div>
 </div>
 </div>
 </div>
 <h3 id="development-workflow">🔧 Development Workflow<a class="headerlink" href="#development-workflow" title="Permanent link">¶</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Testing Changes</label><label for="__tabbed_3_2">Debugging</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Testing Changes</label><label for="__tabbed_4_2">Debugging</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="c1"># Preview changes without execution</span>
-<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--dry-run
-<a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>
-<a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a><span class="c1"># Test with specific workflow</span>
-<a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--workflow-name<span class="w"> </span>test-workflow
+<div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="c1"># Preview changes without execution</span>
+<a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--dry-run
+<a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a>
+<a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a><span class="c1"># Test with specific workflow</span>
+<a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--workflow-name<span class="w"> </span>test-workflow
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="c1"># DEBUG logs, and carry on past a failed step</span>
-<a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>depictio<span class="w"> </span>-vv<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--continue-on-error
-<a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>
-<a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="c1"># Skip problematic steps</span>
-<a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--skip<span class="w"> </span>server-check,s3-check
+<div class="highlight"><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="c1"># DEBUG logs, and carry on past a failed step</span>
+<a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>depictio<span class="w"> </span>-vv<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--continue-on-error
+<a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>
+<a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a><span class="c1"># Skip problematic steps</span>
+<a id="__codelineno-67-5" name="__codelineno-67-5" href="#__codelineno-67-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--skip<span class="w"> </span>server-check,s3-check
 </code></pre></div>
 </div>
 </div>
@@ -8223,46 +8892,46 @@ repeated runs and running the CLI from a container.</p>
 <p class="admonition-title">Admin Access Required</p>
 <p>All backup operations require administrator privileges.</p>
 </div>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Create Backup</label><label for="__tabbed_4_2">Restore Backup</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><input id="__tabbed_5_2" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">Create Backup</label><label for="__tabbed_5_2">Restore Backup</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="c1"># Create database backup</span>
-<a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>depictio<span class="w"> </span>backup<span class="w"> </span>create
-<a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a>
-<a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a><span class="c1"># Include S3 deltatable data</span>
-<a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a>depictio<span class="w"> </span>backup<span class="w"> </span>create<span class="w"> </span>--include-s3-data
+<div class="highlight"><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a><span class="c1"># Create database backup</span>
+<a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a>depictio<span class="w"> </span>backup<span class="w"> </span>create
+<a id="__codelineno-68-3" name="__codelineno-68-3" href="#__codelineno-68-3"></a>
+<a id="__codelineno-68-4" name="__codelineno-68-4" href="#__codelineno-68-4"></a><span class="c1"># Include S3 deltatable data</span>
+<a id="__codelineno-68-5" name="__codelineno-68-5" href="#__codelineno-68-5"></a>depictio<span class="w"> </span>backup<span class="w"> </span>create<span class="w"> </span>--include-s3-data
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="c1"># List available backups</span>
-<a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>depictio<span class="w"> </span>backup<span class="w"> </span>list
-<a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>
-<a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a><span class="c1"># Preview restore</span>
-<a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a>depictio<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>20240115_143052<span class="w"> </span>--dry-run
-<a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a>
-<a id="__codelineno-61-7" name="__codelineno-61-7" href="#__codelineno-61-7"></a><span class="c1"># Restore specific backup</span>
-<a id="__codelineno-61-8" name="__codelineno-61-8" href="#__codelineno-61-8"></a>depictio<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>20240115_143052<span class="w"> </span>--force
+<div class="highlight"><pre><span></span><code><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a><span class="c1"># List available backups</span>
+<a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>depictio<span class="w"> </span>backup<span class="w"> </span>list
+<a id="__codelineno-69-3" name="__codelineno-69-3" href="#__codelineno-69-3"></a>
+<a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a><span class="c1"># Preview restore</span>
+<a id="__codelineno-69-5" name="__codelineno-69-5" href="#__codelineno-69-5"></a>depictio<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>20240115_143052<span class="w"> </span>--dry-run
+<a id="__codelineno-69-6" name="__codelineno-69-6" href="#__codelineno-69-6"></a>
+<a id="__codelineno-69-7" name="__codelineno-69-7" href="#__codelineno-69-7"></a><span class="c1"># Restore specific backup</span>
+<a id="__codelineno-69-8" name="__codelineno-69-8" href="#__codelineno-69-8"></a>depictio<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>20240115_143052<span class="w"> </span>--force
 </code></pre></div>
 </div>
 </div>
 </div>
 <h3 id="data-management">📊 Data Management<a class="headerlink" href="#data-management" title="Permanent link">¶</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><input id="__tabbed_5_2" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">Rescan Data</label><label for="__tabbed_5_2">Process Updates</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio"><input id="__tabbed_6_2" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="__tabbed_6_1">Rescan Data</label><label for="__tabbed_6_2">Process Updates</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="c1"># Rescan all folders</span>
-<a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>depictio<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--rescan-folders
-<a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a>
-<a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a><span class="c1"># Sync file updates</span>
-<a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a>depictio<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--sync-files
+<div class="highlight"><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a><span class="c1"># Rescan all folders</span>
+<a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>depictio<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--rescan-folders
+<a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a>
+<a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a><span class="c1"># Sync file updates</span>
+<a id="__codelineno-70-5" name="__codelineno-70-5" href="#__codelineno-70-5"></a>depictio<span class="w"> </span>data<span class="w"> </span>scan<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--sync-files
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="c1"># Overwrite existing tables</span>
-<a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>depictio<span class="w"> </span>data<span class="w"> </span>process<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--overwrite
-<a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>
-<a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a><span class="c1"># Refresh the whole project, its dashboards kept as edited</span>
-<a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--update-config
+<div class="highlight"><pre><span></span><code><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a><span class="c1"># Overwrite existing tables</span>
+<a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a>depictio<span class="w"> </span>data<span class="w"> </span>process<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--overwrite
+<a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a>
+<a id="__codelineno-71-4" name="__codelineno-71-4" href="#__codelineno-71-4"></a><span class="c1"># Refresh the whole project, its dashboards kept as edited</span>
+<a id="__codelineno-71-5" name="__codelineno-71-5" href="#__codelineno-71-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>./config.yaml<span class="w"> </span>--update-config
 </code></pre></div>
 </div>
 </div>
@@ -8273,40 +8942,40 @@ repeated runs and running the CLI from a container.</p>
 <p class="admonition-title">Admin Access Required</p>
 <p>Migration requires administrator privileges on both source and target instances.</p>
 </div>
-<div class="tabbed-set tabbed-alternate" data-tabs="6:3"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio"><input id="__tabbed_6_2" name="__tabbed_6" type="radio"><input id="__tabbed_6_3" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="__tabbed_6_1">First-time Migration</label><label for="__tabbed_6_2">Shared S3 Storage</label><label for="__tabbed_6_3">Dashboard Update</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:3"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio"><input id="__tabbed_7_2" name="__tabbed_7" type="radio"><input id="__tabbed_7_3" name="__tabbed_7" type="radio"><div class="tabbed-labels"><label for="__tabbed_7_1">First-time Migration</label><label for="__tabbed_7_2">Shared S3 Storage</label><label for="__tabbed_7_3">Dashboard Update</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="c1"># 1. Dry-run to preview what will be migrated</span>
-<a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a><span class="w">  </span>--server<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a><span class="w">  </span>--dry-run
-<a id="__codelineno-64-7" name="__codelineno-64-7" href="#__codelineno-64-7"></a>
-<a id="__codelineno-64-8" name="__codelineno-64-8" href="#__codelineno-64-8"></a><span class="c1"># 2. Run full migration (MongoDB docs + S3 files)</span>
-<a id="__codelineno-64-9" name="__codelineno-64-9" href="#__codelineno-64-9"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-64-10" name="__codelineno-64-10" href="#__codelineno-64-10"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-64-11" name="__codelineno-64-11" href="#__codelineno-64-11"></a><span class="w">  </span>--server<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-64-12" name="__codelineno-64-12" href="#__codelineno-64-12"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a><span class="c1"># 1. Dry-run to preview what will be migrated</span>
+<a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-72-4" name="__codelineno-72-4" href="#__codelineno-72-4"></a><span class="w">  </span>--server<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-72-5" name="__codelineno-72-5" href="#__codelineno-72-5"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-72-6" name="__codelineno-72-6" href="#__codelineno-72-6"></a><span class="w">  </span>--dry-run
+<a id="__codelineno-72-7" name="__codelineno-72-7" href="#__codelineno-72-7"></a>
+<a id="__codelineno-72-8" name="__codelineno-72-8" href="#__codelineno-72-8"></a><span class="c1"># 2. Run full migration (MongoDB docs + S3 files)</span>
+<a id="__codelineno-72-9" name="__codelineno-72-9" href="#__codelineno-72-9"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-72-10" name="__codelineno-72-10" href="#__codelineno-72-10"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-72-11" name="__codelineno-72-11" href="#__codelineno-72-11"></a><span class="w">  </span>--server<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-72-12" name="__codelineno-72-12" href="#__codelineno-72-12"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="c1"># When source and target share the same S3, only migrate MongoDB docs</span>
-<a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a><span class="w">  </span>--server<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a><span class="w">  </span>--mode<span class="w"> </span>metadata
+<div class="highlight"><pre><span></span><code><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a><span class="c1"># When source and target share the same S3, only migrate MongoDB docs</span>
+<a id="__codelineno-73-2" name="__codelineno-73-2" href="#__codelineno-73-2"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-73-3" name="__codelineno-73-3" href="#__codelineno-73-3"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-73-4" name="__codelineno-73-4" href="#__codelineno-73-4"></a><span class="w">  </span>--server<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-73-5" name="__codelineno-73-5" href="#__codelineno-73-5"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-73-6" name="__codelineno-73-6" href="#__codelineno-73-6"></a><span class="w">  </span>--mode<span class="w"> </span>metadata
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="c1"># Push updated dashboard layouts to a remote instance</span>
-<a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a><span class="c1"># (project and data already exist on remote)</span>
-<a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a><span class="w">  </span>--server<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-66-6" name="__codelineno-66-6" href="#__codelineno-66-6"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-66-7" name="__codelineno-66-7" href="#__codelineno-66-7"></a><span class="w">  </span>--mode<span class="w"> </span>dashboard
+<div class="highlight"><pre><span></span><code><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a><span class="c1"># Push updated dashboard layouts to a remote instance</span>
+<a id="__codelineno-74-2" name="__codelineno-74-2" href="#__codelineno-74-2"></a><span class="c1"># (project and data already exist on remote)</span>
+<a id="__codelineno-74-3" name="__codelineno-74-3" href="#__codelineno-74-3"></a>depictio<span class="w"> </span>migrate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-74-4" name="__codelineno-74-4" href="#__codelineno-74-4"></a><span class="w">  </span>--project<span class="w"> </span><span class="s2">"My Project"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-74-5" name="__codelineno-74-5" href="#__codelineno-74-5"></a><span class="w">  </span>--server<span class="w"> </span>~/.depictio/CLI_local.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-74-6" name="__codelineno-74-6" href="#__codelineno-74-6"></a><span class="w">  </span>--to-server<span class="w"> </span>~/.depictio/CLI_remote.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-74-7" name="__codelineno-74-7" href="#__codelineno-74-7"></a><span class="w">  </span>--mode<span class="w"> </span>dashboard
 </code></pre></div>
 </div>
 </div>
