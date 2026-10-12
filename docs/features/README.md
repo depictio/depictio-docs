@@ -23,6 +23,7 @@ User-facing features for building and interacting with dashboards.
 | [Interactive Selection Filtering](interactive-selection-filtering.md) | Filter components via scatter plot and table row selections |
 | [Comments and Annotations](comments-annotations.md) | Discuss components in threads and draw ranges, lines, marked points and notes on them |
 | [Dashboard and Data Versions](versioning.md) | Preview, restore or bookmark any saved version of a dashboard, and read it against the data of the time |
+| [Component Export and Embedding](component-export.md) | Serve one component to another website, as a Plotly spec or a self-contained page |
 
 <div class="grid cards" markdown>
 
@@ -65,6 +66,14 @@ User-facing features for building and interacting with dashboards.
     Go back to any saved version of a dashboard, and to the data it showed
 
     [:octicons-arrow-right-24: Dashboard and Data Versions](versioning.md)
+
+-   :material-code-json:{ .lg .middle } **Component Export and Embedding**
+
+    ---
+
+    Put one component of a dashboard on another website, live
+
+    [:octicons-arrow-right-24: Component Export and Embedding](component-export.md)
 
 </div>
 

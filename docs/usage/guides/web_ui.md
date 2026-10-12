@@ -1,5 +1,39 @@
 # <span style="color: #F68B33;">:material-web:</span> Web UI
 
+## <span style="color: #9966CC;">:material-palette-swatch-outline:</span> Paper and Classic <small>(v1.17.0+)</small> { #looks }
+
+Depictio comes in two looks, with the same pages, panels and settings:
+
+- **Paper**, the default since v1.17.0: every page on paper panels, a top bar with the
+  page or dashboard title, and a sidebar. On a dashboard, the tab sidebar folds to an icon
+  rail, by itself while the filter panel is open, and a floating **dock** holds Search,
+  Analysis, Comments and Edit / Save / Exit as icon keys. Drag it by its grip, or use the
+  arrow keys, to the bottom, left, right or top of the page; the browser keeps the place.
+- **Classic**, the layout of earlier versions: a header bar of buttons and a tab sidebar.
+
+=== "Paper"
+
+    [![The Iris dashboard in the Paper look: the title and a breadcrumb in the top bar, the tab rail and the filter panel on the left, the Overview tab, and the dock at the bottom](../../images/guides/web-ui/look_paper_light.webp#only-light)](../../images/guides/web-ui/look_paper_light.webp){target=_blank}
+    [![The Iris dashboard in the Paper look: the title and a breadcrumb in the top bar, the tab rail and the filter panel on the left, the Overview tab, and the dock at the bottom](../../images/guides/web-ui/look_paper_dark.webp#only-dark)](../../images/guides/web-ui/look_paper_dark.webp){target=_blank}
+
+=== "Classic"
+
+    [![The same dashboard in the Classic look: a header bar with Comments, Analysis, Edit and Settings, the tab sidebar, the filter panel and the Overview tab](../../images/guides/web-ui/look_classic_light.webp#only-light)](../../images/guides/web-ui/look_classic_light.webp){target=_blank}
+    [![The same dashboard in the Classic look: a header bar with Comments, Analysis, Edit and Settings, the tab sidebar, the filter panel and the Overview tab](../../images/guides/web-ui/look_classic_dark.webp#only-dark)](../../images/guides/web-ui/look_classic_dark.webp){target=_blank}
+
+A page takes the first of:
+
+1. `?chrome=glass` (Paper) or `?chrome=base` (Classic) in its URL, kept for the rest of
+   the browser session, for support and testing;
+2. your own pick, in [**Account settings → Preferences → Look**](#account-settings), kept
+   in this browser;
+3. the default an administrator sets in
+   [**Administration → Branding → Default look**](../administration/branding.md#default-look);
+4. Paper.
+
+Screenshots in these docs show one look or the other; where a control sits in the header
+in Classic, Paper has it in the top bar or the dock.
+
 ## <span style="color: #8BC34A;">:material-account-plus:</span> Register and login
 
 ### <span style="color: #6495ED;">:material-account-plus:</span> Registering an Account (Sign Up)
@@ -35,11 +69,8 @@ If you have configured Google OAuth for your Depictio instance (see [Configurati
 
 ## <span style="color: #F68B33;">:material-view-dashboard:</span> Landing page / Dashboards section (/dashboards)
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/page_dashboards.png" target="_blank">
-        <img src="../../../images/react/page_dashboards.png" width="600">
-    </a>
-</div>
+[![The Dashboards page in the Paper look: the toolbar with search, sections and display menus, and the table of dashboards](../../images/guides/web-ui/dashboards_light.webp#only-light)](../../images/guides/web-ui/dashboards_light.webp){target=_blank}
+[![The Dashboards page in the Paper look: the toolbar with search, sections and display menus, and the table of dashboards](../../images/guides/web-ui/dashboards_dark.webp#only-dark)](../../images/guides/web-ui/dashboards_dark.webp){target=_blank}
 
 The listing opens on the **Table** view <small>(v1.12.0+)</small>, one row per dashboard. In the
 **Thumbnails** view each dashboard is shown as a card. Cards display the dashboard's screenshot thumbnail
@@ -48,6 +79,10 @@ generic placeholder.
 
 The table view has a **Last viewed** column <small>(v1.11.0+)</small>, sorted newest
 first, with dashboards you never opened last. It is kept per browser.
+
+The **Table display** menu <small>(v1.17.0+)</small> sets the row height, **Comfortable**
+or **Compact**, and which columns show, with **Show all** and **Reset**. The Projects
+listing has the same menu.
 
 #### <span style="color: #45B8AC;">:material-view-grid-outline:</span> Thumbnails or table <small>(v1.11.2+)</small> { #listing-views }
 
@@ -83,13 +118,24 @@ The left sidebar provides easy access to various sections of the application. Th
 - <span style="color: #45B8AC;">:material-folder-multiple:</span> **Projects**: Manage your projects and data collections.
 - <span style="color: #E53935;">:material-shield-account:</span> **Administration** (sysadmin users only): Access administrative features (only available to users with admin privileges).
 - <span style="color: #6495ED;">:material-information:</span> **About**: Information about the application and its repository.
-- <span style="color: #8BC34A;">:material-account:</span> **Profile**: View and edit your user profile by clicking on the avatar icon in the bottom left corner.
 
-At the bottom of the sidebar, you will find:
+The button at the top of the sidebar folds it to icons. The top bar holds the theme
+toggle and your avatar, which opens [Account settings](#account-settings) <small>(v1.17.0+)</small>.
+The compass in the header of the Dashboards and Projects pages starts the guided tour.
 
-  - **Theme toggle**: Switch between light and dark themes.
-  - **Server status**: Displays the current server version and online status.
-  - **User information**: Displays your username and email (e.g., `test_user@example.com`).
+#### <span style="color: #45B8AC;">:material-server-outline:</span> Server information <small>(v1.17.0+)</small> { #server-information }
+
+The server status at the foot of the sidebar, **Online** with the server version, opens
+the server information: version, API, mode, and links to the documentation, GitHub, the
+releases and the issue tracker. On a dashboard it sits at the foot of the tab rail, and
+in Classic it is the version badge.
+
+[![The server information popover open from the sidebar status: Depictio server online, version v1.17.1, API v1, single-user mode, four links, and Up to date, checked 17 minutes ago](../../images/guides/web-ui/server_info_light.webp#only-light)](../../images/guides/web-ui/server_info_light.webp){target=_blank}
+[![The server information popover open from the sidebar status: Depictio server online, version v1.17.1, API v1, single-user mode, four links, and Up to date, checked 17 minutes ago](../../images/guides/web-ui/server_info_dark.webp#only-dark)](../../images/guides/web-ui/server_info_dark.webp){target=_blank}
+
+For administrators, its last line says whether a newer Depictio release is out. When one
+is, a dot marks the status and a card in the popover names the release; **OK** hides it
+until the next one. See [Release check](#release-check).
 
 ### <span style="color: #F68B33;">:material-plus-circle:</span> Creating a New Dashboard
 
@@ -197,41 +243,73 @@ the server reads, with no CLI involved, in three steps: **Source**, **Preview**
   pick a template that reads one. See
   [From a manifest](../projects/remote-data.md#creating-a-project-from-a-manifest).
 
-## <span style="color: #8BC34A;">:material-account:</span> User Information (/profile)
+## <span style="color: #8BC34A;">:material-account:</span> Account settings (/profile) <small>(v1.17.0+)</small> { #account-settings }
 
-You can access your user profile by clicking on the avatar icon in the bottom left corner of the sidebar.
+Your avatar in the top bar opens **Account settings**, one page of sections that open
+and close:
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/page_profile.png" target="_blank">
-        <img src="../../../images/react/page_profile.png" width="600">
-    </a>
-</div>
+- **Account**: your email, role and dates. Click the avatar to upload a profile
+  picture; the server stores it as a 256-pixel WebP and includes it in
+  [backups](../administration/backup.md). Signing in with Google sets your Google picture
+  until you upload one.
+- **Password**: change the password you sign in with.
+- **CLI agents**: the long-lived tokens of the `depictio` command line, see
+  [Create a CLI configuration](../get_started.md#create-a-cli-configuration). The former
+  `/cli-agents` page leads here.
+- **Preferences**, kept in this browser: **Theme**, light or dark; [**Look**](#looks),
+  Paper, Classic or the instance default; **Font size** of figures, tables and cards.
+- **Getting started**: replay the guided tour of the app or of the builder.
+- **Server**: the [server information](#server-information).
 
-This section allows you to:
+**Sign out** is at the foot of the page.
 
-- View your username and email address
-- Edit your password
-- Generate CLI Configurations for command-line access (see [CLI Usage](../get_started.md#create-a-cli-configuration))
+=== "Account"
+
+    [![Account settings: the Account section open, with the avatar, email, role, database ID and dates, then the Password, CLI agents, Preferences, Getting started and Server sections](../../images/guides/web-ui/account_settings_light.webp#only-light)](../../images/guides/web-ui/account_settings_light.webp){target=_blank}
+    [![Account settings: the Account section open, with the avatar, email, role, database ID and dates, then the Password, CLI agents, Preferences, Getting started and Server sections](../../images/guides/web-ui/account_settings_dark.webp#only-dark)](../../images/guides/web-ui/account_settings_dark.webp){target=_blank}
+
+=== "Preferences"
+
+    [![The Preferences section open: Theme Light or Dark, Look with Instance default (Paper), Paper and Classic, and Font size at 100%](../../images/guides/web-ui/account_preferences_light.webp#only-light)](../../images/guides/web-ui/account_preferences_light.webp){target=_blank}
+    [![The Preferences section open: Theme Light or Dark, Look with Instance default (Paper), Paper and Classic, and Font size at 100%](../../images/guides/web-ui/account_preferences_dark.webp#only-dark)](../../images/guides/web-ui/account_preferences_dark.webp){target=_blank}
 
 ## <span style="color: #6495ED;">:material-information:</span> About section (/about)
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/page_about.png" target="_blank">
-        <img src="../../../images/react/page_about.png" width="600">
-    </a>
-</div>
+[![The About page: GitHub repository and documentation cards, then the funding cards](../../images/guides/web-ui/about_light.webp#only-light)](../../images/guides/web-ui/about_light.webp){target=_blank}
+[![The About page: GitHub repository and documentation cards, then the funding cards](../../images/guides/web-ui/about_dark.webp#only-dark)](../../images/guides/web-ui/about_dark.webp){target=_blank}
 
 The **About** section provides information about the GitHub repository and the documentation.
 
-## <span style="color: #E53935;">:material-shield-account:</span> Admin section (/admin)
+## <span style="color: #E53935;">:material-shield-account:</span> Admin section (/admin) { #admin-section }
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/page_admin.png" target="_blank">
-        <img src="../../../images/react/page_admin.png" width="600">
-    </a>
-</div>
+[![Administration in the Paper look, its pages grouped under People, Content, Activity and Instance](../../images/guides/web-ui/admin_default_look_light.webp#only-light)](../../images/guides/web-ui/admin_default_look_light.webp){target=_blank}
+[![Administration in the Paper look, its pages grouped under People, Content, Activity and Instance](../../images/guides/web-ui/admin_default_look_dark.webp#only-dark)](../../images/guides/web-ui/admin_default_look_dark.webp){target=_blank}
 
-The **Admin** section is only accessible to users with admin privileges. It allows admins to view users, projects and dashboards. The **Users** tab displays a list/delete/change status (sysadmin/standard) of all users registered in the system. The **Dashboards** tab displays a list of all dashboards while the **Projects** tab lists all projects. Admins can delete any project or dashboard, regardless of ownership.
+The **Admin** section is only accessible to users with admin privileges. Since v1.17.0
+its pages are listed down the side, in four groups:
+
+| Group | Pages |
+|-------|-------|
+| **People** | **Users**: every account, its role (standard or system admin), and deletion |
+| **Content** | **Projects** and **Dashboards**: every one of them, whoever owns it. Admins can delete any |
+| **Activity** | **Tasks**, **Ingestion**, **Watchers**, **Logs** and **Health**, see [Monitoring](../administration/monitoring.md) |
+| **Instance** | [**Branding**](../administration/branding.md), [**Backups**](../administration/backup.md), **Maintenance** and **Settings** |
+
+### <span style="color: #E53935;">:material-update:</span> Release check <small>(v1.17.0+)</small> { #release-check }
+
+**Administration → Settings → Version check** tells administrators when a newer Depictio
+release is published. The server asks the GitHub Releases API of `depictio/depictio`
+every 6 hours, with a plain request that sends nothing about the instance, and the
+[server information](#server-information) shows the result to administrators only.
+**Check now** asks at once.
+
+[![Administration, Settings: the Version check card with Check for new versions on, checks every 6 h, repository depictio/depictio, current version and latest release 1.17.1, and the Reset to default, Check now and Save buttons](../../images/guides/web-ui/admin_settings_light.webp#only-light)](../../images/guides/web-ui/admin_settings_light.webp){target=_blank}
+[![Administration, Settings: the Version check card with Check for new versions on, checks every 6 h, repository depictio/depictio, current version and latest release 1.17.1, and the Reset to default, Check now and Save buttons](../../images/guides/web-ui/admin_settings_dark.webp#only-dark)](../../images/guides/web-ui/admin_settings_dark.webp){target=_blank}
+
+The check is on by default and the switch turns it off for the instance. Setting
+[`DEPICTIO_VERSION_CHECK_ENABLED`](../../installation/env-reference.md#release-check) to
+`true` or `false` decides instead and locks the switch, for instances that must make no
+outbound call.
 
 ## <span style="color: #45B8AC;">:material-sitemap:</span> Page reference
 
@@ -239,15 +317,13 @@ Depictio's main pages and their URLs:
 
 ### <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects list (/projects)
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/page_projects.png" target="_blank">
-        <img src="../../../images/react/page_projects.png" width="600">
-    </a>
-</div>
+[![The Projects page: the toolbar and the table of projects with type, visibility, template, owner, workflows and data collections](../../images/guides/web-ui/projects_light.webp#only-light)](../../images/guides/web-ui/projects_light.webp){target=_blank}
+[![The Projects page: the toolbar and the table of projects with type, visibility, template, owner, workflows and data collections](../../images/guides/web-ui/projects_dark.webp#only-dark)](../../images/guides/web-ui/projects_dark.webp){target=_blank}
 
-### <span style="color: #45B8AC;">:material-database-cog:</span> Project detail (/projects/{id})
+### <span style="color: #45B8AC;">:material-database-cog:</span> Project detail (/projects/{id}) { #project-detail }
 
-A single project's data, below its summary, in two tabs:
+A single project's data. Since v1.17.0 the page starts with the project's type and its
+workflows, as cards to pick one from, then a switch between two views:
 
 - **Data collections** — the project's workflows, a sortable, filterable table of its data collections, its cross-DC links, and the details of the selected collection. For a [composed](../projects/composed-dashboards.md) project, a **Files the catalog did not recognise** card lists the tables left out, with the command that adds each <small>(v1.16.0+)</small>.
 - **Ingestion** — the [ingestion report](../../features/dashboards.md#ingestion-report-health), offered for **every** project since v1.6.0. For one created from a [pipeline template](../../pipeline-templates/README.md) it compares expected against ingested data collections; for any other it reads the collections the project declares today, and a **Live project** badge says so. Since v1.15.0 a **History** view lists the project's [ingestion runs](../../features/dashboards.md#ingestion-history), and, where the server allows it, [**Run ingestion**](../../features/dashboards.md#run-ingestion) starts one from the browser.
@@ -260,11 +336,8 @@ You can reach this page directly by clicking the **project badge** shown on any
 dashboard card or in the dashboards table, or the **project name** in an open
 dashboard's Settings <small>(v1.6.0+)</small>.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/page_project_detail.png" target="_blank">
-        <img src="../../../images/react/page_project_detail.png" width="600">
-    </a>
-</div>
+[![A project page: type Advanced, the penguin_species_analysis workflow selected, and the switch between Data collections and Ingestion report, on Data collections](../../images/guides/web-ui/project_detail_light.webp#only-light)](../../images/guides/web-ui/project_detail_light.webp){target=_blank}
+[![A project page: type Advanced, the penguin_species_analysis workflow selected, and the switch between Data collections and Ingestion report, on Data collections](../../images/guides/web-ui/project_detail_dark.webp#only-dark)](../../images/guides/web-ui/project_detail_dark.webp){target=_blank}
 
 Data that is not on the server's own disk is handled in two places
 <small>(v1.16.0+)</small>; the mechanisms are described on
@@ -298,28 +371,19 @@ Data that is not on the server's own disk is handled in two places
 
 Read-only dashboard with filters and component interactions.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/page_dashboard_viewer.png" target="_blank">
-        <img src="../../../images/react/page_dashboard_viewer.png" width="600">
-    </a>
-</div>
+[![The Iris dashboard in the viewer](../../images/guides/web-ui/look_paper_light.webp#only-light)](../../images/guides/web-ui/look_paper_light.webp){target=_blank}
+[![The Iris dashboard in the viewer](../../images/guides/web-ui/look_paper_dark.webp#only-dark)](../../images/guides/web-ui/look_paper_dark.webp){target=_blank}
 
 ### <span style="color: #45B8AC;">:material-pencil-ruler:</span> Dashboard editor (/dashboard-edit/{id})
 
 Design mode — add, configure, and arrange components.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/page_dashboard_editor.png" target="_blank">
-        <img src="../../../images/react/page_dashboard_editor.png" width="600">
-    </a>
-</div>
+[![The Iris dashboard in the editor: an Editing badge next to the title, and the dock with Add, Save and the other editing keys](../../images/guides/web-ui/editor_light.webp#only-light)](../../images/guides/web-ui/editor_light.webp){target=_blank}
+[![The Iris dashboard in the editor: an Editing badge next to the title, and the dock with Add, Save and the other editing keys](../../images/guides/web-ui/editor_dark.webp#only-dark)](../../images/guides/web-ui/editor_dark.webp){target=_blank}
 
-### <span style="color: #45B8AC;">:material-key-chain:</span> CLI agents / tokens (/cli-agents)
+### <span style="color: #45B8AC;">:material-key-chain:</span> CLI agents / tokens (/profile#cli-agents)
 
-Generate and manage CLI configurations for the [`depictio` CLI](../../depictio-cli/usage.md). Saved as `~/.depictio/CLI.yaml`, a configuration is the server every CLI command uses by default.
+Generate and manage CLI configurations for the [`depictio` CLI](../../depictio-cli/usage.md). Saved as `~/.depictio/CLI.yaml`, a configuration is the server every CLI command uses by default. Since v1.17.0 they are a section of [Account settings](#account-settings), and `/cli-agents` leads there.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/page_cli_agents.png" target="_blank">
-        <img src="../../../images/react/page_cli_agents.png" width="600">
-    </a>
-</div>
+[![The CLI agents section of Account settings: Add configuration, and two configurations, default_token and laptop, each with its expiry date and Delete](../../images/guides/web-ui/cli_agents_light.webp#only-light)](../../images/guides/web-ui/cli_agents_light.webp){target=_blank}
+[![The CLI agents section of Account settings: Add configuration, and two configurations, default_token and laptop, each with its expiry date and Delete](../../images/guides/web-ui/cli_agents_dark.webp#only-dark)](../../images/guides/web-ui/cli_agents_dark.webp){target=_blank}

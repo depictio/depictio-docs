@@ -25,7 +25,7 @@ joins do not know the difference.
 |----------|-----|--------|
 | The results folder of a pipeline run, in a bucket | [`depictio ingest s3://bucket/run42`](#a-run-folder-on-s3) | [**From a run folder**](#from-a-run-folder) |
 | The results folder of a pipeline run, on this computer | [`depictio ingest /data/run42`](../../depictio-cli/usage.md#ingest-command) | [**From a run folder**](#from-a-run-folder), on a `depictio local` server |
-| One file on the web or in a bucket | [`--bind tag=https://host/data.csv`](#bind-a-data-collection-to-a-location) (scan mode `url`) | **Create Data Collection**, **Remote URL**, see the [Web UI guide](../guides/web_ui.md#project-detail-projectsid) |
+| One file on the web or in a bucket | [`--bind tag=https://host/data.csv`](#bind-a-data-collection-to-a-location) (scan mode `url`) | **Create Data Collection**, **Remote URL**, see the [Web UI guide](../guides/web_ui.md#project-detail) |
 | Many files under one bucket prefix, one naming pattern | [`--bind tag=s3://bucket/run42/*.csv`](#bind-a-data-collection-to-a-location) (scan mode `s3_prefix`) | |
 | A list of files of several types, in scattered places | [`--manifest <url or path>`](#creating-a-project-from-a-manifest) (scan mode `manifest`) | [**From Manifest**](#creating-a-project-from-a-manifest) |
 

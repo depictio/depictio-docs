@@ -915,6 +915,7 @@ render is in [Components](components.md#secondary-layout-modes).
 | `default_range` | `[low, high]` | `RangeSlider` (numbers), `DateRangePicker` (ISO dates) | The range the filter starts with |
 | `slider_mode` | `gte`, `gt`, `lte`, `lt`, `eq`, `ne` | `Slider` | How the column is compared with the slider's value. `gte` (keep rows at or above it) by default |
 | `show_histogram` | bool | `RangeSlider` | Draw the column's distribution above the slider track, on the same scale, so a threshold is placed against the data. Off by default |
+| `show_mark_labels` <small>(v1.17.0+)</small> | bool | `Slider`, `RangeSlider` | `false` keeps the tick marks but drops their values. Unset, every tick is labelled |
 
 A default on the wrong control fails validation: `default_value` on a `RangeSlider`, a list on
 a `Slider`, or a `default_range` whose low end is above its high end.
