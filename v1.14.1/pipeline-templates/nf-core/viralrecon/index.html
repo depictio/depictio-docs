@@ -6005,7 +6005,8 @@ and its allele frequency figure.</p>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p><em>Viral genomes, from reads to variants, consensus and lineage.</em></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/overview_dark.webp#only-dark"></a></p>
 <p>A short hero links the run parameters. <em>About this dashboard</em> says how to move
 through the tabs, <em>The run</em> lists the samples, platform and protocol, reference,
 primer scheme and callers, and <em>Pipeline</em> walks the six steps from trimming to
@@ -6046,9 +6047,8 @@ that section only.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Data &amp; QC</strong> · <em>Did reads trim, align and cover the genome in every sample?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_light.png#only-light"></a></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png#only-dark"></a></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_dark.webp#only-dark"></a></p>
 <p>MultiQC panels only: general statistics, the samples that failed mapping, fastp
 filtered reads, Bowtie 2 alignments and the mosdepth cumulative coverage open.
 The read and alignment panels and the variant and assembly panels follow,
@@ -6082,9 +6082,8 @@ collapsed. Its sample filter reads the MultiQC report.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Data &amp; QC</strong> · <em>Did each sample yield a well-covered, trustworthy consensus genome?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png" rel="noopener" target="_blank"><img alt="Sample QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png#only-light"></a></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png" rel="noopener" target="_blank"><img alt="Sample QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png#only-dark"></a></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_light.webp" rel="noopener" target="_blank"><img alt="Sample QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.webp" rel="noopener" target="_blank"><img alt="Sample QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.webp#only-dark"></a></p>
 <p>The median <strong>Reads mapped</strong> against the 1,000-read floor, the share of reads
 mapped, the <strong>Median depth</strong> and the <strong>Genome at 10x</strong>. Then median depth against
 genome covered at 10x, one point per sample, beside a record card for the sample
@@ -6120,9 +6119,8 @@ on <code>nextclade_results</code>, all as ranges, plus the sample filters.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Data &amp; QC</strong> · <em>Where along the genome does each sample lose depth?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png" rel="noopener" target="_blank"><img alt="Coverage and depth dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png#only-light"></a></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png" rel="noopener" target="_blank"><img alt="Coverage and depth dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png#only-dark"></a></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.webp" rel="noopener" target="_blank"><img alt="Coverage &amp; Depth dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.webp" rel="noopener" target="_blank"><img alt="Coverage &amp; Depth dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.webp#only-dark"></a></p>
 <p>The median depth per 200 bp window, the windows under 10x, the median amplicon
 depth and the amplicons under 10x in at least one sample; 10x is the depth under
 which the consensus masks a position. Then the genome track, one lane per sample,
@@ -6162,9 +6160,8 @@ and amplicon depth on <code>mosdepth_amplicon_coverage</code>.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Genomes</strong> · <em>Which mutations does each sample carry, and how well supported?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_light.png" rel="noopener" target="_blank"><img alt="Variants dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_light.png#only-light"></a></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_dark.png" rel="noopener" target="_blank"><img alt="Variants dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_dark.png#only-dark"></a></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_light.webp" rel="noopener" target="_blank"><img alt="Variants dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_dark.webp" rel="noopener" target="_blank"><img alt="Variants dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_dark.webp#only-dark"></a></p>
 <p>The calls by functional class, the distinct mutations, the median allele
 frequency against the 0.75 consensus cut-off and the median read depth. Then the
 allele frequency of every call along the genome, the allele frequency histogram
@@ -6214,9 +6211,8 @@ mutation type that narrows the mutation matrix only.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Genomes</strong> · <em>Which lineage and clade is each sample, and do they agree?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png" rel="noopener" target="_blank"><img alt="Lineage and clustering dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png#only-light"></a></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png" rel="noopener" target="_blank"><img alt="Lineage and clustering dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png#only-dark"></a></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.webp" rel="noopener" target="_blank"><img alt="Lineage &amp; Clustering dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.webp" rel="noopener" target="_blank"><img alt="Lineage &amp; Clustering dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.webp#only-dark"></a></p>
 <p>The distinct Pangolin lineages, the distinct Nextclade clades, the median
 Nextclade QC score and the median missing bases. Then the flow from Pangolin QC
 verdict to lineage to clade, the PCA of the samples by the mutations they share,

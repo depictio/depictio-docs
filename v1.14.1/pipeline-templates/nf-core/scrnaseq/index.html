@@ -5409,34 +5409,32 @@
 </div>
 
 <p>The scrnaseq template follows a 10x run from the raw reads to the genes that mark
-each cluster, one tab per step:</p>
+each cluster:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: FastQC on the raw reads and Cell Ranger's own summary</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg></span> <strong>Library QC</strong> and <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> <strong>Cell calling</strong>: library metrics against 10x's cut-offs, the knee curve and CellBender's ambient-RNA removal</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 11c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4zm-9 10c3.75-1 7-5.46 7-9.78V6.3l-7-3.12L5 6.3v4.92C5 15.54 8.25 20 12 21m-2-4-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9"></path></svg></span> <strong>Cell QC</strong>: the MAD rules that flag a cell, which every later tab can filter on</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 13v6h-1l-2-2h-8V9H5l-2 2H2V5h1l2 2h8v8h6l2-2Z"></path></svg></span> <strong>Embeddings</strong> and <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.62 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95M12 19a7 7 0 0 1-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95a10 10 0 0 0 10 10c3.3 0 6.23-1.61 8.05-4.09l-2.6-1.53A6.89 6.89 0 0 1 12 19"></path></svg></span> <strong>Clusters</strong>: UMAP, t-SNE and PCA, cluster sizes, cell cycle and stability across resolutions</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Markers</strong> and <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> <strong>Compare selections</strong>: marker genes per cluster, and two lassoed groups of cells tested gene by gene</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> <strong>Aligner concordance</strong>: Cell Ranger against simpleaf and kallisto, when the run used several routes</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: FastQC and Cell Ranger's own summary from the MultiQC report, and each library's metrics against 10x Genomics' cut-offs</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 11a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.6 11.6c1.65 0 3 1.34 3 3a3 3 0 0 1-3 3c-1.66 0-3-1.35-3-3a3 3 0 0 1 3-3"></path></svg></span> <strong>Cells</strong>: the barcodes called as cells and the ambient RNA removed, how the aligner routes agree, the MAD rules that flag a cell, the UMAP and t-SNE, and the clusters with their cell cycle</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Genes</strong>: the marker genes of each cluster, and two lassoed groups of cells tested gene by gene</li>
 </ul>
-<p>A <code>Run at a glance</code> strip (cells called, median genes per cell, sequencing
-saturation, reads in cells), the collapsed <code>Sample sheet</code> and the <code>Sample</code>
-filter are pinned to every tab. A collapsed <code>Cell QC filters</code> group (cluster, QC
-status, UMI counts, genes detected) is pinned to the bottom and composes forward
-through the <code>cluster_label</code> links, so a cluster picked on any tab narrows the
-cluster, marker, per-cell expression and cell-cycle tables alike.</p>
+<p>The persistent <code>Sample filters</code> sit in the left panel and narrow every tab. On
+the tabs that draw cells, the collapsed <code>Cell filters</code> (cluster, QC status, UMIs
+and genes per cell) compose forward through the <code>cluster_label</code> links, so a
+cluster picked there narrows the cluster, marker, per-cell expression and
+cell-cycle tables alike.</p>
 <div class="admonition info">
 <p class="admonition-title">The Cell Ranger route carries the dashboard</p>
 <p>Only <code>--aligner cellranger</code> (the pipeline default) publishes the matrices,
 the secondary analysis and a MultiQC report the template reads, so it is
 required. The simpleaf and kallisto routes are optional and feed the Aligner
-concordance tab only; a Cell Ranger-only run leaves that tab empty.</p>
+Concordance tab only; a Cell Ranger-only run has no Aligner Concordance tab.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Two readings assume a human reference</p>
-<p>The mitochondrial fraction and the MAD mito rule read gene symbols starting
+<p>The mitochondrial share and the MAD mito rule read gene symbols starting
 with <code>MT-</code>, and the cell-cycle scores read the human Tirosh gene sets. On
 another organism, or a reference without mitochondrial genes, the mito
-columns read 0 and the phase degrades to NA.</p>
+columns read 0 and the phase degrades to NA. The dashboard therefore leads
+with the top-20 gene share and the ribosomal share.</p>
 </div>
 <hr>
 <h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M19.22 4c.28 0 .53 0 .74.05.17 1.39-.02 4.25-3.3 7.53-1.7 1.71-3.73 3.02-6.01 3.89l-2.15-2.1c.92-2.31 2.23-4.34 3.92-6.03C15.18 4.58 17.64 4 19.22 4m0-2c-1.98 0-4.98.69-8.22 3.93-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.38.38.89.61 1.42.61.23 0 .47-.06.7-.15A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61S20.7 2 19.22 2m-4.68 7.46c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
@@ -5466,7 +5464,7 @@ the lineage markers of your tissue on the per-cell marker tiles, name them:</p>
 <tr>
 <td><code>MARKER_PANEL</code></td>
 <td>none</td>
-<td>Comma-separated gene symbols the Markers violin and the gene UMAP's Colour by menu always carry. Unset, or with none of its genes in the reference, the tiles use the top markers of every graph-based cluster</td>
+<td>Comma-separated gene symbols the Markers violins and the colour menu of the Embeddings gene UMAP always carry. Unset, or with none of its genes in the reference, the tiles use the top markers of every graph-based cluster</td>
 </tr>
 </tbody>
 </table>
@@ -6292,25 +6290,59 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Nine tabs, read as a funnel: the report, the libraries, the cells called, the
-cells kept, where they sit, how they group, what marks each group, a
-comparison of your own, and how the aligner routes agree. Each tab below carries
-the <strong>same icon and colour the dashboard gives it</strong>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:9"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><input id="__tabbed_2_8" name="__tabbed_2" type="radio"><input id="__tabbed_2_9" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg></span> Library QC</label><label for="__tabbed_2_3"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Cell calling</label><label for="__tabbed_2_4"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 11c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4zm-9 10c3.75-1 7-5.46 7-9.78V6.3l-7-3.12L5 6.3v4.92C5 15.54 8.25 20 12 21m-2-4-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9"></path></svg></span> Cell QC</label><label for="__tabbed_2_5"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 13v6h-1l-2-2h-8V9H5l-2 2H2V5h1l2 2h8v8h6l2-2Z"></path></svg></span> Embeddings</label><label for="__tabbed_2_6"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.62 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95M12 19a7 7 0 0 1-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95a10 10 0 0 0 10 10c3.3 0 6.23-1.61 8.05-4.09l-2.6-1.53A6.89 6.89 0 0 1 12 19"></path></svg></span> Clusters</label><label for="__tabbed_2_7"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Markers</label><label for="__tabbed_2_8"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Compare selections</label><label for="__tabbed_2_9"><span class="twemoji mc-orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> Aligner concordance</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then nine child tabs in three groups, read as a
+funnel from the reads to the cells, their clusters and the genes that mark them.
+Each tab below carries the <strong>same icon and colour the dashboard gives it</strong>, so the
+page and the app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Library QC</td>
+</tr>
+<tr>
+<td>Cells</td>
+<td>Cell Calling, Aligner Concordance, Cell QC, Embeddings, Clusters</td>
+</tr>
+<tr>
+<td>Genes</td>
+<td>Markers, Compare Selections</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of two to four cards, then at
+most three open sections; tables and details follow, collapsed. The persistent
+<em>Sample filters</em> (the sample) sit in the left panel and narrow every tab through
+the sample links. The persistent <em>Cell filters</em> (cluster, QC status, UMIs and genes
+per cell, on the per-cell QC table) sit collapsed at the bottom of the panel on the
+four tabs that draw cells: Cell QC, Embeddings, Clusters and Markers. A cluster
+picked there narrows the cluster summary, marker, expression and cell-cycle tables
+through the <code>cluster_label</code> links. The <em>Sample sheet</em> is pinned, collapsed, to the
+bottom of every child tab. Cell Ranger clusters each sample on its own, so on a
+multi-sample run a cluster label shared by two samples is not the same population.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:10"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><input id="__tabbed_2_8" name="__tabbed_2" type="radio"><input id="__tabbed_2_9" name="__tabbed_2" type="radio"><input id="__tabbed_2_10" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg></span> Library QC</label><label for="__tabbed_2_4"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 13h12v-2H6M3 6v2h18V6M10 18h4v-2h-4z"></path></svg></span> Cell Calling</label><label for="__tabbed_2_5"><span class="twemoji mc-lime"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> Aligner Concordance</label><label for="__tabbed_2_6"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 11c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4zm-9 10c3.75-1 7-5.46 7-9.78V6.3l-7-3.12L5 6.3v4.92C5 15.54 8.25 20 12 21m-2-4-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9"></path></svg></span> Cell QC</label><label for="__tabbed_2_7"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 11a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.6 11.6c1.65 0 3 1.34 3 3a3 3 0 0 1-3 3c-1.66 0-3-1.35-3-3a3 3 0 0 1 3-3"></path></svg></span> Embeddings</label><label for="__tabbed_2_8"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.62 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95M12 19a7 7 0 0 1-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95a10 10 0 0 0 10 10c3.3 0 6.23-1.61 8.05-4.09l-2.6-1.53A6.89 6.89 0 0 1 12 19"></path></svg></span> Clusters</label><label for="__tabbed_2_9"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Markers</label><label for="__tabbed_2_10"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Compare Selections</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Are the raw reads sound, and what does Cell Ranger's own summary say?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/multiqc_light.png"></a></p>
-<p>MultiQC panels only: FastQC on the raw reads, then Cell Ranger count's
-summary stats and its median-genes and saturation curves. Cell Ranger's own
-barcode-rank panel is left out, because the Cell calling tab draws the same
-curve with cells and background coloured and the cutoff marked.</p>
+<p><em>Droplet single-cell RNA-seq, from reads to called cells, clusters and their marker genes.</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/overview_dark.webp#only-dark"></a></p>
+<p>A short hero links the run parameters. <em>About this dashboard</em> says how the two
+filter levels work, <em>The run</em> lists the samples, the aligner, the protocol and
+the genome, and <em>Pipeline</em> walks the five steps from reads to marker genes
+(reads, count, call, flag, cluster), each linked to its parameters and its tab.
+Every key figure, finding and highlight reads the Cell Ranger route, which every
+run writes. The findings are live values: they follow the filters.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample</code> on the sample hub, persistent and pinned to the
-top of every tab, plus <code>Cluster</code>, <code>QC status</code> and ranges on <code>UMI counts
-per cell</code> and <code>Genes detected</code> in the collapsed <em>Cell QC filters</em>
-group pinned to the bottom.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> has its own
+filter bar (the QC status and the sample), and so does <em>Findings</em> (the
+sample and the cluster): each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -6320,42 +6352,82 @@ group pinned to the bottom.</p>
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards, pinned to every tab</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Sample hub</em>, collapsed and pinned to every tab</td>
+<td>Key figures</td>
+<td>4 headline cards: cells called, genes per cell, clusters, marker genes</td>
 </tr>
 <tr>
-<td>MultiQC general statistics</td>
-<td><em>General statistics</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: the UMAP by cluster, the barcode-rank curve, the cells per cluster with the flagged ones on top and the strongest marker of each cluster</td>
+</tr>
+<tr>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>Did the reads and Cell Ranger's own QC hold for every sample?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/multiqc_dark.webp#only-dark"></a></p>
+<p>MultiQC panels only, from the pipeline's own report. Open: the general
+statistics and Cell Ranger count's summary table, then its median-genes and
+saturation curves, then the FastQC sequence counts and per-sequence quality.
+GC content and duplication are collapsed; duplication runs high by design, since
+each transcript is read many times. Cell Ranger's own barcode-rank panel is left
+out: the Cell Calling tab draws the same curve with the called cells marked.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · no filter of its own: the persistent <code>Sample</code> filter reaches
+the report through the sample link.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QC overview</td>
+<td>2 MultiQC panels</td>
+</tr>
+<tr>
+<td>Cell Ranger curves</td>
+<td>2 MultiQC panels</td>
 </tr>
 <tr>
 <td>Read quality</td>
-<td>4 MultiQC panels</td>
+<td>2 MultiQC panels</td>
 </tr>
 <tr>
-<td>Cell Ranger summary</td>
-<td>3 MultiQC panels</td>
+<td>QC details (collapsed)</td>
+<td>2 MultiQC panels</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Does each library clear 10x's own quality cut-offs?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/library_qc_light.png" rel="noopener" target="_blank"><img alt="Library QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/library_qc_light.png"></a></p>
-<p>Five threshold cards (sequencing saturation, reads in cells, valid barcodes,
-Q30 RNA, confidently mapped to the transcriptome) each show the lowest
-library against 10x's cut-off, next to mean reads and median UMI per cell
-and a count of the checks per QC band. The mapping breakdown is grouped
-rather than stacked, because antisense overlaps exonic and intronic by Cell
-Ranger's own definition.</p>
+<p><strong>Data &amp; QC</strong> · <em>Do the libraries meet 10x Genomics' own QC guidance?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/library_qc_light.webp" rel="noopener" target="_blank"><img alt="Library QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/library_qc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/library_qc_dark.webp" rel="noopener" target="_blank"><img alt="Library QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/library_qc_dark.webp#only-dark"></a></p>
+<p>The reads in cells, the sequencing saturation and the reads on the
+transcriptome as levels out of 100, and the reads per cell with the samples
+counted against the 20,000 10x recommends. Then each library metric (saturation,
+reads in cells, valid barcodes, Q30 on the RNA read, mapped to the transcriptome)
+as a dot coloured by its verdict beside a grey tick at the 10x cut-off, and the
+reads by genomic region, grouped rather than stacked because antisense overlaps
+exonic and intronic. The checks table and Cell Ranger's metrics are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · a <code>Metric</code> picker and a <code>QC band</code> switch on the
-thresholded metrics, in the tab-local <em>Library filters</em>.</p>
+<p><strong>Filters</strong> · <code>Check verdict</code> on <code>cellranger_library_metrics_long</code> and
+<code>Mapping region</code> on <code>cellranger_mapping_breakdown</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6365,34 +6437,39 @@ thresholded metrics, in the tab-local <em>Library filters</em>.</p>
 </thead>
 <tbody>
 <tr>
-<td>Library metrics</td>
-<td>8 cards, <em>Thresholded library metrics</em></td>
+<td>Libraries at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Mapping breakdown</td>
-<td><em>Read mapping breakdown</em></td>
+<td>Against 10x's guidance</td>
+<td><em>Library metrics against their cut-offs</em></td>
 </tr>
 <tr>
-<td>Cell Ranger metrics table</td>
-<td><em>Cell Ranger metrics</em>, collapsed</td>
+<td>Where the reads map</td>
+<td><em>Read mapping by region</em></td>
+</tr>
+<tr>
+<td>Metrics tables (collapsed)</td>
+<td><em>Library checks</em>, <em>Cell Ranger metrics</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Which droplets became cells, and how much ambient RNA came out?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/cell_calling_light.png" rel="noopener" target="_blank"><img alt="Cell calling dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/cell_calling_light.png"></a></p>
-<p>The funnel opens the tab: every barcode observed, called a cell, kept by
-CellBender, passing the per-cell QC, each a subset of the one before. The
-barcode-rank curve, computed off the raw matrix, shows where the knee
-separates cells from empty droplets. CellBender's accounting closes the tab;
-its found over expected ratio carries no verdict, since a ratio far above 1
-is as much a warning as one below it.</p>
+<p><strong>Cells</strong> · <em>How many barcodes are cells, and how much ambient RNA was removed?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/cell_calling_light.webp" rel="noopener" target="_blank"><img alt="Cell Calling dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/cell_calling_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/cell_calling_dark.webp" rel="noopener" target="_blank"><img alt="Cell Calling dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/cell_calling_dark.webp#only-dark"></a></p>
+<p>The barcodes observed, followed down to the cells Cell Ranger calls, the cells
+CellBender keeps and the cells that pass QC, each stage a subset of the one
+before; then the UMI counts CellBender keeps out of the raw counts. Then the
+barcode-rank ("knee") curve, computed off the raw matrix, one curve per sample
+with the called cells drawn darker. Most barcodes are empty droplets: the cliff
+is where the cells end. The calling funnel and CellBender's metrics are
+collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · a <code>UMIs per barcode</code> range on the rank curve, in the
-tab-local <em>Barcode filters</em>.</p>
+<p><strong>Filters</strong> · a <code>UMIs per barcode</code> range on <code>cellranger_barcode_rank</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6402,34 +6479,42 @@ tab-local <em>Barcode filters</em>.</p>
 </thead>
 <tbody>
 <tr>
-<td>Calling funnel</td>
-<td>4 cards, <em>Cell-calling funnel</em></td>
+<td>Calling at a glance</td>
+<td>2 cards</td>
 </tr>
 <tr>
-<td>Cell calling</td>
-<td><em>Barcode-rank curve</em></td>
+<td>The knee</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Ambient RNA removal</td>
-<td>4 cards, <em>CellBender metrics</em></td>
+<td>Calling tables (collapsed)</td>
+<td><em>Cell-calling funnel</em>, <em>CellBender metrics</em></td>
 </tr>
 </tbody>
 </table>
 </details>
+<div class="admonition tip">
+<p class="admonition-title">Without CellBender</p>
+<p>A <code>--skip_cellbender</code> run has no CellBender card or table here, and the
+funnel card widens. The funnel's CellBender stage and the CellBender shares
+on Clusters read empty.</p>
+</div>
 </div>
 <div class="tabbed-block">
-<p><em>Which cells does the MAD flag remove, and by which rule?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/cell_qc_light.png" rel="noopener" target="_blank"><img alt="Cell QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/cell_qc_light.png"></a></p>
-<p>The rules follow sc-best-practices, per sample on log1p values: 5 MAD below
-the median for UMIs and genes, 5 MAD above for the top-20 gene share, and the
-median plus 3 MAD or 8% for the mitochondrial fraction. Rule cards come first,
-then the UMI against genes scatter and the mito and depth box plots by
-cluster. The per-cell table drives a linked <strong>Cell record</strong> beside it, which
-folds to a slim rail until a cell is picked.</p>
+<p><strong>Cells</strong> · <em>Do Cell Ranger, simpleaf and kallisto call the same cells?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/aligner_concordance_light.webp" rel="noopener" target="_blank"><img alt="Aligner Concordance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/aligner_concordance_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/aligner_concordance_dark.webp" rel="noopener" target="_blank"><img alt="Aligner Concordance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/aligner_concordance_dark.webp#only-dark"></a></p>
+<p>A run with several <code>--aligner</code> routes calls cells three ways, each with
+CellBender on top. The cells each route calls, and the barcodes any method calls,
+split by how many methods agree. Then each route's own call against CellBender's
+on it (the diagonal is agreement) beside its mapping rate, and the UpSet of the
+five cell calls, matched on the bare 16-base barcode so the overlap compares the
+same droplets. Most cells should sit in the intersection of every method.
+simpleaf's knee curve and both tables are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Failing rule</code> and a <code>Top-20 gene share</code> range, in the
-tab-local <em>QC detail filters</em>, on top of the pinned cell filters.</p>
+<p><strong>Filters</strong> · <code>Aligner route</code> on <code>aligner_summary</code> and a <code>Methods agreeing</code>
+range on <code>cell_calls_by_method</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6439,202 +6524,249 @@ tab-local <em>QC detail filters</em>, on top of the pinned cell filters.</p>
 </thead>
 <tbody>
 <tr>
-<td>QC rules</td>
-<td>8 cards</td>
+<td>Routes at a glance</td>
+<td>2 cards</td>
 </tr>
 <tr>
-<td>QC distributions</td>
-<td><em>UMI counts vs genes detected</em>, <em>Mitochondrial fraction by cluster</em>, <em>log10 UMI count by cluster</em></td>
-</tr>
-<tr>
-<td>Flagged cells</td>
-<td><em>Per-cell QC table</em>, <em>Cell record</em></td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>Where do the cells sit, and which genes separate them?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/embeddings_light.png" rel="noopener" target="_blank"><img alt="Embeddings dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/embeddings_light.png"></a></p>
-<p>The cluster UMAP and the t-SNE sit side by side, with depth and QC status
-one Colour by pick away on either. <code>Gene expression on the map</code> is the same
-UMAP bound to the per-cell expression matrix, where every panel gene is a
-column of the searchable Colour by menu. Mean expression against normalised
-dispersion and the PCA scree show what the embedding was built on.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · a <code>Normalised dispersion</code> range on the dispersion scatter,
-in the tab-local <em>Feature selection filters</em>.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Cell embeddings</td>
-<td><em>UMAP by cluster</em>, <em>t-SNE by cluster</em>, 2 cards</td>
-</tr>
-<tr>
-<td>Gene expression on the map</td>
-<td><em>UMAP coloured by gene</em></td>
-</tr>
-<tr>
-<td>Feature selection</td>
-<td><em>Mean expression vs dispersion</em></td>
-</tr>
-<tr>
-<td>PCA</td>
-<td><em>PCA scree</em></td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>Is a cluster a cell type, a QC artefact, or the same type cycling?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/clusters_light.png" rel="noopener" target="_blank"><img alt="Clusters dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/clusters_light.png"></a></p>
-<p>Cluster sizes, the QC status per cluster and a column-z-scored QC heatmap
-say which clusters are driven by depth or flagged cells. The cell-cycle
-section plots the S against the G2/M score per cell and the phase per
-cluster, and a sankey shows how graph-based clusters split across the
-k-means resolutions Cell Ranger computes. Cell Ranger clusters each sample on
-its own, so on a multi-sample run a shared label is not the same population.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · a <code>Cells per cluster</code> range and a <code>Cell-cycle phase</code>
-picker, in the tab-local <em>Cluster filters</em>.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Cluster composition</td>
-<td>4 cards, <em>Cluster composition per sample</em>, <em>QC status per cluster</em>, <em>Cluster QC heatmap</em>, <em>Cluster summary</em></td>
-</tr>
-<tr>
-<td>Cell cycle</td>
-<td>4 cards, <em>S score vs G2/M score</em>, <em>Phase per cluster</em></td>
-</tr>
-<tr>
-<td>Cluster stability</td>
-<td><em>Cluster stability across k</em></td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>What marks each cluster, and does the mean hide a bimodal cluster?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/markers_light.png" rel="noopener" target="_blank"><img alt="Markers dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/markers_light.png"></a></p>
-<p>A marker dot plot gives mean expression and detection rate per cluster, then
-a violin faceted by gene shows the same markers cell by cell. The volcano
-reads Cell Ranger's top-ranked markers at any clustering resolution; it keeps
-the volcano view only, since these are not a genome-wide test. The marker
-gene table closes the tab with a linked <strong>Gene record</strong> beside it, one row
-per clustering where the gene ranks, folded to a slim rail until a gene is
-ticked.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Clustering resolution</code> (opens on graph-based), <code>Gene</code>
-and an <code>Expression, log1p(CP10k)</code> range, in the tab-local <em>Marker
-filters</em>.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Marker expression</td>
-<td><em>Marker dot plot</em>, 2 cards, <em>Marker expression table</em></td>
-</tr>
-<tr>
-<td>Per-cell marker spread</td>
-<td><em>Marker expression per cluster, one panel per gene</em>, <em>Expression per gene</em></td>
-</tr>
-<tr>
-<td>Differential expression</td>
-<td><em>Marker gene volcano</em>, 4 cards</td>
-</tr>
-<tr>
-<td>Gene detail</td>
-<td><em>Marker gene table</em>, <em>Gene record</em></td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>What differs between two groups of cells you pick yourself?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/compare_selections_light.png" rel="noopener" target="_blank"><img alt="Compare selections dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/compare_selections_light.png"></a></p>
-<p>Lasso a set of cells on the UMAP and save it as group A, lasso a second set
-as group B, and read the volcano. With no groups saved, the comparison opens
-on the two largest clusters. Each panel gene is tested with a Wilcoxon
-rank-sum on log1p(CP10k), FDR-corrected, and the guard cards say what the
-test runs over: narrow to passing cells first, and watch the depth, since two
-groups of very different depth differ on almost every gene.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Clusters on the map</code> and a <code>QC status</code> switch on the
-per-cell expression matrix, in the tab-local <em>Comparison filters</em>.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Pick the cells</td>
-<td><em>UMAP, lasso to build a group</em>, 4 cards</td>
-</tr>
-<tr>
-<td>Compare the groups</td>
-<td><em>Group A vs group B, gene by gene</em></td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>Do Cell Ranger, simpleaf and kallisto call the same cells?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/aligner_concordance_light.png" rel="noopener" target="_blank"><img alt="Aligner concordance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/aligner_concordance_light.png"></a></p>
-<p>When simpleaf and kallisto also ran, the cards compare cells called,
-CellBender cells, median UMI per cell and mapping rate per route, and a
-scatter sets each route's own call against CellBender's. An UpSet plot shows
-how the routes' cell calls, plus CellBender on each, agree on the same
-physical barcode, normalised to the bare 16-mer. The two knee curves share
-log-log axes. Every collection here is optional.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · an <code>Aligner route</code> picker and a <code>Methods agreeing</code> range,
-in the tab-local <em>Route filters</em>.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Aligner headlines</td>
-<td>4 cards, <em>Own cell call vs CellBender's</em>, <em>Cells called per route</em>, <em>Aligner summary</em></td>
+<td>Routes side by side</td>
+<td>1 advanced visualization + <em>Mapping rate per route</em></td>
 </tr>
 <tr>
 <td>Cell-call overlap</td>
-<td><em>Cell-call overlap across methods</em>, 4 cards, <em>Knee curve (Cell Ranger)</em>, <em>Knee curve (simpleaf/alevin-fry)</em>, <em>Cell calls by method</em></td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Route details (collapsed)</td>
+<td>1 advanced visualization (the simpleaf knee), <em>Aligner summary</em>, <em>Cell calls by method</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">Only with more than one route</p>
+<p>Every collection this tab reads is optional. A Cell Ranger-only run, the
+pipeline default, has no Aligner Concordance tab.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<p><strong>Cells</strong> · <em>Which called cells do the MAD rules flag, and why?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/cell_qc_light.webp" rel="noopener" target="_blank"><img alt="Cell QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/cell_qc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/cell_qc_dark.webp" rel="noopener" target="_blank"><img alt="Cell QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/cell_qc_dark.webp#only-dark"></a></p>
+<p>The called cells as a ring by the rule that flags them, the UMIs and the genes
+per cell, and the top-20 gene share. Then UMIs against genes per cell on log
+axes, coloured by QC status, and the UMIs and top-20 share per cluster as boxes.
+The rules run per sample on log1p values: 5 MAD below the median for UMIs and
+genes, 5 MAD above for the top-20 share, the median plus 3 MAD or 8% for the
+mitochondrial share. Flagged cells stay in the data; the cell filters take them
+out. The per-cell table is collapsed, with a cell record beside it.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Failing rule</code> and a <code>Top-20 gene share (%)</code> range on
+<code>cellranger_cell_qc</code>, plus the cell filters.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cell QC at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Depth against genes</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Per cluster</td>
+<td><em>UMIs per cell, by cluster</em>, <em>Top-20 gene share, by cluster</em></td>
+</tr>
+<tr>
+<td>Flagged cells (collapsed)</td>
+<td><em>Per-cell QC</em> + a cell record card</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Cells</strong> · <em>Do the cells separate into groups on the UMAP and t-SNE?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/embeddings_light.webp" rel="noopener" target="_blank"><img alt="Embeddings dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/embeddings_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/embeddings_dark.webp" rel="noopener" target="_blank"><img alt="Embeddings dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/embeddings_dark.webp#only-dark"></a></p>
+<p>The cells on the map, the genes scored for dispersion as a ring of those the PCA
+used, the first component's share of the variance and the genes whose normalised
+dispersion passes 0.5. Then the UMAP by cluster, where a lasso filters the other
+tabs, and the same UMAP bound to the per-cell expression table: every panel gene
+is a column of its colour menu. The t-SNE, mean expression against dispersion and
+the variance per component are collapsed. Cell Ranger selects every gene with a
+finite dispersion, so the selection is not a variable-gene call.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · a <code>Ribosomal share (%)</code> range on <code>cellranger_cell_qc</code> and a
+<code>Normalised dispersion</code> range on <code>cellranger_hvg_dispersion</code>, plus the cell
+filters.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Maps at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Cells on the map</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>A gene on the map</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>t-SNE (collapsed)</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Feature selection and PCA (collapsed)</td>
+<td>1 advanced visualization + <em>Variance per component</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Cells</strong> · <em>Which clusters are large and clean, and which are cycling?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/clusters_light.webp" rel="noopener" target="_blank"><img alt="Clusters dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/clusters_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/clusters_dark.webp" rel="noopener" target="_blank"><img alt="Clusters dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/clusters_dark.webp#only-dark"></a></p>
+<p>The cells in the clusters, the flagged share of the highest cluster against 5%
+and 10%, the cells by cell-cycle phase and the share of the lowest cluster's
+cells CellBender also calls, against 95% and 90%. Then the cells per cluster with
+the flagged ones on top, the QC medians of each cluster coloured by z-score, and
+S against G2/M score per cell beside the phase mix of each cluster. A cluster
+with a high flagged share or low depth may be damaged cells, not a cell type. The
+stability Sankey across resolutions and the cluster table are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · a <code>Cells per cluster</code> range on <code>cellranger_cluster_summary</code>
+and <code>Cell-cycle phase</code> on <code>cellranger_cell_cycle</code>, plus the cell filters.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clusters at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Cluster sizes</td>
+<td><em>Cells per cluster</em></td>
+</tr>
+<tr>
+<td>Cluster QC profile</td>
+<td><em>Cluster QC medians</em></td>
+</tr>
+<tr>
+<td>Cell cycle</td>
+<td>1 advanced visualization + <em>Phase mix per cluster</em></td>
+</tr>
+<tr>
+<td>Cluster details (collapsed)</td>
+<td>1 advanced visualization + <em>Cluster summary</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Genes</strong> · <em>Which genes mark each cluster?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/markers_light.webp" rel="noopener" target="_blank"><img alt="Markers dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/markers_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/markers_dark.webp" rel="noopener" target="_blank"><img alt="Markers dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/markers_dark.webp#only-dark"></a></p>
+<p>The marker genes up-regulated at adjusted p below 0.05, with how many recur
+across clusters, and their median log2 fold change. Then the dot plot (dot size
+the share of the cluster's cells expressing the gene, colour its mean), and the
+volcano beside the strongest marker of each cluster. The volcano has no QQ view:
+these are Cell Ranger's top-ranked markers per cluster, not a genome-wide test.
+The violins cell by cell, the marker table with a gene record beside it and the
+marker expression table are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Clustering</code> on <code>cellranger_diffexp</code> (opens on <code>graphclust</code>)
+and <code>Gene, cell by cell</code> on <code>cellranger_cell_expression_long</code>, plus the cell
+filters.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Markers at a glance</td>
+<td>2 cards</td>
+</tr>
+<tr>
+<td>Marker dot plot</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Differential expression</td>
+<td>1 advanced visualization + <em>Strongest marker per cluster</em></td>
+</tr>
+<tr>
+<td>Per-cell marker spread (collapsed)</td>
+<td><em>Marker expression per cluster</em></td>
+</tr>
+<tr>
+<td>Gene detail (collapsed)</td>
+<td><em>Marker genes</em> + a gene record card, <em>Marker expression per cluster</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Genes</strong> · <em>Which genes separate two groups of cells you lasso?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/compare_selections_light.webp" rel="noopener" target="_blank"><img alt="Compare Selections dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/compare_selections_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/compare_selections_dark.webp" rel="noopener" target="_blank"><img alt="Compare Selections dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/scrnaseq/compare_selections_dark.webp#only-dark"></a></p>
+<p>The cells on the map as a ring by QC status, and the clusters on it. Then the
+UMAP with lasso on: save one set of cells as group A and a second as group B,
+and every gene of the marker panel is tested between them (Wilcoxon rank-sum on
+log1p(CP10k), FDR-corrected across genes). With no groups saved it compares the
+two largest clusters. Narrow to <code>pass</code> cells first: two groups of very different
+depth differ on almost every gene for the wrong reason.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Clusters on the map</code> and a <code>QC status</code> switch on
+<code>cellranger_cell_expression</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cells in play</td>
+<td>2 cards</td>
+</tr>
+<tr>
+<td>Pick the cells</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Compare the groups</td>
+<td>1 advanced visualization</td>
 </tr>
 </tbody>
 </table>
@@ -6642,10 +6774,14 @@ in the tab-local <em>Route filters</em>.</p>
 </div>
 </div>
 </div>
-<p>The cell scatters and embeddings select on the barcode (the UMAP coloured by gene
-does not), and the tables select on their entity column (sample, cell, gene,
-cluster, route), so a pick narrows the
-other tiles on the same collection or one linked to it.</p>
+<p>Every scatter and embedding of cells selects on <code>barcode</code> (the UMI against genes
+scatter, the UMAP and t-SNE, the phase scatter, the lasso UMAP; the UMAP coloured
+by a gene does not), the route scatter on <code>aligner</code>, and the tables on their entity
+column: <code>sample_id</code> in the sample sheet, <code>sample</code> in the metrics and funnel tables,
+<code>barcode</code> for cells, <code>cluster_label</code> for clusters, <code>gene</code> for markers, <code>aligner</code>
+for routes and <code>barcode_core</code> for the cell-call overlap. A pick narrows the other
+tiles on the same collection or linked to it, and each record card follows the
+table beside it.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/scrnaseq, it does not run the pipeline.
@@ -6660,7 +6796,7 @@ Run the pipeline first, on the Cell Ranger route:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>results/input<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cp<span class="w"> </span>samplesheet.csv<span class="w"> </span>results/input/
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>results/<span class="w"> </span>--template<span class="w"> </span>nf-core/scrnaseq/latest
 </code></pre></div>
-<p>To fill the Aligner concordance tab, run the pipeline once more per extra
+<p>To fill the Aligner Concordance tab, run the pipeline once more per extra
 <code>--aligner</code> route and gather the route directories under one results root. See
 <a href="https://nf-co.re/scrnaseq/4.2.0/docs/usage">nf-co.re/scrnaseq/usage</a> for full
 pipeline documentation.</p>
@@ -6690,7 +6826,7 @@ output directory and a root holding several routes scan the same way.</p>
 <p>The template was validated against the AWS megatest of the 4.2.0 release,
 <code>results-3fc17b4f971a89e47c88337de71d0e777ffad8cc</code>: the pbmc8k sample (10x v2
 chemistry, GRCh38) on the Cell Ranger, simpleaf and kallisto routes, so the
-Aligner concordance tab is filled. The screenshots above come from that run.
+Aligner Concordance tab is filled. The screenshots above come from that run.
 <code>megatest.yaml</code> lists the tables-only subset the template needs; the samplesheet
 the run names in <code>params.json</code> is fetched into <code>input/</code> separately:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>bash<span class="w"> </span>depictio/projects/nf-core/scrnaseq/4.2.0/download_test_data.sh<span class="w"> </span>/tmp/scrnaseq_test

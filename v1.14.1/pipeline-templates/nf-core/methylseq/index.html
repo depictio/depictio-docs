@@ -5431,18 +5431,15 @@
 </div>
 
 <p>The methylseq template follows the Bismark route of an nf-core/methylseq run from
-trimmed reads to per-cytosine methylation, one question per tab:</p>
+the reads to the windows whose methylation differs between groups:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: FastQC, Cutadapt, Bismark and Qualimap panels from the run's MultiQC report</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg></span> <strong>Run QC</strong>: which libraries fail the alignment, duplication or bisulfite conversion floors</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> <strong>Coverage</strong>: how deep and how evenly the deduplicated alignments cover the reference</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> <strong>Bias and context</strong>: whether the methylation extraction needs a read-position trim</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Global methylome</strong>: whether each methylome is bimodal, and whether the libraries group by the design</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> <strong>Group comparison</strong>: where two groups differ, genome-wide and at one locus</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: FastQC, Cutadapt, Bismark and Qualimap panels from the regenerated MultiQC report, the libraries that fail the alignment, duplication or conversion floors, and how deep and how evenly the alignments cover the reference</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Methylome</strong>: whether the extraction needs a read-position trim, whether each methylome is bimodal, whether the libraries group by the design, and the windows that differ between two groups</li>
 </ul>
-<p>A <code>Run at a glance</code> strip, the <code>Sample filters</code> (sample and the design factor) and
-a collapsed sample sheet are pinned to the top of every tab, and a collapsed
-<code>QC thresholds</code> group (mapping efficiency, duplication, conversion) to the bottom.</p>
+<p>The persistent <code>Sample filters</code> (the design factor, then the sample id) sit in the
+left panel and narrow every tab through the project links, and the collapsed
+<code>Sample sheet</code> is pinned to the bottom of every child tab.</p>
 <div class="admonition warning">
 <p class="admonition-title">The MultiQC report must be regenerated</p>
 <p>methylseq 2.3.0 ships MultiQC 1.13, which writes no parquet, and Depictio
@@ -5462,8 +5459,9 @@ hisat2 route.</p>
 <p class="admonition-title">The design is a table beside the run</p>
 <p>The methylseq samplesheet carries no design column, and the template never
 parses one out of sample names. Pass a design table with <code>METADATA_FILE</code>:
-without it the design filter has nothing to offer and the Group comparison
-tab is pruned.</p>
+without it there is no group to filter or colour by, and the window
+comparison is pruned, leaving the Group comparison tab with only the
+per-library lanes of its collapsed locus section.</p>
 </div>
 <hr>
 <h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M19.22 4c.28 0 .53 0 .74.05.17 1.39-.02 4.25-3.3 7.53-1.7 1.71-3.73 3.02-6.01 3.89l-2.15-2.1c.92-2.31 2.23-4.34 3.92-6.03C15.18 4.58 17.64 4 19.22 4m0-2c-1.98 0-4.98.69-8.22 3.93-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.38.38.89.61 1.42.61.23 0 .47-.06.7-.15A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61S20.7 2 19.22 2m-4.68 7.46c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
@@ -5520,7 +5518,7 @@ variables:</p>
 </code></pre></div>
 <p>No <code>depictio ingest</code>, and no template named: the pipeline ingests its own
 output directory when it finishes and resolves this template from its own
-manifest. Without a <code>METADATA_FILE</code> the Group comparison is pruned, and the
+manifest. Without a <code>METADATA_FILE</code> the window comparison is pruned, and the
 MultiQC tab stays empty until the report is regenerated as above. See
 <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger</a>.</p>
 </div>
@@ -5530,9 +5528,9 @@ MultiQC tab stays empty until the report is regenerated as above. See
 <h2 id="reference"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.5c-1.35-.85-3.8-1.5-5.5-1.5-1.65 0-3.35.3-4.75 1.05-.1.05-.15.05-.25.05-.25 0-.5-.25-.5-.5V6c.6-.45 1.25-.75 2-1 1.11-.35 2.33-.5 3.5-.5 1.95 0 4.05.4 5.5 1.5 1.45-1.1 3.55-1.5 5.5-1.5 1.17 0 2.39.15 3.5.5.75.25 1.4.55 2 1v14.6c0 .25-.25.5-.5.5-.1 0-.15 0-.25-.05-1.4-.75-3.1-1.05-4.75-1.05-1.7 0-4.15.65-5.5 1.5M12 8v11.5c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5V7c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5m1 3.5c1.11-.68 2.6-1 4.5-1 .91 0 1.76.09 2.5.28V9.23c-.87-.15-1.71-.23-2.5-.23q-2.655 0-4.5.84zm4.5.17c-1.71 0-3.21.26-4.5.79v1.69c1.11-.65 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24v-1.5c-.87-.16-1.71-.23-2.5-.23m2.5 2.9c-.87-.16-1.71-.24-2.5-.24-1.83 0-3.33.27-4.5.8v1.69c1.11-.66 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24z"></path></svg></span> Reference<a class="headerlink" href="#reference" title="Permanent link">¶</a></h2>
 <p>The template reads the samplesheet and the design table, the regenerated MultiQC
 report, Bismark's alignment, deduplication, splitting and M-bias reports and its
-per-CpG bedGraphs, and Qualimap BamQC. 63 of its 69 tiles carry a <code>use:</code> catalog
-reference (<code>bismark/*</code>, <code>qualimap/*</code>, <code>multiqc/*</code>), and the locus tracks name
-their <code>viz_kind</code> explicitly.</p>
+per-CpG bedGraphs, and Qualimap BamQC. 68 of its 74 tiles carry a <code>use:</code> catalog
+reference (<code>bismark/*</code>, <code>qualimap/*</code>, <code>multiqc/*</code>), and the two comparison tracks
+of the locus view name their <code>viz_kind</code> explicitly.</p>
 <div class="admonition info">
 <p class="admonition-title">Self-adapting layout</p>
 <p>The dashboard adapts to whatever the run actually produced: components bound
@@ -6091,28 +6089,53 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Six tabs, read as a funnel: is the report normal, which libraries fail a floor,
-is depth even enough for a site call, does the extraction need a trim, what does
-the methylome look like, and where do the two groups differ. Each tab below
-carries the <strong>same icon and colour the dashboard gives it</strong>. A picked row or
-point becomes a filter that follows the project links to the tiles it reaches.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg></span> Run QC</label><label for="__tabbed_2_3"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> Coverage</label><label for="__tabbed_2_4"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> Bias and context</label><label for="__tabbed_2_5"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Global methylome</label><label for="__tabbed_2_6"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Group comparison</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then seven child tabs in two groups, read as a
+funnel from the reads to the windows whose methylation differs between groups.
+Each tab below carries the <strong>same icon and colour the dashboard gives it</strong>, so the
+page and the app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Run QC, Coverage</td>
+</tr>
+<tr>
+<td>Methylome</td>
+<td>Bias and context, Methylation levels, Cohort structure, Group comparison</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of two to four cards, then at
+most three open sections; tables, details and the locus view follow, collapsed.
+The design is a table beside the run (<code>METADATA_FILE</code>), and <code>GROUP_COL</code> is the
+factor every tab colours and filters by. The persistent <em>Sample filters</em> (the
+group, then the sample id, both on the sample hub) sit in the left panel and
+narrow every tab through the project links; each tab's own filters sit under them.
+The <em>Sample sheet</em> is pinned, collapsed, to the bottom of every child tab.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:8"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><input id="__tabbed_2_8" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg></span> Run QC</label><label for="__tabbed_2_4"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> Coverage</label><label for="__tabbed_2_5"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> Bias and context</label><label for="__tabbed_2_6"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Methylation levels</label><label for="__tabbed_2_7"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 13v6h-1l-2-2h-8V9H5l-2 2H2V5h1l2 2h8v8h6l2-2Z"></path></svg></span> Cohort structure</label><label for="__tabbed_2_8"><span class="twemoji mc-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Group comparison</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Read the report from the reads to the methylation calls.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/multiqc_light.png"></a></p>
-<p>Every module the report carries: the general statistics, all ten FastQC
-panels, what Trim Galore removed, Bismark's five plots and Qualimap BamQC. A
-bisulfite library legitimately fails the per-base sequence content and GC
-checks, because converting unmethylated cytosines is the point, so the
-quality, length and adapter panels are the ones to read.</p>
+<p><em>Bisulfite methylomes, from read QC to the windows that differ between groups.</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/overview_dark.webp#only-dark"></a></p>
+<p>A short hero links the run's provenance: methylseq 2.3.0 writes no
+<code>params.json</code>, so the dialog holds the software versions. <em>About this
+dashboard</em> says how the two filter levels work, <em>The run</em> lists the samples,
+read pairs, pairs aligned and CpG calls, and <em>Pipeline</em> walks the five steps
+from trimming to the binned methylome, each linked to the version of its tool
+and its tab. The findings are live values: they follow the filters. Without a
+design table the windows row and the Manhattan drop out.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample</code> and the <code>GROUP_COL</code> factor, persistent and pinned
-to the top of every tab; <code>Mapping efficiency</code>, <code>Duplication rate</code> and
-<code>Conversion efficiency</code> ranges in the collapsed <em>QC thresholds</em> group
-pinned to the bottom; plus a tab-local <code>CpG methylation</code> range that
-narrows the pinned strip.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> and
+<em>Findings</em> each have their own filter bar (the group and the sample id):
+each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -6122,50 +6145,84 @@ narrows the pinned strip.</p>
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards: samples by design factor, reads to CpG calls, CpG methylation, lowest conversion efficiency</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Sample hub</em></td>
+<td>Key figures</td>
+<td>4 headline cards: samples, reads aligned, CpG methylation, the lowest conversion</td>
 </tr>
 <tr>
-<td>MultiQC general statistics</td>
-<td><em>General statistics</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures, one per Methylome tab: the CpG M-bias curves, the per-CpG methylation density, the library PCA and the Manhattan of the tested windows</td>
 </tr>
 <tr>
-<td>Read quality</td>
-<td>10 FastQC panels</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>Did the reads trim, align and deduplicate cleanly in every library?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/multiqc_dark.webp#only-dark"></a></p>
+<p>MultiQC panels only, from the report regenerated with MultiQC 1.35. Open:
+general statistics, FastQC base quality and the reads Cutadapt kept, then
+Bismark's alignment rates, deduplication, cytosine methylation and M-bias. A
+bisulfite library fails the FastQC sequence content and GC checks by design,
+since conversion turns unmethylated cytosines into thymines. The other FastQC
+panels with the trimmed read lengths, and Bismark's strand alignment with the
+four Qualimap BamQC panels, are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Sample ID</code>, read from the MultiQC report.</p>
+<table>
+<thead>
 <tr>
-<td>Trimming</td>
-<td>2 Cutadapt panels</td>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QC overview</td>
+<td>3 MultiQC panels</td>
 </tr>
 <tr>
 <td>Bisulfite alignment</td>
-<td>5 Bismark panels, M-bias included</td>
+<td>4 MultiQC panels</td>
 </tr>
 <tr>
-<td>Coverage</td>
-<td>4 Qualimap panels</td>
+<td>Read quality details (collapsed)</td>
+<td>10 MultiQC panels</td>
+</tr>
+<tr>
+<td>Strand and coverage details (collapsed)</td>
+<td>5 MultiQC panels</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Spot the libraries below the alignment, duplication or conversion floors.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/run_qc_light.png" rel="noopener" target="_blank"><img alt="Run QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/run_qc_light.png"></a></p>
-<p>The floor cards read the worst library of the selection: mapping efficiency
-passes at 70 %, since bisulfite alignment searches four converted genomes, and
-duplication up to 10 %. Conversion is read as <code>100 - %CHH</code>, which assumes
-near-zero non-CpG methylation, as in mammals; on a plant run judge it on an
-unmethylated spike-in instead. A parallel-coordinates panel draws each library
-across the QC ratios, coloured by the design factor.</p>
+<p><strong>Data &amp; QC</strong> · <em>Which libraries fail the alignment, duplication or conversion floors?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/run_qc_light.webp" rel="noopener" target="_blank"><img alt="Run QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/run_qc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/run_qc_dark.webp" rel="noopener" target="_blank"><img alt="Run QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/run_qc_dark.webp#only-dark"></a></p>
+<p>The read pairs Bismark analysed, followed to those aligned and kept; the worst
+mapping efficiency, which passes at 70% since a bisulfite aligner tops out in
+the seventies; the worst duplication (10% passes) and the worst conversion,
+read as <code>100 - %CHH</code>. Then the conversion per library, coloured by group, and
+five run-summary metrics on parallel axes: a library that crosses the others on
+conversion is a bisulfite problem, on alignment and duplication a library
+preparation one. Bismark's three report tables are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Reads analysed</code> and <code>Sequences kept after deduplication</code>
-ranges.</p>
+<p><strong>Filters</strong> · <code>Read pairs analysed</code>, <code>CpG methylation</code> and <code>Conversion
+efficiency</code> ranges on <code>bismark_summary_report</code>, <code>Mapping efficiency</code> on
+<code>bismark_alignment_summary</code>, and <code>Duplication rate</code> and <code>Alignments kept
+after deduplication</code> on <code>bismark_deduplication_summary</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6175,36 +6232,40 @@ ranges.</p>
 </thead>
 <tbody>
 <tr>
-<td>Alignment and duplication</td>
-<td>4 cards: % aligned, % duplicates, mapping efficiency floor, duplication ceiling</td>
+<td>Run QC at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Cytosine yield</td>
-<td>2 cards, <em>Bisulfite conversion efficiency per library</em></td>
+<td>Conversion per library</td>
+<td><em>Bisulfite conversion per library</em></td>
 </tr>
 <tr>
 <td>Library QC profile</td>
-<td><em>Per-library QC profile</em> (parallel coordinates)</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Library detail</td>
-<td>Bismark run summary, alignment and deduplication tables (collapsed)</td>
+<td>Library detail (collapsed)</td>
+<td><em>Bismark run summary</em>, <em>Alignment summary</em>, <em>Deduplication summary</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Measure how deep and how evenly the reference is covered.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/coverage_light.png" rel="noopener" target="_blank"><img alt="Coverage dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/coverage_light.png"></a></p>
-<p>Qualimap BamQC on the deduplicated alignments. Mean depth counts the bases at
-zero, so on a shallow run the genome-fraction curve is the number to judge,
-and a low GC share is the conversion itself. Windowed depth is mapped back
-onto its contigs as one lane per library.</p>
+<p><strong>Data &amp; QC</strong> · <em>How deep and how evenly do the alignments cover the reference?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/coverage_light.webp" rel="noopener" target="_blank"><img alt="Coverage dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/coverage_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/coverage_dark.webp" rel="noopener" target="_blank"><img alt="Coverage dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/coverage_dark.webp#only-dark"></a></p>
+<p>Qualimap BamQC on the deduplicated alignments. The mean depth, the share of the
+reference covered at least once, Qualimap's duplicate estimate and the mean
+mapping quality on Bowtie 2's 0 to 42 scale. Mean depth counts the bases at
+zero, so on a shallow run judge the breadth. Then the depth along the
+reference, one lane per library, and side by side the bases at each depth and
+the share of the reference covered at least X deep. The depth threshold in that
+section's bar narrows that section only. The BamQC table is collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Contig</code> on the windowed depth and a <code>Depth threshold</code> on the
-genome fraction.</p>
+<p><strong>Filters</strong> · <code>Contig</code> on <code>qualimap_coverage_across_reference</code>; the
+<code>Depth threshold</code> range sits in the bar of <em>Depth distribution</em>.</p>
 <table>
 <thead>
 <tr>
@@ -6214,35 +6275,40 @@ genome fraction.</p>
 </thead>
 <tbody>
 <tr>
-<td>Depth summary</td>
-<td>4 cards: mean depth, duplication rate, mean MAPQ, GC of mapped bases</td>
+<td>Coverage at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
 <td>Depth along the reference</td>
-<td><em>Read depth along the reference</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Depth distribution</td>
-<td><em>Bases of the reference at each depth</em>, <em>Share of the reference covered at least X deep</em></td>
+<td>2 advanced visualizations, under a filter bar</td>
 </tr>
 <tr>
-<td>Coverage detail</td>
-<td><em>Qualimap BamQC summary</em> (collapsed)</td>
+<td>Coverage detail (collapsed)</td>
+<td><em>Qualimap BamQC summary</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Decide whether a read-position trim is needed.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/bias_and_context_light.png" rel="noopener" target="_blank"><img alt="Bias and context dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/bias_and_context_light.png"></a></p>
-<p>One M-bias explorer over all six tables of Bismark's M-bias file, opening on
-CpG. A CpG curve that has not flattened by the end of the read is Bismark's
-own advice to add an <code>--ignore</code> or <code>--ignore_r2</code> trim and re-extract; a CHH
-curve that climbs at one end is unconverted cytosine at those positions.</p>
+<p><strong>Methylome</strong> · <em>Does the methylation extraction need a read-position trim?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/bias_and_context_light.webp" rel="noopener" target="_blank"><img alt="Bias and context dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/bias_and_context_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/bias_and_context_dark.webp" rel="noopener" target="_blank"><img alt="Bias and context dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/bias_and_context_dark.webp#only-dark"></a></p>
+<p>CpG and CHG methylation, the worst CHH methylation against a 2% line (the 98%
+conversion floor on a mammalian genome) and the methylated calls by context.
+Then one M-bias explorer over the six tables of Bismark's M-bias file; the bar
+of its section picks the context and the read, opens on CpG and narrows the
+explorer only. A CpG curve that has not flattened by the end of the read calls
+for an <code>--ignore</code> or <code>--ignore_r2</code> trim and a re-extraction. The raw M-bias
+positions and the per-context counts are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Cytosine context</code>, <code>Read</code> and a <code>Read position</code> range.</p>
+<p><strong>Filters</strong> · a <code>Read position</code> range on <code>bismark_mbias_all_contexts</code>;
+<code>Cytosine context</code> and <code>Read</code> sit in the bar of <em>M-bias</em>.</p>
 <table>
 <thead>
 <tr>
@@ -6251,30 +6317,37 @@ curve that climbs at one end is unconverted cytosine at those positions.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>Context at a glance</td>
+<td>4 cards</td>
+</tr>
 <tr>
 <td>M-bias</td>
-<td><em>M-bias by context and read</em></td>
+<td>1 advanced visualization, under a filter bar</td>
 </tr>
 <tr>
-<td>Context detail</td>
-<td><em>M-bias, every context and read</em>, <em>Methylation by context</em> (collapsed)</td>
+<td>Context detail (collapsed)</td>
+<td><em>M-bias, every context and read</em>, <em>Methylation by context</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Check bimodality and whether the libraries group by the design.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/global_methylome_light.png" rel="noopener" target="_blank"><img alt="Global methylome dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/global_methylome_light.png"></a></p>
-<p>The per-CpG bedGraphs are streamed into 10 kb windows that hold enough CpGs in
-every library. A healthy mammalian methylome is bimodal, and a low peak that
-drifted upward points to incomplete conversion or too little depth. Windows
-split into CpG-density tertiles stand in for an island annotation, which
-methylseq does not bundle. The cohort is read as a PCA coloured by the design
-factor, a library correlation matrix and the windows that vary most.</p>
+<p><strong>Methylome</strong> · <em>Is each methylome bimodal, and are CpG-dense regions unmethylated?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/methylation_levels_light.webp" rel="noopener" target="_blank"><img alt="Methylation levels dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/methylation_levels_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/methylation_levels_dark.webp" rel="noopener" target="_blank"><img alt="Methylation levels dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/methylation_levels_dark.webp#only-dark"></a></p>
+<p>Bismark's per-CpG calls, streamed into 2% buckets per library and into 10 kb
+windows. The share of CpGs at 98 to 100%, the share at 0 to 2%, the median
+window methylation and the median window per CpG-density class. Then the
+per-CpG methylation density, one curve per library, and window methylation by
+CpG-density class. A healthy mammalian methylome is bimodal. The CpG-density
+tertiles stand in for a CpG-island annotation, which nf-core/methylseq does not
+ship. Nothing on this tab is collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>CpG density class</code> and a <code>Window methylation</code> range.</p>
+<p><strong>Filters</strong> · <code>CpG density class</code> and a <code>Window methylation</code> range on
+<code>bismark_binned_methylation</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6284,34 +6357,34 @@ factor, a library correlation matrix and the windows that vary most.</p>
 </thead>
 <tbody>
 <tr>
+<td>Levels at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
 <td>Per-CpG methylation</td>
-<td>2 cards, <em>Per-CpG methylation density</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>CpG density</td>
-<td>2 cards, <em>Methylation by CpG-density class</em></td>
-</tr>
-<tr>
-<td>Cohort structure</td>
-<td><em>Libraries on the first components of their binned methylome</em>, <em>Library correlation over the shared windows</em>, <em>The 150 windows that move most across the cohort</em></td>
+<td><em>Methylation by CpG-density class</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Locate the differences between the two groups.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/group_comparison_light.png" rel="noopener" target="_blank"><img alt="Group comparison dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/group_comparison_light.png"></a></p>
-<p>methylseq ships no differential-methylation caller, so this is the screen the
-published files support, labelled as one: every eligible window is tested with
-a two-sample t-test on arcsine-transformed proportions and Benjamini-Hochberg
-correction, and called at padj under 0.05 with a difference of at least ten
-points. A Manhattan and a volcano open the tab; a locus navigator then drives
-the per-library windows and the group difference on the same region.</p>
+<p><strong>Methylome</strong> · <em>Do the libraries group by the design?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/cohort_structure_light.webp" rel="noopener" target="_blank"><img alt="Cohort structure dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/cohort_structure_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/cohort_structure_dark.webp" rel="noopener" target="_blank"><img alt="Cohort structure dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/cohort_structure_dark.webp#only-dark"></a></p>
+<p>The library-by-window matrix read three ways. The libraries placed by the PCA,
+as a ring by group, and the 150 most variable windows ranked by contig. Then
+the PCA coloured by group, where a lasso makes an analysis group, and the
+pairwise Pearson correlation, clustered. The heatmap of the 150 windows is
+collapsed, too tall to open by default. A library that lands with the wrong
+block in all three is a swap, a mislabelled sheet or a conversion failure.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Call</code>, and <code>Methylation difference</code> and <code>Adjusted p</code>
-ranges.</p>
+<p><strong>Filters</strong> · <code>Contig</code> on <code>bismark_top_variable_windows</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6321,42 +6394,88 @@ ranges.</p>
 </thead>
 <tbody>
 <tr>
-<td>Window comparison</td>
-<td>4 cards, <em>Tested windows along the genome</em>, <em>Window methylation difference against significance</em></td>
+<td>Cohort at a glance</td>
+<td>2 cards</td>
 </tr>
 <tr>
-<td>Effect size distribution</td>
-<td><em>Distribution of the per-window difference</em></td>
+<td>Library relationships</td>
+<td>2 advanced visualizations</td>
 </tr>
 <tr>
-<td>Methylation at a locus</td>
-<td>the locus navigator and two tracks that follow its region</td>
+<td>Variable windows (collapsed)</td>
+<td>1 advanced visualization</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Methylome</strong> · <em>Which windows differ in methylation between the two groups?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/group_comparison_light.webp" rel="noopener" target="_blank"><img alt="Group comparison dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/group_comparison_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/group_comparison_dark.webp" rel="noopener" target="_blank"><img alt="Group comparison dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/methylseq/group_comparison_dark.webp#only-dark"></a></p>
+<p>Every 10 kb window covered in every library is tested between the two levels
+of the design factor, a t-test on arcsine-transformed proportions with
+Benjamini-Hochberg correction, and called at padj below 0.05 with at least ten
+points of difference. The windows tested and called, the median difference and
+the strongest call. Then the Manhattan of every tested window, and the volcano
+(its View switch draws a QQ plot) beside the spread of the differences. The
+locus view, a navigator with two tracks on its region, and the window table are
+collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Call</code>, and <code>Methylation difference</code> and <code>Adjusted p</code>
+ranges, on <code>bismark_window_group_compare</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Calls at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Window detail</td>
-<td><em>Tested windows</em> (collapsed)</td>
+<td>Along the genome</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Effect and significance</td>
+<td>1 advanced visualization + <em>How the differences spread</em></td>
+</tr>
+<tr>
+<td>Methylation at a locus (collapsed)</td>
+<td>3 advanced visualizations: the locus navigator, the binned methylation per library and the group difference on the same region</td>
+</tr>
+<tr>
+<td>Window detail (collapsed)</td>
+<td><em>Tested windows</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 <div class="admonition tip">
 <p class="admonition-title">A window screen, not a DMR caller</p>
-<p>The unit is a 10 kb window, not a CpG or a called DMR, and with few
-libraries a side the screen is low-powered by construction. Without a
-design table, or without a factor of exactly two levels, the tab is
-pruned.</p>
+<p>nf-core/methylseq ships no differential-methylation caller. The unit is a
+10 kb window, not a CpG or a called DMR, and with few libraries a side the
+screen is low-powered by construction: read clusters of windows, not a lone
+hit. Without a design table, or without a factor of exactly two levels, the
+comparison is pruned and only the per-library lanes of the locus section
+remain.</p>
 </div>
 </div>
 </div>
 </div>
-<p>Tables and point views select on their entity column: the pinned sample sheet
-on <code>sample_id</code>; the Bismark, Qualimap and M-bias tables and the per-library
-profiles on <code>sample</code>; the group comparison table and the two window tracks on
-<code>window_id</code>; the Manhattan panel on <code>chromosome</code>. A pick narrows the other tiles
-of its collection and follows the project links to the collections they reach.
-The methylation-by-context table, the binned methylation track and the depth
-histogram narrow nothing, and neither does the cohort PCA: their collections
-have no outgoing link and no sibling tile.</p>
+<p>A picked row or point becomes a filter that narrows the other tiles of its
+collection and follows the project links to the collections they reach. The
+pinned sample sheet selects on <code>sample_id</code>; the Bismark, Qualimap and M-bias
+tables and the per-library profiles on <code>sample</code>; the PCA on <code>sample_id</code>; the
+tested-window table and the two window tracks on <code>window_id</code>; the Manhattan on
+<code>chromosome</code>. The cohort-level collections (correlation, variable windows,
+comparison) hold the libraries as columns or test across them, so the sample
+filters do not narrow them; their own tab filters do.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/methylseq, it does not run the pipeline.

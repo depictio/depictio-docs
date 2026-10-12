@@ -5409,19 +5409,17 @@
 </div>
 
 <p>The eager template follows an nf-core/eager run from raw lanes to genotypes, one
-question per tab:</p>
+question per tab, in three groups:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: FastQC, AdapterRemoval and bcftools panels from the run's MultiQC report, with its general statistics</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 3h14a2 2 0 0 1 2 2v7.08a6 6 0 0 0-4.32.92H12v4h1.08c-.11.68-.11 1.35 0 2H4a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2m0 4v4h6V7zm8 0v4h6V7zm-8 6v4h6v-4zm19 9v-1c0-1.33-2.67-2-4-2s-4 .67-4 2v1zm-4-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.89 2-2-.89-2-2-2"></path></svg></span> <strong>Run and library hub</strong>: every library, the lanes merged into it, and all of its QC numbers on one set of axes</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 13v6h-1l-2-2h-8V9H5l-2 2H2V5h1l2 2h8v8h6l2-2Z"></path></svg></span> <strong>Reads and read fate</strong>: where each sequenced read stops, from trimming and collapsing to deduplication</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-5h4z"></path></svg></span> <strong>Mapping, endogenous DNA and duplication</strong>: how much of each extract is the target organism, and how much of it survives filtering</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Authentication</strong>: terminal deamination against fragment length, the signals that say whether the DNA is ancient</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> <strong>Coverage, sex and genotyping</strong>: depth per contig, the depth distribution, a locus navigator and the variants called</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: FastQC, AdapterRemoval and bcftools panels from the regenerated MultiQC report, every library on every tool at once, and where each sequenced read stops, from trimming and collapsing to deduplication</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Ancient DNA</strong>: how much of each extract is the target organism, how many distinct molecules each library holds, and whether the DNA is damaged and short, as ancient DNA is</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> <strong>Genome</strong>: depth per contig and the depth distribution, depth and mapping quality at one locus, and the variants called per sample</li>
 </ul>
-<p>A <code>Run at a glance</code> strip, the <code>Sample scope</code> filters and the collapsed library
-sheet are pinned to the top of every tab, and a collapsed <code>QC thresholds</code> group
-with the BamQC reference table to the bottom, so a coverage, duplication or
-endogenous-DNA floor narrows the library hub and, through it, every tab.</p>
+<p>The persistent <code>Sample filters</code> (sample, library, UDG treatment) sit in the left
+panel and narrow every tab. Below them, the collapsed <code>QC thresholds</code> set
+coverage, duplication and endogenous-DNA floors: the collections they read link
+back to the library hub, so a floor narrows the hub and, through it, every tab.</p>
 <div class="admonition warning">
 <p class="admonition-title">The MultiQC report must be regenerated</p>
 <p>eager 2.4.5 ships MultiQC 1.13, which writes no parquet, and Depictio reads
@@ -5439,9 +5437,10 @@ the TSV there (several are concatenated, one per batch).</p>
 <div class="admonition note">
 <p class="admonition-title">Optional branches appear when the run enabled them</p>
 <p>Sex.DetERRmine, MTNucRatio, ANGSD nuclear contamination, MaltExtract and
-Kraken are optional collections, each bound to one table. A run that did not
-enable the branch ingests without it, and its section keeps only the short
-note that explains what would be there.</p>
+Kraken are optional collections, each bound to one table in a collapsed
+section: <em>Off-target screen</em> on Endogenous DNA, <em>Contamination</em> on
+Authentication, <em>Sex determination</em> on Coverage. A run that did not enable
+the branch ingests without it, and the import drops its table.</p>
 </div>
 <hr>
 <h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M19.22 4c.28 0 .53 0 .74.05.17 1.39-.02 4.25-3.3 7.53-1.7 1.71-3.73 3.02-6.01 3.89l-2.15-2.1c.92-2.31 2.23-4.34 3.92-6.03C15.18 4.58 17.64 4 19.22 4m0-2c-1.98 0-4.98.69-8.22 3.93-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.38.38.89.61 1.42.61.23 0 .47-.06.7-.15A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61S20.7 2 19.22 2m-4.68 7.46c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
@@ -5474,8 +5473,8 @@ apply. See <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger</a
 <h2 id="reference"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.5c-1.35-.85-3.8-1.5-5.5-1.5-1.65 0-3.35.3-4.75 1.05-.1.05-.15.05-.25.05-.25 0-.5-.25-.5-.5V6c.6-.45 1.25-.75 2-1 1.11-.35 2.33-.5 3.5-.5 1.95 0 4.05.4 5.5 1.5 1.45-1.1 3.55-1.5 5.5-1.5 1.17 0 2.39.15 3.5.5.75.25 1.4.55 2 1v14.6c0 .25-.25.5-.5.5-.1 0-.15 0-.25-.05-1.4-.75-3.1-1.05-4.75-1.05-1.7 0-4.15.65-5.5 1.5M12 8v11.5c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5V7c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5m1 3.5c1.11-.68 2.6-1 4.5-1 .91 0 1.76.09 2.5.28V9.23c-.87-.15-1.71-.23-2.5-.23q-2.655 0-4.5.84zm4.5.17c-1.71 0-3.21.26-4.5.79v1.69c1.11-.65 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24v-1.5c-.87-.16-1.71-.23-2.5-.23m2.5 2.9c-.87-.16-1.71-.24-2.5-.24-1.83 0-3.33.27-4.5.8v1.69c1.11-.66 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24z"></path></svg></span> Reference<a class="headerlink" href="#reference" title="Permanent link">¶</a></h2>
 <p>The template reads the run's <code>--input</code> TSV, the regenerated MultiQC report and the
 tool tables behind it: AdapterRemoval, samtools flagstat, endorS.py, Picard
-MarkDuplicates, preseq, DamageProfiler, Qualimap BamQC and bcftools stats. 59 of
-its 84 tiles carry a <code>use:</code> catalog reference, so a tile says where its panel
+MarkDuplicates, preseq, DamageProfiler, Qualimap BamQC and bcftools stats. 63 of
+its 89 tiles carry a <code>use:</code> catalog reference, so a tile says where its panel
 comes from. Every file is matched on its name, never on the per-library directory
 around it.</p>
 <div class="admonition info">
@@ -6142,28 +6141,64 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Six tabs, read as a funnel: is the report normal, how do the libraries compare,
-where do the reads go, how much of each extract is the organism, is it ancient,
-and what does the coverage support. Each tab below carries the <strong>same icon and
-colour the dashboard gives it</strong>. A picked row or point becomes a filter that
-follows the project links to the tiles it reaches.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 3h14a2 2 0 0 1 2 2v7.08a6 6 0 0 0-4.32.92H12v4h1.08c-.11.68-.11 1.35 0 2H4a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2m0 4v4h6V7zm8 0v4h6V7zm-8 6v4h6v-4zm19 9v-1c0-1.33-2.67-2-4-2s-4 .67-4 2v1zm-4-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.89 2-2-.89-2-2-2"></path></svg></span> Run and library hub</label><label for="__tabbed_2_3"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 13v6h-1l-2-2h-8V9H5l-2 2H2V5h1l2 2h8v8h6l2-2Z"></path></svg></span> Reads and read fate</label><label for="__tabbed_2_4"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-5h4z"></path></svg></span> Mapping, endogenous DNA and duplication</label><label for="__tabbed_2_5"><span class="twemoji mc-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Authentication</label><label for="__tabbed_2_6"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Coverage, sex and genotyping</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then nine child tabs in three groups, read as a
+funnel from the reads to the genotypes called from an ancient extract. Each tab
+below carries the <strong>same icon and colour the dashboard gives it</strong>, so the page and
+the app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Libraries, Read fate</td>
+</tr>
+<tr>
+<td>Ancient DNA</td>
+<td>Endogenous DNA, Complexity, Authentication</td>
+</tr>
+<tr>
+<td>Genome</td>
+<td>Coverage, Locus, Genotypes</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and, except on MultiQC, a strip of four
+cards, then at most three open sections; tables, record cards and the optional
+branches follow, collapsed. The template has no group column: the library hub
+(<code>samples</code>) is one row per eager library, and the biological sample plays the
+group's part. The persistent <em>Sample filters</em> (sample, library, UDG treatment)
+sit in the left panel and narrow every tab through the project links. The
+persistent <em>QC thresholds</em>, collapsed below them, filter the Qualimap BamQC
+summary (mean coverage, duplication rate) and endorS.py (endogenous DNA); both
+collections link back to the hub, so a floor narrows the hub and the hub fans the
+surviving libraries out. The <em>Sample sheet</em> (the library hub) and <em>Reference
+tables</em> (the BamQC summary the thresholds read) are pinned, collapsed, to the
+bottom of every child tab.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:10"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><input id="__tabbed_2_8" name="__tabbed_2" type="radio"><input id="__tabbed_2_9" name="__tabbed_2" type="radio"><input id="__tabbed_2_10" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 3h14a2 2 0 0 1 2 2v7.08a6 6 0 0 0-4.32.92H12v4h1.08c-.11.68-.11 1.35 0 2H4a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2m0 4v4h6V7zm8 0v4h6V7zm-8 6v4h6v-4zm19 9v-1c0-1.33-2.67-2-4-2s-4 .67-4 2v1zm-4-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.89 2-2-.89-2-2-2"></path></svg></span> Libraries</label><label for="__tabbed_2_4"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 5H4V2H2v20h20v-2H4V9c4.09 0 6.13 2 8.29 4.21S17.09 18 22 18v-2c-4.09 0-6.13-2-8.29-4.21S8.91 7 4 7h18Z"></path></svg></span> Read fate</label><label for="__tabbed_2_5"><span class="twemoji mc-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Endogenous DNA</label><label for="__tabbed_2_6"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 17H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h12v2H4v12h7v-2l4 3-4 3zm8 4V7H8v6H6V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-2h2v2z"></path></svg></span> Complexity</label><label for="__tabbed_2_7"><span class="twemoji mc-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 11c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4zm-9 10c3.75-1 7-5.46 7-9.78V6.3l-7-3.12L5 6.3v4.92C5 15.54 8.25 20 12 21m-2-4-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9"></path></svg></span> Authentication</label><label for="__tabbed_2_8"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Coverage</label><label for="__tabbed_2_9"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5A2.5 2.5 0 0 1 9.5 9 2.5 2.5 0 0 1 12 6.5M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7m0 2a5 5 0 0 0-5 5c0 1 0 3 5 9.71C17 12 17 10 17 9a5 5 0 0 0-5-5"></path></svg></span> Locus</label><label for="__tabbed_2_10"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Genotypes</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Read the report module by module.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/multiqc_light.png"></a></p>
-<p>The tab holds only the MultiQC panels no other tile redraws from a tool
-table: the general statistics with endorS.py's endogenous DNA share, FastQC
-on the raw lanes, the AdapterRemoval collapsed-read length, and the four
-bcftools variant panels. Every panel with a tile twin elsewhere (flagstat,
-Picard, preseq, DamageProfiler, Qualimap) was left to that tile.</p>
+<p><em>Ancient DNA, from the reads to authentication, coverage and genotypes.</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/overview_dark.webp#only-dark"></a></p>
+<p>A short hero links the run's provenance: eager 2.4.5 writes no <code>params.json</code>,
+so the dialog lists the software versions the run recorded. <em>About this
+dashboard</em> says how the two filter levels work, <em>The run</em> lists facts read
+from the run's tables (libraries and samples, the most common UDG treatment,
+the organism, the lanes and reads sequenced), and <em>Pipeline</em> walks the six
+steps from trimming to genotyping, each linked to the version of its tool and
+to its tab. The findings are live values: they follow the filters. Each figure
+draws one point or curve per library, so its legend is hidden and the caption
+says what the colour is.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Library</code>, <code>Sample</code> and <code>UDG treatment</code> on the library hub,
-persistent and pinned to the top of every tab; <code>Mean coverage</code>,
-<code>Duplication rate</code> and <code>Endogenous DNA</code> ranges in the collapsed
-<em>QC thresholds</em> group pinned to the bottom; plus a tab-local
-<code>Report sample</code>.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> has its own
+filter bar (sample and library), and <em>Findings</em> another (sample and UDG
+treatment): each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -6173,44 +6208,40 @@ persistent and pinned to the top of every tab; <code>Mean coverage</code>,
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards: libraries, biological samples, lanes merged, reads sequenced</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Library hub</em></td>
+<td>Key figures</td>
+<td>4 headline cards: libraries by sample, endogenous DNA, C to T at the first base, genome covered at 1X</td>
 </tr>
 <tr>
-<td>MultiQC overview</td>
-<td><em>General statistics</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: endogenous DNA before against after filtering, the preseq complexity curves, the ancient-DNA plane and the genome fraction curves</td>
 </tr>
 <tr>
-<td>Read quality and trimming</td>
-<td>5 FastQC panels, <em>Collapsed-read length distribution</em></td>
-</tr>
-<tr>
-<td>Variant calling</td>
-<td>4 bcftools panels</td>
-</tr>
-<tr>
-<td>Reference metrics</td>
-<td><em>BamQC summary</em></td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Compare every library on every tool at once.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/run_and_library_hub_light.png" rel="noopener" target="_blank"><img alt="Run and library hub dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/run_and_library_hub_light.png"></a></p>
-<p>One row per library pools endorS.py, Picard, Qualimap and DamageProfiler, and
-a parallel-coordinates panel draws each library as one line across those axes,
-each rescaled to its own range. Below it the pooled table sits beside a linked
-<code>Library record</code> card, which folds to a slim rail until a row is picked and
-then opens that library field by field.</p>
+<p><strong>Data &amp; QC</strong> · <em>Did sequencing and trimming work for every library?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/multiqc_dark.webp#only-dark"></a></p>
+<p>MultiQC panels only, from the regenerated report, and only those no tile
+redraws from a tool table: flagstat, Picard, preseq, DamageProfiler and
+Qualimap are left to their tiles. Open: general statistics (endorS.py's
+endogenous DNA included), FastQC sequence counts and the AdapterRemoval
+collapsed-read length, then per-base quality and GC content. Adapter content
+and duplication levels, and the four bcftools panels (substitution types,
+quality, indel lengths, depths), are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Lane</code> and <code>Sequencing run</code> on the per-lane table.</p>
+<p><strong>Filters</strong> · <code>Report sample</code> on <code>multiqc_data</code>, the sample as the report
+names it.</p>
 <table>
 <thead>
 <tr>
@@ -6219,34 +6250,88 @@ then opens that library field by field.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>QC overview</td>
+<td>3 MultiQC panels</td>
+</tr>
+<tr>
+<td>Read quality</td>
+<td>2 MultiQC panels</td>
+</tr>
+<tr>
+<td>QC details (collapsed)</td>
+<td>2 MultiQC panels</td>
+</tr>
+<tr>
+<td>Variant calling (collapsed)</td>
+<td>4 MultiQC panels</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>How do the libraries compare on every tool at once?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/libraries_light.webp" rel="noopener" target="_blank"><img alt="Libraries dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/libraries_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/libraries_dark.webp" rel="noopener" target="_blank"><img alt="Libraries dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/libraries_dark.webp#only-dark"></a></p>
+<p>Libraries split by sample, the reads per lane, the reads sequenced (a funnel to
+the reads AdapterRemoval kept) and the mapping quality. Then the per-library QC
+profile: the pipeline-local <code>eager/library_qc.py</code> recipe joins endorS.py,
+Picard, Qualimap and DamageProfiler on the library id, and a
+parallel-coordinates tile draws one line per library across seven axes, each
+rescaled to its range. Brush an axis to narrow the profile. Collapsed: the
+pooled table with the record of the row you pick beside it, and the per-lane
+AdapterRemoval table.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · a <code>Clonality (%)</code> range on <code>eager_library_qc</code> and <code>Lane</code> on
+<code>eager_lane_stats</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Libraries at a glance</td>
+<td>4 cards</td>
+</tr>
 <tr>
 <td>Library QC profile</td>
-<td><em>Per-library QC profile</em> (parallel coordinates)</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Library detail</td>
-<td><em>Library QC, pooled</em>, with the linked <em>Library record</em></td>
+<td>Library detail (collapsed)</td>
+<td><em>Library QC, pooled</em> + a library record card</td>
 </tr>
 <tr>
-<td>Libraries and lanes</td>
-<td><em>Per-lane trimming and collapsing</em> (collapsed)</td>
+<td>Lanes (collapsed)</td>
+<td><em>Per-lane trimming and collapsing</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>See where every read stops, from trimming to deduplication.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/reads_and_read_fate_light.png" rel="noopener" target="_blank"><img alt="Reads and read fate dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/reads_and_read_fate_light.png"></a></p>
-<p>A Sankey chains AdapterRemoval, samtools flagstat and Picard into one flow
-per library, five stages with the reads that fall out at each. The accounting
-is exact: the reads AdapterRemoval retains over a library's lanes equal the
-pre-filter flagstat total, so nothing is apportioned. <code>Lane yield</code> then shows
-what each lane returned and how its collapse rate relates to retained length.</p>
+<p><strong>Data &amp; QC</strong> · <em>Where does every sequenced read stop?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/read_fate_light.webp" rel="noopener" target="_blank"><img alt="Read fate dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/read_fate_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/read_fate_dark.webp" rel="noopener" target="_blank"><img alt="Read fate dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/read_fate_dark.webp#only-dark"></a></p>
+<p>Reads sequenced split by trimming outcome, the same reads by final fate (a
+ring), the collapse rate and the discard rate per lane. Then one sankey, five
+stages with the reads that fall out at each, its flows coloured by where they
+end. The pipeline-local <code>eager/read_fate.py</code> recipe chains AdapterRemoval,
+samtools flagstat and Picard MarkDuplicates, and the accounting is exact: a
+library's retained reads equal its pre-filter flagstat total, so nothing is
+apportioned. Then the lane yield: reads kept and the discard share per lane,
+and the collapse rate against the retained length. The fate table is
+collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Trimming outcome</code> and <code>Final fate</code> on the read fate, plus
-<code>Lane</code>, which narrows the per-lane tiles only.</p>
+<p><strong>Filters</strong> · <code>Final fate</code> on <code>eager_read_fate</code> and <code>Lane</code> on
+<code>eager_lane_stats</code>. There is no trimming-outcome filter: it would leave
+the strip's first card on one outcome.</p>
 <table>
 <thead>
 <tr>
@@ -6256,34 +6341,42 @@ what each lane returned and how its collapse rate relates to retained length.</p
 </thead>
 <tbody>
 <tr>
+<td>Reads at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
 <td>Read fate</td>
-<td>4 cards, <em>Read fate, sequencing to deduplication</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Lane yield</td>
-<td><em>Reads kept for mapping, per lane</em>, <em>Collapse rate against retained length</em>, <em>Share of reads discarded on quality or length, per lane</em></td>
+<td><em>Reads kept for mapping, per lane</em>, <em>Reads discarded, per lane</em>, 1 advanced visualization (collapse rate against retained length)</td>
 </tr>
 <tr>
-<td>Read fate tables</td>
-<td><em>Read fate, as counts</em> (collapsed)</td>
+<td>Read fate table (collapsed)</td>
+<td><em>Read fate, as counts</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Measure the endogenous share, the duplication and the remaining complexity.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/mapping_endogenous_dna_and_duplication_light.png" rel="noopener" target="_blank"><img alt="Mapping, endogenous DNA and duplication dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/mapping_endogenous_dna_and_duplication_light.png"></a></p>
-<p>endorS.py gives the endogenous share before and after the mapping-quality
-filter, and the scatter of one against the other puts the on-target signal
-lost to filtering below the diagonal. <code>Duplication and complexity</code> reads
-Picard next to the preseq extrapolation, with endogenous DNA against clonality
-between them, to say whether more sequencing would still buy unique reads.
-<code>Off-target screen</code> holds the MaltExtract and Kraken reports when a screen ran.</p>
+<p><strong>Ancient DNA</strong> · <em>How much of each extract is the target organism?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/endogenous_dna_light.webp" rel="noopener" target="_blank"><img alt="Endogenous DNA dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/endogenous_dna_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/endogenous_dna_dark.webp" rel="noopener" target="_blank"><img alt="Endogenous DNA dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/endogenous_dna_dark.webp#only-dark"></a></p>
+<p>Endogenous DNA before filtering, after filtering (a share of 100%), the points
+lost between them and the reads given to the mapper (a funnel to those mapped,
+from flagstat's pre-filter stage). Then each library's endogenous DNA before
+against after filtering, the on-target signal lost to filtering below the
+diagonal, and the mapped reads per library and stage. A low share is normal
+for ancient extracts, where most DNA is environmental. The off-target screen
+(MaltExtract and Kraken, when the run enabled them) and the endorS.py and
+flagstat tables are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Filter stage</code> on flagstat, an <code>Endogenous DNA after
-filtering</code> range and a <code>Picard duplication</code> range.</p>
+<p><strong>Filters</strong> · an <code>Endogenous DNA after filtering</code> range on
+<code>endorspy_endogenous</code>. There is no stage filter, for the same reason there
+is no trimming-outcome filter on Read fate.</p>
 <table>
 <thead>
 <tr>
@@ -6293,42 +6386,45 @@ filtering</code> range and a <code>Picard duplication</code> range.</p>
 </thead>
 <tbody>
 <tr>
-<td>Endogenous DNA</td>
-<td>4 cards, <em>Endogenous DNA, before against after filtering</em></td>
+<td>Endogenous DNA at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Before and after filtering</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Alignment</td>
 <td><em>Mapped reads before and after the filter</em></td>
 </tr>
 <tr>
-<td>Duplication and complexity</td>
-<td>4 cards, <em>Endogenous DNA against clonality</em>, <em>Duplication against what survived it</em>, <em>Library complexity curve</em></td>
+<td>Off-target screen (collapsed)</td>
+<td><em>MaltExtract authentication overview</em>, <em>Kraken classification</em></td>
 </tr>
 <tr>
-<td>Off-target screen</td>
-<td><em>MaltExtract authentication overview</em>, <em>Kraken classification</em> (optional)</td>
-</tr>
-<tr>
-<td>Mapping tables</td>
-<td>endorS.py, flagstat and Picard tables (collapsed)</td>
+<td>Endogenous tables (collapsed)</td>
+<td><em>Endogenous DNA per library</em>, <em>Flagstat, pre- and post-filter</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Establish whether the DNA is ancient, and how contaminated.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/authentication_light.png" rel="noopener" target="_blank"><img alt="Authentication dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/authentication_light.png"></a></p>
-<p>The authenticity plane puts terminal deamination against fragment length, one
-point per library: short and damaged reads as ancient, long and undamaged as
-modern contamination, short but undamaged as over-sheared modern DNA. The full
-DamageProfiler misincorporation profile at both read ends and the fragment
-length distribution follow. <code>Contamination</code> holds the ANGSD and MTNucRatio
-estimates when the run computed them.</p>
+<p><strong>Ancient DNA</strong> · <em>How many distinct molecules does each library hold?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/complexity_light.webp" rel="noopener" target="_blank"><img alt="Complexity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/complexity_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/complexity_dark.webp" rel="noopener" target="_blank"><img alt="Complexity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/complexity_dark.webp#only-dark"></a></p>
+<p>The Picard duplication rate, the reads checked (a funnel to the unique reads
+kept), the duplicates removed and the unique reads kept. Then the screening
+plane, endogenous DNA against clonality with each point sized by depth, and
+side by side the duplication against the unique reads kept and the preseq
+complexity curves. A library worth sequencing deeper is high in endogenous DNA
+and low in duplicates; a flattened curve means the extract, not the sequencing,
+is the limit. eager's preseq run wrote no bootstrap interval, so the curves
+carry no band. The Picard table is collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Read end</code>, <code>Distance from the read end</code>, <code>Strand</code> and
-<code>Fragment length</code> on the DamageProfiler profiles.</p>
+<p><strong>Filters</strong> · a <code>Picard duplication</code> range on
+<code>picard_markduplicates_metrics</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6338,43 +6434,44 @@ estimates when the run computed them.</p>
 </thead>
 <tbody>
 <tr>
-<td>Authenticity plane</td>
-<td>4 cards, <em>The ancient-DNA plane</em></td>
+<td>Duplication at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Misincorporation signature</td>
-<td><em>Misincorporation profile, both read ends</em></td>
+<td>Screening plane</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Fragment length</td>
-<td><em>Fragment length distribution</em></td>
+<td>Duplication and depth</td>
+<td>2 advanced visualizations: duplication against what survived it and the library complexity curve</td>
 </tr>
 <tr>
-<td>Contamination</td>
-<td><em>Nuclear contamination (ANGSD)</em>, <em>Mitochondrial to nuclear ratio</em> (optional)</td>
-</tr>
-<tr>
-<td>Authentication tables</td>
-<td>authenticity summary, misincorporation and fragment length tables (collapsed)</td>
+<td>Duplication table (collapsed)</td>
+<td><em>Duplication metrics per library</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Read depth per contig, the sex signal and the variants called.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/coverage_sex_and_genotyping_light.png" rel="noopener" target="_blank"><img alt="Coverage, sex and genotyping dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/coverage_sex_and_genotyping_light.png"></a></p>
-<p>Depth per contig is normalised by the library's own mean, the quantity a sex
-call and an organelle ratio are made from, with the Sex.DetERRmine table when
-it ran. <code>Depth along the reference</code> is a locus section: a navigator on
-Qualimap's windows drives a mapping-quality track on the same axis, so a
-brush or a typed locus moves both tracks and their cards. bcftools stats close
-the tab.</p>
+<p><strong>Ancient DNA</strong> · <em>Is the DNA damaged and short, as ancient DNA is?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/authentication_light.webp" rel="noopener" target="_blank"><img alt="Authentication dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/authentication_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/authentication_dark.webp" rel="noopener" target="_blank"><img alt="Authentication dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/authentication_dark.webp#only-dark"></a></p>
+<p>C to T at the 5 prime end, G to A at the 3 prime end, the mean fragment length
+and the share under the <code>SHORT_FRAGMENT_BP</code> cut-off. Then the ancient-DNA
+plane, mean length against terminal deamination, beside the fragment length
+curves, and the misincorporation profile (<code>C&gt;T</code>, <code>G&gt;A</code> and the pooled
+background by position from each read end). Short and damaged is ancient, long
+and undamaged is modern contamination; UDG-treated libraries keep the damage at
+the terminal base only. DamageProfiler 0.4.9 writes no length-binned damage
+table, so the profile is not split by length. The contamination estimates
+(ANGSD and MTNucRatio, when the run enabled them) and the DamageProfiler
+tables are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Relative depth</code> and <code>Contig length</code> on the per-contig table,
-<code>Window depth (X)</code> on the windows and a <code>Depth threshold</code> on the genome
-fraction. There is no chromosome filter: the navigator owns the region.</p>
+<p><strong>Filters</strong> · <code>Read end</code> and a <code>Distance from the read end</code> range on
+<code>damageprofiler_misincorporation</code>, <code>Strand</code> and a <code>Fragment length</code> range
+on <code>damageprofiler_lgdistribution</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6384,24 +6481,161 @@ fraction. There is no chromosome filter: the navigator owns the region.</p>
 </thead>
 <tbody>
 <tr>
-<td>Per-contig depth and sex</td>
-<td>4 cards, <em>Relative depth against contig length</em>, <em>Depth per contig, relative to the library mean</em>, <em>Sex.DetERRmine</em> (optional)</td>
+<td>Damage at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Length and damage</td>
+<td>2 advanced visualizations: the ancient-DNA plane and the fragment length distribution</td>
+</tr>
+<tr>
+<td>Misincorporation</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Contamination (collapsed)</td>
+<td><em>Nuclear contamination (ANGSD)</em>, <em>Mitochondrial to nuclear ratio</em></td>
+</tr>
+<tr>
+<td>Authentication tables (collapsed)</td>
+<td><em>Authenticity summary per library</em>, <em>Misincorporation table</em>, <em>Fragment length table</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Genome</strong> · <em>How deep and how evenly is the reference covered?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/coverage_light.webp" rel="noopener" target="_blank"><img alt="Coverage dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/coverage_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/coverage_dark.webp" rel="noopener" target="_blank"><img alt="Coverage dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/coverage_dark.webp#only-dark"></a></p>
+<p>The mean coverage per library, the share of the reference covered at 1X and at
+2X, and the depth of the sequences of 1 Mb or more relative to the library
+mean. Then the relative depth against contig length, the quantity a sex call
+and an organelle ratio are made from: an even library sits on 1, the
+mitochondrion far above it, a sex chromosome near 0.5 or 1. Side by side, the
+depth histogram and the share of the reference covered at least X deep, on a
+log depth axis. There is no per-contig bar: on a reference with hundreds of
+scaffolds its axis cannot be read. The Sex.DetERRmine table (when the run
+enabled it) and the per-contig and genome fraction tables are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Relative depth</code> and <code>Contig length</code> ranges on
+<code>qualimap_coverage_per_contig</code>. There is no depth-threshold filter: the 1X
+and 2X cards would print a dash once it excluded their threshold.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Coverage at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Per-contig depth</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Depth distribution</td>
-<td><em>Depth histogram</em>, <em>Share of the reference covered at least X deep</em></td>
+<td>2 advanced visualizations: the depth histogram and the genome fraction curve</td>
+</tr>
+<tr>
+<td>Sex determination (collapsed)</td>
+<td><em>Sex.DetERRmine</em></td>
+</tr>
+<tr>
+<td>Coverage tables (collapsed)</td>
+<td><em>Coverage per contig</em>, <em>Genome fraction by depth threshold</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Genome</strong> · <em>How deep and how well mapped is one region?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/locus_light.webp" rel="noopener" target="_blank"><img alt="Locus dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/locus_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/locus_dark.webp" rel="noopener" target="_blank"><img alt="Locus dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/locus_dark.webp#only-dark"></a></p>
+<p>The window depth, the windows in view (those at 1X or deeper against the rest),
+the depth spread within a window and the mapping quality; the four cards read
+the whole reference until a region is picked, then that region. Then the locus
+navigator, Qualimap's windows mapped back onto their contigs, with a track of
+mean mapping quality under it from the pipeline-local
+<code>eager/mapq_across_reference.py</code>. A <code>region</code> link carries the navigator's
+chromosome and position onto that track, so a brush or a typed locus moves both
+tracks and the strip together. A dip in mapping quality under a depth dip marks
+repeats the mapper could not place. The window table is collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · a <code>Window depth (X)</code> range on
+<code>qualimap_coverage_across_reference</code>. There is no chromosome filter: the
+navigator owns the region.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Region at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
 <td>Depth along the reference</td>
-<td>4 cards, <em>Locus navigator, depth per window</em>, <em>Mapping quality along the region</em></td>
+<td>2 advanced visualizations: the locus navigator and the mapping quality track</td>
 </tr>
 <tr>
-<td>Variant calls</td>
-<td>4 cards: SNPs, indels, Ts to Tv, multiallelic sites</td>
+<td>Window table (collapsed)</td>
+<td><em>Windowed depth</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="admonition info">
+<p class="admonition-title">The navigator opens on the first contig</p>
+<p>No contig name holds across references, so the navigator opens on the
+whole first contig of the data. A non-model reference has no built-in
+assembly: the contig list comes from the data and there is no gene lane.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<p><strong>Genome</strong> · <em>How many variants did each sample yield, and how clean?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/genotypes_light.webp" rel="noopener" target="_blank"><img alt="Genotypes dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/genotypes_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/genotypes_dark.webp" rel="noopener" target="_blank"><img alt="Genotypes dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/eager/genotypes_dark.webp#only-dark"></a></p>
+<p>SNPs called split by sample, indels, the Ts to Tv ratio and multiallelic
+sites. The VCF record count is not a card: a VCF that emits reference sites
+counts them as records too. Then SNPs and the Ts to Tv ratio per sample, one
+bar per caller. bcftools reads the biological sample from the VCF header, not
+the library, so the hub carries both ids and links on both. A shallow, damaged
+library calls fewer confident variants than its read count suggests, and
+deamination read as variation inflates the transitions. The bcftools summary
+and Ts/Tv tables are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Variant caller</code> on <code>bcftools_stats_summary</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Calls at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Coverage tables</td>
-<td>per-contig, genome fraction, windowed depth and bcftools tables (collapsed)</td>
+<td>Calls per sample</td>
+<td><em>SNPs called per sample</em>, <em>Ts to Tv ratio per sample</em></td>
+</tr>
+<tr>
+<td>Genotype tables (collapsed)</td>
+<td><em>Variant counts per sample and caller</em>, <em>Transition and transversion counts</em></td>
 </tr>
 </tbody>
 </table>
@@ -6409,16 +6643,16 @@ fraction. There is no chromosome filter: the navigator owns the region.</p>
 </div>
 </div>
 </div>
-<p>Tables and point views select on their entity column: the pinned sample sheet
-on <code>sample_id</code>; the lane table and the lane yield scatter on <code>lane_id</code>; every
-per-library table and scatter of the mapping, authentication and coverage tabs,
-the Qualimap reference table and the fragment length and genome fraction
-profiles on <code>sample</code>. A pick narrows the other tiles of its collection and
-follows the project links to the collections they reach. The complexity curve
-and depth histogram profiles, the coverage track, and the raw MaltExtract,
-Kraken, contamination and Sex.DetERRmine tables do not select, and the
-endogenous-against-clonality scatter narrows no other tile, since its collection
-has no outgoing link.</p>
+<p>Tables and points select on their entity column: the pinned sample sheet on
+<code>sample_id</code> and the BamQC reference table on <code>sample</code>; the lane table and the
+collapse scatter on <code>lane_id</code>; the pooled library table, the read fate table and
+every per-library table and scatter of the Ancient DNA and Genome tabs on
+<code>sample</code>, as do the fragment length and genome fraction profiles. A pick narrows
+the other tiles of its collection and follows the project links to the
+collections they reach. The complexity curve and depth histogram profiles, the
+coverage track, and the raw MaltExtract, Kraken, contamination and
+Sex.DetERRmine tables do not select. The screening plane emits a selection, but
+its collection has no outgoing link, so it narrows no other tile.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/eager, it does not run the pipeline.
@@ -6472,7 +6706,7 @@ different directory layout lands in the same collections.</p>
 <code>s3://nf-core-awsmegatests/eager/results-42c9d5f8602e5e88fdcec28f194d2cd4cff61c75/</code>
 (every 2.5.x prefix holds <code>pipeline_info/</code> only), and the screenshots above come
 from that run. The megatest did not enable sex determination, contamination
-estimation or a metagenomic screen, so those sections show their notes only. Its
+estimation or a metagenomic screen, so the import drops those tables. Its
 samplesheet is not part of the results; the template ships a reconstructed one
 under <code>input/</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">DEST</span><span class="o">=</span>/tmp/eager_test

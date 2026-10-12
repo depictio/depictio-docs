@@ -5412,17 +5412,14 @@
 calls land on, and reads the VCFs themselves, so callers are compared call by
 call and gene by gene rather than only by how many calls each made:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: read quality, alignment and recalibration, the pooled variant-call QC and the annotation summaries</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> <strong>Cohort QC</strong>: coverage per contig and per capture target, a locus browser, and an X against Y sex check</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Variant yield</strong>: each caller's own statistics side by side, its mutation spectra, what its filters removed</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> <strong>Caller concordance</strong>: which callsets agree, allele fraction against depth, and where the calls fall</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.62 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95M12 19a7 7 0 0 1-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95a10 10 0 0 0 10 10c3.3 0 6.23-1.61 8.05-4.09l-2.6-1.53A6.89 6.89 0 0 1 12 19"></path></svg></span> <strong>Consequences</strong>: SnpEff's composition, recomputed per call with a variant record beside the scatter</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Genes</strong>: the per-gene burden across callsets and the coding variants along the protein</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: read, mapping and recalibration panels from the pipeline's own MultiQC report, and the depth over the intervals with an X against Y sex check</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> <strong>Variant calls</strong>: what each caller called and of what kind, how clean each callset looks, and which calls the callers share</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Annotation</strong>: SnpEff's consequences recomputed per call, the genes that carry the calls, and depth and calls at one region on one axis</li>
 </ul>
-<p>A <code>Run at a glance</code> strip (SNPs called, indels per callset, samples by status,
-median Ts/Tv), the collapsed <code>Sample sheet</code> and the <code>Sample filters</code> (sample,
-tumour or normal status) are pinned to every tab, with a collapsed <code>QC
-thresholds</code> group (a Ts/Tv floor) pinned to the bottom.</p>
+<p>The persistent <code>Sample filters</code> (status, patient, sample) sit in the left panel,
+and a pick there reaches every per-sample collection and the MultiQC panels
+through the sample links.</p>
 <div class="admonition info">
 <p class="admonition-title">Concordance is agreement, not truth</p>
 <p>Nothing in this template compares a callset against a benchmark truth set:
@@ -6192,27 +6189,56 @@ drops the Consequences and Genes tabs instead of failing to ingest.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Six tabs, read as a funnel: the report, how deeply the targets were covered, how
-much each caller called, which callers agree, what the calls do to the
-transcript, and which genes carry them. Each tab below carries the <strong>same icon
-and colour the dashboard gives it</strong>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> Cohort QC</label><label for="__tabbed_2_3"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Variant yield</label><label for="__tabbed_2_4"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> Caller concordance</label><label for="__tabbed_2_5"><span class="twemoji mc-orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.62 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95M12 19a7 7 0 0 1-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95a10 10 0 0 0 10 10c3.3 0 6.23-1.61 8.05-4.09l-2.6-1.53A6.89 6.89 0 0 1 12 19"></path></svg></span> Consequences</label><label for="__tabbed_2_6"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Genes</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then eight child tabs in three groups, read as a
+funnel from the reads to the genes the calls hit and one region of the genome.
+Each tab below carries the <strong>same icon and colour the dashboard gives it</strong>, so the
+page and the app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Coverage</td>
+</tr>
+<tr>
+<td>Variant calls</td>
+<td>Variant yield, Call quality, Caller concordance</td>
+</tr>
+<tr>
+<td>Annotation</td>
+<td>Consequences, Genes, Locus</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables follow, collapsed. The template has no group column:
+the sample hub is built from sarek's CSV manifests and carries the patient, sex,
+status and the callers run per sample. A callset is one caller on one sample. The
+persistent <em>Sample filters</em> (status, patient, sample) sit in the left panel and
+narrow every tab through the sample links. The <em>Sample sheet</em> is pinned,
+collapsed, to the bottom of every child tab.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:9"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><input id="__tabbed_2_8" name="__tabbed_2" type="radio"><input id="__tabbed_2_9" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 18.54 7.37-5.74L21 14.07l-9 7-9-7 1.62-1.26zM12 16 3 9l9-7 9 7zm0-11.47L6.26 9 12 13.47 17.74 9z"></path></svg></span> Coverage</label><label for="__tabbed_2_4"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-5h4z"></path></svg></span> Variant yield</label><label for="__tabbed_2_5"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg></span> Call quality</label><label for="__tabbed_2_6"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> Caller concordance</label><label for="__tabbed_2_7"><span class="twemoji mc-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.62 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95M12 19a7 7 0 0 1-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95a10 10 0 0 0 10 10c3.3 0 6.23-1.61 8.05-4.09l-2.6-1.53A6.89 6.89 0 0 1 12 19"></path></svg></span> Consequences</label><label for="__tabbed_2_8"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Genes</label><label for="__tabbed_2_9"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5A2.5 2.5 0 0 1 9.5 9 2.5 2.5 0 0 1 12 6.5M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7m0 2a5 5 0 0 0-5 5c0 1 0 3 5 9.71C17 12 17 10 17 9a5 5 0 0 0-5-5"></path></svg></span> Locus</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Are the reads, the alignments and the pooled calls sound, before any caller is compared?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/multiqc_light.png"></a></p>
-<p>The run's native MultiQC report, no reprocess needed: FastQC and fastp on
-the reads, then mapping, duplication, BQSR calibration, mosdepth coverage
-and insert size. The variant-call QC section is what bcftools and VCFtools
-see with every caller pooled, and the annotation section holds the SnpEff
-and VEP summaries. A tab-local <code>Glance scope</code> narrows the pinned strip to
-one caller.</p>
+<p><em>Germline variant calls, from coverage to the genes they hit.</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/overview_dark.webp#only-dark"></a></p>
+<p>A short hero links the run parameters. <em>About this dashboard</em> says how the two
+filter levels work, <em>The run</em> lists the samples, the callsets and the callers
+they come from, the genome and the aligner, and <em>Pipeline</em> walks the six steps
+from mapping to annotation, each linked to the parameters that drive it and
+its tab. The findings are live values: they follow the filters, and a run
+without SnpEff drops the HIGH-impact row and the impact figure.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample</code> and <code>Status</code> on the sample hub, persistent and
-pinned to the top of every tab, a <code>Ts/Tv ratio</code> range in the collapsed
-<em>QC thresholds</em> group pinned to the bottom, and a <code>Variant caller</code>
-picker in the tab-local <em>Glance scope</em>.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> and
+<em>Findings</em> each have their own filter bar (the caller and the sample id):
+each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -6222,31 +6248,64 @@ picker in the tab-local <em>Glance scope</em>.</p>
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards, pinned to every tab</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Sample hub</em>, collapsed and pinned to every tab</td>
+<td>Key figures</td>
+<td>4 headline cards: variant calls by caller, depth on target, PASS share, Ts/Tv against a 1.8 floor</td>
 </tr>
 <tr>
-<td>MultiQC general statistics</td>
-<td><em>General statistics</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: the substitution spectrum, the calls per FILTER value, allele fraction against depth and the impact classes per caller</td>
 </tr>
 <tr>
-<td>Read quality</td>
-<td>4 MultiQC panels</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>Did reads, mapping and recalibration work for every sample?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/multiqc_dark.webp#only-dark"></a></p>
+<p>MultiQC panels only, from the run's native report. Open: general statistics,
+fastp filtered reads, Samtools percent mapped, MarkDuplicates and the mosdepth
+cumulative coverage. Collapsed: the FastQC panels, the BQSR fit and insert
+sizes, the bcftools and VCFtools panels with every caller pooled, and the
+SnpEff and VEP panels. A library carries a lane and a read suffix in the
+report, so a sample can appear once per read.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Sample ID</code>, read from the MultiQC report.</p>
+<table>
+<thead>
 <tr>
-<td>Alignment and recalibration</td>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QC overview</td>
 <td>5 MultiQC panels</td>
 </tr>
 <tr>
-<td>Variant-call QC</td>
+<td>Read quality (collapsed)</td>
+<td>3 MultiQC panels</td>
+</tr>
+<tr>
+<td>Alignment details (collapsed)</td>
+<td>2 MultiQC panels</td>
+</tr>
+<tr>
+<td>Variant-call panels (collapsed)</td>
 <td>4 MultiQC panels</td>
 </tr>
 <tr>
-<td>Annotation</td>
+<td>Annotation panels (collapsed)</td>
 <td>4 MultiQC panels</td>
 </tr>
 </tbody>
@@ -6254,19 +6313,23 @@ picker in the tab-local <em>Glance scope</em>.</p>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Were the targets covered deeply enough for a call to mean anything?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/cohort_qc_light.png" rel="noopener" target="_blank"><img alt="Cohort QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/cohort_qc_light.png"></a></p>
-<p>Coverage bounds every call, so it comes first: target depth per contig,
-depth per capture target, targets under 20x and the X to Y ratio. <code>One
-locus, three tracks</code> is a locus browser: a depth navigator binned to 1 Mb
-windows drives, through its locus field or brush, the per-target depth, the
-calls over the gene lane and the annotated VCFs range-read from their files.
-mosdepth's whole-contig and capture-target scopes are then compared per
-contig, and an X against Y depth scatter gives a heuristic sex check.</p>
+<p><strong>Data &amp; QC</strong> · <em>How deeply were the intervals covered, sample by sample?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/coverage_light.webp" rel="noopener" target="_blank"><img alt="Coverage dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/coverage_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/coverage_dark.webp" rel="noopener" target="_blank"><img alt="Coverage dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/coverage_dark.webp#only-dark"></a></p>
+<p>mosdepth's depth over the intervals (the capture targets, or the calling
+intervals of a whole genome) and over each contig. The depth on target per
+sample, the median depth of an interval against a 20x floor, the depth across
+contigs and the intervals under 20x, with the contigs that have most. Then the
+mean depth per contig, one bar per sample and contig, with a bar above it that
+switches between the intervals and the whole contig (it opens on the
+intervals), and the X against Y depth scatter, a heuristic sex check. The
+per-contig and sex-check tables are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · a <code>Contig or targets</code> picker on mosdepth's summary, in the
-tab-local <em>Coverage scope</em>.</p>
+<p><strong>Filters</strong> · a <code>Mean depth</code> range on <code>mosdepth_summary</code>. <em>Depth per
+contig</em> has its own bar, <code>Intervals or whole contig</code>. There is no contig
+or scope picker in the left panel: it would empty the <em>Depth on target</em>
+card, which reads mosdepth's <code>total</code> row of the intervals.</p>
 <table>
 <thead>
 <tr>
@@ -6280,35 +6343,38 @@ tab-local <em>Coverage scope</em>.</p>
 <td>4 cards</td>
 </tr>
 <tr>
-<td>One locus, three tracks</td>
-<td><em>Depth navigator, 1 Mb windows</em>, <em>Depth per capture target</em>, <em>Calls over the genes</em>, <em>The annotated VCFs, read from the files</em></td>
-</tr>
-<tr>
 <td>Depth per contig</td>
-<td><em>Mean depth per contig</em>, <em>Per-contig coverage summary</em></td>
+<td><em>Mean depth per contig</em>, with its own filter bar</td>
 </tr>
 <tr>
 <td>Sex check</td>
-<td><em>X depth against Y depth</em>, <em>X and Y coverage per sample</em></td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Coverage tables (collapsed)</td>
+<td><em>Per-contig coverage summary</em>, <em>X and Y coverage per sample</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>How much did each caller call, and what did its own filters throw away?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/variant_yield_light.png" rel="noopener" target="_blank"><img alt="Variant yield dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/variant_yield_light.png"></a></p>
-<p>Each caller's own bcftools stats and VCFtools reports, caller against
-caller: SNP and indel counts, the substitution and indel spectra as shares
-of each callset, and a parallel-coordinates profile that puts eight QC
-numbers per callset on one plot. The FILTER partitions show what each caller
-discarded, and Ts/Tv against a rising quality floor shows where its quality
-score stops separating variants from noise. The remaining bcftools blocks
-sit behind a block picker.</p>
+<p><strong>Variant calls</strong> · <em>How much did each caller call, and of what kind?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/variant_yield_light.webp" rel="noopener" target="_blank"><img alt="Variant yield dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/variant_yield_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/variant_yield_dark.webp" rel="noopener" target="_blank"><img alt="Variant yield dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/variant_yield_dark.webp#only-dark"></a></p>
+<p>Each caller's own bcftools stats report. The median records per callset,
+ranked by caller (a structural-variant caller writes orders of magnitude
+fewer), the SNPs and the indels split by caller, and the multiallelic sites.
+Then SNPs and indels per caller, one bar per sample, and the substitution and
+indel length spectra, one bar per caller with its callsets' shares averaged.
+The spectra compare shapes, not yields: a caller whose transversion bars rise
+is the one with the lower Ts/Tv. The bcftools distribution blocks and the
+per-caller count table are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Caller</code> and <code>FILTER value</code> in the tab-local <em>Caller
-scope</em>, and a <code>bcftools block</code> picker in <em>Distribution scope</em>.</p>
+<p><strong>Filters</strong> · <code>Caller</code> on <code>bcftools_stats_summary</code>, and a <code>bcftools
+block</code> picker on <code>bcftools_stats_sections</code> that chooses the block the
+collapsed distribution draws (it opens on depth).</p>
 <table>
 <thead>
 <tr>
@@ -6318,53 +6384,99 @@ scope</em>, and a <code>bcftools block</code> picker in <em>Distribution scope</
 </thead>
 <tbody>
 <tr>
-<td>Caller yield</td>
+<td>Yield at a glance</td>
 <td>4 cards</td>
 </tr>
 <tr>
-<td>SNPs and indels by caller</td>
-<td><em>SNPs called per caller</em>, <em>Indels called per caller</em></td>
+<td>Calls per caller</td>
+<td><em>SNPs per caller</em>, <em>Indels per caller</em></td>
 </tr>
 <tr>
 <td>Mutation spectra</td>
 <td><em>Substitution spectrum</em>, <em>Indel length spectrum</em></td>
 </tr>
 <tr>
-<td>Callset QC profile</td>
-<td><em>Callset QC profile</em></td>
+<td>bcftools distributions (collapsed)</td>
+<td><em>The chosen block, caller by caller</em>, <em>bcftools stats distributions</em></td>
 </tr>
 <tr>
-<td>Filters and what they cost</td>
-<td><em>Calls per FILTER partition</em>, <em>FILTER breakdown per caller</em></td>
-</tr>
-<tr>
-<td>Quality calibration</td>
-<td><em>Ts/Tv against the quality floor</em></td>
-</tr>
-<tr>
-<td>Distributions</td>
-<td><em>The chosen distribution, caller by caller</em>, <em>bcftools stats distributions</em></td>
-</tr>
-<tr>
-<td>Variant tables</td>
-<td><em>Per-caller variant counts</em>, <em>Per-caller Ts/Tv</em>, collapsed</td>
+<td>Yield table (collapsed)</td>
+<td><em>Per-caller variant counts</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Which calls do the callers share, and where do they part ways?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/caller_concordance_light.png" rel="noopener" target="_blank"><img alt="Caller concordance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/caller_concordance_light.png"></a></p>
-<p>Two UpSet plots ask the same question twice: exact PASS calls shared between
-callsets, then genes hit by a coding variant. Allele fraction against depth,
-as a density and as a histogram per caller, is the plane a germline callset
-is read on. A rainfall plot of inter-call distances shows where calls
-cluster along the genome, and selecting a call on it narrows the call table.</p>
+<p><strong>Variant calls</strong> · <em>Do the callsets look like clean germline calls?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/call_quality_light.webp" rel="noopener" target="_blank"><img alt="Call quality dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/call_quality_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/call_quality_dark.webp" rel="noopener" target="_blank"><img alt="Call quality dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/call_quality_dark.webp#only-dark"></a></p>
+<p>QC numbers computed from each callset's VCF. The median Ts/Tv against a 1.8
+floor, the PASS share, the het to hom ratio and the allele fraction of
+heterozygous calls. Then the callset QC profile, six numbers per callset on
+parallel axes coloured by caller, the calls per FILTER value per caller, with
+PASS in green, and the Ts/Tv above a rising quality floor on a log axis,
+because callers write QUAL on scales a thousand-fold apart. A clean germline
+SNP callset has a Ts/Tv near 2 on a genome, higher on an exome, and its
+heterozygous calls sit near an allele fraction of 0.5. The FILTER breakdown
+and the Ts/Tv per callset are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Caller</code> and a <code>Ts/Tv ratio</code> range on <code>callset_qc</code>, and
+<code>FILTER value</code> on <code>vcftools_filter_summary</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quality at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Callset QC profile</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>FILTER partitions</td>
+<td><em>Calls per FILTER value</em></td>
+</tr>
+<tr>
+<td>Quality calibration</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Quality tables (collapsed)</td>
+<td><em>FILTER breakdown per caller</em>, <em>Ts/Tv per callset</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="admonition info">
+<p class="admonition-title">Without VCFtools</p>
+<p>A run that skipped VCFtools has no FILTER partitions, no quality sweep and
+no <code>FILTER value</code> filter here, and the Overview drops its FILTER figure.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<p><strong>Variant calls</strong> · <em>Which calls do the callers share, and where do they differ?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/caller_concordance_light.webp" rel="noopener" target="_blank"><img alt="Caller concordance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/caller_concordance_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/caller_concordance_dark.webp" rel="noopener" target="_blank"><img alt="Caller concordance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/caller_concordance_dark.webp#only-dark"></a></p>
+<p>One row per call, read from the VCFs. The calls ranked by caller, the calls by
+variant type, the allele fraction and the depth at the call. Then the UpSet of
+PASS calls shared between callsets, matched on locus and allele (fixed: the
+pickers on this tab do not narrow it), allele fraction against depth as a
+density beside its histogram per caller (a clean diploid callset forms ridges
+at 0.5 and 1), and the rainfall of the calls along the genome, each at its
+distance to the previous call. The call table is collapsed. Agreement between
+callers is not truth.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>Caller</code>, <code>Variant type</code>, <code>Contig</code> and a <code>Depth at the
-call</code> range on the called VCFs, in the tab-local <em>Call scope</em>.</p>
+call</code> range on <code>vcf_variants</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6378,38 +6490,44 @@ call</code> range on the called VCFs, in the tab-local <em>Call scope</em>.</p>
 <td>4 cards</td>
 </tr>
 <tr>
-<td>Which callsets agree</td>
-<td><em>PASS calls shared between callsets</em>, <em>Genes hit by a coding variant, shared between callers</em></td>
+<td>Shared calls</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Depth sensitivity</td>
-<td><em>Allele fraction against depth, as a density</em>, <em>Allele-fraction distribution per caller</em></td>
+<td>1 advanced visualization, <em>Allele fraction per caller</em></td>
 </tr>
 <tr>
 <td>Calls along the genome</td>
-<td><em>Rainfall, distance to the previous call</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Call table</td>
-<td><em>Variant calls</em>, collapsed</td>
+<td>Call table (collapsed)</td>
+<td><em>Variant calls</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>What do the calls do to the transcript?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/consequences_light.png" rel="noopener" target="_blank"><img alt="Consequences dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/consequences_light.png"></a></p>
-<p>SnpEff's published composition, section by section and caller by caller,
-next to the same composition recomputed from the annotated calls. The allele
-fraction against depth scatter, coloured by impact, drives a linked
-<strong>Variant record</strong> beside it, which folds to a slim rail until a call is
-picked and then links its gene to Ensembl.</p>
+<p><strong>Annotation</strong> · <em>What do the calls do to the transcripts?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/consequences_light.webp" rel="noopener" target="_blank"><img alt="Consequences dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/consequences_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/consequences_dark.webp" rel="noopener" target="_blank"><img alt="Consequences dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/consequences_dark.webp#only-dark"></a></p>
+<p>SnpEff gives each call its most severe effect on a transcript, in four impact
+classes. The annotated calls by impact class, the HIGH-impact calls by variant
+type, the genes with a HIGH or MODERATE call and the depth at HIGH-impact
+calls. Then SnpEff's own counts for the summary section picked in the left
+panel (opening on impact), caller by caller, and the impact recomputed on the
+calls: the impact classes per caller as shares (MODIFIER left out), and the
+allele fraction against depth scatter coloured by impact, with the record of
+the picked call beside it. The SnpEff summary and the annotated calls are
+collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>SnpEff section</code> and <code>Caller</code> in the tab-local
-<em>Composition scope</em>, and <code>Impact class</code> and <code>Consequence</code> on the
-annotated calls in <em>Impact scope</em>.</p>
+<p><strong>Filters</strong> · <code>Caller</code> on <code>snpeff_ann_variants</code> and <code>SnpEff section</code> on
+<code>snpeff_csv_stats</code>. <em>Impact per call</em> has its own bar, <code>Impact class</code>
+and <code>Consequence</code>, rather than the left panel, because three cards pin
+an impact class.</p>
 <table>
 <thead>
 <tr>
@@ -6424,33 +6542,36 @@ annotated calls in <em>Impact scope</em>.</p>
 </tr>
 <tr>
 <td>What kind of variants</td>
-<td><em>The chosen section, caller by caller</em>, <em>SnpEff composition sections</em></td>
+<td><em>The chosen section, caller by caller</em></td>
 </tr>
 <tr>
 <td>Impact per call</td>
-<td><em>Allele fraction against depth, coloured by impact</em>, <em>Variant record</em></td>
+<td><em>Impact classes per caller</em>, then 2 advanced visualizations: the impact scatter and the <em>Variant record</em>, with its own filter bar</td>
 </tr>
 <tr>
-<td>Annotated calls</td>
-<td><em>Annotated variant calls</em>, collapsed</td>
+<td>Consequence tables (collapsed)</td>
+<td><em>SnpEff summary sections</em>, <em>Annotated variant calls</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Which genes carry the variant burden, callset by callset?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/genes_light.png" rel="noopener" target="_blank"><img alt="Genes dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/genes_light.png"></a></p>
-<p>The per-gene burden SnpEff writes, as a clustered gene by callset heatmap of
-coding-variant counts, then a protein lollipop of the coding variants at
-their amino-acid position. A row picked in the per-gene table drives the
-lollipop. A high burden on long, repetitive genes is a mappability signal
-before it is a biological one.</p>
+<p><strong>Annotation</strong> · <em>Which genes carry the calls, and where on the protein?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/genes_light.webp" rel="noopener" target="_blank"><img alt="Genes dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/genes_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/genes_dark.webp" rel="noopener" target="_blank"><img alt="Genes dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/genes_dark.webp#only-dark"></a></p>
+<p>SnpEff's per-gene counts. The genes with a call by biotype, the HIGH-impact
+variants by caller, the top gene burden (the most HIGH or MODERATE variants on
+one gene, the callers' maxima) and the protein changes by impact class. Then
+the gene by callset burden heatmap, coloured by log(1 + variants) so one long
+gene does not wash out the rest, the UpSet of genes the callers share (fixed),
+and the coding variants along the protein, one lane per gene. A high burden is
+often a long, repetitive or poorly mappable gene before it is a biological
+signal. The per-gene burden and protein position tables are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Biotype</code> and <code>Caller</code> on the per-gene table, in the
-tab-local <em>Gene scope</em>, and <code>Impact class</code> on the lollipop in <em>Protein
-scope</em>.</p>
+<p><strong>Filters</strong> · <code>Biotype</code> and <code>Caller</code> on <code>snpeff_genes</code>, and <code>Impact
+class</code> on <code>snpeff_protein_lollipop</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6465,15 +6586,54 @@ scope</em>.</p>
 </tr>
 <tr>
 <td>Burden across callsets</td>
-<td><em>Variant burden, gene against callset</em></td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Genes the callers share</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Along the protein</td>
-<td><em>Coding variants along the protein</em>, <em>Coding variants with a protein position</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Gene table</td>
-<td><em>Per-gene variant burden</em>, collapsed</td>
+<td>Gene tables (collapsed)</td>
+<td><em>Per-gene variant burden</em>, <em>Coding variants with a protein position</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Annotation</strong> · <em>What do depth and calls show at one region?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/locus_light.webp" rel="noopener" target="_blank"><img alt="Locus dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/locus_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/locus_dark.webp" rel="noopener" target="_blank"><img alt="Locus dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/sarek/locus_dark.webp#only-dark"></a></p>
+<p>The locus tab stacks four tracks on one <code>{GENOME}</code> axis. The depth navigator,
+the mean depth in 1 Mb windows, drives the others: a typed locus or gene, or a
+brush on its axis, moves the depth per interval, the calls over the gene lane
+(one lane per caller) and the annotated VCFs, range-read from their files
+below 2 Mb. It opens on <code>chr1:1,000,000-2,000,000</code>. The four cards (calls by
+caller, depth per interval, allele fraction, depth at the call) are recounted
+on the region in view.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Caller</code> and <code>Variant type</code> on <code>vcf_variants</code>, for the call
+track and the cards.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Region at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>One region, four tracks</td>
+<td>4 advanced visualizations: the depth navigator, the depth per interval, the calls over the genes and the annotated VCFs</td>
 </tr>
 </tbody>
 </table>
@@ -6482,9 +6642,13 @@ scope</em>.</p>
 </div>
 </div>
 <p>Tables and point views select on their entity column: the sample sheet on
-<code>sample_id</code>, the per-caller tables on <code>caller</code>, the call tables and the rainfall
-plot on the variant, and the per-gene table on the gene. A pick narrows every
-tile on the tab that reads the same collection or one linked from it.</p>
+<code>sample_id</code>; the contig, sex-check, FILTER and distribution tables and the
+sex-check scatter on <code>sample</code>; the bcftools and SnpEff summary tables on
+<code>caller</code>; the rainfall plot, the impact scatter and the call tables on
+<code>variant_key</code>; the per-gene table on <code>gene_name</code>, which reaches the protein
+lollipop. A pick narrows the other tiles of its collection and follows the
+project links to the collections downstream of it. The variant record on
+Consequences shows the call picked in the scatter beside it.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/sarek, it does not run the pipeline.

@@ -5409,19 +5409,15 @@
 </div>
 
 <p>The hic template follows an nf-core/hic run from read pairs to chromatin
-architecture, each tab reading the output built on the one before:</p>
+architecture:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: FastQC and HiC-Pro mapping, pairing and valid-pair panels from the run's MultiQC report</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 13h12v-2H6M3 6v2h18V6M10 18h4v-2h-4z"></path></svg></span> <strong>Run QC</strong>: every read pair followed to the long-range cis contacts a Hi-C library is built for</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> <strong>Library shape</strong>: how contact probability falls off with genomic distance, with its log-log slope</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4v4h4V4zm6 0v4h4V4zm0 6v4h4v-4zm0 6v4h4v-4zm-2 4v-4h-4v4zm-6 0v-4H4v4zm0-6v-4H4v4zm0-6V4H4v4zm2 6h4v-4h-4zM4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2"></path></svg></span> <strong>Contact maps</strong>: the contact triangle, the domain, insulation and compartment tracks on one genomic axis</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 21V3h18v18zM5 5v14h14V5z"></path></svg></span> <strong>Domains and compartments</strong>: TAD sizes and the A/B split genome-wide, the rows behind the tracks</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: FastQC and HiC-Pro panels from the regenerated MultiQC report, and every read pair followed to the valid contacts</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4v4h4V4zm6 0v4h4V4zm0 6v4h4v-4zm0 6v4h4v-4zm-2 4v-4h-4v4zm-6 0v-4H4v4zm0-6v-4H4v4zm0-6V4H4v4zm2 6h4v-4h-4zM4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2"></path></svg></span> <strong>Contacts</strong>: how contact probability falls off with distance, and the contact triangle with its domain, insulation and compartment tracks at one locus</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 21V3h18v18zM5 5v14h14V5z"></path></svg></span> <strong>Architecture</strong>: TAD domain sizes and the A/B compartment split, genome-wide</li>
 </ul>
-<p>A <code>Run at a glance</code> strip (pairs sequenced, valid-pair rate, cis share, the
-cis/trans/duplicate split), the <code>Sample filters</code> and a collapsed sample sheet are
-pinned to the top of every tab, so the question "is this library any good?" is
-answered wherever you land. A pick in the sample filter reaches the funnel, the
-matrix, every track and both distance curves through the project links.</p>
+<p>The persistent <code>Sample filters</code> sit in the left panel, and a pick there reaches the
+funnel, the matrix, every track and the P(s) curve through the project links.</p>
 <div class="admonition warning">
 <p class="admonition-title">The MultiQC report must be regenerated</p>
 <p>hic 2.0.0 ships MultiQC 1.13, which writes no parquet, and Depictio reads
@@ -5435,8 +5431,8 @@ run's own tool outputs before ingesting, or the MultiQC tab stays empty:</p>
 <p>The HiC-Pro panels stay on the MultiQC tab, because that is the report a
 reader may already know. A MultiQC panel cannot be filtered or joined, so
 <code>hicpro/stats/&lt;sample&gt;/*</code> is also read directly into a funnel row per sample
-and a weighted row per read-pair fate, which is what feeds the cards, the
-Sankey and the pinned strip.</p>
+and a weighted row per read-pair fate, which is what the Valid pairs tab and
+the Overview's key figures read.</p>
 </div>
 <hr>
 <h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M19.22 4c.28 0 .53 0 .74.05.17 1.39-.02 4.25-3.3 7.53-1.7 1.71-3.73 3.02-6.01 3.89l-2.15-2.1c.92-2.31 2.23-4.34 3.92-6.03C15.18 4.58 17.64 4 19.22 4m0-2c-1.98 0-4.98.69-8.22 3.93-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.38.38.89.61 1.42.61.23 0 .47-.06.7-.15A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61S20.7 2 19.22 2m-4.68 7.46c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
@@ -5468,8 +5464,8 @@ above. See <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger</a
 <h2 id="reference"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.5c-1.35-.85-3.8-1.5-5.5-1.5-1.65 0-3.35.3-4.75 1.05-.1.05-.15.05-.25.05-.25 0-.5-.25-.5-.5V6c.6-.45 1.25-.75 2-1 1.11-.35 2.33-.5 3.5-.5 1.95 0 4.05.4 5.5 1.5 1.45-1.1 3.55-1.5 5.5-1.5 1.17 0 2.39.15 3.5.5.75.25 1.4.55 2 1v14.6c0 .25-.25.5-.5.5-.1 0-.15 0-.25-.05-1.4-.75-3.1-1.05-4.75-1.05-1.7 0-4.15.65-5.5 1.5M12 8v11.5c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5V7c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5m1 3.5c1.11-.68 2.6-1 4.5-1 .91 0 1.76.09 2.5.28V9.23c-.87-.15-1.71-.23-2.5-.23q-2.655 0-4.5.84zm4.5.17c-1.71 0-3.21.26-4.5.79v1.69c1.11-.65 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24v-1.5c-.87-.16-1.71-.23-2.5-.23m2.5 2.9c-.87-.16-1.71-.24-2.5-.24-1.83 0-3.33.27-4.5.8v1.69c1.11-.66 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24z"></path></svg></span> Reference<a class="headerlink" href="#reference" title="Permanent link">¶</a></h2>
 <p>The template reads the validated samplesheet, the regenerated MultiQC report,
 HiC-Pro's statistics, the balanced <code>cooler dump</code> contacts and bins, the cooltools
-compartment and insulation outputs, and hicexplorer's distance-decay curve. 52 of
-its 54 tiles carry a <code>use:</code> catalog reference (<code>hicpro/*</code>, <code>cooler/*</code>,
+compartment and insulation outputs, and hicexplorer's distance-decay curve. 51 of
+its 53 tiles carry a <code>use:</code> catalog reference (<code>hicpro/*</code>, <code>cooler/*</code>,
 <code>cooltools/*</code>, <code>hicexplorer/*</code>, <code>multiqc/*</code>), so a tile says where its panel
 comes from.</p>
 <div class="admonition info">
@@ -5868,26 +5864,56 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Five tabs, read as a funnel: is the report normal, where do the read pairs go,
-what kind of genome does the contact curve describe, what does one locus look
-like, and how do domains and compartments split the whole genome. Each tab below
-carries the <strong>same icon and colour the dashboard gives it</strong>. A picked row or
-point becomes a filter that follows the project links to the tiles it reaches.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:5"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 13h12v-2H6M3 6v2h18V6M10 18h4v-2h-4z"></path></svg></span> Run QC</label><label for="__tabbed_2_3"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> Library shape</label><label for="__tabbed_2_4"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4v4h4V4zm6 0v4h4V4zm0 6v4h4v-4zm0 6v4h4v-4zm-2 4v-4h-4v4zm-6 0v-4H4v4zm0-6v-4H4v4zm0-6V4H4v4zm2 6h4v-4h-4zM4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2"></path></svg></span> Contact maps</label><label for="__tabbed_2_5"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 21V3h18v18zM5 5v14h14V5z"></path></svg></span> Domains and compartments</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then six child tabs in three groups, read as a
+funnel from the read pairs to the domains and compartments of the genome. Each tab
+below carries the <strong>same icon and colour the dashboard gives it</strong>, so the page and
+the app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Valid pairs</td>
+</tr>
+<tr>
+<td>Contacts</td>
+<td>Distance decay, Contact maps</td>
+</tr>
+<tr>
+<td>Architecture</td>
+<td>Domains, Compartments</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables follow, collapsed. The template has no group column:
+the sample hub carries the sample id and the FASTQ pairs merged into it, and every
+collection carries a sample column. The persistent <em>Sample filters</em> (the sample)
+sit in the left panel and narrow every tab through the project links. The <em>Sample
+sheet</em> is pinned, collapsed, to the bottom of every child tab.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:7"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 13h12v-2H6M3 6v2h18V6M10 18h4v-2h-4z"></path></svg></span> Valid pairs</label><label for="__tabbed_2_4"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> Distance decay</label><label for="__tabbed_2_5"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4v4h4V4zm6 0v4h4V4zm0 6v4h4v-4zm0 6v4h4v-4zm-2 4v-4h-4v4zm-6 0v-4H4v4zm0-6v-4H4v4zm0-6V4H4v4zm2 6h4v-4h-4zM4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2"></path></svg></span> Contact maps</label><label for="__tabbed_2_6"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 21V3h18v18zM5 5v14h14V5z"></path></svg></span> Domains</label><label for="__tabbed_2_7"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Compartments</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Check the reads and the HiC-Pro processing as the report shows them.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/multiqc_light.png"></a></p>
-<p>The general statistics open the report, then FastQC on the merged reads and
-HiC-Pro's signature panels: two-step mapping, read pairing, valid-pair
-filtering (dangling ends, self circles, re-ligations dropped) and the cis/trans
-split of what survives. There is no trimming module: HiC-Pro's own mapping
-step does the trimming.</p>
+<p><em>Chromatin conformation, from read pairs to domains and compartments.</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/overview_dark.webp#only-dark"></a></p>
+<p>A short hero links the run's provenance: hic 2.0.0 writes no <code>params.json</code>, so
+the dialog holds the software versions. <em>About this dashboard</em> says how the two
+filter levels work, <em>The run</em> lists facts read from the data (samples, read
+pairs, unique valid pairs, map resolutions), and <em>Pipeline</em> walks the six steps
+from mapping to compartments, each linked to the versions of its process and
+its tab. The findings are live values: they follow the filters. Contact maps
+has no figure here, because it is a browser on one region, not a summary.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample</code> on the sample hub, persistent and pinned to the top
-of every tab, plus a tab-local <code>Valid-pair rate</code> range that narrows the
-pinned strip.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> and
+<em>Findings</em> each have their own filter bar (the sample and a FASTQ-pairs
+range): each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -5897,41 +5923,77 @@ pinned strip.</p>
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards: pairs sequenced, valid-pair rate, cis share, cis/trans/duplicates</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td>1 card, <em>Sample hub</em></td>
+<td>Key figures</td>
+<td>4 headline cards: FASTQ pairs, valid-pair rate, decay slope, domain size</td>
 </tr>
 <tr>
-<td>MultiQC general statistics</td>
-<td><em>General statistics</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: the read-pair flow, the contact probability curve, the domain size per insulation window and the A and B bins per chromosome</td>
 </tr>
 <tr>
-<td>Read quality</td>
-<td>7 FastQC panels</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>Did the reads map, pair and filter down to valid contacts?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/multiqc_dark.webp#only-dark"></a></p>
+<p>MultiQC panels only, from the regenerated report. Open: general statistics,
+FastQC sequence counts and per-base quality, then HiC-Pro's read mapping, read
+pairing, valid-pair filtering (dangling ends, self circles and re-ligations
+dropped) and contact statistics. The other FastQC panels are collapsed. There
+is no trimming module: HiC-Pro's mapping step trims.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · a <code>FASTQ pairs merged</code> range on the sample hub, which links
+into the report.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QC overview</td>
+<td>3 MultiQC panels</td>
 </tr>
 <tr>
 <td>HiC-Pro processing</td>
-<td>4 HiC-Pro panels</td>
+<td>4 MultiQC panels</td>
+</tr>
+<tr>
+<td>Read details (collapsed)</td>
+<td>5 MultiQC panels</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Follow every read pair to the long-range cis contacts.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/run_qc_light.png" rel="noopener" target="_blank"><img alt="Run QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/run_qc_light.png"></a></p>
-<p>The Sankey follows HiC-Pro's three decisions, weighted by read pairs: does
-the pair map uniquely at both ends, could a real ligation have joined its two
-fragments, and is the surviving contact cis or trans. Losses peel off at the
-step they stopped at, and the three levels reconcile exactly with the totals
-HiC-Pro reports. The collapsed table pivots the same funnel to one row per
-sample.</p>
+<p><strong>Data &amp; QC</strong> · <em>Where do the read pairs go, and how many become valid contacts?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/valid_pairs_light.webp" rel="noopener" target="_blank"><img alt="Valid pairs dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/valid_pairs_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/valid_pairs_dark.webp" rel="noopener" target="_blank"><img alt="Valid pairs dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/valid_pairs_dark.webp#only-dark"></a></p>
+<p>HiC-Pro's statistics as numbers: the read pairs processed, the median
+valid-pair rate, the median duplicate rate and the read pairs by mapping
+outcome. Then the read-pair flow, HiC-Pro's three decisions weighted by read
+pairs: does the pair map uniquely at both ends, could a real ligation have
+joined its fragments, and is the contact cis or trans. Each loss peels off into
+a <code>Lost</code> lane at the step it stopped at. The read-pair fates and the funnel per
+sample are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Mapping fate</code> and <code>Contact fate</code> on the read-pair flow.</p>
+<p><strong>Filters</strong> · <code>Mapping fate</code> and <code>Contact fate</code> on <code>pair_flow</code>, and a
+<code>Valid-pair rate</code> range on <code>pair_stats</code>.</p>
 <table>
 <thead>
 <tr>
@@ -5941,34 +6003,38 @@ sample.</p>
 </thead>
 <tbody>
 <tr>
-<td>Funnel at a glance</td>
-<td>4 cards: low-quality rate, duplicate rate, mapping fates, unique valid pairs</td>
+<td>Pairs at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
 <td>Where the pairs go</td>
-<td><em>Read-pair fates</em> (Sankey), <em>Read-pair fates table</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>The funnel in numbers</td>
-<td><em>Valid-pair funnel</em> (collapsed)</td>
+<td>Pair tables (collapsed)</td>
+<td><em>Read-pair fates</em>, <em>Valid-pair funnel</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Read how contact probability decays with distance.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/library_shape_light.png" rel="noopener" target="_blank"><img alt="Library shape dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/library_shape_light.png"></a></p>
-<p>P(s), the probability that two loci a distance s apart touch, is recomputed
-per chromosome from the balanced contact dump, because nf-core/hic never runs
-<code>cooltools expected-cis</code>. Its denominator counts every bin pair that could have
-been observed, which keeps the tail from flattening. A derivative panel under
-the curves draws the local log-log slope: near -1 is the usual interphase
-range, and a bump or plateau points to trans contamination or a rearrangement.</p>
+<p><strong>Contacts</strong> · <em>How fast does contact frequency fall off with genomic distance?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/distance_decay_light.webp" rel="noopener" target="_blank"><img alt="Distance decay dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/distance_decay_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/distance_decay_dark.webp" rel="noopener" target="_blank"><img alt="Distance decay dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/distance_decay_dark.webp#only-dark"></a></p>
+<p>The median log-log slope, the valid pairs split into cis, trans and
+duplicates, the median long-range share of cis contacts and the long-range cis
+contacts. Then P(s), the probability that two loci a distance s apart touch,
+one curve per chromosome plus the pooled curve, with its local slope in a panel
+underneath. It is recomputed from the balanced contact dump, because
+nf-core/hic never runs <code>cooltools expected-cis</code>, and its denominator counts
+every bin pair that could have been observed, which keeps the tail from
+flattening. A slope near -1 is the usual interphase range; a bump or a plateau
+points to trans contamination or a rearrangement.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Chromosome</code> on the P(s) curve. Picking a curve narrows
-the P(s) table and card to that chromosome.</p>
+<p><strong>Filters</strong> · <code>Chromosome</code> on <code>distance_profile</code>. Picking a curve narrows
+the P(s) table to that chromosome.</p>
 <table>
 <thead>
 <tr>
@@ -5978,34 +6044,37 @@ the P(s) table and card to that chromosome.</p>
 </thead>
 <tbody>
 <tr>
-<td>Shape at a glance</td>
-<td>4 cards: log-log slope, trans share, long-range cis share and count</td>
+<td>Decay at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
 <td>Contact probability</td>
-<td><em>Contact probability P(s) and its slope</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>P(s) tables</td>
-<td><em>P(s) bins</em>, <em>Distance-decay table</em> (collapsed)</td>
+<td>Curve tables (collapsed)</td>
+<td><em>P(s) bins</em>, <em>Distance-decay curve</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Examine one locus: domains, the contact triangle, insulation and compartments.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/contact_maps_light.png" rel="noopener" target="_blank"><img alt="Contact maps dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/contact_maps_light.png"></a></p>
+<p><strong>Contacts</strong> · <em>What do the contacts, domains and compartments look like at one locus?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/contact_maps_light.webp" rel="noopener" target="_blank"><img alt="Contact maps dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/contact_maps_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/contact_maps_dark.webp" rel="noopener" target="_blank"><img alt="Contact maps dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/contact_maps_dark.webp#only-dark"></a></p>
 <p>The locus tab stacks four collections on one <code>{GENOME}</code> axis. The TAD domain
-track is the navigator: a brush or a typed locus emits a region that <code>region</code>
-links carry to the contact triangle, the insulation score and the phased E1
-compartment track below it. The triangle reads the finest dumped resolution
-that fits the span, so zooming re-bins it; the cards read the region in view.</p>
+track is the navigator: a typed locus or a brush on its axis emits a region
+that <code>region</code> links carry to the contact triangle, the insulation score and the
+phased E1 compartment track below it. The triangle reads the finest dumped
+resolution that fits the span, so zooming re-bins it. The four cards (median
+balanced contact, insulation score, domains, A and B bins) are recounted on the
+region in view.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>Domain window (bp)</code>, <code>Insulation window (bp)</code> and
-<code>Compartment resolution (bp)</code> choose which calls the tracks draw. There is no chromosome
-filter: the locus field is the section's chromosome.</p>
+<code>Compartment resolution (bp)</code> choose which calls the tracks draw. There is
+no chromosome filter: the locus field is the tab's chromosome.</p>
 <table>
 <thead>
 <tr>
@@ -6015,30 +6084,32 @@ filter: the locus field is the section's chromosome.</p>
 </thead>
 <tbody>
 <tr>
-<td>Matrix at a glance</td>
-<td>4 cards on the region in view: balanced contacts, insulation, E1, A and B bins</td>
+<td>Region at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Genome architecture</td>
-<td><em>TAD domains, the navigator</em>, <em>Contact triangle</em>, <em>Insulation score</em>, <em>A/B compartment track (E1)</em></td>
+<td>One region, four tracks</td>
+<td>4 advanced visualizations: the TAD domain navigator, the contact triangle, the insulation score and the E1 track</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Read TADs and compartments across the whole genome.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/domains_and_compartments_light.png" rel="noopener" target="_blank"><img alt="Domains and compartments dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/domains_and_compartments_light.png"></a></p>
-<p>cooltools calls boundaries, not domains, and nf-core/hic 2.x emits no
-interval list, so the domains are derived from runs of boundary bins, with
-mostly unmappable spans dropped. E1 is phased per chromosome and resolution
-against bin coverage, so the better-covered side is A and the call does not
-flip between resolutions. Domain sizes per insulation window and the A and B
-bins per chromosome sit above the collapsed tables.</p>
+<p><strong>Architecture</strong> · <em>How many TAD domains are there, and how large are they?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/domains_light.webp" rel="noopener" target="_blank"><img alt="Domains dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/domains_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/domains_dark.webp" rel="noopener" target="_blank"><img alt="Domains dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/domains_dark.webp#only-dark"></a></p>
+<p>Genome-wide, no tracks. The median domain size, the domains called, the median
+mappable share of a domain and the insulation bins split into boundaries and
+the rest. Then the domain size per insulation window, one box per window.
+cooltools calls boundaries, not domains, and nf-core/hic 2.x emits no interval
+list, so the domains are derived from runs of boundary bins, and a domain that
+is mostly unmappable is dropped. Each window calls its own set: pick one before
+comparing counts.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Domain window (bp)</code>, <code>Insulation window (bp)</code>,
-<code>Compartment resolution (bp)</code> and <code>Compartment</code>; no chromosome filter.</p>
+<p><strong>Filters</strong> · <code>Domain window (bp)</code> on <code>tad_domains</code> and <code>Insulation window
+(bp)</code> on <code>tad_insulation</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6049,19 +6120,53 @@ bins per chromosome sit above the collapsed tables.</p>
 <tbody>
 <tr>
 <td>Domains at a glance</td>
-<td>4 cards: domain size, domains called, mappable share, boundary bins</td>
+<td>4 cards</td>
 </tr>
+<tr>
+<td>Domain sizes</td>
+<td><em>Domain size by insulation window</em></td>
+</tr>
+<tr>
+<td>Domain tables (collapsed)</td>
+<td><em>TAD domains</em>, <em>Insulation bins</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Architecture</strong> · <em>How does the genome split between the A and B compartments?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/compartments_light.webp" rel="noopener" target="_blank"><img alt="Compartments dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/compartments_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/compartments_dark.webp" rel="noopener" target="_blank"><img alt="Compartments dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/hic/compartments_dark.webp#only-dark"></a></p>
+<p>Genome-wide, no tracks. The bins with an E1 sign split into A and B, the median
+E1 (two humps when compartments are strong) and the first and second
+eigenvalues. Then the A and B bins per chromosome. nf-core/hic passes no
+phasing track, so E1 is oriented per chromosome and resolution to correlate
+with bin coverage: the better-covered side is A, and the call does not flip
+between resolutions. Pick one resolution before comparing.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Compartment resolution (bp)</code> and <code>Compartment</code> on
+<code>compartment_eigenvector</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td>Compartments at a glance</td>
-<td>4 cards: A and B bins, E1 spread, eigenvalues 1 and 2</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Domain and compartment distributions</td>
-<td><em>Domain size by insulation window</em>, <em>A and B bins per chromosome</em></td>
+<td>A and B per chromosome</td>
+<td><em>A and B bins per chromosome</em></td>
 </tr>
 <tr>
-<td>Domain, insulation and compartment tables</td>
-<td>4 tables (collapsed)</td>
+<td>Compartment tables (collapsed)</td>
+<td><em>Compartment bins</em>, <em>Compartment eigenvalues</em></td>
 </tr>
 </tbody>
 </table>
@@ -6069,13 +6174,12 @@ bins per chromosome sit above the collapsed tables.</p>
 </div>
 </div>
 </div>
-<p>Tables and point views select on their entity column: the pinned sample sheet
-on <code>sample_id</code>; the pair statistics, pair flow, P(s) and eigenvalue tables on
-<code>sample</code>; the P(s) curve on <code>chrom</code>, which narrows the P(s) table and card to
-the chromosome picked. A pick narrows the other tiles of its collection and
-follows the project links to the collections they reach. The domain, insulation
-and compartment tables do not select: their rows are bins and domains with no
-identifier column.</p>
+<p>Tables select rows and the P(s) curve selects a chromosome: the sample sheet on
+<code>sample_id</code>; the pair fates, the funnel, the P(s) bins and the eigenvalue tables
+on <code>sample</code>; the P(s) curve on <code>chrom</code>. A pick narrows the other tiles of its
+collection and follows the project links to the collections they reach. The
+domain, insulation and compartment tables do not select: their rows are bins and
+domains with no identifier column.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/hic, it does not run the pipeline.

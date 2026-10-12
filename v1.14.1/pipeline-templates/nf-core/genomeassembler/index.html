@@ -5409,21 +5409,21 @@
 </div>
 
 <p>The genomeassembler template follows an nf-core/genomeassembler run from its raw
-assemblies through polishing and scaffolding, one tab per question:</p>
+assemblies through polishing and scaffolding, one tab per question, in three
+groups:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> <strong>Overview</strong>: which assembly strategy gives the best contiguity, accuracy and gene completeness</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <strong>Stages</strong>: what each polishing and scaffolding step adds to a sample's assembly</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m1.39 18.36 1.77-1.76L4.58 18l1.06-1.05-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.42 1.41L10.59 12l-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.41 1.41 1.07-1.06-1.42-1.41 1.42-1.42L18 6.7l1.07-1.06-2.47-2.48 1.76-1.77 4.25 4.25L5.64 22.61z"></path></svg></span> <strong>Contiguity</strong>: Nx curves for every assessed assembly, and QUAST's view of the ones it scored</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> <strong>Genome profile</strong>: the read k-mer spectrum and GenomeScope's genome estimates</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 11c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4zm-9 10c3.75-1 7-5.46 7-9.78V6.3l-7-3.12L5 6.3v4.92C5 15.54 8.25 20 12 21m-2-4-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9"></path></svg></span> <strong>Accuracy and genes</strong>: Merqury QV, k-mer completeness and copy number, and BUSCO</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1c0-.21-.07-.41-.18-.57L13 8.35V4h-2v4.35L5.18 18.43c-.11.16-.18.36-.18.57m1 3a3 3 0 0 1-3-3c0-.6.18-1.16.5-1.63L9 7.81V6a1 1 0 0 1-1-1V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1v1.81l5.5 9.56c.32.47.5 1.03.5 1.63a3 3 0 0 1-3 3zm7-6 1.34-1.34L16.27 18H7.73l2.66-4.61zm-.5-4a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5"></path></svg></span> <strong>Data &amp; QC</strong>: which samples reached assembly QC and at which stages, and the genome the reads describe before any assembly, from the k-mer spectrum and GenomeScope</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 2c-.9 0-2 1-2 2H8c0-1-1.1-2-2-2H2v9c0 1 1 2 2 2h2.2c.4 2 1.7 3.7 4.8 4v2.08C8 19.54 8 22 8 22h8s0-2.46-3-2.92V17c3.1-.3 4.4-2 4.8-4H20c1 0 2-1 2-2V2zM6 11H4V4h2zm14 0h-2V4h2z"></path></svg></span> <strong>Assemblies</strong>: which assembly is best across contiguity, accuracy and genes, and what each polishing and scaffolding step adds to a sample's assembly</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m1.39 18.36 1.77-1.76L4.58 18l1.06-1.05-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.42 1.41L10.59 12l-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.41 1.41 1.07-1.06-1.42-1.41 1.42-1.42L18 6.7l1.07-1.06-2.47-2.48 1.76-1.77 4.25 4.25L5.64 22.61z"></path></svg></span> <strong>Quality</strong>: Nx curves and QUAST for contiguity, Merqury QV, k-mer completeness and copy number for accuracy, and BUSCO for gene completeness</li>
 </ul>
-<p>A <code>Run at a glance</code> strip and the collapsed <code>Sample sheet</code> are pinned to the top
-of every tab, and the <code>Sample filters</code> group (sample and design group) applies
-everywhere through the samplesheet links.</p>
+<p>The persistent <code>Sample filters</code> (the design group, then the sample id) sit in the
+left panel and narrow every per-assembly tab through the samplesheet links;
+Genome profile reads per read set and has its own <code>Read set</code> filter.</p>
 <div class="admonition info">
 <p class="admonition-title">No MultiQC report, one row per assessed assembly</p>
-<p>nf-core/genomeassembler writes no MultiQC report, so the landing tab is an
-Overview built from the QC tools' own files. The unit of every tile is the
+<p>nf-core/genomeassembler writes no MultiQC report, so there is no MultiQC tab:
+every tile reads the QC tools' own files. The unit of every tile is the
 assessed assembly, which every QC tool names <code>&lt;sample&gt;_&lt;stage&gt;</code>: the raw
 assembly, each polishing step (medaka, dorado, pilon) and each scaffolder
 (LINKS, LongStitch, RagTag). A sample whose assembly never reached QC stays
@@ -5464,8 +5464,9 @@ curve are computed), Merqury's QV, completeness, per-sequence QV and copy-number
 spectrum, the BUSCO batch summary and QUAST's transposed report; and per read
 set, the jellyfish histogram and GenomeScope's summary. Every tool collection is
 optional, so a run that skipped a tool, or an assembly a tool never reached,
-leaves its tiles empty instead of breaking the import. 25 of its 58 components
-carry a <code>use:</code> catalog reference, so a tile says where its panel comes from.</p>
+prunes that tool's tiles instead of breaking the import, and a tab left without
+data is dropped. 26 of its 57 tiles carry a <code>use:</code> catalog reference, so a tile
+says where its panel comes from.</p>
 <div class="admonition info">
 <p class="admonition-title">Self-adapting layout</p>
 <p>The dashboard adapts to whatever the run actually produced: components bound
@@ -5962,28 +5963,65 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Five tabs, read as a funnel: which strategy wins overall, what each stage adds,
-how the length is distributed, what genome the reads describe, and how accurate
-and complete each assembly is against it. Each tab below carries the <strong>same icon
-and colour the dashboard gives it</strong>. Screenshots come from the run described
-under Validation runs.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:5"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Overview</label><label for="__tabbed_2_2"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> Stages</label><label for="__tabbed_2_3"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m1.39 18.36 1.77-1.76L4.58 18l1.06-1.05-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.42 1.41L10.59 12l-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.41 1.41 1.07-1.06-1.42-1.41 1.42-1.42L18 6.7l1.07-1.06-2.47-2.48 1.76-1.77 4.25 4.25L5.64 22.61z"></path></svg></span> Contiguity</label><label for="__tabbed_2_4"><span class="twemoji mc-orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> Genome profile</label><label for="__tabbed_2_5"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 11c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4zm-9 10c3.75-1 7-5.46 7-9.78V6.3l-7-3.12L5 6.3v4.92C5 15.54 8.25 20 12 21m-2-4-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9"></path></svg></span> Accuracy and genes</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then seven child tabs in three groups, read as a
+funnel from the samples and the genome their reads describe to the contiguity,
+accuracy and gene completeness of every assembly. Each tab below carries the
+<strong>same icon and colour the dashboard gives it</strong>, so the page and the app read
+alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>Samples, Genome profile</td>
+</tr>
+<tr>
+<td>Assemblies</td>
+<td>Best assembly, Stages</td>
+</tr>
+<tr>
+<td>Quality</td>
+<td>Contiguity, Accuracy, Gene completeness</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables, details and comparisons follow, collapsed. The
+pipeline writes no MultiQC report, so there is no MultiQC tab, and the unit of
+every tile is the assessed assembly, <code>&lt;sample&gt;_&lt;stage&gt;</code>: one sample contributes
+several rows. The persistent <em>Sample filters</em> (the group, then the sample id, on
+the samplesheet) sit in the left panel and narrow every per-assembly tab through
+the samplesheet links; Genome profile reads per read set, which no sample link
+reaches. The <em>Sample sheet</em> (one row per samplesheet sample, with how far its
+assembly QC got) is pinned, collapsed, to the bottom of every child tab. Every QC
+collection is optional: a run without Merqury, BUSCO or k-mer profiling loses the
+Accuracy, Gene completeness or Genome profile tab, with the Overview rows and
+highlights that pointed at it.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:8"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><input id="__tabbed_2_8" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1c0-.21-.07-.41-.18-.57L13 8.35V4h-2v4.35L5.18 18.43c-.11.16-.18.36-.18.57m1 3a3 3 0 0 1-3-3c0-.6.18-1.16.5-1.63L9 7.81V6a1 1 0 0 1-1-1V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1v1.81l5.5 9.56c.32.47.5 1.03.5 1.63a3 3 0 0 1-3 3zm7-6 1.34-1.34L16.27 18H7.73l2.66-4.61zm-.5-4a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5"></path></svg></span> Samples</label><label for="__tabbed_2_3"><span class="twemoji mc-orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> Genome profile</label><label for="__tabbed_2_4"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 2c-.9 0-2 1-2 2H8c0-1-1.1-2-2-2H2v9c0 1 1 2 2 2h2.2c.4 2 1.7 3.7 4.8 4v2.08C8 19.54 8 22 8 22h8s0-2.46-3-2.92V17c3.1-.3 4.4-2 4.8-4H20c1 0 2-1 2-2V2zM6 11H4V4h2zm14 0h-2V4h2z"></path></svg></span> Best assembly</label><label for="__tabbed_2_5"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> Stages</label><label for="__tabbed_2_6"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m1.39 18.36 1.77-1.76L4.58 18l1.06-1.05-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.42 1.41L10.59 12l-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.41 1.41 1.07-1.06-1.42-1.41 1.42-1.42L18 6.7l1.07-1.06-2.47-2.48 1.76-1.77 4.25 4.25L5.64 22.61z"></path></svg></span> Contiguity</label><label for="__tabbed_2_7"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg></span> Accuracy</label><label for="__tabbed_2_8"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 11c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4zm-9 10c3.75-1 7-5.46 7-9.78V6.3l-7-3.12L5 6.3v4.92C5 15.54 8.25 20 12 21m-2-4-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9"></path></svg></span> Gene completeness</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Which assembly strategy gives the best assembly?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/overview_light.png" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/overview_light.png"></a></p>
-<p>Cards give the assemblies assessed, the best Merqury QV, the best BUSCO
-complete share and GenomeScope's genome size estimate. A parallel coordinates
-plot lays every assembly across N50, L50, length, sequence count, QV, k-mer
-completeness and BUSCO, coloured by the design group. The N50 against QV
-scatter, coloured by assembler, carries a linked assembly record that folds to
-a slim rail until a point is picked; BUSCO class bars close the tab.</p>
+<p><em>De novo assemblies scored for contiguity, k-mer accuracy and gene completeness.</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/overview_dark.webp#only-dark"></a></p>
+<p>A short hero links the run parameters. <em>About this dashboard</em> says how the two
+filter levels work, <em>The run</em> lists the samples, the assessed assemblies, the
+BUSCO lineage and the k-mer size, and <em>Pipeline</em> walks the six steps from reads
+to a scored genome (profile, assemble, polish, scaffold, measure, score), each
+linked to the parameters that drive it and to its tab. The QV card reads
+against QV 40, the Earth BioGenome Project floor. The three assembly cards read
+<code>assemblies</code>, which every route writes, so a QC tool the run skipped leaves a
+dash rather than a gap in the row. The findings are live values: they follow
+the filters.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample</code> and the design group (<code>GROUP_COL</code>) on the
-samplesheet, persistent and pinned to the top of every tab, plus
-<code>Stage class</code>, <code>Assembler</code> and a <code>Consensus QV</code> range in an <em>Assembly
-scope</em> group.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> has its own
+filter bar (the group and the sample id), and <em>Findings</em> another (the
+group and the stage class): each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -5993,40 +6031,41 @@ scope</em> group.</p>
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards: samples by QC status, design groups, assemblers, stages assessed (pinned)</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Samples and their assembly QC</em> (collapsed, pinned)</td>
+<td>Key figures</td>
+<td>4 headline cards: samples by group, N50, consensus QV, BUSCO complete</td>
 </tr>
 <tr>
-<td>Best assembly</td>
-<td>4 cards, <em>Every assembly across the QC axes</em>, <em>Contiguity against accuracy</em>, <em>Assembly record</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: N50 against QV per assembly, the QV along each route, the Nx curves and the BUSCO classes per assembly</td>
 </tr>
 <tr>
-<td>Gene completeness</td>
-<td><em>BUSCO classes per assembly</em></td>
-</tr>
-<tr>
-<td>Assembly table</td>
-<td><em>Assessed assemblies</em> (collapsed)</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>What do polishing and scaffolding add, step by step?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/stages_light.png" rel="noopener" target="_blank"><img alt="Stages dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/stages_light.png"></a></p>
-<p>Each sample's route runs from its raw assembly through polishing to each
-scaffolder. Two profiles track the QV and the N50 fold change along every
-route, so a step that costs accuracy or adds no contiguity shows as a flat or
-falling segment. A group comparison then contrasts raw assemblies with
-scaffolds metric by metric.</p>
+<p><strong>Data &amp; QC</strong> · <em>Which samples reached assembly QC, and at which stages?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/samples_light.webp" rel="noopener" target="_blank"><img alt="Samples dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/samples_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/samples_dark.webp" rel="noopener" target="_blank"><img alt="Samples dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/samples_dark.webp#only-dark"></a></p>
+<p>The samples as a ring by QC status, the assessed assemblies split by stage
+class, the distinct stages assessed ranked by stage class, and the mean number
+of QC tools per assembly on a gauge out of four (samtools, Merqury, BUSCO,
+QUAST). Then the assessed stages per sample, one block per assessed assembly
+coloured by stage, a code figure so the count axis steps by one; a group-by
+set in Analysis mode splits it into panels. A sample marked <code>No assembly QC</code>
+reached no QC tool and appears on no other tab: the sample sheet below lists
+it.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Final stage</code> and <code>Route</code> in a <em>Route scope</em> group.</p>
+<p><strong>Filters</strong> · <code>QC status</code> on <code>sample_status</code>, and <code>Stage class</code> and
+<code>Assembler</code> on <code>assemblies</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6036,32 +6075,32 @@ scaffolds metric by metric.</p>
 </thead>
 <tbody>
 <tr>
-<td>What each stage adds</td>
-<td>4 cards, <em>QV along each route</em>, <em>N50 gain along each route</em></td>
+<td>Samples at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Stage comparison</td>
-<td><em>Raw assemblies against scaffolds</em></td>
-</tr>
-<tr>
-<td>Route table</td>
-<td><em>Stage routes</em> (collapsed)</td>
+<td>Assessed stages</td>
+<td><em>Assessed stages per sample</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>How is the assembled length distributed across sequences?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/contiguity_light.png" rel="noopener" target="_blank"><img alt="Contiguity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/contiguity_light.png"></a></p>
-<p>The Nx curves are computed from the idxstats sequence lengths of every
-assessed assembly, so they cover assemblies QUAST never scored. QUAST's
-reference-free N50 against length and the length kept above each contig
-length follow, and, when the run had a reference, genome fraction against
-misassemblies.</p>
+<p><strong>Data &amp; QC</strong> · <em>What genome do the reads describe, before any assembly?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/genome_profile_light.webp" rel="noopener" target="_blank"><img alt="Genome profile dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/genome_profile_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/genome_profile_dark.webp" rel="noopener" target="_blank"><img alt="Genome profile dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/genome_profile_dark.webp#only-dark"></a></p>
+<p>GenomeScope's haploid genome size, heterozygosity, repeat share and the lowest
+model fit over the read sets. Then the jellyfish k-mer spectrum GenomeScope
+fits, one line per read set. The haploid length is the size an assembly should
+approach; a high heterozygosity warns of duplicated haplotigs, and a poor model
+fit means the other estimates are not to be trusted. The GenomeScope table is
+collapsed. Both collections are per read set, not per assembly: the sample
+filters do not reach this tab, and the <code>Read set</code> filter does the narrowing.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Stage</code> in a <em>Curve scope</em> group.</p>
+<p><strong>Filters</strong> · <code>Read set</code> on <code>genomescope_summary</code>, which links to the
+spectrum.</p>
 <table>
 <thead>
 <tr>
@@ -6070,35 +6109,181 @@ misassemblies.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>Genome profile at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>K-mer spectrum</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Genome profile table (collapsed)</td>
+<td><em>GenomeScope estimates</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Assemblies</strong> · <em>Which assembly is best across contiguity, accuracy and genes?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/best_assembly_light.webp" rel="noopener" target="_blank"><img alt="Best assembly dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/best_assembly_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/best_assembly_dark.webp" rel="noopener" target="_blank"><img alt="Best assembly dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/best_assembly_dark.webp#only-dark"></a></p>
+<p>The best N50, QV, share of complete BUSCOs and k-mer completeness over the
+assemblies in view, each with every assembly's spread. Then the parallel
+coordinates over N50, sequence count, length, QV and k-mer completeness,
+coloured by group; brush an axis to keep a range. BUSCO stays off it: the plot
+drops a line that misses an axis, and BUSCO scores fewer assemblies than
+Merqury. Below, N50 against QV coloured by assembler, with the assembly record
+card beside it, which waits for a picked point. The assembly table is
+collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Stage class</code>, <code>Assembler</code> and a <code>Consensus QV</code> range on
+<code>assemblies</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Best assembly at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Every assembly</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Contiguity against accuracy</td>
+<td>2 advanced visualizations: the N50 against QV scatter and the assembly record card</td>
+</tr>
+<tr>
+<td>Assembly table (collapsed)</td>
+<td><em>Assessed assemblies</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Assemblies</strong> · <em>What does each polishing and scaffolding step add?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/stages_light.webp" rel="noopener" target="_blank"><img alt="Stages dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/stages_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/stages_dark.webp" rel="noopener" target="_blank"><img alt="Stages dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/stages_dark.webp#only-dark"></a></p>
+<p>A route runs from a sample's raw assembly through polishing to one scaffolder.
+The routes ranked by the stage they end on, the largest QV gain, the largest
+N50 fold change and the lowest share of complete BUSCOs over the steps. Then
+the QV and the N50 fold change along each route, one line per route: a line
+that climbs gained at that step, a flat one changed nothing the metric can
+see. Pick a route on either chart to follow it on both. The comparison of raw
+assemblies against scaffolds, metric by metric (a screen, not a verdict, with
+few assemblies per class), and the route table are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Final stage</code> and <code>Route</code> on <code>stage_steps</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stages at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>QV along each route</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>N50 along each route</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Stage comparison (collapsed)</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Route table (collapsed)</td>
+<td><em>Stage routes</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Quality</strong> · <em>How long and how fragmented is each assembly?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/contiguity_light.webp" rel="noopener" target="_blank"><img alt="Contiguity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/contiguity_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/contiguity_dark.webp" rel="noopener" target="_blank"><img alt="Contiguity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/contiguity_dark.webp#only-dark"></a></p>
+<p>The median assembled length, N50, L50 and sequence count. Then the Nx curves,
+computed from the samtools idxstats sequence lengths of every assessed
+assembly, so they cover assemblies QUAST never scored: N50 is the point at 50%,
+and a curve that stays high far to the right holds its length in few long
+sequences. Then QUAST's reference-free view, N50 against assembled length
+beside the length kept above each contig length. QUAST against a reference,
+written only when the run had one, and the QUAST tables are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Stage</code> and an <code>N50 (bp)</code> range on <code>assemblies</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contiguity at a glance</td>
+<td>4 cards</td>
+</tr>
 <tr>
 <td>Nx curves</td>
-<td>4 cards, <em>Nx curve per assembly</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>QUAST</td>
-<td><em>N50 against assembled length (QUAST)</em>, <em>Length kept above each contig length (QUAST)</em>, <em>Reference coverage against misassemblies (QUAST)</em></td>
+<td>2 advanced visualizations: N50 against assembled length and the length kept above each contig length</td>
 </tr>
 <tr>
-<td>QUAST tables</td>
-<td><em>QUAST against the reference</em>, <em>QUAST reference-free statistics</em> (collapsed)</td>
+<td>QUAST against a reference (collapsed)</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>QUAST tables (collapsed)</td>
+<td><em>QUAST reference-free statistics</em>, <em>QUAST against the reference</em></td>
 </tr>
 </tbody>
 </table>
 </details>
+<div class="admonition info">
+<p class="admonition-title">QUAST is optional, the reference too</p>
+<p>A run without QUAST has no QUAST sections on this tab; a run without a
+reference has no reference view or table. The Nx curves and the strip do
+not depend on QUAST.</p>
+</div>
 </div>
 <div class="tabbed-block">
-<p><em>What genome do the reads describe, before any assembly?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/genome_profile_light.png" rel="noopener" target="_blank"><img alt="Genome profile dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/genome_profile_light.png"></a></p>
-<p>GenomeScope's heterozygosity, repeat share, model fit and read error rate, next
-to the jellyfish k-mer spectrum it fits. This is the yardstick for the other
-tabs: an assembly much larger or smaller than the estimated genome size, or
-far off the expected heterozygosity, deserves a second look. Both
-collections are per read set, not per assembly: they link to each other but
-not to the samplesheet, so the pinned sample filters do not reach this tab
-and the <code>Read set</code> picker does the narrowing.</p>
+<p><strong>Quality</strong> · <em>How accurate is each assembly against the read k-mers?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/accuracy_light.webp" rel="noopener" target="_blank"><img alt="Accuracy dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/accuracy_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/accuracy_dark.webp" rel="noopener" target="_blank"><img alt="Accuracy dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/accuracy_dark.webp#only-dark"></a></p>
+<p>The median consensus QV, the median k-mer completeness, the sequences Merqury
+scored (a ring, error-free or not) and the median error k-mers per assembly.
+Then QV against k-mer completeness, with a line at Q40 and the points under it
+dimmed, and the copy number of the read k-mers in each assembly. Merqury takes
+the read k-mers as the truth set: assembly k-mers missing from the reads are
+errors (the QV), solid read k-mers missing from the assembly are lost sequence,
+and the copy-number bars show lost, collapsed and duplicated sequence. The
+per-sequence QV scatter and the Merqury table are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Read set</code> in a <em>Read set scope</em> group.</p>
+<p><strong>Filters</strong> · a <code>Consensus QV</code> range on <code>merqury_assembly_qv</code> and
+<code>Error-free sequence</code> on <code>merqury_sequence_qv</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6108,28 +6293,43 @@ and the <code>Read set</code> picker does the narrowing.</p>
 </thead>
 <tbody>
 <tr>
-<td>Genome from the reads</td>
-<td>4 cards, <em>Read k-mer spectrum</em></td>
+<td>Accuracy at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Genome profile table</td>
-<td><em>GenomeScope estimates</em> (collapsed)</td>
+<td>QV and completeness</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Copy number</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Per-sequence errors (collapsed)</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Accuracy table (collapsed)</td>
+<td><em>Merqury QV and completeness</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>How accurate and how complete is each assembly?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/accuracy_and_genes_light.png" rel="noopener" target="_blank"><img alt="Accuracy and genes dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/accuracy_and_genes_light.png"></a></p>
-<p>Merqury QV against k-mer completeness places each assembly, and the
-copy-number bars show how the read k-mers are represented in it, where
-missing or duplicated content shows up. The per-sequence QV scatter against
-sequence length says which sequences carry the error k-mers. BUSCO complete
-against duplicated closes the tab.</p>
+<p><strong>Quality</strong> · <em>How many conserved single-copy genes does each assembly hold?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/gene_completeness_light.webp" rel="noopener" target="_blank"><img alt="Gene completeness dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/gene_completeness_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/gene_completeness_dark.webp" rel="noopener" target="_blank"><img alt="Gene completeness dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/genomeassembler/gene_completeness_dark.webp#only-dark"></a></p>
+<p>The median share of complete BUSCOs (counting the assemblies at 90% or above),
+the highest duplicated share, and the median fragmented and missing shares,
+each with its spread. Then the BUSCO classes per assembly and complete against
+duplicated BUSCOs. Complete BUSCOs say the gene space is there; duplicated ones
+point to retained haplotigs, fragmented and missing ones to gaps or errors.
+The BUSCO table is collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Error-free sequence</code> in a <em>Sequence scope</em> group.</p>
+<p><strong>Filters</strong> · <code>BUSCO lineage</code> and a <code>Complete BUSCOs (%)</code> range on
+<code>busco_batch_summary</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6139,20 +6339,20 @@ against duplicated closes the tab.</p>
 </thead>
 <tbody>
 <tr>
-<td>K-mer accuracy</td>
-<td>4 cards, <em>QV against k-mer completeness</em>, <em>Copy number of the read k-mers in each assembly</em></td>
+<td>Genes at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Per-sequence errors</td>
-<td><em>Per-sequence QV against sequence length</em></td>
+<td>BUSCO classes</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>BUSCO</td>
-<td><em>Complete against duplicated BUSCOs</em></td>
+<td>Complete against duplicated</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Accuracy tables</td>
-<td><em>Merqury QV and completeness</em>, <em>BUSCO batch summary</em> (collapsed)</td>
+<td>BUSCO table (collapsed)</td>
+<td><em>BUSCO batch summary</em></td>
 </tr>
 </tbody>
 </table>
@@ -6160,9 +6360,14 @@ against duplicated closes the tab.</p>
 </div>
 </div>
 </div>
-<p>Every per-assembly scatter and table selects on <code>assembly_id</code>, so a point picked on a QUAST,
-Merqury or BUSCO scatter narrows the other tiles of its collection and follows
-the project links; the stage profiles and route table select on <code>route</code>.</p>
+<p>Tables and points select on their entity column: every per-assembly tile (the
+Best assembly scatter and table, the QUAST, Merqury and BUSCO scatters and tables,
+the Nx curves) on <code>assembly_id</code>, the per-sequence QV scatter on <code>sequence</code>, the
+stage profiles and the route table on <code>route</code>, the GenomeScope table on
+<code>read_set</code> and the pinned sample sheet on <code>sample</code>. A pick narrows the other
+tiles of its collection and follows the project links to the collections they
+reach. The parallel coordinates, the k-mer spectrum, the length ladder, the
+copy-number bars and the BUSCO class bars do not select.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/genomeassembler, it does not run the

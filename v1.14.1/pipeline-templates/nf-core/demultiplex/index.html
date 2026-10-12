@@ -5433,16 +5433,13 @@
 <p>The demultiplex template reads an nf-core/demultiplex run in the order a
 sequencing facility signs a run off:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: what CheckQC flagged, then the Falco and fastp read QC of the demultiplexed FASTQ files</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 8c.56 0 1 .43 1 1a1 1 0 0 1-1 1c-.57 0-1-.45-1-1 0-.57.43-1 1-1M2 2v9c0 2.96 2.19 5.5 5.14 5.91.62 3.01 3.28 5.09 6.36 5.09a6.5 6.5 0 0 0 6.5-6.5v-3.69c1.16-.42 2-1.52 2-2.81a3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 1.29.84 2.4 2 2.81v3.6c0 2.5-2 4.5-4.5 4.5-2 0-3.68-1.21-4.28-3.01C12 16.3 14 13.8 14 11V2h-4v3h2v6a4 4 0 0 1-4 4 4 4 0 0 1-4-4V5h2V2z"></path></svg></span> <strong>Run health</strong>: whether the instrument delivered, per lane, per read and per cycle</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.62 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95M12 19a7 7 0 0 1-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95a10 10 0 0 0 10 10c3.3 0 6.23-1.61 8.05-4.09l-2.6-1.53A6.89 6.89 0 0 1 12 19"></path></svg></span> <strong>Demultiplexing</strong>: how evenly the reads of each lane were shared between the libraries</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2 1 21h22M12 6l7.53 13H4.47M11 10v4h2v-4m-2 6v2h2v-2"></path></svg></span> <strong>Undetermined and index swaps</strong>: what no index matched, and whether it is a swap between indexes in use</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 2v2h1v14a4 4 0 0 0 4 4 4 4 0 0 0 4-4V4h1V2zm4 14c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m2-4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m1-5h-4V4h4z"></path></svg></span> <strong>Library QC</strong>: how each library looks once demultiplexed, and whether the design groups differ</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: what CheckQC and the Falco and fastp read QC flagged in the MultiQC report, and whether the instrument delivered on every lane, read and cycle</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> <strong>Demultiplexing</strong>: how evenly each lane's reads were shared between the libraries, what no index matched and whether it is an index swap, and which libraries stand out on read QC within their group</li>
 </ul>
-<p><code>Run at a glance</code> (libraries, total yield, lowest-lane Q30, highest-lane
-Undetermined share) and the collapsed <code>Sample sheet</code> are pinned to the top of
-every tab, the <code>Lane table</code> to the bottom, and the <code>Library filters</code> group
-(library, design group, lane) applies everywhere.</p>
+<p>The persistent <code>Sample filters</code> (the design group, then the library) sit in the
+left panel and narrow every library tab through the project links; Run health
+reads lanes, so it keeps its own lane, read and cycle filters instead.</p>
 <div class="admonition info">
 <p class="admonition-title">bcl2fastq by default, BCL Convert on request</p>
 <p>The two demultiplexers write different reports: bcl2fastq a
@@ -5493,9 +5490,9 @@ manifest. See <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger
 <p>The template reads the MultiQC report, the demultiplexer statistics of every
 flowcell and lane, the CheckQC report, the fastp JSON of every library and,
 when present, an Illumina InterOp summary table. A pipeline-local <code>libraries</code>
-recipe joins them into one row per library, the hub of the library filters.
-48 of its 79 components carry a <code>use:</code> catalog reference, so a tile says where
-its panel comes from.</p>
+recipe joins them into one row per library, the hub of the sample filters.
+47 of its 60 tiles carry a <code>use:</code> catalog reference, so a tile says where its
+panel comes from.</p>
 <div class="admonition info">
 <p class="admonition-title">Self-adapting layout</p>
 <p>The dashboard adapts to whatever the run actually produced: components bound
@@ -5965,25 +5962,55 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Five tabs, read as a funnel: what the checks flagged, whether the instrument
-delivered, how the reads were shared, what went to Undetermined, and how each
-library looks. Each tab below carries the <strong>same icon and colour the dashboard
-gives it</strong>. The screenshots come from the run described under Validation runs
-below.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:5"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 8c.56 0 1 .43 1 1a1 1 0 0 1-1 1c-.57 0-1-.45-1-1 0-.57.43-1 1-1M2 2v9c0 2.96 2.19 5.5 5.14 5.91.62 3.01 3.28 5.09 6.36 5.09a6.5 6.5 0 0 0 6.5-6.5v-3.69c1.16-.42 2-1.52 2-2.81a3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 1.29.84 2.4 2 2.81v3.6c0 2.5-2 4.5-4.5 4.5-2 0-3.68-1.21-4.28-3.01C12 16.3 14 13.8 14 11V2h-4v3h2v6a4 4 0 0 1-4 4 4 4 0 0 1-4-4V5h2V2z"></path></svg></span> Run health</label><label for="__tabbed_2_3"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.62 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95M12 19a7 7 0 0 1-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95a10 10 0 0 0 10 10c3.3 0 6.23-1.61 8.05-4.09l-2.6-1.53A6.89 6.89 0 0 1 12 19"></path></svg></span> Demultiplexing</label><label for="__tabbed_2_4"><span class="twemoji mc-orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2 1 21h22M12 6l7.53 13H4.47M11 10v4h2v-4m-2 6v2h2v-2"></path></svg></span> Undetermined and index swaps</label><label for="__tabbed_2_5"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 2v2h1v14a4 4 0 0 0 4 4 4 4 0 0 0 4-4V4h1V2zm4 14c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m2-4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m1-5h-4V4h4z"></path></svg></span> Library QC</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then five child tabs in two groups, read as a
+funnel from what the checks flagged to how each library reads, in the order a
+facility signs a run off. Each tab below carries the <strong>same icon and colour the
+dashboard gives it</strong>, so the page and the app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Run health</td>
+</tr>
+<tr>
+<td>Demultiplexing</td>
+<td>Library balance, Undetermined reads, Library QC</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and, except on MultiQC, a strip of four
+cards, then at most three open sections; tables and conditional detail follow,
+collapsed. The design comes from the optional <code>METADATA_FILE</code>: without it the
+<code>libraries</code> hub carries one group, "All libraries", and every tile still renders.
+The persistent <em>Sample filters</em> (the group, then the library, both on the hub)
+sit in the left panel and narrow every library tab through the project links.
+Run health reads lanes, which no library link reaches, so they are kept off that
+tab. The <em>Sample sheet</em> is pinned, collapsed, to the bottom of every child tab
+except Run health.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 8c.56 0 1 .43 1 1a1 1 0 0 1-1 1c-.57 0-1-.45-1-1 0-.57.43-1 1-1M2 2v9c0 2.96 2.19 5.5 5.14 5.91.62 3.01 3.28 5.09 6.36 5.09a6.5 6.5 0 0 0 6.5-6.5v-3.69c1.16-.42 2-1.52 2-2.81a3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 1.29.84 2.4 2 2.81v3.6c0 2.5-2 4.5-4.5 4.5-2 0-3.68-1.21-4.28-3.01C12 16.3 14 13.8 14 11V2h-4v3h2v6a4 4 0 0 1-4 4 4 4 0 0 1-4-4V5h2V2z"></path></svg></span> Run health</label><label for="__tabbed_2_4"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Library balance</label><label for="__tabbed_2_5"><span class="twemoji mc-orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2 1 21h22M12 6l7.53 13H4.47M11 10v4h2v-4m-2 6v2h2v-2"></path></svg></span> Undetermined reads</label><label for="__tabbed_2_6"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 2v2h1v14a4 4 0 0 0 4 4 4 4 0 0 0 4-4V4h1V2zm4 14c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m2-4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m1-5h-4V4h4z"></path></svg></span> Library QC</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>What did CheckQC flag, and how do the demultiplexed FASTQ files look?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/multiqc_light.png"></a></p>
-<p>The tab opens on the CheckQC verdicts: libraries under the read threshold, the
-Undetermined share against its limit, and the general statistics. Falco and
-fastp follow with reads per FASTQ file, per-read quality, adapter content and
-insert sizes. The remaining Falco and fastp panels are collapsed underneath.</p>
+<p><em>A sequencing run split into its libraries, from lanes to per-library read QC.</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/overview_dark.webp#only-dark"></a></p>
+<p>A short hero links the run parameters. <em>About this dashboard</em> says how the two
+filter levels work, <em>The run</em> lists the demultiplexer (from <code>params.json</code>), the
+libraries, the lanes and the yield, and <em>Pipeline</em> walks the five steps from
+run folder to libraries (convert, split, leftovers, read QC, check), each
+linked to the setting or tool version behind it and to its tab. The findings
+are live values: they follow the filters, and a route that lacks their data
+drops them.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Library</code>, the design group and <code>Lane</code> on the library hub,
-persistent on every tab, plus a <code>Reads, % of an even share</code> range in a
-<em>MultiQC scope</em> group.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> and
+<em>Findings</em> each have their own filter bar (the group and the library):
+each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -5993,45 +6020,42 @@ persistent on every tab, plus a <code>Reads, % of an even share</code> range in 
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards, pinned</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Libraries</em> (collapsed, pinned)</td>
+<td>Key figures</td>
+<td>4 headline cards: libraries by group, bases at Q30 on the weakest lane, the smallest library against an even share, the Undetermined share of the worst lane</td>
 </tr>
 <tr>
-<td>CheckQC verdicts</td>
-<td><em>Libraries under the read threshold</em>, <em>Undetermined share against its limit</em>, <em>General statistics</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: the base quality per cycle, reads against index purity, the library QC scatter and the most frequent unknown barcodes</td>
 </tr>
 <tr>
-<td>Read QC after demultiplexing</td>
-<td>5 MultiQC panels (Falco and fastp)</td>
-</tr>
-<tr>
-<td>More MultiQC panels</td>
-<td>9 MultiQC panels (collapsed)</td>
-</tr>
-<tr>
-<td>Lane table</td>
-<td><em>Lane summary</em> (collapsed, pinned to the bottom)</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Did the instrument deliver, per lane, per read and per cycle?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/run_health_light.png" rel="noopener" target="_blank"><img alt="Run health dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/run_health_light.png"></a></p>
-<p>Cards report clusters passing filter, the lowest lane's pass-filter rate and
-mean quality, and the weakest read's Q30. A scatter places each lane by
-Undetermined share and base quality, a profile draws base quality per cycle, and
-a dot plot crosses lanes with reads. Selecting a lane on the lane table or the
-scatter narrows the tiles linked to it.</p>
+<p><strong>Data &amp; QC</strong> · <em>What did CheckQC and the read QC tools flag?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/multiqc_dark.webp#only-dark"></a></p>
+<p>MultiQC panels only. Open: the two CheckQC panels (libraries under the read
+threshold, the Undetermined share against its limit) and the general
+statistics, then Falco read counts, per-read quality and adapter content with
+the fastp insert sizes. Start with CheckQC: a library far below an even share
+of reads fails there first. The Falco status checks and the remaining Falco and
+fastp panels are collapsed. The bcl2fastq panels, fastp Filtered Reads and
+fastp Sequence Quality are left out: the other tabs read the same numbers from
+the reports themselves.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Read</code> and a <code>Cycle</code> range in a <em>Read and cycle scope</em>
-group, on this tab only.</p>
+<p><strong>Filters</strong> · <code>Library or FASTQ file</code> on <code>multiqc_data</code>, as MultiQC names
+it, and a <code>Reads, % of an even share</code> range on the <code>libraries</code> hub, which
+links into the report.</p>
 <table>
 <thead>
 <tr>
@@ -6041,16 +6065,64 @@ group, on this tab only.</p>
 </thead>
 <tbody>
 <tr>
-<td>Lane health</td>
-<td>4 cards, <em>Lanes by Undetermined share and base quality</em></td>
+<td>CheckQC verdicts</td>
+<td>3 MultiQC panels</td>
+</tr>
+<tr>
+<td>Read QC after demultiplexing</td>
+<td>4 MultiQC panels</td>
+</tr>
+<tr>
+<td>More MultiQC panels (collapsed)</td>
+<td>10 MultiQC panels</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>Did the instrument deliver on every lane, read and cycle?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/run_health_light.webp" rel="noopener" target="_blank"><img alt="Run health dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/run_health_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/run_health_dark.webp" rel="noopener" target="_blank"><img alt="Run health dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/run_health_dark.webp#only-dark"></a></p>
+<p>Clusters passing filter (then those assigned to a library), the lowest
+pass-filter rate on a gauge, the share of bases at Q30 in the weakest read and
+the yield split by read. Then every lane by Undetermined share and Q30, sized by
+yield (a lane low and to the right lost reads to both), beside the lane by read
+quality dot plot, and the base quality at every cycle, one curve per lane and
+read with its 10th to 90th percentile band. A lane or read that drops alone
+points at the flowcell or the chemistry, not at the libraries. The Sequencing
+Analysis Viewer metrics and the lane table are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Lane</code> on <code>lane_summary</code>, <code>Read</code> on <code>read_quality</code> and a
+<code>Cycle</code> range on <code>cycle_quality</code>. The sample filters do not reach this tab.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run health at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Lanes and reads</td>
+<td>2 advanced visualizations: the lane scatter and the lane by read dot plot</td>
 </tr>
 <tr>
 <td>Quality along the run</td>
-<td><em>Base quality per cycle</em>, <em>Lane by read quality</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Sequencing Analysis Viewer metrics</td>
-<td>4 cards, <em>PhiX error rate per lane and read</em>, <em>Phasing against prephasing</em></td>
+<td>Sequencing Analysis Viewer metrics (collapsed)</td>
+<td>4 cards, 2 advanced visualizations: the PhiX error rate per lane and read, phasing against prephasing</td>
+</tr>
+<tr>
+<td>Lane detail (collapsed)</td>
+<td><em>Lane summary</em></td>
 </tr>
 </tbody>
 </table>
@@ -6058,23 +6130,32 @@ group, on this tab only.</p>
 <div class="admonition tip">
 <p class="admonition-title">The SAV section needs an InterOp summary table</p>
 <p>Error rate, phasing and cluster density live in the InterOp binaries,
-which Depictio does not parse. Run <code>interop_summary --csv=1 &lt;run folder&gt;</code>
-and drop the output anywhere under the run (any <code>.csv</code> whose name contains
-<code>interop_summary</code>); without it the section is hidden.</p>
+which Depictio does not parse. demultiplex 1.8.0 does not run
+<code>interop_summary</code>, so on a stock run the collapsed section stays empty.
+Run <code>interop_summary --csv=1 &lt;run folder&gt;</code> and drop the output anywhere
+under the run (any <code>.csv</code> whose name contains <code>interop_summary</code>): the
+section then shows the worst PhiX error rate, the lowest share of clusters
+passing filter, the densest lane and the worst phasing, then the error
+rate per lane and read and phasing against prephasing.</p>
 </div>
 </div>
 <div class="tabbed-block">
-<p><em>How evenly were the reads of each lane shared between the libraries?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/demultiplexing_light.png" rel="noopener" target="_blank"><img alt="Demultiplexing dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/demultiplexing_light.png"></a></p>
-<p>An even pool gives even bars. The stacked composition shows what each lane was
-made of, Undetermined included, and the sunburst nests run, lane and library.
-The library balance section puts each library's share of the lane beside a
-scatter of reads against index purity, where a library with many imperfect
-index matches stands out; points and table rows select their library.</p>
+<p><strong>Demultiplexing</strong> · <em>How evenly were each lane's reads shared between the libraries?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/library_balance_light.webp" rel="noopener" target="_blank"><img alt="Library balance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/library_balance_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/library_balance_dark.webp" rel="noopener" target="_blank"><img alt="Library balance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/library_balance_dark.webp#only-dark"></a></p>
+<p>Reads assigned to libraries (with the share the three largest hold), the median
+share of the lane per library, the smallest library against the mean library of
+the least even lane (a gauge, 100 is the mean) and the worst perfect index
+match. Then the composition of each lane (the eight largest libraries named,
+the rest pooled, Undetermined kept) beside the run, lane, library sunburst, then
+every library's share of its lane and its reads against index purity. A library
+with few reads and a high perfect-match share was under-pooled; one with few
+reads and a low perfect-match share lost reads to index errors. The reads per
+library and lane, Undetermined rows included, are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Share of the lane (%)</code> and <code>Perfect index match (%)</code> ranges
-in a <em>Balance scope</em> group, on this tab only.</p>
+<p><strong>Filters</strong> · <code>Lane</code> on <code>lane_summary</code>, and <code>Share of the lane (%)</code> and
+<code>Perfect index match (%)</code> ranges on <code>demux_stats</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6089,33 +6170,39 @@ in a <em>Balance scope</em> group, on this tab only.</p>
 </tr>
 <tr>
 <td>Lane composition</td>
-<td><em>Libraries per lane</em>, <em>Run, lane, library</em></td>
+<td>2 advanced visualizations: the libraries per lane and the run, lane, library sunburst</td>
 </tr>
 <tr>
 <td>Library balance</td>
-<td><em>Share of the lane per library</em>, <em>Reads against index purity</em></td>
+<td><em>Share of the lane per library</em>, 1 advanced visualization (reads against index purity)</td>
 </tr>
 <tr>
-<td>Per-lane library counts</td>
-<td><em>Reads per library and lane</em> (collapsed)</td>
+<td>Per-lane library counts (collapsed)</td>
+<td><em>Reads per library and lane</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Is the Undetermined share an index swap, a missing library or a wrong sample sheet?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/undetermined_and_index_swaps_light.png" rel="noopener" target="_blank"><img alt="Undetermined and index swaps dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/undetermined_and_index_swaps_light.png"></a></p>
-<p>Every unassigned index pair is split into its i7 and i5 and checked against the
-libraries of the same lane. <em>Both indexes in use</em> is the index-hopping or swap
-signature; <em>Only i7</em> or <em>Only i5 in use</em> often points to a mistyped index;
-<em>Neither index in use</em> to a library missing from the sheet or a contamination;
-<em>Poly-G or N index</em> to a failed index read. The bar chart ranks the top unknown
-barcodes by share of the lane, coloured by that class.</p>
+<p><strong>Demultiplexing</strong> · <em>What did no index match, and is it an index swap?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/undetermined_reads_light.webp" rel="noopener" target="_blank"><img alt="Undetermined reads dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/undetermined_reads_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/undetermined_reads_dark.webp" rel="noopener" target="_blank"><img alt="Undetermined reads dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/undetermined_reads_dark.webp#only-dark"></a></p>
+<p>The Undetermined share of the worst lane on a gauge, the Undetermined reads
+ranked by lane, the reads in the top unknown barcodes split by class and the
+share of a lane's Undetermined reads carried by its most frequent barcode. Then
+the fifteen most frequent unknown barcodes over the lanes in view, coloured by
+class. Each unassigned index pair is split into its i7 and i5 and checked
+against the libraries of the same lane: <em>Both indexes in use</em> is the
+index-hopping or swap signature, <em>Only i7 in use</em> or <em>Only i5 in use</em> often a
+mistyped index, <em>Neither index in use</em> a library missing from the sample sheet
+or a contamination, <em>Poly-G or N index</em> a failed index read. The unknown
+barcode table and the CheckQC findings (one row per finding, a pass row for
+each silent check) are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Barcode class</code> and a <code>Rank in its lane</code> range in a
-<em>Barcode scope</em> group, on this tab only.</p>
+<p><strong>Filters</strong> · <code>Lane</code> on <code>lane_summary</code>, and <code>Barcode class</code> and a <code>Rank in
+its lane</code> range on <code>unknown_barcodes</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6130,28 +6217,39 @@ barcodes by share of the lane, coloured by that class.</p>
 </tr>
 <tr>
 <td>Top unknown barcodes</td>
-<td><em>Unknown barcodes by share of the lane</em></td>
+<td><em>Most frequent unknown barcodes</em></td>
 </tr>
 <tr>
-<td>Barcode and verdict tables</td>
-<td><em>Unknown barcodes</em>, <em>CheckQC findings</em> (collapsed)</td>
+<td>Barcode and verdict tables (collapsed)</td>
+<td><em>Unknown barcodes</em>, <em>CheckQC findings</em></td>
 </tr>
 </tbody>
 </table>
 </details>
+<div class="admonition info">
+<p class="admonition-title">No unknown barcodes, no barcode tiles</p>
+<p>bcl2fastq keeps the top unknown barcodes of each lane, and the recipes keep
+the 100 most frequent per lane. A report without them skips
+<code>unknown_barcodes</code>: its cards, figure, table and filters go, and the lane
+cards of the tab remain.</p>
+</div>
 </div>
 <div class="tabbed-block">
-<p><em>Which library looks different from its group once demultiplexed?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/library_qc_light.png" rel="noopener" target="_blank"><img alt="Library QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/library_qc_light.png"></a></p>
-<p>Cards summarise the fastp read QC of every library and lane. A scatter of
-duplication against base quality sits beside a linked <code>Library card</code>, which
-folds to a slim rail until a point is lassoed and then shows that library in
-full. The group comparison sets the design groups against each other metric by
-metric, which needs a <code>METADATA_FILE</code> to say anything.</p>
+<p><strong>Demultiplexing</strong> · <em>Which libraries stand out on read QC within their group?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/library_qc_light.webp" rel="noopener" target="_blank"><img alt="Library QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/library_qc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/library_qc_dark.webp" rel="noopener" target="_blank"><img alt="Library QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/demultiplex/library_qc_dark.webp#only-dark"></a></p>
+<p>The reads fastp was given (then those it kept), the median duplication ranked
+by group, the median share of reads with an adapter and the median share of
+bases at Q30 after filtering. Then duplication against base quality, one point
+per library sized by reads and coloured by group, beside the library card,
+which stays a thin rail until a library is lassoed in the scatter or picked in
+the fastp table. Below, every numeric library metric compared between two
+groups or two saved selections: with a few libraries per group the test is a
+screen, not a verdict. The fastp table is collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Duplication (%)</code> and <code>GC content (%)</code> ranges in a
-<em>Library QC scope</em> group, on this tab only.</p>
+<p><strong>Filters</strong> · <code>Duplication (%)</code> and <code>GC content (%)</code> ranges on the
+<code>libraries</code> hub.</p>
 <table>
 <thead>
 <tr>
@@ -6165,26 +6263,38 @@ metric, which needs a <code>METADATA_FILE</code> to say anything.</p>
 <td>4 cards</td>
 </tr>
 <tr>
-<td>Library QC distributions</td>
-<td><em>Duplication against base quality</em>, <em>Library card</em>, <em>Design groups compared metric by metric</em></td>
+<td>Libraries against each other</td>
+<td>2 advanced visualizations: the duplication against base quality scatter and the library card</td>
 </tr>
 <tr>
-<td>fastp table</td>
-<td><em>fastp read QC</em> (collapsed)</td>
+<td>Design groups compared</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>fastp table (collapsed)</td>
+<td><em>fastp read QC</em></td>
 </tr>
 </tbody>
 </table>
 </details>
+<div class="admonition info">
+<p class="admonition-title">One group without a metadata file</p>
+<p>Without <code>METADATA_FILE</code> the hub carries a single group, "All libraries":
+the group breakdowns show one bar, and the comparison has nothing to
+compare until two selections are saved.</p>
 </div>
 </div>
 </div>
-<p>Tables and point views select on their entity column: the lane table and the
-lane health and phasing scatters on <code>lane_label</code>; the sample sheet, the per-lane
+</div>
+<p>Tables and points select on their entity column: the lane table and the lane
+health and phasing scatters on <code>lane_label</code>; the sample sheet, the per-lane
 library table, the index purity and library QC scatters and the fastp table on
 <code>sample</code>; the unknown barcode table on <code>barcode</code>. A pick narrows the other tiles
 of its collection and follows the project links to the collections they reach.
-The per-cycle quality profile and the CheckQC verdict table do not select: their
-collections have no outgoing link.</p>
+The library card on Library QC follows the scatter beside it. The per-cycle
+quality profile and the CheckQC findings table do not select: their collections
+have no outgoing link. The SAV collection has no incoming link either, so the
+lane filters do not narrow it.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/demultiplex, it does not run the

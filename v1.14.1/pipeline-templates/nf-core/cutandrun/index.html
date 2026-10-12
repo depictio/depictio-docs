@@ -6644,7 +6644,8 @@ throughout; only the peak collections omit them.</p>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p><em>Chromatin profiling, from fragments to the peaks replicates reproduce.</em></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/overview_dark.webp#only-dark"></a></p>
 <p>A short hero links the run parameters, which for cutandrun 3.2.2 are the
 software versions: the run ships no <code>params.json</code>. <em>About this dashboard</em> says
 how the two filter levels work, <em>The run</em> lists the samples, targets, IgG
@@ -6688,8 +6689,8 @@ narrows its own section only.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Data &amp; QC</strong> · <em>Did reads trim, align and rise above the IgG control?</em></p>
-<!-- screenshot pending v2 -->
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/multiqc_light.png"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/multiqc_dark.webp#only-dark"></a></p>
 <p>MultiQC panels only. Open: general statistics, FastQC sequence counts and the
 reads kept after trimming, the Bowtie 2 alignments to the target genome beside
 those to the spike-in genome, then the deepTools fingerprint. Percent mapped,
@@ -6731,7 +6732,8 @@ on <code>bowtie2_spikein_factors</code>, carried into the report by a reverse li
 </div>
 <div class="tabbed-block">
 <p><strong>Data &amp; QC</strong> · <em>How deep and duplicated is each library, and is it enriched?</em></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/libraries_light.webp" rel="noopener" target="_blank"><img alt="Libraries dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/libraries_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/libraries_dark.webp" rel="noopener" target="_blank"><img alt="Libraries dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/libraries_dark.webp#only-dark"></a></p>
 <p>The tables the pipeline publishes beside the report. Read pairs, the spike-in
 scale factor, duplicate reads and the distance from a uniform library. Then the
 scale factor and the duplicate share per library, the fingerprint metrics,
@@ -6779,8 +6781,8 @@ and a <code>Coverage concentration</code> range on <code>deeptools_fingerprint_m
 </div>
 <div class="tabbed-block">
 <p><strong>Chromatin signal</strong> · <em>Did the digestion work, and how nucleosomal are the fragments?</em></p>
-<!-- screenshot pending v2 -->
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/signal_light.png" rel="noopener" target="_blank"><img alt="Fragments dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/signal_light.png"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/fragments_light.webp" rel="noopener" target="_blank"><img alt="Fragments dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/fragments_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/fragments_dark.webp" rel="noopener" target="_blank"><img alt="Fragments dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/fragments_dark.webp#only-dark"></a></p>
 <p>The nucleosomal ladder. The median fragment length, the fragments counted, the
 fragments by nucleosome class and the mononucleosome to sub-nucleosome ratio
 per target. Then the fragment-length distribution, one curve per sample with
@@ -6820,7 +6822,8 @@ twin, and each library split into its four nucleosome classes.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Chromatin signal</strong> · <em>What did each sample call, and how much signal do peaks hold?</em></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/peaks_light.webp" rel="noopener" target="_blank"><img alt="Peaks dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/peaks_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/peaks_dark.webp" rel="noopener" target="_blank"><img alt="Peaks dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/peaks_dark.webp#only-dark"></a></p>
 <p>SEACR regions, their width, their coverage per base and the lowest FRiP in
 view. Then the region width beside the mean pile-up on the summits, the
 summit-centred pile-up of each sample's strongest regions, and the fragment
@@ -6873,7 +6876,8 @@ drop out.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Agreement</strong> · <em>Do SEACR and MACS2 call the same peaks on each sample?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/caller_agreement_light.png" rel="noopener" target="_blank"><img alt="Caller agreement dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/caller_agreement_light.png"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/caller_agreement_light.webp" rel="noopener" target="_blank"><img alt="Caller agreement dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/caller_agreement_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/caller_agreement_dark.webp" rel="noopener" target="_blank"><img alt="Caller agreement dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/caller_agreement_dark.webp#only-dark"></a></p>
 <p>Peaks called by caller, the peak width by caller, the share of one caller's
 peaks the other reproduces and the calls only one caller made. Then MACS2
 against SEACR, one selectable point per sample, beside the calls the other
@@ -6914,6 +6918,8 @@ missing data.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Agreement</strong> · <em>Which peaks do a target's replicates reproduce?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/consensus_light.webp" rel="noopener" target="_blank"><img alt="Consensus dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/consensus_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/consensus_dark.webp" rel="noopener" target="_blank"><img alt="Consensus dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/consensus_dark.webp#only-dark"></a></p>
 <p>Consensus intervals by replicate support, the reproducible ones (two
 replicates or more) by target, the interval width and the coverage per
 interval. Then the UpSet of the replicates calling each interval, the
@@ -6954,7 +6960,8 @@ peaks</code> ranges, all on <code>seacr_consensus_peaks</code>.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Agreement</strong> · <em>Do the callers and the replicates agree on one region?</em></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/locus_light.webp" rel="noopener" target="_blank"><img alt="Locus dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/locus_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/locus_dark.webp" rel="noopener" target="_blank"><img alt="Locus dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/locus_dark.webp#only-dark"></a></p>
 <p>One region on one genome axis. The cards count what the region in view holds
 and follow it as the tracks do. The SEACR navigator opens on the first contig
 the calls sit on, so a run aligned to part of the genome opens on data: type a

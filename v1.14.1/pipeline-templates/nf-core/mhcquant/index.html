@@ -5430,18 +5430,17 @@
   <span class="tpl-version-badge">latest</span>
 </div>
 
-<p>The mhcquant template follows an nf-core/mhcquant run from the Comet search to
-the presented peptides, one tab per question:</p>
+<p>The mhcquant template follows an nf-core/mhcquant run from the spectra to the
+peptides each sample presents:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 22v-2h3v-3h2v3.5c0 .39-.16.74-.46 1.04s-.65.46-1.04.46zM7 22H3.5c-.39 0-.74-.16-1.04-.46S2 20.89 2 20.5V17h2v3h3zM17 2h3.5c.39 0 .74.16 1.04.46s.46.65.46 1.04V7h-2V4h-3zM7 2v2H4v3H2V3.5c0-.39.16-.74.46-1.04S3.11 2 3.5 2zm3.5 4C13 6 15 8 15 10.5c0 .88-.25 1.7-.69 2.4l3.26 3.26-1.41 1.41-3.26-3.26c-.7.44-1.52.69-2.4.69C8 15 6 13 6 10.5S8 6 10.5 6m0 2a2.5 2.5 0 0 0 0 5 2.5 2.5 0 0 0 0-5"></path></svg></span> <strong>Identification</strong>: PSMs, peptides and source proteins per sample, and how the raw search behaves as the FDR threshold moves</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m1.39 18.36 1.77-1.76L4.58 18l1.06-1.05-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.42 1.41L10.59 12l-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.41 1.41 1.07-1.06-1.42-1.41 1.42-1.42L18 6.7l1.07-1.06-2.47-2.48 1.76-1.77 4.25 4.25L5.64 22.61z"></path></svg></span> <strong>MHC signature</strong>: the peptide length profile against the class I and class II windows, and the positional amino-acid preferences behind the anchor motifs</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> <strong>Reproducibility</strong>: how consistently the raw replicates of a sample quantify the same peptides</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 13v6h-1l-2-2h-8V9H5l-2 2H2V5h1l2 2h8v8h6l2-2Z"></path></svg></span> <strong>Peptides and proteins</strong>: peptides common to several conditions or private to one, and the proteins that feed them</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> <strong>Physico-chemical checks</strong>: observed against predicted retention time, hydropathy, precursor charge and m/z, and mass accuracy</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: the sections mhcquant writes into its own MultiQC report, and how consistently the replicate injections of a sample quantify the same peptides</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 22v-2h3v-3h2v3.5c0 .39-.16.74-.46 1.04s-.65.46-1.04.46zM7 22H3.5c-.39 0-.74-.16-1.04-.46S2 20.89 2 20.5V17h2v3h3zM17 2h3.5c.39 0 .74.16 1.04.46s.46.65.46 1.04V7h-2V4h-3zM7 2v2H4v3H2V3.5c0-.39.16-.74.46-1.04S3.11 2 3.5 2zm3.5 4C13 6 15 8 15 10.5c0 .88-.25 1.7-.69 2.4l3.26 3.26-1.41 1.41-3.26-3.26c-.7.44-1.52.69-2.4.69C8 15 6 13 6 10.5S8 6 10.5 6m0 2a2.5 2.5 0 0 0 0 5 2.5 2.5 0 0 0 0-5"></path></svg></span> <strong>Search</strong>: the spectra, PSMs and peptides of each raw file, how the raw search behaves as the FDR threshold moves, and whether the peptides elute and ionise as predicted</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m1.39 18.36 1.77-1.76L4.58 18l1.06-1.05-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.42 1.41L10.59 12l-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.41 1.41 1.07-1.06-1.42-1.41 1.42-1.42L18 6.7l1.07-1.06-2.47-2.48 1.76-1.77 4.25 4.25L5.64 22.61z"></path></svg></span> <strong>Immunopeptidome</strong>: the length profile and anchor motifs that point to the MHC class, and the peptides the conditions share with the proteins they come from</li>
 </ul>
-<p>A <code>Run at a glance</code> strip and the collapsed <code>Sample sheet</code> are pinned to the top
-of every tab, <code>Reference tables</code> to the bottom, and the <code>Sample filters</code> group
-(sample, condition, raw file) applies everywhere.</p>
+<p>The persistent <code>Sample filters</code> (condition, sample, raw file) sit in the left
+panel and apply to every tab, and the collapsed <code>Sample sheet</code> and <code>Reference
+tables</code> sections are pinned to the bottom of every child tab.</p>
 <div class="admonition info">
 <p class="admonition-title">The samplesheet is not in the output</p>
 <p>mhcquant does not publish the samplesheet it ran on, and the samplesheet is
@@ -5471,8 +5470,8 @@ and the presenting alleles from peptide lengths and positional motifs instead.</
 <p><code>METADATA_FILE</code> can be left out when the sheet already sits at
 <code>input/samplesheet.tsv</code> under the data root. A run started without
 <code>--quantify</code> has no replicate intensities: add <code>--var NO_QUANTIFICATION=true</code>
-and the Reproducibility collections are dropped. A run without
-<code>--annotate_ions</code> takes <code>--var NO_ION_ANNOTATION=true</code>.</p>
+and the replicate collections are dropped, with the Reproducibility tab. A
+run without <code>--annotate_ions</code> takes <code>--var NO_ION_ANNOTATION=true</code>.</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>depictio<span class="w"> </span>config<span class="w"> </span>nextflow<span class="w"> </span>--install<span class="w">     </span><span class="c1"># once per machine</span>
@@ -5490,9 +5489,9 @@ manifest. See <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger
 tables at the output root, the Comet pin files that precede rescoring and the
 fragment-ion annotations. Every other collection (sample summary, length
 distribution, composition, motif matrix, replicate pairs and detection, source
-proteins, condition sharing) is a recipe over the peptide table. 39 of its 78
-components carry a <code>use:</code> catalog reference, so a tile says where its panel
-comes from.</p>
+proteins, condition sharing) is a recipe over the peptide table. 42 of its 58
+tiles carry a <code>use:</code> catalog reference (<code>mhcquant/*</code>, <code>openms/*</code>, <code>multiqc/*</code>),
+so a tile says where its panel comes from.</p>
 <div class="admonition info">
 <p class="admonition-title">Self-adapting layout</p>
 <p>The dashboard adapts to whatever the run actually produced: components bound
@@ -5960,27 +5959,58 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Six tabs, read as a funnel: is the report healthy, how much did each sample
-identify, do the peptides look like MHC ligands, do the replicates agree, what is
-shared between conditions, and do the identifications behave physically like
-peptides. Each tab below carries the <strong>same icon and colour the dashboard gives
-it</strong>. The screenshots come from the run described under
-Validation runs below.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 22v-2h3v-3h2v3.5c0 .39-.16.74-.46 1.04s-.65.46-1.04.46zM7 22H3.5c-.39 0-.74-.16-1.04-.46S2 20.89 2 20.5V17h2v3h3zM17 2h3.5c.39 0 .74.16 1.04.46s.46.65.46 1.04V7h-2V4h-3zM7 2v2H4v3H2V3.5c0-.39.16-.74.46-1.04S3.11 2 3.5 2zm3.5 4C13 6 15 8 15 10.5c0 .88-.25 1.7-.69 2.4l3.26 3.26-1.41 1.41-3.26-3.26c-.7.44-1.52.69-2.4.69C8 15 6 13 6 10.5S8 6 10.5 6m0 2a2.5 2.5 0 0 0 0 5 2.5 2.5 0 0 0 0-5"></path></svg></span> Identification</label><label for="__tabbed_2_3"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m1.39 18.36 1.77-1.76L4.58 18l1.06-1.05-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.42 1.41L10.59 12l-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.41 1.41 1.07-1.06-1.42-1.41 1.42-1.42L18 6.7l1.07-1.06-2.47-2.48 1.76-1.77 4.25 4.25L5.64 22.61z"></path></svg></span> MHC signature</label><label for="__tabbed_2_4"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> Reproducibility</label><label for="__tabbed_2_5"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 13v6h-1l-2-2h-8V9H5l-2 2H2V5h1l2 2h8v8h6l2-2Z"></path></svg></span> Peptides and proteins</label><label for="__tabbed_2_6"><span class="twemoji mc-lime"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Physico-chemical checks</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then six child tabs in three groups, read as a
+funnel from the spectra to the peptides each sample presents. Each tab below
+carries the <strong>same icon and colour the dashboard gives it</strong>, so the page and the
+app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Reproducibility</td>
+</tr>
+<tr>
+<td>Search</td>
+<td>Identification, Physico-chemical checks</td>
+</tr>
+<tr>
+<td>Immunopeptidome</td>
+<td>MHC signature, Peptides and proteins</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and record cards follow, collapsed. The design comes
+from the samplesheet: one row per raw file with its sample, its condition
+(<code>GROUP_COL</code>, <code>Condition</code> by default) and its search database. The persistent
+<em>Sample filters</em> (condition, sample, raw file) sit in the left panel and narrow
+every tab: the links carry a pick to every sample-level table by <code>sample_id</code> and
+to the Comet tables by <code>run_id</code>. The <em>Sample sheet</em> and the <em>Reference tables</em>
+(the per-sample summary) are pinned, collapsed, to the bottom of every child tab.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:7"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> Reproducibility</label><label for="__tabbed_2_4"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 22v-2h3v-3h2v3.5c0 .39-.16.74-.46 1.04s-.65.46-1.04.46zM7 22H3.5c-.39 0-.74-.16-1.04-.46S2 20.89 2 20.5V17h2v3h3zM17 2h3.5c.39 0 .74.16 1.04.46s.46.65.46 1.04V7h-2V4h-3zM7 2v2H4v3H2V3.5c0-.39.16-.74.46-1.04S3.11 2 3.5 2zm3.5 4C13 6 15 8 15 10.5c0 .88-.25 1.7-.69 2.4l3.26 3.26-1.41 1.41-3.26-3.26c-.7.44-1.52.69-2.4.69C8 15 6 13 6 10.5S8 6 10.5 6m0 2a2.5 2.5 0 0 0 0 5 2.5 2.5 0 0 0 0-5"></path></svg></span> Identification</label><label for="__tabbed_2_5"><span class="twemoji mc-lime"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Physico-chemical checks</label><label for="__tabbed_2_6"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m1.39 18.36 1.77-1.76L4.58 18l1.06-1.05-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.42 1.41L10.59 12l-1.42-1.41 1.42-1.42 2.47 2.48 1.06-1.06-2.47-2.48 1.41-1.41 1.41 1.41 1.07-1.06-1.42-1.41 1.42-1.42L18 6.7l1.07-1.06-2.47-2.48 1.76-1.77 4.25 4.25L5.64 22.61z"></path></svg></span> MHC signature</label><label for="__tabbed_2_7"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 13v6h-1l-2-2h-8V9H5l-2 2H2V5h1l2 2h8v8h6l2-2Z"></path></svg></span> Peptides and proteins</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Are identification yield and score distributions sound before reading the peptides?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/multiqc_light.png"></a></p>
-<p>The tab is the report mhcquant writes as MultiQC custom content: identification
-counts, the q-value and Comet Xcorr distributions, then precursor m/z, retention
-time and peptide intensity. Chromatograms, fragment mass error and the
-Percolator feature weights sit in a collapsed section, useful when a sample
-underperforms and the cause is the acquisition or the rescoring model.</p>
+<p><em>Immunopeptidomics, from the spectra to the peptides each sample presents.</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/overview_dark.webp#only-dark"></a></p>
+<p>A short hero links the run parameters. <em>About this dashboard</em> says how the two
+filter levels work, <em>The run</em> lists the samples and raw files, the enzyme, the
+FDR threshold, the peptide length bounds and the rescoring engine, and
+<em>Pipeline</em> walks the six steps from the search to the comparison of conditions,
+each linked to its parameters and its tab. The key figures read collections
+every route writes, so a route never leaves a gap in them. The findings are live
+values: they follow the filters.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample</code>, <code>Condition</code> and <code>Raw file</code> on the samplesheet,
-persistent on every tab, plus <code>Report sample</code> in a <em>Report scope</em> group
-that narrows the MultiQC panels only.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> has its own
+filter bar (the condition and the sample), and so does <em>Findings</em> (the
+condition and the peptide length): each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -5990,46 +6020,127 @@ that narrows the MultiQC panels only.</p>
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards: samples, raw files, condition groups, peptides identified</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Samplesheet</em> (collapsed, pinned)</td>
+<td>Key figures</td>
+<td>4 headline cards: samples, PSMs, peptides, identification rate</td>
 </tr>
 <tr>
-<td>Identification yield</td>
-<td><em>Identification counts</em>, <em>q-value distribution</em>, <em>Comet Xcorr per sample</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: the accepted PSMs against the FDR threshold, the observed against predicted retention time, the length profile and the source proteins</td>
 </tr>
 <tr>
-<td>Peptide properties</td>
-<td><em>Precursor m/z</em>, <em>Retention time</em>, <em>Peptide intensity</em></td>
-</tr>
-<tr>
-<td>Acquisition and rescoring</td>
-<td><em>Total ion chromatograms</em>, <em>Fragment mass error</em>, <em>Percolator feature weights</em> (collapsed)</td>
-</tr>
-<tr>
-<td>Reference tables</td>
-<td><em>Immunopeptidome summary per sample</em> (collapsed, pinned)</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>How much did each sample identify, and how does the search behave across FDR thresholds?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/identification_light.png" rel="noopener" target="_blank"><img alt="Identification dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/identification_light.png"></a></p>
-<p>Cards give PSMs, peptides and source proteins per sample and the Comet PSMs
-accepted at 1% FDR per raw file. The FDR profile draws the accepted PSMs of each
-raw file as the target-decoy q-value threshold is relaxed, so a file that gains
-little from a looser cut stands apart. These Comet numbers come from the pin
-files, before MS2Rescore and Percolator, so they describe the raw search and not
-the final FDR.</p>
+<p><strong>Data &amp; QC</strong> · <em>Did the search identify peptides evenly across samples?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/multiqc_dark.webp#only-dark"></a></p>
+<p>MultiQC panels only: the sections mhcquant writes into its own report. Open:
+identification counts, the q-value and Comet Xcorr distributions, then
+precursor m/z, retention time and peptide intensity. Compare the counts across
+samples first, then check that a low-yield sample's scores look like the
+others. The total ion chromatograms, the fragment mass error and the Percolator
+feature weights are collapsed, for when the cause is the acquisition or the
+rescoring model.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Peptide score</code> and <code>PSMs per peptide</code> ranges in an
-<em>Identification scope</em> group.</p>
+<p><strong>Filters</strong> · <code>Report sample</code>, read from the MultiQC report.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identification yield</td>
+<td>3 MultiQC panels</td>
+</tr>
+<tr>
+<td>Peptide properties</td>
+<td>3 MultiQC panels</td>
+</tr>
+<tr>
+<td>Acquisition and rescoring (collapsed)</td>
+<td>3 MultiQC panels</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>Do the replicate injections of a sample quantify the same peptides?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/reproducibility_light.webp" rel="noopener" target="_blank"><img alt="Reproducibility dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/reproducibility_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/reproducibility_dark.webp" rel="noopener" target="_blank"><img alt="Reproducibility dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/reproducibility_dark.webp#only-dark"></a></p>
+<p>OpenMS aligns the replicate injections of each sample and quantifies every
+peptide in each. The replicates per peptide, the peptide detections as a ring by
+replicate, the median log10 intensity and the peptides quantified in both
+replicates of a pair. Then the intensity scatter for every replicate pair and
+the UpSet of the replicate combinations: a pair off the diagonal, or a small
+all-replicate core, points at one injection to check. Replicate labels follow
+the samplesheet <code>ID</code> order within a sample. The membership table is collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Replicate pair</code> on <code>mhcquant_replicate_pairs</code> and a
+<code>Replicates detected</code> range on <code>mhcquant_replicate_detection</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Replicates at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Replicate agreement</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Replicate overlap</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Replicate table (collapsed)</td>
+<td><em>Replicate membership per peptide</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">Only with <code>--quantify</code></p>
+<p>Every tile here binds a replicate collection. A run without <code>--quantify</code>
+takes <code>--var NO_QUANTIFICATION=true</code>: the tab is dropped, and the replicate
+columns of the per-sample summary stay empty.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<p><strong>Search</strong> · <em>How many spectra became peptides, and at what FDR?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/identification_light.webp" rel="noopener" target="_blank"><img alt="Identification dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/identification_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/identification_dark.webp" rel="noopener" target="_blank"><img alt="Identification dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/identification_dark.webp#only-dark"></a></p>
+<p>The spectra searched, as a funnel to the target matches and the PSMs accepted
+at 5% and 1% FDR; the identification rate per raw file; the PSMs that passed the
+pipeline's filter; the accepted precursors by modification. Then the accepted
+PSMs against the q-value threshold, one curve per raw file, and the score of the
+accepted peptides by sample. The Comet numbers come from the pin files, before
+MS2Rescore and Percolator, so they describe the raw search, not the final FDR.
+The Comet search table is collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Peptide score</code> and <code>PSMs per peptide</code> ranges on
+<code>mhcquant_peptides</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6044,153 +6155,31 @@ the final FDR.</p>
 </tr>
 <tr>
 <td>Search and FDR</td>
-<td><em>Accepted PSMs against the FDR threshold, per raw file</em>, <em>Score of the accepted peptides</em></td>
+<td>1 advanced visualization + <em>Score of the accepted peptides</em></td>
 </tr>
 <tr>
-<td>Search tables</td>
-<td><em>Comet search yield per raw file</em> (collapsed)</td>
+<td>Search table (collapsed)</td>
+<td><em>Comet search yield per raw file</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Which MHC class and which presenting alleles do the peptides point to?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/mhc_signature_light.png" rel="noopener" target="_blank"><img alt="MHC signature dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/mhc_signature_light.png"></a></p>
-<p>The length profile shades the class I (8 to 12 residues) and class II (13 to 25)
-windows, with cards for the 9-mer share, the share in each window and the median
-length. The pipeline's own length filter bounds what can appear, so a class
-share of zero can be structural. The motif heatmap gives the amino-acid
-frequency at each position, per sample and length, which is where the anchor
-residues of the presenting alleles show up.</p>
+<p><strong>Search</strong> · <em>Do the identified peptides elute and ionise as peptides should?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/physico_chemical_checks_light.webp" rel="noopener" target="_blank"><img alt="Physico-chemical checks dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/physico_chemical_checks_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/physico_chemical_checks_dark.webp" rel="noopener" target="_blank"><img alt="Physico-chemical checks dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/physico_chemical_checks_dark.webp#only-dark"></a></p>
+<p>The retention-time error per sample, the precursor mass error per raw file, the
+correlation with the MS2PIP-predicted spectrum and the precursors by charge.
+Then the observed against DeepLC-predicted retention time, with the record of a
+picked peptide beside it, and side by side retention time against Kyte-Doolittle
+hydropathy and precursor m/z over the gradient by charge. Outliers on these
+plots are the identifications to question first. The fragment-ion cards and
+table are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Peptide length</code> and <code>Modification</code> in a <em>Signature scope</em>
-group.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Length signature</td>
-<td>4 cards, <em>Peptide length distribution per sample</em>, <em>Peptide composition per sample</em></td>
-</tr>
-<tr>
-<td>Anchor motifs</td>
-<td><em>Amino-acid frequency by peptide position</em></td>
-</tr>
-<tr>
-<td>Signature tables</td>
-<td><em>Peptides per length and sample</em> (collapsed)</td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>Are the peptides of a sample quantified consistently across its raw replicates?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/reproducibility_light.png" rel="noopener" target="_blank"><img alt="Reproducibility dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/reproducibility_light.png"></a></p>
-<p>Cards give the median and weakest replicate correlation and the share of
-peptides seen in every replicate. The scatter plots one replicate's intensity
-against another's for every pair, and an UpSet counts the peptides quantified in
-each combination of replicates. The peptide table does not name the raw file
-behind each intensity column, so replicate labels follow the samplesheet <code>ID</code>
-order within the sample.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Replicate pair</code> and a <code>Replicates detected</code> range in a
-<em>Replicate scope</em> group.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Reproducibility at a glance</td>
-<td>4 cards</td>
-</tr>
-<tr>
-<td>Replicate agreement</td>
-<td><em>Peptide intensity, replicate against replicate</em>, <em>Peptides quantified per replicate combination</em></td>
-</tr>
-<tr>
-<td>Replicate tables</td>
-<td><em>Replicate membership per peptide</em> (collapsed)</td>
-</tr>
-</tbody>
-</table>
-</details>
-<div class="admonition tip">
-<p class="admonition-title">Only with <code>--quantify</code></p>
-<p>Replicate intensities exist only when the run quantified. Pass
-<code>--var NO_QUANTIFICATION=true</code> for a run without it and the tab is dropped.</p>
-</div>
-</div>
-<div class="tabbed-block">
-<p><em>Which presented peptides are common to every condition, which are private, and where do they come from?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/peptides_and_proteins_light.png" rel="noopener" target="_blank"><img alt="Peptides and proteins dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/peptides_and_proteins_light.png"></a></p>
-<p>An UpSet over one peptide set per condition separates shared from private
-peptides. The source-protein scatter puts the number of peptides a protein
-feeds into presentation against their intensity. Below, the peptide and protein
-tables each carry a linked record card beside them: it folds to a slim rail
-until a row is picked, then shows that peptide or protein in full. Picking a
-peptide selects its <code>sequence</code>, which also narrows the condition-sharing view.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Condition sharing</code> and a <code>Peptides per protein</code> range in a
-<em>Peptide scope</em> group.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Peptides at a glance</td>
-<td>4 cards</td>
-</tr>
-<tr>
-<td>Sharing between conditions</td>
-<td><em>Peptides per condition combination</em></td>
-</tr>
-<tr>
-<td>Source proteins</td>
-<td><em>Peptides per source protein against their intensity</em></td>
-</tr>
-<tr>
-<td>Peptide detail</td>
-<td><em>Identified peptides</em>, <em>Peptide record</em></td>
-</tr>
-<tr>
-<td>Protein detail</td>
-<td><em>Source proteins</em>, <em>Protein record</em></td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>Do the identifications behave like real peptides?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/physico_chemical_checks_light.png" rel="noopener" target="_blank"><img alt="Physico-chemical checks dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/physico_chemical_checks_light.png"></a></p>
-<p>Observed retention time is plotted against the DeepLC prediction and against
-Kyte-Doolittle hydropathy; false identifications drift off both trends. A
-peptide picked on the retention-time scatter opens in the <code>Picked peptide</code>
-record beside it, which stays a slim rail until then. Precursor m/z over the
-gradient by charge, and cards for retention-time, precursor and fragment mass
-error, close the tab.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Precursor charge</code> and a <code>Retention time (min)</code> range in a
-<em>Precursor scope</em> group.</p>
+<p><strong>Filters</strong> · <code>Precursor charge</code> and a <code>Retention time (min)</code> range on
+<code>mhcquant_peptides</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6205,31 +6194,134 @@ error, close the tab.</p>
 </tr>
 <tr>
 <td>Chromatography</td>
-<td><em>Observed against predicted retention time</em>, <em>Picked peptide</em>, <em>Retention time against hydropathy</em></td>
+<td>1 advanced visualization + a peptide record card</td>
 </tr>
 <tr>
-<td>Precursors</td>
-<td><em>Precursor m/z over the gradient, by charge</em></td>
+<td>Hydropathy and charge</td>
+<td>2 advanced visualizations</td>
 </tr>
 <tr>
-<td>Fragment tables</td>
-<td><em>Matched fragment ions per peptide</em> (collapsed)</td>
+<td>Fragment ions (collapsed)</td>
+<td>2 cards, <em>Matched fragment ions per peptide</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">Only with <code>--annotate_ions</code></p>
+<p>A run without <code>--annotate_ions</code> takes <code>--var NO_ION_ANNOTATION=true</code>, and
+the Fragment ions section is dropped.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<p><strong>Immunopeptidome</strong> · <em>Which MHC class do the peptide lengths and anchor motifs point to?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/mhc_signature_light.webp" rel="noopener" target="_blank"><img alt="MHC signature dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/mhc_signature_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/mhc_signature_dark.webp" rel="noopener" target="_blank"><img alt="MHC signature dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/mhc_signature_dark.webp#only-dark"></a></p>
+<p>The 9-mer share per sample, the median peptide length, and the distinct
+sequences ranked by their P2 and C-terminal residues, the two class I anchors.
+Then the length profile with the class I (8 to 12) and class II (13 to 25)
+ranges shaded, the composition per sample by length, switchable to charge and
+modification, and the amino-acid frequency at each position per sample and
+length, where the anchor motifs show. A flat or shifted length profile points at
+co-purified peptides or a length filter set too wide. The length table is
+collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Peptide length</code> and <code>Modification</code> on <code>mhcquant_peptides</code>,
+which also narrow the length profile and the motif heatmap through the
+project links.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Signature at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Length signature</td>
+<td>2 advanced visualizations</td>
+</tr>
+<tr>
+<td>Anchor motifs</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Length table (collapsed)</td>
+<td><em>Peptides per length and sample</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
+<div class="tabbed-block">
+<p><strong>Immunopeptidome</strong> · <em>Which peptides do conditions share, and which proteins do they come from?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/peptides_and_proteins_light.webp" rel="noopener" target="_blank"><img alt="Peptides and proteins dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/peptides_and_proteins_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/peptides_and_proteins_dark.webp" rel="noopener" target="_blank"><img alt="Peptides and proteins dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mhcquant/peptides_and_proteins_dark.webp#only-dark"></a></p>
+<p>The distinct sequences by condition sharing, the peptides per source protein,
+the protein intensity and the source proteins per peptide. Then the UpSet of
+the conditions each sequence was identified in, and the source proteins by the
+peptides they give against their intensity; a click selects the protein.
+Peptides private to one condition are the candidates for condition-specific
+presentation: check their support in the peptide record first. The peptide and
+protein tables are collapsed, each with a record card for the selected row.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Condition sharing</code> on <code>peptide_condition_sharing</code> and a
+<code>Peptides per protein</code> range on <code>mhcquant_source_proteins</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Peptides at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Sharing between conditions</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Source proteins</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Peptide detail (collapsed)</td>
+<td><em>Identified peptides</em> + a peptide record card</td>
+</tr>
+<tr>
+<td>Protein detail (collapsed)</td>
+<td><em>Source proteins</em> + a protein record card</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">One condition</p>
+<p>On a run with a single condition, the sharing split and the UpSet show a
+single set.</p>
+</div>
+</div>
 </div>
 </div>
 <p>Tables and scatters select on their entity column: the sample sheet on
-<code>sample_id</code>, which the links carry to every collection and to the MultiQC
-panels, and the pinned per-sample summary on <code>sample</code>; the Comet table on raw
-files (<code>run_id</code>) and the replicate membership table on peptides; the peptide
-table and the three physico-chemical scatters on <code>sequence</code>, which also reaches
-the condition-sharing collection; the source-protein scatter and table on
-<code>protein</code>; the fragment-ion table on <code>peptide</code>. A pick narrows every tile that
-reads the same collection or one linked from it. The length table and the
-replicate-pair scatter select nothing.</p>
+<code>sample_id</code>, which the links carry to every collection and to the MultiQC panels,
+and the pinned per-sample summary on <code>sample</code>; the Comet table on raw files
+(<code>run_id</code>) and the replicate membership table on peptides; the peptide table and
+the three scatters of Physico-chemical checks on <code>sequence</code>, which also reaches the
+condition-sharing collection; the source-protein scatter and table on <code>protein</code>;
+the fragment-ion table on <code>peptide</code>. A pick narrows every tile that reads the same
+collection or one linked from it, and each record card waits beside its table or
+scatter for a picked row or point. The length table and the replicate-pair scatter
+select nothing.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/mhcquant, it does not run the pipeline.

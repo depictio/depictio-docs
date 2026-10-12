@@ -5431,17 +5431,15 @@
 </div>
 
 <p>The smrnaseq template follows an nf-core/smrnaseq run from trimmed small RNA
-libraries to novel miRNA candidates, one tab per question:</p>
+libraries to novel miRNA candidates:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 2v2h1v14a4 4 0 0 0 4 4 4 4 0 0 0 4-4V4h1V2zm4 14c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m2-4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m1-5h-4V4h4z"></path></svg></span> <strong>Library QC</strong>: what each library is made of, how long its reads are and whether it was sequenced deep enough</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>miRNA expression</strong>: which miRNAs each sample carries, which vary most and how they split by design group</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> <strong>Group comparison</strong>: how the samples relate on miRNA expression, and which miRNAs separate two groups</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 13.5v8H3v-8zm-2 2H5v4h4zM12 2l5.5 9h-11zm0 3.86L10.08 9h3.84zM17.5 13c2.5 0 4.5 2 4.5 4.5S20 22 17.5 22 13 20 13 17.5s2-4.5 4.5-4.5m0 2a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"></path></svg></span> <strong>isomiRs</strong>: how far the reads stray from the reference miRNA sequences, by isomiR class</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 15.39-3.76 2.27.99-4.28-3.32-2.88 4.38-.37L12 6.09l1.71 4.04 4.38.37-3.32 2.88.99 4.28M22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.45 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03z"></path></svg></span> <strong>Novel miRNAs</strong>: the precursors miRDeep2 proposes beyond miRBase, and where to set its score cutoff</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: the MultiQC report, then what each library is made of, how long its reads are and whether it was sequenced deep enough</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> <strong>Expression</strong>: which miRNAs each library carries and which vary most, how the libraries relate, and which miRNAs separate two groups</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 13.5v8H3v-8zm-2 2H5v4h4zM12 2l5.5 9h-11zm0 3.86L10.08 9h3.84zM17.5 13c2.5 0 4.5 2 4.5 4.5S20 22 17.5 22 13 20 13 17.5s2-4.5 4.5-4.5m0 2a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"></path></svg></span> <strong>Sequences</strong>: how far the reads stray from the reference miRNA sequences, and the precursors miRDeep2 proposes beyond miRBase</li>
 </ul>
-<p>A <code>Run at a glance</code> strip and the collapsed <code>Sample sheet</code> are pinned to the top
-of every tab, and the <code>Sample scope</code> filters (sample, design group, miRNA depth)
-apply everywhere.</p>
+<p>The persistent <code>Sample filters</code> (the design group, then the sample) sit in the
+left panel and narrow every tab.</p>
 <div class="admonition info">
 <p class="admonition-title">Expression is aggregated from the mirtop isomiR table</p>
 <p>The template reads miRNA expression from mirtop's joined isomiR table, one
@@ -5463,8 +5461,8 @@ back from the plot data MultiQC keeps in its parquet.</p>
 <p>The pipeline samplesheet carries no design column, so the design comes from
 an optional table: <code>METADATA_FILE</code>, sample id in the first column (or in a
 column named <code>sample</code>), one column per factor, and <code>GROUP_COL</code> defaulting to
-the first factor. Without it the design filter and card are dropped and the
-figures fall back to one colour. <code>GENOME</code> (default <code>hg38</code>) is the UCSC
+the first factor. Without it the design table, the group filters and the
+group splits are dropped and the figures fall back to one colour. <code>GENOME</code> (default <code>hg38</code>) is the UCSC
 assembly the novel precursors link out to. A run with <code>--skip_mirdeep</code> takes
 <code>--var SKIP_MIRDEEP=true</code>, one with <code>--skip_multiqc</code> takes
 <code>--var SKIP_MULTIQC=true</code>.</p>
@@ -5484,8 +5482,8 @@ manifest. See <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger
 <p>The template reads the MultiQC report, the mirtop joined isomiR table, the
 miRDeep2 per-sample results and the optional design table. The sample hub, the
 per-miRNA summary, the PCA, the heatmap matrix, the isomiR composition and the
-miRDeep2 precursors are recipes over those files. 24 of its 74 components carry
-a <code>use:</code> catalog reference, so a tile says where its panel comes from.</p>
+miRDeep2 precursors are recipes over those files. 40 of its 58 tiles carry a
+<code>use:</code> catalog reference, so a tile says where its panel comes from.</p>
 <div class="admonition info">
 <p class="admonition-title">Self-adapting layout</p>
 <p>The dashboard adapts to whatever the run actually produced: components bound
@@ -6057,28 +6055,58 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Six tabs, read as a funnel: are the libraries small RNA libraries, what is each
-one made of, which miRNAs they carry, which miRNAs separate the design groups,
-how the reads differ from the reference sequences, and what miRDeep2 proposes
-beyond miRBase. Each tab below carries the <strong>same icon and colour the dashboard
-gives it</strong>. Screenshots come from the run described under Validation runs.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 2v2h1v14a4 4 0 0 0 4 4 4 4 0 0 0 4-4V4h1V2zm4 14c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m2-4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m1-5h-4V4h4z"></path></svg></span> Library QC</label><label for="__tabbed_2_3"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> miRNA expression</label><label for="__tabbed_2_4"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Group comparison</label><label for="__tabbed_2_5"><span class="twemoji mc-orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 13.5v8H3v-8zm-2 2H5v4h4zM12 2l5.5 9h-11zm0 3.86L10.08 9h3.84zM17.5 13c2.5 0 4.5 2 4.5 4.5S20 22 17.5 22 13 20 13 17.5s2-4.5 4.5-4.5m0 2a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"></path></svg></span> isomiRs</label><label for="__tabbed_2_6"><span class="twemoji mc-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 15.39-3.76 2.27.99-4.28-3.32-2.88 4.38-.37L12 6.09l1.71 4.04 4.38.37-3.32 2.88.99 4.28M22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.45 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03z"></path></svg></span> Novel miRNAs</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then six child tabs in three groups, read as a
+funnel from the libraries to the miRNAs they hold and the new ones they suggest.
+Each tab below carries the <strong>same icon and colour the dashboard gives it</strong>, so the
+page and the app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Library QC</td>
+</tr>
+<tr>
+<td>Expression</td>
+<td>miRNA Expression, Group Comparison</td>
+</tr>
+<tr>
+<td>Sequences</td>
+<td>isomiRs, Novel miRNAs</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of cards (four, two on Group
+Comparison), then at most three open sections; tables and details follow,
+collapsed. The persistent <em>Sample filters</em> (the design group, then the sample) sit
+in the left panel and narrow every tab; the group filter reads the design table
+and is pruned with it. The per-miRNA and per-precursor summaries aggregate over
+libraries, so the sample filters do not reach them. The <em>Sample sheet</em> section
+(the design table and the library summary) is pinned, collapsed, to the bottom of
+every child tab.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:7"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 2v2h1v14a4 4 0 0 0 4 4 4 4 0 0 0 4-4V4h1V2zm4 14c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m2-4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m1-5h-4V4h4z"></path></svg></span> Library QC</label><label for="__tabbed_2_4"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> miRNA Expression</label><label for="__tabbed_2_5"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Group Comparison</label><label for="__tabbed_2_6"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 13.5v8H3v-8zm-2 2H5v4h4zM12 2l5.5 9h-11zm0 3.86L10.08 9h3.84zM17.5 13c2.5 0 4.5 2 4.5 4.5S20 22 17.5 22 13 20 13 17.5s2-4.5 4.5-4.5m0 2a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"></path></svg></span> isomiRs</label><label for="__tabbed_2_7"><span class="twemoji mc-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 15.39-3.76 2.27.99-4.28-3.32-2.88 4.38-.37L12 6.09l1.71 4.04 4.38.37-3.32 2.88.99 4.28M22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.45 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03z"></path></svg></span> Novel miRNAs</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Did trimming, the miRTrace verdict and the genome mapping go well?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/multiqc_light.png"></a></p>
-<p>The tab is the MultiQC report as the run published it: what fastp kept and the
-read length after trimming, miRTrace's read QC, the isomiR counts mirtop
-assigned, and how much of each library Bowtie placed on the genome for
-miRDeep2. The miRTrace composition, length and complexity panels are not
-repeated here, Library QC draws them as tiles. The remaining fastp and FastQC
-panels sit in a collapsed section.</p>
+<p><em>Small RNA libraries, from the reads to the miRNAs they hold and the new ones they suggest.</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/overview_dark.webp#only-dark"></a></p>
+<p>A short hero links the run parameters. <em>About this dashboard</em> says what the
+dashboard shows and how the two filter levels work, <em>The run</em> lists the
+samples, the genome, the miRTrace species, the read length window and the
+miRNAs with reads, and <em>Pipeline</em> walks the six steps from trimming to
+discovery, each linked to its settings and its tab. The findings are live
+values: they follow the filters. A run with <code>SKIP_MIRDEEP</code> loses the novel
+card, row and figure, and the Key figures keep three cards.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample</code>, the design group (<code>GROUP_COL</code>) and a <code>Reads
-assigned to miRNAs</code> range, persistent and pinned to the top of every tab,
-plus <code>miRNA reads (%)</code> and <code>rRNA reads (%)</code> ranges in a <em>Read QC scope</em>
-group.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> and
+<em>Findings</em> each have their own filter bar (the design group and the
+sample): each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -6088,47 +6116,85 @@ group.</p>
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards: samples, design groups, reads assigned to miRNAs, miRNAs detected per sample (pinned)</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Design table</em>, <em>Sample summary</em> (collapsed, pinned)</td>
+<td>Key figures</td>
+<td>4 headline cards: samples by group, miRNAs detected, reference reads, novel precursors by star-arm reads</td>
 </tr>
 <tr>
-<td>Read trimming</td>
-<td><em>Reads kept by fastp</em>, <em>Read length after trimming</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: the top miRNAs by group, the library PCA, the novel precursor plane and the isomiR composition</td>
 </tr>
 <tr>
-<td>Small RNA QC</td>
-<td><em>miRTrace read QC</em>, <em>isomiR read counts by type</em>, <em>Distinct isomiR sequences by type</em></td>
-</tr>
-<tr>
-<td>Genome mapping</td>
-<td><em>Reads mapped to the genome</em>, <em>Alignment statistics</em></td>
-</tr>
-<tr>
-<td>More QC panels</td>
-<td>5 fastp, FastQC and mirtop panels (collapsed)</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Is each library a small RNA library, and was it sequenced deep enough?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/library_qc_light.png" rel="noopener" target="_blank"><img alt="Library QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/library_qc_light.png"></a></p>
-<p>Cards give the miRNA, rRNA and tRNA shares and the share in the main clade. The
-read length profile shades the miRNA window, the composition bars split each
-library three ways (RNA type, QC outcome, clade), and the complexity curves
-show how many distinct miRNAs deeper sequencing still finds. A parallel
-coordinates profile puts every per-library measure on one line, and the
-depth-against-share plane carries a linked sample record that stays a slim
-rail until a library is picked.</p>
+<p><strong>Data &amp; QC</strong> · <em>Did the adapter come off and the reads map?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/multiqc_dark.webp#only-dark"></a></p>
+<p>MultiQC panels only. Open: fastp's filtered reads beside the read length after
+trimming, miRTrace's read QC beside mirtop's isomiR read counts, then
+samtools' mapping rate, the reads Bowtie placed on the genome for miRDeep2.
+Check that the adapter came off and the trimmed reads pile up near 22 nt
+before reading any count. The distinct isomiR sequences, the raw FastQC
+counts and adapter content, fastp's base quality, the post-trim FastQC status
+(the <code>fastqc-1</code> panels), the mean isomiR read counts and samtools' alignment
+statistics are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>miRNAs detected</code>, <code>tRNA reads (%)</code> and <code>miRNAs in the main
-clade (%)</code> ranges in a <em>Library scope</em> group.</p>
+<p><strong>Filters</strong> · <code>Sample</code>, read from the MultiQC report.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read trimming</td>
+<td>2 MultiQC panels</td>
+</tr>
+<tr>
+<td>Small RNA QC</td>
+<td>2 MultiQC panels</td>
+</tr>
+<tr>
+<td>Genome mapping</td>
+<td>1 MultiQC panel</td>
+</tr>
+<tr>
+<td>QC details (collapsed)</td>
+<td>7 MultiQC panels</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>Is each library a small RNA library, and a clean one?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/library_qc_light.webp" rel="noopener" target="_blank"><img alt="Library QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/library_qc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/library_qc_dark.webp" rel="noopener" target="_blank"><img alt="Library QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/library_qc_dark.webp#only-dark"></a></p>
+<p>miRTrace's view of every library. The median miRNA share on a bar out of 100,
+the median rRNA share, the reads on miRNAs (the deepest libraries ranked) and
+the most miRNAs a library reaches at full depth. Then the read length profile,
+the miRNA window shaded, beside the complexity curves; the composition bars
+(RNA type, read QC outcome, organism clade); and the per-library measures as
+parallel coordinates. A clean small RNA library peaks at 20 to 24 nt and is
+mostly miRNA. Depth against miRNA share, one point per library coloured by its
+main clade, beside the library record, is collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Reads on miRNAs</code>, <code>miRNAs detected</code>, <code>miRNA reads (%)</code>,
+<code>rRNA reads (%)</code>, <code>tRNA reads (%)</code> and <code>miRNAs in the main clade (%)</code>
+ranges on <code>samples</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6142,41 +6208,49 @@ clade (%)</code> ranges in a <em>Library scope</em> group.</p>
 <td>4 cards</td>
 </tr>
 <tr>
-<td>Read length</td>
-<td><em>Read length distribution</em></td>
+<td>Read length and complexity</td>
+<td>2 advanced visualizations</td>
 </tr>
 <tr>
 <td>RNA composition</td>
-<td><em>Library composition</em></td>
-</tr>
-<tr>
-<td>Complexity</td>
-<td><em>miRNA complexity curves</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Library profile</td>
-<td><em>Per-library profile</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Sample detail</td>
-<td><em>miRNA depth and share per library</em>, <em>Sample record</em></td>
+<td>Library detail (collapsed)</td>
+<td>1 advanced visualization + a library record card</td>
 </tr>
 </tbody>
 </table>
 </details>
+<div class="admonition tip">
+<p class="admonition-title">miRTrace comes through MultiQC</p>
+<p>miRTrace's numbers are read back from the MultiQC parquet. A run with
+<code>--skip_multiqc</code> takes <code>--var SKIP_MULTIQC=true</code>: the MultiQC tab goes,
+and so do the miRTrace cards, the length, complexity and composition
+figures, and the miRNA share row on the Overview.</p>
+</div>
 </div>
 <div class="tabbed-block">
-<p><em>Which miRNAs do the samples carry, and which vary most?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/mirna_expression_light.png" rel="noopener" target="_blank"><img alt="miRNA expression dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/mirna_expression_light.png"></a></p>
-<p>A clustered heatmap of the most variable miRNAs with design strips, where
-samples of one group should form a block, then boxes of the top miRNAs split
-by design group. The mean-variance plane puts well expressed and variable
-miRNAs top right; picking one opens the miRNA record beside it, linked to
-miRBase, and the rows below are selectable too.</p>
+<p><strong>Expression</strong> · <em>Which miRNAs does each library express, and how much?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/mirna_expression_light.webp" rel="noopener" target="_blank"><img alt="miRNA Expression dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/mirna_expression_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/mirna_expression_dark.webp" rel="noopener" target="_blank"><img alt="miRNA Expression dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/mirna_expression_dark.webp#only-dark"></a></p>
+<p>mirtop's counts, scaled to counts per million miRNA reads. The miRNAs with
+reads, the miRNA reads by group, the median miRNAs at 10 CPM or more per
+library and the median number of libraries detecting a miRNA. Then the
+clustered heatmap of the most variable miRNAs, where libraries of one group
+should form a block; the twelve most expressed miRNAs as boxes by group, every
+library a dot; and the mean-variance plane beside the record of the picked
+miRNA, linked to miRBase. A pick on the plane narrows the boxes to that miRNA.
+The miRNA table is collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>miRNA</code>, and <code>Mean log2(CPM + 1)</code> and <code>Samples detecting the
-miRNA</code> ranges in a <em>miRNA scope</em> group.</p>
+<p><strong>Filters</strong> · a <code>miRNA</code> picker on <code>mirtop_mirna_counts</code>, and <code>Mean
+log2(CPM + 1)</code> and <code>Libraries detecting the miRNA</code> ranges on
+<code>mirtop_mirna_summary</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6191,37 +6265,41 @@ miRNA</code> ranges in a <em>miRNA scope</em> group.</p>
 </tr>
 <tr>
 <td>Top variable miRNAs</td>
-<td><em>Top variable miRNAs</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Expression by group</td>
-<td><em>Expression of the top miRNAs by <code>GROUP_COL</code></em></td>
+<td><em>Expression of the top miRNAs by group</em></td>
 </tr>
 <tr>
 <td>miRNA detail</td>
-<td><em>Mean-variance plane</em>, <em>miRNA record</em></td>
+<td>1 advanced visualization + a miRNA record card</td>
 </tr>
 <tr>
-<td>miRNA rows</td>
-<td><em>miRNA summary</em> (collapsed)</td>
+<td>miRNA table (collapsed)</td>
+<td><em>miRNA summary</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Which miRNAs separate two groups of samples?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/group_comparison_light.png" rel="noopener" target="_blank"><img alt="Group comparison dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/group_comparison_light.png"></a></p>
-<p>The sample PCA on miRNA expression is coloured by the design group and takes
-a lasso, so groups can also be drawn by hand. The two-group test runs a
-Wilcoxon test on CPM with Benjamini-Hochberg correction and draws it as a
-volcano. It is a screen, not a model-based differential expression analysis:
-the pipeline publishes no edgeR or DESeq2 table to read instead.</p>
+<p><strong>Expression</strong> · <em>Which libraries look alike, and which miRNAs separate two groups?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/group_comparison_light.webp" rel="noopener" target="_blank"><img alt="Group Comparison dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/group_comparison_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/group_comparison_dark.webp" rel="noopener" target="_blank"><img alt="Group Comparison dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/group_comparison_dark.webp#only-dark"></a></p>
+<p>Two cards rather than four: the libraries compared, by group, and their miRNA
+depth, the two things to check before trusting a separation. Then the library
+PCA on log2(CPM + 1), coloured by group, where a lasso saves a set of points
+as a group, and the volcano of a Wilcoxon rank-sum test between two groups,
+corrected for multiple testing. The volcano opens on the first two groups of
+the design column and runs at once. It is a screen: the pipeline publishes no
+model-based test, so read the hits as candidates to confirm with edgeR or
+DESeq2.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>miRNAs at 10 CPM or more</code> and <code>First principal component</code>
-ranges in a <em>Comparison scope</em> group, to drop shallow or off-target
-libraries before comparing.</p>
+<p><strong>Filters</strong> · a <code>miRNAs at 10 CPM or more</code> range on <code>samples</code> and a <code>First
+principal component</code> range on <code>mirtop_sample_pca</code>, to drop shallow or
+outlying libraries before comparing.</p>
 <table>
 <thead>
 <tr>
@@ -6231,29 +6309,37 @@ libraries before comparing.</p>
 </thead>
 <tbody>
 <tr>
+<td>Comparison at a glance</td>
+<td>2 cards</td>
+</tr>
+<tr>
 <td>Sample relationships</td>
-<td><em>Sample PCA on miRNA expression</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Two-group test</td>
-<td><em>miRNAs that separate two groups</em></td>
+<td>1 advanced visualization</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>How far do the reads stray from the reference miRNA sequences?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/isomirs_light.png" rel="noopener" target="_blank"><img alt="isomiRs dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/isomirs_light.png"></a></p>
-<p>Cards give the share of reads on the reference sequence, per library and per
-miRNA, and how many isomiRs a miRNA carries. The composition bars split each
-library's miRNA reads four ways (3' end, 5' end, non-templated addition,
-nucleotide change), and a dot plot shows which isomiR classes each of the most
-expressed miRNAs carries.</p>
+<p><strong>Sequences</strong> · <em>How far do the reads stray from the reference sequence?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/isomirs_light.webp" rel="noopener" target="_blank"><img alt="isomiRs dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/isomirs_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/isomirs_dark.webp" rel="noopener" target="_blank"><img alt="isomiRs dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/isomirs_dark.webp#only-dark"></a></p>
+<p>mirtop names every read of a miRNA by how it differs from the reference. The
+median share of a library's miRNA reads on the reference sequence, the median
+isomiRs of an expressed miRNA in a library, the miRNA reads by 3' end and the
+reads with a non-templated 3' addition, the added bases ranked. Then the
+isomiR composition of each library, opening on the 3' end with the 5' end,
+the addition and the nucleotide change a switch away, and the landscape of
+isomiR classes over the 40 most expressed miRNAs. The landscape table is
+collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>isomiR class</code> and a <code>Reads on the reference sequence (%)</code>
-range in an <em>isomiR scope</em> group.</p>
+<p><strong>Filters</strong> · <code>isomiR class</code> on <code>mirtop_isomir_landscape</code> and a <code>Reads on
+the reference (%)</code> range on <code>samples</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6268,32 +6354,36 @@ range in an <em>isomiR scope</em> group.</p>
 </tr>
 <tr>
 <td>isomiR composition</td>
-<td><em>isomiR composition per library</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>isomiR landscape</td>
-<td><em>isomiR landscape of the most expressed miRNAs</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>isomiR rows</td>
-<td><em>isomiR landscape rows</em> (collapsed)</td>
+<td>isomiR table (collapsed)</td>
+<td><em>isomiR landscape rows</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Which novel precursors are worth following up?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/novel_mirnas_light.png" rel="noopener" target="_blank"><img alt="Novel miRNAs dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/novel_mirnas_light.png"></a></p>
-<p>miRDeep2's own signal-to-noise and known-recovery curves, by score cutoff,
-say where to set the threshold. The recurrence plane puts the number of
-samples reporting a novel precursor against its best score; picking one opens
-the precursor record beside it, linked to the UCSC browser on <code>GENOME</code>.
-Recurrent, well scored precursors with star-arm reads are the ones to trust.</p>
+<p><strong>Sequences</strong> · <em>Which new miRNAs does miRDeep2 propose, and how credible are they?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/novel_mirnas_light.webp" rel="noopener" target="_blank"><img alt="Novel miRNAs dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/novel_mirnas_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/novel_mirnas_dark.webp" rel="noopener" target="_blank"><img alt="Novel miRNAs dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/smrnaseq/novel_mirnas_dark.webp#only-dark"></a></p>
+<p>The novel precursors merged across libraries, by star-arm reads, the median
+libraries reporting one, the median true-positive estimate and every miRDeep2
+call, novel or known. Then miRDeep2's signal-to-noise and known-recovery
+curves by score cutoff, to set the threshold, and the plane of recurrence
+against the true-positive estimate beside the record of the picked precursor,
+linked to the UCSC browser on <code>GENOME</code>. The plane reads the estimate rather
+than the raw score, which is unbounded. The precursor table and every
+per-library call are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Samples reporting the precursor</code> and <code>Best miRDeep2 score</code>
-ranges and <code>Star-arm reads</code> in a <em>Precursor scope</em> group.</p>
+<p><strong>Filters</strong> · <code>Libraries reporting it</code> and <code>True-positive estimate (%)</code>
+ranges and <code>Star-arm reads</code> on <code>mirdeep2_novel_precursors</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6308,15 +6398,15 @@ ranges and <code>Star-arm reads</code> in a <em>Precursor scope</em> group.</p>
 </tr>
 <tr>
 <td>Score calibration</td>
-<td><em>Signal-to-noise by score cutoff</em>, <em>Known precursors recovered by score cutoff</em></td>
+<td>2 advanced visualizations</td>
 </tr>
 <tr>
 <td>Precursor detail</td>
-<td><em>Recurrence against score</em>, <em>Precursor record</em></td>
+<td>1 advanced visualization + a precursor record card</td>
 </tr>
 <tr>
-<td>Precursor rows</td>
-<td><em>Novel precursors</em>, <em>Every miRDeep2 call, per sample</em> (collapsed)</td>
+<td>Precursor tables (collapsed)</td>
+<td><em>Novel precursors</em>, <em>Every miRDeep2 call, per library</em></td>
 </tr>
 </tbody>
 </table>
@@ -6325,18 +6415,19 @@ ranges and <code>Star-arm reads</code> in a <em>Precursor scope</em> group.</p>
 <p class="admonition-title">Dropped with <code>--skip_mirdeep</code></p>
 <p>A run without miRDeep2 writes no <code>result_*.csv</code>. Pass
 <code>--var SKIP_MIRDEEP=true</code> and the four miRDeep2 collections are pruned,
-which drops this tab.</p>
+which drops this tab and the novel card, row and figure on the Overview.</p>
 </div>
 </div>
 </div>
 </div>
-<p>Tables and point views select on their entity column: the sample summary, the
-read-length and complexity profiles, the depth-and-share plane and the
-group-comparison PCA on <code>sample</code>, and the design table on its id column; the
-mean-variance plane, the miRNA summary and the isomiR table on <code>mirna</code>; the
-novel-precursor plane and table on <code>precursor_id</code>. A pick narrows every tile on
-the tab that reads the same collection or one linked from it, and each record
-card follows the tile beside it.</p>
+<p>Tables select rows and the planes and curves select points: the library summary,
+the read-length and complexity curves, the library plane and the PCA on <code>sample</code>,
+and the design table on its id column; the mean-variance plane, the miRNA summary
+and the isomiR landscape rows on <code>mirna</code>; the novel-precursor plane and table on
+<code>precursor_id</code>. A pick narrows the other tiles of its collection and follows the
+project links to the collections downstream of it: a miRNA picked on the plane
+narrows the per-library counts behind the boxes and the isomiR landscape. Each
+record card follows the plane beside it and waits for a pick.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/smrnaseq, it does not run the pipeline.

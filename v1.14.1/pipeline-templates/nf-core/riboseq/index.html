@@ -5431,24 +5431,22 @@
 </div>
 
 <p>The riboseq template follows an nf-core/riboseq run from paired Ribo-seq and
-RNA-seq libraries to translated ORFs, one tab per question:</p>
+RNA-seq libraries to translated ORFs:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> <strong>Ribo-seq QC</strong>: whether the footprints step one codon at a time, sit on coding sequence and have the expected length</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> <strong>Sample space</strong>: whether the libraries separate by assay first, then by design, on their Salmon expression</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> <strong>Translational regulation</strong>: which genes change through translation, buffering or mRNA abundance, per anota2seq contrast</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> <strong>Translational efficiency</strong>: which genes are translated more or less than their mRNA predicts</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> <strong>ORF discovery</strong>: ORF classes per library, and where Ribo-TISH and RiboCode agree</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: the MultiQC report, riboWaltz periodicity of the footprints, and the Salmon sample space of both assays</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> <strong>Translation</strong>: translational efficiency per gene, pooled over the run, and anota2seq translational regulation per contrast</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> <strong>ORFs</strong>: ORF classes per library, and where Ribo-TISH, RiboCode and the annotation agree</li>
 </ul>
-<p>A <code>Run at a glance</code> strip and the collapsed <code>Sample sheet</code> are pinned to the top
-of every tab, and the <code>Sample scope</code> filters (library, assay and, with a design
-table, the design group) apply everywhere.</p>
+<p>The persistent <code>Sample filters</code> (the design group, the library and the assay)
+sit in the left panel and narrow every tab that reads per-library data.</p>
 <div class="admonition info">
 <p class="admonition-title">Two assays in one sample sheet</p>
 <p>A riboseq run mixes total mRNA libraries (<code>type: rnaseq</code>) and ribosome
 footprint libraries (<code>type: riboseq</code>). The MultiQC and Sample space tabs read
 both; the riboWaltz, Ribo-TISH and RiboCode panels read the footprint
 libraries only, and anota2seq pairs the two per contrast. The <code>Assay</code> filter
-splits them on every tab.</p>
+splits them on every tab that reads per-library data.</p>
 </div>
 <hr>
 <h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M19.22 4c.28 0 .53 0 .74.05.17 1.39-.02 4.25-3.3 7.53-1.7 1.71-3.73 3.02-6.01 3.89l-2.15-2.1c.92-2.31 2.23-4.34 3.92-6.03C15.18 4.58 17.64 4 19.22 4m0-2c-1.98 0-4.98.69-8.22 3.93-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.38.38.89.61 1.42.61.23 0 .47-.06.7-.15A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61S20.7 2 19.22 2m-4.68 7.46c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
@@ -5483,9 +5481,9 @@ manifest. See <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger
 matrices, the riboWaltz QC tables, the anota2seq results per contrast, the
 in-frame P-site counts and the Ribo-TISH and RiboCode ORF calls. Every
 collection past the sample sheet, MultiQC and Salmon is optional, so a run that
-skipped riboWaltz, the contrasts or an ORF caller still imports. 47 of its 77
-components carry a <code>use:</code> catalog reference, so a tile says where its panel
-comes from.</p>
+skipped riboWaltz, the contrasts or an ORF caller still imports. 45 of its 65
+tiles carry a <code>use:</code> catalog reference, so a tile says where its panel comes
+from.</p>
 <div class="admonition info">
 <p class="admonition-title">Self-adapting layout</p>
 <p>The dashboard adapts to whatever the run actually produced: components bound
@@ -6067,27 +6065,59 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Six tabs, read as a funnel: are the libraries usable, do the footprints come
-from translating ribosomes, do the libraries group by assay and design, which
-genes change translation between conditions, which are translated above or
-below their mRNA level, and which ORFs the callers find. Each tab below carries
-the <strong>same icon and colour the dashboard gives it</strong>. Screenshots come from the
-run described under Validation runs.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Ribo-seq QC</label><label for="__tabbed_2_3"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Sample space</label><label for="__tabbed_2_4"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Translational regulation</label><label for="__tabbed_2_5"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> Translational efficiency</label><label for="__tabbed_2_6"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> ORF discovery</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then six child tabs in three groups, read as a
+funnel from the reads to the ORFs being translated. Each tab below carries the
+<strong>same icon and colour the dashboard gives it</strong>, so the page and the app read
+alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Ribo-seq QC, Sample space</td>
+</tr>
+<tr>
+<td>Translation</td>
+<td>Translational efficiency, Translational regulation</td>
+</tr>
+<tr>
+<td>ORFs</td>
+<td>ORF discovery</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The persistent <em>Sample
+filters</em> (the design group, the library and the assay) sit in the left panel and
+narrow every tab that reads per-library data; Translational efficiency and
+Translational regulation are pooled over the run and do not follow them. The
+<em>Sample sheet</em> section (the sample sheet and the optional design table) is pinned,
+collapsed, to the bottom of every child tab. Without a <code>METADATA_FILE</code> the design
+table and the group filters go; the library and assay filters remain.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:7"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Ribo-seq QC</label><label for="__tabbed_2_4"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Sample space</label><label for="__tabbed_2_5"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> Translational efficiency</label><label for="__tabbed_2_6"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Translational regulation</label><label for="__tabbed_2_7"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> ORF discovery</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Did the reads survive trimming, rRNA removal and alignment?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/multiqc_light.png"></a></p>
-<p>The tab is the MultiQC report as the run published it. FastQC is read at three
-stages (raw, trimmed and rRNA-filtered), SortMeRNA says how much of each
-library was ribosomal RNA, STAR and Salmon what was placed and quantified, and
-Ribo-TISH gives the reading-frame proportions and footprint lengths. The
-remaining FastQC and samtools panels sit in a collapsed section.</p>
+<p><em>Ribosome footprints and mRNA, from read QC to the ORFs being translated.</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/overview_dark.webp#only-dark"></a></p>
+<p>A short hero links the run parameters. <em>About this dashboard</em> says what the
+dashboard shows and how the two filter levels work, <em>The run</em> lists the
+libraries, the contrasts, the rRNA removal tool, the aligners and the
+efficiency method, and <em>Pipeline</em> walks the six steps from cleaning to ORFs,
+each linked to its settings and its tab. The findings are live values: they
+follow the filters, except the efficiency and ORF rows, which are pooled over
+the run. No key figure reads anota2seq, so a run without <code>--contrasts</code> keeps
+four cards; regulation is a findings row and a figure.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Library</code>, <code>Assay</code> and the design group (<code>GROUP_COL</code>) on the
-sample sheet and design table, persistent and pinned to the top of every
-tab, plus <code>Read layout</code> in a <em>Library layout</em> group.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> has its own
+filter bar (the design group and the library), <em>Findings</em> another (the
+design group and the contrast): each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -6097,51 +6127,85 @@ tab, plus <code>Read layout</code> in a <em>Library layout</em> group.</p>
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards: libraries by assay, contrasts, genes quantified, P-sites assigned (pinned)</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Sample sheet</em>, <em>Design table</em> (collapsed, pinned)</td>
+<td>Key figures</td>
+<td>4 headline cards: libraries by assay, frame-0 share of CDS P-sites, genes expressed, ORFs by class</td>
 </tr>
 <tr>
-<td>Read quality</td>
-<td><em>Raw sequence counts</em>, <em>Raw adapter content</em>, <em>Sequence counts after rRNA removal</em>, <em>Read length after rRNA removal</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: the P-sites around the start codon, the efficiency plane, the fold-change plane and the caller UpSet</td>
 </tr>
 <tr>
-<td>rRNA depletion</td>
-<td><em>Reads matched to rRNA databases</em></td>
-</tr>
-<tr>
-<td>Alignment and quantification</td>
-<td><em>STAR alignment summary</em>, <em>Salmon fragment length distribution</em></td>
-</tr>
-<tr>
-<td>Footprint quality</td>
-<td><em>Reading frame proportions</em>, <em>Footprint length distribution</em></td>
-</tr>
-<tr>
-<td>More MultiQC panels</td>
-<td>4 FastQC and samtools panels (collapsed)</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Do the footprints step one codon at a time and sit on coding sequence?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/ribo_seq_qc_light.png" rel="noopener" target="_blank"><img alt="Ribo-seq QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/ribo_seq_qc_light.png"></a></p>
-<p>riboWaltz tables drive the tab: P-sites per reading frame in each transcript
-region, the footprint length profile, the metagene signal around the start and
-stop codons and the P-site share per region. The frame 0 share is taken on
-frame 0 itself, not on the dominant frame, so a mis-set P-site offset shows as
-a low value. The phasing plane puts the frame 0 share against the CDS share,
-with a linked library record beside it that folds to a slim rail until a point
-is picked.</p>
+<p><strong>Data &amp; QC</strong> · <em>Did the reads survive trimming, rRNA removal and alignment?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/multiqc_dark.webp#only-dark"></a></p>
+<p>MultiQC panels only. Open: FastQC sequence counts and adapter content on the
+raw reads, then counts and read lengths after rRNA removal; the SortMeRNA rRNA
+share beside the STAR summary; Ribo-TISH's reading-frame proportions and
+footprint lengths. Footprints are short, so Ribo-seq libraries show heavy
+adapter content and a large rRNA share: compare them with each other, not with
+RNA-seq. The Salmon fragment lengths, the raw per-base quality, the read
+lengths after trimming, the FastQC status after rRNA removal and the samtools
+mapping rate are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Frame 0 share in CDS (%)</code> and <code>P-sites in CDS (%)</code> ranges
-in a <em>Library quality</em> group, which reach every riboWaltz view.</p>
+<p><strong>Filters</strong> · <code>Sample ID</code>, read from the MultiQC report, and <code>Read layout</code>
+on the sample sheet, so both work on a run without a design table.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read quality</td>
+<td>4 MultiQC panels</td>
+</tr>
+<tr>
+<td>rRNA and alignment</td>
+<td>2 MultiQC panels</td>
+</tr>
+<tr>
+<td>Footprint quality</td>
+<td>2 MultiQC panels</td>
+</tr>
+<tr>
+<td>QC details (collapsed)</td>
+<td>5 MultiQC panels</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>Do the footprints come from translating ribosomes?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/ribo_seq_qc_light.webp" rel="noopener" target="_blank"><img alt="Ribo-seq QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/ribo_seq_qc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/ribo_seq_qc_dark.webp" rel="noopener" target="_blank"><img alt="Ribo-seq QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/ribo_seq_qc_dark.webp#only-dark"></a></p>
+<p>The P-sites riboWaltz assigned, the median frame-0 share in the CDS, the
+lowest frame margin against a 20-point threshold and the median CDS share of
+P-sites. Then the P-sites per reading frame (the CDS first, a UTR one switch
+away), the P-sites around the start and the stop codon, and the phasing plane
+beside the footprint length profiles. The frame-0 share is taken on frame 0
+itself, not on the dominant frame, so a mis-set P-site offset shows as a low
+value. The region composition, the library table with its record card and the
+region table against the length expectation are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Frame 0 in CDS (%)</code> and <code>P-sites in CDS (%)</code> ranges on
+<code>ribowaltz_summary</code>, which links to every other riboWaltz view.</p>
 <table>
 <thead>
 <tr>
@@ -6156,121 +6220,85 @@ in a <em>Library quality</em> group, which reach every riboWaltz view.</p>
 </tr>
 <tr>
 <td>Reading frame</td>
-<td><em>P-sites per reading frame</em></td>
-</tr>
-<tr>
-<td>Footprint length</td>
-<td><em>Footprint length per library</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Metagene profiles</td>
-<td><em>P-sites around the start codon</em>, <em>P-sites around the stop codon</em></td>
+<td>2 advanced visualizations</td>
 </tr>
 <tr>
-<td>P-site regions</td>
-<td><em>P-sites per transcript region</em></td>
+<td>Libraries</td>
+<td>2 advanced visualizations: the phasing plane and the footprint length profiles</td>
 </tr>
 <tr>
-<td>Library detail</td>
-<td><em>Phasing against CDS share</em>, <em>Library record</em></td>
-</tr>
-<tr>
-<td>Library rows</td>
-<td><em>Ribo-seq library quality</em>, <em>P-site regions against the length expectation</em> (collapsed)</td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>Do the libraries separate by assay first, then by design?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/sample_space_light.png" rel="noopener" target="_blank"><img alt="Sample space dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/sample_space_light.png"></a></p>
-<p>A PCA on the Salmon TPMs of every library, Ribo-seq and RNA-seq together.
-The two assays are expected to split first and the design groups within each,
-so a library that sits with the wrong assay or away from its group stands
-out. Lasso a point to read that library in the record beside the PCA, which
-stays a slim rail until then.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · a <code>Genes expressed</code> range in a <em>Library expression</em> group.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Sample space</td>
-<td><em>Library PCA on Salmon TPMs</em>, <em>Library record</em></td>
-</tr>
-<tr>
-<td>Library rows</td>
-<td><em>Library PCA and expression summary</em> (collapsed)</td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>Which genes change through translation, buffering or mRNA abundance?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/translational_regulation_light.png" rel="noopener" target="_blank"><img alt="Translational regulation dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/translational_regulation_light.png"></a></p>
-<p>The fold-change plane puts ribosome-bound against total mRNA change per gene,
-coloured by the regulatory mode anota2seq assigns with its default selection
-thresholds. A translation volcano and one volcano per anota2seq analysis
-follow. Selecting a gene in the regulation table opens the gene record beside
-it across the four analyses, and a mode or contrast pick narrows the other
-panels to the same genes.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Contrast</code>, <code>Regulatory mode</code> and <code>Gene</code> in a <em>Regulation</em>
-group, plus <code>anota2seq analysis</code> for the per-analysis volcano.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Regulation at a glance</td>
-<td>4 cards</td>
-</tr>
-<tr>
-<td>Fold-change plane</td>
-<td><em>Ribosome-bound against total mRNA change</em></td>
-</tr>
-<tr>
-<td>Significance</td>
-<td><em>Translation effect against significance</em>, <em>Each anota2seq analysis</em></td>
-</tr>
-<tr>
-<td>Gene detail</td>
-<td><em>Regulatory mode per gene</em>, <em>Gene record</em></td>
+<td>Library detail (collapsed)</td>
+<td>1 advanced visualization, <em>Ribo-seq library quality</em> + a library record card, <em>P-site regions against the length expectation</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 <div class="admonition tip">
-<p class="admonition-title">Only with contrasts</p>
-<p>anota2seq runs only when the pipeline got <code>--contrasts</code>. Without it the
-regulation collections are not written and the tab is dropped.</p>
+<p class="admonition-title">Only with riboWaltz</p>
+<p>A run with <code>--skip_ribowaltz</code> writes no riboWaltz tables: the tab is
+dropped, and with it the frame-0 card, the frame-0 row and the start-codon
+figure on the Overview.</p>
 </div>
 </div>
 <div class="tabbed-block">
-<p><em>Which genes are translated more or less than their mRNA predicts?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/translational_efficiency_light.png" rel="noopener" target="_blank"><img alt="Translational efficiency dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/translational_efficiency_light.png"></a></p>
-<p>Translational efficiency is log2 of Ribo-seq CPM over RNA-seq CPM, computed by
-a template recipe from the in-frame P-site count matrix and pooled over the
-run. The plane puts Ribo-seq against RNA-seq abundance per gene, so genes off
-the diagonal are translated above or below their mRNA level. Click or lasso a
-gene to read its record beside the plane.</p>
+<p><strong>Data &amp; QC</strong> · <em>Do the libraries separate by assay first, then by design?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/sample_space_light.webp" rel="noopener" target="_blank"><img alt="Sample space dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/sample_space_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/sample_space_dark.webp" rel="noopener" target="_blank"><img alt="Sample space dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/sample_space_dark.webp#only-dark"></a></p>
+<p>The libraries placed, split by the sheet's leading factor (the assay on a
+riboseq sheet), the median genes detected, and the median genes expressed and
+median TPM per library with their spread. Then a PCA on the Salmon TPMs of
+every library, Ribo-seq and RNA-seq together, coloured by the leading factor;
+any other sheet column is one switch away. The first component usually splits
+the two assays; read the next ones for the design groups within each. A lasso
+filters the linked panels. The PCA table with the library record beside it is
+collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · a <code>Translational efficiency (log2)</code> range and <code>Gene</code> in an
-<em>Efficiency</em> group.</p>
+<p><strong>Filters</strong> · a <code>Genes expressed</code> range on <code>sample_pca</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Libraries at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Sample space</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Library rows (collapsed)</td>
+<td><em>Library PCA and expression summary</em> + a library record card</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Translation</strong> · <em>Which genes carry more ribosomes than their mRNA level predicts?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/translational_efficiency_light.webp" rel="noopener" target="_blank"><img alt="Translational efficiency dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/translational_efficiency_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/translational_efficiency_dark.webp" rel="noopener" target="_blank"><img alt="Translational efficiency dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/translational_efficiency_dark.webp#only-dark"></a></p>
+<p>Translational efficiency is log2 of Ribo-seq CPM over RNA-seq CPM, computed by
+a template recipe from the in-frame P-site count matrix and pooled over every
+library of the run, so it needs no contrast. The genes both assays reach, the
+median log2 efficiency and the median Ribo-seq and RNA-seq abundance. Then the
+plane of Ribo-seq against RNA-seq abundance, one point per gene coloured by
+efficiency, with the diagonal of equal efficiency: genes above it carry more
+ribosomes than their mRNA level predicts. The plane has no point labels; hover
+names a gene. The per-gene table with the gene record beside it is collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · a <code>Translational efficiency (log2)</code> range and <code>Gene</code> on
+<code>translational_efficiency</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6285,28 +6313,84 @@ gene to read its record beside the plane.</p>
 </tr>
 <tr>
 <td>Efficiency plane</td>
-<td><em>Ribo-seq against RNA-seq abundance</em>, <em>Gene record</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Gene rows</td>
-<td><em>Translational efficiency per gene</em> (collapsed)</td>
+<td>Gene detail (collapsed)</td>
+<td><em>Translational efficiency per gene</em> + a gene record card</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Which ORFs are found, of which class, and do both callers agree?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/orf_discovery_light.png" rel="noopener" target="_blank"><img alt="ORF discovery dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/orf_discovery_light.png"></a></p>
-<p>Stacked bars give the share of each ORF class per library, for each caller.
-The UpSet compares Ribo-TISH, RiboCode and the annotation on one key, the
-genomic stop codon (<code>chrom:strand:stop</code>), so alternative start sites of one ORF
-collapse onto one row. Selecting an ORF in the pooled table opens its record
-beside it; an ORF-class or overlap pick reaches the per-library calls.</p>
+<p><strong>Translation</strong> · <em>Which genes change translation between conditions, and through which mode?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/translational_regulation_light.webp" rel="noopener" target="_blank"><img alt="Translational regulation dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/translational_regulation_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/translational_regulation_dark.webp" rel="noopener" target="_blank"><img alt="Translational regulation dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/translational_regulation_dark.webp#only-dark"></a></p>
+<p>Pick a contrast first: every number on the tab depends on it. The regulated
+calls by mode, the translation calls by direction, the median translation
+effect and the smallest translation adjusted p against anota2seq's cut-off of
+0.15. Then the fold-change plane, ribosome-bound against total mRNA change,
+coloured by mode: on the diagonal the mRNA level drives the change, off it
+translation does. Below, the translation volcano beside a volcano of any one
+of the four anota2seq analyses, each with a View switch to its QQ plot. The
+regulation table and its gene record, across the four analyses, are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>ORF class</code>, <code>Gene</code> and a <code>Protein length (aa)</code> range in an
-<em>ORFs</em> group.</p>
+<p><strong>Filters</strong> · <code>Contrast</code>, <code>Regulatory mode</code> and <code>Gene</code> on
+<code>anota2seq_regulation</code>, and an <code>anota2seq analysis</code> picker on
+<code>anota2seq_results</code> for the second volcano.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Regulation at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Fold-change plane</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Significance</td>
+<td>2 advanced visualizations</td>
+</tr>
+<tr>
+<td>Gene detail (collapsed)</td>
+<td><em>Regulatory mode per gene</em> + a gene record card</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">Only with contrasts</p>
+<p>anota2seq runs only when the pipeline got <code>--contrasts</code>. Without it the
+regulation collections are not written and the tab is dropped, with the
+contrast filter, the regulation row and the fold-change figure on the
+Overview.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<p><strong>ORFs</strong> · <em>Which ORFs are translated, and do Ribo-TISH and RiboCode agree?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/orf_discovery_light.webp" rel="noopener" target="_blank"><img alt="ORF discovery dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/orf_discovery_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/orf_discovery_dark.webp" rel="noopener" target="_blank"><img alt="ORF discovery dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/riboseq/orf_discovery_dark.webp#only-dark"></a></p>
+<p>The pooled ORFs split by class, the ORFs Ribo-TISH and the ORFs RiboCode
+report (each spread by the libraries reporting an ORF) and the median protein
+length. Then the ORF classes per library, one caller at a time, and the UpSet
+of Ribo-TISH, RiboCode and the annotated CDS. The callers are compared on the
+genomic stop codon (<code>chrom:strand:stop</code>), so alternative start sites of one ORF
+collapse onto one row; ORFs outside the annotated CDS that both callers report
+are the best supported new candidates. The pooled table with the ORF record
+beside it, then each caller's calls per library, are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>ORF class</code>, <code>Gene</code> and a <code>Protein length (aa)</code> range on
+<code>orf_overlap</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6321,32 +6405,41 @@ beside it; an ORF-class or overlap pick reaches the per-library calls.</p>
 </tr>
 <tr>
 <td>ORF classes per library</td>
-<td><em>ORF classes per library</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Caller agreement</td>
-<td><em>ORFs per caller and annotation</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>ORF detail</td>
-<td><em>ORFs pooled over libraries</em>, <em>ORF record</em></td>
+<td>ORF detail (collapsed)</td>
+<td><em>ORFs pooled over libraries</em> + an ORF record card</td>
 </tr>
 <tr>
-<td>ORF rows</td>
-<td><em>Ribo-TISH calls per library</em>, <em>RiboCode calls per library</em> (collapsed)</td>
+<td>Calls per library (collapsed)</td>
+<td><em>Ribo-TISH calls per library</em>, <em>RiboCode calls per library</em></td>
 </tr>
 </tbody>
 </table>
 </details>
+<div class="admonition tip">
+<p class="admonition-title">One caller skipped</p>
+<p>The four cards read the pooled table, so with <code>--skip_ribotish</code> or
+<code>--skip_ribocode</code> the skipped caller keeps its card and reads 0, and only
+its per-library table goes. The tab is dropped only when both callers are
+skipped.</p>
 </div>
 </div>
 </div>
-<p>Tables and point views select on their entity column: the sample sheet, the
-phasing scatter and the Ribo-seq QC tables on <code>sample</code>, and the design table on
-its id column; the library PCA and its table on <code>sample_id</code>; the regulation and
-efficiency planes and their gene tables on <code>gene_id</code>; the pooled ORF table on
-<code>orf_id</code>. A pick narrows every tile on the tab that reads the same collection or
-one linked from it, and each record card follows the tile beside it.</p>
+</div>
+<p>Tables select rows, and the phasing plane, the PCA and the efficiency and
+fold-change planes select points: the sample sheet, the riboWaltz tables and the
+phasing plane on <code>sample</code>, the design table on its id column, the PCA and its
+table on <code>sample_id</code>, the efficiency and regulation planes and tables on
+<code>gene_id</code>, the pooled ORF table on <code>orf_id</code>. A pick narrows the other tiles of its
+collection and follows the project links to the collections downstream of it.
+Each record card sits beside the table that drives it, in its collapsed section,
+and waits for a picked row or point.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/riboseq, it does not run the pipeline.

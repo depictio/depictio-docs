@@ -5431,20 +5431,17 @@
 </div>
 
 <p>The nanoseq template follows a Nanopore RNA-seq run from the basecalled reads to
-the differential results, one tab per step:</p>
+the genes and isoforms that differ between conditions:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: FastQC and the samtools flagstat and idxstats panels, as the report shows them</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> <strong>Reads and read length</strong>: NanoStat's length and quality readings per library, the Nx ladder and the yield above each quality floor</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-5h4z"></path></svg></span> <strong>Alignment and coverage</strong>: what minimap2 placed, per-base identity, coverage depth and the indel spectrum</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Quantification and sample structure</strong>: what Bambu counted, and whether the libraries group by condition or by preparation</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> <strong>Gene expression (DESeq2)</strong>: the genes that moved in the run's contrast</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <strong>Isoform usage and expression</strong>: the transcripts whose share of their gene shifted, and isoform-level counts</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: FastQC and samtools panels from the reprocessed MultiQC report, NanoStat's length and quality per library with the Nx and quality ladders, and what minimap2 placed with its identity, depth and indel spectrum</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Expression</strong>: what Bambu counted and whether the libraries group by condition or by preparation, the genes DESeq2 calls between the conditions, and the transcripts DEXSeq finds shifting their share of their gene</li>
 </ul>
-<p>A <code>Run at a glance</code> strip (libraries by condition, reads basecalled, gigabases
-sequenced, read length N50), the collapsed <code>Sample sheet</code> and the <code>Sample
-filters</code> (sample, condition, library preparation) are pinned to every tab, and
-the template's links carry a pick to NanoStat, the samtools distributions, the
-melted Bambu counts and the MultiQC panels alike.</p>
+<p>The persistent <code>Sample filters</code> (condition, library, library preparation,
+flow-cell run, source replicate) sit in the left panel, and the template's links
+carry a pick to NanoStat, the samtools distributions, the melted Bambu counts and
+the MultiQC panels alike. The DESeq2 and DEXSeq results carry no sample column,
+so the filters do not narrow them.</p>
 <div class="admonition warning">
 <p class="admonition-title">nanoseq 3.0.0 writes no MultiQC parquet</p>
 <p>The release ships MultiQC 1.11, which writes <code>multiqc_data.json</code> only, and
@@ -5999,26 +5996,56 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Six tabs, read as a funnel: what the report says, how long and how good the
-reads are, how they aligned, what Bambu counted and whether the libraries group
-by condition, which genes moved, and which transcripts changed their share of
-their gene. Each tab below carries the <strong>same icon and colour the dashboard
-gives it</strong>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Reads and read length</label><label for="__tabbed_2_3"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-5h4z"></path></svg></span> Alignment and coverage</label><label for="__tabbed_2_4"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Quantification and sample structure</label><label for="__tabbed_2_5"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Gene expression (DESeq2)</label><label for="__tabbed_2_6"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> Isoform usage and expression</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then six child tabs in two groups, read as a
+funnel from the raw reads to the genes and isoforms that differ between
+conditions. Each tab below carries the <strong>same icon and colour the dashboard gives
+it</strong>, so the page and the app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Reads, Alignment</td>
+</tr>
+<tr>
+<td>Expression</td>
+<td>Quantification, Gene expression, Isoform usage</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The persistent <em>Sample
+filters</em> (condition, library, then the library preparation, flow-cell run and
+source replicate) sit in the left panel and narrow every tab with a sample column
+through the sample hub. DESeq2 and DEXSeq compare the conditions once over the
+whole run: their result tables carry no sample column, so the sample filters do
+not narrow the Gene expression tab or the DEXSeq tiles of Isoform usage. The
+<em>Sample sheet</em>, the library design table, is pinned, collapsed, to the bottom of
+every child tab.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:7"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Reads</label><label for="__tabbed_2_4"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-5h4z"></path></svg></span> Alignment</label><label for="__tabbed_2_5"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Quantification</label><label for="__tabbed_2_6"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Gene expression</label><label for="__tabbed_2_7"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> Isoform usage</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Did every library sequence and align the way the report expects?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/multiqc_light.png"></a></p>
-<p>The general statistics table, the FastQC panels and samtools' flagstat and
-idxstats, as MultiQC reports them. The panels a data-collection tile already
-draws are left out: the NanoStat summary and quality ladder live on the Reads
-tab, and the samtools summary block on the Alignment tab. A tab-local
-<code>Run scope</code> narrows by flow-cell run and source replicate.</p>
+<p><em>Nanopore long reads, from QC to the genes and isoforms that differ.</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/overview_dark.webp#only-dark"></a></p>
+<p>A short hero links the run's provenance: nanoseq writes no <code>params.json</code>, so
+the dialog holds the software versions. <em>About this dashboard</em> says how the two
+filter levels work, <em>The run</em> lists facts read from the data (libraries,
+conditions, library preparations, reads), and <em>Pipeline</em> walks the five steps
+from QC to isoforms, each linked to the version of its tool and its tab. The
+findings are live values: they follow the filters. The DESeq2 row counts one
+call per tested annotation entry, as the key figure and the volcano do; the
+Gene expression tab counts the distinct genes.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample</code>, <code>Condition</code> and <code>Library preparation</code> on the
-sample hub, persistent and pinned to the top of every tab, plus
-<code>Flow-cell run</code> and <code>Source replicate</code> in the tab-local <em>Run scope</em>.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> and
+<em>Findings</em> each have their own filter bar (the condition and the
+library): each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -6028,42 +6055,78 @@ sample hub, persistent and pinned to the top of every tab, plus
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards, pinned to every tab</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Sample hub</em>, collapsed and pinned to every tab</td>
+<td>Key figures</td>
+<td>4 headline cards: libraries by condition, read length N50, reads placed, DESeq2 calls up and down</td>
 </tr>
 <tr>
-<td>General statistics</td>
-<td><em>General statistics</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: length against quality per library, the library PCA, the DESeq2 volcano and the DEXSeq volcano</td>
 </tr>
 <tr>
-<td>Read QC (FastQC)</td>
-<td>8 MultiQC panels</td>
-</tr>
-<tr>
-<td>Alignment (samtools)</td>
-<td>4 MultiQC panels</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>How long and how good are the reads each library delivered?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/reads_and_read_length_light.png" rel="noopener" target="_blank"><img alt="Reads and read length dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/reads_and_read_length_light.png"></a></p>
-<p>NanoStat's length readings open the tab, then a length against quality
-scatter with one point per library and a linked <strong>Library record</strong> beside
-it, which folds to a slim rail until a library is picked. The Nx ladder,
-recomputed from the samtools read-length histogram with N50 marked, shows
-what a single N50 bar hides. The quality ladder follows: the Q10 cards and
-the yield above each Phred cutoff, one curve per library.</p>
+<p><strong>Data &amp; QC</strong> · <em>Did every library sequence and align as expected?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/multiqc_dark.webp#only-dark"></a></p>
+<p>MultiQC panels only, from the reprocessed report. Open: general statistics,
+FastQC sequence counts and quality histograms, samtools flagstat and the
+mapped reads per contig. The other FastQC panels, then the samtools
+percentages and XY counts, are collapsed. The NanoStat panels are left out:
+the Reads tab draws the NanoStat summary and its quality ladder from the data,
+and the Alignment tab the samtools summary.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Library</code>, read from the MultiQC report.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QC overview</td>
+<td>5 MultiQC panels</td>
+</tr>
+<tr>
+<td>FastQC details (collapsed)</td>
+<td>6 MultiQC panels</td>
+</tr>
+<tr>
+<td>samtools details (collapsed)</td>
+<td>2 MultiQC panels</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>How long and how good are the reads of each library?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/reads_light.webp" rel="noopener" target="_blank"><img alt="Reads dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/reads_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/reads_dark.webp" rel="noopener" target="_blank"><img alt="Reads dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/reads_dark.webp#only-dark"></a></p>
+<p>NanoPlot's summary of each library's raw reads. The reads basecalled, the
+median read length N50, the median mean read quality (libraries against Q10,
+failing under Q7) and the median share of reads at Q10 or above. Then mean
+read length against mean quality, one point per library sized by its yield
+(nanoseq publishes no per-read table), with the record of the clicked library
+beside it. The two ladders sit side by side: the Nx ladder recomputed from the
+samtools read-length histogram, N50 marked, and the share of reads above each
+Phred floor, Q10 marked. The NanoStat and per-floor tables are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · a <code>Mean read quality at least</code> floor and a <code>Read length
-N50</code> range on the NanoStat summary, in the tab-local <em>Read QC scope</em>.</p>
+N50</code> range on <code>nanostats</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6073,75 +6136,40 @@ N50</code> range on the NanoStat summary, in the tab-local <em>Read QC scope</em
 </thead>
 <tbody>
 <tr>
-<td>Read length</td>
-<td>4 cards, <em>Length against quality</em>, <em>Library record</em>, <em>Nx ladder per library</em>, <em>Aligned read length distribution per library</em></td>
-</tr>
-<tr>
-<td>Quality ladder</td>
-<td>4 cards, <em>Yield above each quality cutoff</em></td>
-</tr>
-<tr>
-<td>Run dynamics (pycoQC)</td>
-<td>a note: yield over time and the channel map need a <code>sequencing_summary.txt</code></td>
-</tr>
-<tr>
-<td>Read QC tables</td>
-<td><em>NanoStat summary</em>, <em>Yield per cutoff</em>, collapsed</td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>What did minimap2 place, and how evenly does it cover the reference?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/alignment_and_coverage_light.png" rel="noopener" target="_blank"><img alt="Alignment and coverage dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/alignment_and_coverage_light.png"></a></p>
-<p>The placement rate, per-base identity, mapped reads and supplementary
-alignments come from the <code>samtools stats</code> summary block. The coverage depth
-histogram and the indel length spectrum, with insertions and deletions as
-separate curves, show the error mode behind the identity number. Both curves
-select on the library, so a pick narrows the rest of the tab.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · a <code>Library</code> picker on the samtools distributions, in the
-tab-local <em>Alignment scope</em>.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Mapping at a glance</td>
+<td>Reads at a glance</td>
 <td>4 cards</td>
 </tr>
 <tr>
-<td>Coverage and indels</td>
-<td><em>Coverage depth distribution</em>, <em>Indel length spectrum</em></td>
+<td>Length and quality</td>
+<td>2 advanced visualizations: length against quality and the <em>Library record</em></td>
 </tr>
 <tr>
-<td>Alignment tables</td>
-<td><em>Alignment distributions</em>, collapsed</td>
+<td>Ladders</td>
+<td>2 advanced visualizations: the Nx ladder and the reads above each quality floor</td>
+</tr>
+<tr>
+<td>Read tables (collapsed)</td>
+<td><em>NanoStat summary</em>, <em>Yield per quality floor</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Do the libraries group by condition, or by how they were prepared?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/quantification_and_sample_structure_light.png" rel="noopener" target="_blank"><img alt="Quantification and sample structure dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/quantification_and_sample_structure_light.png"></a></p>
-<p>Library size, genes detected, protein-coding share and top-50 gene share say
-what Bambu assigned per library. The structure section sets the libraries by
-preparation and by flow-cell run next to a PCA on log CPM, a depth against
-complexity scatter and a Spearman correlation heatmap, so a batch effect
-reads before any differential result. The gene counts close the tab with the
-per-library log-CPM distribution and the 100 most variable genes as a
-row-standardised heatmap.</p>
+<p><strong>Data &amp; QC</strong> · <em>How much of each library aligned, and how accurately?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/alignment_light.webp" rel="noopener" target="_blank"><img alt="Alignment dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/alignment_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/alignment_dark.webp" rel="noopener" target="_blank"><img alt="Alignment dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/alignment_dark.webp#only-dark"></a></p>
+<p>minimap2 alignments as <code>samtools stats</code> reads them, one summary per library.
+The median share of reads placed, the median per-base identity (100 minus the
+mismatch rate per aligned base), the reads mapped and the supplementary
+alignments, the long-read signal of chimeras. Then the coverage depth
+distribution, one curve per library, and the indel length spectrum beside the
+aligned read lengths. The indel spectrum has no legend, as two curves per
+library pass eight entries: hover a curve for its name. The distributions
+table is collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Gene biotype</code> and a <code>log2(CPM + 1)</code> range on the melted
-gene counts, in the tab-local <em>Feature scope</em>.</p>
+<p><strong>Filters</strong> · a <code>Library</code> picker on <code>samtools_stats_sections</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6151,39 +6179,95 @@ gene counts, in the tab-local <em>Feature scope</em>.</p>
 </thead>
 <tbody>
 <tr>
-<td>Library composition</td>
+<td>Alignment at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Indels and read lengths</td>
+<td>2 advanced visualizations: the indel length spectrum and the aligned read lengths</td>
+</tr>
+<tr>
+<td>Alignment table (collapsed)</td>
+<td><em>Alignment distributions</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Expression</strong> · <em>Do the libraries group by condition, or by preparation?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/quantification_light.webp" rel="noopener" target="_blank"><img alt="Quantification dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/quantification_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/quantification_dark.webp" rel="noopener" target="_blank"><img alt="Quantification dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/quantification_dark.webp#only-dark"></a></p>
+<p>Bambu's counts per library. The reads assigned by condition, the median genes
+detected, the median protein-coding share and the median share of the 50 top
+genes. Then the PCA on log CPM over the 500 most variable genes and the
+Spearman correlation heatmap, full width with library ids on both axes. The
+libraries should group by condition; a split by preparation or flow-cell run
+is a confounder. Collapsed: the 100 most variable genes, row-standardised;
+depth against complexity, the libraries by preparation and by flow-cell run
+and the gene expression per library; then the tables.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Gene biotype</code> and a <code>log2(CPM + 1)</code> range on
+<code>bambu_counts_gene_long</code>; the biotype also narrows the variable-gene
+heatmap.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Libraries at a glance</td>
 <td>4 cards</td>
 </tr>
 <tr>
 <td>Sample structure</td>
-<td>2 cards, <em>Sample PCA on log-CPM gene expression</em>, <em>Depth against complexity</em>, <em>Sample correlation</em></td>
+<td>1 advanced visualization (PCA)</td>
 </tr>
 <tr>
-<td>Gene counts</td>
-<td>4 cards, <em>Expression distribution per library</em>, <em>The 100 most variable genes</em></td>
+<td>Sample correlation</td>
+<td>1 advanced visualization (heatmap)</td>
 </tr>
 <tr>
-<td>Quantification tables</td>
-<td><em>Per-library readings</em>, <em>Correlation matrix</em>, <em>Gene counts per sample</em>, collapsed</td>
+<td>Most variable genes (collapsed)</td>
+<td>1 advanced visualization (heatmap)</td>
+</tr>
+<tr>
+<td>Libraries and counts (collapsed)</td>
+<td>1 advanced visualization (depth against complexity), 2 cards, <em>Gene expression per library</em></td>
+</tr>
+<tr>
+<td>Quantification tables (collapsed)</td>
+<td><em>Per-library readings</em>, <em>Correlation matrix</em>, <em>Gene counts per library</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Which genes moved between the two conditions?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/gene_expression_deseq2_light.png" rel="noopener" target="_blank"><img alt="Gene expression (DESeq2) dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/gene_expression_deseq2_light.png"></a></p>
-<p>DESeq2 on Bambu's gene counts: direction counts, effect size, genes tested
-and the strongest adjusted p-value, then one tile with three views switched
-from its header (volcano, MA, QQ) and the twenty largest effects. DESeq2
-collapses the run into one comparison, so these collections carry no sample
-column and the sample picker does not narrow them; the per-library counts
-are on the Quantification tab.</p>
+<p><strong>Expression</strong> · <em>Which genes differ between the two conditions?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/gene_expression_light.webp" rel="noopener" target="_blank"><img alt="Gene expression dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/gene_expression_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/gene_expression_dark.webp" rel="noopener" target="_blank"><img alt="Gene expression dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/gene_expression_dark.webp#only-dark"></a></p>
+<p>DESeq2 on Bambu's gene counts, once over the whole run, so the sample filters
+do not narrow this tab. The significant genes, ranked up and down, the median
+log2 fold change of the up calls and of the down calls, each on its own card
+so neither cancels the other, and the strongest significance against the 5%
+FDR. Then one tile with three views of the same rows, switched from its View
+control: the volcano, an MA plot from the mean expression and a QQ plot of the
+raw p-values, without point labels (the labels are Ensembl ids). The twenty
+largest fold changes follow, signed. The 200 best-measured rows are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>Adjusted p-value</code>, <code>log2 fold change</code> and <code>log2 mean
-expression</code> ranges, plus <code>Direction</code> and <code>Gene biotype</code>, all on the
-DESeq2 results, in the tab-local <em>DE scope</em>.</p>
+expression</code> ranges and <code>Gene biotype</code>, all on <code>deseq2_results</code>. There is
+no direction filter: it would empty one of the two direction cards.</p>
 <table>
 <thead>
 <tr>
@@ -6193,30 +6277,42 @@ DESeq2 results, in the tab-local <em>DE scope</em>.</p>
 </thead>
 <tbody>
 <tr>
-<td>Differential expression</td>
-<td>4 cards, <em>Volcano, MA and QQ</em>, <em>Largest effect sizes in the contrast</em></td>
+<td>Calls at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>DESeq2 tables</td>
-<td><em>Best-measured DESeq2 rows</em>, collapsed</td>
+<td>Volcano</td>
+<td>1 advanced visualization with volcano, MA and QQ views</td>
+</tr>
+<tr>
+<td>Largest effects</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Best-measured genes (collapsed)</td>
+<td><em>Best-measured DESeq2 rows</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Which transcripts changed their share of their gene?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/isoform_usage_and_expression_light.png" rel="noopener" target="_blank"><img alt="Isoform usage and expression dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/isoform_usage_and_expression_light.png"></a></p>
-<p>DEXSeq first: whether a transcript is used more or less relative to its
-siblings, with its volcano and the per-library transcript shares of the top
-genes, recomputed from Bambu's transcript counts. Isoform expression follows
-from the melted transcript matrix. The isoform lane view reads
-<code>bambu/extended_annotations.gtf</code> and stays empty on a quantification-only
-run; nanoseq publishes no splice-junction table, so there is no sashimi view.</p>
+<p><strong>Expression</strong> · <em>Which transcripts change their share of their gene?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/isoform_usage_light.webp" rel="noopener" target="_blank"><img alt="Isoform usage dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/isoform_usage_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/isoform_usage_dark.webp" rel="noopener" target="_blank"><img alt="Isoform usage dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/nanoseq/isoform_usage_dark.webp#only-dark"></a></p>
+<p>DEXSeq on Bambu's transcript counts: whether a transcript is used more or less
+relative to its gene's other transcripts, once over the whole run. The
+transcripts tested against a 5% gene-level q-value, the median usage gain and
+the median usage loss, each on its own card, and the reads on isoforms by
+condition. Then the change in usage against the gene-level q-value, with a QQ
+view and no MA view (DEXSeq writes no mean intensity), and the per-library
+transcript shares of the top DEXSeq genes, each bar summing to 100% of its
+gene's reads. The transcript expression per library, the isoform structures
+and the tables are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Gene biotype</code> and a <code>log2(CPM + 1)</code> range on the melted
-transcript counts, in the tab-local <em>Isoform scope</em>.</p>
+<p><strong>Filters</strong> · <code>Gene biotype</code> and a <code>log2(CPM + 1)</code> range on
+<code>bambu_counts_transcript_long</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6226,31 +6322,49 @@ transcript counts, in the tab-local <em>Isoform scope</em>.</p>
 </thead>
 <tbody>
 <tr>
-<td>Transcript usage (DEXSeq)</td>
-<td>4 cards, <em>Volcano: differential transcript usage</em>, <em>Transcript usage per library, top DEXSeq genes</em></td>
+<td>Usage at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Isoform expression</td>
-<td>4 cards, <em>Isoform expression distribution per library</em></td>
+<td>Usage volcano</td>
+<td>1 advanced visualization with volcano and QQ views</td>
 </tr>
 <tr>
-<td>Isoform structures</td>
-<td><em>Isoform structures of one gene</em></td>
+<td>Usage per library</td>
+<td><em>Transcript usage per library, top DEXSeq genes</em></td>
 </tr>
 <tr>
-<td>Isoform tables</td>
-<td><em>DEXSeq usage results</em>, <em>Transcript counts per sample</em>, collapsed</td>
+<td>Isoform expression (collapsed)</td>
+<td><em>Transcript expression per library</em></td>
+</tr>
+<tr>
+<td>Isoform structures (collapsed)</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Isoform tables (collapsed)</td>
+<td><em>DEXSeq usage results</em>, <em>Transcript counts per library</em></td>
 </tr>
 </tbody>
 </table>
 </details>
+<div class="admonition info">
+<p class="admonition-title">The isoform structures need Bambu's extended annotation</p>
+<p>The isoform lane view reads <code>bambu/extended_annotations.gtf</code>, which a
+quantification-only run does not write; without it the view is dropped.
+nanoseq publishes no splice-junction table, so there is no sashimi view.</p>
 </div>
 </div>
 </div>
-<p>Every per-library plot and table selects on the sample column, which the sample
-hub links to every sample-keyed collection, so a pick on one panel narrows the
-rest of the tab. The long gene and transcript count tables and the DESeq2 table
-do not select: their feature ids link to nothing else on their tab.</p>
+</div>
+<p>Every per-library plot (length against quality, the ladders, the coverage, indel
+and read-length curves, the PCA, depth against complexity) and every per-library
+table selects on the library, which the sample hub links to every sample-keyed
+collection, so a pick narrows the rest of the tab. The length against quality
+scatter drives the library record card, which waits for a pick. The DEXSeq usage
+table selects on <code>feature_id</code>, which narrows the other tiles of <code>dexseq_results</code>.
+The gene and transcript count tables and the DESeq2 table do not select: their
+feature ids link to no other collection.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/nanoseq, it does not run the pipeline.
@@ -6267,7 +6381,7 @@ results:</p>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>results/<span class="w"> </span>--template<span class="w"> </span>nf-core/nanoseq/latest
 </code></pre></div>
 <p>DESeq2 and DEXSeq need at least two conditions in the samplesheet; a run with
-one condition simply leaves the last two tabs empty. See
+one condition leaves the Gene expression and Isoform usage tabs empty. See
 <a href="https://nf-co.re/nanoseq/3.0.0/docs/usage">nf-co.re/nanoseq/usage</a> for full
 pipeline documentation.</p>
 <hr>

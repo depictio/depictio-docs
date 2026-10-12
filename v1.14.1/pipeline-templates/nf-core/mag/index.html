@@ -5411,19 +5411,16 @@
 <p>The mag template reads an nf-core/mag run as a funnel from assemblies to
 genomes, where the unit is the bin rather than the sample:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: fastp, NanoStat, Bowtie2, QUAST, CheckM2 and GTDB-Tk panels from the run's MultiQC report</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Assembly</strong>: what each assembler made of the same samples, size against contiguity and the Nx curve</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> <strong>Contigs</strong>: the length and coverage signal every binner is fed, and which sample each assembly recruits</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2H7v2.1c-.71.15-1.27.44-1.68.81L2.7 2.29 1.29 3.71l2.95 2.94C4 7.39 4 8 4 8H2v2h2.04c.06.63.17 1.36.36 2.15l-2.72.9.63 1.9 2.69-.9c.24.51.5 1.03.82 1.53l-2.38 1.59 1.11 1.66 2.52-1.68c.56.56 1.22 1.06 1.99 1.49l-.96 1.91 1.79.9 1-2-.16-.09c.95.32 2.03.54 3.27.61V22h2v-2.07c.76-.09 1.81-.29 2.77-.74l1.52 1.52 1.41-1.42-1.33-1.34c.38-.51.63-1.15.63-1.95 0-.5-.05-.92-.12-1.32l1.57-.78-.9-1.8-1.37.69c-.55-.83-1.27-1.29-1.89-1.51l.66-1.96-1.9-.64-.76 2.28c-1.33-.13-2.12-.64-2.59-1.19l1.75-.87-.9-1.8-1.55.79a4.4 4.4 0 0 0-.72-2.02l1.55-2.32-1.66-1.11-1.41 2.12c-.48-.23-1.06-.41-1.76-.5M15 18c-2.94 0-5.19-.82-6.69-2.44C5.68 12.72 6 8.2 6 8.17v-.14C6 7.1 6.39 6 8 6c2.63 0 2.97 1.43 3 2 0 2 1.6 5 6 5 .33 0 2 .15 2 3 0 1.89-3.97 2-4 2M8.5 8A1.5 1.5 0 0 0 7 9.5 1.5 1.5 0 0 0 8.5 11 1.5 1.5 0 0 0 10 9.5 1.5 1.5 0 0 0 8.5 8m2.5 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4.5 2a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5"></path></svg></span> <strong>Bins</strong>: CheckM2 completeness against contamination, cut at the MIMAG thresholds</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 11 5.79V7H7a2 2 0 0 0-2 2v.71A2.5 2.5 0 0 0 3.5 12 2.5 2.5 0 0 0 5 14.29V15H4a2 2 0 0 0-2 2v1.21A2.5 2.5 0 0 0 .5 20.5 2.5 2.5 0 0 0 3 23a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 4 18.21V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 9 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2H7v-.71A2.5 2.5 0 0 0 8.5 12 2.5 2.5 0 0 0 7 9.71V9h10v.71A2.5 2.5 0 0 0 15.5 12a2.5 2.5 0 0 0 1.5 2.29V15h-1a2 2 0 0 0-2 2v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 15 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 21 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2h-1v-.71A2.5 2.5 0 0 0 20.5 12 2.5 2.5 0 0 0 19 9.71V9a2 2 0 0 0-2-2h-4V5.79a2.5 2.5 0 0 0 1.5-2.29A2.5 2.5 0 0 0 12 1m0 1.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M6 11a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m12 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M3 19.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1"></path></svg></span> <strong>Taxonomy</strong>: the GTDB-Tk lineage of the bins that passed, and how each binner recovered the community</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z"></path></svg></span> <strong>Annotation</strong>: Prokka gene density and the ribosomal and transfer RNAs of the MIMAG standard</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.46 6.28 11.05 9c-2.58.26-4.55 2.41-4.55 5a5 5 0 0 0 5 5c2.05 0 3.81-1.23 4.58-3H13.5v-2h8v2h-2.25a8.05 8.05 0 0 1-2.46 4h2.71v2h-16v-2h2.71a8 8 0 0 1-2.71-6c0-3.63 2.46-6.8 5.96-7.72m3.28-4.21.76 1.3.86-.5 3.5 6.06-3.47 2-3.5-6.06.87-.5-.76-1.3z"></path></svg></span> <strong>Bin detail</strong>: the four tools joined per bin, a bin record and the locus map of the bin you pick</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: fastp, Bowtie 2 and NanoStat read QC from the MultiQC report, the only home of the read QC, with the QUAST, CheckM2 and GTDB-Tk panels behind it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Assemblies</strong>: what each assembler made of the same samples, size against contiguity and the Nx curve, then the length and depth signal every binner is fed</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2H7v2.1c-.71.15-1.27.44-1.68.81L2.7 2.29 1.29 3.71l2.95 2.94C4 7.39 4 8 4 8H2v2h2.04c.06.63.17 1.36.36 2.15l-2.72.9.63 1.9 2.69-.9c.24.51.5 1.03.82 1.53l-2.38 1.59 1.11 1.66 2.52-1.68c.56.56 1.22 1.06 1.99 1.49l-.96 1.91 1.79.9 1-2-.16-.09c.95.32 2.03.54 3.27.61V22h2v-2.07c.76-.09 1.81-.29 2.77-.74l1.52 1.52 1.41-1.42-1.33-1.34c.38-.51.63-1.15.63-1.95 0-.5-.05-.92-.12-1.32l1.57-.78-.9-1.8-1.37.69c-.55-.83-1.27-1.29-1.89-1.51l.66-1.96-1.9-.64-.76 2.28c-1.33-.13-2.12-.64-2.59-1.19l1.75-.87-.9-1.8-1.55.79a4.4 4.4 0 0 0-.72-2.02l1.55-2.32-1.66-1.11-1.41 2.12c-.48-.23-1.06-.41-1.76-.5M15 18c-2.94 0-5.19-.82-6.69-2.44C5.68 12.72 6 8.2 6 8.17v-.14C6 7.1 6.39 6 8 6c2.63 0 2.97 1.43 3 2 0 2 1.6 5 6 5 .33 0 2 .15 2 3 0 1.89-3.97 2-4 2M8.5 8A1.5 1.5 0 0 0 7 9.5 1.5 1.5 0 0 0 8.5 11 1.5 1.5 0 0 0 10 9.5 1.5 1.5 0 0 0 8.5 8m2.5 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4.5 2a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5"></path></svg></span> <strong>Genomes</strong>: CheckM2 completeness against contamination, the GTDB-Tk lineage, Prokka's genes and RNAs, and one bin read through all four tools with its locus map</li>
 </ul>
-<p>Every assembler is crossed with every binner over every sample, so the controls
+<p>Every assembler is crossed with every binner over every sample, so the filters
 that matter are the assembler, the binner, the phylum and the quality thresholds.
-The <code>Sample scope</code> and <code>Binning scope</code> (assembler, binner) filters, a four-card
-bin strip and a collapsed sample sheet are pinned to the top of every tab, and
-the per-assembly statistics table to the bottom.</p>
+The persistent <code>Sample filters</code> (assembler, binner, sample) sit in the left panel,
+and a pick there reaches every per-assembly and per-bin collection through the
+<code>bin_summary</code> links.</p>
 <div class="admonition warning">
 <p class="admonition-title">A MultiQC parquet is required</p>
 <p>Depictio reads only <code>multiqc.parquet</code> (MultiQC 1.31 and later). When the run
@@ -5468,9 +5465,10 @@ See <a href="../../../depictio-cli/nextflow-trigger/">Nextflow trigger</a>.</p>
 <h2 id="reference"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.5c-1.35-.85-3.8-1.5-5.5-1.5-1.65 0-3.35.3-4.75 1.05-.1.05-.15.05-.25.05-.25 0-.5-.25-.5-.5V6c.6-.45 1.25-.75 2-1 1.11-.35 2.33-.5 3.5-.5 1.95 0 4.05.4 5.5 1.5 1.45-1.1 3.55-1.5 5.5-1.5 1.17 0 2.39.15 3.5.5.75.25 1.4.55 2 1v14.6c0 .25-.25.5-.5.5-.1 0-.15 0-.25-.05-1.4-.75-3.1-1.05-4.75-1.05-1.7 0-4.15.65-5.5 1.5M12 8v11.5c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5V7c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5m1 3.5c1.11-.68 2.6-1 4.5-1 .91 0 1.76.09 2.5.28V9.23c-.87-.15-1.71-.23-2.5-.23q-2.655 0-4.5.84zm4.5.17c-1.71 0-3.21.26-4.5.79v1.69c1.11-.65 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24v-1.5c-.87-.16-1.71-.23-2.5-.23m2.5 2.9c-.87-.16-1.71-.24-2.5-.24-1.83 0-3.33.27-4.5.8v1.69c1.11-.66 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24z"></path></svg></span> Reference<a class="headerlink" href="#reference" title="Permanent link">¶</a></h2>
 <p>The template reads the samplesheet, the MultiQC report, the QUAST assembly and bin
 reports, the per-contig depth tables, CheckM2, GTDB-Tk and the Prokka summaries
-and GFFs. 61 of its 65 tiles carry a <code>use:</code> catalog reference (<code>quast/*</code>, <code>mag/*</code>,
+and GFFs. 62 of its 66 tiles carry a <code>use:</code> catalog reference (<code>quast/*</code>, <code>mag/*</code>,
 <code>checkm2/*</code>, <code>gtdbtk/*</code>, <code>prokka/*</code>, <code>multiqc/*</code>), so a tile says where its panel
-comes from. Every scatter keeps its analysis controls in the tile header.</p>
+comes from. The controls of an advanced visualization dock to the right of a
+full-width tile and on top of a narrower one.</p>
 <div class="admonition info">
 <p class="admonition-title">Self-adapting layout</p>
 <p>The dashboard adapts to whatever the run actually produced: components bound
@@ -6011,25 +6009,58 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Seven tabs, read as a funnel: did the run pass QC, which assemblies are binnable,
-what signal the binners saw, which bins are genomes, what they are, what they
-carry, and one bin in detail. Each tab below carries the <strong>same icon and colour
-the dashboard gives it</strong>. A picked row or point becomes a filter that follows the
-project links to the tiles it reaches.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:7"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Assembly</label><label for="__tabbed_2_3"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Contigs</label><label for="__tabbed_2_4"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2H7v2.1c-.71.15-1.27.44-1.68.81L2.7 2.29 1.29 3.71l2.95 2.94C4 7.39 4 8 4 8H2v2h2.04c.06.63.17 1.36.36 2.15l-2.72.9.63 1.9 2.69-.9c.24.51.5 1.03.82 1.53l-2.38 1.59 1.11 1.66 2.52-1.68c.56.56 1.22 1.06 1.99 1.49l-.96 1.91 1.79.9 1-2-.16-.09c.95.32 2.03.54 3.27.61V22h2v-2.07c.76-.09 1.81-.29 2.77-.74l1.52 1.52 1.41-1.42-1.33-1.34c.38-.51.63-1.15.63-1.95 0-.5-.05-.92-.12-1.32l1.57-.78-.9-1.8-1.37.69c-.55-.83-1.27-1.29-1.89-1.51l.66-1.96-1.9-.64-.76 2.28c-1.33-.13-2.12-.64-2.59-1.19l1.75-.87-.9-1.8-1.55.79a4.4 4.4 0 0 0-.72-2.02l1.55-2.32-1.66-1.11-1.41 2.12c-.48-.23-1.06-.41-1.76-.5M15 18c-2.94 0-5.19-.82-6.69-2.44C5.68 12.72 6 8.2 6 8.17v-.14C6 7.1 6.39 6 8 6c2.63 0 2.97 1.43 3 2 0 2 1.6 5 6 5 .33 0 2 .15 2 3 0 1.89-3.97 2-4 2M8.5 8A1.5 1.5 0 0 0 7 9.5 1.5 1.5 0 0 0 8.5 11 1.5 1.5 0 0 0 10 9.5 1.5 1.5 0 0 0 8.5 8m2.5 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4.5 2a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5"></path></svg></span> Bins</label><label for="__tabbed_2_5"><span class="twemoji mc-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 11 5.79V7H7a2 2 0 0 0-2 2v.71A2.5 2.5 0 0 0 3.5 12 2.5 2.5 0 0 0 5 14.29V15H4a2 2 0 0 0-2 2v1.21A2.5 2.5 0 0 0 .5 20.5 2.5 2.5 0 0 0 3 23a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 4 18.21V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 9 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2H7v-.71A2.5 2.5 0 0 0 8.5 12 2.5 2.5 0 0 0 7 9.71V9h10v.71A2.5 2.5 0 0 0 15.5 12a2.5 2.5 0 0 0 1.5 2.29V15h-1a2 2 0 0 0-2 2v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 15 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 21 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2h-1v-.71A2.5 2.5 0 0 0 20.5 12 2.5 2.5 0 0 0 19 9.71V9a2 2 0 0 0-2-2h-4V5.79a2.5 2.5 0 0 0 1.5-2.29A2.5 2.5 0 0 0 12 1m0 1.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M6 11a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m12 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M3 19.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1"></path></svg></span> Taxonomy</label><label for="__tabbed_2_6"><span class="twemoji mc-orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z"></path></svg></span> Annotation</label><label for="__tabbed_2_7"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.46 6.28 11.05 9c-2.58.26-4.55 2.41-4.55 5a5 5 0 0 0 5 5c2.05 0 3.81-1.23 4.58-3H13.5v-2h8v2h-2.25a8.05 8.05 0 0 1-2.46 4h2.71v2h-16v-2h2.71a8 8 0 0 1-2.71-6c0-3.63 2.46-6.8 5.96-7.72m3.28-4.21.76 1.3.86-.5 3.5 6.06-3.47 2-3.5-6.06.87-.5-.76-1.3z"></path></svg></span> Bin detail</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then seven child tabs in three groups, read as a
+funnel from the reads to one bin in full. Each tab below carries the <strong>same icon
+and colour the dashboard gives it</strong>, so the page and the app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC</td>
+</tr>
+<tr>
+<td>Assemblies</td>
+<td>Assembly, Contigs</td>
+</tr>
+<tr>
+<td>Genomes</td>
+<td>Bins, Taxonomy, Annotation, Bin detail</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The unit is the bin,
+not the sample, and the template has no group column: mag's own vocabularies
+(assembler, binner, MIMAG tier) take the place of a design column. The persistent
+<em>Sample filters</em> (assembler, binner, then sample) sit in the left panel and narrow
+every tab: the assembler and binner reach every per-assembly and per-bin
+collection through the <code>bin_summary</code> links, the sample every collection through
+the sample sheet. The <em>Sample sheet</em> is pinned, collapsed, to the bottom of every
+child tab.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:8"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><input id="__tabbed_2_8" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Assembly</label><label for="__tabbed_2_4"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Contigs</label><label for="__tabbed_2_5"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2H7v2.1c-.71.15-1.27.44-1.68.81L2.7 2.29 1.29 3.71l2.95 2.94C4 7.39 4 8 4 8H2v2h2.04c.06.63.17 1.36.36 2.15l-2.72.9.63 1.9 2.69-.9c.24.51.5 1.03.82 1.53l-2.38 1.59 1.11 1.66 2.52-1.68c.56.56 1.22 1.06 1.99 1.49l-.96 1.91 1.79.9 1-2-.16-.09c.95.32 2.03.54 3.27.61V22h2v-2.07c.76-.09 1.81-.29 2.77-.74l1.52 1.52 1.41-1.42-1.33-1.34c.38-.51.63-1.15.63-1.95 0-.5-.05-.92-.12-1.32l1.57-.78-.9-1.8-1.37.69c-.55-.83-1.27-1.29-1.89-1.51l.66-1.96-1.9-.64-.76 2.28c-1.33-.13-2.12-.64-2.59-1.19l1.75-.87-.9-1.8-1.55.79a4.4 4.4 0 0 0-.72-2.02l1.55-2.32-1.66-1.11-1.41 2.12c-.48-.23-1.06-.41-1.76-.5M15 18c-2.94 0-5.19-.82-6.69-2.44C5.68 12.72 6 8.2 6 8.17v-.14C6 7.1 6.39 6 8 6c2.63 0 2.97 1.43 3 2 0 2 1.6 5 6 5 .33 0 2 .15 2 3 0 1.89-3.97 2-4 2M8.5 8A1.5 1.5 0 0 0 7 9.5 1.5 1.5 0 0 0 8.5 11 1.5 1.5 0 0 0 10 9.5 1.5 1.5 0 0 0 8.5 8m2.5 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4.5 2a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5"></path></svg></span> Bins</label><label for="__tabbed_2_6"><span class="twemoji mc-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 11 5.79V7H7a2 2 0 0 0-2 2v.71A2.5 2.5 0 0 0 3.5 12 2.5 2.5 0 0 0 5 14.29V15H4a2 2 0 0 0-2 2v1.21A2.5 2.5 0 0 0 .5 20.5 2.5 2.5 0 0 0 3 23a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 4 18.21V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 9 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2H7v-.71A2.5 2.5 0 0 0 8.5 12 2.5 2.5 0 0 0 7 9.71V9h10v.71A2.5 2.5 0 0 0 15.5 12a2.5 2.5 0 0 0 1.5 2.29V15h-1a2 2 0 0 0-2 2v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 15 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 21 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2h-1v-.71A2.5 2.5 0 0 0 20.5 12 2.5 2.5 0 0 0 19 9.71V9a2 2 0 0 0-2-2h-4V5.79a2.5 2.5 0 0 0 1.5-2.29A2.5 2.5 0 0 0 12 1m0 1.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M6 11a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m12 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M3 19.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1"></path></svg></span> Taxonomy</label><label for="__tabbed_2_7"><span class="twemoji mc-yellow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z"></path></svg></span> Annotation</label><label for="__tabbed_2_8"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.46 6.28 11.05 9c-2.58.26-4.55 2.41-4.55 5a5 5 0 0 0 5 5c2.05 0 3.81-1.23 4.58-3H13.5v-2h8v2h-2.25a8.05 8.05 0 0 1-2.46 4h2.71v2h-16v-2h2.71a8 8 0 0 1-2.71-6c0-3.63 2.46-6.8 5.96-7.72m3.28-4.21.76 1.3.86-.5 3.5 6.06-3.47 2-3.5-6.06.87-.5-.76-1.3z"></path></svg></span> Bin detail</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Check reads, host removal, assemblies and bins as the report shows them.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/multiqc_light.png"></a></p>
-<p>Read QC lives here only: fastp writes JSON and NanoPlot free text, neither of
-which a table collection reads, so there is no Reads tab. The report covers
-short- and long-read QC, host and phiX removal, the QUAST assembly statistics,
-CheckM2 bin quality and the GTDB-Tk taxonomy summary.</p>
+<p><em>Metagenome assembly and binning, from reads to named, annotated genomes.</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/overview_dark.webp#only-dark"></a></p>
+<p>A short hero links the run parameters. <em>About this dashboard</em> says the unit is
+the bin and how the two filter levels work, <em>The run</em> lists the samples,
+assemblies and bins and the shortest contig the binners were given
+(<code>min_contig_size</code>), and <em>Pipeline</em> walks the six steps from cleaning to
+annotation, each linked to the parameters that drive it and its tab. The
+findings are live values: they follow the filters, and a route that lacks
+their data drops them.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample</code>, <code>Assembler</code> and <code>Binner</code>, persistent and pinned
-to the top of every tab, plus a tab-local <code>MIMAG tier</code> that narrows the
-pinned bin strip.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> has its own
+filter bar (assembler, binner and sample), and so does <em>Findings</em>
+(assembler and binner): each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -6039,37 +6070,80 @@ pinned bin strip.</p>
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards: bins recovered by MIMAG tier, completeness, contamination, binned bases</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Sample hub</em></td>
+<td>Key figures</td>
+<td>4 headline cards: bins by MIMAG tier, contig N50, bins named to species, CheckM2 completeness</td>
 </tr>
 <tr>
-<td>MultiQC report</td>
-<td><em>General statistics</em> and 8 module panels (fastp, NanoStat, Bowtie2, QUAST, CheckM2, GTDB-Tk)</td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: completeness against contamination, assembled length against contig N50, the GTDB lineage sunburst and transfer against ribosomal RNAs</td>
 </tr>
 <tr>
-<td>Reference tables</td>
-<td><em>Assembly statistics</em></td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Compare the assemblers on size and contiguity.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/assembly_light.png" rel="noopener" target="_blank"><img alt="Assembly dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/assembly_light.png"></a></p>
-<p>Assembled length against contig N50 separates binnable assemblies, long and
-in long pieces, from fragmented ones. <code>Contig length</code> shows how much of each
-assembly survives each QUAST minimum contig length, and the Nx curve per
-assembly, built with QUAST's 500 bp floor so it crosses 50 at the QUAST N50.</p>
+<p><strong>Data &amp; QC</strong> · <em>Did the reads survive trimming and host removal in every sample?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/multiqc_dark.webp#only-dark"></a></p>
+<p>MultiQC panels only, and the only home of the read QC: fastp writes JSON and
+NanoPlot free text, neither of which a table collection reads. Open: general
+statistics, fastp reads kept and base quality side by side, then Bowtie 2 host
+and phiX removal and the NanoStat long-read yield at full width, one bar per
+library. Long reads by quality and short-read insert sizes are collapsed, and
+so are the QUAST, CheckM2 and GTDB-Tk panels the next tabs draw in full.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · a <code>Minimum contig length range (bp)</code> that keeps every
-curve intact inside the window, a <code>Contig N50 (bp)</code> range, and <code>Nx curves</code> to pick
-assemblies.</p>
+<p><strong>Filters</strong> · <code>Sample</code>, read from the MultiQC report.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QC overview</td>
+<td>5 MultiQC panels</td>
+</tr>
+<tr>
+<td>QC details (collapsed)</td>
+<td>2 MultiQC panels</td>
+</tr>
+<tr>
+<td>Assembly and bin panels (collapsed)</td>
+<td>3 MultiQC panels</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Assemblies</strong> · <em>Which assemblies are long and contiguous enough to bin?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/assembly_light.webp" rel="noopener" target="_blank"><img alt="Assembly dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/assembly_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/assembly_dark.webp" rel="noopener" target="_blank"><img alt="Assembly dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/assembly_dark.webp#only-dark"></a></p>
+<p>QUAST measures every assembly mag built, one per assembler and sample or
+co-assembly group. Assembled bases by assembler, the median contig N50, the
+contigs of at least 1 kbp and the longest contig. Then assembled length
+against contig N50, one point per assembly: up and to the right is a long
+assembly in long pieces, which bins cleanly. The share of each assembly kept
+per QUAST minimum contig length sits beside the Nx curve, built with QUAST's
+500 bp floor so it crosses 50 at the QUAST N50; an assembly without a depth
+table has no curve. The assembly statistics and the ladder rungs are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · a <code>Contig N50 (bp)</code> range on <code>assembly_report</code>, a <code>Minimum
+contig length (bp)</code> range on <code>length_ladder</code> that keeps each curve whole
+inside the window, and <code>Nx curves</code> on <code>assembly_nx</code>, the assemblies the
+Nx curve draws.</p>
 <table>
 <thead>
 <tr>
@@ -6080,31 +6154,40 @@ assemblies.</p>
 <tbody>
 <tr>
 <td>Assemblies at a glance</td>
-<td>4 cards: assembled bases, contig N50, contigs, longest contig</td>
+<td>4 cards</td>
 </tr>
 <tr>
 <td>Size against contiguity</td>
-<td><em>Assembled length against contig N50</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Contig length</td>
-<td><em>Fraction of each assembly retained per minimum contig length</em>, <em>Ladder rungs</em>, <em>Nx curve per assembly</em></td>
+<td>2 advanced visualizations: the share kept per minimum contig length and the Nx curve</td>
+</tr>
+<tr>
+<td>Tables (collapsed)</td>
+<td><em>Assembly statistics</em>, <em>Ladder rungs</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>See the coverage signal the binners receive.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/contigs_light.png" rel="noopener" target="_blank"><img alt="Contigs dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/contigs_light.png"></a></p>
-<p>Every contig of at least 1 kbp appears once per sample whose reads were mapped
-back onto its assembly. Length against depth is the plot a binner sees before
-it decides anything, drawn from a server-side hash sample. The recruitment
-heatmap, one row per assembly and one column per read sample, shows which
-sample's organisms each assembly holds.</p>
+<p><strong>Assemblies</strong> · <em>How are the contigs covered by each sample's reads?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/contigs_light.webp" rel="noopener" target="_blank"><img alt="Contigs dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/contigs_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/contigs_dark.webp" rel="noopener" target="_blank"><img alt="Contigs dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/contigs_dark.webp#only-dark"></a></p>
+<p>Every contig of at least 1 kbp, once per sample whose reads were mapped back
+onto its assembly. The median depth of a contig in a sample, the median mean
+depth, the contig and sample pairs by assembler (contig names repeat across
+assemblies, so the rows are counted) and the median contig length. Then length
+against depth, the plot a binner reads, drawn from a server-side hash sample
+and coloured by sample: the contigs of one organism sit in a band of constant
+depth. The depth of each assembly in each sample's reads follows as boxes, then
+the recruitment heatmap, one row per assembly and one column per sample.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Reads from</code>, and <code>Contig length (bp)</code> and <code>Depth</code> ranges.</p>
+<p><strong>Filters</strong> · <code>Reads from</code>, and <code>Contig length (bp)</code> and <code>Depth</code> ranges,
+all on <code>contig_depths</code>. Pick one sample to read its bands alone.</p>
 <table>
 <thead>
 <tr>
@@ -6115,36 +6198,41 @@ sample's organisms each assembly holds.</p>
 <tbody>
 <tr>
 <td>Coverage at a glance</td>
-<td>4 cards: contigs over 1 kbp, depth per sample, mean depth, longest contig</td>
+<td>4 cards</td>
 </tr>
 <tr>
 <td>Length against coverage</td>
-<td><em>Contig length against depth</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Depth distribution</td>
+<td>Depth by sample</td>
 <td><em>Contig depth by assembly and sample</em></td>
 </tr>
 <tr>
 <td>Cross-sample recruitment</td>
-<td><em>Assembly by sample recruitment</em> (heatmap)</td>
+<td>1 advanced visualization (heatmap)</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Judge which bins are genomes.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/bins_light.png" rel="noopener" target="_blank"><img alt="Bins dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/bins_light.png"></a></p>
-<p>Completeness against contamination is cut into quadrants at the MIMAG
-high-quality thresholds (90 % complete, under 5 % contaminated) and coloured
-by binner, with contiguity against completeness beside it. The QUAST section
-measures the same bins rather than predicting them, and is linked to CheckM2
-by bin, so the tab's quality filters reach it too.</p>
+<p><strong>Genomes</strong> · <em>How complete and how clean is each recovered bin?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/bins_light.webp" rel="noopener" target="_blank"><img alt="Bins dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/bins_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/bins_dark.webp" rel="noopener" target="_blank"><img alt="Bins dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/bins_dark.webp#only-dark"></a></p>
+<p>CheckM2 predicts completeness and contamination from marker genes, and QUAST
+measures the contigs. The bins scored by CheckM2 band, the median completeness,
+the median contamination against the 5% high-quality cut and the best quality
+score by binner. Then completeness against contamination, cut into quadrants
+at 90% complete and 5% contaminated and coloured by binner, CheckM2 contig N50
+against completeness beside QUAST bin length against N50 (a complete bin with
+a low N50 is a pile of fragments), and completeness per binner. The QUAST
+collection is linked to CheckM2 by <code>bin_id</code>, so the quality filters reach it.
+The QUAST per-bin table is collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>Completeness (%)</code> and <code>Contamination (%)</code> ranges and a
-<code>Quality band</code>.</p>
+<code>Quality band</code> picker on <code>checkm2_quality_report</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6155,31 +6243,43 @@ by bin, so the tab's quality filters reach it too.</p>
 <tbody>
 <tr>
 <td>Bins at a glance</td>
-<td>4 cards: bins scored by band, bin contig N50, bin size, best bin score</td>
+<td>4 cards</td>
 </tr>
 <tr>
 <td>Completeness against contamination</td>
-<td><em>Completeness against contamination</em>, <em>Contiguity against completeness</em>, <em>Completeness distribution per binner</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Bin assembly statistics</td>
-<td><em>Bin length against contig N50</em>, <em>Per-bin assembly statistics</em></td>
+<td>Contiguity</td>
+<td>2 advanced visualizations: contiguity against completeness and bin length against contig N50</td>
+</tr>
+<tr>
+<td>Completeness by binner</td>
+<td><em>Completeness per binner</em></td>
+</tr>
+<tr>
+<td>Tables (collapsed)</td>
+<td><em>Per-bin assembly statistics</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Read the GTDB-Tk lineage of the bins that were placed.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/taxonomy_light.png" rel="noopener" target="_blank"><img alt="Taxonomy dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/taxonomy_light.png"></a></p>
-<p>A sunburst reads the lineage from domain outwards, and stacked bars show the
-community each binning run recovered, with the rank picker in the tile header.
-A Sankey traces assembler to binner to phylum, weighted by bins, and identity
-against alignment fraction to the closest reference says how confidently each
-bin was named.</p>
+<p><strong>Genomes</strong> · <em>Which organisms are the bins, and how confidently are they named?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/taxonomy_light.webp" rel="noopener" target="_blank"><img alt="Taxonomy dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/taxonomy_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/taxonomy_dark.webp" rel="noopener" target="_blank"><img alt="Taxonomy dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/taxonomy_dark.webp#only-dark"></a></p>
+<p>GTDB-Tk names only the bins that pass its own thresholds, so the poor bins of
+the Bins tab are missing here. The bins named by binner, the distinct phyla by
+assembler, the distinct species and the median identity to the closest
+reference against the 95% species boundary. Then the lineage sunburst beside
+identity against alignment fraction, the community each binning run recovered
+(the eight largest phyla and Other, one bar per assembler, binner and sample,
+the rank picked in the tile's settings) and the Sankey of assembler to binner
+to phylum, weighted by bins. The taxonomy table is collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Phylum</code> and <code>How it was placed</code>.</p>
+<p><strong>Filters</strong> · <code>Phylum</code> and <code>How it was placed</code> on <code>gtdbtk_summary</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6190,30 +6290,44 @@ bin was named.</p>
 <tbody>
 <tr>
 <td>Placements at a glance</td>
-<td>4 cards: bins placed, species named, identity to reference, alignment fraction</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>What was recovered</td>
-<td><em>The recovered lineage</em>, <em>The community each binning run recovered</em></td>
+<td>Lineage</td>
+<td>2 advanced visualizations: the sunburst and identity against alignment fraction</td>
 </tr>
 <tr>
-<td>How each binner got there</td>
-<td><em>Assembler to binner to phylum</em>, <em>How confidently each bin was named</em>, <em>Bin taxonomy</em></td>
+<td>Community per binning run</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Binning routes</td>
+<td>1 advanced visualization (Sankey)</td>
+</tr>
+<tr>
+<td>Tables (collapsed)</td>
+<td><em>Bin taxonomy</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Check the gene content and the RNA half of the MIMAG standard.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/annotation_light.png" rel="noopener" target="_blank"><img alt="Annotation dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/annotation_light.png"></a></p>
-<p>Gene density against bin size is the sanity check on a bin's gene content,
+<p><strong>Genomes</strong> · <em>Do the bins carry the genes and RNAs of a genome?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/annotation_light.webp" rel="noopener" target="_blank"><img alt="Annotation dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/annotation_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/annotation_dark.webp" rel="noopener" target="_blank"><img alt="Annotation dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/annotation_dark.webp#only-dark"></a></p>
+<p>Prokka's per-bin feature counts. Coding sequences by assembler, the median
+genes per Mbp, the median transfer RNAs against the MIMAG floor of 18, and the
+bins carrying the MIMAG RNAs by binner. Then gene density against bin size,
 with the roughly 900 coding sequences per megabase of a prokaryotic genome as
-a reference. Transfer against ribosomal RNAs covers the criterion a
-completeness estimate cannot see.</p>
+a line: a bin far from it holds a second organism or sequence that is not a
+genome. Gene density per assembler follows, then transfer against ribosomal
+RNAs, the half of the MIMAG standard a completeness estimate cannot see. The
+annotation table is collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Genes per Mbp</code>, <code>Transfer RNAs</code> and <code>Ribosomal RNAs</code> ranges.</p>
+<p><strong>Filters</strong> · <code>Genes per Mbp</code>, <code>Transfer RNAs</code> and <code>Ribosomal RNAs</code>
+ranges on <code>prokka_summary</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6224,31 +6338,42 @@ completeness estimate cannot see.</p>
 <tbody>
 <tr>
 <td>Annotation at a glance</td>
-<td>4 cards: coding sequences, genes per Mbp, tRNAs, rRNAs</td>
+<td>4 cards</td>
 </tr>
 <tr>
 <td>Gene density</td>
-<td><em>Gene density against bin size</em>, <em>Gene density per assembler</em></td>
+<td>1 advanced visualization, <em>Gene density per assembler</em></td>
 </tr>
 <tr>
 <td>The RNA half of MIMAG</td>
-<td><em>Transfer RNAs against ribosomal RNAs</em>, <em>Annotation summary</em></td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Tables (collapsed)</td>
+<td><em>Annotation summary</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Read one chosen bin, tool by tool.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/bin_detail_light.png" rel="noopener" target="_blank"><img alt="Bin detail dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/bin_detail_light.png"></a></p>
-<p>The locus map draws the genes of the bin picked in the filter or the table
-along its contigs. <code>Bin detail</code> holds the outer join of CheckM2, QUAST,
-GTDB-Tk and Prokka, one row per bin, beside a linked <code>Bin record</code> card that
-folds to a slim rail until a row is picked, then opens that bin on its
-quality section.</p>
+<p><strong>Genomes</strong> · <em>What do all four tools say about one bin?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/bin_detail_light.webp" rel="noopener" target="_blank"><img alt="Bin detail dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/bin_detail_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/bin_detail_dark.webp" rel="noopener" target="_blank"><img alt="Bin detail dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/mag/bin_detail_dark.webp#only-dark"></a></p>
+<p>One row per bin joining CheckM2, QUAST, GTDB-Tk and Prokka, with the MIMAG
+tier all four decide together. The bins by MIMAG tier, the tools per bin, the
+best quality score by assembler and the features Prokka gave a gene symbol.
+Then the locus map of the bin picked on the left or in the bin table, its
+genes along its contigs coloured by feature class, and the feature lengths by
+class. The collapsed <em>Bin table</em> holds the four-way outer join
+(<code>sources_present</code> counts the tools that reported on a bin) beside the record
+card of the bin picked in it, which waits for a row. The collapsed <em>Features</em>
+section lists every annotated feature.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>MIMAG tier</code>, <code>Bin</code> and <code>Feature class</code>.</p>
+<p><strong>Filters</strong> · <code>MIMAG tier</code> on <code>bin_summary</code>, then <code>Bin</code> and <code>Feature
+class</code> on <code>prokka_gene_track</code>, which choose the bin and the classes the
+map draws.</p>
 <table>
 <thead>
 <tr>
@@ -6259,30 +6384,43 @@ quality section.</p>
 <tbody>
 <tr>
 <td>Bin detail at a glance</td>
-<td>4 cards: high-quality drafts, tools per bin, best bin score, bins with their RNAs</td>
+<td>4 cards</td>
 </tr>
 <tr>
 <td>Locus map</td>
-<td><em>Gene layout along the bin's contigs</em>, <em>Feature length by class</em>, <em>Annotated features</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Bin detail</td>
-<td><em>Bin summary</em>, with the linked <em>Bin record</em></td>
+<td>Feature lengths</td>
+<td><em>Feature length by class</em></td>
+</tr>
+<tr>
+<td>Bin table (collapsed)</td>
+<td><em>Bin summary</em> and the linked <em>Bin record</em> card</td>
+</tr>
+<tr>
+<td>Features (collapsed)</td>
+<td><em>Annotated features</em></td>
 </tr>
 </tbody>
 </table>
 </details>
+<div class="admonition info">
+<p class="admonition-title">The locus map needs Prokka</p>
+<p>A run without Prokka has no locus map or features here, and no
+Annotation tab. Prokka renames the contigs, so the map's coordinates
+hold only inside the bin.</p>
 </div>
 </div>
 </div>
-<p>Tables and point views select on their entity column: the pinned sample sheet
-on <code>sample_id</code>; the assembly table, the length ladder profile and its table on
-<code>assembly_id</code>, and the assembly scatter on <code>assembler</code>; the contig scatter on
-<code>read_sample</code>; every per-bin scatter and table of the Bins, Taxonomy, Annotation
-and Bin detail tabs on <code>bin_id</code>, except the MIMAG plane, which selects on
-<code>binner</code>; the locus table on <code>feature_id</code>. A pick narrows the other tiles of its
-collection and follows the project links to the collections they reach. The Nx
-curve does not select: its collection has no outgoing link and no sibling tile.</p>
+</div>
+<p>A picked row or point narrows the other tiles of its collection and follows the
+project links to the collections they reach. The sample sheet selects on
+<code>sample_id</code>; the assembly table, the ladder rungs and the share-kept curves on
+<code>assembly_id</code>; the length against N50 scatter on <code>assembler</code>; the length against
+depth scatter on <code>read_sample</code>; the MIMAG plane on <code>binner</code>; every other per-bin
+scatter and table on <code>bin_id</code>; the features table on <code>feature_id</code>. The Nx curve
+does not select: its collection has no outgoing link.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/mag, it does not run the pipeline.

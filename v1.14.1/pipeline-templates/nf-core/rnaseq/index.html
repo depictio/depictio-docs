@@ -6032,7 +6032,8 @@ condition, and every tile that shows one says so.</p>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p><em>Bulk RNA-seq, from reads to the genes that vary between conditions.</em></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/overview_dark.webp#only-dark"></a></p>
 <p>A short hero links the run parameters. <em>About this dashboard</em> says how to move
 through the tabs, <em>The run</em> lists the samples, genome, aligner and trimmer, and
 <em>Pipeline</em> walks the six steps from trimming to annotation, each linked to its
@@ -6073,7 +6074,8 @@ narrows its own section only.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Data &amp; QC</strong> · <em>Did trimming, alignment and quantification work for every library?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/multiqc_light.png"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/multiqc_light.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/multiqc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/multiqc_dark.webp" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/multiqc_dark.webp#only-dark"></a></p>
 <p>MultiQC panels only. Open: general statistics, the raw read counts beside the
 reads Trim Galore kept, STAR's summary beside samtools percent mapped, then the
 strandedness inference beside the biotype composition. A library whose inferred
@@ -6116,7 +6118,8 @@ type. Read quality, alignment details and transcript QC are collapsed.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Data &amp; QC</strong> · <em>Which library stands apart on mapping, duplication or read placement?</em></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/library_qc_light.webp" rel="noopener" target="_blank"><img alt="Library QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/library_qc_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/library_qc_dark.webp" rel="noopener" target="_blank"><img alt="Library QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/library_qc_dark.webp#only-dark"></a></p>
 <p>Reads received by STAR, the uniquely mapped share on a gauge, the duplication
 share and the exonic share. Then eleven MultiQC general statistics as parallel
 coordinates, one line per library coloured by condition, and the RSeQC read
@@ -6152,7 +6155,8 @@ several axes is the odd one out.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Data &amp; QC</strong> · <em>Do the replicates of each condition sit together?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/expression_overview_light.png" rel="noopener" target="_blank"><img alt="Sample Space dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/expression_overview_light.png"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/sample_space_light.webp" rel="noopener" target="_blank"><img alt="Sample Space dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/sample_space_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/sample_space_dark.webp" rel="noopener" target="_blank"><img alt="Sample Space dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/sample_space_dark.webp#only-dark"></a></p>
 <p>Libraries by condition, genes expressed, genes detected and the median TPM,
 from the merged Salmon TPM matrix. Then the pipeline's own DESeq2 QC PCA beside
 the sample distances it clusters on. Replicates of one condition should sit
@@ -6188,7 +6192,8 @@ you pick.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Expression</strong> · <em>Which genes vary most between the libraries and conditions?</em></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/variable_genes_light.webp" rel="noopener" target="_blank"><img alt="Variable Genes dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/variable_genes_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/variable_genes_dark.webp" rel="noopener" target="_blank"><img alt="Variable Genes dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/variable_genes_dark.webp#only-dark"></a></p>
 <p>The genes in view, their median log2(TPM + 1), the genes two-fold higher in
 one condition and the highest TPM. Then the 500 most variable genes as a
 clustered heatmap with the design on top, and the most variable genes in view
@@ -6227,8 +6232,8 @@ as one box per condition. Variance ranks these genes, not significance.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Expression</strong> · <em>Where does a gene sit, and which condition does it peak in?</em></p>
-<!-- screenshot pending v2 -->
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/gene_explorer_light.png" rel="noopener" target="_blank"><img alt="Gene Explorer dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/gene_explorer_light.png"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/gene_explorer_light.webp" rel="noopener" target="_blank"><img alt="Gene Explorer dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/gene_explorer_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/gene_explorer_dark.webp" rel="noopener" target="_blank"><img alt="Gene Explorer dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnaseq/gene_explorer_dark.webp#only-dark"></a></p>
 <p>The expressed genes by the condition they peak in, their mean level, their
 spread and the lead of the top condition. Then the mean-variance plane, one
 point per expressed gene coloured by the condition it peaks in, beside the

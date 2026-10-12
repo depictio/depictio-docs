@@ -5891,7 +5891,8 @@ is pinned, collapsed, to the bottom of every child tab.</p>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p><em>DESeq2 differential expression, from sample space to the gene sets that move.</em></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/overview_light.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/overview_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/overview_dark.webp" rel="noopener" target="_blank"><img alt="Overview dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/overview_dark.webp#only-dark"></a></p>
 <p>A short hero links the run parameters. <em>About this dashboard</em> says how to move
 through the tabs, <em>The run</em> lists the samples, the contrasts, the test, the
 cut-offs and the gene sets GSEA scored, and <em>Pipeline</em> walks the five steps
@@ -5933,8 +5934,8 @@ narrows that section only.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Data &amp; QC</strong> · <em>Do the samples separate by design, and are they normalised alike?</em></p>
-<!-- screenshot pending v2 -->
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/samples_light.png" rel="noopener" target="_blank"><img alt="Samples dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/samples_light.png"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/samples_light.webp" rel="noopener" target="_blank"><img alt="Samples dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/samples_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/samples_dark.webp" rel="noopener" target="_blank"><img alt="Samples dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/samples_dark.webp#only-dark"></a></p>
 <p>The samples by group, the DESeq2 size factor, the median variance-stabilised
 expression per sample and the share of features at the matrix floor. Then the
 PCA above the sample-to-sample distance heatmap; a lasso on the PCA carries
@@ -5974,7 +5975,8 @@ differently, and the most variable features, clustered both ways.</p>
 </div>
 <div class="tabbed-block">
 <p><strong>Differential</strong> · <em>Which genes change in each contrast, and can the test be trusted?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/differential_expression_light.png" rel="noopener" target="_blank"><img alt="Differential expression dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/differential_expression_light.png"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/differential_expression_light.webp" rel="noopener" target="_blank"><img alt="Differential expression dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/differential_expression_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/differential_expression_dark.webp" rel="noopener" target="_blank"><img alt="Differential expression dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/differential_expression_dark.webp#only-dark"></a></p>
 <p>Pick a contrast first. The gene tests that kept an adjusted p-value, the
 significant calls by direction, the median log2 fold change and the median
 adjusted p-value. Then the volcano, cut at the pipeline's thresholds, whose
@@ -6025,7 +6027,8 @@ expression-level ranges on <code>deseq2_results</code>; <code>Biotype</code> on
 </div>
 <div class="tabbed-block">
 <p><strong>Differential</strong> · <em>Where on the genome do the calls sit?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/genome_view_light.png" rel="noopener" target="_blank"><img alt="Genome view dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/genome_view_light.png"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/genome_view_light.webp" rel="noopener" target="_blank"><img alt="Genome view dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/genome_view_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/genome_view_dark.webp" rel="noopener" target="_blank"><img alt="Genome view dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/genome_view_dark.webp#only-dark"></a></p>
 <p>Needs the run's GTF. The gene tests the annotation places, the placed calls by
 chromosome, the call strength and the biotypes the up and down calls reach.
 Then the Manhattan plot, with a threshold line at padj 0.05, and the lollipop
@@ -6061,7 +6064,8 @@ on <code>deseq2_results_annotated</code>, plus the persistent <code>Contrast</co
 </div>
 <div class="tabbed-block">
 <p><strong>Gene sets</strong> · <em>Which gene sets move in each contrast, and at which pole?</em></p>
-<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/enrichment_light.webp" rel="noopener" target="_blank"><img alt="Enrichment dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/enrichment_light.webp#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/enrichment_dark.webp" rel="noopener" target="_blank"><img alt="Enrichment dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/differentialabundance/enrichment_dark.webp#only-dark"></a></p>
 <p>Needs a GSEA run. The set reports by pole, the strongest absolute normalised
 enrichment score, the median FDR and the median leading-edge share of each set.
 Then the dot plot of every set on its normalised enrichment score, sized by the
