@@ -32,11 +32,8 @@ When you first access Depictio, you'll be prompted to log in with the admin cred
 
 If you want to explore Depictio with existing demo data, you can use the provided registered iris dataset. A demo dashboard is also already created for you to explore. You can access it by clicking on the **"Iris Dashboard"** on the landing page.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/react/page_dashboards.png" target="_blank">
-        <img src="../../images/react/page_dashboards.png" width="600">
-    </a>
-</div>
+[![The Dashboards page, listing the dashboards you can open](../images/guides/web-ui/dashboards_light.webp#only-light)](../images/guides/web-ui/dashboards_light.webp){target=_blank}
+[![The Dashboards page, listing the dashboards you can open](../images/guides/web-ui/dashboards_dark.webp#only-dark)](../images/guides/web-ui/dashboards_dark.webp){target=_blank}
 
 ### <span style="color: #45B8AC;">:material-folder-plus:</span> Register your first project
 
@@ -91,67 +88,50 @@ Depictio provides a command-line interface (CLI), the `depictio` command, for ma
 
 ##### <span style="color: #F9CB40;">:material-cog:</span> Create a CLI configuration
 
-Once you have installed the CLI tool, you need to create a configuration file to interact with Depictio. This configuration file contains the necessary information to connect to your Depictio instance, including the base URL and user credentials.
-To do so, go to the **profile** section in the web interface (bottom left corner).
+Once you have installed the CLI tool, you need a configuration file to interact with Depictio. It holds the address of your Depictio instance and a long-lived token that signs the CLI in as you.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/react/page_profile.png" target="_blank">
-        <img src="../../images/react/page_profile.png" width="600">
-    </a>
-</div>
+1. Open **Account settings** with your avatar in the top bar, and the **CLI agents** section <small>(v1.17.0+; before, a separate CLI agents page)</small>.
 
-From the profile section, click the **CLI Agents** entry — you'll land on the **CLI Agents** page where you can manage your CLI configurations. To create a new configuration, click on the **Add New Configuration** button.
+    [![The CLI agents section of Account settings, with Add configuration and two configurations](../images/guides/web-ui/cli_agents_light.webp#only-light)](../images/guides/web-ui/cli_agents_light.webp){target=_blank}
+    [![The CLI agents section of Account settings, with Add configuration and two configurations](../images/guides/web-ui/cli_agents_dark.webp#only-dark)](../images/guides/web-ui/cli_agents_dark.webp){target=_blank}
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/react/page_cli_agents.png" target="_blank">
-        <img src="../../images/react/page_cli_agents.png" width="600">
-    </a>
-</div>
+2. Click **Add configuration**, give the configuration a name that tells it apart, such as the machine it runs on, and click **Create**.
 
-Pick a name for your configuration in the modal and confirm — the new token will appear in the list and a copy-to-clipboard prompt will surface the connection block to paste into `~/.depictio/CLI.yaml`.
+    [![The New CLI configuration dialog, with laptop typed as its name](../images/guides/web-ui/cli_new_light.webp#only-light)](../images/guides/web-ui/cli_new_light.webp){target=_blank}
+    [![The New CLI configuration dialog, with laptop typed as its name](../images/guides/web-ui/cli_new_dark.webp#only-dark)](../images/guides/web-ui/cli_new_dark.webp){target=_blank}
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/react/cli_config_create_modal.png" target="_blank">
-        <img src="../../images/react/cli_config_create_modal.png" width="600">
-    </a>
-</div>
+3. **Save it**: **Download** the file, or **Copy** it, as `~/.depictio/CLI.yaml`. The token is shown only once, and it signs the CLI in as you: keep the file private.
+4. **Check the connection** from the machine you saved it on:
 
- This will generate a YAML file with the necessary configuration to interact with Depictio via the CLI. Save this file in a secure location (e.g., `~/.depictio/CLI.yaml`), and ensure it is not publicly accessible. Depending of your installation, the file will look like this:
+    ```bash
+    depictio config check
+    ```
+
+The file looks like this (abridged):
 
 ```yaml
 # ~/.depictio/CLI.yaml
-base_url: http://localhost:8058
-s3:
-  bucket: depictio-bucket
+api_base_url: http://localhost:8058
+user:
+  id: 67658ba033c8b59ad489d7c7
+  email: admin@example.com
+  is_admin: true
+  token:
+    access_token: >-
+      eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+    token_type: bearer
+    token_lifetime: long-lived
+    expire_datetime: '2027-10-12 13:59:59'
+    name: laptop
+s3_storage:
+  service_name: localhost
+  service_port: 9000
   external_host: localhost
   external_port: 9000
   external_protocol: http
-  external_service: false
-  public_url: null
-  root_password: minio123
+  bucket: depictio-bucket
   root_user: minio
-  service_name: s3
-  service_port: 9000
-user:
-  description: null
-  email: admin@example.com
-  flexible_metadata: null
-  hash: null
-  id: 6845c5892bf43fee63e14bab
-  is_admin: true
-  token:
-    access_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-    created_at: '2025-06-08 19:34:21'
-    description: null
-    expire_datetime: '2026-06-08 19:34:21'
-    flexible_metadata: null
-    hash: null
-    id: 6845e5bdce243952fac3e444
-    logged_in: false
-    name: TEST2
-    token_lifetime: long-lived
-    token_type: bearer
-    user_id: 6845c5892bf43fee63e14bab
+  root_password: minio123
 ```
 
 ##### <span style="color: #7A5DC7;">:material-play:</span> Use the CLI tool
@@ -193,11 +173,8 @@ Once the data ingested into the system, you can go to the web interface and see 
 
 To create your first dashboard using the palmer penguins dataset, click on **+ New Dashboard** in the top right corner of the web interface.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/react/page_dashboards.png" target="_blank">
-        <img src="../../images/react/page_dashboards.png" width="600">
-    </a>
-</div>
+[![The Dashboards page, listing the dashboards you can open](../images/guides/web-ui/dashboards_light.webp#only-light)](../images/guides/web-ui/dashboards_light.webp){target=_blank}
+[![The Dashboards page, listing the dashboards you can open](../images/guides/web-ui/dashboards_dark.webp#only-dark)](../images/guides/web-ui/dashboards_dark.webp){target=_blank}
 
 This will open the dashboard creation modal. Pick the **Palmer Penguins Species Comparison** project, give the dashboard a name, and confirm.
 
@@ -209,11 +186,8 @@ This will open the dashboard creation modal. Pick the **Palmer Penguins Species 
 
 You will land in the editor for the new dashboard, where you can add components. The screenshot below shows the editor against an existing ampliseq dashboard for reference.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../images/react/page_dashboard_editor.png" target="_blank">
-        <img src="../../images/react/page_dashboard_editor.png" width="600">
-    </a>
-</div>
+[![A dashboard in the editor](../images/guides/web-ui/editor_light.webp#only-light)](../images/guides/web-ui/editor_light.webp){target=_blank}
+[![A dashboard in the editor](../images/guides/web-ui/editor_dark.webp#only-dark)](../images/guides/web-ui/editor_dark.webp){target=_blank}
 
  Then follow the [dashboard creation guide](guides/dashboard_creation.md) and [dashboard usage guide](guides/dashboard_usage.md). These guides will walk you through the process of designing a dashboard, adding components, and configuring interactivity.
 

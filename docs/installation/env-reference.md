@@ -58,6 +58,7 @@ DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
 <!-- - [Dashboard YAML Sync](#dashboard-yaml-sync) -->
 - [Global Settings](#global-settings)
 - [Branding](#branding)
+- [Release Check](#release-check)
 - [Feedback](#feedback)
 - [ServiceConfig](#serviceconfig)
 
@@ -801,6 +802,22 @@ Deployment-level defaults for the [brand theme](../usage/administration/branding
     ```bash
     DEPICTIO_BRANDING_THEME={"surfaces_light":{"app_bg":"#f8faf9","nav_bg":"#ffffff","heading":"#00514b"}}
     ```
+
+---
+
+## Release Check <small>(v1.17.0+)</small> { #release-check }
+
+**Config Class:** `VersionCheckConfig`
+**Environment Prefix:** `DEPICTIO_VERSION_CHECK_`
+
+Tells administrators when a newer Depictio release is published. The API asks the GitHub Releases API with an unauthenticated `GET` that sends nothing about the instance. See [Release check](../usage/guides/web_ui.md#release-check).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_VERSION_CHECK_ENABLED` | _(unset)_ | Unset: the check is on and administrators can turn it off in **Administration → Settings**. `true` or `false` decides instead and locks that switch |
+| `DEPICTIO_VERSION_CHECK_INTERVAL_HOURS` | `6` | Hours between checks, `1` to `168`, once for the whole instance |
+| `DEPICTIO_VERSION_CHECK_REPOSITORY` | `depictio/depictio` | GitHub repository whose releases are compared with the running version |
+| `DEPICTIO_VERSION_CHECK_TIMEOUT_SECONDS` | `10` | Timeout of the GitHub request |
 
 ---
 

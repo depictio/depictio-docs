@@ -8,6 +8,45 @@ hide:
 
 # Changelog
 
+## **[v1.17.0](https://github.com/depictio/depictio/releases/tag/v1.17.0)** (October 12, 2026)
+
+!!! success "Minor: components embedded in other sites, the Paper look, and Account settings"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.17.0
+ghcr.io/depictio/depictio-viewer:1.17.0
+ghcr.io/depictio/depictio-worker:1.17.0
+ghcr.io/depictio/depictio-cli:1.17.0
+```
+
+### **✨ New Features**
+
+* **Components embedded in other sites**: the export API serves one dashboard component, live, as a Plotly spec for a site's own plotly.js or as a self-contained page for an `<iframe>`, off until `DEPICTIO_FASTAPI_EMBED_ENABLED` turns it on. See [Component export and embedding](../features/component-export.md) ([#917](https://github.com/depictio/depictio/pull/917), [6146fe0b](https://github.com/depictio/depictio/commit/6146fe0b), [387310d6](https://github.com/depictio/depictio/commit/387310d6)).
+* **Export / embed on every tile** opens a dialog that picks the format, the theme and the current filters, and gives the URL, a `curl` command and a `plotly.js` or `<iframe>` snippet. See [From a tile](../features/component-export.md#from-a-tile) ([#917](https://github.com/depictio/depictio/pull/917), [44f9c20c](https://github.com/depictio/depictio/commit/44f9c20c)).
+* **A manifest to build on**: `GET …/components` lists each component with its formats and its filter, with the values a filter offers on request, and every export carries a revision to poll or pin. See [The API](../features/component-export.md#the-api) ([#917](https://github.com/depictio/depictio/pull/917), [e60bf1f0](https://github.com/depictio/depictio/commit/e60bf1f0), [41400f09](https://github.com/depictio/depictio/commit/41400f09)).
+* **The Paper look**, now the default, draws every page on paper panels and puts a dashboard's Search, Analysis, Comments and Edit in a dock that can move, while **Classic** keeps the earlier layout. See [Paper and Classic](../usage/guides/web_ui.md#looks) ([#1174](https://github.com/depictio/depictio/pull/1174), [e98d5bb8](https://github.com/depictio/depictio/commit/e98d5bb8), [366bb5a0](https://github.com/depictio/depictio/commit/366bb5a0)).
+* **Account settings** replace the profile page: account and profile picture, password, CLI agents, preferences (theme, look, font size), the tours and the server, opened from the avatar. See [Account settings](../usage/guides/web_ui.md#account-settings) ([#1180](https://github.com/depictio/depictio/pull/1180), [3c2845c3](https://github.com/depictio/depictio/commit/3c2845c3), [f6ca9b5d](https://github.com/depictio/depictio/commit/f6ca9b5d)).
+* **Server information and the release check**: the server status opens the version, mode and useful links, and tells administrators when a newer release is out, which `DEPICTIO_VERSION_CHECK_ENABLED` can turn off for good. See [Release check](../usage/guides/web_ui.md#release-check) ([#1180](https://github.com/depictio/depictio/pull/1180), [012e8c71](https://github.com/depictio/depictio/commit/012e8c71)).
+
+### **🚀 Improvements**
+
+* **An instance default look**: **Administration → Branding → Default look** picks Paper or Classic for everyone who has not chosen. See [Default look](../usage/administration/branding.md#default-look) ([#1180](https://github.com/depictio/depictio/pull/1180), [75053030](https://github.com/depictio/depictio/commit/75053030)).
+* **A sectioned Administration page**, its pages grouped under People, Content, Activity and Instance, with tasks, ingestion runs and logs read as one list. See [Admin section](../usage/guides/web_ui.md#admin-section) ([#1180](https://github.com/depictio/depictio/pull/1180), [112745e5](https://github.com/depictio/depictio/commit/112745e5)).
+* **The project page leads with its workflow**, then one switch between Data collections and Ingestion report, and cross-DC links open on a map of the collections and their connections. See [Project detail](../usage/guides/web_ui.md#project-detail) ([#1180](https://github.com/depictio/depictio/pull/1180), [78e14fe5](https://github.com/depictio/depictio/commit/78e14fe5), [5a4c4533](https://github.com/depictio/depictio/commit/5a4c4533)).
+* **New CLI configurations in two steps**: name it, then save it as `~/.depictio/CLI.yaml` and run `depictio config check`. See [Create a CLI configuration](../usage/get_started.md#create-a-cli-configuration) ([#1180](https://github.com/depictio/depictio/pull/1180), [2bc60aba](https://github.com/depictio/depictio/commit/2bc60aba)).
+* **A Table display menu** on the Dashboards and Projects listings sets the row height and the columns shown. See [Thumbnails or table](../usage/guides/web_ui.md#listing-views) ([#1180](https://github.com/depictio/depictio/pull/1180), [ef826664](https://github.com/depictio/depictio/commit/ef826664)).
+* **Slider tick labels are optional**: `show_mark_labels: false` keeps the ticks without their values, and the builder previews a slider as the dashboard draws it. See [Initial values and slider options](../features/yaml-sync.md#interactive-defaults) ([#1180](https://github.com/depictio/depictio/pull/1180), [e1b0dd11](https://github.com/depictio/depictio/commit/e1b0dd11)).
+* **Sign-in leads with SSO and Google**, then the email form ([#1180](https://github.com/depictio/depictio/pull/1180), [c9f5ed6a](https://github.com/depictio/depictio/commit/c9f5ed6a)).
+* **A faster Try Depictio codespace**: its image is a quarter smaller, and the server's start-up shows in a terminal of the editor. See [Installation](../installation/README.md#quickstart) ([#1183](https://github.com/depictio/depictio/pull/1183), [ce87f232](https://github.com/depictio/depictio/commit/ce87f232)).
+
+### **🐛 Bug Fixes**
+
+* **GitHub Releases are published again**: they had stopped after v1.14.0, and v1.14.1 to v1.15.1 now have theirs ([#1179](https://github.com/depictio/depictio/pull/1179), [d6e424cf](https://github.com/depictio/depictio/commit/d6e424cf)).
+
+---
+
 ## **[v1.16.0](https://github.com/depictio/depictio/releases/tag/v1.16.0)** (October 11, 2026)
 
 !!! success "Minor: data read where it lives, projects from a run folder, and dashboards composed from the catalog"

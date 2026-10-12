@@ -30,8 +30,11 @@ data.
 
     [Open in Codespaces](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&quickstart=1) runs these steps in a GitHub cloud workspace. Its
     image already holds `depictio[local]`, the services and the examples, so
-    it only starts `depictio local up` and opens the viewer. Drag a results
-    folder onto its Explorer, then run `depictio ingest` in its terminal.
+    it only starts `depictio local up`, in a terminal of the editor, and opens
+    the viewer. Drag a results folder onto its Explorer, then run
+    `depictio ingest` in its terminal. While the codespace is being created,
+    **View logs** on its loading page, or **Codespaces: View Creation Log** in
+    the command palette, shows what it is doing.
 
 **Prerequisites**: Linux, or macOS on Apple silicon (see [Platforms](#platforms)),
 with [uv](https://docs.astral.sh/uv/getting-started/installation/), or pip and
