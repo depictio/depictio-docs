@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.15.0",
-    "x-generated-at": "2026-10-09T18:36:36Z",
-    "x-depictio-version": "v1.15.0"
+    "version": "1.15.1",
+    "x-generated-at": "2026-10-11T19:25:05Z",
+    "x-depictio-version": "v1.15.1"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -15874,7 +15874,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -16290,7 +16290,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -16353,7 +16353,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -16635,7 +16635,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -19328,7 +19328,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -19616,7 +19616,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -20847,7 +20847,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -20953,7 +20953,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -21186,7 +21186,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6ac9342f89481b4fe391d59a"
+            "default": "6acbe28d45918058003ea56c"
           }
         },
         "type": "object",
@@ -21426,7 +21426,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -21545,7 +21545,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -21627,7 +21627,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -21713,7 +21713,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -21914,7 +21914,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -22089,7 +22089,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -22206,7 +22206,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
@@ -22311,7 +22311,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ac9342f89481b4fe391d599"
+            "default": "6acbe28d45918058003ea56b"
           },
           "description": {
             "anyOf": [
