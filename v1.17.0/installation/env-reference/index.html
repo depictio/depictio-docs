@@ -1235,6 +1235,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="FastAPI Backend">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Component export (v1.17.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2896,6 +2913,8 @@
       
         
       
+        
+      
     
     
     
@@ -3080,6 +3099,36 @@
     
   
     Dashboard and Data Versions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/component-export/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3h2v2H5v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5h2v2H5c-1.07-.27-2-.9-2-2v-4a2 2 0 0 0-2-2H0v-2h1a2 2 0 0 0 2-2V5a2 2 0 0 1 2-2m14 0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3zm-7 12a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-4 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m8 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1"></path></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Component Export and Embedding
   
 
     
@@ -5615,6 +5664,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="FastAPI Backend">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Component export (v1.17.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -6097,6 +6163,34 @@
 <td><code>DEPICTIO_FASTAPI_CORS_ALLOW_CREDENTIALS</code></td>
 <td><code>true</code></td>
 <td>Whether the CORS layer attaches credentials (cookies / Authorization header).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="component-export">Component export <small>(v1.17.0+)</small><a class="headerlink" href="#component-export" title="Permanent link">¶</a></h3>
+<p>The API that serves one dashboard component to another website. See <a href="../../features/component-export/">Component export and embedding</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEPICTIO_FASTAPI_EMBED_ENABLED</code></td>
+<td><code>false</code></td>
+<td>Serve <code>/depictio/api/v1/export</code> and show <strong>Export / embed</strong> on the tiles. Off, every export route answers <code>404</code></td>
+</tr>
+<tr>
+<td><code>DEPICTIO_FASTAPI_EMBED_ALLOWED_ORIGINS</code></td>
+<td><em>(empty)</em></td>
+<td>Sites allowed to frame an exported page, comma-separated. They become its CSP <code>frame-ancestors</code>. Empty: the pages open on their own but cannot be framed. <code>*</code> is refused</td>
+</tr>
+<tr>
+<td><code>DEPICTIO_FASTAPI_EMBED_CSP_UNSAFE_INLINE</code></td>
+<td><code>false</code></td>
+<td>Allow inline scripts in the exported page instead of listing their hashes</td>
 </tr>
 </tbody>
 </table>
