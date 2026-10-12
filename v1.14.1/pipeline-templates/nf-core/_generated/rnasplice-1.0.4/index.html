@@ -5218,7 +5218,7 @@
 </tbody>
 </table>
 <h3 id="data-collections"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"></path></svg></span> Data collections<a class="headerlink" href="#data-collections" title="Permanent link">¶</a></h3>
-<p>12 data collections — <span class="gtd-badge gtd-req">6 required</span> <span class="gtd-badge gtd-opt">6 optional</span> · <span class="gtd-badge gtd-direct">10 direct</span> <span class="gtd-badge gtd-derived">2 derived</span>.</p>
+<p>13 data collections — <span class="gtd-badge gtd-req">6 required</span> <span class="gtd-badge gtd-opt">7 optional</span> · <span class="gtd-badge gtd-direct">10 direct</span> <span class="gtd-badge gtd-derived">3 derived</span>.</p>
 <p><strong>Origin</strong> tells you whether a collection is <em>real pipeline data</em> or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more <em>direct</em> collections into the layout a visualization needs (no new measurement). <strong>Reads</strong> shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> <code>.py</code> transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A <code>direct</code> collection can still have a recipe — one that merely parses/cleans the raw file; <code>derived</code> means the recipe reshapes another collection.)</p>
 <table>
 <thead>
@@ -5302,6 +5302,13 @@
 <td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
 </tr>
 <tr>
+<td><code>event_junctions</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-derived">derived</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnasplice/recipes/event_junctions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnasplice/event_junctions.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
 <td><code>suppa_events</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
@@ -5318,7 +5325,7 @@
 </tbody>
 </table>
 <h3 id="conditional-routes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 4v8.5l3-3L9 13c1 1 1 2 1 2v6h4v-7s0-1-.53-2S12 10 12 10L9 6.58 11.5 4M18 4l-4.46 4.47L14 9s.93 1 1.47 2c.21.4.33.79.4 1.13L21 7"></path></svg></span> Conditional routes<a class="headerlink" href="#conditional-routes" title="Permanent link">¶</a></h3>
-<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (11 collections are unaffected by any variable — present on every run.)</p>
+<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (12 collections are unaffected by any variable — present on every run.)</p>
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 
 <div class="gtd-mtx">
@@ -5329,7 +5336,7 @@
 </tbody></table></div>
 
 <h3 id="cross-dc-links"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> Cross-DC links<a class="headerlink" href="#cross-dc-links" title="Permanent link">¶</a></h3>
-<p>16 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
+<p>17 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
 <div class="gtd-links">
 <table>
 <thead><tr><th>Source · column</th><th></th><th>Target</th><th>Filters</th></tr></thead>
@@ -5350,6 +5357,7 @@
 <tr><td><code>splicing_genes</code> <span class="col">·&nbsp;gene_id</span></td><td class="arr">→</td><td><code>dexseq_dtu</code></td><td>Carry the cross-tool gene selection onto DEXSeq transcript usage</td></tr>
 <tr><td><code>splicing_genes</code> <span class="col">·&nbsp;gene_id</span></td><td class="arr">→</td><td><code>rmats_events</code></td><td>Carry the cross-tool gene selection onto the rMATS events</td></tr>
 <tr><td><code>splicing_genes</code> <span class="col">·&nbsp;gene_id</span></td><td class="arr">→</td><td><code>suppa_events</code></td><td>Carry the cross-tool gene selection onto the SUPPA2 events</td></tr>
+<tr><td><code>splicing_genes</code> <span class="col">·&nbsp;gene_id</span></td><td class="arr">→</td><td><code>event_junctions</code></td><td>Carry the cross-tool gene selection onto the sashimi of the rMATS events</td></tr>
 </tbody></table></div>
 
 <h3 id="recipes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.5 1.5c-1.77 0-3.33 1.17-3.83 2.87C8.14 4.13 7.58 4 7 4a4 4 0 0 0-4 4 4.01 4.01 0 0 0 3 3.87V19h13v-7.13c1.76-.46 3-2.05 3-3.87a4 4 0 0 0-4-4c-.58 0-1.14.13-1.67.37-.5-1.7-2.06-2.87-3.83-2.87m-.5 9h1v7h-1zm-3 2h1v5H9zm6 0h1v5h-1zM6 20v1a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-1z"></path></svg></span> Recipes<a class="headerlink" href="#recipes" title="Permanent link">¶</a></h3>
@@ -5377,6 +5385,11 @@
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/edger/diffsplice_genes.py"><code>edger/diffsplice_genes.py</code></a></td>
 <td>edgeR <code>diffSpliceDGE</code> differential exon usage, one row per contrast and gene.</td>
 <td><code>contrast</code>, <code>gene_id</code>, <code>chrom</code>, <code>strand</code>, <code>exons</code>, <code>exons_significant</code>, <code>top_exon</code>, <code>log2fc</code>, <code>abs_log2fc</code>, <code>f_stat</code>, <code>fdr</code>, <code>simes_fdr</code>, <code>neg_log10_fdr</code>, <code>significant</code>, <code>direction</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnasplice/recipes/event_junctions.py"><code>nf-core/rnasplice/event_junctions.py</code></a></td>
+<td>STAR splice junctions around the called rMATS events, per gene and condition.</td>
+<td><code>gene_id</code>, <code>gene_name</code>, <code>condition</code>, <code>chrom</code>, <code>start</code>, <code>end</code>, <code>strand</code>, <code>reads</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnasplice/recipes/samples.py"><code>nf-core/rnasplice/samples.py</code></a></td>

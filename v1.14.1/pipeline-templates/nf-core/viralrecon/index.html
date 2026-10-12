@@ -5453,17 +5453,13 @@
 </div>
 
 <p>The viralrecon template follows a standard nf-core/viralrecon amplicon run from
-reads to variant calls, one tab per step:</p>
+reads to variant calls and lineage, one tab or tab group per step:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: FastQC, fastp, Kraken2, bowtie2 and mosdepth, then iVar, snpEff, bcftools and QUAST, straight from the report</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.45 15.18 22 7.31V21H2V3h2v12.54L9.5 6 16 9.78l4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L4.31 19h2.26l4.39-7.56z"></path></svg></span> <strong>Coverage &amp; Depth</strong>: where the mosdepth depth sits along the genome and across the amplicons</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.82 14A1.746 1.746 0 0 0 23 13a1.746 1.746 0 0 0-3.18-1H19c0-1.57-.5-3-1.4-4.19l1.34-1.34c.56.1 1.13-.06 1.56-.47.67-.69.67-1.8 0-2.5-.69-.67-1.8-.67-2.5 0-.41.43-.57 1-.47 1.56L16.19 6.4c-.92-.69-2-1.15-3.19-1.32v-1.4A1.746 1.746 0 0 0 12 .5a1.746 1.746 0 0 0-1 3.18v1.4c-.9.13-1.74.42-2.5.86L7.39 4.35c.19-.52.14-1.12-.2-1.6a1.75 1.75 0 0 0-2.44-.43c-.79.55-.99 1.64-.43 2.43.34.49.88.75 1.43.75l1.18 1.68c-.43.43-.77.91-1.06 1.44A1.76 1.76 0 0 0 4 9c-.67.7-.67 1.8 0 2.5.29.27.64.43 1 .5 0 .54.07 1.06.18 1.56l-1.31.35c-.42-.35-1-.5-1.58-.35a1.75 1.75 0 1 0 .92 3.38c.57-.16 1-.58 1.18-1.1l1.51-.41c.45.79 1.05 1.49 1.75 2.07l-1.1 2c-.55.08-1.05.39-1.34.92a1.749 1.749 0 1 0 3.08 1.66c.28-.52.27-1.12.02-1.61l1.07-1.97c.81.32 1.69.5 2.62.5h.18c-.13.26-.18.56-.18.88.08.97.92 1.69 1.88 1.62s1.69-.92 1.62-1.88c-.04-.5-.29-.94-.65-1.23.47-.21.92-.48 1.34-.79l2.34 2.34c-.1.56.06 1.13.47 1.56.7.67 1.8.67 2.5 0s.67-1.8 0-2.5c-.43-.41-1-.57-1.56-.47l-2.34-2.34c.49-.65.87-1.39 1.11-2.19zm-9.32-2c-.83 0-1.5-.67-1.5-1.5S9.67 9 10.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5m3.5 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"></path></svg></span> <strong>Lineage &amp; Clustering</strong>: Pangolin lineages and Nextclade clades, the flow from QC verdict to call, and a variant-profile PCA</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 8c.56 0 1 .43 1 1a1 1 0 0 1-1 1c-.57 0-1-.45-1-1 0-.57.43-1 1-1M2 2v9c0 2.96 2.19 5.5 5.14 5.91.62 3.01 3.28 5.09 6.36 5.09a6.5 6.5 0 0 0 6.5-6.5v-3.69c1.16-.42 2-1.52 2-2.81a3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 1.29.84 2.4 2 2.81v3.6c0 2.5-2 4.5-4.5 4.5-2 0-3.68-1.21-4.28-3.01C12 16.3 14 13.8 14 11V2h-4v3h2v6a4 4 0 0 1-4 4 4 4 0 0 1-4-4V5h2V2z"></path></svg></span> <strong>Sample QC</strong>: breadth, mapping and variant yield per sample, with a sample record beside the coverage scatter</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Variants</strong>: every iVar call along the genome, by gene and effect, and which mutations travel together</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-5h4z"></path></svg></span> <strong>Data &amp; QC</strong>: the MultiQC report, per-sample alignment and consensus QC, and mosdepth coverage per window and per amplicon</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Variants</strong>: every call with its snpEff effect, its allele frequency and its read support (iVar on Illumina runs)</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.82 14A1.746 1.746 0 0 0 23 13a1.746 1.746 0 0 0-3.18-1H19c0-1.57-.5-3-1.4-4.19l1.34-1.34c.56.1 1.13-.06 1.56-.47.67-.69.67-1.8 0-2.5-.69-.67-1.8-.67-2.5 0-.41.43-.57 1-.47 1.56L16.19 6.4c-.92-.69-2-1.15-3.19-1.32v-1.4A1.746 1.746 0 0 0 12 .5a1.746 1.746 0 0 0-1 3.18v1.4c-.9.13-1.74.42-2.5.86L7.39 4.35c.19-.52.14-1.12-.2-1.6a1.75 1.75 0 0 0-2.44-.43c-.79.55-.99 1.64-.43 2.43.34.49.88.75 1.43.75l1.18 1.68c-.43.43-.77.91-1.06 1.44A1.76 1.76 0 0 0 4 9c-.67.7-.67 1.8 0 2.5.29.27.64.43 1 .5 0 .54.07 1.06.18 1.56l-1.31.35c-.42-.35-1-.5-1.58-.35a1.75 1.75 0 1 0 .92 3.38c.57-.16 1-.58 1.18-1.1l1.51-.41c.45.79 1.05 1.49 1.75 2.07l-1.1 2c-.55.08-1.05.39-1.34.92a1.749 1.749 0 1 0 3.08 1.66c.28-.52.27-1.12.02-1.61l1.07-1.97c.81.32 1.69.5 2.62.5h.18c-.13.26-.18.56-.18.88.08.97.92 1.69 1.88 1.62s1.69-.92 1.62-1.88c-.04-.5-.29-.94-.65-1.23.47-.21.92-.48 1.34-.79l2.34 2.34c-.1.56.06 1.13.47 1.56.7.67 1.8.67 2.5 0s.67-1.8 0-2.5c-.43-.41-1-.57-1.56-.47l-2.34-2.34c.49-.65.87-1.39 1.11-2.19zm-9.32-2c-.83 0-1.5-.67-1.5-1.5S9.67 9 10.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5m3.5 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"></path></svg></span> <strong>Lineage &amp; Clustering</strong>: Pangolin lineages and Nextclade clades with their QC verdicts, and the samples grouped by the mutations they share</li>
 </ul>
-<p>A <code>Run at a glance</code> strip and the collapsed <code>Sample sheet</code> are pinned to the top
-of every tab, the <code>Sample filters</code> group with them and the <code>QC thresholds</code> group
-to the bottom, so the sample list and its floors follow you from tab to tab.</p>
 <div class="admonition info">
 <p class="admonition-title">Works beyond SARS-CoV-2</p>
 <p>The pipeline supports any viral genome in nf-core's reference-genomes
@@ -5536,8 +5532,9 @@ for the underlying mechanism.</p>
 <h2 id="reference"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.5c-1.35-.85-3.8-1.5-5.5-1.5-1.65 0-3.35.3-4.75 1.05-.1.05-.15.05-.25.05-.25 0-.5-.25-.5-.5V6c.6-.45 1.25-.75 2-1 1.11-.35 2.33-.5 3.5-.5 1.95 0 4.05.4 5.5 1.5 1.45-1.1 3.55-1.5 5.5-1.5 1.17 0 2.39.15 3.5.5.75.25 1.4.55 2 1v14.6c0 .25-.25.5-.5.5-.1 0-.15 0-.25-.05-1.4-.75-3.1-1.05-4.75-1.05-1.7 0-4.15.65-5.5 1.5M12 8v11.5c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5V7c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5m1 3.5c1.11-.68 2.6-1 4.5-1 .91 0 1.76.09 2.5.28V9.23c-.87-.15-1.71-.23-2.5-.23q-2.655 0-4.5.84zm4.5.17c-1.71 0-3.21.26-4.5.79v1.69c1.11-.65 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24v-1.5c-.87-.16-1.71-.23-2.5-.23m2.5 2.9c-.87-.16-1.71-.24-2.5-.24-1.83 0-3.33.27-4.5.8v1.69c1.11-.66 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24z"></path></svg></span> Reference<a class="headerlink" href="#reference" title="Permanent link">¶</a></h2>
 <p>Recipe DCs fan per-sample files into one delta table via <code>glob_pattern</code>. The
 <code>IS_NANOPORE</code> route repoints the coverage and typing DCs at the <code>artic_minion/</code>
-layout and drops <code>summary_metrics</code>, <code>variants_long</code> and the views built on the
-variant calls, since an ARTIC run writes no <code>variants_long_table.csv</code>.</p>
+layout and drops <code>variants_long</code> and the views built on the variant calls, since an
+ARTIC run writes no <code>variants_long_table.csv</code>. <code>summary_metrics</code> stays, read from the
+ARTIC summary CSV with its share of reads mapped left empty.</p>
 <h3 id="direct-vs-derived-data-collections">Direct vs derived data collections<a class="headerlink" href="#direct-vs-derived-data-collections" title="Permanent link">¶</a></h3>
 <p>The template exposes two kinds of data collection, and the <strong>Origin</strong> column of the
 reference table below flags each one explicitly, so you can tell real measurements
@@ -5763,7 +5760,7 @@ template therefore covers both the Illumina and nanopore/ARTIC routes without ed
 </tbody>
 </table>
 <h3 id="conditional-routes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 4v8.5l3-3L9 13c1 1 1 2 1 2v6h4v-7s0-1-.53-2S12 10 12 10L9 6.58 11.5 4M18 4l-4.46 4.47L14 9s.93 1 1.47 2c.21.4.33.79.4 1.13L21 7"></path></svg></span> Conditional routes<a class="headerlink" href="#conditional-routes" title="Permanent link">¶</a></h3>
-<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (4 collections are unaffected by any variable — present on every run.)</p>
+<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (5 collections are unaffected by any variable — present on every run.)</p>
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 <div class="gtd-mtx">
 <table>
@@ -5774,10 +5771,6 @@ template therefore covers both the Illumina and nanopore/ARTIC routes without ed
 </tr>
 </thead>
 <tbody>
-<tr>
-<th class="dc"><code>summary_metrics</code></th>
-<td class="minus" title="removed when IS_NANOPORE is set">−</td>
-</tr>
 <tr>
 <th class="dc"><code>variants_long</code></th>
 <td class="minus" title="removed when IS_NANOPORE is set">−</td>
@@ -5971,33 +5964,98 @@ template therefore covers both the Illumina and nanopore/ARTIC routes without ed
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Five tabs, read as a funnel: did the run sequence and align well, where does the
-depth sit, what was each sample typed as, which samples to trust, and what the
-calls are. Each tab below carries the <strong>same icon and colour the dashboard gives
-it</strong>, so the page and the app read alike. <code>summary_metrics</code> (one row per sample)
-is the source of every project link, so a filter or a pick on <code>sample</code> reaches
-every per-sample collection on every tab.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:5"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.45 15.18 22 7.31V21H2V3h2v12.54L9.5 6 16 9.78l4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L4.31 19h2.26l4.39-7.56z"></path></svg></span> Coverage &amp; Depth</label><label for="__tabbed_2_3"><span class="twemoji mc-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.82 14A1.746 1.746 0 0 0 23 13a1.746 1.746 0 0 0-3.18-1H19c0-1.57-.5-3-1.4-4.19l1.34-1.34c.56.1 1.13-.06 1.56-.47.67-.69.67-1.8 0-2.5-.69-.67-1.8-.67-2.5 0-.41.43-.57 1-.47 1.56L16.19 6.4c-.92-.69-2-1.15-3.19-1.32v-1.4A1.746 1.746 0 0 0 12 .5a1.746 1.746 0 0 0-1 3.18v1.4c-.9.13-1.74.42-2.5.86L7.39 4.35c.19-.52.14-1.12-.2-1.6a1.75 1.75 0 0 0-2.44-.43c-.79.55-.99 1.64-.43 2.43.34.49.88.75 1.43.75l1.18 1.68c-.43.43-.77.91-1.06 1.44A1.76 1.76 0 0 0 4 9c-.67.7-.67 1.8 0 2.5.29.27.64.43 1 .5 0 .54.07 1.06.18 1.56l-1.31.35c-.42-.35-1-.5-1.58-.35a1.75 1.75 0 1 0 .92 3.38c.57-.16 1-.58 1.18-1.1l1.51-.41c.45.79 1.05 1.49 1.75 2.07l-1.1 2c-.55.08-1.05.39-1.34.92a1.749 1.749 0 1 0 3.08 1.66c.28-.52.27-1.12.02-1.61l1.07-1.97c.81.32 1.69.5 2.62.5h.18c-.13.26-.18.56-.18.88.08.97.92 1.69 1.88 1.62s1.69-.92 1.62-1.88c-.04-.5-.29-.94-.65-1.23.47-.21.92-.48 1.34-.79l2.34 2.34c-.1.56.06 1.13.47 1.56.7.67 1.8.67 2.5 0s.67-1.8 0-2.5c-.43-.41-1-.57-1.56-.47l-2.34-2.34c.49-.65.87-1.39 1.11-2.19zm-9.32-2c-.83 0-1.5-.67-1.5-1.5S9.67 9 10.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5m3.5 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"></path></svg></span> Lineage &amp; Clustering</label><label for="__tabbed_2_4"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 8c.56 0 1 .43 1 1a1 1 0 0 1-1 1c-.57 0-1-.45-1-1 0-.57.43-1 1-1M2 2v9c0 2.96 2.19 5.5 5.14 5.91.62 3.01 3.28 5.09 6.36 5.09a6.5 6.5 0 0 0 6.5-6.5v-3.69c1.16-.42 2-1.52 2-2.81a3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 1.29.84 2.4 2 2.81v3.6c0 2.5-2 4.5-4.5 4.5-2 0-3.68-1.21-4.28-3.01C12 16.3 14 13.8 14 11V2h-4v3h2v6a4 4 0 0 1-4 4 4 4 0 0 1-4-4V5h2V2z"></path></svg></span> Sample QC</label><label for="__tabbed_2_5"><span class="twemoji mc-orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Variants</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then five child tabs in two groups, read as a funnel
+from the reads to the lineage of each consensus genome. Each tab below carries the
+<strong>same icon and colour the dashboard gives it</strong>, so the page and the app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Sample QC, Coverage &amp; Depth</td>
+</tr>
+<tr>
+<td>Genomes</td>
+<td>Variants, Lineage &amp; Clustering</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The run summary,
+<code>summary_metrics</code>, is the source of every cross-DC link, so a filter on it reaches
+every tab. The persistent <em>Sample filters</em> (lineage, then sample id) and <em>QC
+thresholds</em> (genome at 10x, median depth, reads mapped, variants called) sit in the
+left panel and narrow every tab. The <em>Sample sheet</em>, the run summary table, is
+pinned, collapsed, to the bottom of every child tab.</p>
+<div class="admonition info">
+<p class="admonition-title">Nanopore (ARTIC) runs</p>
+<p>A nanopore run keeps the Overview's Key figures, the persistent filters and the
+Sample sheet: the run summary is read from the ARTIC summary CSV, which has every
+column but the share of reads mapped, left empty. Coverage, lineage and clade are
+read from <code>artic_minion/</code>. The ARTIC route writes no variant long table, so the
+Variants tab, the PCA and the UpSet drop, and so do the Overview's missense row
+and its allele frequency figure.</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 8c.56 0 1 .43 1 1a1 1 0 0 1-1 1c-.57 0-1-.45-1-1 0-.57.43-1 1-1M2 2v9c0 2.96 2.19 5.5 5.14 5.91.62 3.01 3.28 5.09 6.36 5.09a6.5 6.5 0 0 0 6.5-6.5v-3.69c1.16-.42 2-1.52 2-2.81a3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 1.29.84 2.4 2 2.81v3.6c0 2.5-2 4.5-4.5 4.5-2 0-3.68-1.21-4.28-3.01C12 16.3 14 13.8 14 11V2h-4v3h2v6a4 4 0 0 1-4 4 4 4 0 0 1-4-4V5h2V2z"></path></svg></span> Sample QC</label><label for="__tabbed_2_4"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.45 15.18 22 7.31V21H2V3h2v12.54L9.5 6 16 9.78l4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L4.31 19h2.26l4.39-7.56z"></path></svg></span> Coverage &amp; Depth</label><label for="__tabbed_2_5"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Variants</label><label for="__tabbed_2_6"><span class="twemoji mc-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.82 14A1.746 1.746 0 0 0 23 13a1.746 1.746 0 0 0-3.18-1H19c0-1.57-.5-3-1.4-4.19l1.34-1.34c.56.1 1.13-.06 1.56-.47.67-.69.67-1.8 0-2.5-.69-.67-1.8-.67-2.5 0-.41.43-.57 1-.47 1.56L16.19 6.4c-.92-.69-2-1.15-3.19-1.32v-1.4A1.746 1.746 0 0 0 12 .5a1.746 1.746 0 0 0-1 3.18v1.4c-.9.13-1.74.42-2.5.86L7.39 4.35c.19-.52.14-1.12-.2-1.6a1.75 1.75 0 0 0-2.44-.43c-.79.55-.99 1.64-.43 2.43.34.49.88.75 1.43.75l1.18 1.68c-.43.43-.77.91-1.06 1.44A1.76 1.76 0 0 0 4 9c-.67.7-.67 1.8 0 2.5.29.27.64.43 1 .5 0 .54.07 1.06.18 1.56l-1.31.35c-.42-.35-1-.5-1.58-.35a1.75 1.75 0 1 0 .92 3.38c.57-.16 1-.58 1.18-1.1l1.51-.41c.45.79 1.05 1.49 1.75 2.07l-1.1 2c-.55.08-1.05.39-1.34.92a1.749 1.749 0 1 0 3.08 1.66c.28-.52.27-1.12.02-1.61l1.07-1.97c.81.32 1.69.5 2.62.5h.18c-.13.26-.18.56-.18.88.08.97.92 1.69 1.88 1.62s1.69-.92 1.62-1.88c-.04-.5-.29-.94-.65-1.23.47-.21.92-.48 1.34-.79l2.34 2.34c-.1.56.06 1.13.47 1.56.7.67 1.8.67 2.5 0s.67-1.8 0-2.5c-.43-.41-1-.57-1.56-.47l-2.34-2.34c.49-.65.87-1.39 1.11-2.19zm-9.32-2c-.83 0-1.5-.67-1.5-1.5S9.67 9 10.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5m3.5 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"></path></svg></span> Lineage &amp; Clustering</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Did the run sequence, align and call cleanly, straight from the report?</em></p>
+<p><em>Viral genomes, from reads to variants, consensus and lineage.</em></p>
+<!-- screenshot pending v2 -->
+<p>A short hero links the run parameters. <em>About this dashboard</em> says how to move
+through the tabs, <em>The run</em> lists the samples, platform and protocol, reference,
+primer scheme and callers, and <em>Pipeline</em> walks the six steps from trimming to
+typing, each linked to its parameters and its tab. The findings are live values:
+they follow the filters, and a route that lacks their data drops them.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> and <em>Findings</em>
+each have a filter bar (sample id and a genome-at-10x range) that narrows
+that section only.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
+</tr>
+<tr>
+<td>Key figures</td>
+<td>4 headline cards on the run summary: samples, median depth, genome at 10x, variants per sample</td>
+</tr>
+<tr>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: depth against genome at 10x, depth per amplicon, allele frequency along the genome, and the flow from QC verdict to lineage and clade</td>
+</tr>
+<tr>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>Did reads trim, align and cover the genome in every sample?</em></p>
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_light.png#only-light"></a></p>
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/multiqc_dark.png#only-dark"></a></p>
-<p>The pinned <code>Run at a glance</code> strip opens every tab with four numbers:
-samples, median reads mapped, median genome breadth at 10x and lineages.
-Under it, the collapsed <code>Sample sheet</code> holds the <code>summary_metrics</code> table,
-whose ticked rows narrow every tab. The tab itself is MultiQC only: the
-panels worth reading first, then two collapsed sections with the read,
-alignment, variant and assembly panels, including the nf-core variant summary
-that stands in when a route prunes <code>summary_metrics</code>.</p>
+<!-- screenshot pending v2 -->
+<p>MultiQC panels only: general statistics, the samples that failed mapping, fastp
+filtered reads, Bowtie 2 alignments and the mosdepth cumulative coverage open.
+The read and alignment panels and the variant and assembly panels follow,
+collapsed. Its sample filter reads the MultiQC report.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample</code> and <code>Lineage</code> in <code>Sample filters</code>, persistent and
-pinned to the top of every tab; <code>Genome covered at 10x (%)</code>, <code>Median
-depth</code>, <code>Reads mapped (%)</code> and <code>Variants called</code> ranges in a collapsed
-<code>QC thresholds</code> group pinned to the bottom, all on <code>summary_metrics</code>. A
-collapsed <code>MultiQC report</code> group keeps a <code>Sample ID</code> list read from the
-report itself.</p>
+<p><strong>Filters</strong> · <code>Sample ID</code>, read from the MultiQC report.</p>
 <table>
 <thead>
 <tr>
@@ -6006,130 +6064,36 @@ report itself.</p>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>Run at a glance</td>
-<td>4 cards, pinned to every tab</td>
-</tr>
-<tr>
-<td>Sample sheet</td>
-<td><em>Summary metrics</em>, pinned to every tab and collapsed</td>
-</tr>
 <tr>
 <td>QC overview</td>
-<td><em>MultiQC general statistics</em> and 4 MultiQC panels</td>
+<td>5 MultiQC panels</td>
 </tr>
 <tr>
-<td>Read &amp; alignment details</td>
-<td>6 MultiQC panels (FastQC, Kraken2, samtools, mosdepth, cutadapt)</td>
+<td>Read &amp; alignment details (collapsed)</td>
+<td>6 MultiQC panels</td>
 </tr>
 <tr>
-<td>Variant &amp; assembly details</td>
-<td>7 MultiQC panels (iVar, snpEff, bcftools, QUAST, nf-core variant summary)</td>
+<td>Variant &amp; assembly details (collapsed)</td>
+<td>7 MultiQC panels</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Where does the depth actually sit, along the genome and across the amplicons?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png" rel="noopener" target="_blank"><img alt="Coverage &amp; Depth dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png#only-light"></a></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png" rel="noopener" target="_blank"><img alt="Coverage &amp; Depth dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png#only-dark"></a></p>
-<p>Four cards summarise the depth: amplicons tracked, the median amplicon and
-genome depth, and how many amplicon measurements fall under the 20x default
-floor. Below, the per-position genome track (linear axis, one sub-track per
-sample, so dropouts read as gaps), the per-amplicon track on a log axis and
-the clustered amplicon heatmap, where a primer that fails across samples
-reads as a column.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · a <code>Genome depth</code> range on <code>mosdepth_genome_coverage</code>, and
-an <code>Amplicon</code> picker and an <code>Amplicon depth</code> range on
-<code>mosdepth_amplicon_coverage</code>, local to this tab in <code>Coverage scope</code>.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Coverage at a glance</td>
-<td>4 cards</td>
-</tr>
-<tr>
-<td>Coverage tracks</td>
-<td><em>Genome coverage track per sample</em>, <em>Amplicon coverage track</em>, <em>Amplicon coverage heatmap (clustered)</em></td>
-</tr>
-<tr>
-<td>Coverage tables</td>
-<td><em>Amplicon coverage table</em>, collapsed, rows select on <code>sample</code></td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>What was each sample typed as, and do the lineage and clade calls agree?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png" rel="noopener" target="_blank"><img alt="Lineage &amp; Clustering dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png#only-light"></a></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png" rel="noopener" target="_blank"><img alt="Lineage &amp; Clustering dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png#only-dark"></a></p>
-<p>Pangolin lineage and Nextclade clade counts sit side by side, then a Sankey
-carries each sample from its QC verdict to its lineage to its clade. The
-variant-profile PCA, coloured by lineage, is a selection source: lasso a
-cluster and the samples in it filter the linked panels. In the collapsed
-typing tables, a linked <em>Lineage record</em> card sits beside the Pangolin
-table: it folds to a slim rail until a row is ticked, then shows that
-sample's full call, scorpio notes included.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Lineage</code> and <code>Pangolin QC</code> on <code>pangolin_lineages</code>,
-<code>Clade</code> and <code>Nextclade QC</code> on <code>nextclade_results</code>, in <code>Typing</code>.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Typing at a glance</td>
-<td>4 cards</td>
-</tr>
-<tr>
-<td>Lineage distribution</td>
-<td><em>Pangolin lineage distribution</em>, <em>Nextclade clade distribution</em></td>
-</tr>
-<tr>
-<td>Classification flow</td>
-<td><em>Classification flow: QC verdict, lineage, clade</em>, <em>Variant-profile PCA embedding (coloured by lineage)</em></td>
-</tr>
-<tr>
-<td>Typing tables</td>
-<td><em>Pangolin lineage assignments</em> with its linked <em>Lineage record</em>, <em>Nextclade clade assignments</em>, collapsed</td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>Which samples can you trust, and is a divergent one real or under-sequenced?</em></p>
+<p><strong>Data &amp; QC</strong> · <em>Did each sample yield a well-covered, trustworthy consensus genome?</em></p>
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png" rel="noopener" target="_blank"><img alt="Sample QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_light.png#only-light"></a></p>
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png" rel="noopener" target="_blank"><img alt="Sample QC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/sample_qc_dark.png#only-dark"></a></p>
-<p>Four median cards (breadth at 1x, variants per sample, reads mapped and
-missing consensus bases) open the tab. The two diagnostic scatters, coverage
-against variant count and Nextclade substitutions against deletions,
-separate divergent samples from under-sequenced ones, and both select on
-<code>sample</code>. The linked <em>Sample record</em> sits beside the coverage scatter: it
-folds to a slim rail until a point is lassoed there, in the Nextclade
-scatter or in the Sample sheet, then shows that sample's alignment, breadth
-and calls. Genome breadth at 1x and 10x per sample closes the tab, with the
-80% default floor dashed.</p>
+<!-- screenshot pending v2 -->
+<p>The median <strong>Reads mapped</strong> against the 1,000-read floor, the share of reads
+mapped, the <strong>Median depth</strong> and the <strong>Genome at 10x</strong>. Then median depth against
+genome covered at 10x, one point per sample, beside a record card for the sample
+you pick, the Nextclade substitutions against deletions per consensus genome, and
+the genome covered at 1x and 10x per sample.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>SNPs called</code> and <code>Indels called</code> ranges on
-<code>summary_metrics</code> and a <code>Missing bases</code> range on <code>nextclade_results</code>, in
-<code>Variant yield</code>.</p>
+<p><strong>Filters</strong> · SNPs and indels called on <code>summary_metrics</code>, and missing bases
+on <code>nextclade_results</code>, all as ranges, plus the sample filters.</p>
 <table>
 <thead>
 <tr>
@@ -6144,33 +6108,30 @@ and calls. Genome breadth at 1x and 10x per sample closes the tab, with the
 </tr>
 <tr>
 <td>Diagnostics</td>
-<td><em>Median coverage vs total variants</em> with its linked <em>Sample record</em>, <em>Nextclade substitutions vs deletions</em></td>
+<td><em>Median depth against genome covered at 10x</em> + a sample record card, <em>Substitutions against deletions (Nextclade)</em></td>
 </tr>
 <tr>
-<td>Per-sample coverage</td>
-<td><em>Genome breadth per sample at 1x and 10x</em></td>
+<td>Breadth per sample</td>
+<td><em>Genome covered at 1x and 10x per sample</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>What are the calls, where do they land, and which mutations travel together?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_light.png" rel="noopener" target="_blank"><img alt="Variants dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_light.png#only-light"></a></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_dark.png" rel="noopener" target="_blank"><img alt="Variants dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_dark.png#only-dark"></a></p>
-<p>Four cards size the call set, then the allele frequency of every call along
-the genome, with the default consensus threshold drawn as the score line,
-and one lollipop track per gene. The allele-frequency histogram and the read
-support scatter show how well supported the calls are; the frequency track
-and the read support scatter both select on <code>sample</code>. Calls per gene and
-functional class and per sample follow, and the tab closes on a sample by
-gene mutation matrix and an UpSet of the mutations shared across lineages.</p>
+<p><strong>Data &amp; QC</strong> · <em>Where along the genome does each sample lose depth?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png" rel="noopener" target="_blank"><img alt="Coverage and depth dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_light.png#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png" rel="noopener" target="_blank"><img alt="Coverage and depth dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/coverage_depth_dark.png#only-dark"></a></p>
+<!-- screenshot pending v2 -->
+<p>The median depth per 200 bp window, the windows under 10x, the median amplicon
+depth and the amplicons under 10x in at least one sample; 10x is the depth under
+which the consensus masks a position. Then the genome track, one lane per sample,
+the amplicon track and the clustered amplicon heatmap. A run without a primer
+scheme keeps only the window cards and the genome track.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Gene</code>, <code>Variant Effect</code> and <code>Functional class</code> pickers
-and <code>Allele Frequency</code> and <code>Read depth</code> ranges on <code>variants_long</code>, in
-<code>Variant filters</code>, plus a <code>Mutation Type</code> picker in a collapsed
-<code>Oncoplot scope</code> group that reaches the mutation matrix only.</p>
+<p><strong>Filters</strong> · window depth on <code>mosdepth_genome_coverage</code>, and the amplicon
+and amplicon depth on <code>mosdepth_amplicon_coverage</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6180,44 +6141,131 @@ and <code>Allele Frequency</code> and <code>Read depth</code> ranges on <code>va
 </thead>
 <tbody>
 <tr>
-<td>Variant burden</td>
-<td>4 cards, <em>Variant frequencies along the genome</em>, <em>Variant tracks per gene (lollipop)</em></td>
+<td>Coverage at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Allele frequency</td>
-<td><em>Allele frequency distribution</em>, <em>Read support per call</em></td>
+<td>Along the genome</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Effect breakdown</td>
-<td><em>Variant counts by gene &amp; functional class</em>, <em>Variants per sample</em></td>
+<td>Per amplicon</td>
+<td>2 advanced visualizations</td>
 </tr>
 <tr>
-<td>Co-occurrence</td>
-<td><em>Sample × gene mutation matrix</em>, <em>Mutations shared across lineages (UpSet)</em></td>
-</tr>
-<tr>
-<td>Variant table</td>
-<td><em>Variants table</em>, collapsed, rows select on <code>sample</code></td>
+<td>Amplicon table (collapsed)</td>
+<td><em>Depth per sample and amplicon</em></td>
 </tr>
 </tbody>
 </table>
 </details>
-<div class="admonition note">
-<p class="admonition-title">No variant tabs on a nanopore run</p>
-<p>The <code>IS_NANOPORE</code> route drops <code>variants_long</code> and every view built on
-it, so the Variants tab and the variant-profile PCA disappear, and
-<code>summary_metrics</code> goes with them. The coverage and typing tabs keep
-working off the <code>artic_minion/</code> layout.</p>
+</div>
+<div class="tabbed-block">
+<p><strong>Genomes</strong> · <em>Which mutations does each sample carry, and how well supported?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_light.png" rel="noopener" target="_blank"><img alt="Variants dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_light.png#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_dark.png" rel="noopener" target="_blank"><img alt="Variants dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/variants_dark.png#only-dark"></a></p>
+<!-- screenshot pending v2 -->
+<p>The calls by functional class, the distinct mutations, the median allele
+frequency against the 0.75 consensus cut-off and the median read depth. Then the
+allele frequency of every call along the genome, the allele frequency histogram
+beside the read support scatter, and the mutation matrix per sample and gene. The
+per-gene lollipops, the calls per gene and per sample, and the variant table are
+collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Gene</code>, <code>Effect</code>, <code>Functional class</code>, allele frequency and
+read depth on <code>variants_long</code>, plus a collapsed <em>Matrix filter</em> on the
+mutation type that narrows the mutation matrix only.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Calls at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Along the genome</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Support</td>
+<td><em>Allele frequency of the calls</em>, <em>Read support per call</em></td>
+</tr>
+<tr>
+<td>Co-occurrence</td>
+<td>1 advanced visualization (mutation matrix)</td>
+</tr>
+<tr>
+<td>Genes and effects (collapsed)</td>
+<td>1 advanced visualization + <em>Calls per gene</em>, <em>Calls per sample</em></td>
+</tr>
+<tr>
+<td>Variant table (collapsed)</td>
+<td><em>Variant calls</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Genomes</strong> · <em>Which lineage and clade is each sample, and do they agree?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png" rel="noopener" target="_blank"><img alt="Lineage and clustering dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_light.png#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png" rel="noopener" target="_blank"><img alt="Lineage and clustering dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/viralrecon/lineage_clustering_dark.png#only-dark"></a></p>
+<!-- screenshot pending v2 -->
+<p>The distinct Pangolin lineages, the distinct Nextclade clades, the median
+Nextclade QC score and the median missing bases. Then the flow from Pangolin QC
+verdict to lineage to clade, the PCA of the samples by the mutations they share,
+and the UpSet of the mutations shared across lineages. A lasso on the PCA makes
+an analysis group.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Lineage</code>, <code>Clade</code>, and the Pangolin and Nextclade QC
+verdicts.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Typing at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Classification flow</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Variant profiles</td>
+<td>2 advanced visualizations (PCA, UpSet)</td>
+</tr>
+<tr>
+<td>Calls per lineage and clade (collapsed)</td>
+<td><em>Samples per lineage</em>, <em>Samples per clade</em></td>
+</tr>
+<tr>
+<td>Typing tables (collapsed)</td>
+<td><em>Pangolin lineage calls</em> + a lineage record card, <em>Nextclade clade calls</em></td>
+</tr>
+</tbody>
+</table>
+</details>
 </div>
 </div>
 </div>
-</div>
-<p>Every per-sample table (sample sheet, amplicon coverage, Pangolin, Nextclade,
-variant calls) selects rows on <code>sample</code>, and the coverage and Nextclade
-scatters, the variant-profile PCA, the allele-frequency track and the read
-support scatter select points on it. <code>summary_metrics</code> links <code>sample</code> to every
-per-sample collection, so a pick narrows the rest of the tab. The coverage
-tracks, heatmaps, oncoplot, UpSet and bar charts do not emit a selection.</p>
+<p>Every per-sample table (run summary, amplicon depth, Pangolin, Nextclade, variant
+calls) selects rows on <code>sample</code>, and the depth against breadth scatter, the Nextclade
+scatter, the allele frequency track, the read support scatter and the PCA select points
+on it. <code>summary_metrics</code> links <code>sample</code> to every per-sample collection, so a pick
+narrows the rest of the tab. The record cards wait for a pick, and a lasso on the PCA
+becomes an analysis group.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/viralrecon, it does not run the

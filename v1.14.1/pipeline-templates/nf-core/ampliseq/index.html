@@ -5655,17 +5655,12 @@
 <p>The ampliseq template follows a standard nf-core/ampliseq run from reads to
 differential taxa, one tab per step:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: FastQC read quality and Cutadapt primer trimming, straight from the report</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> <strong>Alpha Diversity</strong>: rarefaction curves, then observed features, Faith PD, evenness and Shannon per group</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2H7v2.1c-.71.15-1.27.44-1.68.81L2.7 2.29 1.29 3.71l2.95 2.94C4 7.39 4 8 4 8H2v2h2.04c.06.63.17 1.36.36 2.15l-2.72.9.63 1.9 2.69-.9c.24.51.5 1.03.82 1.53l-2.38 1.59 1.11 1.66 2.52-1.68c.56.56 1.22 1.06 1.99 1.49l-.96 1.91 1.79.9 1-2-.16-.09c.95.32 2.03.54 3.27.61V22h2v-2.07c.76-.09 1.81-.29 2.77-.74l1.52 1.52 1.41-1.42-1.33-1.34c.38-.51.63-1.15.63-1.95 0-.5-.05-.92-.12-1.32l1.57-.78-.9-1.8-1.37.69c-.55-.83-1.27-1.29-1.89-1.51l.66-1.96-1.9-.64-.76 2.28c-1.33-.13-2.12-.64-2.59-1.19l1.75-.87-.9-1.8-1.55.79a4.4 4.4 0 0 0-.72-2.02l1.55-2.32-1.66-1.11-1.41 2.12c-.48-.23-1.06-.41-1.76-.5M15 18c-2.94 0-5.19-.82-6.69-2.44C5.68 12.72 6 8.2 6 8.17v-.14C6 7.1 6.39 6 8 6c2.63 0 2.97 1.43 3 2 0 2 1.6 5 6 5 .33 0 2 .15 2 3 0 1.89-3.97 2-4 2M8.5 8A1.5 1.5 0 0 0 7 9.5 1.5 1.5 0 0 0 8.5 11 1.5 1.5 0 0 0 10 9.5 1.5 1.5 0 0 0 8.5 8m2.5 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4.5 2a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5"></path></svg></span> <strong>Community &amp; Diversity</strong>: what the samples are made of, ranked, stacked per sample, as a sunburst hierarchy, and shared between groups</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm12 12.5L12 18H7.94l-2.02-3.5L7.94 11H12zm.08-8L12.06 10H8L6 6.5 8 3h4.06zm7.17 4L19.23 14h-4.04l-2.02-3.5L15.19 7h4.04z"></path></svg></span> <strong>Ordination &amp; Clustering</strong>: a PCoA on Bray-Curtis, the distance matrix behind it and a clustered phylum by sample heatmap</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> <strong>Differential Abundance</strong>: ANCOM-BC volcano and ranked effects per contrast, with a record card for the taxon picked</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 11 5.79V7H7a2 2 0 0 0-2 2v.71A2.5 2.5 0 0 0 3.5 12 2.5 2.5 0 0 0 5 14.29V15H4a2 2 0 0 0-2 2v1.21A2.5 2.5 0 0 0 .5 20.5 2.5 2.5 0 0 0 3 23a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 4 18.21V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 9 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2H7v-.71A2.5 2.5 0 0 0 8.5 12 2.5 2.5 0 0 0 7 9.71V9h10v.71A2.5 2.5 0 0 0 15.5 12a2.5 2.5 0 0 0 1.5 2.29V15h-1a2 2 0 0 0-2 2v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 15 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 21 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2h-1v-.71A2.5 2.5 0 0 0 20.5 12 2.5 2.5 0 0 0 19 9.71V9a2 2 0 0 0-2-2h-4V5.79a2.5 2.5 0 0 0 1.5-2.29A2.5 2.5 0 0 0 12 1m0 1.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M6 11a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m12 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M3 19.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1"></path></svg></span> <strong>Phylogeny</strong>: the QIIME2 tree with each tip coloured by its taxonomy</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-5h4z"></path></svg></span> <strong>MultiQC quality control</strong>: FastQC read quality and Cutadapt trimming</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> <strong>Diversity</strong>: alpha diversity with rarefaction curves, and the PCoA on Bray-Curtis distances (requires metadata)</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16c0-.5-.05-.92-.12-1.32l1.57-.78-.9-1.8-1.37.69c-.55-.83-1.27-1.29-1.89-1.51l.66-1.96-1.9-.64-.76 2.28c-1.33-.13-2.12-.64-2.59-1.19l1.75-.87-.9-1.8-1.55.79a4.4 4.4 0 0 0-.72-2.02l1.55-2.32-1.66-1.11-1.41 2.12c-.48-.23-1.06-.41-1.76-.5V2H7v2.1c-.71.15-1.27.44-1.68.81L2.7 2.29 1.29 3.71l2.95 2.94C4 7.39 4 8 4 8H2v2h2.04c.06.63.17 1.36.36 2.15l-2.72.9.63 1.9 2.69-.9c.24.51.5 1.03.82 1.53l-2.38 1.59 1.11 1.66 2.52-1.68c.56.56 1.22 1.06 1.99 1.49l-.96 1.91 1.79.9 1-2-.16-.09c.95.32 2.03.54 3.27.61V22h2v-2.07c.76-.09 1.81-.29 2.77-.74l1.52 1.52 1.41-1.42-1.33-1.34c.38-.51.63-1.15.63-1.95M8.5 11A1.5 1.5 0 0 1 7 9.5 1.5 1.5 0 0 1 8.5 8 1.5 1.5 0 0 1 10 9.5 1.5 1.5 0 0 1 8.5 11m2.5 3a1 1 0 0 1-1-1 1 1 0 0 1 1-1 1 1 0 0 1 1 1 1 1 0 0 1-1 1m4.5 3a1.5 1.5 0 0 1-1.5-1.5 1.5 1.5 0 0 1 1.5-1.5 1.5 1.5 0 0 1 1.5 1.5 1.5 1.5 0 0 1-1.5 1.5"></path></svg></span> <strong>Taxa</strong>: composition per group and per sample, the sunburst, the taxa groups share, and the phylogenetic tree</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> <strong>Differential abundance</strong>: ANCOM-BC volcano with MA and QQ views, per contrast (requires metadata + <code>--ancombc</code>)</li>
 </ul>
-<p>A seventh tab, <strong>Reconstructed Community (SIDLE)</strong>, only appears on multi-region
-runs. <code>Sample filters</code>, <code>Run at a glance</code> and <code>Sample sheet</code> are pinned to the top
-of every tab, so the sample and group picks and the four run-size cards follow
-you from tab to tab.</p>
 <hr>
 <h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M19.22 4c.28 0 .53 0 .74.05.17 1.39-.02 4.25-3.3 7.53-1.7 1.71-3.73 3.02-6.01 3.89l-2.15-2.1c.92-2.31 2.23-4.34 3.92-6.03C15.18 4.58 17.64 4 19.22 4m0-2c-1.98 0-4.98.69-8.22 3.93-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.38.38.89.61 1.42.61.23 0 .47-.06.7-.15A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61S20.7 2 19.22 2m-4.68 7.46c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Point at a finished run</label><label for="__tabbed_1_2">Choose the grouping column</label><label for="__tabbed_1_3">From the pipeline itself (v1.10.0+)</label></div>
@@ -5819,7 +5814,7 @@ multi-region (SIDLE), and <code>skip_qiime</code> runs without edits.</p>
 </table>
 <p><strong>Auto-detected</strong> (set from the run's metadata / <code>params.json</code>; the route flags drive <em>Conditional routes</em> below): <code>PPLACE_TREE_FILE</code>, <code>GROUP_COL_DISPLAY</code>, <code>ANNOTATION_COLS</code>, <code>IS_MULTIREGION</code>, <code>SKIP_TAXONOMY</code>, <code>SKIP_ALPHA_RAREFACTION</code>, <code>SKIP_ANCOM</code>, <code>PHYLUM_LEVEL</code>, <code>CLASS_LEVEL</code>, <code>ORDER_LEVEL</code>, <code>FAMILY_LEVEL</code>, <code>GENUS_LEVEL</code></p>
 <h3 id="data-collections"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"></path></svg></span> Data collections<a class="headerlink" href="#data-collections" title="Permanent link">¶</a></h3>
-<p>24 data collections — <span class="gtd-badge gtd-req">11 required</span> <span class="gtd-badge gtd-opt">13 optional</span> · <span class="gtd-badge gtd-direct">10 direct</span> <span class="gtd-badge gtd-derived">14 derived</span>.</p>
+<p>26 data collections — <span class="gtd-badge gtd-req">11 required</span> <span class="gtd-badge gtd-opt">15 optional</span> · <span class="gtd-badge gtd-direct">12 direct</span> <span class="gtd-badge gtd-derived">14 derived</span>.</p>
 <p><strong>Origin</strong> tells you whether a collection is <em>real pipeline data</em> or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more <em>direct</em> collections into the layout a visualization needs (no new measurement). <strong>Reads</strong> shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> <code>.py</code> transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A <code>direct</code> collection can still have a recipe — one that merely parses/cleans the raw file; <code>derived</code> means the recipe reshapes another collection.)</p>
 <table>
 <thead>
@@ -5851,6 +5846,13 @@ multi-region (SIDLE), and <code>skip_qiime</code> runs without edits.</p>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
 <td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{METADATA_FILE}</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
+<td><code>read_tracking</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/read_tracking.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/ampliseq/read_tracking.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
 </tr>
 <tr>
@@ -5973,6 +5975,13 @@ multi-region (SIDLE), and <code>skip_qiime</code> runs without edits.</p>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
+<td><code>beta_adonis</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/beta_adonis.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/ampliseq/beta_adonis.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
 <td><code>phylogenetic_tree_canonical</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.5 17c-.14 0-.26 0-.39.04L17.5 13.8c.45-.45.75-1.09.75-1.8a2.5 2.5 0 0 0-2.5-2.5c-.14 0-.25 0-.4.04L13.74 6.3c.47-.46.76-1.09.76-1.8a2.5 2.5 0 0 0-5 0c0 .7.29 1.34.76 1.79L8.65 9.54c-.15-.04-.26-.04-.4-.04a2.5 2.5 0 0 0-2.5 2.5c0 .71.29 1.34.75 1.79l-1.61 3.25C4.76 17 4.64 17 4.5 17a2.5 2.5 0 0 0 0 5A2.5 2.5 0 0 0 7 19.5c0-.7-.29-1.34-.76-1.79l1.62-3.25c.14.04.26.04.39.04s.25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0A2.5 2.5 0 0 0 12 17c-.13 0-.26 0-.39.04L10 13.8c.45-.45.75-1.09.75-1.8 0-.7-.29-1.33-.75-1.79l1.61-3.25c.13.04.26.04.39.04s.26 0 .39-.04L14 10.21a2.5 2.5 0 0 0 1.75 4.29c.13 0 .25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0-2.5-2.5m-15 3.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m8.5-1c0 .55-.45 1-1 1s-1-.45-1-1 .45-1 1-1 1 .45 1 1M7.25 12c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1M11 4.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m3.75 7.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m4.75 8.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"></path></svg></span> phylogeny</td>
@@ -6003,7 +6012,7 @@ multi-region (SIDLE), and <code>skip_qiime</code> runs without edits.</p>
 </tbody>
 </table>
 <h3 id="conditional-routes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 4v8.5l3-3L9 13c1 1 1 2 1 2v6h4v-7s0-1-.53-2S12 10 12 10L9 6.58 11.5 4M18 4l-4.46 4.47L14 9s.93 1 1.47 2c.21.4.33.79.4 1.13L21 7"></path></svg></span> Conditional routes<a class="headerlink" href="#conditional-routes" title="Permanent link">¶</a></h3>
-<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (4 collections are unaffected by any variable — present on every run.)</p>
+<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (5 collections are unaffected by any variable — present on every run.)</p>
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 <div class="gtd-mtx scroll">
 <table>
@@ -6239,6 +6248,18 @@ multi-region (SIDLE), and <code>skip_qiime</code> runs without edits.</p>
 <td></td>
 </tr>
 <tr>
+<th class="dc"><code>beta_adonis</code></th>
+<td class="plus" title="included only when METADATA_FILE is set">+</td>
+<td class="minus" title="removed when SKIP_QIIME is set">−</td>
+<td class="minus" title="removed when IS_MULTIREGION is set">−</td>
+<td class="minus" title="removed when SKIP_TAXONOMY is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
 <th class="dc"><code>phylogenetic_tree_canonical</code></th>
 <td></td>
 <td class="minus" title="removed when SKIP_QIIME is set">−</td>
@@ -6266,7 +6287,7 @@ multi-region (SIDLE), and <code>skip_qiime</code> runs without edits.</p>
 </table>
 </div>
 <h3 id="cross-dc-links"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> Cross-DC links<a class="headerlink" href="#cross-dc-links" title="Permanent link">¶</a></h3>
-<p>19 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
+<p>23 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
 <div class="gtd-links">
 <table>
 <thead>
@@ -6289,6 +6310,18 @@ multi-region (SIDLE), and <code>skip_qiime</code> runs without edits.</p>
 <td class="arr">→</td>
 <td><code>multiqc_data</code></td>
 <td>Filter MultiQC by metadata samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sampleID</span></td>
+<td class="arr">→</td>
+<td><code>read_tracking</code></td>
+<td>Filter read tracking by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td>
+<td class="arr">→</td>
+<td><code>read_tracking</code></td>
+<td>Filter read tracking by metadata samples</td>
 </tr>
 <tr>
 <td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td>
@@ -6325,6 +6358,18 @@ multi-region (SIDLE), and <code>skip_qiime</code> runs without edits.</p>
 <td class="arr">→</td>
 <td><code>sintax_rel_abundance</code></td>
 <td>Filter sintax rel abundance by metadata samples</td>
+</tr>
+<tr>
+<td><code>samplesheet</code> <span class="col">·&nbsp;sampleID</span></td>
+<td class="arr">→</td>
+<td><code>sidle_reconstructed</code></td>
+<td>Filter SIDLE reconstructed community by samplesheet samples</td>
+</tr>
+<tr>
+<td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td>
+<td class="arr">→</td>
+<td><code>sidle_reconstructed</code></td>
+<td>Filter SIDLE reconstructed community by metadata samples</td>
 </tr>
 <tr>
 <td><code>samplesheet</code> <span class="col">·&nbsp;sampleID</span></td>
@@ -6407,6 +6452,11 @@ multi-region (SIDLE), and <code>skip_qiime</code> runs without edits.</p>
 </thead>
 <tbody>
 <tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/beta_adonis.py"><code>nf-core/ampliseq/beta_adonis.py</code></a></td>
+<td>Collect ampliseq's PERMANOVA (adonis) tables into one row per metric and term.</td>
+<td><code>metric</code>, <code>formula</code>, <code>term</code>, <code>df</code>, <code>sum_of_squares</code>, <code>r2</code>, <code>f_stat</code>, <code>p_value</code></td>
+</tr>
+<tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/bray_curtis_canonical.py"><code>nf-core/ampliseq/bray_curtis_canonical.py</code></a></td>
 <td>Canonical-schema Bray-Curtis distance DC for ampliseq.</td>
 <td><code>sample</code></td>
@@ -6420,6 +6470,11 @@ multi-region (SIDLE), and <code>skip_qiime</code> runs without edits.</p>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/ma_canonical.py"><code>nf-core/ampliseq/ma_canonical.py</code></a></td>
 <td>Canonical-schema MA-plot DC for ampliseq.</td>
 <td><code>feature_id</code>, <code>avg_log_intensity</code>, <code>log2_fold_change</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/read_tracking.py"><code>nf-core/ampliseq/read_tracking.py</code></a></td>
+<td>Tidy ampliseq's <code>overall_summary.tsv</code> into per-sample read counts and the share kept.</td>
+<td><code>sample</code>, <code>input_reads</code>, <code>denoised_reads</code>, <code>final_reads</code>, <code>kept_percent</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/sankey_canonical.py"><code>nf-core/ampliseq/sankey_canonical.py</code></a></td>
@@ -7530,32 +7585,57 @@ multi-region (SIDLE), and <code>skip_qiime</code> runs without edits.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Seven tabs, read as a funnel: are the reads good, how diverse is each sample,
-what are the communities made of, how do the samples relate, which taxa differ
-between groups, and where those taxa sit on the tree. Each tab below carries the
-<strong>same icon and colour the dashboard gives it</strong>, so the page and the app read
-alike. The persistent <code>Sample filters</code> (sample ID and your grouping column, both
-on the metadata collection) reach every tab through the cross-DC links on the
-metadata sample column, see <a href="#cross-dc-links">Cross-DC links</a>; the tabs carry no
-sample or group filter of their own.</p>
+<p>One dashboard: the <strong>Overview</strong>, then seven child tabs in three groups, read as a
+funnel from the run to the taxa that differ between groups. Each tab below carries
+the <strong>same icon and colour the dashboard gives it</strong>, so the page and the app read
+alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC</td>
+</tr>
+<tr>
+<td>Diversity</td>
+<td>Alpha Diversity, Ordination &amp; Clustering</td>
+</tr>
+<tr>
+<td>Taxa</td>
+<td>Community &amp; Diversity, Differential Abundance, Phylogeny, SIDLE</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The persistent <em>Sample
+filters</em> (your grouping column, then the sample id) sit in the left panel and narrow
+every tab through cross-DC links on the metadata <code>sample</code> column, see
+<a href="#cross-dc-links">Cross-DC links</a>. The <em>Sample sheet</em> is pinned, collapsed, to the
+bottom of every child tab.</p>
 <p>Where a tab names <em>your grouping column</em>, that is whichever metadata column the
 run was resolved against; the dashboard substitutes its real name everywhere.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:7"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> Alpha Diversity</label><label for="__tabbed_2_3"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2H7v2.1c-.71.15-1.27.44-1.68.81L2.7 2.29 1.29 3.71l2.95 2.94C4 7.39 4 8 4 8H2v2h2.04c.06.63.17 1.36.36 2.15l-2.72.9.63 1.9 2.69-.9c.24.51.5 1.03.82 1.53l-2.38 1.59 1.11 1.66 2.52-1.68c.56.56 1.22 1.06 1.99 1.49l-.96 1.91 1.79.9 1-2-.16-.09c.95.32 2.03.54 3.27.61V22h2v-2.07c.76-.09 1.81-.29 2.77-.74l1.52 1.52 1.41-1.42-1.33-1.34c.38-.51.63-1.15.63-1.95 0-.5-.05-.92-.12-1.32l1.57-.78-.9-1.8-1.37.69c-.55-.83-1.27-1.29-1.89-1.51l.66-1.96-1.9-.64-.76 2.28c-1.33-.13-2.12-.64-2.59-1.19l1.75-.87-.9-1.8-1.55.79a4.4 4.4 0 0 0-.72-2.02l1.55-2.32-1.66-1.11-1.41 2.12c-.48-.23-1.06-.41-1.76-.5M15 18c-2.94 0-5.19-.82-6.69-2.44C5.68 12.72 6 8.2 6 8.17v-.14C6 7.1 6.39 6 8 6c2.63 0 2.97 1.43 3 2 0 2 1.6 5 6 5 .33 0 2 .15 2 3 0 1.89-3.97 2-4 2M8.5 8A1.5 1.5 0 0 0 7 9.5 1.5 1.5 0 0 0 8.5 11 1.5 1.5 0 0 0 10 9.5 1.5 1.5 0 0 0 8.5 8m2.5 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4.5 2a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5"></path></svg></span> Community &amp; Diversity</label><label for="__tabbed_2_4"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm12 12.5L12 18H7.94l-2.02-3.5L7.94 11H12zm.08-8L12.06 10H8L6 6.5 8 3h4.06zm7.17 4L19.23 14h-4.04l-2.02-3.5L15.19 7h4.04z"></path></svg></span> Ordination &amp; Clustering</label><label for="__tabbed_2_5"><span class="twemoji mc-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Differential Abundance</label><label for="__tabbed_2_6"><span class="twemoji mc-lime"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 11 5.79V7H7a2 2 0 0 0-2 2v.71A2.5 2.5 0 0 0 3.5 12 2.5 2.5 0 0 0 5 14.29V15H4a2 2 0 0 0-2 2v1.21A2.5 2.5 0 0 0 .5 20.5 2.5 2.5 0 0 0 3 23a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 4 18.21V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 9 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2H7v-.71A2.5 2.5 0 0 0 8.5 12 2.5 2.5 0 0 0 7 9.71V9h10v.71A2.5 2.5 0 0 0 15.5 12a2.5 2.5 0 0 0 1.5 2.29V15h-1a2 2 0 0 0-2 2v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 15 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 21 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2h-1v-.71A2.5 2.5 0 0 0 20.5 12 2.5 2.5 0 0 0 19 9.71V9a2 2 0 0 0-2-2h-4V5.79a2.5 2.5 0 0 0 1.5-2.29A2.5 2.5 0 0 0 12 1m0 1.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M6 11a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m12 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M3 19.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1"></path></svg></span> Phylogeny</label><label for="__tabbed_2_7"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.5 17c-.14 0-.26 0-.39.04L17.5 13.8c.45-.45.75-1.09.75-1.8a2.5 2.5 0 0 0-2.5-2.5c-.14 0-.25 0-.4.04L13.74 6.3c.47-.46.76-1.09.76-1.8a2.5 2.5 0 0 0-5 0c0 .7.29 1.34.76 1.79L8.65 9.54c-.15-.04-.26-.04-.4-.04a2.5 2.5 0 0 0-2.5 2.5c0 .71.29 1.34.75 1.79l-1.61 3.25C4.76 17 4.64 17 4.5 17a2.5 2.5 0 0 0 0 5A2.5 2.5 0 0 0 7 19.5c0-.7-.29-1.34-.76-1.79l1.62-3.25c.14.04.26.04.39.04s.25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0A2.5 2.5 0 0 0 12 17c-.13 0-.26 0-.39.04L10 13.8c.45-.45.75-1.09.75-1.8 0-.7-.29-1.33-.75-1.79l1.61-3.25c.13.04.26.04.39.04s.26 0 .39-.04L14 10.21a2.5 2.5 0 0 0 1.75 4.29c.13 0 .25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0-2.5-2.5m-15 3.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m8.5-1c0 .55-.45 1-1 1s-1-.45-1-1 .45-1 1-1 1 .45 1 1M7.25 12c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1M11 4.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m3.75 7.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m4.75 8.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"></path></svg></span> Reconstructed Community (SIDLE)</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:8"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><input id="__tabbed_2_8" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> Alpha Diversity</label><label for="__tabbed_2_4"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm12 12.5L12 18H7.94l-2.02-3.5L7.94 11H12zm.08-8L12.06 10H8L6 6.5 8 3h4.06zm7.17 4L19.23 14h-4.04l-2.02-3.5L15.19 7h4.04z"></path></svg></span> Ordination &amp; Clustering</label><label for="__tabbed_2_5"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2H7v2.1c-.71.15-1.27.44-1.68.81L2.7 2.29 1.29 3.71l2.95 2.94C4 7.39 4 8 4 8H2v2h2.04c.06.63.17 1.36.36 2.15l-2.72.9.63 1.9 2.69-.9c.24.51.5 1.03.82 1.53l-2.38 1.59 1.11 1.66 2.52-1.68c.56.56 1.22 1.06 1.99 1.49l-.96 1.91 1.79.9 1-2-.16-.09c.95.32 2.03.54 3.27.61V22h2v-2.07c.76-.09 1.81-.29 2.77-.74l1.52 1.52 1.41-1.42-1.33-1.34c.38-.51.63-1.15.63-1.95 0-.5-.05-.92-.12-1.32l1.57-.78-.9-1.8-1.37.69c-.55-.83-1.27-1.29-1.89-1.51l.66-1.96-1.9-.64-.76 2.28c-1.33-.13-2.12-.64-2.59-1.19l1.75-.87-.9-1.8-1.55.79a4.4 4.4 0 0 0-.72-2.02l1.55-2.32-1.66-1.11-1.41 2.12c-.48-.23-1.06-.41-1.76-.5M15 18c-2.94 0-5.19-.82-6.69-2.44C5.68 12.72 6 8.2 6 8.17v-.14C6 7.1 6.39 6 8 6c2.63 0 2.97 1.43 3 2 0 2 1.6 5 6 5 .33 0 2 .15 2 3 0 1.89-3.97 2-4 2M8.5 8A1.5 1.5 0 0 0 7 9.5 1.5 1.5 0 0 0 8.5 11 1.5 1.5 0 0 0 10 9.5 1.5 1.5 0 0 0 8.5 8m2.5 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4.5 2a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5"></path></svg></span> Community &amp; Diversity</label><label for="__tabbed_2_6"><span class="twemoji mc-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Differential Abundance</label><label for="__tabbed_2_7"><span class="twemoji mc-lime"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 11 5.79V7H7a2 2 0 0 0-2 2v.71A2.5 2.5 0 0 0 3.5 12 2.5 2.5 0 0 0 5 14.29V15H4a2 2 0 0 0-2 2v1.21A2.5 2.5 0 0 0 .5 20.5 2.5 2.5 0 0 0 3 23a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 4 18.21V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 9 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2H7v-.71A2.5 2.5 0 0 0 8.5 12 2.5 2.5 0 0 0 7 9.71V9h10v.71A2.5 2.5 0 0 0 15.5 12a2.5 2.5 0 0 0 1.5 2.29V15h-1a2 2 0 0 0-2 2v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 15 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 21 23a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2h-1v-.71A2.5 2.5 0 0 0 20.5 12 2.5 2.5 0 0 0 19 9.71V9a2 2 0 0 0-2-2h-4V5.79a2.5 2.5 0 0 0 1.5-2.29A2.5 2.5 0 0 0 12 1m0 1.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M6 11a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m12 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M3 19.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1"></path></svg></span> Phylogeny</label><label for="__tabbed_2_8"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.5 17c-.14 0-.26 0-.39.04L17.5 13.8c.45-.45.75-1.09.75-1.8a2.5 2.5 0 0 0-2.5-2.5c-.14 0-.25 0-.4.04L13.74 6.3c.47-.46.76-1.09.76-1.8a2.5 2.5 0 0 0-5 0c0 .7.29 1.34.76 1.79L8.65 9.54c-.15-.04-.26-.04-.4-.04a2.5 2.5 0 0 0-2.5 2.5c0 .71.29 1.34.75 1.79l-1.61 3.25C4.76 17 4.64 17 4.5 17a2.5 2.5 0 0 0 0 5A2.5 2.5 0 0 0 7 19.5c0-.7-.29-1.34-.76-1.79l1.62-3.25c.14.04.26.04.39.04s.25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0A2.5 2.5 0 0 0 12 17c-.13 0-.26 0-.39.04L10 13.8c.45-.45.75-1.09.75-1.8 0-.7-.29-1.33-.75-1.79l1.61-3.25c.13.04.26.04.39.04s.26 0 .39-.04L14 10.21a2.5 2.5 0 0 0 1.75 4.29c.13 0 .25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0-2.5-2.5m-15 3.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m8.5-1c0 .55-.45 1-1 1s-1-.45-1-1 .45-1 1-1 1 .45 1 1M7.25 12c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1M11 4.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m3.75 7.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m4.75 8.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"></path></svg></span> SIDLE</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Are the reads good, and did the primers come off?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/multiqc_light.png#only-light"></a></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png#only-dark"></a></p>
-<p>Thirteen MultiQC panels: Cutadapt filtered reads, the FastQC sequence counts
-and quality histograms up front, the other FastQC and Cutadapt panels in a
-collapsed section. There is no per-sequence GC panel, because amplicon reads
-sit in a narrow GC band and it reads as a flat line.</p>
+<p><em>Amplicon communities, from reads to the taxa that differ between groups.</em></p>
+<!-- screenshot pending v2 -->
+<p>A short hero links the run parameters. <em>About this dashboard</em> says how to move
+through the tabs, <em>The run</em> lists the samples, primers, reference taxonomy and
+removed taxa, and <em>Pipeline</em> walks the six steps from trimming to the
+differential test, each linked to its parameters and its tab. The findings are
+live values: they follow the filters, and a route that lacks their data drops
+them.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample ID</code> and your grouping column on <code>metadata</code>,
-persistent and pinned to the top of every tab, plus a collapsed <em>MultiQC
-report</em> section with a <code>Sample ID (MultiQC)</code> list read from the report
-itself, which keeps the tab filterable on a run without <code>--metadata</code>.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> has its own
+filter bar (your grouping column and the sample id), and so does
+<em>Findings</em> (your grouping column and the kingdom): each narrows its own
+section only.</p>
 <table>
 <thead>
 <tr>
@@ -7565,37 +7645,68 @@ itself, which keeps the tab filterable on a run without <code>--metadata</code>.
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards, pinned to every tab</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>QC overview</td>
-<td>4 MultiQC panels</td>
+<td>Key figures</td>
+<td>4 headline cards: samples, phyla, median Shannon diversity, reads kept</td>
 </tr>
 <tr>
-<td>QC details</td>
-<td>9 MultiQC panels</td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: phylum composition per group, the ANCOM-BC volcano, the PCoA and a tree of the eight largest phyla</td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Sample sheet</em>, pinned to every tab</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Did sequencing reach saturation, and how rich is each sample?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png" rel="noopener" target="_blank"><img alt="Alpha Diversity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png#only-light"></a></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png" rel="noopener" target="_blank"><img alt="Alpha Diversity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png#only-dark"></a></p>
-<p>The cards summarise observed features, Faith PD and evenness as a median
-with their spread, next to the deepest rarefaction depth. The rarefaction
-curves come next, with the metric switch in the tile header, then the same
-indices compared between groups.</p>
+<p><strong>Data &amp; QC</strong> · <em>Did sequencing and primer trimming work for every sample?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/multiqc_light.png#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/multiqc_dark.png#only-dark"></a></p>
+<p>MultiQC panels only: general statistics, Cutadapt filtered reads, FastQC
+sequence counts and quality histograms open, the other FastQC and Cutadapt
+panels collapsed. Its sample filter reads the MultiQC report, so the tab works
+on a run without metadata.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · a <code>Shannon index</code> range on <code>alpha_diversity_multi_canonical</code>,
-which carries the surviving samples to the rarefaction curves.</p>
+<p><strong>Filters</strong> · <code>Sample ID</code>, read from the MultiQC report.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QC overview</td>
+<td>4 MultiQC panels</td>
+</tr>
+<tr>
+<td>QC details (collapsed)</td>
+<td>9 MultiQC panels</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Diversity</strong> · <em>How diverse is each sample, and was it sequenced deeply enough?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png" rel="noopener" target="_blank"><img alt="Alpha Diversity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/alpha_diversity_light.png#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png" rel="noopener" target="_blank"><img alt="Alpha Diversity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/alpha_diversity_dark.png#only-dark"></a></p>
+<p>The median <strong>Shannon</strong> diversity and <strong>Faith PD</strong> with their spread,
+<strong>Observed ASVs</strong> with their distribution and <strong>Evenness</strong> on a 0 to 1 gauge.
+Then the rarefaction curves, one per group with a metric switch, and Shannon
+diversity per group with one point per sample.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · a Shannon diversity range on
+<code>alpha_diversity_multi_canonical</code>, plus the sample filters.</p>
 <table>
 <thead>
 <tr>
@@ -7610,79 +7721,32 @@ which carries the surviving samples to the rarefaction curves.</p>
 </tr>
 <tr>
 <td>Rarefaction</td>
-<td><em>Rarefaction curves (multi-metric)</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Per-group comparison</td>
-<td><em>Alpha diversity by group (per metric)</em></td>
+<td>Group comparison</td>
+<td><em>Shannon diversity per group</em></td>
 </tr>
 <tr>
-<td>Per-sample table</td>
-<td><em>Per-sample alpha diversity (one row per sample)</em></td>
+<td>Per-sample table (collapsed)</td>
+<td><em>Alpha diversity per sample</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>What are the samples made of, and which taxa do the groups share?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/community_diversity_light.png" rel="noopener" target="_blank"><img alt="Community &amp; Diversity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/community_diversity_light.png#only-light"></a></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.png" rel="noopener" target="_blank"><img alt="Community &amp; Diversity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.png#only-dark"></a></p>
-<p>The 15 most abundant phyla by mean relative abundance per group open the tab,
-followed by the stacked per-sample composition with a rank switch in the
-header. The sunburst reads the same abundances as a hierarchy, and the UpSet
-shows which taxa are shared between groups and which are exclusive. The
-SINTAX tiles only fill on <code>--skip_qiime</code> runs.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Kingdom</code>, <code>Phylum</code> and a relative-abundance range on
-<code>taxonomy_rel_abundance</code>, plus a collapsed <em>SINTAX scope</em> with its own
-<code>Kingdom</code> and <code>Phylum</code> pair for the SINTAX tiles.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Composition</td>
-<td><em>Mean Relative Abundance by group</em>, <em>Stacked taxonomy (advanced)</em></td>
-</tr>
-<tr>
-<td>Taxonomic structure</td>
-<td><em>Taxonomic hierarchy (sunburst)</em></td>
-</tr>
-<tr>
-<td>Set overlap</td>
-<td><em>Taxa shared across groups (UpSet)</em></td>
-</tr>
-<tr>
-<td>SINTAX classifier</td>
-<td>1 bar, <em>Taxonomy Relative Abundance (sintax)</em></td>
-</tr>
-<tr>
-<td>Tables</td>
-<td><em>Taxonomy Relative Abundance</em></td>
-</tr>
-</tbody>
-</table>
-</details>
-</div>
-<div class="tabbed-block">
-<p><em>Do the samples cluster by group, and which phyla drive it?</em></p>
+<p><strong>Diversity</strong> · <em>Which samples have similar communities?</em></p>
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/ordination_clustering_light.png" rel="noopener" target="_blank"><img alt="Ordination &amp; Clustering dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/ordination_clustering_light.png#only-light"></a></p>
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/ordination_clustering_dark.png" rel="noopener" target="_blank"><img alt="Ordination &amp; Clustering dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/ordination_clustering_dark.png#only-dark"></a></p>
-<p>The PCoA embeds each sample in two dimensions from Bray-Curtis distances, and
-the distance matrix beside it shows the pairs it was computed from, where a
-sample unlike every other shows up as a bright row. Below, the phylum by
-sample heatmap clusters both axes. The PCoA takes a lasso, which keeps the
-picked samples as a selection.</p>
+<p>The samples placed by the PCoA, split by group, and, when the run tested a
+PERMANOVA formula, the share of variation the group explains. Then the PCoA on
+Bray-Curtis beside the distances it was drawn from, and the phyla against the
+samples with both axes clustered. A lasso on the PCoA makes an analysis group.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Phylum</code> on <code>complex_heatmap_canonical</code>, which narrows the
-heatmap rows.</p>
+<p><strong>Filters</strong> · <code>Phylum</code> on <code>complex_heatmap_canonical</code>, narrowing the rows
+of the heatmap, plus the sample filters.</p>
 <table>
 <thead>
 <tr>
@@ -7692,32 +7756,33 @@ heatmap rows.</p>
 </thead>
 <tbody>
 <tr>
+<td>Ordination at a glance</td>
+<td>2 cards</td>
+</tr>
+<tr>
 <td>Sample relationships</td>
-<td><em>Sample ordination (PCoA, Bray-Curtis)</em>, <em>Sample distances (Bray-Curtis)</em></td>
+<td>2 advanced visualizations</td>
 </tr>
 <tr>
 <td>Clustered abundance</td>
-<td><em>Taxonomy heatmap (clustered)</em></td>
+<td>1 advanced visualization</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Which taxa differ between groups, and by how much?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/differential_abundance_light.png" rel="noopener" target="_blank"><img alt="Differential Abundance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/differential_abundance_light.png#only-light"></a></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/differential_abundance_dark.png" rel="noopener" target="_blank"><img alt="Differential Abundance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/differential_abundance_dark.png#only-dark"></a></p>
-<p>Pick a contrast first: every number on the tab is conditional on it. The cards
-count the taxa tested, those significant at a 5% FDR and those enriched, above
-the volcano and the ranked differential-abundance bars. <code>Taxon detail</code> holds
-the full ANCOM-BC table with a linked record card beside it, which folds to a
-slim rail until a row is picked and then opens on that taxon's test and
-lineage.</p>
+<p><strong>Taxa</strong> · <em>Which taxa make up the samples, and which do groups share?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/community_diversity_light.png" rel="noopener" target="_blank"><img alt="Community &amp; Diversity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/community_diversity_light.png#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.png" rel="noopener" target="_blank"><img alt="Community &amp; Diversity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/community_diversity_dark.png#only-dark"></a></p>
+<p>Distinct phyla, classes, orders and families, each split or ranked. Then the
+phylum composition per group and per sample (the eight largest phyla and
+Other), the sunburst hierarchy and the UpSet of the taxa the groups share. A
+<code>--skip_qiime</code> run shows its SINTAX tiles in the same places.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Contrast</code>, <code>Phylum</code> and <code>Kingdom</code> in a <em>Call scope</em> group,
-plus <code>W Statistic Range</code> and <code>Log-Fold Change Range</code> in a <em>Thresholds</em>
-group, all on <code>ancombc_results</code>.</p>
+<p><strong>Filters</strong> · <code>Kingdom</code> and <code>Phylum</code> on <code>taxonomy_rel_abundance</code>, or on
+<code>sintax_rel_abundance</code> for a SINTAX run, plus the sample filters.</p>
 <table>
 <thead>
 <tr>
@@ -7727,39 +7792,78 @@ group, all on <code>ancombc_results</code>.</p>
 </thead>
 <tbody>
 <tr>
-<td>Summary</td>
+<td>Community at a glance</td>
 <td>4 cards</td>
 </tr>
 <tr>
-<td>Volcano &amp; ranked effects</td>
-<td><em>Volcano (advanced viz)</em>, <em>Differential-abundance bars (per contrast)</em></td>
+<td>Composition</td>
+<td>1 bar + 1 advanced visualization</td>
 </tr>
 <tr>
-<td>Taxon detail</td>
-<td><em>ANCOM-BC differential abundance results</em>, <em>Taxon record</em></td>
+<td>Taxonomic structure</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Set overlap</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Tables (collapsed)</td>
+<td><em>Relative abundance per sample and phylum</em></td>
 </tr>
 </tbody>
 </table>
 </details>
-<div class="admonition note">
-<p class="admonition-title">No MA plot</p>
-<p><code>ancombc_results</code> carries no mean abundance, and the contrast filter does
-not reach the MA collection, so an MA tile would ignore the contrast every
-other number on the tab depends on.</p>
-</div>
 </div>
 <div class="tabbed-block">
-<p><em>Where do the taxa sit on the tree, and how confidently are they classified?</em></p>
+<p><strong>Taxa</strong> · <em>Which taxa differ in abundance between groups?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/differential_abundance_light.png" rel="noopener" target="_blank"><img alt="Differential Abundance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/differential_abundance_light.png#only-light"></a></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/differential_abundance_dark.png" rel="noopener" target="_blank"><img alt="Differential Abundance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/differential_abundance_dark.png#only-dark"></a></p>
+<p>Pick a contrast first. The taxa tested, those significant at 5% FDR, and the
+enriched and depleted calls, each split by contrast. Then the volcano, whose
+View switch reads the same calls as an MA or a QQ plot, and the largest effects
+per contrast. The collapsed <em>Taxon detail</em> holds the ANCOM-BC table, with a
+record card for the row you pick.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Contrast</code>, <code>Phylum</code>, <code>Kingdom</code> and a log-fold-change
+range, all on <code>ancombc_results</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Calls at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Volcano and ranked effects</td>
+<td>2 advanced visualizations</td>
+</tr>
+<tr>
+<td>Taxon detail (collapsed)</td>
+<td><em>ANCOM-BC results</em> + a taxon record card</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Taxa</strong> · <em>How are the ASVs related, and how deeply are they classified?</em></p>
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png" rel="noopener" target="_blank"><img alt="Phylogeny dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/phylogeny_light.png#only-light"></a></p>
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png" rel="noopener" target="_blank"><img alt="Phylogeny dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/phylogeny_dark.png#only-dark"></a></p>
-<p>The cards count the ASVs, the share classified down to genus, the mean
-classifier confidence and the unique genera. The tree follows, pruned to the
-clade picked in the filters and coloured by any rank, with the full lineage of
-each tip in a collapsed table.</p>
+<p>The ASVs, the share classified to genus, the median classifier confidence and
+the distinct genera. The tree opens on its summary, the eight largest phyla
+with their share of the reads per group; its View switch draws every ASV,
+coloured by any rank.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>Kingdom</code> and <code>Phylum</code> on
-<code>phylogenetic_tree_metadata_canonical</code>.</p>
+<code>phylogenetic_tree_metadata_canonical</code>, pruning the tree to one clade.</p>
 <table>
 <thead>
 <tr>
@@ -7774,27 +7878,27 @@ each tip in a collapsed table.</p>
 </tr>
 <tr>
 <td>Tree</td>
-<td><em>ASV phylogenetic tree</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Tip taxonomy</td>
-<td><em>ASV taxonomy table</em></td>
+<td>Tip taxonomy (collapsed)</td>
+<td><em>ASV taxonomy</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>What community did SIDLE rebuild across regions, and on how much evidence?</em></p>
+<p><strong>Taxa</strong> · <em>What does the community rebuilt across amplicon regions contain?</em></p>
 <div class="admonition info">
 <p class="admonition-title">Multi-region runs only</p>
 <p>This tab is bound to <code>sidle_reconstructed</code>, which a single-region run never
 writes. On such a run the self-adapting layout drops the tab entirely.</p>
 </div>
-<p>Cards for the reconstructed features, samples, phyla and the mean number of
-regions per feature, then the per-sample composition by phylum and by the most
-abundant genera. The QC section plots how many regions and k-mers support each
-feature: select points on the k-mer scatter to filter both tables below.</p>
+<p>The reconstructed features, the samples that carry them, the phyla they
+resolve to and the mean number of regions per feature. Then the composition
+per sample, by phylum and by genus, and the reconstruction QC: regions and
+k-mer support per feature.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>Phylum</code> on <code>sidle_reconstructed</code>.</p>
@@ -7812,15 +7916,15 @@ feature: select points on the k-mer scatter to filter both tables below.</p>
 </tr>
 <tr>
 <td>Composition</td>
-<td><em>Relative composition by phylum (per sample)</em>, <em>Genus-level composition (per sample)</em></td>
+<td>2 bars</td>
 </tr>
 <tr>
 <td>Reconstruction QC</td>
-<td><em>Cross-region support (features by regions mapped)</em>, <em>K-mer support vs region coverage</em></td>
+<td>1 bar + 1 scatter</td>
 </tr>
 <tr>
-<td>Tables</td>
-<td><em>Reconstructed features (per-sample counts)</em>, <em>Reconstruction confidence (regions mapped, kmer support)</em></td>
+<td>Tables (collapsed)</td>
+<td><em>Reconstructed features per sample</em>, <em>Reconstruction support per feature</em></td>
 </tr>
 </tbody>
 </table>
@@ -7829,21 +7933,13 @@ feature: select points on the k-mer scatter to filter both tables below.</p>
 </div>
 </div>
 <div class="admonition tip">
-<p class="admonition-title">Cross-selection</p>
-<p>Every table selects rows, and a pick becomes a dashboard filter that narrows
-the other tiles of the same collection and, through the project links, the
-collections downstream of it: the pinned sample sheet, the alpha-diversity
-table, both relative-abundance tables, the ANCOM-BC table, the tip taxonomy
-table and both SIDLE tables. The bar and box figures do not select.</p>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">The reference dataset adds two more</p>
+<p class="admonition-title">The reference project adds two tabs</p>
 <p>The Ammer catchment reference dashboard, seeded with the bundled demo data,
-carries two further tabs on top of these seven:
-<span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5A2.5 2.5 0 0 1 9.5 9 2.5 2.5 0 0 1 12 6.5M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7m0 2a5 5 0 0 0-5 5c0 1 0 3 5 9.71C17 12 17 10 17 9a5 5 0 0 0-5-5"></path></svg></span> <strong>Sampling Campaign</strong> (where and when
-the catchment was sampled) and <span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> <strong>Environment (CTD)</strong>
-(sonde readings per sample, and the diversity they go with). Both are bound to
-metadata columns that only that dataset ships.</p>
+adds two tabs to <em>Data &amp; QC</em>: <span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5A2.5 2.5 0 0 1 9.5 9 2.5 2.5 0 0 1 12 6.5M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7m0 2a5 5 0 0 0-5 5c0 1 0 3 5 9.71C17 12 17 10 17 9a5 5 0 0 0-5-5"></path></svg></span>
+<strong>Sampling Campaign</strong> (where and when the catchment was sampled) and
+<span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> <strong>Environment (CTD)</strong> (sonde readings per sample,
+and the diversity they go with). Both are bound to metadata columns that only
+that dataset ships.</p>
 </div>
 <p>Tables select rows and the SIDLE k-mer scatter selects points: the pinned
 sample sheet on the metadata id column, the alpha-diversity table on

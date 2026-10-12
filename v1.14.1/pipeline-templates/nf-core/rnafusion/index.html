@@ -5433,14 +5433,11 @@
 <p>The rnafusion template follows the pipeline's own funnel, from read quality
 through to the protein a fusion would produce:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: FastQC either side of trimming, fastp, STAR and Picard, out of the MultiQC report</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> <strong>Fusion calls</strong>: fusion-report's ranked calls, the UpSet of caller agreement, and the contigs the two partners came from</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> <strong>Evidence</strong>: Arriba, STAR-Fusion and FusionCatcher read support, side by side and each on its own terms</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>FusionInspector and splicing</strong>: re-quantified calls with a linked record, the Pfam domains each partner brings, and the CTAT-splicing junction landscape</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: FastQC, fastp, STAR and Picard, out of the MultiQC report</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> <strong>Fusion calls</strong>: fusion-report's ranked consensus and caller agreement, each caller's read support, and Arriba's breakpoints on the genome</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg></span> <strong>Follow-up</strong>: FusionInspector re-quantification and fusion allelic ratios, the Pfam domains each fusion protein keeps, and CTAT-splicing junctions</li>
 </ul>
-<p><code>Run at a glance</code> and <code>Sample sheet</code> are pinned to the top of every tab and the
-fusion-report consensus to the bottom, so the run size, the samples and the
-calls every tab is filtered by follow you from tab to tab.</p>
 <div class="admonition info">
 <p class="admonition-title">One row is one fusion in one sample</p>
 <p>rnafusion writes one file per tool per sample and none of those files carries
@@ -5705,7 +5702,7 @@ re-packed so there are no empty rows.</p>
 </tbody>
 </table>
 <h3 id="conditional-routes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 4v8.5l3-3L9 13c1 1 1 2 1 2v6h4v-7s0-1-.53-2S12 10 12 10L9 6.58 11.5 4M18 4l-4.46 4.47L14 9s.93 1 1.47 2c.21.4.33.79.4 1.13L21 7"></path></svg></span> Conditional routes<a class="headerlink" href="#conditional-routes" title="Permanent link">¶</a></h3>
-<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (3 collections are unaffected by any variable — present on every run.)</p>
+<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (2 collections are unaffected by any variable — present on every run.)</p>
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 <div class="gtd-mtx scroll">
 <table>
@@ -5744,6 +5741,16 @@ re-packed so there are no empty rows.</p>
 </tr>
 <tr>
 <th class="dc"><code>arriba_fusions</code></th>
+<td></td>
+<td class="minus" title="removed when SKIP_ARRIBA is set">−</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th class="dc"><code>arriba_fusion_links</code></th>
 <td></td>
 <td class="minus" title="removed when SKIP_ARRIBA is set">−</td>
 <td></td>
@@ -6017,33 +6024,55 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Four tabs, read as a funnel: can the reads support a call at all, what was
-called, how strong is each caller's evidence, and does the call survive
-re-alignment. Each tab below carries the <strong>same icon and colour the dashboard
-gives it</strong>. Two filter groups are persistent and pinned to the top of every tab,
-<code>Sample scope</code> and <code>Fusion scope</code>, and a third, <code>Reference scope</code>, follows you
-from tab to tab without being pinned.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> Fusion calls</label><label for="__tabbed_2_3"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Evidence</label><label for="__tabbed_2_4"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> FusionInspector and splicing</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then seven child tabs in three groups, read as a
+funnel from the reads to the proteins the fusions would make. Each tab below
+carries the <strong>same icon and colour the dashboard gives it</strong>, so the page and the
+app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC</td>
+</tr>
+<tr>
+<td>Fusion calls</td>
+<td>Caller Agreement, Caller Evidence, Breakpoints</td>
+</tr>
+<tr>
+<td>Follow-up</td>
+<td>Validation, Protein Domains, Splice Junctions</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. Two persistent filter
+sections sit in the left panel. <em>Sample filters</em> (the sample, then the
+strandedness) narrow every tab. <em>Fusion filters</em> (the fusion, then the caller
+agreement) reach every caller table through the links on the fusion name;
+MultiQC and Splice Junctions carry no fusion, so they are left off those two
+tabs. The <em>Sample sheet</em> is pinned, collapsed, to the bottom of every child tab.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:8"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><input id="__tabbed_2_8" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> Caller Agreement</label><label for="__tabbed_2_4"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Caller Evidence</label><label for="__tabbed_2_5"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> Breakpoints</label><label for="__tabbed_2_6"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg></span> Validation</label><label for="__tabbed_2_7"><span class="twemoji mc-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 13.5v8H3v-8zm-2 2H5v4h4zM12 2l5.5 9h-11zm0 3.86L10.08 9h3.84zM17.5 13c2.5 0 4.5 2 4.5 4.5S20 22 17.5 22 13 20 13 17.5s2-4.5 4.5-4.5m0 2a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"></path></svg></span> Protein Domains</label><label for="__tabbed_2_8"><span class="twemoji mc-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Splice Junctions</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Read and alignment QC before any fusion is trusted.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/multiqc_light.png"></a></p>
-<p>A fusion call rests on reads that crossed a breakpoint, so a library that
-never aligned well cannot support one. The MultiQC general statistics table
-opens the tab, then the raw and post-trim FastQC panels either side of
-fastp, STAR's alignment scores and Picard's transcript region assignment.
-Insert size, gene body coverage and the STAR gene counts are folded in a
-collapsed <code>Library metrics</code> section. rnafusion runs FastQC twice, so the
-second pass is anchored as <code>fastqc-1</code> and carries a <code>_trimmed</code> suffix the
-samplesheet does not know: picking a sample in the persistent filter empties
-the trimmed panels.</p>
+<p><em>Gene fusions, from the reads to the callers that agree and the proteins they would make.</em></p>
+<!-- screenshot pending v2 -->
+<p>A short hero links the run parameters. <em>About this dashboard</em> says how to move
+through the tabs, <em>The run</em> lists the samples, the genome and GENCODE release,
+the callers and the caller cut-off, and <em>Pipeline</em> walks the six steps from
+alignment to splicing, each linked to its parameters and its tab. The findings
+are live values: they follow the filters, and a run that skipped a step drops
+the rows that read it.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample</code> and <code>Strandedness</code> on <code>samplesheet</code> in <em>Sample
-scope</em>, plus <code>Fusion</code>, <code>Caller agreement</code> and a <code>Fusion Indication Index</code>
-range on <code>fusion_consensus</code> in <em>Fusion scope</em>, both persistent and pinned
-to the top of every tab. <em>Reference scope</em> adds <code>5' partner gene</code> and
-<code>Knowledge bases hit</code> on <code>fusion_consensus</code>, persistent but not pinned.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> and
+<em>Findings</em> each have a filter bar (the sample and the caller agreement)
+that narrows that section only.</p>
 <table>
 <thead>
 <tr>
@@ -6053,54 +6082,35 @@ to the top of every tab. <em>Reference scope</em> adds <code>5' partner gene</co
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards (fusions called, samples, callers reporting, distinct 5' partners), pinned to the top of every tab</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Sample sheet</em>, pinned to the top of every tab</td>
+<td>Key figures</td>
+<td>4 headline cards: samples, fusion calls, read support, validated calls</td>
 </tr>
 <tr>
-<td>General statistics</td>
-<td><em>General statistics</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: the caller UpSet, the breakpoint chord, the fusion allelic ratio scatter and the fusion protein structure</td>
 </tr>
 <tr>
-<td>Read quality</td>
-<td><em>Raw read quality</em>, <em>Reads kept by fastp</em>, <em>Trimmed read quality</em></td>
-</tr>
-<tr>
-<td>Alignment</td>
-<td><em>STAR alignment scores</em>, <em>Where the bases landed</em></td>
-</tr>
-<tr>
-<td>Library metrics</td>
-<td><em>Insert size distribution</em>, <em>Coverage along the gene body</em>, <em>STAR gene-count assignment</em></td>
-</tr>
-<tr>
-<td>Reference tables</td>
-<td><em>fusion-report consensus</em>, pinned to the bottom of every tab</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>What the run called, how much agreement is behind each call, and where the two halves came from.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/fusion_calls_light.png" rel="noopener" target="_blank"><img alt="Fusion calls dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/fusion_calls_light.png"></a></p>
-<p>Four cards open the tab: the Fusion Indication Index, caller agreement,
-knowledge-base support and known fusions. The UpSet below reads every caller
-flag the run wrote as a set, so each bar is the fusions found by exactly that
-combination of callers and unanimous calls separate from single-caller ones
-at a glance. The lollipop plots each fusion at its fusion-report rank, sized
-by the index. <code>Partner chromosomes</code> then reads the Arriba breakpoints as a
-flow from the 5' partner's contig to the 3' partner's, and as chords on a
-chromosome ring coloured by structural class: a band that stays on one
-contig is a local rearrangement, one that crosses is a translocation.</p>
+<p><strong>Data &amp; QC</strong> · <em>Did the reads survive trimming and align to transcripts?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/multiqc_light.png"></a></p>
+<p>MultiQC panels only. The general statistics, the raw read quality beside the
+reads fastp kept, then STAR's alignment scores beside Picard's transcript
+region assignment. The post-trim read quality, insert size, gene body coverage
+and STAR gene counts are collapsed. Its sample filter reads the MultiQC report.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Rank</code> and <code>Knowledge bases</code> ranges on <code>fusion_consensus</code>
-and <code>Partner contigs</code> on the Arriba calls, in a <em>Consensus scope</em> group,
-on top of the persistent filters.</p>
+<p><strong>Filters</strong> · <code>Sample</code>, read from the MultiQC report.</p>
 <table>
 <thead>
 <tr>
@@ -6110,41 +6120,78 @@ on top of the persistent filters.</p>
 </thead>
 <tbody>
 <tr>
-<td>Calls at a glance</td>
+<td>QC overview</td>
+<td><em>General statistics</em></td>
+</tr>
+<tr>
+<td>Reads</td>
+<td>2 MultiQC panels</td>
+</tr>
+<tr>
+<td>Alignment</td>
+<td>2 MultiQC panels</td>
+</tr>
+<tr>
+<td>QC details (collapsed)</td>
+<td>4 MultiQC panels</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Fusion calls</strong> · <em>Which fusions did the callers agree on, and how are they ranked?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/fusion_calls_light.png" rel="noopener" target="_blank"><img alt="Caller Agreement dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/fusion_calls_light.png"></a></p>
+<p>The distinct fusions ranked by 5' partner, the calls split by how many callers
+agree, the median Fusion Indication Index and the calls a knowledge base
+already lists. Then the UpSet of the fusions each combination of callers
+found, and the fusions fusion-report ranks highest, as bars of their index.
+The consensus table is collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Fusion Indication Index</code>, <code>Rank in the sample</code> and
+<code>Knowledge bases listing it</code> ranges, <code>Knowledge bases</code> and
+<code>5' partner gene</code>, all on <code>fusion_consensus</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agreement at a glance</td>
 <td>4 cards</td>
 </tr>
 <tr>
 <td>Caller concordance</td>
-<td><em>Caller concordance</em> (UpSet), <em>Ranked fusions</em> (lollipop)</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Partner chromosomes</td>
-<td><em>Partner contigs, 5' to 3'</em> (Sankey), <em>Breakpoint partners on the genome</em> (chords)</td>
+<td>Ranked fusions</td>
+<td><em>Fusions by the index, highest first</em></td>
+</tr>
+<tr>
+<td>Consensus table (collapsed)</td>
+<td><em>fusion-report consensus</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>The same fusions seen through each caller's own read counts.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/evidence_light.png" rel="noopener" target="_blank"><img alt="Evidence dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/evidence_light.png"></a></p>
-<p>The shared dot plot is one dot per fusion and caller, coloured by log10 read
-support and sized by that caller's share of the total, so an empty column
-means the caller never reported the fusion. The scatter below faces the
-two split-read callers, with FusionCatcher as the marker size: a fusion off
-the diagonal is one they weigh differently, and a lasso on it filters the
-dashboard by fusion.</p>
-<p>The collapsed <code>Per caller detail</code> section gives each caller its own view
-rather than a shared one, because the callers report genuinely different
-evidence quantities and collapsing them would mean inventing a common
-scale: Arriba by event type, breakpoint site and confidence class,
-STAR-Fusion by splice type, FusionCatcher by predicted effect. The caller
-tables at the foot of the tab are row-selectable on the fusion.</p>
+<p><strong>Fusion calls</strong> · <em>How much read support did each caller find for each fusion?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/evidence_light.png" rel="noopener" target="_blank"><img alt="Caller Evidence dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/evidence_light.png"></a></p>
+<p>The caller reports by caller, their median read support, the total support per
+caller and the share of a fusion's reads one caller accounts for. Then the dot
+plot of read support per fusion and caller, and Arriba against STAR-Fusion on
+log axes, one point per fusion and sample. Each caller's own dot plot, on its
+own terms, and the caller tables are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Caller</code> and <code>Arriba confidence</code>, plus <code>Supporting reads</code>
-and <code>Caller share</code> ranges on <code>caller_evidence</code>, in an <em>Evidence scope</em>
-group.</p>
+<p><strong>Filters</strong> · <code>Caller</code>, plus <code>Supporting reads</code> and <code>Caller share</code>
+ranges, all on <code>caller_evidence</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6154,15 +6201,23 @@ group.</p>
 </thead>
 <tbody>
 <tr>
+<td>Evidence at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
 <td>Support across callers</td>
-<td>4 cards, <em>Read support per fusion and caller</em>, <em>Arriba against STAR-Fusion</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Per caller detail</td>
-<td><em>Arriba event types</em>, <em>Arriba breakpoint sites</em>, <em>Arriba confidence and support</em>, <em>STAR-Fusion splice type and abundance</em>, <em>FusionCatcher predicted effect and support</em></td>
+<td>Arriba against STAR-Fusion</td>
+<td><em>Arriba against STAR-Fusion</em></td>
 </tr>
 <tr>
-<td>Caller tables</td>
+<td>Per caller detail (collapsed)</td>
+<td>3 advanced visualizations, one per caller</td>
+</tr>
+<tr>
+<td>Caller tables (collapsed)</td>
 <td><em>Per-caller evidence</em>, <em>Arriba calls</em>, <em>STAR-Fusion calls</em>, <em>FusionCatcher calls</em></td>
 </tr>
 </tbody>
@@ -6170,27 +6225,18 @@ group.</p>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>What survives re-alignment, the fusion protein, and the junctions around it.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/fusioninspector_and_splicing_light.png" rel="noopener" target="_blank"><img alt="FusionInspector and splicing dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/fusioninspector_and_splicing_light.png"></a></p>
-<p>FusionInspector re-quantifies the calls against a fusion contig reference.
-The allelic-ratio scatter plots the 5' side against the 3' side on log axes:
-a call supported on one side only falls off the diagonal, the classic
-signature of a mapping artefact rather than a real fusion transcript. Beside
-it, a linked <em>Validated call record</em> folds to a slim rail until a point on
-the scatter or a row of the validated table is picked, then shows that
-call's breakpoints, read support, allelic ratios and predicted protein.</p>
-<p>The fusion protein structure draws each fusion as its two partners end to
-end with the breakpoint marked, one bar per Pfam domain along the partner
-that contributes it; a <code>PARTIAL</code> suffix means the breakpoint cuts through
-it. The collapsed <code>Splice junctions</code> section closes the tab with the
-CTAT-splicing landscape: support along the genome, arcs over the busiest
-loci, and a junction table whose row selection narrows both.</p>
+<p><strong>Fusion calls</strong> · <em>Where on the genome do the two fusion partners sit?</em></p>
+<!-- screenshot pending v2 -->
+<p>Arriba's calls as loci. Its calls by event class, the calls between
+chromosomes by confidence, the share of the local reads that support a call
+and the split reads. Then the flow from the contig of the 5' partner to that
+of the 3' partner beside the chord ring of the same calls, and the read
+support by event class and by breakpoint site.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Predicted protein</code> and a <code>Fragments per million</code> range on
-<code>fusioninspector_fusions</code> in a <em>Validation scope</em> group; <code>Chromosome</code>
-and a <code>Unique read support</code> range on <code>splice_junctions</code> in a <em>Splicing
-scope</em> group.</p>
+<p><strong>Filters</strong> · <code>Partner contigs</code>, <code>Event class</code> and <code>Arriba confidence</code> on
+<code>arriba_fusions</code>. They narrow the Arriba calls, not the chord, which the
+sample and fusion filters reach.</p>
 <table>
 <thead>
 <tr>
@@ -6200,20 +6246,137 @@ scope</em> group.</p>
 </thead>
 <tbody>
 <tr>
-<td>Validated calls</td>
-<td>4 cards, <em>Validated abundance by predicted protein</em>, <em>Fusion allelic ratio, both sides</em> with the linked <em>Validated call record</em></td>
+<td>Breakpoints at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Fusion protein domains</td>
-<td><em>Fusion protein structure</em>, <em>Domain positions per fusion</em>, <em>Pfam domains</em></td>
+<td>Partner contigs</td>
+<td>2 advanced visualizations</td>
 </tr>
 <tr>
-<td>Validated rows</td>
+<td>Event classes</td>
+<td><em>Read support by event class</em>, <em>Read support by breakpoint site</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Follow-up</strong> · <em>Which calls hold up when the reads are re-aligned?</em></p>
+<p><!-- screenshot pending v2 -->
+<a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/fusioninspector_and_splicing_light.png" rel="noopener" target="_blank"><img alt="Validation dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/rnafusion/fusioninspector_and_splicing_light.png"></a></p>
+<p>FusionInspector's re-quantified calls. The validated fusions by predicted
+protein, the median fragments per million against STAR-Fusion's default
+floor, the share of the support that crosses the junction and the re-aligned
+support. Then the abundance by predicted protein, and the 5' against the 3'
+fusion allelic ratio on log axes beside the record of the call you pick: a
+call supported on one side only falls off the diagonal.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Predicted protein</code> and a <code>Fragments per million</code> range on
+<code>fusioninspector_fusions</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Validation at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Validated abundance</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Allelic ratio</td>
+<td><em>Fusion allelic ratio, both sides</em> + a validated call record card</td>
+</tr>
+<tr>
+<td>Validated rows (collapsed)</td>
 <td><em>FusionInspector validation</em></td>
 </tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Follow-up</strong> · <em>Which protein domains would each fusion protein keep?</em></p>
+<!-- screenshot pending v2 -->
+<p>The Pfam domains of both partners. The domain hits by partner side, the hits
+the breakpoint cuts through, the domain length and the hit strength. Then the
+fusion protein structure, the fusions with the most domains drawn as their
+partners end to end, and the lollipop of every domain at its start position. A
+domain name ending in <code>PARTIAL</code> is one the breakpoint cuts through.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Partner side</code> and <code>Predicted protein</code> on
+<code>fusion_protein_domains</code>.</p>
+<table>
+<thead>
 <tr>
-<td>Splice junctions</td>
-<td>4 cards, <em>Junction support along the genome</em>, <em>Junction arcs over the busiest loci</em>, <em>Splice junctions</em></td>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domains at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Fusion protein structure</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Domain positions</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Domain table (collapsed)</td>
+<td><em>Pfam domains</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Follow-up</strong> · <em>Which splice junctions do the reads support, and how strongly?</em></p>
+<!-- screenshot pending v2 -->
+<p>CTAT-splicing's junctions. The distinct junctions ranked by gene, the unique
+read support, the reads summed over every junction by chromosome and the
+intron length. Then the Manhattan of junction support along the genome and
+the junction arcs over the busiest loci.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Chromosome</code> and a <code>Unique read support</code> range on
+<code>splice_junctions</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Junctions at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Junction landscape</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Junction arcs</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Junction table (collapsed)</td>
+<td><em>Splice junctions</em></td>
 </tr>
 </tbody>
 </table>
@@ -6222,20 +6385,18 @@ scope</em> group.</p>
 </div>
 </div>
 <div class="admonition tip">
-<p class="admonition-title">Splice junctions follow the sample, not the fusion</p>
-<p>CTAT-splicing scores every junction in the genes the callers touched, so the
-landscape is keyed on the junction and a fusion name has nothing to match
-against. <code>splice_junctions</code> is left out of the fusion links on purpose: the
-junction tiles keep their values when a fusion is picked, while the sample
-filter and the <em>Splicing scope</em> group narrow them.</p>
+<p class="admonition-title">Splice junctions are keyed on the intron</p>
+<p>CTAT-splicing scores the introns of a gene, so a fusion name has nothing to
+match against. The fusion filters stay off the Splice Junctions tab on
+purpose: the sample filters and the tab's own junction filters narrow it.</p>
 </div>
-<p>Fusions select on <code>fusion</code>: the <em>Arriba against STAR-Fusion</em> scatter, the
-allelic-ratio scatter, the caller tables, the evidence and FusionInspector
-tables, the Pfam domain table and the pinned consensus table. The pinned sample
-sheet selects on <code>sample</code>, and the junction Manhattan and junction table select
-on <code>gene</code>, which stays inside the splicing section. A pick narrows every tile
-that reads the same collection or one linked from it. The partner chords, the
-Sankey, the UpSet, the lollipops and the dot plots do not select.</p>
+<p>Fusions select on <code>fusion</code>: the ranked fusion bars, the <em>Arriba against
+STAR-Fusion</em> and allelic-ratio scatters, and the consensus, evidence, caller,
+FusionInspector and Pfam tables. The sample sheet selects on <code>sample</code>, and the
+junction Manhattan and junction table select on <code>gene</code>, which stays inside the
+Splice Junctions tab. A pick narrows every tile that reads the same collection or
+one linked from it. The partner chords, the flow, the UpSet and the dot plots do
+not select.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/rnafusion, it does not run the

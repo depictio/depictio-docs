@@ -5410,12 +5410,10 @@
 
 <p>The cutandrun template covers the peak-calling chain of a standard run:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: FastQC and Trim Galore, bowtie2 against the target genome and the spike-in, and the deepTools fingerprint that separates a target from its IgG control</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> <strong>Signal</strong>: the nucleosomal ladder and its fragment classes, the spike-in factors, duplication, and the deepTools tables behind the MultiQC pictures</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> <strong>Peaks</strong>: SEACR regions, the fragment pile-up around their summits, the share of coverage they hold, and MACS2 alongside</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> <strong>Caller agreement</strong>: how much of each caller's calls the other reproduced, sample by sample</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> <strong>Locus</strong>: one region with the SEACR, fragment, MACS2 and consensus tracks stacked on one genome axis</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> <strong>Consensus</strong>: the merged peak set of each target, and which replicates support every interval</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: the MultiQC report (FastQC, Trim Galore, Bowtie 2 against the target and the spike-in, the deepTools fingerprint), then depth, spike-in scaling, duplication and enrichment per library</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> <strong>Chromatin signal</strong>: the nucleosomal fragment ladder, then the SEACR regions, their pile-up and the signal they hold</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> <strong>Agreement</strong>: how much SEACR and MACS2 agree, the consensus set each target's replicates reproduce, and both on one genomic region</li>
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">Reprocess MultiQC first, or the QC tab is empty</p>
@@ -5435,7 +5433,7 @@ and nothing else.</p>
 seacr,macs2</code>). SEACR is cutandrun's default and the path the template is
 built on; the MACS2 collections are optional, so a SEACR-only run still
 ingests and the layout drops what is missing. Read <strong>Caller agreement</strong> with
-care then: with one caller the comparison reads as complete agreement.</p>
+care then: with one caller the comparison reads as complete disagreement.</p>
 </div>
 <hr>
 <h2 id="quick-start"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M19.22 4c.28 0 .53 0 .74.05.17 1.39-.02 4.25-3.3 7.53-1.7 1.71-3.73 3.02-6.01 3.89l-2.15-2.1c.92-2.31 2.23-4.34 3.92-6.03C15.18 4.58 17.64 4 19.22 4m0-2c-1.98 0-4.98.69-8.22 3.93-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.38.38.89.61 1.42.61.23 0 .47-.06.7-.15A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61S20.7 2 19.22 2m-4.68 7.46c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
@@ -5636,7 +5634,7 @@ re-packed so there are no empty rows.</p>
 <td><code>seacr_peaks_raw</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
-<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*.seacr.peaks.\w+.bed$</code></td>
+<td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?!(?:.<em>/)?igv/).</em>/[^/]*.seacr.peaks.\w+.bed$</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
@@ -5971,39 +5969,57 @@ re-packed so there are no empty rows.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Six tabs, read as a funnel: are the libraries clean and is each target enriched
-over its control, what the material itself carries before any peak is called,
-what SEACR called and how much of the coverage those calls hold, how much of
-that MACS2 shares, what one region looks like with every track stacked, and how
-much of it the replicates reproduce. Each tab below carries the <strong>same icon and
-colour the dashboard gives it</strong>. <code>Sample filters</code> (sample, target, replicate,
-role) is persistent and pinned to the top of every tab, with the <em>Cohort at a
-glance</em> cards and the collapsed <em>Sample sheet</em>; <em>QC thresholds</em> and <code>Reference
-tables</code> are pinned to the bottom. Every tab also carries a tab-local filter
-group on its own columns. The IgG controls are samples throughout; only the
-peak collections omit them.</p>
-<p>Scatter plots, genome tracks and tables are selection sources: a lasso on a
-scatter, a brush on a track or a picked table row sends its <code>sample</code> or
-<code>peak_id</code> values across the project links, so the other panels of the tab
-narrow to the same libraries or intervals.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Signal</label><label for="__tabbed_2_3"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Peaks</label><label for="__tabbed_2_4"><span class="twemoji mc-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Caller agreement</label><label for="__tabbed_2_5"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Locus</label><label for="__tabbed_2_6"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> Consensus</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then seven child tabs in three groups, read as a
+funnel from the libraries to the peaks a target's replicates reproduce. Each tab
+below carries the <strong>same icon and colour the dashboard gives it</strong>, so the page and
+the app read alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Libraries</td>
+</tr>
+<tr>
+<td>Chromatin signal</td>
+<td>Fragments, Peaks</td>
+</tr>
+<tr>
+<td>Agreement</td>
+<td>Caller agreement, Consensus, Locus</td>
+</tr>
+</tbody>
+</table>
+<p>Each child tab opens with a short intro and a strip of four cards, then at most
+three open sections; tables and details follow, collapsed. The persistent <em>Sample
+filters</em> (target, sample, replicate, role) sit in the left panel and narrow every
+tab through the project links. The <em>Sample sheet</em> is pinned, collapsed, to the
+bottom of every child tab. The template has no grouping variable: <code>target</code>, the
+samplesheet group, is what every grouped tile reads. The IgG controls are samples
+throughout; only the peak collections omit them.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:8"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><input id="__tabbed_2_8" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1c0-.21-.07-.41-.18-.57L13 8.35V4h-2v4.35L5.18 18.43c-.11.16-.18.36-.18.57m1 3a3 3 0 0 1-3-3c0-.6.18-1.16.5-1.63L9 7.81V6a1 1 0 0 1-1-1V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1v1.81l5.5 9.56c.32.47.5 1.03.5 1.63a3 3 0 0 1-3 3zm7-6 1.34-1.34L16.27 18H7.73l2.66-4.61zm-.5-4a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5"></path></svg></span> Libraries</label><label for="__tabbed_2_4"><span class="twemoji mc-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Fragments</label><label for="__tabbed_2_5"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> Peaks</label><label for="__tabbed_2_6"><span class="twemoji mc-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"></path></svg></span> Caller agreement</label><label for="__tabbed_2_7"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 7v2h5V7zm10 2v2H9v2h3v2l3-3zm5 0v6h5V9zM2 11v2h5v-2zm0 4v2h5v-2z"></path></svg></span> Consensus</label><label for="__tabbed_2_8"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"></path></svg></span> Locus</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Are the libraries clean, and does each target rise above its IgG control?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/multiqc_light.png"></a></p>
-<p>The general statistics table, then FastQC and Trim Galore, then bowtie2
-against the target genome and against the spike-in: a library whose spike-in
-alignment collapses is not comparable to the others even when its target
-alignment looks fine. The deepTools fingerprint closes the tab, which is what
-says whether a target rises above its IgG control at all. The tab holds
-MultiQC panels only; the tables behind those pictures are on the Signal tab.</p>
+<p><em>Chromatin profiling, from fragments to the peaks replicates reproduce.</em></p>
+<!-- screenshot pending v2 -->
+<p>A short hero links the run parameters, which for cutandrun 3.1 are the software
+versions: the run ships no <code>params.json</code>. <em>About this dashboard</em> says how the
+two filter levels work, <em>The run</em> lists the samples, targets, IgG controls and
+peak callers read from the data, and <em>Pipeline</em> walks the six steps from
+trimming to the consensus merge, each linked to its tool versions and its tab.
+The findings are live values: they follow the filters, and a route that lacks
+their data drops them. The Locus tab has no figure here, since it is a browser
+rather than a summary.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · the persistent <code>Sample filters</code> group (<code>Sample</code>, <code>Target</code>,
-<code>Replicate</code>, <code>Role</code>), plus <code>Target alignment rate</code> and <code>Spike-in scale
-factor</code> ranges in a tab-local <em>Alignment scope</em> group, and <code>Regions
-called</code> and <code>Coverage per base</code> ranges on <code>seacr_peak_summary</code> in a
-collapsed <em>QC thresholds</em> group pinned to the bottom.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> and
+<em>Findings</em> each have their own filter bar (target and sample): each
+narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -6013,55 +6029,77 @@ collapsed <em>QC thresholds</em> group pinned to the bottom.</p>
 </thead>
 <tbody>
 <tr>
-<td>Cohort at a glance</td>
-<td>4 cards (pinned)</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Sample sheet</em> (pinned, collapsed)</td>
+<td>Key figures</td>
+<td>4 headline cards: samples, fragment length, peaks, FRiP</td>
 </tr>
 <tr>
-<td>Run at a glance</td>
-<td><em>General statistics</em></td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: the fragment-length distribution, the pile-up at the SEACR summits, MACS2 against SEACR per sample and the reproducible share per target</td>
 </tr>
 <tr>
-<td>Read quality</td>
-<td>4 MultiQC panels (FastQC, cutadapt)</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>Did reads trim, align and rise above the IgG control?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/multiqc_light.png"></a></p>
+<p>MultiQC panels only, from the reprocessed report. Open: general statistics,
+FastQC sequence counts and the reads kept after trimming, Bowtie 2 against
+samtools percent mapped (spike-in libraries carry a <code>.spikein</code> suffix), then
+the deepTools fingerprint. Base quality, GC content, insert sizes and reads
+per contig are collapsed.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Target alignment rate</code> and <code>Spike-in scale factor</code> ranges
+on <code>bowtie2_spikein_factors</code>, carried into the report by a reverse link.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QC overview</td>
+<td>3 MultiQC panels</td>
 </tr>
 <tr>
 <td>Alignment and spike-in</td>
-<td>4 MultiQC panels (bowtie2, samtools)</td>
+<td>2 MultiQC panels</td>
 </tr>
 <tr>
 <td>Enrichment over the control</td>
-<td><em>Fingerprint plot</em></td>
+<td>1 MultiQC panel (fingerprint)</td>
 </tr>
 <tr>
-<td>Reference tables</td>
-<td><em>SEACR QC summary</em> (pinned, collapsed)</td>
+<td>QC details (collapsed)</td>
+<td>4 MultiQC panels</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Did the digestion work, and what was the coverage divided by, before any peak is called?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/signal_light.png" rel="noopener" target="_blank"><img alt="Signal dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/signal_light.png"></a></p>
-<p>Everything the pipeline published as a table beside the report. MNase cuts
-around nucleosomes, so a working experiment shows a sharp sub-nucleosomal
-peak next to a mononucleosomal shoulder, and a flat distribution means the
-digestion did not work; the nucleosome classes bin the same histogram at the
-conventional boundaries. The spike-in factors are recomputed from the two
-bowtie2 logs, since the run publishes no scale-factor table, and Picard's
-duplicate flags show which libraries saturated. The deepTools tables close
-the tab: the fingerprint scatter, the <code>plotPCA</code> loadings and the clustered
-correlation matrix, where a block spanning two targets is a swap or a
-contamination. The depth, duplication, fingerprint and PCA scatters are all
-lasso sources on <code>sample</code>.</p>
+<p><strong>Data &amp; QC</strong> · <em>How deep and duplicated is each library, and is it enriched?</em></p>
+<!-- screenshot pending v2 -->
+<p>The tables the pipeline publishes beside the report. Read pairs, the spike-in
+scale factor, duplicate reads and the distance from a uniform library. Then the
+scale factor and the duplicate share per library, the fingerprint metrics,
+where targets sit apart from the IgG controls, and the PCA beside the clustered
+correlation matrix of the genome-wide bin counts.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Nucleosome class</code>, a <code>Fragment length</code> range and a
-<code>Coverage concentration</code> range in a tab-local <em>Signal scope</em> group.</p>
+<p><strong>Filters</strong> · a <code>Spike-in scale factor</code> range on <code>bowtie2_spikein_factors</code>
+and a <code>Coverage concentration</code> range on <code>deeptools_fingerprint_metrics</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6071,54 +6109,46 @@ lasso sources on <code>sample</code>.</p>
 </thead>
 <tbody>
 <tr>
-<td>Signal at a glance</td>
+<td>Libraries at a glance</td>
 <td>4 cards</td>
 </tr>
 <tr>
-<td>Fragment length structure</td>
-<td><em>Fragment length distribution</em>, <em>Cumulative fragment length</em></td>
+<td>Spike-in and duplication</td>
+<td>2 bars</td>
 </tr>
 <tr>
-<td>Nucleosome classes</td>
-<td>3 cards, <em>Fragment classes per sample</em></td>
+<td>Enrichment over the control</td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Spike-in normalisation</td>
-<td><em>Spike-in scale factor per sample</em>, <em>Target depth against spike-in depth</em></td>
+<td>Sample similarity</td>
+<td>2 advanced visualizations</td>
 </tr>
 <tr>
-<td>Library duplication</td>
-<td><em>Duplicate reads per library</em>, <em>Duplication against depth</em></td>
+<td>Depth detail (collapsed)</td>
+<td>2 scatters</td>
 </tr>
 <tr>
-<td>Coverage concentration and sample similarity</td>
-<td><em>Coverage concentration per library</em>, <em>Samples on the first two components</em>, <em>Sample correlation matrix</em></td>
-</tr>
-<tr>
-<td>Signal tables</td>
-<td><em>Fragment classes</em>, <em>Spike-in factors</em> (collapsed)</td>
+<td>Library tables (collapsed)</td>
+<td><em>Spike-in factors</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>What SEACR called on every sample, what the fragments look like under it, and how much of the library the calls hold.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/peaks_light.png" rel="noopener" target="_blank"><img alt="Peaks dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/peaks_light.png"></a></p>
-<p>SEACR calls regions from fragment coverage rather than from a background
-model, so a SEACR row carries a total and a maximum signal and no p-value at
-all; MultiQC has no SEACR module, which is why SEACR needed its own catalog
-tool. The pile-up heatmap rebuilds the fragments from the fragment BEDs, one
-row per region 3 kb either side of its summit: a sharp mark collapses onto
-the summit while a broad one stays spread. <em>Signal budget</em> is the fraction
-of reads in peaks, counted in base pairs of fragment coverage because SEACR
-reports no read count. MACS2 follows with the fold enrichment and q-value
-SEACR does not give; its significance track is a brush source on <code>peak_id</code>
-that narrows the peak tables.</p>
+<p><strong>Chromatin signal</strong> · <em>Did the digestion work, and how nucleosomal are the fragments?</em></p>
+<!-- screenshot pending v2 -->
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/signal_light.png" rel="noopener" target="_blank"><img alt="Fragments dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/signal_light.png"></a></p>
+<p>The nucleosomal ladder. The median fragment length, the fragments counted, the
+fragments by nucleosome class and the mononucleosome to sub-nucleosome ratio
+per target. Then the fragment-length distribution, one curve per sample with
+the sub-nucleosomal and mononucleosomal windows shaded, beside its cumulative
+twin, and each library split into its four nucleosome classes.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Region width</code> and <code>Coverage per base</code> ranges and a
-<code>Contig</code> selector on <code>seacr_peaks</code>, in a tab-local <em>Peak scope</em> group.</p>
+<p><strong>Filters</strong> · <code>Nucleosome class</code> on <code>seacr_fragment_classes</code> and a
+<code>Fragment length</code> range on <code>seacr_fragment_lengths</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6128,24 +6158,66 @@ that narrows the peak tables.</p>
 </thead>
 <tbody>
 <tr>
-<td>SEACR peak yield</td>
-<td>4 cards, <em>SEACR region width</em></td>
+<td>Fragments at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Fragment pile-up around the peaks</td>
-<td><em>Fragment pile-up around the SEACR summits</em>, <em>Mean pile-up per sample</em></td>
+<td>Fragment length</td>
+<td>2 line charts</td>
 </tr>
 <tr>
-<td>Signal budget</td>
-<td>2 cards, <em>Fragment coverage inside and outside peaks</em></td>
+<td>Nucleosome classes</td>
+<td>1 bar</td>
 </tr>
 <tr>
-<td>MACS2 alongside</td>
-<td>4 cards, <em>MACS2 significance along the genome</em></td>
+<td>Fragment tables (collapsed)</td>
+<td><em>Nucleosome classes</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Chromatin signal</strong> · <em>What did each sample call, and how much signal do peaks hold?</em></p>
+<!-- screenshot pending v2 -->
+<p>SEACR regions, their width, their coverage per base and the lowest FRiP in
+view. Then the region width beside the mean pile-up on the summits, the
+summit-centred pile-up of each sample's strongest regions, and the fragment
+coverage inside and outside peaks. FRiP is built in base pairs of coverage,
+because SEACR reports no read count. The pile-up tiles need the fragment BEDs
+and drop when a run did not publish them.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Region width</code>, <code>Coverage per base</code> and <code>Contig</code> on
+<code>seacr_peaks</code>, then <code>Regions called</code> and <code>Median coverage per base</code> on
+<code>seacr_peak_summary</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Peaks at a glance</td>
+<td>4 cards</td>
 </tr>
 <tr>
-<td>Peak tables</td>
-<td><em>SEACR regions</em>, <em>MACS2 peaks</em>, <em>Signal budget</em> (collapsed)</td>
+<td>Peak shape</td>
+<td>1 histogram + 1 line chart</td>
+</tr>
+<tr>
+<td>Pile-up per region</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Signal in peaks</td>
+<td>1 bar</td>
+</tr>
+<tr>
+<td>Peak tables (collapsed)</td>
+<td><em>SEACR regions</em>, <em>MACS2 peaks</em>, <em>SEACR summary per sample</em>, <em>Signal budget</em></td>
 </tr>
 </tbody>
 </table>
@@ -6153,26 +6225,24 @@ that narrows the peak tables.</p>
 <div class="admonition tip">
 <p class="admonition-title">The pile-up needs the fragment BEDs</p>
 <p>Both fragment collections are optional. A run or a mirror without the
-<code>*.frags.cut.bed</code> files ingests everything else, and the pile-up section
-here and the fragment track of the Locus tab drop out.</p>
+<code>*.frags.cut.bed</code> files ingests everything else, and the pile-up tiles here,
+the fragment track of the Locus tab and the pile-up figure on the Overview
+drop out.</p>
 </div>
 </div>
 <div class="tabbed-block">
-<p><em>Two callers, one set of fragments: how much of each one's calls the other reproduced.</em></p>
+<p><strong>Agreement</strong> · <em>Do SEACR and MACS2 call the same peaks on each sample?</em></p>
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/caller_agreement_light.png" rel="noopener" target="_blank"><img alt="Caller agreement dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/caller_agreement_light.png"></a></p>
-<p>The two callers meet only here. <code>caller_agreement</code> is a join on <code>sample</code>
-that lives in the template's own <code>recipes/</code>, because a composition across
-two collections is what the catalog policy keeps out of the catalog. A peak
-counts as shared when it overlaps at least one call of the other caller on
-the same sample and chromosome, and a sample a caller never called keeps a
-row with <code>n_peaks = 0</code> rather than disappearing. The scatter puts MACS2 and
-SEACR on the two axes, one point per sample sized by the share they agree
-on, and is a lasso source on <code>sample</code>; the bars count the calls the other
-caller never made.</p>
+<p>Peaks called by caller, the peak width by caller, the share of one caller's
+peaks the other reproduces and the calls only one caller made. Then MACS2
+against SEACR, one selectable point per sample, beside the calls the other
+caller did not make, and the MACS2 significance along the genome. A sample
+with no MACS2 peaks keeps its row, so it reads as disagreement rather than as
+missing data.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>Caller</code> and a <code>Share reproduced</code> range, both on
-<code>caller_agreement</code>, in a tab-local <em>Caller scope</em> group.</p>
+<code>caller_agreement</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6187,72 +6257,32 @@ caller never made.</p>
 </tr>
 <tr>
 <td>Caller against caller</td>
-<td><em>MACS2 against SEACR, per sample</em>, <em>Calls the other caller did not make</em></td>
+<td>1 scatter + 1 bar</td>
 </tr>
 <tr>
-<td>Comparison table</td>
-<td><em>Caller comparison</em> (collapsed)</td>
+<td>MACS2 along the genome</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Comparison table (collapsed)</td>
+<td><em>Caller comparison</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>One region, every track: do the callers and the replicates agree where it matters?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/locus_light.png" rel="noopener" target="_blank"><img alt="Locus dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/locus_light.png"></a></p>
-<p>Four tracks on one genome axis, set by the <code>GENOME</code> variable: the SEACR
-regions, the fragment pile-up, the MACS2 calls and the consensus intervals
-over a gene lane. The SEACR track is the navigator: the tab opens on a fixed
-default locus, and typing a locus in its header or brushing its axis moves
-the other three tracks and recounts the cards above. Brushing intervals on
-any track selects their <code>peak_id</code> values for the rest of the tab.</p>
+<p><strong>Agreement</strong> · <em>Which peaks do a target's replicates reproduce?</em></p>
+<p>Consensus intervals by replicate support, the reproducible ones (two
+replicates or more) by target, the interval width and the coverage per
+interval. Then the UpSet of the replicates calling each interval, the
+reproducible share per target and the interval width by support. The
+<code>Replicate support</code> filter keeps every value until you narrow it, so the cards
+include single-replicate intervals.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>SEACR coverage per base</code> and <code>MACS2 -log10 q-value</code>
-ranges and a <code>Replicate support</code> selector, in a tab-local <em>Locus scope</em>
-group.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Region at a glance</td>
-<td>4 cards, recounted on the region in view</td>
-</tr>
-<tr>
-<td>One region, four tracks</td>
-<td><em>SEACR regions</em>, <em>Fragment pile-up</em>, <em>MACS2 calls on the region</em>, <em>Consensus intervals and genes</em></td>
-</tr>
-</tbody>
-</table>
-</details>
-<div class="admonition tip">
-<p class="admonition-title">Pass the assembly for a run not on hg38</p>
-<p>The navigator fetches only the chromosome of its region from the
-assembly it is given, which defaults to <code>hg38</code>. For a run aligned to
-another build, pass <code>--var GENOME=&lt;assembly&gt;</code> at ingest, or the tracks
-land on the wrong coordinates.</p>
-</div>
-</div>
-<div class="tabbed-block">
-<p><em>The merged peak set of each target, and which replicates support every interval.</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/consensus_light.png" rel="noopener" target="_blank"><img alt="Consensus dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/cutandrun/consensus_light.png"></a></p>
-<p>Four cards on the merged intervals, then the UpSet panel over the replicate
-columns of the consensus table: bars spanning several replicates are the
-reproducible core of a target, single-replicate bars what one replicate saw
-alone. Below it, the reproducible share per target and interval width by
-replicate support. The cards average over whatever <code>Replicate support</code> leaves
-in view, and it defaults to every value; picking a row of the consensus table
-selects its <code>peak_id</code> across the tab.</p>
-<details class="abstract">
-<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Replicate support</code> and <code>Interval width</code> and <code>Member peaks</code>
-ranges on <code>seacr_consensus_peaks</code>, in a tab-local <em>Consensus scope</em>
-group.</p>
+<p><strong>Filters</strong> · <code>Replicate support</code>, and <code>Interval width</code> and <code>Member
+peaks</code> ranges, all on <code>seacr_consensus_peaks</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6267,35 +6297,77 @@ group.</p>
 </tr>
 <tr>
 <td>Replicate agreement</td>
-<td><em>Consensus interval overlap</em> (UpSet)</td>
+<td>1 advanced visualization (UpSet)</td>
 </tr>
 <tr>
 <td>How reproducible</td>
-<td><em>Reproducible share per target</em>, <em>Interval width by replicate support</em></td>
+<td>1 bar + 1 histogram</td>
 </tr>
 <tr>
-<td>Consensus table</td>
-<td><em>Consensus intervals</em> (collapsed)</td>
+<td>Consensus table (collapsed)</td>
+<td><em>Consensus intervals</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
+<div class="tabbed-block">
+<p><strong>Agreement</strong> · <em>Do the callers and the replicates agree on one region?</em></p>
+<!-- screenshot pending v2 -->
+<p>One region on one genome axis. The cards count what the region in view holds
+and follow it as the tracks do. The SEACR navigator opens on a default region:
+type a locus in its header or brush its axis, and the fragment pile-up, the
+MACS2 calls and the consensus intervals over the gene lane follow.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>SEACR coverage per base</code> on <code>seacr_peaks</code>, <code>MACS2 -log10
+q-value</code> on <code>macs2_peaks</code> and <code>Replicate support</code> on
+<code>seacr_consensus_peaks</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Region at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>One region, four tracks</td>
+<td>4 advanced visualizations</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">Pass the assembly for a run not on hg38</p>
+<p>The navigator fetches only the chromosome of its region from the
+assembly it is given, which defaults to <code>hg38</code>. For a run aligned to
+another build, pass <code>--var GENOME=&lt;assembly&gt;</code> at ingest, or the tracks
+land on the wrong coordinates.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">A broad mark reproduces poorly, and the dashboard says so</p>
-<p>Replicates of a broad histone mark overlap badly, so a large share of its
-consensus intervals are called by a single replicate. That is a property of
-the data, not of the template.</p>
+<p>The replicates of a broad histone mark overlap badly, so a large part of its
+consensus intervals rests on a single replicate. That is a property of the
+data, not of the template.</p>
 </div>
-<p>Tables and point views select on their entity column: the pinned sample sheet
-on <code>sample_id</code>; the per-sample tables (peak summary, fragment classes, spike-in
-factors, FRiP, caller agreement) and the spike-in and duplication scatters on
-<code>sample</code>; the peak tables, the Manhattan panel and every Locus track on <code>peak_id</code>. A
-pick narrows the other tiles of its collection and follows the project links to
-the collections they reach. The deepTools PCA emits a selection, but its
-collection has no outgoing link, so it narrows no other tile.</p>
+<p>Tables and point views select on their entity column: the sample sheet on
+<code>sample_id</code>; the per-sample tables (SEACR summary, fragment classes, spike-in
+factors, signal budget, caller comparison), the caller, depth and duplication
+scatters and the fingerprint tile on <code>sample</code>; the peak and consensus tables, the
+MACS2 significance track and the SEACR, MACS2 and consensus tracks of the Locus
+tab on <code>peak_id</code>. A lasso on a scatter, a brush on a track or a picked table row
+becomes a dashboard filter that narrows the other tiles of its collection and
+follows the project links to the collections they reach. The deepTools PCA emits
+a selection, but its collection has no outgoing link, so it narrows no other
+tile.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/cutandrun. Run the pipeline first:</p>

@@ -5411,14 +5411,11 @@
 <p>The taxprofiler template covers the standardised outputs of an nf-core/taxprofiler
 run, whichever classifiers it used:</p>
 <ul>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>MultiQC</strong>: FastQC and fastp, host removal, nanopore read stats and coverage redundancy, straight from the pipeline's MultiQC report</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> <strong>Depth and diversity</strong>: nonpareil coverage against sequencing effort, and how diverse and how even each classifier says the community is</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2H7v2.1c-.71.15-1.27.44-1.68.81L2.7 2.29 1.29 3.71l2.95 2.94C4 7.39 4 8 4 8H2v2h2.04c.06.63.17 1.36.36 2.15l-2.72.9.63 1.9 2.69-.9c.24.51.5 1.03.82 1.53l-2.38 1.59 1.11 1.66 2.52-1.68c.56.56 1.22 1.06 1.99 1.49l-.96 1.91 1.79.9 1-2-.16-.09c.95.32 2.03.54 3.27.61V22h2v-2.07c.76-.09 1.81-.29 2.77-.74l1.52 1.52 1.41-1.42-1.33-1.34c.38-.51.63-1.15.63-1.95 0-.5-.05-.92-.12-1.32l1.57-.78-.9-1.8-1.37.69c-.55-.83-1.27-1.29-1.89-1.51l.66-1.96-1.9-.64-.76 2.28c-1.33-.13-2.12-.64-2.59-1.19l1.75-.87-.9-1.8-1.55.79a4.4 4.4 0 0 0-.72-2.02l1.55-2.32-1.66-1.11-1.41 2.12c-.48-.23-1.06-.41-1.76-.5M15 18c-2.94 0-5.19-.82-6.69-2.44C5.68 12.72 6 8.2 6 8.17v-.14C6 7.1 6.39 6 8 6c2.63 0 2.97 1.43 3 2 0 2 1.6 5 6 5 .33 0 2 .15 2 3 0 1.89-3.97 2-4 2M8.5 8A1.5 1.5 0 0 0 7 9.5 1.5 1.5 0 0 0 8.5 11 1.5 1.5 0 0 0 10 9.5 1.5 1.5 0 0 0 8.5 8m2.5 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4.5 2a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5"></path></svg></span> <strong>Profiles</strong>: stacked taxonomy per profiling run and rank, Krona rings per classifier, beside sylph containment and melon genome copies</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.5 17c-.14 0-.26 0-.39.04L17.5 13.8c.45-.45.75-1.09.75-1.8a2.5 2.5 0 0 0-2.5-2.5c-.14 0-.25 0-.4.04L13.74 6.3c.47-.46.76-1.09.76-1.8a2.5 2.5 0 0 0-5 0c0 .7.29 1.34.76 1.79L8.65 9.54c-.15-.04-.26-.04-.4-.04a2.5 2.5 0 0 0-2.5 2.5c0 .71.29 1.34.75 1.79l-1.61 3.25C4.76 17 4.64 17 4.5 17a2.5 2.5 0 0 0 0 5A2.5 2.5 0 0 0 7 19.5c0-.7-.29-1.34-.76-1.79l1.62-3.25c.14.04.26.04.39.04s.25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0A2.5 2.5 0 0 0 12 17c-.13 0-.26 0-.39.04L10 13.8c.45-.45.75-1.09.75-1.8 0-.7-.29-1.33-.75-1.79l1.61-3.25c.13.04.26.04.39.04s.26 0 .39-.04L14 10.21a2.5 2.5 0 0 0 1.75 4.29c.13 0 .25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0-2.5-2.5m-15 3.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m8.5-1c0 .55-.45 1-1 1s-1-.45-1-1 .45-1 1-1 1 .45 1 1M7.25 12c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1M11 4.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m3.75 7.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m4.75 8.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"></path></svg></span> <strong>Concordance</strong>: a Bray-Curtis ordination over every profiling run, the classifier overlap as an UpSet, a root-to-species flow and a taxon-by-run heatmap</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 2v2.07A8 8 0 0 0 4.07 11H2v2h2.07A8 8 0 0 0 11 19.93V22h2v-2.07A8 8 0 0 0 19.93 13H22v-2h-2.07A8 8 0 0 0 13 4.07V2m-2 4.08V8h2V6.09c2.5.41 4.5 2.41 4.92 4.91H16v2h1.91c-.41 2.5-2.41 4.5-4.91 4.92V16h-2v1.91C8.5 17.5 6.5 15.5 6.08 13H8v-2H6.09C6.5 8.5 8.5 6.5 11 6.08M12 11a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1"></path></svg></span> <strong>Confidence</strong>: containment identity against abundance, with a record card for the genome picked on the scatter</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> <strong>Overview</strong>: the run in four key figures, live findings and four figures, each linked to the tab that explains it</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> <strong>Data &amp; QC</strong>: FastQC and fastp, host removal, nanopore read stats and coverage redundancy from the MultiQC report, and the sequencing depth Nonpareil models</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2H7v2.1c-.71.15-1.27.44-1.68.81L2.7 2.29 1.29 3.71l2.95 2.94C4 7.39 4 8 4 8H2v2h2.04c.06.63.17 1.36.36 2.15l-2.72.9.63 1.9 2.69-.9c.24.51.5 1.03.82 1.53l-2.38 1.59 1.11 1.66 2.52-1.68c.56.56 1.22 1.06 1.99 1.49l-.96 1.91 1.79.9 1-2-.16-.09c.95.32 2.03.54 3.27.61V22h2v-2.07c.76-.09 1.81-.29 2.77-.74l1.52 1.52 1.41-1.42-1.33-1.34c.38-.51.63-1.15.63-1.95 0-.5-.05-.92-.12-1.32l1.57-.78-.9-1.8-1.37.69c-.55-.83-1.27-1.29-1.89-1.51l.66-1.96-1.9-.64-.76 2.28c-1.33-.13-2.12-.64-2.59-1.19l1.75-.87-.9-1.8-1.55.79a4.4 4.4 0 0 0-.72-2.02l1.55-2.32-1.66-1.11-1.41 2.12c-.48-.23-1.06-.41-1.76-.5M15 18c-2.94 0-5.19-.82-6.69-2.44C5.68 12.72 6 8.2 6 8.17v-.14C6 7.1 6.39 6 8 6c2.63 0 2.97 1.43 3 2 0 2 1.6 5 6 5 .33 0 2 .15 2 3 0 1.89-3.97 2-4 2M8.5 8A1.5 1.5 0 0 0 7 9.5 1.5 1.5 0 0 0 8.5 11 1.5 1.5 0 0 0 10 9.5 1.5 1.5 0 0 0 8.5 8m2.5 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4.5 2a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5"></path></svg></span> <strong>Communities</strong>: the composition per profiling run beside sylph containment and melon genome copies, and the diversity of each profile</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.5 17c-.14 0-.26 0-.39.04L17.5 13.8c.45-.45.75-1.09.75-1.8a2.5 2.5 0 0 0-2.5-2.5c-.14 0-.25 0-.4.04L13.74 6.3c.47-.46.76-1.09.76-1.8a2.5 2.5 0 0 0-5 0c0 .7.29 1.34.76 1.79L8.65 9.54c-.15-.04-.26-.04-.4-.04a2.5 2.5 0 0 0-2.5 2.5c0 .71.29 1.34.75 1.79l-1.61 3.25C4.76 17 4.64 17 4.5 17a2.5 2.5 0 0 0 0 5A2.5 2.5 0 0 0 7 19.5c0-.7-.29-1.34-.76-1.79l1.62-3.25c.14.04.26.04.39.04s.25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0A2.5 2.5 0 0 0 12 17c-.13 0-.26 0-.39.04L10 13.8c.45-.45.75-1.09.75-1.8 0-.7-.29-1.33-.75-1.79l1.61-3.25c.13.04.26.04.39.04s.26 0 .39-.04L14 10.21a2.5 2.5 0 0 0 1.75 4.29c.13 0 .25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0-2.5-2.5m-15 3.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m8.5-1c0 .55-.45 1-1 1s-1-.45-1-1 .45-1 1-1 1 .45 1 1M7.25 12c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1M11 4.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m3.75 7.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m4.75 8.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"></path></svg></span> <strong>Classifiers</strong>: a Bray-Curtis ordination over every profiling run, the classifier overlap as an UpSet, the taxonomic flow, and sylph containment identity</li>
 </ul>
-<p><code>Run at a glance</code> and a collapsed <code>Sample sheet</code> are pinned to the top of every
-tab, and <code>Reference tables</code>, holding the database sheet, to the bottom.</p>
 <div class="admonition info">
 <p class="admonition-title">Whatever profilers your run used</p>
 <p>taxprofiler runs an arbitrary subset of its profilers, chosen by the database
@@ -5870,30 +5867,55 @@ nothing drops out the same way.</p>
 </div>
 <hr>
 <h2 id="dashboard-tabs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Dashboard tabs<a class="headerlink" href="#dashboard-tabs" title="Permanent link">¶</a></h2>
-<p>Five tabs, read as a funnel: are the reads worth classifying, did the sequencing
-go deep enough and how diverse is what it found, what does each classifier say
-the community is, where do the classifiers disagree, and how much should a given
-call be trusted. Each tab below carries the <strong>same icon and colour the dashboard
-gives it</strong>, so the page and the app read alike. The <code>Samples</code> filter group and
-the <code>Run at a glance</code> cards are persistent and pinned to the top of every tab,
-with the collapsed <code>Sample sheet</code> under them, and <code>Reference tables</code> is pinned
-to the bottom of every tab.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:5"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_2"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> Depth and diversity</label><label for="__tabbed_2_3"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2H7v2.1c-.71.15-1.27.44-1.68.81L2.7 2.29 1.29 3.71l2.95 2.94C4 7.39 4 8 4 8H2v2h2.04c.06.63.17 1.36.36 2.15l-2.72.9.63 1.9 2.69-.9c.24.51.5 1.03.82 1.53l-2.38 1.59 1.11 1.66 2.52-1.68c.56.56 1.22 1.06 1.99 1.49l-.96 1.91 1.79.9 1-2-.16-.09c.95.32 2.03.54 3.27.61V22h2v-2.07c.76-.09 1.81-.29 2.77-.74l1.52 1.52 1.41-1.42-1.33-1.34c.38-.51.63-1.15.63-1.95 0-.5-.05-.92-.12-1.32l1.57-.78-.9-1.8-1.37.69c-.55-.83-1.27-1.29-1.89-1.51l.66-1.96-1.9-.64-.76 2.28c-1.33-.13-2.12-.64-2.59-1.19l1.75-.87-.9-1.8-1.55.79a4.4 4.4 0 0 0-.72-2.02l1.55-2.32-1.66-1.11-1.41 2.12c-.48-.23-1.06-.41-1.76-.5M15 18c-2.94 0-5.19-.82-6.69-2.44C5.68 12.72 6 8.2 6 8.17v-.14C6 7.1 6.39 6 8 6c2.63 0 2.97 1.43 3 2 0 2 1.6 5 6 5 .33 0 2 .15 2 3 0 1.89-3.97 2-4 2M8.5 8A1.5 1.5 0 0 0 7 9.5 1.5 1.5 0 0 0 8.5 11 1.5 1.5 0 0 0 10 9.5 1.5 1.5 0 0 0 8.5 8m2.5 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4.5 2a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5"></path></svg></span> Profiles</label><label for="__tabbed_2_4"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.5 17c-.14 0-.26 0-.39.04L17.5 13.8c.45-.45.75-1.09.75-1.8a2.5 2.5 0 0 0-2.5-2.5c-.14 0-.25 0-.4.04L13.74 6.3c.47-.46.76-1.09.76-1.8a2.5 2.5 0 0 0-5 0c0 .7.29 1.34.76 1.79L8.65 9.54c-.15-.04-.26-.04-.4-.04a2.5 2.5 0 0 0-2.5 2.5c0 .71.29 1.34.75 1.79l-1.61 3.25C4.76 17 4.64 17 4.5 17a2.5 2.5 0 0 0 0 5A2.5 2.5 0 0 0 7 19.5c0-.7-.29-1.34-.76-1.79l1.62-3.25c.14.04.26.04.39.04s.25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0A2.5 2.5 0 0 0 12 17c-.13 0-.26 0-.39.04L10 13.8c.45-.45.75-1.09.75-1.8 0-.7-.29-1.33-.75-1.79l1.61-3.25c.13.04.26.04.39.04s.26 0 .39-.04L14 10.21a2.5 2.5 0 0 0 1.75 4.29c.13 0 .25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0-2.5-2.5m-15 3.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m8.5-1c0 .55-.45 1-1 1s-1-.45-1-1 .45-1 1-1 1 .45 1 1M7.25 12c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1M11 4.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m3.75 7.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m4.75 8.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"></path></svg></span> Concordance</label><label for="__tabbed_2_5"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 2v2.07A8 8 0 0 0 4.07 11H2v2h2.07A8 8 0 0 0 11 19.93V22h2v-2.07A8 8 0 0 0 19.93 13H22v-2h-2.07A8 8 0 0 0 13 4.07V2m-2 4.08V8h2V6.09c2.5.41 4.5 2.41 4.92 4.91H16v2h1.91c-.41 2.5-2.41 4.5-4.91 4.92V16h-2v1.91C8.5 17.5 6.5 15.5 6.08 13H8v-2H6.09C6.5 8.5 8.5 6.5 11 6.08M12 11a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1"></path></svg></span> Confidence</label></div>
+<p>One dashboard: the <strong>Overview</strong>, then six child tabs in three groups, read as a
+funnel from the reads to the taxa the classifiers agree on. Each tab below carries
+the <strong>same icon and colour the dashboard gives it</strong>, so the page and the app read
+alike.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tabs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data &amp; QC</td>
+<td>MultiQC, Sequencing depth</td>
+</tr>
+<tr>
+<td>Communities</td>
+<td>Profiles, Diversity</td>
+</tr>
+<tr>
+<td>Classifiers</td>
+<td>Concordance, Confidence</td>
+</tr>
+</tbody>
+</table>
+<p>A profiling run is a sample, a classifier and a database, so most tiles show one
+value per run, and the classifier and the sequencing platform take the place of a
+design column. Each child tab opens with a short intro and a strip of four cards,
+then at most three open sections; tables and details follow, collapsed. The
+persistent <em>Sample filters</em> (platform, sample, sequencing run) sit in the left panel
+and narrow every tab. The <em>Sample sheet</em> and <em>Database sheet</em> sections are pinned,
+collapsed, to the bottom of every child tab.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:7"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7 17 3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9.9.9 0 0 0 .9.9.9.9 0 0 0 .9-.9.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Overview</label><label for="__tabbed_2_2"><img alt="MultiQC" src="../../../images/logos/multiqc_light.svg#only-light" width="18"><img alt="MultiQC" src="../../../images/logos/multiqc_dark.svg#only-dark" width="18"> MultiQC</label><label for="__tabbed_2_3"><span class="twemoji mc-cyan"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33m0-6h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2V6h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0C17.22 5.53 18.61 6 20 6m0 12h2v2h-2c-1.38 0-2.74-.35-4-1-2.5 1.3-5.5 1.3-8 0-1.26.65-2.63 1-4 1H2v-2h2c1.39 0 2.78-.47 4-1.33 2.44 1.71 5.56 1.71 8 0 1.22.86 2.61 1.33 4 1.33"></path></svg></span> Sequencing depth</label><label for="__tabbed_2_4"><span class="twemoji mc-grape"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2H7v2.1c-.71.15-1.27.44-1.68.81L2.7 2.29 1.29 3.71l2.95 2.94C4 7.39 4 8 4 8H2v2h2.04c.06.63.17 1.36.36 2.15l-2.72.9.63 1.9 2.69-.9c.24.51.5 1.03.82 1.53l-2.38 1.59 1.11 1.66 2.52-1.68c.56.56 1.22 1.06 1.99 1.49l-.96 1.91 1.79.9 1-2-.16-.09c.95.32 2.03.54 3.27.61V22h2v-2.07c.76-.09 1.81-.29 2.77-.74l1.52 1.52 1.41-1.42-1.33-1.34c.38-.51.63-1.15.63-1.95 0-.5-.05-.92-.12-1.32l1.57-.78-.9-1.8-1.37.69c-.55-.83-1.27-1.29-1.89-1.51l.66-1.96-1.9-.64-.76 2.28c-1.33-.13-2.12-.64-2.59-1.19l1.75-.87-.9-1.8-1.55.79a4.4 4.4 0 0 0-.72-2.02l1.55-2.32-1.66-1.11-1.41 2.12c-.48-.23-1.06-.41-1.76-.5M15 18c-2.94 0-5.19-.82-6.69-2.44C5.68 12.72 6 8.2 6 8.17v-.14C6 7.1 6.39 6 8 6c2.63 0 2.97 1.43 3 2 0 2 1.6 5 6 5 .33 0 2 .15 2 3 0 1.89-3.97 2-4 2M8.5 8A1.5 1.5 0 0 0 7 9.5 1.5 1.5 0 0 0 8.5 11 1.5 1.5 0 0 0 10 9.5 1.5 1.5 0 0 0 8.5 8m2.5 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4.5 2a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5"></path></svg></span> Profiles</label><label for="__tabbed_2_5"><span class="twemoji mc-lime"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"></path></svg></span> Diversity</label><label for="__tabbed_2_6"><span class="twemoji mc-indigo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.5 17c-.14 0-.26 0-.39.04L17.5 13.8c.45-.45.75-1.09.75-1.8a2.5 2.5 0 0 0-2.5-2.5c-.14 0-.25 0-.4.04L13.74 6.3c.47-.46.76-1.09.76-1.8a2.5 2.5 0 0 0-5 0c0 .7.29 1.34.76 1.79L8.65 9.54c-.15-.04-.26-.04-.4-.04a2.5 2.5 0 0 0-2.5 2.5c0 .71.29 1.34.75 1.79l-1.61 3.25C4.76 17 4.64 17 4.5 17a2.5 2.5 0 0 0 0 5A2.5 2.5 0 0 0 7 19.5c0-.7-.29-1.34-.76-1.79l1.62-3.25c.14.04.26.04.39.04s.25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0A2.5 2.5 0 0 0 12 17c-.13 0-.26 0-.39.04L10 13.8c.45-.45.75-1.09.75-1.8 0-.7-.29-1.33-.75-1.79l1.61-3.25c.13.04.26.04.39.04s.26 0 .39-.04L14 10.21a2.5 2.5 0 0 0 1.75 4.29c.13 0 .25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0-2.5-2.5m-15 3.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m8.5-1c0 .55-.45 1-1 1s-1-.45-1-1 .45-1 1-1 1 .45 1 1M7.25 12c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1M11 4.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m3.75 7.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m4.75 8.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"></path></svg></span> Concordance</label><label for="__tabbed_2_7"><span class="twemoji mc-teal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 2v2.07A8 8 0 0 0 4.07 11H2v2h2.07A8 8 0 0 0 11 19.93V22h2v-2.07A8 8 0 0 0 19.93 13H22v-2h-2.07A8 8 0 0 0 13 4.07V2m-2 4.08V8h2V6.09c2.5.41 4.5 2.41 4.92 4.91H16v2h1.91c-.41 2.5-2.41 4.5-4.91 4.92V16h-2v1.91C8.5 17.5 6.5 15.5 6.08 13H8v-2H6.09C6.5 8.5 8.5 6.5 11 6.08M12 11a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1"></path></svg></span> Confidence</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p><em>Are the reads worth classifying, and what did preprocessing take out?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/taxprofiler/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/taxprofiler/multiqc_light.png"></a></p>
-<p>Four run-level cards, then the panels MultiQC already built: the general
-statistics table, FastQC before and after trimming, fastp's filtered reads,
-the bowtie2 and samtools views of host removal, nanoq's nanopore summary and
-nonpareil's redundancy curves. The collapsed <em>Profiler panels</em> section holds
-each classifier's own top-taxa panel; MultiQC ships no bracken or centrifuge
-module, so nf-core/taxprofiler runs the kraken module three times behind
-<code>path_filters</code>, one anchor each.</p>
+<p><em>Many classifiers, one community, from reads to the taxa they agree on.</em></p>
+<!-- screenshot pending v2 -->
+<p>A short hero links the run parameters. <em>About this dashboard</em> says how to move
+through the tabs, <em>The run</em> lists the samples, classifiers, databases and read
+QC tools, and <em>Pipeline</em> walks the six steps from cleaning the reads to
+confirming the calls, each linked to its parameters and its tab. The key
+figures read the taxpasta collections every run writes, so no classifier subset
+leaves a gap.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Sample</code>, <code>Platform</code> and <code>Sequencing run</code> on <code>samplesheet</code>,
-in the <em>Samples</em> group, persistent and pinned to the top of every tab.</p>
+<p><strong>Filters</strong> · the left panel starts collapsed. <em>Key figures</em> has its own
+filter bar (the classifier and the sample), and so does <em>Findings</em> (the
+platform and the sample): each narrows its own section only.</p>
 <table>
 <thead>
 <tr>
@@ -5903,52 +5925,37 @@ in the <em>Samples</em> group, persistent and pinned to the top of every tab.</p
 </thead>
 <tbody>
 <tr>
-<td>Run at a glance</td>
-<td>4 cards, pinned to every tab</td>
+<td>Top</td>
+<td>Hero, <em>About this dashboard</em>, <em>The run</em>, <em>Pipeline</em></td>
 </tr>
 <tr>
-<td>Sample sheet</td>
-<td><em>Samplesheet</em>, collapsed and pinned to every tab</td>
+<td>Key figures</td>
+<td>4 headline cards: profiling runs, reads assigned, Shannon diversity, classifiers per taxon</td>
 </tr>
 <tr>
-<td>Read quality</td>
-<td><em>General statistics</em> + 4 MultiQC panels (fastqc, fastp)</td>
+<td>Findings</td>
+<td>Live result rows, then 4 figures: the composition per profiling run, richness against diversity, the PCoA of the profiles and sylph identity against abundance</td>
 </tr>
 <tr>
-<td>Host removal and long reads</td>
-<td>4 MultiQC panels (bowtie2, samtools, nanoq, nonpareil)</td>
-</tr>
-<tr>
-<td>Profiler panels</td>
-<td>6 MultiQC panels (Kraken2, Bracken, Centrifuge, Kaiju and MetaPhlAn top taxa, MALT mappability)</td>
-</tr>
-<tr>
-<td>Reference tables</td>
-<td><em>Database sheet</em>, pinned to every tab</td>
+<td>How to read this dashboard</td>
+<td>The tabs by group, each with its question</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Did the sequencing go deep enough, and how diverse is what it found?</em></p>
-<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/taxprofiler/depth_and_diversity_light.png" rel="noopener" target="_blank"><img alt="Depth and diversity dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/taxprofiler/depth_and_diversity_light.png"></a></p>
-<p>Nonpareil turns read redundancy into the share of the metagenome each library
-covers. One curve per library against sequencing effort: a curve still
-climbing at the effort sequenced means every classifier on the later tabs is
-working from an incomplete view. The scatter beside it puts coverage against
-diversity, sized by how much deeper the run would have to go, and a box or
-lasso selection there carries the libraries to the nonpareil table. <em>Alpha
-diversity</em> treats each profile as a distribution rather than a list: richness
-against Shannon diversity per profiling run (selectable, carrying
-<code>profiler_db</code> to the per-run table), a dot plot of diversity and top-taxon
-share, and a rank-abundance curve that saturates early when few taxa carry
-the profile.</p>
+<p><strong>Data &amp; QC</strong> · <em>Were the reads clean, and how much host was removed?</em></p>
+<p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/taxprofiler/multiqc_light.png" rel="noopener" target="_blank"><img alt="MultiQC dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/taxprofiler/multiqc_light.png"></a></p>
+<p>MultiQC panels only: general statistics, fastp filtered reads, FastQC quality
+before trimming, then the host alignment and the share mapped to the host. The
+read counts and lengths, nanoq's long-read summary and Nonpareil's redundancy
+are collapsed, and so is each classifier's own top-taxa panel. MultiQC has no
+Bracken or Centrifuge module, so nf-core/taxprofiler runs the kraken module
+three times behind <code>path_filters</code>.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Metagenome coverage</code> and <code>Nonpareil diversity</code> ranges on
-<code>nonpareil_summary</code>, plus <code>Taxa observed</code> and <code>Evenness</code> ranges on
-<code>taxpasta_sample_summary</code>, in a <em>Depth scope</em> group.</p>
+<p><strong>Filters</strong> · <code>Sample</code>, read from the MultiQC report.</p>
 <table>
 <thead>
 <tr>
@@ -5958,44 +5965,82 @@ the profile.</p>
 </thead>
 <tbody>
 <tr>
-<td>Coverage redundancy</td>
-<td>4 cards, <em>Coverage against sequencing effort</em>, <em>Coverage against diversity</em></td>
+<td>QC overview</td>
+<td>5 MultiQC panels</td>
 </tr>
 <tr>
-<td>Alpha diversity</td>
-<td>4 cards, <em>Richness against diversity</em>, <em>Diversity by run</em>, <em>Rank-abundance accumulation</em></td>
+<td>QC details (collapsed)</td>
+<td>4 MultiQC panels</td>
 </tr>
 <tr>
-<td>Depth tables</td>
-<td><em>Nonpareil per-library statistics</em>, <em>Per-run profile statistics</em></td>
+<td>Profiler panels (collapsed)</td>
+<td>6 MultiQC panels</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Data &amp; QC</strong> · <em>Did the sequencing reach enough of each metagenome?</em></p>
+<!-- screenshot pending v2 -->
+<p>Nonpareil turns read redundancy into the share of the metagenome each library
+covers. The cards give the median coverage against Nonpareil's 0.95 target,
+the diversity, the effort sequenced and how much deeper the median library
+would have to go. Then the coverage curve of each library, rebuilt from the
+fitted model, and coverage against diversity. Nonpareil runs on the short reads
+only.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Metagenome coverage</code> and <code>Nonpareil diversity</code> ranges on
+<code>nonpareil_summary</code>, plus the sample filters.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Depth at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Coverage curves</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Coverage against diversity</td>
+<td><em>Coverage against diversity</em></td>
+</tr>
+<tr>
+<td>Tables (collapsed)</td>
+<td><em>Nonpareil per library</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 <div class="admonition tip">
-<p class="admonition-title">The coverage section needs nonpareil</p>
+<p class="admonition-title">The Sequencing depth tab needs nonpareil</p>
 <p>The two nonpareil collections are optional and only written by a
-short-read run with <code>--run_nonpareil</code>. Without them the coverage section
-disappears and the tab opens on the diversity tiles.</p>
+short-read run with <code>--perform_shortread_redundancyestimation</code>. Without
+them the Sequencing depth tab is dropped.</p>
 </div>
 </div>
 <div class="tabbed-block">
-<p><em>What each classifier says the community is made of.</em></p>
+<p><strong>Communities</strong> · <em>What does each classifier say the community is made of?</em></p>
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/taxprofiler/profiles_light.png" rel="noopener" target="_blank"><img alt="Profiles dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/taxprofiler/profiles_light.png"></a></p>
-<p>One stacked bar per profiling run, a classifier and database pair, switchable
-by rank in the tile header, with a strip above the bars naming the
-classifier. Narrow the sample filter to one sample to read its runs side by
-side. <em>Lineage rings</em> draws the same profiles as Krona rings, one wedge per
-classifier from the domain out to the species. <em>Containment composition</em>
-shows the samples as sylph reconstructs them, which disagrees in a way that
-says something about the reference database rather than about the sample.
-The collapsed <em>Genome copies</em> section carries melon, whose sample id lives
-only in its output path, so its rows are pooled across the long-read samples.</p>
+<p>taxpasta standardises every classifier's profile into one table. The
+composition draws one bar per profiling run, so a bar never mixes two naming
+vocabularies: species by default, the eight largest taxa and Other, the rank in
+the tile's settings. Then the Krona rings, one wedge per classifier, and the
+community as sylph rebuilds it from genome containment. melon's genome copies,
+pooled over the long-read samples, and the profile tables are collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
-<p><strong>Filters</strong> · <code>Classifier</code>, <code>Database</code> and a <code>Relative abundance</code> range on
-<code>taxpasta_profiles</code>, <code>Domain</code> on <code>taxpasta_lineage</code> and <code>Melon phylum</code> on
-<code>melon_ranks</code>, in a <em>Profile scope</em> group.</p>
+<p><strong>Filters</strong> · <code>Classifier</code>, <code>Database</code> and a relative-abundance range on
+<code>taxpasta_profiles</code>, <code>Domain</code> on <code>taxpasta_lineage</code>, and <code>Melon phylum</code>,
+the only filter that reaches melon's pooled table.</p>
 <table>
 <thead>
 <tr>
@@ -6005,46 +6050,90 @@ only in its output path, so its rows are pooled across the long-read samples.</p
 </thead>
 <tbody>
 <tr>
+<td>Profiles at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
 <td>Composition</td>
-<td>4 cards, <em>Community composition per profiling run</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Lineage rings</td>
-<td><em>Krona rings per classifier</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Containment composition</td>
-<td><em>sylph composition</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Genome copies</td>
-<td><em>Melon genome-copy hierarchy</em>, <em>Estimated copies per species</em>, <em>Melon lineages</em></td>
+<td>Genome copies (collapsed)</td>
+<td>1 advanced visualization, <em>Estimated copies per species</em>, <em>Melon lineages</em></td>
 </tr>
 <tr>
-<td>Profile tables</td>
-<td><em>Cross-profiler abundances</em>, <em>Cross-profiler lineages</em>, <em>sylph clade abundances</em></td>
+<td>Profile tables (collapsed)</td>
+<td><em>Cross-classifier abundances</em>, <em>Cross-classifier lineages</em>, <em>sylph clade abundances</em></td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>Where the classifiers agree, and where each one is on its own.</em></p>
+<p><strong>Communities</strong> · <em>How diverse is each profile, by each classifier?</em></p>
+<!-- screenshot pending v2 -->
+<p>Diversity is computed per profiling run, so one sample has one value per
+classifier, and the spread between them is classifier disagreement. Richness
+against Shannon diversity comes first, then each run's diversity and top-taxon
+share, and the rank-abundance accumulation: a curve that reaches one after a
+handful of taxa is a profile carried by a few organisms.</p>
+<details class="abstract">
+<summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
+<p><strong>Filters</strong> · <code>Classifier</code>, plus <code>Taxa observed</code> and <code>Evenness</code> ranges, on
+<code>taxpasta_sample_summary</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Diversity at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Richness and diversity</td>
+<td><em>Richness against diversity</em></td>
+</tr>
+<tr>
+<td>Diversity by run</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Profile concentration</td>
+<td><em>Rank-abundance accumulation</em></td>
+</tr>
+<tr>
+<td>Tables (collapsed)</td>
+<td><em>Per-run profile statistics</em></td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+<div class="tabbed-block">
+<p><strong>Classifiers</strong> · <em>Where do the classifiers agree, and where does each stand alone?</em></p>
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/taxprofiler/concordance_light.png" rel="noopener" target="_blank"><img alt="Concordance dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/taxprofiler/concordance_light.png"></a></p>
-<p>The Bray-Curtis PCoA puts one point per sample and profiling run, so the
-spread reads as classifier disagreement rather than as biological distance:
-runs of the same sample should cluster whatever classifier produced them.
-The ordination is the tab's selection source: box or lasso points and their
-<code>profiler_db</code> narrows the root-to-species flow below. The UpSet plot shows the
-intersections a pairwise view cannot, how many taxa were found by exactly one
-set of classifiers, and the Sankey follows the reads from the root down the
-taxonomy, unclassified branch included. The collapsed heatmap clusters the
-top taxa across every profiling run.</p>
+<p>The Bray-Curtis PCoA puts one point per profiling run, so runs of one sample
+land together when their classifiers agree; a lasso narrows the flow below to
+the runs it picks. The UpSet counts the taxa each set of classifiers found, and
+the taxonomic flow follows the reads from the root down to the phylum,
+unclassified reads included. The taxon by run heatmap is collapsed.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>Classifier</code> and <code>Platform</code> on <code>taxpasta_embedding</code>, a
 <code>Classifiers per taxon</code> range on <code>taxpasta_presence</code>, and <code>Domain</code> and
-<code>Flow classifier</code> on <code>taxpasta_lineage</code>, in an <em>Ordination scope</em> group.</p>
+<code>Flow classifier</code> on <code>taxpasta_lineage</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6054,40 +6143,42 @@ top taxa across every profiling run.</p>
 </thead>
 <tbody>
 <tr>
+<td>Concordance at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
 <td>Ordination</td>
-<td>4 cards, <em>Bray-Curtis ordination</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Shared taxa</td>
-<td><em>Classifier detection overlap</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
 <td>Taxonomic flow</td>
-<td><em>Root to species flow</em></td>
+<td>1 advanced visualization</td>
 </tr>
 <tr>
-<td>Taxon by run matrix</td>
-<td><em>Taxon by run heatmap</em></td>
+<td>Taxon by run matrix (collapsed)</td>
+<td>1 advanced visualization</td>
 </tr>
 </tbody>
 </table>
 </details>
 </div>
 <div class="tabbed-block">
-<p><em>How much to trust a call, from how close the reads are to the reference.</em></p>
+<p><strong>Classifiers</strong> · <em>How close are the reads to the genomes sylph matched?</em></p>
 <p><a class="tpl-shot" href="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/taxprofiler/confidence_light.png" rel="noopener" target="_blank"><img alt="Confidence dashboard" loading="lazy" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/taxprofiler/confidence_light.png"></a></p>
-<p>sylph reports the adjusted ANI of every containment match beside its
-abundance, so the two can be read together: a high-abundance, low-ANI genome
-is a confident-looking call that is really a divergent relative of the
-reference. The dot plot and the scatter show those axes at different
-resolutions. Picking a point on the scatter fills the linked <em>Picked genome</em>
-record card beside it, one card per sample the genome was detected in, which
-folds to a slim rail until a point is picked. The containment table below has
-row selection on the sample.</p>
+<p>sylph reports the adjusted ANI of every genome it detects beside its abundance,
+so a high-abundance, low-identity genome reads as the divergent relative it is.
+The cards give the median ANI against 95%, the species boundary, the genomes
+detected, the effective coverage and the detections. Then the ANI by genome and
+sample, and identity against abundance beside a record card for the genome you
+pick.</p>
 <details class="abstract">
 <summary><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 13c-1.86 0-3.41 1.28-3.86 3H2v2h2.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22v-2H11.86c-.45-1.72-2-3-3.86-3m0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M19.86 6c-.45-1.72-2-3-3.86-3s-3.41 1.28-3.86 3H2v2h10.14c.45 1.72 2 3 3.86 3s3.41-1.28 3.86-3H22V6zM16 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"></path></svg></span> Filters and components</summary>
 <p><strong>Filters</strong> · <code>Adjusted ANI</code> and <code>Taxonomic abundance</code> ranges on
-<code>sylph_ani</code>, in a <em>Confidence ranges</em> group.</p>
+<code>sylph_ani</code>.</p>
 <table>
 <thead>
 <tr>
@@ -6097,8 +6188,20 @@ row selection on the sample.</p>
 </thead>
 <tbody>
 <tr>
-<td>Containment identity</td>
-<td>4 cards, <em>ANI by genome and sample</em>, <em>ANI against abundance</em>, <em>Picked genome</em>, <em>sylph containment table</em></td>
+<td>Confidence at a glance</td>
+<td>4 cards</td>
+</tr>
+<tr>
+<td>Identity by genome</td>
+<td>1 advanced visualization</td>
+</tr>
+<tr>
+<td>Identity against abundance</td>
+<td><em>ANI against abundance</em> + a genome record card</td>
+</tr>
+<tr>
+<td>Tables (collapsed)</td>
+<td><em>sylph containment table</em></td>
 </tr>
 </tbody>
 </table>
@@ -6108,19 +6211,19 @@ row selection on the sample.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Which panels the sample filter reaches</p>
-<p>The persistent <code>Samples</code> filter narrows every taxpasta and sylph tile, plus
-the fastp and post-trimming FastQC panels. It does not reach the
-per-classifier top-taxa panels: MultiQC keys those on a sample id carrying
-the database as a suffix, which no samplesheet value reduces to. The
-cross-classifier views of the same data, on the later tabs, do filter.</p>
+<p>The persistent <em>Sample filters</em> narrow every taxpasta and sylph tile, the
+Nonpareil tiles and the MultiQC panels keyed on the sample id. They do not
+reach the per-classifier top-taxa panels: MultiQC keys those on a sample id
+carrying the database as a suffix, which no samplesheet value reduces to. The
+cross-classifier view of the same data, on the Profiles tab, does filter.</p>
 </div>
-<p>Tables and point views select on their entity column: the samplesheet and the
-sylph containment table on <code>sample</code>; the Nonpareil scatter and table on
-<code>library</code>; the richness scatter, the per-run table and the Bray-Curtis
-ordination on <code>profiler_db</code>; the cross-profiler tables on the taxon <code>name</code>, the
-Melon table on <code>species</code> and the sylph clade table on <code>clade_name</code>; the ANI
-scatter on <code>genome</code>. A pick narrows every tile on the tab that reads the same
-collection or one linked from it.</p>
+<p>Tables and point views select on their entity column: the sample sheet on
+<code>sample</code>; the Nonpareil scatter and table on <code>library</code>; the richness scatter, the
+per-run table and the Bray-Curtis ordination on <code>profiler_db</code>; the
+cross-classifier tables on the taxon <code>name</code>, the melon table on <code>species</code> and the
+sylph clade table on <code>clade_name</code>; the ANI scatter and the sylph containment
+table on <code>genome</code>. A pick narrows the other tiles of its collection and follows
+the project links to the collections they reach.</p>
 <hr>
 <h2 id="running-the-pipeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m-2 14.5 6-4.5-6-4.5z"></path></svg></span> Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permanent link">¶</a></h2>
 <p>Depictio reads the <strong>output</strong> of nf-core/taxprofiler, it does not run the
@@ -6164,7 +6267,7 @@ collections are what every cross-profiler tile is built from.</p>
 <a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>├── melon/                                     # ⚠ Requires --run_melon and long reads
 <a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>│   └── &lt;database&gt;/&lt;sample&gt;_&lt;database&gt;/*.tsv
 <a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>├── nanoq/*.stats
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>└── nonpareil/nonpareil_all_samples.tsv       # ⚠ Requires --run_nonpareil (short reads)
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>└── nonpareil/nonpareil_all_samples.tsv       # ⚠ Requires --perform_shortread_redundancyestimation (short reads)
 </code></pre></div>
 <hr>
 <h2 id="validation-runs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1c0-.21-.07-.41-.18-.57L13 8.35V4h-2v4.35L5.18 18.43c-.11.16-.18.36-.18.57m1 3a3 3 0 0 1-3-3c0-.6.18-1.16.5-1.63L9 7.81V6a1 1 0 0 1-1-1V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1v1.81l5.5 9.56c.32.47.5 1.03.5 1.63a3 3 0 0 1-3 3zm7-6 1.34-1.34L16.27 18H7.73l2.66-4.61zm-.5-4a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5"></path></svg></span> Validation runs<a class="headerlink" href="#validation-runs" title="Permanent link">¶</a></h2>

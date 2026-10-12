@@ -5199,7 +5199,7 @@
 </table>
 <p><strong>Auto-detected</strong> (set from the run's metadata / <code>params.json</code>; the route flags drive <em>Conditional routes</em> below): <code>PPLACE_TREE_FILE</code>, <code>GROUP_COL_DISPLAY</code>, <code>ANNOTATION_COLS</code>, <code>IS_MULTIREGION</code>, <code>SKIP_TAXONOMY</code>, <code>SKIP_ALPHA_RAREFACTION</code>, <code>SKIP_ANCOM</code>, <code>PHYLUM_LEVEL</code>, <code>CLASS_LEVEL</code>, <code>ORDER_LEVEL</code>, <code>FAMILY_LEVEL</code>, <code>GENUS_LEVEL</code></p>
 <h3 id="data-collections"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"></path></svg></span> Data collections<a class="headerlink" href="#data-collections" title="Permanent link">¶</a></h3>
-<p>24 data collections — <span class="gtd-badge gtd-req">11 required</span> <span class="gtd-badge gtd-opt">13 optional</span> · <span class="gtd-badge gtd-direct">10 direct</span> <span class="gtd-badge gtd-derived">14 derived</span>.</p>
+<p>26 data collections — <span class="gtd-badge gtd-req">11 required</span> <span class="gtd-badge gtd-opt">15 optional</span> · <span class="gtd-badge gtd-direct">12 direct</span> <span class="gtd-badge gtd-derived">14 derived</span>.</p>
 <p><strong>Origin</strong> tells you whether a collection is <em>real pipeline data</em> or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more <em>direct</em> collections into the layout a visualization needs (no new measurement). <strong>Reads</strong> shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> <code>.py</code> transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A <code>direct</code> collection can still have a recipe — one that merely parses/cleans the raw file; <code>derived</code> means the recipe reshapes another collection.)</p>
 <table>
 <thead>
@@ -5231,6 +5231,13 @@
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
 <td><span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{METADATA_FILE}</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
+<td><code>read_tracking</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/read_tracking.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/ampliseq/read_tracking.py</code></a></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
 </tr>
 <tr>
@@ -5353,6 +5360,13 @@
 <td style="text-align: center;"><span class="gtd-badge gtd-req">required</span></td>
 </tr>
 <tr>
+<td><code>beta_adonis</code></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table</td>
+<td><span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/beta_adonis.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/ampliseq/beta_adonis.py</code></a></td>
+<td style="text-align: center;"><span class="gtd-badge gtd-opt">optional</span></td>
+</tr>
+<tr>
 <td><code>phylogenetic_tree_canonical</code></td>
 <td style="text-align: center;"><span class="gtd-badge gtd-direct">direct</span></td>
 <td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.5 17c-.14 0-.26 0-.39.04L17.5 13.8c.45-.45.75-1.09.75-1.8a2.5 2.5 0 0 0-2.5-2.5c-.14 0-.25 0-.4.04L13.74 6.3c.47-.46.76-1.09.76-1.8a2.5 2.5 0 0 0-5 0c0 .7.29 1.34.76 1.79L8.65 9.54c-.15-.04-.26-.04-.4-.04a2.5 2.5 0 0 0-2.5 2.5c0 .71.29 1.34.75 1.79l-1.61 3.25C4.76 17 4.64 17 4.5 17a2.5 2.5 0 0 0 0 5A2.5 2.5 0 0 0 7 19.5c0-.7-.29-1.34-.76-1.79l1.62-3.25c.14.04.26.04.39.04s.25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0A2.5 2.5 0 0 0 12 17c-.13 0-.26 0-.39.04L10 13.8c.45-.45.75-1.09.75-1.8 0-.7-.29-1.33-.75-1.79l1.61-3.25c.13.04.26.04.39.04s.26 0 .39-.04L14 10.21a2.5 2.5 0 0 0 1.75 4.29c.13 0 .25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0-2.5-2.5m-15 3.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m8.5-1c0 .55-.45 1-1 1s-1-.45-1-1 .45-1 1-1 1 .45 1 1M7.25 12c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1M11 4.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m3.75 7.5c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1m4.75 8.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"></path></svg></span> phylogeny</td>
@@ -5383,7 +5397,7 @@
 </tbody>
 </table>
 <h3 id="conditional-routes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 4v8.5l3-3L9 13c1 1 1 2 1 2v6h4v-7s0-1-.53-2S12 10 12 10L9 6.58 11.5 4M18 4l-4.46 4.47L14 9s.93 1 1.47 2c.21.4.33.79.4 1.13L21 7"></path></svg></span> Conditional routes<a class="headerlink" href="#conditional-routes" title="Permanent link">¶</a></h3>
-<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (4 collections are unaffected by any variable — present on every run.)</p>
+<p>Rows are data collections; columns are the variables you set or <code>params.json</code> flags auto-detected from the run. Each filled cell is the effect of <strong>setting</strong> that variable; an <strong>empty cell</strong> means that variable leaves the collection unchanged. (5 collections are unaffected by any variable — present on every run.)</p>
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 
 <div class="gtd-mtx scroll">
@@ -5408,24 +5422,29 @@
 <tr><th class="dc"><code>upset_canonical</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><th class="dc"><code>ma_canonical</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td class="minus" title="removed when SKIP_ANCOM is set">−</td><td></td><td></td><td></td></tr>
 <tr><th class="dc"><code>bray_curtis_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>beta_adonis</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td class="minus" title="removed when SKIP_TAXONOMY is set">−</td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><th class="dc"><code>phylogenetic_tree_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td></td><td></td><td></td><td></td><td class="swap" title="re-sourced when PPLACE_TREE_FILE is set">⇄</td><td class="swap" title="re-sourced when TREE_FILE is set">⇄</td></tr>
 <tr><th class="dc"><code>phylogenetic_tree_metadata_canonical</code></th><td></td><td class="minus" title="removed when SKIP_QIIME is set">−</td><td class="minus" title="removed when IS_MULTIREGION is set">−</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 </tbody></table></div>
 
 <h3 id="cross-dc-links"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> Cross-DC links<a class="headerlink" href="#cross-dc-links" title="Permanent link">¶</a></h3>
-<p>19 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
+<p>23 links — selecting a value in the <strong>source</strong> collection filters the <strong>target</strong>. The join column is shown after the source.</p>
 <div class="gtd-links">
 <table>
 <thead><tr><th>Source · column</th><th></th><th>Target</th><th>Filters</th></tr></thead>
 <tbody>
 <tr><td><code>samplesheet</code> <span class="col">·&nbsp;sampleID</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter MultiQC by samplesheet samples</td></tr>
 <tr><td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter MultiQC by metadata samples</td></tr>
+<tr><td><code>samplesheet</code> <span class="col">·&nbsp;sampleID</span></td><td class="arr">→</td><td><code>read_tracking</code></td><td>Filter read tracking by samplesheet samples</td></tr>
+<tr><td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td><td class="arr">→</td><td><code>read_tracking</code></td><td>Filter read tracking by metadata samples</td></tr>
 <tr><td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td><td class="arr">→</td><td><code>alpha_rarefaction</code></td><td>Filter alpha rarefaction by metadata samples</td></tr>
 <tr><td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td><td class="arr">→</td><td><code>alpha_rarefaction_summary</code></td><td>Filter the rarefaction summary by metadata samples</td></tr>
 <tr><td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td><td class="arr">→</td><td><code>taxonomy_composition</code></td><td>Filter taxonomy composition by metadata samples</td></tr>
 <tr><td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td><td class="arr">→</td><td><code>taxonomy_rel_abundance</code></td><td>Filter taxonomy rel abundance by metadata samples</td></tr>
 <tr><td><code>samplesheet</code> <span class="col">·&nbsp;sampleID</span></td><td class="arr">→</td><td><code>sintax_rel_abundance</code></td><td>Filter sintax rel abundance by samplesheet samples</td></tr>
 <tr><td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td><td class="arr">→</td><td><code>sintax_rel_abundance</code></td><td>Filter sintax rel abundance by metadata samples</td></tr>
+<tr><td><code>samplesheet</code> <span class="col">·&nbsp;sampleID</span></td><td class="arr">→</td><td><code>sidle_reconstructed</code></td><td>Filter SIDLE reconstructed community by samplesheet samples</td></tr>
+<tr><td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td><td class="arr">→</td><td><code>sidle_reconstructed</code></td><td>Filter SIDLE reconstructed community by metadata samples</td></tr>
 <tr><td><code>samplesheet</code> <span class="col">·&nbsp;sampleID</span></td><td class="arr">→</td><td><code>taxonomy_heatmap</code></td><td>Filter taxonomy heatmap by samplesheet samples</td></tr>
 <tr><td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td><td class="arr">→</td><td><code>taxonomy_heatmap</code></td><td>Filter taxonomy heatmap by metadata samples</td></tr>
 <tr><td><code>metadata</code> <span class="col">·&nbsp;{METADATA_ID_COL}</span></td><td class="arr">→</td><td><code>alpha_diversity_multi_canonical</code></td><td>Filter per-sample multi-metric alpha-diversity by metadata samples</td></tr>
@@ -5451,6 +5470,11 @@
 </thead>
 <tbody>
 <tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/beta_adonis.py"><code>nf-core/ampliseq/beta_adonis.py</code></a></td>
+<td>Collect ampliseq's PERMANOVA (adonis) tables into one row per metric and term.</td>
+<td><code>metric</code>, <code>formula</code>, <code>term</code>, <code>df</code>, <code>sum_of_squares</code>, <code>r2</code>, <code>f_stat</code>, <code>p_value</code></td>
+</tr>
+<tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/bray_curtis_canonical.py"><code>nf-core/ampliseq/bray_curtis_canonical.py</code></a></td>
 <td>Canonical-schema Bray-Curtis distance DC for ampliseq.</td>
 <td><code>sample</code></td>
@@ -5464,6 +5488,11 @@
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/ma_canonical.py"><code>nf-core/ampliseq/ma_canonical.py</code></a></td>
 <td>Canonical-schema MA-plot DC for ampliseq.</td>
 <td><code>feature_id</code>, <code>avg_log_intensity</code>, <code>log2_fold_change</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/read_tracking.py"><code>nf-core/ampliseq/read_tracking.py</code></a></td>
+<td>Tidy ampliseq's <code>overall_summary.tsv</code> into per-sample read counts and the share kept.</td>
+<td><code>sample</code>, <code>input_reads</code>, <code>denoised_reads</code>, <code>final_reads</code>, <code>kept_percent</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/sankey_canonical.py"><code>nf-core/ampliseq/sankey_canonical.py</code></a></td>
