@@ -432,13 +432,44 @@ habitat*), and `strip_icon: false` drops the icon badge before it. See
 
 `category_colors`, at dashboard level, gives one colour per value of a column, so a city
 is the same colour on every tile: the filter bar's chips, a figure's points and bars, an
-UpSet's sets, sunburst, sankey and tree colours, and code figures. Maps do not read it.
-Child tabs inherit the main tab's map, and a child's own map overrides it value by value.
+UpSet's sets, sunburst, sankey and tree colours, the map's markers (since v1.14.1), and
+code figures. Child tabs inherit the main tab's map, and a child's own map overrides it
+value by value.
 A figure's own `color_discrete_map` still wins value by value. Values left out fall back
 to the brand colorway, then to grey (grey on a filter chip). In code mode the map is
 available as `depictio_category_colors`, and a code figure that sets no colours of its
 own is recoloured from it when every trace name, *Other* aside, is a value of one
 coloured column. See [Code Mode](components.md#code-mode).
+
+Since v1.14.1 a dashboard can also let the import pick the colours from a
+colour-blind-safe palette (`auto`), and a re-import keeps the colours the values
+already had. See [YAML Sync](yaml-sync.md#category-colors) for the keys.
+
+### :material-tune-vertical: Advanced visualization controls { #viz-controls }
+
+An [advanced visualization](components.md#advanced-visualizations) has controls: the
+view, the colour, the labels. They dock next to the plot when the tile has room, so a
+reader sees how the figure is set without opening a menu. The tile's width decides
+where:
+
+| Tile | Controls |
+|---|---|
+| Spans its row, and at least 720 px wide | In a column on the right of the plot |
+| Narrower, and at least 300 px wide | In a row above the plot |
+| Narrower than 300 px | Behind the settings icon |
+
+- A docked panel shows its first few controls and puts the rest under **More options**.
+  A view switch (volcano, MA, QQ) comes first.
+- The settings icon folds a docked panel away, and back.
+- Tiles in the minimal landing-page style, highlights included, keep their controls
+  behind the icon.
+
+!!! note "Leave the placement unset"
+    The rule needs no key. Leave the component's `controls_placement` unset, and leave
+    `config.controls_placement` and the dashboard's `advanced_viz_controls` at their
+    default, `popover`: `rail` or `header` there turn docking off for the tile. A
+    component can force a side with `controls_placement: right`, `top` or `popover`,
+    but the nf-core templates never set it.
 
 ---
 
@@ -460,6 +491,7 @@ Organize complex dashboards with **tabs** (v0.6.0+):
 - :material-palette: **Custom Colors**: Match your organization's theme
 - :material-view-grid-outline: **Own Layouts**: Each tab arranges its own components, and a tab cannot rearrange a section another tab shares with it
 - :material-cog-sync: **Shared Settings**: Theme and permissions apply across all tabs, as do [sections marked *Show on every tab*](#persistent-sections) and the filter values set in them
+- :material-palette-swatch: **Shared colours**: the [category colours](#category-colors) of the main tab apply to every tab
 
 ### :material-format-title: Canvas tab header <small>(v1.8.3+)</small> { #canvas-tab-header }
 

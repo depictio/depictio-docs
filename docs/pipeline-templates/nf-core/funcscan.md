@@ -31,21 +31,17 @@ hide:
 
 The funcscan template covers the four aggregated screening reports of a standard nf-core/funcscan run, plus the annotated contigs they share and the run's own record of what it ran:
 
-- :material-bullseye-arrow: **Screening overview**: per-sample counts for all four screens, and the sample selection every other tab follows
-- :material-file-document-outline: **Annotation**: the contigs the four screens touch, how long they are and how densely they are annotated
-- :material-bacteria-outline: **Resistome**: five ARG tools harmonised by hAMRonization, the drug-class matrix and a contig-level gene track
-- :material-atom: **AMPs**: AMPcombi candidates in their physicochemical property space, with a linked candidate record, and the sequence clusters they fall into
-- :material-graph-outline: **BGCs**: comBGC regions from antiSMASH, DeepBGC and GECCO, split by product class and mapped along their contigs
-- :material-leaf: **CAZymes**: run_dbCAN family calls and the substrates their gene clusters target
-- :material-file-document-outline: **Run report**: the tools and versions each screen ran, read from the MultiQC report
+- :material-compass-outline: **Overview**: one key figure per screen, live findings and one figure per screen, each linked to the tab that explains it
+- :material-flask-outline: **Data & QC**: the screens and tool versions the run recorded, what each assembly yielded, and the contigs the screens share
+- :material-bacteria-outline: **Antimicrobials**: five ARG tools harmonised by hAMRonization, and AMPcombi peptide candidates in their property space
+- :material-leaf: **Metabolism**: comBGC regions from antiSMASH, DeepBGC and GECCO, and run_dbCAN CAZyme families with their substrates
 
 !!! info "Four screens, any subset"
     funcscan runs up to four independent screens over the same assemblies and
-    nothing joins them, which is why the dashboard has one cross-screen tab, one
-    locus tab and one tab per screen. Every screen is optional: an arm that did
-    not run leaves no report, so its collections prune themselves. `--var
-    SKIP_ARG=true` (or `SKIP_AMP`, `SKIP_BGC`, `SKIP_CAZYME`) prunes an arm
-    explicitly.
+    nothing joins them, which is why the dashboard has one tab per screen, after
+    the Data & QC tabs that cover all four. Every screen is optional: an arm that did not run leaves
+    no report, so its collections prune themselves. `--var SKIP_ARG=true` (or
+    `SKIP_AMP`, `SKIP_BGC`, `SKIP_CAZYME`) prunes an arm explicitly.
 
 !!! note "No MultiQC panels, only versions"
     funcscan feeds MultiQC nothing but software versions: the parquet holds one
@@ -108,197 +104,225 @@ them.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-Seven tabs: the cross-screen overview, the contig layer the screens share, one
-tab per screen, and the run report. Each tab below carries the **same icon and
-colour the dashboard gives it**, so the page and the app read alike. `Sample
-scope` is pinned to the top of every tab, together with the *Run at a glance*
-cards and the collapsed *Sample sheet* section.
+One dashboard: the **Overview**, then seven child tabs in three groups, read as a
+funnel from what the run executed to what each screen found. Each tab below carries
+the **same icon and colour the dashboard gives it**, so the page and the app read
+alike.
 
-=== ":material-bullseye-arrow:{ .mc-indigo } Screening overview"
+| Group | Tabs |
+|---|---|
+| Data & QC | Run report, Samples, Contigs |
+| Antimicrobials | Resistome, AMPs |
+| Metabolism | BGCs, CAZymes |
 
-    *What the four screens found, sample by sample, and which samples to follow.*
+Each child tab opens with a short intro and a strip of cards, then at most three
+open sections; tables and details follow, collapsed. The samplesheet carries no
+experimental factor, so the persistent *Sample filters* hold the sample id only:
+they sit in the left panel and narrow every tab through `screening_summary`, the
+per-assembly hub every screen links to on `sample`. The *Sample sheet* section,
+the hub table above the samplesheet, is pinned, collapsed, to the bottom of every
+child tab.
 
-    [![Screening overview dashboard](../../images/pipeline-templates/nf-core/funcscan/screening_overview_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/screening_overview_light.png){ .tpl-shot target="_blank" rel="noopener" }
+=== ":material-compass-outline: Overview"
 
-    Four cards read the whole run at once, each with the samples that carry
-    most of it: ARG hits, AMP candidates, BGC regions and CAZyme genes. The bar
-    below is grouped and log-scaled, so an empty resistome next to a large
-    CAZyme repertoire stands out. The scatter and the hub table are
-    cross-selecting on `sample`: lasso points or tick rows, and the project
-    links carry that selection into the Resistome, AMPs, BGCs and CAZymes tabs.
+    *Assemblies screened for resistance genes, peptides, gene clusters and CAZymes.*
 
-    ??? abstract ":material-tune-variant: Filters and components"
+    <!-- screenshot pending v2 -->
 
-        **Filters** · `Sample` on `screening_summary`, persistent and pinned to
-        the top of every tab, plus ARG, AMP, BGC and CAZyme per-sample ranges in
-        a *Sample thresholds* group.
-
-        | Section | What it holds |
-        |---|---|
-        | Run at a glance | 4 cards, pinned to every tab |
-        | Screen composition | *Findings per sample and screen* |
-        | Sample comparison | *Resistome load against CAZyme capacity*, *Per-sample screening summary* |
-        | Sample sheet | *Samplesheet*, collapsed and pinned to every tab |
-
-=== ":material-file-document-outline:{ .mc-yellow } Annotation"
-
-    *Which contigs carry the findings, and are they long or just dense?*
-
-    [![Annotation dashboard](../../images/pipeline-templates/nf-core/funcscan/annotation_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/annotation_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    Every screen names the contig its feature sits on, so this tab rebuilds the
-    locus layer from the screens: one row per contig, with what each screen put
-    there. Contig length is read from the contig name when the assembler wrote
-    it there (SPAdes or MEGAHIT headers); other names keep the contig in the
-    table but off the length axis. The scatter puts features against contig
-    length on a log axis, so short, dense loci stand out from merely long
-    contigs. Scatter and table cross-select on `contig`, and the project links
-    carry the contig into the ARG hits, AMP candidates, BGC region map and
-    CAZyme annotations.
+    A short hero links the run parameters. *About this dashboard* says how to move
+    through the tabs, *The run* lists the assemblies, the screens that ran, the gene
+    caller and the AMP reference database, and *Pipeline* walks the five steps from
+    annotation to the CAZyme screen, each linked to its parameters and its tab. The
+    four key figures all read the screening hub, so a screen that did not run reads
+    0 instead of leaving a gap.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Leading screen` and a `Screens on the contig` range in a
-        *Locus scope* group, plus `Contig length (bp)` and `Features per kb`
-        ranges in *Locus thresholds*, all on `contig_annotation`.
+        **Filters** · the left panel starts collapsed. *Key figures* has its own
+        filter bar (the sample id and an ARG-hits range), and so does *Findings*
+        (the sample id and the ARG tool): each narrows its own section only.
 
         | Section | What it holds |
         |---|---|
-        | Annotation at a glance | 4 cards |
-        | Loci | *Features against contig length*, *Feature density*, *Annotated contigs* |
+        | Top | Hero, *About this dashboard*, *The run*, *Pipeline* |
+        | Key figures | 4 headline cards: ARG hits, AMP candidates, BGC regions, CAZyme genes |
+        | Findings | Live result rows, then 4 figures, one per screen: the resistome sunburst, the AMP property plane, the BGC caller sunburst and the CAZy classes per assembly |
+        | How to read this dashboard | The tabs by group, each with its question |
+
+=== ":material-file-document-outline: Run report"
+
+    **Data & QC** · *Which screens and tools did the run execute?*
+
+    <!-- screenshot pending v2 -->
+
+    The run's MultiQC report carries software versions only, so there is no
+    MultiQC tab: this one reads the versions back out of it, one row per Nextflow
+    process and tool, assigned to a screen by the process name. Processes that
+    belong to no screen are labelled as workflow plumbing rather than dropped. The
+    screens that ran and the distinct tools come first, then the tool versions per
+    screen. A screen missing here did not run, the first thing to check when a tab
+    is empty.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Screen` and `Tool` on `software_versions`.
+
+        | Section | What it holds |
+        |---|---|
+        | Run at a glance | 2 cards |
+        | Tools per screen | *Tool versions per screen* |
+        | Software versions (collapsed) | *Software versions* |
+
+=== ":material-flask-outline:{ .mc-teal } Samples"
+
+    **Data & QC** · *What did each assembly yield across the four screens?*
+
+    <!-- screenshot pending v2 -->
+
+    [![Samples dashboard](../../images/pipeline-templates/nf-core/funcscan/screening_overview_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/screening_overview_light.png){ .tpl-shot target="_blank" rel="noopener" }
+
+    The median assembly's resistance genes, high-confidence AMPs, BGC product
+    classes and CAZy families. Then the findings per assembly and screen as grouped
+    bars on a log axis, since the screens differ by orders of magnitude, and the
+    resistance load against CAZyme capacity. A lasso on that scatter picks
+    assemblies for every tab.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · a range per screen (ARG hits, AMP candidates, BGC regions,
+        CAZyme genes) on `screening_summary`, plus the sample filters.
+
+        | Section | What it holds |
+        |---|---|
+        | Samples at a glance | 4 cards |
+        | Screen composition | *Findings per assembly and screen* |
+        | Sample comparison | 1 advanced visualization |
+
+=== ":material-dna:{ .mc-yellow } Contigs"
+
+    **Data & QC** · *Which contigs carry the screens' findings, and how densely?*
+
+    <!-- screenshot pending v2 -->
+
+    Every screen names the contig its feature sits on, so this tab counts, per
+    contig, what the four screens put there. The cards give the annotated contigs,
+    their length, the feature density and the contigs two screens or more share.
+    Then the features against contig length and the density histogram. The length
+    is read from SPAdes or MEGAHIT contig names, and stays empty for other
+    assemblers.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Leading screen`, plus ranges on the screens per contig, the
+        contig length and the features per kb, all on `contig_annotation`.
+
+        | Section | What it holds |
+        |---|---|
+        | Contigs at a glance | 4 cards |
+        | Loci | 1 advanced visualization |
+        | Feature density | *Feature density per contig* |
+        | Contig table (collapsed) | *Annotated contigs* |
 
 === ":material-bacteria-outline:{ .mc-red } Resistome"
 
-    *Resistance genes across five ARG screens, harmonised into one vocabulary.*
+    **Antimicrobials** · *Which resistance genes do the assemblies carry, and which tools agree?*
 
     [![Resistome dashboard](../../images/pipeline-templates/nf-core/funcscan/resistome_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/resistome_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    ABRicate, AMRFinderPlus, DeepARG, fARGene and RGI all report differently, and
-    hAMRonization normalises them into one table of hits. The hierarchy starts at
-    the tool, not the drug class: the five tools share no class vocabulary, so a
-    class-first sunburst collapses into one wedge. Beside it, the drug-class by
-    sample matrix narrows to the samples picked on the overview. The UpSet and
-    the dot plot then show which tools called each gene. In *Gene detail* the
-    hit-quality scatter and the hits table cross-select on the gene symbol, and
-    the contig track binds the `gene_arrow_track` advanced visualization kind,
-    one lane per contig and one arrow per hit, so genes packed head to tail
-    read as a resistance island.
+    hAMRonization maps the hits of ABRicate, AMRFinderPlus, DeepARG, fARGene and
+    RGI onto shared columns, but not their drug-class names. So the hierarchy starts
+    at the tool, after the gene support per assembly, and the UpSet counts tool
+    agreement on the contig. The drug class by assembly heatmap, the hit quality per
+    tool, the contig track of resistance islands and the hit table are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `ARG tool` and `Drug class` on `hamronization_report`, plus
-        identity and tools-agreeing ranges in a *Hit quality* group.
+        **Filters** · `ARG tool`, `Drug class` and an identity range on
+        `hamronization_report`, plus a range on the tools calling a gene.
 
         | Section | What it holds |
         |---|---|
         | Resistome at a glance | 4 cards |
-        | Resistance hierarchy | *Resistome hierarchy*, *Drug class by sample hit matrix* |
-        | Tool concordance | *ARG tool concordance*, *Gene support per sample* |
-        | Gene detail | *Hit quality per tool*, *ARG hits*, *Resistance genes along their contig* |
+        | Gene support | 1 advanced visualization |
+        | Resistance hierarchy | 1 advanced visualization |
+        | Tool concordance | 1 advanced visualization |
+        | Drug classes per sample (collapsed) | 1 advanced visualization |
+        | Hit detail (collapsed) | *Hit quality per tool*, a contig track, *ARG hits* |
 
 === ":material-atom:{ .mc-grape } AMPs"
 
-    *Antimicrobial peptide candidates, their physicochemistry and their clusters.*
+    **Antimicrobials** · *Which peptide candidates look antimicrobial, and how do they cluster?*
 
     [![AMPs dashboard](../../images/pipeline-templates/nf-core/funcscan/amps_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/amps_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    AMPcombi merges the ampir, Macrel and AMPlify predictions, keeps the
-    peptides above its probability cut-off and annotates each with its
-    physicochemistry, so the tab reads the best probability across tools and
-    how many predictors agree rather than one tool's score. The property plane
-    is hydrophobicity against isoelectric point: cationic, hydrophobic peptides
-    sit in the upper right. The scatter and the candidates table cross-select
-    on the CDS, and the linked *Candidate record* beside the scatter folds to a
-    slim rail until a point or a row is picked, then shows that peptide's
-    origin, per-tool probabilities and physicochemistry. The PCA embeds the same
-    descriptors, and the cluster panel is the MMseqs2 clustering over the whole
-    run.
+    AMPcombi merges the ampir, Macrel and AMPlify predictions and computes the
+    physicochemistry of each peptide. The property plane puts hydrophobicity against
+    the isoelectric point, coloured by charge, beside a record card for the peptide
+    you pick. The physicochemistry PCA and the MMseqs2 cluster sizes follow.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Charge class` on `ampcombi_summary`, plus best-probability
-        and length ranges in a *Peptide properties* group.
+        **Filters** · `Charge class`, plus best-probability and length ranges, on
+        `ampcombi_summary`.
 
         | Section | What it holds |
         |---|---|
         | AMPs at a glance | 4 cards |
-        | Property space | *Charge against hydrophobicity*, *Candidate record*, *Physicochemistry PCA*, *AMP candidates* |
-        | Clusters | *Cluster sizes*, *Peptide clusters* |
+        | Property space | 2 advanced visualizations + a candidate record card |
+        | Clusters | *Cluster sizes* |
+        | Candidate table (collapsed) | *AMP candidates* |
+        | Cluster table (collapsed) | *Peptide clusters* |
 
 === ":material-graph-outline:{ .mc-cyan } BGCs"
 
-    *Biosynthetic gene clusters merged from antiSMASH, DeepBGC and GECCO.*
+    **Metabolism** · *Which biosynthetic gene clusters do the assemblies carry, and where?*
 
     [![BGCs dashboard](../../images/pipeline-templates/nf-core/funcscan/bgcs_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/bgcs_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    Metagenome assemblies are fragmented, so a cluster is often cut by a contig
-    edge; that is why the cards read region length and CDS count next to the
-    product classes, and why the completeness split reads low by construction.
-    The sunburst goes caller to product class. *Region maps* shows the same
-    regions as coordinates: brush the genome axis or pick a row and the arrow
-    lanes and the coordinate table narrow to that contig (arrows run left to
-    right, because comBGC reports no strand). The concordance UpSet scores
-    agreement on the contig, not on region coordinates: the callers disagree on
-    boundaries by design, so a coordinate join finds no overlap.
+    comBGC merges the antiSMASH, DeepBGC and GECCO calls into one table of regions.
+    On fragmented assemblies most regions run off the end of their contig, so the
+    completeness split reads low by construction. The caller to product class
+    sunburst sits beside the regions per assembly, then one arrow lane per contig.
+    The caller concordance UpSet, counted on the contig, is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Prediction tool` and `Product class` on `combgc_summary`,
-        plus length and CDS-count ranges in a *Region size* group, and a
-        `Product class on the map` selector and a `Region length on the map (kb)`
-        range on `combgc_region_track` for the region maps.
+        **Filters** · `BGC caller` and `Product class`, plus length and CDS-count
+        ranges, on `combgc_summary`; a second product class and length pair narrows
+        the region map.
 
         | Section | What it holds |
         |---|---|
         | BGCs at a glance | 4 cards |
-        | Product classes | *Regions per sample*, *Caller to product class* |
-        | Region maps | *Cluster footprints on the genome axis*, *Clusters along their contig*, *BGC region coordinates* |
-        | Caller concordance | *Caller concordance* |
+        | Product classes | 1 advanced visualization + *Regions per assembly* |
+        | Region map | 1 advanced visualization |
+        | Region detail (collapsed) | *BGC region coordinates* |
+        | Caller concordance (collapsed) | 1 advanced visualization |
 
 === ":material-leaf:{ .mc-green } CAZymes"
 
-    *Carbohydrate-active enzymes and the substrates their gene clusters target.*
+    **Metabolism** · *Which carbohydrate-active enzymes do the assemblies carry, and for which substrates?*
 
     [![CAZymes dashboard](../../images/pipeline-templates/nf-core/funcscan/cazymes_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/cazymes_light.png){ .tpl-shot target="_blank" rel="noopener" }
 
-    run_dbCAN calls every gene three times, with HMMER, dbCAN-sub and DIAMOND,
-    and the *Tools agreeing* filter is the confidence floor for the whole tab.
-    The hierarchy runs CAZy class to family to substrate. The substrate panel
-    reads the CGC predictions, which name the polysaccharide a gene cluster
-    should act on, and the UpSet shows where the three annotators agree.
+    run_dbCAN annotates every protein with HMMER, dbCAN-sub and DIAMOND. The cards
+    give the CAZyme genes, the tools agreeing, the genes with a substrate call and
+    the dbCAN-PUL bitscore. The class to family to substrate sunburst, the CAZy
+    classes per assembly and the top substrates follow; the annotation concordance
+    and the tables are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `CAZy class` and `Substrate` on `dbcan_overview`, plus a
-        tools-agreeing range in a *Call confidence* group.
+        **Filters** · `CAZy class`, `Substrate` and a tools-agreeing range on
+        `dbcan_overview`.
 
         | Section | What it holds |
         |---|---|
         | CAZymes at a glance | 4 cards |
-        | Family hierarchy | *CAZyme hierarchy*, *Class split per sample* |
-        | Substrates | *Substrates predicted*, *CGC substrate predictions* |
-        | Tool concordance | *Annotation concordance*, *CAZyme annotations* |
-
-=== ":material-file-document-outline: Run report"
-
-    *Which screen ran what, and with which versions?*
-
-    [![Run report dashboard](../../images/pipeline-templates/nf-core/funcscan/run_report_light.png){ loading=lazy }](../../images/pipeline-templates/nf-core/funcscan/run_report_light.png){ .tpl-shot target="_blank" rel="noopener" }
-
-    One row per Nextflow process and tool, read from the versions table in the
-    MultiQC report and assigned to a screen by the process name; processes that
-    belong to no screen are labelled as workflow plumbing rather than dropped.
-    A screen that reports no tool here did not run, so this is the first place
-    to look when a screen tab is empty.
-
-    ??? abstract ":material-tune-variant: Filters and components"
-
-        **Filters** · `Screen` and `Tool` on `software_versions`, in a *Version
-        scope* group.
-
-        | Section | What it holds |
-        |---|---|
-        | Tools and versions | *Tools per screen*, *Software versions* |
+        | Family hierarchy | 1 advanced visualization + *CAZy classes per assembly* |
+        | Substrates | *Top substrates* |
+        | Tool concordance (collapsed) | 1 advanced visualization + *CAZyme annotations* |
+        | Substrate table (collapsed) | *Gene cluster substrate predictions* |
 
 !!! tip "Vocabularies that do not line up"
     The five ARG tools, the three BGC callers and the three CAZyme annotators

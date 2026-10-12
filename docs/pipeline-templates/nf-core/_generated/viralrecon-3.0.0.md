@@ -90,7 +90,7 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 
 ### :material-directions-fork: Conditional routes
 
-Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (4 collections are unaffected by any variable — present on every run.)
+Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (5 collections are unaffected by any variable — present on every run.)
 
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 
@@ -98,7 +98,6 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <table>
 <thead><tr><th class="dc">Data collection</th><th><code>IS_NANOPORE</code></th></tr></thead>
 <tbody>
-<tr><th class="dc"><code>summary_metrics</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td></tr>
 <tr><th class="dc"><code>variants_long</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td></tr>
 <tr><th class="dc"><code>pangolin_lineages</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td></tr>
 <tr><th class="dc"><code>nextclade_results</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td></tr>
