@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.16.0",
-    "x-generated-at": "2026-10-11T20:13:10Z",
-    "x-depictio-version": "v1.16.0"
+    "version": "1.17.0",
+    "x-generated-at": "2026-10-12T13:01:19Z",
+    "x-depictio-version": "v1.17.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -5783,6 +5783,31 @@
         }
       }
     },
+    "/depictio/api/v1/utils/server-info": {
+      "get": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Server Info",
+        "description": "Version and links for the account menu, plus the release check for admins.\n\nNever 401s: the menu is rendered for anonymous and single-user visitors too.\nThe user is resolved from an optional bearer token exactly as\n``/auth/me/optional`` does (including its single-user-mode admin), and only\nto decide whether to include ``version_check``. That block says whether a\nnewer release exists, which is operator information, so everyone else gets\n``null``.",
+        "operationId": "server_info_depictio_api_v1_utils_server_info_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/utils/public-config": {
       "get": {
         "tags": [
@@ -5948,6 +5973,51 @@
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/utils/branding/look": {
+      "put": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Put Branding Look",
+        "description": "Set the instance's default chrome style (``null`` = Glass).",
+        "operationId": "put_branding_look_depictio_api_v1_utils_branding_look_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstanceLook"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -6299,6 +6369,122 @@
         "summary": "Infrastructure Diagnostics",
         "description": "Run comprehensive infrastructure diagnostics to identify performance bottlenecks.\n\nThis endpoint helps identify the root cause of screenshot performance issues by testing:\n- DNS resolution performance\n- Network latency between services\n- Browser performance in container environment\n- System resource constraints\n- Storage I/O performance\n\nUse this to compare performance between working (laptop/minikube) and problematic\n(production K8s) environments.",
         "operationId": "infrastructure_diagnostics_depictio_api_v1_utils_infrastructure_diagnostics_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/utils/version-check": {
+      "get": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Get Version Check",
+        "description": "Release-check state for the admin panel.",
+        "operationId": "get_version_check_depictio_api_v1_utils_version_check_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Put Version Check",
+        "description": "Switch the release check on or off at runtime. 409 when the env sets it.",
+        "operationId": "put_version_check_depictio_api_v1_utils_version_check_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionCheckToggle"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Delete Version Check",
+        "description": "Drop the admin's choice so the default (on) applies again. 409 when env-locked.",
+        "operationId": "delete_version_check_depictio_api_v1_utils_version_check_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/utils/version-check/run": {
+      "post": {
+        "tags": [
+          "Utils"
+        ],
+        "summary": "Run Version Check Now",
+        "description": "Check GitHub now (\"Check now\"), ignoring the interval. 409 when disabled.",
+        "operationId": "run_version_check_now_depictio_api_v1_utils_version_check_run_post",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -11428,6 +11614,282 @@
         }
       }
     },
+    "/depictio/api/v1/export/dashboards/{dashboard_id}/components": {
+      "get": {
+        "tags": [
+          "Export"
+        ],
+        "summary": "List Exportable Components",
+        "description": "Report every component on a dashboard and which formats it supports.\n\nLets a consumer plan an integration without probing each component and\ncollecting 422s.",
+        "operationId": "list_exportable_components_depictio_api_v1_export_dashboards__dashboard_id__components_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "include_filter_options",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Also return each interactive component's value universe (distinct values, or min/max) so an external page can build its own control. Off by default: it reads every filtered column.",
+              "default": false,
+              "title": "Include Filter Options"
+            },
+            "description": "Also return each interactive component's value universe (distinct values, or min/max) so an external page can build its own control. Off by default: it reads every filtered column."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response List Exportable Components Depictio Api V1 Export Dashboards  Dashboard Id  Components Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/export/dashboards/{dashboard_id}/components/{component_id}": {
+      "get": {
+        "tags": [
+          "Export"
+        ],
+        "summary": "Export Component",
+        "description": "Export one component as a Plotly spec or a self-contained HTML page.",
+        "operationId": "export_component_depictio_api_v1_export_dashboards__dashboard_id__components__component_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ExportFormat",
+              "description": "`json` for a Plotly spec, `html` for an embed page.",
+              "default": "json"
+            },
+            "description": "`json` for a Plotly spec, `html` for an embed page."
+          },
+          {
+            "name": "theme",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(light|dark)$",
+              "default": "light",
+              "title": "Theme"
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "URL-encoded JSON array of interactive filter values.",
+              "title": "Filters"
+            },
+            "description": "URL-encoded JSON array of interactive filter values."
+          },
+          {
+            "name": "controls",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "URL-encoded JSON object of intra-viz state, e.g. {\"mode\": \"roc\"}. Selects between the cases a multi-view renderer offers; without it the export renders the component's persisted default.",
+              "title": "Controls"
+            },
+            "description": "URL-encoded JSON object of intra-viz state, e.g. {\"mode\": \"roc\"}. Selects between the cases a multi-view renderer offers; without it the export renders the component's persisted default."
+          },
+          {
+            "name": "expect_revision",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Pin the revision this caller was built against (`meta.revision` of an earlier export). If the component's definition or data has moved on, answer 409 rather than silently serving something different.",
+              "title": "Expect Revision"
+            },
+            "description": "Pin the revision this caller was built against (`meta.revision` of an earlier export). If the component's definition or data has moved on, answer 409 rather than silently serving something different."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Export Component Depictio Api V1 Export Dashboards  Dashboard Id  Components  Component Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Export"
+        ],
+        "summary": "Export Component Post",
+        "description": "Same as the GET, for filter payloads too large to sit in a query string.\n\nBody: ``{\"filters\": [...], \"theme\": \"light\" | \"dark\"}``",
+        "operationId": "export_component_post_depictio_api_v1_export_dashboards__dashboard_id__components__component_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ExportFormat",
+              "default": "json"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Export Component Post Depictio Api V1 Export Dashboards  Dashboard Id  Components  Component Id  Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/catalog/project/{project_id}/compose": {
       "get": {
         "tags": [
@@ -13132,6 +13594,105 @@
                   "additionalProperties": true,
                   "type": "object",
                   "title": "Response Get Current User Info Optional Depictio Api V1 Auth Me Optional Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/auth/me/avatar": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get My Avatar",
+        "description": "The current user's profile picture as image bytes, 404 when there is none.\n\n``private`` so a shared proxy never serves one user's picture to another;\nthe SPA keys its own copy on ``avatar_updated_at`` instead of relying on it.",
+        "operationId": "get_my_avatar_depictio_api_v1_auth_me_avatar_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Put My Avatar",
+        "description": "Replace the current user's profile picture with an upload.\n\nThe image is decoded and re-encoded (cropped square, 256 px, WebP) before\nanything is stored, so the bytes served later are never the uploaded ones.\n413 over 5 MB, 415 when the file is not a decodable image.",
+        "operationId": "put_my_avatar_depictio_api_v1_auth_me_avatar_put",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_put_my_avatar_depictio_api_v1_auth_me_avatar_put"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Put My Avatar Depictio Api V1 Auth Me Avatar Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Delete My Avatar",
+        "description": "Remove the current user's profile picture (idempotent).\n\nThe next login through an identity provider that supplies a picture may set\none again; see ``services/avatars.py``.",
+        "operationId": "delete_my_avatar_depictio_api_v1_auth_me_avatar_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Delete My Avatar Depictio Api V1 Auth Me Avatar Delete"
                 }
               }
             }
@@ -15382,6 +15943,20 @@
         ],
         "title": "Body_multiqc_uniformity_check_depictio_api_v1_datacollections_multiqc_uniformity_check_post"
       },
+      "Body_put_my_avatar_depictio_api_v1_auth_me_avatar_put": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_put_my_avatar_depictio_api_v1_auth_me_avatar_put"
+      },
       "Body_replace_multiqc_reports_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__replace_post": {
         "properties": {
           "files": {
@@ -16976,7 +17551,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -17443,7 +18018,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -17506,7 +18081,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -17860,6 +18435,15 @@
         "title": "ExpectedDataCollection",
         "description": "One entry in a project's frozen expected-DC manifest (see TemplateOrigin).\n\nRecords the *full* template DC superset at resolution time — including DCs that\nwere conditionally gated out — so the ingestion report can show what the template\nexpected vs. what was actually identified, faithful to the template version used."
       },
+      "ExportFormat": {
+        "type": "string",
+        "enum": [
+          "json",
+          "html"
+        ],
+        "title": "ExportFormat",
+        "description": "Wire value of the ``format`` query parameter."
+      },
       "ExportTemplateRequest": {
         "properties": {
           "template_id": {
@@ -17907,7 +18491,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -20409,6 +20993,29 @@
         ],
         "title": "IngestionVariable"
       },
+      "InstanceLook": {
+        "properties": {
+          "default_chrome": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "glass",
+                  "base"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Default Chrome"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "InstanceLook",
+        "description": "The instance-wide default chrome style, set from the /admin Branding panel.\n\nKept apart from ``BrandTheme``: a dashboard carries a ``BrandTheme`` too,\nand the app's chrome is not something one dashboard can restyle. ``None``\nmeans Glass. Each reader can still pick their own look in their profile."
+      },
       "JoinDefinition": {
         "properties": {
           "id": {
@@ -21636,7 +22243,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -21924,7 +22531,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -24221,7 +24828,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -24327,7 +24934,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -24560,7 +25167,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6acbedd00eabe4e7e6f7cb3d"
+            "default": "6accda19498e8a3310295119"
           }
         },
         "type": "object",
@@ -24873,7 +25480,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -24992,7 +25599,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -25074,7 +25681,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -25160,7 +25767,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -25308,6 +25915,19 @@
         ],
         "title": "ValidationError"
       },
+      "VersionCheckToggle": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          }
+        },
+        "type": "object",
+        "required": [
+          "enabled"
+        ],
+        "title": "VersionCheckToggle"
+      },
       "ViewState": {
         "properties": {
           "filters": {
@@ -25361,7 +25981,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -25536,7 +26156,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -25653,7 +26273,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
@@ -25758,7 +26378,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acbedd00eabe4e7e6f7cb3c"
+            "default": "6accda19498e8a3310295118"
           },
           "description": {
             "anyOf": [
