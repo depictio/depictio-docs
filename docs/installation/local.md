@@ -28,10 +28,10 @@ data.
 
 !!! tip "No machine at hand?"
 
-    [Open in Codespaces](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&quickstart=1) runs these steps in a GitHub cloud workspace: it
-    installs `depictio[local]`, starts `depictio local up` and opens the
-    viewer. Drag a results folder onto its Explorer, then run `depictio ingest`
-    in its terminal.
+    [Open in Codespaces](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&quickstart=1) runs these steps in a GitHub cloud workspace. Its
+    image already holds `depictio[local]`, the services and the examples, so
+    it only starts `depictio local up` and opens the viewer. Drag a results
+    folder onto its Explorer, then run `depictio ingest` in its terminal.
 
 **Prerequisites**: Linux, or macOS on Apple silicon (see [Platforms](#platforms)),
 with [uv](https://docs.astral.sh/uv/getting-started/installation/), or pip and
