@@ -457,6 +457,10 @@ main_dashboard:
   visible controls. The group filter comes first.
 - Every filter has an icon and a colour, `display: {icon_name: mdi:…, custom_color:
   <palette name>}`, and a column keeps its colour on every tab.
+- The MultiQC tab has no sample filter of its own: the pinned `Sample filters` reach
+  its panels through a link from the sample hub to `multiqc_data`. The convention test
+  `check_persistent_filters_reach_multiqc` fails a template whose pinned filters do not
+  reach the report.
 - A link whose target spells the sample with a stage suffix (a Picard
   `WT_REP1.mLb.mkD.sorted` against the sheet's `WT_REP1`) takes `resolver: pattern` and
   `pattern: "{sample}.mLb.mkD.sorted"`. A `direct` link there matches no row, and the

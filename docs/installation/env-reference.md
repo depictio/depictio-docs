@@ -48,6 +48,7 @@ DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [Logging](#logging)
 - [Monitoring](#monitoring)
 - [Dashboard Versions](#dashboard-versions)
+- [Comments](#comments)
 - [Ingestion](#ingestion)
 - [Jobs](#jobs)
 - [Telemetry](#telemetry)
@@ -113,7 +114,7 @@ Base class for service configurations with internal/external URL handling.
 | `DEPICTIO_VIEWER_EXTERNAL_HOST` | `localhost` | - |
 | `DEPICTIO_VIEWER_EXTERNAL_PORT` | `5080` | Host-side port mapped to the viewer container |
 | `DEPICTIO_VIEWER_EXTERNAL_PROTOCOL` | `http` | - |
-| `DEPICTIO_VIEWER_PUBLIC_URL` | - | - |
+| `DEPICTIO_VIEWER_PUBLIC_URL` | - | Public URL of the viewer, where magic links and the [SAML](sso.md) hand-off land |
 | `DEPICTIO_VIEWER_EXTERNAL_SERVICE` | `false` | - |
 | `DEPICTIO_VIEWER_HOST` | `0.0.0.0` | - |
 | `DEPICTIO_VIEWER_WORKERS` | `4` | Gunicorn worker processes |
@@ -272,7 +273,7 @@ by hand. See [From a run folder](../usage/projects/remote-data.md#from-a-run-fol
 **Config Class:** `AuthConfig`
 **Environment Prefix:** `DEPICTIO_AUTH_`
 
-Authentication and authorization settings including JWT configuration, unauthenticated mode, and Google OAuth integration.
+Authentication and authorization settings including JWT configuration, unauthenticated mode, Google OAuth and SAML single sign-on. Empty SAML values count as unset.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -294,6 +295,20 @@ Authentication and authorization settings including JWT configuration, unauthent
 | `DEPICTIO_AUTH_REGISTRATION_DISABLED` | `false` | Block self-service registration: `/register` returns 403 and the Register UI is hidden, so only pre-provisioned accounts can log in. Independent of public/single-user mode |
 | `DEPICTIO_AUTH_PROVISIONING_API_KEY` | - | Shared secret for pipeline-side user provisioning (`POST /auth/provision_user`). Scoped to provisioning only, kept separate from the internal API key. Also accepted as `DEPICTIO_AUTH_PROVISIONING_API_KEY_ENV`. **The provisioning endpoints are disabled while this is unset.** See [Pipeline provisioning](../usage/guides/authentication-modes.md#pipeline-provisioning-and-magic-links-v113) |
 | `DEPICTIO_AUTH_MAGIC_LINK_EXPIRY_MINUTES` | `15` | Lifetime of a single-use magic-link login ticket |
+| `DEPICTIO_AUTH_SAML_ENABLED` | `false` | Turn on SAML 2.0 single sign-on (v1.18.0+). See [Single sign-on (SAML)](sso.md) |
+| `DEPICTIO_AUTH_SAML_IDP_ENTITY_ID` | - | The identity provider's entity ID |
+| `DEPICTIO_AUTH_SAML_IDP_SSO_URL` | - | The identity provider's SSO endpoint (HTTP-Redirect binding) |
+| `DEPICTIO_AUTH_SAML_IDP_CERT` | - | The identity provider's signing certificate, as inline PEM or a path to a PEM file |
+| `DEPICTIO_AUTH_SAML_SP_ENTITY_ID` | - | Depictio's entity ID (the Client ID) as registered with the identity provider |
+| `DEPICTIO_AUTH_SAML_SP_BASE_URL` | _(API external URL)_ | Public base URL of the API, used to build the ACS URL |
+| `DEPICTIO_AUTH_SAML_NAME_ID_FORMAT` | `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress` | Requested NameID format |
+| `DEPICTIO_AUTH_SAML_ATTRIBUTE_EMAIL` | - | Attribute carrying the email. Unset, the NameID is used |
+| `DEPICTIO_AUTH_SAML_ATTRIBUTE_USERNAME` | - | Attribute carrying the username (informational) |
+| `DEPICTIO_AUTH_SAML_LOGIN_LABEL` | `Sign in with SSO` | Label of the SSO button |
+| `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS` | - | Attribute carrying the user's groups, mirrored as SSO-managed groups at each sign-in. See [Group and profile sync](sso.md#group-and-profile-sync) |
+| `DEPICTIO_AUTH_SAML_ATTRIBUTE_TITLE` | - | Attribute carrying the user's title |
+| `DEPICTIO_AUTH_SAML_ATTRIBUTE_DISPLAY_NAME` | - | Attribute carrying the user's display name |
+| `DEPICTIO_AUTH_SAML_ATTRIBUTE_LOGIN` | - | Attribute carrying the user's login |
 
 ---
 
@@ -676,6 +691,19 @@ The version history of every dashboard. See [Dashboard and data versions](../fea
 | `DEPICTIO_DASHBOARD_VERSIONS_RETENTION_DAYS` | `90` | Age after which versions that are not bookmarked are dropped |
 | `DEPICTIO_DASHBOARD_VERSIONS_KEEP_DAILY_FOR_DAYS` | `30` | Age after which autosaves thin to the last one of each day |
 | `DEPICTIO_DASHBOARD_VERSIONS_MAX_SNAPSHOT_BYTES` | `8388608` (8 MiB) | Largest version recorded. A larger one is skipped and logged; the save itself goes through |
+
+---
+
+## Comments <small>(v1.17.2+)</small> { #comments }
+
+**Config Class:** `CommentsConfig`
+**Environment Prefix:** `DEPICTIO_COMMENTS_`
+
+Who may use the comment threads of a dashboard. See [Viewers can comment](../features/comments-annotations.md#viewers-can-comment).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT` | `false` | Let anyone with viewer access to a project read and write its threads. Moderation, annotations and agent proposals stay with editors and owners, and anonymous visitors never comment |
 
 ---
 
