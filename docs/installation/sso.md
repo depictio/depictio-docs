@@ -13,8 +13,10 @@ against a Keycloak realm, but nothing in it is specific to Keycloak.
 SAML is off until `DEPICTIO_AUTH_SAML_ENABLED` turns it on, and sits beside
 [Google OAuth](configuration.md#google-oauth-integration) and password sign-in.
 
-!!! warning "Use v1.18.1 or later"
-    Every SAML route answered 500 on the 1.18.0 API image (an `lxml` / `xmlsec` mismatch).
+!!! warning "Use v1.19.0 or later"
+    SAML sign-in works end to end from v1.19.0. Every SAML route answers 500 on the 1.18.0
+    API image (an `lxml` / `xmlsec` mismatch), no image was published for 1.18.1, and
+    1.19.0 also fixes how the callback reads the identity provider's response.
 
 <figure markdown="span">
   [![Signing in with SAML: the SSO button, the redirect to the IdP, the signed response posted back to the ACS and its checks, user resolution, and the single-use ticket carried in the URL fragment](../images/guides/sso/schema_saml_login.svg)](../images/guides/sso/schema_saml_login.svg){target=_blank}
