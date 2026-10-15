@@ -208,9 +208,8 @@ column: the antibody reaches them, through a prefix link on the set name.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sequencing library` on `samplesheet`, in its own *Library
-        scope* group: the read-level panels are keyed on the sequencing library,
-        a finer grain than the merged library every other tab works in.
+        **Filters** · the pinned sample filters narrow the panels, down to the
+        sequencing libraries behind them.
 
         | Section | What it holds |
         |---|---|

@@ -8,6 +8,192 @@ hide:
 
 # Changelog
 
+## **[v1.19.0](https://github.com/depictio/depictio/releases/tag/v1.19.0)** (October 15, 2026)
+
+!!! success "Minor: protein tiles linked by residue, seven nf-core templates, and users added by an administrator"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.19.0
+ghcr.io/depictio/depictio-viewer:1.19.0
+ghcr.io/depictio/depictio-worker:1.19.0
+ghcr.io/depictio/depictio-cli:1.19.0
+```
+
+### **✨ New Features**
+
+* **Protein tiles**: eight advanced visualizations draw one protein or a family, `molecule_3d`, `msa`, `sequence_track`, `hmm_logo`, `domain_architecture`, `secondary_structure`, `pae_matrix` and `ramachandran`. See [Protein tiles](../features/protein-tiles.md) ([#1130](https://github.com/depictio/depictio/pull/1130), [841608ce](https://github.com/depictio/depictio/commit/841608ce), [3c68a394](https://github.com/depictio/depictio/commit/3c68a394)).
+* **Tiles linked by residue**: a click or brush in any protein tile filters every table on that protein and residue range, the last gesture winning, and a hover marks the residue in all of them. See [Linked by residue](../features/protein-tiles.md#residue-selection) ([#1130](https://github.com/depictio/depictio/pull/1130), [e1cae8f7](https://github.com/depictio/depictio/commit/e1cae8f7)).
+* **Structures the run did not publish**: a 3D or Ramachandran tile can fetch a model from AlphaFold DB by accession or gene, or fold a short sequence with ESMFold, once `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` turns it on. See [Where the structure comes from](../features/protein-tiles.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [a0af95f1](https://github.com/depictio/depictio/commit/a0af95f1), [#1254](https://github.com/depictio/depictio/pull/1254)).
+* **Structure and error files as collections**: an `indexed_file` collection takes `format: pdb`, `mmcif` or `pae`, one file per protein. See [Indexed-file DCs](../usage/projects/guide.md#example-indexed-file-dcs) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **Seven nf-core templates**: proteinfamilies, proteinannotator and proteinfold, built on the protein tiles, and oncoanalyser, crisprseq, isoseq and pairgenomealign. See [nf-core templates](../pipeline-templates/nf-core/index.md) ([#1131](https://github.com/depictio/depictio/pull/1131), [e3fdfb63](https://github.com/depictio/depictio/commit/e3fdfb63)).
+* **A Protein tab on sarek** draws a gene's coding variants on its predicted structure, beside a gene scatter and a lollipop, as oncoanalyser's Protein changes tab does. See [sarek](../pipeline-templates/nf-core/sarek.md#dashboard-tabs) ([#1131](https://github.com/depictio/depictio/pull/1131), [82b49dea](https://github.com/depictio/depictio/commit/82b49dea)).
+* **Add user**: **Administration → Users** creates an account with an initial password, which the person is asked to change at first sign-in, even where registration is closed. See [Adding a user](../usage/guides/web_ui.md#add-a-user) ([#1251](https://github.com/depictio/depictio/pull/1251), [3b0b2c57](https://github.com/depictio/depictio/commit/3b0b2c57)).
+* **Everyone with access**: a project's permissions list each person once, with their highest role and the grants behind it, and a group's members show before it is added. See [Everyone with access](../usage/projects/guide.md#everyone-with-access) ([#1252](https://github.com/depictio/depictio/pull/1252), [0993e48d](https://github.com/depictio/depictio/commit/0993e48d)).
+
+### **🚀 Improvements**
+
+* **A Select that always holds one value**: `always_selected: true` keeps a picker on one family or structure, and `default_by` starts it on the option that ranks first on a numeric column. See [Initial values](../features/yaml-sync.md#interactive-defaults) ([#1131](https://github.com/depictio/depictio/pull/1131), [2a91f880](https://github.com/depictio/depictio/commit/2a91f880), [#1257](https://github.com/depictio/depictio/pull/1257), [340367ae](https://github.com/depictio/depictio/commit/340367ae)).
+* **Protein tiles zoom and fold**: Ctrl or Cmd and the wheel zooms the sequence tiles, the HMM logo hides or folds parts of the profile, and the sequence track draws every chain of a complex. See [Protein tiles](../features/protein-tiles.md#the-tiles) ([#1256](https://github.com/depictio/depictio/pull/1256), [81103856](https://github.com/depictio/depictio/commit/81103856), [9f81a336](https://github.com/depictio/depictio/commit/9f81a336)).
+* **27 catalog tools** for the new pipelines, from HMMER, InterProScan and S4PRED to PURPLE, LINX and TAMA. See [Tools Catalog](../catalog/index.md) ([#1131](https://github.com/depictio/depictio/pull/1131)).
+* **Stacked composition beyond taxonomy**: `rank_label`, `x_title`, `hidden_controls` and `legend_pos: bottom`, and a table's `columns:` now sets their order. See [Stacked taxonomy](../features/components.md#stacked-taxonomy) ([#1131](https://github.com/depictio/depictio/pull/1131), [349a6fcd](https://github.com/depictio/depictio/commit/349a6fcd)).
+* **A clearer Groups page and sign-in card**: the source filter is a dropdown, Create group looks like Create project, and a branded sign-in card centres a larger logo ([#1249](https://github.com/depictio/depictio/pull/1249), [#1255](https://github.com/depictio/depictio/pull/1255), [#1248](https://github.com/depictio/depictio/pull/1248)).
+
+### **🔒 Security**
+
+* **The structure resolver is off by default**: once on, only the accession, gene or sequence leaves the server, to AlphaFold DB, UniProt or ESMFold, and the 3D tile names the service it called. See [External structure services](../features/security.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1256](https://github.com/depictio/depictio/pull/1256), [86f801cc](https://github.com/depictio/depictio/commit/86f801cc)).
+* **SAML counts as single sign-on**: `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED` now applies with SAML alone, and closes `/auth/register` as well. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) ([#1246](https://github.com/depictio/depictio/pull/1246), [097032ef](https://github.com/depictio/depictio/commit/097032ef)).
+
+### **🐛 Bug Fixes**
+
+* **SAML sign-in reads the identity provider's response**, which the callback refused as missing. See [Single sign-on (SAML)](../installation/sso.md) ([#1247](https://github.com/depictio/depictio/pull/1247), [35f2db3f](https://github.com/depictio/depictio/commit/35f2db3f)).
+* **The API image builds again**: no image could be published for v1.18.1 ([#1244](https://github.com/depictio/depictio/pull/1244), [d9308176](https://github.com/depictio/depictio/commit/d9308176)).
+* **Dashboards with advanced visualizations export again**: `depictio dashboard export` failed with a 500 on a tile with extra collections, and now writes their tags ([#1239](https://github.com/depictio/depictio/pull/1239), [9cb71aa5](https://github.com/depictio/depictio/commit/9cb71aa5)).
+* **The Groups page counts the members it lists** ([#1249](https://github.com/depictio/depictio/pull/1249), [4f80870e](https://github.com/depictio/depictio/commit/4f80870e)).
+* **crisprseq recipes run on polars 1.33** ([#1253](https://github.com/depictio/depictio/pull/1253), [88d17a71](https://github.com/depictio/depictio/commit/88d17a71)).
+
+---
+
+## **[v1.18.1](https://github.com/depictio/depictio/releases/tag/v1.18.1)** (October 14, 2026)
+
+!!! success "Patch: SAML loads in the API image, and file-backed genome tracks work with sign-in"
+
+### Docker Images
+
+No images were published for v1.18.1: the API image failed to build ([#1244](https://github.com/depictio/depictio/pull/1244)). Use [v1.19.0](#v1190-october-15-2026), which carries both fixes.
+
+### **🐛 Bug Fixes**
+
+* **SAML loads in the API image**: `lxml` is built against the same `libxml2` as `xmlsec`, a mismatch that made every SAML route answer 500 in 1.18.0, and the build now fails if SAML cannot load. See [Single sign-on (SAML)](../installation/sso.md) ([#1243](https://github.com/depictio/depictio/pull/1243), [a22bd5c3](https://github.com/depictio/depictio/commit/a22bd5c3)).
+* **File-backed genome tracks render on instances with sign-in**, instead of *Indexed file manifest unavailable (401)*. See [Genome view](../features/components.md#genome-view) ([#1242](https://github.com/depictio/depictio/pull/1242), [0f38f506](https://github.com/depictio/depictio/commit/0f38f506)).
+
+---
+
+## **[v1.18.0](https://github.com/depictio/depictio/releases/tag/v1.18.0)** (October 14, 2026)
+
+!!! success "Minor: SAML sign-in, user groups, and filters that stay and travel as a link"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.18.0
+ghcr.io/depictio/depictio-viewer:1.18.0
+ghcr.io/depictio/depictio-worker:1.18.0
+ghcr.io/depictio/depictio-cli:1.18.0
+```
+
+### **♻️ Migration**
+
+* **A project update no longer changes who has access**: `PUT /projects/update` checks the stored project and ignores the `permissions` it is sent, so sharing goes through **Permissions** or `POST /projects/update_project_permissions`. See [Project permissions](../usage/projects/guide.md#project-permissions) ([#972](https://github.com/depictio/depictio/pull/972), [6dce8ac8](https://github.com/depictio/depictio/commit/6dce8ac8)).
+* **Data-collection writes follow the role**: renaming one or editing its properties needs editor and deleting it needs owner, where a direct viewer could write and an editor could not. See [Group-Based Access](../features/security.md#group-based-access) ([#972](https://github.com/depictio/depictio/pull/972), [2d375aae](https://github.com/depictio/depictio/commit/2d375aae)).
+
+### **✨ New Features**
+
+* **Sign in with SAML 2.0**: an instance can send its users to their institution's identity provider, off until `DEPICTIO_AUTH_SAML_ENABLED` turns it on, with its service-provider metadata at `/auth/saml/metadata`. Use v1.19.0 or later. See [Single sign-on (SAML)](../installation/sso.md) ([#968](https://github.com/depictio/depictio/pull/968), [fd09c330](https://github.com/depictio/depictio/commit/fd09c330)).
+* **User groups**: a project is shared with a whole lab as owner, editor or viewer, and each member gets the highest of their own role and their groups'. See [Groups](../usage/administration/groups.md) ([#972](https://github.com/depictio/depictio/pull/972), [cfadf7c5](https://github.com/depictio/depictio/commit/cfadf7c5), [127353a5](https://github.com/depictio/depictio/commit/127353a5)).
+* **Group admins run their own groups**: **Administration → Groups** manages every group, and `/groups`, opened from the group badges in Account settings, lets a group admin add members and admins. A P.I. can be named before their first sign-in. See [Managing a group](../usage/administration/groups.md#managing-a-group) ([#972](https://github.com/depictio/depictio/pull/972), [4fb69aca](https://github.com/depictio/depictio/commit/4fb69aca), [b6ab32fa](https://github.com/depictio/depictio/commit/b6ab32fa)).
+* **Groups from the identity provider**: with `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS` set, each SAML sign-in mirrors the user's groups and refreshes their name and title. See [Group and profile sync](../installation/sso.md#group-and-profile-sync) ([#972](https://github.com/depictio/depictio/pull/972), [9383d518](https://github.com/depictio/depictio/commit/9383d518)).
+* **Filters remembered per dashboard**: a dashboard reopens on the filters you left, in this browser and in any browser you sign in to, unless **Your filters → Remember my filters** is off. See [Remembered filters](../usage/guides/dashboard_usage.md#remembered-filters) ([#967](https://github.com/depictio/depictio/pull/967), [b779f183](https://github.com/depictio/depictio/commit/b779f183)).
+* **The address bar is a filter link**: `#filters=` follows the active filters, and the link icon beside **N filters active** copies it. See [Filter links](../usage/guides/dashboard_usage.md#filter-links) ([#967](https://github.com/depictio/depictio/pull/967), [c190f568](https://github.com/depictio/depictio/commit/c190f568), [54aeb5ca](https://github.com/depictio/depictio/commit/54aeb5ca)).
+
+### **🚀 Improvements**
+
+* **Every project manages its data collections in the browser**: **Create Data Collection** opens on a project the CLI made, where it used to refuse. See [Managing Data Collections from the viewer](../usage/projects/guide.md#managing-data-collections-from-the-viewer-v0120) ([#1039](https://github.com/depictio/depictio/pull/1039), [45f3422e](https://github.com/depictio/depictio/commit/45f3422e)).
+* **Log & Task on a public instance**: a signed-in administrator gets Tasks, Ingestion, Watchers, Logs and Health, while guests and demo instances still do not. See [Monitoring](../usage/administration/monitoring.md) ([#1236](https://github.com/depictio/depictio/pull/1236), [f7ec044c](https://github.com/depictio/depictio/commit/f7ec044c)).
+
+### **🔒 Security**
+
+* **One permission check for every resource**: projects, dashboards, files, tables and the rest go through one module, and an anonymous visitor matches public projects only. See [Group-Based Access](../features/security.md#group-based-access) ([#972](https://github.com/depictio/depictio/pull/972), [61a51a88](https://github.com/depictio/depictio/commit/61a51a88)).
+* **SAML sign-in ends on a single-use ticket**: a response must answer a request this instance made, the return path stays on this site, and no token travels in a query string. See [SAML sign-in](../features/security.md#saml-sign-in) ([#968](https://github.com/depictio/depictio/pull/968), [fd09c330](https://github.com/depictio/depictio/commit/fd09c330)).
+* **A phylogeny tree is read only where the server may read**: an `s3://` Newick follows the remote-data rules, a local one must sit under the bundled projects or a `depictio local` folder. See [Folders on the server's disk](../features/security.md#folders-on-the-servers-disk) ([#1237](https://github.com/depictio/depictio/pull/1237), [b2ee7b06](https://github.com/depictio/depictio/commit/b2ee7b06)).
+
+### **🐛 Bug Fixes**
+
+* **A CLI refresh keeps what the browser added**: `--update-config` wrote the whole project back, deleting the data collections added in the web UI. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1038](https://github.com/depictio/depictio/pull/1038), [0cf51772](https://github.com/depictio/depictio/commit/0cf51772)).
+* **The release check looks again after an upgrade**, so the server information no longer shows a latest release older than the one running. See [Release check](../usage/guides/web_ui.md#release-check) ([#1236](https://github.com/depictio/depictio/pull/1236), [6ad2f1aa](https://github.com/depictio/depictio/commit/6ad2f1aa)).
+* **The QIIME2 rarefaction summary skips the columns ingestion adds**, such as `depictio_run_id`, on which it failed ([#1237](https://github.com/depictio/depictio/pull/1237), [c400bb3b](https://github.com/depictio/depictio/commit/c400bb3b)).
+* **A database wipe keeps the installation's telemetry ID**. See [Telemetry](../features/telemetry.md#what-is-sent) ([#1237](https://github.com/depictio/depictio/pull/1237), [5a121129](https://github.com/depictio/depictio/commit/5a121129)).
+
+---
+
+## **[v1.17.4](https://github.com/depictio/depictio/releases/tag/v1.17.4)** (October 13, 2026)
+
+!!! success "Patch: a landing hint on dashboards, and Comments and Versions in the Guide"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.17.4
+ghcr.io/depictio/depictio-viewer:1.17.4
+ghcr.io/depictio/depictio-worker:1.17.4
+ghcr.io/depictio/depictio-cli:1.17.4
+```
+
+### **✨ New Features**
+
+* **A landing hint on a dashboard**: a public-mode guest gets a short note on what Depictio and the dashboard are, with a button to the Guide, once per browser, and the public tour now stays on the dashboards list. See [Landing hint](../usage/guides/dashboard-guide.md#landing-hint) ([#1208](https://github.com/depictio/depictio/pull/1208), [46ffbfbf](https://github.com/depictio/depictio/commit/46ffbfbf), [b1ff9848](https://github.com/depictio/depictio/commit/b1ff9848)).
+* **Comments and Versions in the Guide**: comments and annotations tried on one of the dashboard's own figures, and a component's read-only history for any reader. See [What it covers](../usage/guides/dashboard-guide.md#what-it-covers) ([#1208](https://github.com/depictio/depictio/pull/1208), [4478780e](https://github.com/depictio/depictio/commit/4478780e)).
+
+### **🐛 Bug Fixes**
+
+* **Show me rings the comments button only when it is visible** ([#1209](https://github.com/depictio/depictio/pull/1209)).
+
+---
+
+## **[v1.17.3](https://github.com/depictio/depictio/releases/tag/v1.17.3)** (October 13, 2026)
+
+!!! success "Patch: a public-mode guest can sign in where they would comment"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.17.3
+ghcr.io/depictio/depictio-viewer:1.17.3
+ghcr.io/depictio/depictio-worker:1.17.3
+ghcr.io/depictio/depictio-cli:1.17.3
+```
+
+### **✨ New Features**
+
+* **Guests sign in from where they would comment**: on a public instance with Google or another identity provider, the avatar, the sidebar's mode line and the comments buttons offer a sign-in, and `/auth/login` shows the form with **Continue as guest**. See [Signing in as a guest](../usage/guides/authentication-modes.md#guest-sign-in) ([#1207](https://github.com/depictio/depictio/pull/1207), [2e72e446](https://github.com/depictio/depictio/commit/2e72e446)).
+
+### **🐛 Bug Fixes**
+
+* **The actions column of the Dashboards and Projects tables stays in view** on a narrow screen, and the depictio mark sits centred in the top bar ([7d1ec740](https://github.com/depictio/depictio/commit/7d1ec740), [f70d2fc5](https://github.com/depictio/depictio/commit/f70d2fc5)).
+
+---
+
+## **[v1.17.2](https://github.com/depictio/depictio/releases/tag/v1.17.2)** (October 12, 2026)
+
+!!! success "Patch: viewers may comment, and the pinned sample filters reach the MultiQC panels"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.17.2
+ghcr.io/depictio/depictio-viewer:1.17.2
+ghcr.io/depictio/depictio-worker:1.17.2
+ghcr.io/depictio/depictio-cli:1.17.2
+```
+
+### **✨ New Features**
+
+* **Viewers may comment**: `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT` lets anyone with viewer access to a project read and write its threads, while resolving, annotating and agent proposals stay with editors and owners, and temporary accounts still cannot comment. See [Viewers can comment](../features/comments-annotations.md#viewers-can-comment) ([#1204](https://github.com/depictio/depictio/pull/1204), [#1206](https://github.com/depictio/depictio/pull/1206)).
+
+### **🚀 Improvements**
+
+* **One sample filter for every tab of an nf-core template**: 14 templates drop the sample filter of their MultiQC tab, which the pinned Sample filters now narrow; a dashboard already imported keeps it until it is imported again. See [Sections on every tab](../features/dashboards.md#persistent-sections) ([#1203](https://github.com/depictio/depictio/pull/1203), [a1827f1c](https://github.com/depictio/depictio/commit/a1827f1c)).
+
+### **🐛 Bug Fixes**
+
+* **A pinned filter narrows the MultiQC panels of another tab**, through every link of its table, and matches a sample id inside a report name such as mag's bins. See [Supported target types](../features/cross-dc-filtering.md#supported-target-types) ([#1201](https://github.com/depictio/depictio/pull/1201), [#1202](https://github.com/depictio/depictio/pull/1202)).
+* **The nf-core section lists every nf-core dashboard**, imported templates included, not only the two seeded ones. See [Dashboards](../usage/guides/web_ui.md#dashboards-listing) ([#1199](https://github.com/depictio/depictio/pull/1199)).
+* **A refused Google sign-in reads as a message** under *Sign-in failed*, not as the raw API response ([#1198](https://github.com/depictio/depictio/pull/1198)).
+* **The open sidebar centres its foot**, the server status and All dashboards ([#1185](https://github.com/depictio/depictio/pull/1185)).
+
+---
+
 ## **[v1.17.1](https://github.com/depictio/depictio/releases/tag/v1.17.1)** (October 12, 2026)
 
 !!! success "Patch: section filter bars use their full width in the Paper look"
