@@ -67,7 +67,10 @@ in Classic, Paper has it in the top bar or the dock.
 
 If you have configured Google OAuth for your Depictio instance (see [Configuration](../../../installation/configuration/#google-oauth-integration)), you can log in using your Google account. If the account does not exist, it will be created automatically.
 
-## <span style="color: #F68B33;">:material-view-dashboard:</span> Landing page / Dashboards section (/dashboards)
+When the server refuses the sign-in, for example because registration is closed, the
+callback page shows **Sign-in failed** and the reason, since v1.17.2.
+
+## <span style="color: #F68B33;">:material-view-dashboard:</span> Landing page / Dashboards section (/dashboards) { #dashboards-listing }
 
 [![The Dashboards page in the Paper look: the toolbar with search, sections and display menus, and the table of dashboards](../../images/guides/web-ui/dashboards_light.webp#only-light)](../../images/guides/web-ui/dashboards_light.webp){target=_blank}
 [![The Dashboards page in the Paper look: the toolbar with search, sections and display menus, and the table of dashboards](../../images/guides/web-ui/dashboards_dark.webp#only-dark)](../../images/guides/web-ui/dashboards_dark.webp){target=_blank}
@@ -83,6 +86,11 @@ first, with dashboards you never opened last. It is kept per browser.
 The **Table display** menu <small>(v1.17.0+)</small> sets the row height, **Comfortable**
 or **Compact**, and which columns show, with **Show all** and **Reset**. The Projects
 listing has the same menu.
+
+Dashboards are grouped into sections, each dashboard in one only, in this order:
+**nf-core dashboards**, **Demo dashboards**, **Public**, **Accessed** and **Owned**.
+Since v1.17.2 the nf-core section holds every dashboard of an nf-core workflow, the
+imported templates included: the seeded ones first, then the others by title.
 
 #### <span style="color: #45B8AC;">:material-view-grid-outline:</span> Thumbnails or table <small>(v1.11.2+)</small> { #listing-views }
 
