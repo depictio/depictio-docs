@@ -23,6 +23,8 @@ A random **installation ID** (a UUID generated on first boot, not derived from a
 - Which optional features are switched on, as booleans
 - Deployment size as **coarse buckets** (`11-50 users`, `2-5 projects`), never exact counts
 
+The ID lives in the database. Since **v1.18.0** a database wipe keeps it, so a wiped instance is not counted as a new installation, and a report says `preexisting_data` when its ID was first created on a database that already held data.
+
 The full field-by-field payload reference is generated from the schema and lives in the main repository: [docs/telemetry.md](https://github.com/depictio/depictio/blob/main/docs/telemetry.md).
 
 ## What is never sent

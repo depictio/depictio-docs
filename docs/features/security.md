@@ -93,13 +93,26 @@ Permissions are applied at multiple levels:
 | Manage project settings | Yes | No | No |
 | Manage project members | Yes | No | No |
 
-### Group-Based Access
+### Group-Based Access <small>(v1.18.0+)</small> { #group-based-access }
 
-Users can be organized into groups for easier permission management:
+A project can be shared with [groups](../usage/administration/groups.md) as owner, editor
+or viewer, beside its individual users. A user's role is the **highest** of their own role
+and their groups' roles, so a direct viewer whose group owns the project is an owner.
 
-- **Groups** inherit project permissions
-- **Individual users** can have additional permissions
-- **Permission inheritance** follows the most permissive grant
+Since v1.18.0 every access check (projects, dashboards, workflows, files, tables, MultiQC,
+advanced visualizations, events, runs, the catalog and the screenshot service) goes
+through one module, `depictio/api/v1/permissions.py`, where these hand-rolled checks had
+drifted apart:
+
+- an anonymous visitor matches public projects only;
+- editors now pass every viewer-level read;
+- renaming a data collection or editing its properties needs **editor**, and deleting one
+  needs **owner**, where a direct viewer could write and an editor could not;
+- `PUT /projects/update` checks the stored project and no longer writes `permissions`:
+  sharing goes through the Permissions page or `POST /projects/update_project_permissions`.
+
+A refusal is the same 404 as a missing resource. `GET /groups/list` returns names only,
+never membership.
 
 ---
 
@@ -290,6 +303,11 @@ a `depictio local` server:
   folder, every template variable given as a path and every location a data
   collection scans must be inside it; one pointing elsewhere is refused.
 
+Since **v1.18.0** a phylogeny tree's stored location follows the same rules. An `s3://`
+Newick goes through the [S3 location](#s3-locations) checks (never the instance bucket
+with the instance's keys), a local one is read only below the bundled projects or a
+`depictio local` folder, and an error no longer names the paths it tried.
+
 ### Per-project storage credentials
 
 A project owner or an administrator can attach S3-compatible credentials so
@@ -390,6 +408,16 @@ Configure logging via environment variables:
 ### JBrowse Iframe Sandbox
 
 The JBrowse iframe uses a restricted `sandbox` attribute that omits `allow-same-origin`. Previously, combining `allow-same-origin` with `allow-scripts` would have allowed iframe content to access the parent page's `localStorage` and read authentication tokens; removing `allow-same-origin` closes this vector.
+
+### SAML sign-in <small>(v1.18.0+)</small> { #saml-sign-in }
+
+[SAML single sign-on](../installation/sso.md) accepts a response only if it answers a
+request this instance made, and only once: the request IDs live in a one-shot store
+shared by the API workers (Redis, with an in-process fallback). The return path the
+identity provider echoes back is never trusted, and redirects stay on this site. The
+browser is handed a single-use ticket in the URL fragment, so no token travels in a query
+string. Accounts created by Google or SAML now get a random password hash instead of an
+invalid placeholder.
 
 ### OAuth Callback Security
 

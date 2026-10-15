@@ -207,6 +207,10 @@ Project, Dashboard, WorkflowRun and File, holding three disjoint sets of users:
 | **editors** | Modify dashboard content, run data updates |
 | **viewers** | Read-only access to dashboards and data |
 
+Since v1.18.0 the same object also holds `group_owners`, `group_editors` and
+`group_viewers`, which grant a role to every member of a [group](../usage/administration/groups.md).
+A user's role is the highest of their own and their groups'.
+
 A project also carries an `is_public` flag, which is what opens it to readers with no
 account. See [Authentication Modes](../usage/guides/authentication-modes.md) for how that
 interacts with anonymous and unauthenticated deployments.
