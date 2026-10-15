@@ -114,13 +114,14 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 
 ### :material-vector-link: Cross-DC links
 
-26 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+27 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
 <thead><tr><th>Source · column</th><th></th><th>Target</th><th>Filters</th></tr></thead>
 <tbody>
 <tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter the MultiQC panels by the libraries picked in the left panel</td></tr>
+<tr><td><code>samples</code> <span class="col">·&nbsp;sample_name</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter the MultiQC panels named after the sample by the samples picked in the left panel</td></tr>
 <tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>preseq_complexity_curve</code></td><td>Filter the complexity curves by the libraries picked in the left panel</td></tr>
 <tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>samtools_flagstat</code></td><td>Filter the flagstat table by the libraries picked in the left panel</td></tr>
 <tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>qualimap_bamqc_genome_results</code></td><td>Filter the coverage table by the libraries picked in the left panel</td></tr>

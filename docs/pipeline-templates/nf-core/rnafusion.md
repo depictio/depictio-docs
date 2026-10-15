@@ -162,11 +162,11 @@ tabs. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
     MultiQC panels only. The general statistics, the raw read quality beside the
     reads fastp kept, then STAR's alignment scores beside Picard's transcript
     region assignment. The post-trim read quality, insert size, gene body coverage
-    and STAR gene counts are collapsed. Its sample filter reads the MultiQC report.
+    and STAR gene counts are collapsed. The pinned sample filters narrow its panels.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample`, read from the MultiQC report.
+        **Filters** · the pinned sample filters narrow its panels.
 
         | Section | What it holds |
         |---|---|

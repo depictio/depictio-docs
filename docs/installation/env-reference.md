@@ -48,6 +48,7 @@ DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [Logging](#logging)
 - [Monitoring](#monitoring)
 - [Dashboard Versions](#dashboard-versions)
+- [Comments](#comments)
 - [Ingestion](#ingestion)
 - [Jobs](#jobs)
 - [Telemetry](#telemetry)
@@ -676,6 +677,19 @@ The version history of every dashboard. See [Dashboard and data versions](../fea
 | `DEPICTIO_DASHBOARD_VERSIONS_RETENTION_DAYS` | `90` | Age after which versions that are not bookmarked are dropped |
 | `DEPICTIO_DASHBOARD_VERSIONS_KEEP_DAILY_FOR_DAYS` | `30` | Age after which autosaves thin to the last one of each day |
 | `DEPICTIO_DASHBOARD_VERSIONS_MAX_SNAPSHOT_BYTES` | `8388608` (8 MiB) | Largest version recorded. A larger one is skipped and logged; the save itself goes through |
+
+---
+
+## Comments <small>(v1.17.2+)</small> { #comments }
+
+**Config Class:** `CommentsConfig`
+**Environment Prefix:** `DEPICTIO_COMMENTS_`
+
+Who may use the comment threads of a dashboard. See [Viewers can comment](../features/comments-annotations.md#viewers-can-comment).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT` | `false` | Let anyone with viewer access to a project read and write its threads. Moderation, annotations and agent proposals stay with editors and owners, and anonymous visitors never comment |
 
 ---
 
