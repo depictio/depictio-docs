@@ -70,6 +70,12 @@ If you have configured Google OAuth for your Depictio instance (see [Configurati
 When the server refuses the sign-in, for example because registration is closed, the
 callback page shows **Sign-in failed** and the reason, since v1.17.2.
 
+### <span style="color: #1E88E5;">:material-shield-key-outline:</span> SSO login <small>(v1.18.0+)</small>
+
+An instance with [SAML single sign-on](../../installation/sso.md) adds a button, *Sign in
+with SSO* or the label it sets, that sends you to your institution's identity provider and
+back.
+
 ## <span style="color: #F68B33;">:material-view-dashboard:</span> Landing page / Dashboards section (/dashboards) { #dashboards-listing }
 
 [![The Dashboards page in the Paper look: the toolbar with search, sections and display menus, and the table of dashboards](../../images/guides/web-ui/dashboards_light.webp#only-light)](../../images/guides/web-ui/dashboards_light.webp){target=_blank}
@@ -261,6 +267,9 @@ and close:
   picture; the server stores it as a 256-pixel WebP and includes it in
   [backups](../administration/backup.md). Signing in with Google sets your Google picture
   until you upload one.
+  Since v1.18.0 it shows your [group](../administration/groups.md#my-groups) badges
+  (crown for P.I., shield for group admin), which open `/groups`, and the name and title
+  your identity provider gives.
 - **Password**: change the password you sign in with.
 - **CLI agents**: the long-lived tokens of the `depictio` command line, see
   [Create a CLI configuration](../get_started.md#create-a-cli-configuration). The former
@@ -299,7 +308,7 @@ its pages are listed down the side, in four groups:
 
 | Group | Pages |
 |-------|-------|
-| **People** | **Users**: every account, its role (standard or system admin), and deletion |
+| **People** | **Users**: every account, its role (standard or system admin), and deletion. **Groups** <small>(v1.18.0+)</small>: see [Groups](../administration/groups.md#managing-a-group) |
 | **Content** | **Projects** and **Dashboards**: every one of them, whoever owns it. Admins can delete any |
 | **Activity** | **Tasks**, **Ingestion**, **Watchers**, **Logs** and **Health**, see [Monitoring](../administration/monitoring.md) |
 | **Instance** | [**Branding**](../administration/branding.md), [**Backups**](../administration/backup.md), **Maintenance** and **Settings** |
@@ -319,6 +328,10 @@ The check is on by default and the switch turns it off for the instance. Setting
 [`DEPICTIO_VERSION_CHECK_ENABLED`](../../installation/env-reference.md#release-check) to
 `true` or `false` decides instead and locks the switch, for instances that must make no
 outbound call.
+
+Since v1.18.0 the check also runs as soon as the running version is not the one that last
+checked, so the page never shows a latest release older than the current one after an
+upgrade.
 
 ## <span style="color: #45B8AC;">:material-sitemap:</span> Page reference
 

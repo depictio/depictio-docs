@@ -777,7 +777,7 @@ with *sign in again* when none is valid.
 
 ### :material-shield-account: Permissions { #permissions }
 
-Dashboards inherit permissions from their project:
+Dashboards inherit permissions from their project, granted to users or, since v1.18.0, to [groups](../usage/administration/groups.md):
 
 | Role                              | View                 | Edit                 | Delete               |
 | --------------------------------- | -------------------- | -------------------- | -------------------- |
@@ -789,6 +789,7 @@ Dashboards inherit permissions from their project:
 
 - :material-eye: **Viewer URL**: `/dashboard/{id}` - Safe to share with collaborators
 - :material-pencil: **Editor URL**: `/dashboard-edit/{id}` - Only for authorized editors
+- :material-filter-variant: **Filter link** <small>(v1.18.0+)</small>: `/dashboard/{id}#filters=…` - The viewer URL with its filters. See [Filter links](../usage/guides/dashboard_usage.md#filter-links)
 
 ### :material-application-brackets: Embedding a component <small>(v1.17.0+)</small> { #embedding }
 

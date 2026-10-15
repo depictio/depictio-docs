@@ -8,6 +8,53 @@ hide:
 
 # Changelog
 
+## **[v1.18.0](https://github.com/depictio/depictio/releases/tag/v1.18.0)** (October 14, 2026)
+
+!!! success "Minor: SAML sign-in, user groups, and filters that stay and travel as a link"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.18.0
+ghcr.io/depictio/depictio-viewer:1.18.0
+ghcr.io/depictio/depictio-worker:1.18.0
+ghcr.io/depictio/depictio-cli:1.18.0
+```
+
+### **♻️ Migration**
+
+* **A project update no longer changes who has access**: `PUT /projects/update` checks the stored project and ignores the `permissions` it is sent, so sharing goes through **Permissions** or `POST /projects/update_project_permissions`. See [Project permissions](../usage/projects/guide.md#project-permissions) ([#972](https://github.com/depictio/depictio/pull/972), [6dce8ac8](https://github.com/depictio/depictio/commit/6dce8ac8)).
+* **Data-collection writes follow the role**: renaming one or editing its properties needs editor and deleting it needs owner, where a direct viewer could write and an editor could not. See [Group-Based Access](../features/security.md#group-based-access) ([#972](https://github.com/depictio/depictio/pull/972), [2d375aae](https://github.com/depictio/depictio/commit/2d375aae)).
+
+### **✨ New Features**
+
+* **Sign in with SAML 2.0**: an instance can send its users to their institution's identity provider, off until `DEPICTIO_AUTH_SAML_ENABLED` turns it on, with its service-provider metadata at `/auth/saml/metadata`. Use v1.18.1 or later. See [Single sign-on (SAML)](../installation/sso.md) ([#968](https://github.com/depictio/depictio/pull/968), [fd09c330](https://github.com/depictio/depictio/commit/fd09c330)).
+* **User groups**: a project is shared with a whole lab as owner, editor or viewer, and each member gets the highest of their own role and their groups'. See [Groups](../usage/administration/groups.md) ([#972](https://github.com/depictio/depictio/pull/972), [cfadf7c5](https://github.com/depictio/depictio/commit/cfadf7c5), [127353a5](https://github.com/depictio/depictio/commit/127353a5)).
+* **Group admins run their own groups**: **Administration → Groups** manages every group, and `/groups`, opened from the group badges in Account settings, lets a group admin add members and admins. A P.I. can be named before their first sign-in. See [Managing a group](../usage/administration/groups.md#managing-a-group) ([#972](https://github.com/depictio/depictio/pull/972), [4fb69aca](https://github.com/depictio/depictio/commit/4fb69aca), [b6ab32fa](https://github.com/depictio/depictio/commit/b6ab32fa)).
+* **Groups from the identity provider**: with `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS` set, each SAML sign-in mirrors the user's groups and refreshes their name and title. See [Group and profile sync](../installation/sso.md#group-and-profile-sync) ([#972](https://github.com/depictio/depictio/pull/972), [9383d518](https://github.com/depictio/depictio/commit/9383d518)).
+* **Filters remembered per dashboard**: a dashboard reopens on the filters you left, in this browser and in any browser you sign in to, unless **Your filters → Remember my filters** is off. See [Remembered filters](../usage/guides/dashboard_usage.md#remembered-filters) ([#967](https://github.com/depictio/depictio/pull/967), [b779f183](https://github.com/depictio/depictio/commit/b779f183)).
+* **The address bar is a filter link**: `#filters=` follows the active filters, and the link icon beside **N filters active** copies it. See [Filter links](../usage/guides/dashboard_usage.md#filter-links) ([#967](https://github.com/depictio/depictio/pull/967), [c190f568](https://github.com/depictio/depictio/commit/c190f568), [54aeb5ca](https://github.com/depictio/depictio/commit/54aeb5ca)).
+
+### **🚀 Improvements**
+
+* **Every project manages its data collections in the browser**: **Create Data Collection** opens on a project the CLI made, where it used to refuse. See [Managing Data Collections from the viewer](../usage/projects/guide.md#managing-data-collections-from-the-viewer-v0120) ([#1039](https://github.com/depictio/depictio/pull/1039), [45f3422e](https://github.com/depictio/depictio/commit/45f3422e)).
+* **Log & Task on a public instance**: a signed-in administrator gets Tasks, Ingestion, Watchers, Logs and Health, while guests and demo instances still do not. See [Monitoring](../usage/administration/monitoring.md) ([#1236](https://github.com/depictio/depictio/pull/1236), [f7ec044c](https://github.com/depictio/depictio/commit/f7ec044c)).
+
+### **🔒 Security**
+
+* **One permission check for every resource**: projects, dashboards, files, tables and the rest go through one module, and an anonymous visitor matches public projects only. See [Group-Based Access](../features/security.md#group-based-access) ([#972](https://github.com/depictio/depictio/pull/972), [61a51a88](https://github.com/depictio/depictio/commit/61a51a88)).
+* **SAML sign-in ends on a single-use ticket**: a response must answer a request this instance made, the return path stays on this site, and no token travels in a query string. See [SAML sign-in](../features/security.md#saml-sign-in) ([#968](https://github.com/depictio/depictio/pull/968), [fd09c330](https://github.com/depictio/depictio/commit/fd09c330)).
+* **A phylogeny tree is read only where the server may read**: an `s3://` Newick follows the remote-data rules, a local one must sit under the bundled projects or a `depictio local` folder. See [Folders on the server's disk](../features/security.md#folders-on-the-servers-disk) ([#1237](https://github.com/depictio/depictio/pull/1237), [b2ee7b06](https://github.com/depictio/depictio/commit/b2ee7b06)).
+
+### **🐛 Bug Fixes**
+
+* **A CLI refresh keeps what the browser added**: `--update-config` wrote the whole project back, deleting the data collections added in the web UI. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1038](https://github.com/depictio/depictio/pull/1038), [0cf51772](https://github.com/depictio/depictio/commit/0cf51772)).
+* **The release check looks again after an upgrade**, so the server information no longer shows a latest release older than the one running. See [Release check](../usage/guides/web_ui.md#release-check) ([#1236](https://github.com/depictio/depictio/pull/1236), [6ad2f1aa](https://github.com/depictio/depictio/commit/6ad2f1aa)).
+* **The QIIME2 rarefaction summary skips the columns ingestion adds**, such as `depictio_run_id`, on which it failed ([#1237](https://github.com/depictio/depictio/pull/1237), [c400bb3b](https://github.com/depictio/depictio/commit/c400bb3b)).
+* **A database wipe keeps the installation's telemetry ID**. See [Telemetry](../features/telemetry.md#what-is-sent) ([#1237](https://github.com/depictio/depictio/pull/1237), [5a121129](https://github.com/depictio/depictio/commit/5a121129)).
+
+---
+
 ## **[v1.17.4](https://github.com/depictio/depictio/releases/tag/v1.17.4)** (October 13, 2026)
 
 !!! success "Patch: a landing hint on dashboards, and Comments and Versions in the Guide"
