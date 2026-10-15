@@ -24,7 +24,7 @@ Read-only mode for exploring data:
 - :material-filter: Use filter components to explore data
 - :material-download: Export data from tables (v0.6.0+)
 - :material-share-variant: Share dashboards with collaborators
-- :material-comment-text-multiple-outline: Discuss and annotate components (project editors and owners), see [Comments and Annotations](comments-annotations.md)
+- :material-comment-text-multiple-outline: Discuss and annotate components (project editors and owners, and viewers if allowed), see [Comments and Annotations](comments-annotations.md)
 - :material-code-json: Export one component to another website, when the server allows it, see [Component export and embedding](component-export.md) <small>(v1.17.0+)</small>
 - :material-lock: No accidental modifications
 
@@ -344,6 +344,11 @@ editor still draws such a section on the tab being edited, badged **Hidden on th
 On a tab that does not own it, a pinned grid section says **Filtered** while a filter
 narrows it; folded, its cards read *filtered / total*, and **Reset filters** clears the
 filters.
+
+Since **v1.17.2** a value picked in a pinned filter section also narrows the MultiQC
+panels of every other tab (the report, General Statistics and the funnel), through the
+project's [links](cross-dc-filtering.md#supported-target-types) to the MultiQC collection.
+A MultiQC tab no longer needs a sample filter of its own.
 
 ### :material-view-dashboard-outline: Landing tabs <small>(v1.14.0+)</small> { #landing-tabs }
 

@@ -184,9 +184,9 @@ except Run health.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Library or FASTQ file` on `multiqc_data`, as MultiQC names
-        it, and a `Reads, % of an even share` range on the `libraries` hub, which
-        links into the report.
+        **Filters** · a `Reads, % of an even share` range on the `libraries` hub,
+        which links into the report; the pinned sample filters narrow the panels
+        by library.
 
         | Section | What it holds |
         |---|---|
