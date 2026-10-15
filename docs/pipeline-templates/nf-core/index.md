@@ -33,6 +33,13 @@ Templates for [nf-core](https://nf-co.re) pipelines. Each template configures a 
 | [mhcquant](mhcquant.md) | Immunopeptidomics | 3.2.0 |
 | [demultiplex](demultiplex.md) | Sequencing run demultiplexing | 1.8.0 |
 | [rnasplice](rnasplice.md) | Alternative splicing analysis | 1.0.4 |
+| [proteinfamilies](proteinfamilies.md) | Protein family clustering and profile HMMs | 2.5.0 |
+| [proteinannotator](proteinannotator.md) | Protein domain and structure annotation | 1.1.0 |
+| [proteinfold](proteinfold.md) | Protein structure prediction | 2.1.0 |
+| [oncoanalyser](oncoanalyser.md) | Cancer whole-genome and transcriptome analysis (WiGiTS) | 3.0.0 |
+| [crisprseq](crisprseq.md) | CRISPR gene editing outcomes and screens | 2.3.0 |
+| [isoseq](isoseq.md) | PacBio Iso-Seq full-length transcripts | 3.0.1 |
+| [pairgenomealign](pairgenomealign.md) | Pairwise genome alignment | 3.0.4 |
 
 !!! tip "You do not have to name the template <small>(v1.10.0+)</small>"
     A pipeline can trigger the ingestion itself when it completes, and the
