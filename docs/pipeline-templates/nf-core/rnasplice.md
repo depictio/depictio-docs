@@ -198,8 +198,8 @@ of every child tab.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample ID`, read from the MultiQC report, whose library
-        names carry read suffixes.
+        **Filters** · the pinned sample filters narrow its panels, though the
+        report's library names carry read suffixes.
 
         | Section | What it holds |
         |---|---|
