@@ -82,6 +82,7 @@ When a dashboard has a map authored as a dashboard-wide panel, it follows you ac
 |---------|-------|---------------|
 | **About this dashboard** | Always | What the dashboard is, below |
 | **Your view** | Always | **Font size** and **Page width**, for you only, saved in this browser. See [Appearance](#appearance) |
+| **Your filters** <small>(v1.18.0+)</small> | Viewer | **Remember my filters** and the link to the filtered view. See [Remembered filters](#remembered-filters) |
 | **Tab defaults**, **Tiles**, **Filtering**, **Guide** | Edit mode | Saved with the dashboard. See [Settings for everyone](#settings-for-everyone) |
 | **Branding** | Edit mode | Logo, colours and figure palette. See [Appearance](#appearance) |
 | **History** | Edit mode | Every saved version of the dashboard, to preview, restore, bookmark or delete. See [Dashboard and data versions](../../features/versioning.md#history) |
@@ -263,9 +264,47 @@ There are currently two types of interactive actions available in the dashboard:
 - **Reset all filters** You can reset all filters applied to the components by clicking the **Reset all filters** button in the right sidebar. This will clear all filters applied to the components and reset them to their default state.
 - **Reset interactive component/scatter plot filter** You can reset the filters applied to the graph components by clicking the orange <span style="color: #fd7e14;"><i class="bx bx-reset"></i> Reset</span> button in the component options at the top of the box. This will clear the filters applied to the graph component and reset it to its default state.
 - **Clear one filter from the summary** (v1.4.0+) Each row of the filter panel's active-filter summary has its own clear button, so you can drop a single filter without touching the rest.
+- **Reset all** also clears the [remembered filters](#remembered-filters) of the dashboard (v1.18.0+).
 
 !!! note "Where the reset icon stays visible (v1.4.0+)"
     On figures, tables and maps the reset icon stays pinned while a selection is active, since a selection there is easy to miss. On an interactive control it appears on hover, so that it cannot sit on top of the select's chevron or the slider track.
+
+## Remembered filters and filter links <small>(v1.18.0+)</small> { #remembered-filters }
+
+A dashboard reopens on the filters you left: at once in this browser, and in any browser
+you sign in to, from a copy kept per user on the server. Every kind of filter counts: the
+filter panel and filter bars, a box or lasso on a scatter plot, the map, table rows and
+images. Filters set on a component that no longer exists are dropped.
+
+<figure markdown="span">
+  [![Every filter level converges on one list of filters, kept in the browser tab, in this browser, on the server per user, and in the #filters= link](../../images/guides/filter-persistence/schema_one_array.svg)](../../images/guides/filter-persistence/schema_one_array.svg){target=_blank}
+  <figcaption><strong>One list of filters, four places.</strong> The browser tab, this browser, your server copy and the link each keep it for a different time.</figcaption>
+</figure>
+
+**Your filters**, in [Dashboard settings](#dashboard-settings-drawer), holds the
+**Remember my filters** switch, on by default and set per dashboard. Off, nothing is kept,
+and the choice follows you to other browsers. Anonymous visitors keep their filters in their
+own browser only, never on the server.
+
+### Filter links { #filter-links }
+
+The address bar carries the filtered view as `#filters=…`, so copying it shares the view.
+The link icon beside **N filters active** in the filter panel copies it, and **Your
+filters** shows it with a copy button. Opening a link applies its filters on top of what
+you had. The fragment is written only for a view you changed, it replaces the history entry
+rather than adding one, and a selection too large for a link leaves no fragment instead of
+a truncated one.
+
+[![The filter panel after a reload: two filters restored, with the link icon beside the count](../../images/guides/filter-persistence/restored.webp)](../../images/guides/filter-persistence/restored.webp){target=_blank}
+[![Dashboard settings, Your filters: the Remember my filters switch and the link with its copy button](../../images/guides/filter-persistence/settings.webp)](../../images/guides/filter-persistence/settings.webp){target=_blank}
+
+??? info "Which filters win when a dashboard opens"
+    Three sources merge, each overriding the one before: the remembered filters, the
+    selections carried across tabs, then the link. The server copy applies afterwards only
+    when it is the best information available. A `?version=` preview neither restores nor
+    remembers anything, and **Reset all** clears the stored copy.
+
+    [![The merge at opening: remembered, cross-tab, then link, the pruning pass, and the gates the server copy passes](../../images/guides/filter-persistence/schema_mount_merge.svg)](../../images/guides/filter-persistence/schema_mount_merge.svg){target=_blank}
 
 ## Saving the Dashboard
 
