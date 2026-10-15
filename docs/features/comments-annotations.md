@@ -77,7 +77,8 @@ lets anyone with viewer access to a project read and write its threads:
 - resolving or reopening a thread, publishing or editing an annotation, annotate mode and
   agent proposals stay with editors and owners; a viewer never sees proposals or
   rejected threads;
-- anonymous visitors and the temporary accounts of public mode never comment.
+- anonymous visitors and the temporary accounts of public mode never comment. Since
+  v1.17.3 a guest is offered to [sign in](../usage/guides/authentication-modes.md#guest-sign-in) instead.
 
 Commenters see each other's email addresses. On Kubernetes, the setting is the
 `backend.env` key of the same name.

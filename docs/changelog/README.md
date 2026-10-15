@@ -8,6 +8,29 @@ hide:
 
 # Changelog
 
+## **[v1.17.3](https://github.com/depictio/depictio/releases/tag/v1.17.3)** (October 13, 2026)
+
+!!! success "Patch: a public-mode guest can sign in where they would comment"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.17.3
+ghcr.io/depictio/depictio-viewer:1.17.3
+ghcr.io/depictio/depictio-worker:1.17.3
+ghcr.io/depictio/depictio-cli:1.17.3
+```
+
+### **✨ New Features**
+
+* **Guests sign in from where they would comment**: on a public instance with Google or another identity provider, the avatar, the sidebar's mode line and the comments buttons offer a sign-in, and `/auth/login` shows the form with **Continue as guest**. See [Signing in as a guest](../usage/guides/authentication-modes.md#guest-sign-in) ([#1207](https://github.com/depictio/depictio/pull/1207), [2e72e446](https://github.com/depictio/depictio/commit/2e72e446)).
+
+### **🐛 Bug Fixes**
+
+* **The actions column of the Dashboards and Projects tables stays in view** on a narrow screen, and the depictio mark sits centred in the top bar ([7d1ec740](https://github.com/depictio/depictio/commit/7d1ec740), [f70d2fc5](https://github.com/depictio/depictio/commit/f70d2fc5)).
+
+---
+
 ## **[v1.17.2](https://github.com/depictio/depictio/releases/tag/v1.17.2)** (October 12, 2026)
 
 !!! success "Patch: viewers may comment, and the pinned sample filters reach the MultiQC panels"
