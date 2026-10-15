@@ -8,6 +8,83 @@ hide:
 
 # Changelog
 
+## **[v1.17.4](https://github.com/depictio/depictio/releases/tag/v1.17.4)** (October 13, 2026)
+
+!!! success "Patch: a landing hint on dashboards, and Comments and Versions in the Guide"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.17.4
+ghcr.io/depictio/depictio-viewer:1.17.4
+ghcr.io/depictio/depictio-worker:1.17.4
+ghcr.io/depictio/depictio-cli:1.17.4
+```
+
+### **✨ New Features**
+
+* **A landing hint on a dashboard**: a public-mode guest gets a short note on what Depictio and the dashboard are, with a button to the Guide, once per browser, and the public tour now stays on the dashboards list. See [Landing hint](../usage/guides/dashboard-guide.md#landing-hint) ([#1208](https://github.com/depictio/depictio/pull/1208), [46ffbfbf](https://github.com/depictio/depictio/commit/46ffbfbf), [b1ff9848](https://github.com/depictio/depictio/commit/b1ff9848)).
+* **Comments and Versions in the Guide**: comments and annotations tried on one of the dashboard's own figures, and a component's read-only history for any reader. See [What it covers](../usage/guides/dashboard-guide.md#what-it-covers) ([#1208](https://github.com/depictio/depictio/pull/1208), [4478780e](https://github.com/depictio/depictio/commit/4478780e)).
+
+### **🐛 Bug Fixes**
+
+* **Show me rings the comments button only when it is visible** ([#1209](https://github.com/depictio/depictio/pull/1209)).
+
+---
+
+## **[v1.17.3](https://github.com/depictio/depictio/releases/tag/v1.17.3)** (October 13, 2026)
+
+!!! success "Patch: a public-mode guest can sign in where they would comment"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.17.3
+ghcr.io/depictio/depictio-viewer:1.17.3
+ghcr.io/depictio/depictio-worker:1.17.3
+ghcr.io/depictio/depictio-cli:1.17.3
+```
+
+### **✨ New Features**
+
+* **Guests sign in from where they would comment**: on a public instance with Google or another identity provider, the avatar, the sidebar's mode line and the comments buttons offer a sign-in, and `/auth/login` shows the form with **Continue as guest**. See [Signing in as a guest](../usage/guides/authentication-modes.md#guest-sign-in) ([#1207](https://github.com/depictio/depictio/pull/1207), [2e72e446](https://github.com/depictio/depictio/commit/2e72e446)).
+
+### **🐛 Bug Fixes**
+
+* **The actions column of the Dashboards and Projects tables stays in view** on a narrow screen, and the depictio mark sits centred in the top bar ([7d1ec740](https://github.com/depictio/depictio/commit/7d1ec740), [f70d2fc5](https://github.com/depictio/depictio/commit/f70d2fc5)).
+
+---
+
+## **[v1.17.2](https://github.com/depictio/depictio/releases/tag/v1.17.2)** (October 12, 2026)
+
+!!! success "Patch: viewers may comment, and the pinned sample filters reach the MultiQC panels"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.17.2
+ghcr.io/depictio/depictio-viewer:1.17.2
+ghcr.io/depictio/depictio-worker:1.17.2
+ghcr.io/depictio/depictio-cli:1.17.2
+```
+
+### **✨ New Features**
+
+* **Viewers may comment**: `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT` lets anyone with viewer access to a project read and write its threads, while resolving, annotating and agent proposals stay with editors and owners, and temporary accounts still cannot comment. See [Viewers can comment](../features/comments-annotations.md#viewers-can-comment) ([#1204](https://github.com/depictio/depictio/pull/1204), [#1206](https://github.com/depictio/depictio/pull/1206)).
+
+### **🚀 Improvements**
+
+* **One sample filter for every tab of an nf-core template**: 14 templates drop the sample filter of their MultiQC tab, which the pinned Sample filters now narrow; a dashboard already imported keeps it until it is imported again. See [Sections on every tab](../features/dashboards.md#persistent-sections) ([#1203](https://github.com/depictio/depictio/pull/1203), [a1827f1c](https://github.com/depictio/depictio/commit/a1827f1c)).
+
+### **🐛 Bug Fixes**
+
+* **A pinned filter narrows the MultiQC panels of another tab**, through every link of its table, and matches a sample id inside a report name such as mag's bins. See [Supported target types](../features/cross-dc-filtering.md#supported-target-types) ([#1201](https://github.com/depictio/depictio/pull/1201), [#1202](https://github.com/depictio/depictio/pull/1202)).
+* **The nf-core section lists every nf-core dashboard**, imported templates included, not only the two seeded ones. See [Dashboards](../usage/guides/web_ui.md#dashboards-listing) ([#1199](https://github.com/depictio/depictio/pull/1199)).
+* **A refused Google sign-in reads as a message** under *Sign-in failed*, not as the raw API response ([#1198](https://github.com/depictio/depictio/pull/1198)).
+* **The open sidebar centres its foot**, the server status and All dashboards ([#1185](https://github.com/depictio/depictio/pull/1185)).
+
+---
+
 ## **[v1.17.1](https://github.com/depictio/depictio/releases/tag/v1.17.1)** (October 12, 2026)
 
 !!! success "Patch: section filter bars use their full width in the Paper look"

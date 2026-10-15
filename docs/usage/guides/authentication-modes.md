@@ -18,7 +18,7 @@ Depictio supports four authentication modes, each designed for a different deplo
 | **User management** | Full RBAC | Disabled | Disabled | Disabled |
 | **Temporary users (24h)** | No | No | Yes | Yes |
 | **Google OAuth** | Optional | Optional | Optional | Optional |
-| **Guided tour** | No | No | No | Yes |
+| **Guided tour** | No | No | Dashboards list | Yes |
 
 ## Auth Mode (Default)
 
@@ -80,12 +80,28 @@ DEPICTIO_AUTH_PUBLIC_MODE=true
 
 **Behavior:**
 
-- Anonymous user has **read-only** access to public dashboards
-- A "Sign In" button in the sidebar opens an auth modal with:
-    - **Temporary user** — 24-hour session, auto-cleaned after expiry
-    - **Google OAuth** — persistent account (if enabled)
+- Every visitor gets a **temporary account** (24-hour session, cleaned after expiry) with
+  **read-only** access to public dashboards, without a login screen
+- With Google OAuth or another identity provider enabled, a guest can
+  [sign in](#guest-sign-in) to a persistent account
+- A short tour of the dashboards list ends by picking a dashboard, where a
+  [landing hint](dashboard-guide.md#landing-hint) points to its Guide <small>(v1.17.4+)</small>
 - After sign-in, users can create dashboards, duplicate existing ones, and manage projects
 - Sidebar shows a "Public Mode" badge
+
+### Signing in as a guest <small>(v1.17.3+)</small> { #guest-sign-in }
+
+When Google or another identity provider is configured, a guest finds **Sign in** where
+they would need it: the avatar menu, the sidebar's mode line (*Public mode · Sign in*),
+the profile page, the tour's welcome step and, when
+[viewers may comment](../../features/comments-annotations.md#viewers-can-comment), the
+comments buttons, which open a *Sign in to comment* prompt. `/auth/login` shows the
+sign-in form with **Continue as guest**, and a sign-in returns to the page it started
+from. A public instance with password sign-in only behaves as before.
+
+A public showcase where signed-in readers comment combines `DEPICTIO_AUTH_PUBLIC_MODE`,
+an identity provider and `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT`. Keep
+[registration](#registration) open, or a first-time reader's account is never created.
 
 **Configuration:**
 

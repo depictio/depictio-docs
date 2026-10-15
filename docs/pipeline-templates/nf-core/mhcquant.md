@@ -180,7 +180,7 @@ to the Comet tables by `run_id`. The *Sample sheet* and the *Reference tables*
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Report sample`, read from the MultiQC report.
+        **Filters** · the pinned sample filters narrow its panels.
 
         | Section | What it holds |
         |---|---|

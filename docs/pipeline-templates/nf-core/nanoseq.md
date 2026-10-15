@@ -196,7 +196,7 @@ every child tab.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Library`, read from the MultiQC report.
+        **Filters** · the pinned sample filters narrow its panels.
 
         | Section | What it holds |
         |---|---|
