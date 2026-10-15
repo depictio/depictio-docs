@@ -8,6 +8,30 @@ hide:
 
 # Changelog
 
+## **[v1.17.4](https://github.com/depictio/depictio/releases/tag/v1.17.4)** (October 13, 2026)
+
+!!! success "Patch: a landing hint on dashboards, and Comments and Versions in the Guide"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.17.4
+ghcr.io/depictio/depictio-viewer:1.17.4
+ghcr.io/depictio/depictio-worker:1.17.4
+ghcr.io/depictio/depictio-cli:1.17.4
+```
+
+### **✨ New Features**
+
+* **A landing hint on a dashboard**: a public-mode guest gets a short note on what Depictio and the dashboard are, with a button to the Guide, once per browser, and the public tour now stays on the dashboards list. See [Landing hint](../usage/guides/dashboard-guide.md#landing-hint) ([#1208](https://github.com/depictio/depictio/pull/1208), [46ffbfbf](https://github.com/depictio/depictio/commit/46ffbfbf), [b1ff9848](https://github.com/depictio/depictio/commit/b1ff9848)).
+* **Comments and Versions in the Guide**: comments and annotations tried on one of the dashboard's own figures, and a component's read-only history for any reader. See [What it covers](../usage/guides/dashboard-guide.md#what-it-covers) ([#1208](https://github.com/depictio/depictio/pull/1208), [4478780e](https://github.com/depictio/depictio/commit/4478780e)).
+
+### **🐛 Bug Fixes**
+
+* **Show me rings the comments button only when it is visible** ([#1209](https://github.com/depictio/depictio/pull/1209)).
+
+---
+
 ## **[v1.17.3](https://github.com/depictio/depictio/releases/tag/v1.17.3)** (October 13, 2026)
 
 !!! success "Patch: a public-mode guest can sign in where they would comment"
