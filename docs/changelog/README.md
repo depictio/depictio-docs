@@ -23,11 +23,11 @@ ghcr.io/depictio/depictio-cli:1.17.3
 
 ### **✨ New Features**
 
-* **Guests sign in from where they would comment**: on a public instance with Google or another identity provider, the avatar, the sidebar's mode line and the comments buttons offer a sign-in, and `/auth/login` shows the form with **Continue as guest**. See [Signing in as a guest](../usage/guides/authentication-modes.md#guest-sign-in) ([#1207](https://github.com/depictio/depictio/pull/1207), [2e72e446](https://github.com/depictio/depictio/commit/2e72e446)).
+* **Guests sign in from where they would comment**, on a public instance with an identity provider. See [Signing in as a guest](../usage/guides/authentication-modes.md#guest-sign-in) ([#1207](https://github.com/depictio/depictio/pull/1207)).
 
 ### **🐛 Bug Fixes**
 
-* **The actions column of the Dashboards and Projects tables stays in view** on a narrow screen, and the depictio mark sits centred in the top bar ([7d1ec740](https://github.com/depictio/depictio/commit/7d1ec740), [f70d2fc5](https://github.com/depictio/depictio/commit/f70d2fc5)).
+* **Table actions stay in view on a narrow screen** ([7d1ec740](https://github.com/depictio/depictio/commit/7d1ec740)).
 
 ---
 
