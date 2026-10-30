@@ -335,7 +335,7 @@ def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
 | `format` | `str` | yes if `path` set | `CSV`, `TSV`, or `Parquet` (case-insensitive) |
 | `input_schema` | `dict` | no | Columns `transform()` reads from this source, as column name to Polars dtype (e.g. `{"#gene1": pl.Utf8}`). Checked after the source is read. Leave it out, with a `# No input_schema:` comment giving the reason, when no column name is fixed (one column per sample, columns read by position or found by alias) |
 | `read_kwargs` | `dict` | no | Extra kwargs forwarded to the Polars reader (e.g. `{"skip_rows": 1}`) |
-| `optional` | `bool` | no | If `true`, source is skipped when unavailable instead of failing |
+| `optional` | `bool` | no | If `true`, a missing source (or, since v1.19.2, a glob matching nothing) is skipped and reaches `transform()` as `None` |
 | `glob_pattern` | `str` | no | Glob pattern for matching multiple files (concatenated) |
 
 Exactly one of `path`, `dc_ref`, or `glob_pattern` must be set per source.

@@ -84,7 +84,7 @@ ghcr.io/depictio/depictio-cli:1.19.3
 
 ## **[v1.19.2](https://github.com/depictio/depictio/releases/tag/v1.19.2)** (October 23, 2026)
 
-!!! success "Patch: a switch between two reference databases, and volcano groups named"
+!!! success "Patch: option cards"
 
 ### Docker Images
 
@@ -97,15 +97,11 @@ ghcr.io/depictio/depictio-cli:1.19.2
 
 ### **✨ New Features**
 
-* **Option cards on a segmented control**, which can sit at the top of the tab. See [SegmentedControl](../features/components.md#segmentedcontrol) ([#1264](https://github.com/depictio/depictio/pull/1264)).
+* **Option cards**: a SegmentedControl drawn as cards, optionally at the top of the tab. See [Option cards](../features/components.md#option-cards) ([#1264](https://github.com/depictio/depictio/pull/1264)).
 
 ### **🚀 Improvements**
 
-* **Volcano and DA barplot name the groups of a contrast**, with shapes or colours per group. See [Volcano](../features/components.md#volcano) ([#1264](https://github.com/depictio/depictio/pull/1264)).
-
-### **🧬 Pipeline Templates**
-
-* **ANCOM-BC for two reference databases** in the ampliseq template, switched from the top of the tab. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md#dashboard-tabs) ([#1264](https://github.com/depictio/depictio/pull/1264)).
+* **An optional glob that matches nothing is skipped**. See [`RecipeSource` Reference](../usage/projects/recipes.md#recipesource-reference) ([#1264](https://github.com/depictio/depictio/pull/1264)).
 
 ---
 

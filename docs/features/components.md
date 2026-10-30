@@ -2,6 +2,7 @@
 title: "Dashboard Components"
 icon: material/view-dashboard
 description: "Complete guide to Depictio's dashboard component types and their configuration."
+glightbox: true
 ---
 
 # :material-puzzle: Dashboard Components
@@ -752,22 +753,26 @@ Single-selection toggle:
 | Options | Available choices |
 | Default | Initially selected option |
 
-Since **v1.19.2** `option_cards` draws one card per option (title, icon, a line of
-description), keyed by the option's value, for a choice that changes what the whole tab
-shows, such as a reference database. A segmented control can also sit at the top of the
-tab with `placement: top`, like a Timeline.
+#### Option cards { #option-cards }
+
+<span class="ver-badge">v1.19.2+</span> `option_cards`
+
+Draws each option of a SegmentedControl as a card, for a choice that changes the whole tab, such as a reference database.
+
+![Option cards: one card per option, with an icon, a label and a line of description](../images/guides/components/option_cards_light.webp#only-light){ .viz-shot loading=lazy }
+![Option cards: one card per option, with an icon, a label and a line of description](../images/guides/components/option_cards_dark.webp#only-dark){ .viz-shot loading=lazy }
 
 ```yaml
 - component_type: interactive
   interactive_component_type: SegmentedControl
-  data_collection_tag: ancombc_results
   column_name: taxonomy
-  placement: top
-  default_value: silva
-  option_cards:
-    silva: {label: SILVA 138.2, icon: mdi:bacteria, description: Bacteria and archaea named}
-    pr2: {label: PR2 5.0.0, icon: mdi:microscope, description: Eukaryotes resolved}
+  placement: top               # above the grid, stays in view
+  option_cards:                # keyed by value; label, icon, description all optional
+    silva: {label: SILVA 138.2, icon: mdi:bacteria, description: Bacteria and archaea}
+    pr2: {label: PR2 5.0.0, icon: mdi:microscope, description: Eukaryotes}
 ```
+
+An `always_selected` Select takes `option_cards` too, for its [scope banner](dashboards.md#scope-banner). YAML only for now.
 
 ### In a filter bar <small>(v1.14.0+)</small> { #filter-bar-keys }
 
