@@ -8,6 +8,37 @@ hide:
 
 # Changelog
 
+## **[v1.19.3](https://github.com/depictio/depictio/releases/tag/v1.19.3)** (October 28, 2026)
+
+!!! success "Patch: faster dashboards, heatmaps that keep their height, and a larger UpSet"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.19.3
+ghcr.io/depictio/depictio-viewer:1.19.3
+ghcr.io/depictio/depictio-worker:1.19.3
+ghcr.io/depictio/depictio-cli:1.19.3
+```
+
+### **♻️ Migration**
+
+* **A heatmap keeps its authored height**: set `max_rows` to let it grow with a large matrix again. See [Hierarchical Heatmap](../features/components.md#hierarchical-heatmap) ([#1285](https://github.com/depictio/depictio/pull/1285)).
+
+### **🚀 Improvements**
+
+* **Faster dashboard loads and filter changes**: stacked taxonomy fetches one rank, sunbursts are summed on the server, and repeated redraws are skipped ([#1286](https://github.com/depictio/depictio/pull/1286)).
+* **A larger UpSet** dot matrix, set-size bars and annotation strip ([#1287](https://github.com/depictio/depictio/pull/1287)).
+* **Compact docked controls**: a control group joins the row of controls ([#1285](https://github.com/depictio/depictio/pull/1285)).
+* **A Kingdom filter on the ampliseq Ordination tab**. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md#dashboard-tabs) ([#1292](https://github.com/depictio/depictio/pull/1292)).
+
+### **🐛 Bug Fixes**
+
+* **The figure code editor loads** on a served instance ([#1283](https://github.com/depictio/depictio/pull/1283)).
+* **`depictio ingest` reads run tags on Python 3.15** ([#1281](https://github.com/depictio/depictio/pull/1281)).
+
+---
+
 ## **[v1.19.2](https://github.com/depictio/depictio/releases/tag/v1.19.2)** (October 23, 2026)
 
 !!! success "Patch: a switch between two reference databases, and volcano groups named"
