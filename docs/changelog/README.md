@@ -8,6 +8,97 @@ hide:
 
 # Changelog
 
+## **[v1.19.2](https://github.com/depictio/depictio/releases/tag/v1.19.2)** (October 23, 2026)
+
+!!! success "Patch: a switch between two reference databases, and volcano groups named"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.19.2
+ghcr.io/depictio/depictio-viewer:1.19.2
+ghcr.io/depictio/depictio-worker:1.19.2
+ghcr.io/depictio/depictio-cli:1.19.2
+```
+
+### **✨ New Features**
+
+* **Option cards on a segmented control**, which can sit at the top of the tab. See [SegmentedControl](../features/components.md#segmentedcontrol) ([#1264](https://github.com/depictio/depictio/pull/1264)).
+* **ANCOM-BC for two reference databases** in the ampliseq template, switched from the top of the tab. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md#dashboard-tabs) ([#1264](https://github.com/depictio/depictio/pull/1264)).
+
+### **🚀 Improvements**
+
+* **Volcano and DA barplot name the groups of a contrast**, with shapes or colours per group. See [Volcano](../features/components.md#volcano) ([#1264](https://github.com/depictio/depictio/pull/1264)).
+
+---
+
+## **[v1.19.1](https://github.com/depictio/depictio/releases/tag/v1.19.1)** (October 16, 2026)
+
+!!! success "Patch: protein tabs on one screen, and exports that keep card strips"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.19.1
+ghcr.io/depictio/depictio-viewer:1.19.1
+ghcr.io/depictio/depictio-worker:1.19.1
+ghcr.io/depictio/depictio-cli:1.19.1
+```
+
+### **✨ New Features**
+
+* **Linked view sections**: `display: linked` keeps a section's tiles on one screen. See [Linked view](../features/dashboards.md#linked-view) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **A scope banner** for a tab whose picker holds one value, with its `banner_facts`. See [Linked view](../features/dashboards.md#linked-view) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **Zoom sync** between the residue tiles and the 3D model. See [Linked by residue](../features/protein-tiles.md#residue-selection) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+
+### **🐛 Bug Fixes**
+
+* **An export keeps a card's secondary strip and a table's row selection** ([#1263](https://github.com/depictio/depictio/pull/1263)).
+
+---
+
+## **[v1.19.0](https://github.com/depictio/depictio/releases/tag/v1.19.0)** (October 15, 2026)
+
+!!! success "Minor: protein tiles, seven nf-core templates, and Add user"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.19.0
+ghcr.io/depictio/depictio-viewer:1.19.0
+ghcr.io/depictio/depictio-worker:1.19.0
+ghcr.io/depictio/depictio-cli:1.19.0
+```
+
+### **✨ New Features**
+
+* **Protein tiles**: eight advanced visualizations for structures, alignments and protein families. See [Protein tiles](../features/protein-tiles.md) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **Tiles linked by residue**: a pick filters every table, a hover marks every tile. See [Linked by residue](../features/protein-tiles.md#residue-selection) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **Structures from AlphaFold DB or ESMFold**, off until `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` is set. See [Where the structure comes from](../features/protein-tiles.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1254](https://github.com/depictio/depictio/pull/1254)).
+* **Seven nf-core templates**, and a Protein tab on sarek. See [nf-core templates](../pipeline-templates/nf-core/index.md) ([#1131](https://github.com/depictio/depictio/pull/1131)).
+* **Add user**: an administrator creates an account with an initial password. See [Adding a user](../usage/guides/web_ui.md#add-a-user) ([#1251](https://github.com/depictio/depictio/pull/1251)).
+* **Everyone with access** on a project's permissions. See [Everyone with access](../usage/projects/guide.md#everyone-with-access) ([#1252](https://github.com/depictio/depictio/pull/1252)).
+
+### **🚀 Improvements**
+
+* **`always_selected` and `default_by`** for pickers that hold one value. See [Initial values](../features/yaml-sync.md#interactive-defaults) ([#1131](https://github.com/depictio/depictio/pull/1131), [#1257](https://github.com/depictio/depictio/pull/1257)).
+* **Protein tiles zoom and fold**. See [The tiles](../features/protein-tiles.md#the-tiles) ([#1256](https://github.com/depictio/depictio/pull/1256)).
+* **Structure and PAE files as indexed-file collections**. See [Indexed-file DCs](../usage/projects/guide.md#example-indexed-file-dcs) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **27 catalog tools** for the new pipelines. See [Tools Catalog](../catalog/index.md) ([#1131](https://github.com/depictio/depictio/pull/1131)).
+
+### **🔒 Security**
+
+* **The structure resolver is off by default** and names the service it calls. See [External structure services](../features/security.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1256](https://github.com/depictio/depictio/pull/1256)).
+* **SAML counts as single sign-on** for `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED`. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) ([#1246](https://github.com/depictio/depictio/pull/1246)).
+
+### **🐛 Bug Fixes**
+
+* **SAML sign-in reads the identity provider's response**. See [Single sign-on (SAML)](../installation/sso.md) ([#1247](https://github.com/depictio/depictio/pull/1247)).
+* **The API image builds again** ([#1244](https://github.com/depictio/depictio/pull/1244)).
+* **Dashboards with advanced visualizations export again** ([#1239](https://github.com/depictio/depictio/pull/1239)).
+
+---
+
 ## **[v1.18.1](https://github.com/depictio/depictio/releases/tag/v1.18.1)** (October 14, 2026)
 
 !!! success "Patch: SAML loads in the API image, and genome tracks work with sign-in"

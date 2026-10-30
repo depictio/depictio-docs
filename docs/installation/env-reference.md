@@ -49,6 +49,7 @@ DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [Monitoring](#monitoring)
 - [Dashboard Versions](#dashboard-versions)
 - [Comments](#comments)
+- [Structure Resolver](#structure-resolver)
 - [Ingestion](#ingestion)
 - [Jobs](#jobs)
 - [Telemetry](#telemetry)
@@ -293,6 +294,7 @@ Authentication and authorization settings including JWT configuration, unauthent
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET` | - | Google OAuth client secret |
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI` | - | Google OAuth redirect URI |
 | `DEPICTIO_AUTH_REGISTRATION_DISABLED` | `false` | Block self-service registration: `/register` returns 403 and the Register UI is hidden, so only pre-provisioned accounts can log in. Independent of public/single-user mode |
+| `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED` | `false` | Close email and password sign-in when Google OAuth or, since v1.19.0, SAML is on. Ignored with neither. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) |
 | `DEPICTIO_AUTH_PROVISIONING_API_KEY` | - | Shared secret for pipeline-side user provisioning (`POST /auth/provision_user`). Scoped to provisioning only, kept separate from the internal API key. Also accepted as `DEPICTIO_AUTH_PROVISIONING_API_KEY_ENV`. **The provisioning endpoints are disabled while this is unset.** See [Pipeline provisioning](../usage/guides/authentication-modes.md#pipeline-provisioning-and-magic-links-v113) |
 | `DEPICTIO_AUTH_MAGIC_LINK_EXPIRY_MINUTES` | `15` | Lifetime of a single-use magic-link login ticket |
 | `DEPICTIO_AUTH_SAML_ENABLED` | `false` | Turn on SAML 2.0 single sign-on (v1.18.0+). See [Single sign-on (SAML)](sso.md) |
@@ -704,6 +706,27 @@ Who may use the comment threads of a dashboard. See [Viewers can comment](../fea
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT` | `false` | Let anyone with viewer access to a project read and write its threads. Moderation, annotations and agent proposals stay with editors and owners, and anonymous visitors never comment |
+
+---
+
+## Structure Resolver <small>(v1.19.0+)</small> { #structure-resolver }
+
+**Config Class:** `StructureResolverSettings`
+**Environment Prefix:** `DEPICTIO_STRUCTURE_RESOLVER_`
+
+Lets the [protein tiles](../features/protein-tiles.md#structure-resolver) fetch a model the run did not publish, from AlphaFold DB, UniProt and ESMFold. Off by default: once on, an accession, a gene and taxon, or a sequence leaves the server. See [External structure services](../features/security.md#structure-resolver). Compose and Helm forward only `ENABLED`; add the others to the service's environment.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` | `false` | Turn the resolver on. Off, `structure_source: resolve` tiles answer 403 |
+| `DEPICTIO_STRUCTURE_RESOLVER_AFDB_BASE_URL` | `https://alphafold.ebi.ac.uk` | AlphaFold DB |
+| `DEPICTIO_STRUCTURE_RESOLVER_UNIPROT_BASE_URL` | `https://rest.uniprot.org` | UniProt, to turn a gene and taxon into an accession |
+| `DEPICTIO_STRUCTURE_RESOLVER_ESMFOLD_URL` | `https://api.esmatlas.com/foldSequence/v1/pdb/` | ESMFold, which folds a sequence |
+| `DEPICTIO_STRUCTURE_RESOLVER_TIMEOUT_S` | `60` | Timeout of one call to a service |
+| `DEPICTIO_STRUCTURE_RESOLVER_TOTAL_TIMEOUT_S` | `120` | Time one request may spend across all its calls and retries |
+| `DEPICTIO_STRUCTURE_RESOLVER_MAX_BYTES` | `20971520` (20 MiB) | Largest model accepted |
+| `DEPICTIO_STRUCTURE_RESOLVER_ESMFOLD_MAX_LENGTH` | `400` | Longest sequence sent to ESMFold |
+| `DEPICTIO_STRUCTURE_RESOLVER_CACHE_PREFIX` | `structures/resolved` | Where fetched models are cached in the instance bucket |
 
 ---
 
