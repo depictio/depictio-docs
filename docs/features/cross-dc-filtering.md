@@ -130,6 +130,12 @@ Consequences worth knowing:
 | :material-dna: `jbrowse2` | Shows/hides tracks | :material-clock-outline: Planned |
 | :material-image-multiple: `images` | Filters image gallery | :material-clock-outline: Planned |
 
+Since **v1.17.2** every link from a source table to a MultiQC collection counts, not only
+the first, and a sample id found inside a MultiQC name (mag's
+`<assembler>-<binner>-<sample>.<bin>`) is matched. A filter on another tab, such as a
+[pinned sample filter](dashboards.md#persistent-sections), reaches the MultiQC panels the
+same way.
+
 ## :material-code-braces: Complete Example
 
 ```yaml
