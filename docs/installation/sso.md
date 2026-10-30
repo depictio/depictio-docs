@@ -51,6 +51,10 @@ A first SAML sign-in creates the account, unless
 [registration is closed](../usage/guides/authentication-modes.md#registration). A new
 account has no project access until someone grants it.
 
+To make SSO the only way in, set `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED`: since v1.19.0 SAML
+counts as single sign-on for it. See
+[Password sign-in](../usage/guides/authentication-modes.md#password-login).
+
 !!! info "The image and the package"
     The API Docker image ships the native `xmlsec` / `libxml2` libraries. A Python install
     needs the `saml` extra: `pip install "depictio[server,saml]"`.
