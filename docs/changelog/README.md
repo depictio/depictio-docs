@@ -124,13 +124,20 @@ ghcr.io/depictio/depictio-cli:1.19.1
 
 ### **✨ New Features**
 
-* **Linked view sections**: `display: linked` keeps a section's tiles on one screen. See [Linked view](../features/dashboards.md#linked-view) ([#1262](https://github.com/depictio/depictio/pull/1262)).
-* **A scope banner** for a tab whose picker holds one value, with its `banner_facts`. See [Linked view](../features/dashboards.md#linked-view) ([#1262](https://github.com/depictio/depictio/pull/1262)).
-* **Zoom sync** between the residue tiles and the 3D model. See [Linked by residue](../features/protein-tiles.md#residue-selection) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **Scope banner** on one-unit tabs. See [Scope banner](../features/dashboards.md#scope-banner) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **Linked views**: a section's tiles as panes on one screen. See [Linked view](../features/dashboards.md#linked-view) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **Residue tiles sync their zoom**. See [Linked by residue](../features/advanced-visualizations.md#residue-selection) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **Floating 3D structure** across tabs. See [Floating structure](../features/advanced-visualizations.md#floating-structure) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+
+### **🚀 Improvements**
+
+* **Figures zoom on Ctrl or Cmd and the wheel**, or a pinch. See [Right Panel](../features/dashboards.md#right-panel-visualizations) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **proteinannotator, proteinfamilies and proteinfold** use these. See [nf-core templates](../pipeline-templates/nf-core/index.md) ([#1262](https://github.com/depictio/depictio/pull/1262)).
 
 ### **🐛 Bug Fixes**
 
-* **An export keeps a card's secondary strip and a table's row selection** ([#1263](https://github.com/depictio/depictio/pull/1263)).
+* **Export keeps card secondary strips and table row selection**. See [Export](../features/yaml-sync.md#export) ([#1263](https://github.com/depictio/depictio/pull/1263)).
+* **Builds and CI no longer count as installations** in telemetry ([#1258](https://github.com/depictio/depictio/pull/1258)).
 
 ---
 

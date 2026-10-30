@@ -2077,6 +2077,21 @@ See [The data](#the-data).
         selection_enabled: true
     ```
 
+#### Floating structure { #floating-structure }
+
+<span class="ver-badge">v1.19.1+</span> `placement: floating`
+
+The 3D tile leaves the grid and floats over every tab, as a card you drag, resize, fold or
+dock. Only `molecule_3d` floats.
+
+![Floating structure: the 3D model as a card over the tab](../images/guides/advanced-visualizations/floating_structure_light.webp#only-light){ .viz-shot loading=lazy }
+![Floating structure: the 3D model as a card over the tab](../images/guides/advanced-visualizations/floating_structure_dark.webp#only-dark){ .viz-shot loading=lazy }
+
+```yaml
+placement: floating             # grid (default) or floating
+floating_initial_state: compact # compact, expanded, docked or hidden
+```
+
 ### :material-text-box-outline: Alignment { #msa }
 
 <span class="ver-badge">v1.19.0+</span> `viz_kind: msa`
@@ -2430,6 +2445,8 @@ The helpers in `depictio/recipes/lib/` (`protein_structure`, `msa`, `hmm`,
   `position` range and, on a complex, the chain. Every table with those columns narrows, and
   every protein tile shows the range. The last gesture wins.
 - **A hover is not.** Pointing at a residue marks it in every protein tile, in the browser only.
+- <span class="ver-badge">v1.19.1+</span> **Zoom can follow.** Turn on the sync icon of a
+  tile, or a section's button, and the other residue tiles and the 3D model follow its zoom.
 - A [lollipop](#lollipop) joins with `selection_enabled: true`, a [profile](#profile) with
   `residue_axis: true`. Cards and figures that do not draw the position column ignore the range.
 
