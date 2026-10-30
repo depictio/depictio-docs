@@ -619,6 +619,11 @@ Samples or cells in 2D or 3D, from precomputed coordinates or a PCA, UMAP, t-SNE
 ![Embedding](../images/guides/advanced-visualizations/embedding_light.webp#only-light){ data-title="Embedding" .viz-shot loading=lazy }
 ![Embedding](../images/guides/advanced-visualizations/embedding_dark.webp#only-dark){ data-title="Embedding" .viz-shot loading=lazy }
 
+The same kind on a sample PCA, with **Point size** at 25:
+
+![Embedding, sample PCA](../images/guides/advanced-visualizations/embedding_pca_light.webp#only-light){ data-title="Embedding, sample PCA" .viz-shot loading=lazy }
+![Embedding, sample PCA](../images/guides/advanced-visualizations/embedding_pca_dark.webp#only-dark){ data-title="Embedding, sample PCA" .viz-shot loading=lazy }
+
 **Input:** one row per cell or sample.
 
 | cell_id | umap_1 | umap_2 | cluster <small>optional</small> |
