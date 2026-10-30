@@ -234,8 +234,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Phylum` on `complex_heatmap_canonical`, narrowing the rows
-        of the heatmap, plus the sample filters.
+        **Filters** · `Kingdom` (v1.19.3+) and `Phylum` on
+        `complex_heatmap_canonical`, narrowing the rows of the heatmap, plus the
+        sample filters.
 
         | Section | What it holds |
         |---|---|
@@ -282,6 +283,13 @@ run was resolved against; the dashboard substitutes its real name everywhere.
     View switch reads the same calls as an MA or a QQ plot, and the largest effects
     per contrast. The collapsed *Taxon detail* holds the ANCOM-BC table, with a
     record card for the row you pick.
+
+    Since v1.19.2 a run analysed against two reference databases can show both
+    ANCOM-BC results: a slice written beside ampliseq's own as
+    `<slice>.<label>.csv` (and its `qiime2/barplot/level-N.<label>.csv` for the MA
+    view) keeps its rows under `taxonomy = <label>`, and a segmented control with
+    [option cards](../../features/components.md#segmentedcontrol) at the top of the
+    tab switches between them. A run with one database is unchanged.
 
     ??? abstract ":material-tune-variant: Filters and components"
 

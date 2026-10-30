@@ -65,7 +65,10 @@ admin), which also show the name and title an identity provider gives.
 ## Sharing with a group { #sharing-with-a-group }
 
 A project's **Permissions** page has a **Groups** section beside the people: add a group by
-name and give it one role. Users and groups are saved together.
+name and give it one role. Users and groups are saved together. Since v1.19.0 typing a
+group's name previews its members, and
+[Everyone with access](../projects/guide.md#everyone-with-access) lists each person once
+with their highest role.
 
 - An admin of a group that owns the project manages its sharing and its public switch, like
   an owner.
