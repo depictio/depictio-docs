@@ -10,7 +10,7 @@ hide:
 
 ## **[v1.17.2](https://github.com/depictio/depictio/releases/tag/v1.17.2)** (October 12, 2026)
 
-!!! success "Patch: viewers may comment, and the pinned sample filters reach the MultiQC panels"
+!!! success "Patch: viewers may comment, and pinned sample filters reach the MultiQC panels"
 
 ### Docker Images
 
@@ -23,18 +23,17 @@ ghcr.io/depictio/depictio-cli:1.17.2
 
 ### **✨ New Features**
 
-* **Viewers may comment**: `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT` lets anyone with viewer access to a project read and write its threads, while resolving, annotating and agent proposals stay with editors and owners, and temporary accounts still cannot comment. See [Viewers can comment](../features/comments-annotations.md#viewers-can-comment) ([#1204](https://github.com/depictio/depictio/pull/1204), [#1206](https://github.com/depictio/depictio/pull/1206)).
+* **Viewers may comment** when `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT` is on. See [Viewers can comment](../features/comments-annotations.md#viewers-can-comment) ([#1204](https://github.com/depictio/depictio/pull/1204), [#1206](https://github.com/depictio/depictio/pull/1206)).
 
 ### **🚀 Improvements**
 
-* **One sample filter for every tab of an nf-core template**: 14 templates drop the sample filter of their MultiQC tab, which the pinned Sample filters now narrow; a dashboard already imported keeps it until it is imported again. See [Sections on every tab](../features/dashboards.md#persistent-sections) ([#1203](https://github.com/depictio/depictio/pull/1203), [a1827f1c](https://github.com/depictio/depictio/commit/a1827f1c)).
+* **One sample filter for every tab**: 14 nf-core templates drop the sample filter of their MultiQC tab. See [Sections on every tab](../features/dashboards.md#persistent-sections) ([#1203](https://github.com/depictio/depictio/pull/1203)).
 
 ### **🐛 Bug Fixes**
 
-* **A pinned filter narrows the MultiQC panels of another tab**, through every link of its table, and matches a sample id inside a report name such as mag's bins. See [Supported target types](../features/cross-dc-filtering.md#supported-target-types) ([#1201](https://github.com/depictio/depictio/pull/1201), [#1202](https://github.com/depictio/depictio/pull/1202)).
-* **The nf-core section lists every nf-core dashboard**, imported templates included, not only the two seeded ones. See [Dashboards](../usage/guides/web_ui.md#dashboards-listing) ([#1199](https://github.com/depictio/depictio/pull/1199)).
-* **A refused Google sign-in reads as a message** under *Sign-in failed*, not as the raw API response ([#1198](https://github.com/depictio/depictio/pull/1198)).
-* **The open sidebar centres its foot**, the server status and All dashboards ([#1185](https://github.com/depictio/depictio/pull/1185)).
+* **A pinned filter narrows the MultiQC panels of another tab**. See [Supported target types](../features/cross-dc-filtering.md#supported-target-types) ([#1201](https://github.com/depictio/depictio/pull/1201), [#1202](https://github.com/depictio/depictio/pull/1202)).
+* **The nf-core section lists every nf-core dashboard**. See [Dashboards](../usage/guides/web_ui.md#dashboards-listing) ([#1199](https://github.com/depictio/depictio/pull/1199)).
+* **A refused Google sign-in shows a readable message** ([#1198](https://github.com/depictio/depictio/pull/1198)).
 
 ---
 
