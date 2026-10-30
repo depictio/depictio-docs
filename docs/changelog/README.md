@@ -10,7 +10,7 @@ hide:
 
 ## **[v1.19.0](https://github.com/depictio/depictio/releases/tag/v1.19.0)** (October 15, 2026)
 
-!!! success "Minor: protein tiles linked by residue, seven nf-core templates, and users added by an administrator"
+!!! success "Minor: protein tiles, seven nf-core templates, and Add user"
 
 ### Docker Images
 
@@ -23,35 +23,30 @@ ghcr.io/depictio/depictio-cli:1.19.0
 
 ### **✨ New Features**
 
-* **Protein tiles**: eight advanced visualizations draw one protein or a family, `molecule_3d`, `msa`, `sequence_track`, `hmm_logo`, `domain_architecture`, `secondary_structure`, `pae_matrix` and `ramachandran`. See [Protein tiles](../features/protein-tiles.md) ([#1130](https://github.com/depictio/depictio/pull/1130), [841608ce](https://github.com/depictio/depictio/commit/841608ce), [3c68a394](https://github.com/depictio/depictio/commit/3c68a394)).
-* **Tiles linked by residue**: a click or brush in any protein tile filters every table on that protein and residue range, the last gesture winning, and a hover marks the residue in all of them. See [Linked by residue](../features/protein-tiles.md#residue-selection) ([#1130](https://github.com/depictio/depictio/pull/1130), [e1cae8f7](https://github.com/depictio/depictio/commit/e1cae8f7)).
-* **Structures the run did not publish**: a 3D or Ramachandran tile can fetch a model from AlphaFold DB by accession or gene, or fold a short sequence with ESMFold, once `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` turns it on. See [Where the structure comes from](../features/protein-tiles.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [a0af95f1](https://github.com/depictio/depictio/commit/a0af95f1), [#1254](https://github.com/depictio/depictio/pull/1254)).
-* **Structure and error files as collections**: an `indexed_file` collection takes `format: pdb`, `mmcif` or `pae`, one file per protein. See [Indexed-file DCs](../usage/projects/guide.md#example-indexed-file-dcs) ([#1130](https://github.com/depictio/depictio/pull/1130)).
-* **Seven nf-core templates**: proteinfamilies, proteinannotator and proteinfold, built on the protein tiles, and oncoanalyser, crisprseq, isoseq and pairgenomealign. See [nf-core templates](../pipeline-templates/nf-core/index.md) ([#1131](https://github.com/depictio/depictio/pull/1131), [e3fdfb63](https://github.com/depictio/depictio/commit/e3fdfb63)).
-* **A Protein tab on sarek** draws a gene's coding variants on its predicted structure, beside a gene scatter and a lollipop, as oncoanalyser's Protein changes tab does. See [sarek](../pipeline-templates/nf-core/sarek.md#dashboard-tabs) ([#1131](https://github.com/depictio/depictio/pull/1131), [82b49dea](https://github.com/depictio/depictio/commit/82b49dea)).
-* **Add user**: **Administration → Users** creates an account with an initial password, which the person is asked to change at first sign-in, even where registration is closed. See [Adding a user](../usage/guides/web_ui.md#add-a-user) ([#1251](https://github.com/depictio/depictio/pull/1251), [3b0b2c57](https://github.com/depictio/depictio/commit/3b0b2c57)).
-* **Everyone with access**: a project's permissions list each person once, with their highest role and the grants behind it, and a group's members show before it is added. See [Everyone with access](../usage/projects/guide.md#everyone-with-access) ([#1252](https://github.com/depictio/depictio/pull/1252), [0993e48d](https://github.com/depictio/depictio/commit/0993e48d)).
+* **Protein tiles**: eight advanced visualizations for structures, alignments and protein families. See [Protein tiles](../features/protein-tiles.md) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **Tiles linked by residue**: a pick filters every table, a hover marks every tile. See [Linked by residue](../features/protein-tiles.md#residue-selection) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **Structures from AlphaFold DB or ESMFold**, off until `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` is set. See [Where the structure comes from](../features/protein-tiles.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1254](https://github.com/depictio/depictio/pull/1254)).
+* **Seven nf-core templates**, and a Protein tab on sarek. See [nf-core templates](../pipeline-templates/nf-core/index.md) ([#1131](https://github.com/depictio/depictio/pull/1131)).
+* **Add user**: an administrator creates an account with an initial password. See [Adding a user](../usage/guides/web_ui.md#add-a-user) ([#1251](https://github.com/depictio/depictio/pull/1251)).
+* **Everyone with access** on a project's permissions. See [Everyone with access](../usage/projects/guide.md#everyone-with-access) ([#1252](https://github.com/depictio/depictio/pull/1252)).
 
 ### **🚀 Improvements**
 
-* **A Select that always holds one value**: `always_selected: true` keeps a picker on one family or structure, and `default_by` starts it on the option that ranks first on a numeric column. See [Initial values](../features/yaml-sync.md#interactive-defaults) ([#1131](https://github.com/depictio/depictio/pull/1131), [2a91f880](https://github.com/depictio/depictio/commit/2a91f880), [#1257](https://github.com/depictio/depictio/pull/1257), [340367ae](https://github.com/depictio/depictio/commit/340367ae)).
-* **Protein tiles zoom and fold**: Ctrl or Cmd and the wheel zooms the sequence tiles, the HMM logo hides or folds parts of the profile, and the sequence track draws every chain of a complex. See [Protein tiles](../features/protein-tiles.md#the-tiles) ([#1256](https://github.com/depictio/depictio/pull/1256), [81103856](https://github.com/depictio/depictio/commit/81103856), [9f81a336](https://github.com/depictio/depictio/commit/9f81a336)).
-* **27 catalog tools** for the new pipelines, from HMMER, InterProScan and S4PRED to PURPLE, LINX and TAMA. See [Tools Catalog](../catalog/index.md) ([#1131](https://github.com/depictio/depictio/pull/1131)).
-* **Stacked composition beyond taxonomy**: `rank_label`, `x_title`, `hidden_controls` and `legend_pos: bottom`, and a table's `columns:` now sets their order. See [Stacked taxonomy](../features/components.md#stacked-taxonomy) ([#1131](https://github.com/depictio/depictio/pull/1131), [349a6fcd](https://github.com/depictio/depictio/commit/349a6fcd)).
-* **A clearer Groups page and sign-in card**: the source filter is a dropdown, Create group looks like Create project, and a branded sign-in card centres a larger logo ([#1249](https://github.com/depictio/depictio/pull/1249), [#1255](https://github.com/depictio/depictio/pull/1255), [#1248](https://github.com/depictio/depictio/pull/1248)).
+* **`always_selected` and `default_by`** for pickers that hold one value. See [Initial values](../features/yaml-sync.md#interactive-defaults) ([#1131](https://github.com/depictio/depictio/pull/1131), [#1257](https://github.com/depictio/depictio/pull/1257)).
+* **Protein tiles zoom and fold**. See [The tiles](../features/protein-tiles.md#the-tiles) ([#1256](https://github.com/depictio/depictio/pull/1256)).
+* **Structure and PAE files as indexed-file collections**. See [Indexed-file DCs](../usage/projects/guide.md#example-indexed-file-dcs) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **27 catalog tools** for the new pipelines. See [Tools Catalog](../catalog/index.md) ([#1131](https://github.com/depictio/depictio/pull/1131)).
 
 ### **🔒 Security**
 
-* **The structure resolver is off by default**: once on, only the accession, gene or sequence leaves the server, to AlphaFold DB, UniProt or ESMFold, and the 3D tile names the service it called. See [External structure services](../features/security.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1256](https://github.com/depictio/depictio/pull/1256), [86f801cc](https://github.com/depictio/depictio/commit/86f801cc)).
-* **SAML counts as single sign-on**: `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED` now applies with SAML alone, and closes `/auth/register` as well. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) ([#1246](https://github.com/depictio/depictio/pull/1246), [097032ef](https://github.com/depictio/depictio/commit/097032ef)).
+* **The structure resolver is off by default** and names the service it calls. See [External structure services](../features/security.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1256](https://github.com/depictio/depictio/pull/1256)).
+* **SAML counts as single sign-on** for `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED`. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) ([#1246](https://github.com/depictio/depictio/pull/1246)).
 
 ### **🐛 Bug Fixes**
 
-* **SAML sign-in reads the identity provider's response**, which the callback refused as missing. See [Single sign-on (SAML)](../installation/sso.md) ([#1247](https://github.com/depictio/depictio/pull/1247), [35f2db3f](https://github.com/depictio/depictio/commit/35f2db3f)).
-* **The API image builds again**: no image could be published for v1.18.1 ([#1244](https://github.com/depictio/depictio/pull/1244), [d9308176](https://github.com/depictio/depictio/commit/d9308176)).
-* **Dashboards with advanced visualizations export again**: `depictio dashboard export` failed with a 500 on a tile with extra collections, and now writes their tags ([#1239](https://github.com/depictio/depictio/pull/1239), [9cb71aa5](https://github.com/depictio/depictio/commit/9cb71aa5)).
-* **The Groups page counts the members it lists** ([#1249](https://github.com/depictio/depictio/pull/1249), [4f80870e](https://github.com/depictio/depictio/commit/4f80870e)).
-* **crisprseq recipes run on polars 1.33** ([#1253](https://github.com/depictio/depictio/pull/1253), [88d17a71](https://github.com/depictio/depictio/commit/88d17a71)).
+* **SAML sign-in reads the identity provider's response**. See [Single sign-on (SAML)](../installation/sso.md) ([#1247](https://github.com/depictio/depictio/pull/1247)).
+* **The API image builds again** ([#1244](https://github.com/depictio/depictio/pull/1244)).
+* **Dashboards with advanced visualizations export again** ([#1239](https://github.com/depictio/depictio/pull/1239)).
 
 ---
 
