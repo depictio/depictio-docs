@@ -57,7 +57,7 @@ left panel and narrow every tab through the target hub.
 !!! info "Structures are read from the run, not resolved"
     The 3D and Ramachandran tiles read the top-ranked PDB that each engine
     publishes under `top_ranked_structures/`, so nothing leaves the server and
-    the [structure resolver](../../features/protein-tiles.md#structure-resolver)
+    the [structure resolver](../../features/advanced-visualizations.md#structure-resolver)
     (`DEPICTIO_STRUCTURE_RESOLVER_ENABLED`) is not used. Those PDBs are required:
     a run that published none has no structure to open.
 
@@ -247,7 +247,7 @@ every child tab. The pLDDT bands take AlphaFold's own colours.
     The tab reads one structure. The strip gives its mean PAE, the pLDDT of its
     residues, and the pTM and ipTM of its top-ranked model against AlphaFold's
     cut-offs (pTM 0.5; ipTM 0.8 and 0.6). Then the
-    [PAE matrix](../../features/protein-tiles.md#pae-matrix) beside the same
+    [PAE matrix](../../features/advanced-visualizations.md#pae-matrix) beside the same
     structure in 3D, coloured by pLDDT, and the sequence with its pLDDT lane below.
     A diagonal brush on the matrix selects a square as a residue range: the
     structure draws it red and the sequence track shades it, so a confident domain

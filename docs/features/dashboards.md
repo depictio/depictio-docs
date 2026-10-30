@@ -388,7 +388,7 @@ and, in the minimal figure style, a PCoA, both coloured by city in the colours
 [![Result rows linking to their tabs, beside a phylogeny summary sized by reads per city](../images/guides/landing-tabs/findings-phylogeny.webp)](../images/guides/landing-tabs/findings-phylogeny.webp){target=_blank}
 
 *Findings*: result rows whose figure takes the linked tab's colour, beside a
-[phylogeny summary](components.md#phylogeny-summary) collapsed to phyla, sized by
+[phylogeny summary](advanced-visualizations.md#phylogenetic) collapsed to phyla, sized by
 share of reads, with one column of dots per city.
 
 [![A stacked bar and a strip plot in the minimal style with captions, then tab tiles](../images/guides/landing-tabs/minimal-figures.webp)](../images/guides/landing-tabs/minimal-figures.webp){target=_blank}
@@ -403,8 +403,8 @@ headings that repeat the sidebar's groups.
 | `icon_style`, `caption`, `decimals`, `variant`, `link` on cards | [Card Components](components.md#card-display-options) |
 | `figure_style: minimal`, `caption`, `link` on figures | [Figure Components](components.md#figure-style) |
 | Another tab's figure, redrawn here | [Highlight](components.md#highlight-components) |
-| Phylogeny summary by rank | [Phylogenetic](components.md#phylogeny-summary) |
-| An UpSet that filters the tab | [UpSet](components.md#upset) |
+| Phylogeny summary by rank | [Phylogenetic](advanced-visualizations.md#phylogenetic) |
+| An UpSet that filters the tab | [UpSet](advanced-visualizations.md#upset) |
 | Plain sections, filter bars, colours, tab defaults | Below, and [YAML Sync](yaml-sync.md#landing-tab-keys) |
 
 #### Plain sections
@@ -472,7 +472,7 @@ already had. See [YAML Sync](yaml-sync.md#category-colors) for the keys.
 
 ### :material-tune-vertical: Advanced visualization controls { #viz-controls }
 
-An [advanced visualization](components.md#advanced-visualizations) has controls: the
+An [advanced visualization](advanced-visualizations.md) has controls: the
 view, the colour, the labels. They dock next to the plot when the tile has room, so a
 reader sees how the figure is set without opening a menu. The tile's width decides
 where:

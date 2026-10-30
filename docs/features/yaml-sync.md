@@ -260,7 +260,7 @@ never overridden. The height is only pinned at the grid breakpoint the dashboard
 `advanced_viz_controls` sets where the controls of every advanced visualization on the
 dashboard sit: behind the settings icon (`popover`), in a rail beside the plot (`rail`) or
 under the tile title (`header`). A tile's own `controls_placement` wins over it. See
-[Shared settings](components.md#advanced-viz-shared-settings).
+[Shared settings](advanced-visualizations.md#shared-settings).
 
 ```yaml
 title: Variant QC

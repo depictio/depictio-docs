@@ -2605,4 +2605,81 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
 .md-nav__item--nested.nav-pinned > .md-nav__container > label.md-nav__link,
 .md-nav__item--nested.nav-pinned > nav.md-nav {
     display: none;
+
+/* Version badge. One convention for "available since": a small pill on its own
+   line under a heading, never inside the heading, so anchors and the table of
+   contents stay version-free. Used by the Advanced visualizations page. */
+.md-typeset .ver-badge {
+    display: inline-block;
+    padding: 0 0.6em;
+    border: 1px solid #d1c4e9;
+    border-radius: 999px;
+    background: #f3eefc;
+    color: #5e35b1;
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.7;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .ver-badge {
+    border-color: rgba(179, 157, 219, 0.45);
+    background: rgba(149, 117, 205, 0.16);
+    color: #c9b6f2;
+}
+
+/* Screenshot catalogue: one card per visualization, the thumbnail opens in the
+   lightbox and the name below it jumps to the entry. */
+.md-typeset .viz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.8rem;
+    margin: 0.4rem 0 1.4rem;
+}
+
+.md-typeset .viz-grid > div > p {
+    margin: 0;
+}
+
+.md-typeset .viz-grid a.glightbox {
+    display: block;
+}
+
+.md-typeset .viz-grid img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: top center;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 6px;
+    background: var(--md-default-bg-color);
+}
+
+.md-typeset .viz-grid .viz-grid__name {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.72rem;
+    line-height: 1.3;
+    text-align: center;
+}
+
+.md-typeset .viz-grid__family {
+    margin: 1rem 0 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--md-default-fg-color--light);
+}
+
+/* The screenshot at the top of each entry: capped so a wide tile does not
+   push the data table off screen; the lightbox shows it full size. */
+.md-typeset img.viz-shot {
+    display: block;
+    max-width: min(100%, 760px);
+    margin: 0.6rem 0;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 6px;
 }

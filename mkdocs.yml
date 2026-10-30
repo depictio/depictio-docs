@@ -163,6 +163,9 @@ plugins:
       zoomable: true
       draggable: true
       auto_caption: false
+      # #only-light / #only-dark screenshots go to separate galleries, so the
+      # lightbox arrows step through one theme's images, not both copies.
+      auto_themed: true
       caption_position: bottom
   - inline-select-svg:
       pattern: "images/logo/animated_favicon.svg"
@@ -287,9 +290,9 @@ nav:
       - Dashboard & Components:
           - Dashboards: features/dashboards.md
           - Components: features/components.md
+          - Advanced Visualizations: features/advanced-visualizations.md
           - Interactive Selection Filtering: features/interactive-selection-filtering.md
           - Comments and Annotations: features/comments-annotations.md
-          - Protein tiles: features/protein-tiles.md
           - Genome browser:
               - features/genome-browser/index.md
               - Table to browser: features/genome-browser/table-to-browser.md

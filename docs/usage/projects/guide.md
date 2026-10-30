@@ -487,7 +487,7 @@ Use `tip_label_strategy: "first_token"` when leaf names carry a suffix
 
 A component then points at the tree with `tree_wf_id` / `tree_dc_id` and colours
 its tips from any column of the metadata DC. See
-[Phylogenetic](../../features/components.md#phylogenetic) for the component
+[Phylogenetic](../../features/advanced-visualizations.md#phylogenetic) for the component
 schema and its controls.
 
 #### :material-dna: Example: Indexed-file DCs { #example-indexed-file-dcs }
@@ -535,7 +535,7 @@ the whole ingestion.
 
 Prefer a `table` DC when the data is small enough to filter and aggregate as rows: cards,
 figures and tables read rows, and an `indexed_file` DC has none. Its consumer is a genome
-track reading files directly: a [Genome view](../../features/components.md#genome-view)
+track reading files directly: a [Genome view](../../features/advanced-visualizations.md#genome-view)
 tile with `source: file`.
 
 ##### Storage the browser can read <small>(v1.13.0+)</small> { #indexed-file-storage }
@@ -627,7 +627,7 @@ For per-sample files read directly by a Genome view tile, with no manifest, see
 
 Protein structures and predicted aligned error (PAE) matrices are `indexed_file` DCs too,
 one file per protein. They need no index: a
-[protein tile](../../features/protein-tiles.md#the-data) fetches the file whole.
+[protein tile](../../features/advanced-visualizations.md#the-data) fetches the file whole.
 
 ```yaml
 - data_collection_tag: "structures"

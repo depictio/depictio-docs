@@ -1,6 +1,6 @@
 # Advanced Visualizations — screenshots
 
-Each advanced-viz subsection in [`docs/features/components.md`](../../../features/components.md#advanced-visualizations) references **two** WebP files per viz: `<viz>_light.webp#only-light` and `<viz>_dark.webp#only-dark`. The `#only-light` / `#only-dark` URL fragments are a mkdocs-material feature that swaps the image based on the active theme.
+Each advanced-viz subsection in [`docs/features/advanced-visualizations.md`](../../../features/advanced-visualizations.md) references **two** WebP files per viz: `<viz>_light.webp#only-light` and `<viz>_dark.webp#only-dark`. The `#only-light` / `#only-dark` URL fragments are a mkdocs-material feature that swaps the image based on the active theme.
 
 ## File set (68 total)
 
@@ -37,11 +37,11 @@ Each advanced-viz subsection in [`docs/features/components.md`](../../../feature
 
 ### Controls placement (v1.13.0)
 
-The volcano tile with `controls_placement` set to each value, referenced from [Shared settings](../../../features/components.md#advanced-viz-shared-settings): `controls_popover_{light,dark}.webp` (popover open), `controls_rail_{light,dark}.webp`, `controls_header_{light,dark}.webp`.
+The volcano tile with `controls_placement` set to each value, referenced from [Shared settings](../../../features/advanced-visualizations.md#shared-settings): `controls_popover_{light,dark}.webp` (popover open), `controls_rail_{light,dark}.webp`, `controls_header_{light,dark}.webp`.
 
 ### Phylogeny interaction (v1.8.0)
 
-Three extra pairs referenced from [Reading and navigating the tree](../../../features/components.md#phylogeny-interaction), same `#only-light` / `#only-dark` convention:
+Three extra pairs referenced from [Reading and navigating the tree](../../../features/advanced-visualizations.md#phylogenetic), same `#only-light` / `#only-dark` convention:
 
 | State | Filenames |
 |---|---|
